@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>주사위 성채 (Dicekeep)</title>
+<link rel="stylesheet" href="style.css?v=2" />
+<link rel="icon" href="ui/gold.png" />
+</head>
+<body>
+<div id="wrap">
+  <div id="stage">
+    <canvas id="game" width="1024" height="576"></canvas>
+
+    <div id="stats" class="hidden">
+      <span class="chip"><img id="icon-gold" alt="골드"><b id="gold-val">0</b></span>
+      <span class="chip"><img id="icon-heart" alt="목숨"><b id="lives-val">0</b></span>
+      <span class="chip"><b id="wave-val">웨이브 0 / 20</b></span>
+    </div>
+
+    <div id="overlay">
+      <div id="overlay-box">
+        <h1 id="ov-title">주사위 성채</h1>
+        <p id="ov-desc">
+          주사위를 <b>잡아서 휙 던지거나</b>, 버튼으로 <b>빠르게</b> 굴리세요.<br>
+          나온 눈(1~6)에 해당하는 <b>주사위 타워</b>가 생성됩니다. <b>6눈이 가장 강력!</b><br>
+          같은 눈의 타워 위에 주사위를 올리면 <b>레벨 업</b> (최대 Lv3).<br>
+          포탈에서 몰려오는 적이 크리스탈에 닿기 전에 막아내세요!
+        </p>
+        <button id="ov-btn">게임 시작</button>
+        <p class="hint">주사위 드래그 후 놓기: 물리 던지기 · R/버튼: 빠른 굴리기 · 클릭: 배치/선택 · ESC: 취소</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="hud" class="hidden">
+    <div id="dice-panel">
+      <div id="dice-slot" title="보유 주사위">
+        <img id="dice-img" class="hidden" alt="">
+        <span id="dice-q">?</span>
+        <canvas id="slot-canvas" width="74" height="74" class="hidden"></canvas>
+      </div>
+      <button id="roll-btn">주사위 굴리기<small id="roll-cost">40 G</small></button>
+      <div id="held-info" class="hidden"><b id="held-name"></b><span id="held-desc"></span></div>
+    </div>
+
+    <div id="right-panel">
+      <div id="info-panel" class="hidden">
+        <div id="info-head"><img id="info-dice" alt=""><b id="info-name"></b></div>
+        <div id="info-body"></div>
+        <button id="sell-btn">판매</button>
+      </div>
+      <button id="wave-btn">웨이브 시작</button>
+      <div class="mini">
+        <button id="speed-btn" title="게임 속도">x1</button>
+        <button id="mute-btn" title="소리">&#128266;</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="game.js?v=2"></script>
+</body>
+</html>
