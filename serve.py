@@ -1,8 +1,9 @@
 """캐시 없이 파일을 제공하는 개발용 로컬 서버 (start.bat에서 사용)"""
+import os
 import socket
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 
-PORT = 8137
+PORT = int(os.environ.get('PORT', '8137'))
 
 
 class NoCacheHandler(SimpleHTTPRequestHandler):
@@ -22,6 +23,12 @@ class DualStackServer(ThreadingHTTPServer):
 
 
 if __name__ == '__main__':
-    with DualStackServer(('::', PORT), NoCacheHandler) as httpd:
-        print(f'주사위 성채 서버 실행 중: http://localhost:{PORT}')
+    try:
+        httpd = DualStackServer(('::', PORT), NoCacheHandler)
+    except OSError:
+        httpd = ThreadingHTTPServer(('0.0.0.0', PORT), NoCacheHandler)
+    print(f'주사위 성채 서버 실행 중: http://localhost:{PORT}')
+    try:
         httpd.serve_forever()
+    finally:
+        httpd.server_close()

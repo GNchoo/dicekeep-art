@@ -31,12 +31,12 @@ const MAX_LVL = 3;
 
 // 주사위 눈(1~6) = 타워 종류. 눈이 높을수록 강력!
 const TOWER_DEFS = {
-  1: { name: '궁수 주사위', desc: '빠른 단일 사격',   dmg: 8,  rate: 0.50, range: 150, proj: 'arrow',      pspd: 540, color: '#9fd463', topper: 'arrow' },
-  2: { name: '대포 주사위', desc: '광역 포격',        dmg: 22, rate: 1.60, range: 135, proj: 'shell',      pspd: 300, splash: 60, color: '#e0862c', topper: 'shell' },
-  3: { name: '마법 주사위', desc: '강력한 마법탄',    dmg: 24, rate: 0.95, range: 165, proj: 'bolt',       pspd: 430, color: '#b78bff', topper: 'bolt' },
-  4: { name: '서리 주사위', desc: '적을 둔화',        dmg: 8,  rate: 0.80, range: 140, proj: 'frostShard', pspd: 400, slow: true, color: '#7fd4ff', topper: 'frostShard' },
-  5: { name: '전격 주사위', desc: '연쇄 전격',        dmg: 16, rate: 1.10, range: 150, chain: true, color: '#ffe86b', topper: 'spark' },
-  6: { name: '폭군 주사위', desc: '최강! 폭발 주사위 투척', dmg: 40, rate: 1.25, range: 175, proj: 'die6', pspd: 340, splash: 55, color: '#ff5555', topper: 'die6' },
+  1: { name: '궁수 주사위', desc: '속사 레이저',        dmg: 8,  rate: 0.50, range: 150, laser: true,                 color: '#9fd463', topper: 'laserMuzzle' },
+  2: { name: '대포 주사위', desc: '쌍포 광역 포격',     dmg: 22, rate: 1.60, range: 135, proj: 'shell',      pspd: 300, splash: 60, color: '#e0862c', topper: 'muzzleFlash' },
+  3: { name: '마법 주사위', desc: '자수정 마력탄',      dmg: 24, rate: 0.95, range: 165, proj: 'bolt',       pspd: 430, color: '#b78bff', topper: 'bolt' },
+  4: { name: '서리 주사위', desc: '사방 냉기 둔화',     dmg: 8,  rate: 0.80, range: 140, proj: 'frostShard', pspd: 400, slow: true, color: '#7fd4ff', topper: 'frostShard' },
+  5: { name: '전격 주사위', desc: '연쇄 번개',          dmg: 16, rate: 1.10, range: 150, chain: true, color: '#ffe86b', topper: 'spark' },
+  6: { name: '폭군 주사위', desc: '최강! 폭발 주사위 투척', dmg: 40, rate: 1.25, range: 175, proj: 'dieBomb', pspd: 340, splash: 55, color: '#ff5555', topper: 'dieBomb' },
 };
 const LVL_DMG   = [1, 1.6, 2.4];
 const LVL_RANGE = [0, 12, 24];
@@ -78,10 +78,17 @@ const SRCS = {
   gold: 'ui/gold.png', heart: 'ui/heart.png',
   d1: 'dice/dice-1.png', d2: 'dice/dice-2.png', d3: 'dice/dice-3.png',
   d4: 'dice/dice-4.png', d5: 'dice/dice-5.png', d6: 'dice/dice-6.png',
+  t1: 'towers/die-1.png', t2: 'towers/die-2.png', t3: 'towers/die-3.png',
+  t4: 'towers/die-4.png', t5: 'towers/die-5.png', t6: 'towers/die-6.png',
   miteWalk: 'enemies/mite-walk-2x2.png', runnerWalk: 'enemies/runner-walk-2x2.png',
   huskWalk: 'enemies/husk-walk-2x2.png', bossWalk: 'enemies/boss-walk-2x2.png',
   arrow: 'vfx/arrow.png', shell: 'vfx/shell.png', bolt: 'vfx/bolt.png',
   frostShard: 'vfx/frost-shard.png', spark: 'vfx/spark.png', impact: 'vfx/impact-2x2.png',
+  laserBeam: 'vfx/laser-beam.png', laserMuzzle: 'vfx/laser-muzzle.png',
+  muzzleFlash: 'vfx/muzzle-flash.png', cannonBlast: 'vfx/cannon-blast-2x2.png',
+  arcaneBurst: 'vfx/arcane-burst-2x2.png', frostBurst: 'vfx/frost-burst-2x2.png',
+  lightningArc: 'vfx/lightning-arc.png', dieBomb: 'vfx/die-bomb.png',
+  dieExplode: 'vfx/die-explode-2x2.png',
 };
 const A = {};
 let corsBlocked = false;
@@ -218,7 +225,10 @@ async function loadAssets(onProgress) {
     imgs[k] = await loadImage(SRCS[k]);
     onProgress(++done / keys.length * 0.6);
   }));
-  const sheets = ['miteWalk', 'runnerWalk', 'huskWalk', 'bossWalk', 'impact'];
+  const sheets = [
+    'miteWalk', 'runnerWalk', 'huskWalk', 'bossWalk', 'impact',
+    'cannonBlast', 'arcaneBurst', 'frostBurst', 'dieExplode',
+  ];
   const raw = ['map', 'keyart'];
   let pi = 0;
   for (const k of keys) {
@@ -236,52 +246,61 @@ async function loadAssets(onProgress) {
 
 const towerSprites = {};
 const TS_W = 116, TS_H = 126, TS_CX = 58, TS_BASE_Y = 104; // 받침 중심 위치
+const TOWER_DRAW_H = 118;
+
+function compositeFallback(f) {
+  const def = TOWER_DEFS[f];
+  const cv = document.createElement('canvas');
+  cv.width = TS_W; cv.height = TS_H;
+  const g = cv.getContext('2d');
+  g.fillStyle = '#242019';
+  g.beginPath(); g.ellipse(TS_CX, TS_BASE_Y + 6, 40, 16, 0, 0, Math.PI * 2); g.fill();
+  g.fillStyle = '#3b342a';
+  g.fillRect(TS_CX - 40, TS_BASE_Y - 2, 80, 8);
+  const grad = g.createRadialGradient(TS_CX - 8, TS_BASE_Y - 8, 4, TS_CX, TS_BASE_Y - 2, 42);
+  grad.addColorStop(0, '#6a6152');
+  grad.addColorStop(0.72, '#4c4438');
+  grad.addColorStop(1, '#312b22');
+  g.fillStyle = grad;
+  g.beginPath(); g.ellipse(TS_CX, TS_BASE_Y - 2, 40, 16, 0, 0, Math.PI * 2); g.fill();
+  g.strokeStyle = 'rgba(15,12,9,0.85)';
+  g.lineWidth = 2;
+  g.stroke();
+  g.save();
+  g.strokeStyle = def.color;
+  g.globalAlpha = 0.55;
+  g.lineWidth = 2;
+  g.setLineDash([7, 5]);
+  g.beginPath(); g.ellipse(TS_CX, TS_BASE_Y - 2, 31, 12, 0, 0, Math.PI * 2); g.stroke();
+  g.restore();
+  const sp = A.dice[f - 1];
+  const dw = 58, dh = dw * sp.h / sp.w;
+  g.save();
+  g.translate(TS_CX, TS_BASE_Y - 6);
+  g.rotate(-0.05);
+  g.shadowColor = def.color;
+  g.shadowBlur = 22;
+  g.drawImage(sp.cv, -dw / 2, -dh, dw, dh);
+  g.shadowBlur = 10;
+  g.drawImage(sp.cv, -dw / 2, -dh, dw, dh);
+  g.restore();
+  return { cv, w: TS_W, h: TS_H, cx: TS_CX, baseY: TS_BASE_Y };
+}
+
 function buildTowerSprites() {
   for (let f = 1; f <= 6; f++) {
-    const def = TOWER_DEFS[f];
-    const cv = document.createElement('canvas');
-    cv.width = TS_W; cv.height = TS_H;
-    const g = cv.getContext('2d');
-
-    // 돌 받침 (아랫면)
-    g.fillStyle = '#242019';
-    g.beginPath(); g.ellipse(TS_CX, TS_BASE_Y + 6, 40, 16, 0, 0, Math.PI * 2); g.fill();
-    // 받침 옆면
-    g.fillStyle = '#3b342a';
-    g.fillRect(TS_CX - 40, TS_BASE_Y - 2, 80, 8);
-    // 받침 윗면
-    const grad = g.createRadialGradient(TS_CX - 8, TS_BASE_Y - 8, 4, TS_CX, TS_BASE_Y - 2, 42);
-    grad.addColorStop(0, '#6a6152');
-    grad.addColorStop(0.72, '#4c4438');
-    grad.addColorStop(1, '#312b22');
-    g.fillStyle = grad;
-    g.beginPath(); g.ellipse(TS_CX, TS_BASE_Y - 2, 40, 16, 0, 0, Math.PI * 2); g.fill();
-    g.strokeStyle = 'rgba(15,12,9,0.85)';
-    g.lineWidth = 2;
-    g.stroke();
-    // 원소 룬 링
-    g.save();
-    g.strokeStyle = def.color;
-    g.globalAlpha = 0.55;
-    g.lineWidth = 2;
-    g.setLineDash([7, 5]);
-    g.beginPath(); g.ellipse(TS_CX, TS_BASE_Y - 2, 31, 12, 0, 0, Math.PI * 2); g.stroke();
-    g.restore();
-
-    // 주사위 본체 (원소 글로우 2겹)
-    const sp = A.dice[f - 1];
-    const dw = 58, dh = dw * sp.h / sp.w;
-    g.save();
-    g.translate(TS_CX, TS_BASE_Y - 6);
-    g.rotate(-0.05);
-    g.shadowColor = def.color;
-    g.shadowBlur = 22;
-    g.drawImage(sp.cv, -dw / 2, -dh, dw, dh);
-    g.shadowBlur = 10;
-    g.drawImage(sp.cv, -dw / 2, -dh, dw, dh);
-    g.restore();
-
-    towerSprites[f] = { cv, w: TS_W, h: TS_H };
+    const art = A['t' + f];
+    if (art && art.cv && art.h > 8) {
+      const s = TOWER_DRAW_H / art.h;
+      const w = Math.max(1, Math.round(art.w * s));
+      const h = TOWER_DRAW_H;
+      const cv = document.createElement('canvas');
+      cv.width = w; cv.height = h;
+      cv.getContext('2d').drawImage(art.cv, 0, 0, w, h);
+      towerSprites[f] = { cv, w, h, cx: w / 2, baseY: h - 7, dedicated: true };
+    } else {
+      towerSprites[f] = compositeFallback(f);
+    }
   }
 }
 
@@ -958,10 +977,18 @@ function towerFire(t, dt) {
   }
   if (!best) return;
   t.cd = towerRate(t);
+  t.kick = 1;
   const dmg = towerDmg(t);
   const from = { x: t.x, y: t.y - 64 };
 
-  if (t.def.chain) {
+  if (t.def.laser) {
+    const tp = posAt(best.dist);
+    const to = { x: tp.x, y: tp.y - best.def.size * 0.45 };
+    damageEnemy(best, dmg);
+    S.beams.push({ pts: [from, to], t: 0, dur: 0.11, style: 'laser' });
+    S.fxs.push({ kind: 'laserMuzzle', x: from.x, y: from.y, t: 0, dur: 0.1, size: 28 });
+    SFX.t1();
+  } else if (t.def.chain) {
     const maxChain = 2 + t.lvl;
     const hitList = [best];
     let cur = best;
@@ -986,7 +1013,7 @@ function towerFire(t, dt) {
       dd *= 0.75;
       S.fxs.push({ kind: 'spark', x: p.x, y: p.y - e.def.size * 0.4, t: 0, dur: 0.16, size: 34 });
     }
-    S.beams.push({ pts, t: 0, dur: 0.14 });
+    S.beams.push({ pts, t: 0, dur: 0.16, style: 'lightning' });
     SFX.t5();
   } else {
     S.projs.push({
@@ -995,8 +1022,15 @@ function towerFire(t, dt) {
       slow: t.def.slow ? { pct: 0.26 + 0.06 * t.lvl, dur: 1.8 } : null,
       rot: 0, spin: 0,
     });
+    if (t.face === 2) {
+      S.fxs.push({ kind: 'muzzleFlash', x: from.x, y: from.y, t: 0, dur: 0.12, size: 38 });
+    }
     SFX['t' + t.face]();
   }
+}
+
+function sheetHit(kind, x, y, size, dur) {
+  S.fxs.push({ kind, x, y, t: 0, dur: dur || 0.32, size });
 }
 
 function projHit(p) {
@@ -1008,13 +1042,19 @@ function projHit(p) {
       const ep = posAt(e.dist);
       if (Math.hypot(ep.x - hx, ep.y - hy + e.def.size * 0.4) <= p.splash) damageEnemy(e, p.dmg);
     }
-    S.fxs.push({ kind: 'impact', x: hx, y: hy, t: 0, dur: 0.32, size: p.splash * 2 });
+    if (p.kind === 'dieBomb' || p.kind === 'die6') {
+      sheetHit('dieExplode', hx, hy, p.splash * 2.2, 0.4);
+    } else {
+      sheetHit('cannonBlast', hx, hy, p.splash * 2, 0.34);
+    }
   } else {
     damageEnemy(p.tgt, p.dmg);
     if (p.slow && !p.tgt.dead) {
       p.tgt.slowT = Math.max(p.tgt.slowT, p.slow.dur);
       p.tgt.slowPct = Math.max(p.tgt.slowPct, p.slow.pct);
-      S.fxs.push({ kind: 'frostHit', x: hx, y: hy, t: 0, dur: 0.25, size: 30 });
+      sheetHit('frostBurst', hx, hy, 48, 0.3);
+    } else if (p.kind === 'bolt') {
+      sheetHit('arcaneBurst', hx, hy, 46, 0.3);
     } else {
       S.fxs.push({ kind: 'hit', x: hx, y: hy, t: 0, dur: 0.15, size: 16 });
     }
@@ -1216,9 +1256,16 @@ function draw() {
     if (ent.kind === 't') {
       const t = ent.o;
       const sp = towerSprites[t.face];
-      // 받침 중심(TS_CX, TS_BASE_Y)이 (t.x, t.y+6)에 오도록
-      ctx.drawImage(sp.cv, t.x - TS_CX, t.y + 6 - TS_BASE_Y);
-      drawTopper(t);
+      const cx = sp.cx ?? TS_CX, by = sp.baseY ?? TS_BASE_Y;
+      const kick = t.kick || 0;
+      if (t.kick > 0) t.kick = Math.max(0, t.kick - 0.08);
+      ctx.save();
+      ctx.translate(t.x, t.y + 6);
+      const sc = 1 - kick * 0.04;
+      ctx.scale(sc, sc);
+      ctx.drawImage(sp.cv, -cx, -by);
+      ctx.restore();
+      if (!sp.dedicated) drawTopper(t);
       // 레벨 표시 (받침 앞의 금색 점)
       for (let i = 0; i < MAX_LVL; i++) {
         ctx.beginPath();
@@ -1266,15 +1313,15 @@ function draw() {
   for (const p of S.projs) {
     ctx.save();
     ctx.translate(p.x, p.y);
-    if (p.kind === 'die6') {
-      const sp = A.dice[5];
-      const s = 22 / sp.w;
+    if (p.kind === 'dieBomb' || p.kind === 'die6') {
+      const sp = A.dieBomb || A.dice[5];
+      const s = 26 / sp.w;
       ctx.rotate(p.spin);
       ctx.shadowColor = '#ff5555'; ctx.shadowBlur = 8;
-      ctx.drawImage(sp.cv, -11, -sp.h * s / 2, 22, sp.h * s);
+      ctx.drawImage(sp.cv, -13, -sp.h * s / 2, 26, sp.h * s);
     } else {
       const sp = A[p.kind];
-      const len = p.kind === 'arrow' ? 36 : p.kind === 'shell' ? 20 : 26;
+      const len = p.kind === 'arrow' ? 36 : p.kind === 'shell' ? 22 : 26;
       const s = len / sp.w;
       ctx.rotate(p.rot);
       ctx.drawImage(sp.cv, -len / 2, -sp.h * s / 2, len, sp.h * s);
@@ -1282,32 +1329,66 @@ function draw() {
     ctx.restore();
   }
 
-  // 전격 빔
+  // 레이저 / 전격 빔
   for (const b of S.beams) {
     const alpha = 1 - b.t / b.dur;
-    for (let pass = 0; pass < 2; pass++) {
+    if (b.style === 'laser' && A.laserBeam) {
+      const a = b.pts[0], c = b.pts[b.pts.length - 1];
+      const dx = c.x - a.x, dy = c.y - a.y;
+      const len = Math.hypot(dx, dy) || 1;
+      const sp = A.laserBeam;
       ctx.save();
-      ctx.strokeStyle = pass === 0 ? `rgba(120,200,255,${alpha * 0.55})` : `rgba(255,255,255,${alpha * 0.9})`;
-      ctx.lineWidth = pass === 0 ? 5 : 1.8;
-      ctx.beginPath();
-      for (let i = 0; i < b.pts.length - 1; i++) {
-        const a = b.pts[i], c = b.pts[i + 1];
-        ctx.moveTo(a.x, a.y);
-        const midx = (a.x + c.x) / 2 + (Math.random() - 0.5) * 14;
-        const midy = (a.y + c.y) / 2 + (Math.random() - 0.5) * 14;
-        ctx.lineTo(midx, midy);
-        ctx.lineTo(c.x, c.y);
-      }
-      ctx.stroke();
+      ctx.globalAlpha = alpha;
+      ctx.translate(a.x, a.y);
+      ctx.rotate(Math.atan2(dy, dx));
+      const hh = 14;
+      ctx.drawImage(sp.cv, 0, -hh / 2, len, hh);
       ctx.restore();
+    } else {
+      for (let pass = 0; pass < 2; pass++) {
+        ctx.save();
+        ctx.strokeStyle = pass === 0 ? `rgba(120,200,255,${alpha * 0.55})` : `rgba(255,255,220,${alpha * 0.9})`;
+        ctx.lineWidth = pass === 0 ? 5 : 1.8;
+        ctx.beginPath();
+        for (let i = 0; i < b.pts.length - 1; i++) {
+          const a = b.pts[i], c = b.pts[i + 1];
+          ctx.moveTo(a.x, a.y);
+          const midx = (a.x + c.x) / 2 + (Math.random() - 0.5) * 14;
+          const midy = (a.y + c.y) / 2 + (Math.random() - 0.5) * 14;
+          ctx.lineTo(midx, midy);
+          ctx.lineTo(c.x, c.y);
+        }
+        ctx.stroke();
+        ctx.restore();
+      }
+      if (A.lightningArc) {
+        for (let i = 0; i < b.pts.length - 1; i++) {
+          const a = b.pts[i], c = b.pts[i + 1];
+          const dx = c.x - a.x, dy = c.y - a.y;
+          const len = Math.hypot(dx, dy) || 1;
+          const sp = A.lightningArc;
+          ctx.save();
+          ctx.globalAlpha = alpha * 0.85;
+          ctx.translate(a.x, a.y);
+          ctx.rotate(Math.atan2(dy, dx));
+          const hh = 22;
+          ctx.drawImage(sp.cv, 0, -hh / 2, len, hh);
+          ctx.restore();
+        }
+      }
     }
   }
 
   // 이펙트
   for (const f of S.fxs) {
     const pr = f.t / f.dur;
-    if (f.kind === 'impact') {
-      const fr = A.impact[Math.min(3, Math.floor(pr * 4))];
+    const sheetMap = {
+      impact: A.impact, cannonBlast: A.cannonBlast, arcaneBurst: A.arcaneBurst,
+      frostBurst: A.frostBurst, dieExplode: A.dieExplode,
+    };
+    if (sheetMap[f.kind]) {
+      const frames = sheetMap[f.kind];
+      const fr = frames[Math.min(3, Math.floor(pr * 4))];
       const s = f.size / Math.max(fr.w, fr.h);
       ctx.save();
       ctx.globalAlpha = 1 - pr * 0.4;
@@ -1346,6 +1427,15 @@ function draw() {
       ctx.lineWidth = 3 * (1 - pr) + 1;
       ctx.beginPath(); ctx.arc(f.x, f.y, 8 + pr * f.size, 0, Math.PI * 2); ctx.stroke();
       ctx.restore();
+    } else if (f.kind === 'laserMuzzle' || f.kind === 'muzzleFlash') {
+      const sp = f.kind === 'laserMuzzle' ? A.laserMuzzle : A.muzzleFlash;
+      if (sp) {
+        const s = f.size / Math.max(sp.w, sp.h) * (1 + pr * 0.4);
+        ctx.save();
+        ctx.globalAlpha = 1 - pr;
+        ctx.drawImage(sp.cv, f.x - sp.w * s / 2, f.y - sp.h * s / 2, sp.w * s, sp.h * s);
+        ctx.restore();
+      }
     } else { // hit
       ctx.save();
       ctx.globalAlpha = (1 - pr) * 0.9;
