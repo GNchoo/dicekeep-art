@@ -94,10 +94,15 @@ const A = {};
 let corsBlocked = false;
 
 function loadImage(src) {
-  return new Promise((res, rej) => {
+  return new Promise((res) => {
     const img = new Image();
     img.onload = () => res(img);
-    img.onerror = () => rej(new Error('로드 실패: ' + src));
+    img.onerror = () => {
+      console.warn('asset missing', src);
+      const cv = document.createElement('canvas');
+      cv.width = 8; cv.height = 8;
+      res(cv);
+    };
     img.src = src;
   });
 }
@@ -1939,6 +1944,7 @@ $('mute-btn').addEventListener('click', () => {
 });
 
 $('ov-btn').addEventListener('click', () => {
+  if (S.phase === 'loading') return;
   audio();
   if (S.phase === 'over' || S.phase === 'win') { location.reload(); return; }
   overlayEl.classList.add('hidden');
@@ -1979,26 +1985,29 @@ function drawLoading(pr) {
 
 (async () => {
   drawLoading(0);
+  $('ov-btn').disabled = true;
+  $('ov-btn').textContent = '불러오는 중...';
   try {
     await loadAssets(pr => drawLoading(pr));
   } catch (e) {
-    ctx.fillStyle = '#0d0b09'; ctx.fillRect(0, 0, W, H);
-    ctx.fillStyle = '#ff9f9f'; ctx.font = '18px sans-serif'; ctx.textAlign = 'center';
-    ctx.fillText('에셋 로드 실패: ' + e.message, W / 2, H / 2);
-    return;
+    console.warn(e);
   }
-  fixDice3();
-  buildTowerSprites();
-  buildFaceTex();
-  diceURLs = A.dice.map((d, i) => thumbURL(d, 96, SRCS['d' + (i + 1)]));
-  $('icon-gold').src = thumbURL(A.gold, 44, SRCS.gold);
-  $('icon-heart').src = thumbURL(A.heart, 44, SRCS.heart);
-  overlayEl.style.backgroundImage = `linear-gradient(rgba(5,4,3,.45), rgba(5,4,3,.7)), url('${SRCS.keyart}')`;
+  try { fixDice3(); } catch (e) { console.warn(e); }
+  try { buildTowerSprites(); } catch (e) { console.warn(e); }
+  try { buildFaceTex(); } catch (e) { console.warn(e); }
+  try {
+    diceURLs = A.dice.map((d, i) => thumbURL(d, 96, SRCS['d' + (i + 1)]));
+    $('icon-gold').src = A.gold ? thumbURL(A.gold, 44, SRCS.gold) : SRCS.gold;
+    $('icon-heart').src = A.heart ? thumbURL(A.heart, 44, SRCS.heart) : SRCS.heart;
+    overlayEl.style.backgroundImage = `linear-gradient(rgba(5,4,3,.45), rgba(5,4,3,.7)), url('${SRCS.keyart}')`;
+  } catch (e) { console.warn(e); }
   if (corsBlocked) {
     $('ov-desc').innerHTML += '<br><span style="color:#ff9f9f">⚠ file:// 로 열면 이미지 배경 보정이 생략됩니다. start.bat 또는 로컬 서버 사용을 권장합니다.</span>';
   }
   S.phase = 'title';
-  window.DK = S; // 디버그/테스트용 상태 노출
+  $('ov-btn').disabled = false;
+  $('ov-btn').textContent = '게임 시작';
+  window.DK = S;
   window.DKDIE = DIE;
   window.DKSLOT = SLOT;
   window.DKthrow = throwDie;
