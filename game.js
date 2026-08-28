@@ -1200,8 +1200,10 @@ function draw() {
   for (let i = 0; i < SPOTS.length; i++) {
     const [sx, sy] = SPOTS[i];
     const occupied = towerAt(i);
-    const hover = Math.hypot(S.mouse.x - sx, S.mouse.y - sy) < SPOT_R;
-    if (occupied && !hover) continue;
+    const hover = Math.hypot(S.mouse.x - sx, S.mouse.y - sy) < SPOT_R
+      || (DRAG.active && DRAG.overSpot === i);
+    const dragging = DRAG.active && S.heldDie;
+    if (occupied && !hover && !dragging) continue;
     ctx.save();
     ctx.translate(sx, sy);
     ctx.scale(1, 0.5);
@@ -1227,7 +1229,7 @@ function draw() {
   if (S.selTower) {
     rangePrev = { x: S.selTower.x, y: S.selTower.y, r: towerRange(S.selTower), c: S.selTower.def.color };
   } else if (S.heldDie) {
-    const idx = spotAt(S.mouse.x, S.mouse.y);
+    const idx = DRAG.active ? DRAG.overSpot : spotAt(S.mouse.x, S.mouse.y);
     if (idx >= 0 && !towerAt(idx)) {
       rangePrev = { x: SPOTS[idx][0], y: SPOTS[idx][1], r: TOWER_DEFS[S.heldDie].range, c: TOWER_DEFS[S.heldDie].color };
     }
@@ -1306,6 +1308,33 @@ function draw() {
         ctx.fillStyle = ratio > 0.5 ? '#6fd06f' : ratio > 0.25 ? '#e0c04a' : '#d05050';
         ctx.fillRect(bx, by, bw * ratio, bh);
       }
+    }
+  }
+
+  if (DRAG.active && S.heldDie && DRAG.overSpot >= 0) {
+    const sp = towerSprites[S.heldDie];
+    if (sp) {
+      const idx = DRAG.overSpot;
+      let gx = S.mouse.x, gy = S.mouse.y;
+      if (idx >= 0) { gx = SPOTS[idx][0]; gy = SPOTS[idx][1]; }
+      const cx = sp.cx ?? TS_CX, by = sp.baseY ?? TS_BASE_Y;
+      const mode = ghostMode(idx);
+      ctx.save();
+      ctx.globalAlpha = 0.28 + 0.45 * DRAG.morph;
+      ctx.translate(gx, gy + 6);
+      ctx.drawImage(sp.cv, -cx, -by);
+      ctx.restore();
+      ctx.save();
+      ctx.translate(gx, gy + 6);
+      ctx.scale(1, 0.5);
+      ctx.beginPath(); ctx.arc(0, 0, SPOT_R + 2, 0, Math.PI * 2);
+      ctx.strokeStyle = mode === 'ok' ? 'rgba(140,240,170,0.95)'
+        : mode === 'merge' ? 'rgba(140,210,255,0.95)'
+        : mode === 'bad' ? 'rgba(255,110,90,0.95)'
+        : 'rgba(232,214,150,0.7)';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+      ctx.restore();
     }
   }
 
@@ -1512,11 +1541,11 @@ function syncUI() {
     diceSlot.classList.add('has-die');
     diceImg.src = diceURLs[S.heldDie - 1];
     diceImg.classList.remove('hidden'); diceQ.classList.add('hidden');
-    diceSlot.title = def.name + ' — 빈 지점에 배치하세요';
+    diceSlot.title = def.name + ' — 필드로 끌어다 놓아 설치';
     heldInfo.classList.remove('hidden');
     heldInfo.style.setProperty('--elem', def.color);
     $('held-name').textContent = def.name;
-    $('held-desc').textContent = def.desc + ' · 빈 지점을 클릭!';
+    $('held-desc').textContent = def.desc + ' · 끌어다 건설 지점에 놓으세요';
   } else {
     diceSlot.classList.remove('has-die');
     diceImg.classList.add('hidden');
@@ -1570,11 +1599,151 @@ function canvasPos(ev) {
   const r = canvas.getBoundingClientRect();
   return { x: (ev.clientX - r.left) * W / r.width, y: (ev.clientY - r.top) * H / r.height };
 }
-function spotAt(x, y) {
+function canvasToClient(cx, cy) {
+  const r = canvas.getBoundingClientRect();
+  return { x: r.left + cx * r.width / W, y: r.top + cy * r.height / H };
+}
+function spotAt(x, y, extra) {
+  const lim = SPOT_R + (extra == null ? 6 : extra);
+  let best = -1, bd = lim;
   for (let i = 0; i < SPOTS.length; i++) {
-    if (Math.hypot(x - SPOTS[i][0], y - SPOTS[i][1]) < SPOT_R + 6) return i;
+    const d = Math.hypot(x - SPOTS[i][0], y - SPOTS[i][1]);
+    if (d < bd) { bd = d; best = i; }
   }
-  return -1;
+  return best;
+}
+
+function tryPlace(idx) {
+  if (!S.heldDie || idx < 0) return false;
+  const existing = towerAt(idx);
+  const def = TOWER_DEFS[S.heldDie];
+  const [sx, sy] = SPOTS[idx];
+  if (!existing) {
+    S.towers.push({ face: S.heldDie, def, lvl: 1, spot: idx, x: sx, y: sy, cd: 0 });
+    S.fxs.push({ kind: 'ring', x: sx, y: sy - 30, t: 0, dur: 0.5, size: 70, color: def.color });
+    S.fxs.push({ kind: 'impact', x: sx, y: sy - 30, t: 0, dur: 0.28, size: 70 });
+    S.texts.push({ str: def.name + '!', x: sx, y: sy - 90, t: 0, color: def.color });
+    S.heldDie = 0;
+    SFX.place();
+  } else if (existing.face === S.heldDie) {
+    if (existing.lvl < MAX_LVL) {
+      existing.lvl++;
+      S.heldDie = 0;
+      S.fxs.push({ kind: 'ring', x: existing.x, y: existing.y - 40, t: 0, dur: 0.5, size: 80, color: existing.def.color });
+      S.texts.push({ str: `Lv${existing.lvl} 강화!`, x: existing.x, y: existing.y - 95, t: 0, color: '#a0e8ff' });
+      SFX.merge();
+    } else {
+      S.texts.push({ str: '이미 최대 레벨!', x: existing.x, y: existing.y - 95, t: 0, color: '#ff9f9f' });
+      SFX.deny();
+      return false;
+    }
+  } else {
+    S.texts.push({ str: `${existing.face} 눈에는 ${S.heldDie} 눈을 올릴 수 없어요`, x: sx, y: sy - 30, t: 0, color: '#ff9f9f' });
+    SFX.deny();
+    return false;
+  }
+  S.selTower = null;
+  syncUI();
+  return true;
+}
+
+const DRAG = {
+  active: false, face: 0, morph: 0,
+  startX: 0, startY: 0, x: 0, y: 0,
+  overSpot: -1, pid: 0,
+};
+const ghostEl = $('place-ghost');
+const ghostDie = $('ghost-die');
+const ghostTower = $('ghost-tower');
+
+function ghostMode(idx) {
+  if (idx < 0) return '';
+  const ex = towerAt(idx);
+  if (!ex) return 'ok';
+  if (ex.face === DRAG.face && ex.lvl < MAX_LVL) return 'merge';
+  return 'bad';
+}
+
+function updateGhost(clientX, clientY) {
+  DRAG.x = clientX; DRAG.y = clientY;
+  const stage = $('stage').getBoundingClientRect();
+  const overCanvas = clientX >= stage.left && clientX <= stage.right && clientY >= stage.top && clientY <= stage.bottom;
+  const dist = Math.hypot(clientX - DRAG.startX, clientY - DRAG.startY);
+  DRAG.morph = overCanvas ? 1 : Math.min(1, dist / 90);
+  let gx = clientX, gy = clientY;
+  DRAG.overSpot = -1;
+  if (overCanvas) {
+    const p = canvasPos({ clientX, clientY });
+    S.mouse = p;
+    const idx = spotAt(p.x, p.y, 22);
+    DRAG.overSpot = idx;
+    if (idx >= 0) {
+      const [sx, sy] = SPOTS[idx];
+      const c = canvasToClient(sx, sy - 8);
+      gx = c.x; gy = c.y;
+    }
+  }
+  ghostEl.style.opacity = DRAG.overSpot >= 0 ? '0' : '1';
+  const mode = ghostMode(DRAG.overSpot);
+  ghostEl.style.left = gx + 'px';
+  ghostEl.style.top = gy + 'px';
+  ghostDie.style.opacity = String(1 - DRAG.morph);
+  ghostTower.style.opacity = String(DRAG.morph);
+  const sc = 0.78 + DRAG.morph * 0.28;
+  ghostEl.style.transform = `translate(-50%, -78%) scale(${sc})`;
+  ghostEl.classList.toggle('show', dist > 8 || overCanvas);
+  ghostEl.classList.toggle('ok', mode === 'ok');
+  ghostEl.classList.toggle('merge', mode === 'merge');
+  ghostEl.classList.toggle('bad', mode === 'bad');
+}
+
+function startPlaceDrag(ev) {
+  if (S.phase !== 'playing' || !S.heldDie || SLOT.active) return;
+  DRAG.active = true;
+  DRAG.face = S.heldDie;
+  DRAG.morph = 0;
+  DRAG.startX = ev.clientX; DRAG.startY = ev.clientY;
+  DRAG.pid = ev.pointerId;
+  DRAG.overSpot = -1;
+  ghostDie.src = diceURLs[S.heldDie - 1] || SRCS['d' + S.heldDie];
+  ghostTower.src = SRCS['t' + S.heldDie];
+  diceSlot.classList.add('dragging');
+  document.body.classList.add('placing');
+  try { diceSlot.setPointerCapture(ev.pointerId); } catch (e) { /* ignore */ }
+  updateGhost(ev.clientX, ev.clientY);
+  ev.preventDefault();
+}
+
+function movePlaceDrag(ev) {
+  if (!DRAG.active) return;
+  updateGhost(ev.clientX, ev.clientY);
+  ev.preventDefault();
+}
+
+function endPlaceDrag(ev) {
+  if (!DRAG.active) return;
+  updateGhost(ev.clientX, ev.clientY);
+  const dist = Math.hypot(ev.clientX - DRAG.startX, ev.clientY - DRAG.startY);
+  const idx = DRAG.overSpot;
+  let placed = false;
+  if (idx >= 0 && dist > 18) placed = tryPlace(idx);
+  if (!placed && dist <= 18) {
+    /* tap on slot — keep die */
+  } else if (!placed) {
+    SFX.deny();
+  }
+  stopPlaceDrag();
+  ev.preventDefault();
+}
+
+function stopPlaceDrag() {
+  DRAG.active = false;
+  DRAG.overSpot = -1;
+  DRAG.morph = 0;
+  ghostEl.classList.remove('show', 'ok', 'merge', 'bad');
+  ghostEl.style.opacity = '1';
+  diceSlot.classList.remove('dragging');
+  document.body.classList.remove('placing');
 }
 
 let suppressClick = false;
@@ -1649,42 +1818,16 @@ canvas.addEventListener('pointercancel', endGrab);
 
 canvas.addEventListener('click', ev => {
   if (suppressClick) { suppressClick = false; return; }
+  if (DRAG.active) return;
   if (S.phase !== 'playing') return;
   const { x, y } = canvasPos(ev);
   const idx = spotAt(x, y);
   if (idx >= 0) {
-    const existing = towerAt(idx);
     if (S.heldDie) {
-      if (!existing) {
-        // 주사위가 타워로 변신!
-        const def = TOWER_DEFS[S.heldDie];
-        S.towers.push({ face: S.heldDie, def, lvl: 1, spot: idx, x: SPOTS[idx][0], y: SPOTS[idx][1], cd: 0 });
-        S.fxs.push({ kind: 'ring', x: SPOTS[idx][0], y: SPOTS[idx][1] - 30, t: 0, dur: 0.5, size: 70, color: def.color });
-        S.fxs.push({ kind: 'impact', x: SPOTS[idx][0], y: SPOTS[idx][1] - 30, t: 0, dur: 0.28, size: 70 });
-        S.texts.push({ str: def.name + '!', x: SPOTS[idx][0], y: SPOTS[idx][1] - 90, t: 0, color: def.color });
-        S.heldDie = 0;
-        SFX.place();
-      } else if (existing.face === S.heldDie) {
-        if (existing.lvl < MAX_LVL) {
-          existing.lvl++;
-          S.heldDie = 0;
-          S.fxs.push({ kind: 'ring', x: existing.x, y: existing.y - 40, t: 0, dur: 0.5, size: 80, color: existing.def.color });
-          S.texts.push({ str: `Lv${existing.lvl} 강화!`, x: existing.x, y: existing.y - 95, t: 0, color: '#a0e8ff' });
-          SFX.merge();
-        } else {
-          S.texts.push({ str: '이미 최대 레벨!', x: existing.x, y: existing.y - 95, t: 0, color: '#ff9f9f' });
-          SFX.deny();
-        }
-      } else {
-        S.texts.push({ str: `${existing.face} 눈에는 ${S.heldDie} 눈을 올릴 수 없어요`, x, y: y - 30, t: 0, color: '#ff9f9f' });
-        SFX.deny();
-        return;
-      }
-      S.selTower = null;
-      syncUI();
+      tryPlace(idx);
       return;
     }
-    S.selTower = existing;
+    S.selTower = towerAt(idx);
     syncUI();
     return;
   }
@@ -1692,9 +1835,24 @@ canvas.addEventListener('click', ev => {
   syncUI();
 });
 
+diceSlot.addEventListener('pointerdown', startPlaceDrag);
+diceSlot.addEventListener('pointermove', movePlaceDrag);
+diceSlot.addEventListener('pointerup', endPlaceDrag);
+diceSlot.addEventListener('pointercancel', ev => { if (DRAG.active) { stopPlaceDrag(); ev.preventDefault(); } });
+window.addEventListener('pointermove', ev => {
+  if (DRAG.active && ev.pointerId === DRAG.pid) movePlaceDrag(ev);
+}, { passive: false });
+window.addEventListener('pointerup', ev => {
+  if (DRAG.active && ev.pointerId === DRAG.pid) endPlaceDrag(ev);
+}, { passive: false });
+
 document.addEventListener('keydown', ev => {
   if (ev.key === 'r' || ev.key === 'R' || ev.key === 'ㄱ') rollByButton();
-  else if (ev.key === 'Escape') { S.selTower = null; syncUI(); }
+  else if (ev.key === 'Escape') {
+    if (DRAG.active) stopPlaceDrag();
+    S.selTower = null;
+    syncUI();
+  }
 });
 
 rollBtn.addEventListener('click', rollByButton);

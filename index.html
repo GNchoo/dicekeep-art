@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>주사위 성채 (Dicekeep)</title>
-<link rel="stylesheet" href="style.css?v=3" />
+<link rel="stylesheet" href="style.css?v=4" />
 <link rel="icon" href="ui/gold.png" />
 </head>
 <body>
@@ -25,10 +25,11 @@
           주사위를 <b>잡아서 휙 던지거나</b>, 버튼으로 <b>빠르게</b> 굴리세요.<br>
           나온 눈(1~6)에 해당하는 <b>주사위 타워</b>가 생성됩니다. <b>6눈이 가장 강력!</b><br>
           같은 눈의 타워 위에 주사위를 올리면 <b>레벨 업</b> (최대 Lv3).<br>
+          굴린 주사위를 <b>끌어다 건설 지점에 놓으면</b> 그 눈의 타워로 변신합니다.<br>
           포탈에서 몰려오는 적이 크리스탈에 닿기 전에 막아내세요!
         </p>
         <button id="ov-btn">게임 시작</button>
-        <p class="hint">주사위 드래그 후 놓기: 물리 던지기 · R/버튼: 빠른 굴리기 · 클릭: 배치/선택 · ESC: 취소</p>
+        <p class="hint">필드 주사위 휙 던지기 · R/버튼: 빠른 굴리기 · 굴린 주사위를 끌어다 놓기: 설치</p>
       </div>
     </div>
   </div>
@@ -36,7 +37,7 @@
   <div id="hud" class="hidden">
     <div id="dice-panel">
       <div id="dice-slot" title="보유 주사위">
-        <img id="dice-img" class="hidden" alt="">
+        <img id="dice-img" class="hidden" alt="" draggable="false">
         <span id="dice-q">?</span>
         <canvas id="slot-canvas" width="74" height="74" class="hidden"></canvas>
       </div>
@@ -58,6 +59,11 @@
     </div>
   </div>
 </div>
-<script src="game.js?v=3"></script>
+<div id="place-ghost" aria-hidden="true">
+  <img id="ghost-die" alt="">
+  <img id="ghost-tower" alt="">
+  <div id="ghost-ring"></div>
+</div>
+<script src="game.js?v=4"></script>
 </body>
 </html>

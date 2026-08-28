@@ -121,15 +121,29 @@ html, body {
 /* 주사위 패널 */
 #dice-panel { display: flex; align-items: center; gap: 10px; }
 #dice-slot {
-  width: 74px; height: 74px;
+  width: 80px; height: 80px;
   background: rgba(0,0,0,.4);
   border: 2px dashed #6b5636;
   border-radius: 10px;
   display: flex; align-items: center; justify-content: center;
   position: relative;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
-#dice-slot.has-die { border-style: solid; border-color: var(--gold); box-shadow: 0 0 14px rgba(232,182,74,.4); }
-#dice-slot img { width: 58px; height: 58px; object-fit: contain; filter: drop-shadow(0 3px 4px rgba(0,0,0,.6)); }
+#dice-slot.has-die {
+  border-style: solid; border-color: var(--gold);
+  box-shadow: 0 0 14px rgba(232,182,74,.4);
+  cursor: grab;
+}
+#dice-slot.has-die:active, #dice-slot.dragging { cursor: grabbing; }
+#dice-slot.dragging { opacity: .28; }
+#dice-slot img {
+  width: 62px; height: 62px; object-fit: contain;
+  filter: drop-shadow(0 3px 4px rgba(0,0,0,.6));
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
 #slot-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 #dice-slot.rolling { border-style: solid; border-color: var(--gold); box-shadow: 0 0 14px rgba(232,182,74,.45); }
 #dice-slot.pop { animation: pop .32s ease-out; }
@@ -225,3 +239,51 @@ html, body {
   font-size: 13px;
 }
 .mini button:hover { filter: brightness(1.3); }
+
+#place-ghost {
+  position: fixed;
+  left: 0; top: 0;
+  width: 108px; height: 124px;
+  pointer-events: none;
+  z-index: 80;
+  display: none;
+  transform: translate(-50%, -78%);
+  filter: drop-shadow(0 10px 14px rgba(0,0,0,.55));
+}
+#place-ghost.show { display: block; }
+#place-ghost img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: contain;
+  -webkit-user-drag: none;
+}
+#ghost-die { z-index: 1; }
+#ghost-tower { z-index: 2; }
+#ghost-ring {
+  position: absolute;
+  left: 50%; bottom: 6px;
+  width: 54px; height: 22px;
+  margin-left: -27px;
+  border-radius: 50%;
+  border: 2px solid rgba(232, 214, 150, .85);
+  box-shadow: 0 0 16px rgba(232, 182, 74, .45);
+  opacity: 0;
+}
+#place-ghost.ok #ghost-ring {
+  opacity: 1;
+  border-color: #8fe8b0;
+  box-shadow: 0 0 18px rgba(80, 220, 140, .55);
+}
+#place-ghost.merge #ghost-ring {
+  opacity: 1;
+  border-color: #8fd4ff;
+  box-shadow: 0 0 18px rgba(100, 190, 255, .55);
+}
+#place-ghost.bad #ghost-ring {
+  opacity: 1;
+  border-color: #ff7a6a;
+  box-shadow: 0 0 18px rgba(220, 70, 60, .5);
+}
+body.placing { cursor: grabbing; touch-action: none; }
+body.placing #game { cursor: grabbing; }
+
