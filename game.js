@@ -1191,6 +1191,52 @@ function drawTopper(t) {
   ctx.restore();
 }
 
+function heldFace() {
+  return (DRAG.active && DRAG.face) || S.heldDie || 0;
+}
+
+function drawMergeHalo(t, sp, hovered) {
+  const cx = sp.cx ?? TS_CX, by = sp.baseY ?? TS_BASE_Y;
+  const pulse = 0.5 + 0.5 * Math.sin(S.time * 7);
+  const col = t.def.color;
+  ctx.save();
+  ctx.translate(t.x, t.y + 6);
+  ctx.save();
+  ctx.scale(1, 0.48);
+  ctx.beginPath();
+  ctx.arc(0, 0, SPOT_R + 10 + pulse * 8, 0, Math.PI * 2);
+  ctx.strokeStyle = hovered ? `rgba(255,236,140,0.98)` : `rgba(255,214,90,${0.55 + pulse * 0.4})`;
+  ctx.lineWidth = hovered ? 8 : 5.5;
+  ctx.shadowColor = col;
+  ctx.shadowBlur = hovered ? 28 : 16;
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(0, 0, SPOT_R + 1, 0, Math.PI * 2);
+  ctx.strokeStyle = col;
+  ctx.lineWidth = 3;
+  ctx.shadowBlur = 8;
+  ctx.stroke();
+  ctx.restore();
+  ctx.shadowColor = hovered ? '#ffe27a' : col;
+  ctx.shadowBlur = 20 + pulse * 18;
+  ctx.drawImage(sp.cv, -cx, -by);
+  ctx.shadowBlur = 7;
+  ctx.drawImage(sp.cv, -cx, -by);
+  ctx.restore();
+
+  const label = hovered ? '놓으면 강화!' : `합체 → Lv${t.lvl + 1}`;
+  ctx.save();
+  ctx.font = 'bold 14px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.lineWidth = 4;
+  ctx.strokeStyle = 'rgba(0,0,0,0.75)';
+  ctx.fillStyle = hovered ? '#fff3a8' : '#ffe27a';
+  const ly = t.y - Math.min(92, sp.h * 0.78) + Math.sin(S.time * 5) * 2;
+  ctx.strokeText(label, t.x, ly);
+  ctx.fillText(label, t.x, ly);
+  ctx.restore();
+}
+
 function draw() {
   ctx.clearRect(0, 0, W, H);
   if (S.phase === 'loading') return;
@@ -1203,7 +1249,8 @@ function draw() {
     const hover = Math.hypot(S.mouse.x - sx, S.mouse.y - sy) < SPOT_R
       || (DRAG.active && DRAG.overSpot === i);
     const dragging = DRAG.active && S.heldDie;
-    if (occupied && !hover && !dragging) continue;
+    const mergePad = occupied && occupied.face === heldFace() && occupied.lvl < MAX_LVL;
+    if (occupied && !hover && !dragging && !mergePad) continue;
     ctx.save();
     ctx.translate(sx, sy);
     ctx.scale(1, 0.5);
@@ -1216,9 +1263,16 @@ function draw() {
       ctx.stroke();
       ctx.fillStyle = `rgba(220,200,140,${S.heldDie ? 0.14 : 0.05})`;
       ctx.fill();
+    } else if (occupied.face === heldFace() && occupied.lvl < MAX_LVL) {
+      const pulse = 0.55 + 0.4 * Math.sin(S.time * 7);
+      ctx.strokeStyle = hover ? `rgba(255,230,120,0.95)` : `rgba(255,210,80,${pulse})`;
+      ctx.lineWidth = hover ? 6 : 4;
+      ctx.stroke();
+      ctx.fillStyle = `rgba(255,210,80,${hover ? 0.28 : 0.12})`;
+      ctx.fill();
     } else if (hover) {
-      ctx.strokeStyle = 'rgba(150,220,255,0.5)';
-      ctx.lineWidth = 2;
+      ctx.strokeStyle = occupied.face === heldFace() ? 'rgba(180,180,180,0.6)' : 'rgba(255,110,90,0.7)';
+      ctx.lineWidth = 2.5;
       ctx.stroke();
     }
     ctx.restore();
@@ -1261,12 +1315,20 @@ function draw() {
       const cx = sp.cx ?? TS_CX, by = sp.baseY ?? TS_BASE_Y;
       const kick = t.kick || 0;
       if (t.kick > 0) t.kick = Math.max(0, t.kick - 0.08);
-      ctx.save();
-      ctx.translate(t.x, t.y + 6);
-      const sc = 1 - kick * 0.04;
-      ctx.scale(sc, sc);
-      ctx.drawImage(sp.cv, -cx, -by);
-      ctx.restore();
+      const face = heldFace();
+      const mergeable = face && t.face === face && t.lvl < MAX_LVL;
+      const hovered = mergeable && DRAG.active && DRAG.overSpot === t.spot;
+      if (mergeable) {
+        drawMergeHalo(t, sp, hovered);
+      } else {
+        ctx.save();
+        ctx.translate(t.x, t.y + 6);
+        if (face && t.face !== face) ctx.globalAlpha = 0.72;
+        const sc = 1 - kick * 0.04;
+        ctx.scale(sc, sc);
+        ctx.drawImage(sp.cv, -cx, -by);
+        ctx.restore();
+      }
       if (!sp.dedicated) drawTopper(t);
       // 레벨 표시 (받침 앞의 금색 점)
       for (let i = 0; i < MAX_LVL; i++) {
@@ -1319,20 +1381,22 @@ function draw() {
       if (idx >= 0) { gx = SPOTS[idx][0]; gy = SPOTS[idx][1]; }
       const cx = sp.cx ?? TS_CX, by = sp.baseY ?? TS_BASE_Y;
       const mode = ghostMode(idx);
-      ctx.save();
-      ctx.globalAlpha = 0.28 + 0.45 * DRAG.morph;
-      ctx.translate(gx, gy + 6);
-      ctx.drawImage(sp.cv, -cx, -by);
-      ctx.restore();
+      if (mode !== 'merge') {
+        ctx.save();
+        ctx.globalAlpha = 0.28 + 0.45 * DRAG.morph;
+        ctx.translate(gx, gy + 6);
+        ctx.drawImage(sp.cv, -cx, -by);
+        ctx.restore();
+      }
       ctx.save();
       ctx.translate(gx, gy + 6);
       ctx.scale(1, 0.5);
       ctx.beginPath(); ctx.arc(0, 0, SPOT_R + 2, 0, Math.PI * 2);
       ctx.strokeStyle = mode === 'ok' ? 'rgba(140,240,170,0.95)'
-        : mode === 'merge' ? 'rgba(140,210,255,0.95)'
+        : mode === 'merge' ? 'rgba(255,230,120,0.98)'
         : mode === 'bad' ? 'rgba(255,110,90,0.95)'
         : 'rgba(232,214,150,0.7)';
-      ctx.lineWidth = 3;
+      ctx.lineWidth = mode === 'merge' ? 6 : 3;
       ctx.stroke();
       ctx.restore();
     }
@@ -1545,7 +1609,7 @@ function syncUI() {
     heldInfo.classList.remove('hidden');
     heldInfo.style.setProperty('--elem', def.color);
     $('held-name').textContent = def.name;
-    $('held-desc').textContent = def.desc + ' · 끌어다 건설 지점에 놓으세요';
+    $('held-desc').textContent = def.desc + ' · 같은 눈 타워에 놓으면 합체';
   } else {
     diceSlot.classList.remove('has-die');
     diceImg.classList.add('hidden');
