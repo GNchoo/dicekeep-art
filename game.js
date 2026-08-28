@@ -364,6 +364,7 @@ const SFX = {
   win:  () => [523, 659, 784, 1046].forEach((f, i) => setTimeout(() => tone(f, 0.3, 'triangle', 0.18), i * 160)),
   lose: () => [400, 340, 280, 200].forEach((f, i) => setTimeout(() => tone(f, 0.35, 'sawtooth', 0.12), i * 200)),
   sell: () => { tone(700, 0.08, 'square', 0.07); setTimeout(() => tone(500, 0.1, 'square', 0.07), 70); },
+  dieHit: (v) => { noise(0.12, Math.min(0.35, 0.12 + v * 0.2), 1800); tone(220 + v * 80, 0.09, 'square', 0.12, -80); },
 };
 
 // ==================== 게임 상태 ====================
@@ -577,6 +578,7 @@ const DIE = {
   settleFrom: null, settleAxis: [0, 0, 1], settleAng: 0,
   history: [],
   grabDX: 0, grabDY: 0,
+  hits: [], throwSpd: 0,
 };
 
 // 버튼용 빠른 굴림: HUD 슬롯(?박스) 안에서 3D 큐브가 짧게 회전 후 결과 확정
@@ -595,6 +597,8 @@ function throwDie(vx, vy) {
   DIE.state = 'throw';
   DIE.vx = vx; DIE.vy = vy;
   const spd = Math.hypot(vx, vy);
+  DIE.throwSpd = spd;
+  DIE.hits = [];
   DIE.vz = Math.min(720, 220 + spd * 0.42);
   DIE.z = Math.max(2, DIE.z);
   // 진행 방향으로 구르는 회전 + 무작위 비틀림 (결과는 물리가 결정)
@@ -717,6 +721,35 @@ function computeSettleTarget(finalVal) {
   DIE.settleAng = aa.ang;
 }
 
+function strikeEnemiesWithDie() {
+  if (!S.enemies.length) return;
+  const spd = Math.hypot(DIE.vx, DIE.vy);
+  if (spd < 80 && DIE.z < 4) return;
+  const dieX = DIE.x;
+  const dieY = DIE.y - DIE.z * 0.62;
+  const dieR = 26 + Math.min(22, DIE.z * 0.06);
+  for (const e of S.enemies) {
+    if (e.dead || DIE.hits.includes(e)) continue;
+    const p = posAt(e.dist);
+    const hitR = dieR + e.def.size * 0.42;
+    if (Math.hypot(dieX - p.x, dieY - p.y) > hitR) continue;
+    const dmg = Math.max(12, Math.min(220, Math.round(10 + spd * 0.14)));
+    DIE.hits.push(e);
+    damageEnemy(e, dmg);
+    e.dist = Math.max(0, e.dist - (14 + spd * 0.018));
+    e.slowT = Math.max(e.slowT, 0.35);
+    e.slowPct = Math.max(e.slowPct || 0, 0.25);
+    S.texts.push({ str: dmg + '!', x: p.x, y: p.y - e.def.size - 6, t: 0, color: '#ffe27a', big: true });
+    S.fxs.push({ kind: 'impact', x: p.x, y: p.y - 10, t: 0, dur: 0.28, size: 36 + Math.min(50, spd * 0.04) });
+    SFX.dieHit(Math.min(1.4, spd / 900));
+    DIE.vx *= 0.68; DIE.vy *= 0.68;
+    DIE.vz = Math.max(DIE.vz, 140);
+    DIE.w[0] += (Math.random() - 0.5) * 10;
+    DIE.w[1] += (Math.random() - 0.5) * 10;
+    break;
+  }
+}
+
 function updateDie(dt) {
   if (S.phase !== 'playing') return;
 
@@ -774,6 +807,8 @@ function updateDie(dt) {
       DIE.w = DIE.w.map(v => v * Math.pow(0.8, dt)); // 공기 감쇠
     }
     integrateRot(dt);
+
+    strikeEnemiesWithDie();
 
     // 정지 판정 → 위를 향한 면이 결과
     if (spd < 26 && DIE.z <= 0 && Math.abs(DIE.vz) < 40) {
@@ -1378,7 +1413,7 @@ function draw() {
     }
   }
 
-  if (DRAG.active && S.heldDie && DRAG.overSpot >= 0) {
+  if (DRAG.active && S.heldDie && DRAG.overCanvas) {
     const sp = towerSprites[S.heldDie];
     if (sp) {
       const idx = DRAG.overSpot;
@@ -1386,10 +1421,12 @@ function draw() {
       if (idx >= 0) { gx = SPOTS[idx][0]; gy = SPOTS[idx][1]; }
       const cx = sp.cx ?? TS_CX, by = sp.baseY ?? TS_BASE_Y;
       const mode = ghostMode(idx);
+      const preview = 0.72;
       if (mode !== 'merge') {
         ctx.save();
-        ctx.globalAlpha = 0.28 + 0.45 * DRAG.morph;
+        ctx.globalAlpha = 0.4 + 0.4 * DRAG.morph;
         ctx.translate(gx, gy + 6);
+        ctx.scale(preview, preview);
         ctx.drawImage(sp.cv, -cx, -by);
         ctx.restore();
       }
@@ -1719,7 +1756,7 @@ function tryPlace(idx) {
 const DRAG = {
   active: false, face: 0, morph: 0,
   startX: 0, startY: 0, x: 0, y: 0,
-  overSpot: -1, pid: 0,
+  overSpot: -1, pid: 0, overCanvas: false,
 };
 const ghostEl = $('place-ghost');
 const ghostDie = $('ghost-die');
@@ -1739,6 +1776,7 @@ function updateGhost(clientX, clientY) {
   const overCanvas = clientX >= stage.left && clientX <= stage.right && clientY >= stage.top && clientY <= stage.bottom;
   const dist = Math.hypot(clientX - DRAG.startX, clientY - DRAG.startY);
   DRAG.morph = overCanvas ? 1 : Math.min(1, dist / 90);
+  DRAG.overCanvas = overCanvas;
   let gx = clientX, gy = clientY;
   DRAG.overSpot = -1;
   if (overCanvas) {
@@ -1752,13 +1790,17 @@ function updateGhost(clientX, clientY) {
       gx = c.x; gy = c.y;
     }
   }
-  ghostEl.style.opacity = DRAG.overSpot >= 0 ? '0' : '1';
+  ghostEl.style.opacity = overCanvas ? '0' : '1';
   const mode = ghostMode(DRAG.overSpot);
+  const cr = canvas.getBoundingClientRect();
+  const gs = cr.width / W;
+  ghostEl.style.width = Math.round(52 * gs) + 'px';
+  ghostEl.style.height = Math.round(60 * gs) + 'px';
   ghostEl.style.left = gx + 'px';
   ghostEl.style.top = gy + 'px';
   ghostDie.style.opacity = String(1 - DRAG.morph);
   ghostTower.style.opacity = String(DRAG.morph);
-  const sc = 0.78 + DRAG.morph * 0.28;
+  const sc = 0.78 + DRAG.morph * 0.1;
   ghostEl.style.transform = `translate(-50%, -78%) scale(${sc})`;
   ghostEl.classList.toggle('show', dist > 8 || overCanvas);
   ghostEl.classList.toggle('ok', mode === 'ok');
@@ -1808,6 +1850,7 @@ function endPlaceDrag(ev) {
 function stopPlaceDrag() {
   DRAG.active = false;
   DRAG.overSpot = -1;
+  DRAG.overCanvas = false;
   DRAG.morph = 0;
   ghostEl.classList.remove('show', 'ok', 'merge', 'bad');
   ghostEl.style.opacity = '1';
