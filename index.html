@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>주사위 성채 (Dicekeep)</title>
-<link rel="stylesheet" href="style.css?v=7" />
+<link rel="stylesheet" href="style.css?v=9" />
 <link rel="icon" href="ui/gold.png" />
 </head>
 <body>
@@ -15,7 +15,7 @@
     <div id="stats" class="hidden">
       <span class="chip"><img id="icon-gold" src="ui/gold.png" alt="골드"><b id="gold-val">0</b></span>
       <span class="chip"><img id="icon-heart" src="ui/heart.png" alt="목숨"><b id="lives-val">0</b></span>
-      <span class="chip"><b id="wave-val">웨이브 0 / 20</b></span>
+      <span class="chip"><b id="wave-val">웨이브 0 / 100</b></span>
     </div>
 
     <div id="overlay">
@@ -27,7 +27,7 @@
           같은 눈의 타워 위에 주사위를 올리면 <b>레벨 업</b> (최대 Lv3).<br>
           굴린 주사위를 <b>끌어다 건설 지점에 놓으면</b> 그 눈의 타워로 변신합니다.<br>
           필드 주사위를 <b>적에게 세게 던지면</b> 속도에 비례한 피해를 줍니다.<br>
-          포탈에서 몰려오는 적이 크리스탈에 닿기 전에 막아내세요!
+          포탈에서 몰려오는 적이 크리스탈에 닿기 전에 막아내세요! 스테이지는 <b>100개</b>, 공중·땅굴 적도 등장합니다.
         </p>
         <button id="ov-btn" disabled>불러오는 중...</button>
         <p class="hint">필드 주사위 휙 던지기 · 적에게 던지면 속도만큼 피해 · 굴린 주사위는 끌어다 설치</p>
@@ -65,6 +65,7 @@
   <img id="ghost-tower" alt="">
   <div id="ghost-ring"></div>
 </div>
-<script src="game.js?v=7"></script>
+<script src="content.js?v=9"></script>
+<script src="game.js?v=9"></script>
 </body>
 </html>

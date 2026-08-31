@@ -23,7 +23,7 @@ const SPOTS = [
 const SPOT_R = 30;
 
 const ROLL_COST = 40;
-const MAX_WAVE = 20;
+const MAX_WAVE = 100;
 const START_GOLD = 130;
 const START_LIVES = 20;
 const INTERMISSION = 9;
@@ -31,12 +31,12 @@ const MAX_LVL = 3;
 
 // 주사위 눈(1~6) = 타워 종류. 눈이 높을수록 강력!
 const TOWER_DEFS = {
-  1: { name: '궁수 주사위', desc: '속사 레이저',        dmg: 8,  rate: 0.50, range: 150, laser: true,                 color: '#9fd463', topper: 'laserMuzzle' },
-  2: { name: '대포 주사위', desc: '쌍포 광역 포격',     dmg: 22, rate: 1.60, range: 135, proj: 'shell',      pspd: 300, splash: 60, color: '#e0862c', topper: 'muzzleFlash' },
-  3: { name: '마법 주사위', desc: '자수정 마력탄',      dmg: 24, rate: 0.95, range: 165, proj: 'bolt',       pspd: 430, color: '#b78bff', topper: 'bolt' },
-  4: { name: '서리 주사위', desc: '사방 냉기 둔화',     dmg: 8,  rate: 0.80, range: 140, proj: 'frostShard', pspd: 400, slow: true, color: '#7fd4ff', topper: 'frostShard' },
-  5: { name: '전격 주사위', desc: '연쇄 번개',          dmg: 16, rate: 1.10, range: 150, chain: true, color: '#ffe86b', topper: 'spark' },
-  6: { name: '폭군 주사위', desc: '최강! 폭발 주사위 투척', dmg: 40, rate: 1.25, range: 175, proj: 'dieBomb', pspd: 340, splash: 55, color: '#ff5555', topper: 'dieBomb' },
+  1: { name: '궁수 주사위', desc: '속사 레이저',        dmg: 8,  rate: 0.50, range: 150, laser: true,                 canAir: true,  color: '#9fd463', topper: 'laserMuzzle' },
+  2: { name: '대포 주사위', desc: '쌍포 광역 포격',     dmg: 22, rate: 1.60, range: 135, proj: 'shell',      pspd: 300, splash: 60, canAir: false, color: '#e0862c', topper: 'muzzleFlash' },
+  3: { name: '마법 주사위', desc: '자수정 마력탄',      dmg: 24, rate: 0.95, range: 165, proj: 'bolt',       pspd: 430, canAir: true,  color: '#b78bff', topper: 'bolt' },
+  4: { name: '서리 주사위', desc: '사방 냉기 둔화',     dmg: 8,  rate: 0.80, range: 140, proj: 'frostShard', pspd: 400, slow: true, canAir: true, color: '#7fd4ff', topper: 'frostShard' },
+  5: { name: '전격 주사위', desc: '연쇄 번개',          dmg: 16, rate: 1.10, range: 150, chain: true, canAir: true, color: '#ffe86b', topper: 'spark' },
+  6: { name: '폭군 주사위', desc: '최강! 폭발 주사위 투척', dmg: 40, rate: 1.25, range: 175, proj: 'dieBomb', pspd: 340, splash: 55, canAir: false, color: '#ff5555', topper: 'dieBomb' },
 };
 const LVL_DMG   = [1, 1.6, 2.4];
 const LVL_RANGE = [0, 12, 24];
@@ -73,23 +73,37 @@ function posAt(d) {
 
 // ==================== 에셋 로딩 / 배경 잔상 제거 ====================
 
+const BASE = (() => {
+  const s = document.currentScript;
+  if (s && s.src) return s.src.replace(/game\.js(\?.*)?$/, '');
+  if (location.pathname.indexOf('/dicekeep') === 0) return '/dicekeep/';
+  return '/dicekeep/';
+})();
 const SRCS = {
-  map: 'map/battlefield.jpg', keyart: 'ui/title-keyart.jpg',
-  gold: 'ui/gold.png', heart: 'ui/heart.png',
-  d1: 'dice/dice-1.png', d2: 'dice/dice-2.png', d3: 'dice/dice-3.png',
-  d4: 'dice/dice-4.png', d5: 'dice/dice-5.png', d6: 'dice/dice-6.png',
-  t1: 'towers/die-1.png', t2: 'towers/die-2.png', t3: 'towers/die-3.png',
-  t4: 'towers/die-4.png', t5: 'towers/die-5.png', t6: 'towers/die-6.png',
-  miteWalk: 'enemies/mite-walk-2x2.png', runnerWalk: 'enemies/runner-walk-2x2.png',
-  huskWalk: 'enemies/husk-walk-2x2.png', bossWalk: 'enemies/boss-walk-2x2.png',
-  arrow: 'vfx/arrow.png', shell: 'vfx/shell.png', bolt: 'vfx/bolt.png',
-  frostShard: 'vfx/frost-shard.png', spark: 'vfx/spark.png', impact: 'vfx/impact-2x2.png',
-  laserBeam: 'vfx/laser-beam.png', laserMuzzle: 'vfx/laser-muzzle.png',
-  muzzleFlash: 'vfx/muzzle-flash.png', cannonBlast: 'vfx/cannon-blast-2x2.png',
-  arcaneBurst: 'vfx/arcane-burst-2x2.png', frostBurst: 'vfx/frost-burst-2x2.png',
-  lightningArc: 'vfx/lightning-arc.png', dieBomb: 'vfx/die-bomb.png',
-  dieExplode: 'vfx/die-explode-2x2.png',
+  map: BASE + 'map/battlefield.jpg', keyart: BASE + 'ui/title-keyart.jpg',
+  gold: BASE + 'ui/gold.png', heart: BASE + 'ui/heart.png',
+  d1: BASE + 'dice/dice-1.png', d2: BASE + 'dice/dice-2.png', d3: BASE + 'dice/dice-3.png',
+  d4: BASE + 'dice/dice-4.png', d5: BASE + 'dice/dice-5.png', d6: BASE + 'dice/dice-6.png',
+  t1: BASE + 'towers/die-1.png', t2: BASE + 'towers/die-2.png', t3: BASE + 'towers/die-3.png',
+  t4: BASE + 'towers/die-4.png', t5: BASE + 'towers/die-5.png', t6: BASE + 'towers/die-6.png',
+  miteWalk: BASE + 'enemies/mite-walk-2x2.png', runnerWalk: BASE + 'enemies/runner-walk-2x2.png',
+  huskWalk: BASE + 'enemies/husk-walk-2x2.png', bossWalk: BASE + 'enemies/boss-walk-2x2.png',
+  arrow: BASE + 'vfx/arrow.png', shell: BASE + 'vfx/shell.png', bolt: BASE + 'vfx/bolt.png',
+  frostShard: BASE + 'vfx/frost-shard.png', spark: BASE + 'vfx/spark.png', impact: BASE + 'vfx/impact-2x2.png',
+  laserBeam: BASE + 'vfx/laser-beam.png', laserMuzzle: BASE + 'vfx/laser-muzzle.png',
+  muzzleFlash: BASE + 'vfx/muzzle-flash.png', cannonBlast: BASE + 'vfx/cannon-blast-2x2.png',
+  arcaneBurst: BASE + 'vfx/arcane-burst-2x2.png', frostBurst: BASE + 'vfx/frost-burst-2x2.png',
+  lightningArc: BASE + 'vfx/lightning-arc.png', dieBomb: BASE + 'vfx/die-bomb.png',
+  dieExplode: BASE + 'vfx/die-explode-2x2.png',
 };
+if (window.DKCONTENT) {
+  for (const m of DKCONTENT.maps) SRCS[m.key] = BASE + m.src;
+  for (const f of Object.keys(DKCONTENT.towerSkins)) {
+    for (const s of DKCONTENT.towerSkins[f]) SRCS[s.key] = BASE + s.src;
+  }
+  for (const b of DKCONTENT.bases) SRCS[b.sprite] = BASE + b.src;
+  for (const b of DKCONTENT.bossBases) SRCS[b.sprite] = BASE + b.src;
+}
 const A = {};
 let corsBlocked = false;
 
@@ -235,6 +249,7 @@ async function loadAssets(onProgress) {
     'cannonBlast', 'arcaneBurst', 'frostBurst', 'dieExplode',
   ];
   const raw = ['map', 'keyart'];
+  if (window.DKCONTENT) for (const m of DKCONTENT.maps) raw.push(m.key);
   let pi = 0;
   for (const k of keys) {
     if (raw.includes(k)) A[k] = imgs[k];
@@ -294,7 +309,12 @@ function compositeFallback(f) {
 
 function buildTowerSprites() {
   for (let f = 1; f <= 6; f++) {
-    const art = A['t' + f];
+    const skins = (window.DKCONTENT && DKCONTENT.towerSkins[f]) || [];
+    let art = null;
+    for (const s of skins) {
+      if (A[s.key] && A[s.key].cv && A[s.key].h > 16) { art = A[s.key]; break; }
+    }
+    if (!art) art = A['t' + f];
     if (art && art.cv && art.h > 8) {
       const s = TOWER_DRAW_H / art.h;
       const w = Math.max(1, Math.round(art.w * s));
@@ -375,6 +395,7 @@ const S = {
   enemies: [], towers: [], projs: [], beams: [], fxs: [], texts: [],
   spawnQ: [], waveActive: false, autoT: 0, waveT: 0,
   heldDie: 0, selTower: null,
+  mapKey: 'cMap1',
   speed: 1, muted: false,
   time: 0, hurtT: 0,
   mouse: { x: -100, y: -100 },
@@ -930,30 +951,32 @@ function drawDie() {
 
 function buildWave(w) {
   const q = [];
-  let t = 0.5;
-  const hpMult = Math.pow(1.17, w - 1);
-  const goldMult = 1 + w * 0.04;
-  const add = (type) => { q.push({ type, t, hpMult, goldMult }); };
+  let t = 0.45;
+  const hpMult = Math.pow(1.085, w - 1);
+  const goldMult = 1 + w * 0.035;
+  const C = window.DKCONTENT;
+  const add = (type, extra) => { q.push(Object.assign({ type, t, hpMult, goldMult }, extra || {})); };
+  const n = 7 + Math.floor(w * 1.15);
+  const gap = Math.max(0.38, 0.88 - w * 0.006);
+  const unlockAir = w >= 6;
+  const unlockBurrow = w >= 10;
+  for (let i = 0; i < n; i++) {
+    let pool = ['slime', 'shroom', 'pig', 'chicken', 'goblin'];
+    if (unlockAir) pool = pool.concat(['bee', 'balloon', 'bat']);
+    if (unlockBurrow) pool = pool.concat(['mole', 'worm', 'arma']);
+    if (w >= 4) pool.push('goblin', 'chicken');
+    const type = pool[(i * 3 + w * 5) % pool.length];
+    const sid = ((w - 1) * 11 + i * 17) % 500;
+    const sp = C && C.species[sid];
+    add(type, sp ? { speciesId: sid, name: sp.name, hue: sp.hue, hpMult: hpMult * sp.hpM, goldMult } : null);
+    t += gap * (type === 'bat' || type === 'bee' ? 0.72 : 1);
+  }
   if (w % 5 === 0) {
-    const escorts = 4 + w;
-    for (let i = 0; i < escorts; i++) {
-      add(i % 3 === 0 ? 'husk' : (i % 3 === 1 ? 'runner' : 'mite'));
-      t += 0.75;
-    }
-    t += 1.5;
-    add('boss');
-    if (w === 20) { t += 3; add('boss'); }
-  } else {
-    const n = 6 + Math.floor(w * 1.9);
-    const gap = Math.max(0.5, 0.95 - w * 0.02);
-    for (let i = 0; i < n; i++) {
-      let type = 'mite';
-      const r = Math.random();
-      if (w >= 3 && r < 0.24) type = 'husk';
-      else if (w >= 2 && r < 0.55) type = 'runner';
-      add(type);
-      t += gap * (type === 'runner' ? 0.7 : 1);
-    }
+    t += 1.2;
+    const bid = Math.min(99, Math.floor(w / 5) - 1);
+    const boss = C && C.bosses[bid];
+    const btype = C ? C.bossBases[bid % 3].id : 'boss';
+    add(btype, boss ? { name: boss.name, hue: boss.hue, hpMult: hpMult * boss.hpM, isBoss: true } : { isBoss: true });
   }
   return q;
 }
@@ -961,6 +984,7 @@ function buildWave(w) {
 function startWave() {
   if (S.waveActive || S.wave >= MAX_WAVE || S.phase !== 'playing') return;
   S.wave++;
+  S.mapKey = (window.DKCONTENT && DKCONTENT.maps[(S.wave - 1) % DKCONTENT.maps.length].key) || 'map';
   S.spawnQ = buildWave(S.wave);
   S.waveActive = true;
   S.waveT = 0;
@@ -972,13 +996,29 @@ function startWave() {
 // ==================== 전투 로직 ====================
 
 function spawnEnemy(item) {
-  const def = ENEMY_DEFS[item.type];
+  const C = window.DKCONTENT;
+  let def = ENEMY_DEFS[item.type];
+  let move = 'ground', sprite = null, hue = item.hue || 0, size, name;
+  if (C) {
+    const base = C.bases.find(b => b.id === item.type) || C.bossBases.find(b => b.id === item.type);
+    if (base) {
+      def = base;
+      move = base.move;
+      sprite = base.sprite;
+      size = base.size;
+      name = item.name || base.name;
+    }
+  }
+  if (!def) def = ENEMY_DEFS.mite;
   S.enemies.push({
     type: item.type, def,
-    hp: def.hp * item.hpMult, max: def.hp * item.hpMult,
-    gold: Math.round(def.gold * item.goldMult),
+    hp: def.hp * (item.hpMult || 1), max: def.hp * (item.hpMult || 1),
+    gold: Math.round(def.gold * (item.goldMult || 1)),
     dist: 0, slowT: 0, slowPct: 0,
     animT: Math.random(), face: 1, dead: false,
+    move, sprite, hue, name: name || def.name,
+    hidden: false, burrowT: Math.random() * 2,
+    isBoss: !!item.isBoss,
   });
 }
 
@@ -990,7 +1030,7 @@ function damageEnemy(e, dmg) {
     S.gold += e.gold;
     const p = posAt(e.dist);
     S.texts.push({ str: '+' + e.gold, x: p.x, y: p.y - e.def.size, t: 0, color: '#ffd870' });
-    if (e.type === 'boss') { S.fxs.push({ kind: 'impact', x: p.x, y: p.y - 20, t: 0, dur: 0.45, size: 150 }); noise(0.4, 0.3, 500); }
+    if (e.isBoss || e.type === 'boss') { S.fxs.push({ kind: 'impact', x: p.x, y: p.y - 20, t: 0, dur: 0.45, size: 150 }); noise(0.4, 0.3, 500); }
     SFX.coin();
     syncUI();
   }
@@ -1011,8 +1051,10 @@ function towerFire(t, dt) {
   let best = null;
   for (const e of S.enemies) {
     if (e.dead) continue;
+    if (e.hidden) continue;
+    if (e.move === 'air' && !t.def.canAir) continue;
     const p = posAt(e.dist);
-    const d = Math.hypot(p.x - t.x, p.y - (t.y - 30));
+    const d = Math.hypot(p.x - t.x, p.y - (t.y - 30) - (e.move === 'air' ? 42 : 0));
     if (d <= range && (!best || e.dist > best.dist)) best = e;
   }
   if (!best) return;
@@ -1023,7 +1065,7 @@ function towerFire(t, dt) {
 
   if (t.def.laser) {
     const tp = posAt(best.dist);
-    const to = { x: tp.x, y: tp.y - best.def.size * 0.45 };
+    const to = { x: tp.x, y: tp.y - best.def.size * 0.45 - (best.move === 'air' ? 42 : 0) };
     damageEnemy(best, dmg);
     S.beams.push({ pts: [from, to], t: 0, dur: 0.11, style: 'laser' });
     S.fxs.push({ kind: 'laserMuzzle', x: from.x, y: from.y, t: 0, dur: 0.1, size: 28 });
@@ -1036,7 +1078,8 @@ function towerFire(t, dt) {
       const cp = posAt(cur.dist);
       let next = null, nd = 115;
       for (const e of S.enemies) {
-        if (e.dead || hitList.includes(e)) continue;
+        if (e.dead || e.hidden || hitList.includes(e)) continue;
+        if (e.move === 'air' && !t.def.canAir) continue;
         const p = posAt(e.dist);
         const d = Math.hypot(p.x - cp.x, p.y - cp.y);
         if (d < nd) { nd = d; next = e; }
@@ -1121,6 +1164,10 @@ function update(dt) {
     if (e.slowT > 0) { e.slowT -= dt; sp *= (1 - e.slowPct); }
     e.dist += sp * dt;
     e.animT += dt * (sp / 38);
+    if (e.move === 'burrow') {
+      e.burrowT += dt;
+      e.hidden = (e.burrowT % 2.6) < 1.15;
+    } else e.hidden = false;
     const p = posAt(e.dist);
     if (Math.abs(p.dx) > 0.3) e.face = Math.sign(p.dx);
     if (e.dist >= PATH_LEN) {
@@ -1142,7 +1189,7 @@ function update(dt) {
   for (const p of S.projs) {
     if (p.tgt.dead || p.tgt.dist >= PATH_LEN) { p.gone = true; continue; }
     const tp = posAt(p.tgt.dist);
-    const tx = tp.x, ty = tp.y - p.tgt.def.size * 0.4;
+    const tx = tp.x, ty = tp.y - p.tgt.def.size * 0.4 - (p.tgt.move === 'air' ? 42 : 0);
     const dx = tx - p.x, dy = ty - p.y;
     const d = Math.hypot(dx, dy);
     p.rot = Math.atan2(dy, dx);
@@ -1280,7 +1327,8 @@ function drawMergeHalo(t, sp, hovered) {
 function draw() {
   ctx.clearRect(0, 0, W, H);
   if (S.phase === 'loading') return;
-  ctx.drawImage(A.map, 0, 0, W, H);
+  const mk = S.mapKey && A[S.mapKey] ? A[S.mapKey] : A.map;
+  ctx.drawImage(mk, 0, 0, W, H);
 
   // 건설 지점 표시
   for (let i = 0; i < SPOTS.length; i++) {
@@ -1390,20 +1438,49 @@ function draw() {
       }
     } else {
       const e = ent.o, p = ent.p;
-      const frames = A[e.def.sheet];
-      const fr = frames[Math.floor(e.animT * 5) % 4];
+      const airY = e.move === 'air' ? 42 : 0;
+      const bob = Math.sin(e.animT * 6) * (e.move === 'air' ? 5 : 2);
+      const drawY = p.y + 4 - airY - bob;
       if (e.slowT > 0) {
         ctx.save();
-        ctx.translate(p.x, p.y);
+        ctx.translate(p.x, p.y - airY);
         ctx.scale(1, 0.45);
         ctx.beginPath(); ctx.arc(0, 0, e.def.size * 0.42, 0, Math.PI * 2);
         ctx.fillStyle = 'rgba(120,190,255,0.3)'; ctx.fill();
         ctx.restore();
       }
-      drawSprite(fr, p.x, p.y + 4, e.def.size, e.face > 0);
+      const spr = e.sprite && A[e.sprite];
+      ctx.save();
+      if (e.hidden) ctx.globalAlpha = 0.22;
+      if (e.hue) ctx.filter = `hue-rotate(${e.hue}deg)`;
+      if (spr && spr.cv) {
+        const h = e.def.size;
+        const w = h * (spr.w / spr.h);
+        ctx.drawImage(spr.cv, p.x - w / 2, drawY - h, w, h);
+      } else if (A[e.def.sheet]) {
+        const frames = A[e.def.sheet];
+        const fr = frames[Math.floor(e.animT * 5) % 4];
+        drawSprite(fr, p.x, drawY, e.def.size, e.face > 0);
+      }
+      ctx.filter = 'none';
+      ctx.restore();
+      if (e.move === 'air' && !e.hidden) {
+        ctx.save();
+        ctx.globalAlpha = 0.25;
+        ctx.beginPath(); ctx.ellipse(p.x, p.y + 8, 12, 5, 0, 0, Math.PI * 2);
+        ctx.fillStyle = '#000'; ctx.fill();
+        ctx.restore();
+      }
+      if (e.move === 'burrow' && e.hidden) {
+        ctx.save();
+        ctx.globalAlpha = 0.55;
+        ctx.beginPath(); ctx.ellipse(p.x, p.y + 6, 16, 7, 0, 0, Math.PI * 2);
+        ctx.fillStyle = '#6b4a28'; ctx.fill();
+        ctx.restore();
+      }
       if (e.hp < e.max) {
         const bw = Math.max(26, e.def.size * 0.7), bh = 4;
-        const bx = p.x - bw / 2, by = p.y - e.def.size - 8;
+        const bx = p.x - bw / 2, by = drawY - e.def.size - 8;
         ctx.fillStyle = 'rgba(0,0,0,0.6)';
         ctx.fillRect(bx - 1, by - 1, bw + 2, bh + 2);
         const ratio = Math.max(0, e.hp / e.max);
