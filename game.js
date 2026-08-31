@@ -972,10 +972,10 @@ function buildWave(w) {
   const unlockAir = w >= 6;
   const unlockBurrow = w >= 10;
   for (let i = 0; i < n; i++) {
-    let pool = ['slime', 'shroom', 'pig', 'chicken', 'goblin', 'sheep', 'penguin', 'squirrel', 'frog', 'duck', 'koala', 'hedgehog', 'goat', 'otter', 'tanuki', 'wolf', 'mouse', 'alpaca', 'seahorse', 'beaver', 'kiwi', 'snake', 'capybara', 'axolotl', 'meerkat', 'quokka', 'hamster', 'platypus', 'weasel'];
-    if (w >= 4) pool = pool.concat(['cactus', 'fox', 'raccoon', 'turtle', 'panda', 'catsamurai', 'boar', 'chameleon', 'porcupine', 'rhino', 'hippo', 'lemur', 'sloth', 'bison', 'walrus', 'skunk']);
-    if (unlockAir) pool = pool.concat(['bee', 'balloon', 'bat', 'owl', 'parrot', 'dragonfly', 'cloudsheep', 'humming', 'ladybug', 'fairy', 'crane', 'pigeon', 'moth', 'firefly', 'pelican', 'butterfly', 'jellyfish', 'toucan', 'flamingo', 'eagle', 'dragoncub', 'squid', 'swan', 'pegasus', 'puffin', 'kite']);
-    if (unlockBurrow) pool = pool.concat(['mole', 'worm', 'arma', 'beetle', 'crab', 'prairie', 'rabbit', 'badger', 'chipmunk', 'wormknight', 'vole', 'pangolin', 'ant', 'gecko', 'wombat', 'ferret', 'centipede', 'shrew', 'termite', 'molecricket']);
+    let pool = ['slime', 'shroom', 'pig', 'chicken', 'goblin', 'sheep', 'penguin', 'squirrel', 'frog', 'duck', 'koala', 'hedgehog', 'goat', 'otter', 'tanuki', 'wolf', 'mouse', 'alpaca', 'seahorse', 'beaver', 'kiwi', 'snake', 'capybara', 'axolotl', 'meerkat', 'quokka', 'hamster', 'platypus', 'weasel', 'zebra', 'lynx', 'tapir'];
+    if (w >= 4) pool = pool.concat(['cactus', 'fox', 'raccoon', 'turtle', 'panda', 'catsamurai', 'boar', 'chameleon', 'porcupine', 'rhino', 'hippo', 'lemur', 'sloth', 'bison', 'walrus', 'skunk', 'camel', 'giraffe', 'crocodile']);
+    if (unlockAir) pool = pool.concat(['bee', 'balloon', 'bat', 'owl', 'parrot', 'dragonfly', 'cloudsheep', 'humming', 'ladybug', 'fairy', 'crane', 'pigeon', 'moth', 'firefly', 'pelican', 'butterfly', 'jellyfish', 'toucan', 'flamingo', 'eagle', 'dragoncub', 'squid', 'swan', 'pegasus', 'puffin', 'kite', 'phoenix', 'griffin', 'hornet', 'firebird']);
+    if (unlockBurrow) pool = pool.concat(['mole', 'worm', 'arma', 'beetle', 'crab', 'prairie', 'rabbit', 'badger', 'chipmunk', 'wormknight', 'vole', 'pangolin', 'ant', 'gecko', 'wombat', 'ferret', 'centipede', 'shrew', 'termite', 'molecricket', 'gopher', 'cicada']);
     const type = pool[(i * 3 + w * 5) % pool.length];
     const sid = ((w - 1) * 11 + i * 17) % 500;
     const sp = C && C.species[sid];
