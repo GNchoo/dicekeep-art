@@ -972,10 +972,10 @@ function buildWave(w) {
   const unlockAir = w >= 6;
   const unlockBurrow = w >= 10;
   for (let i = 0; i < n; i++) {
-    let pool = ['slime', 'shroom', 'pig', 'chicken', 'goblin', 'sheep', 'penguin'];
-    if (w >= 4) pool = pool.concat(['cactus', 'fox']);
-    if (unlockAir) pool = pool.concat(['bee', 'balloon', 'bat', 'owl', 'parrot']);
-    if (unlockBurrow) pool = pool.concat(['mole', 'worm', 'arma', 'beetle', 'crab']);
+    let pool = ['slime', 'shroom', 'pig', 'chicken', 'goblin', 'sheep', 'penguin', 'squirrel', 'frog'];
+    if (w >= 4) pool = pool.concat(['cactus', 'fox', 'raccoon', 'turtle']);
+    if (unlockAir) pool = pool.concat(['bee', 'balloon', 'bat', 'owl', 'parrot', 'dragonfly', 'cloudsheep']);
+    if (unlockBurrow) pool = pool.concat(['mole', 'worm', 'arma', 'beetle', 'crab', 'prairie', 'rabbit']);
     const type = pool[(i * 3 + w * 5) % pool.length];
     const sid = ((w - 1) * 11 + i * 17) % 500;
     const sp = C && C.species[sid];
