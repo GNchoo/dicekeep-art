@@ -25,6 +25,18 @@ window.DKCONTENT = (function () {
     { key: 'cMap22', src: 'casual/maps/map-22-rain.jpg', name: '비마을' },
     { key: 'cMap23', src: 'casual/maps/map-23-workshop.jpg', name: '장난감공방' },
     { key: 'cMap24', src: 'casual/maps/map-24-onsen.jpg', name: '온천마을' },
+    { key: 'cMap25', src: 'casual/maps/map-25-gingerbread.jpg', name: '진저브레드' },
+    { key: 'cMap26', src: 'casual/maps/map-26-maple.jpg', name: '단풍협곡' },
+    { key: 'cMap27', src: 'casual/maps/map-27-aurora.jpg', name: '오로라툰드라' },
+    { key: 'cMap28', src: 'casual/maps/map-28-toadstool.jpg', name: '버섯초원' },
+    { key: 'cMap29', src: 'casual/maps/map-29-mesa.jpg', name: '메사협곡' },
+    { key: 'cMap30', src: 'casual/maps/map-30-firefly.jpg', name: '반딧불숲' },
+    { key: 'cMap31', src: 'casual/maps/map-31-carnival.jpg', name: '서커스장' },
+    { key: 'cMap32', src: 'casual/maps/map-32-vineyard.jpg', name: '포도언덕' },
+    { key: 'cMap33', src: 'casual/maps/map-33-icelake.jpg', name: '얼음호수' },
+    { key: 'cMap34', src: 'casual/maps/map-34-jungle.jpg', name: '정글유적' },
+    { key: 'cMap35', src: 'casual/maps/map-35-tulip.jpg', name: '튤립풍차' },
+    { key: 'cMap36', src: 'casual/maps/map-36-crystalcity.jpg', name: '밤수정도시' },
   ];
   const skin = (f, letter) => ({ key: `cT${f}${letter}`, src: `casual/towers/t${f}-${letter}.png` });
   const towerSkins = {
@@ -49,6 +61,10 @@ window.DKCONTENT = (function () {
     { id: 'frog', name: '개구리음유시인', hp: 42, speed: 48, gold: 8, dmg: 1, size: 44, move: 'ground', sprite: 'cFrog', src: 'casual/enemies/frog.png' },
     { id: 'turtle', name: '거북전차', hp: 85, speed: 32, gold: 12, dmg: 2, size: 50, move: 'ground', sprite: 'cTurtle', src: 'casual/enemies/turtle.png' },
     { id: 'squirrel', name: '도토리다람쥐', hp: 30, speed: 76, gold: 8, dmg: 1, size: 42, move: 'ground', sprite: 'cSquirrel', src: 'casual/enemies/squirrel.png' },
+    { id: 'hedgehog', name: '고슴도치창병', hp: 40, speed: 46, gold: 8, dmg: 1, size: 42, move: 'ground', sprite: 'cHedgehog', src: 'casual/enemies/hedgehog.png' },
+    { id: 'duck', name: '오리기사', hp: 44, speed: 58, gold: 8, dmg: 1, size: 46, move: 'ground', sprite: 'cDuck', src: 'casual/enemies/duck.png' },
+    { id: 'panda', name: '팬더수도승', hp: 72, speed: 36, gold: 11, dmg: 2, size: 50, move: 'ground', sprite: 'cPanda', src: 'casual/enemies/panda.png' },
+    { id: 'koala', name: '코알라우산', hp: 38, speed: 42, gold: 7, dmg: 1, size: 44, move: 'ground', sprite: 'cKoala', src: 'casual/enemies/koala.png' },
     { id: 'bee', name: '꿀벌창병', hp: 22, speed: 88, gold: 8, dmg: 1, size: 42, move: 'air', sprite: 'cBee', src: 'casual/enemies/bee.png' },
     { id: 'balloon', name: '풍선임프', hp: 30, speed: 64, gold: 9, dmg: 1, size: 50, move: 'air', sprite: 'cBalloon', src: 'casual/enemies/balloon.png' },
     { id: 'bat', name: '가방박쥐', hp: 26, speed: 96, gold: 9, dmg: 1, size: 40, move: 'air', sprite: 'cBat', src: 'casual/enemies/bat.png' },
@@ -56,6 +72,8 @@ window.DKCONTENT = (function () {
     { id: 'parrot', name: '연연앵무', hp: 28, speed: 84, gold: 9, dmg: 1, size: 46, move: 'air', sprite: 'cParrot', src: 'casual/enemies/parrot.png' },
     { id: 'dragonfly', name: '잠자리기사', hp: 24, speed: 100, gold: 10, dmg: 1, size: 42, move: 'air', sprite: 'cDragonfly', src: 'casual/enemies/dragonfly.png' },
     { id: 'cloudsheep', name: '구름양', hp: 40, speed: 60, gold: 11, dmg: 1, size: 50, move: 'air', sprite: 'cCloudsheep', src: 'casual/enemies/cloudsheep.png' },
+    { id: 'humming', name: '벌새창기', hp: 20, speed: 110, gold: 10, dmg: 1, size: 38, move: 'air', sprite: 'cHumming', src: 'casual/enemies/humming.png' },
+    { id: 'ladybug', name: '무당벌레방패', hp: 36, speed: 68, gold: 9, dmg: 1, size: 42, move: 'air', sprite: 'cLadybug', src: 'casual/enemies/ladybug.png' },
     { id: 'mole', name: '두더지광부', hp: 44, speed: 54, gold: 8, dmg: 1, size: 44, move: 'burrow', sprite: 'cMole', src: 'casual/enemies/mole.png' },
     { id: 'worm', name: '모래벌레', hp: 55, speed: 40, gold: 10, dmg: 2, size: 50, move: 'burrow', sprite: 'cWorm', src: 'casual/enemies/worm.png' },
     { id: 'arma', name: '아르마딜로', hp: 70, speed: 38, gold: 11, dmg: 2, size: 48, move: 'burrow', sprite: 'cArma', src: 'casual/enemies/arma.png' },
@@ -63,6 +81,8 @@ window.DKCONTENT = (function () {
     { id: 'crab', name: '소라게', hp: 50, speed: 46, gold: 9, dmg: 1, size: 44, move: 'burrow', sprite: 'cCrab', src: 'casual/enemies/crab.png' },
     { id: 'prairie', name: '프레리독', hp: 48, speed: 50, gold: 9, dmg: 1, size: 44, move: 'burrow', sprite: 'cPrairie', src: 'casual/enemies/prairie.png' },
     { id: 'rabbit', name: '구멍토끼', hp: 34, speed: 70, gold: 9, dmg: 1, size: 42, move: 'burrow', sprite: 'cRabbit', src: 'casual/enemies/rabbit.png' },
+    { id: 'badger', name: '오소리광부', hp: 58, speed: 44, gold: 10, dmg: 2, size: 46, move: 'burrow', sprite: 'cBadger', src: 'casual/enemies/badger.png' },
+    { id: 'chipmunk', name: '칩멍크', hp: 32, speed: 74, gold: 8, dmg: 1, size: 40, move: 'burrow', sprite: 'cChipmunk', src: 'casual/enemies/chipmunk.png' },
   ];
   const bossBases = [
     { id: 'kingSlime', name: '슬라임왕', hp: 720, speed: 28, gold: 90, dmg: 4, size: 86, move: 'ground', sprite: 'cKingSlime', src: 'casual/bosses/king-slime.png' },
@@ -76,6 +96,10 @@ window.DKCONTENT = (function () {
     { id: 'coralQueen', name: '산호여왕', hp: 1020, speed: 28, gold: 128, dmg: 5, size: 88, move: 'ground', sprite: 'cCoralQueen', src: 'casual/bosses/coral-queen.png' },
     { id: 'ghostKing', name: '유령왕', hp: 940, speed: 34, gold: 122, dmg: 5, size: 88, move: 'air', sprite: 'cGhostKing', src: 'casual/bosses/ghost-king.png' },
     { id: 'honeyBear', name: '꿀곰대왕', hp: 1250, speed: 22, gold: 145, dmg: 5, size: 94, move: 'ground', sprite: 'cHoneyBear', src: 'casual/bosses/honey-bear.png' },
+    { id: 'lionMaster', name: '서커스사자', hp: 1120, speed: 30, gold: 138, dmg: 5, size: 90, move: 'ground', sprite: 'cLionMaster', src: 'casual/bosses/lion-master.png' },
+    { id: 'mapleTreant', name: '단풍정령', hp: 1180, speed: 24, gold: 140, dmg: 5, size: 94, move: 'ground', sprite: 'cMapleTreant', src: 'casual/bosses/maple-treant.png' },
+    { id: 'auroraMoose', name: '오로라무스', hp: 1080, speed: 28, gold: 136, dmg: 5, size: 92, move: 'ground', sprite: 'cAuroraMoose', src: 'casual/bosses/aurora-moose.png' },
+    { id: 'gorillaKing', name: '정글고릴라왕', hp: 1300, speed: 22, gold: 150, dmg: 6, size: 96, move: 'ground', sprite: 'cGorillaKing', src: 'casual/bosses/gorilla-king.png' },
   ];
   const ADJ = ['꼬마','숲','사탕','해변','눈꽃','달빛','황금','그림자','불꽃','이슬','돌','바람','꿀','구름','별','호박','산호','이끼','진주','장난','민트','코코아','벚꽃','밤하늘','햇살'];
   const RANK = ['신병','정찰','순찰','특공','정예','대장','파수','약탈','유랑','친위'];
