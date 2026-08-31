@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>주사위 성채 (Dicekeep)</title>
-<link rel="stylesheet" href="style.css?v=36" />
+<link rel="stylesheet" href="style.css?v=40" />
 <link rel="icon" href="ui/gold.png" />
 </head>
 <body>
@@ -33,6 +33,46 @@
         <p class="hint">필드 주사위 휙 던지기 · 적에게 던지면 속도만큼 피해 · 굴린 주사위는 끌어다 설치</p>
       </div>
     </div>
+
+    <div id="lobby" class="screen hidden">
+      <div class="screen-box">
+        <h1>주사위 성채</h1>
+        <p class="screen-sub">스테이지를 정복해 젬을 모으고, 상점에서 주사위 타워와 스킨을 해금하세요.</p>
+        <div class="gem-chip big"><span class="gem-ico">&#128142;</span><b id="lobby-gems">0</b><span class="gem-lbl">젬</span></div>
+        <div id="lobby-progress" class="screen-sub"></div>
+        <div class="lobby-btns">
+          <button id="btn-stage-select" class="big-btn">스테이지 선택</button>
+          <button id="btn-shop" class="big-btn alt">상점</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="stage-select" class="screen hidden">
+      <div class="screen-box wide">
+        <div class="screen-head">
+          <button class="back-btn" id="ss-back">&#8592; 로비</button>
+          <h2>스테이지 선택</h2>
+          <div class="gem-chip"><span class="gem-ico">&#128142;</span><b id="ss-gems">0</b></div>
+        </div>
+        <div id="stage-grid" class="stage-grid"></div>
+      </div>
+    </div>
+
+    <div id="shop" class="screen hidden">
+      <div class="screen-box wide">
+        <div class="screen-head">
+          <button class="back-btn" id="shop-back">&#8592; 로비</button>
+          <h2>상점</h2>
+          <div class="gem-chip"><span class="gem-ico">&#128142;</span><b id="shop-gems">0</b></div>
+        </div>
+        <div class="shop-body">
+          <h3>주사위 타워 해금 <small>해금한 눈만 굴리기에 등장</small></h3>
+          <div id="shop-towers" class="shop-row"></div>
+          <h3>주사위 스킨 <small>눈별로 해금·장착</small></h3>
+          <div id="shop-skins" class="shop-skins"></div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div id="hud" class="hidden">
@@ -56,6 +96,7 @@
       <div class="mini">
         <button id="speed-btn" title="게임 속도">x1</button>
         <button id="mute-btn" title="소리">&#128266;</button>
+        <button id="exit-btn" title="스테이지 선택으로">&#8801;</button>
       </div>
     </div>
   </div>
@@ -65,7 +106,7 @@
   <img id="ghost-tower" alt="">
   <div id="ghost-ring"></div>
 </div>
-<script src="content.js?v=36"></script>
-<script src="game.js?v=36"></script>
+<script src="content.js?v=40"></script>
+<script src="game.js?v=40"></script>
 </body>
 </html>
