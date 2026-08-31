@@ -1549,12 +1549,18 @@ function draw() {
     ctx.beginPath();
     ctx.arc(0, 0, SPOT_R, 0, Math.PI * 2);
     if (!occupied) {
-      const pulse = S.heldDie ? 0.45 + 0.25 * Math.sin(S.time * 5) : 0.18;
-      ctx.strokeStyle = `rgba(232,214,150,${pulse})`;
-      ctx.lineWidth = hover ? 4 : 2;
-      ctx.stroke();
-      ctx.fillStyle = `rgba(220,200,140,${S.heldDie ? 0.14 : 0.05})`;
+      const held = !!S.heldDie;
+      const pulse = held ? 0.6 + 0.25 * Math.sin(S.time * 5) : 0.5;
+      ctx.fillStyle = held ? `rgba(70,120,60,0.30)` : `rgba(35,30,24,0.30)`;
       ctx.fill();
+      ctx.strokeStyle = `rgba(255,238,180,${pulse})`;
+      ctx.lineWidth = hover ? 5 : 3;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(0, 0, SPOT_R - 7, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(255,255,255,${held ? 0.5 : 0.28})`;
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
     } else if (occupied.face === heldFace() && occupied.lvl < MAX_LVL) {
       const pulse = 0.55 + 0.4 * Math.sin(S.time * 7);
       ctx.strokeStyle = hover ? `rgba(255,230,120,0.95)` : `rgba(255,210,80,${pulse})`;
@@ -2489,6 +2495,7 @@ function drawLoading(pr) {
   $('ov-btn').disabled = false;
   $('ov-btn').textContent = '게임 시작';
   window.DK = S;
+  window.DKstart = startStage; window.DKplace = tryPlace;
   window.DKA = A;
   window.DKDIE = DIE;
   window.DKSLOT = SLOT;
