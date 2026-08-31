@@ -7,20 +7,21 @@ const ctx = canvas.getContext('2d');
 
 // ==================== 상수 ====================
 
-// 맵의 흙길을 따라가는 웨이포인트 (포탈 → 크리스탈)
-const PATH = [
-  [112, 168], [225, 222], [330, 218], [318, 268], [262, 318], [218, 362],
-  [214, 402], [320, 410], [442, 406], [458, 352], [466, 242], [560, 231],
-  [670, 230], [686, 290], [692, 388], [780, 396], [858, 394], [872, 300],
-  [878, 215],
+// 맵의 흙길을 따라가는 웨이포인트 (포탈 → 크리스탈). 맵별로 content.js가 덮어씀.
+const DEFAULT_PATH = [
+  [148, 208], [228, 248], [292, 278], [312, 338], [298, 398],
+  [372, 448], [490, 455], [590, 418], [648, 352], [698, 292],
+  [758, 248], [838, 198],
 ];
 
-// 타워 건설 지점 (발밑 기준)
-const SPOTS = [
-  [298, 162], [212, 318], [360, 345], [452, 448], [524, 188],
-  [660, 188], [522, 295], [724, 345], [848, 345], [812, 448],
+// 타워 건설 지점 (발밑 기준) — 길 옆 잔디/석단
+const DEFAULT_SPOTS = [
+  [268, 158], [168, 328], [392, 298], [360, 478], [518, 158],
+  [648, 158], [538, 292], [768, 308], [200, 458], [798, 238],
 ];
-const SPOT_R = 30;
+let PATH = DEFAULT_PATH;
+let SPOTS = DEFAULT_SPOTS;
+const SPOT_R = 28;
 
 const ROLL_COST = 40;
 const MAX_WAVE = 100;
@@ -51,14 +52,35 @@ const ENEMY_DEFS = {
 
 // ==================== 경로 계산 ====================
 
-const segs = [];
+let segs = [];
 let PATH_LEN = 0;
-for (let i = 0; i < PATH.length - 1; i++) {
-  const [ax, ay] = PATH[i], [bx, by] = PATH[i + 1];
-  const len = Math.hypot(bx - ax, by - ay);
-  segs.push({ ax, ay, bx, by, len, acc: PATH_LEN });
-  PATH_LEN += len;
+function rebuildPath() {
+  segs = [];
+  PATH_LEN = 0;
+  for (let i = 0; i < PATH.length - 1; i++) {
+    const [ax, ay] = PATH[i], [bx, by] = PATH[i + 1];
+    const len = Math.hypot(bx - ax, by - ay);
+    if (len < 1) continue;
+    segs.push({ ax, ay, bx, by, len, acc: PATH_LEN });
+    PATH_LEN += len;
+  }
 }
+function applyMapLayout(mapKey) {
+  const C = window.DKCONTENT;
+  const m = C && C.maps && C.maps.find(x => x.key === mapKey);
+  PATH = (m && m.path && m.path.length > 1) ? m.path : DEFAULT_PATH;
+  SPOTS = (m && m.spots && m.spots.length) ? m.spots : DEFAULT_SPOTS;
+  rebuildPath();
+  if (S && S.towers) {
+    for (const t of S.towers) {
+      if (t.spot >= 0 && t.spot < SPOTS.length) {
+        t.x = SPOTS[t.spot][0];
+        t.y = SPOTS[t.spot][1];
+      }
+    }
+  }
+}
+rebuildPath();
 function posAt(d) {
   if (d <= 0) { const s = segs[0]; return { x: s.ax, y: s.ay, dx: (s.bx - s.ax) / s.len }; }
   for (const s of segs) {
@@ -95,14 +117,23 @@ const SRCS = {
   arcaneBurst: BASE + 'vfx/arcane-burst-2x2.png', frostBurst: BASE + 'vfx/frost-burst-2x2.png',
   lightningArc: BASE + 'vfx/lightning-arc.png', dieBomb: BASE + 'vfx/die-bomb.png',
   dieExplode: BASE + 'vfx/die-explode-2x2.png',
+  t1Atk: BASE + 'casual/towers/t1-attack-2x2.png', t2Atk: BASE + 'casual/towers/t2-attack-2x2.png',
+  t3Atk: BASE + 'casual/towers/t3-attack-2x2.png', t4Atk: BASE + 'casual/towers/t4-attack-2x2.png',
+  t5Atk: BASE + 'casual/towers/t5-attack-2x2.png', t6Atk: BASE + 'casual/towers/t6-attack-2x2.png',
 };
 if (window.DKCONTENT) {
   for (const m of DKCONTENT.maps) SRCS[m.key] = BASE + m.src;
   for (const f of Object.keys(DKCONTENT.towerSkins)) {
     for (const s of DKCONTENT.towerSkins[f]) SRCS[s.key] = BASE + s.src;
   }
-  for (const b of DKCONTENT.bases) SRCS[b.sprite] = BASE + b.src;
-  for (const b of DKCONTENT.bossBases) SRCS[b.sprite] = BASE + b.src;
+  for (const b of DKCONTENT.bases) {
+    SRCS[b.sprite] = BASE + b.src;
+    if (b.walk && b.walkSrc) SRCS[b.walk] = BASE + b.walkSrc;
+  }
+  for (const b of DKCONTENT.bossBases) {
+    SRCS[b.sprite] = BASE + b.src;
+    if (b.walk && b.walkSrc) SRCS[b.walk] = BASE + b.walkSrc;
+  }
 }
 const A = {};
 let corsBlocked = false;
@@ -121,7 +152,18 @@ function loadImage(src) {
   });
 }
 
-// 테두리에서 연결된 저알파(잔상) 픽셀을 플러드필로 제거
+function isKeyPixel(d, i) {
+  const r = d[i * 4], g = d[i * 4 + 1], b = d[i * 4 + 2], a = d[i * 4 + 3];
+  if (a <= 150) return true;
+  if (r > 180 && g < 90 && b > 80 && r - g > 80) return true;
+  const mx = r > g ? (r > b ? r : b) : (g > b ? g : b);
+  const mn = r < g ? (r < b ? r : b) : (g < b ? g : b);
+  const avg = (r + g + b) / 3;
+  if (avg > 185 && avg < 250 && mx - mn < 22) return true;
+  return false;
+}
+
+// 테두리에서 연결된 배경(잔상) 픽셀을 플러드필로 제거
 function keyImageData(id, w, h) {
   const d = id.data;
   const visited = new Uint8Array(w * h);
@@ -130,7 +172,7 @@ function keyImageData(id, w, h) {
   const tryPush = (i) => {
     if (visited[i]) return;
     visited[i] = 1;
-    if (d[i * 4 + 3] <= 150) { d[i * 4 + 3] = 0; queue[tail++] = i; }
+    if (isKeyPixel(d, i)) { d[i * 4 + 3] = 0; queue[tail++] = i; }
   };
   for (let x = 0; x < w; x++) { tryPush(x); tryPush((h - 1) * w + x); }
   for (let y = 0; y < h; y++) { tryPush(y * w); tryPush(y * w + w - 1); }
@@ -247,7 +289,12 @@ async function loadAssets(onProgress) {
   const sheets = [
     'miteWalk', 'runnerWalk', 'huskWalk', 'bossWalk', 'impact',
     'cannonBlast', 'arcaneBurst', 'frostBurst', 'dieExplode',
+    't1Atk', 't2Atk', 't3Atk', 't4Atk', 't5Atk', 't6Atk',
   ];
+  if (window.DKCONTENT) {
+    for (const b of DKCONTENT.bases) if (b.walk) sheets.push(b.walk);
+    for (const b of DKCONTENT.bossBases) if (b.walk) sheets.push(b.walk);
+  }
   const raw = ['map', 'keyart'];
   if (window.DKCONTENT) for (const m of DKCONTENT.maps) raw.push(m.key);
   let pi = 0;
@@ -308,13 +355,14 @@ function compositeFallback(f) {
 }
 
 function scaleTowerArt(art) {
-  const s = TOWER_DRAW_H / art.h;
+  const maxH = 96, maxW = 70;
+  const s = Math.min(maxH / art.h, maxW / art.w);
   const w = Math.max(1, Math.round(art.w * s));
-  const h = TOWER_DRAW_H;
+  const h = Math.max(1, Math.round(art.h * s));
   const cv = document.createElement('canvas');
   cv.width = w; cv.height = h;
   cv.getContext('2d').drawImage(art.cv, 0, 0, w, h);
-  return { cv, w, h, cx: w / 2, baseY: h - 7, dedicated: true };
+  return { cv, w, h, cx: w / 2, baseY: h - 5, dedicated: true };
 }
 
 function buildTowerSprites() {
@@ -338,6 +386,31 @@ function towerSpr(face, skin) {
   const pack = towerSprites[face] || [];
   if (!pack.length) return compositeFallback(face);
   return pack[((skin || 0) % pack.length + pack.length) % pack.length];
+}
+
+function towerAtkFrame(face, kick) {
+  const sheet = A['t' + face + 'Atk'];
+  if (!sheet || !sheet.length || kick <= 0) return null;
+  const fi = Math.min(sheet.length - 1, Math.floor((1 - kick) * sheet.length));
+  return sheet[fi];
+}
+
+function paintTowerBody(t, sp) {
+  const kick = t.kick || 0;
+  const fr = towerAtkFrame(t.face, kick);
+  if (fr && fr.cv) {
+    const maxH = 96, maxW = 70;
+    const s = Math.min(maxH / fr.h, maxW / fr.w);
+    const w = fr.w * s, h = fr.h * s;
+    ctx.drawImage(fr.cv, -w / 2, -(h - 5));
+    return;
+  }
+  const cx = sp.cx ?? TS_CX, by = sp.baseY ?? TS_BASE_Y;
+  const sc = 1 - kick * 0.04;
+  ctx.save();
+  ctx.scale(sc, sc);
+  ctx.drawImage(sp.cv, -cx, -by);
+  ctx.restore();
 }
 
 // ==================== 사운드 (WebAudio 신디사이저) ====================
@@ -971,16 +1044,28 @@ function buildWave(w) {
   const gap = Math.max(0.38, 0.88 - w * 0.006);
   const unlockAir = w >= 6;
   const unlockBurrow = w >= 10;
+  let pool;
+  if (C && C.bases) {
+    pool = C.bases.filter(b => {
+      if (b.move === 'air' && !unlockAir) return false;
+      if (b.move === 'burrow' && !unlockBurrow) return false;
+      if (w < 4 && b.hp >= 70) return false;
+      return true;
+    }).map(b => b.id);
+  } else {
+    pool = ['slime', 'shroom', 'pig', 'chicken', 'goblin', 'sheep', 'penguin', 'squirrel', 'frog'];
+  }
+  if (!pool.length) pool = ['slime'];
   for (let i = 0; i < n; i++) {
-    let pool = ['slime', 'shroom', 'pig', 'chicken', 'goblin', 'sheep', 'penguin', 'squirrel', 'frog', 'duck', 'koala', 'hedgehog', 'goat', 'otter', 'tanuki', 'wolf', 'mouse', 'alpaca', 'seahorse', 'beaver', 'kiwi', 'snake', 'capybara', 'axolotl', 'meerkat', 'quokka', 'hamster', 'platypus', 'weasel', 'zebra', 'lynx', 'tapir', 'deer', 'llama', 'monkey', 'lioncub', 'kangaroo', 'dodo', 'peacock'];
-    if (w >= 4) pool = pool.concat(['cactus', 'fox', 'raccoon', 'turtle', 'panda', 'catsamurai', 'boar', 'chameleon', 'porcupine', 'rhino', 'hippo', 'lemur', 'sloth', 'bison', 'walrus', 'skunk', 'camel', 'giraffe', 'crocodile', 'elephant', 'tiger', 'yak', 'ostrich', 'cheetah']);
-    if (unlockAir) pool = pool.concat(['bee', 'balloon', 'bat', 'owl', 'parrot', 'dragonfly', 'cloudsheep', 'humming', 'ladybug', 'fairy', 'crane', 'pigeon', 'moth', 'firefly', 'pelican', 'butterfly', 'jellyfish', 'toucan', 'flamingo', 'eagle', 'dragoncub', 'squid', 'swan', 'pegasus', 'puffin', 'kite', 'phoenix', 'griffin', 'hornet', 'firebird', 'seagull', 'wyvern', 'sparrow', 'unicorn', 'raven', 'hawk', 'macaw', 'locust']);
-    if (unlockBurrow) pool = pool.concat(['mole', 'worm', 'arma', 'beetle', 'crab', 'prairie', 'rabbit', 'badger', 'chipmunk', 'wormknight', 'vole', 'pangolin', 'ant', 'gecko', 'wombat', 'ferret', 'centipede', 'shrew', 'termite', 'molecricket', 'gopher', 'cicada', 'sandfish', 'spider', 'scorpion', 'pillbug']);
-    const type = pool[(i * 3 + w * 5) % pool.length];
+    let type = pool[(i * 3 + w * 5) % pool.length];
     const sid = ((w - 1) * 11 + i * 17) % 500;
     const sp = C && C.species[sid];
+    if (sp) {
+      const spBase = C.bases.find(b => b.id === sp.base);
+      if (spBase && pool.includes(spBase.id)) type = spBase.id;
+    }
     add(type, sp ? { speciesId: sid, name: sp.name, hue: sp.hue, hpMult: hpMult * sp.hpM, goldMult } : null);
-    t += gap * (type === 'bat' || type === 'bee' ? 0.72 : 1);
+    t += gap * ((type === 'bat' || type === 'bee' || type === 'wasp' || type === 'paperplane' || type === 'dandelion' || type === 'hornet') ? 0.72 : 1);
   }
   if (w % 5 === 0) {
     t += 1.2;
@@ -996,6 +1081,7 @@ function startWave() {
   if (S.waveActive || S.wave >= MAX_WAVE || S.phase !== 'playing') return;
   S.wave++;
   S.mapKey = (window.DKCONTENT && DKCONTENT.maps[(S.wave - 1) % DKCONTENT.maps.length].key) || 'map';
+  applyMapLayout(S.mapKey);
   S.spawnQ = buildWave(S.wave);
   S.waveActive = true;
   S.waveT = 0;
@@ -1411,9 +1497,8 @@ function draw() {
     if (ent.kind === 't') {
       const t = ent.o;
       const sp = towerSpr(t.face, t.skin);
-      const cx = sp.cx ?? TS_CX, by = sp.baseY ?? TS_BASE_Y;
       const kick = t.kick || 0;
-      if (t.kick > 0) t.kick = Math.max(0, t.kick - 0.08);
+      if (t.kick > 0) t.kick = Math.max(0, t.kick - 0.045);
       const face = heldFace();
       const mergeable = face && t.face === face && t.lvl < MAX_LVL;
       const hovered = mergeable && DRAG.active && DRAG.overSpot === t.spot;
@@ -1423,9 +1508,7 @@ function draw() {
         ctx.save();
         ctx.translate(t.x, t.y + 6);
         if (face && t.face !== face) ctx.globalAlpha = 0.72;
-        const sc = 1 - kick * 0.04;
-        ctx.scale(sc, sc);
-        ctx.drawImage(sp.cv, -cx, -by);
+        paintTowerBody(t, sp);
         ctx.restore();
       }
       if (!sp.dedicated) drawTopper(t);
@@ -1461,10 +1544,18 @@ function draw() {
         ctx.restore();
       }
       const spr = e.sprite && A[e.sprite];
+      const walk = e.def && e.def.walk && A[e.def.walk];
       ctx.save();
       if (e.hidden) ctx.globalAlpha = 0.22;
       if (e.hue) ctx.filter = `hue-rotate(${e.hue}deg)`;
-      if (spr && spr.cv) {
+      if (Array.isArray(walk) && walk.length) {
+        const fr = walk[Math.floor(e.animT * 5) % walk.length];
+        if (fr && fr.cv) {
+          const h = e.def.size;
+          const w = h * (fr.w / fr.h);
+          ctx.drawImage(fr.cv, p.x - w / 2, drawY - h, w, h);
+        }
+      } else if (spr && spr.cv) {
         const h = e.def.size;
         const w = h * (spr.w / spr.h);
         ctx.drawImage(spr.cv, p.x - w / 2, drawY - h, w, h);
@@ -2082,6 +2173,7 @@ $('ov-btn').addEventListener('click', () => {
   statsEl.classList.remove('hidden');
   hudEl.classList.remove('hidden');
   S.phase = 'playing';
+  applyMapLayout(S.mapKey || 'cMap1');
   syncUI();
 });
 
@@ -2139,6 +2231,7 @@ function drawLoading(pr) {
   $('ov-btn').disabled = false;
   $('ov-btn').textContent = '게임 시작';
   window.DK = S;
+  window.DKA = A;
   window.DKDIE = DIE;
   window.DKSLOT = SLOT;
   window.DKthrow = throwDie;
