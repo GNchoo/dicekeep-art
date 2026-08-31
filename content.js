@@ -113,6 +113,12 @@ window.DKCONTENT = (function () {
     { id: 'crocodile', name: '악어선원', hp: 82, speed: 36, gold: 12, dmg: 2, size: 52, move: 'ground', sprite: 'cCrocodile', src: 'casual/enemies/crocodile.png' },
     { id: 'lynx', name: '스라소니궁수', hp: 44, speed: 72, gold: 10, dmg: 1, size: 46, move: 'ground', sprite: 'cLynx', src: 'casual/enemies/lynx.png' },
     { id: 'tapir', name: '맥우산', hp: 58, speed: 40, gold: 10, dmg: 1, size: 50, move: 'ground', sprite: 'cTapir', src: 'casual/enemies/tapir.png' },
+    { id: 'elephant', name: '아기코끼리', hp: 95, speed: 32, gold: 14, dmg: 2, size: 56, move: 'ground', sprite: 'cElephant', src: 'casual/enemies/elephant.png' },
+    { id: 'tiger', name: '호랑이새끼', hp: 52, speed: 74, gold: 12, dmg: 2, size: 48, move: 'ground', sprite: 'cTiger', src: 'casual/enemies/tiger.png' },
+    { id: 'deer', name: '사슴정찰', hp: 40, speed: 70, gold: 9, dmg: 1, size: 46, move: 'ground', sprite: 'cDeer', src: 'casual/enemies/deer.png' },
+    { id: 'llama', name: '라마짐꾼', hp: 54, speed: 48, gold: 10, dmg: 1, size: 50, move: 'ground', sprite: 'cLlama', src: 'casual/enemies/llama.png' },
+    { id: 'monkey', name: '원숭이창병', hp: 36, speed: 76, gold: 9, dmg: 1, size: 42, move: 'ground', sprite: 'cMonkey', src: 'casual/enemies/monkey.png' },
+    { id: 'yak', name: '야크전사', hp: 88, speed: 34, gold: 13, dmg: 2, size: 54, move: 'ground', sprite: 'cYak', src: 'casual/enemies/yak.png' },
     { id: 'bee', name: '꿀벌창병', hp: 22, speed: 88, gold: 8, dmg: 1, size: 42, move: 'air', sprite: 'cBee', src: 'casual/enemies/bee.png' },
     { id: 'balloon', name: '풍선임프', hp: 30, speed: 64, gold: 9, dmg: 1, size: 50, move: 'air', sprite: 'cBalloon', src: 'casual/enemies/balloon.png' },
     { id: 'bat', name: '가방박쥐', hp: 26, speed: 96, gold: 9, dmg: 1, size: 40, move: 'air', sprite: 'cBat', src: 'casual/enemies/bat.png' },
@@ -143,6 +149,10 @@ window.DKCONTENT = (function () {
     { id: 'griffin', name: '아기그리핀', hp: 50, speed: 82, gold: 14, dmg: 2, size: 50, move: 'air', sprite: 'cGriffin', src: 'casual/enemies/griffin.png' },
     { id: 'hornet', name: '말벌정찰', hp: 22, speed: 108, gold: 10, dmg: 1, size: 40, move: 'air', sprite: 'cHornet', src: 'casual/enemies/hornet.png' },
     { id: 'firebird', name: '불새리본', hp: 34, speed: 90, gold: 12, dmg: 1, size: 46, move: 'air', sprite: 'cFirebird', src: 'casual/enemies/firebird.png' },
+    { id: 'seagull', name: '갈매기해적', hp: 26, speed: 88, gold: 10, dmg: 1, size: 44, move: 'air', sprite: 'cSeagull', src: 'casual/enemies/seagull.png' },
+    { id: 'wyvern', name: '아기와이번', hp: 52, speed: 76, gold: 14, dmg: 2, size: 50, move: 'air', sprite: 'cWyvern', src: 'casual/enemies/wyvern.png' },
+    { id: 'sparrow', name: '참새우편', hp: 18, speed: 106, gold: 8, dmg: 1, size: 38, move: 'air', sprite: 'cSparrow', src: 'casual/enemies/sparrow.png' },
+    { id: 'unicorn', name: '아기유니콘', hp: 48, speed: 84, gold: 14, dmg: 2, size: 50, move: 'air', sprite: 'cUnicorn', src: 'casual/enemies/unicorn.png' },
     { id: 'mole', name: '두더지광부', hp: 44, speed: 54, gold: 8, dmg: 1, size: 44, move: 'burrow', sprite: 'cMole', src: 'casual/enemies/mole.png' },
     { id: 'worm', name: '모래벌레', hp: 55, speed: 40, gold: 10, dmg: 2, size: 50, move: 'burrow', sprite: 'cWorm', src: 'casual/enemies/worm.png' },
     { id: 'arma', name: '아르마딜로', hp: 70, speed: 38, gold: 11, dmg: 2, size: 48, move: 'burrow', sprite: 'cArma', src: 'casual/enemies/arma.png' },
@@ -165,6 +175,8 @@ window.DKCONTENT = (function () {
     { id: 'molecricket', name: '땅강아지', hp: 40, speed: 52, gold: 9, dmg: 1, size: 42, move: 'burrow', sprite: 'cMolecricket', src: 'casual/enemies/molecricket.png' },
     { id: 'gopher', name: '고퍼광부', hp: 46, speed: 54, gold: 9, dmg: 1, size: 42, move: 'burrow', sprite: 'cGopher', src: 'casual/enemies/gopher.png' },
     { id: 'cicada', name: '매미약충', hp: 34, speed: 50, gold: 8, dmg: 1, size: 40, move: 'burrow', sprite: 'cCicada', src: 'casual/enemies/cicada.png' },
+    { id: 'sandfish', name: '모래고기', hp: 38, speed: 58, gold: 9, dmg: 1, size: 42, move: 'burrow', sprite: 'cSandfish', src: 'casual/enemies/sandfish.png' },
+    { id: 'spider', name: '함정거미', hp: 44, speed: 48, gold: 10, dmg: 1, size: 44, move: 'burrow', sprite: 'cSpider', src: 'casual/enemies/spider.png' },
   ];
   const bossBases = [
     { id: 'kingSlime', name: '슬라임왕', hp: 720, speed: 28, gold: 90, dmg: 4, size: 86, move: 'ground', sprite: 'cKingSlime', src: 'casual/bosses/king-slime.png' },
@@ -226,6 +238,14 @@ window.DKCONTENT = (function () {
     { id: 'phoenixKing', name: '불사조왕', hp: 1280, speed: 30, gold: 156, dmg: 6, size: 94, move: 'air', sprite: 'cPhoenixKing', src: 'casual/bosses/phoenix-king.png' },
     { id: 'griffinEmperor', name: '그리핀황제', hp: 1360, speed: 28, gold: 158, dmg: 6, size: 96, move: 'air', sprite: 'cGriffinEmperor', src: 'casual/bosses/griffin-emperor.png' },
     { id: 'hornetQueen', name: '말벌여왕', hp: 980, speed: 34, gold: 138, dmg: 5, size: 88, move: 'air', sprite: 'cHornetQueen', src: 'casual/bosses/hornet-queen.png' },
+    { id: 'elephantRaja', name: '코끼리라자', hp: 1500, speed: 18, gold: 162, dmg: 6, size: 100, move: 'ground', sprite: 'cElephantRaja', src: 'casual/bosses/elephant-raja.png' },
+    { id: 'tigerRaja', name: '호랑이라자', hp: 1220, speed: 30, gold: 150, dmg: 6, size: 92, move: 'ground', sprite: 'cTigerRaja', src: 'casual/bosses/tiger-raja.png' },
+    { id: 'stagKing', name: '사슴왕', hp: 1120, speed: 28, gold: 142, dmg: 5, size: 90, move: 'ground', sprite: 'cStagKing', src: 'casual/bosses/stag-king.png' },
+    { id: 'llamaKing', name: '라마왕', hp: 1160, speed: 26, gold: 144, dmg: 5, size: 92, move: 'ground', sprite: 'cLlamaKing', src: 'casual/bosses/llama-king.png' },
+    { id: 'monkeyKing', name: '원숭이왕', hp: 1080, speed: 32, gold: 146, dmg: 5, size: 88, move: 'ground', sprite: 'cMonkeyKing', src: 'casual/bosses/monkey-king.png' },
+    { id: 'yakChief', name: '야크족장', hp: 1380, speed: 20, gold: 154, dmg: 6, size: 96, move: 'ground', sprite: 'cYakChief', src: 'casual/bosses/yak-chief.png' },
+    { id: 'wyvernKing', name: '와이번왕', hp: 1320, speed: 28, gold: 158, dmg: 6, size: 94, move: 'air', sprite: 'cWyvernKing', src: 'casual/bosses/wyvern-king.png' },
+    { id: 'unicornQueen', name: '유니콘여왕', hp: 1200, speed: 30, gold: 152, dmg: 5, size: 92, move: 'air', sprite: 'cUnicornQueen', src: 'casual/bosses/unicorn-queen.png' },
   ];
   const ADJ = ['꼬마','숲','사탕','해변','눈꽃','달빛','황금','그림자','불꽃','이슬','돌','바람','꿀','구름','별','호박','산호','이끼','진주','장난','민트','코코아','벚꽃','밤하늘','햇살'];
   const RANK = ['신병','정찰','순찰','특공','정예','대장','파수','약탈','유랑','친위'];
