@@ -121,15 +121,10 @@ window.DKCONTENT = (function () {
     m.path = (L && L.path && L.path.length > 1) ? L.path.map((p) => p.slice()) : PATH_S.map((p) => p.slice());
     m.spots = (L && L.spots && L.spots.length > 0) ? L.spots.map((p) => p.slice()) : SPOTS_S.map((p) => p.slice());
   });
-  const skin = (f, letter) => ({ key: `cT${f}${letter}`, src: `casual/towers/t${f}-${letter}.png` });
-  const towerSkins = {
-    1: [skin(1, 'a')],
-    2: [skin(2, 'a')],
-    3: [skin(3, 'a')],
-    4: [skin(4, 'a')],
-    5: [skin(5, 'a')],
-    6: [skin(6, 'a')],
-  };
+  const skin = (f, letter) => ({ key: `cT${f}${letter}`, src: `casual/towers/t${f}-${letter}.png`, letter });
+  const SKIN_LETTERS = ['a', 'b', 'c', 'd', 'e'];
+  const towerSkins = {};
+  for (let f = 1; f <= 6; f++) towerSkins[f] = SKIN_LETTERS.map((l) => skin(f, l));
   const bases = [
     { id: 'slime', name: '슬라임', hp: 28, speed: 50, gold: 5, dmg: 1, size: 40, move: 'ground', sprite: 'cSlime', src: 'casual/enemies/slime.png', walk: 'cSlimeWalk', walkSrc: 'casual/enemies/slime-walk-2x2.png' },
     { id: 'shroom', name: '버섯돌이', hp: 36, speed: 42, gold: 6, dmg: 1, size: 44, move: 'ground', sprite: 'cShroom', src: 'casual/enemies/shroom.png', walk: 'cShroomWalk', walkSrc: 'casual/enemies/shroom-walk-2x2.png' },
@@ -754,5 +749,34 @@ window.DKCONTENT = (function () {
       hpM: 1 + i * 0.08,
     });
   }
-  return { maps, towerSkins, bases, bossBases, species, bosses, mapCount: 50, stageCount: 100 };
+  // ===== 50 스테이지 (맵당 1개) =====
+  // 각 스테이지: 고정 맵 1개, 웨이브 수(마지막 웨이브=보스), 테마 몬스터풀(땅/공중/땅굴 혼합), 보스, 젬 보상.
+  const groundIds = bases.filter((b) => b.move === 'ground').map((b) => b.id);
+  const airIds = bases.filter((b) => b.move === 'air').map((b) => b.id);
+  const burrowIds = bases.filter((b) => b.move === 'burrow').map((b) => b.id);
+  const pickN = (arr, off, cnt, step) => {
+    const r = [];
+    for (let k = 0; k < cnt; k++) r.push(arr[(off + k * step) % arr.length]);
+    return r;
+  };
+  const stages = maps.map((m, i) => {
+    const n = i + 1;
+    // 항상 땅 5 + 공중 3 + 땅굴 2 = 10종 (초반 웨이브에 땅 적이 보장되도록 땅을 앞에 배치)
+    const pool = [
+      ...pickN(groundIds, i * 4, 5, 3),
+      ...pickN(airIds, i * 3, 3, 2),
+      ...pickN(burrowIds, i * 2, 2, 2),
+    ];
+    return {
+      n,
+      mapKey: m.key,
+      name: m.name,
+      waves: 8 + Math.floor(i / 5),      // 8 ~ 17
+      bases: pool,
+      bossIndex: i % bossBases.length,
+      gem: 8 + Math.floor(i / 2),        // 최초 클리어 보상 젬
+    };
+  });
+
+  return { maps, towerSkins, skinLetters: SKIN_LETTERS, bases, bossBases, species, bosses, stages, mapCount: 50, stageCount: 50 };
 })();

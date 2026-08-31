@@ -474,16 +474,75 @@ const SFX = {
 // ==================== 게임 상태 ====================
 
 const S = {
-  phase: 'loading', // loading | title | playing | over | win
+  phase: 'loading', // loading | title | lobby | stageSelect | shop | playing | over | win | stageClear
   gold: START_GOLD, lives: START_LIVES, wave: 0,
   enemies: [], towers: [], projs: [], beams: [], fxs: [], texts: [],
   spawnQ: [], waveActive: false, autoT: 0, waveT: 0,
   heldDie: 0, selTower: null,
   mapKey: 'cMap1',
+  stage: 1, stageData: null, stageWaves: 10,
   speed: 1, muted: false,
   time: 0, hurtT: 0,
   mouse: { x: -100, y: -100 },
 };
+
+// ==================== 저장 / 진행도 (localStorage) ====================
+const SAVE_KEY = 'DKSAVE';
+const TOWER_COST = { 1: 0, 2: 0, 3: 0, 4: 30, 5: 55, 6: 90 }; // 젬으로 해금 (1~3 기본)
+const SKIN_COST = 20; // 스킨 1종 해금 비용(젬)
+
+function defaultSave() {
+  const skins = {}, equip = {};
+  for (let f = 1; f <= 6; f++) { skins[f] = ['a']; equip[f] = 'a'; }
+  return { cleared: [], gems: 40, unlockedTowers: [1, 2, 3], unlockedSkins: skins, equippedSkin: equip };
+}
+let SAVE = defaultSave();
+function loadSave() {
+  try {
+    const raw = localStorage.getItem(SAVE_KEY);
+    if (!raw) { SAVE = defaultSave(); return; }
+    const s = JSON.parse(raw);
+    const d = defaultSave();
+    SAVE = {
+      cleared: Array.isArray(s.cleared) ? s.cleared : d.cleared,
+      gems: typeof s.gems === 'number' ? s.gems : d.gems,
+      unlockedTowers: Array.isArray(s.unlockedTowers) && s.unlockedTowers.length ? s.unlockedTowers : d.unlockedTowers,
+      unlockedSkins: Object.assign(d.unlockedSkins, s.unlockedSkins || {}),
+      equippedSkin: Object.assign(d.equippedSkin, s.equippedSkin || {}),
+    };
+    // 기본 3종은 항상 해금 보장
+    for (const f of [1, 2, 3]) if (!SAVE.unlockedTowers.includes(f)) SAVE.unlockedTowers.push(f);
+    SAVE.unlockedTowers.sort((a, b) => a - b);
+  } catch (e) { SAVE = defaultSave(); }
+}
+function saveSave() {
+  try { localStorage.setItem(SAVE_KEY, JSON.stringify(SAVE)); } catch (e) { /* 무시 */ }
+}
+function stageUnlocked(n) { return n === 1 || SAVE.cleared.includes(n - 1); }
+function stageCleared(n) { return SAVE.cleared.includes(n); }
+
+// 굴리기 결과를 해금된 눈으로 제한
+function unlockedFaces() {
+  const u = (SAVE.unlockedTowers || []).filter((f) => f >= 1 && f <= 6);
+  return u.length ? u : [1];
+}
+function pickUnlockedFace() {
+  const u = unlockedFaces();
+  return u[Math.floor(Math.random() * u.length)];
+}
+function nearestUnlockedFace(v) {
+  const u = unlockedFaces();
+  if (u.includes(v)) return v;
+  let best = u[0], bd = Infinity;
+  for (const f of u) { const d = Math.abs(f - v); if (d < bd || (d === bd && f < best)) { bd = d; best = f; } }
+  return best;
+}
+function equippedSkinIndex(face) {
+  const letters = (window.DKCONTENT && DKCONTENT.skinLetters) || ['a', 'b', 'c', 'd', 'e'];
+  const eq = (SAVE.equippedSkin && SAVE.equippedSkin[face]) || 'a';
+  const i = letters.indexOf(eq);
+  return i < 0 ? 0 : i;
+}
 
 // ==================== 3D 회전 수학 (3x3 행렬, 행 우선) ====================
 
@@ -723,7 +782,7 @@ function rollByButton() {
   S.gold -= ROLL_COST;
   SLOT.active = true;
   SLOT.t = 0; SLOT.t2 = 0; SLOT.phase = 0; SLOT.sndT = 0;
-  SLOT.final = 1 + Math.floor(Math.random() * 6);
+  SLOT.final = pickUnlockedFace();
   SLOT.R = m3mul(m3axisAngle(Math.random(), Math.random(), Math.random() * 0.5 + 0.1, Math.random() * 6), TRAY_TILT);
   SLOT.w = [
     (Math.random() < 0.5 ? -1 : 1) * (26 + Math.random() * 16),
@@ -917,7 +976,7 @@ function updateDie(dt) {
 
     // 정지 판정 → 위를 향한 면이 결과
     if (spd < 26 && DIE.z <= 0 && Math.abs(DIE.vz) < 40) {
-      DIE.final = DIE.forceFinal || topFace(DIE.R);
+      DIE.final = nearestUnlockedFace(DIE.forceFinal || topFace(DIE.R));
       DIE.forceFinal = 0;
       computeSettleTarget(DIE.final);
       DIE.state = 'settle';
@@ -1033,61 +1092,108 @@ function drawDie() {
 
 // ==================== 웨이브 구성 ====================
 
+const FAST_AIR = new Set(['bat', 'bee', 'wasp', 'paperplane', 'dandelion', 'hornet', 'hummingbird', 'swift', 'sparrow']);
+
+// 스테이지 스코프 웨이브: 한 판 = 선택 스테이지의 웨이브들. 맵은 스테이지 시작 시 고정.
 function buildWave(w) {
   const q = [];
   let t = 0.45;
-  const hpMult = Math.pow(1.085, w - 1);
-  const goldMult = 1 + w * 0.035;
   const C = window.DKCONTENT;
+  const sd = S.stageData;
+  const totalW = S.stageWaves;
+  const stageScale = Math.pow(1.16, S.stage - 1);
+  const hpMult = Math.pow(1.09, w - 1) * stageScale;
+  const goldMult = 1 + w * 0.03 + S.stage * 0.01;
   const add = (type, extra) => { q.push(Object.assign({ type, t, hpMult, goldMult }, extra || {})); };
-  const n = 7 + Math.floor(w * 1.15);
-  const gap = Math.max(0.38, 0.88 - w * 0.006);
-  const unlockAir = w >= 6;
-  const unlockBurrow = w >= 10;
-  let pool;
+  const n = 8 + Math.floor(w * 1.2) + Math.floor(S.stage / 3);
+  const gap = Math.max(0.34, 0.9 - w * 0.01);
+  const unlockAir = w >= 4;
+  const unlockBurrow = w >= 6;
+  let pool = (sd && sd.bases) ? sd.bases.slice() : ['slime', 'chicken', 'goblin'];
   if (C && C.bases) {
-    pool = C.bases.filter(b => {
+    pool = pool.filter((id) => {
+      const b = C.bases.find((x) => x.id === id);
+      if (!b) return false;
       if (b.move === 'air' && !unlockAir) return false;
       if (b.move === 'burrow' && !unlockBurrow) return false;
-      if (w < 4 && b.hp >= 70) return false;
       return true;
-    }).map(b => b.id);
-  } else {
-    pool = ['slime', 'shroom', 'pig', 'chicken', 'goblin', 'sheep', 'penguin', 'squirrel', 'frog'];
+    });
   }
   if (!pool.length) pool = ['slime'];
+  const isBossWave = w >= totalW;
   for (let i = 0; i < n; i++) {
     let type = pool[(i * 3 + w * 5) % pool.length];
-    const sid = ((w - 1) * 11 + i * 17) % 500;
+    const sid = ((S.stage - 1) * 37 + (w - 1) * 11 + i * 17) % 500;
     const sp = C && C.species[sid];
     if (sp) {
-      const spBase = C.bases.find(b => b.id === sp.base);
+      const spBase = C.bases.find((b) => b.id === sp.base);
       if (spBase && pool.includes(spBase.id)) type = spBase.id;
     }
     add(type, sp ? { speciesId: sid, name: sp.name, hue: sp.hue, hpMult: hpMult * sp.hpM, goldMult } : null);
-    t += gap * ((type === 'bat' || type === 'bee' || type === 'wasp' || type === 'paperplane' || type === 'dandelion' || type === 'hornet') ? 0.72 : 1);
+    t += gap * (FAST_AIR.has(type) ? 0.72 : 1);
   }
-  if (w % 5 === 0) {
+  if (isBossWave) {
     t += 1.2;
-    const bid = Math.min(99, Math.floor(w / 5) - 1);
-    const boss = C && C.bosses[bid];
-    const btype = C ? C.bossBases[bid % C.bossBases.length].id : 'boss';
-    add(btype, boss ? { name: boss.name, hue: boss.hue, hpMult: hpMult * boss.hpM, isBoss: true } : { isBoss: true });
+    const bi = sd ? sd.bossIndex : 0;
+    const boss = C && C.bosses[bi % C.bosses.length];
+    const bbase = C && C.bossBases[bi % C.bossBases.length];
+    const btype = bbase ? bbase.id : 'boss';
+    add(btype, boss ? { name: boss.name, hue: boss.hue, hpMult: hpMult * (1.15 + S.stage * 0.04), isBoss: true } : { isBoss: true });
   }
   return q;
 }
 
 function startWave() {
-  if (S.waveActive || S.wave >= MAX_WAVE || S.phase !== 'playing') return;
+  if (S.waveActive || S.wave >= S.stageWaves || S.phase !== 'playing') return;
   S.wave++;
-  S.mapKey = (window.DKCONTENT && DKCONTENT.maps[(S.wave - 1) % DKCONTENT.maps.length].key) || 'map';
-  applyMapLayout(S.mapKey);
   S.spawnQ = buildWave(S.wave);
   S.waveActive = true;
   S.waveT = 0;
   S.autoT = 0;
   SFX.wave();
   syncUI();
+}
+
+// 선택한 스테이지 시작 (로비/스테이지선택에서 호출)
+function startStage(n) {
+  const C = window.DKCONTENT;
+  const sd = C && C.stages && C.stages[n - 1];
+  if (!sd) return;
+  S.stage = n;
+  S.stageData = sd;
+  S.stageWaves = sd.waves;
+  S.mapKey = sd.mapKey;
+  S.gold = START_GOLD;
+  S.lives = START_LIVES;
+  S.wave = 0;
+  S.enemies = []; S.towers = []; S.projs = []; S.beams = []; S.fxs = []; S.texts = [];
+  S.spawnQ = []; S.waveActive = false; S.autoT = 0; S.waveT = 0;
+  S.heldDie = 0; S.selTower = null;
+  DIE.state = 'tray'; DIE.z = 0; DIE.final = 0;
+  SLOT.active = false;
+  applyMapLayout(sd.mapKey);
+  S.phase = 'playing';
+  showScreen('playing');
+  syncUI();
+}
+
+// 스테이지 클리어 처리: 젬 보상 + 다음 스테이지 해금 + 저장
+function onStageClear() {
+  S.phase = 'stageClear';
+  S.waveActive = false;
+  const sd = S.stageData;
+  const first = !SAVE.cleared.includes(S.stage);
+  const reward = first ? sd.gem : Math.max(2, Math.ceil(sd.gem / 3));
+  SAVE.gems += reward;
+  if (first) SAVE.cleared.push(S.stage);
+  saveSave();
+  SFX.win();
+  const nextInfo = S.stage < 50 ? `다음 스테이지 <b>${S.stage + 1}</b> 해금!` : '모든 스테이지 정복!';
+  showOverlay(
+    '스테이지 클리어!',
+    `<b>${sd.name}</b> (스테이지 ${S.stage}) 완료!<br>젬 <b>+${reward}</b> 획득 ${first ? '(최초 클리어 보상)' : '(재도전 보상)'}<br>${nextInfo}`,
+    '스테이지 선택'
+  );
 }
 
 // ==================== 전투 로직 ====================
@@ -1311,15 +1417,15 @@ function update(dt) {
   // 웨이브 종료 판정
   if (S.waveActive && S.spawnQ.length === 0 && S.enemies.length === 0) {
     S.waveActive = false;
-    const bonus = 25 + S.wave * 3;
+    const bonus = 20 + S.wave * 3 + S.stage * 2;
     S.gold += bonus;
     S.texts.push({ str: '웨이브 클리어! +' + bonus + 'G', x: W / 2, y: H / 2 - 40, t: 0, color: '#a0ffc8' });
     SFX.coin();
-    if (S.wave >= MAX_WAVE) { gameEnd(true); return; }
+    if (S.wave >= S.stageWaves) { onStageClear(); return; }
     S.autoT = INTERMISSION;
     syncUI();
   }
-  if (!S.waveActive && S.wave > 0 && S.wave < MAX_WAVE && S.autoT > 0) {
+  if (!S.waveActive && S.wave > 0 && S.wave < S.stageWaves && S.autoT > 0) {
     S.autoT -= dt;
     if (S.autoT <= 0) startWave();
     else syncWaveBtn();
@@ -1329,12 +1435,13 @@ function update(dt) {
 function gameEnd(win) {
   S.phase = win ? 'win' : 'over';
   (win ? SFX.win : SFX.lose)();
+  const sd = S.stageData;
   showOverlay(
     win ? '승리!' : '패배...',
     win
-      ? `크리스탈을 지켜냈습니다!<br>웨이브 ${MAX_WAVE}까지 모두 격퇴 — 남은 목숨 <b>${S.lives}</b>`
-      : `크리스탈이 파괴되었습니다.<br>웨이브 <b>${S.wave}</b>에서 함락 — 다시 도전해 보세요!`,
-    '다시 시작'
+      ? `크리스탈을 지켜냈습니다!<br>남은 목숨 <b>${S.lives}</b>`
+      : `크리스탈이 파괴되었습니다.<br><b>${sd ? sd.name : ''}</b> 스테이지 ${S.stage}, 웨이브 <b>${S.wave}</b>에서 함락 — 다시 도전해 보세요!`,
+    '스테이지 선택'
   );
 }
 
@@ -1790,7 +1897,7 @@ function draw() {
   }
 
   // 웨이브 예고
-  if (S.phase === 'playing' && !S.waveActive && S.wave < MAX_WAVE) {
+  if (S.phase === 'playing' && !S.waveActive && S.wave < S.stageWaves) {
     ctx.save();
     ctx.fillStyle = 'rgba(255,240,200,0.9)';
     ctx.font = 'bold 17px sans-serif';
@@ -1819,7 +1926,7 @@ let diceURLs = [];
 function syncUI() {
   $('gold-val').textContent = S.gold;
   $('lives-val').textContent = S.lives;
-  $('wave-val').textContent = `웨이브 ${S.wave} / ${MAX_WAVE}`;
+  $('wave-val').textContent = `S${S.stage} · 웨이브 ${S.wave} / ${S.stageWaves}`;
   const heldInfo = $('held-info');
   if (S.heldDie) {
     const def = TOWER_DEFS[S.heldDie];
@@ -1845,7 +1952,7 @@ function syncUI() {
 }
 
 function syncWaveBtn() {
-  if (S.phase !== 'playing' || (S.wave >= MAX_WAVE && !S.waveActive)) { waveBtn.disabled = true; waveBtn.textContent = '웨이브 종료'; return; }
+  if (S.phase !== 'playing' || (S.wave >= S.stageWaves && !S.waveActive)) { waveBtn.disabled = true; waveBtn.textContent = '웨이브 종료'; return; }
   waveBtn.disabled = S.waveActive;
   waveBtn.textContent = S.waveActive
     ? `웨이브 ${S.wave} 진행 중`
@@ -1875,7 +1982,156 @@ function showOverlay(title, descHTML, btnLabel) {
   $('ov-title').textContent = title;
   $('ov-desc').innerHTML = descHTML;
   $('ov-btn').textContent = btnLabel;
+  $('lobby').classList.add('hidden');
+  $('stage-select').classList.add('hidden');
+  $('shop').classList.add('hidden');
+  statsEl.classList.add('hidden');
+  hudEl.classList.add('hidden');
   overlayEl.classList.remove('hidden');
+}
+
+// ==================== 화면 전환 (로비 / 스테이지선택 / 상점 / 플레이) ====================
+function showScreen(name) {
+  overlayEl.classList.add('hidden');
+  $('lobby').classList.add('hidden');
+  $('stage-select').classList.add('hidden');
+  $('shop').classList.add('hidden');
+  statsEl.classList.add('hidden');
+  hudEl.classList.add('hidden');
+  if (name === 'title' || name === 'result') overlayEl.classList.remove('hidden');
+  else if (name === 'lobby') { $('lobby').classList.remove('hidden'); renderLobby(); }
+  else if (name === 'stageSelect') { $('stage-select').classList.remove('hidden'); renderStageSelect(); }
+  else if (name === 'shop') { $('shop').classList.remove('hidden'); renderShop(); }
+  else if (name === 'playing') { statsEl.classList.remove('hidden'); hudEl.classList.remove('hidden'); }
+}
+function gotoLobby() { S.phase = 'lobby'; showScreen('lobby'); }
+function gotoStageSelect() { S.phase = 'stageSelect'; showScreen('stageSelect'); }
+function gotoShop() { S.phase = 'shop'; showScreen('shop'); }
+
+function renderLobby() {
+  $('lobby-gems').textContent = SAVE.gems;
+  $('lobby-progress').innerHTML = `클리어 <b>${SAVE.cleared.length}</b> / 50 스테이지 · 해금 타워 <b>${unlockedFaces().length}</b>/6`;
+}
+
+function renderStageSelect() {
+  $('ss-gems').textContent = SAVE.gems;
+  const grid = $('stage-grid');
+  grid.innerHTML = '';
+  const C = window.DKCONTENT;
+  if (!C || !C.stages) return;
+  for (let n = 1; n <= 50; n++) {
+    const sd = C.stages[n - 1];
+    const cell = document.createElement('button');
+    cell.className = 'stage-cell';
+    const unlocked = stageUnlocked(n);
+    const cleared = stageCleared(n);
+    if (!unlocked) cell.classList.add('locked');
+    if (cleared) cell.classList.add('cleared');
+    if (n === S.stage) cell.classList.add('current');
+    let html = `<span>${n}</span>`;
+    if (cleared) html += '<span class="clear-mark">&#10003;</span>';
+    if (!unlocked) html += '<span class="lock">&#128274;</span>';
+    html += `<span class="cell-name">${sd.name}</span>`;
+    cell.innerHTML = html;
+    if (unlocked) cell.addEventListener('click', () => startStage(n));
+    grid.appendChild(cell);
+  }
+}
+
+function skinThumb(key) {
+  const art = A[key];
+  if (art && art.cv && art.h > 8) { try { return thumbURL(art, 64, SRCS[key]); } catch (e) { /* fallback */ } }
+  return SRCS[key];
+}
+
+function renderShop() {
+  $('shop-gems').textContent = SAVE.gems;
+  const C = window.DKCONTENT;
+  if (!C) return;
+  const towersEl = $('shop-towers');
+  towersEl.innerHTML = '';
+  for (let f = 1; f <= 6; f++) {
+    const def = TOWER_DEFS[f];
+    const owned = SAVE.unlockedTowers.includes(f);
+    const cost = TOWER_COST[f] || 0;
+    const card = document.createElement('div');
+    card.className = 'shop-tower' + (owned ? '' : ' locked');
+    const img = diceURLs[f - 1] || SRCS['d' + f];
+    card.innerHTML = `<img src="${img}" alt=""><div class="t-name">${f}눈 · ${def.name}</div>`;
+    if (owned) {
+      const s = document.createElement('div'); s.className = 'owned'; s.textContent = '보유중';
+      card.appendChild(s);
+    } else {
+      const btn = document.createElement('button');
+      btn.innerHTML = `&#128142; ${cost}`;
+      btn.disabled = SAVE.gems < cost;
+      btn.addEventListener('click', () => buyTower(f, cost));
+      card.appendChild(btn);
+    }
+    towersEl.appendChild(card);
+  }
+  const skinsEl = $('shop-skins');
+  skinsEl.innerHTML = '';
+  const letters = C.skinLetters || ['a', 'b', 'c', 'd', 'e'];
+  for (let f = 1; f <= 6; f++) {
+    const face = document.createElement('div');
+    face.className = 'skin-face';
+    face.innerHTML = `<div class="face-title">${f}눈 · ${TOWER_DEFS[f].name}</div>`;
+    const list = document.createElement('div');
+    list.className = 'skin-list';
+    (C.towerSkins[f] || []).forEach((sk, idx) => {
+      const letter = sk.letter || letters[idx];
+      const ownedSkin = (SAVE.unlockedSkins[f] || []).includes(letter);
+      const equipped = (SAVE.equippedSkin[f] || 'a') === letter;
+      const cell = document.createElement('div');
+      cell.className = 'skin-cell' + (equipped ? ' equipped' : '') + (ownedSkin ? '' : ' faded');
+      cell.innerHTML = `<img src="${skinThumb(sk.key)}" alt="">`;
+      const btn = document.createElement('button');
+      if (!ownedSkin) {
+        btn.innerHTML = `&#128142; ${SKIN_COST}`;
+        btn.disabled = SAVE.gems < SKIN_COST;
+        btn.addEventListener('click', () => buySkin(f, letter));
+      } else if (equipped) {
+        btn.textContent = '장착됨';
+        btn.disabled = true;
+      } else {
+        btn.textContent = '장착';
+        btn.addEventListener('click', () => equipSkin(f, letter));
+      }
+      cell.appendChild(btn);
+      list.appendChild(cell);
+    });
+    face.appendChild(list);
+    skinsEl.appendChild(face);
+  }
+}
+
+function buyTower(f, cost) {
+  if (SAVE.unlockedTowers.includes(f) || SAVE.gems < cost) return;
+  SAVE.gems -= cost;
+  SAVE.unlockedTowers.push(f);
+  SAVE.unlockedTowers.sort((a, b) => a - b);
+  saveSave();
+  SFX.coin();
+  renderShop();
+}
+function buySkin(f, letter) {
+  if (SAVE.gems < SKIN_COST) return;
+  const arr = SAVE.unlockedSkins[f] || (SAVE.unlockedSkins[f] = []);
+  if (arr.includes(letter)) return;
+  SAVE.gems -= SKIN_COST;
+  arr.push(letter);
+  SAVE.equippedSkin[f] = letter;
+  saveSave();
+  SFX.coin();
+  renderShop();
+}
+function equipSkin(f, letter) {
+  if (!(SAVE.unlockedSkins[f] || []).includes(letter)) return;
+  SAVE.equippedSkin[f] = letter;
+  saveSave();
+  SFX.place();
+  renderShop();
 }
 
 // ==================== 입력 ====================
@@ -1904,7 +2160,7 @@ function tryPlace(idx) {
   const def = TOWER_DEFS[S.heldDie];
   const [sx, sy] = SPOTS[idx];
   if (!existing) {
-    S.towers.push({ face: S.heldDie, def, lvl: 1, spot: idx, x: sx, y: sy, cd: 0, skin: (S.wave + idx) % 8 });
+    S.towers.push({ face: S.heldDie, def, lvl: 1, spot: idx, x: sx, y: sy, cd: 0, skin: equippedSkinIndex(S.heldDie) });
     S.fxs.push({ kind: 'ring', x: sx, y: sy - 30, t: 0, dur: 0.5, size: 70, color: def.color });
     S.fxs.push({ kind: 'impact', x: sx, y: sy - 30, t: 0, dur: 0.28, size: 70 });
     S.texts.push({ str: def.name + '!', x: sx, y: sy - 90, t: 0, color: def.color });
@@ -2168,14 +2424,15 @@ $('mute-btn').addEventListener('click', () => {
 $('ov-btn').addEventListener('click', () => {
   if (S.phase === 'loading') return;
   audio();
-  if (S.phase === 'over' || S.phase === 'win') { location.reload(); return; }
-  overlayEl.classList.add('hidden');
-  statsEl.classList.remove('hidden');
-  hudEl.classList.remove('hidden');
-  S.phase = 'playing';
-  applyMapLayout(S.mapKey || 'cMap1');
-  syncUI();
+  if (S.phase === 'over' || S.phase === 'win' || S.phase === 'stageClear') { gotoStageSelect(); return; }
+  // 타이틀 → 로비
+  gotoLobby();
 });
+$('btn-stage-select').addEventListener('click', () => { audio(); gotoStageSelect(); });
+$('btn-shop').addEventListener('click', () => { audio(); gotoShop(); });
+$('ss-back').addEventListener('click', () => gotoLobby());
+$('shop-back').addEventListener('click', () => gotoLobby());
+$('exit-btn').addEventListener('click', () => { if (S.phase === 'playing') gotoStageSelect(); });
 
 // ==================== 메인 루프 ====================
 
@@ -2227,6 +2484,7 @@ function drawLoading(pr) {
   if (corsBlocked) {
     $('ov-desc').innerHTML += '<br><span style="color:#ff9f9f">⚠ file:// 로 열면 이미지 배경 보정이 생략됩니다. start.bat 또는 로컬 서버 사용을 권장합니다.</span>';
   }
+  loadSave();
   S.phase = 'title';
   $('ov-btn').disabled = false;
   $('ov-btn').textContent = '게임 시작';
