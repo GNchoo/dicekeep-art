@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>주사위 성채 — 맵 좌표 에디터</title>
+<link rel="icon" href="ui/gold.png" />
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #14110d; color: #e9dfc4;
+    font-family: "Segoe UI", system-ui, sans-serif; font-size: 14px;
+  }
+  header {
+    display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+    padding: 10px 14px; background: #1d1912; border-bottom: 1px solid #3a3020;
+    position: sticky; top: 0; z-index: 10;
+  }
+  header h1 { font-size: 16px; margin: 0 12px 0 0; color: #e8b64a; }
+  .group { display: flex; gap: 6px; align-items: center; }
+  select, button {
+    background: #2a2417; color: #e9dfc4; border: 1px solid #5a4a2c;
+    border-radius: 6px; padding: 6px 10px; font-size: 13px; cursor: pointer;
+  }
+  button:hover { background: #3a3018; }
+  button.active { background: #7a5e1e; border-color: #e8b64a; color: #fff; }
+  button.warn { border-color: #a05; }
+  .mode-path.active { background: #6b4a1e; }
+  .mode-spots.active { background: #1e5a6b; }
+  main { display: flex; gap: 14px; padding: 14px; align-items: flex-start; }
+  #wrap { position: relative; width: 1024px; max-width: 70vw; }
+  canvas {
+    width: 100%; display: block; border: 1px solid #3a3020; border-radius: 8px;
+    cursor: crosshair; background: #000;
+  }
+  aside { flex: 1; min-width: 300px; display: flex; flex-direction: column; gap: 10px; }
+  .card { background: #1d1912; border: 1px solid #3a3020; border-radius: 8px; padding: 10px; }
+  .card h2 { font-size: 13px; margin: 0 0 8px; color: #e8b64a; text-transform: uppercase; letter-spacing: .05em; }
+  textarea {
+    width: 100%; height: 190px; background: #0e0c08; color: #cfe8b0;
+    border: 1px solid #3a3020; border-radius: 6px; padding: 8px;
+    font-family: ui-monospace, "Cascadia Code", monospace; font-size: 12px; resize: vertical;
+  }
+  .hint { color: #a99a72; font-size: 12px; line-height: 1.5; }
+  .status { font-size: 12px; color: #9fd463; min-height: 16px; }
+  .status.err { color: #ff9f9f; }
+  .row { display: flex; gap: 6px; flex-wrap: wrap; }
+  .pill { padding: 2px 8px; border-radius: 999px; background: #2a2417; font-size: 12px; }
+  kbd { background: #2a2417; border: 1px solid #5a4a2c; border-radius: 4px; padding: 1px 5px; font-size: 11px; }
+  .legend span { display: inline-flex; align-items: center; gap: 5px; margin-right: 12px; }
+  .swatch { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+</style>
+</head>
+<body>
+<header>
+  <h1>맵 좌표 에디터</h1>
+  <div class="group">
+    <label for="map-select">맵</label>
+    <select id="map-select"></select>
+    <button id="prev-map" title="이전 맵">◀</button>
+    <button id="next-map" title="다음 맵">▶</button>
+  </div>
+  <div class="group">
+    <span class="pill">편집:</span>
+    <button id="mode-path" class="mode-path active">경로 PATH</button>
+    <button id="mode-spots" class="mode-spots">석단 SPOTS</button>
+  </div>
+  <div class="group">
+    <button id="undo">되돌리기 (Z)</button>
+    <button id="clear" class="warn">현재 모드 지우기</button>
+    <button id="seed">DKCONTENT에서 불러오기</button>
+  </div>
+  <div class="group">
+    <label><input type="checkbox" id="toggle-path" checked> 경로 표시</label>
+    <label><input type="checkbox" id="toggle-spots" checked> 석단 표시</label>
+  </div>
+</header>
+
+<main>
+  <div id="wrap">
+    <canvas id="edit" width="1024" height="576"></canvas>
+  </div>
+  <aside>
+    <div class="card">
+      <div class="legend">
+        <span><span class="swatch" style="background:#e8b64a"></span>경로 웨이포인트</span>
+        <span><span class="swatch" style="background:#5fd0ff"></span>석단(타워 자리)</span>
+      </div>
+      <p class="hint">
+        <b>클릭</b> = 현재 모드 점 추가 · <b>드래그</b> = 점 이동 · <b>우클릭</b> = 가까운 점 삭제 ·
+        <kbd>Z</kbd> 되돌리기 · <kbd>P</kbd>/<kbd>S</kbd> 모드 전환 · <kbd>Del</kbd> 마지막 점 삭제.<br>
+        경로는 포탈→크리스탈 순서로 흙길 중심을 따라 찍고, 석단은 길 옆 평지/석단 위에 두세요(길·물·건물 위 금지).
+      </p>
+      <div class="status" id="status"></div>
+      <div class="row">
+        <span class="pill" id="count-path">경로 0</span>
+        <span class="pill" id="count-spots">석단 0</span>
+        <span class="pill" id="warn-overlap"></span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>현재 맵 JSON</h2>
+      <textarea id="json-current" spellcheck="false"></textarea>
+      <div class="row" style="margin-top:6px">
+        <button id="copy-current">복사</button>
+        <button id="apply-current">텍스트 적용</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>전체 내보내기 (content.js MAP_LAYOUTS)</h2>
+      <textarea id="json-all" spellcheck="false"></textarea>
+      <div class="row" style="margin-top:6px">
+        <button id="export-all">전체 생성</button>
+        <button id="copy-all">복사</button>
+        <button id="download-all">파일 저장</button>
+        <button id="import-all">붙여넣기 가져오기</button>
+      </div>
+      <p class="hint">작업 내용은 브라우저 localStorage에 자동 저장됩니다. 완료 후 "전체 생성"→"복사"하여 content.js의 MAP_LAYOUTS에 붙여넣으세요.</p>
+    </div>
+  </aside>
+</main>
+
+<script src="content.js?v=36"></script>
+<script src="editor.js?v=36"></script>
+</body>
+</html>
