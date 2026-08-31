@@ -307,26 +307,37 @@ function compositeFallback(f) {
   return { cv, w: TS_W, h: TS_H, cx: TS_CX, baseY: TS_BASE_Y };
 }
 
+function scaleTowerArt(art) {
+  const s = TOWER_DRAW_H / art.h;
+  const w = Math.max(1, Math.round(art.w * s));
+  const h = TOWER_DRAW_H;
+  const cv = document.createElement('canvas');
+  cv.width = w; cv.height = h;
+  cv.getContext('2d').drawImage(art.cv, 0, 0, w, h);
+  return { cv, w, h, cx: w / 2, baseY: h - 7, dedicated: true };
+}
+
 function buildTowerSprites() {
   for (let f = 1; f <= 6; f++) {
+    const pack = [];
     const skins = (window.DKCONTENT && DKCONTENT.towerSkins[f]) || [];
-    let art = null;
     for (const s of skins) {
-      if (A[s.key] && A[s.key].cv && A[s.key].h > 16) { art = A[s.key]; break; }
+      const art = A[s.key];
+      if (art && art.cv && art.h > 16) pack.push(scaleTowerArt(art));
     }
-    if (!art) art = A['t' + f];
-    if (art && art.cv && art.h > 8) {
-      const s = TOWER_DRAW_H / art.h;
-      const w = Math.max(1, Math.round(art.w * s));
-      const h = TOWER_DRAW_H;
-      const cv = document.createElement('canvas');
-      cv.width = w; cv.height = h;
-      cv.getContext('2d').drawImage(art.cv, 0, 0, w, h);
-      towerSprites[f] = { cv, w, h, cx: w / 2, baseY: h - 7, dedicated: true };
-    } else {
-      towerSprites[f] = compositeFallback(f);
+    if (!pack.length) {
+      const art = A['t' + f];
+      if (art && art.cv && art.h > 8) pack.push(scaleTowerArt(art));
     }
+    if (!pack.length) pack.push(compositeFallback(f));
+    towerSprites[f] = pack;
   }
+}
+
+function towerSpr(face, skin) {
+  const pack = towerSprites[face] || [];
+  if (!pack.length) return compositeFallback(face);
+  return pack[((skin || 0) % pack.length + pack.length) % pack.length];
 }
 
 // ==================== 사운드 (WebAudio 신디사이저) ====================
@@ -961,10 +972,10 @@ function buildWave(w) {
   const unlockAir = w >= 6;
   const unlockBurrow = w >= 10;
   for (let i = 0; i < n; i++) {
-    let pool = ['slime', 'shroom', 'pig', 'chicken', 'goblin'];
-    if (unlockAir) pool = pool.concat(['bee', 'balloon', 'bat']);
-    if (unlockBurrow) pool = pool.concat(['mole', 'worm', 'arma']);
-    if (w >= 4) pool.push('goblin', 'chicken');
+    let pool = ['slime', 'shroom', 'pig', 'chicken', 'goblin', 'sheep', 'penguin'];
+    if (w >= 4) pool = pool.concat(['cactus', 'fox']);
+    if (unlockAir) pool = pool.concat(['bee', 'balloon', 'bat', 'owl', 'parrot']);
+    if (unlockBurrow) pool = pool.concat(['mole', 'worm', 'arma', 'beetle', 'crab']);
     const type = pool[(i * 3 + w * 5) % pool.length];
     const sid = ((w - 1) * 11 + i * 17) % 500;
     const sp = C && C.species[sid];
@@ -975,7 +986,7 @@ function buildWave(w) {
     t += 1.2;
     const bid = Math.min(99, Math.floor(w / 5) - 1);
     const boss = C && C.bosses[bid];
-    const btype = C ? C.bossBases[bid % 3].id : 'boss';
+    const btype = C ? C.bossBases[bid % C.bossBases.length].id : 'boss';
     add(btype, boss ? { name: boss.name, hue: boss.hue, hpMult: hpMult * boss.hpM, isBoss: true } : { isBoss: true });
   }
   return q;
@@ -1399,7 +1410,7 @@ function draw() {
   for (const ent of ents) {
     if (ent.kind === 't') {
       const t = ent.o;
-      const sp = towerSprites[t.face];
+      const sp = towerSpr(t.face, t.skin);
       const cx = sp.cx ?? TS_CX, by = sp.baseY ?? TS_BASE_Y;
       const kick = t.kick || 0;
       if (t.kick > 0) t.kick = Math.max(0, t.kick - 0.08);
@@ -1491,7 +1502,7 @@ function draw() {
   }
 
   if (DRAG.active && S.heldDie && DRAG.overCanvas) {
-    const sp = towerSprites[S.heldDie];
+    const sp = towerSpr(S.heldDie, S.wave);
     if (sp) {
       const idx = DRAG.overSpot;
       let gx = S.mouse.x, gy = S.mouse.y;
@@ -1802,7 +1813,7 @@ function tryPlace(idx) {
   const def = TOWER_DEFS[S.heldDie];
   const [sx, sy] = SPOTS[idx];
   if (!existing) {
-    S.towers.push({ face: S.heldDie, def, lvl: 1, spot: idx, x: sx, y: sy, cd: 0 });
+    S.towers.push({ face: S.heldDie, def, lvl: 1, spot: idx, x: sx, y: sy, cd: 0, skin: (S.wave + idx) % 8 });
     S.fxs.push({ kind: 'ring', x: sx, y: sy - 30, t: 0, dur: 0.5, size: 70, color: def.color });
     S.fxs.push({ kind: 'impact', x: sx, y: sy - 30, t: 0, dur: 0.28, size: 70 });
     S.texts.push({ str: def.name + '!', x: sx, y: sy - 90, t: 0, color: def.color });
