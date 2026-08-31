@@ -972,10 +972,10 @@ function buildWave(w) {
   const unlockAir = w >= 6;
   const unlockBurrow = w >= 10;
   for (let i = 0; i < n; i++) {
-    let pool = ['slime', 'shroom', 'pig', 'chicken', 'goblin', 'sheep', 'penguin', 'squirrel', 'frog', 'duck', 'koala', 'hedgehog', 'goat', 'otter', 'tanuki', 'wolf', 'mouse', 'alpaca', 'seahorse'];
-    if (w >= 4) pool = pool.concat(['cactus', 'fox', 'raccoon', 'turtle', 'panda', 'catsamurai', 'boar', 'chameleon']);
-    if (unlockAir) pool = pool.concat(['bee', 'balloon', 'bat', 'owl', 'parrot', 'dragonfly', 'cloudsheep', 'humming', 'ladybug', 'fairy', 'crane', 'pigeon', 'moth', 'firefly']);
-    if (unlockBurrow) pool = pool.concat(['mole', 'worm', 'arma', 'beetle', 'crab', 'prairie', 'rabbit', 'badger', 'chipmunk', 'wormknight', 'vole', 'pangolin', 'ant', 'gecko']);
+    let pool = ['slime', 'shroom', 'pig', 'chicken', 'goblin', 'sheep', 'penguin', 'squirrel', 'frog', 'duck', 'koala', 'hedgehog', 'goat', 'otter', 'tanuki', 'wolf', 'mouse', 'alpaca', 'seahorse', 'beaver', 'kiwi', 'snake'];
+    if (w >= 4) pool = pool.concat(['cactus', 'fox', 'raccoon', 'turtle', 'panda', 'catsamurai', 'boar', 'chameleon', 'porcupine', 'rhino', 'hippo']);
+    if (unlockAir) pool = pool.concat(['bee', 'balloon', 'bat', 'owl', 'parrot', 'dragonfly', 'cloudsheep', 'humming', 'ladybug', 'fairy', 'crane', 'pigeon', 'moth', 'firefly', 'pelican', 'butterfly', 'jellyfish', 'toucan']);
+    if (unlockBurrow) pool = pool.concat(['mole', 'worm', 'arma', 'beetle', 'crab', 'prairie', 'rabbit', 'badger', 'chipmunk', 'wormknight', 'vole', 'pangolin', 'ant', 'gecko', 'wombat', 'ferret']);
     const type = pool[(i * 3 + w * 5) % pool.length];
     const sid = ((w - 1) * 11 + i * 17) % 500;
     const sp = C && C.species[sid];
