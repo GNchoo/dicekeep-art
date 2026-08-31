@@ -2494,12 +2494,6 @@ function drawLoading(pr) {
   S.phase = 'title';
   $('ov-btn').disabled = false;
   $('ov-btn').textContent = '게임 시작';
-  window.DK = S;
-  window.DKstart = startStage; window.DKplace = tryPlace;
-  window.DKA = A;
-  window.DKDIE = DIE;
-  window.DKSLOT = SLOT;
-  window.DKthrow = throwDie;
   requestAnimationFrame(frame);
 })();
 
