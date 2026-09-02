@@ -1177,7 +1177,7 @@ function buildWave(w) {
     const bbase = C && C.bossBases[bi % C.bossBases.length];
     const btype = bbase ? bbase.id : 'boss';
     const lane = laneFor(bbase ? bbase.move : 'ground', 0);
-    add(btype, boss ? { name: boss.name, hue: boss.hue, hpMult: hpMult * (1.15 + S.stage * 0.03), isBoss: true, lane } : { isBoss: true, lane });
+    add(btype, boss ? { name: boss.name, hue: boss.hue, hpMult: hpMult * (1.1 + S.stage * 0.015), isBoss: true, lane } : { isBoss: true, lane });
   }
   return q;
 }
