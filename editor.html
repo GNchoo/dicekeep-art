@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>주사위 성채 — 맵 좌표 에디터</title>
+<title>주사위 성채 — 맵 그리드 에디터</title>
 <link rel="icon" href="ui/gold.png" />
 <style>
   :root { color-scheme: dark; }
@@ -52,46 +52,30 @@
   kbd { background: #2a2417; border: 1px solid #5a4a2c; border-radius: 4px; padding: 1px 5px; font-size: 11px; }
   .legend span { display: inline-flex; align-items: center; gap: 5px; margin-right: 12px; }
   .swatch { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+  #palette button.active { outline: 2px solid #e8b64a; }
 </style>
 </head>
 <body>
 <header>
-  <h1>맵 좌표 에디터</h1>
+  <h1>맵 그리드 에디터</h1>
   <div class="group">
-    <label for="map-select">맵</label>
-    <select id="map-select"></select>
-    <button id="prev-map" title="이전 맵">◀</button>
-    <button id="next-map" title="다음 맵">▶</button>
-  </div>
-  <div class="group">
-    <span class="pill">편집:</span>
-    <button id="mode-path" class="mode-path active" title="P">흙길 PATH</button>
-    <button id="mode-path2" class="mode-path2" title="O">흙길2 PATH2</button>
-    <button id="mode-spots" class="mode-spots" title="S">석단 SPOTS</button>
-    <button id="mode-spots2" class="mode-spots2" title="A">추가석단 SPOTS2</button>
+    <label for="tpl-select">템플릿</label>
+    <select id="tpl-select"></select>
+    <label for="stage-go">스테이지</label>
+    <input id="stage-go" type="number" min="1" max="50" value="1" style="width:56px">
+    <label><input type="checkbox" id="mirror"> 좌우 반전</label>
   </div>
   <div class="group">
     <label for="tier-preview">티어 미리보기</label>
     <select id="tier-preview">
       <option value="auto">스테이지 티어</option>
-      <option value="off">끔</option>
       <option value="1">T1 초원</option>
       <option value="2">T2 언덕</option>
       <option value="3">T3 협곡</option>
       <option value="4">T4 요새</option>
       <option value="5">T5 악몽</option>
     </select>
-    <button id="bake-auto" title="코드 생성 추가 석단을 spots2 로 복사해 손볼 수 있게 한다">자동 석단 굳히기</button>
-  </div>
-  <div class="group">
-    <button id="undo">되돌리기 (Z)</button>
-    <button id="clear" class="warn">현재 모드 지우기</button>
-    <button id="seed">DKCONTENT에서 불러오기</button>
-  </div>
-  <div class="group">
-    <label><input type="checkbox" id="toggle-path" checked> 경로 표시</label>
-    <label><input type="checkbox" id="toggle-spots" checked> 석단 표시</label>
-    <label><input type="checkbox" id="toggle-preview" checked> 미리보기 표시</label>
+    <button id="reset" class="warn">원본으로 되돌리기</button>
   </div>
 </header>
 
@@ -101,55 +85,34 @@
   </div>
   <aside>
     <div class="card">
-      <div class="legend">
-        <span><span class="swatch" style="background:#e8b64a"></span>흙길</span>
-        <span><span class="swatch" style="background:#ff8c50"></span>흙길2 (하드 배경)</span>
-        <span><span class="swatch" style="background:#5fd0ff"></span>석단</span>
-        <span><span class="swatch" style="background:#b478ff"></span>추가석단</span>
-        <span><span class="swatch" style="background:#ffc85a"></span>자동 석단(코드)</span>
-        <span><span class="swatch" style="background:#c8ebff"></span>하늘길(코드)</span>
-        <span><span class="swatch" style="background:#d29650"></span>땅굴(코드)</span>
-      </div>
+      <div id="palette" class="row"></div>
       <p class="hint">
-        <b>클릭</b> = 현재 모드 점 추가 · <b>드래그</b> = 점 이동 · <b>우클릭</b> = 가까운 점 삭제 ·
-        <kbd>Z</kbd> 되돌리기 · <kbd>P</kbd>/<kbd>O</kbd>/<kbd>S</kbd>/<kbd>A</kbd> 모드 전환 · <kbd>Del</kbd> 마지막 점 삭제.<br>
-        흙길은 포탈→크리스탈 순서로 길 중심을 따라 찍고, 석단은 길 옆 평지/석단 위에(길·물·건물 위 금지).<br>
-        <b>하드 배경</b>(ART-PROMPTS.md)을 넣은 맵은 흙길2를 두 번째 포탈→크리스탈로 찍고, 추가석단은 아트의 새 석단 위에 찍으세요.
-        아트에 석단이 없으면 "자동 석단 굳히기"로 코드 위치를 가져와 다듬어도 됩니다.
+        <b>클릭/드래그</b> = 선택한 글자로 칠하기 · <b>우클릭</b> = 평지로 · <kbd>Z</kbd> 되돌리기 · 글자 키로 붓 전환.<br>
+        흙길(#)은 4방향으로 이어진 한 줄이어야 하고 옆 줄과 붙으면 안 됩니다(한 칸 띄움). E 위 칸은 성 그림 자리라 비워 두세요.
+        두 번째 길(2, =)은 티어 4·5 에서만 열리며 흙길 한 칸에만 닿아야 합니다. 추가 석단(+)은 티어별로 2·4·6·8개가 열립니다.
       </p>
       <div class="status" id="status"></div>
-      <div class="row">
-        <span class="pill" id="tier-info"></span>
-        <span class="pill" id="count-path">흙길 0</span>
-        <span class="pill" id="count-spots">석단 0</span>
-        <span class="pill" id="warn-overlap"></span>
-      </div>
+      <div class="row"><span class="pill" id="tpl-title"></span></div>
+      <div class="row"><span class="pill" id="lane-info"></span></div>
     </div>
-
     <div class="card">
-      <h2>현재 맵 JSON</h2>
-      <textarea id="json-current" spellcheck="false"></textarea>
-      <div class="row" style="margin-top:6px">
-        <button id="copy-current">복사</button>
-        <button id="apply-current">텍스트 적용</button>
-      </div>
+      <h2>템플릿 텍스트 (9줄 × 16글자)</h2>
+      <textarea id="tpl-text" spellcheck="false" style="height:170px"></textarea>
+      <div class="row" style="margin-top:6px"><button id="apply-text">텍스트 적용</button></div>
     </div>
-
     <div class="card">
-      <h2>전체 내보내기 (content.js MAP_LAYOUTS)</h2>
-      <textarea id="json-all" spellcheck="false"></textarea>
+      <h2>content.js 스니펫</h2>
+      <textarea id="tpl-snippet" spellcheck="false" style="height:190px"></textarea>
       <div class="row" style="margin-top:6px">
-        <button id="export-all">전체 생성</button>
-        <button id="copy-all">복사</button>
-        <button id="download-all">파일 저장</button>
-        <button id="import-all">붙여넣기 가져오기</button>
+        <button id="copy-snippet">이 템플릿 복사</button>
+        <button id="copy-all">전체 배열 복사 (TEMPLATES_SINGLE / DUAL)</button>
       </div>
-      <p class="hint">작업 내용은 브라우저 localStorage에 자동 저장됩니다. 완료 후 "전체 생성"→"복사"하여 content.js의 <b>MAP_LAYOUTS</b>(흙길·석단)와 <b>MAP_LAYOUTS_HARD</b>(흙길2·추가석단)에 붙여넣으세요.</p>
+      <p class="hint">복사한 내용을 <b>content.js</b> 의 <b>TEMPLATES_SINGLE</b> / <b>TEMPLATES_DUAL</b> 에 붙여넣으면 게임에 반영됩니다. 편집본은 브라우저 localStorage 에 저장됩니다.</p>
     </div>
   </aside>
 </main>
 
-<script src="content.js?v=49"></script>
-<script src="editor.js?v=49"></script>
+<script src="content.js?v=50"></script>
+<script src="editor.js?v=50"></script>
 </body>
 </html>

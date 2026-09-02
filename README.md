@@ -2,14 +2,14 @@
 
 주사위를 굴려 나온 눈이 높을수록 강력한 타워를 세우는 캐주얼 타워 디펜스 + 아트팩.
 
-**전체 명세:** [GAME-SPEC.md](GAME-SPEC.md) · **생성 프롬프트:** [ART-PROMPTS.md](ART-PROMPTS.md) · **인수 브리프:** [GROK-HANDOFF.md](GROK-HANDOFF.md) · **파일 목록:** [ASSET-MANIFEST.md](ASSET-MANIFEST.md)
+**전체 명세:** [GAME-SPEC.md](GAME-SPEC.md) · **타일셋 브리프(Grok):** [GROK-BRIEF.md](GROK-BRIEF.md) · **생성 프롬프트:** [ART-PROMPTS.md](ART-PROMPTS.md) · **파일 목록:** [ASSET-MANIFEST.md](ASSET-MANIFEST.md)
 
 ## 실행
 
 ```bash
 python serve.py
 # http://localhost:8137             게임
-# http://localhost:8137/editor.html 맵 좌표 에디터
+# http://localhost:8137/editor.html 맵 그리드 에디터
 ```
 
 Windows는 `start.bat`. `index.html`을 file://로 열지 말 것.
@@ -33,6 +33,7 @@ Windows는 `start.bat`. `index.html`을 file://로 열지 말 것.
 - 같은 눈 합체 최대 Lv3
 - 50 스테이지 / 5 티어 / 목숨 20. 마지막 웨이브에 보스
 - 티어가 오르면 **하늘길·땅굴·두 번째 흙길**이 열리고 석단이 늘어난다
+- 맵은 **코드가 16×9 격자에 설계**하고 테마(평원·숲·호수·어두운 숲·성·지옥) 타일을 입힌다. 타일이 없으면 코드 그림으로 동작
 - 50 스테이지를 모두 깨면 **인피니티 모드**(무한 투기장): 크리스탈을 도는 나선 도로를 코드가 그리고, 끝없이 강해지는 웨이브, SP로 눈별 강화, 최고 웨이브 기록·젬 보상
 
 | 티어 | 스테이지 | 레인 | 추가 석단 |
@@ -56,7 +57,7 @@ Windows는 `start.bat`. `index.html`을 file://로 열지 말 것.
 
 | 항목 | 수량 | 경로 |
 |---|---|---|
-| 맵 | 50 + 하드 배경 20 | `casual/maps/` |
+| 맵 타일 | 6테마 × 15 (생성 대기, `GROK-BRIEF.md`) | `casual/tiles/<theme>/` |
 | 몬스터 | 500 + 걷기 36 | `casual/enemies/` |
 | 보스 | 100 + 걷기 10 | `casual/bosses/` |
 | 타워 | 6 인게임 + 스킨 24 (+ 공격시트 6, 미사용) | `casual/towers/` |
