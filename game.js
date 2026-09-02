@@ -2554,23 +2554,39 @@ function gotoLobby() { S.phase = 'lobby'; showScreen('lobby'); }
 function gotoStageSelect() { S.phase = 'stageSelect'; showScreen('stageSelect'); }
 function gotoShop() { S.phase = 'shop'; showScreen('shop'); }
 
+function syncInfButtons() {
+  const ok = infinityUnlocked();
+  const btn = $('btn-infinity');
+  if (btn) {
+    btn.disabled = !ok;
+    btn.classList.toggle('locked', !ok);
+    btn.innerHTML = ok ? '&#8734; 인피니티 · 무한 투기장' : '&#128274; 인피니티 · 무한 투기장';
+  }
+  const banner = $('ss-inf-btn');
+  if (banner) {
+    banner.disabled = !ok;
+    banner.classList.toggle('locked', !ok);
+    banner.textContent = ok
+      ? '∞ 인피니티 · 무한 투기장 입장'
+      : '🔒 인피니티 · 무한 투기장 — 50 스테이지 클리어 후 해금';
+  }
+  const info = $('lobby-inf');
+  if (info) {
+    info.innerHTML = ok
+      ? `무한 투기장 최고 기록 <b>${SAVE.infBest || 0}</b> 웨이브${(SAVE.infRuns || []).length ? ` · 최근 ${SAVE.infRuns.slice(0, 3).map(r => r.wave).join(' / ')}` : ''}`
+      : `인피니티는 로비 아래 <b>분홍 버튼</b>입니다. 50 스테이지를 모두 깨면 열립니다 (현재 ${SAVE.cleared.length}/50).`;
+  }
+}
+
 function renderLobby() {
   $('lobby-gems').textContent = SAVE.gems;
   $('lobby-progress').innerHTML = `클리어 <b>${SAVE.cleared.length}</b> / 50 스테이지 · 해금 타워 <b>${unlockedFaces().length}</b>/6`;
-  const btn = $('btn-infinity'), info = $('lobby-inf');
-  if (btn) {
-    const ok = infinityUnlocked();
-    btn.disabled = !ok;
-    btn.classList.toggle('locked', !ok);
-    btn.innerHTML = ok ? '&#8734; 인피니티' : '&#128274; 인피니티';
-    if (info) info.innerHTML = ok
-      ? `무한 투기장 최고 기록 <b>${SAVE.infBest || 0}</b> 웨이브${(SAVE.infRuns || []).length ? ` · 최근 ${SAVE.infRuns.slice(0, 3).map(r => r.wave).join(' / ')}` : ''}`
-      : `인피니티 모드는 <b>50 스테이지를 모두 클리어</b>하면 열립니다 (현재 ${SAVE.cleared.length}/50)`;
-  }
+  syncInfButtons();
 }
 
 function renderStageSelect() {
   $('ss-gems').textContent = SAVE.gems;
+  syncInfButtons();
   const grid = $('stage-grid');
   grid.innerHTML = '';
   const C = window.DKCONTENT;
@@ -3006,10 +3022,18 @@ $('ov-btn').addEventListener('click', () => {
 });
 $('btn-stage-select').addEventListener('click', () => { audio(); gotoStageSelect(); });
 $('btn-infinity').addEventListener('click', () => { if (!infinityUnlocked()) return; audio(); startInfinity(); });
+const ssInf = $('ss-inf-btn');
+if (ssInf) ssInf.addEventListener('click', () => { if (!infinityUnlocked()) return; audio(); startInfinity(); });
 for (let f = 1; f <= 6; f++) { const b = $('inf-face-' + f); if (b) b.addEventListener('click', () => upgradeFace(f)); }
 $('btn-shop').addEventListener('click', () => { audio(); gotoShop(); });
 $('ss-back').addEventListener('click', () => gotoLobby());
 $('shop-back').addEventListener('click', () => gotoLobby());
+// 어두운 배경을 누르면 로비로 (상점에 갇히지 않게)
+['shop', 'stage-select'].forEach((id) => {
+  const el = $(id);
+  if (!el) return;
+  el.addEventListener('click', (e) => { if (e.target === el) gotoLobby(); });
+});
 $('exit-btn').addEventListener('click', () => {
   if (S.phase !== 'playing') return;
   if (S.mode === 'infinity') { endInfinity(); return; } // 포기 = 런 종료 (기록 저장)
@@ -3033,22 +3057,22 @@ function frame(ts) {
 // ==================== 부팅 ====================
 
 function drawLoading(pr) {
+  const pct = Math.max(0, Math.min(100, Math.round(pr * 100)));
   ctx.fillStyle = '#0d0b09';
   ctx.fillRect(0, 0, W, H);
-  ctx.fillStyle = '#e9dfc4';
-  ctx.font = '20px sans-serif';
-  ctx.textAlign = 'center';
-  ctx.fillText('에셋 불러오는 중... ' + Math.round(pr * 100) + '%', W / 2, H / 2 - 10);
-  ctx.strokeStyle = '#6b5636';
-  ctx.strokeRect(W / 2 - 150, H / 2 + 12, 300, 14);
-  ctx.fillStyle = '#e8b64a';
-  ctx.fillRect(W / 2 - 148, H / 2 + 14, 296 * pr, 10);
+  const load = $('ov-load');
+  const bar = $('ov-load-bar');
+  const txt = $('ov-load-txt');
+  const box = $('overlay-box');
+  if (box) box.classList.add('loading');
+  if (load) load.classList.remove('hidden');
+  if (bar) bar.style.width = pct + '%';
+  if (txt) txt.textContent = '에셋 불러오는 중… ' + pct + '%';
 }
 
 (async () => {
   drawLoading(0);
   $('ov-btn').disabled = true;
-  $('ov-btn').textContent = '불러오는 중...';
   try {
     await loadAssets(pr => drawLoading(pr));
   } catch (e) {
@@ -3070,7 +3094,7 @@ function drawLoading(pr) {
   // 개발용 URL 플래그: ?unlock=all → 50 스테이지 클리어·타워 전부 해금 상태로 시작 (저장은 플레이 후 갱신될 때만)
   //                    ?start=inf  → 타이틀 버튼을 누르면 로비 대신 바로 인피니티 시작
   const qs = new URLSearchParams(location.search);
-  if (qs.get('unlock') === 'all') {
+  if (qs.get('unlock') === 'all' || window.__DK_UNLOCK_ALL) {
     SAVE.cleared = Array.from({ length: 50 }, (_, i) => i + 1);
     SAVE.unlockedTowers = [1, 2, 3, 4, 5, 6];
     if (SAVE.gems < 200) SAVE.gems = 200;
@@ -3089,6 +3113,10 @@ function drawLoading(pr) {
   window.DKspots = () => SPOTS;
   window.DKSAVE = SAVE;
   S.phase = 'title';
+  const loadEl = $('ov-load');
+  if (loadEl) loadEl.classList.add('hidden');
+  const box = $('overlay-box');
+  if (box) box.classList.remove('loading');
   $('ov-btn').disabled = false;
   $('ov-btn').textContent = '게임 시작';
   requestAnimationFrame(frame);

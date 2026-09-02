@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>주사위 성채 (Dicekeep)</title>
-<link rel="stylesheet" href="style.css?v=44" />
+<link rel="stylesheet" href="style.css?v=47" />
 <link rel="icon" href="ui/gold.png" />
 </head>
 <body>
@@ -19,32 +19,33 @@
     </div>
 
     <div id="overlay">
-      <div id="overlay-box">
+      <div id="overlay-box" class="loading">
         <h1 id="ov-title">주사위 성채</h1>
+        <div id="ov-load">
+          <div id="ov-load-track"><div id="ov-load-bar"></div></div>
+          <span id="ov-load-txt">에셋 불러오는 중… 0%</span>
+        </div>
         <p id="ov-desc">
-          주사위를 <b>잡아서 휙 던지거나</b>, 버튼으로 <b>빠르게</b> 굴리세요.<br>
-          나온 눈(1~6)에 해당하는 <b>주사위 타워</b>가 생성됩니다. <b>6눈이 가장 강력!</b><br>
-          같은 눈의 타워 위에 주사위를 올리면 <b>레벨 업</b> (최대 Lv3).<br>
-          굴린 주사위를 <b>끌어다 건설 지점에 놓으면</b> 그 눈의 타워로 변신합니다.<br>
-          필드 주사위를 <b>적에게 세게 던지면</b> 속도에 비례한 피해를 줍니다.<br>
-          포탈에서 몰려오는 적이 크리스탈에 닿기 전에 막아내세요! 스테이지는 <b>50개</b>, 10개마다 티어가 올라 <b>하늘길·땅굴·두 번째 흙길</b>이 열리고 석단이 늘어납니다.
+          주사위를 <b>휙 던지거나</b> 버튼으로 굴리세요. 나온 눈(1~6)의 타워가 됩니다. <b>6눈이 가장 강합니다.</b>
+          같은 눈을 겹치면 <b>레벨 업</b>. 굴린 주사위는 <b>끌어다 석단에 놓아</b> 변신합니다.
+          스테이지 <b>50개</b>를 정복하면 <b>인피니티(무한 투기장)</b>가 열립니다.
         </p>
-        <button id="ov-btn" disabled>불러오는 중...</button>
-        <p class="hint">필드 주사위 휙 던지기 · 적에게 던지면 속도만큼 피해 · 굴린 주사위는 끌어다 설치</p>
+        <button id="ov-btn" disabled>게임 시작</button>
+        <p class="hint">필드 휙 던지기 · 적에게 던지면 속도 피해 · 같은 눈 합체</p>
       </div>
     </div>
 
     <div id="lobby" class="screen hidden">
       <div class="screen-box">
         <h1>주사위 성채</h1>
-        <p class="screen-sub">스테이지를 정복해 젬을 모으고, 상점에서 주사위 타워와 스킨을 해금하세요.</p>
+        <p class="screen-sub">스테이지를 정복해 젬을 모으고, 상점에서 주사위 타워와 스킨을 해금하세요.<br>50개를 모두 깨면 <b>인피니티(무한 투기장)</b>가 열립니다.</p>
         <div class="gem-chip big"><span class="gem-ico">&#128142;</span><b id="lobby-gems">0</b><span class="gem-lbl">젬</span></div>
         <div id="lobby-progress" class="screen-sub"></div>
         <div class="lobby-btns">
           <button id="btn-stage-select" class="big-btn">스테이지 선택</button>
           <button id="btn-shop" class="big-btn alt">상점</button>
-          <button id="btn-infinity" class="big-btn inf" disabled>&#128274; 인피니티</button>
         </div>
+        <button id="btn-infinity" class="big-btn inf lobby-inf-btn" disabled>&#128274; 인피니티 · 무한 투기장</button>
         <div id="lobby-inf" class="screen-sub inf-sub"></div>
       </div>
     </div>
@@ -56,6 +57,7 @@
           <h2>스테이지 선택</h2>
           <div class="gem-chip"><span class="gem-ico">&#128142;</span><b id="ss-gems">0</b></div>
         </div>
+        <button id="ss-inf-btn" class="inf-banner" disabled>&#128274; 인피니티 · 무한 투기장 — 50 스테이지 클리어 후 해금</button>
         <div id="tier-legend" class="tier-legend"></div>
         <div id="stage-grid" class="stage-grid"></div>
       </div>
@@ -119,7 +121,7 @@
   <img id="ghost-tower" alt="">
   <div id="ghost-ring"></div>
 </div>
-<script src="content.js?v=44"></script>
-<script src="game.js?v=44"></script>
+<script src="content.js?v=47"></script>
+<script src="game.js?v=47"></script>
 </body>
 </html>
