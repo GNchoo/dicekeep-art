@@ -39,6 +39,22 @@ const TOWER_DEFS = {
   5: { name: '전격 주사위', desc: '연쇄 번개',          dmg: 16, rate: 1.10, range: 150, chain: true, canAir: true, color: '#ffe86b', topper: 'spark' },
   6: { name: '폭군 주사위', desc: '최강! 폭발 주사위 투척', dmg: 40, rate: 1.25, range: 175, proj: 'dieBomb', pspd: 340, splash: 55, canAir: false, color: '#ff5555', topper: 'dieBomb' },
 };
+// 성(★) 타워 7~20: 인피니티 보물상자의 다면체 주사위에서만 나온다. 6눈(폭군)을 바탕으로 기하급수 강화.
+const STAR_BANDS = [
+  { min: 7,  max: 10, name: '별빛 첨탑', color: '#7fd4ff' },
+  { min: 11, max: 14, name: '성운 요새', color: '#c78bff' },
+  { min: 15, max: 18, name: '천공 옥좌', color: '#ffd452' },
+  { min: 19, max: 20, name: '차원 군주', color: '#ff7ad9', rainbow: true },
+];
+const starBand = (g) => STAR_BANDS.find((b) => g >= b.min && g <= b.max) || STAR_BANDS[STAR_BANDS.length - 1];
+for (let g = 7; g <= 20; g++) {
+  const b = starBand(g), k = g - 6;
+  TOWER_DEFS[g] = {
+    name: `${b.name} ★${g}`, desc: `${g}성 히든 타워 · 폭발 주사위 투척`, star: g,
+    dmg: Math.round(40 * Math.pow(1.28, k)), rate: +(1.25 * Math.pow(0.97, k)).toFixed(3), range: 175 + 5 * k,
+    proj: 'dieBomb', pspd: 340 + 6 * k, splash: 55 + 4 * k, canAir: true, color: b.color, rainbow: !!b.rainbow, topper: 'dieBomb',
+  };
+}
 const LVL_DMG   = [1, 1.6, 2.4];
 const LVL_RANGE = [0, 12, 24];
 const LVL_RATE  = [1, 0.92, 0.85];
@@ -96,7 +112,7 @@ function applyMapLayout(mapKey, tier) {
       }
     }
   }
-  ARENA = (m && m.renderRoads) ? { center: m.center || [W / 2, H / 2], portals: m.portals || [], tiled: !!m.tiled, theme: m.theme || null } : null;
+  ARENA = (m && m.renderRoads) ? { center: m.center || [W / 2, H / 2], portals: m.portals || [], tiled: !!m.tiled, theme: m.theme || null, track: m.track || null } : null;
   ROAD_LAYER = null;
   if (m && m.tiled) {
     const layer = buildTileLayer(m);
@@ -116,7 +132,44 @@ function buildRoadLayer(m) {
   if (bg && !bg.missing && bg.width > 8) g.drawImage(bg, 0, 0, W, H);
   else drawArenaFloor(g, m);
   for (const lane of LANES) if (lane.kind === 'ground' || lane.kind === 'ground2') drawRoad(g, lane.pts, lane.kind === 'ground2' ? 7 : 3);
+  // 트랙 양쪽 돌 연석: 길 가장자리 띠만 다시 칠한다 (본체는 그대로)
+  for (const lane of LANES) if (lane.kind === 'ground') {
+    const pts = lane.pts;
+    const stroke = (w, style, dash) => { g.strokeStyle = style; g.lineWidth = w; g.setLineDash(dash || []); g.beginPath(); g.moveTo(pts[0][0], pts[0][1]); for (let i = 1; i < pts.length; i++) g.lineTo(pts[i][0], pts[i][1]); g.stroke(); };
+    g.save(); g.lineJoin = 'round'; g.lineCap = 'round';
+    stroke(48, 'rgba(232,214,170,0.55)');
+    stroke(48, 'rgba(60,44,30,0.7)', [10, 8]);
+    stroke(43, 'rgba(120,92,60,1)');
+    stroke(40, 'rgba(178,140,92,0.35)');
+    g.restore();
+  }
+  if (m.track) { // 네 모서리 바깥 화로 받침 (불꽃은 매 프레임)
+    for (const [x, y] of arenaBraziers(m)) {
+      g.fillStyle = 'rgba(0,0,0,0.35)'; g.beginPath(); g.ellipse(x, y + 6, 22, 10, 0, 0, Math.PI * 2); g.fill();
+      g.fillStyle = '#4a4258'; g.beginPath(); g.ellipse(x, y, 20, 9, 0, 0, Math.PI * 2); g.fill();
+      g.fillStyle = '#6a6078'; g.beginPath(); g.ellipse(x, y - 8, 15, 7, 0, 0, Math.PI * 2); g.fill();
+      g.fillStyle = '#2a2436'; g.beginPath(); g.ellipse(x, y - 9, 10, 4, 0, 0, Math.PI * 2); g.fill();
+    }
+  }
   return cv;
+}
+function arenaBraziers(m) {
+  const t = m.track; if (!t) return [];
+  return [[t.L - 40, t.T - 24], [t.R + 40, t.T - 24], [t.L - 40, t.B + 30], [t.R + 40, t.B + 30]];
+}
+function drawArenaBraziers() {
+  if (!ARENA || !ARENA.track) return;
+  for (const [x, y] of arenaBraziers({ track: ARENA.track })) {
+    const f = Math.sin(S.time * 9 + x) * 3, f2 = Math.sin(S.time * 13 + y) * 2;
+    ctx.save();
+    ctx.translate(x, y - 12);
+    ctx.shadowColor = '#ff9a3a'; ctx.shadowBlur = 18;
+    ctx.fillStyle = 'rgba(255,120,40,0.85)';
+    ctx.beginPath(); ctx.moveTo(-9, 0); ctx.quadraticCurveTo(-11 + f2, -14, 0 + f, -30); ctx.quadraticCurveTo(11 + f2, -14, 9, 0); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = 'rgba(255,230,120,0.95)';
+    ctx.beginPath(); ctx.moveTo(-4, 0); ctx.quadraticCurveTo(-5, -8, 0 + f * 0.5, -16); ctx.quadraticCurveTo(5, -8, 4, 0); ctx.closePath(); ctx.fill();
+    ctx.restore();
+  }
 }
 // 코드 바닥: 어두운 돌 + 룬 링 + 은은한 격자 (아레나 배경 그림이 없을 때)
 function drawArenaFloor(g, m) {
@@ -128,9 +181,15 @@ function drawArenaFloor(g, m) {
   g.strokeStyle = 'rgba(255,255,255,0.045)'; g.lineWidth = 1;
   for (let x = 0; x <= W; x += 64) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, H); g.stroke(); }
   for (let y = 0; y <= H; y += 64) { g.beginPath(); g.moveTo(0, y); g.lineTo(W, y); g.stroke(); }
-  // 가운데 석단 보드: 돌 단 + 금색 룬 테두리 (랜덤다이스의 15칸 보드)
+  // 가운데 석단 보드: 돌 단 + 금색 룬 테두리 (랜덤다이스의 15칸 보드), 바닥엔 큰 룬 원 두 겹
   const bd = m.board;
   if (bd) {
+    g.setLineDash([]);
+    const bcx = bd.x + bd.w / 2, bcy = bd.y + bd.h / 2;
+    for (const [r, a, dash] of [[330, 0.16, [22, 14]], [372, 0.1, [6, 10]]]) {
+      g.strokeStyle = `rgba(214,150,255,${a})`; g.lineWidth = 3; g.setLineDash(dash);
+      g.beginPath(); g.ellipse(bcx, bcy, r, r * 0.62, 0, 0, Math.PI * 2); g.stroke();
+    }
     g.setLineDash([]);
     g.fillStyle = 'rgba(0,0,0,0.35)'; g.beginPath(); g.roundRect(bd.x - 6, bd.y + 6, bd.w + 12, bd.h + 12, 26); g.fill();
     const bg = g.createLinearGradient(0, bd.y, 0, bd.y + bd.h);
@@ -139,7 +198,11 @@ function drawArenaFloor(g, m) {
     g.strokeStyle = 'rgba(232,182,74,0.55)'; g.lineWidth = 3; g.beginPath(); g.roundRect(bd.x + 6, bd.y + 6, bd.w - 12, bd.h - 12, 20); g.stroke();
     g.strokeStyle = 'rgba(255,255,255,0.06)'; g.lineWidth = 1;
     for (let x = bd.x + 44; x < bd.x + bd.w; x += 88) { g.beginPath(); g.moveTo(x, bd.y + 8); g.lineTo(x, bd.y + bd.h - 8); g.stroke(); }
-    for (let y = bd.y + 48; y < bd.y + bd.h; y += 88) { g.beginPath(); g.moveTo(bd.x + 8, y); g.lineTo(bd.x + bd.w - 8, y); g.stroke(); }
+    for (let y = bd.y + 44; y < bd.y + bd.h; y += 72) { g.beginPath(); g.moveTo(bd.x + 8, y); g.lineTo(bd.x + bd.w - 8, y); g.stroke(); }
+    for (const [sx, sy] of (m.spots || [])) { // 석단 소켓: 오목한 홈
+      g.fillStyle = 'rgba(0,0,0,0.35)'; g.beginPath(); g.ellipse(sx, sy + 2, 36, 18, 0, 0, Math.PI * 2); g.fill();
+      g.strokeStyle = 'rgba(232,182,74,0.25)'; g.lineWidth = 2; g.beginPath(); g.ellipse(sx, sy + 2, 36, 18, 0, 0, Math.PI * 2); g.stroke();
+    }
   } else {
     for (const [rx, ry, a] of [[120, 62, 0.35], [260, 135, 0.22], [400, 208, 0.14]]) {
       g.strokeStyle = `rgba(214,150,255,${a})`; g.lineWidth = 3; g.setLineDash([14, 10]);
@@ -521,7 +584,10 @@ const SRCS = {
   dieExplode: BASE + 'vfx/die-explode-2x2.png',
   portal: BASE + 'props/portal.png',
   crystal: BASE + 'props/crystal.png',
+  chest: BASE + 'ui/chest.png',
 };
+for (let g = 7; g <= 20; g++) SRCS['tStar' + g] = BASE + `casual/towers/star-${String(g).padStart(2, '0')}.png`; // 없으면 6눈 스킨으로 폴백
+for (const k of ['d1', 'd4', 'd8', 'd12', 'd20']) SRCS['poly' + k] = BASE + `dice/poly-${k}.png`;                 // 없으면 코드 다각형
 if (window.DKCONTENT) {
   for (const m of DKCONTENT.maps) if (m.src) SRCS[m.key] = BASE + m.src;
   // 테마 타일: casual/tiles/<theme>/<name>.png (floor 만 jpg). 없으면 코드가 그린다.
@@ -793,9 +859,11 @@ function buildTowerSprites() {
     if (!pack.length) pack.push(compositeFallback(f));
     towerSprites[f] = pack;
   }
+  for (let g = 7; g <= 20; g++) { const art = A['tStar' + g]; if (art && art.cv && art.h > 16) towerSprites[g] = [scaleTowerArt(art)]; }
 }
 
 function towerSpr(face, skin) {
+  if (face > 6 && !towerSprites[face]) return towerSpr(6, skin); // 성 타워 그림이 없으면 6눈 스킨 + 별 배지
   const pack = towerSprites[face] || [];
   if (!pack.length) return compositeFallback(face);
   return pack[((skin || 0) % pack.length + pack.length) % pack.length];
@@ -951,6 +1019,7 @@ function nearestUnlockedFace(v) {
   return best;
 }
 function equippedSkinIndex(face) {
+  if (face > 6) return 0;
   const letters = (window.DKCONTENT && DKCONTENT.skinLetters) || ['a', 'b', 'c', 'd', 'e'];
   const eq = (SAVE.equippedSkin && SAVE.equippedSkin[face]) || 'a';
   const i = letters.indexOf(eq);
@@ -1160,7 +1229,7 @@ const DIE = {
 
 // 버튼용 빠른 굴림: HUD 슬롯(?박스) 안에서 3D 큐브가 짧게 회전 후 결과 확정
 const SLOT = {
-  active: false, t: 0, t2: 0, phase: 0,
+  active: false, t: 0, t2: 0, phase: 0, kind: 'd6',
   R: m3id(), w: [0, 0, 0], final: 1,
   from: null, axis: [0, 0, 1], ang: 0, sndT: 0,
 };
@@ -1193,7 +1262,7 @@ function throwDie(vx, vy) {
 function rollByButton() {
   if (!canRoll()) return;
   S.gold -= ROLL_COST;
-  SLOT.active = true;
+  SLOT.active = true; SLOT.kind = 'd6';
   SLOT.t = 0; SLOT.t2 = 0; SLOT.phase = 0; SLOT.sndT = 0;
   SLOT.final = pickUnlockedFace();
   SLOT.R = m3mul(m3axisAngle(Math.random(), Math.random(), Math.random() * 0.5 + 0.1, Math.random() * 6), TRAY_TILT);
@@ -1206,9 +1275,73 @@ function rollByButton() {
   syncUI();
 }
 
+// 인피니티 보물상자: 골드 → 다면체 주사위 1개 (가방). 가방의 주사위를 굴리면 나온 숫자 = 타워 성.
+function chestDef() { const C = window.DKCONTENT; return C && C.INFINITY && C.INFINITY.chest; }
+function chestCost() { const ch = chestDef(); return ch && S.inf ? ch.cost(S.inf.chests || 0) : Infinity; }
+function buyChest() {
+  const ch = chestDef();
+  if (!ch || S.mode !== 'infinity' || !S.inf || S.phase !== 'playing') return null;
+  const cost = chestCost();
+  if (S.gold < cost) { SFX.deny(); return null; }
+  S.gold -= cost;
+  S.inf.chests = (S.inf.chests || 0) + 1;
+  const kind = ch.draw();
+  S.inf.bag[kind] = (S.inf.bag[kind] || 0) + 1;
+  const rare = kind === 'd20' ? 3 : kind === 'd12' ? 2 : kind === 'd8' ? 1 : 0;
+  const col = kind === 'd1' ? '#9a9a9a' : ['#e9dfc4', '#7fd4ff', '#c78bff', '#ffd452'][rare];
+  S.texts.push({ str: kind === 'd1' ? '꽝… 외눈 주사위' : `보물상자: ${ch.label[kind]}(${kind}) 획득!`, x: W / 2, y: 140, t: 0, color: col });
+  S.fxs.push({ kind: 'ring', x: W / 2, y: 150, t: 0, dur: 0.6 + rare * 0.2, size: 90 + rare * 40, color: col });
+  if (rare >= 2) SFX.win(); else if (kind === 'd1') SFX.deny(); else SFX.coin();
+  syncUI();
+  return kind;
+}
+function rollBagDie(kind) {
+  const ch = chestDef();
+  if (!ch || S.mode !== 'infinity' || !S.inf || S.phase !== 'playing') return false;
+  if (SLOT.active || S.heldDie || DIE.state !== 'tray' || !(S.inf.bag[kind] > 0)) { SFX.deny(); return false; }
+  S.inf.bag[kind]--;
+  SLOT.active = true; SLOT.kind = kind;
+  SLOT.t = 0; SLOT.t2 = 0; SLOT.phase = 0; SLOT.sndT = 0;
+  SLOT.final = ch.roll(kind);
+  SFX.throwDie();
+  syncUI();
+  return true;
+}
+function finishSlot() {
+  SLOT.active = false;
+  S.heldDie = SLOT.final;
+  SFX.coin();
+  diceSlot.classList.add('pop');
+  setTimeout(() => diceSlot.classList.remove('pop'), 350);
+  if (S.heldDie > 6) { // 성 타워 당첨 연출
+    const def = TOWER_DEFS[S.heldDie];
+    S.texts.push({ str: `★${S.heldDie} ${def.name.replace(/ ★\d+$/, '')} 등장!`, x: W / 2, y: 120, t: 0, color: def.color, big: true });
+    S.fxs.push({ kind: 'ring', x: W / 2, y: H / 2, t: 0, dur: 0.9, size: 260, color: def.color });
+    S.shakeT = S.heldDie >= 15 ? 0.5 : 0.2;
+    if (S.heldDie >= 15) SFX.win(); else SFX.merge();
+  }
+  syncUI();
+}
+
 function updateSlot(dt) {
   if (!SLOT.active) return;
   SLOT.t += dt;
+  if (SLOT.kind && SLOT.kind !== 'd6') { // 다면체: 숫자가 빠르게 바뀌다가 멈춘다
+    if (SLOT.phase === 0) {
+      SLOT.sndT -= dt;
+      if (SLOT.sndT <= 0) { SFX.bounce(0.25); SLOT.sndT = 0.09; }
+      if (SLOT.t >= 0.8) {
+        SLOT.phase = 1; SLOT.t2 = 0;
+        const ch = chestDef();
+        if (DIE.forceFinal) { SLOT.final = Math.max(1, Math.min(ch ? ch.sides[SLOT.kind] : 6, DIE.forceFinal)); DIE.forceFinal = 0; }
+        SFX.settle();
+      }
+    } else {
+      SLOT.t2 += dt;
+      if (SLOT.t2 > 0.5) finishSlot();
+    }
+    return;
+  }
   if (SLOT.phase === 0) {
     // 빠른 회전 (덜그럭 소리)
     const wl = Math.hypot(...SLOT.w);
@@ -1234,15 +1367,33 @@ function updateSlot(dt) {
     if (SLOT.ang > 1e-4) {
       SLOT.R = m3mul(m3axisAngle(SLOT.axis[0], SLOT.axis[1], SLOT.axis[2], SLOT.ang * ease), SLOT.from);
     }
-    if (SLOT.t2 > 0.45) {
-      SLOT.active = false;
-      S.heldDie = SLOT.final;
-      SFX.coin();
-      diceSlot.classList.add('pop');
-      setTimeout(() => diceSlot.classList.remove('pop'), 350);
-      syncUI();
-    }
+    if (SLOT.t2 > 0.45) finishSlot();
   }
+}
+// 다면체 주사위 (슬롯용): 그림이 있으면 회전, 없으면 변 수에 맞는 다각형 + 숫자
+const POLY_SIDES = { d1: 0, d4: 3, d8: 4, d12: 5, d20: 6 };
+function drawPolyDie(g, cx, cy, size, kind, num, rot, col) {
+  const sp = A['poly' + kind];
+  g.save();
+  g.translate(cx, cy);
+  g.rotate(rot);
+  if (sp && sp.cv) {
+    const h = size * 2.2, w = h * sp.w / sp.h;
+    g.drawImage(sp.cv, -w / 2, -h / 2, w, h);
+  } else {
+    const n = POLY_SIDES[kind] || 4;
+    g.beginPath();
+    if (n === 0) g.arc(0, 0, size, 0, Math.PI * 2);
+    else for (let i = 0; i < n; i++) { const a = -Math.PI / 2 + i * Math.PI * 2 / n; const x = Math.cos(a) * size, y = Math.sin(a) * size; if (i === 0) g.moveTo(x, y); else g.lineTo(x, y); }
+    g.closePath();
+    const gr = g.createLinearGradient(-size, -size, size, size); gr.addColorStop(0, '#fffaf0'); gr.addColorStop(1, col);
+    g.fillStyle = gr; g.fill();
+    g.strokeStyle = '#2a2018'; g.lineWidth = 2.5; g.stroke();
+  }
+  g.rotate(-rot);
+  g.fillStyle = '#1a1208'; g.font = `bold ${Math.round(size * 0.95)}px sans-serif`; g.textAlign = 'center'; g.textBaseline = 'middle';
+  g.strokeStyle = 'rgba(255,255,255,0.8)'; g.lineWidth = 3; g.strokeText(String(num), 0, 1); g.fillText(String(num), 0, 1);
+  g.restore();
 }
 
 function drawSlot() {
@@ -1253,6 +1404,15 @@ function drawSlot() {
   slotCanvas.classList.remove('hidden');
   sctx.clearRect(0, 0, slotCanvas.width, slotCanvas.height);
   const bounce = SLOT.phase === 0 ? Math.abs(Math.sin(SLOT.t * 16)) * 4 : 0;
+  if (SLOT.kind && SLOT.kind !== 'd6') {
+    const ch = chestDef();
+    const sides = ch ? ch.sides[SLOT.kind] : 6;
+    const num = SLOT.phase === 0 ? 1 + (Math.floor(SLOT.t * 22) * 7) % sides : SLOT.final;
+    const rot = SLOT.phase === 0 ? SLOT.t * 9 : Math.max(0, 0.4 - SLOT.t2) * 2;
+    const col = SLOT.kind === 'd20' ? '#ffd452' : SLOT.kind === 'd12' ? '#c78bff' : SLOT.kind === 'd8' ? '#7fd4ff' : SLOT.kind === 'd1' ? '#9a9a9a' : '#d9c9a0';
+    drawPolyDie(sctx, 37, 40 - bounce, 22, SLOT.kind, num, rot, col);
+    return;
+  }
   drawCube(sctx, 37, 40 - bounce, 17, SLOT.R);
 }
 
@@ -1639,7 +1799,7 @@ function startInfinity() {
   const INF = C && C.INFINITY;
   if (!INF) return;
   S.mode = 'infinity';
-  S.inf = { sp: 0, power: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 }, kills: 0, spent: 0 };
+  S.inf = { sp: 0, power: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 }, kills: 0, spent: 0, bag: { d1: 0, d4: 0, d6: 0, d8: 0, d12: 0, d20: 0 }, chests: 0 };
   S.stage = 0;
   S.stageData = { n: 0, name: '무한 투기장', tier: INF.tier.tier, tierName: INF.tier.name, tierColor: INF.tier.color, lanes: INF.tier.lanes.length, waves: Infinity, bases: [], gem: 0 };
   S.stageWaves = Infinity;
@@ -1822,7 +1982,7 @@ const towerDmg   = t => {
   if (d) { m *= d.dmgMult(powerLv(t.face)); const ex = powerSpecial(t.face, 'dmg'); if (ex) m *= 1 + ex * powerTier(t.face); }
   return t.def.dmg * m;
 };
-const towerRange = t => t.def.range + LVL_RANGE[t.lvl - 1] + (DP() ? DP().rangeAdd(powerLv(t.face)) : 0);
+const towerRange = t => t.def.range + LVL_RANGE[t.lvl - 1] + (DP() ? DP().rangeAdd(powerLv(t.face)) : 0) + (S.mode === 'infinity' && window.DKCONTENT ? (DKCONTENT.INFINITY.rangeBonus || 0) : 0);
 const towerRate  = t => { let r = t.def.rate * LVL_RATE[t.lvl - 1]; const ex = powerSpecial(t.face, 'rate'); if (ex) r *= Math.pow(ex, powerTier(t.face)); return r; };
 const towerSplash = t => (t.def.splash || 0) + ((powerSpecial(t.face, 'splash') || 0) * powerTier(t.face));
 const towerSlowPct = t => 0.26 + 0.06 * t.lvl + ((powerSpecial(t.face, 'slow') || 0) * powerTier(t.face));
@@ -1913,7 +2073,7 @@ function towerFire(t, dt) {
     if (t.face === 2) {
       S.fxs.push({ kind: 'muzzleFlash', x: from.x, y: from.y, t: 0, dur: 0.12, size: 38 });
     }
-    SFX['t' + t.face]();
+    (SFX['t' + t.face] || SFX.t6)();
   }
 }
 
@@ -2117,6 +2277,29 @@ function drawTopper(t) {
   ctx.restore();
 }
 
+// 성 타워: 밴드색 오라 링 + 머리 위 ★n 배지 (19·20 은 무지개)
+function starColor(def) { return def.rainbow ? `hsl(${(S.time * 90) % 360},95%,65%)` : def.color; }
+function drawStarBadge(t) {
+  const col = starColor(t.def);
+  const pulse = 0.5 + 0.5 * Math.sin(S.time * 4 + t.x * 0.01);
+  ctx.save();
+  ctx.translate(t.x, t.y + 6);
+  ctx.scale(1, 0.5);
+  ctx.beginPath(); ctx.arc(0, 0, SPOT_R + 6 + pulse * 4, 0, Math.PI * 2);
+  ctx.strokeStyle = col; ctx.lineWidth = 3; ctx.globalAlpha = 0.6 + pulse * 0.3;
+  ctx.shadowColor = col; ctx.shadowBlur = 16;
+  ctx.stroke();
+  ctx.restore();
+  ctx.save();
+  ctx.font = 'bold 13px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  const txt = `★${t.face}`;
+  const w = ctx.measureText(txt).width + 12, y = t.y - 112;
+  ctx.fillStyle = 'rgba(10,8,14,0.82)'; ctx.beginPath(); ctx.roundRect(t.x - w / 2, y - 9, w, 18, 9); ctx.fill();
+  ctx.strokeStyle = col; ctx.lineWidth = 1.5; ctx.stroke();
+  ctx.fillStyle = col; ctx.fillText(txt, t.x, y + 0.5);
+  ctx.restore();
+}
+
 function heldFace() {
   return (DRAG.active && DRAG.face) || S.heldDie || 0;
 }
@@ -2298,6 +2481,7 @@ function draw() {
   }
   drawLanes();
   drawArenaCrystal();
+  drawArenaBraziers();
 
   // 건설 지점 표시
   for (let i = 0; i < SPOTS.length; i++) {
@@ -2413,6 +2597,7 @@ function draw() {
         ctx.restore();
       }
       if (!sp.dedicated) drawTopper(t);
+      if (t.face > 6) drawStarBadge(t);
       // 레벨 표시 (받침 앞의 금색 점)
       for (let i = 0; i < MAX_LVL; i++) {
         ctx.beginPath();
@@ -2850,6 +3035,21 @@ const slotCanvas = $('slot-canvas'), sctx = slotCanvas.getContext('2d');
 const rollBtn = $('roll-btn'), waveBtn = $('wave-btn');
 const infoPanel = $('info-panel');
 let diceURLs = [];
+const starIconCache = {};
+// 눈(1~6) 은 주사위 그림, 성(7~20) 은 코드로 만든 별 배지 아이콘
+function dieIconURL(face) {
+  if (face <= 6) return diceURLs[face - 1] || SRCS['d' + face];
+  if (starIconCache[face]) return starIconCache[face];
+  const def = TOWER_DEFS[face];
+  const cv = document.createElement('canvas'); cv.width = 96; cv.height = 96;
+  const g = cv.getContext('2d');
+  const gr = g.createLinearGradient(0, 0, 96, 96); gr.addColorStop(0, def.color); gr.addColorStop(1, '#1a1428');
+  g.fillStyle = gr; g.beginPath(); g.roundRect(6, 6, 84, 84, 18); g.fill();
+  g.strokeStyle = '#fff'; g.lineWidth = 3; g.globalAlpha = 0.7; g.stroke(); g.globalAlpha = 1;
+  g.fillStyle = '#fff'; g.font = 'bold 30px sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle';
+  g.fillText('★' + face, 48, 50);
+  return (starIconCache[face] = cv.toDataURL());
+}
 
 function syncUI() {
   $('gold-val').textContent = S.gold;
@@ -2863,7 +3063,7 @@ function syncUI() {
   if (S.heldDie) {
     const def = TOWER_DEFS[S.heldDie];
     diceSlot.classList.add('has-die');
-    diceImg.src = diceURLs[S.heldDie - 1];
+    diceImg.src = dieIconURL(S.heldDie);
     diceImg.classList.remove('hidden'); diceQ.classList.add('hidden');
     diceSlot.title = def.name + ' — 필드로 끌어다 놓아 설치';
     heldInfo.classList.remove('hidden');
@@ -2889,6 +3089,8 @@ function syncInfPanel() {
   if (!panel) return;
   const on = S.mode === 'infinity' && S.phase === 'playing' && S.inf;
   panel.classList.toggle('hidden', !on);
+  const gachaEl = $('inf-gacha'); if (gachaEl) gachaEl.classList.toggle('hidden', !on);
+  const brk = $('hud-break'); if (brk) brk.classList.toggle('hidden', !on);
   if (!on) return;
   const d = DP();
   $('inf-sp').textContent = S.inf.sp;
@@ -2904,6 +3106,24 @@ function syncInfPanel() {
     btn.classList.toggle('maxed', maxed);
     btn.title = `${TOWER_DEFS[f].name} · 피해 ×${d.dmgMult(lv).toFixed(2)} · 사거리 +${d.rangeAdd(lv)} · ${d.special[f].label} (${d.tier(lv)}단계)`;
   }
+  // 보물상자 + 주사위 가방
+  const gacha = $('inf-gacha');
+  if (gacha) {
+    gacha.classList.remove('hidden');
+    const cost = chestCost();
+    const cb = $('chest-btn');
+    cb.querySelector('small').textContent = `${cost} G`;
+    cb.disabled = S.gold < cost;
+    const ch = chestDef();
+    for (const k of ['d1', 'd4', 'd6', 'd8', 'd12', 'd20']) {
+      const b = $('bag-' + k); if (!b) continue;
+      const n = (S.inf.bag && S.inf.bag[k]) || 0;
+      b.querySelector('.bag-n').textContent = n;
+      b.classList.toggle('empty', n === 0);
+      b.disabled = n === 0 || SLOT.active || !!S.heldDie || DIE.state !== 'tray';
+      b.title = ch ? `${ch.label[k]} — 굴리면 1~${ch.sides[k]} 성 타워` : k;
+    }
+  }
 }
 
 function syncWaveBtn() {
@@ -2918,7 +3138,7 @@ function syncInfo() {
   if (!S.selTower) { infoPanel.classList.add('hidden'); return; }
   const t = S.selTower;
   infoPanel.classList.remove('hidden');
-  $('info-dice').src = diceURLs[t.face - 1];
+  $('info-dice').src = dieIconURL(t.face);
   $('info-name').textContent = `${t.def.name} · Lv${t.lvl}`;
   const dmg = Math.round(towerDmg(t));
   const rng = Math.round(towerRange(t));
@@ -3250,8 +3470,8 @@ function startPlaceDrag(ev) {
   DRAG.startX = ev.clientX; DRAG.startY = ev.clientY;
   DRAG.pid = ev.pointerId;
   DRAG.overSpot = -1;
-  ghostDie.src = diceURLs[S.heldDie - 1] || SRCS['d' + S.heldDie];
-  ghostTower.src = SRCS['t' + S.heldDie];
+  ghostDie.src = dieIconURL(S.heldDie);
+  ghostTower.src = SRCS['t' + Math.min(6, S.heldDie)];
   diceSlot.classList.add('dragging');
   document.body.classList.add('placing');
   try { diceSlot.setPointerCapture(ev.pointerId); } catch (e) { /* ignore */ }
@@ -3437,6 +3657,8 @@ $('btn-infinity').addEventListener('click', () => { if (!infinityUnlocked()) ret
 const ssInf = $('ss-inf-btn');
 if (ssInf) ssInf.addEventListener('click', () => { if (!infinityUnlocked()) return; audio(); startInfinity(); });
 for (let f = 1; f <= 6; f++) { const b = $('inf-face-' + f); if (b) b.addEventListener('click', () => upgradeFace(f)); }
+if ($('chest-btn')) $('chest-btn').addEventListener('click', () => { audio(); buyChest(); });
+for (const k of ['d1', 'd4', 'd6', 'd8', 'd12', 'd20']) { const b = $('bag-' + k); if (b) b.addEventListener('click', () => { audio(); rollBagDie(k); }); }
 $('btn-shop').addEventListener('click', () => { audio(); gotoShop(); });
 $('ss-back').addEventListener('click', () => gotoLobby());
 $('shop-back').addEventListener('click', () => gotoLobby());
@@ -3522,6 +3744,7 @@ function drawLoading(pr) {
   window.DKstartInf = startInfinity;
   window.DKinf = () => S.inf;
   window.DKupgrade = upgradeFace;
+  window.DKchest = buyChest; window.DKbag = () => S.inf && S.inf.bag; window.DKrollBag = rollBagDie; // 인피니티 갓챠 훅
   window.DKtowerSpr = towerSpr;
   window.DKplace = tryPlace;                      // 보유 주사위를 석단 idx 에 놓기
   window.DKroll = () => { if (S.phase === 'playing' && !S.heldDie && S.gold >= ROLL_COST) { S.gold -= ROLL_COST; S.heldDie = pickUnlockedFace(); syncUI(); return S.heldDie; } return 0; }; // 즉시 굴림 (테스트용)

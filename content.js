@@ -291,8 +291,8 @@ window.DKCONTENT = (function () {
   // 가운데 3×5 석단 보드(15개, 처음부터 전부 개방), 둘레를 도는 둥근 사각형 트랙 하나. 왼쪽 변 가운데가 열려 있어
   // 아래쪽 포탈에서 출발한 적이 (종류와 상관없이 전부) 시계 반대 방향으로 한 바퀴 돌아 위쪽 크리스탈에 닿는다.
   function buildArenaLayout() {
-    const L = 222, R = 802, T = 132, B = 468, rad = 60;
-    const start = [L, 360], end = [L, 240];
+    const L = 250, R = 774, T = 150, B = 450, rad = 52; // 보드에 밀착: 가운데 줄에서 위·아래 트랙까지 150px
+    const start = [L, 342], end = [L, 258];
     const arc = (cx, cy, a0, a1, n) => { const out = []; for (let i = 0; i <= n; i++) { const a = a0 + (a1 - a0) * i / n; out.push([Math.round(cx + rad * Math.cos(a)), Math.round(cy + rad * Math.sin(a))]); } return out; };
     // 시계 반대 방향 (화면 좌표계에서 y 아래가 +): 왼쪽 변 아래로 → 바닥 → 오른쪽 변 위로 → 위 변 왼쪽으로 → 왼쪽 변 아래로
     const loop = [];
@@ -305,8 +305,8 @@ window.DKCONTENT = (function () {
     const path = loop.filter((p, i) => i === 0 || p[0] !== loop[i - 1][0] || p[1] !== loop[i - 1][1]);
     // 석단 보드 3×5
     const spots = [];
-    for (let r = 0; r < 3; r++) for (let c = 0; c < 5; c++) spots.push([512 + (c - 2) * 88, 300 + (r - 1) * 88]);
-    return { path, path2: null, airPts: null, spots, spots2: [], portals: [start.slice()], center: end.slice(), board: { x: 290, y: 164, w: 444, h: 272 } };
+    for (let r = 0; r < 3; r++) for (let c = 0; c < 5; c++) spots.push([512 + (c - 2) * 88, 300 + (r - 1) * 72]);
+    return { path, path2: null, airPts: null, spots, spots2: [], portals: [start.slice()], center: end.slice(), board: { x: 290, y: 178, w: 444, h: 244 }, track: { L, R, T, B, rad } };
   }
 
   // ===== 난이도 티어 =====
@@ -1125,7 +1125,7 @@ window.DKCONTENT = (function () {
     if (inf) {
       const L = buildArenaLayout();
       inf.path = L.path; inf.path2 = L.path2; inf.airPts = L.airPts; inf.spots = L.spots; inf.spots2 = L.spots2;
-      inf.portals = L.portals; inf.center = L.center; inf.board = L.board;
+      inf.portals = L.portals; inf.center = L.center; inf.board = L.board; inf.track = L.track;
     }
   }
 
@@ -1218,6 +1218,16 @@ window.DKCONTENT = (function () {
     mapKey: 'cInf',
     tier: { tier: 6, name: '무한', color: '#ff7ad9', lanes: ['ground'], extraSpots: 0, hpScale: 1, countBonus: 0, startGold: 400 }, // 랜덤다이스식: 트랙 하나(공중·땅굴 적도 같은 트랙), 석단 15개 처음부터 전부
     startGold: 400, lives: 20, intermission: 6,
+    rangeBonus: 24,  // 보드 보정: 가운데 칸에서도 트랙(150px)에 닿게
+    // 보물상자 갓챠: 골드로 상자를 사면 다면체 주사위 하나. 굴려 나온 숫자 = 타워 성(★). 7 이상은 히든 타워.
+    chest: {
+      cost: (n) => Math.round(250 * Math.pow(1.10, n) / 10) * 10,   // n = 이번 런에 산 횟수 (10번째 650, 20번째 1,680, 30번째 4,360)
+      table: [['d1', 0.10], ['d4', 0.42], ['d6', 0.20], ['d8', 0.17], ['d12', 0.08], ['d20', 0.03]],
+      sides: { d1: 1, d4: 4, d6: 6, d8: 8, d12: 12, d20: 20 },
+      label: { d1: '외눈 주사위', d4: '4면체', d6: '6면체', d8: '8면체', d12: '12면체', d20: '20면체' },
+      roll(kind) { const n = this.sides[kind] || 6; return 1 + Math.floor(Math.random() * n); },
+      draw() { let v = Math.random(); for (const [k, p] of this.table) { if (v < p) return k; v -= p; } return 'd4'; },
+    },
     bossEvery: 10,   // 10 웨이브마다 보스 (20 부터 2마리)
     eliteEvery: 5,   // 5 웨이브마다 정예 (HP×3, 크기×1.2, 골드×3)
     unlockAir: 1, unlockBurrow: 1,

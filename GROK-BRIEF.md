@@ -140,10 +140,49 @@ casual/tiles/<theme>/prop-1.png … prop-6.png       (오브젝트, 회색 배�
 
 `<theme>` 는 `plains`, `forest`, `lake`, `darkforest`, `castle`, `hell`.
 
+## E. 인피니티 갓챠 에셋 20장 (성 타워 14 + 다면체 주사위 5 + 상자 1)
+
+인피니티에서 골드로 **보물상자**를 사면 다면체 주사위(d1·d4·d6·d8·d12·d20)가 나오고, 굴려 나온 숫자가 타워의 **성(★)** 이 됩니다. 1~6성은 기존 `t1-a`~`t6-a`, **7~20성은 새 히든 타워**입니다. 그림이 없는 동안은 6눈 타워에 별 배지를 얹어 동작합니다.
+
+### E-1. 성 타워 14장 → `casual/towers/star-07.png` … `star-20.png` (1024², 회색 배경, `t6-a.png` 와 같은 박스 핏·받침·시점)
+
+공통 프롬프트:
+```text
+Single tower sprite on a solid plain light gray #C8C8C8 background, centered, same 3/4 top-down view, same footprint and same round stone base as the reference tower t6-a.png. Hand-painted casual Kingdom Rush and Random Dice style, chibi-cute proportions, thick clean outlines, saturated colors. A HIDDEN LEGENDARY dice tower of rank {STAR}: {BAND}. The tower is built around a large glowing die showing {STAR} pips or the number {STAR}. No text, no watermark.
+```
+| 성 | {BAND} |
+|---|---|
+| 7~10 별빛 첨탑 | `a slender starlight spire of pale blue crystal with silver trim, small floating star shards, soft cyan glow — each rank slightly taller and brighter than the last` |
+| 11~14 성운 요새 | `a violet nebula fortress of dark stone wrapped in swirling purple-pink galaxy energy, floating rune rings, amethyst crystals — each rank adds another orbiting ring` |
+| 15~18 천공 옥좌 | `a golden sky throne: white marble and gold with wings, halo rings of light, small clouds around the base — each rank adds more wings and gold` |
+| 19~20 차원 군주 | `a dimension lord's obelisk: black void crystal cracked open with rainbow light pouring out, reality-tear effects, tiny orbiting dice — rank 20 is the grandest object in the game` |
+
+파일명 `star-07.png` … `star-20.png` (두 자리). 크기감: 게임에서 96px 높이 박스에 맞춰 줄어듭니다. 밴드 안에서 숫자가 오를수록 조금씩 더 웅장하게.
+
+### E-2. 다면체 주사위 5장 → `dice/poly-d1.png`, `poly-d4.png`, `poly-d8.png`, `poly-d12.png`, `poly-d20.png` (1024², 회색 배경)
+
+```text
+Single polyhedral game die on a solid plain light gray #C8C8C8 background, centered, large, slightly tilted 3/4 view, hand-painted casual style with thick clean outlines: {DIE}. Ivory body with the numbers engraved in dark red like the game's existing d6 (dice-1.png). Soft rim light, no cast shadow beyond the base, no text other than the die numbers, no watermark.
+```
+| 파일 | {DIE} |
+|---|---|
+| `poly-d1.png` | `a small round pebble-like "one-eyed" die with a single dark red pip, dull and slightly cracked (the dud)` |
+| `poly-d4.png` | `a four-sided tetrahedron die showing the numbers 1-4 on its faces` |
+| `poly-d8.png` | `an eight-sided octahedron die with a faint blue crystal tint` |
+| `poly-d12.png` | `a twelve-sided dodecahedron die with a violet amethyst tint and tiny sparkles` |
+| `poly-d20.png` | `a twenty-sided icosahedron die made of gold-veined crystal, glowing, with the 20 face turned to the viewer` |
+
+### E-3. 보물상자 1장 → `ui/chest.png` (1024², 회색 배경)
+
+```text
+Single closed treasure chest icon on a solid plain light gray #C8C8C8 background, centered, 3/4 view, hand-painted casual Kingdom Rush style, dark wood with gold bands and a glowing golden lock, a few dice peeking from under the lid, thick clean outlines, no text, no watermark.
+```
+
 ## 납품 순서
 
 1. `plains` 의 `road.png` 1장 → 게임에서 확인 (길 표면이 자연스럽게 반복되는지)
 2. 문제 없으면 `forest`, `lake`, `darkforest`, `castle`, `hell` 순으로 12장씩
+3. 인피니티 갓챠 에셋(E): 다면체 주사위 5장 → 성 타워 14장(7~20 순서) → 상자
 
 문제가 있으면 해당 조각만 다시 만들면 됩니다. 조각 하나가 없어도 게임은 그 자리만 코드 그림으로 대신하므로 부분 납품도 괜찮습니다.
 
