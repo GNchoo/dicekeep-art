@@ -30,18 +30,14 @@ html, body {
 
 #stage {
   position: relative;
-  width: min(100%, 1280px);
+  width: min(100%, 1280px); /* 실제 폭은 game.js fitStage()가 화면·HUD 높이에 맞춰 지정 */
   aspect-ratio: 16 / 9;
-  max-height: 100%;
   border: 2px solid #4c3d2c;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 8px 40px rgba(0,0,0,.7);
   background: #000;
   flex: 0 1 auto;
-}
-#wrap:has(#hud:not(.hidden)) #stage {
-  max-height: calc(100% - 116px);
 }
 
 #game { width: 100%; height: 100%; display: block; cursor: crosshair; touch-action: none; }
@@ -172,10 +168,9 @@ html, body {
   border: 2px solid #4c3d2c;
   border-radius: 10px;
   padding: 8px 12px;
-  height: 104px;
   min-height: 104px;
-  max-height: 104px;
   flex-shrink: 0;
+  flex-wrap: wrap;
   overflow: visible;
 }
 #hud.hidden, .hidden { display: none !important; }
@@ -217,6 +212,8 @@ html, body {
 #dice-q { font-size: 30px; color: #6b5e46; }
 #roll-btn {
   display: flex; flex-direction: column; align-items: center; gap: 2px;
+  flex-shrink: 0;
+  white-space: nowrap;
   font-size: 15px;
   padding: 10px 16px;
   background: linear-gradient(#6d5124, #4a350f);
@@ -298,7 +295,7 @@ html, body {
 }
 #wave-btn:hover:not(:disabled) { filter: brightness(1.3); }
 #wave-btn:disabled { opacity: .5; cursor: default; }
-.mini { display: flex; flex-direction: column; gap: 6px; }
+.mini { display: grid; grid-template-columns: repeat(2, 44px); gap: 6px; }
 .mini button {
   width: 44px; height: 34px;
   background: #3a2d21;
@@ -544,7 +541,30 @@ body.placing #game { cursor: grabbing; }
 .inf-face .inf-lv { font-size: 10px; color: #ffb8ea; }
 .inf-face .inf-cost { font-size: 9px; color: #e8b64a; }
 
+/* 좁거나 낮은 화면(폰·작은 창): HUD 요소를 줄인다 */
+@media (max-width: 720px), (max-height: 520px) {
+  #wrap { padding: 4px; gap: 4px; }
+  #hud { padding: 6px 8px; gap: 6px 8px; min-height: 0; }
+  #dice-panel { flex: 1 1 auto; gap: 6px; }
+  #dice-slot { width: 60px; height: 60px; }
+  #dice-slot img { width: 46px; height: 46px; }
+  #dice-q { font-size: 24px; }
+  #roll-btn { font-size: 13px; padding: 8px 10px; }
+  #roll-btn small { font-size: 11px; }
+  #held-info { padding: 4px 8px; max-width: 150px; }
+  #held-info b { font-size: 12px; }
+  #held-info span { display: none; }
+  #right-panel { margin-left: auto; gap: 6px; }
+  #wave-btn { min-width: 96px; font-size: 13px; padding: 10px 10px; }
+  .mini { grid-template-columns: repeat(3, 34px); }
+  .mini button { width: 34px; height: 30px; font-size: 12px; }
+  #inf-panel { padding: 3px 6px; gap: 4px; }
+  .inf-face { width: 40px; height: 52px; }
+  .inf-face .inf-pip { font-size: 14px; }
+}
+/* 세로 폰: 인피니티 강화 패널은 두 번째 줄로 */
 @media (max-width: 720px) {
+  #inf-panel { order: 5; width: 100%; margin-left: 0; justify-content: center; }
   .stage-grid { grid-template-columns: repeat(5, 1fr); }
   .shop-row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .skin-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }

@@ -10,3 +10,4 @@ serve.py
 start.bat
 wrangler.jsonc
 .assetsignore
+.gitignore
