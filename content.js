@@ -141,8 +141,8 @@ window.DKCONTENT = (function () {
     { tier: 1, name: '초원',   color: '#7fd463', lanes: ['ground'],                               extraSpots: 0, hpScale: 1.00, countBonus: 0, startGold: 130 },
     { tier: 2, name: '언덕',   color: '#7fd4ff', lanes: ['ground', 'air'],                        extraSpots: 2, hpScale: 1.30, countBonus: 2, startGold: 170 },
     { tier: 3, name: '협곡',   color: '#ffe86b', lanes: ['ground', 'air', 'tunnel'],              extraSpots: 4, hpScale: 1.65, countBonus: 4, startGold: 220 },
-    { tier: 4, name: '요새',   color: '#e0862c', lanes: ['ground', 'ground2', 'air'],             extraSpots: 6, hpScale: 2.05, countBonus: 6, startGold: 280 },
-    { tier: 5, name: '악몽',   color: '#ff5555', lanes: ['ground', 'ground2', 'air', 'tunnel'],   extraSpots: 8, hpScale: 2.50, countBonus: 8, startGold: 350 },
+    { tier: 4, name: '요새',   color: '#e0862c', lanes: ['ground', 'ground2', 'air'],             extraSpots: 6, hpScale: 1.85, countBonus: 6, startGold: 280 },
+    { tier: 5, name: '악몽',   color: '#ff5555', lanes: ['ground', 'ground2', 'air', 'tunnel'],   extraSpots: 8, hpScale: 2.10, countBonus: 8, startGold: 350 },
   ];
   const tierOf = (stageN) => TIERS[Math.min(TIERS.length - 1, Math.max(0, Math.floor((stageN - 1) / 10)))];
 
@@ -1008,7 +1008,7 @@ window.DKCONTENT = (function () {
       bossIndex: i % bossBases.length,
       gem: 8 + Math.floor(i / 2) + (T.tier - 1) * 2, // 최초 클리어 보상 젬
       // ---- 밸런스 (game.js 가 그대로 읽는다) ----
-      hpScale: +(T.hpScale * Math.pow(1.022, i)).toFixed(3), // 스테이지 기본 HP 배율 (S1 1.0 → S50 약 7.2)
+      hpScale: +(T.hpScale * Math.pow(1.02, i)).toFixed(3),  // 스테이지 기본 HP 배율 (S1 1.0 → S50 약 5.5)
       waveGrowth: 1.07,                                      // 웨이브마다 HP ×1.07
       countBase: 8 + T.countBonus,                           // 웨이브당 기본 마릿수
       goldMult: +(1 + i * 0.02).toFixed(3),                  // 적 처치 골드 배율 (석단이 늘어난 만큼 수입도)
