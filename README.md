@@ -14,7 +14,7 @@ python serve.py
 
 Windows는 `start.bat`. `index.html`을 file://로 열지 말 것.
 
-테스트용: `http://localhost:8137/?unlock=all` 로 열면 50 스테이지 클리어·타워 전부 해금 상태(인피니티 열림). `&start=inf` 를 붙이면 바로 인피니티 시작.
+테스트용: `http://localhost:8137/?unlock=all` 로 열면 50 스테이지 클리어·타워 전부 해금 상태(인피니티 열림). `?inf=1` 은 인피니티만 임시 개방(진행·저장 그대로). `&start=inf` 를 붙이면 바로 인피니티 시작.
 
 ### 외부 공개 (Cloudflare Workers)
 
