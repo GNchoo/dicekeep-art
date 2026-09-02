@@ -237,9 +237,6 @@ const SRCS = {
   dieExplode: BASE + 'vfx/die-explode-2x2.png',
   portal: BASE + 'props/portal.png',
   crystal: BASE + 'props/crystal.png',
-  t1Atk: BASE + 'casual/towers/t1-attack-2x2.png', t2Atk: BASE + 'casual/towers/t2-attack-2x2.png',
-  t3Atk: BASE + 'casual/towers/t3-attack-2x2.png', t4Atk: BASE + 'casual/towers/t4-attack-2x2.png',
-  t5Atk: BASE + 'casual/towers/t5-attack-2x2.png', t6Atk: BASE + 'casual/towers/t6-attack-2x2.png',
 };
 if (window.DKCONTENT) {
   for (const m of DKCONTENT.maps) SRCS[m.key] = BASE + m.src;
@@ -412,7 +409,6 @@ async function loadAssets(onProgress) {
   const sheets = [
     'miteWalk', 'runnerWalk', 'huskWalk', 'bossWalk', 'impact',
     'cannonBlast', 'arcaneBurst', 'frostBurst', 'dieExplode',
-    't1Atk', 't2Atk', 't3Atk', 't4Atk', 't5Atk', 't6Atk',
   ];
   if (window.DKCONTENT) {
     for (const b of DKCONTENT.bases) if (b.walk) sheets.push(b.walk);
@@ -515,27 +511,18 @@ function towerSpr(face, skin) {
   return pack[((skin || 0) % pack.length + pack.length) % pack.length];
 }
 
-function towerAtkFrame(face, kick) {
-  const sheet = A['t' + face + 'Atk'];
-  if (!sheet || !sheet.length || kick <= 0) return null;
-  const fi = Math.min(sheet.length - 1, Math.floor((1 - kick) * sheet.length));
-  return sheet[fi];
-}
-
+// 공격 모션: 배치된 스킨 스프라이트를 그대로 쓰고 반동(눌림)과 원소색 발광만 얹는다.
+// tN-attack-2x2 시트는 스킨과 디자인이 달라 사용하지 않는다 (교체 시 "다른 타워가 공격"하는 것처럼 보임).
 function paintTowerBody(t, sp) {
   const kick = t.kick || 0;
-  const fr = towerAtkFrame(t.face, kick);
-  if (fr && fr.cv) {
-    const maxH = 96, maxW = 70;
-    const s = Math.min(maxH / fr.h, maxW / fr.w);
-    const w = fr.w * s, h = fr.h * s;
-    ctx.drawImage(fr.cv, -w / 2, -(h - 5));
-    return;
-  }
   const cx = sp.cx ?? TS_CX, by = sp.baseY ?? TS_BASE_Y;
-  const sc = 1 - kick * 0.04;
+  const k = kick * kick; // 발사 직후 가장 강하고 빠르게 풀린다
   ctx.save();
-  ctx.scale(sc, sc);
+  ctx.scale(1 + k * 0.07, 1 - k * 0.09);
+  if (kick > 0.05) {
+    ctx.shadowColor = (t.def && t.def.color) || '#ffd452';
+    ctx.shadowBlur = 6 + 22 * kick;
+  }
   ctx.drawImage(sp.cv, -cx, -by);
   ctx.restore();
 }
@@ -2533,6 +2520,37 @@ function draw() {
 
 const $ = id => document.getElementById(id);
 const overlayEl = $('overlay'), statsEl = $('stats'), hudEl = $('hud');
+const wrapEl = $('wrap'), stageEl = $('stage');
+
+// 스테이지(16:9)와 HUD 폭을 화면에 맞춘다: 가로·세로 중 더 빡빡한 쪽에 맞추고 HUD 높이만큼 뺀다.
+// HUD 는 스테이지와 같은 폭을 우선하되, 그 폭에서 두 줄로 접히면 화면 폭까지 넓혀 한 줄을 유지한다.
+function fitStage() {
+  const cs = getComputedStyle(wrapEl);
+  const padX = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
+  const padY = (parseFloat(cs.paddingTop) || 0) + (parseFloat(cs.paddingBottom) || 0);
+  const gap = parseFloat(cs.rowGap) || 8;
+  const availW = wrapEl.clientWidth - padX;
+  const availH = wrapEl.clientHeight - padY;
+  const maxW = Math.max(240, Math.min(availW, 1280));
+  const hudHidden = hudEl.classList.contains('hidden');
+  const setW = (el, w) => { const px = Math.floor(w) + 'px'; if (el.style.width !== px) el.style.width = px; };
+  const hudH = () => hudHidden ? 0 : hudEl.offsetHeight + gap;
+  const stageW = (h) => Math.max(240, Math.min(maxW, (availH - h) * 16 / 9));
+  setW(hudEl, maxW);
+  const wideH = hudH();
+  let w = stageW(wideH);
+  setW(hudEl, w);
+  if (!hudHidden && hudEl.offsetHeight + gap > wideH + 1) setW(hudEl, maxW); // 좁히면 접히는 경우 → 넓은 폭 유지
+  w = stageW(hudH());
+  setW(stageEl, w);
+}
+window.addEventListener('resize', fitStage);
+window.addEventListener('orientationchange', fitStage);
+if (window.ResizeObserver) {
+  const ro = new ResizeObserver(() => fitStage());
+  ro.observe(wrapEl); ro.observe(hudEl);
+}
+fitStage();
 const diceSlot = $('dice-slot'), diceImg = $('dice-img'), diceQ = $('dice-q');
 const slotCanvas = $('slot-canvas'), sctx = slotCanvas.getContext('2d');
 const rollBtn = $('roll-btn'), waveBtn = $('wave-btn');
