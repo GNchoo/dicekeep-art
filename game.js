@@ -916,7 +916,7 @@ function saveSave() {
   try { localStorage.setItem(SAVE_KEY, JSON.stringify(SAVE)); } catch (e) { /* 무시 */ }
 }
 function stageUnlocked(n) { return n === 1 || SAVE.cleared.includes(n - 1); }
-function infinityUnlocked() { return SAVE.cleared.length >= 50; }
+function infinityUnlocked() { return window.DKINF_OPEN === true || SAVE.cleared.length >= 50; } // ?inf=1 이면 임시 개방
 function stageCleared(n) { return SAVE.cleared.includes(n); }
 
 // 굴리기 결과를 해금된 눈으로 제한
@@ -3490,6 +3490,7 @@ function drawLoading(pr) {
   loadSave();
   // 개발용 URL 플래그: ?unlock=all → 50 스테이지 클리어·타워 전부 해금 상태로 시작 (저장은 플레이 후 갱신될 때만)
   //                    ?start=inf  → 타이틀 버튼을 누르면 로비 대신 바로 인피니티 시작
+  //                    ?inf=1      → 인피니티만 임시 개방 (50 스테이지 클리어 없이, 저장 데이터 변경 없음)
   const qs = new URLSearchParams(location.search);
   if (qs.get('unlock') === 'all' || window.__DK_UNLOCK_ALL) {
     SAVE.cleared = Array.from({ length: 50 }, (_, i) => i + 1);
@@ -3497,6 +3498,7 @@ function drawLoading(pr) {
     if (SAVE.gems < 200) SAVE.gems = 200;
   }
   window.DKAUTOSTART = qs.get('start');
+  window.DKINF_OPEN = qs.get('inf') === '1';   // ?inf=1 → 인피니티만 임시 개방 (스테이지 진행·저장은 그대로)
   // 디버그 훅 (콘솔): DK 게임 상태, DKA 스프라이트, DKDIE/DKSLOT 주사위, DKthrow 던지기, DKLANES 레인
   window.DK = S; window.DKA = A; window.DKDIE = DIE; window.DKSLOT = SLOT;
   window.DKthrow = (vx, vy) => { if (canRoll()) throwDie(vx, vy); };
