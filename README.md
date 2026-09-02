@@ -2,13 +2,14 @@
 
 주사위를 굴려 나온 눈이 높을수록 강력한 타워를 세우는 캐주얼 타워 디펜스 + 아트팩.
 
-**전체 명세:** [GAME-SPEC.md](GAME-SPEC.md) · **인수 브리프:** [GROK-HANDOFF.md](GROK-HANDOFF.md) · **파일 목록:** [ASSET-MANIFEST.md](ASSET-MANIFEST.md)
+**전체 명세:** [GAME-SPEC.md](GAME-SPEC.md) · **생성 프롬프트:** [ART-PROMPTS.md](ART-PROMPTS.md) · **인수 브리프:** [GROK-HANDOFF.md](GROK-HANDOFF.md) · **파일 목록:** [ASSET-MANIFEST.md](ASSET-MANIFEST.md)
 
 ## 실행
 
 ```bash
 python serve.py
-# http://localhost:8137
+# http://localhost:8137             게임
+# http://localhost:8137/editor.html 맵 좌표 에디터
 ```
 
 Windows는 `start.bat`. `index.html`을 file://로 열지 말 것.
@@ -18,8 +19,16 @@ Windows는 `start.bat`. `index.html`을 file://로 열지 말 것.
 - 주사위 **플릭 던지기** 또는 버튼/R 로 굴리기 (40G)
 - 눈 1~6 = 타워 종류 (6이 최강). 끌어다 석단에 놓으면 설치
 - 같은 눈 합체 최대 Lv3
-- 100웨이브 / 50맵 / 목숨 20
-- 공중·땅굴 적, 5의 배수 웨이브에 보스
+- 50 스테이지 / 5 티어 / 목숨 20. 마지막 웨이브에 보스
+- 티어가 오르면 **하늘길·땅굴·두 번째 흙길**이 열리고 석단이 늘어난다
+
+| 티어 | 스테이지 | 레인 | 추가 석단 |
+|---|---|---|---|
+| 1 초원 | 1~10 | 흙길 | +0 |
+| 2 언덕 | 11~20 | 흙길 + 하늘길 | +2 |
+| 3 협곡 | 21~30 | 흙길 + 하늘길 + 땅굴 | +4 |
+| 4 요새 | 31~40 | 흙길 + 흙길2 + 하늘길 | +6 |
+| 5 악몽 | 41~50 | 흙길 + 흙길2 + 하늘길 + 땅굴 | +8 |
 
 | 눈 | 타워 |
 |---|---|
@@ -30,17 +39,17 @@ Windows는 `start.bat`. `index.html`을 file://로 열지 말 것.
 | 5 | 테슬라 (연쇄) |
 | 6 | 왕관 요새 (폭발 주사위) |
 
-## 아트 (2026-08-31)
+## 아트 (2026-09-02)
 
 | 항목 | 수량 | 경로 |
 |---|---|---|
-| 맵 | 50 | `casual/maps/` |
-| 몬스터 | 500 + 걷기 12 | `casual/enemies/` |
-| 보스 | 100 | `casual/bosses/` |
-| 타워 | 6 인게임 + 보존 스킨 30 + 공격시트 6 | `casual/towers/` |
+| 맵 | 50 (+ 하드 배경 20 생성 대기) | `casual/maps/` |
+| 몬스터 | 500 + 걷기 12 (13~24 생성 대기) | `casual/enemies/` |
+| 보스 | 100 (걷기 1~10 생성 대기) | `casual/bosses/` |
+| 타워 | 6 인게임 + 스킨 24 (재생성 대기) + 공격시트 6 | `casual/towers/` |
 | VFX | 레이저·포격·룬·서리·번개·주사위폭탄 | `vfx/` |
 
-스타일: Kingdom Rush + Random Dice, 2D 아이소메트릭.
+스타일: Kingdom Rush + Random Dice, 2D 아이소메트릭. 생성 대기 항목의 프롬프트는 `ART-PROMPTS.md`.
 
 ## 라이선스
 

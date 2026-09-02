@@ -1,9 +1,9 @@
 # 주사위 성채 (Dicekeep) — 게임 명세
 
-최종 정리: 2026-08-31. 저장소: https://github.com/GNchoo/dicekeep-art
+최종 정리: 2026-09-02. 저장소: https://github.com/GNchoo/dicekeep-art
 
 이 문서는 **현재 구현된 규칙·아트·파일 위치**의 단일 소스다.
-이어서 작업할 때는 이 파일 → `content.js` → `game.js` → `GROK-HANDOFF.md` 순으로 읽는다.
+이어서 작업할 때는 이 파일 → `content.js` → `game.js` → `ART-PROMPTS.md`(생성 프롬프트) → `GROK-HANDOFF.md`(옛 브리프) 순으로 읽는다.
 
 대화는 한국어, 이미지 생성 프롬프트는 영어(Grok Imagine).
 
@@ -11,7 +11,7 @@
 
 ## 1. 한 줄 요약
 
-주사위를 굴려 나온 눈(1~6)이 곧 타워 종류다. 눈을 빈 석단에 놓으면 설치, 같은 눈 위에 놓으면 합체(최대 Lv3). 포탈에서 나온 적이 크리스탈에 닿기 전에 막는다. 100웨이브, 50맵.
+주사위를 굴려 나온 눈(1~6)이 곧 타워 종류다. 눈을 빈 석단에 놓으면 설치, 같은 눈 위에 놓으면 합체(최대 Lv3). 포탈에서 나온 적이 크리스탈에 닿기 전에 막는다. **50 스테이지, 5 난이도 티어, 티어가 오를수록 적 동선(레인)과 석단이 늘어난다.**
 
 ---
 
@@ -21,20 +21,23 @@
 git clone https://github.com/GNchoo/dicekeep-art.git
 cd dicekeep-art
 python serve.py
-# http://localhost:8137
+# http://localhost:8137          게임
+# http://localhost:8137/editor.html  맵 좌표 에디터
 ```
 
 Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크로마키 실패).
 
-캐시: `index.html`의 `content.js?v=N` / `game.js?v=N` / `style.css?v=N` 을 올릴 것.
+캐시: `index.html`·`editor.html`의 `?v=N` 을 올릴 것 (현재 v41).
 
-디버그:
-- `window.DK` 게임 상태
+디버그 (콘솔):
+- `window.DK` 게임 상태 (`gold`, `enemies`, `towers`, `stageData` …)
 - `window.DKA` 로드된 스프라이트
-- `window.DKDIE` 필드 3D 주사위
+- `window.DKDIE` 필드 3D 주사위 (`forceFinal` 로 눈 강제)
 - `window.DKSLOT` 버튼 슬롯 굴림
 - `window.DKthrow(vx, vy)` 필드 물리 던지기
-- `window.DKCONTENT` 맵/적/타워 카탈로그
+- `window.DKLANES()` 현재 레인 배열
+- `window.DKstart(n)` 스테이지 n 바로 시작
+- `window.DKCONTENT` 맵/적/타워/티어 카탈로그 (`buildLayout`, `tiers`)
 
 ---
 
@@ -42,13 +45,52 @@ Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크�
 
 | 항목 | 값 |
 |---|---|
-| 시작 골드 | 130 |
 | 굴리기 비용 | 40G |
 | 목숨 | 20 |
-| 웨이브 | 100 |
-| 맵 | 50종, 웨이브마다 `maps[(wave-1) % 50]` |
+| 스테이지 | 50 (맵당 1개), 10개마다 티어 상승 |
+| 웨이브 | 스테이지당 8 ~ 17 (마지막 웨이브 = 보스) |
+| 시작 골드 | 티어 기본값 + 스테이지×4 (S1 130 → S50 546) |
 | 합체 | 같은 눈만, 최대 Lv3 |
-| 보스 | 5의 배수 웨이브 |
+| 젬 | 최초 클리어 8 + 스테이지/2 + (티어−1)×2, 재클리어는 1/3 |
+
+### 난이도 티어
+
+| 티어 | 스테이지 | 이름 | 레인 | 추가 석단 | HP 배율 | 마릿수 보너스 | 시작 골드 |
+|---|---|---|---|---|---|---|---|
+| 1 | 1~10 | 초원 | 흙길 | +0 | 1.00 | +0 | 130 |
+| 2 | 11~20 | 언덕 | 흙길 + 하늘길 | +2 | 1.30 | +2 | 170 |
+| 3 | 21~30 | 협곡 | 흙길 + 하늘길 + 땅굴 | +4 | 1.65 | +4 | 220 |
+| 4 | 31~40 | 요새 | 흙길 + **흙길2** + 하늘길 | +6 | 2.05 | +6 | 280 |
+| 5 | 41~50 | 악몽 | 흙길 + **흙길2** + 하늘길 + 땅굴 | +8 | 2.50 | +8 | 350 |
+
+정의: `content.js` `TIERS`, `tierOf(n)`. 스테이지 객체(`stages[n-1]`)에 밸런스 값이 계산돼 들어 있고 `game.js` 는 그 값을 그대로 읽는다.
+
+- `hpScale = 티어 HP 배율 × 1.022^(n−1)` (S1 1.0 → S50 약 7.3)
+- 웨이브 w 의 적 HP = 기본 HP × `hpScale` × `1.07^(w−1)` × 종 보정
+- 웨이브 w 마릿수 = `8 + 티어 보너스 + floor(w×1.2)`
+- 보스 HP = 기본 × 웨이브 배율 × `(1.15 + n×0.03)`
+- 적 처치 골드 = 기본 × `(1 + (n−1)×0.02)` × `(1 + w×0.03)`, 웨이브 클리어 보너스 `20 + w×3 + n×2`
+
+### 레인 (적 동선)
+
+| 종류 | 누가 다니나 | 출처 | 표시 |
+|---|---|---|---|
+| `ground` 흙길 | 땅 적, 땅 보스 | 배경 아트의 길 (`MAP_LAYOUTS.path`) | 아트 |
+| `ground2` 흙길2 | 땅 적 (흙길과 번갈아) | 하드 배경의 두 번째 길 (`MAP_LAYOUTS_HARD.path2`) | 아트 + 코드 포탈 |
+| `air` 하늘길 | 공중 적, 공중 보스 | 코드 생성: 포탈→크리스탈 호 (`buildAirLane`) | 구름 점선 |
+| `tunnel` 땅굴 | 땅굴 적 | 코드 생성: 흙길 옆 오프셋 (`buildTunnelLane`) | 흙더미 점선 |
+
+- 흙길2가 필요한 티어(4·5)인데 `path2` 가 없으면 **땅굴로 대체**된다 (티어 4는 땅굴이 하나 생기고, 티어 5는 땅굴 하나만). 하드 배경을 생성해 `path2` 를 찍으면 자동으로 두 번째 흙길이 된다.
+- 같은 종류 레인이 여럿이면 적을 순번으로 나눠 보낸다 (`laneFor`).
+- 첫 레인의 포탈은 아트에 있고, 나머지 레인의 시작점에는 `props/portal.png` 를 코드가 그린다.
+- 공중 적 해금 웨이브 3, 땅굴 적 해금 웨이브 5.
+
+### 석단 (타워 자리)
+
+- 기본 석단 = `MAP_LAYOUTS.spots` (아트의 석단 위).
+- 티어 추가 석단 = `MAP_LAYOUTS_HARD.spots2` 가 있으면 그것을 먼저, 부족하면 코드가 흙길 양옆 평지에 생성 (`buildExtraSpots`: 길에서 46px 이상, 다른 석단과 60px 이상, 포탈·크리스탈에서 96px 이상).
+- 코드 생성 석단은 인게임에서 **돌 받침을 코드로 그린다** (`SPOT_BASE` 이후 인덱스).
+- 맵이 바뀌어도 타워는 같은 슬롯 인덱스에 남는다.
 
 ### 타워 (눈 = 종류, 높을수록 강함)
 
@@ -61,13 +103,11 @@ Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크�
 | 5 | 전격 주사위 | 연쇄 번개 | `casual/towers/t5-a.png` |
 | 6 | 폭군 주사위 | 폭발 주사위 투척 | `casual/towers/t6-a.png` |
 
-현재 인게임 스킨은 눈당 **1장(a)** 만 쓴다. b~e 는 이전 배치 아트로 폴더에 보존.
+스킨 a~e: 상점에서 젬 20으로 해금·장착 (`SAVE.equippedSkin`). 현재 b~e 는 이전 배치 아트 — `ART-PROMPTS.md` §3 으로 재생성 예정.
 
 공격 모션: `casual/towers/tN-attack-2x2.png` (2열2행, 발사 시 kick 동안 4프레임).
 
-레벨: 데미지 `[1, 1.6, 2.4]`, 사거리 `+0/+12/+24`, 연사 `1/0.92/0.85`.
-
-앵커: 타워 발밑(받침) = `(t.x, t.y)` = 건설 지점.
+레벨: 데미지 `[1, 1.6, 2.4]`, 사거리 `+0/+12/+24`, 연사 `1/0.92/0.85`. 앵커: 타워 발밑(받침) = `(t.x, t.y)` = 석단.
 
 ### 조작 (두 갈래 — 합치지 말 것)
 
@@ -76,26 +116,38 @@ Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크�
 
 획득한 주사위는 **드래그해서 석단에 놓으면** 해당 눈 타워로 변신. 같은 눈 타워 위에 올리면 합체 하이라이트.
 
+### 연출 (P3 완료)
+
+- 피격 플래시: `e.flashT`, 흰 실루엣 오버레이 (`flashCanvas`, 프레임별 캐시)
+- 사망: 잔상이 떠오르며 사라짐 + 먼지 (`spawnDeath`, `S.corpses`)
+- 배치/합체 마법진: `fx.kind = 'circle'` (눈 수만큼 룬 눈금, 합체는 금색 6각 별 + 불꽃)
+- 보스 등장: 포탈 폭발·마법진·화면 흔들림·**BOSS 등장! 배너**·포효, 1.25초 스케일업(오버슈트) 후 이동 (`BOSS_ENTRANCE`)
+- 보스 걷기: 쿵쿵 스쿼시 + 발디딤 먼지·흔들림·스톰프 음. 걷기 시트(`bossBases[].walk`)가 있으면 재생.
+
 ### 적 이동
 
-- `ground` 흙길 PATH
-- `air` 같은 PATH, y −42, 그림자
-- `burrow` 잠수 타이머, 숨으면 타겟 불가
+- `ground` 흙길 / 흙길2
+- `air` 하늘길 (y −42, 그림자)
+- `burrow` 땅굴, 잠수 타이머, 숨으면 타겟 불가
 
-초반 12종은 걷기 시트: slime, shroom, pig, chicken, goblin, sheep, cactus, fox, penguin, raccoon, frog, turtle.
+걷기 시트 12종 완료 (slime~turtle). 13~24 (squirrel~mouse)와 보스 1~10 은 **코드에 미리 연결**돼 있어 파일만 넣으면 된다. 파일이 없으면 정지컷 폴백 (`loadImage` 의 `missing` 표식).
 
 ---
 
-## 4. 맵 경로
+## 4. 맵 레이아웃
 
-`content.js`의 각 맵에 `path`, `spots` 가 있다. 웨이브 시작 시 `applyMapLayout`.
+`content.js`:
+- `MAP_LAYOUTS[key] = { path, spots }` — 50맵 전부 작성 완료 (에디터로 아트 흙길·석단에 맞춤).
+- `MAP_LAYOUTS_HARD[key] = { src?, path2?, spots2? }` — 하드 배경 전용. `src` 를 주면 그 배경으로 교체된다. (현재 비어 있음: `ART-PROMPTS.md` §1 배경 생성 후 작성)
+- `buildLayout(map, tier)` → `{ lanes, spots, baseSpotCount }`. 게임(`applyMapLayout`)과 에디터가 같은 함수를 쓴다.
 
-- 기본 레이아웃 `PATH_S` / `SPOTS_S`: 왼쪽 포탈 → 아래 한 바퀴 → 오른쪽 크리스탈.
-- 오버라이드: 맵 10 대나무 (`PATH_BAMBOO`), 맵 13 태엽 (`PATH_CLOCK`).
-- PATH = 흙길. SPOTS = 길 **옆** 잔디/석단 (길 위·물 위 금지).
-- 맵이 바뀌면 기존 타워는 **같은 슬롯 인덱스**의 새 좌표로 붙는다.
+`editor.html`:
+- 모드 4개: 흙길(P) · 흙길2(O) · 석단(S) · 추가석단(A)
+- 티어 미리보기: 하늘길·땅굴·자동 석단을 실제 계산으로 겹쳐 표시
+- "자동 석단 굳히기": 코드 위치를 `spots2` 로 복사해 손으로 다듬기
+- "전체 생성": `MAP_LAYOUTS` + `MAP_LAYOUTS_HARD` 스니펫 출력 → content.js 에 붙여넣기
 
-캔버스 1024×576. 맵 JPG는 이 크기로 stretch.
+캔버스 1024×576. 맵 JPG(1280×720)는 이 크기로 stretch.
 
 ---
 
@@ -103,23 +155,19 @@ Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크�
 
 | 항목 | 목표 | 파일 | 상태 |
 |---|---|---|---|
-| 스테이지 | 100 | 로직 | 완료 |
 | 배경 | 50 | `casual/maps/*.jpg` | 완료 |
-| 몬스터 고유 | 500 | `casual/enemies/*.png` | 완료 (대기 500 + 걷기 12) |
+| 하드 배경 (흙길 2개·석단 14개) | 20 (S31~50) | `casual/maps/map-NN-*-hard.jpg` | **생성 대기** → ART-PROMPTS §1 |
+| 몬스터 고유 | 500 | `casual/enemies/*.png` | 완료 |
+| 적 걷기 시트 | 순차 | `*-walk-2x2.png` | 12 완료, **13~24 생성 대기** → ART-PROMPTS §2 |
 | 보스 고유 | 100 | `casual/bosses/*.png` | 완료 |
-| 타워 인게임 | 6 | `t1-a`~`t6-a` | 2D 아이소 재작업 |
-| 타워 보존 스킨 | 30 | `tN-a`~`tN-e` | 폴더에 유지 |
+| 보스 걷기 시트 | 순차 | `casual/bosses/*-walk-2x2.png` | **1~10 생성 대기** → ART-PROMPTS §2 |
+| 타워 인게임 | 6 | `t1-a`~`t6-a` | 완료 (2D 아이소) |
+| 타워 스킨 b~e | 24 | `tN-b`~`tN-e` | 구 아트, **재생성 대기** → ART-PROMPTS §3 |
 | 타워 공격 시트 | 6 | `tN-attack-2x2.png` | 완료 |
-| 공격 VFX P1 | 눈별 | `vfx/` | 완료 |
-| 적 걷기 | 순차 | 12종 `*-walk-2x2.png` | 진행 중 |
+| 공격 VFX | 눈별 | `vfx/` | 완료 |
+| 포탈 (추가 레인) | 1 | `props/portal.png` | 완료 (코드가 그림) |
 
-스타일: Kingdom Rush + Random Dice. 캐주얼 치비, 두꺼운 외곽선, 아이소 3/4.
-
-타워 재작업 원칙:
-- 2D 핸드페인트 건물이지 3D 주사위 큐브가 아님
-- 눈 개수가 무기로 녹아 있어야 함
-- 마젠타/회색 배경 잔상 제거
-- 인게임 박스 핏 최대 70×96
+스타일: Kingdom Rush + Random Dice. 캐주얼 치비, 두꺼운 외곽선, 아이소 3/4. 인게임 타워 박스 핏 70×96.
 
 ---
 
@@ -128,29 +176,31 @@ Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크�
 ```
 dicekeep-art/
   index.html          엔트리 (?v= 캐시버스트)
-  game.js             게임 루프, 전투, 입력
-  content.js          DKCONTENT (맵/적/보스/스킨)
+  game.js             게임 루프, 레인 이동, 전투, 연출, 입력, 로비/상점
+  content.js          DKCONTENT (맵/레이아웃/티어/적/보스/스킨/스테이지)
+  editor.html/js      맵 좌표 에디터 (흙길·흙길2·석단·추가석단, 티어 미리보기)
   style.css
   serve.py / start.bat
   GAME-SPEC.md        이 문서
-  GROK-HANDOFF.md     이전 인수 브리프 (P0~P2 프롬프트 포함)
+  ART-PROMPTS.md      다음 배치 생성 프롬프트 (하드 배경 / 걷기 시트 / 스킨)
   ART-PIPELINE.md     배치 트래커
+  GROK-HANDOFF.md     초기 인수 브리프 (P0~P2 프롬프트 보관)
   ASSET-MANIFEST.md   파일 목록
   casual/
-    maps/             50 JPG
+    maps/             50 JPG (+ 하드 배경 예정)
     towers/           tN-a~e + tN-attack-2x2
-    enemies/          500 대기 + 12 걷기
-    bosses/           100
+    enemies/          500 대기 + 걷기 시트
+    bosses/           100 (+ 걷기 시트 예정)
   dice/               HUD·3D 큐브 텍스처 dice-1~6
-  towers/             die-1~6 (현재 tN-a 복사본) + 구 archer/cannon/…
+  towers/             die-1~6 (tN-a 복사본) + 구 archer/cannon/…
   enemies/            구 mite/runner/husk/boss + walk
   vfx/                레이저·포구·폭발·번개·주사위폭탄
   map/battlefield.jpg 구 전장
-  props/              portal, crystal
+  props/              portal(추가 레인 포탈로 사용), crystal
   ui/                 gold, heart, title-keyart
 ```
 
-로드하지 않지만 삭제하지 말 것: `towers/archer.png` 등 옛 5종, `enemies/*` 구 정지컷, `props/*`.
+로드하지 않지만 삭제하지 말 것: `towers/archer.png` 등 옛 5종, `enemies/*` 구 정지컷, `props/crystal.png`.
 
 ---
 
@@ -160,15 +210,17 @@ dicekeep-art/
 - 3D `persp = 10` 낮추기
 - file:// 테스트
 - 요청 없는 BGM
-- PATH를 물/건물 위로 통과시키기
+- 흙길(PATH/PATH2)을 물/건물 위로 통과시키기 (하늘길·땅굴은 코드 생성이라 예외)
 - 타워를 길 한가운데 두기
+- 걷기 시트 키를 연결만 하고 파일을 빼먹은 채 "완료" 표시하기 (폴백은 되지만 카탈로그가 어긋난다)
 
 ---
 
 ## 8. 다음 작업 (우선순위)
 
-1. 나머지 맵(대나무·태엽 제외) PATH/SPOTS를 각 맵 흙길에 맞게 조정
-2. 적 걷기 시트 12종 이후 순차 추가
-3. 타워 스킨 b~e 를 새 2D 아이소 스타일로 재생성 (원하면)
-4. 보스 걷기/등장 연출
-5. 피격 플래시, 사망 먼지, 배치/합체 마법진 (P3)
+1. **하드 배경 20장 생성** (S31~50, ART-PROMPTS §1) → 에디터로 `path2`/`spots2` 작성 → `MAP_LAYOUTS_HARD` 에 붙여넣기 (`src` 포함)
+2. **적 걷기 시트 13~24 + 보스 걷기 1~10 생성** (ART-PROMPTS §2) → 파일만 넣으면 끝
+3. **타워 스킨 b~e 재생성** (ART-PROMPTS §3) → 파일 덮어쓰기
+4. 실플레이로 티어 3~5 밸런스 확인 (시뮬레이션 기준: 1웨이브 여유 1.8→0.95, 보스 웨이브 3.7→1.8 로 완만히 하락)
+5. 코드 생성 추가 석단이 물 위에 걸리는 맵은 에디터 "자동 석단 굳히기"로 손보기
+6. 남은 적 25~ 걷기 시트 순차 추가 (`NEXT_WALK` 배열에 id 추가)

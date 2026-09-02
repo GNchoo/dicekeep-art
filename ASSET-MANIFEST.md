@@ -6,7 +6,7 @@
 
 | 경로 | 파일 수 |
 |---|---|
-| `.` | 11 |
+| `.` | 12 |
 | `casual/bosses` | 100 |
 | `casual/enemies` | 512 |
 | `casual/maps` | 50 |
@@ -18,7 +18,7 @@
 | `towers` | 11 |
 | `ui` | 3 |
 | `vfx` | 15 |
-| **합계** | **755** |
+| **합계** | **756** |
 
 ## 핵심 카운트
 
@@ -33,7 +33,8 @@
 
 ### `.`
 
-- `ART-PIPELINE.md` — 0.8 KB
+- `ART-PIPELINE.md` — 1.9 KB
+- `ART-PROMPTS.md` — 14 KB (다음 배치 생성 프롬프트)
 - `GAME-SPEC.md` — 6.1 KB
 - `GROK-HANDOFF.md` — 16.0 KB
 - `LICENSE` — 0.1 KB

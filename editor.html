@@ -27,7 +27,9 @@
   button.active { background: #7a5e1e; border-color: #e8b64a; color: #fff; }
   button.warn { border-color: #a05; }
   .mode-path.active { background: #6b4a1e; }
+  .mode-path2.active { background: #7a3a1e; }
   .mode-spots.active { background: #1e5a6b; }
+  .mode-spots2.active { background: #4a2e7a; }
   main { display: flex; gap: 14px; padding: 14px; align-items: flex-start; }
   #wrap { position: relative; width: 1024px; max-width: 70vw; }
   canvas {
@@ -63,8 +65,23 @@
   </div>
   <div class="group">
     <span class="pill">편집:</span>
-    <button id="mode-path" class="mode-path active">경로 PATH</button>
-    <button id="mode-spots" class="mode-spots">석단 SPOTS</button>
+    <button id="mode-path" class="mode-path active" title="P">흙길 PATH</button>
+    <button id="mode-path2" class="mode-path2" title="O">흙길2 PATH2</button>
+    <button id="mode-spots" class="mode-spots" title="S">석단 SPOTS</button>
+    <button id="mode-spots2" class="mode-spots2" title="A">추가석단 SPOTS2</button>
+  </div>
+  <div class="group">
+    <label for="tier-preview">티어 미리보기</label>
+    <select id="tier-preview">
+      <option value="auto">스테이지 티어</option>
+      <option value="off">끔</option>
+      <option value="1">T1 초원</option>
+      <option value="2">T2 언덕</option>
+      <option value="3">T3 협곡</option>
+      <option value="4">T4 요새</option>
+      <option value="5">T5 악몽</option>
+    </select>
+    <button id="bake-auto" title="코드 생성 추가 석단을 spots2 로 복사해 손볼 수 있게 한다">자동 석단 굳히기</button>
   </div>
   <div class="group">
     <button id="undo">되돌리기 (Z)</button>
@@ -74,6 +91,7 @@
   <div class="group">
     <label><input type="checkbox" id="toggle-path" checked> 경로 표시</label>
     <label><input type="checkbox" id="toggle-spots" checked> 석단 표시</label>
+    <label><input type="checkbox" id="toggle-preview" checked> 미리보기 표시</label>
   </div>
 </header>
 
@@ -84,17 +102,25 @@
   <aside>
     <div class="card">
       <div class="legend">
-        <span><span class="swatch" style="background:#e8b64a"></span>경로 웨이포인트</span>
-        <span><span class="swatch" style="background:#5fd0ff"></span>석단(타워 자리)</span>
+        <span><span class="swatch" style="background:#e8b64a"></span>흙길</span>
+        <span><span class="swatch" style="background:#ff8c50"></span>흙길2 (하드 배경)</span>
+        <span><span class="swatch" style="background:#5fd0ff"></span>석단</span>
+        <span><span class="swatch" style="background:#b478ff"></span>추가석단</span>
+        <span><span class="swatch" style="background:#ffc85a"></span>자동 석단(코드)</span>
+        <span><span class="swatch" style="background:#c8ebff"></span>하늘길(코드)</span>
+        <span><span class="swatch" style="background:#d29650"></span>땅굴(코드)</span>
       </div>
       <p class="hint">
         <b>클릭</b> = 현재 모드 점 추가 · <b>드래그</b> = 점 이동 · <b>우클릭</b> = 가까운 점 삭제 ·
-        <kbd>Z</kbd> 되돌리기 · <kbd>P</kbd>/<kbd>S</kbd> 모드 전환 · <kbd>Del</kbd> 마지막 점 삭제.<br>
-        경로는 포탈→크리스탈 순서로 흙길 중심을 따라 찍고, 석단은 길 옆 평지/석단 위에 두세요(길·물·건물 위 금지).
+        <kbd>Z</kbd> 되돌리기 · <kbd>P</kbd>/<kbd>O</kbd>/<kbd>S</kbd>/<kbd>A</kbd> 모드 전환 · <kbd>Del</kbd> 마지막 점 삭제.<br>
+        흙길은 포탈→크리스탈 순서로 길 중심을 따라 찍고, 석단은 길 옆 평지/석단 위에(길·물·건물 위 금지).<br>
+        <b>하드 배경</b>(ART-PROMPTS.md)을 넣은 맵은 흙길2를 두 번째 포탈→크리스탈로 찍고, 추가석단은 아트의 새 석단 위에 찍으세요.
+        아트에 석단이 없으면 "자동 석단 굳히기"로 코드 위치를 가져와 다듬어도 됩니다.
       </p>
       <div class="status" id="status"></div>
       <div class="row">
-        <span class="pill" id="count-path">경로 0</span>
+        <span class="pill" id="tier-info"></span>
+        <span class="pill" id="count-path">흙길 0</span>
         <span class="pill" id="count-spots">석단 0</span>
         <span class="pill" id="warn-overlap"></span>
       </div>
@@ -118,12 +144,12 @@
         <button id="download-all">파일 저장</button>
         <button id="import-all">붙여넣기 가져오기</button>
       </div>
-      <p class="hint">작업 내용은 브라우저 localStorage에 자동 저장됩니다. 완료 후 "전체 생성"→"복사"하여 content.js의 MAP_LAYOUTS에 붙여넣으세요.</p>
+      <p class="hint">작업 내용은 브라우저 localStorage에 자동 저장됩니다. 완료 후 "전체 생성"→"복사"하여 content.js의 <b>MAP_LAYOUTS</b>(흙길·석단)와 <b>MAP_LAYOUTS_HARD</b>(흙길2·추가석단)에 붙여넣으세요.</p>
     </div>
   </aside>
 </main>
 
-<script src="content.js?v=36"></script>
-<script src="editor.js?v=36"></script>
+<script src="content.js?v=41"></script>
+<script src="editor.js?v=41"></script>
 </body>
 </html>

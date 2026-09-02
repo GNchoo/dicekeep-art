@@ -407,3 +407,17 @@ body.placing #game { cursor: grabbing; }
 .skin-cell .s-status { font-size: 10px; color: #9fffc8; }
 .skin-cell.faded { opacity: .5; }
 
+
+/* 난이도 티어 */
+.tier-legend { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.tier-pill {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 12px; padding: 3px 10px; border-radius: 999px;
+  border: 1px solid var(--tc, #6b5636); color: var(--tc, #e9dfc4); background: rgba(0,0,0,.35);
+}
+.tier-pill small { color: #a99a72; font-size: 10px; }
+.stage-cell.tier-2 { border-color: #3f6f8a; }
+.stage-cell.tier-3 { border-color: #8a7d2a; }
+.stage-cell.tier-4 { border-color: #8a5a20; }
+.stage-cell.tier-5 { border-color: #8a2a2a; background: linear-gradient(#3a1e1e, #24100f); }
+.stage-cell.tier-5.cleared { background: linear-gradient(#2e5b46, #1c3d2d); }
