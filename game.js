@@ -1167,7 +1167,7 @@ function buildInfinityWave(w) {
       const bi = (w / INF.bossEvery - 1 + k * 37) % C.bosses.length;
       const boss = C.bosses[bi];
       const bbase = C.bossBases.find((b) => b.id === boss.base) || C.bossBases[0];
-      add(bbase.id, { name: boss.name, hue: boss.hue, hpMult: P.hpMult * P.bossHp * boss.hpM * 0.5, isBoss: true, lane: laneFor(bbase.move, k) });
+      add(bbase.id, { name: boss.name, hue: boss.hue, hpMult: P.hpMult * P.bossHp, isBoss: true, lane: laneFor(bbase.move, k) });
       t += 1.5;
     }
   }

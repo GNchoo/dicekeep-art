@@ -1066,12 +1066,12 @@ window.DKCONTENT = (function () {
     unlockAir: 1, unlockBurrow: 1,
     wave(w) {
       return {
-        hpMult: +(2.2 * Math.pow(1.065, w - 1)).toFixed(3),   // w50 ≈ 48×, w100 ≈ 1,100×
-        count: Math.min(48, 12 + Math.floor(w * 0.8)),
-        gap: Math.max(0.26, 0.8 - w * 0.012),
+        hpMult: +(1.8 * Math.pow(1.035, w - 1)).toFixed(3),   // w30 ≈ 4.9×, w50 ≈ 9.7×, w100 ≈ 55×
+        count: Math.min(36, 12 + Math.floor(w * 0.6)),
+        gap: Math.max(0.3, 0.8 - w * 0.01),
         goldMult: +(1 + w * 0.045).toFixed(3),
-        speedMult: Math.min(1.6, 1 + Math.max(0, w - 30) * 0.01),
-        bossHp: +(1.3 + w * 0.02).toFixed(2),
+        speedMult: Math.min(1.5, 1 + Math.max(0, w - 40) * 0.01),
+        bossHp: +(0.7 + w * 0.012).toFixed(2),                 // 보스 개별 보정(hpM)은 인피니티에서 쓰지 않는다
         bosses: w >= 20 && w % 10 === 0 ? 2 : 1,
         elites: w >= 20 ? 3 : 2,
       };
