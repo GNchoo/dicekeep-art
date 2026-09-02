@@ -2672,8 +2672,9 @@ function draw() {
     const msg = S.wave === 0
       ? '주사위를 던져 타워를 배치하고, 준비되면 웨이브를 시작하세요!'
       : `다음 웨이브까지 ${Math.ceil(S.autoT)}초`;
-    ctx.strokeText(msg, W / 2, 40);
-    ctx.fillText(msg, W / 2, 40);
+    // 좌상단 재화·웨이브 칩(HTML, 화면이 작을수록 캔버스 기준으로 커진다)과 겹치지 않게 아래로 내린다
+    ctx.strokeText(msg, W / 2, 92);
+    ctx.fillText(msg, W / 2, 92);
     ctx.restore();
   }
 
@@ -2708,7 +2709,7 @@ function draw() {
 // ==================== UI 연동 ====================
 
 const $ = id => document.getElementById(id);
-const overlayEl = $('overlay'), statsEl = $('stats'), hudEl = $('hud');
+const overlayEl = $('overlay'), statsEl = $('stats'), hudEl = $('hud'), miniEl = $('mini-top');
 const wrapEl = $('wrap'), stageEl = $('stage');
 
 // 스테이지(16:9)와 HUD 폭을 화면에 맞춘다: 가로·세로 중 더 빡빡한 쪽에 맞추고 HUD 높이만큼 뺀다.
@@ -2837,6 +2838,7 @@ function showOverlay(title, descHTML, btnLabel) {
   $('shop').classList.add('hidden');
   statsEl.classList.add('hidden');
   hudEl.classList.add('hidden');
+  miniEl.classList.add('hidden');
   overlayEl.classList.remove('hidden');
 }
 
@@ -2848,11 +2850,12 @@ function showScreen(name) {
   $('shop').classList.add('hidden');
   statsEl.classList.add('hidden');
   hudEl.classList.add('hidden');
+  miniEl.classList.add('hidden');
   if (name === 'title' || name === 'result') overlayEl.classList.remove('hidden');
   else if (name === 'lobby') { $('lobby').classList.remove('hidden'); renderLobby(); }
   else if (name === 'stageSelect') { $('stage-select').classList.remove('hidden'); renderStageSelect(); }
   else if (name === 'shop') { $('shop').classList.remove('hidden'); renderShop(); }
-  else if (name === 'playing') { statsEl.classList.remove('hidden'); hudEl.classList.remove('hidden'); }
+  else if (name === 'playing') { statsEl.classList.remove('hidden'); hudEl.classList.remove('hidden'); miniEl.classList.remove('hidden'); }
 }
 function gotoLobby() { S.phase = 'lobby'; showScreen('lobby'); }
 function gotoStageSelect() { S.phase = 'stageSelect'; showScreen('stageSelect'); }
