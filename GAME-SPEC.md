@@ -27,7 +27,7 @@ python serve.py
 
 Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크로마키 실패).
 
-캐시: `index.html`·`editor.html`의 `?v=N` 을 올릴 것 (현재 v41).
+캐시: `index.html`·`editor.html`의 `?v=N` 을 올릴 것 (현재 v42).
 
 디버그 (콘솔):
 - `window.DK` 게임 상태 (`gold`, `enemies`, `towers`, `stageData` …)
@@ -80,7 +80,7 @@ Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크�
 | `air` 하늘길 | 공중 적, 공중 보스 | 코드 생성: 포탈→크리스탈 호 (`buildAirLane`) | 구름 점선 |
 | `tunnel` 땅굴 | 땅굴 적 | 코드 생성: 흙길 옆 오프셋 (`buildTunnelLane`) | 흙더미 점선 |
 
-- 흙길2가 필요한 티어(4·5)인데 `path2` 가 없으면 **땅굴로 대체**된다 (티어 4는 땅굴이 하나 생기고, 티어 5는 땅굴 하나만). 하드 배경을 생성해 `path2` 를 찍으면 자동으로 두 번째 흙길이 된다.
+- 흙길2가 필요한 티어(4·5)인데 `path2` 가 없으면 **땅굴로 대체**된다. 현재 31~50 은 전부 `path2` 가 있어 실제 두 갈래 흙길로 동작한다.
 - 같은 종류 레인이 여럿이면 적을 순번으로 나눠 보낸다 (`laneFor`).
 - 첫 레인의 포탈은 아트에 있고, 나머지 레인의 시작점에는 `props/portal.png` 를 코드가 그린다.
 - 공중 적 해금 웨이브 3, 땅굴 적 해금 웨이브 5.
@@ -104,7 +104,7 @@ Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크�
 | 5 | 전격 주사위 | 연쇄 번개 | `casual/towers/t5-a.png` |
 | 6 | 폭군 주사위 | 폭발 주사위 투척 | `casual/towers/t6-a.png` |
 
-스킨 a~e: 상점에서 젬 20으로 해금·장착 (`SAVE.equippedSkin`). 현재 b~e 는 이전 배치 아트 — `ART-PROMPTS.md` §3 으로 재생성 예정.
+스킨 a~e: 상점에서 젬 20으로 해금·장착 (`SAVE.equippedSkin`). b~e 는 `tN-a` 재채색 임시본(숲/서리/왕실/밤) — 진짜 아트는 `ART-PROMPTS.md` §3.
 
 공격 모션: `casual/towers/tN-attack-2x2.png` (2열2행, 발사 시 kick 동안 4프레임).
 
@@ -131,7 +131,7 @@ Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크�
 - `air` 하늘길 (y −42, 그림자)
 - `burrow` 땅굴, 잠수 타이머, 숨으면 타겟 불가
 
-걷기 시트 12종 완료 (slime~turtle). 13~36 (squirrel~meerkat)과 보스 1~10 은 **코드에 미리 연결**돼 있어 파일만 넣으면 된다. 파일이 없으면 정지컷 폴백 (`loadImage` 의 `missing` 표식).
+걷기 시트 12종 진짜 아트 (slime~turtle). 13~36 (squirrel~meerkat)과 보스 1~10 은 임시 합성본이 들어가 있다 (`gen-walk.js`). 파일이 없으면 정지컷 폴백 (`loadImage` 의 `missing` 표식).
 
 ---
 
@@ -139,7 +139,7 @@ Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크�
 
 `content.js`:
 - `MAP_LAYOUTS[key] = { path, spots }` — 50맵 전부 작성 완료 (에디터로 아트 흙길·석단에 맞춤).
-- `MAP_LAYOUTS_HARD[key] = { src?, path2?, spots2? }` — 하드 배경 전용. `src` 를 주면 그 배경으로 교체된다. (현재 비어 있음: `ART-PROMPTS.md` §1 배경 생성 후 작성)
+- `MAP_LAYOUTS_HARD[key] = { src?, path2?, spots2? }` — 하드 배경 전용. `src` 를 주면 그 배경으로 교체된다. 31~50 은 `gen-hard.js` 임시본으로 채워져 있다 (진짜 배경으로 바꾸면 에디터로 다시 찍을 것).
 - `buildLayout(map, tier)` → `{ lanes, spots, baseSpotCount }`. 게임(`applyMapLayout`)과 에디터가 같은 함수를 쓴다.
 
 `editor.html`:
@@ -157,13 +157,13 @@ Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크�
 | 항목 | 목표 | 파일 | 상태 |
 |---|---|---|---|
 | 배경 | 50 | `casual/maps/*.jpg` | 완료 |
-| 하드 배경 (흙길 2개·석단 14개) | 20 (S31~50) | `casual/maps/map-NN-*-hard.jpg` | **생성 대기** → ART-PROMPTS §1 |
+| 하드 배경 (흙길 2개) | 20 (S31~50) | `casual/maps/map-NN-*-hard.jpg` | **임시본 적용** (코드로 그린 흙길2, 레이아웃 연결 완료) → 진짜 아트는 ART-PROMPTS §1 |
 | 몬스터 고유 | 500 | `casual/enemies/*.png` | 완료 |
-| 적 걷기 시트 | 순차 | `*-walk-2x2.png` | 12 완료, **13~36 생성 대기** (코드 연결 완료) → ART-PROMPTS §2 |
+| 적 걷기 시트 | 순차 | `*-walk-2x2.png` | 12 진짜 + **13~36 임시본**(대기컷 4프레임화) → 진짜 아트는 ART-PROMPTS §2 |
 | 보스 고유 | 100 | `casual/bosses/*.png` | 완료 |
-| 보스 걷기 시트 | 순차 | `casual/bosses/*-walk-2x2.png` | **1~10 생성 대기** → ART-PROMPTS §2 |
+| 보스 걷기 시트 | 순차 | `casual/bosses/*-walk-2x2.png` | **1~10 임시본** → 진짜 아트는 ART-PROMPTS §2 |
 | 타워 인게임 | 6 | `t1-a`~`t6-a` | 완료 (2D 아이소) |
-| 타워 스킨 b~e | 24 | `tN-b`~`tN-e` | 구 아트, **재생성 대기** → ART-PROMPTS §3 |
+| 타워 스킨 b~e | 24 | `tN-b`~`tN-e` | **임시본** (`tN-a` 테마 재채색: 숲/서리/왕실/밤) → 진짜 아트는 ART-PROMPTS §3 |
 | 타워 공격 시트 | 6 | `tN-attack-2x2.png` | 완료 |
 | 공격 VFX | 눈별 | `vfx/` | 완료 |
 | 포탈 (추가 레인) | 1 | `props/portal.png` | 완료 (코드가 그림) |
@@ -219,9 +219,9 @@ dicekeep-art/
 
 ## 8. 다음 작업 (우선순위)
 
-1. **하드 배경 20장 생성** (S31~50, ART-PROMPTS §1) → 에디터로 `path2`/`spots2` 작성 → `MAP_LAYOUTS_HARD` 에 붙여넣기 (`src` 포함)
-2. **적 걷기 시트 13~24 + 보스 걷기 1~10 생성** (ART-PROMPTS §2) → 파일만 넣으면 끝
-3. **타워 스킨 b~e 재생성** (ART-PROMPTS §3) → 파일 덮어쓰기
+1. ~~하드 배경~~ → 임시본 적용. 진짜 아트(ART-PROMPTS §1)로 덮어쓴 뒤 에디터로 `path`/`path2`/`spots`/`spots2` 재작성
+2. ~~걷기 시트 13~36 + 보스 1~10~~ → 임시본 적용. 진짜 아트(ART-PROMPTS §2)로 덮어쓰기만
+3. ~~타워 스킨 b~e~~ → 재채색 임시본 적용. 진짜 아트(ART-PROMPTS §3)로 덮어쓰기만
 4. ~~밸런스 봇 검증~~ → §9 (3차까지 조정 완료). 실제 손플레이로 티어 5 재확인
 5. ~~물 위 석단~~ → 배경 픽셀 물 회피로 해결. 그래도 어색한 맵은 에디터 "자동 석단 굳히기"로 손보기
 6. ~~적 25~36 걷기 연결~~ → 완료. 37~ 은 `NEXT_WALK` 에 id 추가 + ART-PROMPTS §2 에 프롬프트 추가
