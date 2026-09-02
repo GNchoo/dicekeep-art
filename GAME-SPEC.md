@@ -186,8 +186,9 @@ Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크�
 - `buildArenaLayout()` — 무한 투기장 전용 나선(변경 없음).
 
 `game.js`:
-- `buildTileLayer(m)` 가 스테이지 시작 때 오프스크린에 한 번 굽는다. 순서: 바닥(`floor.jpg` 없으면 그라데이션+풀결) → 물(`water.png` 없으면 둥근 칸) → 도로 자동 타일(이웃 마스크 N1 E2 S4 W8 → 직선/코너/T/십자 + 90° 회전, 타일이 없으면 `drawRoad` 흙길 브러시를 테마색으로) → 석단(`pad.png` 없으면 코드 받침) → 소품(씨앗 고정 배치, 빈 평지의 30%, S·E·2 주변 제외; `prop-1~6` 없으면 코드 나무·바위·덤불·꽃·비석) → 시작(`start.png` 없으면 포탈 애니) → 도착(`end.png` 없으면 `props/crystal.png`).
-- 타일 키 `tl_<theme>_<name>`, 경로 `casual/tiles/<theme>/<name>.png` (floor 만 jpg). 도로·물 타일은 `processTile`(배경 제거, 크롭 없음), 나머지는 `processSprite`.
+- `buildTileLayer(m)` 가 스테이지 시작 때 오프스크린에 한 번 굽는다. 순서: 바닥(`floor.jpg` 없으면 그라데이션+풀결) → 물(모양은 코드 둥근 칸, 표면은 `water.png` 256px 반복 패턴, 없으면 테마색) → 도로(모양·폭·코너·합류는 `drawRoad` 브러시, 본체 40px 를 `road.png` 160px 반복 패턴으로 채움; `road.png` 가 없고 옛 `road-straight.png` 가 있으면 띠 가운데를 잘라 질감으로; 둘 다 없으면 테마색) → 석단(`pad.png` 없으면 코드 받침) → 소품(씨앗 고정 배치, 빈 평지의 24%, S·E·2 주변 제외; `prop-1~6` 없으면 코드 나무·바위·덤불·꽃·비석) → 시작(`start.png` 없으면 포탈 애니) → 도착(`end.png` 없으면 `props/crystal.png`).
+- 도로를 타일(직선·코너·T·십자)로 받지 않는 이유: 생성 모델이 폭·진입 위치를 못 지켜 장마다 달라진다(2026-09-02 평원 납품에서 확인). 질감만 받으면 어긋남이 0.
+- 타일 키 `tl_<theme>_<name>`, 경로 `casual/tiles/<theme>/<name>.png` (floor 만 jpg). 바닥·도로·물 질감은 raw 이미지, 나머지 오브젝트는 `processSprite`(회색 배경 제거·크롭).
 - `ARENA` = `{ center, portals, tiled, theme, hasStart, hasEnd }`. 도착 타일이 있으면 크리스탈 대신 맥동 링만, 시작 타일이 있으면 포탈 그림 대신 발광만 그린다.
 
 `editor.html` (그리드 에디터):
@@ -202,7 +203,7 @@ Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크�
 | 항목 | 목표 | 파일 | 상태 |
 |---|---|---|---|
 | ~~배경~~ | ~~50~~ | `casual/maps/*.jpg` | **폐기** (그리드 + 타일로 대체) |
-| **테마 타일셋** | 6테마 × 15 = 90 | `casual/tiles/<theme>/` | **생성 대기** → `GROK-BRIEF.md`. 없으면 코드 폴백으로 동작 |
+| **테마 타일셋** | 6테마 × 12 = 72 | `casual/tiles/<theme>/` | 평원 14/12 납품(`road.png` 대기, 옛 도로 타일 4장 미사용). 나머지 5테마 → `GROK-BRIEF.md`. 없으면 코드 폴백 |
 | 몬스터 고유 | 500 | `casual/enemies/*.png` | 완료 |
 | 적 걷기 시트 | 순차 | `*-walk-2x2.png` | 36 완료 (1~36). 37~ 은 `NEXT_WALK` 에 id 추가 + ART-PROMPTS §2 |
 | 보스 고유 | 100 | `casual/bosses/*.png` | 완료 |
@@ -234,7 +235,7 @@ dicekeep-art/
   GROK-HANDOFF.md     초기 인수 브리프 (P0~P2 프롬프트 보관)
   ASSET-MANIFEST.md   파일 목록
   casual/
-    tiles/<theme>/    테마 타일 (floor, road-*, water, pad, start, end, prop-1~6) — 생성 대기
+    tiles/<theme>/    테마 조각 (floor, road·water 질감, pad, start, end, prop-1~6)
     maps/             (폐기) 옛 배경 JPG, 아레나 바닥(예정)
     towers/           tN-a~e + tN-attack-2x2
     enemies/          500 대기 + 걷기 시트

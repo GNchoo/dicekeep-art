@@ -57,7 +57,7 @@ Windows는 `start.bat`. `index.html`을 file://로 열지 말 것.
 
 | 항목 | 수량 | 경로 |
 |---|---|---|
-| 맵 타일 | 6테마 × 15 (생성 대기, `GROK-BRIEF.md`) | `casual/tiles/<theme>/` |
+| 맵 조각 | 6테마 × 12 (평원 납품 중, `GROK-BRIEF.md`) | `casual/tiles/<theme>/` |
 | 몬스터 | 500 + 걷기 36 | `casual/enemies/` |
 | 보스 | 100 + 걷기 10 | `casual/bosses/` |
 | 타워 | 6 인게임 + 스킨 24 (+ 공격시트 6, 미사용) | `casual/towers/` |

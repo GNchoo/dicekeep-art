@@ -136,7 +136,8 @@ function drawArenaFloor(g, m) {
   g.restore();
 }
 // 흙길 브러시: 그림자 → 어두운 테두리 → 본체 → 밝은 띠 → 점·돌 (결정적 의사난수)
-function drawRoad(g, pts, seed, color) {
+// tex: 이음새 없는 도로 질감 패턴(CanvasPattern). 있으면 본체를 질감으로 채우고 점·밝은 띠는 줄인다.
+function drawRoad(g, pts, seed, color, tex) {
   const base = color || [178, 140, 92];
   const rgba = (mul, a) => `rgba(${Math.round(base[0] * mul)},${Math.round(base[1] * mul)},${Math.round(base[2] * mul)},${a})`;
   const stroke = (w, style) => { g.strokeStyle = style; g.lineWidth = w; g.beginPath(); g.moveTo(pts[0][0], pts[0][1]); for (let i = 1; i < pts.length; i++) g.lineTo(pts[i][0], pts[i][1]); g.stroke(); };
@@ -144,13 +145,13 @@ function drawRoad(g, pts, seed, color) {
   g.lineJoin = 'round'; g.lineCap = 'round';
   stroke(54, 'rgba(0,0,0,0.22)');
   stroke(48, rgba(0.74, 1));
-  stroke(40, rgba(1, 1));
-  stroke(24, rgba(1.12, 0.5));
+  stroke(40, tex || rgba(1, 1));
+  stroke(24, rgba(1.12, tex ? 0.18 : 0.5));
   let s = seed * 7919 + 17;
   const rnd = () => { s = (s * 1103515245 + 12345) & 0x7fffffff; return s / 0x7fffffff; };
   const C = window.DKCONTENT;
   const len = C.pathLength(pts);
-  for (let d = 0; d < len; d += 6) {
+  for (let d = 0; d < len; d += tex ? 18 : 6) {
     const p = C.pathAt(pts, d);
     const off = (rnd() - 0.5) * 30;
     const x = p.x - p.dy * off, y = p.y + p.dx * off;
@@ -169,12 +170,31 @@ function drawRoad(g, pts, seed, color) {
 const TILE = 64;
 function mulberry(seed) { let a = seed >>> 0; return () => { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
 const tileArt = (th, name) => { const a = A[`tl_${th.id}_${name}`]; return (a && a.cv && a.h > 8) ? a : null; };
-function drawTile(g, tile, c, r, rot) {
-  g.save();
-  g.translate(c * TILE + TILE / 2, r * TILE + TILE / 2);
-  if (rot) g.rotate(rot * Math.PI / 180);
-  g.drawImage(tile.cv, -TILE / 2 - 1, -TILE / 2 - 1, TILE + 2, TILE + 2); // 1px 겹쳐 이음새를 숨긴다
-  g.restore();
+// 질감 이미지를 repeatPx 정사각으로 줄여 반복 패턴으로 (1024 원본을 64px 로 줄이면 디테일이 사라지므로 칸보다 크게 반복)
+function makePattern(g, img, repeatPx) {
+  if (!img || img.missing || !(img.width > 8)) return null;
+  const cv = document.createElement('canvas');
+  cv.width = repeatPx; cv.height = repeatPx;
+  cv.getContext('2d').drawImage(img, 0, 0, repeatPx, repeatPx);
+  return g.createPattern(cv, 'repeat');
+}
+// road.png 가 없고 직선 도로 타일(회색 배경에 가로 띠)만 있으면 띠 가운데를 정사각으로 잘라 질감으로 쓴다
+function roadTextureFromStraight(img) {
+  if (!img || img.missing || !(img.width > 8)) return null;
+  try {
+    const cv = toCanvas(img);
+    const g = cv.getContext('2d', { willReadFrequently: true });
+    const col = g.getImageData(Math.floor(cv.width / 2), 0, 1, cv.height).data;
+    let top = -1, bot = -1;
+    for (let y = 0; y < cv.height; y++) if (!isKeyPixel(col, y)) { if (top < 0) top = y; bot = y; }
+    const h = bot - top + 1;
+    if (top < 0 || h < 16) return null;
+    const size = Math.max(16, h - 8);
+    const out = document.createElement('canvas');
+    out.width = size; out.height = size;
+    out.getContext('2d').drawImage(cv, Math.floor(cv.width / 2 - size / 2), top + 4, size, size, 0, 0, size, size);
+    return out;
+  } catch (e) { return null; }
 }
 // 바닥 아래에 앉히는 소품/석단/성: 바닥 중심 (x, y) 에 높이 h 로
 function drawGroundSprite(g, sp, x, y, h, flip) {
@@ -184,19 +204,6 @@ function drawGroundSprite(g, sp, x, y, h, flip) {
   if (flip) g.scale(-1, 1);
   g.drawImage(sp.cv, -w / 2, -h, w, h);
   g.restore();
-}
-// 도로 자동 타일: 이웃 마스크 N=1 E=2 S=4 W=8 → (타일, 회전)
-function roadTileFor(mask, tiles) {
-  const { straight, corner, tee, cross } = tiles;
-  switch (mask) {
-    case 10: case 2: case 8: case 0: return [straight, 0];
-    case 5: case 1: case 4: return [straight, 90];
-    case 3: return [corner, 0]; case 6: return [corner, 90]; case 12: return [corner, 180]; case 9: return [corner, 270];
-    case 14: return [tee || cross || straight, 0]; case 13: return [tee || cross || straight, 90];
-    case 11: return [tee || cross || straight, 180]; case 7: return [tee || cross || straight, 270];
-    case 15: return [cross || tee || straight, 0];
-  }
-  return [straight, 0];
 }
 function drawCodeFloor(g, th, rnd) {
   const gr = g.createLinearGradient(0, 0, 0, H);
@@ -214,12 +221,25 @@ function drawCodeFloor(g, th, rnd) {
     g.beginPath(); g.moveTo(x, y); g.lineTo(x + (rnd() - 0.5) * 6, y - 3 - rnd() * 5); g.stroke();
   }
 }
-function drawCodeWater(g, th, cells) {
+function drawCodeWater(g, th, cells, tex) {
+  // 셀들의 합집합을 마스크로 만들어 한 번에 채운다 (칸마다 따로 칠하면 겹치는 자리에 이음새가 보인다)
+  const union = (pad, radius) => {
+    const m = document.createElement('canvas');
+    m.width = W; m.height = H;
+    const mg = m.getContext('2d');
+    mg.fillStyle = '#000';
+    for (const [r, c] of cells) { mg.beginPath(); mg.roundRect(c * TILE - pad, r * TILE - pad, TILE + pad * 2, TILE + pad * 2, radius); mg.fill(); }
+    return m;
+  };
+  const fillMasked = (mask, style) => {
+    const mg = mask.getContext('2d');
+    mg.globalCompositeOperation = 'source-in';
+    mg.fillStyle = style; mg.fillRect(0, 0, W, H);
+    g.drawImage(mask, 0, 0);
+  };
   g.save();
-  const rim = (pad, style) => { g.fillStyle = style; for (const [r, c] of cells) { g.beginPath(); g.roundRect(c * TILE - pad, r * TILE - pad, TILE + pad * 2, TILE + pad * 2, 18); g.fill(); } };
-  rim(7, 'rgba(0,0,0,0.28)');   // 물가 그늘
-  rim(3, th.water);
-  rim(-6, 'rgba(255,255,255,0.08)');
+  fillMasked(union(7, 20), 'rgba(0,0,0,0.28)');       // 물가 그늘
+  fillMasked(union(3, 18), tex || th.water);           // 물 표면 (질감 패턴)
   g.fillStyle = 'rgba(255,255,255,0.22)';
   for (const [r, c] of cells) { g.beginPath(); g.ellipse(c * TILE + 24, r * TILE + 20, 13, 4, -0.3, 0, Math.PI * 2); g.fill(); }
   g.restore();
@@ -260,23 +280,13 @@ function buildTileLayer(m) {
   // 1. 바닥
   const floor = A[`tl_${th.id}_floor`];
   if (floor && !floor.missing && floor.width > 8) g.drawImage(floor, 0, 0, W, H); else drawCodeFloor(g, th, rnd);
-  // 2. 물
-  const water = T('water');
-  if (L.water.length) { if (water) for (const [r, c] of L.water) drawTile(g, water, c, r, 0); else drawCodeWater(g, th, L.water); }
-  // 3. 도로 (이 티어에 열린 길만)
-  const hasSec = LANES.some((l) => l.kind === 'ground2');
-  const isRoad = (r, c) => { if (r < 0 || r >= GH || c < 0 || c >= GW) return false; const ch = grid[r][c]; return ch === '#' || ch === 'S' || ch === 'E' || (hasSec && (ch === '2' || ch === '=')); };
-  const tiles = { straight: T('road-straight'), corner: T('road-corner'), tee: T('road-t'), cross: T('road-cross') };
-  if (tiles.straight && tiles.corner) {
-    for (let r = 0; r < GH; r++) for (let c = 0; c < GW; c++) {
-      if (!isRoad(r, c)) continue;
-      const mask = (isRoad(r - 1, c) ? 1 : 0) | (isRoad(r, c + 1) ? 2 : 0) | (isRoad(r + 1, c) ? 4 : 0) | (isRoad(r, c - 1) ? 8 : 0);
-      const [tile, rot] = roadTileFor(mask, tiles);
-      drawTile(g, tile, c, r, rot);
-    }
-  } else {
-    for (const lane of LANES) if (lane.kind === 'ground' || lane.kind === 'ground2') drawRoad(g, lane.pts, lane.kind === 'ground2' ? 7 : 3, th.road);
-  }
+  // 2. 물: 질감(water.png)이 있으면 패턴으로 채우고, 모양은 코드
+  if (L.water.length) drawCodeWater(g, th, L.water, makePattern(g, A[`tl_${th.id}_water`], 256));
+  // 3. 도로: 모양·폭·코너·합류는 코드 브러시, 표면은 질감(road.png; 없으면 직선 타일에서 잘라낸 질감; 그것도 없으면 테마색)
+  let roadImg = A[`tl_${th.id}_road`];
+  if (!roadImg || roadImg.missing || !(roadImg.width > 8)) roadImg = roadTextureFromStraight(A[`tl_${th.id}_road-straight`]);
+  const roadTex = makePattern(g, roadImg, 160);
+  for (const lane of LANES) if (lane.kind === 'ground' || lane.kind === 'ground2') drawRoad(g, lane.pts, lane.kind === 'ground2' ? 7 : 3, th.road, roadTex);
   // 4. 석단
   const pad = T('pad');
   if (pad) for (const [x, y] of SPOTS) drawGroundSprite(g, pad, x, y + 18, 40);
@@ -398,7 +408,10 @@ const SRCS = {
 if (window.DKCONTENT) {
   for (const m of DKCONTENT.maps) if (m.src) SRCS[m.key] = BASE + m.src;
   // 테마 타일: casual/tiles/<theme>/<name>.png (floor 만 jpg). 없으면 코드가 그린다.
-  for (const th of DKCONTENT.THEMES) for (const n of DKCONTENT.TILE_ASSETS) SRCS[`tl_${th.id}_${n}`] = BASE + `casual/tiles/${th.id}/${n}.${n === 'floor' ? 'jpg' : 'png'}`;
+  for (const th of DKCONTENT.THEMES) {
+    for (const n of DKCONTENT.TILE_ASSETS) SRCS[`tl_${th.id}_${n}`] = BASE + `casual/tiles/${th.id}/${n}.${n === 'floor' ? 'jpg' : 'png'}`;
+    SRCS[`tl_${th.id}_road-straight`] = BASE + `casual/tiles/${th.id}/road-straight.png`; // road.png 가 없을 때 직선 타일에서 질감을 잘라 쓴다 (임시 호환)
+  }
   for (const f of Object.keys(DKCONTENT.towerSkins)) {
     for (const s of DKCONTENT.towerSkins[f]) SRCS[s.key] = BASE + s.src;
   }
@@ -544,19 +557,6 @@ function processSheet(img) {
   }
 }
 
-// 도로·물 타일: 배경만 지우고 칸 전체 프레임은 유지한다 (크롭하면 이웃 타일과 이어지지 않는다)
-function processTile(img) {
-  if (img.missing) return null;
-  const cv = toCanvas(img);
-  try {
-    const g = cv.getContext('2d');
-    const id = g.getImageData(0, 0, cv.width, cv.height);
-    keyImageData(id, cv.width, cv.height);
-    g.putImageData(id, 0, 0);
-  } catch (e) { corsBlocked = true; }
-  return { cv, w: cv.width, h: cv.height };
-}
-
 function thumbURL(sprite, size, fallbackSrc = '') {
   try {
     const s = Math.min(size / sprite.w, size / sprite.h);
@@ -588,11 +588,10 @@ async function loadAssets(onProgress) {
   }
   const raw = ['map', 'keyart'];
   if (window.DKCONTENT) for (const m of DKCONTENT.maps) if (m.src) raw.push(m.key);
-  const isTile = (k) => /^tl_.*_(floor|road-straight|road-corner|road-t|road-cross|water)$/.test(k);
+  const isTexture = (k) => /^tl_.*_(floor|road|water|road-straight)$/.test(k); // 질감·바닥: 배경 제거 없이 그대로
   let pi = 0;
   for (const k of keys) {
-    if (raw.includes(k) || /^tl_.*_floor$/.test(k)) A[k] = imgs[k];
-    else if (isTile(k)) A[k] = processTile(imgs[k]);
+    if (raw.includes(k) || isTexture(k)) A[k] = imgs[k];
     else if (sheets.includes(k)) A[k] = processSheet(imgs[k]);
     else A[k] = processSprite(imgs[k]);
     onProgress(0.6 + (++pi / keys.length) * 0.4);
