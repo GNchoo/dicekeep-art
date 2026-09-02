@@ -290,19 +290,33 @@ function buildTileLayer(m) {
   // 4. 석단
   const pad = T('pad');
   if (pad) for (const [x, y] of SPOTS) drawGroundSprite(g, pad, x, y + 18, 40);
-  // 5. 소품: 빈 평지에 씨앗 고정 배치 (S·E·2 주변과 그 위 칸은 비움)
-  const reserved = new Set();
-  const mark = (cell, up) => { if (!cell) return; for (let d = 0; d <= up; d++) reserved.add((cell[0] - d) * GW + cell[1]); reserved.add(cell[0] * GW + cell[1] - 1); reserved.add(cell[0] * GW + cell[1] + 1); };
-  mark(L.startCell, 1); mark(L.start2Cell, 1); mark(L.endCell, 2);
+  // 5. 소품: 길·석단을 절대 가리지 않는 칸에만 씨앗 고정 배치
+  //    - 길 칸과 그 8방향 이웃 금지, 석단 칸과 그 8방향 이웃 금지, 포탈·성 주변 금지
+  //    - 키 큰 소품(나무·상징물)은 그림이 위로 1.5칸 뻗으므로 위쪽 두 칸에 길·석단이 있으면 금지
+  const blocked = new Set(), tallBlocked = new Set();
+  const key = (r, c) => r * GW + c;
+  const roadCells = [];
+  for (let r = 0; r < GH; r++) for (let c = 0; c < GW; c++) { const ch = grid[r][c]; if (ch === '#' || ch === 'S' || ch === 'E' || ch === '2' || ch === '=') roadCells.push([r, c]); }
+  const occupied = roadCells.concat(L.padCells || []);
+  for (const [r, c] of occupied) {
+    for (let dr = -1; dr <= 1; dr++) for (let dc = -1; dc <= 1; dc++) blocked.add(key(r + dr, c + dc));
+    tallBlocked.add(key(r + 1, c)); tallBlocked.add(key(r + 2, c)); tallBlocked.add(key(r + 1, c - 1)); tallBlocked.add(key(r + 1, c + 1));
+  }
+  for (const cell of [L.startCell, L.start2Cell, L.endCell]) if (cell) for (let dr = -2; dr <= 1; dr++) for (let dc = -1; dc <= 1; dc++) blocked.add(key(cell[0] + dr, cell[1] + dc));
   const cands = [];
-  for (let r = 0; r < GH; r++) for (let c = 0; c < GW; c++) if (grid[r][c] === '.' && !reserved.has(r * GW + c)) cands.push([r, c]);
+  for (let r = 0; r < GH; r++) for (let c = 0; c < GW; c++) if (grid[r][c] === '.' && !blocked.has(key(r, c))) cands.push([r, c]);
   for (let i = cands.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [cands[i], cands[j]] = [cands[j], cands[i]]; }
   const KINDS = [['tree', 'prop-1', 96], ['tree2', 'prop-2', 80], ['rock', 'prop-3', 40], ['bush', 'prop-4', 42], ['flowers', 'prop-5', 30], ['artifact', 'prop-6', 70]];
+  const TALL = [0, 1, 5];
   const pick = () => { const v = rnd(); return v < 0.3 ? 0 : v < 0.55 ? 1 : v < 0.7 ? 2 : v < 0.85 ? 3 : v < 0.95 ? 4 : 5; };
   const props = [];
   for (const [r, c] of L.props) props.push({ r, c, k: 0 });
-  const n = Math.round(cands.length * 0.24);
-  for (let i = 0; i < n; i++) props.push({ r: cands[i][0], c: cands[i][1], k: pick() });
+  const n = Math.round(cands.length * 0.45);
+  for (let i = 0; i < n; i++) {
+    let k = pick();
+    if (TALL.includes(k) && tallBlocked.has(key(cands[i][0], cands[i][1]))) k = 2 + Math.floor(rnd() * 3); // 키 작은 것으로 교체
+    props.push({ r: cands[i][0], c: cands[i][1], k });
+  }
   for (const p of props) { p.x = p.c * TILE + TILE / 2 + (rnd() - 0.5) * 16; p.y = p.r * TILE + TILE / 2 + 22 + (rnd() - 0.5) * 10; p.s = 0.85 + rnd() * 0.3; p.flip = rnd() < 0.5; }
   props.sort((a, b) => a.y - b.y);
   for (const p of props) {
