@@ -52,7 +52,8 @@ window.DKCONTENT = (function () {
     { key: 'cMap49', src: 'casual/maps/map-49-lavabeach-hard.jpg', name: '용암해변' },
     { key: 'cMap50', src: 'casual/maps/map-50-royal-hard.jpg', name: '왕실정원' },
     // 인피니티 모드 전용 아레나 (스테이지 목록에는 안 뜬다). 아레나 배경이 없으면 game.js 가 왕실정원 배경으로 폴백.
-    { key: 'cInf', src: 'casual/maps/map-inf-arena.jpg', name: '무한 투기장', infinity: true },
+    // 인피니티 전용 아레나: 배경은 '바닥 그림'만 쓰고 순환 도로·석단·포탈은 코드가 만든다 (buildArenaLayout, game.js buildRoadLayer)
+    { key: 'cInf', src: 'casual/maps/map-inf-arena.jpg', name: '무한 투기장', infinity: true, arena: true, renderRoads: true },
   ];
   // 공통 S커브 폴백: MAP_LAYOUTS에 항목이 없는 맵만 사용.
   const PATH_S = [
@@ -152,15 +153,52 @@ window.DKCONTENT = (function () {
     m.spots2 = (Hd && Hd.spots2 && Hd.spots2.length) ? Hd.spots2.map((p) => p.slice()) : null;
     if (Hd && Hd.src) m.src = Hd.src; // 하드 배경으로 교체 (두 번째 흙길이 그려진 아트)
   });
-  // 아레나 레이아웃이 아직 없으면 왕실정원(50) 레이아웃을 임시로 쓴다 (아레나 배경 도착 후 editor.html 로 재작성)
-  {
-    const inf = maps.find((m) => m.infinity), royal = maps.find((m) => m.key === 'cMap50');
-    if (inf && royal && !MAP_LAYOUTS.cInf) {
-      inf.path = royal.path.map((p) => p.slice()); inf.spots = royal.spots.map((p) => p.slice());
-      inf.path2 = royal.path2 ? royal.path2.map((p) => p.slice()) : null;
-      inf.spots2 = royal.spots2 ? royal.spots2.map((p) => p.slice()) : null;
-      inf.fallbackKey = 'cMap50';
+  // ===== 무한 투기장: 나선 순환 도로 생성기 =====
+  // 왼쪽 가장자리 포탈에서 출발해 중심 크리스탈을 1.5바퀴 돌아 들어간다. 오른쪽 포탈은 두 번째 바퀴로 곧장 합류하는 지름길.
+  function buildArenaLayout() {
+    const cx = 528, cy = 300;
+    const turns = 1.5, steps = 68;
+    const spiral = [];
+    for (let i = 0; i <= steps; i++) {
+      const t = i / steps;
+      const th = Math.PI + t * turns * Math.PI * 2;           // π 에서 시작 = 왼쪽
+      const A = 470 - (470 - 150) * t, B = 245 - (245 - 80) * t;
+      spiral.push([Math.round(cx + A * Math.cos(th)), Math.round(cy + B * Math.sin(th))]);
     }
+    const center = [cx, cy];
+    const path = spiral.concat([[cx - 40, cy + 10], center]);
+    // 지름길: 오른쪽 포탈 → 나선의 두 번째 바퀴 시작(t≈0.67, θ≈π+2π) 지점에 합류
+    const joinIdx = Math.round(steps * (1 / turns));           // 한 바퀴 돈 지점
+    const join = spiral[joinIdx];
+    const feederStart = [1000, cy + 60];
+    const feeder = [];
+    for (let k = 0; k <= 4; k++) {
+      const u = k / 4;
+      feeder.push([Math.round(feederStart[0] + (join[0] - feederStart[0]) * u), Math.round(feederStart[1] + (join[1] - feederStart[1]) * u - Math.sin(u * Math.PI) * 30)]);
+    }
+    const path2 = feeder.concat(spiral.slice(joinIdx + 1)).concat([[cx - 40, cy + 10], center]);
+    // 석단 16개: 나선 양옆 법선 ±58px 후보 → 거리 규칙으로 선별 (길 46, 석단 60, 중심 96)
+    const cands = [];
+    const len = pathLength(spiral);
+    const n = 52;
+    for (let i = 1; i < n; i++) {
+      const p = pathAt(spiral, len * i / n);
+      for (const side of [1, -1]) cands.push([Math.round(p.x - p.dy * 58 * side), Math.round(p.y + p.dx * 58 * side)]);
+    }
+    const spots = [];
+    const okSpot = (s) => s[0] > 44 && s[0] < W - 44 && s[1] > 118 && s[1] < H - 40   // 위쪽은 타워 높이(96)만큼 여유
+      && pathDist(s[0], s[1], path) >= 46 && pathDist(s[0], s[1], path2) >= 46
+      && Math.hypot(s[0] - cx, s[1] - cy) >= 96
+      && Math.hypot(s[0] - spiral[0][0], s[1] - spiral[0][1]) >= 90
+      && Math.hypot(s[0] - feederStart[0], s[1] - feederStart[1]) >= 90
+      && spots.every((q) => Math.hypot(q[0] - s[0], q[1] - s[1]) >= 62);
+    // 안쪽·바깥쪽을 번갈아 고르게: 후보를 돌며 조건에 맞는 것을 16개까지
+    const stride = Math.max(1, Math.floor(cands.length / 20));
+    for (let k = 0; k < cands.length * 2 && spots.length < 16; k++) {
+      const s = cands[(k * stride) % cands.length];
+      if (okSpot(s)) spots.push(s);
+    }
+    return { path, path2, spots2: spots, portals: [spiral[0].slice(), feederStart.slice()], center };
   }
 
   // ===== 난이도 티어 =====
@@ -355,7 +393,8 @@ window.DKCONTENT = (function () {
       } else if (kind === 'air') { airPts = buildAirLane(base); lanes.push({ kind: 'air', pts: airPts, label: '하늘길' }); }
       else if (kind === 'tunnel') lanes.push({ kind: 'tunnel', pts: null, label: '땅굴' });
     }
-    for (const l of lanes) if (l.kind === 'tunnel' && !l.pts) l.pts = buildTunnelLane(base, airPts);
+    // 아레나는 땅굴이 지름길(path2)을 따라가게 해 나선 전체를 파고들지 않도록 한다
+    for (const l of lanes) if (l.kind === 'tunnel' && !l.pts) l.pts = buildTunnelLane(map.arena && map.path2 ? map.path2 : base, airPts);
     const spots = map.spots.map((p) => p.slice());
     let extra = [];
     if (T.extraSpots > 0) {
@@ -972,6 +1011,16 @@ window.DKCONTENT = (function () {
     { id: 'toyKing', name: '장난감왕', hp: 1220, speed: 24, gold: 150, dmg: 5, size: 92, move: 'ground', sprite: 'cToyKing', src: 'casual/bosses/toy-king.png' },
     { id: 'lanternKoi', name: '등불잉어', hp: 1080, speed: 30, gold: 146, dmg: 5, size: 92, move: 'air', sprite: 'cLanternKoi', src: 'casual/bosses/lantern-koi.png' },
   ];
+  // 아레나 레이아웃 적용 (W/H/pathLength 가 정의된 뒤에 실행해야 한다)
+  {
+    const inf = maps.find((m) => m.arena);
+    if (inf) {
+      const L = buildArenaLayout();
+      inf.path = L.path; inf.path2 = L.path2; inf.spots = []; inf.spots2 = L.spots2;
+      inf.portals = L.portals; inf.center = L.center;
+    }
+  }
+
   // ===== 걷기 시트 순차 연결 =====
   // 13~24번째 적과 보스 1~10 은 시트 파일이 아직 없어도 미리 연결해 둔다.
   // 파일이 없으면 game.js 가 정지컷으로 폴백하므로 안전하다. (프롬프트: ART-PROMPTS.md)
@@ -1059,7 +1108,7 @@ window.DKCONTENT = (function () {
   // 50 스테이지를 모두 클리어하면 해금. 웨이브 상한 없음, 목숨 0 이면 런 종료. game.js 가 이 값을 그대로 읽는다.
   const INFINITY = {
     mapKey: 'cInf',
-    tier: { tier: 6, name: '무한', color: '#ff7ad9', lanes: ['ground', 'ground2', 'air', 'tunnel'], extraSpots: 8, hpScale: 1, countBonus: 0, startGold: 400 },
+    tier: { tier: 6, name: '무한', color: '#ff7ad9', lanes: ['ground', 'ground2', 'air', 'tunnel'], extraSpots: 16, hpScale: 1, countBonus: 0, startGold: 400 },
     startGold: 400, lives: 20, intermission: 6,
     bossEvery: 10,   // 10 웨이브마다 보스 (20 부터 2마리)
     eliteEvery: 5,   // 5 웨이브마다 정예 (HP×3, 크기×1.2, 골드×3)
@@ -1106,7 +1155,7 @@ window.DKCONTENT = (function () {
   return {
     maps, towerSkins, skinLetters: SKIN_LETTERS, bases, bossBases, species, bosses, stages,
     INFINITY, DICE_POWER,
-    tiers: TIERS, tierOf, buildLayout, makeAvoidFromImage, pathLength, pathAt,
+    tiers: TIERS, tierOf, buildLayout, buildArenaLayout, makeAvoidFromImage, pathLength, pathAt, pathDist,
     mapCount: 50, stageCount: 50,
   };
 })();

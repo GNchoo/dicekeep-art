@@ -1,0 +1,22 @@
+# Cloudflare 정적 에셋 캐시 규칙
+# HTML/JS/CSS: 항상 재검증 (index.html 의 ?v= 캐시버스트와 병행)
+/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+# 이미지: 하루 캐시. 같은 파일명으로 그림을 교체하면 최대 하루 뒤 반영된다.
+/casual/*
+  Cache-Control: public, max-age=86400
+/vfx/*
+  Cache-Control: public, max-age=86400
+/props/*
+  Cache-Control: public, max-age=86400
+/towers/*
+  Cache-Control: public, max-age=86400
+/enemies/*
+  Cache-Control: public, max-age=86400
+/dice/*
+  Cache-Control: public, max-age=86400
+/ui/*
+  Cache-Control: public, max-age=86400
+/map/*
+  Cache-Control: public, max-age=86400

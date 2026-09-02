@@ -244,7 +244,8 @@
     $('warn-overlap').style.color = bad ? '#ff9f9f' : '';
     const st = C.stages && C.stages[mapIdx];
     const T = effectiveTier();
-    $('tier-info').textContent = st ? `스테이지 ${st.n} · ${st.tierName} 티어(T${st.tier}) · 동선 ${st.lanes}` + (T ? ` · 미리보기 T${T}` : '') : '';
+    const mm = maps[mapIdx];
+    $('tier-info').textContent = mm.arena ? '코드 생성 맵 (buildArenaLayout) — 표시만 되며 편집해도 게임에 반영되지 않음' : (st ? `스테이지 ${st.n} · ${st.tierName} 티어(T${st.tier}) · 동선 ${st.lanes}` + (T ? ` · 미리보기 T${T}` : '') : '');
     $('json-current').value = JSON.stringify({ key: curKey(), path: l.path, spots: l.spots, path2: l.path2, spots2: l.spots2 });
     $('map-select').value = String(mapIdx);
   }

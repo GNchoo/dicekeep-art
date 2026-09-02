@@ -154,10 +154,12 @@ Hand-painted casual tower defense tower, Kingdom Rush and Random Dice style, 3/4
 
 ---
 
-## D. 인피니티 아레나 배경 1장 → `casual/maps/map-inf-arena.jpg` (16:9, 1280×720)
+## D. 인피니티 아레나 바닥 1장 → `casual/maps/map-inf-arena.jpg` (16:9, 1280×720)
+
+이 맵은 도로·석단·포탈·크리스탈을 게임 코드가 그립니다. **아무것도 없는 바닥만** 그려 주세요.
 
 ```
-Hand-painted casual tower defense arena map, Kingdom Rush and Random Dice style, 3/4 top-down isometric view, 16:9 landscape, full-bleed, no UI. A circular coliseum floor under a dark violet night sky with giant floating ivory dice and stars. A grand crystal shrine stands slightly right of CENTER. One wide dirt road starts at a glowing purple portal gate at the LEFT edge and spirals one full lap around the shrine before reaching its gate; a second road starts at a portal gate at the BOTTOM edge and merges into the spiral halfway. Along both roads, on flat ground beside the road (never on the road), place 16 round flat stone tower pads of identical size, evenly spread. Gold and violet palette, glowing rune trims, chibi cute proportions, thick clean outlines, saturated colors, no characters, no text, no watermark.
+Hand-painted casual tower defense arena FLOOR ONLY, Kingdom Rush and Random Dice style, 3/4 top-down isometric view, 16:9 landscape, full-bleed, no UI. A wide empty circular coliseum floor of worn violet-gray flagstones with faint glowing golden rune rings carved around the center, low stone parapet and torch braziers along the outer edge, dark violet night sky with giant floating ivory dice and stars beyond the parapet. The floor must be EMPTY: no roads, no paths, no tower pads, no portals, no buildings, no shrine, no characters, no text, no watermark. Gold and violet palette, chibi cute proportions, thick clean outlines, saturated colors.
 ```
 
 ---

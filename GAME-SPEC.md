@@ -27,7 +27,7 @@ python serve.py
 
 Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크로마키 실패).
 
-캐시: `index.html`·`editor.html`의 `?v=N` 을 올릴 것 (현재 v44).
+캐시: `index.html`·`editor.html`의 `?v=N` 을 올릴 것 (현재 v48).
 
 개발용 URL: `http://localhost:8137/?unlock=all` (50 스테이지 클리어·타워 전부 해금 상태로 시작, 젬 200 보장) · `?unlock=all&start=inf` (타이틀에서 바로 인피니티).
 
@@ -117,8 +117,8 @@ Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크�
 | 항목 | 값 |
 |---|---|
 | 해금 | 50 스테이지 전부 클리어 (`SAVE.cleared.length >= 50`) → 로비 "∞ 인피니티" 버튼 |
-| 맵 | `cInf` 무한 투기장 (`casual/maps/map-inf-arena.jpg`). 배경·레이아웃이 없으면 **왕실정원(50) 하드 배경·레이아웃으로 폴백** |
-| 레인 | 흙길 + 흙길2 + 하늘길 + 땅굴 (처음부터 전부), 추가 석단 +8 |
+| 맵 | `cInf` 무한 투기장 — **코드 렌더**: 배경은 바닥 그림(`casual/maps/map-inf-arena.jpg`, 없으면 코드 바닥)만 쓰고, 크리스탈을 1.5바퀴 도는 나선 흙길·오른쪽 포탈 지름길(흙길2)·석단 16개·포탈·중심 크리스탈을 코드가 그린다 (`buildArenaLayout`, `buildRoadLayer`) |
+| 레인 | 나선 흙길(≈2,500px) + 지름길 흙길2(≈1,500px, 두 번째 바퀴로 합류) + 하늘길 + 땅굴(지름길 옆), 석단 16 (전부 코드 받침) |
 | 시작 | 골드 400, 목숨 20, 웨이브 상한 없음, 웨이브 간 6초 |
 | 적 HP | 기본 × `1.8 × 1.035^(w−1)` × 종 보정 (w30 ≈ 4.9×, w50 ≈ 9.7×, w100 ≈ 55×) |
 | 마릿수 | `12 + floor(w×0.6)` (최대 36), 간격 `0.8 − 0.01w` (최소 0.3초) |
@@ -176,6 +176,8 @@ Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크�
 - `MAP_LAYOUTS[key] = { path, spots }` — 50맵 전부 작성 완료 (에디터로 아트 흙길·석단에 맞춤).
 - `MAP_LAYOUTS_HARD[key] = { src?, path2?, spots2? }` — 하드 배경 전용. 31~50 은 납품 배경의 두 번째 길을 따라 `path2` 를 찍었고 `spots2` 는 물 회피 자동 배치. (`maps[]` 의 `src` 가 이미 `-hard.jpg` 라 `src` 는 생략)
 - `buildLayout(map, tier)` → `{ lanes, spots, baseSpotCount }`. 게임(`applyMapLayout`)과 에디터가 같은 함수를 쓴다.
+- `buildArenaLayout()` — 무한 투기장 전용. 타원 나선(중심 528,300, A 470→150, B 245→80, 1.5바퀴)을 `path`, 오른쪽 포탈에서 두 번째 바퀴로 합류하는 지름길을 `path2`, 나선 양옆 법선 ±58px 후보에서 거리 규칙으로 고른 석단 16개를 `spots2` 로 만든다. 에디터에서는 표시만 되고 편집해도 게임에 반영되지 않는다.
+- 코드 렌더 맵(`renderRoads: true`)은 `game.js` `buildRoadLayer` 가 바닥+도로를 오프스크린에 한 번 그려 캐시한다. 도로 브러시는 `drawRoad()` 하나에 모여 있어 타일셋으로 바꿀 때 그 함수만 교체하면 된다.
 
 `editor.html`:
 - 모드 4개: 흙길(P) · 흙길2(O) · 석단(S) · 추가석단(A)
@@ -202,7 +204,7 @@ Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크�
 | 타워 공격 시트 | 6 | `tN-attack-2x2.png` | 완료 |
 | 공격 VFX | 눈별 | `vfx/` | 완료 |
 | 포탈 (추가 레인) | 1 | `props/portal.png` | 완료 (코드가 그림) |
-| 인피니티 아레나 배경 | 1 | `casual/maps/map-inf-arena.jpg` | **생성 대기** → ART-PROMPTS §5 (도착 전에는 왕실정원 폴백) |
+| 인피니티 아레나 바닥 | 1 | `casual/maps/map-inf-arena.jpg` | **생성 대기** (길·석단·포탈·건물 없는 바닥만) → ART-PROMPTS §5. 없으면 코드 바닥 |
 
 스타일: Kingdom Rush + Random Dice. 캐주얼 치비, 두꺼운 외곽선, 아이소 3/4. 인게임 타워 박스 핏 70×96.
 
@@ -262,7 +264,7 @@ dicekeep-art/
 5. ~~물 위 석단~~ → 배경 픽셀 물 회피로 해결. 그래도 어색한 맵은 에디터 "자동 석단 굳히기"로 손보기
 6. ~~적 25~36 걷기 연결~~ → 완료. 37~ 은 `NEXT_WALK` 에 id 추가 + ART-PROMPTS §2 에 프롬프트 추가
 7. 디버그 훅: `DKroll()` 즉시 굴림, `DKplace(idx)` 배치, `DKspots()`, `DKSAVE` — 자동 플레이 봇용
-8. **인피니티 아레나 배경 생성** (ART-PROMPTS §5) → 에디터로 `cInf` 흙길·흙길2·석단·추가석단 작성 → `MAP_LAYOUTS.cInf`/`MAP_LAYOUTS_HARD.cInf`
+8. **인피니티 아레나 바닥 생성** (ART-PROMPTS §5, 길·석단 없는 바닥만) → 파일만 넣으면 끝. 도로 화풍이 아쉬우면 Grok 타일셋으로 `drawRoad()` 교체
 9. 인피니티 밸런스 손플레이 확인 (봇 기준 목표: 무전략 봇이 웨이브 25~40 에서 종료)
 
 ---
@@ -312,4 +314,6 @@ dicekeep-art/
 | 3차: HP 1.8×1.035^w, 마릿수 ≤36 | 62 | 59 (골드 과잉으로 보드 즉시 최대화) |
 | **4차: + 골드 1+0.025w (최종)** | ~60 (60 부터 시작한 기준) | **49 / 69** (2회, 주사위 운 편차) |
 
-판정: 무전략 봇 50~70. 후반은 40 부터 시작하는 속도 램프와 마릿수 상한이 벽 역할을 한다. 더 길게 가게 하려면 `INFINITY.wave()` 의 지수(1.035)나 `speedMult` 시작 웨이브부터 조정.
+판정: 무전략 봇 50~70.
+
+5차 (코드 렌더 나선 아레나, 흙길 2,526px): 무전략 봇 **54 / 54** — 같은 범위 유지, 조정 없음. 후반은 40 부터 시작하는 속도 램프와 마릿수 상한이 벽 역할을 한다. 더 길게 가게 하려면 `INFINITY.wave()` 의 지수(1.035)나 `speedMult` 시작 웨이브부터 조정.
