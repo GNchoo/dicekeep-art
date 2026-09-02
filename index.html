@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>주사위 성채 (Dicekeep)</title>
-<link rel="stylesheet" href="style.css?v=57" />
+<link rel="stylesheet" href="style.css?v=58" />
 <link rel="icon" href="ui/gold.png" />
 </head>
 <body>
@@ -97,6 +97,7 @@
       <div id="held-info" class="hidden"><b id="held-name"></b><span id="held-desc"></span></div>
     </div>
 
+    <div id="hud-break" class="hidden"></div>
     <div id="inf-panel" class="hidden" title="웨이브를 넘길 때마다 SP를 얻어 눈을 강화합니다 (단축키 1~6)">
       <div class="inf-sp-chip">SP <b id="inf-sp">0</b></div>
       <button id="inf-face-1" class="inf-face"><span class="inf-pip">1</span><span class="inf-lv">Lv0</span><span class="inf-cost">1 SP</span></button>
@@ -105,6 +106,18 @@
       <button id="inf-face-4" class="inf-face"><span class="inf-pip">4</span><span class="inf-lv">Lv0</span><span class="inf-cost">1 SP</span></button>
       <button id="inf-face-5" class="inf-face"><span class="inf-pip">5</span><span class="inf-lv">Lv0</span><span class="inf-cost">1 SP</span></button>
       <button id="inf-face-6" class="inf-face"><span class="inf-pip">6</span><span class="inf-lv">Lv0</span><span class="inf-cost">1 SP</span></button>
+    </div>
+
+    <div id="inf-gacha" class="hidden" title="골드로 보물상자를 사면 다면체 주사위가 나옵니다. 굴려 나온 숫자가 타워의 성(★)이 됩니다">
+      <button id="chest-btn">&#127873; 보물상자<small>250 G</small></button>
+      <div id="dice-bag">
+        <button id="bag-d1" class="bag-die empty" data-k="d1"><span class="bag-k">d1</span><span class="bag-n">0</span></button>
+        <button id="bag-d4" class="bag-die empty" data-k="d4"><span class="bag-k">d4</span><span class="bag-n">0</span></button>
+        <button id="bag-d6" class="bag-die empty" data-k="d6"><span class="bag-k">d6</span><span class="bag-n">0</span></button>
+        <button id="bag-d8" class="bag-die empty" data-k="d8"><span class="bag-k">d8</span><span class="bag-n">0</span></button>
+        <button id="bag-d12" class="bag-die empty" data-k="d12"><span class="bag-k">d12</span><span class="bag-n">0</span></button>
+        <button id="bag-d20" class="bag-die empty" data-k="d20"><span class="bag-k">d20</span><span class="bag-n">0</span></button>
+      </div>
     </div>
 
     <div id="right-panel">
@@ -122,7 +135,7 @@
   <img id="ghost-tower" alt="">
   <div id="ghost-ring"></div>
 </div>
-<script src="content.js?v=57"></script>
-<script src="game.js?v=57"></script>
+<script src="content.js?v=58"></script>
+<script src="game.js?v=58"></script>
 </body>
 </html>

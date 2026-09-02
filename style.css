@@ -544,6 +544,30 @@ body.placing #game { cursor: grabbing; }
 .inf-face .inf-lv { font-size: 10px; color: #ffb8ea; }
 .inf-face .inf-cost { font-size: 9px; color: #e8b64a; }
 
+/* 인피니티: 강화 패널과 보물상자는 HUD 둘째 줄 (첫 줄은 주사위·굴리기·웨이브) */
+#hud-break { flex-basis: 100%; height: 0; order: 4; }
+#inf-panel { order: 5; margin-left: 0; }
+#inf-gacha { order: 6; }
+#right-panel { order: 3; margin-left: auto; }
+/* 인피니티 보물상자 + 주사위 가방 */
+#inf-gacha { display: flex; align-items: center; gap: 6px; padding: 4px 8px; margin-left: 6px; background: rgba(60, 40, 10, .45); border: 1px solid #a07a2a; border-radius: 10px; flex-shrink: 0; }
+#chest-btn { display: flex; flex-direction: column; align-items: center; gap: 1px; font-size: 13px; padding: 6px 10px; background: linear-gradient(#7a5a1e, #4a350f); color: #ffe9b8; border: 1px solid #e8b64a; border-radius: 8px; cursor: pointer; font-family: inherit; white-space: nowrap; }
+#chest-btn small { font-size: 11px; color: var(--gold); }
+#chest-btn:hover:not(:disabled) { filter: brightness(1.25); }
+#chest-btn:disabled { opacity: .45; cursor: default; }
+#dice-bag { display: flex; gap: 4px; }
+.bag-die { width: 40px; height: 44px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; background: linear-gradient(#3a2d21, #241a10); border: 1px solid #6b5636; border-radius: 8px; color: #e9dfc4; font-family: inherit; cursor: pointer; padding: 0; }
+.bag-die .bag-k { font-size: 11px; font-weight: bold; }
+.bag-die .bag-n { font-size: 12px; color: var(--gold); }
+.bag-die:hover:not(:disabled) { filter: brightness(1.3); }
+.bag-die:disabled { cursor: default; }
+.bag-die.empty { opacity: .35; }
+#bag-d20 { border-color: #ffd452; } #bag-d12 { border-color: #c78bff; } #bag-d8 { border-color: #7fd4ff; }
+@media (max-width: 720px) {
+  #inf-gacha { width: 100%; margin-left: 0; justify-content: center; }
+  .bag-die { width: 34px; height: 38px; }
+}
+
 /* 좁거나 낮은 화면(폰·작은 창): HUD 요소를 줄인다 */
 @media (max-width: 720px), (max-height: 520px) {
   #wrap { padding: 4px; gap: 4px; }
