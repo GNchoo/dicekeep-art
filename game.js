@@ -267,6 +267,74 @@ function drawCodeProp(g, th, kind, x, y, h, rnd) {
   }
   g.restore();
 }
+// 소품 금지 마스크: 1 이면 소품 스프라이트가 닿으면 안 되는 픽셀
+function buildForbidMask(L, th) {
+  const cv = document.createElement('canvas');
+  cv.width = W; cv.height = H;
+  const g = cv.getContext('2d', { willReadFrequently: true });
+  g.fillStyle = '#000';
+  g.lineJoin = 'round'; g.lineCap = 'round'; g.strokeStyle = '#000';
+  for (const lane of LANES) if (lane.kind === 'ground' || lane.kind === 'ground2') {
+    g.lineWidth = 58; // 길 40 + 양쪽 여백 9
+    g.beginPath(); g.moveTo(lane.pts[0][0], lane.pts[0][1]); for (let i = 1; i < lane.pts.length; i++) g.lineTo(lane.pts[i][0], lane.pts[i][1]); g.stroke();
+  }
+  for (const [x, y] of SPOTS) { // 석단 타원 + 그 위 타워 그림 자리
+    g.beginPath(); g.ellipse(x, y + 2, 42, 24, 0, 0, Math.PI * 2); g.fill();
+    g.fillRect(x - 40, y - 104, 80, 108);
+  }
+  for (const p of [L.start, L.start2]) if (p) g.fillRect(p[0] - 50, p[1] - 92, 100, 118);
+  if (L.end) g.fillRect(L.end[0] - 72, L.end[1] - 132, 144, 156);
+  g.fillRect(0, 0, 480, 54); g.fillRect(W - 170, 0, 170, 54); // HUD 칩·버튼 자리
+  for (const [r, c] of L.water) g.fillRect(c * TILE - 4, r * TILE - 4, TILE + 8, TILE + 8);
+  const d = g.getImageData(0, 0, W, H).data;
+  const mask = new Uint8Array(W * H);
+  for (let i = 0; i < W * H; i++) mask[i] = d[i * 4 + 3] > 0 ? 1 : 0;
+  return mask;
+}
+// 브리드슨 포아송 디스크 샘플링: 최소 거리 r 를 지키며 영역을 고르게 채우는 점들 (블루 노이즈)
+function poissonDisc(w, h, r, rnd) {
+  const cell = r / Math.SQRT2, gw = Math.ceil(w / cell), gh = Math.ceil(h / cell);
+  const grid = new Int32Array(gw * gh).fill(-1);
+  const pts = [], active = [];
+  const put = (p) => { pts.push(p); active.push(pts.length - 1); grid[Math.floor(p[1] / cell) * gw + Math.floor(p[0] / cell)] = pts.length - 1; };
+  const ok = (x, y) => {
+    if (x < 0 || y < 0 || x >= w || y >= h) return false;
+    const gx = Math.floor(x / cell), gy = Math.floor(y / cell);
+    for (let yy = Math.max(0, gy - 2); yy <= Math.min(gh - 1, gy + 2); yy++) for (let xx = Math.max(0, gx - 2); xx <= Math.min(gw - 1, gx + 2); xx++) {
+      const i = grid[yy * gw + xx];
+      if (i >= 0 && Math.hypot(pts[i][0] - x, pts[i][1] - y) < r) return false;
+    }
+    return true;
+  };
+  put([rnd() * w, rnd() * h]);
+  while (active.length) {
+    const ai = Math.floor(rnd() * active.length);
+    const p = pts[active[ai]];
+    let found = false;
+    for (let k = 0; k < 20; k++) {
+      const ang = rnd() * Math.PI * 2, dist = r * (1 + rnd());
+      const x = p[0] + Math.cos(ang) * dist, y = p[1] + Math.sin(ang) * dist;
+      if (ok(x, y)) { put([x, y]); found = true; break; }
+    }
+    if (!found) active.splice(ai, 1);
+  }
+  return pts;
+}
+// 저주파 값 노이즈 (0~1): 4×3 격자 난수를 부드럽게 보간 → 숲 덤불/트인 풀밭 무리
+function valueNoise(seed) {
+  const r = mulberry(seed);
+  const NX = 5, NY = 4;
+  const v = [];
+  for (let i = 0; i < NX * NY; i++) v.push(r());
+  const sm = (t) => t * t * (3 - 2 * t);
+  return (u, w) => { // u, w ∈ [0,1]
+    const x = u * (NX - 1), y = w * (NY - 1);
+    const x0 = Math.min(NX - 2, Math.floor(x)), y0 = Math.min(NY - 2, Math.floor(y));
+    const tx = sm(x - x0), ty = sm(y - y0);
+    const a = v[y0 * NX + x0], b = v[y0 * NX + x0 + 1], c = v[(y0 + 1) * NX + x0], d = v[(y0 + 1) * NX + x0 + 1];
+    return (a * (1 - tx) + b * tx) * (1 - ty) + (c * (1 - tx) + d * tx) * ty;
+  };
+}
 // 테마 타일 맵을 오프스크린에 한 번 굽는다. 타일이 없으면 각 요소를 코드로 그린다.
 function buildTileLayer(m) {
   const C = window.DKCONTENT;
@@ -290,34 +358,55 @@ function buildTileLayer(m) {
   // 4. 석단
   const pad = T('pad');
   if (pad) for (const [x, y] of SPOTS) drawGroundSprite(g, pad, x, y + 18, 40);
-  // 5. 소품: 길·석단을 절대 가리지 않는 칸에만 씨앗 고정 배치
-  //    - 길 칸과 그 8방향 이웃 금지, 석단 칸과 그 8방향 이웃 금지, 포탈·성 주변 금지
-  //    - 키 큰 소품(나무·상징물)은 그림이 위로 1.5칸 뻗으므로 위쪽 두 칸에 길·석단이 있으면 금지
-  const blocked = new Set(), tallBlocked = new Set();
-  const key = (r, c) => r * GW + c;
-  const roadCells = [];
-  for (let r = 0; r < GH; r++) for (let c = 0; c < GW; c++) { const ch = grid[r][c]; if (ch === '#' || ch === 'S' || ch === 'E' || ch === '2' || ch === '=') roadCells.push([r, c]); }
-  const occupied = roadCells.concat(L.padCells || []);
-  for (const [r, c] of occupied) {
-    for (let dr = -1; dr <= 1; dr++) for (let dc = -1; dc <= 1; dc++) blocked.add(key(r + dr, c + dc));
-    tallBlocked.add(key(r + 1, c)); tallBlocked.add(key(r + 2, c)); tallBlocked.add(key(r + 1, c - 1)); tallBlocked.add(key(r + 1, c + 1));
-  }
-  for (const cell of [L.startCell, L.start2Cell, L.endCell]) if (cell) for (let dr = -2; dr <= 1; dr++) for (let dc = -1; dc <= 1; dc++) blocked.add(key(cell[0] + dr, cell[1] + dc));
-  const cands = [];
-  for (let r = 0; r < GH; r++) for (let c = 0; c < GW; c++) if (grid[r][c] === '.' && !blocked.has(key(r, c))) cands.push([r, c]);
-  for (let i = cands.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [cands[i], cands[j]] = [cands[j], cands[i]]; }
+  // 5. 소품 산포 (자연스럽게, 그러나 길·석단·타워·포탈·성을 절대 가리지 않게)
+  //    (1) 금지 마스크: 길(폭 40 + 여백)·석단 타원과 그 위 타워 자리·포탈/성 그림·HUD 칩·물 을 오프스크린에 칠한다
+  //    (2) 브리드슨 포아송 디스크(블루 노이즈)로 맵 전체에 고르게 후보점을 뿌린다 — 구석에 몰리지 않고 가운데도 채워진다
+  //    (3) 저주파 밀도 노이즈로 "숲 덤불 / 트인 풀밭" 무리를 만든다 (나무는 노이즈가 높은 곳에 몰림)
+  //    (4) 후보마다 종류·크기를 정한 뒤 그 스프라이트 사각형이 마스크에 닿으면 버린다 — 길 위쪽(뒤)에는 큰 나무가 서도 되고,
+  //        길 아래쪽(앞)에는 캐노피가 길을 덮으므로 자동으로 안 선다. 소품끼리는 30% 까지 겹쳐 무리를 이룬다
+  const forbid = buildForbidMask(L, th);
+  const hits = (x, y, w, h) => {
+    const x0 = Math.max(0, Math.floor(x)), y0 = Math.max(0, Math.floor(y)), x1 = Math.min(W - 1, Math.ceil(x + w)), y1 = Math.min(H - 1, Math.ceil(y + h));
+    for (let yy = y0; yy <= y1; yy += 6) for (let xx = x0; xx <= x1; xx += 6) if (forbid[yy * W + xx]) return true;
+    return false;
+  };
+  const density = valueNoise(seed ^ 0x9e3779b9);
   const KINDS = [['tree', 'prop-1', 96], ['tree2', 'prop-2', 80], ['rock', 'prop-3', 40], ['bush', 'prop-4', 42], ['flowers', 'prop-5', 30], ['artifact', 'prop-6', 70]];
-  const TALL = [0, 1, 5];
-  const pick = () => { const v = rnd(); return v < 0.3 ? 0 : v < 0.55 ? 1 : v < 0.7 ? 2 : v < 0.85 ? 3 : v < 0.95 ? 4 : 5; };
+  const artW = (k, h) => { const a = T(KINDS[k][1]); return a ? h * a.w / a.h : h * 0.8; };
+  const pickKind = (d, v) => { // d: 밀도 노이즈 0~1, v: 난수
+    const treeP = 0.15 + 0.55 * d;                                   // 숲 덤불일수록 나무
+    if (v < treeP) return v < treeP * 0.55 ? 0 : 1;
+    const rest = (v - treeP) / (1 - treeP);
+    return rest < 0.18 ? 2 : rest < 0.55 ? 3 : rest < 0.9 ? 4 : 5;   // 바위 18% · 덤불 37% · 꽃무리 35% · 상징물 10%
+  };
   const props = [];
-  for (const [r, c] of L.props) props.push({ r, c, k: 0 });
-  const n = Math.round(cands.length * 0.45);
-  for (let i = 0; i < n; i++) {
-    let k = pick();
-    if (TALL.includes(k) && tallBlocked.has(key(cands[i][0], cands[i][1]))) k = 2 + Math.floor(rnd() * 3); // 키 작은 것으로 교체
-    props.push({ r: cands[i][0], c: cands[i][1], k });
+  const overlapOK = (r) => props.every((p) => {
+    const ix = Math.max(0, Math.min(r.x + r.w, p.bx + p.bw) - Math.max(r.x, p.bx));
+    const iy = Math.max(0, Math.min(r.y + r.h, p.by + p.bh) - Math.max(r.y, p.by));
+    return ix * iy <= 0.3 * Math.min(r.w * r.h, p.bw * p.bh);
+  });
+  const tryPlace = (x, y, k, s, flip) => {
+    const h = KINDS[k][2] * s, w = artW(k, h);
+    const r = { x: x - w / 2, y: y - h, w, h };
+    if (r.y < -6 || r.x < 8 || r.x + r.w > W - 8 || y > H - 2) return false;
+    if (hits(r.x, r.y, r.w, r.h)) return false;
+    if (!overlapOK(r)) return false;
+    props.push({ x, y, k, s, flip, bx: r.x, by: r.y, bw: r.w, bh: r.h });
+    return true;
+  };
+  for (const [r, c] of L.props) tryPlace(c * TILE + TILE / 2, r * TILE + TILE / 2 + 22, 0, 1.05, false); // 템플릿 T 칸: 큰 나무 고정
+  const pts = poissonDisc(W, H, 38, rnd);
+  for (let i = pts.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [pts[i], pts[j]] = [pts[j], pts[i]]; }
+  const MAX_PROPS = 90;
+  for (const [x, y] of pts) {
+    if (props.length >= MAX_PROPS) break;
+    const d = density(x / W, y / H);
+    if (rnd() > 0.35 + 0.5 * d) continue;           // 트인 곳은 듬성듬성
+    let k = pickKind(d, rnd());
+    const flip = rnd() < 0.5;
+    if (tryPlace(x, y, k, 0.85 + rnd() * 0.3, flip)) continue;
+    if (k <= 1 || k === 5) { k = 2 + Math.floor(rnd() * 3); tryPlace(x, y, k, 0.85 + rnd() * 0.3, flip); } // 큰 것이 안 들어가면 작은 것으로
   }
-  for (const p of props) { p.x = p.c * TILE + TILE / 2 + (rnd() - 0.5) * 16; p.y = p.r * TILE + TILE / 2 + 22 + (rnd() - 0.5) * 10; p.s = 0.85 + rnd() * 0.3; p.flip = rnd() < 0.5; }
   props.sort((a, b) => a.y - b.y);
   for (const p of props) {
     const [kind, name, h] = KINDS[p.k];
