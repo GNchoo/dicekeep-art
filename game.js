@@ -55,6 +55,8 @@ const ENEMY_DEFS = {
 
 let LANES = []; // { kind, pts, segs, len, label }
 const avoidCache = {}; // mapKey → 물 판정 함수
+let ROAD_LAYER = null;   // 코드 렌더 맵(아레나)의 바닥+도로 오프스크린 캔버스
+let ARENA = null;        // { center, portals } — 코드 렌더 맵일 때만
 function buildLane(kind, pts, label) {
   const segs = [];
   let len = 0;
@@ -93,6 +95,95 @@ function applyMapLayout(mapKey, tier) {
         t.y = SPOTS[t.spot][1];
       }
     }
+  }
+  ARENA = (m && m.renderRoads) ? { center: m.center || [W / 2, H / 2], portals: m.portals || [] } : null;
+  ROAD_LAYER = ARENA ? buildRoadLayer(m) : null;
+}
+
+// ==================== 코드 렌더 맵 (아레나): 바닥 + 도로 레이어 ====================
+// 타일셋으로 바꿀 때는 drawRoad() 만 교체하면 된다.
+function buildRoadLayer(m) {
+  const cv = document.createElement('canvas');
+  cv.width = W; cv.height = H;
+  const g = cv.getContext('2d');
+  const bg = A[m.key];
+  if (bg && !bg.missing && bg.width > 8) g.drawImage(bg, 0, 0, W, H);
+  else drawArenaFloor(g, m);
+  for (const lane of LANES) if (lane.kind === 'ground' || lane.kind === 'ground2') drawRoad(g, lane.pts, lane.kind === 'ground2' ? 7 : 3);
+  return cv;
+}
+// 코드 바닥: 어두운 돌 + 룬 링 + 은은한 격자 (아레나 배경 그림이 없을 때)
+function drawArenaFloor(g, m) {
+  const [cx, cy] = m.center || [W / 2, H / 2];
+  const gr = g.createRadialGradient(cx, cy, 40, cx, cy, 620);
+  gr.addColorStop(0, '#3a2f4a'); gr.addColorStop(0.55, '#26203a'); gr.addColorStop(1, '#120e1c');
+  g.fillStyle = gr; g.fillRect(0, 0, W, H);
+  g.save();
+  g.strokeStyle = 'rgba(255,255,255,0.045)'; g.lineWidth = 1;
+  for (let x = 0; x <= W; x += 64) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, H); g.stroke(); }
+  for (let y = 0; y <= H; y += 64) { g.beginPath(); g.moveTo(0, y); g.lineTo(W, y); g.stroke(); }
+  for (const [rx, ry, a] of [[120, 62, 0.35], [260, 135, 0.22], [400, 208, 0.14]]) {
+    g.strokeStyle = `rgba(214,150,255,${a})`; g.lineWidth = 3; g.setLineDash([14, 10]);
+    g.beginPath(); g.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2); g.stroke();
+  }
+  g.setLineDash([]);
+  g.restore();
+}
+// 흙길 브러시: 그림자 → 어두운 테두리 → 본체 → 밝은 띠 → 점·돌 (결정적 의사난수)
+function drawRoad(g, pts, seed) {
+  const base = [178, 140, 92];
+  const rgba = (mul, a) => `rgba(${Math.round(base[0] * mul)},${Math.round(base[1] * mul)},${Math.round(base[2] * mul)},${a})`;
+  const stroke = (w, style) => { g.strokeStyle = style; g.lineWidth = w; g.beginPath(); g.moveTo(pts[0][0], pts[0][1]); for (let i = 1; i < pts.length; i++) g.lineTo(pts[i][0], pts[i][1]); g.stroke(); };
+  g.save();
+  g.lineJoin = 'round'; g.lineCap = 'round';
+  stroke(54, 'rgba(0,0,0,0.22)');
+  stroke(48, rgba(0.74, 1));
+  stroke(40, rgba(1, 1));
+  stroke(24, rgba(1.12, 0.5));
+  let s = seed * 7919 + 17;
+  const rnd = () => { s = (s * 1103515245 + 12345) & 0x7fffffff; return s / 0x7fffffff; };
+  const C = window.DKCONTENT;
+  const len = C.pathLength(pts);
+  for (let d = 0; d < len; d += 6) {
+    const p = C.pathAt(pts, d);
+    const off = (rnd() - 0.5) * 30;
+    const x = p.x - p.dy * off, y = p.y + p.dx * off;
+    g.fillStyle = rnd() < 0.5 ? rgba(0.82, 0.35) : rgba(1.2, 0.35);
+    g.beginPath(); g.ellipse(x, y, 2 + rnd() * 4, 1.5 + rnd() * 2, 0, 0, Math.PI * 2); g.fill();
+    if (rnd() < 0.1) {
+      const side = rnd() < 0.5 ? 1 : -1;
+      const sx = p.x - p.dy * 25 * side, sy = p.y + p.dx * 25 * side;
+      g.fillStyle = 'rgba(60,54,48,0.9)'; g.beginPath(); g.ellipse(sx, sy + 1, 4, 3, 0, 0, Math.PI * 2); g.fill();
+      g.fillStyle = 'rgba(150,142,130,0.95)'; g.beginPath(); g.ellipse(sx, sy, 3.5, 2.5, 0, 0, Math.PI * 2); g.fill();
+    }
+  }
+  g.restore();
+}
+// 중심 크리스탈 (코드 렌더 맵)
+function drawArenaCrystal() {
+  if (!ARENA) return;
+  const [cx, cy] = ARENA.center;
+  const pulse = 0.5 + 0.5 * Math.sin(S.time * 2.4);
+  ctx.save();
+  ctx.translate(cx, cy + 8);
+  ctx.scale(1, 0.5);
+  ctx.beginPath(); ctx.arc(0, 0, 44 + pulse * 6, 0, Math.PI * 2);
+  ctx.fillStyle = `rgba(120,200,255,${0.18 + pulse * 0.12})`; ctx.fill();
+  ctx.strokeStyle = '#9fdcff'; ctx.lineWidth = 2.5; ctx.stroke();
+  ctx.restore();
+  const sp = A.crystal;
+  if (sp && sp.cv) {
+    const h = 118, w = h * sp.w / sp.h;
+    ctx.save();
+    ctx.shadowColor = '#7fd4ff'; ctx.shadowBlur = 18 + pulse * 14;
+    ctx.drawImage(sp.cv, cx - w / 2, cy - h + 12, w, h);
+    ctx.restore();
+  } else {
+    ctx.save();
+    ctx.translate(cx, cy - 40);
+    ctx.beginPath(); ctx.moveTo(0, -50); ctx.lineTo(24, 0); ctx.lineTo(0, 50); ctx.lineTo(-24, 0); ctx.closePath();
+    ctx.fillStyle = '#8fd8ff'; ctx.shadowColor = '#7fd4ff'; ctx.shadowBlur = 20; ctx.fill();
+    ctx.restore();
   }
 }
 LANES = [buildLane('ground', DEFAULT_PATH, '흙길')];
@@ -145,6 +236,7 @@ const SRCS = {
   lightningArc: BASE + 'vfx/lightning-arc.png', dieBomb: BASE + 'vfx/die-bomb.png',
   dieExplode: BASE + 'vfx/die-explode-2x2.png',
   portal: BASE + 'props/portal.png',
+  crystal: BASE + 'props/crystal.png',
   t1Atk: BASE + 'casual/towers/t1-attack-2x2.png', t2Atk: BASE + 'casual/towers/t2-attack-2x2.png',
   t3Atk: BASE + 'casual/towers/t3-attack-2x2.png', t4Atk: BASE + 'casual/towers/t4-attack-2x2.png',
   t5Atk: BASE + 'casual/towers/t5-attack-2x2.png', t6Atk: BASE + 'casual/towers/t6-attack-2x2.png',
@@ -1816,7 +1908,7 @@ function flashCanvas(fr) {
 function drawLanes() {
   for (let li = 0; li < LANES.length; li++) {
     const lane = LANES[li];
-    if (lane.kind === 'ground') continue;
+    if (lane.kind === 'ground') { if (ARENA) drawPortal(lane.pts[0][0], lane.pts[0][1], lane); continue; }
     const pts = lane.pts;
     ctx.save();
     ctx.lineJoin = 'round'; ctx.lineCap = 'round';
@@ -1869,6 +1961,7 @@ function drawLanes() {
     // 추가 포탈 (첫 레인의 포탈은 배경 아트에 있음). 시작점이 첫 레인과 같으면 생략.
     const p0 = pts[0], m0 = LANES[0].pts[0];
     if (Math.hypot(p0[0] - m0[0], p0[1] - m0[1]) > 30) drawPortal(p0[0], p0[1], lane);
+    else if (ARENA && li === 0) drawPortal(p0[0], p0[1], lane);
     // 레인 이름표 (웨이브 전에만)
     if (!S.waveActive && S.wave < S.stageWaves) {
       const lp = pts[Math.floor(pts.length / 2)];
@@ -1918,9 +2011,13 @@ function draw() {
     const k = Math.min(1, S.shakeT / 0.4) * 5;
     ctx.translate((Math.random() - 0.5) * k * 2, (Math.random() - 0.5) * k * 2);
   }
-  const mk = S.mapKey && A[S.mapKey] ? A[S.mapKey] : A.map;
-  ctx.drawImage(mk, -3, -3, W + 6, H + 6);
+  if (ROAD_LAYER) ctx.drawImage(ROAD_LAYER, -3, -3, W + 6, H + 6);
+  else {
+    const mk = S.mapKey && A[S.mapKey] ? A[S.mapKey] : A.map;
+    ctx.drawImage(mk, -3, -3, W + 6, H + 6);
+  }
   drawLanes();
+  drawArenaCrystal();
 
   // 건설 지점 표시
   for (let i = 0; i < SPOTS.length; i++) {
@@ -3108,6 +3205,7 @@ function drawLoading(pr) {
   window.DKstartInf = startInfinity;
   window.DKinf = () => S.inf;
   window.DKupgrade = upgradeFace;
+  window.DKtowerSpr = towerSpr;
   window.DKplace = tryPlace;                      // 보유 주사위를 석단 idx 에 놓기
   window.DKroll = () => { if (S.phase === 'playing' && !S.heldDie && S.gold >= ROLL_COST) { S.gold -= ROLL_COST; S.heldDie = pickUnlockedFace(); syncUI(); return S.heldDie; } return 0; }; // 즉시 굴림 (테스트용)
   window.DKspots = () => SPOTS;
