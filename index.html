@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>주사위 성채 (Dicekeep)</title>
-<link rel="stylesheet" href="style.css?v=52" />
+<link rel="stylesheet" href="style.css?v=53" />
 <link rel="icon" href="ui/gold.png" />
 </head>
 <body>
@@ -16,6 +16,12 @@
       <span class="chip"><img id="icon-gold" src="ui/gold.png" alt="골드"><b id="gold-val">0</b></span>
       <span class="chip"><img id="icon-heart" src="ui/heart.png" alt="목숨"><b id="lives-val">0</b></span>
       <span class="chip"><b id="wave-val">웨이브 0 / 10</b></span>
+    </div>
+
+    <div id="mini-top" class="mini hidden">
+      <button id="speed-btn" title="게임 속도">x1</button>
+      <button id="mute-btn" title="소리">&#128266;</button>
+      <button id="exit-btn" title="스테이지 선택으로">&#8801;</button>
     </div>
 
     <div id="overlay">
@@ -108,11 +114,6 @@
         <button id="sell-btn">판매</button>
       </div>
       <button id="wave-btn">웨이브 시작</button>
-      <div class="mini">
-        <button id="speed-btn" title="게임 속도">x1</button>
-        <button id="mute-btn" title="소리">&#128266;</button>
-        <button id="exit-btn" title="스테이지 선택으로">&#8801;</button>
-      </div>
     </div>
   </div>
 </div>
@@ -121,7 +122,7 @@
   <img id="ghost-tower" alt="">
   <div id="ghost-ring"></div>
 </div>
-<script src="content.js?v=52"></script>
-<script src="game.js?v=52"></script>
+<script src="content.js?v=53"></script>
+<script src="game.js?v=53"></script>
 </body>
 </html>
