@@ -2,10 +2,11 @@
 window.DKCONTENT = (function () {
   // ===== 테마 + 그리드 타일 맵 =====
   // 배경 그림에 좌표를 맞추던 방식은 폐기했다. 맵은 16×9 칸(64px) ASCII 템플릿으로 코드가 설계하고,
-  // 테마별 타일(바닥·도로·석단·시작·도착·소품)을 그 위에 입힌다. 타일이 없으면 game.js 가 코드로 그린다.
+  // 테마별 타일(바닥·도로 질감·물 질감·석단·시작·도착·소품)을 그 위에 입힌다. 타일이 없으면 game.js 가 코드로 그린다.
   const TILE = 64, GW = 16, GH = 9;
   // 타일 에셋 파일명 (casual/tiles/<theme>/<name>.png, floor 만 .jpg). 키는 tl_<theme>_<name>.
-  const TILE_ASSETS = ['floor', 'road-straight', 'road-corner', 'road-t', 'road-cross', 'pad', 'start', 'end', 'water', 'prop-1', 'prop-2', 'prop-3', 'prop-4', 'prop-5', 'prop-6'];
+  // 도로·물은 이음새 없는 '질감' 1장씩만 받는다 — 길 모양·폭·코너·합류는 코드가 그린다 (생성 모델이 기하를 못 지키므로).
+  const TILE_ASSETS = ['floor', 'road', 'water', 'pad', 'start', 'end', 'prop-1', 'prop-2', 'prop-3', 'prop-4', 'prop-5', 'prop-6'];
   const THEMES = [
     { id: 'plains',     name: '평원',     stages: [1, 8],   floor: ['#93c85e', '#6fa843'], road: [186, 146, 92],  water: '#4f9fd8', propA: '#3f8a36', propB: '#2c6528', rock: '#928c80', glow: '#ffe28a' },
     { id: 'forest',     name: '숲',       stages: [9, 16],  floor: ['#5f9a3e', '#3f7229'], road: [160, 124, 80],  water: '#3f8fc4', propA: '#2f6f2a', propB: '#1f4d1c', rock: '#7d7a70', glow: '#c8ff9a' },

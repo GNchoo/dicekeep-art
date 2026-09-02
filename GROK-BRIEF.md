@@ -8,32 +8,31 @@
 
 ## 상황
 
-맵을 통째로 그리던 방식을 버렸습니다. 이제 **코드가 16×9 칸 격자 위에 길·석단·시작·도착 위치를 설계**하고, 당신이 만들어 줄 **테마별 타일 조각**을 그 위에 입힙니다. 그래서 그림 안에 길이나 건물을 배치할 필요가 전혀 없고, **조각 하나하나가 정확한 규격**이기만 하면 됩니다. 파일을 지정한 이름으로 저장하기만 하면 게임이 바로 씌웁니다.
+맵을 통째로 그리던 방식을 버렸습니다. 이제 **코드가 16×9 칸 격자 위에 길·석단·시작·도착 위치를 설계**하고, 당신이 만들어 줄 **테마별 조각**을 그 위에 입힙니다. 그림 안에 길이나 건물을 배치할 필요가 전혀 없습니다.
 
-테마 6종 × 조각 15개 = **총 90장**입니다. **먼저 「평원」 15장만 만들어 주세요.** 게임에 넣어 이음새·크기를 확인한 뒤 나머지 5테마를 같은 규격으로 진행합니다.
+**도로와 물은 "모양"이 아니라 "질감"만 받습니다.** 길의 모양·폭·코너·합류는 코드가 그리고, 당신이 준 이음새 없는 질감으로 표면을 채웁니다. (직선·코너·T·십자 타일 방식은 폭과 위치가 장마다 달라져 폐기했습니다. 이미 만든 `road-straight/corner/t/cross.png` 는 더 이상 쓰지 않습니다.)
+
+테마 6종 × 조각 12개 = **총 72장**입니다. **평원은 이미 14장이 들어가 있으니 `road.png` 1장만 더** 만들어 주세요. 확인 후 나머지 5테마를 12장씩 진행합니다.
 
 ## 반드시 지킬 공통 규칙
 
 1. **스타일**: Kingdom Rush + Random Dice. 손그림 캐주얼, 두꺼운 깔끔한 외곽선, 채도 높은 색, **3/4 탑다운(살짝 기울여 내려다본) 시점**. 글자·워터마크·UI 금지. 6테마가 한 게임처럼 보여야 하므로 선 굵기·채도·명암 처리를 통일하세요.
-2. **도로 타일 4종 + 물 타일**은 **정사각형 1024×1024**. 게임은 이걸 64×64 로 줄여 격자에 깔고 **90° 단위로 회전**합니다. 그러므로
-   - 조명은 **정수리에서 내리쬐는 평평한 조명**, 한쪽으로 늘어지는 그림자 금지 (회전해도 어색하지 않게).
-   - 길은 **타일 가장자리에서 가장자리까지** 이어지고, 가장자리에서 **딱 잘린 단면**이어야 합니다 (옆 타일과 맞닿아 이어짐). 길 폭은 **타일 폭의 56%**, 타일 정중앙. 길 가장자리는 부드럽게 흐려도 되지만 폭은 모든 타일에서 같아야 합니다.
-   - 길 바깥은 **단색 연회색 (#C8C8C8) 만**. 풀·흙·바닥 무늬를 그리지 마세요. 게임이 회색을 지우고 바닥 위에 얹습니다.
+2. **도로 질감(`road.png`)과 물 질감(`water.png`)** 은 **정사각형 1024×1024 를 가장자리까지 가득 채우는 표면 재질**입니다. 게임이 이걸 반복 패턴으로 깔아 길과 물의 모양을 채웁니다. 그러므로
+   - **이음새 없이 반복**되어야 합니다: 네 변이 서로 이어지게, 테두리·비네팅·큰 물체·글자 없이 고른 재질만.
+   - 조명은 **정수리에서 내리쬐는 평평한 조명**, 한쪽으로 늘어지는 그림자 금지.
+   - 길 가장자리·경계는 그리지 마세요(코드가 어두운 테두리와 돌을 얹습니다). 물도 물가·바위 없이 물 표면만.
 3. **바닥(floor)** 은 **16:9, 1280×720**, 화면 가득. **길·석단·건물·큰 소품이 전혀 없는 빈 땅**만 그립니다. 은은한 얼룩·풀결·작은 자갈 정도만.
 4. **석단·시작·도착·소품(prop)** 은 **연회색 (#C8C8C8) 단색 배경에 오브젝트 하나만**, 정중앙, 여백 넉넉히, 바닥에 깔리는 그림자는 오브젝트 바로 밑에 아주 짧게만. 게임이 회색을 지우고 자동 크롭해서 **바닥 중앙 아래쪽을 기준**으로 세웁니다.
-5. **크기 감**: 게임 안에서 석단은 60px 폭, 시작 포탈 84px 높이, 도착 성 128px 높이, 큰 나무 96px, 작은 나무 80px, 바위 40px, 덤불 42px, 꽃무리 30px, 상징물 70px 로 그려집니다. 비율만 맞으면 됩니다(모두 1024×1024 로 만들어도 됨).
+5. **크기 감**: 게임 안에서 석단은 60px 폭, 시작 포탈 84px 높이, 도착 성 128px 높이, 큰 나무 96px, 작은 나무 80px, 바위 40px, 덤불 42px, 꽃무리 30px, 상징물 70px 로 그려집니다. 비율만 맞으면 됩니다(모두 1024×1024 로 만들어도 됨). 도로 질감은 160px, 물 질감은 256px 마다 반복됩니다.
 6. 파일명은 아래 표 그대로. `casual/tiles/<테마>/` 폴더에 저장.
 
-## 조각 15개 (모든 테마 공통 프롬프트 — `{THEME}` 자리에 아래 테마 문단을 넣으세요)
+## 조각 12개 (모든 테마 공통 프롬프트 — `{THEME}` 자리에 아래 테마 문단을 넣으세요)
 
 | 파일 | 프롬프트 |
 |---|---|
 | `floor.jpg` (1280×720) | `Hand-painted casual tower defense game ground texture, Kingdom Rush and Random Dice style, 3/4 top-down view, 16:9 landscape, full-bleed. An EMPTY expanse of {THEME_FLOOR}. Gentle color variation, subtle grass/soil strokes, a few tiny pebbles. NO roads, NO paths, NO tower pads, NO buildings, NO trees, NO large objects, NO characters, NO text, NO watermark. Thick clean outlines where applicable, saturated colors, flat overhead lighting.` |
-| `road-straight.png` (1024²) | `Square game tile 1:1, hand-painted casual tower defense style, 3/4 top-down view, flat overhead lighting with no cast shadows. A STRAIGHT road running horizontally from the exact LEFT edge to the exact RIGHT edge, perfectly centered, road width exactly 56% of the tile height, cut flat at both edges so it connects to neighboring tiles. The road is {THEME_ROAD}. Everything outside the road is solid plain light gray #C8C8C8 with no texture. No text, no watermark.` |
-| `road-corner.png` | `Square game tile 1:1, same style as the straight road tile. A road that enters from the exact TOP edge center and leaves through the exact RIGHT edge center, turning with a smooth quarter-circle curve, road width exactly 56% of the tile, cut flat at both edges. The road is {THEME_ROAD}. Everything outside the road is solid plain light gray #C8C8C8. Flat overhead lighting, no cast shadows, no text.` |
-| `road-t.png` | `Square game tile 1:1, same style as the straight road tile. A T-junction: a horizontal road from the exact LEFT edge to the exact RIGHT edge, plus a branch going down to the exact BOTTOM edge center; nothing connects to the top edge. Road width exactly 56% of the tile everywhere, cut flat at the three edges. The road is {THEME_ROAD}. Outside the road solid plain light gray #C8C8C8. Flat overhead lighting, no text.` |
-| `road-cross.png` | `Square game tile 1:1, same style as the straight road tile. A four-way crossroad connecting the exact centers of all four edges, road width exactly 56% of the tile, cut flat at every edge. The road is {THEME_ROAD}. Outside the road solid plain light gray #C8C8C8. Flat overhead lighting, no text.` |
-| `water.png` | `Square seamless game tile 1:1, hand-painted casual style, 3/4 top-down view, filling the WHOLE square edge to edge with {THEME_WATER}. Must tile seamlessly when repeated in a grid: no borders, no shore, no rocks, no objects, no vignette. Flat overhead lighting, no text.` |
+| `road.png` (1024²) | `Seamless square game texture 1:1, hand-painted casual tower defense style, 3/4 top-down view, filling the WHOLE square edge to edge with the SURFACE of {THEME_ROAD}. Must tile seamlessly when repeated in a grid: no borders, no edges of the road, no shoulders, no grass, no objects, no vignette, no text. Even flat overhead lighting, medium detail so it still reads when shrunk.` |
+| `water.png` | `Seamless square game texture 1:1, hand-painted casual style, 3/4 top-down view, filling the WHOLE square edge to edge with {THEME_WATER}. Must tile seamlessly when repeated in a grid: no borders, no shore, no rocks, no objects, no vignette. Flat overhead lighting, no text.` |
 | `pad.png` | `Single game object on a solid plain light gray #C8C8C8 background, centered, generous margins. A round flat stone tower foundation pad seen from a 3/4 top-down view (an ellipse about twice as wide as tall), {THEME_PAD}. Empty on top so a tower can be placed on it. Thick clean outlines, hand-painted casual style, no cast shadow beyond the rim, no text.` |
 | `start.png` | `Single game object on a solid plain light gray #C8C8C8 background, centered. The ENEMY SPAWN GATE: {THEME_START}, with a swirling glowing purple magic portal inside the opening. 3/4 top-down view, hand-painted casual Kingdom Rush style, thick clean outlines, the base sits flat on the ground, no text.` |
 | `end.png` | `Single game object on a solid plain light gray #C8C8C8 background, centered. The PLAYER'S STRONGHOLD to defend: {THEME_END}, with a large glowing crystal on top. Roughly twice as tall as wide, 3/4 top-down view, hand-painted casual Kingdom Rush style, chibi-cute proportions, thick clean outlines, the base sits flat on the ground, no text.` |
@@ -46,7 +45,7 @@
 
 ## 테마 6종 (위 `{THEME_…}` 자리에 넣을 문단)
 
-### 1. `plains` 평원 (먼저 이것부터)
+### 1. `plains` 평원 (`road.png` 만 남음 — 나머지 14장은 납품 완료)
 - THEME_FLOOR: `bright sunny meadow grass, fresh green with lighter yellow-green patches and tiny daisies`
 - THEME_ROAD: `a packed sandy-tan dirt road with soft darker edges, a few small pebbles and faint wheel ruts`
 - THEME_WATER: `calm bright blue pond water with soft ripples and a few small lily pads`
@@ -134,17 +133,17 @@
 
 ```
 casual/tiles/<theme>/floor.jpg
-casual/tiles/<theme>/road-straight.png   road-corner.png   road-t.png   road-cross.png   water.png
-casual/tiles/<theme>/pad.png   start.png   end.png
-casual/tiles/<theme>/prop-1.png … prop-6.png
+casual/tiles/<theme>/road.png   water.png          (질감, 이음새 없이 반복)
+casual/tiles/<theme>/pad.png   start.png   end.png (오브젝트, 회색 배경)
+casual/tiles/<theme>/prop-1.png … prop-6.png       (오브젝트, 회색 배경)
 ```
 
 `<theme>` 는 `plains`, `forest`, `lake`, `darkforest`, `castle`, `hell`.
 
 ## 납품 순서
 
-1. `plains` 15장 → 게임에서 확인 (이음새·크기·회색 제거 상태)
-2. 문제 없으면 `forest`, `lake`, `darkforest`, `castle`, `hell` 순으로 15장씩
+1. `plains` 의 `road.png` 1장 → 게임에서 확인 (길 표면이 자연스럽게 반복되는지)
+2. 문제 없으면 `forest`, `lake`, `darkforest`, `castle`, `hell` 순으로 12장씩
 
 문제가 있으면 해당 조각만 다시 만들면 됩니다. 조각 하나가 없어도 게임은 그 자리만 코드 그림으로 대신하므로 부분 납품도 괜찮습니다.
 
