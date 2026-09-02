@@ -9,8 +9,8 @@
   const LS_KEY = 'DK_GRID_EDITOR_v1';
   const CHARS = [
     ['.', '평지', '#7fb35a'], ['#', '흙길', '#b48e5c'], ['S', '시작 포탈', '#c26cff'], ['E', '도착 (성)', '#5fd8ff'],
-    ['2', '두 번째 길 시작', '#ff9a4a'], ['=', '두 번째 길', '#d9b070'], ['o', '기본 석단', '#d8ccb0'], ['+', '추가 석단', '#b478ff'],
-    ['~', '물', '#3f8fd6'], ['T', '큰 소품', '#2f6a2a'],
+    ['2', '두 번째 길 시작', '#ff9a4a'], ['=', '두 번째 길', '#d9b070'],
+    ['~', '물', '#3f8fd6'], ['T', '큰 소품', '#2f6a2a'], ['x', '석단·소품 금지', '#6b6b6b'], ['o', '석단 강제(선택)', '#d8ccb0'],
   ];
   const canvas = document.getElementById('edit');
   const ctx = canvas.getContext('2d');
@@ -76,10 +76,10 @@
     if (!L.path) errs.push('S→E 가 이어지지 않음');
     if (L.start2 && !L.path2) errs.push('2→흙길 이 이어지지 않음');
     if (L.endCell && L.endCell[0] > 0 && !'.'.includes(g[L.endCell[0] - 1][L.endCell[1]])) errs.push('E 위 칸은 비워 둘 것 (성 그림 자리)');
-    const need = list === 'dual' ? 8 : 4;
-    if (count('+') < need) errs.push(`추가 석단(+) ${count('+')}개 — ${need}개 이상 권장`);
-    if (count('o') < 5) errs.push(`기본 석단(o) ${count('o')}개 — 5개 이상 권장`);
-    return { errs, L, pads: count('o'), extras: count('+') };
+    const need = 7 + (list === 'dual' ? 8 : 4);
+    const padN = L.padCells ? L.padCells.length : 0;
+    if (padN < need) errs.push(`석단 후보 ${padN}개 — ${need}개 이상 필요 (길을 더 꺾어 안쪽 칸을 만드세요)`);
+    return { errs, L, pads: Math.min(7, padN), extras: Math.max(0, padN - 7) };
   }
 
   // ---- 그리기 ----
@@ -121,14 +121,16 @@
       }
       lay.spots.forEach(([x, y], i) => {
         ctx.beginPath(); ctx.ellipse(x, y, 26, 13, 0, 0, Math.PI * 2);
+        ctx.fillStyle = i < lay.baseSpotCount ? 'rgba(255,255,255,0.35)' : 'rgba(255,212,82,0.35)'; ctx.fill();
         ctx.strokeStyle = i < lay.baseSpotCount ? '#fff' : '#ffd452'; ctx.lineWidth = 2; ctx.stroke();
+        ctx.fillStyle = '#000'; ctx.font = 'bold 12px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(String(i + 1), x, y);
       });
       $('lane-info').textContent = `T${T.tier} ${T.name}: ${lay.lanes.map((l) => l.label).join(' · ')} / 석단 ${lay.spots.length} (기본 ${lay.baseSpotCount}) / 흙길 ${Math.round(C.pathLength(L.path))}px${L.path2 ? ` / 흙길2 ${Math.round(C.pathLength(L.path2))}px` : ''}`;
     } else $('lane-info').textContent = '';
     // 패널
     $('tpl-title').textContent = `${list === 'dual' ? '두 갈래' : '한 갈래'} #${index}${mirror ? ' (좌우 반전)' : ''} · 쓰는 스테이지: ${stagesUsing().join(', ') || '없음'} · 테마 ${th.name}`;
     const st = $('status');
-    st.textContent = v.errs.length ? v.errs.join(' / ') : `OK · 석단 ${v.pads} · 추가 ${v.extras}`;
+    st.textContent = v.errs.length ? v.errs.join(' / ') : `OK · 석단 자동 ${v.pads} + 추가 후보 ${v.extras}`;
     st.className = 'status' + (v.errs.length ? ' err' : '');
     if (document.activeElement !== $('tpl-text')) $('tpl-text').value = rs.join('\n');
     $('tpl-snippet').value = '  [ // ' + (list === 'dual' ? '두 갈래' : '한 갈래') + '\n' + rs.map((r, i) => `    '${r}'${i === rs.length - 1 ? '],' : ','}`).join('\n');
