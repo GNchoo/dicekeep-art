@@ -27,7 +27,7 @@ python serve.py
 
 Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크로마키 실패).
 
-캐시: `index.html`·`editor.html`의 `?v=N` 을 올릴 것 (현재 v42).
+캐시: `index.html`·`editor.html`의 `?v=N` 을 올릴 것 (현재 v43).
 
 디버그 (콘솔):
 - `window.DK` 게임 상태 (`gold`, `enemies`, `towers`, `stageData` …)
@@ -104,7 +104,7 @@ Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크�
 | 5 | 전격 주사위 | 연쇄 번개 | `casual/towers/t5-a.png` |
 | 6 | 폭군 주사위 | 폭발 주사위 투척 | `casual/towers/t6-a.png` |
 
-스킨 a~e: 상점에서 젬 20으로 해금·장착 (`SAVE.equippedSkin`). b~e 는 `tN-a` 재채색 임시본(숲/서리/왕실/밤) — 진짜 아트는 `ART-PROMPTS.md` §3.
+스킨 a~e: 상점에서 젬 20으로 해금·장착 (`SAVE.equippedSkin`). b~e = 숲/얼음/로열/공허 (2026-09-02 납품).
 
 공격 모션: `casual/towers/tN-attack-2x2.png` (2열2행, 발사 시 kick 동안 4프레임).
 
@@ -131,7 +131,7 @@ Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크�
 - `air` 하늘길 (y −42, 그림자)
 - `burrow` 땅굴, 잠수 타이머, 숨으면 타겟 불가
 
-걷기 시트 12종 진짜 아트 (slime~turtle). 13~36 (squirrel~meerkat)과 보스 1~10 은 임시 합성본이 들어가 있다 (`gen-walk.js`). 파일이 없으면 정지컷 폴백 (`loadImage` 의 `missing` 표식).
+걷기 시트 36종 (slime~meerkat) + 보스 1~10 완료. 파일이 없으면 정지컷 폴백 (`loadImage` 의 `missing` 표식).
 
 ---
 
@@ -139,7 +139,7 @@ Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크�
 
 `content.js`:
 - `MAP_LAYOUTS[key] = { path, spots }` — 50맵 전부 작성 완료 (에디터로 아트 흙길·석단에 맞춤).
-- `MAP_LAYOUTS_HARD[key] = { src?, path2?, spots2? }` — 하드 배경 전용. `src` 를 주면 그 배경으로 교체된다. 31~50 은 `gen-hard.js` 임시본으로 채워져 있다 (진짜 배경으로 바꾸면 에디터로 다시 찍을 것).
+- `MAP_LAYOUTS_HARD[key] = { src?, path2?, spots2? }` — 하드 배경 전용. 31~50 은 납품 배경의 두 번째 길을 따라 `path2` 를 찍었고 `spots2` 는 물 회피 자동 배치. (`maps[]` 의 `src` 가 이미 `-hard.jpg` 라 `src` 는 생략)
 - `buildLayout(map, tier)` → `{ lanes, spots, baseSpotCount }`. 게임(`applyMapLayout`)과 에디터가 같은 함수를 쓴다.
 
 `editor.html`:
@@ -157,13 +157,13 @@ Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크�
 | 항목 | 목표 | 파일 | 상태 |
 |---|---|---|---|
 | 배경 | 50 | `casual/maps/*.jpg` | 완료 |
-| 하드 배경 (흙길 2개) | 20 (S31~50) | `casual/maps/map-NN-*-hard.jpg` | **임시본 적용** (코드로 그린 흙길2, 레이아웃 연결 완료) → 진짜 아트는 ART-PROMPTS §1 |
+| 하드 배경 (흙길 2개) | 20 (S31~50) | `casual/maps/map-NN-*-hard.jpg` | 완료 (납품 2026-09-02, `path2`/`spots2` 작성 완료) |
 | 몬스터 고유 | 500 | `casual/enemies/*.png` | 완료 |
-| 적 걷기 시트 | 순차 | `*-walk-2x2.png` | 12 진짜 + **13~36 임시본**(대기컷 4프레임화) → 진짜 아트는 ART-PROMPTS §2 |
+| 적 걷기 시트 | 순차 | `*-walk-2x2.png` | 36 완료 (1~36). 37~ 은 `NEXT_WALK` 에 id 추가 + ART-PROMPTS §2 |
 | 보스 고유 | 100 | `casual/bosses/*.png` | 완료 |
-| 보스 걷기 시트 | 순차 | `casual/bosses/*-walk-2x2.png` | **1~10 임시본** → 진짜 아트는 ART-PROMPTS §2 |
+| 보스 걷기 시트 | 순차 | `casual/bosses/*-walk-2x2.png` | 1~10 완료. 11~ 은 `BOSS_WALK_COUNT` 올리기 |
 | 타워 인게임 | 6 | `t1-a`~`t6-a` | 완료 (2D 아이소) |
-| 타워 스킨 b~e | 24 | `tN-b`~`tN-e` | **임시본** (`tN-a` 테마 재채색: 숲/서리/왕실/밤) → 진짜 아트는 ART-PROMPTS §3 |
+| 타워 스킨 b~e | 24 | `tN-b`~`tN-e` | 완료 (숲/얼음/로열/공허, 납품 2026-09-02) |
 | 타워 공격 시트 | 6 | `tN-attack-2x2.png` | 완료 |
 | 공격 VFX | 눈별 | `vfx/` | 완료 |
 | 포탈 (추가 레인) | 1 | `props/portal.png` | 완료 (코드가 그림) |
@@ -188,10 +188,10 @@ dicekeep-art/
   GROK-HANDOFF.md     초기 인수 브리프 (P0~P2 프롬프트 보관)
   ASSET-MANIFEST.md   파일 목록
   casual/
-    maps/             50 JPG (+ 하드 배경 예정)
+    maps/             50 JPG + 하드 배경 20 (S31~50)
     towers/           tN-a~e + tN-attack-2x2
     enemies/          500 대기 + 걷기 시트
-    bosses/           100 (+ 걷기 시트 예정)
+    bosses/           100 + 걷기 시트 10
   dice/               HUD·3D 큐브 텍스처 dice-1~6
   towers/             die-1~6 (tN-a 복사본) + 구 archer/cannon/…
   enemies/            구 mite/runner/husk/boss + walk
@@ -219,9 +219,9 @@ dicekeep-art/
 
 ## 8. 다음 작업 (우선순위)
 
-1. ~~하드 배경~~ → 임시본 적용. 진짜 아트(ART-PROMPTS §1)로 덮어쓴 뒤 에디터로 `path`/`path2`/`spots`/`spots2` 재작성
-2. ~~걷기 시트 13~36 + 보스 1~10~~ → 임시본 적용. 진짜 아트(ART-PROMPTS §2)로 덮어쓰기만
-3. ~~타워 스킨 b~e~~ → 재채색 임시본 적용. 진짜 아트(ART-PROMPTS §3)로 덮어쓰기만
+1. ~~하드 배경~~ → 납품·레이아웃 작성 완료. `spots2` 가 어색한 맵은 에디터(A 모드)로 손보기
+2. ~~걷기 시트 13~36 + 보스 1~10~~ → 납품 완료. 다음 배치는 `NEXT_WALK`/`BOSS_WALK_COUNT` + ART-PROMPTS §2
+3. ~~타워 스킨 b~e~~ → 납품 완료
 4. ~~밸런스 봇 검증~~ → §9 (3차까지 조정 완료). 실제 손플레이로 티어 5 재확인
 5. ~~물 위 석단~~ → 배경 픽셀 물 회피로 해결. 그래도 어색한 맵은 에디터 "자동 석단 굳히기"로 손보기
 6. ~~적 25~36 걷기 연결~~ → 완료. 37~ 은 `NEXT_WALK` 에 id 추가 + ART-PROMPTS §2 에 프롬프트 추가

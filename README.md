@@ -43,13 +43,13 @@ Windows는 `start.bat`. `index.html`을 file://로 열지 말 것.
 
 | 항목 | 수량 | 경로 |
 |---|---|---|
-| 맵 | 50 + 하드 배경 20 (임시본) | `casual/maps/` |
-| 몬스터 | 500 + 걷기 12 (+ 13~36 임시본) | `casual/enemies/` |
-| 보스 | 100 (+ 걷기 1~10 임시본) | `casual/bosses/` |
-| 타워 | 6 인게임 + 스킨 24 (재채색 임시본) + 공격시트 6 | `casual/towers/` |
+| 맵 | 50 + 하드 배경 20 | `casual/maps/` |
+| 몬스터 | 500 + 걷기 36 | `casual/enemies/` |
+| 보스 | 100 + 걷기 10 | `casual/bosses/` |
+| 타워 | 6 인게임 + 스킨 24 + 공격시트 6 | `casual/towers/` |
 | VFX | 레이저·포격·룬·서리·번개·주사위폭탄 | `vfx/` |
 
-스타일: Kingdom Rush + Random Dice, 2D 아이소메트릭. 생성 대기 항목의 프롬프트는 `ART-PROMPTS.md`.
+스타일: Kingdom Rush + Random Dice, 2D 아이소메트릭. 추가 배치 프롬프트는 `ART-PROMPTS.md`.
 
 ## 라이선스
 

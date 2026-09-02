@@ -2,7 +2,7 @@
 
 생성: 2026-08-31. 이 목록은 디스크 기준이다. content.js와 대조할 것.
 
-2026-09-02 추가(아래 표에 미반영): 하드 배경 임시본 20 (`casual/maps/*-hard.jpg`), 걷기 시트 임시본 34 (`casual/enemies/*-walk-2x2.png` 24 + `casual/bosses/*-walk-2x2.png` 10), 타워 스킨 b~e 재채색 24, `ART-PROMPTS.md`. 임시본은 Grok 아트로 같은 파일명 덮어쓰기 대상.
+2026-09-02 추가(아래 표에 미반영): 하드 배경 20 (`casual/maps/*-hard.jpg`), 걷기 시트 34 (`casual/enemies/*-walk-2x2.png` 24 + `casual/bosses/*-walk-2x2.png` 10), 타워 스킨 b~e 24 (재작업), `ART-PROMPTS.md`, `GROK-BRIEF.md`.
 
 ## 폴더별 개수
 
