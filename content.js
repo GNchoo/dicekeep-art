@@ -51,6 +51,8 @@ window.DKCONTENT = (function () {
     { key: 'cMap48', src: 'casual/maps/map-48-orchard-hard.jpg', name: '사과과수원' },
     { key: 'cMap49', src: 'casual/maps/map-49-lavabeach-hard.jpg', name: '용암해변' },
     { key: 'cMap50', src: 'casual/maps/map-50-royal-hard.jpg', name: '왕실정원' },
+    // 인피니티 모드 전용 아레나 (스테이지 목록에는 안 뜬다). 아레나 배경이 없으면 game.js 가 왕실정원 배경으로 폴백.
+    { key: 'cInf', src: 'casual/maps/map-inf-arena.jpg', name: '무한 투기장', infinity: true },
   ];
   // 공통 S커브 폴백: MAP_LAYOUTS에 항목이 없는 맵만 사용.
   const PATH_S = [
@@ -116,11 +118,252 @@ window.DKCONTENT = (function () {
     cMap49: { path: [[53,218],[108,195],[142,255],[200,271],[237,346],[318,362],[364,419],[473,431],[491,459],[532,477],[603,473],[651,432],[698,425],[764,459],[832,463],[876,441],[901,397]], spots: [[63,238],[260,257],[281,415],[398,362],[478,518],[581,412],[705,496],[826,398]] },
     cMap50: { path: [[36,243],[84,254],[134,231],[178,183],[347,203],[500,346],[525,388],[628,386],[752,307],[792,171],[832,184],[925,117]], spots: [[140,294],[238,129],[323,263],[507,270],[571,447],[664,291],[830,252],[821,117]] },
   };
+  // 하드 티어용 두 번째 흙길(path2)·추가 석단(spots2). 31~50 은 납품된 -hard.jpg 의 두 번째 길을 따라 작성 (2026-09-02).
+  // src 를 주면 배경을 교체한다 (현재는 maps 배열이 이미 -hard.jpg 를 가리키므로 생략).
+  // 아래 31~50 은 gen-hard.js 로 만든 임시본(기존 배경 + 코드로 그린 두 번째 흙길). Grok 하드 배경으로 교체하면 에디터로 다시 찍을 것.
+  const MAP_LAYOUTS_HARD = {
+    cMap31: { path2: [[335,530], [420,505], [560,500], [700,500], [830,480], [890,420], [930,330], [955,250], [985,175], [1004,165]], spots2: [[120,241], [489,350], [241,416], [965,439], [366,380], [793,179]] },
+    cMap32: { path2: [[300,545], [335,495], [390,440], [450,400], [520,372], [600,342], [645,290], [655,235], [655,200], [652,185]], spots2: [[235,433], [476,524], [429,327], [339,186], [758,392], [262,353]] },
+    cMap33: { path2: [[20,270], [100,310], [200,380], [300,440], [400,455], [500,450], [600,400], [680,320], [740,230], [760,190]], spots2: [[76,386], [225,456], [428,530], [618,476], [751,416], [475,326]] },
+    cMap34: { path2: [[350,545], [500,530], [650,520], [800,505], [900,470], [935,430], [905,400], [907,386]], spots2: [[71,360], [250,208], [617,370], [406,446], [654,438], [136,366]] },
+    cMap35: { path2: [[665,555], [652,500], [660,450], [688,395], [708,340], [700,295], [678,255], [650,220], [645,185], [655,165]], spots2: [[69,325], [226,400], [243,480], [386,244], [441,538], [548,234]] },
+    cMap36: { path2: [[350,545], [450,535], [560,525], [630,500], [655,420], [660,320], [650,240], [645,190], [665,155], [680,145]], spots2: [[393,422], [528,411], [300,120], [808,413], [511,188], [706,324]] },
+    cMap37: { path2: [[812,555], [822,480], [835,400], [842,320], [855,260], [890,232], [918,233]], spots2: [[194,169], [85,422], [331,436], [258,307], [419,107], [797,281]] },
+    cMap38: { path2: [[330,55], [400,150], [470,235], [540,300], [620,330], [720,338], [830,342], [920,350], [965,400], [980,460], [1006,491]], spots2: [[112,294], [490,73], [406,277], [94,529], [639,211], [763,264]] },
+    cMap39: { path2: [[692,62], [715,120], [735,190], [738,260], [725,315], [750,345], [790,359]], spots2: [[319,150], [835,110], [806,163], [493,386], [884,304], [638,452]] },
+    cMap40: { path2: [[170,545], [260,522], [380,508], [500,500], [620,490], [740,468], [830,420], [860,340], [845,260], [800,190], [740,150], [690,160]], spots2: [[186,384], [311,81], [488,348], [367,163], [974,307], [77,259]] },
+    cMap41: { path2: [[30,520], [150,470], [300,456], [450,455], [560,448], [660,395], [760,352], [840,330], [858,270], [845,190], [820,110]], spots2: [[88,239], [295,533], [448,337], [639,492], [514,207], [809,496], [916,340], [774,225]] },
+    cMap42: { path2: [[412,58], [452,115], [520,180], [600,212], [690,222], [780,232], [840,255], [870,300], [915,330], [953,341]], spots2: [[43,427], [235,437], [595,128], [684,103], [791,114], [490,439], [639,457], [921,206]] },
+    cMap43: { path2: [[450,545], [520,500], [610,488], [720,494], [800,470], [845,420], [870,340], [895,260], [920,205], [890,150], [873,113]], spots2: [[183,113], [580,339], [959,452], [295,298], [731,110], [675,444], [974,252], [270,140]] },
+    cMap44: { path2: [[300,545], [345,500], [420,440], [490,408], [590,410], [690,405], [770,400], [810,360], [830,300], [845,240], [870,205], [889,191]], spots2: [[90,289], [505,485], [640,484], [845,433], [419,95], [982,318], [728,142], [661,186]] },
+    cMap45: { path2: [[335,65], [420,82], [480,120], [540,158], [620,175], [680,205], [715,265], [745,315], [800,330], [870,300], [930,265], [985,235], [1021,247]], spots2: [[365,191], [420,222], [200,456], [800,259], [552,430], [129,389], [488,215], [252,419]] },
+    cMap46: { path2: [[350,545], [420,520], [500,505], [565,468], [615,410], [650,330], [680,255], [700,210], [710,195]], spots2: [[92,321], [239,183], [681,514], [692,424], [774,337], [517,399], [600,140], [254,105]] },
+    cMap47: { path2: [[440,545], [510,480], [600,445], [690,420], [760,395], [770,340], [740,290], [738,255], [765,230]], spots2: [[111,369], [136,435], [301,270], [322,121], [586,201], [715,507], [601,526], [229,487]] },
+    cMap48: { path2: [[290,70], [350,90], [420,150], [480,200], [550,222], [650,226], [750,226], [850,232], [930,252], [990,285], [1022,389]], spots2: [[131,391], [91,166], [269,428], [225,184], [627,107], [342,194], [846,114], [647,509]] },
+    cMap49: { path2: [[430,62], [480,110], [540,180], [605,250], [670,305], [740,345], [820,372], [880,385], [901,397]], spots2: [[149,306], [484,232], [208,151], [319,246], [268,197], [454,288], [580,332], [387,184]] },
+    cMap50: { path2: [[330,545], [420,505], [520,490], [610,468], [690,428], [770,395], [830,350], [860,290], [875,220], [895,160], [925,117]], spots2: [[138,359], [230,239], [734,538], [869,510], [522,158], [394,455], [699,481], [920,273]] },
+  };
   maps.forEach((m) => {
     const L = MAP_LAYOUTS[m.key];
+    const Hd = MAP_LAYOUTS_HARD[m.key];
     m.path = (L && L.path && L.path.length > 1) ? L.path.map((p) => p.slice()) : PATH_S.map((p) => p.slice());
     m.spots = (L && L.spots && L.spots.length > 0) ? L.spots.map((p) => p.slice()) : SPOTS_S.map((p) => p.slice());
+    m.path2 = (Hd && Hd.path2 && Hd.path2.length > 1) ? Hd.path2.map((p) => p.slice()) : null;
+    m.spots2 = (Hd && Hd.spots2 && Hd.spots2.length) ? Hd.spots2.map((p) => p.slice()) : null;
+    if (Hd && Hd.src) m.src = Hd.src; // 하드 배경으로 교체 (두 번째 흙길이 그려진 아트)
   });
+  // 아레나 레이아웃이 아직 없으면 왕실정원(50) 레이아웃을 임시로 쓴다 (아레나 배경 도착 후 editor.html 로 재작성)
+  {
+    const inf = maps.find((m) => m.infinity), royal = maps.find((m) => m.key === 'cMap50');
+    if (inf && royal && !MAP_LAYOUTS.cInf) {
+      inf.path = royal.path.map((p) => p.slice()); inf.spots = royal.spots.map((p) => p.slice());
+      inf.path2 = royal.path2 ? royal.path2.map((p) => p.slice()) : null;
+      inf.spots2 = royal.spots2 ? royal.spots2.map((p) => p.slice()) : null;
+      inf.fallbackKey = 'cMap50';
+    }
+  }
+
+  // ===== 난이도 티어 =====
+  // 스테이지 10개마다 티어가 오른다. 티어가 오를수록 적 동선(레인)과 타워 석단이 늘어난다.
+  //  - ground : 배경 아트의 흙길 (path). 땅 적.
+  //  - air    : 포탈→크리스탈 하늘길 (코드 생성). 공중 적. 배경 필요 없음.
+  //  - tunnel : 흙길 옆 땅굴 (코드 생성). 땅굴 적. 배경 필요 없음.
+  //  - ground2: 두 번째 흙길 (path2). 아트에 길이 그려진 맵만 사용. 없으면 tunnel 로 대체된다.
+  const TIERS = [
+    { tier: 1, name: '초원',   color: '#7fd463', lanes: ['ground'],                               extraSpots: 0, hpScale: 1.00, countBonus: 0, startGold: 130 },
+    { tier: 2, name: '언덕',   color: '#7fd4ff', lanes: ['ground', 'air'],                        extraSpots: 2, hpScale: 1.30, countBonus: 2, startGold: 170 },
+    { tier: 3, name: '협곡',   color: '#ffe86b', lanes: ['ground', 'air', 'tunnel'],              extraSpots: 4, hpScale: 1.65, countBonus: 4, startGold: 220 },
+    { tier: 4, name: '요새',   color: '#e0862c', lanes: ['ground', 'ground2', 'air'],             extraSpots: 6, hpScale: 1.85, countBonus: 6, startGold: 280 },
+    { tier: 5, name: '악몽',   color: '#ff5555', lanes: ['ground', 'ground2', 'air', 'tunnel'],   extraSpots: 8, hpScale: 2.10, countBonus: 8, startGold: 350 },
+  ];
+  const tierOf = (stageN) => TIERS[Math.min(TIERS.length - 1, Math.max(0, Math.floor((stageN - 1) / 10)))];
+
+  // ===== 레이아웃 생성기 =====
+  // 맵의 기본 path/spots 에 티어에 맞는 레인·석단을 더해 { lanes, spots } 를 만든다. 게임·에디터가 공용으로 쓴다.
+  const W = 1024, H = 576, SPOT_R = 28;
+  const clampPt = (p) => [Math.round(Math.max(36, Math.min(W - 36, p[0]))), Math.round(Math.max(64, Math.min(H - 34, p[1])))];
+  const segDist = (px, py, a, b) => {
+    const dx = b[0] - a[0], dy = b[1] - a[1];
+    const l2 = dx * dx + dy * dy;
+    if (l2 === 0) return Math.hypot(px - a[0], py - a[1]);
+    const t = Math.max(0, Math.min(1, ((px - a[0]) * dx + (py - a[1]) * dy) / l2));
+    return Math.hypot(px - (a[0] + t * dx), py - (a[1] + t * dy));
+  };
+  const pathDist = (x, y, path) => {
+    let md = Infinity;
+    for (let i = 0; i < path.length - 1; i++) md = Math.min(md, segDist(x, y, path[i], path[i + 1]));
+    return md;
+  };
+  const pathLength = (path) => {
+    let l = 0;
+    for (let i = 0; i < path.length - 1; i++) l += Math.hypot(path[i + 1][0] - path[i][0], path[i + 1][1] - path[i][1]);
+    return l;
+  };
+  // 경로 위 거리 d 지점의 좌표와 진행 방향
+  const pathAt = (path, d) => {
+    let acc = 0;
+    for (let i = 0; i < path.length - 1; i++) {
+      const a = path[i], b = path[i + 1];
+      const l = Math.hypot(b[0] - a[0], b[1] - a[1]);
+      if (l < 1) continue;
+      if (d <= acc + l) {
+        const t = (d - acc) / l;
+        return { x: a[0] + (b[0] - a[0]) * t, y: a[1] + (b[1] - a[1]) * t, dx: (b[0] - a[0]) / l, dy: (b[1] - a[1]) / l };
+      }
+      acc += l;
+    }
+    const a = path[path.length - 2], b = path[path.length - 1];
+    const l = Math.hypot(b[0] - a[0], b[1] - a[1]) || 1;
+    return { x: b[0], y: b[1], dx: (b[0] - a[0]) / l, dy: (b[1] - a[1]) / l };
+  };
+
+  // 하늘길: 포탈→크리스탈을 잇는 완만한 호. 흙길에서 먼 쪽(대개 위쪽)으로 휜다.
+  function buildAirLane(path) {
+    const a = path[0], b = path[path.length - 1];
+    const mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2;
+    const dx = b[0] - a[0], dy = b[1] - a[1];
+    const L = Math.hypot(dx, dy) || 1;
+    const nx = -dy / L, ny = dx / L;
+    // 두 법선 방향 중 흙길 중간 지점에서 더 먼 쪽을 고른다
+    const mid = pathAt(path, pathLength(path) / 2);
+    const side = ((mx + nx * 100 - mid.x) ** 2 + (my + ny * 100 - mid.y) ** 2) >= ((mx - nx * 100 - mid.x) ** 2 + (my - ny * 100 - mid.y) ** 2) ? 1 : -1;
+    const bend = Math.min(120, 60 + L * 0.1);
+    const cx = mx + nx * side * bend, cy = my + ny * side * bend;
+    // 공중 적은 y−42 에 그려지므로 하늘길은 화면 위쪽 여백을 더 남긴다
+    const clampAir = (p) => [Math.round(Math.max(36, Math.min(W - 36, p[0]))), Math.round(Math.max(118, Math.min(H - 34, p[1])))];
+    const pts = [];
+    for (let i = 0; i <= 12; i++) {
+      const t = i / 12, u = 1 - t;
+      pts.push(clampAir([u * u * a[0] + 2 * u * t * cx + t * t * b[0], u * u * a[1] + 2 * u * t * cy + t * t * b[1]]));
+    }
+    pts[0] = a.slice(); pts[pts.length - 1] = b.slice();
+    return pts;
+  }
+  // 땅굴: 흙길과 같은 포탈에서 출발해 길 옆으로 비껴 파고들다가 크리스탈 앞에서 합류한다.
+  function buildTunnelLane(path, airPts) {
+    const len = pathLength(path);
+    const n = Math.max(6, Math.round(len / 70));
+    const airMid = airPts ? airPts[Math.floor(airPts.length / 2)] : null;
+    const pts = [path[0].slice()];
+    for (let i = 1; i < n; i++) {
+      const d = len * i / n;
+      const p = pathAt(path, d);
+      const fade = Math.sin(Math.PI * i / n); // 양 끝에서 0, 중간에서 1
+      let side = 1;
+      if (airMid) {
+        // 하늘길 반대편으로
+        const sx = p.x - p.dy * 60, sy = p.y + p.dx * 60;
+        side = (Math.hypot(sx - airMid[0], sy - airMid[1]) > Math.hypot(p.x + p.dy * 60 - airMid[0], p.y - p.dx * 60 - airMid[1])) ? 1 : -1;
+      }
+      const off = 58 * fade * side;
+      pts.push(clampPt([p.x - p.dy * off, p.y + p.dx * off]));
+    }
+    pts.push(path[path.length - 1].slice());
+    return pts;
+  }
+  // 추가 석단: 흙길 양옆 평지에 일정 간격으로 후보를 만들고 기존 석단·길·포탈·크리스탈과 겹치지 않는 것을 고른다.
+  function buildExtraSpots(groundPaths, baseSpots, count, avoid) {
+    if (count <= 0) return [];
+    const ends = [];
+    for (const gp of groundPaths) { ends.push(gp[0]); ends.push(gp[gp.length - 1]); }
+    const taken = baseSpots.map((s) => s.slice());
+    const cands = [];
+    // 모든 흙길(흙길2 포함)을 따라 후보를 만들되, 길마다 번갈아 넣어 고르게 섞는다
+    const perPath = groundPaths.map((gp) => {
+      const len = pathLength(gp);
+      const list = [];
+      const steps = Math.max(8, Math.round(len / 55));
+      for (let i = 1; i < steps; i++) {
+        const p = pathAt(gp, len * i / steps);
+        for (const side of [1, -1]) {
+          for (const off of [76, 118, 152]) {
+            const c = [p.x - p.dy * off * side, p.y + p.dx * off * side];
+            if (c[0] < 40 || c[0] > W - 40 || c[1] < 70 || c[1] > H - 36) continue;
+            list.push({ pt: [Math.round(c[0]), Math.round(c[1])], order: i + (off > 100 ? 0.5 : 0) });
+          }
+        }
+      }
+      return list;
+    });
+    const maxLen = Math.max(...perPath.map((l) => l.length));
+    for (let i = 0; i < maxLen; i++) for (const list of perPath) if (list[i]) cands.push(list[i]);
+    const ok = (c, useAvoid) => {
+      for (const gp of groundPaths) if (pathDist(c[0], c[1], gp) < 46) return false;
+      for (const e of ends) if (Math.hypot(c[0] - e[0], c[1] - e[1]) < 96) return false;
+      for (const s of taken) if (Math.hypot(c[0] - s[0], c[1] - s[1]) < 60) return false;
+      if (useAvoid && avoid && avoid(c[0], c[1])) return false; // 물·용암 등 배경 픽셀 판정 (game.js/editor.js 가 넘김)
+      return true;
+    };
+    // 길을 따라 고르게 퍼지도록 stride 로 훑는다. 1차: 물 회피 포함, 2차: 부족하면 회피 없이 채움 (얼음호수처럼 온통 파란 맵)
+    const out = [];
+    for (const useAvoid of [true, false]) {
+      if (out.length >= count) break;
+      const valid = cands.filter((c) => ok(c.pt, useAvoid));
+      if (!valid.length) continue;
+      const stride = Math.max(1, Math.floor(valid.length / (count - out.length)));
+      let k = 0;
+      while (out.length < count && k < valid.length * 2) {
+        const c = valid[(k * stride) % valid.length];
+        k++;
+        if (ok(c.pt, useAvoid)) { out.push(c.pt); taken.push(c.pt); }
+      }
+    }
+    return out;
+  }
+
+  // 배경 이미지로 "석단을 두면 안 되는 곳" 판정기를 만든다. 반경 안 샘플의 절반 이상이 물빛(파랑 우세)이면 true.
+  function makeAvoidFromImage(img) {
+    try {
+      const cv = document.createElement('canvas');
+      cv.width = W; cv.height = H;
+      const g = cv.getContext('2d', { willReadFrequently: true });
+      g.drawImage(img, 0, 0, W, H);
+      const data = g.getImageData(0, 0, W, H).data;
+      const isWater = (x, y) => {
+        const i = ((y | 0) * W + (x | 0)) * 4;
+        const r = data[i], gg = data[i + 1], b = data[i + 2];
+        return b > 80 && b > r + 22 && b > gg + 4; // 파랑 우세 = 물·바다·하늘빛 호수
+      };
+      return (x, y) => {
+        let hit = 0, n = 0;
+        for (let dy = -18; dy <= 18; dy += 9) for (let dx = -26; dx <= 26; dx += 13) {
+          const sx = x + dx, sy = y + dy;
+          if (sx < 0 || sy < 0 || sx >= W || sy >= H) continue;
+          n++;
+          if (isWater(sx, sy)) hit++;
+        }
+        return n > 0 && hit / n >= 0.4;
+      };
+    } catch (e) { return null; } // file:// 등으로 픽셀을 읽을 수 없으면 판정 없음
+  }
+
+  // 티어(또는 스테이지 번호)에 맞춘 최종 레이아웃
+  // opts.avoid(x, y) → true 면 그 자리에 석단을 두지 않는다 (배경 이미지의 물 판정 등)
+  function buildLayout(map, tierOrStage, opts) {
+    const T = typeof tierOrStage === 'object' ? tierOrStage : (tierOrStage > 5 ? tierOf(tierOrStage) : TIERS[Math.max(0, (tierOrStage | 0) - 1)]);
+    const avoid = opts && opts.avoid;
+    const base = map.path.map((p) => p.slice());
+    const lanes = [];
+    const groundPaths = [base];
+    let airPts = null;
+    const kinds = T.lanes.slice();
+    for (const kind of kinds) {
+      if (kind === 'ground') lanes.push({ kind: 'ground', pts: base, label: '흙길' });
+      else if (kind === 'ground2') {
+        if (map.path2) { lanes.push({ kind: 'ground2', pts: map.path2.map((p) => p.slice()), label: '두 번째 흙길' }); groundPaths.push(map.path2); }
+        else if (!kinds.includes('tunnel')) lanes.push({ kind: 'tunnel', pts: null, label: '땅굴', fallback: true });
+      } else if (kind === 'air') { airPts = buildAirLane(base); lanes.push({ kind: 'air', pts: airPts, label: '하늘길' }); }
+      else if (kind === 'tunnel') lanes.push({ kind: 'tunnel', pts: null, label: '땅굴' });
+    }
+    for (const l of lanes) if (l.kind === 'tunnel' && !l.pts) l.pts = buildTunnelLane(base, airPts);
+    const spots = map.spots.map((p) => p.slice());
+    let extra = [];
+    if (T.extraSpots > 0) {
+      if (map.spots2 && map.spots2.length) extra = map.spots2.slice(0, T.extraSpots).map((p) => p.slice());
+      if (extra.length < T.extraSpots) extra = extra.concat(buildExtraSpots(groundPaths, spots.concat(extra), T.extraSpots - extra.length, avoid));
+    }
+    return { tier: T, lanes, spots: spots.concat(extra), baseSpotCount: spots.length };
+  }
   const skin = (f, letter) => ({ key: `cT${f}${letter}`, src: `casual/towers/t${f}-${letter}.png`, letter });
   const SKIN_LETTERS = ['a', 'b', 'c', 'd', 'e'];
   const towerSkins = {};
@@ -729,6 +972,26 @@ window.DKCONTENT = (function () {
     { id: 'toyKing', name: '장난감왕', hp: 1220, speed: 24, gold: 150, dmg: 5, size: 92, move: 'ground', sprite: 'cToyKing', src: 'casual/bosses/toy-king.png' },
     { id: 'lanternKoi', name: '등불잉어', hp: 1080, speed: 30, gold: 146, dmg: 5, size: 92, move: 'air', sprite: 'cLanternKoi', src: 'casual/bosses/lantern-koi.png' },
   ];
+  // ===== 걷기 시트 순차 연결 =====
+  // 13~24번째 적과 보스 1~10 은 시트 파일이 아직 없어도 미리 연결해 둔다.
+  // 파일이 없으면 game.js 가 정지컷으로 폴백하므로 안전하다. (프롬프트: ART-PROMPTS.md)
+  const NEXT_WALK = [
+    'squirrel', 'hedgehog', 'duck', 'panda', 'koala', 'catsamurai', 'goat', 'otter', 'tanuki', 'wolf', 'boar', 'mouse',           // 13~24
+    'chameleon', 'seahorse', 'alpaca', 'beaver', 'snake', 'porcupine', 'kiwi', 'rhino', 'hippo', 'capybara', 'axolotl', 'meerkat', // 25~36
+  ];
+  const camel = (id) => id.charAt(0).toUpperCase() + id.slice(1);
+  for (const b of bases) {
+    if (b.walk || !NEXT_WALK.includes(b.id)) continue;
+    b.walk = 'c' + camel(b.id) + 'Walk';
+    b.walkSrc = b.src.replace(/\.png$/, '-walk-2x2.png');
+  }
+  const BOSS_WALK_COUNT = 10;
+  bossBases.slice(0, BOSS_WALK_COUNT).forEach((b) => {
+    if (b.walk) return;
+    b.walk = b.sprite + 'Walk';
+    b.walkSrc = b.src.replace(/\.png$/, '-walk-2x2.png');
+  });
+
   const ADJ = ['꼬마','숲','사탕','해변','눈꽃','달빛','황금','그림자','불꽃','이슬','돌','바람','꿀','구름','별','호박','산호','이끼','진주','장난','민트','코코아','벚꽃','밤하늘','햇살'];
   const RANK = ['신병','정찰','순찰','특공','정예','대장','파수','약탈','유랑','친위'];
   const species = [];
@@ -759,24 +1022,91 @@ window.DKCONTENT = (function () {
     for (let k = 0; k < cnt; k++) r.push(arr[(off + k * step) % arr.length]);
     return r;
   };
-  const stages = maps.map((m, i) => {
+  const stages = maps.filter((m) => !m.infinity).map((m, i) => {
     const n = i + 1;
-    // 항상 땅 5 + 공중 3 + 땅굴 2 = 10종 (초반 웨이브에 땅 적이 보장되도록 땅을 앞에 배치)
+    const T = tierOf(n);
+    // 티어가 오를수록 공중·땅굴 비중이 커진다 (전용 레인이 생기므로)
+    const gN = T.tier >= 4 ? 4 : 5;
+    const aN = T.tier >= 2 ? 3 : 2;
+    const bN = T.tier >= 3 ? 3 : 2;
     const pool = [
-      ...pickN(groundIds, i * 4, 5, 3),
-      ...pickN(airIds, i * 3, 3, 2),
-      ...pickN(burrowIds, i * 2, 2, 2),
+      ...pickN(groundIds, i * 4, gN, 3),
+      ...pickN(airIds, i * 3, aN, 2),
+      ...pickN(burrowIds, i * 2, bN, 2),
     ];
     return {
       n,
+      tier: T.tier,
+      tierName: T.name,
+      tierColor: T.color,
       mapKey: m.key,
       name: m.name,
       waves: 8 + Math.floor(i / 5),      // 8 ~ 17
       bases: pool,
       bossIndex: i % bossBases.length,
-      gem: 8 + Math.floor(i / 2),        // 최초 클리어 보상 젬
+      gem: 8 + Math.floor(i / 2) + (T.tier - 1) * 2, // 최초 클리어 보상 젬
+      // ---- 밸런스 (game.js 가 그대로 읽는다) ----
+      hpScale: +(T.hpScale * Math.pow(1.02, i)).toFixed(3),  // 스테이지 기본 HP 배율 (S1 1.0 → S50 약 5.5)
+      waveGrowth: 1.07,                                      // 웨이브마다 HP ×1.07
+      countBase: 8 + T.countBonus,                           // 웨이브당 기본 마릿수
+      goldMult: +(1 + i * 0.02).toFixed(3),                  // 적 처치 골드 배율 (석단이 늘어난 만큼 수입도)
+      startGold: T.startGold + i * 4,                        // 시작 골드 (S1 130 → S50 546)
+      lanes: T.lanes.length,
     };
   });
 
-  return { maps, towerSkins, skinLetters: SKIN_LETTERS, bases, bossBases, species, bosses, stages, mapCount: 50, stageCount: 50 };
+  // ===== 인피니티 모드 =====
+  // 50 스테이지를 모두 클리어하면 해금. 웨이브 상한 없음, 목숨 0 이면 런 종료. game.js 가 이 값을 그대로 읽는다.
+  const INFINITY = {
+    mapKey: 'cInf',
+    tier: { tier: 6, name: '무한', color: '#ff7ad9', lanes: ['ground', 'ground2', 'air', 'tunnel'], extraSpots: 8, hpScale: 1, countBonus: 0, startGold: 400 },
+    startGold: 400, lives: 20, intermission: 6,
+    bossEvery: 10,   // 10 웨이브마다 보스 (20 부터 2마리)
+    eliteEvery: 5,   // 5 웨이브마다 정예 (HP×3, 크기×1.2, 골드×3)
+    unlockAir: 1, unlockBurrow: 1,
+    wave(w) {
+      return {
+        hpMult: +(1.8 * Math.pow(1.035, w - 1)).toFixed(3),   // w30 ≈ 4.9×, w50 ≈ 9.7×, w100 ≈ 55×
+        count: Math.min(36, 12 + Math.floor(w * 0.6)),
+        gap: Math.max(0.3, 0.8 - w * 0.01),
+        goldMult: +(1 + w * 0.025).toFixed(3),
+        speedMult: Math.min(1.5, 1 + Math.max(0, w - 40) * 0.01),
+        bossHp: +(0.7 + w * 0.012).toFixed(2),                 // 보스 개별 보정(hpM)은 인피니티에서 쓰지 않는다
+        bosses: w >= 20 && w % 10 === 0 ? 2 : 1,
+        elites: w >= 20 ? 3 : 2,
+      };
+    },
+    spPerWave: (w) => (w % 10 === 0 ? 3 : 1),
+    milestones: [25, 50, 100, 200],
+    // 런 종료 젬: 10웨이브당 2 + 최초 달성 마일스톤당 15
+    gems(wave, claimed) {
+      let g = Math.floor(wave / 10) * 2;
+      const newly = [];
+      for (const m of this.milestones) if (wave >= m && !(claimed || []).includes(m)) { g += 15; newly.push(m); }
+      return { gems: g, newly };
+    },
+  };
+  // 눈별 강화 (SP). 랜덤다이스의 '주사위 파워'.
+  const DICE_POWER = {
+    maxLv: 10,
+    cost: (lv) => 1 + Math.floor(lv / 3),         // lv0→1: 1SP … lv9→10: 4SP (총 22SP)
+    dmgMult: (lv) => 1 + 0.15 * lv,               // 최대 2.5×
+    rangeAdd: (lv) => 3 * lv,
+    tier: (lv) => Math.floor(lv / 3),             // 3레벨마다 특수 보너스 1단계 (최대 3)
+    special: {
+      1: { label: '연사 −6%/3Lv', rate: 0.94 },
+      2: { label: '광역 +8/3Lv', splash: 8 },
+      3: { label: '피해 +10%/3Lv', dmg: 0.10 },
+      4: { label: '둔화 +4%/3Lv', slow: 0.04 },
+      5: { label: '연쇄 +1/3Lv', chain: 1 },
+      6: { label: '광역 +6·피해 +8%/3Lv', splash: 6, dmg: 0.08 },
+    },
+  };
+
+  return {
+    maps, towerSkins, skinLetters: SKIN_LETTERS, bases, bossBases, species, bosses, stages,
+    INFINITY, DICE_POWER,
+    tiers: TIERS, tierOf, buildLayout, makeAvoidFromImage, pathLength, pathAt,
+    mapCount: 50, stageCount: 50,
+  };
 })();

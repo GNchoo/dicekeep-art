@@ -2,11 +2,13 @@
 
 생성: 2026-08-31. 이 목록은 디스크 기준이다. content.js와 대조할 것.
 
+2026-09-02 추가(아래 표에 미반영): 하드 배경 20 (`casual/maps/*-hard.jpg`), 걷기 시트 34 (`casual/enemies/*-walk-2x2.png` 24 + `casual/bosses/*-walk-2x2.png` 10), 타워 스킨 b~e 24 (재작업), `ART-PROMPTS.md`, `GROK-BRIEF.md`.
+
 ## 폴더별 개수
 
 | 경로 | 파일 수 |
 |---|---|
-| `.` | 11 |
+| `.` | 12 |
 | `casual/bosses` | 100 |
 | `casual/enemies` | 512 |
 | `casual/maps` | 50 |
@@ -18,7 +20,7 @@
 | `towers` | 11 |
 | `ui` | 3 |
 | `vfx` | 15 |
-| **합계** | **755** |
+| **합계** | **756** |
 
 ## 핵심 카운트
 
@@ -33,7 +35,8 @@
 
 ### `.`
 
-- `ART-PIPELINE.md` — 0.8 KB
+- `ART-PIPELINE.md` — 1.9 KB
+- `ART-PROMPTS.md` — 14 KB (다음 배치 생성 프롬프트)
 - `GAME-SPEC.md` — 6.1 KB
 - `GROK-HANDOFF.md` — 16.0 KB
 - `LICENSE` — 0.1 KB
