@@ -11,3 +11,5 @@ start.bat
 wrangler.jsonc
 .assetsignore
 .gitignore
+# 폐기된 배경 그림 (맵은 이제 코드 + 타일). 저장소에는 남기되 배포에서는 뺀다
+casual/maps/map-[0-9][0-9]-*.jpg

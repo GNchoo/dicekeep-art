@@ -170,22 +170,30 @@ Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크�
 
 ---
 
-## 4. 맵 레이아웃
+## 4. 맵 레이아웃 (그리드 + 테마 타일)
+
+**2026-09-02 전면 변경.** 배경 그림에 길·석단 좌표를 맞추던 방식(`MAP_LAYOUTS`, `MAP_LAYOUTS_HARD`, 좌표 에디터)은 폐기했다. 그림과 코드가 미묘하게 어긋나 품질을 떨어뜨렸기 때문이다. 이제 **코드가 격자 위에 맵을 설계하고, 테마 타일을 그 위에 입힌다.** 어긋남이 구조적으로 없다.
 
 `content.js`:
-- `MAP_LAYOUTS[key] = { path, spots }` — 50맵 전부 작성 완료 (에디터로 아트 흙길·석단에 맞춤).
-- `MAP_LAYOUTS_HARD[key] = { src?, path2?, spots2? }` — 하드 배경 전용. 31~50 은 납품 배경의 두 번째 길을 따라 `path2` 를 찍었고 `spots2` 는 물 회피 자동 배치. (`maps[]` 의 `src` 가 이미 `-hard.jpg` 라 `src` 는 생략)
-- `buildLayout(map, tier)` → `{ lanes, spots, baseSpotCount }`. 게임(`applyMapLayout`)과 에디터가 같은 함수를 쓴다.
-- `buildArenaLayout()` — 무한 투기장 전용. 타원 나선(중심 528,300, A 470→150, B 245→80, 1.5바퀴)을 `path`, 오른쪽 포탈에서 두 번째 바퀴로 합류하는 지름길을 `path2`, 나선 양옆 법선 ±58px 후보에서 거리 규칙으로 고른 석단 16개를 `spots2` 로 만든다. 에디터에서는 표시만 되고 편집해도 게임에 반영되지 않는다.
-- 코드 렌더 맵(`renderRoads: true`)은 `game.js` `buildRoadLayer` 가 바닥+도로를 오프스크린에 한 번 그려 캐시한다. 도로 브러시는 `drawRoad()` 하나에 모여 있어 타일셋으로 바꿀 때 그 함수만 교체하면 된다.
+- 격자 16×9 칸, 칸 64px (`TILE`, `GW`, `GH`). 픽셀 좌표 = 칸 중심.
+- `TEMPLATES_SINGLE[6]` (스테이지 1~30, 한 갈래) / `TEMPLATES_DUAL[6]` (31~50, 두 갈래). 9줄 × 16글자 ASCII:
+  `.` 평지 `#` 흙길 `S` 시작 `E` 도착 `2` 두 번째 길 시작 `=` 두 번째 길(티어 4·5 만) `o` 기본 석단 `+` 추가 석단 후보 `~` 물 `T` 큰 소품.
+  규칙: 흙길은 4방향으로 이어진 한 줄(옆 줄과 한 칸 띄움), E 위 칸은 비움(성 그림), 두 번째 길은 흙길 한 칸에만 닿음.
+- `templateForStage(n)`: 6개씩 돌려 쓰고 두 바퀴째는 좌우 반전 → 1~30 은 12가지, 31~50 은 12가지 배치.
+- `buildGridLayout(rows, mirror)` → `{ grid, path, path2, spots, spots2, water, props, start, end, start2, …Cell }`. 꺾이는 칸은 모서리를 36% 깎아 곡선처럼 돈다. `spots2` 는 "이미 고른 것에서 가장 먼 후보" 순으로 정렬해 앞 n개만 열어도 고르게 퍼진다.
+- `THEMES[6]`: `plains` 평원(1~8) · `forest` 숲(9~16) · `lake` 호수(17~25) · `darkforest` 어두운 숲(26~33) · `castle` 성(34~42) · `hell` 지옥(43~50). 코드 폴백용 색(바닥·길·물·소품·바위·발광)을 갖는다. `themeForStage(n)`.
+- `maps[]` 는 `g1`~`g50` (`tiled: true`, `theme`, `layout`, `path`, `path2`, `spots`, `spots2`, `center`=E, `portals`) + `cInf` 아레나. `buildLayout(map, tier)` 은 그대로: 하늘길·땅굴은 코드 생성, 추가 석단은 `spots2` 앞에서 티어 수만큼.
+- `buildArenaLayout()` — 무한 투기장 전용 나선(변경 없음).
 
-`editor.html`:
-- 모드 4개: 흙길(P) · 흙길2(O) · 석단(S) · 추가석단(A)
-- 티어 미리보기: 하늘길·땅굴·자동 석단을 실제 계산으로 겹쳐 표시
-- "자동 석단 굳히기": 코드 위치를 `spots2` 로 복사해 손으로 다듬기
-- "전체 생성": `MAP_LAYOUTS` + `MAP_LAYOUTS_HARD` 스니펫 출력 → content.js 에 붙여넣기
+`game.js`:
+- `buildTileLayer(m)` 가 스테이지 시작 때 오프스크린에 한 번 굽는다. 순서: 바닥(`floor.jpg` 없으면 그라데이션+풀결) → 물(`water.png` 없으면 둥근 칸) → 도로 자동 타일(이웃 마스크 N1 E2 S4 W8 → 직선/코너/T/십자 + 90° 회전, 타일이 없으면 `drawRoad` 흙길 브러시를 테마색으로) → 석단(`pad.png` 없으면 코드 받침) → 소품(씨앗 고정 배치, 빈 평지의 30%, S·E·2 주변 제외; `prop-1~6` 없으면 코드 나무·바위·덤불·꽃·비석) → 시작(`start.png` 없으면 포탈 애니) → 도착(`end.png` 없으면 `props/crystal.png`).
+- 타일 키 `tl_<theme>_<name>`, 경로 `casual/tiles/<theme>/<name>.png` (floor 만 jpg). 도로·물 타일은 `processTile`(배경 제거, 크롭 없음), 나머지는 `processSprite`.
+- `ARENA` = `{ center, portals, tiled, theme, hasStart, hasEnd }`. 도착 타일이 있으면 크리스탈 대신 맥동 링만, 시작 타일이 있으면 포탈 그림 대신 발광만 그린다.
 
-캔버스 1024×576. 맵 JPG(1280×720)는 이 크기로 stretch.
+`editor.html` (그리드 에디터):
+- 템플릿/스테이지 선택, 글자 붓으로 칸 칠하기(우클릭 = 평지), 좌우 반전 미리보기, 티어 미리보기(하늘길·땅굴·추가 석단을 실제 계산으로), 규칙 검증(이웃 수·연결·E 위 칸·석단 수), `content.js` 스니펫 복사.
+
+캔버스 1024×576. 옛 배경 JPG(`casual/maps/map-NN-*.jpg`)는 로드하지 않고 배포에서도 뺀다(`.assetsignore`). 지워도 된다.
 
 ---
 
@@ -193,8 +201,8 @@ Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크�
 
 | 항목 | 목표 | 파일 | 상태 |
 |---|---|---|---|
-| 배경 | 50 | `casual/maps/*.jpg` | 완료 |
-| 하드 배경 (흙길 2개) | 20 (S31~50) | `casual/maps/map-NN-*-hard.jpg` | 완료 (납품 2026-09-02, `path2`/`spots2` 작성 완료) |
+| ~~배경~~ | ~~50~~ | `casual/maps/*.jpg` | **폐기** (그리드 + 타일로 대체) |
+| **테마 타일셋** | 6테마 × 15 = 90 | `casual/tiles/<theme>/` | **생성 대기** → `GROK-BRIEF.md`. 없으면 코드 폴백으로 동작 |
 | 몬스터 고유 | 500 | `casual/enemies/*.png` | 완료 |
 | 적 걷기 시트 | 순차 | `*-walk-2x2.png` | 36 완료 (1~36). 37~ 은 `NEXT_WALK` 에 id 추가 + ART-PROMPTS §2 |
 | 보스 고유 | 100 | `casual/bosses/*.png` | 완료 |
@@ -216,8 +224,8 @@ Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크�
 dicekeep-art/
   index.html          엔트리 (?v= 캐시버스트)
   game.js             게임 루프, 레인 이동, 전투, 연출, 입력, 로비/상점
-  content.js          DKCONTENT (맵/레이아웃/티어/적/보스/스킨/스테이지)
-  editor.html/js      맵 좌표 에디터 (흙길·흙길2·석단·추가석단, 티어 미리보기)
+  content.js          DKCONTENT (테마/템플릿/그리드 레이아웃/티어/적/보스/스킨/스테이지)
+  editor.html/js      맵 그리드 에디터 (ASCII 템플릿 칠하기, 티어 미리보기, 스니펫 복사)
   style.css
   serve.py / start.bat
   GAME-SPEC.md        이 문서
@@ -226,7 +234,8 @@ dicekeep-art/
   GROK-HANDOFF.md     초기 인수 브리프 (P0~P2 프롬프트 보관)
   ASSET-MANIFEST.md   파일 목록
   casual/
-    maps/             50 JPG + 하드 배경 20 (S31~50) + 아레나(예정)
+    tiles/<theme>/    테마 타일 (floor, road-*, water, pad, start, end, prop-1~6) — 생성 대기
+    maps/             (폐기) 옛 배경 JPG, 아레나 바닥(예정)
     towers/           tN-a~e + tN-attack-2x2
     enemies/          500 대기 + 걷기 시트
     bosses/           100 + 걷기 시트 10
@@ -249,7 +258,7 @@ dicekeep-art/
 - 3D `persp = 10` 낮추기
 - file:// 테스트
 - 요청 없는 BGM
-- 흙길(PATH/PATH2)을 물/건물 위로 통과시키기 (하늘길·땅굴은 코드 생성이라 예외)
+- 배경 그림에 좌표를 맞추는 방식으로 되돌아가기 (템플릿 규칙: 흙길 한 줄, E 위 칸 비움, 두 번째 길은 흙길 한 칸에만)
 - 타워를 길 한가운데 두기
 - 걷기 시트 키를 연결만 하고 파일을 빼먹은 채 "완료" 표시하기 (폴백은 되지만 카탈로그가 어긋난다)
 

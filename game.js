@@ -96,8 +96,14 @@ function applyMapLayout(mapKey, tier) {
       }
     }
   }
-  ARENA = (m && m.renderRoads) ? { center: m.center || [W / 2, H / 2], portals: m.portals || [] } : null;
-  ROAD_LAYER = ARENA ? buildRoadLayer(m) : null;
+  ARENA = (m && m.renderRoads) ? { center: m.center || [W / 2, H / 2], portals: m.portals || [], tiled: !!m.tiled, theme: m.theme || null } : null;
+  ROAD_LAYER = null;
+  if (m && m.tiled) {
+    const layer = buildTileLayer(m);
+    ROAD_LAYER = layer.cv;
+    ARENA.hasStart = layer.hasStart; ARENA.hasEnd = layer.hasEnd;
+    SPOT_BASE = layer.hasPad ? SPOTS.length : 0; // 석단 타일이 있으면 레이어에 굽고, 없으면 코드 받침을 전부 그린다
+  } else if (ARENA) ROAD_LAYER = buildRoadLayer(m);
 }
 
 // ==================== 코드 렌더 맵 (아레나): 바닥 + 도로 레이어 ====================
@@ -130,8 +136,8 @@ function drawArenaFloor(g, m) {
   g.restore();
 }
 // 흙길 브러시: 그림자 → 어두운 테두리 → 본체 → 밝은 띠 → 점·돌 (결정적 의사난수)
-function drawRoad(g, pts, seed) {
-  const base = [178, 140, 92];
+function drawRoad(g, pts, seed, color) {
+  const base = color || [178, 140, 92];
   const rgba = (mul, a) => `rgba(${Math.round(base[0] * mul)},${Math.round(base[1] * mul)},${Math.round(base[2] * mul)},${a})`;
   const stroke = (w, style) => { g.strokeStyle = style; g.lineWidth = w; g.beginPath(); g.moveTo(pts[0][0], pts[0][1]); for (let i = 1; i < pts.length; i++) g.lineTo(pts[i][0], pts[i][1]); g.stroke(); };
   g.save();
@@ -159,11 +165,162 @@ function drawRoad(g, pts, seed) {
   }
   g.restore();
 }
-// 중심 크리스탈 (코드 렌더 맵)
+// ==================== 타일 맵 레이어 (테마 타일 + 코드 폴백) ====================
+const TILE = 64;
+function mulberry(seed) { let a = seed >>> 0; return () => { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+const tileArt = (th, name) => { const a = A[`tl_${th.id}_${name}`]; return (a && a.cv && a.h > 8) ? a : null; };
+function drawTile(g, tile, c, r, rot) {
+  g.save();
+  g.translate(c * TILE + TILE / 2, r * TILE + TILE / 2);
+  if (rot) g.rotate(rot * Math.PI / 180);
+  g.drawImage(tile.cv, -TILE / 2 - 1, -TILE / 2 - 1, TILE + 2, TILE + 2); // 1px 겹쳐 이음새를 숨긴다
+  g.restore();
+}
+// 바닥 아래에 앉히는 소품/석단/성: 바닥 중심 (x, y) 에 높이 h 로
+function drawGroundSprite(g, sp, x, y, h, flip) {
+  const w = h * sp.w / sp.h;
+  g.save();
+  g.translate(x, y);
+  if (flip) g.scale(-1, 1);
+  g.drawImage(sp.cv, -w / 2, -h, w, h);
+  g.restore();
+}
+// 도로 자동 타일: 이웃 마스크 N=1 E=2 S=4 W=8 → (타일, 회전)
+function roadTileFor(mask, tiles) {
+  const { straight, corner, tee, cross } = tiles;
+  switch (mask) {
+    case 10: case 2: case 8: case 0: return [straight, 0];
+    case 5: case 1: case 4: return [straight, 90];
+    case 3: return [corner, 0]; case 6: return [corner, 90]; case 12: return [corner, 180]; case 9: return [corner, 270];
+    case 14: return [tee || cross || straight, 0]; case 13: return [tee || cross || straight, 90];
+    case 11: return [tee || cross || straight, 180]; case 7: return [tee || cross || straight, 270];
+    case 15: return [cross || tee || straight, 0];
+  }
+  return [straight, 0];
+}
+function drawCodeFloor(g, th, rnd) {
+  const gr = g.createLinearGradient(0, 0, 0, H);
+  gr.addColorStop(0, th.floor[0]); gr.addColorStop(1, th.floor[1]);
+  g.fillStyle = gr; g.fillRect(0, 0, W, H);
+  // 얼룩·풀결
+  for (let i = 0; i < 260; i++) {
+    const x = rnd() * W, y = rnd() * H, r = 10 + rnd() * 40;
+    g.fillStyle = rnd() < 0.5 ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.06)';
+    g.beginPath(); g.ellipse(x, y, r, r * 0.5, 0, 0, Math.PI * 2); g.fill();
+  }
+  g.strokeStyle = 'rgba(0,0,0,0.12)'; g.lineWidth = 1;
+  for (let i = 0; i < 900; i++) {
+    const x = rnd() * W, y = rnd() * H;
+    g.beginPath(); g.moveTo(x, y); g.lineTo(x + (rnd() - 0.5) * 6, y - 3 - rnd() * 5); g.stroke();
+  }
+}
+function drawCodeWater(g, th, cells) {
+  g.save();
+  const rim = (pad, style) => { g.fillStyle = style; for (const [r, c] of cells) { g.beginPath(); g.roundRect(c * TILE - pad, r * TILE - pad, TILE + pad * 2, TILE + pad * 2, 18); g.fill(); } };
+  rim(7, 'rgba(0,0,0,0.28)');   // 물가 그늘
+  rim(3, th.water);
+  rim(-6, 'rgba(255,255,255,0.08)');
+  g.fillStyle = 'rgba(255,255,255,0.22)';
+  for (const [r, c] of cells) { g.beginPath(); g.ellipse(c * TILE + 24, r * TILE + 20, 13, 4, -0.3, 0, Math.PI * 2); g.fill(); }
+  g.restore();
+}
+function drawCodeProp(g, th, kind, x, y, h, rnd) {
+  g.save();
+  g.translate(x, y);
+  g.fillStyle = 'rgba(0,0,0,0.22)'; g.beginPath(); g.ellipse(0, 2, h * 0.3, h * 0.11, 0, 0, Math.PI * 2); g.fill();
+  if (kind === 'tree' || kind === 'tree2') {
+    g.fillStyle = '#5a3d22'; g.fillRect(-h * 0.06, -h * 0.35, h * 0.12, h * 0.36);
+    g.fillStyle = th.propB; g.beginPath(); g.ellipse(0, -h * 0.5, h * 0.3, h * 0.36, 0, 0, Math.PI * 2); g.fill();
+    g.fillStyle = th.propA; g.beginPath(); g.ellipse(-h * 0.06, -h * 0.58, h * 0.22, h * 0.26, 0, 0, Math.PI * 2); g.fill();
+    g.fillStyle = 'rgba(255,255,255,0.14)'; g.beginPath(); g.ellipse(-h * 0.12, -h * 0.68, h * 0.09, h * 0.07, 0, 0, Math.PI * 2); g.fill();
+  } else if (kind === 'rock') {
+    g.fillStyle = th.rock; g.beginPath(); g.moveTo(-h * 0.5, 0); g.lineTo(-h * 0.35, -h * 0.55); g.lineTo(h * 0.1, -h * 0.75); g.lineTo(h * 0.5, -h * 0.3); g.lineTo(h * 0.4, 0); g.closePath(); g.fill();
+    g.fillStyle = 'rgba(255,255,255,0.18)'; g.beginPath(); g.moveTo(-h * 0.3, -h * 0.5); g.lineTo(h * 0.05, -h * 0.68); g.lineTo(h * 0.1, -h * 0.5); g.closePath(); g.fill();
+  } else if (kind === 'bush') {
+    g.fillStyle = th.propB; g.beginPath(); g.ellipse(0, -h * 0.3, h * 0.55, h * 0.35, 0, 0, Math.PI * 2); g.fill();
+    g.fillStyle = th.propA; g.beginPath(); g.ellipse(-h * 0.15, -h * 0.4, h * 0.32, h * 0.26, 0, 0, Math.PI * 2); g.fill();
+  } else if (kind === 'flowers') {
+    for (let i = 0; i < 5; i++) { g.fillStyle = ['#ff8fb0', '#ffe27a', '#b9a3ff', '#ffffff'][i % 4]; g.beginPath(); g.arc((rnd() - 0.5) * h * 1.4, -rnd() * h * 0.5, h * 0.09, 0, Math.PI * 2); g.fill(); }
+  } else { // artifact: 테마색 기둥/비석
+    g.fillStyle = th.rock; g.fillRect(-h * 0.16, -h * 0.85, h * 0.32, h * 0.85);
+    g.fillStyle = th.glow; g.globalAlpha = 0.85; g.beginPath(); g.arc(0, -h * 0.6, h * 0.1, 0, Math.PI * 2); g.fill();
+  }
+  g.restore();
+}
+// 테마 타일 맵을 오프스크린에 한 번 굽는다. 타일이 없으면 각 요소를 코드로 그린다.
+function buildTileLayer(m) {
+  const C = window.DKCONTENT;
+  const th = m.theme, L = m.layout, grid = L.grid, GW = C.GW, GH = C.GH;
+  const cv = document.createElement('canvas');
+  cv.width = W; cv.height = H;
+  const g = cv.getContext('2d');
+  const T = (n) => tileArt(th, n);
+  let seed = 7; for (const ch of m.key) seed = (seed * 31 + ch.charCodeAt(0)) >>> 0;
+  const rnd = mulberry(seed);
+  // 1. 바닥
+  const floor = A[`tl_${th.id}_floor`];
+  if (floor && !floor.missing && floor.width > 8) g.drawImage(floor, 0, 0, W, H); else drawCodeFloor(g, th, rnd);
+  // 2. 물
+  const water = T('water');
+  if (L.water.length) { if (water) for (const [r, c] of L.water) drawTile(g, water, c, r, 0); else drawCodeWater(g, th, L.water); }
+  // 3. 도로 (이 티어에 열린 길만)
+  const hasSec = LANES.some((l) => l.kind === 'ground2');
+  const isRoad = (r, c) => { if (r < 0 || r >= GH || c < 0 || c >= GW) return false; const ch = grid[r][c]; return ch === '#' || ch === 'S' || ch === 'E' || (hasSec && (ch === '2' || ch === '=')); };
+  const tiles = { straight: T('road-straight'), corner: T('road-corner'), tee: T('road-t'), cross: T('road-cross') };
+  if (tiles.straight && tiles.corner) {
+    for (let r = 0; r < GH; r++) for (let c = 0; c < GW; c++) {
+      if (!isRoad(r, c)) continue;
+      const mask = (isRoad(r - 1, c) ? 1 : 0) | (isRoad(r, c + 1) ? 2 : 0) | (isRoad(r + 1, c) ? 4 : 0) | (isRoad(r, c - 1) ? 8 : 0);
+      const [tile, rot] = roadTileFor(mask, tiles);
+      drawTile(g, tile, c, r, rot);
+    }
+  } else {
+    for (const lane of LANES) if (lane.kind === 'ground' || lane.kind === 'ground2') drawRoad(g, lane.pts, lane.kind === 'ground2' ? 7 : 3, th.road);
+  }
+  // 4. 석단
+  const pad = T('pad');
+  if (pad) for (const [x, y] of SPOTS) drawGroundSprite(g, pad, x, y + 18, 40);
+  // 5. 소품: 빈 평지에 씨앗 고정 배치 (S·E·2 주변과 그 위 칸은 비움)
+  const reserved = new Set();
+  const mark = (cell, up) => { if (!cell) return; for (let d = 0; d <= up; d++) reserved.add((cell[0] - d) * GW + cell[1]); reserved.add(cell[0] * GW + cell[1] - 1); reserved.add(cell[0] * GW + cell[1] + 1); };
+  mark(L.startCell, 1); mark(L.start2Cell, 1); mark(L.endCell, 2);
+  const cands = [];
+  for (let r = 0; r < GH; r++) for (let c = 0; c < GW; c++) if (grid[r][c] === '.' && !reserved.has(r * GW + c)) cands.push([r, c]);
+  for (let i = cands.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [cands[i], cands[j]] = [cands[j], cands[i]]; }
+  const KINDS = [['tree', 'prop-1', 96], ['tree2', 'prop-2', 80], ['rock', 'prop-3', 40], ['bush', 'prop-4', 42], ['flowers', 'prop-5', 30], ['artifact', 'prop-6', 70]];
+  const pick = () => { const v = rnd(); return v < 0.3 ? 0 : v < 0.55 ? 1 : v < 0.7 ? 2 : v < 0.85 ? 3 : v < 0.95 ? 4 : 5; };
+  const props = [];
+  for (const [r, c] of L.props) props.push({ r, c, k: 0 });
+  const n = Math.round(cands.length * 0.24);
+  for (let i = 0; i < n; i++) props.push({ r: cands[i][0], c: cands[i][1], k: pick() });
+  for (const p of props) { p.x = p.c * TILE + TILE / 2 + (rnd() - 0.5) * 16; p.y = p.r * TILE + TILE / 2 + 22 + (rnd() - 0.5) * 10; p.s = 0.85 + rnd() * 0.3; p.flip = rnd() < 0.5; }
+  props.sort((a, b) => a.y - b.y);
+  for (const p of props) {
+    const [kind, name, h] = KINDS[p.k];
+    const art = T(name);
+    if (art) drawGroundSprite(g, art, p.x, p.y, h * p.s, p.flip); else drawCodeProp(g, th, kind, p.x, p.y, h * p.s * 0.8, rnd);
+  }
+  // 6. 시작·도착 (그림이 없으면 게임이 포탈/크리스탈을 매 프레임 그린다)
+  const start = T('start'), end = T('end');
+  if (start) { for (const p of [L.start, L.start2]) if (p) drawGroundSprite(g, start, p[0], p[1] + 26, 84); }
+  if (end && L.end) drawGroundSprite(g, end, L.end[0], L.end[1] + 28, 128);
+  return { cv, hasPad: !!pad, hasStart: !!start, hasEnd: !!end };
+}
+
+// 중심 크리스탈 (코드 렌더 맵). 테마 도착 타일이 구워져 있으면 맥동 링만 그린다.
 function drawArenaCrystal() {
   if (!ARENA) return;
   const [cx, cy] = ARENA.center;
   const pulse = 0.5 + 0.5 * Math.sin(S.time * 2.4);
+  if (ARENA.hasEnd) {
+    ctx.save();
+    ctx.translate(cx, cy + 10);
+    ctx.scale(1, 0.5);
+    ctx.beginPath(); ctx.arc(0, 0, 40 + pulse * 6, 0, Math.PI * 2);
+    ctx.strokeStyle = (ARENA.theme && ARENA.theme.glow) || '#9fdcff'; ctx.globalAlpha = 0.35 + pulse * 0.3; ctx.lineWidth = 3; ctx.stroke();
+    ctx.restore();
+    return;
+  }
   ctx.save();
   ctx.translate(cx, cy + 8);
   ctx.scale(1, 0.5);
@@ -239,7 +396,9 @@ const SRCS = {
   crystal: BASE + 'props/crystal.png',
 };
 if (window.DKCONTENT) {
-  for (const m of DKCONTENT.maps) SRCS[m.key] = BASE + m.src;
+  for (const m of DKCONTENT.maps) if (m.src) SRCS[m.key] = BASE + m.src;
+  // 테마 타일: casual/tiles/<theme>/<name>.png (floor 만 jpg). 없으면 코드가 그린다.
+  for (const th of DKCONTENT.THEMES) for (const n of DKCONTENT.TILE_ASSETS) SRCS[`tl_${th.id}_${n}`] = BASE + `casual/tiles/${th.id}/${n}.${n === 'floor' ? 'jpg' : 'png'}`;
   for (const f of Object.keys(DKCONTENT.towerSkins)) {
     for (const s of DKCONTENT.towerSkins[f]) SRCS[s.key] = BASE + s.src;
   }
@@ -385,6 +544,19 @@ function processSheet(img) {
   }
 }
 
+// 도로·물 타일: 배경만 지우고 칸 전체 프레임은 유지한다 (크롭하면 이웃 타일과 이어지지 않는다)
+function processTile(img) {
+  if (img.missing) return null;
+  const cv = toCanvas(img);
+  try {
+    const g = cv.getContext('2d');
+    const id = g.getImageData(0, 0, cv.width, cv.height);
+    keyImageData(id, cv.width, cv.height);
+    g.putImageData(id, 0, 0);
+  } catch (e) { corsBlocked = true; }
+  return { cv, w: cv.width, h: cv.height };
+}
+
 function thumbURL(sprite, size, fallbackSrc = '') {
   try {
     const s = Math.min(size / sprite.w, size / sprite.h);
@@ -415,10 +587,12 @@ async function loadAssets(onProgress) {
     for (const b of DKCONTENT.bossBases) if (b.walk) sheets.push(b.walk);
   }
   const raw = ['map', 'keyart'];
-  if (window.DKCONTENT) for (const m of DKCONTENT.maps) raw.push(m.key);
+  if (window.DKCONTENT) for (const m of DKCONTENT.maps) if (m.src) raw.push(m.key);
+  const isTile = (k) => /^tl_.*_(floor|road-straight|road-corner|road-t|road-cross|water)$/.test(k);
   let pi = 0;
   for (const k of keys) {
-    if (raw.includes(k)) A[k] = imgs[k];
+    if (raw.includes(k) || /^tl_.*_floor$/.test(k)) A[k] = imgs[k];
+    else if (isTile(k)) A[k] = processTile(imgs[k]);
     else if (sheets.includes(k)) A[k] = processSheet(imgs[k]);
     else A[k] = processSprite(imgs[k]);
     onProgress(0.6 + (++pi / keys.length) * 0.4);
@@ -596,7 +770,7 @@ const S = {
   spawnQ: [], waveActive: false, autoT: 0, waveT: 0,
   shakeT: 0, bannerT: 0, bannerName: '',
   heldDie: 0, selTower: null,
-  mapKey: 'cMap1',
+  mapKey: 'g1',
   stage: 1, stageData: null, stageWaves: 10,
   mode: 'stage', inf: null, // 'stage' | 'infinity', inf = { sp, power{1..6}, kills, spent }
   speed: 1, muted: false,
@@ -1974,6 +2148,8 @@ function drawPortal(x, y, lane) {
   ctx.strokeStyle = col; ctx.lineWidth = 3; ctx.stroke();
   ctx.restore();
   const sp = A.portal;
+  const baked = ARENA && ARENA.hasStart && lane.kind !== 'air' && lane.kind !== 'tunnel'; // 테마 시작 타일이 레이어에 있음
+  if (baked) return;
   if (sp && sp.cv) {
     const h = 64, w = h * sp.w / sp.h;
     ctx.save();
@@ -2728,7 +2904,8 @@ function renderStageSelect() {
     if (!unlocked) html += '<span class="lock">&#128274;</span>';
     html += `<span class="cell-name">${sd.name}</span>`;
     cell.innerHTML = html;
-    cell.title = `${sd.name} · ${sd.tierName || ''} 티어 · 동선 ${sd.lanes || 1} · 웨이브 ${sd.waves}`;
+    const themeName = C.themeForStage ? C.themeForStage(n).name : '';
+    cell.title = `${sd.name} · ${themeName} 테마 · ${sd.tierName || ''} 티어 · 동선 ${sd.lanes || 1} · 웨이브 ${sd.waves}`;
     if (unlocked) cell.addEventListener('click', () => startStage(n));
     grid.appendChild(cell);
   }

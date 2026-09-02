@@ -1,172 +1,151 @@
-# Grok 전달용 브리프 (그대로 붙여넣기)
+# Grok 전달용 브리프 — 테마 타일셋 (그대로 붙여넣기)
 
-아래 구분선 안의 내용을 Grok 에게 그대로 전달하면 된다. 세부 프롬프트 원본은 `ART-PROMPTS.md`.
+아래 구분선 안의 내용을 Grok 에게 그대로 전달하면 된다. 프롬프트 원본·연결 방법은 `ART-PROMPTS.md` §0.
 
 ---
 
-안녕하세요. 캐주얼 타워 디펜스 게임 **「주사위 성채 (Dicekeep)」** 의 아트 생성을 부탁합니다. 저장소: https://github.com/GNchoo/dicekeep-art
+안녕하세요. 캐주얼 타워 디펜스 게임 **「주사위 성채 (Dicekeep)」** 의 맵 타일셋 생성을 부탁합니다. 저장소: https://github.com/GNchoo/dicekeep-art
 
 ## 상황
 
-게임과 코드는 완성되어 있고, 지금은 코드로 합성한 **임시 이미지**가 들어가 있습니다. 당신이 만들어 줄 진짜 그림으로 같은 파일명에 덮어쓰기만 하면 바로 적용됩니다. 총 78장, 세 묶음입니다.
+맵을 통째로 그리던 방식을 버렸습니다. 이제 **코드가 16×9 칸 격자 위에 길·석단·시작·도착 위치를 설계**하고, 당신이 만들어 줄 **테마별 타일 조각**을 그 위에 입힙니다. 그래서 그림 안에 길이나 건물을 배치할 필요가 전혀 없고, **조각 하나하나가 정확한 규격**이기만 하면 됩니다. 파일을 지정한 이름으로 저장하기만 하면 게임이 바로 씌웁니다.
 
-| 묶음 | 수량 | 저장 파일명 |
-|---|---|---|
-| A. 하드 배경 (길이 두 갈래인 맵) | 20 | `map-NN-<theme>-hard.jpg` |
-| B. 걷기 스프라이트 시트 2x2 | 34 (적 24 + 보스 10) | `<id>-walk-2x2.png` |
-| C. 타워 스킨 | 24 (6종 × b,c,d,e) | `tN-<letter>.png` |
+테마 6종 × 조각 15개 = **총 90장**입니다. **먼저 「평원」 15장만 만들어 주세요.** 게임에 넣어 이음새·크기를 확인한 뒤 나머지 5테마를 같은 규격으로 진행합니다.
 
 ## 반드시 지킬 공통 규칙
 
-1. **스타일**: Kingdom Rush + Random Dice 느낌. 손그림 캐주얼, 치비 비율, 두꺼운 깔끔한 외곽선, 채도 높은 색, 3/4 아이소메트릭 시점. 글자·워터마크·UI 금지.
-2. **배경(A)** 은 16:9, 1280×720, 화면 가득 채우기.
-3. **시트(B)와 스킨(C)** 은 단색 **연회색 배경**(예: #C8C8C8)에 오브젝트 하나만. 게임 로더가 가장자리에서 이어진 회색을 지우고 자동 크롭하므로 그림자를 배경에 깔지 마세요.
-4. **2x2 시트**는 2열 2행, 읽는 순서 좌상 → 우상 → 좌하 → 우하 = 프레임 0,1,2,3. 네 칸 모두 캐릭터 크기와 발밑 위치가 같아야 합니다. 캐릭터는 **오른쪽을 향해** 걷습니다.
-5. 한 장씩 만들고, 파일명은 표에 적힌 그대로.
-6. 참고 이미지가 있는 항목(대기컷 `casual/enemies/<id>.png`, 타워 `casual/towers/tN-a.png`)은 반드시 그 디자인을 그대로 따릅니다. 새로 디자인하지 마세요.
+1. **스타일**: Kingdom Rush + Random Dice. 손그림 캐주얼, 두꺼운 깔끔한 외곽선, 채도 높은 색, **3/4 탑다운(살짝 기울여 내려다본) 시점**. 글자·워터마크·UI 금지. 6테마가 한 게임처럼 보여야 하므로 선 굵기·채도·명암 처리를 통일하세요.
+2. **도로 타일 4종 + 물 타일**은 **정사각형 1024×1024**. 게임은 이걸 64×64 로 줄여 격자에 깔고 **90° 단위로 회전**합니다. 그러므로
+   - 조명은 **정수리에서 내리쬐는 평평한 조명**, 한쪽으로 늘어지는 그림자 금지 (회전해도 어색하지 않게).
+   - 길은 **타일 가장자리에서 가장자리까지** 이어지고, 가장자리에서 **딱 잘린 단면**이어야 합니다 (옆 타일과 맞닿아 이어짐). 길 폭은 **타일 폭의 56%**, 타일 정중앙. 길 가장자리는 부드럽게 흐려도 되지만 폭은 모든 타일에서 같아야 합니다.
+   - 길 바깥은 **단색 연회색 (#C8C8C8) 만**. 풀·흙·바닥 무늬를 그리지 마세요. 게임이 회색을 지우고 바닥 위에 얹습니다.
+3. **바닥(floor)** 은 **16:9, 1280×720**, 화면 가득. **길·석단·건물·큰 소품이 전혀 없는 빈 땅**만 그립니다. 은은한 얼룩·풀결·작은 자갈 정도만.
+4. **석단·시작·도착·소품(prop)** 은 **연회색 (#C8C8C8) 단색 배경에 오브젝트 하나만**, 정중앙, 여백 넉넉히, 바닥에 깔리는 그림자는 오브젝트 바로 밑에 아주 짧게만. 게임이 회색을 지우고 자동 크롭해서 **바닥 중앙 아래쪽을 기준**으로 세웁니다.
+5. **크기 감**: 게임 안에서 석단은 60px 폭, 시작 포탈 84px 높이, 도착 성 128px 높이, 큰 나무 96px, 작은 나무 80px, 바위 40px, 덤불 42px, 꽃무리 30px, 상징물 70px 로 그려집니다. 비율만 맞으면 됩니다(모두 1024×1024 로 만들어도 됨).
+6. 파일명은 아래 표 그대로. `casual/tiles/<테마>/` 폴더에 저장.
 
----
+## 조각 15개 (모든 테마 공통 프롬프트 — `{THEME}` 자리에 아래 테마 문단을 넣으세요)
 
-## A. 하드 배경 20장 → `casual/maps/`
-
-### 공통 프롬프트 (모든 배경 앞에 붙임)
-
-```
-Hand-painted casual tower defense game map, Kingdom Rush and Random Dice style, 3/4 top-down isometric view, 16:9 landscape, full-bleed scene with no UI. TWO separate winding dirt roads: road A starts at a glowing purple portal gate at the TOP-LEFT, road B starts at a second glowing purple portal gate at the BOTTOM-LEFT; both roads wind across the map and MERGE in front of a large crystal castle shrine on the RIGHT side. Along both roads, on flat grass beside the road (never on the road, never on water or buildings), place 14 round flat stone tower pads of identical size, evenly spread. Roads are wide, clearly readable, with soft edges. Chibi cute proportions, thick clean outlines, saturated colors, crisp painterly details, no characters, no text, no watermark.
-```
-
-### 맵별 꼬리 (공통 프롬프트 뒤에 이어 붙임)
-
-| 파일 | 꼬리 |
+| 파일 | 프롬프트 |
 |---|---|
-| `map-31-carnival-hard.jpg` | Theme: candy-striped circus fairground at dusk — big-top tents, ferris wheel, popcorn carts, string lights, confetti on the grass, warm pink and gold palette. |
-| `map-32-vineyard-hard.jpg` | Theme: sunny vineyard hills — rows of grapevines on terraces, wooden wine barrels, a stone winery with a red roof, golden afternoon light. |
-| `map-33-icelake-hard.jpg` | Theme: frozen lake valley — the roads run on snowy shores around a cracked frozen lake, pine trees dusted with snow, ice-fishing huts, cold blue palette with warm lantern glow. |
-| `map-34-jungle-hard.jpg` | Theme: overgrown jungle ruins — mossy stone temple blocks, giant leaves, vines, a waterfall pool, carved totem statues, lush emerald palette. |
-| `map-35-tulip-hard.jpg` | Theme: tulip fields with windmills — striped red, pink and yellow tulip beds, two Dutch windmills, a small canal with a bridge, bright spring light. |
-| `map-36-crystalcity-hard.jpg` | Theme: night crystal city — glowing violet and cyan crystal towers, neon-lit stone streets, floating crystal shards, deep indigo night sky, bioluminescent plants. |
-| `map-37-lavender-hard.jpg` | Theme: lavender fields at golden hour — purple lavender rows, a stone farmhouse, beehives, butterflies, soft purple-and-honey palette. |
-| `map-38-halloween-hard.jpg` | Theme: halloween village — jack-o-lantern patches, crooked cottages with glowing windows, bare twisted trees, candy corn fences, orange moon, playful spooky mood. |
-| `map-39-bioreef-hard.jpg` | Theme: glowing underwater coral reef seen from above — the roads are sandy seabed paths, neon corals, anemones, bubbles, sunbeams through water, teal and magenta glow. |
-| `map-40-alpine-hard.jpg` | Theme: alpine mountain village — wooden chalets, flower boxes, a cable car, snowy peaks in the back, green meadows, crisp bright daylight. |
-| `map-41-rice-hard.jpg` | Theme: terraced rice paddies — stepped green paddies with water mirrors, stone retaining walls, a red-and-gold pagoda shrine, small streams and waterfalls between terraces. |
-| `map-42-nightdesert-hard.jpg` | Theme: desert oasis at night — dunes under a starry sky, palm trees around a moonlit oasis pool, sandstone ruins, glowing lanterns, blue-violet palette with warm lantern accents. |
-| `map-43-nightclock-hard.jpg` | Theme: clockwork valley at night — giant brass gears embedded in the ground, copper pipes venting steam, glowing gauge lamps, a clock-tower shrine, midnight blue and brass palette. |
-| `map-44-fairy-hard.jpg` | Theme: enchanted fairy forest — giant glowing mushrooms, fairy lights, a fairy-ring of stones, sparkling stream, pastel pink and mint palette with magical glow. |
-| `map-45-harbor-hard.jpg` | Theme: seaside harbor town — stone piers, moored fishing boats, lighthouse, crates and barrels, seagulls, sunny turquoise water. |
-| `map-46-nightbamboo-hard.jpg` | Theme: bamboo dojo at night — tall bamboo groves, paper lanterns, a wooden dojo with curved roof, koi pond, fireflies, deep green and lantern-gold palette. |
-| `map-47-candyspace-hard.jpg` | Theme: candy planet in space — pastel candy terrain with lollipop trees, jelly rocks, a starry space sky with planets, floating gummy asteroids, dreamy pink-purple palette. |
-| `map-48-orchard-hard.jpg` | Theme: autumn apple orchard — apple trees in rows, wooden crates full of apples, a cider barn, hay bales, warm red and amber palette. |
-| `map-49-lavabeach-hard.jpg` | Theme: volcanic black-sand beach — lava rivers cooling into the sea, glowing cracks, palm trees, obsidian rocks, orange lava light against dark sand. |
-| `map-50-royal-hard.jpg` | Theme: royal castle grounds — white marble walkways, golden fountains, red royal banners, trimmed hedges, the crystal castle is the grandest of all, gold and crimson palette. |
+| `floor.jpg` (1280×720) | `Hand-painted casual tower defense game ground texture, Kingdom Rush and Random Dice style, 3/4 top-down view, 16:9 landscape, full-bleed. An EMPTY expanse of {THEME_FLOOR}. Gentle color variation, subtle grass/soil strokes, a few tiny pebbles. NO roads, NO paths, NO tower pads, NO buildings, NO trees, NO large objects, NO characters, NO text, NO watermark. Thick clean outlines where applicable, saturated colors, flat overhead lighting.` |
+| `road-straight.png` (1024²) | `Square game tile 1:1, hand-painted casual tower defense style, 3/4 top-down view, flat overhead lighting with no cast shadows. A STRAIGHT road running horizontally from the exact LEFT edge to the exact RIGHT edge, perfectly centered, road width exactly 56% of the tile height, cut flat at both edges so it connects to neighboring tiles. The road is {THEME_ROAD}. Everything outside the road is solid plain light gray #C8C8C8 with no texture. No text, no watermark.` |
+| `road-corner.png` | `Square game tile 1:1, same style as the straight road tile. A road that enters from the exact TOP edge center and leaves through the exact RIGHT edge center, turning with a smooth quarter-circle curve, road width exactly 56% of the tile, cut flat at both edges. The road is {THEME_ROAD}. Everything outside the road is solid plain light gray #C8C8C8. Flat overhead lighting, no cast shadows, no text.` |
+| `road-t.png` | `Square game tile 1:1, same style as the straight road tile. A T-junction: a horizontal road from the exact LEFT edge to the exact RIGHT edge, plus a branch going down to the exact BOTTOM edge center; nothing connects to the top edge. Road width exactly 56% of the tile everywhere, cut flat at the three edges. The road is {THEME_ROAD}. Outside the road solid plain light gray #C8C8C8. Flat overhead lighting, no text.` |
+| `road-cross.png` | `Square game tile 1:1, same style as the straight road tile. A four-way crossroad connecting the exact centers of all four edges, road width exactly 56% of the tile, cut flat at every edge. The road is {THEME_ROAD}. Outside the road solid plain light gray #C8C8C8. Flat overhead lighting, no text.` |
+| `water.png` | `Square seamless game tile 1:1, hand-painted casual style, 3/4 top-down view, filling the WHOLE square edge to edge with {THEME_WATER}. Must tile seamlessly when repeated in a grid: no borders, no shore, no rocks, no objects, no vignette. Flat overhead lighting, no text.` |
+| `pad.png` | `Single game object on a solid plain light gray #C8C8C8 background, centered, generous margins. A round flat stone tower foundation pad seen from a 3/4 top-down view (an ellipse about twice as wide as tall), {THEME_PAD}. Empty on top so a tower can be placed on it. Thick clean outlines, hand-painted casual style, no cast shadow beyond the rim, no text.` |
+| `start.png` | `Single game object on a solid plain light gray #C8C8C8 background, centered. The ENEMY SPAWN GATE: {THEME_START}, with a swirling glowing purple magic portal inside the opening. 3/4 top-down view, hand-painted casual Kingdom Rush style, thick clean outlines, the base sits flat on the ground, no text.` |
+| `end.png` | `Single game object on a solid plain light gray #C8C8C8 background, centered. The PLAYER'S STRONGHOLD to defend: {THEME_END}, with a large glowing crystal on top. Roughly twice as tall as wide, 3/4 top-down view, hand-painted casual Kingdom Rush style, chibi-cute proportions, thick clean outlines, the base sits flat on the ground, no text.` |
+| `prop-1.png` | `Single game object on a solid plain light gray #C8C8C8 background, centered. A large {THEME_TREE1}, 3/4 top-down view, hand-painted casual style, thick clean outlines, rounded chibi-cute shapes, base flat on the ground, no text.` |
+| `prop-2.png` | `Single game object on a solid plain light gray #C8C8C8 background, centered. A medium {THEME_TREE2}, same style as prop-1 but clearly a different silhouette, no text.` |
+| `prop-3.png` | `Single game object on a solid plain light gray #C8C8C8 background, centered. A small {THEME_ROCK}, 3/4 top-down view, hand-painted casual style, thick clean outlines, no text.` |
+| `prop-4.png` | `Single game object on a solid plain light gray #C8C8C8 background, centered. A low round {THEME_BUSH}, 3/4 top-down view, hand-painted casual style, thick clean outlines, no text.` |
+| `prop-5.png` | `Single game object on a solid plain light gray #C8C8C8 background, centered. A tiny ground detail cluster: {THEME_SMALL}, seen from above, hand-painted casual style, no text.` |
+| `prop-6.png` | `Single game object on a solid plain light gray #C8C8C8 background, centered. A landmark prop: {THEME_ARTIFACT}, 3/4 top-down view, hand-painted casual Kingdom Rush style, thick clean outlines, base flat on the ground, no text.` |
 
----
+## 테마 6종 (위 `{THEME_…}` 자리에 넣을 문단)
 
-## B. 걷기 시트 34장
+### 1. `plains` 평원 (먼저 이것부터)
+- THEME_FLOOR: `bright sunny meadow grass, fresh green with lighter yellow-green patches and tiny daisies`
+- THEME_ROAD: `a packed sandy-tan dirt road with soft darker edges, a few small pebbles and faint wheel ruts`
+- THEME_WATER: `calm bright blue pond water with soft ripples and a few small lily pads`
+- THEME_PAD: `pale gray flagstones ringed with a low mossy stone rim and a few daisies at the base`
+- THEME_START: `a mossy stone archway gate built into a small grassy mound, wooden fence posts at each side`
+- THEME_END: `a small friendly stone keep with a red-tiled roof, blue banners and a wooden gate`
+- THEME_TREE1: `round leafy apple tree with red apples and a thick brown trunk`
+- THEME_TREE2: `slim young birch tree with a bright green canopy`
+- THEME_ROCK: `gray boulder with a bit of moss`
+- THEME_BUSH: `green bush dotted with pink wildflowers`
+- THEME_SMALL: `a tuft of grass with three small white-and-yellow daisies`
+- THEME_ARTIFACT: `a wooden signpost with two arrow boards, a hay bale leaning against it`
 
-### 공통 프롬프트 (모든 시트 앞에 붙임)
+### 2. `forest` 숲
+- THEME_FLOOR: `dense forest floor of deep green grass and moss with scattered fallen leaves and small ferns`
+- THEME_ROAD: `a dark earthen forest trail with exposed roots and moss creeping along the edges`
+- THEME_WATER: `clear forest stream water, deep teal-green with gentle ripples`
+- THEME_PAD: `dark mossy stones fitted in a ring, a few acorns and mushrooms at the rim`
+- THEME_START: `a hollow ancient oak trunk whose opening forms a gate, roots spreading on the ground`
+- THEME_END: `an elven treehouse fortress: a stout tree with a wooden watchtower and green banners in its branches`
+- THEME_TREE1: `tall dark-green pine tree with layered boughs`
+- THEME_TREE2: `broad old oak tree with a gnarled trunk`
+- THEME_ROCK: `moss-covered boulder with a red-capped mushroom beside it`
+- THEME_BUSH: `fern bush with fanned fronds`
+- THEME_SMALL: `a cluster of three small red-and-white spotted mushrooms`
+- THEME_ARTIFACT: `a carved wooden totem pole with an owl on top and a hanging lantern`
 
-```
-Hand-painted 2x2 sprite sheet, four frames of a walk cycle read left-to-right then top-to-bottom (contact, down, passing, up), of the same chibi character walking toward the right, side 3/4 view. Kingdom Rush and Random Dice casual style, thick clean outlines, identical character size and identical ground pivot in every cell, generous margins, plain light gray background, no text, no watermark. Match the described idle design exactly.
-```
+### 3. `lake` 호수
+- THEME_FLOOR: `soft lakeside meadow: pale green grass fading into light sandy patches, tiny pebbles and reeds`
+- THEME_ROAD: `a pale sandy path with rounded pebbles and damp darker sand at the edges`
+- THEME_WATER: `calm bright lake water, sky-blue with soft reflections and a few lily pads`
+- THEME_PAD: `flat beach stones fitted in a ring, a few seashells and reeds at the base`
+- THEME_START: `a weathered stone sea-cave arch with barnacles and a fishing net hanging on one side`
+- THEME_END: `a white-and-red lighthouse fortress on a stone base with a small dock and blue flags`
+- THEME_TREE1: `weeping willow tree with long drooping branches`
+- THEME_TREE2: `slender tree with a round pale-green canopy`
+- THEME_ROCK: `smooth wet gray-blue river stone`
+- THEME_BUSH: `clump of tall green reeds with brown cattails`
+- THEME_SMALL: `three lily pads with one pink lotus flower`
+- THEME_ARTIFACT: `a wooden pier post with a tied rowboat and a lantern`
 
-### 적 24장 → `casual/enemies/` (참고: 같은 폴더의 `<id>.png` 대기컷)
+### 4. `darkforest` 어두운 숲
+- THEME_FLOOR: `gloomy night forest floor: dark blue-green grass, fallen dead leaves, faint mist patches`
+- THEME_ROAD: `a dark muddy trail with twisted roots, faint purple mist and scattered small bones`
+- THEME_WATER: `murky dark swamp water, blue-black with pale green glow patches and bubbles`
+- THEME_PAD: `cracked dark stones fitted in a ring with faint purple glowing runes`
+- THEME_START: `a crooked iron-and-stone gate wrapped in thorny vines, lit by a purple glow`
+- THEME_END: `a witch's crooked tower with a purple pointed roof, glowing windows and hanging cauldrons`
+- THEME_TREE1: `twisted dead tree with clawing bare branches`
+- THEME_TREE2: `gnarled dark tree with a hollow face and a few dark leaves`
+- THEME_ROCK: `jagged dark rock with a glowing purple mushroom`
+- THEME_BUSH: `thorny bramble bush with a spider web`
+- THEME_SMALL: `a cluster of glowing purple mushrooms`
+- THEME_ARTIFACT: `a leaning old tombstone with a raven perched on top and a candle`
 
-| 파일 | 캐릭터 꼬리 |
-|---|---|
-| `squirrel-walk-2x2.png` | Character: a tiny brown squirrel scout hugging a big acorn like a shield, fluffy tail up, leaf cap. |
-| `hedgehog-walk-2x2.png` | Character: a round hedgehog spearman with spiky quills, holding a wooden spear, tiny leather vest. |
-| `duck-walk-2x2.png` | Character: a yellow duckling knight in a small silver helmet with a visor, wooden sword and round shield, waddling. |
-| `panda-walk-2x2.png` | Character: a chubby panda monk in an orange robe, holding a bamboo staff, calm face, heavy slow steps. |
-| `koala-walk-2x2.png` | Character: a sleepy gray koala holding a leaf umbrella over its head, eucalyptus sprig in the other paw. |
-| `catsamurai-walk-2x2.png` | Character: a white-and-orange cat samurai in red lacquered armor with a katana at the hip and a straw hat. |
-| `goat-walk-2x2.png` | Character: a mountain goat climber with a coiled rope, backpack and tiny pickaxe, curled horns, sure-footed stride. |
-| `otter-walk-2x2.png` | Character: a sleek river otter spearman with a fish-bone spear and a shell pendant, cheerful. |
-| `tanuki-walk-2x2.png` | Character: a tanuki illusionist with a leaf on its head, straw hat on its back, holding a glowing green magic leaf. |
-| `wolf-walk-2x2.png` | Character: a gray wolf scout with a red bandana, small dagger at the belt, keen eyes, quick trot. |
-| `boar-walk-2x2.png` | Character: a stocky wild boar knight in dented iron plate armor and a horned helmet, charging posture. |
-| `mouse-walk-2x2.png` | Character: a tiny mouse wizard in an oversized blue star-patterned hat and robe, holding a glowing wand. |
-| `chameleon-walk-2x2.png` | Character: a green chameleon painter with a beret and a paint palette, color-shifting tail, curious eyes. |
-| `seahorse-walk-2x2.png` | Character: a teal seahorse knight in a shell helmet with a coral lance, hopping upright on its curled tail. |
-| `alpaca-walk-2x2.png` | Character: a fluffy cream alpaca porter with saddle bags and a red tassel bridle, calm trot. |
-| `beaver-walk-2x2.png` | Character: a brown beaver carpenter with a hard hat, a hammer on the belt and a wooden plank on the shoulder. |
-| `snake-walk-2x2.png` | Character: a coiled green snake ninja with a black mask and a tiny throwing star, slithering forward in four frames. |
-| `porcupine-walk-2x2.png` | Character: a porcupine shield-bearer with a big round wooden shield and bristling quills, sturdy march. |
-| `kiwi-walk-2x2.png` | Character: a round brown kiwi bird knight with a tiny bucket helmet and a stick sword, quick steps. |
-| `rhino-walk-2x2.png` | Character: a baby gray rhino in leather harness armor, head lowered, heavy stomping charge. |
-| `hippo-walk-2x2.png` | Character: a chubby purple hippo sailor in a striped shirt and sailor cap, waddling. |
-| `capybara-walk-2x2.png` | Character: a relaxed capybara with a towel on its head and a yuzu fruit, slow unbothered stroll. |
-| `axolotl-walk-2x2.png` | Character: a pink axolotl mage with glowing gill fronds and a small water orb staff, bouncy walk. |
-| `meerkat-walk-2x2.png` | Character: a meerkat sentry with a tiny spear and a scout scarf, alert upright posture, brisk steps. |
+### 5. `castle` 성
+- THEME_FLOOR: `a royal courtyard of light gray flagstones with faint moss between the stones`
+- THEME_ROAD: `a neatly paved cobblestone road with a lighter stone border on both sides`
+- THEME_WATER: `castle moat water, deep blue with gentle ripples`
+- THEME_PAD: `a polished round stone dais with a golden rim and a blue rune circle`
+- THEME_START: `an iron portcullis gate in a stone wall with two torches`
+- THEME_END: `a grand royal castle keep with tall towers, golden roofs and red-and-gold banners`
+- THEME_TREE1: `tall trimmed cypress tree in a stone planter`
+- THEME_TREE2: `round trimmed topiary tree in a golden pot`
+- THEME_ROCK: `a marble statue pedestal with a small stone lion`
+- THEME_BUSH: `neatly trimmed square hedge with red roses`
+- THEME_SMALL: `a small stone flower planter with red and white flowers`
+- THEME_ARTIFACT: `a stone fountain with a golden spout and blue water`
 
-### 보스 10장 → `casual/bosses/` (참고: 같은 폴더의 대기컷). 공중 보스는 걷기 대신 **부유/날갯짓 4프레임**
+### 6. `hell` 지옥
+- THEME_FLOOR: `cracked dark volcanic ground, ash-gray and dark maroon with faint red glow in the cracks`
+- THEME_ROAD: `a black obsidian road with glowing orange cracks and ember flecks along the edges`
+- THEME_WATER: `bright molten lava, orange-yellow with dark cooling crust patches`
+- THEME_PAD: `a ring of dark basalt slabs with glowing red runes`
+- THEME_START: `a fanged demonic gate of black iron and bone, fire licking from the top`
+- THEME_END: `the demon lord's obsidian throne fortress with horns, spikes and a huge red crystal`
+- THEME_TREE1: `charred dead tree with glowing embers on its branches`
+- THEME_TREE2: `tall black spike rock formation glowing red at the cracks`
+- THEME_ROCK: `dark brimstone boulder with orange crystal shards`
+- THEME_BUSH: `pile of bones and skulls`
+- THEME_SMALL: `three small orange fire crystals in ash`
+- THEME_ARTIFACT: `a demonic totem of skulls and chains with a burning brazier`
 
-| 파일 | 캐릭터 꼬리 |
-|---|---|
-| `king-slime-walk-2x2.png` | Character: a giant royal green slime king wearing a golden crown, bouncing forward in four squash-and-stretch frames. |
-| `dice-dragon-walk-2x2.png` | Character: a chubby purple dragon made of ivory dice with red pips, FLYING with four wing-flap frames, hovering. |
-| `ogre-chef-walk-2x2.png` | Character: a huge ogre chef in a white toque and apron, carrying a giant ladle and a bubbling pot, stomping. |
-| `pumpkin-king-walk-2x2.png` | Character: a tall pumpkin-headed king in tattered purple robes with a vine scepter, lurching walk. |
-| `yeti-walk-2x2.png` | Character: a big fluffy white yeti wearing a dice pendant and ice club, heavy stomping walk. |
-| `candy-golem-walk-2x2.png` | Character: a massive golem built of candies, lollipops and gummy blocks, slow heavy strides. |
-| `kraken-walk-2x2.png` | Character: a pirate kraken with a captain hat and eyepatch, FLOATING with tentacles waving in four frames. |
-| `clock-owl-walk-2x2.png` | Character: a brass clockwork owl with gear wings and a glowing clock-face chest, FLYING with four wing-flap frames. |
-| `coral-queen-walk-2x2.png` | Character: a coral queen with a pearl crown, flowing seaweed dress and a trident, graceful walk. |
-| `ghost-king-walk-2x2.png` | Character: a translucent blue ghost king with a crown and floating cape, HOVERING with a wispy tail in four frames. |
-
----
-
-## C. 타워 스킨 24장 → `casual/towers/` (참고: `tN-a.png`, 실루엣·크기·받침 동일하게)
-
-프롬프트 = **공통** + **눈별 본체** + **테마 꼬리** 를 이어 붙임. 파일명은 `t{눈}-{글자}.png` (예: 3눈 서리 = `t3-c.png`). 6눈 × 4테마 = 24장.
-
-### 공통
-
-```
-Hand-painted casual tower defense tower, Kingdom Rush and Random Dice style, 3/4 isometric view, a single tall building on a round mossy stone pedestal, chibi proportions, thick clean outlines, 1:1 canvas, one object centered, plain light gray background, no text, no watermark. Keep the exact same silhouette, size and pedestal as the reference tower; change only materials, colors and decorations.
-```
-
-### 눈별 본체
-
-| 눈 | 본체 |
-|---|---|
-| 1 | An ivory dice watchtower whose single center pip is a huge glowing crimson eye-lens in a brass iris, firing a thin scarlet laser. |
-| 2 | An ivory dice artillery fort whose two pips are twin black iron cannon muzzles rimmed with bronze, powder kegs at the base. |
-| 3 | An ivory dice arcane obelisk whose three diagonal pips are glowing amethyst rune-gems, floating rune stones orbiting it. |
-| 4 | An ivory dice frost spire whose four corner pips are jagged blue ice crystals venting freezing mist, icicles on the edges. |
-| 5 | An ivory dice lightning tower whose four corner pips are copper lightning rods and the center pip a brass tesla coil, blue-white arcs between them. |
-| 6 | An ivory dice tyrant fortress whose six pips are black mortar ports with red-hot rims, wearing a spiked golden crown and crimson banners. |
-
-### 테마 꼬리
-
-| 글자 | 꼬리 |
-|---|---|
-| b | Theme skin: living forest — the dice body is carved from pale birch wood wrapped in moss and ivy, tiny mushrooms and glowing green fireflies, leaf-green accents. |
-| c | Theme skin: frozen — the dice body is translucent blue ice with frost patterns, snow on the top edges, icicles hanging, cold cyan glow. |
-| d | Theme skin: royal gold — the dice body is polished ivory with gold filigree trim, red velvet and gold banners, ruby gems on the pips, luxurious warm glow. |
-| e | Theme skin: void night — the dice body is obsidian black with violet cracks of energy, purple flames at the base, small floating star motes, dark mystical glow. |
-
-예시 (`t3-c.png`):
+## 저장 파일명 (테마마다 같음)
 
 ```
-Hand-painted casual tower defense tower, Kingdom Rush and Random Dice style, 3/4 isometric view, a single tall building on a round mossy stone pedestal, chibi proportions, thick clean outlines, 1:1 canvas, one object centered, plain light gray background, no text, no watermark. Keep the exact same silhouette, size and pedestal as the reference tower; change only materials, colors and decorations. An ivory dice arcane obelisk whose three diagonal pips are glowing amethyst rune-gems, floating rune stones orbiting it. Theme skin: frozen — the dice body is translucent blue ice with frost patterns, snow on the top edges, icicles hanging, cold cyan glow.
+casual/tiles/<theme>/floor.jpg
+casual/tiles/<theme>/road-straight.png   road-corner.png   road-t.png   road-cross.png   water.png
+casual/tiles/<theme>/pad.png   start.png   end.png
+casual/tiles/<theme>/prop-1.png … prop-6.png
 ```
 
----
+`<theme>` 는 `plains`, `forest`, `lake`, `darkforest`, `castle`, `hell`.
 
-## D. 인피니티 아레나 바닥 1장 → `casual/maps/map-inf-arena.jpg` (16:9, 1280×720)
+## 납품 순서
 
-이 맵은 도로·석단·포탈·크리스탈을 게임 코드가 그립니다. **아무것도 없는 바닥만** 그려 주세요.
+1. `plains` 15장 → 게임에서 확인 (이음새·크기·회색 제거 상태)
+2. 문제 없으면 `forest`, `lake`, `darkforest`, `castle`, `hell` 순으로 15장씩
 
-```
-Hand-painted casual tower defense arena FLOOR ONLY, Kingdom Rush and Random Dice style, 3/4 top-down isometric view, 16:9 landscape, full-bleed, no UI. A wide empty circular coliseum floor of worn violet-gray flagstones with faint glowing golden rune rings carved around the center, low stone parapet and torch braziers along the outer edge, dark violet night sky with giant floating ivory dice and stars beyond the parapet. The floor must be EMPTY: no roads, no paths, no tower pads, no portals, no buildings, no shrine, no characters, no text, no watermark. Gold and violet palette, chibi cute proportions, thick clean outlines, saturated colors.
-```
-
----
-
-## 납품 순서 제안
-
-1. **C 스킨 24장** (가장 빠르고 검수가 쉬움) → 2. **B 걷기 시트 34장** → 3. **A 하드 배경 20장**.
-각 묶음이 끝나면 파일명 목록과 함께 알려 주세요. 규칙 3·4(배경색, 2x2 칸 정렬)가 어긋나면 게임에서 잘못 잘리니 그 부분만 특히 확인 부탁드립니다.
+문제가 있으면 해당 조각만 다시 만들면 됩니다. 조각 하나가 없어도 게임은 그 자리만 코드 그림으로 대신하므로 부분 납품도 괜찮습니다.
 
 ---
