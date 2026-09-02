@@ -1069,7 +1069,7 @@ window.DKCONTENT = (function () {
         hpMult: +(1.8 * Math.pow(1.035, w - 1)).toFixed(3),   // w30 ≈ 4.9×, w50 ≈ 9.7×, w100 ≈ 55×
         count: Math.min(36, 12 + Math.floor(w * 0.6)),
         gap: Math.max(0.3, 0.8 - w * 0.01),
-        goldMult: +(1 + w * 0.045).toFixed(3),
+        goldMult: +(1 + w * 0.025).toFixed(3),
         speedMult: Math.min(1.5, 1 + Math.max(0, w - 40) * 0.01),
         bossHp: +(0.7 + w * 0.012).toFixed(2),                 // 보스 개별 보정(hpM)은 인피니티에서 쓰지 않는다
         bosses: w >= 20 && w % 10 === 0 ? 2 : 1,
