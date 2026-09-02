@@ -3000,7 +3000,8 @@ $('ov-btn').addEventListener('click', () => {
     if (S.mode === 'infinity') { S.mode = 'stage'; S.inf = null; gotoLobby(); } else gotoStageSelect();
     return;
   }
-  // 타이틀 → 로비
+  // 타이틀 → 로비 (?start=inf 이면 바로 인피니티)
+  if (window.DKAUTOSTART === 'inf' && infinityUnlocked()) { window.DKAUTOSTART = null; startInfinity(); return; }
   gotoLobby();
 });
 $('btn-stage-select').addEventListener('click', () => { audio(); gotoStageSelect(); });
@@ -3066,6 +3067,15 @@ function drawLoading(pr) {
     $('ov-desc').innerHTML += '<br><span style="color:#ff9f9f">⚠ file:// 로 열면 이미지 배경 보정이 생략됩니다. start.bat 또는 로컬 서버 사용을 권장합니다.</span>';
   }
   loadSave();
+  // 개발용 URL 플래그: ?unlock=all → 50 스테이지 클리어·타워 전부 해금 상태로 시작 (저장은 플레이 후 갱신될 때만)
+  //                    ?start=inf  → 타이틀 버튼을 누르면 로비 대신 바로 인피니티 시작
+  const qs = new URLSearchParams(location.search);
+  if (qs.get('unlock') === 'all') {
+    SAVE.cleared = Array.from({ length: 50 }, (_, i) => i + 1);
+    SAVE.unlockedTowers = [1, 2, 3, 4, 5, 6];
+    if (SAVE.gems < 200) SAVE.gems = 200;
+  }
+  window.DKAUTOSTART = qs.get('start');
   // 디버그 훅 (콘솔): DK 게임 상태, DKA 스프라이트, DKDIE/DKSLOT 주사위, DKthrow 던지기, DKLANES 레인
   window.DK = S; window.DKA = A; window.DKDIE = DIE; window.DKSLOT = SLOT;
   window.DKthrow = (vx, vy) => { if (canRoll()) throwDie(vx, vy); };

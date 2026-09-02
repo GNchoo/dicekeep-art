@@ -29,6 +29,8 @@ Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크�
 
 캐시: `index.html`·`editor.html`의 `?v=N` 을 올릴 것 (현재 v44).
 
+개발용 URL: `http://localhost:8137/?unlock=all` (50 스테이지 클리어·타워 전부 해금 상태로 시작, 젬 200 보장) · `?unlock=all&start=inf` (타이틀에서 바로 인피니티).
+
 디버그 (콘솔):
 - `window.DK` 게임 상태 (`gold`, `enemies`, `towers`, `stageData` …)
 - `window.DKA` 로드된 스프라이트

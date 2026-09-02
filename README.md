@@ -14,6 +14,8 @@ python serve.py
 
 Windows는 `start.bat`. `index.html`을 file://로 열지 말 것.
 
+테스트용: `http://localhost:8137/?unlock=all` 로 열면 50 스테이지 클리어·타워 전부 해금 상태(인피니티 열림). `&start=inf` 를 붙이면 바로 인피니티 시작.
+
 ## 플레이
 
 - 주사위 **플릭 던지기** 또는 버튼/R 로 굴리기 (40G)
