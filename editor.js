@@ -88,6 +88,7 @@
     render(); syncPanels();
   }
   let previewTierAuto = 1;
+  let avoidFn = null, avoidKey = null;
   function effectiveTier() {
     const v = $('tier-preview').value;
     if (v === 'off') return 0;
@@ -138,7 +139,9 @@
     const l = curLayout();
     if (l.path.length < 2) return null;
     const fake = { path: l.path, spots: l.spots, path2: l.path2.length > 1 ? l.path2 : null, spots2: l.spots2.length ? l.spots2 : null };
-    try { return C.buildLayout(fake, tier); } catch (e) { return null; }
+    // 게임과 같은 물 판정 (배경 픽셀). file:// 이면 null.
+    if (avoidKey !== imgKey && img && img.complete && img.naturalWidth && C.makeAvoidFromImage) { avoidFn = C.makeAvoidFromImage(img); avoidKey = imgKey; }
+    try { return C.buildLayout(fake, tier, { avoid: avoidFn }); } catch (e) { return null; }
   }
 
   // ---- 렌더 ----

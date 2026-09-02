@@ -89,6 +89,7 @@ Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크�
 
 - 기본 석단 = `MAP_LAYOUTS.spots` (아트의 석단 위).
 - 티어 추가 석단 = `MAP_LAYOUTS_HARD.spots2` 가 있으면 그것을 먼저, 부족하면 코드가 흙길 양옆 평지에 생성 (`buildExtraSpots`: 길에서 46px 이상, 다른 석단과 60px 이상, 포탈·크리스탈에서 96px 이상).
+- **물 회피**: 게임·에디터가 배경 픽셀을 읽어 파랑 우세(물·바다) 지점을 거른다 (`makeAvoidFromImage`). 온통 파란 맵(얼음호수 등)은 2차 패스로 회피 없이 채운다.
 - 코드 생성 석단은 인게임에서 **돌 받침을 코드로 그린다** (`SPOT_BASE` 이후 인덱스).
 - 맵이 바뀌어도 타워는 같은 슬롯 인덱스에 남는다.
 
@@ -130,7 +131,7 @@ Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크�
 - `air` 하늘길 (y −42, 그림자)
 - `burrow` 땅굴, 잠수 타이머, 숨으면 타겟 불가
 
-걷기 시트 12종 완료 (slime~turtle). 13~24 (squirrel~mouse)와 보스 1~10 은 **코드에 미리 연결**돼 있어 파일만 넣으면 된다. 파일이 없으면 정지컷 폴백 (`loadImage` 의 `missing` 표식).
+걷기 시트 12종 완료 (slime~turtle). 13~36 (squirrel~meerkat)과 보스 1~10 은 **코드에 미리 연결**돼 있어 파일만 넣으면 된다. 파일이 없으면 정지컷 폴백 (`loadImage` 의 `missing` 표식).
 
 ---
 
@@ -158,7 +159,7 @@ Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크�
 | 배경 | 50 | `casual/maps/*.jpg` | 완료 |
 | 하드 배경 (흙길 2개·석단 14개) | 20 (S31~50) | `casual/maps/map-NN-*-hard.jpg` | **생성 대기** → ART-PROMPTS §1 |
 | 몬스터 고유 | 500 | `casual/enemies/*.png` | 완료 |
-| 적 걷기 시트 | 순차 | `*-walk-2x2.png` | 12 완료, **13~24 생성 대기** → ART-PROMPTS §2 |
+| 적 걷기 시트 | 순차 | `*-walk-2x2.png` | 12 완료, **13~36 생성 대기** (코드 연결 완료) → ART-PROMPTS §2 |
 | 보스 고유 | 100 | `casual/bosses/*.png` | 완료 |
 | 보스 걷기 시트 | 순차 | `casual/bosses/*-walk-2x2.png` | **1~10 생성 대기** → ART-PROMPTS §2 |
 | 타워 인게임 | 6 | `t1-a`~`t6-a` | 완료 (2D 아이소) |
@@ -221,6 +222,7 @@ dicekeep-art/
 1. **하드 배경 20장 생성** (S31~50, ART-PROMPTS §1) → 에디터로 `path2`/`spots2` 작성 → `MAP_LAYOUTS_HARD` 에 붙여넣기 (`src` 포함)
 2. **적 걷기 시트 13~24 + 보스 걷기 1~10 생성** (ART-PROMPTS §2) → 파일만 넣으면 끝
 3. **타워 스킨 b~e 재생성** (ART-PROMPTS §3) → 파일 덮어쓰기
-4. 실플레이로 티어 3~5 밸런스 확인 (시뮬레이션 기준: 1웨이브 여유 1.8→0.95, 보스 웨이브 3.7→1.8 로 완만히 하락)
-5. 코드 생성 추가 석단이 물 위에 걸리는 맵은 에디터 "자동 석단 굳히기"로 손보기
-6. 남은 적 25~ 걷기 시트 순차 추가 (`NEXT_WALK` 배열에 id 추가)
+4. 밸런스: 자동 플레이 봇(`DKroll`/`DKplace` 훅) 결과는 §9 참조. 실제 손플레이로 티어 4~5 재확인
+5. ~~물 위 석단~~ → 배경 픽셀 물 회피로 해결. 그래도 어색한 맵은 에디터 "자동 석단 굳히기"로 손보기
+6. ~~적 25~36 걷기 연결~~ → 완료. 37~ 은 `NEXT_WALK` 에 id 추가 + ART-PROMPTS §2 에 프롬프트 추가
+7. 디버그 훅: `DKroll()` 즉시 굴림, `DKplace(idx)` 배치, `DKspots()`, `DKSAVE` — 자동 플레이 봇용

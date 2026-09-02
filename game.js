@@ -54,6 +54,7 @@ const ENEMY_DEFS = {
 // 레인 = 적이 따라가는 폴리라인. 티어에 따라 흙길·하늘길·땅굴·두 번째 흙길이 생긴다 (content.js buildLayout).
 
 let LANES = []; // { kind, pts, segs, len, label }
+const avoidCache = {}; // mapKey → 물 판정 함수
 function buildLane(kind, pts, label) {
   const segs = [];
   let len = 0;
@@ -70,7 +71,13 @@ function applyMapLayout(mapKey, tier) {
   const C = window.DKCONTENT;
   const m = C && C.maps && C.maps.find(x => x.key === mapKey);
   if (m && C.buildLayout) {
-    const L = C.buildLayout(m, tier || 1);
+    // 배경 픽셀로 물 판정 → 코드 생성 석단이 물 위에 걸리지 않게
+    let avoid = null;
+    if (C.makeAvoidFromImage && A[mapKey] && A[mapKey].width) {
+      if (!avoidCache[mapKey]) avoidCache[mapKey] = C.makeAvoidFromImage(A[mapKey]) || (() => false);
+      avoid = avoidCache[mapKey];
+    }
+    const L = C.buildLayout(m, tier || 1, { avoid });
     LANES = L.lanes.map(l => buildLane(l.kind, l.pts, l.label));
     SPOTS = L.spots;
     SPOT_BASE = L.baseSpotCount;
@@ -2867,6 +2874,10 @@ function drawLoading(pr) {
   window.DKthrow = (vx, vy) => { if (canRoll()) throwDie(vx, vy); };
   window.DKLANES = () => LANES;
   window.DKstart = startStage;
+  window.DKplace = tryPlace;                      // 보유 주사위를 석단 idx 에 놓기
+  window.DKroll = () => { if (S.phase === 'playing' && !S.heldDie && S.gold >= ROLL_COST) { S.gold -= ROLL_COST; S.heldDie = pickUnlockedFace(); syncUI(); return S.heldDie; } return 0; }; // 즉시 굴림 (테스트용)
+  window.DKspots = () => SPOTS;
+  window.DKSAVE = SAVE;
   S.phase = 'title';
   $('ov-btn').disabled = false;
   $('ov-btn').textContent = '게임 시작';

@@ -230,7 +230,7 @@ window.DKCONTENT = (function () {
     return pts;
   }
   // 추가 석단: 흙길 양옆 평지에 일정 간격으로 후보를 만들고 기존 석단·길·포탈·크리스탈과 겹치지 않는 것을 고른다.
-  function buildExtraSpots(groundPaths, baseSpots, count) {
+  function buildExtraSpots(groundPaths, baseSpots, count, avoid) {
     if (count <= 0) return [];
     const main = groundPaths[0];
     const len = pathLength(main);
@@ -249,29 +249,61 @@ window.DKCONTENT = (function () {
         }
       }
     }
-    const ok = (c) => {
+    const ok = (c, useAvoid) => {
       for (const gp of groundPaths) if (pathDist(c[0], c[1], gp) < 46) return false;
       for (const e of ends) if (Math.hypot(c[0] - e[0], c[1] - e[1]) < 96) return false;
       for (const s of taken) if (Math.hypot(c[0] - s[0], c[1] - s[1]) < 60) return false;
+      if (useAvoid && avoid && avoid(c[0], c[1])) return false; // 물·용암 등 배경 픽셀 판정 (game.js/editor.js 가 넘김)
       return true;
     };
-    // 길을 따라 고르게 퍼지도록 stride 로 훑는다
+    // 길을 따라 고르게 퍼지도록 stride 로 훑는다. 1차: 물 회피 포함, 2차: 부족하면 회피 없이 채움 (얼음호수처럼 온통 파란 맵)
     const out = [];
-    const valid = cands.filter((c) => ok(c.pt));
-    if (!valid.length) return out;
-    const stride = Math.max(1, Math.floor(valid.length / count));
-    let k = 0;
-    while (out.length < count && k < valid.length * 2) {
-      const c = valid[(k * stride) % valid.length];
-      k++;
-      if (ok(c.pt)) { out.push(c.pt); taken.push(c.pt); }
+    for (const useAvoid of [true, false]) {
+      if (out.length >= count) break;
+      const valid = cands.filter((c) => ok(c.pt, useAvoid));
+      if (!valid.length) continue;
+      const stride = Math.max(1, Math.floor(valid.length / (count - out.length)));
+      let k = 0;
+      while (out.length < count && k < valid.length * 2) {
+        const c = valid[(k * stride) % valid.length];
+        k++;
+        if (ok(c.pt, useAvoid)) { out.push(c.pt); taken.push(c.pt); }
+      }
     }
     return out;
   }
 
+  // 배경 이미지로 "석단을 두면 안 되는 곳" 판정기를 만든다. 반경 안 샘플의 절반 이상이 물빛(파랑 우세)이면 true.
+  function makeAvoidFromImage(img) {
+    try {
+      const cv = document.createElement('canvas');
+      cv.width = W; cv.height = H;
+      const g = cv.getContext('2d', { willReadFrequently: true });
+      g.drawImage(img, 0, 0, W, H);
+      const data = g.getImageData(0, 0, W, H).data;
+      const isWater = (x, y) => {
+        const i = ((y | 0) * W + (x | 0)) * 4;
+        const r = data[i], gg = data[i + 1], b = data[i + 2];
+        return b > 80 && b > r + 22 && b > gg + 4; // 파랑 우세 = 물·바다·하늘빛 호수
+      };
+      return (x, y) => {
+        let hit = 0, n = 0;
+        for (let dy = -18; dy <= 18; dy += 9) for (let dx = -26; dx <= 26; dx += 13) {
+          const sx = x + dx, sy = y + dy;
+          if (sx < 0 || sy < 0 || sx >= W || sy >= H) continue;
+          n++;
+          if (isWater(sx, sy)) hit++;
+        }
+        return n > 0 && hit / n >= 0.4;
+      };
+    } catch (e) { return null; } // file:// 등으로 픽셀을 읽을 수 없으면 판정 없음
+  }
+
   // 티어(또는 스테이지 번호)에 맞춘 최종 레이아웃
-  function buildLayout(map, tierOrStage) {
+  // opts.avoid(x, y) → true 면 그 자리에 석단을 두지 않는다 (배경 이미지의 물 판정 등)
+  function buildLayout(map, tierOrStage, opts) {
     const T = typeof tierOrStage === 'object' ? tierOrStage : (tierOrStage > 5 ? tierOf(tierOrStage) : TIERS[Math.max(0, (tierOrStage | 0) - 1)]);
+    const avoid = opts && opts.avoid;
     const base = map.path.map((p) => p.slice());
     const lanes = [];
     const groundPaths = [base];
@@ -290,7 +322,7 @@ window.DKCONTENT = (function () {
     let extra = [];
     if (T.extraSpots > 0) {
       if (map.spots2 && map.spots2.length) extra = map.spots2.slice(0, T.extraSpots).map((p) => p.slice());
-      if (extra.length < T.extraSpots) extra = extra.concat(buildExtraSpots(groundPaths, spots.concat(extra), T.extraSpots - extra.length));
+      if (extra.length < T.extraSpots) extra = extra.concat(buildExtraSpots(groundPaths, spots.concat(extra), T.extraSpots - extra.length, avoid));
     }
     return { tier: T, lanes, spots: spots.concat(extra), baseSpotCount: spots.length };
   }
@@ -905,7 +937,10 @@ window.DKCONTENT = (function () {
   // ===== 걷기 시트 순차 연결 =====
   // 13~24번째 적과 보스 1~10 은 시트 파일이 아직 없어도 미리 연결해 둔다.
   // 파일이 없으면 game.js 가 정지컷으로 폴백하므로 안전하다. (프롬프트: ART-PROMPTS.md)
-  const NEXT_WALK = ['squirrel', 'hedgehog', 'duck', 'panda', 'koala', 'catsamurai', 'goat', 'otter', 'tanuki', 'wolf', 'boar', 'mouse'];
+  const NEXT_WALK = [
+    'squirrel', 'hedgehog', 'duck', 'panda', 'koala', 'catsamurai', 'goat', 'otter', 'tanuki', 'wolf', 'boar', 'mouse',           // 13~24
+    'chameleon', 'seahorse', 'alpaca', 'beaver', 'snake', 'porcupine', 'kiwi', 'rhino', 'hippo', 'capybara', 'axolotl', 'meerkat', // 25~36
+  ];
   const camel = (id) => id.charAt(0).toUpperCase() + id.slice(1);
   for (const b of bases) {
     if (b.walk || !NEXT_WALK.includes(b.id)) continue;
@@ -984,7 +1019,7 @@ window.DKCONTENT = (function () {
 
   return {
     maps, towerSkins, skinLetters: SKIN_LETTERS, bases, bossBases, species, bosses, stages,
-    tiers: TIERS, tierOf, buildLayout, pathLength, pathAt,
+    tiers: TIERS, tierOf, buildLayout, makeAvoidFromImage, pathLength, pathAt,
     mapCount: 50, stageCount: 50,
   };
 })();

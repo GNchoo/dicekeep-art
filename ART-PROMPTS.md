@@ -11,7 +11,7 @@
 | 섹션 | 수량 | 저장 위치 | 코드 연결 |
 |---|---|---|---|
 | §1 하드 배경 | 20 | `casual/maps/map-NN-<theme>-hard.jpg` | `content.js` `MAP_LAYOUTS_HARD` 에 `src` + 에디터로 `path2`/`spots2` |
-| §2 걷기 시트 (적 12 + 보스 10) | 22 | `casual/enemies/<id>-walk-2x2.png`, `casual/bosses/<file>-walk-2x2.png` | **이미 연결됨** — 파일만 넣으면 됨 |
+| §2 걷기 시트 (적 24 + 보스 10) | 34 | `casual/enemies/<id>-walk-2x2.png`, `casual/bosses/<file>-walk-2x2.png` | **이미 연결됨** — 파일만 넣으면 됨 |
 | §3 타워 스킨 b~e | 24 | `casual/towers/tN-<letter>.png` 덮어쓰기 | **이미 연결됨** |
 
 ---
@@ -92,6 +92,23 @@ Hand-painted 2x2 sprite sheet, four frames of a walk cycle read left-to-right th
 | wolf | `wolf-walk-2x2.png` | `Character: a gray wolf scout with a red bandana, small dagger at the belt, keen eyes, quick trot.` |
 | boar | `boar-walk-2x2.png` | `Character: a stocky wild boar knight in dented iron plate armor and a horned helmet, charging posture.` |
 | mouse | `mouse-walk-2x2.png` | `Character: a tiny mouse wizard in an oversized blue star-patterned hat and robe, holding a glowing wand.` |
+
+### 적 25~36 (`casual/enemies/<id>-walk-2x2.png`) — 다음 배치, 코드 연결 완료
+
+| id | 파일 | 캐릭터 꼬리 프롬프트 |
+|---|---|---|
+| chameleon | `chameleon-walk-2x2.png` | `Character: a green chameleon painter with a beret and a paint palette, color-shifting tail, curious eyes.` |
+| seahorse | `seahorse-walk-2x2.png` | `Character: a teal seahorse knight in a shell helmet with a coral lance, hopping upright on its curled tail.` |
+| alpaca | `alpaca-walk-2x2.png` | `Character: a fluffy cream alpaca porter with saddle bags and a red tassel bridle, calm trot.` |
+| beaver | `beaver-walk-2x2.png` | `Character: a brown beaver carpenter with a hard hat, a hammer on the belt and a wooden plank on the shoulder.` |
+| snake | `snake-walk-2x2.png` | `Character: a coiled green snake ninja with a black mask and a tiny throwing star, slithering forward in four frames.` |
+| porcupine | `porcupine-walk-2x2.png` | `Character: a porcupine shield-bearer with a big round wooden shield and bristling quills, sturdy march.` |
+| kiwi | `kiwi-walk-2x2.png` | `Character: a round brown kiwi bird knight with a tiny bucket helmet and a stick sword, quick steps.` |
+| rhino | `rhino-walk-2x2.png` | `Character: a baby gray rhino in leather harness armor, head lowered, heavy stomping charge.` |
+| hippo | `hippo-walk-2x2.png` | `Character: a chubby purple hippo sailor in a striped shirt and sailor cap, waddling.` |
+| capybara | `capybara-walk-2x2.png` | `Character: a relaxed capybara with a towel on its head and a yuzu fruit, slow unbothered stroll.` |
+| axolotl | `axolotl-walk-2x2.png` | `Character: a pink axolotl mage with glowing gill fronds and a small water orb staff, bouncy walk.` |
+| meerkat | `meerkat-walk-2x2.png` | `Character: a meerkat sentry with a tiny spear and a scout scarf, alert upright posture, brisk steps.` |
 
 ### 보스 1~10 (`casual/bosses/<file>-walk-2x2.png`)
 
