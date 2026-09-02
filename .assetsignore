@@ -1,0 +1,12 @@
+# Workers 정적 에셋 배포에서 제외할 파일 (gitignore 문법)
+.git
+.github
+.claude
+node_modules
+.wrangler
+*.md
+LICENSE
+serve.py
+start.bat
+wrangler.jsonc
+.assetsignore

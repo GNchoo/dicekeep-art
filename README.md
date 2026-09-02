@@ -16,6 +16,16 @@ Windows는 `start.bat`. `index.html`을 file://로 열지 말 것.
 
 테스트용: `http://localhost:8137/?unlock=all` 로 열면 50 스테이지 클리어·타워 전부 해금 상태(인피니티 열림). `&start=inf` 를 붙이면 바로 인피니티 시작.
 
+### 외부 공개 (Cloudflare Workers)
+
+저장소를 Cloudflare Workers에 연결하면 정적 에셋으로 그대로 배포된다 (`wrangler.jsonc`, 제외 목록 `.assetsignore`, 캐시 규칙 `_headers`).
+
+1. Cloudflare 대시보드 → 컴퓨트 → Workers & Pages → 만들기 → **저장소 가져오기** → `GNchoo/dicekeep-art`
+2. 빌드 명령 비움, 배포 명령 `npx wrangler deploy` (기본값) → 배포
+3. `https://dicekeep.<계정>.workers.dev` 로 접속. main에 push하면 자동 재배포, 다른 브랜치는 미리보기 주소가 생긴다.
+
+이미지는 하루 캐시된다. 같은 파일명으로 그림을 바꾸면 최대 하루 뒤 반영되므로, 바로 보려면 브라우저 강력 새로고침(Ctrl+Shift+R).
+
 ## 플레이
 
 - 주사위 **플릭 던지기** 또는 버튼/R 로 굴리기 (40G)
