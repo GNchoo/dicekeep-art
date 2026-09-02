@@ -128,9 +128,23 @@ function drawArenaFloor(g, m) {
   g.strokeStyle = 'rgba(255,255,255,0.045)'; g.lineWidth = 1;
   for (let x = 0; x <= W; x += 64) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, H); g.stroke(); }
   for (let y = 0; y <= H; y += 64) { g.beginPath(); g.moveTo(0, y); g.lineTo(W, y); g.stroke(); }
-  for (const [rx, ry, a] of [[120, 62, 0.35], [260, 135, 0.22], [400, 208, 0.14]]) {
-    g.strokeStyle = `rgba(214,150,255,${a})`; g.lineWidth = 3; g.setLineDash([14, 10]);
-    g.beginPath(); g.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2); g.stroke();
+  // 가운데 석단 보드: 돌 단 + 금색 룬 테두리 (랜덤다이스의 15칸 보드)
+  const bd = m.board;
+  if (bd) {
+    g.setLineDash([]);
+    g.fillStyle = 'rgba(0,0,0,0.35)'; g.beginPath(); g.roundRect(bd.x - 6, bd.y + 6, bd.w + 12, bd.h + 12, 26); g.fill();
+    const bg = g.createLinearGradient(0, bd.y, 0, bd.y + bd.h);
+    bg.addColorStop(0, '#5a4d70'); bg.addColorStop(1, '#3e3352');
+    g.fillStyle = bg; g.beginPath(); g.roundRect(bd.x, bd.y, bd.w, bd.h, 24); g.fill();
+    g.strokeStyle = 'rgba(232,182,74,0.55)'; g.lineWidth = 3; g.beginPath(); g.roundRect(bd.x + 6, bd.y + 6, bd.w - 12, bd.h - 12, 20); g.stroke();
+    g.strokeStyle = 'rgba(255,255,255,0.06)'; g.lineWidth = 1;
+    for (let x = bd.x + 44; x < bd.x + bd.w; x += 88) { g.beginPath(); g.moveTo(x, bd.y + 8); g.lineTo(x, bd.y + bd.h - 8); g.stroke(); }
+    for (let y = bd.y + 48; y < bd.y + bd.h; y += 88) { g.beginPath(); g.moveTo(bd.x + 8, y); g.lineTo(bd.x + bd.w - 8, y); g.stroke(); }
+  } else {
+    for (const [rx, ry, a] of [[120, 62, 0.35], [260, 135, 0.22], [400, 208, 0.14]]) {
+      g.strokeStyle = `rgba(214,150,255,${a})`; g.lineWidth = 3; g.setLineDash([14, 10]);
+      g.beginPath(); g.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2); g.stroke();
+    }
   }
   g.setLineDash([]);
   g.restore();
@@ -921,6 +935,7 @@ function stageCleared(n) { return SAVE.cleared.includes(n); }
 
 // 굴리기 결과를 해금된 눈으로 제한
 function unlockedFaces() {
+  if (S.mode === 'infinity') return [1, 2, 3, 4, 5, 6]; // 인피니티는 풀파워: 모든 눈 해금
   const u = (SAVE.unlockedTowers || []).filter((f) => f >= 1 && f <= 6);
   return u.length ? u : [1];
 }
@@ -2885,7 +2900,7 @@ function syncInfPanel() {
     const cost = maxed ? 0 : d.cost(lv);
     btn.querySelector('.inf-lv').textContent = maxed ? 'MAX' : `Lv${lv}`;
     btn.querySelector('.inf-cost').textContent = maxed ? '—' : `${cost} SP`;
-    btn.disabled = maxed || S.inf.sp < cost || !SAVE.unlockedTowers.includes(f);
+    btn.disabled = maxed || S.inf.sp < cost || !unlockedFaces().includes(f);
     btn.classList.toggle('maxed', maxed);
     btn.title = `${TOWER_DEFS[f].name} · 피해 ×${d.dmgMult(lv).toFixed(2)} · 사거리 +${d.rangeAdd(lv)} · ${d.special[f].label} (${d.tier(lv)}단계)`;
   }
