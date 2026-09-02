@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>주사위 성채 (Dicekeep)</title>
-<link rel="stylesheet" href="style.css?v=43" />
+<link rel="stylesheet" href="style.css?v=44" />
 <link rel="icon" href="ui/gold.png" />
 </head>
 <body>
@@ -43,7 +43,9 @@
         <div class="lobby-btns">
           <button id="btn-stage-select" class="big-btn">스테이지 선택</button>
           <button id="btn-shop" class="big-btn alt">상점</button>
+          <button id="btn-infinity" class="big-btn inf" disabled>&#128274; 인피니티</button>
         </div>
+        <div id="lobby-inf" class="screen-sub inf-sub"></div>
       </div>
     </div>
 
@@ -87,6 +89,16 @@
       <div id="held-info" class="hidden"><b id="held-name"></b><span id="held-desc"></span></div>
     </div>
 
+    <div id="inf-panel" class="hidden" title="웨이브를 넘길 때마다 SP를 얻어 눈을 강화합니다 (단축키 1~6)">
+      <div class="inf-sp-chip">SP <b id="inf-sp">0</b></div>
+      <button id="inf-face-1" class="inf-face"><span class="inf-pip">1</span><span class="inf-lv">Lv0</span><span class="inf-cost">1 SP</span></button>
+      <button id="inf-face-2" class="inf-face"><span class="inf-pip">2</span><span class="inf-lv">Lv0</span><span class="inf-cost">1 SP</span></button>
+      <button id="inf-face-3" class="inf-face"><span class="inf-pip">3</span><span class="inf-lv">Lv0</span><span class="inf-cost">1 SP</span></button>
+      <button id="inf-face-4" class="inf-face"><span class="inf-pip">4</span><span class="inf-lv">Lv0</span><span class="inf-cost">1 SP</span></button>
+      <button id="inf-face-5" class="inf-face"><span class="inf-pip">5</span><span class="inf-lv">Lv0</span><span class="inf-cost">1 SP</span></button>
+      <button id="inf-face-6" class="inf-face"><span class="inf-pip">6</span><span class="inf-lv">Lv0</span><span class="inf-cost">1 SP</span></button>
+    </div>
+
     <div id="right-panel">
       <div id="info-panel" class="hidden">
         <div id="info-head"><img id="info-dice" alt=""><b id="info-name"></b></div>
@@ -107,7 +119,7 @@
   <img id="ghost-tower" alt="">
   <div id="ghost-ring"></div>
 </div>
-<script src="content.js?v=43"></script>
-<script src="game.js?v=43"></script>
+<script src="content.js?v=44"></script>
+<script src="game.js?v=44"></script>
 </body>
 </html>

@@ -421,3 +421,30 @@ body.placing #game { cursor: grabbing; }
 .stage-cell.tier-4 { border-color: #8a5a20; }
 .stage-cell.tier-5 { border-color: #8a2a2a; background: linear-gradient(#3a1e1e, #24100f); }
 .stage-cell.tier-5.cleared { background: linear-gradient(#2e5b46, #1c3d2d); }
+
+/* ==================== 인피니티 모드 ==================== */
+.big-btn.inf { background: linear-gradient(#7a2f6a, #4a1a40); border-color: #ff7ad9; color: #ffd6f3; }
+.big-btn.inf.locked, .big-btn.inf:disabled { opacity: .55; cursor: default; filter: none; transform: none; }
+.inf-sub { margin-top: 10px; color: #e6b8dc; }
+#inf-panel {
+  display: flex; align-items: center; gap: 5px;
+  padding: 4px 8px; margin-left: 6px;
+  background: rgba(70, 20, 60, .45);
+  border: 1px solid #a24d8c; border-radius: 10px;
+  flex-shrink: 0;
+}
+.inf-sp-chip { font-size: 12px; color: #ffd6f3; padding: 0 6px; white-space: nowrap; }
+.inf-sp-chip b { color: #ff9ae0; font-size: 16px; }
+.inf-face {
+  width: 46px; height: 62px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px;
+  background: linear-gradient(#5a2a52, #3a1634);
+  border: 1px solid #a24d8c; border-radius: 8px;
+  color: #ffd6f3; font-family: inherit; cursor: pointer; padding: 2px 0;
+}
+.inf-face:hover:not(:disabled) { filter: brightness(1.3); transform: translateY(-1px); }
+.inf-face:disabled { opacity: .45; cursor: default; }
+.inf-face.maxed { border-color: var(--gold); opacity: .9; }
+.inf-face .inf-pip { font-size: 16px; font-weight: bold; color: #fff; }
+.inf-face .inf-lv { font-size: 10px; color: #ffb8ea; }
+.inf-face .inf-cost { font-size: 9px; color: #e8b64a; }

@@ -154,6 +154,14 @@ Hand-painted casual tower defense tower, Kingdom Rush and Random Dice style, 3/4
 
 ---
 
+## D. 인피니티 아레나 배경 1장 → `casual/maps/map-inf-arena.jpg` (16:9, 1280×720)
+
+```
+Hand-painted casual tower defense arena map, Kingdom Rush and Random Dice style, 3/4 top-down isometric view, 16:9 landscape, full-bleed, no UI. A circular coliseum floor under a dark violet night sky with giant floating ivory dice and stars. A grand crystal shrine stands slightly right of CENTER. One wide dirt road starts at a glowing purple portal gate at the LEFT edge and spirals one full lap around the shrine before reaching its gate; a second road starts at a portal gate at the BOTTOM edge and merges into the spiral halfway. Along both roads, on flat ground beside the road (never on the road), place 16 round flat stone tower pads of identical size, evenly spread. Gold and violet palette, glowing rune trims, chibi cute proportions, thick clean outlines, saturated colors, no characters, no text, no watermark.
+```
+
+---
+
 ## 납품 순서 제안
 
 1. **C 스킨 24장** (가장 빠르고 검수가 쉬움) → 2. **B 걷기 시트 34장** → 3. **A 하드 배경 20장**.

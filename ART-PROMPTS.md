@@ -185,3 +185,15 @@ Hand-painted casual tower defense tower, Kingdom Rush and Random Dice style, 3/4
 ```text
 ... (기존 맵 프롬프트) ... Additionally paint a faint trail of small fluffy clouds arcing across the upper part of the map from the portal to the crystal castle, and a line of small dirt mounds with cracked earth running beside the main road (a burrow tunnel), both subtle and not obstructing the road.
 ```
+
+---
+
+## §5. 인피니티 아레나 배경 1장 (`casual/maps/map-inf-arena.jpg`, 1280×720)
+
+50 스테이지를 모두 깬 뒤 열리는 무한 모드 전용 맵. 도착 전에는 왕실정원(50) 하드 배경으로 동작한다.
+
+```text
+Hand-painted casual tower defense arena map, Kingdom Rush and Random Dice style, 3/4 top-down isometric view, 16:9 landscape, full-bleed, no UI. A circular coliseum floor under a dark violet night sky with giant floating ivory dice and stars. A grand crystal shrine stands slightly right of CENTER. One wide dirt road starts at a glowing purple portal gate at the LEFT edge and spirals one full lap around the shrine before reaching its gate; a second road starts at a portal gate at the BOTTOM edge and merges into the spiral halfway. Along both roads, on flat ground beside the road (never on the road), place 16 round flat stone tower pads of identical size, evenly spread. Gold and violet palette, glowing rune trims, chibi cute proportions, thick clean outlines, saturated colors, no characters, no text, no watermark.
+```
+
+연결: 파일을 넣은 뒤 `editor.html` 에서 맵 목록 맨 끝 "무한 투기장" 을 열어 흙길(P, 왼쪽 포탈→크리스탈)·흙길2(O, 아래 포탈→합류→크리스탈)·석단(S)·추가석단(A) 을 찍고, "전체 생성" 결과의 `cInf` 항목을 `MAP_LAYOUTS` 와 `MAP_LAYOUTS_HARD` 에 붙여넣는다. `cInf` 항목이 생기면 왕실정원 폴백은 자동으로 꺼진다.

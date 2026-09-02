@@ -27,7 +27,7 @@ python serve.py
 
 Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크로마키 실패).
 
-캐시: `index.html`·`editor.html`의 `?v=N` 을 올릴 것 (현재 v43).
+캐시: `index.html`·`editor.html`의 `?v=N` 을 올릴 것 (현재 v44).
 
 디버그 (콘솔):
 - `window.DK` 게임 상태 (`gold`, `enemies`, `towers`, `stageData` …)
@@ -36,7 +36,7 @@ Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크�
 - `window.DKSLOT` 버튼 슬롯 굴림
 - `window.DKthrow(vx, vy)` 필드 물리 던지기
 - `window.DKLANES()` 현재 레인 배열
-- `window.DKstart(n)` 스테이지 n 바로 시작
+- `window.DKstart(n)` 스테이지 n 바로 시작 · `DKstartInf()` 인피니티 시작 · `DKinf()` 런 상태 · `DKupgrade(f)` 눈 강화
 - `window.DKCONTENT` 맵/적/타워/티어 카탈로그 (`buildLayout`, `tiers`)
 
 ---
@@ -110,6 +110,39 @@ Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크�
 
 레벨: 데미지 `[1, 1.6, 2.4]`, 사거리 `+0/+12/+24`, 연사 `1/0.92/0.85`. 앵커: 타워 발밑(받침) = `(t.x, t.y)` = 석단.
 
+### 인피니티 모드 (무한 투기장)
+
+| 항목 | 값 |
+|---|---|
+| 해금 | 50 스테이지 전부 클리어 (`SAVE.cleared.length >= 50`) → 로비 "∞ 인피니티" 버튼 |
+| 맵 | `cInf` 무한 투기장 (`casual/maps/map-inf-arena.jpg`). 배경·레이아웃이 없으면 **왕실정원(50) 하드 배경·레이아웃으로 폴백** |
+| 레인 | 흙길 + 흙길2 + 하늘길 + 땅굴 (처음부터 전부), 추가 석단 +8 |
+| 시작 | 골드 400, 목숨 20, 웨이브 상한 없음, 웨이브 간 6초 |
+| 적 HP | 기본 × `2.2 × 1.065^(w−1)` × 종 보정 (w50 ≈ 48×, w100 ≈ 1,100×) |
+| 마릿수 | `12 + floor(w×0.8)` (최대 48), 간격 `0.8 − 0.012w` (최소 0.26초) |
+| 속도 | 웨이브 30부터 +1%/웨이브 (최대 1.6×) |
+| 정예 | 5의 배수 웨이브에 2마리(20부터 3마리): HP×3, 크기×1.2, 골드×3, 금테 표시 |
+| 보스 | 10의 배수 웨이브: 100 보스 순환, HP × `(1.3 + 0.02w)` × 보스 보정 × 0.5. 20부터 2마리 |
+| 골드 | 처치 골드 × `(1 + 0.045w)` |
+| SP | 웨이브 클리어 +1, 10의 배수 +3 |
+| 종료 | 목숨 0 또는 HUD ≡ 버튼(포기). 완료 웨이브 = `S.wave − 1` 기준으로 기록 |
+| 젬 | `floor(웨이브/10) × 2` + 최초 도달 마일스톤(25/50/100/200)당 +15 |
+| 저장 | `SAVE.infBest`, `SAVE.infRuns`(최근 5회), `SAVE.infMilestones` |
+
+정의: `content.js` `INFINITY` (`wave(w)` 가 위 수치를 돌려주고 `game.js` `buildInfinityWave` 가 그대로 쓴다).
+
+**눈별 강화 (SP)** — `content.js` `DICE_POWER`, HUD 강화 패널 또는 단축키 1~6:
+
+| 항목 | 값 |
+|---|---|
+| 최대 Lv | 10 |
+| 비용 | `1 + floor(Lv/3)` SP (Lv0→1 1SP … Lv9→10 4SP, 총 22SP) |
+| 피해 | `×(1 + 0.15Lv)` (최대 2.5×) |
+| 사거리 | `+3/Lv` |
+| 특수 (3Lv마다 1단계) | 1눈 연사 −6% · 2눈 광역 +8 · 3눈 피해 +10% · 4눈 둔화 +4% · 5눈 연쇄 +1 · 6눈 광역 +6 & 피해 +8% |
+
+강화는 해당 눈의 모든 타워에 즉시 적용되며 스테이지 모드에서는 항상 Lv0 이다 (`powerLv`). 합체 상한은 Lv3 그대로.
+
 ### 조작 (두 갈래 — 합치지 말 것)
 
 1. **필드 플릭** — 맵 왼쪽 아래 3D 주사위를 잡고 던진다. 윗면이 결과. 적에게 세게 맞히면 속도 비례 피해.
@@ -167,6 +200,7 @@ Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크�
 | 타워 공격 시트 | 6 | `tN-attack-2x2.png` | 완료 |
 | 공격 VFX | 눈별 | `vfx/` | 완료 |
 | 포탈 (추가 레인) | 1 | `props/portal.png` | 완료 (코드가 그림) |
+| 인피니티 아레나 배경 | 1 | `casual/maps/map-inf-arena.jpg` | **생성 대기** → ART-PROMPTS §5 (도착 전에는 왕실정원 폴백) |
 
 스타일: Kingdom Rush + Random Dice. 캐주얼 치비, 두꺼운 외곽선, 아이소 3/4. 인게임 타워 박스 핏 70×96.
 
@@ -188,7 +222,7 @@ dicekeep-art/
   GROK-HANDOFF.md     초기 인수 브리프 (P0~P2 프롬프트 보관)
   ASSET-MANIFEST.md   파일 목록
   casual/
-    maps/             50 JPG + 하드 배경 20 (S31~50)
+    maps/             50 JPG + 하드 배경 20 (S31~50) + 아레나(예정)
     towers/           tN-a~e + tN-attack-2x2
     enemies/          500 대기 + 걷기 시트
     bosses/           100 + 걷기 시트 10
@@ -226,6 +260,8 @@ dicekeep-art/
 5. ~~물 위 석단~~ → 배경 픽셀 물 회피로 해결. 그래도 어색한 맵은 에디터 "자동 석단 굳히기"로 손보기
 6. ~~적 25~36 걷기 연결~~ → 완료. 37~ 은 `NEXT_WALK` 에 id 추가 + ART-PROMPTS §2 에 프롬프트 추가
 7. 디버그 훅: `DKroll()` 즉시 굴림, `DKplace(idx)` 배치, `DKspots()`, `DKSAVE` — 자동 플레이 봇용
+8. **인피니티 아레나 배경 생성** (ART-PROMPTS §5) → 에디터로 `cInf` 흙길·흙길2·석단·추가석단 작성 → `MAP_LAYOUTS.cInf`/`MAP_LAYOUTS_HARD.cInf`
+9. 인피니티 밸런스 손플레이 확인 (봇 기준 목표: 무전략 봇이 웨이브 25~40 에서 종료)
 
 ---
 

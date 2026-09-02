@@ -337,6 +337,10 @@ async function loadAssets(onProgress) {
     await new Promise(r => setTimeout(r, 0));
   }
   A.dice = [A.d1, A.d2, A.d3, A.d4, A.d5, A.d6];
+  // 아레나 등 배경이 아직 없는 맵은 지정된 다른 맵 배경으로 폴백
+  if (window.DKCONTENT) for (const m of DKCONTENT.maps) {
+    if (m.fallbackKey && (!A[m.key] || A[m.key].missing) && A[m.fallbackKey]) A[m.key] = A[m.fallbackKey];
+  }
 }
 
 // ==================== 주사위 타워 스프라이트 합성 ====================
@@ -515,6 +519,7 @@ const S = {
   heldDie: 0, selTower: null,
   mapKey: 'cMap1',
   stage: 1, stageData: null, stageWaves: 10,
+  mode: 'stage', inf: null, // 'stage' | 'infinity', inf = { sp, power{1..6}, kills, spent }
   speed: 1, muted: false,
   time: 0, hurtT: 0,
   mouse: { x: -100, y: -100 },
@@ -528,7 +533,7 @@ const SKIN_COST = 20; // 스킨 1종 해금 비용(젬)
 function defaultSave() {
   const skins = {}, equip = {};
   for (let f = 1; f <= 6; f++) { skins[f] = ['a']; equip[f] = 'a'; }
-  return { cleared: [], gems: 40, unlockedTowers: [1, 2, 3], unlockedSkins: skins, equippedSkin: equip };
+  return { cleared: [], gems: 40, unlockedTowers: [1, 2, 3], unlockedSkins: skins, equippedSkin: equip, infBest: 0, infRuns: [], infMilestones: [] };
 }
 let SAVE = defaultSave();
 function loadSave() {
@@ -543,6 +548,9 @@ function loadSave() {
       unlockedTowers: Array.isArray(s.unlockedTowers) && s.unlockedTowers.length ? s.unlockedTowers : d.unlockedTowers,
       unlockedSkins: Object.assign(d.unlockedSkins, s.unlockedSkins || {}),
       equippedSkin: Object.assign(d.equippedSkin, s.equippedSkin || {}),
+      infBest: typeof s.infBest === 'number' ? s.infBest : 0,
+      infRuns: Array.isArray(s.infRuns) ? s.infRuns.slice(0, 5) : [],
+      infMilestones: Array.isArray(s.infMilestones) ? s.infMilestones : [],
     };
     // 기본 3종은 항상 해금 보장
     for (const f of [1, 2, 3]) if (!SAVE.unlockedTowers.includes(f)) SAVE.unlockedTowers.push(f);
@@ -553,6 +561,7 @@ function saveSave() {
   try { localStorage.setItem(SAVE_KEY, JSON.stringify(SAVE)); } catch (e) { /* 무시 */ }
 }
 function stageUnlocked(n) { return n === 1 || SAVE.cleared.includes(n - 1); }
+function infinityUnlocked() { return SAVE.cleared.length >= 50; }
 function stageCleared(n) { return SAVE.cleared.includes(n); }
 
 // 굴리기 결과를 해금된 눈으로 제한
@@ -1129,7 +1138,44 @@ function drawDie() {
 const FAST_AIR = new Set(['bat', 'bee', 'wasp', 'paperplane', 'dandelion', 'hornet', 'hummingbird', 'swift', 'sparrow']);
 
 // 스테이지 스코프 웨이브: 한 판 = 선택 스테이지의 웨이브들. 맵은 스테이지 시작 시 고정.
+// 인피니티 웨이브: 전 레인 사용, 500종 순환, 5웨이브 정예, 10웨이브 보스
+function buildInfinityWave(w) {
+  const C = window.DKCONTENT;
+  const INF = C.INFINITY;
+  const P = INF.wave(w);
+  const q = [];
+  let t = 0.45;
+  const add = (type, extra) => { q.push(Object.assign({ type, t, hpMult: P.hpMult, goldMult: P.goldMult, spdMult: P.speedMult }, extra || {})); };
+  const seq = { ground: 0, air: 0, burrow: 0 };
+  const eliteSlots = new Set();
+  if (w % INF.eliteEvery === 0) for (let k = 0; k < P.elites; k++) eliteSlots.add(Math.floor((k + 0.5) * P.count / P.elites));
+  for (let i = 0; i < P.count; i++) {
+    const sid = (w * 23 + i * 17) % C.species.length;
+    const sp = C.species[sid];
+    const base = C.bases.find((b) => b.id === sp.base) || C.bases[0];
+    const lane = laneFor(base.move, seq[base.move]++);
+    const elite = eliteSlots.has(i);
+    add(base.id, {
+      speciesId: sid, name: (elite ? '정예 ' : '') + sp.name, hue: sp.hue, lane,
+      hpMult: P.hpMult * sp.hpM * (elite ? 3 : 1), goldMult: P.goldMult * (elite ? 3 : 1), isElite: elite,
+    });
+    t += P.gap * (FAST_AIR.has(base.id) ? 0.72 : 1);
+  }
+  if (w % INF.bossEvery === 0) {
+    t += 1.2;
+    for (let k = 0; k < P.bosses; k++) {
+      const bi = (w / INF.bossEvery - 1 + k * 37) % C.bosses.length;
+      const boss = C.bosses[bi];
+      const bbase = C.bossBases.find((b) => b.id === boss.base) || C.bossBases[0];
+      add(bbase.id, { name: boss.name, hue: boss.hue, hpMult: P.hpMult * P.bossHp * boss.hpM * 0.5, isBoss: true, lane: laneFor(bbase.move, k) });
+      t += 1.5;
+    }
+  }
+  return q;
+}
+
 function buildWave(w) {
+  if (S.mode === 'infinity') return buildInfinityWave(w);
   const q = [];
   let t = 0.45;
   const C = window.DKCONTENT;
@@ -1198,6 +1244,7 @@ function startStage(n) {
   const C = window.DKCONTENT;
   const sd = C && C.stages && C.stages[n - 1];
   if (!sd) return;
+  S.mode = 'stage'; S.inf = null;
   S.stage = n;
   S.stageData = sd;
   S.stageWaves = sd.waves;
@@ -1214,6 +1261,57 @@ function startStage(n) {
   S.phase = 'playing';
   showScreen('playing');
   syncUI();
+}
+
+// 인피니티 런 시작 (로비에서 호출)
+function startInfinity() {
+  const C = window.DKCONTENT;
+  const INF = C && C.INFINITY;
+  if (!INF) return;
+  S.mode = 'infinity';
+  S.inf = { sp: 0, power: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 }, kills: 0, spent: 0 };
+  S.stage = 0;
+  S.stageData = { n: 0, name: '무한 투기장', tier: INF.tier.tier, tierName: INF.tier.name, tierColor: INF.tier.color, lanes: INF.tier.lanes.length, waves: Infinity, bases: [], gem: 0 };
+  S.stageWaves = Infinity;
+  S.mapKey = INF.mapKey;
+  S.gold = INF.startGold;
+  S.lives = INF.lives;
+  S.wave = 0;
+  S.enemies = []; S.towers = []; S.projs = []; S.beams = []; S.fxs = []; S.texts = []; S.corpses = [];
+  S.spawnQ = []; S.waveActive = false; S.autoT = 0; S.waveT = 0;
+  S.heldDie = 0; S.selTower = null; S.shakeT = 0; S.bannerT = 0;
+  DIE.state = 'tray'; DIE.z = 0; DIE.final = 0;
+  SLOT.active = false;
+  applyMapLayout(INF.mapKey, INF.tier);
+  S.phase = 'playing';
+  showScreen('playing');
+  syncUI();
+}
+
+// 인피니티 런 종료: 기록·젬 저장 + 결과 화면
+function endInfinity() {
+  const C = window.DKCONTENT;
+  const INF = C.INFINITY;
+  S.phase = 'over';
+  S.waveActive = false;
+  const reached = Math.max(0, S.waveActive ? S.wave - 1 : S.wave - (S.enemies.length ? 1 : 0));
+  const wave = Math.max(0, S.wave - 1); // 마지막으로 '완료'한 웨이브
+  const r = INF.gems(wave, SAVE.infMilestones);
+  SAVE.gems += r.gems;
+  SAVE.infMilestones = (SAVE.infMilestones || []).concat(r.newly);
+  const isBest = wave > (SAVE.infBest || 0);
+  if (isBest) SAVE.infBest = wave;
+  SAVE.infRuns = [{ wave, kills: S.inf.kills, date: new Date().toISOString().slice(0, 10) }].concat(SAVE.infRuns || []).slice(0, 5);
+  saveSave();
+  SFX.lose();
+  showOverlay(
+    isBest ? '신기록!' : '런 종료',
+    `<b>무한 투기장</b> 웨이브 <b>${wave}</b> 까지 버텼습니다${isBest ? ' — <b>최고 기록 갱신!</b>' : ` (최고 ${SAVE.infBest})`}<br>` +
+    `처치 <b>${S.inf.kills}</b> · 강화에 쓴 SP <b>${S.inf.spent}</b><br>` +
+    `젬 <b>+${r.gems}</b>${r.newly.length ? ` (마일스톤 ${r.newly.join(', ')} 달성 보너스 포함)` : ''}`,
+    '로비로'
+  );
+  void reached;
 }
 
 // 스테이지 클리어 처리: 젬 보상 + 다음 스테이지 해금 + 저장
@@ -1254,8 +1352,9 @@ function spawnEnemy(item) {
   if (!def) def = ENEMY_DEFS.mite;
   const lane = (item.lane != null && LANES[item.lane]) ? item.lane : laneFor(move, 0);
   const isBoss = !!item.isBoss;
+  if (item.isElite) { def = Object.assign({}, def, { size: Math.round((size || def.size) * 1.2) }); }
   const e = {
-    type: item.type, def,
+    type: item.type, def, isElite: !!item.isElite, spdMult: item.spdMult || 1,
     hp: def.hp * (item.hpMult || 1), max: def.hp * (item.hpMult || 1),
     gold: Math.round(def.gold * (item.goldMult || 1)),
     dist: 0, slowT: 0, slowPct: 0,
@@ -1293,6 +1392,7 @@ function damageEnemy(e, dmg) {
   if (e.hp <= 0) {
     e.dead = true;
     S.gold += e.gold;
+    if (S.inf) S.inf.kills++;
     const p = epos(e);
     S.texts.push({ str: '+' + e.gold, x: p.x, y: p.y - e.def.size, t: 0, color: '#ffd870' });
     spawnDeath(e, p);
@@ -1341,9 +1441,43 @@ function towerAt(spotIdx) {
   return S.towers.find(t => t.spot === spotIdx) || null;
 }
 
-const towerDmg   = t => t.def.dmg * LVL_DMG[t.lvl - 1];
-const towerRange = t => t.def.range + LVL_RANGE[t.lvl - 1];
-const towerRate  = t => t.def.rate * LVL_RATE[t.lvl - 1];
+// 인피니티 눈별 강화 (SP). 스테이지 모드에서는 항상 0.
+const powerLv = face => (S.mode === 'infinity' && S.inf) ? (S.inf.power[face] || 0) : 0;
+const DP = () => window.DKCONTENT && DKCONTENT.DICE_POWER;
+const powerTier = face => DP() ? DP().tier(powerLv(face)) : 0;
+const powerSpecial = (face, key) => { const d = DP(); const s = d && d.special[face]; return (s && s[key] != null) ? s[key] : null; };
+const towerDmg   = t => {
+  let m = LVL_DMG[t.lvl - 1];
+  const d = DP();
+  if (d) { m *= d.dmgMult(powerLv(t.face)); const ex = powerSpecial(t.face, 'dmg'); if (ex) m *= 1 + ex * powerTier(t.face); }
+  return t.def.dmg * m;
+};
+const towerRange = t => t.def.range + LVL_RANGE[t.lvl - 1] + (DP() ? DP().rangeAdd(powerLv(t.face)) : 0);
+const towerRate  = t => { let r = t.def.rate * LVL_RATE[t.lvl - 1]; const ex = powerSpecial(t.face, 'rate'); if (ex) r *= Math.pow(ex, powerTier(t.face)); return r; };
+const towerSplash = t => (t.def.splash || 0) + ((powerSpecial(t.face, 'splash') || 0) * powerTier(t.face));
+const towerSlowPct = t => 0.26 + 0.06 * t.lvl + ((powerSpecial(t.face, 'slow') || 0) * powerTier(t.face));
+const towerChain = t => 2 + t.lvl + ((powerSpecial(t.face, 'chain') || 0) * powerTier(t.face));
+
+// SP 로 눈 강화 (인피니티 전용)
+function upgradeFace(f) {
+  const d = DP();
+  if (S.mode !== 'infinity' || !S.inf || !d) return false;
+  const lv = S.inf.power[f] || 0;
+  if (lv >= d.maxLv) { SFX.deny(); return false; }
+  const cost = d.cost(lv);
+  if (S.inf.sp < cost) { SFX.deny(); return false; }
+  S.inf.sp -= cost; S.inf.spent += cost;
+  S.inf.power[f] = lv + 1;
+  const def = TOWER_DEFS[f];
+  for (const t of S.towers) if (t.face === f) {
+    S.fxs.push({ kind: 'circle', x: t.x, y: t.y + 4, t: 0, dur: 0.7, size: 110, color: def.color, pips: f });
+    S.fxs.push({ kind: 'ring', x: t.x, y: t.y - 40, t: 0, dur: 0.45, size: 70, color: def.color });
+  }
+  S.texts.push({ str: `${def.name} 강화 Lv${lv + 1}!`, x: W / 2, y: H / 2 - 70, t: 0, color: def.color, big: true });
+  SFX.merge();
+  syncUI();
+  return true;
+}
 
 function towerFire(t, dt) {
   t.cd -= dt;
@@ -1372,7 +1506,7 @@ function towerFire(t, dt) {
     S.fxs.push({ kind: 'laserMuzzle', x: from.x, y: from.y, t: 0, dur: 0.1, size: 28 });
     SFX.t1();
   } else if (t.def.chain) {
-    const maxChain = 2 + t.lvl;
+    const maxChain = towerChain(t);
     const hitList = [best];
     let cur = best;
     while (hitList.length < maxChain) {
@@ -1402,8 +1536,8 @@ function towerFire(t, dt) {
   } else {
     S.projs.push({
       kind: t.def.proj, x: from.x, y: from.y, tgt: best,
-      spd: t.def.pspd, dmg, splash: t.def.splash || 0,
-      slow: t.def.slow ? { pct: 0.26 + 0.06 * t.lvl, dur: 1.8 } : null,
+      spd: t.def.pspd, dmg, splash: towerSplash(t),
+      slow: t.def.slow ? { pct: towerSlowPct(t), dur: 1.8 } : null,
       rot: 0, spin: 0,
     });
     if (t.face === 2) {
@@ -1468,7 +1602,7 @@ function update(dt) {
       if (e.entranceT < BOSS_ENTRANCE) continue;
       e.entranceT = -1;
     }
-    let sp = e.def.speed;
+    let sp = e.def.speed * (e.spdMult || 1);
     if (e.slowT > 0) { e.slowT -= dt; sp *= (1 - e.slowPct); }
     e.dist += sp * dt;
     e.animT += dt * (sp / 38);
@@ -1498,7 +1632,7 @@ function update(dt) {
       SFX.leak();
       S.fxs.push({ kind: 'impact', x: p.x, y: p.y - 20, t: 0, dur: 0.3, size: 80 });
       syncUI();
-      if (S.lives <= 0) { S.lives = 0; gameEnd(false); return; }
+      if (S.lives <= 0) { S.lives = 0; if (S.mode === 'infinity') endInfinity(); else gameEnd(false); return; }
     }
   }
   S.enemies = S.enemies.filter(e => !e.dead);
@@ -1543,6 +1677,14 @@ function update(dt) {
     S.gold += bonus;
     S.texts.push({ str: '웨이브 클리어! +' + bonus + 'G', x: W / 2, y: H / 2 - 40, t: 0, color: '#a0ffc8' });
     SFX.coin();
+    if (S.mode === 'infinity') {
+      const sp = DKCONTENT.INFINITY.spPerWave(S.wave);
+      S.inf.sp += sp;
+      S.texts.push({ str: `강화 포인트 +${sp} SP`, x: W / 2, y: H / 2 - 12, t: 0, color: '#ff9ae0' });
+      S.autoT = DKCONTENT.INFINITY.intermission;
+      syncUI();
+      return;
+    }
     if (S.wave >= S.stageWaves) { onStageClear(); return; }
     S.autoT = INTERMISSION;
     syncUI();
@@ -1555,6 +1697,7 @@ function update(dt) {
 }
 
 function gameEnd(win) {
+  if (S.mode === 'infinity') { endInfinity(); return; }
   S.phase = win ? 'win' : 'over';
   (win ? SFX.win : SFX.lose)();
   const sd = S.stageData;
@@ -1982,6 +2125,15 @@ function draw() {
         ctx.fillStyle = '#6b4a28'; ctx.fill();
         ctx.restore();
       }
+      if (e.isElite && !e.hidden) {
+        ctx.save();
+        ctx.translate(p.x, p.y - airY + 6);
+        ctx.scale(1, 0.45);
+        ctx.beginPath(); ctx.arc(0, 0, e.def.size * 0.5, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(255,200,60,${0.6 + 0.3 * Math.sin(S.time * 6)})`; ctx.lineWidth = 3;
+        ctx.shadowColor = '#ffc83c'; ctx.shadowBlur = 10; ctx.stroke();
+        ctx.restore();
+      }
       if (e.hp < e.max) {
         const bw = Math.max(26, e.def.size * 0.7), bh = e.isBoss ? 6 : 4;
         const bx = p.x - bw / 2, by = drawY - e.def.size * sy - 8;
@@ -2294,8 +2446,10 @@ function syncUI() {
   $('gold-val').textContent = S.gold;
   $('lives-val').textContent = S.lives;
   const sd = S.stageData;
-  $('wave-val').textContent = `S${S.stage}${sd && sd.tierName ? ' ' + sd.tierName : ''} · 웨이브 ${S.wave} / ${S.stageWaves}`;
+  if (S.mode === 'infinity') $('wave-val').textContent = `∞ 웨이브 ${S.wave} · 최고 ${SAVE.infBest || 0}`;
+  else $('wave-val').textContent = `S${S.stage}${sd && sd.tierName ? ' ' + sd.tierName : ''} · 웨이브 ${S.wave} / ${S.stageWaves}`;
   $('wave-val').style.color = sd && sd.tierColor ? sd.tierColor : '';
+  syncInfPanel();
   const heldInfo = $('held-info');
   if (S.heldDie) {
     const def = TOWER_DEFS[S.heldDie];
@@ -2318,6 +2472,29 @@ function syncUI() {
   rollBtn.disabled = !canRoll();
   syncWaveBtn();
   syncInfo();
+}
+
+// 인피니티 강화 패널 (HUD)
+function syncInfPanel() {
+  const panel = $('inf-panel');
+  if (!panel) return;
+  const on = S.mode === 'infinity' && S.phase === 'playing' && S.inf;
+  panel.classList.toggle('hidden', !on);
+  if (!on) return;
+  const d = DP();
+  $('inf-sp').textContent = S.inf.sp;
+  for (let f = 1; f <= 6; f++) {
+    const btn = $('inf-face-' + f);
+    if (!btn) continue;
+    const lv = S.inf.power[f] || 0;
+    const maxed = lv >= d.maxLv;
+    const cost = maxed ? 0 : d.cost(lv);
+    btn.querySelector('.inf-lv').textContent = maxed ? 'MAX' : `Lv${lv}`;
+    btn.querySelector('.inf-cost').textContent = maxed ? '—' : `${cost} SP`;
+    btn.disabled = maxed || S.inf.sp < cost || !SAVE.unlockedTowers.includes(f);
+    btn.classList.toggle('maxed', maxed);
+    btn.title = `${TOWER_DEFS[f].name} · 피해 ×${d.dmgMult(lv).toFixed(2)} · 사거리 +${d.rangeAdd(lv)} · ${d.special[f].label} (${d.tier(lv)}단계)`;
+  }
 }
 
 function syncWaveBtn() {
@@ -2380,6 +2557,16 @@ function gotoShop() { S.phase = 'shop'; showScreen('shop'); }
 function renderLobby() {
   $('lobby-gems').textContent = SAVE.gems;
   $('lobby-progress').innerHTML = `클리어 <b>${SAVE.cleared.length}</b> / 50 스테이지 · 해금 타워 <b>${unlockedFaces().length}</b>/6`;
+  const btn = $('btn-infinity'), info = $('lobby-inf');
+  if (btn) {
+    const ok = infinityUnlocked();
+    btn.disabled = !ok;
+    btn.classList.toggle('locked', !ok);
+    btn.innerHTML = ok ? '&#8734; 인피니티' : '&#128274; 인피니티';
+    if (info) info.innerHTML = ok
+      ? `무한 투기장 최고 기록 <b>${SAVE.infBest || 0}</b> 웨이브${(SAVE.infRuns || []).length ? ` · 최근 ${SAVE.infRuns.slice(0, 3).map(r => r.wave).join(' / ')}` : ''}`
+      : `인피니티 모드는 <b>50 스테이지를 모두 클리어</b>하면 열립니다 (현재 ${SAVE.cleared.length}/50)`;
+  }
 }
 
 function renderStageSelect() {
@@ -2779,6 +2966,7 @@ window.addEventListener('pointerup', ev => {
 
 document.addEventListener('keydown', ev => {
   if (ev.key === 'r' || ev.key === 'R' || ev.key === 'ㄱ') rollByButton();
+  else if (S.mode === 'infinity' && ev.key >= '1' && ev.key <= '6') upgradeFace(parseInt(ev.key, 10));
   else if (ev.key === 'Escape') {
     if (DRAG.active) stopPlaceDrag();
     S.selTower = null;
@@ -2808,15 +2996,24 @@ $('mute-btn').addEventListener('click', () => {
 $('ov-btn').addEventListener('click', () => {
   if (S.phase === 'loading') return;
   audio();
-  if (S.phase === 'over' || S.phase === 'win' || S.phase === 'stageClear') { gotoStageSelect(); return; }
+  if (S.phase === 'over' || S.phase === 'win' || S.phase === 'stageClear') {
+    if (S.mode === 'infinity') { S.mode = 'stage'; S.inf = null; gotoLobby(); } else gotoStageSelect();
+    return;
+  }
   // 타이틀 → 로비
   gotoLobby();
 });
 $('btn-stage-select').addEventListener('click', () => { audio(); gotoStageSelect(); });
+$('btn-infinity').addEventListener('click', () => { if (!infinityUnlocked()) return; audio(); startInfinity(); });
+for (let f = 1; f <= 6; f++) { const b = $('inf-face-' + f); if (b) b.addEventListener('click', () => upgradeFace(f)); }
 $('btn-shop').addEventListener('click', () => { audio(); gotoShop(); });
 $('ss-back').addEventListener('click', () => gotoLobby());
 $('shop-back').addEventListener('click', () => gotoLobby());
-$('exit-btn').addEventListener('click', () => { if (S.phase === 'playing') gotoStageSelect(); });
+$('exit-btn').addEventListener('click', () => {
+  if (S.phase !== 'playing') return;
+  if (S.mode === 'infinity') { endInfinity(); return; } // 포기 = 런 종료 (기록 저장)
+  gotoStageSelect();
+});
 
 // ==================== 메인 루프 ====================
 
@@ -2874,6 +3071,9 @@ function drawLoading(pr) {
   window.DKthrow = (vx, vy) => { if (canRoll()) throwDie(vx, vy); };
   window.DKLANES = () => LANES;
   window.DKstart = startStage;
+  window.DKstartInf = startInfinity;
+  window.DKinf = () => S.inf;
+  window.DKupgrade = upgradeFace;
   window.DKplace = tryPlace;                      // 보유 주사위를 석단 idx 에 놓기
   window.DKroll = () => { if (S.phase === 'playing' && !S.heldDie && S.gold >= ROLL_COST) { S.gold -= ROLL_COST; S.heldDie = pickUnlockedFace(); syncUI(); return S.heldDie; } return 0; }; // 즉시 굴림 (테스트용)
   window.DKspots = () => SPOTS;

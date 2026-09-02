@@ -51,6 +51,8 @@ window.DKCONTENT = (function () {
     { key: 'cMap48', src: 'casual/maps/map-48-orchard-hard.jpg', name: '사과과수원' },
     { key: 'cMap49', src: 'casual/maps/map-49-lavabeach-hard.jpg', name: '용암해변' },
     { key: 'cMap50', src: 'casual/maps/map-50-royal-hard.jpg', name: '왕실정원' },
+    // 인피니티 모드 전용 아레나 (스테이지 목록에는 안 뜬다). 아레나 배경이 없으면 game.js 가 왕실정원 배경으로 폴백.
+    { key: 'cInf', src: 'casual/maps/map-inf-arena.jpg', name: '무한 투기장', infinity: true },
   ];
   // 공통 S커브 폴백: MAP_LAYOUTS에 항목이 없는 맵만 사용.
   const PATH_S = [
@@ -150,6 +152,16 @@ window.DKCONTENT = (function () {
     m.spots2 = (Hd && Hd.spots2 && Hd.spots2.length) ? Hd.spots2.map((p) => p.slice()) : null;
     if (Hd && Hd.src) m.src = Hd.src; // 하드 배경으로 교체 (두 번째 흙길이 그려진 아트)
   });
+  // 아레나 레이아웃이 아직 없으면 왕실정원(50) 레이아웃을 임시로 쓴다 (아레나 배경 도착 후 editor.html 로 재작성)
+  {
+    const inf = maps.find((m) => m.infinity), royal = maps.find((m) => m.key === 'cMap50');
+    if (inf && royal && !MAP_LAYOUTS.cInf) {
+      inf.path = royal.path.map((p) => p.slice()); inf.spots = royal.spots.map((p) => p.slice());
+      inf.path2 = royal.path2 ? royal.path2.map((p) => p.slice()) : null;
+      inf.spots2 = royal.spots2 ? royal.spots2.map((p) => p.slice()) : null;
+      inf.fallbackKey = 'cMap50';
+    }
+  }
 
   // ===== 난이도 티어 =====
   // 스테이지 10개마다 티어가 오른다. 티어가 오를수록 적 동선(레인)과 타워 석단이 늘어난다.
@@ -1010,7 +1022,7 @@ window.DKCONTENT = (function () {
     for (let k = 0; k < cnt; k++) r.push(arr[(off + k * step) % arr.length]);
     return r;
   };
-  const stages = maps.map((m, i) => {
+  const stages = maps.filter((m) => !m.infinity).map((m, i) => {
     const n = i + 1;
     const T = tierOf(n);
     // 티어가 오를수록 공중·땅굴 비중이 커진다 (전용 레인이 생기므로)
@@ -1043,8 +1055,57 @@ window.DKCONTENT = (function () {
     };
   });
 
+  // ===== 인피니티 모드 =====
+  // 50 스테이지를 모두 클리어하면 해금. 웨이브 상한 없음, 목숨 0 이면 런 종료. game.js 가 이 값을 그대로 읽는다.
+  const INFINITY = {
+    mapKey: 'cInf',
+    tier: { tier: 6, name: '무한', color: '#ff7ad9', lanes: ['ground', 'ground2', 'air', 'tunnel'], extraSpots: 8, hpScale: 1, countBonus: 0, startGold: 400 },
+    startGold: 400, lives: 20, intermission: 6,
+    bossEvery: 10,   // 10 웨이브마다 보스 (20 부터 2마리)
+    eliteEvery: 5,   // 5 웨이브마다 정예 (HP×3, 크기×1.2, 골드×3)
+    unlockAir: 1, unlockBurrow: 1,
+    wave(w) {
+      return {
+        hpMult: +(2.2 * Math.pow(1.065, w - 1)).toFixed(3),   // w50 ≈ 48×, w100 ≈ 1,100×
+        count: Math.min(48, 12 + Math.floor(w * 0.8)),
+        gap: Math.max(0.26, 0.8 - w * 0.012),
+        goldMult: +(1 + w * 0.045).toFixed(3),
+        speedMult: Math.min(1.6, 1 + Math.max(0, w - 30) * 0.01),
+        bossHp: +(1.3 + w * 0.02).toFixed(2),
+        bosses: w >= 20 && w % 10 === 0 ? 2 : 1,
+        elites: w >= 20 ? 3 : 2,
+      };
+    },
+    spPerWave: (w) => (w % 10 === 0 ? 3 : 1),
+    milestones: [25, 50, 100, 200],
+    // 런 종료 젬: 10웨이브당 2 + 최초 달성 마일스톤당 15
+    gems(wave, claimed) {
+      let g = Math.floor(wave / 10) * 2;
+      const newly = [];
+      for (const m of this.milestones) if (wave >= m && !(claimed || []).includes(m)) { g += 15; newly.push(m); }
+      return { gems: g, newly };
+    },
+  };
+  // 눈별 강화 (SP). 랜덤다이스의 '주사위 파워'.
+  const DICE_POWER = {
+    maxLv: 10,
+    cost: (lv) => 1 + Math.floor(lv / 3),         // lv0→1: 1SP … lv9→10: 4SP (총 22SP)
+    dmgMult: (lv) => 1 + 0.15 * lv,               // 최대 2.5×
+    rangeAdd: (lv) => 3 * lv,
+    tier: (lv) => Math.floor(lv / 3),             // 3레벨마다 특수 보너스 1단계 (최대 3)
+    special: {
+      1: { label: '연사 −6%/3Lv', rate: 0.94 },
+      2: { label: '광역 +8/3Lv', splash: 8 },
+      3: { label: '피해 +10%/3Lv', dmg: 0.10 },
+      4: { label: '둔화 +4%/3Lv', slow: 0.04 },
+      5: { label: '연쇄 +1/3Lv', chain: 1 },
+      6: { label: '광역 +6·피해 +8%/3Lv', splash: 6, dmg: 0.08 },
+    },
+  };
+
   return {
     maps, towerSkins, skinLetters: SKIN_LETTERS, bases, bossBases, species, bosses, stages,
+    INFINITY, DICE_POWER,
     tiers: TIERS, tierOf, buildLayout, makeAvoidFromImage, pathLength, pathAt,
     mapCount: 50, stageCount: 50,
   };
