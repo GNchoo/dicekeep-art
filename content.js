@@ -287,50 +287,31 @@ window.DKCONTENT = (function () {
 
   // ===== 무한 투기장: 나선 순환 도로 생성기 =====
   // 왼쪽 가장자리 포탈에서 출발해 중심 크리스탈을 1.5바퀴 돌아 들어간다. 오른쪽 포탈은 두 번째 바퀴로 곧장 합류하는 지름길.
+  // ===== 무한 투기장: 랜덤다이스식 보드 + 둘레 트랙 =====
+  // 가운데 3×5 석단 보드(15개, 처음부터 전부 개방), 둘레를 도는 둥근 사각형 트랙. 왼쪽 변 가운데가 열려 있어
+  // 아래쪽 포탈에서 출발한 적이 시계 반대 방향으로 한 바퀴 돌아 위쪽 크리스탈에 닿는다. 오른쪽 위 모서리 포탈은 지름길.
   function buildArenaLayout() {
-    const cx = 528, cy = 300;
-    const turns = 1.5, steps = 68;
-    const spiral = [];
-    for (let i = 0; i <= steps; i++) {
-      const t = i / steps;
-      const th = Math.PI + t * turns * Math.PI * 2;           // π 에서 시작 = 왼쪽
-      const A = 470 - (470 - 150) * t, B = 245 - (245 - 80) * t;
-      spiral.push([Math.round(cx + A * Math.cos(th)), Math.round(cy + B * Math.sin(th))]);
-    }
-    const center = [cx, cy];
-    const path = spiral.concat([[cx - 40, cy + 10], center]);
-    // 지름길: 오른쪽 포탈 → 나선의 두 번째 바퀴 시작(t≈0.67, θ≈π+2π) 지점에 합류
-    const joinIdx = Math.round(steps * (1 / turns));           // 한 바퀴 돈 지점
-    const join = spiral[joinIdx];
-    const feederStart = [1000, cy + 60];
-    const feeder = [];
-    for (let k = 0; k <= 4; k++) {
-      const u = k / 4;
-      feeder.push([Math.round(feederStart[0] + (join[0] - feederStart[0]) * u), Math.round(feederStart[1] + (join[1] - feederStart[1]) * u - Math.sin(u * Math.PI) * 30)]);
-    }
-    const path2 = feeder.concat(spiral.slice(joinIdx + 1)).concat([[cx - 40, cy + 10], center]);
-    // 석단 16개: 나선 양옆 법선 ±58px 후보 → 거리 규칙으로 선별 (길 46, 석단 60, 중심 96)
-    const cands = [];
-    const len = pathLength(spiral);
-    const n = 52;
-    for (let i = 1; i < n; i++) {
-      const p = pathAt(spiral, len * i / n);
-      for (const side of [1, -1]) cands.push([Math.round(p.x - p.dy * 58 * side), Math.round(p.y + p.dx * 58 * side)]);
-    }
+    const L = 222, R = 802, T = 132, B = 468, rad = 60;
+    const start = [L, 360], end = [L, 240], start2 = [R, T + rad];
+    const arc = (cx, cy, a0, a1, n) => { const out = []; for (let i = 0; i <= n; i++) { const a = a0 + (a1 - a0) * i / n; out.push([Math.round(cx + rad * Math.cos(a)), Math.round(cy + rad * Math.sin(a))]); } return out; };
+    // 시계 반대 방향 (화면 좌표계에서 y 아래가 +): 왼쪽 변 아래로 → 바닥 → 오른쪽 변 위로 → 위 변 왼쪽으로 → 왼쪽 변 아래로
+    const loop = [];
+    loop.push(start);
+    loop.push(...arc(L + rad, B - rad, Math.PI, Math.PI / 2, 6));        // 왼쪽 아래 모서리
+    loop.push(...arc(R - rad, B - rad, Math.PI / 2, 0, 6));              // 오른쪽 아래 모서리
+    loop.push(...arc(R - rad, T + rad, 0, -Math.PI / 2, 6));             // 오른쪽 위 모서리
+    loop.push(...arc(L + rad, T + rad, -Math.PI / 2, -Math.PI, 6));      // 왼쪽 위 모서리
+    loop.push(end);
+    const path = loop.filter((p, i) => i === 0 || p[0] !== loop[i - 1][0] || p[1] !== loop[i - 1][1]);
+    // 지름길: 오른쪽 위 모서리 포탈 → 위 변 → 왼쪽 변 → 크리스탈
+    const topRightIdx = path.findIndex((p) => p[0] === R && p[1] === T + rad);
+    const path2 = [start2.slice()].concat(path.slice(topRightIdx + 1));
+    // 하늘길: 포탈 → 보드 중심 → 크리스탈 (V 자, 보드 위를 가로질러 대공 타워가 잡는다)
+    const airPts = [start.slice(), [372, 340], [512, 300], [372, 262], end.slice()];
+    // 석단 보드 3×5
     const spots = [];
-    const okSpot = (s) => s[0] > 44 && s[0] < W - 44 && s[1] > 118 && s[1] < H - 40   // 위쪽은 타워 높이(96)만큼 여유
-      && pathDist(s[0], s[1], path) >= 46 && pathDist(s[0], s[1], path2) >= 46
-      && Math.hypot(s[0] - cx, s[1] - cy) >= 96
-      && Math.hypot(s[0] - spiral[0][0], s[1] - spiral[0][1]) >= 90
-      && Math.hypot(s[0] - feederStart[0], s[1] - feederStart[1]) >= 90
-      && spots.every((q) => Math.hypot(q[0] - s[0], q[1] - s[1]) >= 62);
-    // 안쪽·바깥쪽을 번갈아 고르게: 후보를 돌며 조건에 맞는 것을 16개까지
-    const stride = Math.max(1, Math.floor(cands.length / 20));
-    for (let k = 0; k < cands.length * 2 && spots.length < 16; k++) {
-      const s = cands[(k * stride) % cands.length];
-      if (okSpot(s)) spots.push(s);
-    }
-    return { path, path2, spots2: spots, portals: [spiral[0].slice(), feederStart.slice()], center };
+    for (let r = 0; r < 3; r++) for (let c = 0; c < 5; c++) spots.push([512 + (c - 2) * 88, 300 + (r - 1) * 88]);
+    return { path, path2, airPts, spots, spots2: [], portals: [start.slice(), start2.slice()], center: end.slice(), board: { x: 290, y: 164, w: 444, h: 272 } };
   }
 
   // ===== 난이도 티어 =====
@@ -522,7 +503,7 @@ window.DKCONTENT = (function () {
       else if (kind === 'ground2') {
         if (map.path2) { lanes.push({ kind: 'ground2', pts: map.path2.map((p) => p.slice()), label: '두 번째 흙길' }); groundPaths.push(map.path2); }
         else if (!kinds.includes('tunnel')) lanes.push({ kind: 'tunnel', pts: null, label: '땅굴', fallback: true });
-      } else if (kind === 'air') { airPts = buildAirLane(base); lanes.push({ kind: 'air', pts: airPts, label: '하늘길' }); }
+      } else if (kind === 'air') { airPts = map.airPts ? map.airPts.map((p) => p.slice()) : buildAirLane(base); lanes.push({ kind: 'air', pts: airPts, label: '하늘길' }); }
       else if (kind === 'tunnel') lanes.push({ kind: 'tunnel', pts: null, label: '땅굴' });
     }
     // 아레나는 땅굴이 지름길(path2)을 따라가게 해 나선 전체를 파고들지 않도록 한다
@@ -1148,8 +1129,8 @@ window.DKCONTENT = (function () {
     const inf = maps.find((m) => m.arena);
     if (inf) {
       const L = buildArenaLayout();
-      inf.path = L.path; inf.path2 = L.path2; inf.spots = []; inf.spots2 = L.spots2;
-      inf.portals = L.portals; inf.center = L.center;
+      inf.path = L.path; inf.path2 = L.path2; inf.airPts = L.airPts; inf.spots = L.spots; inf.spots2 = L.spots2;
+      inf.portals = L.portals; inf.center = L.center; inf.board = L.board;
     }
   }
 
@@ -1240,14 +1221,14 @@ window.DKCONTENT = (function () {
   // 50 스테이지를 모두 클리어하면 해금. 웨이브 상한 없음, 목숨 0 이면 런 종료. game.js 가 이 값을 그대로 읽는다.
   const INFINITY = {
     mapKey: 'cInf',
-    tier: { tier: 6, name: '무한', color: '#ff7ad9', lanes: ['ground', 'ground2', 'air', 'tunnel'], extraSpots: 16, hpScale: 1, countBonus: 0, startGold: 400 },
+    tier: { tier: 6, name: '무한', color: '#ff7ad9', lanes: ['ground', 'ground2', 'air', 'tunnel'], extraSpots: 0, hpScale: 1, countBonus: 0, startGold: 400 }, // 석단 15개는 보드에 처음부터 전부
     startGold: 400, lives: 20, intermission: 6,
     bossEvery: 10,   // 10 웨이브마다 보스 (20 부터 2마리)
     eliteEvery: 5,   // 5 웨이브마다 정예 (HP×3, 크기×1.2, 골드×3)
     unlockAir: 1, unlockBurrow: 1,
     wave(w) {
       return {
-        hpMult: +(1.8 * Math.pow(1.035, w - 1)).toFixed(3),   // w30 ≈ 4.9×, w50 ≈ 9.7×, w100 ≈ 55×
+        hpMult: +(1.8 * Math.pow(1.045, w - 1)).toFixed(3),   // w30 ≈ 6.4×, w50 ≈ 15.6×, w100 ≈ 142× (보드 맵·풀파워 기준 봇 재보정)
         count: Math.min(36, 12 + Math.floor(w * 0.6)),
         gap: Math.max(0.3, 0.8 - w * 0.01),
         goldMult: +(1 + w * 0.025).toFixed(3),
