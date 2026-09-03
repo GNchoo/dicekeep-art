@@ -290,23 +290,28 @@ window.DKCONTENT = (function () {
   // ===== 무한 투기장: 랜덤다이스식 보드 + 둘레 트랙 =====
   // 가운데 3×5 석단 보드(15개, 처음부터 전부 개방), 둘레를 도는 둥근 사각형 트랙 하나. 왼쪽 변 가운데가 열려 있어
   // 아래쪽 포탈에서 출발한 적이 (종류와 상관없이 전부) 시계 반대 방향으로 한 바퀴 돌아 위쪽 크리스탈에 닿는다.
+  // 인피니티 아레나: 시작·도착 지점이 없다. 적은 왼쪽 화면 밖에서 들어와 가운데 트랙을 ARENA_LAPS 바퀴 돌고
+  // 오른쪽 화면 밖으로 빠져나간다 (빠져나가면 목숨 차감, 보스면 즉시 런 종료).
+  const ARENA_LAPS = 2; // 온전한 바퀴 수. 마지막 반 바퀴(왼쪽 가운데 → 아래 → 오른쪽 가운데)를 더 돌고 나간다 → 총 2.5바퀴
   function buildArenaLayout() {
-    const L = 250, R = 774, T = 150, B = 450, rad = 52; // 보드에 밀착: 가운데 줄에서 위·아래 트랙까지 150px
-    const start = [L, 342], end = [L, 258];
+    const L = 250, R = 774, T = 150, B = 450, rad = 52, MID = 300; // 보드에 밀착: 가운데 줄에서 위·아래 트랙까지 150px
     const arc = (cx, cy, a0, a1, n) => { const out = []; for (let i = 0; i <= n; i++) { const a = a0 + (a1 - a0) * i / n; out.push([Math.round(cx + rad * Math.cos(a)), Math.round(cy + rad * Math.sin(a))]); } return out; };
-    // 시계 반대 방향 (화면 좌표계에서 y 아래가 +): 왼쪽 변 아래로 → 바닥 → 오른쪽 변 위로 → 위 변 왼쪽으로 → 왼쪽 변 아래로
-    const loop = [];
-    loop.push(start);
-    loop.push(...arc(L + rad, B - rad, Math.PI, Math.PI / 2, 6));        // 왼쪽 아래 모서리
-    loop.push(...arc(R - rad, B - rad, Math.PI / 2, 0, 6));              // 오른쪽 아래 모서리
-    loop.push(...arc(R - rad, T + rad, 0, -Math.PI / 2, 6));             // 오른쪽 위 모서리
-    loop.push(...arc(L + rad, T + rad, -Math.PI / 2, -Math.PI, 6));      // 왼쪽 위 모서리
-    loop.push(end);
-    const path = loop.filter((p, i) => i === 0 || p[0] !== loop[i - 1][0] || p[1] !== loop[i - 1][1]);
+    const dedupe = (pts) => pts.filter((p, i) => i === 0 || p[0] !== pts[i - 1][0] || p[1] !== pts[i - 1][1]);
+    // 시계 반대 방향 (화면 좌표계에서 y 아래가 +): 왼쪽 가운데 → 왼쪽 변 아래로 → 바닥 → 오른쪽 변 위로 → 오른쪽 가운데 (앞 반 바퀴)
+    const front = [[L, MID], ...arc(L + rad, B - rad, Math.PI, Math.PI / 2, 6), ...arc(R - rad, B - rad, Math.PI / 2, 0, 6), [R, MID]];
+    // 오른쪽 가운데 → 오른쪽 변 위로 → 위 변 왼쪽으로 → 왼쪽 가운데 (뒷 반 바퀴)
+    const back = [[R, MID], ...arc(R - rad, T + rad, 0, -Math.PI / 2, 6), ...arc(L + rad, T + rad, -Math.PI / 2, -Math.PI, 6), [L, MID]];
+    const entry = [[-40, MID], [L, MID]], exit = [[R, MID], [1064, MID]];
+    const raw = [...entry];
+    for (let i = 0; i < ARENA_LAPS; i++) raw.push(...front, ...back);
+    raw.push(...front, ...exit);
+    const path = dedupe(raw);
+    const ring = dedupe([...front, ...back]); // 그리기용 닫힌 트랙
     // 석단 보드 3×5
     const spots = [];
     for (let r = 0; r < 3; r++) for (let c = 0; c < 5; c++) spots.push([512 + (c - 2) * 88, 300 + (r - 1) * 72]);
-    return { path, path2: null, airPts: null, spots, spots2: [], portals: [start.slice()], center: end.slice(), board: { x: 290, y: 178, w: 444, h: 244 }, track: { L, R, T, B, rad } };
+    return { path, path2: null, airPts: null, spots, spots2: [], portals: [], center: null, noGoal: true, laps: ARENA_LAPS,
+             roads: [entry, ring, exit], board: { x: 290, y: 178, w: 444, h: 244 }, track: { L, R, T, B, rad, mid: MID } };
   }
 
   // ===== 난이도 티어 =====
@@ -1126,6 +1131,7 @@ window.DKCONTENT = (function () {
       const L = buildArenaLayout();
       inf.path = L.path; inf.path2 = L.path2; inf.airPts = L.airPts; inf.spots = L.spots; inf.spots2 = L.spots2;
       inf.portals = L.portals; inf.center = L.center; inf.board = L.board; inf.track = L.track;
+      inf.noGoal = L.noGoal; inf.roads = L.roads; inf.laps = L.laps;
     }
   }
 
@@ -1219,6 +1225,7 @@ window.DKCONTENT = (function () {
     tier: { tier: 6, name: '무한', color: '#ff7ad9', lanes: ['ground'], extraSpots: 0, hpScale: 1, countBonus: 0, startGold: 400 }, // 랜덤다이스식: 트랙 하나(공중·땅굴 적도 같은 트랙), 석단 15개 처음부터 전부
     startGold: 400, lives: 20, intermission: 6,
     rangeBonus: 24,  // 보드 보정: 가운데 칸에서도 트랙(150px)에 닿게
+    laps: ARENA_LAPS, // 적이 트랙을 도는 온전한 바퀴 수 (+ 마지막 반 바퀴) — buildArenaLayout
     // 보물상자 갓챠: 골드로 상자를 사면 다면체 주사위 하나. 굴려 나온 숫자 = 타워 성(★). 7 이상은 히든 타워.
     chest: {
       cost: (n) => Math.round(250 * Math.pow(1.10, n) / 10) * 10,   // n = 이번 런에 산 횟수 (10번째 650, 20번째 1,680, 30번째 4,360)
