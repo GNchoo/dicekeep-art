@@ -112,7 +112,7 @@ function applyMapLayout(mapKey, tier) {
       }
     }
   }
-  ARENA = (m && m.renderRoads) ? { center: m.center || [W / 2, H / 2], portals: m.portals || [], tiled: !!m.tiled, theme: m.theme || null, track: m.track || null } : null;
+  ARENA = (m && m.renderRoads) ? { center: m.center || (m.noGoal ? null : [W / 2, H / 2]), noGoal: !!m.noGoal, portals: m.portals || [], tiled: !!m.tiled, theme: m.theme || null, track: m.track || null } : null;
   ROAD_LAYER = null;
   if (m && m.tiled) {
     const layer = buildTileLayer(m);
@@ -140,7 +140,9 @@ function buildRoadLayer(m) {
   drawArenaBoard(g, m, makePattern(g, tex('board'), 256), art('pad'), rnd);
   // 3. 트랙: 모양은 코드, 표면은 질감(road.png) 패턴, 없으면 코드 석판
   const roadTex = makePattern(g, tex('road'), 160);
-  for (const lane of LANES) if (lane.kind === 'ground' || lane.kind === 'ground2') {
+  // 아레나는 그리기용 폴리라인(m.roads: 입구·닫힌 트랙·출구)을 따로 쓴다 — 적 경로(path)는 트랙을 여러 바퀴 돌아 겹치기 때문
+  const roadLanes = m.roads ? m.roads.map(pts => ({ kind: 'ground', pts })) : LANES;
+  for (const lane of roadLanes) if (lane.kind === 'ground' || lane.kind === 'ground2') {
     drawRoad(g, lane.pts, lane.kind === 'ground2' ? 7 : 3, [150, 132, 112], roadTex);
     if (!roadTex) drawSlabJoints(g, lane.pts, rnd);
     // 경사 연석: 바깥 밝은 띠(46~50) + 안쪽 어두운 띠(40~46)
@@ -153,9 +155,11 @@ function buildRoadLayer(m) {
     stroke(46, 'rgba(78,64,58,0.95)');
     stroke(43, 'rgba(0,0,0,0.18)');
     g.restore();
-    // 연석은 본체(0~43)를 덮었으므로 본체를 다시 그린다 (질감/석판 포함)
-    drawRoad(g, pts, lane.kind === 'ground2' ? 7 : 3, [150, 132, 112], roadTex, true);
-    if (!roadTex) drawSlabJoints(g, pts, mulberry(0x5eed + 1));
+  }
+  // 연석은 본체(0~43)를 덮었으므로 본체를 다시 그린다 (질감/석판 포함). 모든 연석 뒤에 그려야 입구·출구가 트랙에 매끈하게 붙는다
+  for (const lane of roadLanes) if (lane.kind === 'ground' || lane.kind === 'ground2') {
+    drawRoad(g, lane.pts, lane.kind === 'ground2' ? 7 : 3, [150, 132, 112], roadTex, true);
+    if (!roadTex) drawSlabJoints(g, lane.pts, mulberry(0x5eed + 1));
   }
   // 4. 화로·기둥·잔해: 그림이 있으면 오브젝트, 없으면 코드
   if (m.track) {
@@ -173,7 +177,7 @@ function buildRoadLayer(m) {
         g.fillStyle = '#2a2436'; g.beginPath(); g.ellipse(x, y - 9, 10, 4, 0, 0, Math.PI * 2); g.fill();
       }
     }
-    if (rubble) for (const [x, y] of [[m.track.L - 150, m.track.T + 110], [m.track.R + 150, m.track.B - 100], [m.track.L - 30, m.track.B + 88], [m.track.R + 60, m.track.T - 70]]) drawGroundSprite(g, rubble, x, y, 48, rnd() < 0.5);
+    if (rubble) for (const [x, y] of [[160, 110], [W - 160, 110], [300, 548], [W - 300, 548]]) drawGroundSprite(g, rubble, x, y, 48, rnd() < 0.5);
   }
   // 5. 시작·도착 그림 (있으면 포탈 그림·크리스탈 대신)
   const st = art('start'), en = art('end');
@@ -193,6 +197,11 @@ function dimOutsideTrack(g, m) {
   o.globalCompositeOperation = 'destination-out';
   o.shadowColor = '#000'; o.shadowBlur = 56; o.fillStyle = '#000';
   o.beginPath(); o.roundRect(t.L - pad, t.T - pad, t.R - t.L + pad * 2, t.B - t.T + pad * 2, t.rad + pad); o.fill();
+  if (m.roads && t.mid != null) { // 입구·출구 길: 연석 옆은 밝고 화면 가장자리로 갈수록 어둠 속으로 사라진다
+    o.shadowBlur = 28;
+    const lane = (x0, x1) => { const gr = o.createLinearGradient(x0, 0, x1, 0); gr.addColorStop(0, 'rgba(0,0,0,1)'); gr.addColorStop(1, 'rgba(0,0,0,0)'); o.fillStyle = gr; o.fillRect(Math.min(x0, x1), t.mid - pad, Math.abs(x1 - x0), pad * 2); };
+    lane(t.L, 30); lane(t.R, W - 30);
+  }
   g.drawImage(ov, 0, 0);
 }
 // 코드 석판: 트랙 진행 방향을 따라 어긋난 줄눈 (질감 그림이 없을 때)
@@ -264,7 +273,7 @@ function drawArenaBoard(g, m, boardTex, padArt, rnd) {
 // 캔버스 좌우 가장자리의 돌 기둥 4개: 연석에서 ≥100px 떨어뜨려 타워와 헷갈리지 않게 (HUD 칩 아래)
 function arenaPillars(m) {
   const t = m.track; if (!t) return [];
-  return [[t.L - 186, 210], [t.R + 186, 210], [t.L - 186, 470], [t.R + 186, 470]];
+  return [[40, 140], [W - 40, 140], [40, 530], [W - 40, 530]]; // 입구·출구 길(y 248~352) 위아래로 비켜서
 }
 function drawCodePillar(g, x, y) {
   g.save();
@@ -279,7 +288,7 @@ function drawCodePillar(g, x, y) {
 function brazierArtFlag() { const a = A['tl_arena_prop-1']; return !!(a && a.cv && a.h > 8); }
 function arenaBraziers(m) {
   const t = m.track; if (!t) return [];
-  return [[t.L - 186, 340], [t.R + 186, 340]]; // 좌우 가장자리 중간, 기둥 사이
+  return [[120, 205], [W - 120, 205], [120, 415], [W - 120, 415]]; // 입구·출구 길 위아래, 기둥 안쪽
 }
 function drawArenaBraziers() {
   if (!ARENA || !ARENA.track) return;
@@ -612,7 +621,7 @@ function buildTileLayer(m) {
 
 // 중심 크리스탈 (코드 렌더 맵). 테마 도착 타일이 구워져 있으면 맥동 링만 그린다.
 function drawArenaCrystal() {
-  if (!ARENA) return;
+  if (!ARENA || ARENA.noGoal) return;
   const [cx, cy] = ARENA.center;
   const pulse = 0.5 + 0.5 * Math.sin(S.time * 2.4);
   if (ARENA.hasEnd) {
@@ -1951,7 +1960,7 @@ function endInfinity() {
   SFX.lose();
   showOverlay(
     isBest ? '신기록!' : '런 종료',
-    `<b>무한 투기장</b> 웨이브 <b>${wave}</b> 까지 버텼습니다${isBest ? ' — <b>최고 기록 갱신!</b>' : ` (최고 ${SAVE.infBest})`}<br>` +
+    `${S.inf.bossLeak ? `보스 <b>${S.inf.bossLeak}</b> 돌파 — 투기장을 빠져나갔습니다!<br>` : ''}<b>무한 투기장</b> 웨이브 <b>${wave}</b> 까지 버텼습니다${isBest ? ' — <b>최고 기록 갱신!</b>' : ` (최고 ${SAVE.infBest})`}<br>` +
     `처치 <b>${S.inf.kills}</b> · 강화에 쓴 SP <b>${S.inf.spent}</b><br>` +
     `젬 <b>+${r.gems}</b>${r.newly.length ? ` (마일스톤 ${r.newly.join(', ')} 달성 보너스 포함)` : ''}`,
     '로비로'
@@ -2276,6 +2285,7 @@ function update(dt) {
       S.hurtT = 0.5;
       SFX.leak();
       S.fxs.push({ kind: 'impact', x: p.x, y: p.y - 20, t: 0, dur: 0.3, size: 80 });
+      if (S.mode === 'infinity' && e.isBoss) { S.lives = 0; S.inf.bossLeak = e.name; } // 인피니티: 보스를 못 잡으면 남은 목숨과 상관없이 런 종료
       syncUI();
       if (S.lives <= 0) { S.lives = 0; if (S.mode === 'infinity') endInfinity(); else gameEnd(false); return; }
     }
@@ -2484,7 +2494,7 @@ function flashCanvas(fr) {
 function drawLanes() {
   for (let li = 0; li < LANES.length; li++) {
     const lane = LANES[li];
-    if (lane.kind === 'ground') { if (ARENA) drawPortal(lane.pts[0][0], lane.pts[0][1], lane); continue; }
+    if (lane.kind === 'ground') { if (ARENA && !ARENA.noGoal) drawPortal(lane.pts[0][0], lane.pts[0][1], lane); continue; }
     const pts = lane.pts;
     ctx.save();
     ctx.lineJoin = 'round'; ctx.lineCap = 'round';
