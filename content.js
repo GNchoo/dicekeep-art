@@ -1282,7 +1282,7 @@ window.DKCONTENT = (function () {
     // ---- 로스터: 웨이브 w 에 나오는 단일 몬스터 ----
     roster: null,
     getRoster() { if (!this.roster) this.roster = buildInfinityRoster(this.sizeSeq); return this.roster; },
-    countOf(w, cls) { return Math.round(Math.min(36, 12 + Math.floor(w * 0.6)) * ({ S: 1.2, M: 1, L: 0.8 })[cls || 'M']); },
+    countOf(w, cls) { return Math.round(Math.min(36, 12 + Math.floor(w * 0.6)) * ({ S: 1.0, M: 1, L: 0.85 })[cls || 'M']); }, // 소형 ×1.2 는 31~33 소형 연속 구간에서 벽이 너무 높아 1.0 으로
     monsterFor(w) {
       const R = this.getRoster(), cycle = Math.floor((w - 1) / 101), r = R[(w - 1) % 101];
       const hue = cycle ? (cycle * 97) % 360 : 0, prefix = cycle ? `${cycle + 1}주기 ` : '';
@@ -1292,7 +1292,7 @@ window.DKCONTENT = (function () {
                count: this.countOf(w, r.cls), armor: this.armor(w) + (r.tank ? 2 + cycle : 0), hpMult: r.tank ? 1.25 : 1 };
     },
     // ---- 방어력: 후반으로 갈수록 타격당 고정 감소, 33의 배수 웨이브는 고방어(버블피시 255) ----
-    armor(w) { const base = Math.floor(Math.max(0, w - 20) / 4); return w % 33 === 0 ? Math.max(8, base * 8) : base; },
+    armor(w) { const base = Math.floor(Math.max(0, w - 30) / 6); return w % 33 === 0 ? Math.max(6, base * 4) : base; }, // w60 5 · w90 10 · 고방어 w33 6 · w66 24 · w99 40 (봇 보정: 33웨이브 벽이 너무 높았다)
     highArmor(w) { return w % 33 === 0; },
     // ---- 보스 보상 스케줄 (1미네랄 = 16G): 24R 50+유물 · 37/58R 50+서사 · 79R 70+전설 · 90R 100+전설 · 95R 150+전설 · 96~100R 유물·서사 추가 ----
     bossReward(w) {
@@ -1325,7 +1325,6 @@ window.DKCONTENT = (function () {
         elites: w >= 20 ? 3 : 2,
       };
     },
-    spPerWave: (w) => (w % 10 === 0 ? 3 : 1),
     milestones: [25, 50, 100, 200],
     // 런 종료 젬: 10웨이브당 2 + 최초 달성 마일스톤당 15
     gems(wave, claimed) {
@@ -1338,7 +1337,8 @@ window.DKCONTENT = (function () {
   // 눈별 강화 (SP). 랜덤다이스의 '주사위 파워'.
   const DICE_POWER = {
     maxLv: 10,
-    cost: (lv) => 1 + Math.floor(lv / 3),         // lv0→1: 1SP … lv9→10: 4SP (총 22SP)
+    unit: 'G',
+    cost: (lv) => 150 + 150 * lv,                 // 랜덤다이스식 골드 파워업: Lv1 150G … Lv10 1,500G (눈당 총 8,250G), 강화할수록 비싸진다
     dmgMult: (lv) => 1 + 0.15 * lv,               // 최대 2.5×
     rangeAdd: (lv) => 3 * lv,
     tier: (lv) => Math.floor(lv / 3),             // 3레벨마다 특수 보너스 1단계 (최대 3)

@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>주사위 성채 (Dicekeep)</title>
-<link rel="stylesheet" href="style.css?v=67" />
+<link rel="stylesheet" href="style.css?v=68" />
 <link rel="icon" href="ui/gold.png" />
 </head>
 <body>
@@ -18,6 +18,21 @@
       <span class="chip"><b id="wave-val">웨이브 0 / 10</b></span>
     </div>
 
+    <div id="inf-help" class="hidden">
+      <div class="help-card">
+        <h3>무한 투기장 안내</h3>
+        <ol>
+          <li><b>🎁 뽑기 160G</b> — 등급이 정해지고 바로 굴러 타워가 됩니다. 굴려 나온 숫자 = 타워 성(★).<br><small>일반 50% (1★) · 레어 33.1% (1~4★) · 고대 10.2% (1~6★) · 유물 5.1% (1~8★) · 서사 0.8% (1~12★) · 전설 0.5% (1~20★) · 에픽 0.2% (14★↑) · 신화 0.08% (18★↑) · 태초 0.019% (20★)</small></li>
+          <li><b>주머니</b> — 손에 타워가 있을 때 뽑은 주사위와 보스 보상 주사위가 쌓입니다. 눌러서 굴리세요.</li>
+          <li><b>승급 도박 20%</b> — 켜고 주머니 주사위를 누르면 그 주사위를 걸고 20%로 한 등급 위, 80%는 사라집니다.</li>
+          <li><b>교환</b> — 7★ 이상 타워를 고르면 다시 굴릴 수 있습니다 (전설 1600G 66% · 신화 4000G 50%). 실패하면 타워가 사라집니다.</li>
+          <li><b>판매</b> — 7★ 이상은 팔 수 없습니다.</li>
+          <li><b>파워업</b> — 골드로 눈(1~6)을 강화합니다. 강화할수록 비싸집니다. ★ 히든 타워는 6눈 파워업을 따릅니다.</li>
+          <li><b>패배</b> — 필드에 적이 200마리를 넘으면 가장 오래된 적이 사라지며 목숨 −1. 보스는 5분 20초 안에 잡아야 합니다.</li>
+        </ol>
+        <button id="help-close">알겠어요</button>
+      </div>
+    </div>
     <div id="mini-top" class="mini hidden">
       <button id="speed-btn" title="게임 속도">x1</button>
       <button id="mute-btn" title="소리">&#128266;</button>
@@ -98,8 +113,8 @@
     </div>
 
     <div id="hud-break" class="hidden"></div>
-    <div id="inf-panel" class="hidden" title="웨이브를 넘길 때마다 SP를 얻어 눈을 강화합니다 (단축키 1~6)">
-      <div class="inf-sp-chip">SP <b id="inf-sp">0</b></div>
+    <div id="inf-panel" class="hidden" title="골드로 눈(1~6)을 파워업합니다. 강화할수록 비싸집니다 (단축키 1~6)">
+      <div class="inf-sp-chip">파워업</div>
       <button id="inf-face-1" class="inf-face"><span class="inf-pip">1</span><span class="inf-lv">Lv0</span><span class="inf-cost">1 SP</span></button>
       <button id="inf-face-2" class="inf-face"><span class="inf-pip">2</span><span class="inf-lv">Lv0</span><span class="inf-cost">1 SP</span></button>
       <button id="inf-face-3" class="inf-face"><span class="inf-pip">3</span><span class="inf-lv">Lv0</span><span class="inf-cost">1 SP</span></button>
@@ -108,9 +123,8 @@
       <button id="inf-face-6" class="inf-face"><span class="inf-pip">6</span><span class="inf-lv">Lv0</span><span class="inf-cost">1 SP</span></button>
     </div>
 
-    <div id="inf-gacha" class="hidden" title="골드로 보물상자를 사면 다면체 주사위가 나옵니다. 굴려 나온 숫자가 타워의 성(★)이 됩니다">
-      <button id="chest-btn">&#127873; 보물상자<small>160 G</small></button>
-      <button id="gamble-btn" title="메운디 랜덤 도박 — 켜고 주머니 주사위를 누르세요">&#127922; 도박<small>20% 승급</small></button>
+    <div id="inf-gacha" class="hidden" title="주머니: 손에 타워가 있을 때 뽑은 주사위와 보스 보상 주사위가 쌓입니다. 눌러서 굴리세요">
+      <span class="bag-label">주머니</span>
       <div id="dice-bag">
         <button id="bag-d1" class="bag-die empty" data-k="d1"><span class="bag-k">d1</span><span class="bag-n">0</span></button>
         <button id="bag-d4" class="bag-die empty" data-k="d4"><span class="bag-k">d4</span><span class="bag-n">0</span></button>
@@ -122,6 +136,9 @@
         <button id="bag-myth" class="bag-die rare myth empty hidden" data-k="myth"><span class="bag-k">신화</span><span class="bag-n">0</span></button>
         <button id="bag-primal" class="bag-die rare primal empty hidden" data-k="primal"><span class="bag-k">태초</span><span class="bag-n">0</span></button>
       </div>
+      <button id="gamble-btn" title="주머니 주사위 하나를 걸고 20% 확률로 한 등급 위로 (실패하면 소멸)">&#127922; 승급 도박<small>20%</small></button>
+      <span id="gamble-hint" class="hidden">← 주머니 주사위를 누르면 도박</span>
+      <button id="help-btn" title="무한 투기장 안내">?</button>
     </div>
 
     <div id="right-panel">
@@ -140,7 +157,7 @@
   <img id="ghost-tower" alt="">
   <div id="ghost-ring"></div>
 </div>
-<script src="content.js?v=67"></script>
-<script src="game.js?v=67"></script>
+<script src="content.js?v=68"></script>
+<script src="game.js?v=68"></script>
 </body>
 </html>
