@@ -1325,7 +1325,6 @@ window.DKCONTENT = (function () {
         elites: w >= 20 ? 3 : 2,
       };
     },
-    spPerWave: (w) => (w % 10 === 0 ? 3 : 1),
     milestones: [25, 50, 100, 200],
     // 런 종료 젬: 10웨이브당 2 + 최초 달성 마일스톤당 15
     gems(wave, claimed) {
@@ -1338,7 +1337,8 @@ window.DKCONTENT = (function () {
   // 눈별 강화 (SP). 랜덤다이스의 '주사위 파워'.
   const DICE_POWER = {
     maxLv: 10,
-    cost: (lv) => 1 + Math.floor(lv / 3),         // lv0→1: 1SP … lv9→10: 4SP (총 22SP)
+    unit: 'G',
+    cost: (lv) => 150 + 150 * lv,                 // 랜덤다이스식 골드 파워업: Lv1 150G … Lv10 1,500G (눈당 총 8,250G), 강화할수록 비싸진다
     dmgMult: (lv) => 1 + 0.15 * lv,               // 최대 2.5×
     rangeAdd: (lv) => 3 * lv,
     tier: (lv) => Math.floor(lv / 3),             // 3레벨마다 특수 보너스 1단계 (최대 3)

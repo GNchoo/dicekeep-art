@@ -564,6 +564,20 @@ body.placing #game { cursor: grabbing; }
 #chest-btn:hover:not(:disabled) { filter: brightness(1.25); }
 #chest-btn:disabled { opacity: .45; cursor: default; }
 #dice-bag { display: flex; gap: 4px; }
+.bag-label { font-size: 12px; color: #ffe9b8; padding: 0 4px; white-space: nowrap; }
+#gamble-hint { font-size: 11px; color: #e0b8ff; white-space: nowrap; }
+#inf-gacha.gambling .bag-die:not(.empty) { border-color: #b76bff; box-shadow: 0 0 8px rgba(183,107,255,.7); }
+#help-btn { width: 26px; height: 26px; border-radius: 50%; border: 1px solid #e8b64a; background: #3a2c14; color: var(--gold); font-weight: bold; cursor: pointer; font-family: inherit; }
+#help-btn:hover { filter: brightness(1.3); }
+#inf-help { position: absolute; inset: 0; z-index: 8; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,.62); }
+#inf-help.hidden { display: none; }
+.help-card { max-width: 560px; width: 92%; max-height: 90%; overflow: auto; background: #1e1626; border: 1px solid #c9a24a; border-radius: 12px; padding: 14px 18px; color: #f3e9d2; font-size: 13px; line-height: 1.5; box-shadow: 0 8px 30px rgba(0,0,0,.6); }
+.help-card h3 { margin: 0 0 8px; color: var(--gold); font-size: 16px; }
+.help-card ol { margin: 0 0 10px; padding-left: 20px; }
+.help-card li { margin-bottom: 6px; }
+.help-card li small { color: #c9bda0; font-size: 11px; }
+.help-card b { color: #ffe9b8; }
+#help-close { display: block; margin: 4px auto 0; padding: 6px 18px; border-radius: 8px; border: 1px solid #e8b64a; background: linear-gradient(#7a5a1e, #4a350f); color: #ffe9b8; font-family: inherit; font-size: 13px; cursor: pointer; }
 .bag-die { width: 40px; height: 44px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; background: linear-gradient(#3a2d21, #241a10); border: 1px solid #6b5636; border-radius: 8px; color: #e9dfc4; font-family: inherit; cursor: pointer; padding: 0; }
 .bag-die .bag-k { font-size: 11px; font-weight: bold; }
 .bag-die .bag-n { font-size: 12px; color: var(--gold); }
