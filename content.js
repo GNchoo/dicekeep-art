@@ -1216,6 +1216,32 @@ window.DKCONTENT = (function () {
 
   // ===== 인피니티 모드 =====
   // 50 스테이지를 모두 클리어하면 해금. 웨이브 상한 없음, 목숨 0 이면 런 종료. game.js 가 이 값을 그대로 읽는다.
+  // ===== 인피니티 로스터: 웨이브 하나 = 몬스터 한 종류 (메운디 라운드표 방식) =====
+  // 101웨이브 한 사이클. 크기 클래스(sizeSeq)로 후보를 거르고, 이동형은 주기(4의 배수 공중, 7의 배수 땅굴, 나머지 땅),
+  // hp 오름차순 풀에서 진행도(w/101) 위치의 아직 안 쓴 종을 뽑는다 → 초반 약한 종, 후반 튼튼한 종, 사이클 안 중복 없음.
+  const TANK_IDS = new Set(['turtle', 'snail', 'pebblegolem', 'pillbug', 'porcupine', 'arma', 'pangolin', 'walrus', 'rhino', 'elephant', 'bison', 'yak', 'watermelon', 'chessrook', 'daruma', 'clam', 'oyster', 'seaurchin', 'saintbernard', 'newfoundland', 'greatdane', 'durian', 'hippo', 'crocodile', 'manatee', 'dugong']);
+  const ROSTER_OVERRIDES = {}; // { [웨이브]: baseId } — 손으로 바꾸고 싶을 때
+  const sizeClassOf = (b) => (b.size <= 42 ? 'S' : b.size <= 48 ? 'M' : 'L');
+  function buildInfinityRoster(sizeSeq) {
+    const used = new Set(), roster = [];
+    for (let w = 1; w <= 101; w++) {
+      const c = sizeSeq[w - 1];
+      if (w % 10 === 0) { roster.push({ w, cls: c, boss: true }); continue; }
+      let move = w % 7 === 0 ? 'burrow' : w % 4 === 0 ? 'air' : 'ground';
+      const filt = (mv) => bases.filter((b) => sizeClassOf(b) === c && (!mv || b.move === mv) && !used.has(b.id));
+      let pool = filt(move);
+      if (!pool.length) { move = 'ground'; pool = filt('ground'); }
+      if (!pool.length) pool = filt(null);
+      pool.sort((a, b) => a.hp - b.hp || (a.id < b.id ? -1 : 1));
+      const idx = Math.min(pool.length - 1, Math.floor((w - 1) / 101 * pool.length));
+      const ov = ROSTER_OVERRIDES[w] && bases.find((b) => b.id === ROSTER_OVERRIDES[w]);
+      const pick = ov || pool[idx];
+      used.add(pick.id);
+      roster.push({ w, id: pick.id, cls: c, move: pick.move, tank: TANK_IDS.has(pick.id) });
+    }
+    return roster;
+  }
+
   const INFINITY = {
     mapKey: 'cInf',
     tier: { tier: 6, name: '무한', color: '#ff7ad9', lanes: ['ground'], extraSpots: 0, hpScale: 1, countBonus: 0, startGold: 400 }, // 랜덤다이스식: 트랙 하나(공중·땅굴 적도 같은 트랙), 석단 15개 처음부터 전부
@@ -1253,6 +1279,18 @@ window.DKCONTENT = (function () {
     // 원작 1~101R 몬스터 크기 표 그대로 (보스 라운드 포함). 웨이브 w 의 크기 = sizeSeq[(w-1)%101]
     sizeSeq: ('SSLSMLLSLL' + 'SLSLMLMSLL' + 'SLSSMSLLLS' + 'SSSLLLMSMS' + 'LMLLLSMLSL' + 'LSMSLLLSML' + 'MSSMLLSSLS' + 'LSLSSSSLMM' + 'SMLLSSLSLL' + 'SSLLMSLMLSM').split(''),
     sizeOf(w) { return this.sizeSeq[(Math.max(1, w) - 1) % this.sizeSeq.length]; },
+    // ---- 로스터: 웨이브 w 에 나오는 단일 몬스터 ----
+    roster: null,
+    getRoster() { if (!this.roster) this.roster = buildInfinityRoster(this.sizeSeq); return this.roster; },
+    countOf(w, cls) { return Math.round(Math.min(36, 12 + Math.floor(w * 0.6)) * ({ S: 1.2, M: 1, L: 0.8 })[cls || 'M']); },
+    monsterFor(w) {
+      const R = this.getRoster(), cycle = Math.floor((w - 1) / 101), r = R[(w - 1) % 101];
+      const hue = cycle ? (cycle * 97) % 360 : 0, prefix = cycle ? `${cycle + 1}주기 ` : '';
+      if (r.boss) return { boss: true, cls: r.cls, hue, prefix, armor: this.armor(w), count: 0, name: '보스' };
+      const base = bases.find((b) => b.id === r.id);
+      return { boss: false, base, name: prefix + base.name, hue, cls: r.cls, move: base.move, tank: r.tank,
+               count: this.countOf(w, r.cls), armor: this.armor(w) + (r.tank ? 2 + cycle : 0), hpMult: r.tank ? 1.25 : 1 };
+    },
     // ---- 방어력: 후반으로 갈수록 타격당 고정 감소, 33의 배수 웨이브는 고방어(버블피시 255) ----
     armor(w) { const base = Math.floor(Math.max(0, w - 20) / 4); return w % 33 === 0 ? Math.max(8, base * 8) : base; },
     highArmor(w) { return w % 33 === 0; },

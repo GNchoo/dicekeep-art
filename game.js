@@ -1834,34 +1834,30 @@ function buildInfinityWave(w) {
   const C = window.DKCONTENT;
   const INF = C.INFINITY;
   const P = INF.wave(w);
+  const M = INF.monsterFor(w); // 메운디식 로스터: 웨이브 하나 = 몬스터 한 종류 (보스 웨이브는 보스만)
   const q = [];
   let t = 0.45;
-  const sizeClass = INF.sizeOf ? INF.sizeOf(w) : null, armor = INF.armor ? INF.armor(w) : 0; // 메운디: 웨이브별 크기·방어력
-  const add = (type, extra) => { q.push(Object.assign({ type, t, hpMult: P.hpMult, goldMult: P.goldMult, spdMult: P.speedMult, sizeClass, armor, wave: w }, extra || {})); };
-  const seq = { ground: 0, air: 0, burrow: 0 };
-  const eliteSlots = new Set();
-  if (w % INF.eliteEvery === 0) for (let k = 0; k < P.elites; k++) eliteSlots.add(Math.floor((k + 0.5) * P.count / P.elites));
-  for (let i = 0; i < P.count; i++) {
-    const sid = (w * 23 + i * 17) % C.species.length;
-    const sp = C.species[sid];
-    const base = C.bases.find((b) => b.id === sp.base) || C.bases[0];
-    const lane = laneFor(base.move, seq[base.move]++);
-    const elite = eliteSlots.has(i);
-    add(base.id, {
-      speciesId: sid, name: (elite ? '정예 ' : '') + sp.name, hue: sp.hue, lane,
-      hpMult: P.hpMult * sp.hpM * (elite ? 3 : 1), goldMult: P.goldMult * (elite ? 3 : 1), isElite: elite,
-    });
-    t += P.gap * (FAST_AIR.has(base.id) ? 0.72 : 1);
-  }
-  if (w % INF.bossEvery === 0) {
-    t += 1.2;
+  const add = (type, extra) => { q.push(Object.assign({ type, t, hpMult: P.hpMult, goldMult: P.goldMult, spdMult: P.speedMult, sizeClass: M.cls, armor: M.armor, wave: w }, extra || {})); };
+  if (M.boss) {
+    t += 0.6;
     for (let k = 0; k < P.bosses; k++) {
       const bi = (w / INF.bossEvery - 1 + k * 37) % C.bosses.length;
       const boss = C.bosses[bi];
       const bbase = C.bossBases.find((b) => b.id === boss.base) || C.bossBases[0];
-      add(bbase.id, { name: boss.name, hue: boss.hue, hpMult: P.hpMult * P.bossHp, isBoss: true, lane: laneFor(bbase.move, k) });
+      add(bbase.id, { name: M.prefix + boss.name, hue: boss.hue, hpMult: P.hpMult * P.bossHp, isBoss: true, lane: laneFor(bbase.move, k) });
       t += 1.5;
     }
+    return q;
+  }
+  const eliteSlots = new Set();
+  if (w % INF.eliteEvery === 0) for (let k = 0; k < P.elites; k++) eliteSlots.add(Math.floor((k + 0.5) * M.count / P.elites));
+  for (let i = 0; i < M.count; i++) {
+    const elite = eliteSlots.has(i);
+    add(M.base.id, {
+      name: (elite ? '정예 ' : '') + M.name, hue: M.hue, lane: laneFor(M.base.move, i),
+      hpMult: P.hpMult * M.hpMult * (elite ? 3 : 1), goldMult: P.goldMult * (elite ? 3 : 1), isElite: elite,
+    });
+    t += P.gap * (FAST_AIR.has(M.base.id) ? 0.72 : 1);
   }
   return q;
 }
@@ -1928,8 +1924,9 @@ function startWave() {
   S.waveT = 0;
   S.autoT = 0;
   if (S.mode === 'infinity' && window.DKCONTENT) { // 메운디: 크기·방어력 예고
-    const INF = DKCONTENT.INFINITY, sc = INF.sizeOf(S.wave), ar = INF.armor(S.wave), hi = INF.highArmor(S.wave);
-    S.texts.push({ str: `웨이브 ${S.wave} · ${INF.sizeName[sc]}${ar ? ` · 방어 ${ar}` : ''}${hi ? ' · 고방어!' : ''}${S.wave % INF.bossEvery === 0 ? ' · 보스' : ''}`, x: W / 2, y: H / 2 - 70, t: 0, color: hi ? '#ff7a7a' : '#ffe6b0' });
+    const INF = DKCONTENT.INFINITY, M = INF.monsterFor(S.wave), hi = INF.highArmor(S.wave);
+    const who = M.boss ? '보스' : `${M.name} ×${M.count}`;
+    S.texts.push({ str: `웨이브 ${S.wave} · ${who} · ${INF.sizeName[M.cls]}${M.armor ? ` · 방어 ${M.armor}` : ''}${hi ? ' · 고방어!' : ''}`, x: W / 2, y: H / 2 - 70, t: 0, color: hi ? '#ff7a7a' : M.boss ? '#ffd452' : '#ffe6b0' });
   }
   SFX.wave();
   syncUI();
@@ -3284,7 +3281,8 @@ function syncUI() {
   const sd = S.stageData;
   if (S.mode === 'infinity') {
     const INF = DKCONTENT.INFINITY, cap = INF.fieldCap || 200, n = S.enemies.length;
-    const sz = S.wave > 0 && INF.sizeOf ? ` · ${INF.sizeName[INF.sizeOf(S.wave)]}` : '';
+    const M = S.wave > 0 && INF.monsterFor ? INF.monsterFor(S.wave) : null;
+    const sz = M ? ` · ${M.boss ? '보스' : M.name}(${INF.sizeName[M.cls]})` : '';
     const bt = S.inf && S.inf.bossT > 0 ? ` · 보스 ${Math.floor(S.inf.bossT / 60)}:${String(Math.floor(S.inf.bossT % 60)).padStart(2, '0')}` : '';
     $('wave-val').textContent = `∞ 웨이브 ${S.wave}${sz} · 최고 ${SAVE.infBest || 0} · 필드 ${n}/${cap}${bt}`;
     $('wave-val').classList.toggle('hot', n >= cap * 0.9 || (S.inf && S.inf.bossT > 0 && S.inf.bossT < 30));
