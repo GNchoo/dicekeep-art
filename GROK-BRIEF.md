@@ -178,11 +178,37 @@ Single polyhedral game die on a solid plain light gray #C8C8C8 background, cente
 Single closed treasure chest icon on a solid plain light gray #C8C8C8 background, centered, 3/4 view, hand-painted casual Kingdom Rush style, dark wood with gold bands and a glowing golden lock, a few dice peeking from under the lid, thick clean outlines, no text, no watermark.
 ```
 
+## F. 인피니티 아레나 조각 9장 → `casual/tiles/arena/`
+
+인피니티 맵(랜덤다이스식 보드 + 둘레 트랙)은 코드가 모양을 그리고, 아래 조각으로 표면과 장식을 입힙니다. 통일 테마: **어두운 보라빛 밤의 투기장, 닳은 회보라 석판, 금색 룬 상감, 횃불 빛** (`dark violet night coliseum, worn gray-violet flagstones, gold rune inlays, torchlight`).
+
+### F-1. 질감 3장 (정사각 1024², 가장자리까지 가득, 이음새 없이 반복, 물체·테두리·글자 없음, 평평한 조명)
+
+| 파일 | 프롬프트 |
+|---|---|
+| `floor.jpg` (1280×720 만 예외) | `Hand-painted casual tower defense arena FLOOR ONLY, 16:9, full-bleed: a dark violet night coliseum ground of large worn gray-violet flagstones with faint gold rune inlays and torchlight falling from outside the frame. EMPTY: no track, no roads, no board, no pads, no pillars, no braziers, no characters, no text.` |
+| `road.png` | `Seamless square game texture 1:1, filling the whole square edge to edge with the SURFACE of a worn pale sandstone racing track: fitted flagstones with thin dark joints, small chips and dust. Must tile seamlessly, no borders, no edges, no objects, flat overhead lighting, no text.` |
+| `board.png` | `Seamless square game texture 1:1, filling the whole square edge to edge with the SURFACE of a dark violet-gray polished stone slab with faint gold rune engravings and subtle cracks. Must tile seamlessly, no borders, no objects, flat overhead lighting, no text.` |
+
+### F-2. 오브젝트 6장 (1024², 연회색 #C8C8C8 배경에 오브젝트 하나, 정중앙, 3/4 탑다운, 바닥 그림자는 바로 밑에 짧게)
+
+| 파일 | 게임 크기 | 프롬프트 |
+|---|---|---|
+| `pad.png` | 폭 60 | `a sunken round stone socket in a violet stone floor, 3/4 top-down ellipse about twice as wide as tall, dark recessed center with a thin gold rune ring around the rim, empty so a tower can stand in it` |
+| `start.png` | 높이 84 | `an arched black-iron and stone gate with a swirling purple magic portal inside, torches on both sides` |
+| `end.png` | 높이 128 | `a stone shrine altar holding a large glowing cyan crystal, gold rune rings on the base, roughly twice as tall as wide` |
+| `prop-1.png` | 높이 56 | `a stone brazier bowl on a short pedestal, unlit (the game animates the flame), violet stone with gold trim` |
+| `prop-2.png` | 높이 84 | `a tall violet stone pillar with a gold cap and a floating purple crystal on top, small purple banner` |
+| `prop-3.png` | 높이 40 | `a small pile of broken stone rubble with a cracked dice fragment` |
+
+공통 문구를 앞에 붙이세요: `Hand-painted casual Kingdom Rush and Random Dice style, chibi-cute proportions, thick clean outlines, saturated colors, dark violet coliseum theme with gold accents.`
+
 ## 납품 순서
 
 1. `plains` 의 `road.png` 1장 → 게임에서 확인 (길 표면이 자연스럽게 반복되는지)
 2. 문제 없으면 `forest`, `lake`, `darkforest`, `castle`, `hell` 순으로 12장씩
 3. 인피니티 갓챠 에셋(E): 다면체 주사위 5장 → 성 타워 14장(7~20 순서) → 상자
+4. 인피니티 아레나 조각(F): 질감 3장 → 오브젝트 6장
 
 문제가 있으면 해당 조각만 다시 만들면 됩니다. 조각 하나가 없어도 게임은 그 자리만 코드 그림으로 대신하므로 부분 납품도 괜찮습니다.
 

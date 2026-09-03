@@ -37,6 +37,8 @@ Grok 에게 그대로 붙여넣을 전체 메시지(공통 규칙 + 조각 15개
 
 폴더: `casual/tiles/<theme>/` (`plains`, `forest`, `lake`, `darkforest`, `castle`, `hell`). 키는 `tl_<theme>_<name>`.
 
+**인피니티 아레나 조각 9장** (`casual/tiles/arena/`: floor·road·board 질감 + pad·start·end·prop-1~3): 프롬프트는 `GROK-BRIEF.md` §F. 없으면 코드 석판 트랙·베벨 보드·소켓·기둥·화로로 동작.
+
 **인피니티 갓챠 에셋 20장** (성 타워 `casual/towers/star-07~20.png`, 다면체 주사위 `dice/poly-d1/d4/d8/d12/d20.png`, 상자 `ui/chest.png`): 프롬프트는 `GROK-BRIEF.md` §E. 없으면 6눈 스킨 + 별 배지 / 코드 다각형 / 이모지로 동작.
 
 연결: 파일만 넣으면 끝. 코드 수정·좌표 작업 없음. `index.html` 의 `?v=` 만 올리거나 Ctrl+F5.
