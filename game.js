@@ -1411,16 +1411,21 @@ function buyChest() {
   if (S.gold < cost) { SFX.deny(); return null; }
   S.gold -= cost;
   S.inf.chests = (S.inf.chests || 0) + 1;
-  const kind = ch.draw();
+  const kind = ch.draw(S.wave);
   S.inf.bag[kind] = (S.inf.bag[kind] || 0) + 1;
-  const rare = kind === 'd20' ? 3 : kind === 'd12' ? 2 : kind === 'd8' ? 1 : 0;
-  const col = kind === 'd1' ? '#9a9a9a' : ['#e9dfc4', '#7fd4ff', '#c78bff', '#ffd452'][rare];
-  S.texts.push({ str: kind === 'd1' ? '꽝… 외눈 주사위' : `보물상자: ${ch.label[kind]}(${kind}) 획득!`, x: W / 2, y: 140, t: 0, color: col });
+  const rk = ch.rank(kind);
+  const rare = rk >= 5 ? 3 : rk === 4 ? 2 : rk === 3 ? 1 : 0;
+  const col = dieKindColor(kind);
+  S.texts.push({ str: kind === 'd1' ? '꽝… 일반: 외눈 주사위' : `보물상자: ${ch.grade[kind]} — ${ch.label[kind]} 획득!`, x: W / 2, y: 140, t: 0, color: col });
   S.fxs.push({ kind: 'ring', x: W / 2, y: 150, t: 0, dur: 0.6 + rare * 0.2, size: 90 + rare * 40, color: col });
+  if (rk >= 6) { S.shakeT = Math.max(S.shakeT || 0, 0.3); S.fxs.push({ kind: 'circle', x: W / 2, y: 150, t: 0, dur: 1.2, size: 200, color: col }); }
   if (rare >= 2) SFX.win(); else if (kind === 'd1') SFX.deny(); else SFX.coin();
   syncUI();
   return kind;
 }
+const DIE_KIND_COLORS = { d1: '#9a9a9a', d4: '#d9c9a0', d6: '#e9dfc4', d8: '#7fd4ff', d12: '#c78bff', d20: '#ffd452', epic: '#ff8a5c', myth: '#ff5fa8', primal: '#ffffff' };
+const dieKindColor = k => DIE_KIND_COLORS[k] || '#e9dfc4';
+const dieShape = k => { const ch = chestDef(); return (ch && ch.shape && ch.shape[k]) || k; };
 function rollBagDie(kind) {
   const ch = chestDef();
   if (!ch || S.mode !== 'infinity' || !S.inf || S.phase !== 'playing') return false;
@@ -1459,7 +1464,7 @@ function updateSlot(dt) {
       if (SLOT.t >= 0.8) {
         SLOT.phase = 1; SLOT.t2 = 0;
         const ch = chestDef();
-        if (DIE.forceFinal) { SLOT.final = Math.max(1, Math.min(ch ? ch.sides[SLOT.kind] : 6, DIE.forceFinal)); DIE.forceFinal = 0; }
+        if (DIE.forceFinal) { SLOT.final = Math.max(ch && ch.min ? ch.min[SLOT.kind] || 1 : 1, Math.min(ch ? ch.sides[SLOT.kind] : 6, DIE.forceFinal)); DIE.forceFinal = 0; }
         SFX.settle();
       }
     } else {
@@ -1498,6 +1503,7 @@ function updateSlot(dt) {
 }
 // 다면체 주사위 (슬롯용): 그림이 있으면 회전, 없으면 변 수에 맞는 다각형 + 숫자
 const POLY_SIDES = { d1: 0, d4: 3, d8: 4, d12: 5, d20: 6 };
+const BAG_KINDS = ['d1', 'd4', 'd6', 'd8', 'd12', 'd20', 'epic', 'myth', 'primal'];
 function drawPolyDie(g, cx, cy, size, kind, num, rot, col) {
   const sp = A['poly' + kind];
   g.save();
@@ -1535,8 +1541,8 @@ function drawSlot() {
     const sides = ch ? ch.sides[SLOT.kind] : 6;
     const num = SLOT.phase === 0 ? 1 + (Math.floor(SLOT.t * 22) * 7) % sides : SLOT.final;
     const rot = SLOT.phase === 0 ? SLOT.t * 9 : Math.max(0, 0.4 - SLOT.t2) * 2;
-    const col = SLOT.kind === 'd20' ? '#ffd452' : SLOT.kind === 'd12' ? '#c78bff' : SLOT.kind === 'd8' ? '#7fd4ff' : SLOT.kind === 'd1' ? '#9a9a9a' : '#d9c9a0';
-    drawPolyDie(sctx, 37, 40 - bounce, 22, SLOT.kind, num, rot, col);
+    const col = dieKindColor(SLOT.kind);
+    drawPolyDie(sctx, 37, 40 - bounce, 22, dieShape(SLOT.kind), num, rot, col);
     return;
   }
   drawCube(sctx, 37, 40 - bounce, 17, SLOT.R);
@@ -2072,6 +2078,12 @@ function damageEnemy(e, dmg) {
     S.texts.push({ str: '+' + e.gold, x: p.x, y: p.y - e.def.size, t: 0, color: '#ffd870' });
     spawnDeath(e, p);
     if (e.isBoss || e.type === 'boss') {
+      const ch = chestDef();
+      if (S.mode === 'infinity' && S.inf && ch && ch.bossPick) { // 메운디: 보스 처치 시 유물·서사·전설 중 하나
+        const k = ch.bossPick[Math.floor(Math.random() * ch.bossPick.length)];
+        S.inf.bag[k] = (S.inf.bag[k] || 0) + 1;
+        S.texts.push({ str: `보스 보상: ${ch.grade[k]} ${ch.label[k]}!`, x: W / 2, y: 170, t: 0, color: dieKindColor(k) });
+      }
       S.fxs.push({ kind: 'impact', x: p.x, y: p.y - 20, t: 0, dur: 0.45, size: 150 });
       S.fxs.push({ kind: 'ring', x: p.x, y: p.y - 20, t: 0, dur: 0.8, size: 160, color: '#ffd870' });
       S.shakeT = Math.max(S.shakeT || 0, 0.45);
@@ -3262,13 +3274,15 @@ function syncInfPanel() {
     cb.querySelector('small').textContent = `${cost} G`;
     cb.disabled = S.gold < cost;
     const ch = chestDef();
-    for (const k of ['d1', 'd4', 'd6', 'd8', 'd12', 'd20']) {
+    for (const k of BAG_KINDS) {
       const b = $('bag-' + k); if (!b) continue;
       const n = (S.inf.bag && S.inf.bag[k]) || 0;
       b.querySelector('.bag-n').textContent = n;
       b.classList.toggle('empty', n === 0);
+      b.classList.toggle('hidden', b.classList.contains('rare') && n === 0); // 에픽·신화·태초 칸은 가지고 있을 때만
       b.disabled = n === 0 || SLOT.active || !!S.heldDie || DIE.state !== 'tray';
-      b.title = ch ? `${ch.label[k]} — 굴리면 1~${ch.sides[k]} 성 타워` : k;
+      const lo = ch && ch.min ? ch.min[k] || 1 : 1;
+      b.title = ch ? `${ch.grade ? ch.grade[k] + ' ' : ''}${ch.label[k]} — 굴리면 ${lo === ch.sides[k] ? lo : lo + '~' + ch.sides[k]} 성 타워` : k;
     }
   }
 }
@@ -3805,7 +3819,7 @@ const ssInf = $('ss-inf-btn');
 if (ssInf) ssInf.addEventListener('click', () => { if (!infinityUnlocked()) return; audio(); startInfinity(); });
 for (let f = 1; f <= 6; f++) { const b = $('inf-face-' + f); if (b) b.addEventListener('click', () => upgradeFace(f)); }
 if ($('chest-btn')) $('chest-btn').addEventListener('click', () => { audio(); buyChest(); });
-for (const k of ['d1', 'd4', 'd6', 'd8', 'd12', 'd20']) { const b = $('bag-' + k); if (b) b.addEventListener('click', () => { audio(); rollBagDie(k); }); }
+for (const k of BAG_KINDS) { const b = $('bag-' + k); if (b) b.addEventListener('click', () => { audio(); rollBagDie(k); }); }
 $('btn-shop').addEventListener('click', () => { audio(); gotoShop(); });
 $('ss-back').addEventListener('click', () => gotoLobby());
 $('shop-back').addEventListener('click', () => gotoLobby());

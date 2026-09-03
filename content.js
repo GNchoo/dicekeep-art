@@ -1220,17 +1220,33 @@ window.DKCONTENT = (function () {
     mapKey: 'cInf',
     tier: { tier: 6, name: '무한', color: '#ff7ad9', lanes: ['ground'], extraSpots: 0, hpScale: 1, countBonus: 0, startGold: 400 }, // 랜덤다이스식: 트랙 하나(공중·땅굴 적도 같은 트랙), 석단 15개 처음부터 전부
     startGold: 400, lives: 20, intermission: 6,
-    rangeBonus: 24,  // 보드 보정: 가운데 칸에서도 트랙(150px)에 닿게
+    rangeBonus: 160, // 인피니티는 사거리를 크게: 가운데 칸(512,300)에서 트랙 가장 먼 지점(모서리 호 바깥, 284px)까지 가장 짧은 타워(135)도 닿는다
     fieldCap: 200,   // 필드 한계선: 살아있는 적이 이 수를 넘는 순간 가장 먼저 스폰된 적이 사라지며 목숨 차감 (보스면 즉시 런 종료)
     capDmg: 1,       // 한계선으로 사라지는 적 1마리당 목숨
-    // 보물상자 갓챠: 골드로 상자를 사면 다면체 주사위 하나. 굴려 나온 숫자 = 타워 성(★). 7 이상은 히든 타워.
+    // 보물상자 갓챠 — 스타크래프트 유즈맵 '메이플 운빨 디펜스(메운디)'의 등급·확률·경제를 그대로 옮겼다.
+    //  등급 9개: 일반 50% · 레어 33.1% · 고대 10.2% · 유물 5.1% · 서사 0.8% · 전설 0.5% · 에픽 0.2% · 신화 0.08% · 태초 0.019% (합 100.099%, 원작 그대로)
+    //  등급 → 주사위: 일반 d1(1★ 확정) · 레어 d4 · 고대 d6 · 유물 d8 · 서사 d12 · 전설 d20 · 에픽 d20(14★↑) · 신화 d20(18★↑) · 태초 20★ 확정
+    //  경제: 원작 시작 25미네랄·뽑기 10(2.5회) → 시작 400G·상자 160G 고정(회차 상승 없음)
+    //  라운드 락: 원작처럼 5웨이브 전엔 전설 이상이 나오지 않는다(서사로 대체). 보스 처치 = 유물·서사·전설 중 하나 지급
     chest: {
-      cost: (n) => Math.round(250 * Math.pow(1.10, n) / 10) * 10,   // n = 이번 런에 산 횟수 (10번째 650, 20번째 1,680, 30번째 4,360)
-      table: [['d1', 0.10], ['d4', 0.42], ['d6', 0.20], ['d8', 0.17], ['d12', 0.08], ['d20', 0.03]],
-      sides: { d1: 1, d4: 4, d6: 6, d8: 8, d12: 12, d20: 20 },
-      label: { d1: '외눈 주사위', d4: '4면체', d6: '6면체', d8: '8면체', d12: '12면체', d20: '20면체' },
-      roll(kind) { const n = this.sides[kind] || 6; return 1 + Math.floor(Math.random() * n); },
-      draw() { let v = Math.random(); for (const [k, p] of this.table) { if (v < p) return k; v -= p; } return 'd4'; },
+      cost: () => 160,
+      table: [['d1', 0.50], ['d4', 0.331], ['d6', 0.102], ['d8', 0.051], ['d12', 0.008], ['d20', 0.005], ['epic', 0.002], ['myth', 0.0008], ['primal', 0.00019]],
+      kinds: ['d1', 'd4', 'd6', 'd8', 'd12', 'd20', 'epic', 'myth', 'primal'],
+      sides: { d1: 1, d4: 4, d6: 6, d8: 8, d12: 12, d20: 20, epic: 20, myth: 20, primal: 20 },
+      min:   { d1: 1, d4: 1, d6: 1, d8: 1, d12: 1, d20: 1, epic: 14, myth: 18, primal: 20 },
+      grade: { d1: '일반', d4: '레어', d6: '고대', d8: '유물', d12: '서사', d20: '전설', epic: '에픽', myth: '신화', primal: '태초' },
+      label: { d1: '외눈 주사위', d4: '4면체', d6: '6면체', d8: '8면체', d12: '12면체', d20: '20면체', epic: '에픽 20면체', myth: '신화 20면체', primal: '태초 주사위' },
+      shape: { d1: 'd1', d4: 'd4', d6: 'd6', d8: 'd8', d12: 'd12', d20: 'd20', epic: 'd20', myth: 'd20', primal: 'd20' },
+      lockUntilWave: 5,
+      bossPick: ['d8', 'd12', 'd20'],
+      rank(k) { return this.kinds.indexOf(k); },
+      roll(kind) { const lo = this.min[kind] || 1, hi = this.sides[kind] || 6; return lo + Math.floor(Math.random() * (hi - lo + 1)); },
+      draw(wave) {
+        let v = Math.random(), k = 'd4';
+        for (const [kk, p] of this.table) { if (v < p) { k = kk; break; } v -= p; }
+        if ((wave || 0) < this.lockUntilWave && this.rank(k) >= this.rank('d20')) k = 'd12'; // 라운드 락
+        return k;
+      },
     },
     bossEvery: 10,   // 10 웨이브마다 보스 (20 부터 2마리)
     eliteEvery: 5,   // 5 웨이브마다 정예 (HP×3, 크기×1.2, 골드×3)
