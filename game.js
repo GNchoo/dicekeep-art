@@ -2433,7 +2433,9 @@ function update(dt) {
     }
   }
   // 웨이브 종료 판정
-  if (S.waveActive && S.spawnQ.length === 0 && (S.enemies.length === 0 || S.mode === 'infinity')) { // 인피니티: 스폰이 끝나면 완료 (남은 적은 계속 돈다)
+  // 인피니티: 스폰이 끝나면 완료 (남은 적은 계속 돈다). 단 보스 웨이브는 메운디 보스 라운드처럼 보스를 잡을 때까지 다음 웨이브를 막는다 (제한시간 5분 20초)
+  const infBossHold = S.mode === 'infinity' && S.wave % (DKCONTENT.INFINITY.bossEvery || 10) === 0 && S.enemies.some(e => e.isBoss && !e.dead);
+  if (S.waveActive && S.spawnQ.length === 0 && (S.enemies.length === 0 || (S.mode === 'infinity' && !infBossHold))) {
     S.waveActive = false;
     const bonus = 20 + S.wave * 3 + S.stage * 2;
     S.gold += bonus;
