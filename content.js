@@ -1237,7 +1237,7 @@ window.DKCONTENT = (function () {
     unlockAir: 1, unlockBurrow: 1,
     wave(w) {
       return {
-        hpMult: +(1.8 * Math.pow(1.045, w - 1)).toFixed(3),   // w30 ≈ 6.4×, w50 ≈ 15.6×, w100 ≈ 142× (보드 맵·풀파워 기준 봇 재보정)
+        hpMult: +(1.8 * Math.pow(1.06, w - 1)).toFixed(3),   // w30 ≈ 6.4×, w50 ≈ 15.6×, w100 ≈ 142× (보드 맵·풀파워 기준 봇 재보정)
         count: Math.min(36, 12 + Math.floor(w * 0.6)),
         gap: Math.max(0.3, 0.8 - w * 0.01),
         goldMult: +(1 + w * 0.025).toFixed(3),
