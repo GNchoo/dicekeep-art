@@ -1282,7 +1282,7 @@ window.DKCONTENT = (function () {
     // ---- 로스터: 웨이브 w 에 나오는 단일 몬스터 ----
     roster: null,
     getRoster() { if (!this.roster) this.roster = buildInfinityRoster(this.sizeSeq); return this.roster; },
-    countOf(w, cls) { return Math.round(Math.min(36, 12 + Math.floor(w * 0.6)) * ({ S: 1.2, M: 1, L: 0.8 })[cls || 'M']); },
+    countOf(w, cls) { return Math.round(Math.min(36, 12 + Math.floor(w * 0.6)) * ({ S: 1.0, M: 1, L: 0.85 })[cls || 'M']); }, // 소형 ×1.2 는 31~33 소형 연속 구간에서 벽이 너무 높아 1.0 으로
     monsterFor(w) {
       const R = this.getRoster(), cycle = Math.floor((w - 1) / 101), r = R[(w - 1) % 101];
       const hue = cycle ? (cycle * 97) % 360 : 0, prefix = cycle ? `${cycle + 1}주기 ` : '';
