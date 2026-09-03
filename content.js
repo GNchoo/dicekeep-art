@@ -290,28 +290,24 @@ window.DKCONTENT = (function () {
   // ===== 무한 투기장: 랜덤다이스식 보드 + 둘레 트랙 =====
   // 가운데 3×5 석단 보드(15개, 처음부터 전부 개방), 둘레를 도는 둥근 사각형 트랙 하나. 왼쪽 변 가운데가 열려 있어
   // 아래쪽 포탈에서 출발한 적이 (종류와 상관없이 전부) 시계 반대 방향으로 한 바퀴 돌아 위쪽 크리스탈에 닿는다.
-  // 인피니티 아레나: 시작·도착 지점이 없다. 적은 왼쪽 화면 밖에서 들어와 가운데 트랙을 ARENA_LAPS 바퀴 돌고
-  // 오른쪽 화면 밖으로 빠져나간다 (빠져나가면 목숨 차감, 보스면 즉시 런 종료).
-  const ARENA_LAPS = 2; // 온전한 바퀴 수. 마지막 반 바퀴(왼쪽 가운데 → 아래 → 오른쪽 가운데)를 더 돌고 나간다 → 총 2.5바퀴
+  // 인피니티 아레나: 시작·도착 지점이 없다. 적은 왼쪽 화면 밖에서 입구 길로 들어와 가운데 트랙을 영원히 돈다.
+  // 목숨은 '도착'이 아니라 필드 한계선(INFINITY.fieldCap)으로 깎인다 — game.js spawnEnemy.
   function buildArenaLayout() {
     const L = 250, R = 774, T = 150, B = 450, rad = 52, MID = 300; // 보드에 밀착: 가운데 줄에서 위·아래 트랙까지 150px
     const arc = (cx, cy, a0, a1, n) => { const out = []; for (let i = 0; i <= n; i++) { const a = a0 + (a1 - a0) * i / n; out.push([Math.round(cx + rad * Math.cos(a)), Math.round(cy + rad * Math.sin(a))]); } return out; };
     const dedupe = (pts) => pts.filter((p, i) => i === 0 || p[0] !== pts[i - 1][0] || p[1] !== pts[i - 1][1]);
-    // 시계 반대 방향 (화면 좌표계에서 y 아래가 +): 왼쪽 가운데 → 왼쪽 변 아래로 → 바닥 → 오른쪽 변 위로 → 오른쪽 가운데 (앞 반 바퀴)
-    const front = [[L, MID], ...arc(L + rad, B - rad, Math.PI, Math.PI / 2, 6), ...arc(R - rad, B - rad, Math.PI / 2, 0, 6), [R, MID]];
-    // 오른쪽 가운데 → 오른쪽 변 위로 → 위 변 왼쪽으로 → 왼쪽 가운데 (뒷 반 바퀴)
-    const back = [[R, MID], ...arc(R - rad, T + rad, 0, -Math.PI / 2, 6), ...arc(L + rad, T + rad, -Math.PI / 2, -Math.PI, 6), [L, MID]];
-    const entry = [[-40, MID], [L, MID]], exit = [[R, MID], [1064, MID]];
-    const raw = [...entry];
-    for (let i = 0; i < ARENA_LAPS; i++) raw.push(...front, ...back);
-    raw.push(...front, ...exit);
-    const path = dedupe(raw);
-    const ring = dedupe([...front, ...back]); // 그리기용 닫힌 트랙
+    // 시계 반대 방향 (화면 좌표계에서 y 아래가 +): 왼쪽 가운데 → 왼쪽 변 아래로 → 바닥 → 오른쪽 변 위로 → 위 변 왼쪽으로 → 왼쪽 가운데
+    const ring = dedupe([[L, MID],
+      ...arc(L + rad, B - rad, Math.PI, Math.PI / 2, 6), ...arc(R - rad, B - rad, Math.PI / 2, 0, 6),
+      ...arc(R - rad, T + rad, 0, -Math.PI / 2, 6), ...arc(L + rad, T + rad, -Math.PI / 2, -Math.PI, 6), [L, MID]]);
+    const entry = [[-40, MID], [L, MID]];
+    const path = dedupe([...entry, ...ring]);
+    const loopAt = L - entry[0][0]; // 입구 길이(290px). 경로 끝에 닿으면 여기로 되돌아가 계속 돈다
     // 석단 보드 3×5
     const spots = [];
     for (let r = 0; r < 3; r++) for (let c = 0; c < 5; c++) spots.push([512 + (c - 2) * 88, 300 + (r - 1) * 72]);
-    return { path, path2: null, airPts: null, spots, spots2: [], portals: [], center: null, noGoal: true, laps: ARENA_LAPS,
-             roads: [entry, ring, exit], board: { x: 290, y: 178, w: 444, h: 244 }, track: { L, R, T, B, rad, mid: MID } };
+    return { path, path2: null, airPts: null, spots, spots2: [], portals: [], center: null, noGoal: true, loopAt,
+             roads: [entry, ring], board: { x: 290, y: 178, w: 444, h: 244 }, track: { L, R, T, B, rad, mid: MID } };
   }
 
   // ===== 난이도 티어 =====
@@ -1131,7 +1127,7 @@ window.DKCONTENT = (function () {
       const L = buildArenaLayout();
       inf.path = L.path; inf.path2 = L.path2; inf.airPts = L.airPts; inf.spots = L.spots; inf.spots2 = L.spots2;
       inf.portals = L.portals; inf.center = L.center; inf.board = L.board; inf.track = L.track;
-      inf.noGoal = L.noGoal; inf.roads = L.roads; inf.laps = L.laps;
+      inf.noGoal = L.noGoal; inf.roads = L.roads; inf.loopAt = L.loopAt;
     }
   }
 
@@ -1224,23 +1220,40 @@ window.DKCONTENT = (function () {
     mapKey: 'cInf',
     tier: { tier: 6, name: '무한', color: '#ff7ad9', lanes: ['ground'], extraSpots: 0, hpScale: 1, countBonus: 0, startGold: 400 }, // 랜덤다이스식: 트랙 하나(공중·땅굴 적도 같은 트랙), 석단 15개 처음부터 전부
     startGold: 400, lives: 20, intermission: 6,
-    rangeBonus: 24,  // 보드 보정: 가운데 칸에서도 트랙(150px)에 닿게
-    laps: ARENA_LAPS, // 적이 트랙을 도는 온전한 바퀴 수 (+ 마지막 반 바퀴) — buildArenaLayout
-    // 보물상자 갓챠: 골드로 상자를 사면 다면체 주사위 하나. 굴려 나온 숫자 = 타워 성(★). 7 이상은 히든 타워.
+    rangeBonus: 160, // 인피니티는 사거리를 크게: 가운데 칸(512,300)에서 트랙 가장 먼 지점(모서리 호 바깥, 284px)까지 가장 짧은 타워(135)도 닿는다
+    fieldCap: 200,   // 필드 한계선: 살아있는 적이 이 수를 넘는 순간 가장 먼저 스폰된 적이 사라지며 목숨 차감 (보스면 즉시 런 종료)
+    capDmg: 1,       // 한계선으로 사라지는 적 1마리당 목숨
+    // 보물상자 갓챠 — 스타크래프트 유즈맵 '메이플 운빨 디펜스(메운디)'의 등급·확률·경제를 그대로 옮겼다.
+    //  등급 9개: 일반 50% · 레어 33.1% · 고대 10.2% · 유물 5.1% · 서사 0.8% · 전설 0.5% · 에픽 0.2% · 신화 0.08% · 태초 0.019% (합 100.099%, 원작 그대로)
+    //  등급 → 주사위: 일반 d1(1★ 확정) · 레어 d4 · 고대 d6 · 유물 d8 · 서사 d12 · 전설 d20 · 에픽 d20(14★↑) · 신화 d20(18★↑) · 태초 20★ 확정
+    //  경제: 원작 시작 25미네랄·뽑기 10(2.5회) → 시작 400G·상자 160G 고정(회차 상승 없음)
+    //  라운드 락: 원작처럼 5웨이브 전엔 전설 이상이 나오지 않는다(서사로 대체). 보스 처치 = 유물·서사·전설 중 하나 지급
     chest: {
-      cost: (n) => Math.round(250 * Math.pow(1.10, n) / 10) * 10,   // n = 이번 런에 산 횟수 (10번째 650, 20번째 1,680, 30번째 4,360)
-      table: [['d1', 0.10], ['d4', 0.42], ['d6', 0.20], ['d8', 0.17], ['d12', 0.08], ['d20', 0.03]],
-      sides: { d1: 1, d4: 4, d6: 6, d8: 8, d12: 12, d20: 20 },
-      label: { d1: '외눈 주사위', d4: '4면체', d6: '6면체', d8: '8면체', d12: '12면체', d20: '20면체' },
-      roll(kind) { const n = this.sides[kind] || 6; return 1 + Math.floor(Math.random() * n); },
-      draw() { let v = Math.random(); for (const [k, p] of this.table) { if (v < p) return k; v -= p; } return 'd4'; },
+      cost: () => 160,
+      table: [['d1', 0.50], ['d4', 0.331], ['d6', 0.102], ['d8', 0.051], ['d12', 0.008], ['d20', 0.005], ['epic', 0.002], ['myth', 0.0008], ['primal', 0.00019]],
+      kinds: ['d1', 'd4', 'd6', 'd8', 'd12', 'd20', 'epic', 'myth', 'primal'],
+      sides: { d1: 1, d4: 4, d6: 6, d8: 8, d12: 12, d20: 20, epic: 20, myth: 20, primal: 20 },
+      min:   { d1: 1, d4: 1, d6: 1, d8: 1, d12: 1, d20: 1, epic: 14, myth: 18, primal: 20 },
+      grade: { d1: '일반', d4: '레어', d6: '고대', d8: '유물', d12: '서사', d20: '전설', epic: '에픽', myth: '신화', primal: '태초' },
+      label: { d1: '외눈 주사위', d4: '4면체', d6: '6면체', d8: '8면체', d12: '12면체', d20: '20면체', epic: '에픽 20면체', myth: '신화 20면체', primal: '태초 주사위' },
+      shape: { d1: 'd1', d4: 'd4', d6: 'd6', d8: 'd8', d12: 'd12', d20: 'd20', epic: 'd20', myth: 'd20', primal: 'd20' },
+      lockUntilWave: 5,
+      bossPick: ['d8', 'd12', 'd20'],
+      rank(k) { return this.kinds.indexOf(k); },
+      roll(kind) { const lo = this.min[kind] || 1, hi = this.sides[kind] || 6; return lo + Math.floor(Math.random() * (hi - lo + 1)); },
+      draw(wave) {
+        let v = Math.random(), k = 'd4';
+        for (const [kk, p] of this.table) { if (v < p) { k = kk; break; } v -= p; }
+        if ((wave || 0) < this.lockUntilWave && this.rank(k) >= this.rank('d20')) k = 'd12'; // 라운드 락
+        return k;
+      },
     },
     bossEvery: 10,   // 10 웨이브마다 보스 (20 부터 2마리)
     eliteEvery: 5,   // 5 웨이브마다 정예 (HP×3, 크기×1.2, 골드×3)
     unlockAir: 1, unlockBurrow: 1,
     wave(w) {
       return {
-        hpMult: +(1.8 * Math.pow(1.045, w - 1)).toFixed(3),   // w30 ≈ 6.4×, w50 ≈ 15.6×, w100 ≈ 142× (보드 맵·풀파워 기준 봇 재보정)
+        hpMult: +(1.8 * Math.pow(1.08, w - 1)).toFixed(3),   // w30 ≈ 16.8×, w50 ≈ 78×, w70 ≈ 364× — 무한 순환·필드 한계선·사거리 160 기준 봇 재보정(1.06→83, 1.08→60, 1.10→50 웨이브)
         count: Math.min(36, 12 + Math.floor(w * 0.6)),
         gap: Math.max(0.3, 0.8 - w * 0.01),
         goldMult: +(1 + w * 0.025).toFixed(3),
