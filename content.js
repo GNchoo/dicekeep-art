@@ -1292,7 +1292,7 @@ window.DKCONTENT = (function () {
                count: this.countOf(w, r.cls), armor: this.armor(w) + (r.tank ? 2 + cycle : 0), hpMult: r.tank ? 1.25 : 1 };
     },
     // ---- 방어력: 후반으로 갈수록 타격당 고정 감소, 33의 배수 웨이브는 고방어(버블피시 255) ----
-    armor(w) { const base = Math.floor(Math.max(0, w - 20) / 4); return w % 33 === 0 ? Math.max(8, base * 8) : base; },
+    armor(w) { const base = Math.floor(Math.max(0, w - 30) / 6); return w % 33 === 0 ? Math.max(6, base * 4) : base; }, // w60 5 · w90 10 · 고방어 w33 6 · w66 24 · w99 40 (봇 보정: 33웨이브 벽이 너무 높았다)
     highArmor(w) { return w % 33 === 0; },
     // ---- 보스 보상 스케줄 (1미네랄 = 16G): 24R 50+유물 · 37/58R 50+서사 · 79R 70+전설 · 90R 100+전설 · 95R 150+전설 · 96~100R 유물·서사 추가 ----
     bossReward(w) {
