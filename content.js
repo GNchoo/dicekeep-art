@@ -1227,7 +1227,7 @@ window.DKCONTENT = (function () {
     //  등급 9개: 일반 50% · 레어 33.1% · 고대 10.2% · 유물 5.1% · 서사 0.8% · 전설 0.5% · 에픽 0.2% · 신화 0.08% · 태초 0.019% (합 100.099%, 원작 그대로)
     //  등급 → 주사위: 일반 d1(1★ 확정) · 레어 d4 · 고대 d6 · 유물 d8 · 서사 d12 · 전설 d20 · 에픽 d20(14★↑) · 신화 d20(18★↑) · 태초 20★ 확정
     //  경제: 원작 시작 25미네랄·뽑기 10(2.5회) → 시작 400G·상자 160G 고정(회차 상승 없음)
-    //  라운드 락: 원작처럼 5웨이브 전엔 전설 이상이 나오지 않는다(서사로 대체). 보스 처치 = 유물·서사·전설 중 하나 지급
+    //  보스 처치 보상은 bossReward(w) 스케줄(원작 24/37/58/79/90/95/96~100R)
     chest: {
       cost: () => 160,
       table: [['d1', 0.50], ['d4', 0.331], ['d6', 0.102], ['d8', 0.051], ['d12', 0.008], ['d20', 0.005], ['epic', 0.002], ['myth', 0.0008], ['primal', 0.00019]],
@@ -1237,17 +1237,41 @@ window.DKCONTENT = (function () {
       grade: { d1: '일반', d4: '레어', d6: '고대', d8: '유물', d12: '서사', d20: '전설', epic: '에픽', myth: '신화', primal: '태초' },
       label: { d1: '외눈 주사위', d4: '4면체', d6: '6면체', d8: '8면체', d12: '12면체', d20: '20면체', epic: '에픽 20면체', myth: '신화 20면체', primal: '태초 주사위' },
       shape: { d1: 'd1', d4: 'd4', d6: 'd6', d8: 'd8', d12: 'd12', d20: 'd20', epic: 'd20', myth: 'd20', primal: 'd20' },
-      lockUntilWave: 5,
-      bossPick: ['d8', 'd12', 'd20'],
+      bossPick: ['d8', 'd12', 'd20'], // (구) 무작위 보스 보상 — 이제 INFINITY.bossReward 스케줄을 쓴다
       rank(k) { return this.kinds.indexOf(k); },
       roll(kind) { const lo = this.min[kind] || 1, hi = this.sides[kind] || 6; return lo + Math.floor(Math.random() * (hi - lo + 1)); },
       draw(wave) {
         let v = Math.random(), k = 'd4';
         for (const [kk, p] of this.table) { if (v < p) { k = kk; break; } v -= p; }
-        if ((wave || 0) < this.lockUntilWave && this.rank(k) >= this.rank('d20')) k = 'd12'; // 라운드 락
-        return k;
+        return k; // 라운드 락(5웨이브 전 전설 금지)은 원작에서 몰래 넣었다가 조작으로 밝혀진 요소라 넣지 않는다
       },
     },
+    // ---- 메운디 상성: 타워 공격형(진동 vib / 폭발 exp / 일반 norm) × 몬스터 크기(소 S / 중 M / 대 L) ----
+    sizeMult: { vib: { S: 1, M: 0.5, L: 0.25 }, exp: { S: 0.5, M: 0.75, L: 1 }, norm: { S: 1, M: 1, L: 1 } },
+    sizeName: { S: '소형', M: '중형', L: '대형' },
+    sizeScale: { S: 0.9, M: 1, L: 1.15 },
+    // 원작 1~101R 몬스터 크기 표 그대로 (보스 라운드 포함). 웨이브 w 의 크기 = sizeSeq[(w-1)%101]
+    sizeSeq: ('SSLSMLLSLL' + 'SLSLMLMSLL' + 'SLSSMSLLLS' + 'SSSLLLMSMS' + 'LMLLLSMLSL' + 'LSMSLLLSML' + 'MSSMLLSSLS' + 'LSLSSSSLMM' + 'SMLLSSLSLL' + 'SSLLMSLMLSM').split(''),
+    sizeOf(w) { return this.sizeSeq[(Math.max(1, w) - 1) % this.sizeSeq.length]; },
+    // ---- 방어력: 후반으로 갈수록 타격당 고정 감소, 33의 배수 웨이브는 고방어(버블피시 255) ----
+    armor(w) { const base = Math.floor(Math.max(0, w - 20) / 4); return w % 33 === 0 ? Math.max(8, base * 8) : base; },
+    highArmor(w) { return w % 33 === 0; },
+    // ---- 보스 보상 스케줄 (1미네랄 = 16G): 24R 50+유물 · 37/58R 50+서사 · 79R 70+전설 · 90R 100+전설 · 95R 150+전설 · 96~100R 유물·서사 추가 ----
+    bossReward(w) {
+      const n = Math.max(1, Math.round(w / this.bossEvery));
+      if (n === 1) return { gold: 800, dice: ['d8'] };
+      if (n <= 3) return { gold: 800, dice: ['d12'] };
+      if (n === 4) return { gold: 1120, dice: ['d20'] };
+      if (n === 5) return { gold: 1600, dice: ['d20'] };
+      if (n === 6) return { gold: 2400, dice: ['d20'] };
+      return { gold: 1600, dice: ['d20', n % 2 ? 'd8' : 'd12'] };
+    },
+    bossTimeLimit: 320, // 보스 라운드 5분 20초 안에 못 잡으면 패배
+    gamble: { up: 0.20 }, // 랜덤 도박: 주머니 주사위를 걸고 20% 확률로 한 등급 승급, 실패 시 소멸
+    exchange: { legend: { cost: 1600, p: 0.66, min: 7, max: 20 }, myth: { cost: 4000, p: 0.5, min: 18, max: 20 } }, // 전설 교환 100미네랄 66% · 신화 교환 250미네랄 50%
+    perks: { epic: [14, 17], myth: [18, 19], primal: [20, 20] }, // 에픽: 방어 무시+락다운 · 신화: 공속 ×1.5 · 태초: 트랙 전체 스플래시
+    stun: { p: 0.12, dur: 1.0, bossDur: 0.4 },
+    mythRate: 1.5,
     bossEvery: 10,   // 10 웨이브마다 보스 (20 부터 2마리)
     eliteEvery: 5,   // 5 웨이브마다 정예 (HP×3, 크기×1.2, 골드×3)
     unlockAir: 1, unlockBurrow: 1,
