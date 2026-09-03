@@ -178,7 +178,7 @@ Single polyhedral game die on a solid plain light gray #C8C8C8 background, cente
 Single closed treasure chest icon on a solid plain light gray #C8C8C8 background, centered, 3/4 view, hand-painted casual Kingdom Rush style, dark wood with gold bands and a glowing golden lock, a few dice peeking from under the lid, thick clean outlines, no text, no watermark.
 ```
 
-## F. 인피니티 아레나 조각 9장 → `casual/tiles/arena/`
+## F. 인피니티 아레나 조각 9장 → `casual/tiles/arena/` — **납품 완료 (2026-09-03)**
 
 인피니티 맵(랜덤다이스식 보드 + 둘레 트랙)은 코드가 모양을 그리고, 아래 조각으로 표면과 장식을 입힙니다. 통일 테마: **어두운 보라빛 밤의 투기장, 닳은 회보라 석판, 금색 룬 상감, 횃불 빛** (`dark violet night coliseum, worn gray-violet flagstones, gold rune inlays, torchlight`).
 
@@ -208,7 +208,6 @@ Single closed treasure chest icon on a solid plain light gray #C8C8C8 background
 1. `plains` 의 `road.png` 1장 → 게임에서 확인 (길 표면이 자연스럽게 반복되는지)
 2. 문제 없으면 `forest`, `lake`, `darkforest`, `castle`, `hell` 순으로 12장씩
 3. 인피니티 갓챠 에셋(E): 다면체 주사위 5장 → 성 타워 14장(7~20 순서) → 상자
-4. 인피니티 아레나 조각(F): 질감 3장 → 오브젝트 6장
 
 문제가 있으면 해당 조각만 다시 만들면 됩니다. 조각 하나가 없어도 게임은 그 자리만 코드 그림으로 대신하므로 부분 납품도 괜찮습니다.
 

@@ -235,7 +235,7 @@ Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크�
 | 항목 | 목표 | 파일 | 상태 |
 |---|---|---|---|
 | ~~배경~~ | ~~50~~ | `casual/maps/*.jpg` | **폐기** (그리드 + 타일로 대체) |
-| 인피니티 아레나 조각 | 9 | `casual/tiles/arena/` | **생성 대기** → `GROK-BRIEF.md` §F. 없으면 코드 폴백 |
+| 인피니티 아레나 조각 | 9 | `casual/tiles/arena/` | 완료 (납품 2026-09-03, main 37323f2). 기둥 112·화로 64·잔해 48px |
 | **테마 타일셋** | 6테마 × 12 = 72 | `casual/tiles/<theme>/` | 평원 14/12 납품(`road.png` 대기, 옛 도로 타일 4장 미사용). 나머지 5테마 → `GROK-BRIEF.md`. 없으면 코드 폴백 |
 | 몬스터 고유 | 500 | `casual/enemies/*.png` | 완료 |
 | 적 걷기 시트 | 순차 | `*-walk-2x2.png` | 36 완료 (1~36). 37~ 은 `NEXT_WALK` 에 id 추가 + ART-PROMPTS §2 |
