@@ -33,12 +33,12 @@ const BOSS_ENTRANCE = 1.25; // 보스 등장 연출 시간(초)
 // 주사위 눈(1~6) = 타워 종류. 눈이 높을수록 강력!
 // 모든 타워는 공중 적을 때릴 수 있다 (canAir 는 전부 true — 공중 적의 기믹은 '동선 무시 직행'뿐)
 const TOWER_DEFS = {
-  1: { name: '궁수 주사위', desc: '속사 레이저',        dmg: 8,  rate: 0.50, range: 150, laser: true,                 canAir: true,  color: '#9fd463', topper: 'laserMuzzle' },
-  2: { name: '대포 주사위', desc: '쌍포 광역 포격',     dmg: 22, rate: 1.60, range: 135, proj: 'shell',      pspd: 300, splash: 60, canAir: true,  color: '#e0862c', topper: 'muzzleFlash' },
-  3: { name: '마법 주사위', desc: '자수정 마력탄',      dmg: 24, rate: 0.95, range: 165, proj: 'bolt',       pspd: 430, canAir: true,  color: '#b78bff', topper: 'bolt' },
-  4: { name: '서리 주사위', desc: '사방 냉기 둔화',     dmg: 8,  rate: 0.80, range: 140, proj: 'frostShard', pspd: 400, slow: true, canAir: true, color: '#7fd4ff', topper: 'frostShard' },
-  5: { name: '전격 주사위', desc: '연쇄 번개',          dmg: 16, rate: 1.10, range: 150, chain: true, canAir: true, color: '#ffe86b', topper: 'spark' },
-  6: { name: '폭군 주사위', desc: '최강! 폭발 주사위 투척', dmg: 40, rate: 1.25, range: 175, proj: 'dieBomb', pspd: 340, splash: 55, canAir: true,  color: '#ff5555', topper: 'dieBomb' },
+  1: { name: '궁수 주사위', desc: '속사 레이저',        dmg: 8,  rate: 0.50, range: 150, laser: true,                 canAir: true,  color: '#9fd463', topper: 'laserMuzzle', atk: 'vib' },
+  2: { name: '대포 주사위', desc: '쌍포 광역 포격',     dmg: 22, rate: 1.60, range: 135, proj: 'shell',      pspd: 300, splash: 60, canAir: true,  color: '#e0862c', topper: 'muzzleFlash', atk: 'exp' },
+  3: { name: '마법 주사위', desc: '자수정 마력탄',      dmg: 24, rate: 0.95, range: 165, proj: 'bolt',       pspd: 430, canAir: true,  color: '#b78bff', topper: 'bolt', atk: 'norm' },
+  4: { name: '서리 주사위', desc: '사방 냉기 둔화',     dmg: 8,  rate: 0.80, range: 140, proj: 'frostShard', pspd: 400, slow: true, canAir: true, color: '#7fd4ff', topper: 'frostShard', atk: 'norm' },
+  5: { name: '전격 주사위', desc: '연쇄 번개',          dmg: 16, rate: 1.10, range: 150, chain: true, canAir: true, color: '#ffe86b', topper: 'spark', atk: 'norm' },
+  6: { name: '폭군 주사위', desc: '최강! 폭발 주사위 투척', dmg: 40, rate: 1.25, range: 175, proj: 'dieBomb', pspd: 340, splash: 55, canAir: true,  color: '#ff5555', topper: 'dieBomb', atk: 'exp' },
 };
 // 성(★) 타워 7~20: 인피니티 보물상자의 다면체 주사위에서만 나온다. 6눈(폭군)을 바탕으로 기하급수 강화.
 const STAR_BANDS = [
@@ -50,12 +50,17 @@ const STAR_BANDS = [
 const starBand = (g) => STAR_BANDS.find((b) => g >= b.min && g <= b.max) || STAR_BANDS[STAR_BANDS.length - 1];
 for (let g = 7; g <= 20; g++) {
   const b = starBand(g), k = g - 6;
+  // 메운디 등급 특전(인피니티): 14~17★ 에픽 = 방어 무시 + 락다운, 18~19★ 신화 = 공속 ×1.5, 20★ 태초 = 트랙 전체 스플래시 (일반형)
+  const perk = g >= 20 ? 'primal' : g >= 18 ? 'myth' : g >= 14 ? 'epic' : null;
+  const perkDesc = perk === 'primal' ? ' · 태초: 일반형, 트랙 전체 스플래시' : perk === 'myth' ? ' · 신화: 공속 ×1.5' : perk === 'epic' ? ' · 에픽: 방어 무시 + 락다운' : '';
   TOWER_DEFS[g] = {
-    name: `${b.name} ★${g}`, desc: `${g}성 히든 타워 · 폭발 주사위 투척`, star: g,
+    name: `${b.name} ★${g}`, desc: `${g}성 히든 타워 · 폭발 주사위 투척${perkDesc}`, star: g,
     dmg: Math.round(40 * Math.pow(1.28, k)), rate: +(1.25 * Math.pow(0.97, k)).toFixed(3), range: 175 + 5 * k,
     proj: 'dieBomb', pspd: 340 + 6 * k, splash: 55 + 4 * k, canAir: true, color: b.color, rainbow: !!b.rainbow, topper: 'dieBomb',
+    atk: perk === 'primal' ? 'norm' : 'exp', perk,
   };
 }
+const ATK_NAME = { vib: '진동형', exp: '폭발형', norm: '일반형' };
 const LVL_DMG   = [1, 1.6, 2.4];
 const LVL_RANGE = [0, 12, 24];
 const LVL_RATE  = [1, 0.92, 0.85];
@@ -1426,7 +1431,31 @@ function buyChest() {
 const DIE_KIND_COLORS = { d1: '#9a9a9a', d4: '#d9c9a0', d6: '#e9dfc4', d8: '#7fd4ff', d12: '#c78bff', d20: '#ffd452', epic: '#ff8a5c', myth: '#ff5fa8', primal: '#ffffff' };
 const dieKindColor = k => DIE_KIND_COLORS[k] || '#e9dfc4';
 const dieShape = k => { const ch = chestDef(); return (ch && ch.shape && ch.shape[k]) || k; };
+// 메운디 랜덤 도박: 주머니 주사위 하나를 걸고 20% 확률로 한 등급 위, 실패하면 소멸
+function gambleDie(kind) {
+  const ch = chestDef(), INF = window.DKCONTENT && DKCONTENT.INFINITY;
+  if (!ch || !INF || S.mode !== 'infinity' || !S.inf || S.phase !== 'playing') return false;
+  if (!(S.inf.bag[kind] > 0)) { SFX.deny(); return false; }
+  const idx = ch.kinds.indexOf(kind);
+  if (idx < 0 || idx >= ch.kinds.length - 1) { S.texts.push({ str: '태초는 도박할 수 없습니다', x: W / 2, y: 140, t: 0, color: '#ffffff' }); SFX.deny(); return false; }
+  S.inf.bag[kind]--;
+  S.inf.gambleOn = false;
+  const win = Math.random() < (INF.gamble ? INF.gamble.up : 0.2);
+  if (win) {
+    const nk = ch.kinds[idx + 1];
+    S.inf.bag[nk] = (S.inf.bag[nk] || 0) + 1;
+    S.texts.push({ str: `도박 성공! ${ch.grade[kind]} → ${ch.grade[nk]} ${ch.label[nk]}`, x: W / 2, y: 140, t: 0, color: dieKindColor(nk) });
+    S.fxs.push({ kind: 'ring', x: W / 2, y: 150, t: 0, dur: 0.8, size: 140, color: dieKindColor(nk) });
+    SFX.win();
+  } else {
+    S.texts.push({ str: `도박 실패… ${ch.label[kind]} 소멸`, x: W / 2, y: 140, t: 0, color: '#9a9a9a' });
+    SFX.deny();
+  }
+  syncUI();
+  return win;
+}
 function rollBagDie(kind) {
+  if (S.inf && S.inf.gambleOn) return gambleDie(kind);
   const ch = chestDef();
   if (!ch || S.mode !== 'infinity' || !S.inf || S.phase !== 'playing') return false;
   if (SLOT.active || S.heldDie || DIE.state !== 'tray' || !(S.inf.bag[kind] > 0)) { SFX.deny(); return false; }
@@ -1807,7 +1836,8 @@ function buildInfinityWave(w) {
   const P = INF.wave(w);
   const q = [];
   let t = 0.45;
-  const add = (type, extra) => { q.push(Object.assign({ type, t, hpMult: P.hpMult, goldMult: P.goldMult, spdMult: P.speedMult }, extra || {})); };
+  const sizeClass = INF.sizeOf ? INF.sizeOf(w) : null, armor = INF.armor ? INF.armor(w) : 0; // 메운디: 웨이브별 크기·방어력
+  const add = (type, extra) => { q.push(Object.assign({ type, t, hpMult: P.hpMult, goldMult: P.goldMult, spdMult: P.speedMult, sizeClass, armor, wave: w }, extra || {})); };
   const seq = { ground: 0, air: 0, burrow: 0 };
   const eliteSlots = new Set();
   if (w % INF.eliteEvery === 0) for (let k = 0; k < P.elites; k++) eliteSlots.add(Math.floor((k + 0.5) * P.count / P.elites));
@@ -1897,6 +1927,10 @@ function startWave() {
   S.waveActive = true;
   S.waveT = 0;
   S.autoT = 0;
+  if (S.mode === 'infinity' && window.DKCONTENT) { // 메운디: 크기·방어력 예고
+    const INF = DKCONTENT.INFINITY, sc = INF.sizeOf(S.wave), ar = INF.armor(S.wave), hi = INF.highArmor(S.wave);
+    S.texts.push({ str: `웨이브 ${S.wave} · ${INF.sizeName[sc]}${ar ? ` · 방어 ${ar}` : ''}${hi ? ' · 고방어!' : ''}${S.wave % INF.bossEvery === 0 ? ' · 보스' : ''}`, x: W / 2, y: H / 2 - 70, t: 0, color: hi ? '#ff7a7a' : '#ffe6b0' });
+  }
   SFX.wave();
   syncUI();
 }
@@ -1931,7 +1965,7 @@ function startInfinity() {
   const INF = C && C.INFINITY;
   if (!INF) return;
   S.mode = 'infinity';
-  S.inf = { sp: 0, power: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 }, kills: 0, spent: 0, bag: { d1: 0, d4: 0, d6: 0, d8: 0, d12: 0, d20: 0 }, chests: 0 };
+  S.inf = { sp: 0, power: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 }, kills: 0, spent: 0, bag: { d1: 0, d4: 0, d6: 0, d8: 0, d12: 0, d20: 0, epic: 0, myth: 0, primal: 0 }, chests: 0, bossT: 0, gambleOn: false };
   S.stage = 0;
   S.stageData = { n: 0, name: '무한 투기장', tier: INF.tier.tier, tierName: INF.tier.name, tierColor: INF.tier.color, lanes: INF.tier.lanes.length, waves: Infinity, bases: [], gem: 0 };
   S.stageWaves = Infinity;
@@ -1968,7 +2002,7 @@ function endInfinity() {
   SFX.lose();
   showOverlay(
     isBest ? '신기록!' : '런 종료',
-    `${S.inf.bossLeak ? `보스 <b>${S.inf.bossLeak}</b>가 한계선을 넘었습니다!<br>` : ''}<b>무한 투기장</b> 웨이브 <b>${wave}</b> 까지 버텼습니다${isBest ? ' — <b>최고 기록 갱신!</b>' : ` (최고 ${SAVE.infBest})`}<br>` +
+    `${S.inf.bossLeak ? (S.inf.bossTimeout ? `보스 <b>${S.inf.bossLeak}</b>: 제한시간(5분 20초) 안에 잡지 못했습니다!<br>` : `보스 <b>${S.inf.bossLeak}</b>가 한계선을 넘었습니다!<br>`) : ''}<b>무한 투기장</b> 웨이브 <b>${wave}</b> 까지 버텼습니다${isBest ? ' — <b>최고 기록 갱신!</b>' : ` (최고 ${SAVE.infBest})`}<br>` +
     `처치 <b>${S.inf.kills}</b> · 강화에 쓴 SP <b>${S.inf.spent}</b><br>` +
     `젬 <b>+${r.gems}</b>${r.newly.length ? ` (마일스톤 ${r.newly.join(', ')} 달성 보너스 포함)` : ''}`,
     '로비로'
@@ -2033,8 +2067,10 @@ function spawnEnemy(item) {
   const lane = (item.lane != null && LANES[item.lane]) ? item.lane : laneFor(move, 0);
   const isBoss = !!item.isBoss;
   if (item.isElite) { def = Object.assign({}, def, { size: Math.round((size || def.size) * 1.2) }); }
+  if (item.sizeClass && window.DKCONTENT && DKCONTENT.INFINITY.sizeScale) { const k = DKCONTENT.INFINITY.sizeScale[item.sizeClass] || 1; if (k !== 1) def = Object.assign({}, def, { size: Math.round(def.size * k) }); }
   const e = {
     type: item.type, def, isElite: !!item.isElite, spdMult: item.spdMult || 1,
+    sizeClass: item.sizeClass || null, armor: item.armor || 0, wave: item.wave || S.wave, stunT: 0,
     hp: def.hp * (item.hpMult || 1), max: def.hp * (item.hpMult || 1),
     gold: Math.round(def.gold * (item.goldMult || 1)),
     dist: 0, slowT: 0, slowPct: 0,
@@ -2048,6 +2084,7 @@ function spawnEnemy(item) {
   S.enemies.push(e);
   if (S.mode === 'infinity') enforceFieldCap();
   const p = epos(e);
+  if (isBoss && S.mode === 'infinity' && S.inf && !(S.inf.bossT > 0)) S.inf.bossT = DKCONTENT.INFINITY.bossTimeLimit || 320; // 메운디: 보스 제한시간
   if (isBoss) {
     // 보스 등장: 포탈 폭발 + 화면 흔들림 + 배너 + 포효
     S.shakeT = 0.7;
@@ -2066,8 +2103,15 @@ function spawnEnemy(item) {
   }
 }
 
-function damageEnemy(e, dmg) {
+function damageEnemy(e, dmg, src) {
   if (e.dead) return;
+  if (S.mode === 'infinity' && S.inf && window.DKCONTENT) { // 메운디: 상성 · 방어력 · 에픽 락다운 (인피니티 전용)
+    const INF = DKCONTENT.INFINITY, def = src && src.def;
+    if (def && e.sizeClass && INF.sizeMult) { const m = INF.sizeMult[def.atk || 'norm']; if (m && m[e.sizeClass] != null) dmg *= m[e.sizeClass]; }
+    const ignoreArmor = !!(def && def.perk === 'epic');
+    if (e.armor > 0 && !ignoreArmor) dmg = Math.max(dmg * 0.1, dmg - e.armor);
+    if (def && def.perk === 'epic' && INF.stun && Math.random() < INF.stun.p) e.stunT = Math.max(e.stunT || 0, e.isBoss ? INF.stun.bossDur : INF.stun.dur);
+  }
   e.hp -= dmg;
   e.flashT = 0.13; // 피격 플래시
   if (e.hp <= 0) {
@@ -2079,10 +2123,15 @@ function damageEnemy(e, dmg) {
     spawnDeath(e, p);
     if (e.isBoss || e.type === 'boss') {
       const ch = chestDef();
-      if (S.mode === 'infinity' && S.inf && ch && ch.bossPick) { // 메운디: 보스 처치 시 유물·서사·전설 중 하나
-        const k = ch.bossPick[Math.floor(Math.random() * ch.bossPick.length)];
-        S.inf.bag[k] = (S.inf.bag[k] || 0) + 1;
-        S.texts.push({ str: `보스 보상: ${ch.grade[k]} ${ch.label[k]}!`, x: W / 2, y: 170, t: 0, color: dieKindColor(k) });
+      if (S.mode === 'infinity' && S.inf && ch && DKCONTENT.INFINITY.bossReward) { // 메운디 보스 보상 스케줄 (같은 웨이브의 마지막 보스 처치 시 1회)
+        const others = S.enemies.some(x => x !== e && !x.dead && x.isBoss && x.wave === e.wave);
+        if (!others) {
+          const r = DKCONTENT.INFINITY.bossReward(e.wave || S.wave);
+          S.gold += r.gold;
+          for (const k of r.dice) S.inf.bag[k] = (S.inf.bag[k] || 0) + 1;
+          S.texts.push({ str: `보스 보상: +${r.gold}G · ${r.dice.map(k => ch.grade[k] + ' ' + ch.label[k]).join(' + ')}!`, x: W / 2, y: 170, t: 0, color: dieKindColor(r.dice[0]) });
+        }
+        if (!S.enemies.some(x => x !== e && !x.dead && x.isBoss)) S.inf.bossT = 0; // 제한시간 해제
       }
       S.fxs.push({ kind: 'impact', x: p.x, y: p.y - 20, t: 0, dur: 0.45, size: 150 });
       S.fxs.push({ kind: 'ring', x: p.x, y: p.y - 20, t: 0, dur: 0.8, size: 160, color: '#ffd870' });
@@ -2140,7 +2189,7 @@ const towerDmg   = t => {
   return t.def.dmg * m;
 };
 const towerRange = t => t.def.range + LVL_RANGE[t.lvl - 1] + (DP() ? DP().rangeAdd(powerLv(t.face)) : 0) + (S.mode === 'infinity' && window.DKCONTENT ? (DKCONTENT.INFINITY.rangeBonus || 0) : 0);
-const towerRate  = t => { let r = t.def.rate * LVL_RATE[t.lvl - 1]; const ex = powerSpecial(t.face, 'rate'); if (ex) r *= Math.pow(ex, powerTier(t.face)); return r; };
+const towerRate  = t => { let r = t.def.rate * LVL_RATE[t.lvl - 1]; const ex = powerSpecial(t.face, 'rate'); if (ex) r *= Math.pow(ex, powerTier(t.face)); if (S.mode === 'infinity' && t.def.perk === 'myth' && window.DKCONTENT) r /= DKCONTENT.INFINITY.mythRate || 1.5; return r; };
 const towerSplash = t => (t.def.splash || 0) + ((powerSpecial(t.face, 'splash') || 0) * powerTier(t.face));
 const towerSlowPct = t => 0.26 + 0.06 * t.lvl + ((powerSpecial(t.face, 'slow') || 0) * powerTier(t.face));
 const towerChain = t => 2 + t.lvl + ((powerSpecial(t.face, 'chain') || 0) * powerTier(t.face));
@@ -2188,7 +2237,7 @@ function towerFire(t, dt) {
   if (t.def.laser) {
     const tp = epos(best);
     const to = { x: tp.x, y: tp.y - best.def.size * 0.45 - (best.move === 'air' ? 42 : 0) };
-    damageEnemy(best, dmg);
+    damageEnemy(best, dmg, t);
     S.beams.push({ pts: [from, to], t: 0, dur: 0.11, style: 'laser' });
     S.fxs.push({ kind: 'laserMuzzle', x: from.x, y: from.y, t: 0, dur: 0.1, size: 28 });
     SFX.t1();
@@ -2214,7 +2263,7 @@ function towerFire(t, dt) {
     for (const e of hitList) {
       const p = epos(e);
       pts.push({ x: p.x, y: p.y - e.def.size * 0.45 });
-      damageEnemy(e, dd);
+      damageEnemy(e, dd, t);
       dd *= 0.75;
       S.fxs.push({ kind: 'spark', x: p.x, y: p.y - e.def.size * 0.4, t: 0, dur: 0.16, size: 34 });
     }
@@ -2225,7 +2274,7 @@ function towerFire(t, dt) {
       kind: t.def.proj, x: from.x, y: from.y, tgt: best,
       spd: t.def.pspd, dmg, splash: towerSplash(t),
       slow: t.def.slow ? { pct: towerSlowPct(t), dur: 1.8 } : null,
-      rot: 0, spin: 0,
+      rot: 0, spin: 0, src: t,
     });
     if (t.face === 2) {
       S.fxs.push({ kind: 'muzzleFlash', x: from.x, y: from.y, t: 0, dur: 0.12, size: 38 });
@@ -2241,11 +2290,16 @@ function sheetHit(kind, x, y, size, dur) {
 function projHit(p) {
   const tp = epos(p.tgt);
   const hx = tp.x, hy = tp.y - p.tgt.def.size * 0.4;
-  if (p.splash) {
+  if (p.src && p.src.def.perk === 'primal' && S.mode === 'infinity') { // 태초: 트랙 위 모든 적에게 스플래시
+    for (const e of S.enemies) if (!e.dead) damageEnemy(e, p.dmg, p.src);
+    sheetHit('dieExplode', hx, hy, 260, 0.5);
+    S.fxs.push({ kind: 'ring', x: hx, y: hy, t: 0, dur: 0.5, size: 420, color: '#ffffff' });
+    S.texts.push({ str: '태초의 일격!', x: hx, y: hy - 40, t: 0, color: '#ffffff' });
+  } else if (p.splash) {
     for (const e of S.enemies) {
       if (e.dead) continue;
       const ep = epos(e);
-      if (Math.hypot(ep.x - hx, ep.y - hy + e.def.size * 0.4) <= p.splash) damageEnemy(e, p.dmg);
+      if (Math.hypot(ep.x - hx, ep.y - hy + e.def.size * 0.4) <= p.splash) damageEnemy(e, p.dmg, p.src);
     }
     if (p.kind === 'dieBomb' || p.kind === 'die6') {
       sheetHit('dieExplode', hx, hy, p.splash * 2.2, 0.4);
@@ -2253,7 +2307,7 @@ function projHit(p) {
       sheetHit('cannonBlast', hx, hy, p.splash * 2, 0.34);
     }
   } else {
-    damageEnemy(p.tgt, p.dmg);
+    damageEnemy(p.tgt, p.dmg, p.src);
     if (p.slow && !p.tgt.dead) {
       p.tgt.slowT = Math.max(p.tgt.slowT, p.slow.dur);
       p.tgt.slowPct = Math.max(p.tgt.slowPct, p.slow.pct);
@@ -2289,6 +2343,7 @@ function update(dt) {
       if (e.entranceT < BOSS_ENTRANCE) continue;
       e.entranceT = -1;
     }
+    if (e.stunT > 0) { e.stunT -= dt; continue; } // 락다운
     let sp = e.def.speed * (e.spdMult || 1);
     if (e.slowT > 0) { e.slowT -= dt; sp *= (1 - e.slowPct); }
     e.dist += sp * dt;
@@ -2359,6 +2414,15 @@ function update(dt) {
   for (const tx of S.texts) tx.t += dt;
   S.texts = S.texts.filter(tx => tx.t < 1.1);
 
+  // 메운디 보스 제한시간: 보스가 살아있는 동안 카운트다운, 0이 되면 런 종료
+  if (S.mode === 'infinity' && S.inf && S.inf.bossT > 0) {
+    const boss = S.enemies.find(x => !x.dead && x.isBoss);
+    if (!boss) S.inf.bossT = 0;
+    else {
+      S.inf.bossT -= dt;
+      if (S.inf.bossT <= 0) { S.inf.bossT = 0; S.lives = 0; S.inf.bossLeak = boss.name; S.inf.bossTimeout = true; syncUI(); endInfinity(); return; }
+    }
+  }
   // 웨이브 종료 판정
   if (S.waveActive && S.spawnQ.length === 0 && (S.enemies.length === 0 || S.mode === 'infinity')) { // 인피니티: 스폰이 끝나면 완료 (남은 적은 계속 돈다)
     S.waveActive = false;
@@ -2846,6 +2910,10 @@ function draw() {
         ctx.fillStyle = '#6b4a28'; ctx.fill();
         ctx.restore();
       }
+      if (e.stunT > 0 && !e.hidden) { // 락다운 표시
+        ctx.save(); ctx.font = 'bold 16px sans-serif'; ctx.textAlign = 'center'; ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(0,0,0,0.7)'; ctx.fillStyle = '#ffe86b';
+        const yy = p.y - airY - e.def.size - 4; ctx.strokeText('⚡', p.x, yy); ctx.fillText('⚡', p.x, yy); ctx.restore();
+      }
       if (e.isElite && !e.hidden) {
         ctx.save();
         ctx.translate(p.x, p.y - airY + 6);
@@ -3214,7 +3282,13 @@ function syncUI() {
   $('gold-val').textContent = S.gold;
   $('lives-val').textContent = S.lives;
   const sd = S.stageData;
-  if (S.mode === 'infinity') { const cap = DKCONTENT.INFINITY.fieldCap || 200, n = S.enemies.length; $('wave-val').textContent = `∞ 웨이브 ${S.wave} · 최고 ${SAVE.infBest || 0} · 필드 ${n}/${cap}`; $('wave-val').classList.toggle('hot', n >= cap * 0.9); }
+  if (S.mode === 'infinity') {
+    const INF = DKCONTENT.INFINITY, cap = INF.fieldCap || 200, n = S.enemies.length;
+    const sz = S.wave > 0 && INF.sizeOf ? ` · ${INF.sizeName[INF.sizeOf(S.wave)]}` : '';
+    const bt = S.inf && S.inf.bossT > 0 ? ` · 보스 ${Math.floor(S.inf.bossT / 60)}:${String(Math.floor(S.inf.bossT % 60)).padStart(2, '0')}` : '';
+    $('wave-val').textContent = `∞ 웨이브 ${S.wave}${sz} · 최고 ${SAVE.infBest || 0} · 필드 ${n}/${cap}${bt}`;
+    $('wave-val').classList.toggle('hot', n >= cap * 0.9 || (S.inf && S.inf.bossT > 0 && S.inf.bossT < 30));
+  }
   else $('wave-val').textContent = `S${S.stage}${sd && sd.tierName ? ' ' + sd.tierName : ''} · 웨이브 ${S.wave} / ${S.stageWaves}`;
   $('wave-val').style.color = sd && sd.tierColor ? sd.tierColor : '';
   syncInfPanel();
@@ -3273,6 +3347,8 @@ function syncInfPanel() {
     const cb = $('chest-btn');
     cb.querySelector('small').textContent = `${cost} G`;
     cb.disabled = S.gold < cost;
+    const gb = $('gamble-btn');
+    if (gb) { gb.classList.toggle('on', !!S.inf.gambleOn); gb.title = S.inf.gambleOn ? '도박 모드: 주머니 주사위를 누르면 20% 확률로 한 등급 승급, 실패하면 소멸' : '메운디 랜덤 도박 — 켜고 주머니 주사위를 누르세요'; }
     const ch = chestDef();
     for (const k of BAG_KINDS) {
       const b = $('bag-' + k); if (!b) continue;
@@ -3308,8 +3384,47 @@ function syncInfo() {
   if (t.def.slow) extra = `\n둔화 ${Math.round((0.26 + 0.06 * t.lvl) * 100)}%`;
   if (t.def.chain) extra = `\n연쇄 ${2 + t.lvl}회`;
   const up = t.lvl < MAX_LVL ? `\n같은 눈(${t.face})을 올리면 레벨 업` : '\n최대 레벨';
-  $('info-body').textContent = `피해 ${dmg} · 사거리 ${rng}${extra}${up}`;
-  $('sell-btn').textContent = `판매 (+${sellPrice(t)} G)`;
+  const inf = S.mode === 'infinity';
+  const atk = inf && t.def.atk ? ` · ${ATK_NAME[t.def.atk] || t.def.atk}` : '';
+  $('info-body').textContent = `피해 ${dmg} · 사거리 ${rng}${atk}${extra}${up}`;
+  const noSell = inf && t.face >= 7; // 메운디: 전설 이상 판매 불가
+  $('sell-btn').disabled = noSell;
+  $('sell-btn').textContent = noSell ? '전설 이상 판매 불가' : `판매 (+${sellPrice(t)} G)`;
+  const xb = $('exchange-btn');
+  if (xb) {
+    const ex = exchangeDef(t);
+    xb.classList.toggle('hidden', !ex);
+    if (ex) { xb.textContent = `${ex.key === 'myth' ? '신화' : '전설'} 교환 ${ex.cost}G (${Math.round(ex.p * 100)}%)`; xb.disabled = S.gold < ex.cost || S.phase !== 'playing'; }
+  }
+}
+// 메운디 교환 도박: 7~17★ = 전설 교환(7~20 재굴림), 18★+ = 신화 교환(18~20 재굴림). 실패하면 타워 소멸
+function exchangeDef(t) {
+  const INF = window.DKCONTENT && DKCONTENT.INFINITY;
+  if (!INF || !INF.exchange || S.mode !== 'infinity' || !t || t.face < 7) return null;
+  const key = t.face >= INF.exchange.myth.min ? 'myth' : 'legend';
+  return Object.assign({ key }, INF.exchange[key]);
+}
+function exchangeTower() {
+  const t = S.selTower, ex = exchangeDef(t);
+  if (!t || !ex || S.gold < ex.cost || S.phase !== 'playing') { SFX.deny(); return false; }
+  S.gold -= ex.cost;
+  const p = { x: t.x, y: t.y - 40 };
+  if (Math.random() < ex.p) {
+    let ns = ex.min + Math.floor(Math.random() * (ex.max - ex.min + 1));
+    if (ns === t.face && ex.max > ex.min) ns = ns === ex.max ? ns - 1 : ns + 1;
+    t.face = ns; t.def = TOWER_DEFS[ns];
+    S.texts.push({ str: `교환 성공! ★${ns} ${t.def.name}`, x: p.x, y: p.y, t: 0, color: t.def.color || '#ffd452' });
+    S.fxs.push({ kind: 'ring', x: t.x, y: t.y - 20, t: 0, dur: 0.8, size: 120, color: t.def.color || '#ffd452' });
+    SFX.win();
+  } else {
+    S.texts.push({ str: '교환 실패… 타워 소멸', x: p.x, y: p.y, t: 0, color: '#9a9a9a' });
+    S.fxs.push({ kind: 'impact', x: t.x, y: t.y - 20, t: 0, dur: 0.4, size: 90 });
+    S.towers = S.towers.filter(x => x !== t);
+    S.selTower = null;
+    SFX.deny();
+  }
+  syncUI();
+  return true;
 }
 
 const sellPrice = t => 6 + 5 * t.face + 12 * (t.lvl - 1);
@@ -3787,6 +3902,7 @@ rollBtn.addEventListener('click', rollByButton);
 waveBtn.addEventListener('click', startWave);
 $('sell-btn').addEventListener('click', () => {
   if (!S.selTower) return;
+  if (S.mode === 'infinity' && S.selTower.face >= 7) { SFX.deny(); return; } // 전설 이상 판매 불가
   S.gold += sellPrice(S.selTower);
   S.towers = S.towers.filter(t => t !== S.selTower);
   S.selTower = null;
@@ -3819,6 +3935,8 @@ const ssInf = $('ss-inf-btn');
 if (ssInf) ssInf.addEventListener('click', () => { if (!infinityUnlocked()) return; audio(); startInfinity(); });
 for (let f = 1; f <= 6; f++) { const b = $('inf-face-' + f); if (b) b.addEventListener('click', () => upgradeFace(f)); }
 if ($('chest-btn')) $('chest-btn').addEventListener('click', () => { audio(); buyChest(); });
+if ($('gamble-btn')) $('gamble-btn').addEventListener('click', () => { audio(); if (!S.inf) return; S.inf.gambleOn = !S.inf.gambleOn; syncUI(); });
+if ($('exchange-btn')) $('exchange-btn').addEventListener('click', () => { audio(); exchangeTower(); });
 for (const k of BAG_KINDS) { const b = $('bag-' + k); if (b) b.addEventListener('click', () => { audio(); rollBagDie(k); }); }
 $('btn-shop').addEventListener('click', () => { audio(); gotoShop(); });
 $('ss-back').addEventListener('click', () => gotoLobby());
@@ -3907,6 +4025,7 @@ function drawLoading(pr) {
   window.DKupgrade = upgradeFace;
   window.DKchest = buyChest; window.DKbag = () => S.inf && S.inf.bag; window.DKrollBag = rollBagDie; // 인피니티 갓챠 훅
   window.DKtowerSpr = towerSpr;
+  window.DKdamage = damageEnemy; window.DKgamble = gambleDie; window.DKexchange = exchangeTower; // 메운디 시스템 테스트 훅
   window.DKplace = tryPlace;                      // 보유 주사위를 석단 idx 에 놓기
   window.DKroll = () => { if (S.phase === 'playing' && !S.heldDie && S.gold >= ROLL_COST) { S.gold -= ROLL_COST; S.heldDie = pickUnlockedFace(); syncUI(); return S.heldDie; } return 0; }; // 즉시 굴림 (테스트용)
   window.DKspots = () => SPOTS;
