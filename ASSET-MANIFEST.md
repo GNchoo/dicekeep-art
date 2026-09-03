@@ -28,6 +28,7 @@
 - 적 PNG: 512 (대기 500 + 걷기 12)
 - 보스 PNG: 100
 - 맵 배경 JPG (`casual/maps/map-NN-*.jpg`): **폐기** — 로드·배포하지 않음. 맵은 `casual/tiles/<theme>/` 타일 90장(생성 대기)으로 대체
+- 인피니티 아레나 조각 (`casual/tiles/arena/`): 9 (floor.jpg, road/board 질감, pad, start, end, prop-1~3)
 - 타워 PNG: 36 (스킨 30 + 공격시트 6 — 공격시트는 현재 게임에서 사용하지 않음)
 - VFX: 15
 - dice: 6

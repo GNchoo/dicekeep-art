@@ -161,11 +161,11 @@ function buildRoadLayer(m) {
   if (m.track) {
     const brazier = art('prop-1'), pillar = art('prop-2'), rubble = art('prop-3');
     for (const [x, y] of arenaPillars(m)) {
-      if (pillar) drawGroundSprite(g, pillar, x, y, 84);
+      if (pillar) drawGroundSprite(g, pillar, x, y, 112);
       else drawCodePillar(g, x, y);
     }
     for (const [x, y] of arenaBraziers(m)) {
-      if (brazier) drawGroundSprite(g, brazier, x, y + 4, 56);
+      if (brazier) drawGroundSprite(g, brazier, x, y + 4, 64);
       else {
         g.fillStyle = 'rgba(0,0,0,0.35)'; g.beginPath(); g.ellipse(x, y + 6, 22, 10, 0, 0, Math.PI * 2); g.fill();
         g.fillStyle = '#4a4258'; g.beginPath(); g.ellipse(x, y, 20, 9, 0, 0, Math.PI * 2); g.fill();
@@ -173,13 +173,13 @@ function buildRoadLayer(m) {
         g.fillStyle = '#2a2436'; g.beginPath(); g.ellipse(x, y - 9, 10, 4, 0, 0, Math.PI * 2); g.fill();
       }
     }
-    if (rubble) for (const [x, y] of [[m.track.L - 80, m.track.T + 60], [m.track.R + 80, m.track.B - 40], [m.track.L - 30, m.track.B + 88], [m.track.R + 60, m.track.T - 70]]) drawGroundSprite(g, rubble, x, y, 40, rnd() < 0.5);
+    if (rubble) for (const [x, y] of [[m.track.L - 80, m.track.T + 60], [m.track.R + 80, m.track.B - 40], [m.track.L - 30, m.track.B + 88], [m.track.R + 60, m.track.T - 70]]) drawGroundSprite(g, rubble, x, y, 48, rnd() < 0.5);
   }
   // 5. 시작·도착 그림 (있으면 포탈 그림·크리스탈 대신)
   const st = art('start'), en = art('end');
   if (st && m.portals) for (const p of m.portals) drawGroundSprite(g, st, p[0], p[1] + 26, 84);
   if (en && m.center) drawGroundSprite(g, en, m.center[0], m.center[1] + 28, 128);
-  if (ARENA) { ARENA.hasStart = !!st; ARENA.hasEnd = !!en; }
+  if (ARENA) { ARENA.hasStart = !!st; ARENA.hasEnd = !!en; ARENA.brazierArt = !!brazierArtFlag(m); }
   return cv;
 }
 // 코드 석판: 트랙 진행 방향을 따라 어긋난 줄눈 (질감 그림이 없을 때)
@@ -271,6 +271,7 @@ function drawCodePillar(g, x, y) {
   g.fillStyle = '#c99cff'; g.shadowColor = '#c99cff'; g.shadowBlur = 12; g.beginPath(); g.moveTo(x, y - 78); g.lineTo(x + 6, y - 68); g.lineTo(x, y - 60); g.lineTo(x - 6, y - 68); g.closePath(); g.fill(); // 보석
   g.restore();
 }
+function brazierArtFlag() { const a = A['tl_arena_prop-1']; return !!(a && a.cv && a.h > 8); }
 function arenaBraziers(m) {
   const t = m.track; if (!t) return [];
   return [[t.L - 40, t.T - 24], [t.R + 40, t.T - 24], [t.L - 40, t.B + 30], [t.R + 40, t.B + 30]];
@@ -280,7 +281,7 @@ function drawArenaBraziers() {
   for (const [x, y] of arenaBraziers({ track: ARENA.track })) {
     const f = Math.sin(S.time * 9 + x) * 3, f2 = Math.sin(S.time * 13 + y) * 2;
     ctx.save();
-    ctx.translate(x, y - 12);
+    ctx.translate(x, y - (ARENA.brazierArt ? 50 : 12)); // 그림 화로는 그릇이 위에 있다
     ctx.shadowColor = '#ff9a3a'; ctx.shadowBlur = 18;
     ctx.fillStyle = 'rgba(255,120,40,0.85)';
     ctx.beginPath(); ctx.moveTo(-9, 0); ctx.quadraticCurveTo(-11 + f2, -14, 0 + f, -30); ctx.quadraticCurveTo(11 + f2, -14, 9, 0); ctx.closePath(); ctx.fill();
