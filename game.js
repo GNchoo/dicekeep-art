@@ -31,13 +31,14 @@ const MAX_LVL = 3;
 const BOSS_ENTRANCE = 1.25; // 보스 등장 연출 시간(초)
 
 // 주사위 눈(1~6) = 타워 종류. 눈이 높을수록 강력!
+// 모든 타워는 공중 적을 때릴 수 있다 (canAir 는 전부 true — 공중 적의 기믹은 '동선 무시 직행'뿐)
 const TOWER_DEFS = {
   1: { name: '궁수 주사위', desc: '속사 레이저',        dmg: 8,  rate: 0.50, range: 150, laser: true,                 canAir: true,  color: '#9fd463', topper: 'laserMuzzle' },
-  2: { name: '대포 주사위', desc: '쌍포 광역 포격',     dmg: 22, rate: 1.60, range: 135, proj: 'shell',      pspd: 300, splash: 60, canAir: false, color: '#e0862c', topper: 'muzzleFlash' },
+  2: { name: '대포 주사위', desc: '쌍포 광역 포격',     dmg: 22, rate: 1.60, range: 135, proj: 'shell',      pspd: 300, splash: 60, canAir: true,  color: '#e0862c', topper: 'muzzleFlash' },
   3: { name: '마법 주사위', desc: '자수정 마력탄',      dmg: 24, rate: 0.95, range: 165, proj: 'bolt',       pspd: 430, canAir: true,  color: '#b78bff', topper: 'bolt' },
   4: { name: '서리 주사위', desc: '사방 냉기 둔화',     dmg: 8,  rate: 0.80, range: 140, proj: 'frostShard', pspd: 400, slow: true, canAir: true, color: '#7fd4ff', topper: 'frostShard' },
   5: { name: '전격 주사위', desc: '연쇄 번개',          dmg: 16, rate: 1.10, range: 150, chain: true, canAir: true, color: '#ffe86b', topper: 'spark' },
-  6: { name: '폭군 주사위', desc: '최강! 폭발 주사위 투척', dmg: 40, rate: 1.25, range: 175, proj: 'dieBomb', pspd: 340, splash: 55, canAir: false, color: '#ff5555', topper: 'dieBomb' },
+  6: { name: '폭군 주사위', desc: '최강! 폭발 주사위 투척', dmg: 40, rate: 1.25, range: 175, proj: 'dieBomb', pspd: 340, splash: 55, canAir: true,  color: '#ff5555', topper: 'dieBomb' },
 };
 // 성(★) 타워 7~20: 인피니티 보물상자의 다면체 주사위에서만 나온다. 6눈(폭군)을 바탕으로 기하급수 강화.
 const STAR_BANDS = [
