@@ -62,6 +62,7 @@ html, body {
 .chip b { color: var(--gold); font-size: 15px; }
 #lives-val { color: #ff8f8f; }
 #wave-val { color: var(--ivory); padding-left: 6px; }
+#wave-val.hot { color: #ff7a7a; }
 
 /* ---- 오버레이 (타이틀 / 결과) ---- */
 #overlay {

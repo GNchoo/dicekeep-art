@@ -105,6 +105,7 @@ function applyMapLayout(mapKey, tier) {
     SPOTS = (m && m.spots && m.spots.length) ? m.spots : DEFAULT_SPOTS;
     SPOT_BASE = SPOTS.length;
   }
+  if (m && m.loopAt != null && LANES[0]) LANES[0].loopAt = m.loopAt; // 인피니티: 경로 끝 → loopAt 으로 되돌아가 무한 순환 (어느 분기로 만들었든)
   if (S && S.towers) {
     for (const t of S.towers) {
       if (t.spot >= 0 && t.spot < SPOTS.length) {
@@ -201,7 +202,7 @@ function dimOutsideTrack(g, m) {
   if (m.roads && t.mid != null) { // 입구·출구 길: 연석 옆은 밝고 화면 가장자리로 갈수록 어둠 속으로 사라진다
     o.shadowBlur = 28;
     const lane = (x0, x1) => { const gr = o.createLinearGradient(x0, 0, x1, 0); gr.addColorStop(0, 'rgba(0,0,0,1)'); gr.addColorStop(1, 'rgba(0,0,0,0)'); o.fillStyle = gr; o.fillRect(Math.min(x0, x1), t.mid - pad, Math.abs(x1 - x0), pad * 2); };
-    lane(t.L, 30); lane(t.R, W - 30);
+    lane(t.L, 30);
   }
   g.drawImage(ov, 0, 0);
 }
@@ -1961,7 +1962,7 @@ function endInfinity() {
   SFX.lose();
   showOverlay(
     isBest ? '신기록!' : '런 종료',
-    `${S.inf.bossLeak ? `보스 <b>${S.inf.bossLeak}</b> 돌파 — 투기장을 빠져나갔습니다!<br>` : ''}<b>무한 투기장</b> 웨이브 <b>${wave}</b> 까지 버텼습니다${isBest ? ' — <b>최고 기록 갱신!</b>' : ` (최고 ${SAVE.infBest})`}<br>` +
+    `${S.inf.bossLeak ? `보스 <b>${S.inf.bossLeak}</b>가 한계선을 넘었습니다!<br>` : ''}<b>무한 투기장</b> 웨이브 <b>${wave}</b> 까지 버텼습니다${isBest ? ' — <b>최고 기록 갱신!</b>' : ` (최고 ${SAVE.infBest})`}<br>` +
     `처치 <b>${S.inf.kills}</b> · 강화에 쓴 SP <b>${S.inf.spent}</b><br>` +
     `젬 <b>+${r.gems}</b>${r.newly.length ? ` (마일스톤 ${r.newly.join(', ')} 달성 보너스 포함)` : ''}`,
     '로비로'
@@ -1990,6 +1991,24 @@ function onStageClear() {
 
 // ==================== 전투 로직 ====================
 
+// 인피니티 필드 한계선: 살아있는 적이 fieldCap 을 넘으면 가장 먼저 스폰된 적이 사라지며 목숨 차감. 보스가 사라지면 런 종료.
+function enforceFieldCap() {
+  const INF = DKCONTENT.INFINITY, cap = INF.fieldCap || 200;
+  while (S.enemies.length > cap) {
+    const old = S.enemies.find(x => !x.dead); if (!old) break;
+    old.dead = true;
+    const op = epos(old);
+    S.fxs.push({ kind: 'ring', x: op.x, y: op.y - 10, t: 0, dur: 0.5, size: 70, color: '#ff7a7a' });
+    S.fxs.push({ kind: 'impact', x: op.x, y: op.y - 20, t: 0, dur: 0.3, size: 80 });
+    S.lives -= INF.capDmg || 1;
+    S.hurtT = 0.5;
+    SFX.leak();
+    if (old.isBoss) { S.lives = 0; S.inf.bossLeak = old.name; }
+    S.enemies = S.enemies.filter(x => !x.dead);
+    if (S.lives <= 0) { S.lives = 0; syncUI(); endInfinity(); return; }
+  }
+  syncUI();
+}
 function spawnEnemy(item) {
   const C = window.DKCONTENT;
   let def = ENEMY_DEFS[item.type];
@@ -2021,6 +2040,7 @@ function spawnEnemy(item) {
     stompPhase: 0,
   };
   S.enemies.push(e);
+  if (S.mode === 'infinity') enforceFieldCap();
   const p = epos(e);
   if (isBoss) {
     // 보스 등장: 포탈 폭발 + 화면 흔들림 + 배너 + 포효
@@ -2281,12 +2301,13 @@ function update(dt) {
       }
     }
     if (e.dist >= laneLen(e)) {
+      const ln = LANES[e.lane || 0] || LANES[0];
+      if (ln.loopAt != null) { e.dist = ln.loopAt + (e.dist - ln.len); e.laps = (e.laps || 0) + 1; continue; } // 인피니티: 영원히 돈다
       e.dead = true;
       S.lives -= e.def.dmg;
       S.hurtT = 0.5;
       SFX.leak();
       S.fxs.push({ kind: 'impact', x: p.x, y: p.y - 20, t: 0, dur: 0.3, size: 80 });
-      if (S.mode === 'infinity' && e.isBoss) { S.lives = 0; S.inf.bossLeak = e.name; } // 인피니티: 보스를 못 잡으면 남은 목숨과 상관없이 런 종료
       syncUI();
       if (S.lives <= 0) { S.lives = 0; if (S.mode === 'infinity') endInfinity(); else gameEnd(false); return; }
     }
@@ -2302,7 +2323,7 @@ function update(dt) {
 
   // 투사체
   for (const p of S.projs) {
-    if (p.tgt.dead || p.tgt.dist >= laneLen(p.tgt)) { p.gone = true; continue; }
+    if (p.tgt.dead || (LANES[p.tgt.lane || 0].loopAt == null && p.tgt.dist >= laneLen(p.tgt))) { p.gone = true; continue; }
     const tp = epos(p.tgt);
     const tx = tp.x, ty = tp.y - p.tgt.def.size * 0.4 - (p.tgt.move === 'air' ? 42 : 0);
     const dx = tx - p.x, dy = ty - p.y;
@@ -2327,7 +2348,7 @@ function update(dt) {
   S.texts = S.texts.filter(tx => tx.t < 1.1);
 
   // 웨이브 종료 판정
-  if (S.waveActive && S.spawnQ.length === 0 && S.enemies.length === 0) {
+  if (S.waveActive && S.spawnQ.length === 0 && (S.enemies.length === 0 || S.mode === 'infinity')) { // 인피니티: 스폰이 끝나면 완료 (남은 적은 계속 돈다)
     S.waveActive = false;
     const bonus = 20 + S.wave * 3 + S.stage * 2;
     S.gold += bonus;
@@ -3181,7 +3202,7 @@ function syncUI() {
   $('gold-val').textContent = S.gold;
   $('lives-val').textContent = S.lives;
   const sd = S.stageData;
-  if (S.mode === 'infinity') $('wave-val').textContent = `∞ 웨이브 ${S.wave} · 최고 ${SAVE.infBest || 0}`;
+  if (S.mode === 'infinity') { const cap = DKCONTENT.INFINITY.fieldCap || 200, n = S.enemies.length; $('wave-val').textContent = `∞ 웨이브 ${S.wave} · 최고 ${SAVE.infBest || 0} · 필드 ${n}/${cap}`; $('wave-val').classList.toggle('hot', n >= cap * 0.9); }
   else $('wave-val').textContent = `S${S.stage}${sd && sd.tierName ? ' ' + sd.tierName : ''} · 웨이브 ${S.wave} / ${S.stageWaves}`;
   $('wave-val').style.color = sd && sd.tierColor ? sd.tierColor : '';
   syncInfPanel();
