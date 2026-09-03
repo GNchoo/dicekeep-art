@@ -161,11 +161,11 @@ function buildRoadLayer(m) {
   if (m.track) {
     const brazier = art('prop-1'), pillar = art('prop-2'), rubble = art('prop-3');
     for (const [x, y] of arenaPillars(m)) {
-      if (pillar) drawGroundSprite(g, pillar, x, y, 112);
+      if (pillar) drawGroundSprite(g, pillar, x, y, 80); // 타워(116px)보다 확실히 작게
       else drawCodePillar(g, x, y);
     }
     for (const [x, y] of arenaBraziers(m)) {
-      if (brazier) drawGroundSprite(g, brazier, x, y + 4, 64);
+      if (brazier) drawGroundSprite(g, brazier, x, y + 4, 56);
       else {
         g.fillStyle = 'rgba(0,0,0,0.35)'; g.beginPath(); g.ellipse(x, y + 6, 22, 10, 0, 0, Math.PI * 2); g.fill();
         g.fillStyle = '#4a4258'; g.beginPath(); g.ellipse(x, y, 20, 9, 0, 0, Math.PI * 2); g.fill();
@@ -173,14 +173,27 @@ function buildRoadLayer(m) {
         g.fillStyle = '#2a2436'; g.beginPath(); g.ellipse(x, y - 9, 10, 4, 0, 0, Math.PI * 2); g.fill();
       }
     }
-    if (rubble) for (const [x, y] of [[m.track.L - 80, m.track.T + 60], [m.track.R + 80, m.track.B - 40], [m.track.L - 30, m.track.B + 88], [m.track.R + 60, m.track.T - 70]]) drawGroundSprite(g, rubble, x, y, 48, rnd() < 0.5);
+    if (rubble) for (const [x, y] of [[m.track.L - 150, m.track.T + 110], [m.track.R + 150, m.track.B - 100], [m.track.L - 30, m.track.B + 88], [m.track.R + 60, m.track.T - 70]]) drawGroundSprite(g, rubble, x, y, 48, rnd() < 0.5);
   }
   // 5. 시작·도착 그림 (있으면 포탈 그림·크리스탈 대신)
   const st = art('start'), en = art('end');
   if (st && m.portals) for (const p of m.portals) drawGroundSprite(g, st, p[0], p[1] + 26, 84);
   if (en && m.center) drawGroundSprite(g, en, m.center[0], m.center[1] + 28, 128);
+  // 6. 연석 바깥은 어둡게: 플레이 영역(보드·트랙)만 밝게 남겨 장식이 타워로 읽히지 않게 한다
+  if (m.track) dimOutsideTrack(g, m);
   if (ARENA) { ARENA.hasStart = !!st; ARENA.hasEnd = !!en; ARENA.brazierArt = !!brazierArtFlag(m); }
   return cv;
+}
+// 임시 캔버스에 어둠을 깔고 트랙+연석(+58px, 가장자리 번짐)을 뚫어서 얹는다. g 에 직접 destination-out 하면 바닥까지 뚫리므로 임시 캔버스를 쓴다.
+function dimOutsideTrack(g, m) {
+  const t = m.track, pad = 58;
+  const ov = document.createElement('canvas'); ov.width = W; ov.height = H;
+  const o = ov.getContext('2d');
+  o.fillStyle = 'rgba(6,4,14,0.36)'; o.fillRect(0, 0, W, H);
+  o.globalCompositeOperation = 'destination-out';
+  o.shadowColor = '#000'; o.shadowBlur = 56; o.fillStyle = '#000';
+  o.beginPath(); o.roundRect(t.L - pad, t.T - pad, t.R - t.L + pad * 2, t.B - t.T + pad * 2, t.rad + pad); o.fill();
+  g.drawImage(ov, 0, 0);
 }
 // 코드 석판: 트랙 진행 방향을 따라 어긋난 줄눈 (질감 그림이 없을 때)
 function drawSlabJoints(g, pts, rnd) {
@@ -248,18 +261,10 @@ function drawArenaBoard(g, m, boardTex, padArt, rnd) {
   }
   g.restore();
 }
-// 바깥 룬 원 위의 돌 기둥 6개 (트랙·HUD 와 겹치지 않는 자리)
+// 캔버스 좌우 가장자리의 돌 기둥 4개: 연석에서 ≥100px 떨어뜨려 타워와 헷갈리지 않게 (HUD 칩 아래)
 function arenaPillars(m) {
-  const bd = m.board; if (!bd || !m.track) return [];
-  const cx = bd.x + bd.w / 2, cy = bd.y + bd.h / 2;
-  const out = [];
-  for (let i = 0; i < 6; i++) {
-    const a = Math.PI / 6 + i * Math.PI / 3;
-    const x = cx + Math.cos(a) * 372, y = cy + Math.sin(a) * 372 * 0.62 + 30;
-    if (y < 120 || y > H - 8 || x < 30 || x > W - 30) continue; // 맨 위 기둥은 안내 문구·HUD 칩과 겹치므로 뺀다
-    out.push([Math.round(x), Math.round(y)]);
-  }
-  return out;
+  const t = m.track; if (!t) return [];
+  return [[t.L - 186, 210], [t.R + 186, 210], [t.L - 186, 470], [t.R + 186, 470]];
 }
 function drawCodePillar(g, x, y) {
   g.save();
@@ -274,14 +279,14 @@ function drawCodePillar(g, x, y) {
 function brazierArtFlag() { const a = A['tl_arena_prop-1']; return !!(a && a.cv && a.h > 8); }
 function arenaBraziers(m) {
   const t = m.track; if (!t) return [];
-  return [[t.L - 40, t.T - 24], [t.R + 40, t.T - 24], [t.L - 40, t.B + 30], [t.R + 40, t.B + 30]];
+  return [[t.L - 186, 340], [t.R + 186, 340]]; // 좌우 가장자리 중간, 기둥 사이
 }
 function drawArenaBraziers() {
   if (!ARENA || !ARENA.track) return;
   for (const [x, y] of arenaBraziers({ track: ARENA.track })) {
     const f = Math.sin(S.time * 9 + x) * 3, f2 = Math.sin(S.time * 13 + y) * 2;
     ctx.save();
-    ctx.translate(x, y - (ARENA.brazierArt ? 50 : 12)); // 그림 화로는 그릇이 위에 있다
+    ctx.translate(x, y - (ARENA.brazierArt ? 44 : 12)); // 그림 화로는 그릇이 위에 있다
     ctx.shadowColor = '#ff9a3a'; ctx.shadowBlur = 18;
     ctx.fillStyle = 'rgba(255,120,40,0.85)';
     ctx.beginPath(); ctx.moveTo(-9, 0); ctx.quadraticCurveTo(-11 + f2, -14, 0 + f, -30); ctx.quadraticCurveTo(11 + f2, -14, 9, 0); ctx.closePath(); ctx.fill();
