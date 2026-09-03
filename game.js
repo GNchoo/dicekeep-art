@@ -3910,6 +3910,7 @@ function drawLoading(pr) {
   window.DKplace = tryPlace;                      // 보유 주사위를 석단 idx 에 놓기
   window.DKroll = () => { if (S.phase === 'playing' && !S.heldDie && S.gold >= ROLL_COST) { S.gold -= ROLL_COST; S.heldDie = pickUnlockedFace(); syncUI(); return S.heldDie; } return 0; }; // 즉시 굴림 (테스트용)
   window.DKspots = () => SPOTS;
+  window.DKrange = towerRange;                     // 테스트 훅
   window.DKSAVE = SAVE;
   S.phase = 'title';
   const loadEl = $('ov-load');
