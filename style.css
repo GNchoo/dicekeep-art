@@ -430,6 +430,12 @@ body.placing #game { cursor: grabbing; }
 .big-btn.alt { background: linear-gradient(#2e5b46, #1c3d2d); border-color: #55a382; color: #c9f0dd; }
 .big-btn:hover { filter: brightness(1.18); transform: translateY(-1px); }
 .lobby-inf-btn { width: 100%; margin-top: 10px; flex-shrink: 0; letter-spacing: 0.5px; }
+/* 인피니티 두 갈래: 도전(클리어 있음) / 무한(기록) */
+.inf-btns { margin-top: 0; }
+.inf-btns .big-btn { flex: 1 1 200px; margin-top: 10px; display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.big-btn small { font-size: 11px; font-weight: normal; opacity: .85; letter-spacing: 0; }
+#ss-inf-clear { background: linear-gradient(#7a5a1e, #4a350f); border-color: #e8b64a; color: #ffe9b8; }
+#btn-inf-clear { background: linear-gradient(#7a5a1e, #4a350f); border-color: #e8b64a; color: #ffe9b8; }
 .big-btn.alt { background: linear-gradient(#2e5b46, #1c3d2d); border-color: #55a382; color: #c9f0dd; }
 .big-btn:hover { filter: brightness(1.18); transform: translateY(-1px); }
 

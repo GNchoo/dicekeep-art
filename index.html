@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>주사위 성채 (Dicekeep)</title>
-<link rel="stylesheet" href="style.css?v=70" />
+<link rel="stylesheet" href="style.css?v=71" />
 <link rel="icon" href="ui/gold.png" />
 </head>
 <body>
@@ -20,7 +20,7 @@
 
     <div id="inf-help" class="hidden">
       <div class="help-card">
-        <h3>무한 투기장 안내</h3>
+        <h3 id="help-title">무한 투기장 안내</h3>
         <ol>
           <li><b>&#127873; 뽑기 160G</b> — 등급이 정해지고 <b>바로 굴러 타워가 됩니다.</b> 굴려 나온 숫자 = 타워 성(★). 손에 타워가 있으면 먼저 석단에 배치해야 다시 뽑을 수 있습니다.<br><small>일반 50% (1★) · 레어 33.1% (1~4★) · 고대 10.2% (1~6★) · 유물 5.1% (1~8★) · 서사 0.8% (1~12★) · 전설 0.5% (1~20★) · 에픽 0.2% (14★↑) · 신화 0.08% (18★↑) · 태초 0.019% (20★)</small></li>
           <li><b>보상 대기</b> — 보스를 잡으면 주사위를 받습니다. 손이 비는 대로 하나씩 자동으로 굴러갑니다.</li>
@@ -28,6 +28,7 @@
           <li><b>판매</b> — 7★ 이상은 팔 수 없습니다.</li>
           <li><b>파워업</b> — 골드로 눈(1~6)을 강화합니다. 강화할수록 비싸집니다. ★ 히든 타워는 6눈 파워업을 따릅니다.</li>
           <li><b>패배</b> — 필드에 적이 200마리를 넘으면 가장 오래된 적이 사라지며 목숨 −1. 보스는 5분 20초 안에 잡아야 합니다.</li>
+          <li><b>두 갈래</b> — <b>도전</b>은 <b>101웨이브 완주가 클리어</b>입니다. 91웨이브부터 체력이 한 번 더 가팔라지는 <b>최종 관문</b>이라 뽑기·확률강화 운이 아주 좋아야 닿습니다. <b>무한</b>은 클리어가 없는 진짜 무한 — 101웨이브를 넘으면 더 강해진 2주기가 이어지고, 최고 기록만 남습니다.</li>
         </ol>
         <button id="help-close">알겠어요</button>
       </div>
@@ -65,7 +66,10 @@
           <button id="btn-stage-select" class="big-btn">스테이지 선택</button>
           <button id="btn-shop" class="big-btn alt">상점</button>
         </div>
-        <button id="btn-infinity" class="big-btn inf lobby-inf-btn" disabled>&#128274; 인피니티 · 무한 투기장</button>
+        <div class="lobby-btns inf-btns">
+          <button id="btn-inf-clear" class="big-btn inf lobby-inf-btn" disabled>&#128274; 인피니티 · 도전<small>101웨이브 완주 = 클리어</small></button>
+          <button id="btn-infinity" class="big-btn inf lobby-inf-btn" disabled>&#128274; 인피니티 · 무한<small>끝이 없는 기록 도전</small></button>
+        </div>
         <div id="lobby-inf" class="screen-sub inf-sub"></div>
       </div>
     </div>
@@ -77,7 +81,8 @@
           <h2>스테이지 선택</h2>
           <div class="gem-chip"><span class="gem-ico">&#128142;</span><b id="ss-gems">0</b></div>
         </div>
-        <button id="ss-inf-btn" class="inf-banner" disabled>&#128274; 인피니티 · 무한 투기장 — 50 스테이지 클리어 후 해금</button>
+        <button id="ss-inf-clear" class="inf-banner" disabled>&#128274; 인피니티 · 도전 — 50 스테이지 클리어 후 해금</button>
+        <button id="ss-inf-btn" class="inf-banner" disabled>&#128274; 인피니티 · 무한 — 50 스테이지 클리어 후 해금</button>
         <div id="tier-legend" class="tier-legend"></div>
         <div id="stage-grid" class="stage-grid"></div>
       </div>
@@ -149,7 +154,7 @@
   <img id="ghost-tower" alt="">
   <div id="ghost-ring"></div>
 </div>
-<script src="content.js?v=70"></script>
-<script src="game.js?v=70"></script>
+<script src="content.js?v=71"></script>
+<script src="game.js?v=71"></script>
 </body>
 </html>

@@ -1296,7 +1296,7 @@ window.DKCONTENT = (function () {
     highArmor(w) { return w % 33 === 0; },
     // ---- 보스 보상 스케줄 (1미네랄 = 16G): 24R 50+유물 · 37/58R 50+서사 · 79R 70+전설 · 90R 100+전설 · 95R 150+전설 · 96~100R 유물·서사 추가 ----
     bossReward(w) {
-      const n = Math.max(1, Math.round(w / this.bossEvery));
+      const n = Math.max(1, this.bossOrdinal(w));
       if (n === 1) return { gold: 800, dice: ['d8'] };
       if (n <= 3) return { gold: 800, dice: ['d12'] };
       if (n === 4) return { gold: 1120, dice: ['d20'] };
@@ -1320,15 +1320,28 @@ window.DKCONTENT = (function () {
     bossEvery: 10,   // 10 웨이브마다 보스 (20 부터 2마리)
     eliteEvery: 5,   // 5 웨이브마다 정예 (HP×3, 크기×1.2, 골드×3)
     unlockAir: 1, unlockBurrow: 1,
-    wave(w) {
+    // ---- 두 갈래: 도전(클리어 있음, 멀티 예정) / 무한(진짜 무한, 싱글 기록) ----
+    modes: {
+      clear:   { key: 'clear',   name: '도전',  sub: '101웨이브 완주가 목표 · 91웨이브부터 최종 관문', gauntlet: true,  clearWave: 101 },
+      endless: { key: 'endless', name: '무한',  sub: '끝이 없는 기록 도전 · 주기마다 적이 강해진다',   gauntlet: false, clearWave: 0 },
+    },
+    modeOf(key) { return this.modes[key] || this.modes.endless; },
+    clearWave: 101,   // 도전 모드 클리어 선 (로스터 한 사이클 = 메운디 1~101R)
+    clearGems: 60,
+    lateFrom: 90, lateExp: 1.08, // 최종 관문(도전 모드): 91웨이브부터 체력이 한 번 더 가팔라진다 (1.08 → 실질 1.166)
+    // ---- 보스 주기는 로스터 기준 (2주기부터 w % 10 과 어긋난다) ----
+    isBossWave(w) { const r = this.getRoster()[(Math.max(1, w) - 1) % 101]; return !!(r && r.boss); },
+    bossOrdinal(w) { const c = Math.floor((Math.max(1, w) - 1) / 101), i = (Math.max(1, w) - 1) % 101 + 1; return c * 10 + Math.round(i / this.bossEvery); },
+    wave(w, gauntlet) {
+      const late = gauntlet && w > this.lateFrom ? Math.pow(this.lateExp, w - this.lateFrom) : 1;
       return {
-        hpMult: +(1.8 * Math.pow(1.08, w - 1)).toFixed(3),   // w30 ≈ 16.8×, w50 ≈ 78×, w70 ≈ 364× — 무한 순환·필드 한계선·사거리 160 기준 봇 재보정(1.06→83, 1.08→60, 1.10→50 웨이브)
+        hpMult: +(1.8 * Math.pow(1.08, w - 1) * late).toFixed(3),   // w30 ≈ 16.8×, w50 ≈ 78×, w70 ≈ 364×, w101 ≈ 6,700× — 무한 순환·필드 한계선·사거리 160 기준 봇 재보정
         count: Math.min(36, 12 + Math.floor(w * 0.6)),
         gap: Math.max(0.3, 0.8 - w * 0.01),
         goldMult: +(1 + w * 0.025).toFixed(3),
         speedMult: Math.min(1.5, 1 + Math.max(0, w - 40) * 0.01),
         bossHp: +(0.7 + w * 0.012).toFixed(2),                 // 보스 개별 보정(hpM)은 인피니티에서 쓰지 않는다
-        bosses: w >= 20 && w % 10 === 0 ? 2 : 1,
+        bosses: this.isBossWave(w) && this.bossOrdinal(w) >= 2 ? 2 : 1,
         elites: w >= 20 ? 3 : 2,
       };
     },

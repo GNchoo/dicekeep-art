@@ -1101,7 +1101,7 @@ const SKIN_COST = 20; // 스킨 1종 해금 비용(젬)
 function defaultSave() {
   const skins = {}, equip = {};
   for (let f = 1; f <= 6; f++) { skins[f] = ['a']; equip[f] = 'a'; }
-  return { cleared: [], gems: 40, unlockedTowers: [1, 2, 3], unlockedSkins: skins, equippedSkin: equip, infBest: 0, infRuns: [], infMilestones: [] };
+  return { cleared: [], gems: 40, unlockedTowers: [1, 2, 3], unlockedSkins: skins, equippedSkin: equip, infBest: 0, infRuns: [], infMilestones: [], infClears: 0 };
 }
 let SAVE = defaultSave();
 function loadSave() {
@@ -1119,6 +1119,7 @@ function loadSave() {
       infBest: typeof s.infBest === 'number' ? s.infBest : 0,
       infRuns: Array.isArray(s.infRuns) ? s.infRuns.slice(0, 5) : [],
       infMilestones: Array.isArray(s.infMilestones) ? s.infMilestones : [],
+      infClears: typeof s.infClears === 'number' ? s.infClears : 0,
     };
     // 기본 3종은 항상 해금 보장
     for (const f of [1, 2, 3]) if (!SAVE.unlockedTowers.includes(f)) SAVE.unlockedTowers.push(f);
@@ -1409,7 +1410,12 @@ function rollByButton() {
 }
 
 // 인피니티 보물상자: 골드 → 다면체 주사위 1개. 그 자리에서 굴려 나온 숫자 = 타워 성.
-function openInfHelp() { const h = $('inf-help'); if (h) h.classList.remove('hidden'); }
+function openInfHelp() {
+  const h = $('inf-help'); if (!h) return;
+  const t = $('help-title');
+  if (t) t.textContent = S.inf && S.inf.mode === 'clear' ? '무한 투기장 · 도전 안내' : '무한 투기장 · 무한 안내';
+  h.classList.remove('hidden');
+}
 function closeInfHelp() { const h = $('inf-help'); if (h) h.classList.add('hidden'); }
 function chestDef() { const C = window.DKCONTENT; return C && C.INFINITY && C.INFINITY.chest; }
 function chestCost() { const ch = chestDef(); return ch && S.inf ? ch.cost(S.inf.chests || 0) : Infinity; }
@@ -1870,7 +1876,7 @@ const FAST_AIR = new Set(['bat', 'bee', 'wasp', 'paperplane', 'dandelion', 'horn
 function buildInfinityWave(w) {
   const C = window.DKCONTENT;
   const INF = C.INFINITY;
-  const P = INF.wave(w);
+  const P = INF.wave(w, !!(S.inf && S.inf.gauntlet)); // 도전 모드만 최종 관문 곡선
   const M = INF.monsterFor(w); // 메운디식 로스터: 웨이브 하나 = 몬스터 한 종류 (보스 웨이브는 보스만)
   const q = [];
   let t = 0.45;
@@ -1878,7 +1884,7 @@ function buildInfinityWave(w) {
   if (M.boss) {
     t += 0.6;
     for (let k = 0; k < P.bosses; k++) {
-      const bi = (w / INF.bossEvery - 1 + k * 37) % C.bosses.length;
+      const bi = (INF.bossOrdinal(w) - 1 + k * 37) % C.bosses.length; // 2주기부터 w % 10 과 어긋나므로 순번으로 센다
       const boss = C.bosses[bi];
       const bbase = C.bossBases.find((b) => b.id === boss.base) || C.bossBases[0];
       add(bbase.id, { name: M.prefix + boss.name, hue: boss.hue, hpMult: P.hpMult * P.bossHp, isBoss: true, lane: laneFor(bbase.move, k) });
@@ -1994,14 +2000,15 @@ function startStage(n) {
 }
 
 // 인피니티 런 시작 (로비에서 호출)
-function startInfinity() {
+function startInfinity(kind) {
   const C = window.DKCONTENT;
   const INF = C && C.INFINITY;
   if (!INF) return;
   S.mode = 'infinity';
-  S.inf = { sp: 0, power: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 }, kills: 0, spent: 0, queue: [], chests: 0, bossT: 0 };
+  const MODE = INF.modeOf(kind === 'clear' || kind === 'endless' ? kind : 'endless'); // 도전(클리어 있음) / 무한(진짜 무한)
+  S.inf = { sp: 0, power: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 }, kills: 0, spent: 0, queue: [], chests: 0, bossT: 0, cleared: 0, mode: MODE.key, gauntlet: MODE.gauntlet };
   S.stage = 0;
-  S.stageData = { n: 0, name: '무한 투기장', tier: INF.tier.tier, tierName: INF.tier.name, tierColor: INF.tier.color, lanes: INF.tier.lanes.length, waves: Infinity, bases: [], gem: 0 };
+  S.stageData = { n: 0, name: '무한 투기장', tier: INF.tier.tier, tierName: INF.tier.name + ' · ' + MODE.name, tierColor: INF.tier.color, lanes: INF.tier.lanes.length, waves: Infinity, bases: [], gem: 0 };
   S.stageWaves = Infinity;
   S.mapKey = INF.mapKey;
   S.gold = INF.startGold;
@@ -2020,29 +2027,46 @@ function startInfinity() {
 }
 
 // 인피니티 런 종료: 기록·젬 저장 + 결과 화면
-function endInfinity() {
+// 도전 모드 클리어: 101웨이브를 완주하면 승리로 런이 끝난다. 무한 모드에는 클리어가 없다.
+function checkInfClear() {
+  const INF = window.DKCONTENT && DKCONTENT.INFINITY;
+  if (!INF || !S.inf || S.mode !== 'infinity' || S.inf.mode !== 'clear') return false;
+  const line = INF.clearWave || 101;
+  if (S.wave < line || S.inf.cleared) return false;
+  S.inf.cleared = 1;
+  SAVE.infClears = (SAVE.infClears || 0) + 1;
+  S.shakeT = Math.max(S.shakeT || 0, 0.5);
+  for (let i = 0; i < 5; i++) S.fxs.push({ kind: 'ring', x: W / 2, y: 200, t: 0, dur: 1.1 + i * 0.25, size: 160 + i * 60, color: '#ffd452' });
+  S.texts.push({ str: `무한 투기장 클리어! ${line}웨이브 완주`, x: W / 2, y: H / 2 - 90, t: 0, color: '#ffd452', big: true });
+  endInfinity(true);
+  return true;
+}
+
+function endInfinity(won) {
   const C = window.DKCONTENT;
   const INF = C.INFINITY;
   S.phase = 'over';
   S.waveActive = false;
-  const reached = Math.max(0, S.waveActive ? S.wave - 1 : S.wave - (S.enemies.length ? 1 : 0));
-  const wave = Math.max(0, S.wave - 1); // 마지막으로 '완료'한 웨이브
+  const wave = won ? S.wave : Math.max(0, S.wave - 1); // 클리어는 그 웨이브를 완료한 것
+  const modeName = S.inf.mode === 'clear' ? '도전' : '무한';
   const r = INF.gems(wave, SAVE.infMilestones);
-  SAVE.gems += r.gems;
+  let gems = r.gems + (won ? (INF.clearGems || 60) : 0);
+  SAVE.gems += gems;
   SAVE.infMilestones = (SAVE.infMilestones || []).concat(r.newly);
   const isBest = wave > (SAVE.infBest || 0);
   if (isBest) SAVE.infBest = wave;
-  SAVE.infRuns = [{ wave, kills: S.inf.kills, date: new Date().toISOString().slice(0, 10) }].concat(SAVE.infRuns || []).slice(0, 5);
+  SAVE.infRuns = [{ wave, kills: S.inf.kills, mode: S.inf.mode, date: new Date().toISOString().slice(0, 10) }].concat(SAVE.infRuns || []).slice(0, 5);
   saveSave();
-  SFX.lose();
+  (won ? SFX.win : SFX.lose)();
   showOverlay(
-    isBest ? '신기록!' : '런 종료',
-    `${S.inf.bossLeak ? (S.inf.bossTimeout ? `보스 <b>${S.inf.bossLeak}</b>: 제한시간(5분 20초) 안에 잡지 못했습니다!<br>` : `보스 <b>${S.inf.bossLeak}</b>가 한계선을 넘었습니다!<br>`) : ''}<b>무한 투기장</b> 웨이브 <b>${wave}</b> 까지 버텼습니다${isBest ? ' — <b>최고 기록 갱신!</b>' : ` (최고 ${SAVE.infBest})`}<br>` +
+    won ? '클리어!' : isBest ? '신기록!' : '런 종료',
+    (won
+      ? `<b>무한 투기장 · 도전</b> ${INF.clearWave}웨이브를 완주했습니다 — <b>클리어!</b><br>통산 클리어 <b>${SAVE.infClears || 0}</b>회<br>`
+      : `${S.inf.bossLeak ? (S.inf.bossTimeout ? `보스 <b>${S.inf.bossLeak}</b>: 제한시간(5분 20초) 안에 잡지 못했습니다!<br>` : `보스 <b>${S.inf.bossLeak}</b>가 한계선을 넘었습니다!<br>`) : ''}<b>무한 투기장 · ${modeName}</b> 웨이브 <b>${wave}</b> 까지 버텼습니다${isBest ? ' — <b>최고 기록 갱신!</b>' : ` (최고 ${SAVE.infBest})`}<br>`) +
     `처치 <b>${S.inf.kills}</b> · 파워업·강화에 쓴 골드 <b>${S.inf.spent}</b><br>` +
-    `젬 <b>+${r.gems}</b>${r.newly.length ? ` (마일스톤 ${r.newly.join(', ')} 달성 보너스 포함)` : ''}`,
+    `젬 <b>+${gems}</b>${r.newly.length ? ` (마일스톤 ${r.newly.join(', ')} 달성 보너스 포함)` : ''}${won ? ` (클리어 보너스 +${INF.clearGems || 60} 포함)` : ''}`,
     '로비로'
   );
-  void reached;
 }
 
 // 스테이지 클리어 처리: 젬 보상 + 다음 스테이지 해금 + 저장
@@ -2462,7 +2486,7 @@ function update(dt) {
   }
   // 웨이브 종료 판정
   // 인피니티: 스폰이 끝나면 완료 (남은 적은 계속 돈다). 단 보스 웨이브는 메운디 보스 라운드처럼 보스를 잡을 때까지 다음 웨이브를 막는다 (제한시간 5분 20초)
-  const infBossHold = S.mode === 'infinity' && S.wave % (DKCONTENT.INFINITY.bossEvery || 10) === 0 && S.enemies.some(e => e.isBoss && !e.dead);
+  const infBossHold = S.mode === 'infinity' && DKCONTENT.INFINITY.isBossWave(S.wave) && S.enemies.some(e => e.isBoss && !e.dead);
   if (S.waveActive && S.spawnQ.length === 0 && (S.enemies.length === 0 || (S.mode === 'infinity' && !infBossHold))) {
     S.waveActive = false;
     const bonus = 20 + S.wave * 3 + S.stage * 2;
@@ -2470,6 +2494,7 @@ function update(dt) {
     S.texts.push({ str: '웨이브 클리어! +' + bonus + 'G', x: W / 2, y: H / 2 - 40, t: 0, color: '#a0ffc8' });
     SFX.coin();
     if (S.mode === 'infinity') {
+      if (checkInfClear()) return;              // 도전 모드: 101웨이브 완주 = 클리어
       S.autoT = DKCONTENT.INFINITY.intermission;
       syncUI();
       return;
@@ -3323,7 +3348,11 @@ function syncUI() {
     const M = S.wave > 0 && INF.monsterFor ? INF.monsterFor(S.wave) : null;
     const sz = M ? ` · ${M.boss ? '보스' : M.name}(${INF.sizeName[M.cls]})` : '';
     const bt = S.inf && S.inf.bossT > 0 ? ` · 보스 ${Math.floor(S.inf.bossT / 60)}:${String(Math.floor(S.inf.bossT % 60)).padStart(2, '0')}` : '';
-    $('wave-val').textContent = `∞ 웨이브 ${S.wave}${sz} · 최고 ${SAVE.infBest || 0} · 필드 ${n}/${cap}${bt}`;
+    const line = INF.clearWave || 101, cyc = Math.floor(Math.max(0, S.wave - 1) / 101);
+    const wtxt = S.inf && S.inf.mode === 'clear'
+      ? `${S.wave}/${line}`                                    // 도전: 101웨이브 완주가 클리어
+      : `${S.wave}${cyc ? ` (${cyc + 1}주기)` : ''}`;          // 무한: 끝이 없다
+    $('wave-val').textContent = `∞ 웨이브 ${wtxt}${sz} · 최고 ${SAVE.infBest || 0} · 필드 ${n}/${cap}${bt}`;
     $('wave-val').classList.toggle('hot', n >= cap * 0.9 || (S.inf && S.inf.bossT > 0 && S.inf.bossT < 30));
   }
   else $('wave-val').textContent = `S${S.stage}${sd && sd.tierName ? ' ' + sd.tierName : ''} · 웨이브 ${S.wave} / ${S.stageWaves}`;
@@ -3510,24 +3539,30 @@ function gotoShop() { S.phase = 'shop'; showScreen('shop'); }
 
 function syncInfButtons() {
   const ok = infinityUnlocked();
-  const btn = $('btn-infinity');
-  if (btn) {
-    btn.disabled = !ok;
-    btn.classList.toggle('locked', !ok);
-    btn.innerHTML = ok ? '&#8734; 인피니티 · 무한 투기장' : '&#128274; 인피니티 · 무한 투기장';
-  }
-  const banner = $('ss-inf-btn');
-  if (banner) {
-    banner.disabled = !ok;
-    banner.classList.toggle('locked', !ok);
-    banner.textContent = ok
-      ? '∞ 인피니티 · 무한 투기장 입장'
-      : '🔒 인피니티 · 무한 투기장 — 50 스테이지 클리어 후 해금';
-  }
+  const INF = window.DKCONTENT && DKCONTENT.INFINITY;
+  const line = (INF && INF.clearWave) || 101;
+  const setBtn = (id, icon, name, sub) => {           // 도전 / 무한 두 갈래
+    const b = $(id);
+    if (!b) return;
+    b.disabled = !ok;
+    b.classList.toggle('locked', !ok);
+    b.innerHTML = `${ok ? icon : '&#128274;'} 인피니티 · ${name}<small>${ok ? sub : '50 스테이지 클리어 후 해금'}</small>`;
+  };
+  setBtn('btn-inf-clear', '&#127942;', '도전', `${line}웨이브 완주 = 클리어`);
+  setBtn('btn-infinity', '&#8734;', '무한', '끝이 없는 기록 도전');
+  const setBanner = (id, txt, lock) => {
+    const b = $(id);
+    if (!b) return;
+    b.disabled = !ok;
+    b.classList.toggle('locked', !ok);
+    b.textContent = ok ? txt : lock;
+  };
+  setBanner('ss-inf-clear', `🏆 인피니티 · 도전 — ${line}웨이브 완주가 목표`, '🔒 인피니티 · 도전 — 50 스테이지 클리어 후 해금');
+  setBanner('ss-inf-btn', '∞ 인피니티 · 무한 — 끝이 없는 기록 도전', '🔒 인피니티 · 무한 — 50 스테이지 클리어 후 해금');
   const info = $('lobby-inf');
   if (info) {
     info.innerHTML = ok
-      ? `무한 투기장 최고 기록 <b>${SAVE.infBest || 0}</b> 웨이브${(SAVE.infRuns || []).length ? ` · 최근 ${SAVE.infRuns.slice(0, 3).map(r => r.wave).join(' / ')}` : ''}`
+      ? `최고 기록 <b>${SAVE.infBest || 0}</b> 웨이브 · 도전 클리어 <b>${SAVE.infClears || 0}</b>회${(SAVE.infRuns || []).length ? ` · 최근 ${SAVE.infRuns.slice(0, 3).map(r => r.wave).join(' / ')}` : ''}`
       : `인피니티는 로비 아래 <b>분홍 버튼</b>입니다. 50 스테이지를 모두 깨면 열립니다 (현재 ${SAVE.cleared.length}/50).`;
   }
 }
@@ -3973,13 +4008,16 @@ $('ov-btn').addEventListener('click', () => {
     return;
   }
   // 타이틀 → 로비 (?start=inf 이면 바로 인피니티)
-  if (window.DKAUTOSTART === 'inf' && infinityUnlocked()) { window.DKAUTOSTART = null; startInfinity(); return; }
+  if ((window.DKAUTOSTART === 'inf' || window.DKAUTOSTART === 'clear') && infinityUnlocked()) { const k = window.DKAUTOSTART === 'clear' ? 'clear' : 'endless'; window.DKAUTOSTART = null; startInfinity(k); return; }
   gotoLobby();
 });
 $('btn-stage-select').addEventListener('click', () => { audio(); gotoStageSelect(); });
-$('btn-infinity').addEventListener('click', () => { if (!infinityUnlocked()) return; audio(); startInfinity(); });
+const startInf = (kind) => { if (!infinityUnlocked()) return; audio(); startInfinity(kind); };
+$('btn-infinity').addEventListener('click', () => startInf('endless'));
+if ($('btn-inf-clear')) $('btn-inf-clear').addEventListener('click', () => startInf('clear'));
 const ssInf = $('ss-inf-btn');
-if (ssInf) ssInf.addEventListener('click', () => { if (!infinityUnlocked()) return; audio(); startInfinity(); });
+if (ssInf) ssInf.addEventListener('click', () => startInf('endless'));
+if ($('ss-inf-clear')) $('ss-inf-clear').addEventListener('click', () => startInf('clear'));
 for (let f = 1; f <= 6; f++) { const b = $('inf-face-' + f); if (b) b.addEventListener('click', () => upgradeFace(f)); }
 if ($('help-btn')) $('help-btn').addEventListener('click', () => { audio(); openInfHelp(); });
 if ($('help-close')) $('help-close').addEventListener('click', () => { audio(); closeInfHelp(); });
