@@ -991,10 +991,126 @@ function buildTowerSprites() {
     towerSprites[f] = pack;
   }
   for (let g = 7; g <= 20; g++) { const art = A['tStar' + g]; if (art && art.cv && art.h > 16) towerSprites[g] = [scaleTowerArt(art)]; }
+  for (const k of Object.keys(starSpriteCache)) delete starSpriteCache[k]; // 에셋이 바뀌면 구워둔 성 타워도 다시 만든다
+}
+
+// ★7~20 전용 그림(star-NN.png)이 아직 없다. 6눈 스킨을 밴드색으로 물들이고 밴드별 장식을 얹어
+// "6눈보다 강해 보이는" 몸통을 성마다 한 번만 구워 캐시한다. PNG 가 들어오면 buildTowerSprites 가 그쪽을 쓴다.
+const starSpriteCache = {};
+function buildStarSprite(g, skinIdx) {
+  const key = g + ':' + (skinIdx || 0);
+  if (starSpriteCache[key]) return starSpriteCache[key];
+  const base = (towerSprites[6] || [])[((skinIdx || 0) % ((towerSprites[6] || []).length || 1))] || compositeFallback(6);
+  const band = starBand(g), k = g - 6;             // k = 1(★7) … 14(★20)
+  const col = band.color;
+  const padX = 26, padTop = 30, padBot = 10;
+  const cv = document.createElement('canvas');
+  cv.width = base.w + padX * 2; cv.height = base.h + padTop + padBot;
+  const c = cv.getContext('2d');
+  const cx = cv.width / 2, baseY = padTop + base.baseY;
+  const grow = Math.min(1, k / 14);                 // 등급이 오를수록 장식이 커진다
+
+  // --- 받침: 밴드색 룬 링 (성이 오를수록 굵고 밝다) ---
+  c.save();
+  c.translate(cx, baseY + 2);
+  c.scale(1, 0.42);
+  for (let i = 0; i < 2; i++) {
+    c.beginPath(); c.arc(0, 0, 30 + i * 7 + grow * 7, 0, Math.PI * 2);
+    c.strokeStyle = col; c.globalAlpha = 0.5 - i * 0.2; c.lineWidth = 3 + grow * 2;
+    c.shadowColor = col; c.shadowBlur = 14; c.stroke();
+  }
+  c.restore();
+
+  // --- 밴드 장식 (몸통 뒤) ---
+  c.save();
+  c.translate(cx, baseY);
+  c.shadowColor = col; c.shadowBlur = 12; c.strokeStyle = col; c.fillStyle = col;
+  if (band.min === 7) {                             // 별빛 첨탑: 뒤로 솟은 청색 크리스탈 + 별 조각
+    const hgt = 26 + k * 9;
+    for (const sx of [-30, 30]) {
+      c.beginPath();
+      c.moveTo(sx, -6); c.lineTo(sx - 7, -hgt * 0.55); c.lineTo(sx, -hgt); c.lineTo(sx + 7, -hgt * 0.55);
+      c.closePath(); c.globalAlpha = 0.85; c.fill();
+      c.globalAlpha = 1; c.lineWidth = 2; c.stroke();
+    }
+    c.globalAlpha = 0.95;
+    for (let i = 0; i < 3 + k; i++) {
+      const a = i * 1.7, r = 30 + (i % 3) * 9;
+      starPoly(c, Math.cos(a) * r, -34 - (i % 4) * 12, 3.2 + (i % 2));
+    }
+  } else if (band.min === 11) {                     // 성운 요새: 궤도 링 (등급마다 +1)
+    for (let i = 0; i <= g - 11; i++) {
+      c.save(); c.rotate(-0.5 + i * 0.42); c.scale(1, 0.34);
+      c.beginPath(); c.arc(0, -46, 34 + i * 8, 0, Math.PI * 2);
+      c.globalAlpha = 0.75; c.lineWidth = 3; c.stroke(); c.restore();
+    }
+  } else if (band.min === 15) {                     // 천공 옥좌: 금빛 날개 + 후광
+    for (const dir of [-1, 1]) {
+      c.beginPath();
+      c.moveTo(dir * 12, -34);
+      c.quadraticCurveTo(dir * (46 + k * 2), -74, dir * (30 + k), -14);
+      c.quadraticCurveTo(dir * 26, -34, dir * 12, -34);
+      c.globalAlpha = 0.8; c.fill();
+    }
+    c.globalAlpha = 0.9; c.lineWidth = 3;
+    c.beginPath(); c.arc(0, -84, 20 + grow * 6, 0, Math.PI * 2); c.stroke();
+  } else {                                          // 차원 군주: 공허 오벨리스크 + 무지개 균열
+    c.globalAlpha = 0.9;
+    c.beginPath(); c.moveTo(-16, -8); c.lineTo(-11, -96); c.lineTo(0, -112); c.lineTo(11, -96); c.lineTo(16, -8);
+    c.closePath(); c.fillStyle = '#160d20'; c.fill(); c.lineWidth = 2.5; c.stroke();
+    for (let i = 0; i < 5; i++) {
+      c.beginPath(); c.moveTo(-9 + i * 4, -20 - i * 14); c.lineTo(4 - i * 3, -34 - i * 14);
+      c.strokeStyle = `hsl(${i * 62}, 95%, 65%)`; c.lineWidth = 2; c.stroke();
+    }
+  }
+  c.restore();
+
+  // --- 몸통: 6눈 스킨을 밴드색으로 물들인다 (음영은 그대로 남긴다) ---
+  const body = document.createElement('canvas');
+  body.width = base.w; body.height = base.h;
+  const bc = body.getContext('2d');
+  bc.drawImage(base.cv, 0, 0);
+  bc.globalCompositeOperation = 'color';
+  bc.globalAlpha = 0.45 + grow * 0.3;
+  bc.fillStyle = col; bc.fillRect(0, 0, base.w, base.h);
+  bc.globalCompositeOperation = 'destination-in';   // 원래 실루엣만 남긴다
+  bc.globalAlpha = 1;
+  bc.drawImage(base.cv, 0, 0);
+  c.save();
+  c.shadowColor = col; c.shadowBlur = 10 + grow * 14;
+  c.drawImage(body, padX, padTop);
+  c.restore();
+
+  // --- 앞쪽 장식: 떠 있는 작은 주사위 (등급이 오를수록 많다) ---
+  const orb = Math.min(4, 1 + Math.floor(k / 4));
+  c.save();
+  c.translate(cx, baseY - 30);
+  for (let i = 0; i < orb; i++) {
+    const a = i * (Math.PI * 2 / orb) + 0.6, r = 34 + grow * 8;
+    c.save();
+    c.translate(Math.cos(a) * r, Math.sin(a) * r * 0.34);
+    c.rotate(a);
+    c.fillStyle = col; c.shadowColor = col; c.shadowBlur = 10; c.globalAlpha = 0.9;
+    c.fillRect(-4, -4, 8, 8);
+    c.strokeStyle = '#fff'; c.globalAlpha = 0.7; c.lineWidth = 1; c.strokeRect(-4, -4, 8, 8);
+    c.restore();
+  }
+  c.restore();
+
+  const sp = { cv, w: cv.width, h: cv.height, cx, baseY, dedicated: true, star: g };
+  starSpriteCache[key] = sp;
+  return sp;
+}
+function starPoly(c, x, y, r) {                     // 작은 4갈래 별 조각
+  c.beginPath();
+  c.moveTo(x, y - r); c.quadraticCurveTo(x, y, x + r, y);
+  c.quadraticCurveTo(x, y, x, y + r); c.quadraticCurveTo(x, y, x - r, y);
+  c.quadraticCurveTo(x, y, x, y - r);
+  c.fill();
 }
 
 function towerSpr(face, skin) {
-  if (face > 6 && !towerSprites[face]) return towerSpr(6, skin); // 성 타워 그림이 없으면 6눈 스킨 + 별 배지
+  if (face > 6 && !towerSprites[face]) return buildStarSprite(face, skin); // 전용 PNG 가 없으면 코드로 구운 성 타워
   const pack = towerSprites[face] || [];
   if (!pack.length) return compositeFallback(face);
   return pack[((skin || 0) % pack.length + pack.length) % pack.length];
@@ -1151,7 +1267,7 @@ function nearestUnlockedFace(v) {
   return best;
 }
 function equippedSkinIndex(face) {
-  if (face > 6) return 0;
+  if (face > 6) face = 6;              // ★ 타워는 6눈 몸통을 쓰므로 6눈 장착 스킨을 그대로 따른다
   const letters = (window.DKCONTENT && DKCONTENT.skinLetters) || ['a', 'b', 'c', 'd', 'e'];
   const eq = (SAVE.equippedSkin && SAVE.equippedSkin[face]) || 'a';
   const i = letters.indexOf(eq);
@@ -2341,11 +2457,17 @@ function towerFire(t, dt) {
     S.projs.push({
       kind: t.def.proj, x: from.x, y: from.y, tgt: best,
       spd: t.def.pspd, dmg, splash: towerSplash(t),
+      star: t.def.star || 0, color: t.def.star ? starColor(t.def) : null, trail: [],
       slow: t.def.slow ? { pct: towerSlowPct(t), dur: 1.8 } : null,
       rot: 0, spin: 0, src: t,
     });
     if (t.face === 2) {
       S.fxs.push({ kind: 'muzzleFlash', x: from.x, y: from.y, t: 0, dur: 0.12, size: 38 });
+    }
+    if (t.def.star) { // ★ 타워: 밴드색 발사 섬광 + 링 — 성이 높을수록 크다
+      const sc = starColor(t.def), k = t.def.star - 6;
+      S.fxs.push({ kind: 'muzzleFlash', x: from.x, y: from.y, t: 0, dur: 0.13, size: 34 + k * 3 });
+      S.fxs.push({ kind: 'ring', x: from.x, y: from.y, t: 0, dur: 0.26, size: 34 + k * 4, color: sc });
     }
     (SFX['t' + t.face] || SFX.t6)();
   }
@@ -2353,6 +2475,23 @@ function towerFire(t, dt) {
 
 function sheetHit(kind, x, y, size, dur) {
   S.fxs.push({ kind, x, y, t: 0, dur: dur || 0.32, size });
+}
+
+// ★ 타워 명중 연출: 밴드색 충격파 + 파편, 등급 특전마다 다르게 보이게 한다
+function starImpact(p, hx, hy) {
+  const col = p.color || '#ffd452', k = p.star - 6;
+  S.fxs.push({ kind: 'ring', x: hx, y: hy, t: 0, dur: 0.3 + k * 0.012, size: p.splash * 2 + k * 8, color: col });
+  const shards = Math.min(10, 3 + Math.floor(k / 2));
+  for (let i = 0; i < shards; i++) {
+    const a = Math.random() * Math.PI * 2, v = 90 + Math.random() * 110;
+    S.fxs.push({ kind: 'spark', x: hx, y: hy, vx: Math.cos(a) * v, vy: Math.sin(a) * v * 0.6, t: 0, dur: 0.3, size: 12 + k, color: col });
+  }
+  const perk = p.src && p.src.def.perk;
+  if (perk === 'epic') {        // 방어 무시: 흰 파쇄 샤드
+    S.fxs.push({ kind: 'ring', x: hx, y: hy, t: 0, dur: 0.22, size: p.splash * 1.3, color: '#ffffff' });
+  } else if (perk === 'myth') { // 공속: 이중 링으로 연타감
+    S.fxs.push({ kind: 'ring', x: hx, y: hy, t: 0, dur: 0.44, size: p.splash * 2.6, color: col }); // 느리게 퍼지는 두 번째 링
+  }
 }
 
 function projHit(p) {
@@ -2374,6 +2513,7 @@ function projHit(p) {
     } else {
       sheetHit('cannonBlast', hx, hy, p.splash * 2, 0.34);
     }
+    if (p.star) starImpact(p, hx, hy);
   } else {
     damageEnemy(p.tgt, p.dmg, p.src);
     if (p.slow && !p.tgt.dead) {
@@ -2469,6 +2609,7 @@ function update(dt) {
     p.rot = Math.atan2(dy, dx);
     p.spin += dt * 13;
     const step = p.spd * dt;
+    if (p.trail) { p.trail.push({ x: p.x, y: p.y }); if (p.trail.length > 3) p.trail.shift(); }
     if (d <= step + 8) { projHit(p); p.gone = true; }
     else { p.x += dx / d * step; p.y += dy / d * step; }
   }
@@ -3039,14 +3180,25 @@ function draw() {
 
   // 투사체
   for (const p of S.projs) {
+    if (p.trail && p.trail.length) { // ★ 탄: 지나온 자리에 짧은 잔상
+      ctx.save();
+      for (let i = 0; i < p.trail.length; i++) {
+        const q = p.trail[i], a = (i + 1) / (p.trail.length + 1);
+        ctx.globalAlpha = a * 0.4;
+        ctx.fillStyle = p.color || '#ff5555';
+        ctx.beginPath(); ctx.arc(q.x, q.y, 4 + a * 5, 0, Math.PI * 2); ctx.fill();
+      }
+      ctx.restore();
+    }
     ctx.save();
     ctx.translate(p.x, p.y);
     if (p.kind === 'dieBomb' || p.kind === 'die6') {
       const sp = A.dieBomb || A.dice[5];
-      const s = 26 / sp.w;
+      const w = 26 + (p.star ? (p.star - 6) * 1.1 : 0);   // ★ 가 높을수록 큰 탄
+      const s = w / sp.w;
       ctx.rotate(p.spin);
-      ctx.shadowColor = '#ff5555'; ctx.shadowBlur = 8;
-      ctx.drawImage(sp.cv, -13, -sp.h * s / 2, 26, sp.h * s);
+      ctx.shadowColor = p.color || '#ff5555'; ctx.shadowBlur = p.star ? 15 : 8;
+      ctx.drawImage(sp.cv, -w / 2, -sp.h * s / 2, w, sp.h * s);
     } else {
       const sp = A[p.kind];
       const len = p.kind === 'arrow' ? 36 : p.kind === 'shell' ? 22 : 26;
@@ -3299,8 +3451,13 @@ const $ = id => document.getElementById(id);
 const overlayEl = $('overlay'), statsEl = $('stats'), hudEl = $('hud'), miniEl = $('mini-top');
 const wrapEl = $('wrap'), stageEl = $('stage');
 
-// 스테이지(16:9)와 HUD 폭을 화면에 맞춘다: 가로·세로 중 더 빡빡한 쪽에 맞추고 HUD 높이만큼 뺀다.
-// HUD 는 스테이지와 같은 폭을 우선하되, 그 폭에서 두 줄로 접히면 화면 폭까지 넓혀 한 줄을 유지한다.
+// 화면에 맞춰 스테이지(16:9)와 HUD 를 배치한다. 두 가지 배치가 있고 JS 가 실제 가용 공간으로 고른다
+// (스테이지 크기는 뷰포트 폭이 아니라 세로 여유가 정하므로 미디어쿼리로는 맞출 수 없다):
+//   side    — 가로로 넓고 낮은 화면(가로 폰): #wrap 을 row 로, HUD 를 오른쪽 세로 열로. 스테이지가 세로를 꽉 쓴다
+//   stacked — 그 외(세로 폰·데스크톱): 스테이지 위, HUD 아래. 남는 세로 공간은 HUD 를 키워 채운다
+const SIDE_MIN_HUD = 150, SIDE_MAX_HUD = 240, ROOMY_GAP = 120, ROOMY_MAX = 430;
+let rotateHintOff = false;
+try { rotateHintOff = localStorage.getItem('dk_rotateHint') === 'off'; } catch (e) { /* 사파리 프라이빗 */ }
 function fitStage() {
   const cs = getComputedStyle(wrapEl);
   const padX = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
@@ -3308,21 +3465,53 @@ function fitStage() {
   const gap = parseFloat(cs.rowGap) || 8;
   const availW = wrapEl.clientWidth - padX;
   const availH = wrapEl.clientHeight - padY;
-  const maxW = Math.max(240, Math.min(availW, 1280));
   const hudHidden = hudEl.classList.contains('hidden');
-  const setW = (el, w) => { const px = Math.floor(w) + 'px'; if (el.style.width !== px) el.style.width = px; };
-  const hudH = () => hudHidden ? 0 : hudEl.offsetHeight + gap;
-  const stageW = (h) => Math.max(240, Math.min(maxW, (availH - h) * 16 / 9));
-  setW(hudEl, maxW);
-  const wideH = hudH();
-  let w = stageW(wideH);
-  setW(hudEl, w);
-  if (!hudHidden && hudEl.offsetHeight + gap > wideH + 1) setW(hudEl, maxW); // 좁히면 접히는 경우 → 넓은 폭 유지
-  w = stageW(hudH());
-  setW(stageEl, w);
+  const side = !hudHidden && availH > 0 && availW / availH >= 1.45 && availH < 620;
+  wrapEl.classList.toggle('side', side);
+  const setPx = (el, k, v) => { const px = Math.floor(v) + 'px'; if (el.style[k] !== px) el.style[k] = px; };
+  const clearPx = (el, k) => { if (el.style[k]) el.style[k] = ''; };
+
+  let w;
+  if (side) {
+    // HUD 를 오른쪽 세로 열로: 스테이지가 세로를 다 쓰고 남은 폭을 HUD 가 갖는다
+    const hudW = Math.min(SIDE_MAX_HUD, Math.max(SIDE_MIN_HUD, availW - availH * 16 / 9 - gap));
+    setPx(hudEl, 'width', hudW);
+    setPx(hudEl, 'height', availH);
+    w = Math.max(240, Math.min(availW - hudW - gap, availH * 16 / 9));
+    hudEl.classList.remove('roomy');
+  } else {
+    clearPx(hudEl, 'height');
+    const maxW = Math.max(240, Math.min(availW, 1280));
+    const hudH = () => hudHidden ? 0 : hudEl.offsetHeight + gap;
+    const stageW = (h) => Math.max(240, Math.min(maxW, (availH - h) * 16 / 9));
+    setPx(hudEl, 'width', maxW);
+    const wideH = hudH();
+    w = stageW(wideH);
+    setPx(hudEl, 'width', w);
+    if (!hudHidden && hudEl.offsetHeight + gap > wideH + 1) setPx(hudEl, 'width', maxW); // 좁히면 접히는 경우 → 넓은 폭 유지
+    w = stageW(hudH());
+    // 세로 폰: 스테이지가 폭에 막혀 위아래가 남으면 그 공간을 HUD 에 준다 (터치 타겟 확대)
+    const target = availH - w * 9 / 16 - gap;      // HUD 가 차지할 수 있는 높이
+    clearPx(hudEl, 'height');
+    const natural = hudEl.offsetHeight;            // 인라인 높이 없는 상태의 자연 높이
+    const roomy = !hudHidden && target > natural + ROOMY_GAP;
+    hudEl.classList.toggle('roomy', roomy);
+    const rh = $('rotate-hint'); // 세로로 크게 남을 때만 '가로로 돌리세요' 안내
+    if (rh) rh.classList.toggle('hidden', !roomy || rotateHintOff || availW >= availH);
+    // 남는 만큼 다 먹으면 빈 갈색 벽이 된다 — 적당히만 키우고 나머지는 위아래 여백으로 둔다
+    if (roomy) setPx(hudEl, 'height', Math.max(hudEl.offsetHeight, Math.min(target, ROOMY_MAX)));
+  }
+  setPx(stageEl, 'width', w);
+  // 칩·미니버튼 축소는 뷰포트 폭이 아니라 실제 스테이지 폭으로 정한다 (가로 폰은 폭이 넓어도 스테이지가 좁다)
+  stageEl.classList.toggle('small', w < 680);
+  stageEl.classList.toggle('tiny', w < 520);
 }
 window.addEventListener('resize', fitStage);
 window.addEventListener('orientationchange', fitStage);
+if (window.visualViewport) { // 모바일 주소창이 접히고 펴질 때 resize 가 오지 않는 경우가 있다
+  visualViewport.addEventListener('resize', fitStage);
+  visualViewport.addEventListener('scroll', fitStage);
+}
 if (window.ResizeObserver) {
   const ro = new ResizeObserver(() => fitStage());
   ro.observe(wrapEl); ro.observe(hudEl);
@@ -3495,7 +3684,7 @@ function enhanceTower() {
     const col = t.def.color || '#ffd452';
     S.texts.push({ str: `강화 성공! ${t.def.name}`, x, y, t: 0, color: col, big: t.face >= 14 });
     S.fxs.push({ kind: 'ring', x: t.x, y: t.y - 20, t: 0, dur: 0.8, size: 130, color: col });
-    S.fxs.push({ kind: 'circle', x: t.x, y: t.y + 4, t: 0, dur: 0.8, size: 120, color: col, pips: t.face <= 6 ? t.face : 0 });
+    S.fxs.push({ kind: 'circle', x: t.x, y: t.y + 4, t: 0, dur: 0.8, size: 120, color: col, pips: t.face <= 6 ? t.face : 4 + Math.min(8, t.face - 6) });
     if (t.face >= 14) S.shakeT = Math.max(S.shakeT || 0, 0.3);
     netLog(`확률강화 성공 — ${t.def.name}`, 'up');
     SFX.win(); syncUI(); return 'up';
@@ -3729,6 +3918,11 @@ function canvasToClient(cx, cy) {
   const r = canvas.getBoundingClientRect();
   return { x: r.left + cx * r.width / W, y: r.top + cy * r.height / H };
 }
+// 스테이지가 줄어들면 캔버스 내부 좌표 1px 이 화면에서 1px 보다 작아진다.
+// 터치 판정은 화면(CSS px) 기준으로 고정해야 작은 폰에서도 석단을 누를 수 있다.
+function stageScale() { const r = canvas.getBoundingClientRect(); return r.width > 0 ? r.width / W : 1; }
+// 화면 기준 반경(css px) 을 캔버스 내부 좌표 여유로 바꾼다
+function touchExtra(cssRadius) { return Math.max(6, cssRadius / stageScale() - SPOT_R); }
 function spotAt(x, y, extra) {
   const lim = SPOT_R + (extra == null ? 6 : extra);
   let best = -1, bd = lim;
@@ -3808,7 +4002,7 @@ function updateGhost(clientX, clientY) {
   if (overCanvas) {
     const p = canvasPos({ clientX, clientY });
     S.mouse = p;
-    const idx = spotAt(p.x, p.y, 22);
+    const idx = spotAt(p.x, p.y, touchExtra(50)); // 드래그 배치: 화면 기준 50px
     DRAG.overSpot = idx;
     if (idx >= 0) {
       const [sx, sy] = SPOTS[idx];
@@ -3938,7 +4132,7 @@ function endGrab(ev) {
   const moved = Math.hypot(last.x - hist[0].x, last.y - hist[0].y);
   if (moved > 12) suppressClick = true;
 
-  if (spd > 330 && S.gold >= ROLL_COST) {
+  if (spd > 330 * stageScale() && S.gold >= ROLL_COST) { // 던지기 속도도 화면 기준
     const cap = Math.min(1, 1500 / Math.max(1, spd));
     throwDie(vx * 0.95 * cap, vy * 0.95 * cap);
   } else {
@@ -3959,7 +4153,7 @@ canvas.addEventListener('click', ev => {
   if (DRAG.active) return;
   if (S.phase !== 'playing') return;
   const { x, y } = canvasPos(ev);
-  const idx = spotAt(x, y);
+  const idx = spotAt(x, y, touchExtra(24)); // 탭 선택: 화면 기준 24px 반경(=48px 타겟)
   if (idx >= 0) {
     if (S.heldDie) {
       tryPlace(idx);
@@ -4047,6 +4241,8 @@ document.addEventListener('keydown', ev => {
   if (ev.key === 'r' || ev.key === 'R' || ev.key === 'ㄱ') rollByButton();
   else if (S.mode === 'infinity' && ev.key >= '1' && ev.key <= '6') upgradeFace(parseInt(ev.key, 10));
   else if (ev.key === 'Escape') {
+    const help = $('inf-help');
+    if (help && !help.classList.contains('hidden')) { closeInfHelp(); return; } // 도움말이 열려 있으면 먼저 닫는다
     if (DRAG.active) stopPlaceDrag();
     S.selTower = null;
     syncUI();
@@ -4093,7 +4289,14 @@ if (ssInf) ssInf.addEventListener('click', () => startInf('endless'));
 if ($('ss-inf-clear')) $('ss-inf-clear').addEventListener('click', () => startInf('clear'));
 for (let f = 1; f <= 6; f++) { const b = $('inf-face-' + f); if (b) b.addEventListener('click', () => upgradeFace(f)); }
 if ($('help-btn')) $('help-btn').addEventListener('click', () => { audio(); openInfHelp(); });
+if ($('rotate-hint')) $('rotate-hint').addEventListener('click', () => {
+  rotateHintOff = true;
+  try { localStorage.setItem('dk_rotateHint', 'off'); } catch (e) { /* 저장 못해도 이번 세션은 닫힌다 */ }
+  $('rotate-hint').classList.add('hidden');
+  fitStage();
+});
 if ($('help-close')) $('help-close').addEventListener('click', () => { audio(); closeInfHelp(); });
+if ($('inf-help')) $('inf-help').addEventListener('click', (ev) => { if (ev.target === $('inf-help')) closeInfHelp(); }); // 배경 클릭으로 닫기
 if ($('enhance-btn')) $('enhance-btn').addEventListener('click', () => { audio(); enhanceTower(); });
 $('btn-shop').addEventListener('click', () => { audio(); gotoShop(); });
 $('ss-back').addEventListener('click', () => gotoLobby());

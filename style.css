@@ -218,6 +218,48 @@ html, body {
 }
 #hud.hidden, .hidden { display: none !important; }
 
+/* ---- 가로(side) 배치: HUD 를 오른쪽 세로 열로. 폭·높이는 fitStage() 가 지정 ---- */
+#wrap.side { flex-direction: row; align-items: center; justify-content: center; }
+#wrap.side #hud { flex-direction: column; flex-wrap: nowrap; align-items: stretch; justify-content: flex-start;
+  gap: 6px; padding: 6px 8px; min-height: 0; overflow-y: auto; overflow-x: hidden; }
+#wrap.side #hud > * { width: 100%; margin-left: 0 !important; }
+#wrap.side #hud-break { display: none; }
+#wrap.side #dice-panel { order: 1; justify-content: center; gap: 8px; }
+#wrap.side #right-panel { order: 2; }
+#wrap.side #right-panel #wave-btn { width: 100%; min-width: 0; padding: 10px 8px; font-size: 14px; }
+#wrap.side #inf-panel { order: 3; display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 5px 6px; }
+#wrap.side .inf-sp-chip { grid-column: 1 / -1; text-align: center; padding: 0; }
+#wrap.side .inf-face { width: 100%; height: 46px; }
+#wrap.side #help-btn { grid-column: 1 / -1; width: 100%; height: 24px; border-radius: 8px; margin-left: 0; }
+#wrap.side #tower-panel { order: 4; flex-basis: auto; min-height: 0; max-height: none; flex-direction: column; align-items: stretch; }
+#wrap.side #tower-panel > * { max-height: none; }
+#wrap.side #info-actions { flex-wrap: wrap; }
+#wrap.side #dice-slot { width: 56px; height: 56px; }
+#wrap.side #dice-slot img { width: 42px; height: 42px; }
+#wrap.side #roll-btn { flex: 1; font-size: 13px; padding: 8px 6px; }
+
+/* ---- 세로에서 남는 공간을 HUD 가 먹은 상태: 터치 타겟을 키운다 ---- */
+#hud.roomy { align-content: space-evenly; padding: 10px 12px; }
+/* 세로에서만 뜨는 안내: 가로가 더 낫다는 것을 알려준다 (한 번 닫으면 다시 안 뜬다) */
+#rotate-hint { order: 0; flex-basis: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 7px 10px; font-family: inherit; font-size: 12px; color: #ffe0b0; cursor: pointer;
+  background: rgba(80, 50, 12, .5); border: 1px dashed #a07a2a; border-radius: 8px; }
+#rotate-hint span { color: #c9a35a; font-size: 13px; }
+#rotate-hint:hover { filter: brightness(1.2); }
+#hud.roomy #dice-panel, #hud.roomy #right-panel { align-self: center; }
+#hud.roomy #dice-slot { width: 104px; height: 104px; }
+#hud.roomy #dice-slot img { width: 80px; height: 80px; }
+#hud.roomy #dice-q { font-size: 38px; }
+#hud.roomy #roll-btn { font-size: 18px; padding: 16px 20px; }
+#hud.roomy #roll-btn small { font-size: 14px; }
+#hud.roomy #wave-btn { font-size: 17px; padding: 20px 18px; min-width: 150px; }
+#hud.roomy .inf-face { width: 54px; height: 74px; }
+#hud.roomy .inf-face .inf-pip { font-size: 19px; }
+#hud.roomy .inf-sp-chip { font-size: 13px; }
+#hud.roomy #help-btn { width: 32px; height: 32px; }
+#hud.roomy #sell-btn, #hud.roomy #enhance-btn { font-size: 14px; padding: 8px 12px; }
+#hud.roomy #info-body, #hud.roomy #hud-hint { font-size: 13px; }
+
 /* 주사위 패널 */
 #dice-panel { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 0 0 auto; }
 #draw-col { display: flex; flex-direction: column; align-items: stretch; gap: 4px; }
@@ -609,15 +651,26 @@ body.placing #game { cursor: grabbing; }
 /* 무한 투기장 안내 */
 #help-btn { margin-left: 4px; width: 26px; height: 26px; border-radius: 50%; border: 1px solid #e8b64a; background: #3a2c14; color: var(--gold); font-weight: bold; cursor: pointer; font-family: inherit; }
 #help-btn:hover { filter: brightness(1.3); }
-#inf-help { position: absolute; inset: 0; z-index: 8; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,.62); }
+/* 도움말 카드: body 직속 전체화면 모달 — 스테이지 높이에 갇히지 않는다.
+   머리말과 닫기 버튼은 고정, 본문만 스크롤 (#overlay-box · .screen-box 와 같은 패턴) */
+#inf-help { position: fixed; inset: 0; z-index: 50; display: flex; align-items: center; justify-content: center; padding: 12px; background: rgba(0,0,0,.7); }
 #inf-help.hidden { display: none; }
-.help-card { max-width: 560px; width: 92%; max-height: 90%; overflow: auto; background: #1e1626; border: 1px solid #c9a24a; border-radius: 12px; padding: 14px 18px; color: #f3e9d2; font-size: 13px; line-height: 1.5; box-shadow: 0 8px 30px rgba(0,0,0,.6); }
-.help-card h3 { margin: 0 0 8px; color: var(--gold); font-size: 16px; }
-.help-card ol { margin: 0 0 10px; padding-left: 20px; }
+.help-card {
+  display: flex; flex-direction: column;
+  max-width: 560px; width: 100%; max-height: 100%;
+  background: #1e1626; border: 1px solid #c9a24a; border-radius: 12px;
+  padding: 14px 18px 12px; color: #f3e9d2; font-size: 13px; line-height: 1.5;
+  box-shadow: 0 8px 30px rgba(0,0,0,.6);
+}
+.help-card h3 { margin: 0 0 8px; color: var(--gold); font-size: 16px; flex-shrink: 0; }
+.help-card ol { flex: 1; min-width: 0; overflow-y: auto; overscroll-behavior: contain; margin: 0; padding: 0 4px 10px 22px; }
 .help-card li { margin-bottom: 6px; }
 .help-card li small { color: #c9bda0; font-size: 11px; }
 .help-card b { color: #ffe9b8; }
-#help-close { display: block; margin: 4px auto 0; padding: 6px 18px; border-radius: 8px; border: 1px solid #e8b64a; background: linear-gradient(#7a5a1e, #4a350f); color: #ffe9b8; font-family: inherit; font-size: 13px; cursor: pointer; }
+.help-scroll { position: relative; flex: 1; min-height: 0; display: flex; }
+.help-scroll::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 22px; pointer-events: none; background: linear-gradient(rgba(30,22,38,0), #1e1626); }
+#help-close { flex-shrink: 0; display: block; margin: 10px auto 0; padding: 10px 24px; border-radius: 8px; border: 1px solid #e8b64a; background: linear-gradient(#7a5a1e, #4a350f); color: #ffe9b8; font-family: inherit; font-size: 14px; cursor: pointer; border-top-color: #e8b64a; }
+#help-close:hover { filter: brightness(1.2); }
 
 /* 좁거나 낮은 화면(폰·작은 창): HUD 요소를 줄인다 */
 @media (max-width: 720px), (max-height: 520px) {
@@ -646,16 +699,18 @@ body.placing #game { cursor: grabbing; }
   .chip { font-size: 12px; padding: 3px 8px 3px 4px; gap: 4px; }
   .chip img { width: 18px; height: 18px; }
 }
-/* 세로 폰: 칩을 더 줄여 우상단 버튼과 겹치지 않게 */
-@media (max-width: 480px) {
-  #stats { gap: 3px; }
-  .chip { font-size: 11px; padding: 2px 6px 2px 3px; gap: 3px; }
-  .chip img { width: 16px; height: 16px; }
-}
-/* 아주 좁은 폰: 우상단 버튼을 칩 아래 줄로 */
+/* 스테이지가 좁을 때(뷰포트 폭이 아니라 실제 스테이지 폭 기준 — fitStage 가 클래스를 붙인다) */
+#stage.small #stats { top: 6px; left: 6px; gap: 3px; }
+#stage.small .chip { font-size: 11px; padding: 2px 6px 2px 3px; gap: 3px; }
+#stage.small .chip img { width: 16px; height: 16px; }
+#stage.small #mini-top { top: 6px; right: 6px; }
+#stage.small .mini button { width: 36px; height: 30px; font-size: 12px; }
+/* 아주 좁으면 우상단 버튼을 칩 아래 줄로 */
+#stage.tiny #mini-top { top: 34px; }
+#stage.tiny .mini button { width: 32px; height: 28px; font-size: 11px; }
+#stage.tiny .chip { font-size: 10px; padding: 2px 5px 2px 3px; }
+#stage.tiny .chip img { width: 14px; height: 14px; }
 @media (max-width: 400px) {
-  #mini-top { top: 38px; }
-  .mini button { width: 34px; height: 30px; font-size: 12px; }
   #inf-panel { padding: 3px 6px; gap: 4px; }
   .inf-face { width: 40px; height: 52px; }
   .inf-face .inf-pip { font-size: 14px; }

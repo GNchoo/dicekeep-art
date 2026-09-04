@@ -158,6 +158,14 @@ window.DKNET = (function () {
   }
 
   // ---- 핑: 호스트 선출용 ----
+  // 내 회선 품질: 내가 가진 모든 링크의 점수 평균. 0 을 넣으면 모든 피어가 자기 자신을 뽑아
+  // 방장이 여러 명이 된다. (완전히 일치된 표를 만들려면 점수를 서로 브로드캐스트하는 라운드가 더 필요하다 — 로드맵)
+  function selfScore() {
+    if (!S.room || !S.room.members.size) return 0;
+    let sum = 0, n = 0;
+    for (const p of S.room.members.values()) { const q = qualityScore(p.rtt, 0); if (isFinite(q)) { sum += q; n++; } }
+    return n ? sum / n : Infinity;
+  }
   function measure(peer) {
     return new Promise((res) => {
       let sent = 0;
@@ -175,7 +183,7 @@ window.DKNET = (function () {
   async function reElectHost() {
     if (!S.room) return;
     S.state = 'electing';
-    const cands = [{ id: S.me.id, score: S.me.score || 0 }];
+    const cands = [{ id: S.me.id, score: selfScore() }];
     for (const p of S.room.members.values()) cands.push({ id: p.id, score: qualityScore(p.rtt, 0) });
     S.room.hostId = electHost(cands) || S.me.id;
     S.state = 'in-room';
@@ -202,8 +210,9 @@ window.DKNET = (function () {
       S.room.members.set(c.id, Peer(c.id, String(S.me.id) < String(c.id)));
     }
     await new Promise((r) => setTimeout(r, 300));       // 채널이 열릴 여유
-    const scored = [{ id: S.me.id, score: 0 }];
+    const scored = [];
     for (const p of S.room.members.values()) scored.push({ id: p.id, score: await measure(p) });
+    scored.push({ id: S.me.id, score: selfScore() });   // 자기 점수도 실제 링크로 낸다 (0 이면 늘 자기가 방장이 된다)
     S.room.hostId = electHost(scored) || S.me.id;
     S.state = 'in-room';
     emit('state', S.state);

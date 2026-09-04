@@ -168,6 +168,13 @@ Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크�
 - **판매 제한**: 인피니티에서 7★ 이상(전설 이상)은 판매 불가.
 - **등급 특전** (`TOWER_DEFS[g].perk`): 14~17★ 에픽 = 방어 무시 + 명중 시 12% 락다운 1.0s(보스 0.4s, `e.stunT`, ⚡ 표시) · 18~19★ 신화 = 공속 ×1.5 · 20★ 태초 = 일반형 + 투사체 명중 시 트랙 위 모든 적에게 피해('태초의 일격'). 7~13★ 전설은 기존 스플래시.
 - **다면체 주사위는 진짜 3D**: `POLY` 가 정사면체(d4)·정팔면체(d8)·정십이면체(d12)·정이십면체(d20)를 만들고(정이십면체는 황금비 좌표에서 최소 변 길이로 삼각형 20개, 정십이면체는 그 쌍대), `drawPoly3D` 가 `drawCube` 와 같은 원근·뒷면 컬링·면별 조명으로 그린다. 굴림도 d6 과 같은 자세 행렬(`SLOT.R`)로 회전하고 `slotTargetR()` 로 최종 눈이 정면에 오도록 감속한다. d1 은 구슬(`drawOrb`). `poly-dN.png` 아트가 오면 그림이 우선.
+- **화면 배치는 `fitStage()` 가 정한다** (`game.js`) — 스테이지 크기는 뷰포트 폭이 아니라 **세로 여유**가 정하므로 미디어쿼리만으로는 맞출 수 없다. 두 배치를 JS 가 고르고 `#wrap` 에 클래스를 붙인다:
+  - **side** (`availW/availH ≥ 1.45 && availH < 620`, 가로 폰): `#wrap` 이 `row`, HUD 가 오른쪽 세로 열(폭 150~240px)이 되고 스테이지가 `availH × 16/9` 로 **세로를 꽉 쓴다**. 가로 폰 844×390 에서 스테이지 679×382(화면 높이의 98%). 파워업은 3×2 그리드, `#hud-break` 는 숨긴다.
+  - **stacked** (세로 폰·데스크톱): 스테이지 위, HUD 아래. 세로에서 스테이지가 폭에 막혀 남는 높이는 `#hud.roomy` 가 가져가 슬롯·버튼·파워업을 키운다(최대 `ROOMY_MAX` 430px, 나머지는 위아래 여백). 세로에서만 `#rotate-hint` 로 가로를 권한다(닫으면 `localStorage.dk_rotateHint`).
+  - 칩(`#stats`)·미니버튼(`#mini-top`) 축소는 뷰포트 폭이 아니라 **스테이지 폭** 기준(`#stage.small` < 680px, `#stage.tiny` < 520px) — 가로 폰은 폭이 넓어도 스테이지가 좁다.
+  - `visualViewport` 의 `resize`/`scroll` 에도 다시 맞춘다(모바일 주소창).
+- **터치 타겟**: 캔버스 내부 좌표(1024×576)와 화면 크기가 다르므로 `stageScale()`·`touchExtra(cssRadius)` 로 판정 반경을 화면 기준으로 고정한다 — 탭 선택 24px, 드래그 배치 50px, 던지기 임계값도 `330 × stageScale()`.
+- **도움말 카드** `#inf-help`: `#stage` 밖 body 직속 `position: fixed` 모달. `.help-card` 는 머리말·`<ol>`(스크롤)·`#help-close`(고정) 3단 플렉스라 **어떤 화면 높이에서도 닫기 버튼이 보인다**. 배경 클릭과 `Esc` 로도 닫힌다.
 - **하단 HUD 구성** (`index.html` `#hud`, `style.css`): 첫 줄 `#dice-panel`(슬롯 + `#draw-col`: 뽑기 버튼·`#queue-chip`) → `#tower-panel`(`flex: 1`) → `#right-panel`(웨이브 버튼, `margin-left: auto`). 인피니티는 `#hud-break` 뒤 둘째 줄에 `#inf-panel`(파워업 1~6 + `?`).
   `#tower-panel` 은 선택한 타워가 없으면 안내 한 줄(`#hud-hint`), 손에 타워가 있으면 `#held-info`, 타워를 고르면 인라인 상태창 `#info-panel`(아이콘·이름·공격형 배지 / 수치 한 줄 / `판매` · `확률강화` · 확률 문구)을 보여준다. `min-height: 84px` + `#tower-panel > * { max-height: 84px }` 로 **선택 여부와 무관하게 HUD 높이가 고정**된다 — 예전 인라인 캡션·팝오버는 `#hud`(`flex-wrap: wrap`)를 접어 `fitStage()` 가 스테이지를 줄이는 버그가 있었다. ≤720px 에서는 `#tower-panel` 이 `flex-basis: 100%` 로 자기 줄을 쓴다.
 - **웨이브 로스터 (웨이브 하나 = 몬스터 한 종류)** `INFINITY.monsterFor(w)` / `buildInfinityRoster`: 101웨이브 한 사이클. 크기 클래스(`sizeSeq`)로 후보(S `size≤42` / M `44~48` / L `≥50`)를 거르고, 이동형은 주기(4의 배수 공중, 7의 배수 땅굴, 나머지 땅), hp 오름차순 풀에서 진행도(w/101) 위치의 아직 안 쓴 종을 뽑는다 → 초반 약한 종, 후반 튼튼한 종, 사이클 안 중복 없음. 탱커(`TANK_IDS`: 전차·골렘·방패·요새·천산갑 등)는 hp ×1.25, 방어 +2(사이클마다 +1). 보스 웨이브(10의 배수)는 **보스만**. 정예(5의 배수)는 같은 종 3마리 HP ×3. 마릿수 = `min(36, 12+0.6w)` × (소 1.2 / 중 1.0 / 대 0.8). 102웨이브부터 사이클 반복: 색상 `hue = cycle×97`, 이름 앞 `N주기`. 손질은 `ROSTER_OVERRIDES[w] = baseId`. 체력 = base.hp × 1.8×1.08^(w−1) × 탱커 배율, 방어 = `armor(w)` + 탱커 보너스.
@@ -289,9 +296,10 @@ Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크�
 | 인피니티 뽑기 | HUD `#roll-btn`(`🎁 뽑기 160G`, 고정가) → `buyChest()` 로 등급 결정 → 곧바로 `rollDie()` 로 슬롯에서 굴림 |
 | 확률 | 일반 50% · 레어 33.1% · 고대 10.2% · 유물 5.1% · 서사 0.8% · 전설 0.5% · 에픽 0.2% · 신화 0.08% · 태초 0.019% (`INFINITY.chest`) |
 | 굴림 | 슬롯에서 다각형 주사위가 돌다 멈춤(`drawPoly3D`, `dice/poly-dN.png` 가 있으면 그 그림 회전) → 나온 숫자 = 타워 성. d1 은 항상 1. 손이 찰 때까지 다음 뽑기는 잠긴다 |
-| 성 타워 7~20 | `TOWER_DEFS[7..20]` 를 `STAR_BANDS` 로 생성: 6눈 기준 `dmg 40×1.28^(g−6)`(20성 1,268), `range 175+5(g−6)`, `rate 1.25×0.97^(g−6)`, `splash 55+4(g−6)`, 대공 가능, 폭발 주사위 투척. 밴드: 7~10 별빛 첨탑(하늘색) · 11~14 성운 요새(보라) · 15~18 천공 옥좌(금) · 19~20 차원 군주(무지개). 그림 `casual/towers/star-NN.png` 없으면 6눈 스킨 + 오라 링 + `★g` 배지. 같은 성끼리 합체 Lv 업, SP 강화는 1~6눈만 |
+| 성 타워 7~20 | `TOWER_DEFS[7..20]` 를 `STAR_BANDS` 로 생성: 6눈 기준 `dmg 40×1.28^(g−6)`(20성 1,268), `range 175+5(g−6)`, `rate 1.25×0.97^(g−6)`, `splash 55+4(g−6)`, 대공 가능, 폭발 주사위 투척. 밴드: 7~10 별빛 첨탑(하늘색) · 11~14 성운 요새(보라) · 15~18 천공 옥좌(금) · 19~20 차원 군주(무지개). 그림 `casual/towers/star-NN.png` 가 아직 없어 **`buildStarSprite(g, skin)` 이 코드로 구워 쓴다**(성마다 1회 캐시, PNG 가 들어오면 `buildTowerSprites` 가 그쪽을 우선): 6눈 장착 스킨을 밴드색으로 물들이고(`globalCompositeOperation:'color'` — 음영 유지) 받침 룬 링·떠 있는 주사위·밴드 장식(7~10 크리스탈 첨탑 / 11~14 궤도 링 등급마다 +1 / 15~18 날개+후광 / 19~20 공허 오벨리스크+무지개 균열)을 얹는다. `★g` 배지와 펄스 링은 그대로. 같은 성끼리 합체 Lv 업, SP 강화는 1~6눈만 |
 | 20성 확률 | 태초 0.019% 확정 + 전설·신화 뽑기에서 20이 나오는 경우 |
 | 당첨 연출 | 7 이상: 화면 흔들림 + 링 + "★n 등장!" 텍스트, 15 이상 팡파르 |
+| ★ 공격 연출 | 투사체에 `star`·`color`(밴드색)를 실어 크기 `26 + (g−6)×1.1`·밴드색 글로우·3칸 잔상. 발사 때 밴드색 머즐 플래시 + 링, 명중은 `starImpact()` 가 밴드색 충격파 + 파편(성에 비례). 특전별로 epic 흰 파쇄 링 · myth 느린 두 번째 링 · primal 흰 대형 링('태초의 일격'). 배치 마법진 눈금도 성마다 다르다 |
 
 에셋 프롬프트: `GROK-BRIEF.md` §E (성 타워 14 + 다면체 주사위 5 + 상자 1).
 
@@ -454,13 +462,14 @@ dicekeep-art/
 - **시그널 어댑터**: `WebSocketSignal(url)` 과 테스트용 `LoopbackSignal()` 이 같은 인터페이스
   (`connect` / `enqueue` / `send` / `onmessage`). 서버가 생기면 `DKNET.CFG.signalUrl` 만 채우면 된다.
   `signalUrl` 이 비어 있으면 상태는 `offline` 그대로이고 게임은 완전한 싱글로 돈다 — **지금 상태가 그렇다**.
-- **전송**: `RTCPeerConnection` + 순서 보장 `DataChannel`. STUN 은 공개 서버 2개(`CFG.iceServers`).
+- **전송(미완성)**: `RTCPeerConnection` 과 순서 보장 `DataChannel` 을 **여는 자리까지만** 있다. SDP offer/answer 교환(`createOffer`/`setRemoteDescription`/`addIceCandidate`)이 아직 없어 **채널은 열리지 않는다**. `sig().onmessage` 를 다는 코드와 `emit('signal-msg')` 도 없어, 실제 시그널 서버를 붙여도 `matchmake()` 는 후보 응답을 기다리며 멈춘다. STUN 만 공개 서버 2개(`CFG.iceServers`) 선언돼 있다.
   대칭 NAT 뒤에서는 TURN 이 필요하다 — 필요해지면 `iceServers` 에 추가한다.
 - **메시지 봉투** `{ v: 프로토콜, t: 종류, f: 보낸 id, s: 순번, d: 데이터 }`. `v` 가 다르면 무시한다.
   기본 종류: `ping`/`pong`(선출용), `chat`, `log`. 게임 상태 동기화(`state`/`input`)는 규칙이 확정되면 붙인다.
 - **API**: `DKNET.matchmake(name)` · `leave()` · `send(to, type, data)` · `broadcast(type, data)` ·
   `isHost()` · `inRoom()` · `members()` · `on(type, fn)`. 순수 함수 `_qualityScore` / `_electHost` 는 테스트용.
-- **아직 없는 것**: 매칭·리더보드 서버, 상태 동기화 프로토콜, 재접속. 멀티는 **도전 모드**(101웨이브 클리어)를 쓴다.
+- **아직 없는 것**: 매칭·리더보드 서버, WebRTC 핸드셰이크, `matchmake()` 호출부와 로비 UI, 상태 동기화 프로토콜, 재접속. 즉 **지금 멀티는 플레이할 수 없다** — 로그 패널만 싱글에서 동작하고 채팅은 방이 없어 열리지 않는다. 멀티는 **도전 모드**(101웨이브 클리어)를 쓴다.
+- 호스트 선출은 자기 점수를 자기 링크 평균(`selfScore()`)으로 낸다. 예전처럼 0 을 넣으면 모두가 자기 자신을 방장으로 뽑는다. 완전히 일치된 표를 만들려면 점수를 서로 브로드캐스트하는 라운드가 더 필요하다.
 
 **로그 · 채팅 (`#log-panel`)** — 스타크래프트처럼 화면 왼쪽 아래에 잠깐 남았다가 사라진다.
 - `pushLog(text, kind, who)`: `LOG.ttl` 9초 뒤 제거, 마지막 1.2초는 CSS 로 페이드. 최대 8줄.
@@ -497,7 +506,7 @@ dicekeep-art/
 7. 디버그 훅: `DKroll()` 즉시 굴림, `DKplace(idx)` 배치, `DKspots()`, `DKSAVE` — 자동 플레이 봇용
 8. **인피니티 아레나 바닥 생성** (ART-PROMPTS §5, 길·석단 없는 바닥만) → 파일만 넣으면 끝. 도로 화풍이 아쉬우면 Grok 타일셋으로 `drawRoad()` 교체
 9. 인피니티 밸런스 손플레이 확인 (봇 기준 목표: 무전략 봇이 웨이브 50~70 에서 종료 — 현재 중앙값 59)
-10. **멀티 1단계**: 매칭·리더보드 서버(WebSocket) → `DKNET.CFG.signalUrl` 연결 → 로비에 방/인원 UI → 도전 모드 동시 진행
+10. **멀티 1단계**: Cloudflare Worker + Durable Object 시그널 서버 신규 작성(`wrangler.jsonc` 에 `main`·`durable_objects`·`migrations` 추가) → `net.js` 에 WebRTC 핸드셰이크와 `sig().onmessage` 배선 → `DKNET.CFG.signalUrl` 연결 → 로비 멀티 버튼에서 `matchmake()` 호출 → 도전 모드 동시 진행
 11. **멀티 2단계**: 상태 동기화 프로토콜(호스트 권위 + 입력 전송), 재접속, 호스트 마이그레이션 실전 검증
 
 ---

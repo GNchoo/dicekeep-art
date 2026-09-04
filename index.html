@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>주사위 성채 (Dicekeep)</title>
-<link rel="stylesheet" href="style.css?v=71" />
+<link rel="stylesheet" href="style.css?v=72" />
 <link rel="icon" href="ui/gold.png" />
 </head>
 <body>
@@ -18,29 +18,6 @@
       <span class="chip"><b id="wave-val">웨이브 0 / 10</b></span>
     </div>
 
-    <div id="inf-help" class="hidden">
-      <div class="help-card">
-        <h3 id="help-title">무한 투기장 안내</h3>
-        <ol>
-          <li><b>&#127873; 뽑기 160G</b> — 등급이 정해지고 <b>바로 굴러 타워가 됩니다.</b> 굴려 나온 숫자 = 타워 성(★). 손에 타워가 있으면 먼저 석단에 배치해야 다시 뽑을 수 있습니다.<br><small>일반 50% (1★) · 레어 33.1% (1~4★) · 고대 10.2% (1~6★) · 유물 5.1% (1~8★) · 서사 0.8% (1~12★) · 전설 0.5% (1~20★) · 에픽 0.2% (14★↑) · 신화 0.08% (18★↑) · 태초 0.019% (20★)</small></li>
-          <li><b>보상 대기</b> — 보스를 잡으면 주사위를 받습니다. 손이 비는 대로 하나씩 자동으로 굴러갑니다.</li>
-          <li><b>확률강화</b> — 배치한 타워를 누르면 하단 상태창에 <b>판매 / 확률강화</b>가 뜹니다. 골드를 걸고 <b>강화(★+1) · 유지 · 소멸</b> 셋 중 하나가 나오며, 성(★)이 높을수록 비싸고 소멸 확률도 커집니다. 합체 레벨은 강화해도 유지됩니다.</li>
-          <li><b>판매</b> — 7★ 이상은 팔 수 없습니다.</li>
-          <li><b>파워업</b> — 골드로 눈(1~6)을 강화합니다. 강화할수록 비싸집니다. ★ 히든 타워는 6눈 파워업을 따릅니다.</li>
-          <li><b>패배</b> — 필드에 적이 200마리를 넘으면 가장 오래된 적이 사라지며 목숨 −1. 보스는 5분 20초 안에 잡아야 합니다.</li>
-          <li><b>두 갈래</b> — <b>도전</b>은 <b>101웨이브 완주가 클리어</b>입니다. 91웨이브부터 체력이 한 번 더 가팔라지는 <b>최종 관문</b>이라 뽑기·확률강화 운이 아주 좋아야 닿습니다. <b>무한</b>은 클리어가 없는 진짜 무한 — 101웨이브를 넘으면 더 강해진 2주기가 이어지고, 최고 기록만 남습니다.</li>
-        </ol>
-        <button id="help-close">알겠어요</button>
-      </div>
-    </div>
-    <!-- 스타크래프트식 로그·채팅: 화면에 잠깐 남았다 사라진다. 로그는 싱글에서도, 채팅은 멀티에서만 -->
-    <div id="log-panel">
-      <div id="log-lines"></div>
-      <form id="chat-form" class="hidden" autocomplete="off">
-        <span id="chat-tag">전체</span>
-        <input id="chat-input" type="text" maxlength="120" placeholder="메시지를 입력하고 Enter" />
-      </form>
-    </div>
     <div id="mini-top" class="mini hidden">
       <button id="speed-btn" title="게임 속도">x1</button>
       <button id="mute-btn" title="소리">&#128266;</button>
@@ -114,6 +91,7 @@
   </div>
 
   <div id="hud" class="hidden">
+    <button id="rotate-hint" class="hidden" title="닫기">📱 가로로 돌리면 게임 화면이 훨씬 커집니다 <span>✕</span></button>
     <div id="dice-panel">
       <div id="dice-slot" title="보유 주사위">
         <img id="dice-img" class="hidden" alt="" draggable="false">
@@ -157,13 +135,36 @@
     </div>
   </div>
 </div>
+<div id="inf-help" class="hidden">
+  <div class="help-card">
+    <h3 id="help-title">무한 투기장 안내</h3>
+    <div class="help-scroll"><ol>
+      <li><b>&#127873; 뽑기 160G</b> — 등급이 정해지고 <b>바로 굴러 타워가 됩니다.</b> 굴려 나온 숫자 = 타워 성(★). 손에 타워가 있으면 먼저 석단에 배치해야 다시 뽑을 수 있습니다.<br><small>일반 50% (1★) · 레어 33.1% (1~4★) · 고대 10.2% (1~6★) · 유물 5.1% (1~8★) · 서사 0.8% (1~12★) · 전설 0.5% (1~20★) · 에픽 0.2% (14★↑) · 신화 0.08% (18★↑) · 태초 0.019% (20★)</small></li>
+      <li><b>보상 대기</b> — 보스를 잡으면 주사위를 받습니다. 손이 비는 대로 하나씩 자동으로 굴러갑니다.</li>
+      <li><b>확률강화</b> — 배치한 타워를 누르면 하단 상태창에 <b>판매 / 확률강화</b>가 뜹니다. 골드를 걸고 <b>강화(★+1) · 유지 · 소멸</b> 셋 중 하나가 나오며, 성(★)이 높을수록 비싸고 소멸 확률도 커집니다. 합체 레벨은 강화해도 유지됩니다.</li>
+      <li><b>판매</b> — 7★ 이상은 팔 수 없습니다.</li>
+      <li><b>파워업</b> — 골드로 눈(1~6)을 강화합니다. 강화할수록 비싸집니다. ★ 히든 타워는 6눈 파워업을 따릅니다.</li>
+      <li><b>패배</b> — 필드에 적이 200마리를 넘으면 가장 오래된 적이 사라지며 목숨 −1. 보스는 5분 20초 안에 잡아야 합니다.</li>
+      <li><b>두 갈래</b> — <b>도전</b>은 <b>101웨이브 완주가 클리어</b>입니다. 91웨이브부터 체력이 한 번 더 가팔라지는 <b>최종 관문</b>이라 뽑기·확률강화 운이 아주 좋아야 닿습니다. <b>무한</b>은 클리어가 없는 진짜 무한 — 101웨이브를 넘으면 더 강해진 2주기가 이어지고, 최고 기록만 남습니다.</li>
+    </ol></div>
+    <button id="help-close">알겠어요</button>
+  </div>
+</div>
+<!-- 스타크래프트식 로그·채팅: 화면에 잠깐 남았다 사라진다. 로그는 싱글에서도, 채팅은 멀티에서만 -->
+<div id="log-panel">
+  <div id="log-lines"></div>
+  <form id="chat-form" class="hidden" autocomplete="off">
+    <span id="chat-tag">전체</span>
+    <input id="chat-input" type="text" maxlength="120" placeholder="메시지를 입력하고 Enter" />
+  </form>
+</div>
 <div id="place-ghost" aria-hidden="true">
   <img id="ghost-die" alt="">
   <img id="ghost-tower" alt="">
   <div id="ghost-ring"></div>
 </div>
-<script src="net.js?v=71"></script>
-<script src="content.js?v=71"></script>
-<script src="game.js?v=71"></script>
+<script src="net.js?v=72"></script>
+<script src="content.js?v=72"></script>
+<script src="game.js?v=72"></script>
 </body>
 </html>
