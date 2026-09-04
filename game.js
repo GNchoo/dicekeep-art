@@ -1222,7 +1222,7 @@ const S = {
   enemies: [], towers: [], projs: [], beams: [], fxs: [], texts: [], corpses: [],
   spawnQ: [], waveActive: false, autoT: 0, waveT: 0,
   shakeT: 0, bannerT: 0, bannerName: '',
-  heldDie: 0, selTower: null,
+  heldDie: 0, dieFocus: true, selTower: null,
   mapKey: 'g1',
   stage: 1, stageData: null, stageWaves: 10,
   mode: 'stage', inf: null, // 'stage' | 'infinity', inf = { sp, power{1..6}, kills, spent }
@@ -1600,14 +1600,21 @@ function rollDie(kind) {
   return true;
 }
 // 대기열(보스 보상 등)을 손이 비는 대로 하나씩 굴린다
+// 지금 주사위를 놓을 자리가 있는가 — 빈 석단이 있거나, 합체 여지가 있는 타워가 있으면 된다
+function canPlaceAnywhere() {
+  for (let i = 0; i < SPOTS.length; i++) if (!towerAt(i)) return true;
+  return S.towers.some(t => t.lvl < MAX_LVL);
+}
 function pumpQueue() {
   if (S.mode !== 'infinity' || !S.inf || !S.inf.queue || !S.inf.queue.length) return;
   if (SLOT.active || S.heldDie || DIE.state !== 'tray' || S.phase !== 'playing') return;
+  if (!canPlaceAnywhere()) return;   // 자리가 날 때까지 보상은 큐에 남는다
   rollDie(S.inf.queue.shift());
 }
 function finishSlot() {
   SLOT.active = false;
   S.heldDie = SLOT.final;
+  S.dieFocus = true;      // 새로 온 주사위는 배치 모드로 시작
   SFX.coin();
   diceSlot.classList.add('pop');
   setTimeout(() => diceSlot.classList.remove('pop'), 350);
@@ -2137,7 +2144,7 @@ function startStage(n) {
   S.wave = 0;
   S.enemies = []; S.towers = []; S.projs = []; S.beams = []; S.fxs = []; S.texts = []; S.corpses = [];
   S.spawnQ = []; S.waveActive = false; S.autoT = 0; S.waveT = 0;
-  S.heldDie = 0; S.selTower = null; S.shakeT = 0; S.bannerT = 0;
+  S.heldDie = 0; S.dieFocus = true; S.selTower = null; S.shakeT = 0; S.bannerT = 0;
   DIE.state = 'tray'; DIE.z = 0; DIE.final = 0;
   SLOT.active = false;
   applyMapLayout(sd.mapKey, sd.tier || 1);
@@ -2165,7 +2172,7 @@ function startInfinity(kind) {
   S.wave = 0;
   S.enemies = []; S.towers = []; S.projs = []; S.beams = []; S.fxs = []; S.texts = []; S.corpses = [];
   S.spawnQ = []; S.waveActive = false; S.autoT = 0; S.waveT = 0;
-  S.heldDie = 0; S.selTower = null; S.shakeT = 0; S.bannerT = 0;
+  S.heldDie = 0; S.dieFocus = true; S.selTower = null; S.shakeT = 0; S.bannerT = 0;
   DIE.state = 'tray'; DIE.z = 0; DIE.final = 0;
   SLOT.active = false;
   applyMapLayout(S.mapKey, INF.tier);
@@ -2346,6 +2353,7 @@ function damageEnemy(e, dmg, src) {
           for (const k of r.dice) S.inf.queue.push(k); // 손이 비면 자동으로 굴러간다
           S.texts.push({ str: `보스 보상: +${r.gold}G · ${r.dice.map(k => ch.grade[k] + ' ' + ch.label[k]).join(' + ')}!`, x: W / 2, y: 170, t: 0, color: dieKindColor(r.dice[0]) });
           netLog(`보스 ${e.name} 처치! +${r.gold}G · ${r.dice.map(k => ch.grade[k]).join(' + ')}`, 'boss');
+          syncUI();   // '보상 대기' 칩을 바로 갱신 (자리가 없으면 큐에 쌓인 채로 기다린다)
         }
         if (!S.enemies.some(x => x !== e && !x.dead && x.isBoss)) S.inf.bossT = 0; // 제한시간 해제
       }
@@ -3639,15 +3647,19 @@ function syncUI() {
   if (S.heldDie) {
     const def = TOWER_DEFS[S.heldDie];
     diceSlot.classList.add('has-die');
+    diceSlot.classList.toggle('unfocused', !S.dieFocus);
     diceImg.src = dieIconURL(S.heldDie);
     diceImg.classList.remove('hidden'); diceQ.classList.add('hidden');
-    diceSlot.title = def.name + ' — 필드로 끌어다 놓아 설치';
+    diceSlot.title = S.dieFocus
+      ? def.name + ' — 석단을 눌러 설치 (한 번 더 누르면 잠시 내려놓기)'
+      : def.name + ' — 내려놓은 상태입니다. 다시 누르면 배치 모드';
     heldInfo.classList.remove('hidden');
     heldInfo.style.setProperty('--elem', def.color);
     $('held-name').textContent = def.name;
     $('held-desc').textContent = def.desc + ' · 같은 눈 타워에 놓으면 합체';
   } else {
     diceSlot.classList.remove('has-die');
+    diceSlot.classList.remove('unfocused');
     diceImg.classList.add('hidden');
     diceQ.classList.toggle('hidden', SLOT.active);
     diceSlot.title = SLOT.active ? '굴리는 중…' : '보유 주사위';
@@ -3659,8 +3671,9 @@ function syncUI() {
     rollBtn.childNodes[0].nodeValue = '🎁 뽑기';
     rollBtn.title = '골드로 주사위를 뽑습니다. 등급이 정해지고 바로 굴러 타워가 되니 먼저 석단에 배치하세요 (굴려 나온 숫자 = 성★)\n일반 50% · 레어 33.1% · 고대 10.2% · 유물 5.1% · 서사 0.8% · 전설 0.5% · 에픽 0.2% · 신화 0.08% · 태초 0.019%';
     const busy = SLOT.active || !!S.heldDie;
-    $('roll-cost').textContent = busy ? '배치 후 가능' : `${cost} G`;
-    rollBtn.disabled = busy || !(S.inf && S.phase === 'playing' && S.gold >= cost);
+    const full = !busy && !canPlaceAnywhere();   // 빈 칸도 합체 여지도 없다
+    $('roll-cost').textContent = busy ? '배치 후 가능' : full ? '석단이 가득 참' : `${cost} G`;
+    rollBtn.disabled = busy || full || !(S.inf && S.phase === 'playing' && S.gold >= cost);
     const q = $('queue-chip');
     if (q) { const n = (S.inf && S.inf.queue) ? S.inf.queue.length : 0; q.classList.toggle('hidden', n === 0); q.querySelector('b').textContent = n; }
   } else {
@@ -3712,7 +3725,9 @@ function syncInfo() {
     if (hint) {
       // 손에 타워가 있는 그 순간이 "어떻게 놓지?" 인 순간이다 — 이때 숨기지 않는다
       hint.textContent = S.heldDie
-        ? '빈 석단을 눌러 타워를 놓으세요 (끌어다 놓아도 됩니다). 같은 눈 위에 놓으면 합체.'
+        ? (S.dieFocus
+            ? '빈 석단을 눌러 타워를 놓으세요 (끌어다 놓아도 됩니다). 같은 눈 위에 놓으면 합체.'
+            : '주사위를 내려놨습니다. 타워를 눌러 판매·확률강화하고, 주사위 칸을 다시 누르면 배치 모드로 돌아갑니다.')
         : S.mode === 'infinity'
           ? '석단의 타워를 누르면 여기에서 판매·확률강화를 할 수 있습니다.'
           : '석단의 타워를 누르면 여기에서 능력치와 판매를 확인할 수 있습니다.';
@@ -4148,12 +4163,14 @@ function tryPlace(idx) {
     S.fxs.push({ kind: 'impact', x: sx, y: sy - 30, t: 0, dur: 0.28, size: 70 });
     S.texts.push({ str: def.name + '!', x: sx, y: sy - 90, t: 0, color: def.color });
     S.heldDie = 0;
+    S.dieFocus = true;
     SFX.place();
     coachHit('place');
   } else if (existing.face === S.heldDie) {
     if (existing.lvl < MAX_LVL) {
       existing.lvl++;
       S.heldDie = 0;
+      S.dieFocus = true;
       S.fxs.push({ kind: 'circle', x: existing.x, y: existing.y + 4, t: 0, dur: 1.1, size: 150, color: '#ffe27a', pips: existing.face, merge: true, spin: 1 });
       S.fxs.push({ kind: 'ring', x: existing.x, y: existing.y - 40, t: 0, dur: 0.5, size: 80, color: existing.def.color });
       for (let i = 0; i < 12; i++) {
@@ -4263,7 +4280,8 @@ function endPlaceDrag(ev) {
   let placed = false;
   if (idx >= 0 && dist > 18) placed = tryPlace(idx);
   if (!placed && dist <= 18) {
-    /* tap on slot — keep die */
+    // 슬롯 탭 = 포커스 토글. 풀면 굴리기 전처럼 타워를 고를 수 있어 석단이 가득 차도 막히지 않는다
+    if (S.heldDie) { S.dieFocus = !S.dieFocus; if (!S.dieFocus) S.selTower = null; syncUI(); }
   } else if (!placed) {
     SFX.deny();
   }
@@ -4359,11 +4377,12 @@ canvas.addEventListener('click', ev => {
   const { x, y } = canvasPos(ev);
   const idx = spotAt(x, y, touchExtra(24)); // 탭 선택: 화면 기준 24px 반경(=48px 타겟)
   if (idx >= 0) {
-    if (S.heldDie) {
+    if (S.heldDie && S.dieFocus) {
       tryPlace(idx);
       return;
     }
-    S.selTower = towerAt(idx);
+    const hit = towerAt(idx);
+    S.selTower = (hit && hit === S.selTower) ? null : hit;   // 같은 타워를 다시 누르면 닫는다
     if (S.selTower) coachHit('select');
     syncUI();
     return;
@@ -4506,7 +4525,11 @@ if ($('rotate-hint')) $('rotate-hint').addEventListener('click', () => {
 });
 if ($('help-close')) $('help-close').addEventListener('click', () => { audio(); closeInfHelp(); });
 if ($('inf-help')) $('inf-help').addEventListener('click', (ev) => { if (ev.target === $('inf-help')) closeInfHelp(); }); // 배경 클릭으로 닫기
-if ($('enhance-btn')) $('enhance-btn').addEventListener('click', () => { audio(); enhanceTower(); });
+if ($('enhance-btn')) $('enhance-btn').addEventListener('click', () => {
+  audio();
+  if (enhanceTower()) { S.selTower = null; syncUI(); }   // 강화하면 카드를 닫아 다시 뽑기·파워업 칸이 보인다
+});
+if ($('info-close')) $('info-close').addEventListener('click', () => { audio(); S.selTower = null; syncUI(); });
 $('btn-shop').addEventListener('click', () => { audio(); gotoShop(); });
 $('ss-back').addEventListener('click', () => gotoLobby());
 $('shop-back').addEventListener('click', () => gotoLobby());
