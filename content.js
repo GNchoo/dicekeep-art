@@ -283,7 +283,9 @@ window.DKCONTENT = (function () {
     });
   }
   // 인피니티 전용 아레나: 배경은 '바닥 그림'만 쓰고 순환 도로·석단·포탈은 코드가 만든다 (buildArenaLayout, game.js buildRoadLayer)
-  maps.push({ key: 'cInf', src: 'casual/maps/map-inf-arena.jpg', name: '무한 투기장', infinity: true, arena: true, renderRoads: true });
+  maps.push({ key: 'cInf', name: '무한 투기장', infinity: true, arena: true, renderRoads: true, canvas: [1024, 576], rangeBonus: 160 });
+  // 세로 화면용 아레나 (랜덤다이스식): 같은 15칸을 3열×5행으로 세우고 트랙을 세로로 길게 두른다
+  maps.push({ key: 'cInfP', name: '무한 투기장 (세로)', infinity: true, arena: true, arenaPortrait: true, renderRoads: true, canvas: [720, 1080], rangeBonus: 280 });
 
   // ===== 무한 투기장: 나선 순환 도로 생성기 =====
   // 왼쪽 가장자리 포탈에서 출발해 중심 크리스탈을 1.5바퀴 돌아 들어간다. 오른쪽 포탈은 두 번째 바퀴로 곧장 합류하는 지름길.
@@ -1120,11 +1122,32 @@ window.DKCONTENT = (function () {
     { id: 'toyKing', name: '장난감왕', hp: 1220, speed: 24, gold: 150, dmg: 5, size: 92, move: 'ground', sprite: 'cToyKing', src: 'casual/bosses/toy-king.png' },
     { id: 'lanternKoi', name: '등불잉어', hp: 1080, speed: 30, gold: 146, dmg: 5, size: 92, move: 'air', sprite: 'cLanternKoi', src: 'casual/bosses/lantern-koi.png' },
   ];
+  // 세로 화면용 아레나: 캔버스 720×1080, 보드 3열×5행, 트랙은 세로로 긴 링
+  function buildArenaLayoutPortrait() {
+    const L = 90, R = 630, T = 200, B = 920, rad = 60, MID = 560;
+    const arc = (cx, cy, a0, a1, n) => {
+      const out = [];
+      for (let i = 0; i <= n; i++) { const a = a0 + (a1 - a0) * (i / n); out.push([cx + Math.cos(a) * rad, cy + Math.sin(a) * rad]); }
+      return out;
+    };
+    const dedupe = (pts) => pts.filter((p, i) => i === 0 || Math.hypot(p[0] - pts[i - 1][0], p[1] - pts[i - 1][1]) > 0.5);
+    const ring = dedupe([[L, MID],
+      ...arc(L + rad, B - rad, Math.PI, Math.PI / 2, 6), ...arc(R - rad, B - rad, Math.PI / 2, 0, 6),
+      ...arc(R - rad, T + rad, 0, -Math.PI / 2, 6), ...arc(L + rad, T + rad, -Math.PI / 2, -Math.PI, 6), [L, MID]]);
+    const entry = [[-40, MID], [L, MID]];
+    const path = dedupe([...entry, ...ring]);
+    const loopAt = L - entry[0][0];
+    const gapX = 150, gapY = 118, cx = 360;
+    const spots = [];
+    for (let r = 0; r < 5; r++) for (let c = 0; c < 3; c++) spots.push([cx + (c - 1) * gapX, MID + (r - 2) * gapY]);
+    return { path, path2: null, airPts: null, spots, spots2: [], portals: [], center: null, noGoal: true, loopAt,
+             roads: [entry, ring], board: { x: cx - 210, y: MID - 310, w: 420, h: 620, gapX, gapY }, track: { L, R, T, B, rad, mid: MID } };
+  }
+
   // 아레나 레이아웃 적용 (W/H/pathLength 가 정의된 뒤에 실행해야 한다)
   {
-    const inf = maps.find((m) => m.arena);
-    if (inf) {
-      const L = buildArenaLayout();
+    for (const inf of maps.filter((m) => m.arena)) {
+      const L = inf.arenaPortrait ? buildArenaLayoutPortrait() : buildArenaLayout();
       inf.path = L.path; inf.path2 = L.path2; inf.airPts = L.airPts; inf.spots = L.spots; inf.spots2 = L.spots2;
       inf.portals = L.portals; inf.center = L.center; inf.board = L.board; inf.track = L.track;
       inf.noGoal = L.noGoal; inf.roads = L.roads; inf.loopAt = L.loopAt;

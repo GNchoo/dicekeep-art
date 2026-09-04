@@ -4,7 +4,10 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>주사위 성채 (Dicekeep)</title>
-<link rel="stylesheet" href="style.css?v=73" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="style.css?v=74" />
 <link rel="icon" href="ui/gold.png" />
 </head>
 <body>
@@ -15,13 +18,21 @@
     <div id="stats" class="hidden">
       <span class="chip"><img id="icon-gold" src="ui/gold.png" alt="골드"><b id="gold-val">0</b></span>
       <span class="chip"><img id="icon-heart" src="ui/heart.png" alt="목숨"><b id="lives-val">0</b></span>
-      <span class="chip"><b id="wave-val">웨이브 0 / 10</b></span>
+      <span class="chip"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#ffd452" stroke-width="2.2" stroke-linecap="round"><path d="M4 12c0-2.2 1.6-3.6 3.4-3.6 2.6 0 3.6 3.6 6.2 3.6 1.8 0 3.4-1.4 3.4-3.6M4 12c0 2.2 1.6 3.6 3.4 3.6 2.6 0 3.6-3.6 6.2-3.6 1.8 0 3.4 1.4 3.4 3.6"/></svg></span><b id="wave-val">웨이브 0 / 10</b></span>
     </div>
 
+    <!-- 스타크래프트식 로그·채팅: 화면에 잠깐 남았다 사라진다. 로그는 싱글에서도, 채팅은 멀티에서만 -->
+    <div id="log-panel">
+      <div id="log-lines"></div>
+      <form id="chat-form" class="hidden" autocomplete="off">
+        <span id="chat-tag">전체</span>
+        <input id="chat-input" type="text" maxlength="120" placeholder="메시지를 입력하고 Enter" />
+      </form>
+    </div>
     <div id="mini-top" class="mini hidden">
       <button id="speed-btn" title="게임 속도">x1</button>
-      <button id="mute-btn" title="소리">&#128266;</button>
-      <button id="exit-btn" title="스테이지 선택으로">&#8801;</button>
+      <button id="mute-btn" title="소리"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 8.5a5 5 0 0 1 0 7"/><path d="M20 6a9 9 0 0 1 0 12"/></svg></button>
+      <button id="exit-btn" title="스테이지 선택으로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
 
     <div id="overlay">
@@ -161,21 +172,13 @@
     <button id="help-close">알겠어요</button>
   </div>
 </div>
-<!-- 스타크래프트식 로그·채팅: 화면에 잠깐 남았다 사라진다. 로그는 싱글에서도, 채팅은 멀티에서만 -->
-<div id="log-panel">
-  <div id="log-lines"></div>
-  <form id="chat-form" class="hidden" autocomplete="off">
-    <span id="chat-tag">전체</span>
-    <input id="chat-input" type="text" maxlength="120" placeholder="메시지를 입력하고 Enter" />
-  </form>
-</div>
 <div id="place-ghost" aria-hidden="true">
   <img id="ghost-die" alt="">
   <img id="ghost-tower" alt="">
   <div id="ghost-ring"></div>
 </div>
-<script src="net.js?v=73"></script>
-<script src="content.js?v=73"></script>
-<script src="game.js?v=73"></script>
+<script src="net.js?v=74"></script>
+<script src="content.js?v=74"></script>
+<script src="game.js?v=74"></script>
 </body>
 </html>

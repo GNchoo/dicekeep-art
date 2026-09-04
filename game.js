@@ -1,9 +1,23 @@
 'use strict';
 (() => {
 
-const W = 1024, H = 576;
+// 캔버스 크기는 맵이 정한다 (가로 아레나 1024×576 / 세로 아레나 720×1080 / 스테이지 1024×576).
+// 그리기·좌표 변환이 전부 W·H 파라메트릭이라 값만 바꾸면 따라온다.
+let W = 1024, H = 576;
+// 캔버스 텍스트도 DOM 과 같은 서체를 쓴다. 웹폰트가 늦게 오면 로드 후 갈아끼운다.
+let UI_FACE = '"Do Hyeon", "Noto Sans KR", "Malgun Gothic", sans-serif';
+const uiFont = (px, weight) => `${weight || 'bold'} ${px}px ${UI_FACE}`;
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { /* 로드 완료 — 다음 프레임부터 반영된다 */ });
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
+function setCanvasSize(w, h) {
+  if (!w || !h || (W === w && H === h && canvas.width === w)) return false;
+  W = w; H = h;
+  canvas.width = w; canvas.height = h;
+  const st = document.getElementById('stage');
+  if (st) st.style.setProperty('--ar', w + ' / ' + h);
+  return true;
+}
 
 // ==================== 상수 ====================
 
@@ -94,6 +108,7 @@ function buildLane(kind, pts, label) {
 function applyMapLayout(mapKey, tier) {
   const C = window.DKCONTENT;
   const m = C && C.maps && C.maps.find(x => x.key === mapKey);
+  if (m && m.canvas) setCanvasSize(m.canvas[0], m.canvas[1]); else setCanvasSize(1024, 576);
   if (m && C.buildLayout) {
     // 배경 픽셀로 물 판정 → 코드 생성 석단이 물 위에 걸리지 않게
     let avoid = null;
@@ -184,7 +199,7 @@ function buildRoadLayer(m) {
         g.fillStyle = '#2a2436'; g.beginPath(); g.ellipse(x, y - 9, 10, 4, 0, 0, Math.PI * 2); g.fill();
       }
     }
-    if (rubble) for (const [x, y] of [[160, 110], [W - 160, 110], [300, 548], [W - 300, 548]]) drawGroundSprite(g, rubble, x, y, 48, rnd() < 0.5);
+    if (rubble) for (const [x, y] of [[W * 0.16, H * 0.19], [W * 0.84, H * 0.19], [W * 0.29, H * 0.95], [W * 0.71, H * 0.95]]) drawGroundSprite(g, rubble, x, y, 48, rnd() < 0.5);
   }
   // 5. 시작·도착 그림 (있으면 포탈 그림·크리스탈 대신)
   const st = art('start'), en = art('end');
@@ -251,8 +266,9 @@ function drawArenaBoard(g, m, boardTex, padArt, rnd) {
     g.save(); g.beginPath(); g.roundRect(bd.x, bd.y, bd.w, bd.h, r); g.clip();
     for (let i = 0; i < 900; i++) { g.fillStyle = rnd() < 0.5 ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.08)'; g.beginPath(); g.ellipse(bd.x + rnd() * bd.w, bd.y + rnd() * bd.h, 2 + rnd() * 5, 1 + rnd() * 2, rnd() * 3, 0, Math.PI * 2); g.fill(); }
     g.strokeStyle = 'rgba(0,0,0,0.22)'; g.lineWidth = 1.5;
-    for (let x = bd.x + 88; x < bd.x + bd.w; x += 88) { g.beginPath(); g.moveTo(x, bd.y); g.lineTo(x, bd.y + bd.h); g.stroke(); }
-    for (let y = bd.y + 72; y < bd.y + bd.h; y += 72) { g.beginPath(); g.moveTo(bd.x, y); g.lineTo(bd.x + bd.w, y); g.stroke(); }
+    const gx = bd.gapX || 88, gy = bd.gapY || 72;   // 세로 아레나는 간격이 다르다
+    for (let x = bd.x + gx; x < bd.x + bd.w - 1; x += gx) { g.beginPath(); g.moveTo(x, bd.y); g.lineTo(x, bd.y + bd.h); g.stroke(); }
+    for (let y = bd.y + gy; y < bd.y + bd.h - 1; y += gy) { g.beginPath(); g.moveTo(bd.x, y); g.lineTo(bd.x + bd.w, y); g.stroke(); }
     g.restore();
   }
   // 베벨: 위쪽 밝게, 아래쪽 어둡게, 안쪽 인셋 그림자
@@ -280,7 +296,10 @@ function drawArenaBoard(g, m, boardTex, padArt, rnd) {
 // 캔버스 좌우 가장자리의 돌 기둥 4개: 연석에서 ≥100px 떨어뜨려 타워와 헷갈리지 않게 (HUD 칩 아래)
 function arenaPillars(m) {
   const t = m.track; if (!t) return [];
-  return [[40, 140], [W - 40, 140], [40, 530], [W - 40, 530]]; // 입구·출구 길(y 248~352) 위아래로 비켜서
+  // 트랙 바깥 네 귀퉁이. 입구 길(y = mid)과 겹치지 않게 위·아래로 비켜선다
+  const x0 = Math.max(30, t.L / 2), x1 = W - x0;
+  const y0 = Math.max(60, t.T * 0.72), y1 = Math.min(H - 30, t.B + (H - t.B) * 0.5);
+  return [[x0, y0], [x1, y0], [x0, y1], [x1, y1]];
 }
 function drawCodePillar(g, x, y) {
   g.save();
@@ -295,7 +314,10 @@ function drawCodePillar(g, x, y) {
 function brazierArtFlag() { const a = A['tl_arena_prop-1']; return !!(a && a.cv && a.h > 8); }
 function arenaBraziers(m) {
   const t = m.track; if (!t) return [];
-  return [[120, 205], [W - 120, 205], [120, 415], [W - 120, 415]]; // 입구·출구 길 위아래, 기둥 안쪽
+  // 기둥 안쪽, 트랙 좌우 바깥. 역시 입구 길 높이를 피한다
+  const x0 = Math.max(60, t.L * 0.62), x1 = W - x0;
+  const y0 = t.T + (t.mid - t.T) * 0.35, y1 = t.B - (t.B - t.mid) * 0.35;
+  return [[x0, y0], [x1, y0], [x0, y1], [x1, y1]];
 }
 function drawArenaBraziers() {
   if (!ARENA || !ARENA.track) return;
@@ -1703,7 +1725,7 @@ function drawPoly3D(g, cx, cy, size, kind, R, col) {
       const c = m3apply(R, f.c), w = persp / (persp - c[2]);
       const fs = size * (P.faces.length <= 8 ? 0.62 : 0.4) * z;
       g.fillStyle = 'rgba(26,18,8,0.92)';
-      g.font = `bold ${Math.max(6, Math.round(fs))}px sans-serif`;
+      g.font = uiFont(Math.max(6, Math.round(fs)));
       g.textAlign = 'center'; g.textBaseline = 'middle';
       g.fillText(String(i + 1), cx + c[0] * size * w, cy + c[1] * size * w);
     }
@@ -1717,7 +1739,7 @@ function drawOrb(g, cx, cy, size, col) {
   g.beginPath(); g.arc(cx, cy, size, 0, Math.PI * 2);
   g.fillStyle = gr; g.fill();
   g.strokeStyle = 'rgba(30,24,16,0.6)'; g.lineWidth = 1.5; g.stroke();
-  g.fillStyle = 'rgba(26,18,8,0.9)'; g.font = `bold ${Math.round(size * 0.9)}px sans-serif`;
+  g.fillStyle = 'rgba(26,18,8,0.9)'; g.font = uiFont(Math.round(size * 0.9));
   g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('1', cx, cy + 1);
 }
 function drawPolyDie(g, cx, cy, size, kind, R, col) {
@@ -1979,7 +2001,7 @@ function drawDie() {
   // 트레이 대기 중 안내
   if (DIE.state === 'tray' && canRoll()) {
     ctx.save();
-    ctx.font = 'bold 11px sans-serif';
+    ctx.font = uiFont(11);
     ctx.textAlign = 'center';
     ctx.fillStyle = `rgba(255,233,160,${0.6 + 0.3 * Math.sin(S.time * 4)})`;
     ctx.strokeStyle = 'rgba(0,0,0,0.7)';
@@ -2137,7 +2159,7 @@ function startInfinity(kind) {
   S.stageData = { n: 0, name: '무한 투기장', tier: INF.tier.tier, tierName: INF.tier.name + ' · ' + MODE.name, tierColor: INF.tier.color, lanes: INF.tier.lanes.length, waves: Infinity, bases: [], gem: 0 };
   S.stageWaves = Infinity;
   setTimeout(() => pushLog(MODE.key === 'clear' ? `도전 시작 — ${INF.clearWave}웨이브 완주가 목표입니다` : '무한 시작 — 버틸 수 있는 데까지', 'sys'), 60);
-  S.mapKey = INF.mapKey;
+  S.mapKey = arenaKeyForScreen();   // 세로 화면이면 세로 아레나
   S.gold = INF.startGold;
   S.lives = INF.lives;
   S.wave = 0;
@@ -2146,7 +2168,7 @@ function startInfinity(kind) {
   S.heldDie = 0; S.selTower = null; S.shakeT = 0; S.bannerT = 0;
   DIE.state = 'tray'; DIE.z = 0; DIE.final = 0;
   SLOT.active = false;
-  applyMapLayout(INF.mapKey, INF.tier);
+  applyMapLayout(S.mapKey, INF.tier);
   S.phase = 'playing';
   // 첫 런은 코치가 먼저 돈다. 코치가 끝나면 도움말을 한 번 연다.
   // 이미 코치를 본 사람인데 도움말을 아직 안 봤다면 도움말만 연다.
@@ -2382,7 +2404,13 @@ const towerDmg   = t => {
   if (d) { m *= d.dmgMult(powerLv(t.face)); const ex = powerSpecial(t.face, 'dmg'); if (ex) m *= 1 + ex * powerTier(t.face); }
   return t.def.dmg * m;
 };
-const towerRange = t => t.def.range + LVL_RANGE[t.lvl - 1] + (DP() ? DP().rangeAdd(powerLv(t.face)) : 0) + (S.mode === 'infinity' && window.DKCONTENT ? (DKCONTENT.INFINITY.rangeBonus || 0) : 0);
+// 인피니티 사거리 보너스는 아레나마다 다르다 — 세로 아레나는 트랙이 길어 중앙 타워가 더 멀리 닿아야 한다
+function arenaRangeBonus() {
+  if (S.mode !== 'infinity' || !window.DKCONTENT) return 0;
+  const m = DKCONTENT.maps && DKCONTENT.maps.find(x => x.key === S.mapKey);
+  return (m && m.rangeBonus != null) ? m.rangeBonus : (DKCONTENT.INFINITY.rangeBonus || 0);
+}
+const towerRange = t => t.def.range + LVL_RANGE[t.lvl - 1] + (DP() ? DP().rangeAdd(powerLv(t.face)) : 0) + arenaRangeBonus();
 const towerRate  = t => { let r = t.def.rate * LVL_RATE[t.lvl - 1]; const ex = powerSpecial(t.face, 'rate'); if (ex) r *= Math.pow(ex, powerTier(t.face)); if (S.mode === 'infinity' && t.def.perk === 'myth' && window.DKCONTENT) r /= DKCONTENT.INFINITY.mythRate || 1.5; return r; };
 const towerSplash = t => (t.def.splash || 0) + ((powerSpecial(t.face, 'splash') || 0) * powerTier(t.face));
 const towerSlowPct = t => 0.26 + 0.06 * t.lvl + ((powerSpecial(t.face, 'slow') || 0) * powerTier(t.face));
@@ -2738,7 +2766,7 @@ function drawStarBadge(t) {
   ctx.stroke();
   ctx.restore();
   ctx.save();
-  ctx.font = 'bold 13px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.font = uiFont(13); ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
   const txt = `★${t.face}`;
   const w = ctx.measureText(txt).width + 12, y = t.y - 112;
   ctx.fillStyle = 'rgba(10,8,14,0.82)'; ctx.beginPath(); ctx.roundRect(t.x - w / 2, y - 9, w, 18, 9); ctx.fill();
@@ -2782,7 +2810,7 @@ function drawMergeHalo(t, sp, hovered) {
 
   const label = hovered ? '놓으면 강화!' : `합체 → Lv${t.lvl + 1}`;
   ctx.save();
-  ctx.font = 'bold 14px sans-serif';
+  ctx.font = uiFont(14);
   ctx.textAlign = 'center';
   ctx.lineWidth = 4;
   ctx.strokeStyle = 'rgba(0,0,0,0.75)';
@@ -2875,7 +2903,7 @@ function drawLanes() {
       const lp = pts[Math.floor(pts.length / 2)];
       const ly = Math.max(62, lp[1] - (lane.kind === 'air' ? 56 : 14));
       ctx.save();
-      ctx.font = 'bold 12px sans-serif'; ctx.textAlign = 'center';
+      ctx.font = uiFont(12); ctx.textAlign = 'center';
       ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(0,0,0,0.7)';
       ctx.fillStyle = lane.kind === 'air' ? '#e4f3ff' : lane.kind === 'tunnel' ? '#f0d3a0' : '#ffe0c0';
       const txt = (lane.kind === 'air' ? '☁ ' : lane.kind === 'tunnel' ? '⛏ ' : '') + lane.label;
@@ -3135,7 +3163,7 @@ function draw() {
         ctx.restore();
       }
       if (e.stunT > 0 && !e.hidden) { // 락다운 표시
-        ctx.save(); ctx.font = 'bold 16px sans-serif'; ctx.textAlign = 'center'; ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(0,0,0,0.7)'; ctx.fillStyle = '#ffe86b';
+        ctx.save(); ctx.font = uiFont(16); ctx.textAlign = 'center'; ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(0,0,0,0.7)'; ctx.fillStyle = '#ffe86b';
         const yy = p.y - airY - e.def.size - 4; ctx.strokeText('⚡', p.x, yy); ctx.fillText('⚡', p.x, yy); ctx.restore();
       }
       if (e.isElite && !e.hidden) {
@@ -3391,7 +3419,7 @@ function draw() {
     ctx.save();
     ctx.globalAlpha = 1 - pr;
     ctx.fillStyle = t.color;
-    ctx.font = t.big ? 'bold 26px sans-serif' : 'bold 15px sans-serif';
+    ctx.font = uiFont(t.big ? 26 : 15);
     ctx.textAlign = 'center';
     ctx.strokeStyle = 'rgba(0,0,0,0.7)';
     ctx.lineWidth = t.big ? 5 : 3;
@@ -3404,7 +3432,7 @@ function draw() {
   if (S.hurtT > 0) {
     ctx.save();
     const a = Math.min(0.5, S.hurtT);
-    const grad = ctx.createRadialGradient(W / 2, H / 2, H * 0.45, W / 2, H / 2, H * 0.75);
+    const grad = ctx.createRadialGradient(W / 2, H / 2, Math.hypot(W, H) * 0.32, W / 2, H / 2, Math.hypot(W, H) * 0.54);
     grad.addColorStop(0, 'rgba(200,30,30,0)');
     grad.addColorStop(1, `rgba(200,30,30,${a})`);
     ctx.fillStyle = grad;
@@ -3415,17 +3443,22 @@ function draw() {
   // 웨이브 예고
   if (S.phase === 'playing' && !S.waveActive && S.wave < S.stageWaves) {
     ctx.save();
-    ctx.fillStyle = 'rgba(255,240,200,0.9)';
-    ctx.font = 'bold 17px sans-serif';
+    const fs = Math.max(14, Math.round(W * 0.017));
+    ctx.font = uiFont(fs);
     ctx.textAlign = 'center';
-    ctx.strokeStyle = 'rgba(0,0,0,0.8)';
-    ctx.lineWidth = 4;
     const msg = S.wave === 0
       ? (S.mode === 'infinity' ? '뽑기(160G)를 눌러 주사위를 뽑고, 굴러 나온 타워를 석단에 놓으세요!' : '주사위를 던져 타워를 배치하고, 준비되면 웨이브를 시작하세요!')
       : `다음 웨이브까지 ${Math.ceil(S.autoT)}초`;
-    // 좌상단 재화·웨이브 칩(HTML, 화면이 작을수록 캔버스 기준으로 커진다)과 겹치지 않게 아래로 내린다
-    ctx.strokeText(msg, W / 2, 92);
-    ctx.fillText(msg, W / 2, 92);
+    // 좌상단 칩 아래. 캔버스 높이에 비례시켜 세로 아레나에서도 같은 자리에 온다
+    const by = Math.round(H * 0.105), tw = ctx.measureText(msg).width;
+    const pw = Math.min(W - 24, tw + 34), ph = fs + 18;
+    ctx.fillStyle = 'rgba(14,10,6,0.72)';
+    ctx.strokeStyle = 'rgba(232,182,74,0.5)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.roundRect(W / 2 - pw / 2, by - ph / 2, pw, ph, ph / 2); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = 'rgba(255,240,200,0.95)';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(msg, W / 2, by);
     ctx.restore();
   }
 
@@ -3437,17 +3470,28 @@ function draw() {
     const a = Math.min(inA, outA);
     ctx.save();
     ctx.globalAlpha = a;
-    ctx.fillStyle = 'rgba(40,0,0,0.55)';
-    ctx.fillRect(0, H / 2 - 52, W, 92);
-    ctx.fillStyle = '#ff5a5a';
-    ctx.fillRect(0, H / 2 - 52, W, 3); ctx.fillRect(0, H / 2 + 37, W, 3);
+    const by0 = H / 2 - 52, bh = 92;
+    const rib = ctx.createLinearGradient(0, by0, 0, by0 + bh);   // 위아래로 어두워지는 리본
+    rib.addColorStop(0, 'rgba(96,10,10,0.72)');
+    rib.addColorStop(0.5, 'rgba(38,0,0,0.82)');
+    rib.addColorStop(1, 'rgba(96,10,10,0.72)');
+    ctx.fillStyle = rib;
+    ctx.fillRect(0, by0, W, bh);
+    const edge = ctx.createLinearGradient(0, 0, W, 0);           // 좌우로 빠지는 금속 테두리
+    edge.addColorStop(0, 'rgba(255,90,90,0)');
+    edge.addColorStop(0.5, '#ff8a8a');
+    edge.addColorStop(1, 'rgba(255,90,90,0)');
+    ctx.fillStyle = edge;
+    ctx.fillRect(0, by0, W, 3); ctx.fillRect(0, by0 + bh - 3, W, 3);
+    ctx.fillStyle = 'rgba(255,255,255,0.10)';
+    ctx.fillRect(0, by0 + 3, W, 2);                              // 상단 하이라이트
     ctx.textAlign = 'center';
     ctx.lineWidth = 6; ctx.strokeStyle = 'rgba(0,0,0,0.85)';
-    ctx.font = `bold ${Math.round(40 - (1 - inA) * 12)}px sans-serif`;
+    ctx.font = uiFont(Math.round(40 - (1 - inA) * 12));
     ctx.fillStyle = '#ffd2d2';
     ctx.strokeText('BOSS 등장!', W / 2, H / 2 - 8);
     ctx.fillText('BOSS 등장!', W / 2, H / 2 - 8);
-    ctx.font = 'bold 20px sans-serif';
+    ctx.font = uiFont(20);
     ctx.lineWidth = 4;
     ctx.fillStyle = '#ffe9a0';
     ctx.strokeText(S.bannerName || '', W / 2, H / 2 + 24);
@@ -3468,6 +3512,7 @@ const wrapEl = $('wrap'), stageEl = $('stage');
 //   side    — 가로로 넓고 낮은 화면(가로 폰): #wrap 을 row 로, HUD 를 오른쪽 세로 열로. 스테이지가 세로를 꽉 쓴다
 //   stacked — 그 외(세로 폰·데스크톱): 스테이지 위, HUD 아래. 남는 세로 공간은 HUD 를 키워 채운다
 const SIDE_MIN_HUD = 150, SIDE_MAX_HUD = 240, ROOMY_GAP = 120, ROOMY_MAX = 430;
+let RELAYOUTING = false;
 let rotateHintOff = false;
 try { rotateHintOff = localStorage.getItem('dk_rotateHint') === 'off'; } catch (e) { /* 사파리 프라이빗 */ }
 function fitStage() {
@@ -3478,7 +3523,14 @@ function fitStage() {
   const availW = wrapEl.clientWidth - padX;
   const availH = wrapEl.clientHeight - padY;
   const hudHidden = hudEl.classList.contains('hidden');
-  const side = !hudHidden && availH > 0 && availW / availH >= 1.45 && availH < 620;
+  if (!RELAYOUTING && S.mode === 'infinity' && S.phase === 'playing' && typeof arenaKeyForScreen === 'function') {
+    const want = arenaKeyForScreen();
+    if (want !== S.mapKey) { RELAYOUTING = true; try { relayoutArena(want); } finally { RELAYOUTING = false; } return; }
+  }
+  const AR = W / H;                       // 현재 아레나 비율 (세로 아레나면 0.667)
+  const portraitArena = AR < 1;
+  // 세로 아레나는 화면도 세로라는 뜻이므로 HUD 를 옆으로 보내지 않는다
+  const side = !portraitArena && !hudHidden && availH > 0 && availW / availH >= 1.45 && availH < 620;
   wrapEl.classList.toggle('side', side);
   const setPx = (el, k, v) => { const px = Math.floor(v) + 'px'; if (el.style[k] !== px) el.style[k] = px; };
   const clearPx = (el, k) => { if (el.style[k]) el.style[k] = ''; };
@@ -3486,16 +3538,16 @@ function fitStage() {
   let w;
   if (side) {
     // HUD 를 오른쪽 세로 열로: 스테이지가 세로를 다 쓰고 남은 폭을 HUD 가 갖는다
-    const hudW = Math.min(SIDE_MAX_HUD, Math.max(SIDE_MIN_HUD, availW - availH * 16 / 9 - gap));
+    const hudW = Math.min(SIDE_MAX_HUD, Math.max(SIDE_MIN_HUD, availW - availH * AR - gap));
     setPx(hudEl, 'width', hudW);
     setPx(hudEl, 'height', availH);
-    w = Math.max(240, Math.min(availW - hudW - gap, availH * 16 / 9));
+    w = Math.max(240, Math.min(availW - hudW - gap, availH * AR));
     hudEl.classList.remove('roomy');
   } else {
     clearPx(hudEl, 'height');
     const maxW = Math.max(240, Math.min(availW, 1280));
     const hudH = () => hudHidden ? 0 : hudEl.offsetHeight + gap;
-    const stageW = (h) => Math.max(240, Math.min(maxW, (availH - h) * 16 / 9));
+    const stageW = (h) => Math.max(240, Math.min(maxW, (availH - h) * AR));
     setPx(hudEl, 'width', maxW);
     const wideH = hudH();
     w = stageW(wideH);
@@ -3503,7 +3555,7 @@ function fitStage() {
     if (!hudHidden && hudEl.offsetHeight + gap > wideH + 1) setPx(hudEl, 'width', maxW); // 좁히면 접히는 경우 → 넓은 폭 유지
     w = stageW(hudH());
     // 세로 폰: 스테이지가 폭에 막혀 위아래가 남으면 그 공간을 HUD 에 준다 (터치 타겟 확대)
-    const target = availH - w * 9 / 16 - gap;      // HUD 가 차지할 수 있는 높이
+    const target = availH - w / AR - gap;          // HUD 가 차지할 수 있는 높이
     clearPx(hudEl, 'height');
     const natural = hudEl.offsetHeight;            // 인라인 높이 없는 상태의 자연 높이
     const roomy = !hudHidden && target > natural + ROOMY_GAP;
@@ -3546,7 +3598,7 @@ function dieIconURL(face) {
   const gr = g.createLinearGradient(0, 0, 96, 96); gr.addColorStop(0, def.color); gr.addColorStop(1, '#1a1428');
   g.fillStyle = gr; g.beginPath(); g.roundRect(6, 6, 84, 84, 18); g.fill();
   g.strokeStyle = '#fff'; g.lineWidth = 3; g.globalAlpha = 0.7; g.stroke(); g.globalAlpha = 1;
-  g.fillStyle = '#fff'; g.font = 'bold 30px sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle';
+  g.fillStyle = '#fff'; g.font = uiFont(30); g.textAlign = 'center'; g.textBaseline = 'middle';
   g.fillText('★' + face, 48, 50);
   return (starIconCache[face] = cv.toDataURL());
 }
@@ -3554,6 +3606,7 @@ function dieIconURL(face) {
 function syncUI() {
   $('gold-val').textContent = S.gold;
   $('lives-val').textContent = S.lives;
+  $('lives-val').parentElement.classList.toggle('low', S.lives > 0 && S.lives <= 5);
   const sd = S.stageData;
   if (S.mode === 'infinity') {
     const INF = DKCONTENT.INFINITY, cap = INF.fieldCap || 200, n = S.enemies.length;
@@ -3564,10 +3617,18 @@ function syncUI() {
     const wtxt = S.inf && S.inf.mode === 'clear'
       ? `${S.wave}/${line}`                                    // 도전: 101웨이브 완주가 클리어
       : `${S.wave}${cyc ? ` (${cyc + 1}주기)` : ''}`;          // 무한: 끝이 없다
-    $('wave-val').textContent = `∞ 웨이브 ${wtxt}${sz} · 최고 ${SAVE.infBest || 0} · 필드 ${n}/${cap}${bt}`;
+    // 좁은 화면에서는 칩이 두 줄로 넘쳐 아레나를 가린다 — 몬스터 이름·최고 기록을 접는다
+    const tight = stageEl.classList.contains('tiny'), mid = stageEl.classList.contains('small');
+    $('wave-val').textContent = tight
+      ? `${S.wave}${S.inf && S.inf.mode === 'clear' ? '/' + line : ''} · ${n}/${cap}${bt}`
+      : mid
+        ? `웨이브 ${wtxt} · 필드 ${n}/${cap}${bt}`
+        : `∞ 웨이브 ${wtxt}${sz} · 최고 ${SAVE.infBest || 0} · 필드 ${n}/${cap}${bt}`;
     $('wave-val').classList.toggle('hot', n >= cap * 0.9 || (S.inf && S.inf.bossT > 0 && S.inf.bossT < 30));
   }
-  else $('wave-val').textContent = `S${S.stage}${sd && sd.tierName ? ' ' + sd.tierName : ''} · 웨이브 ${S.wave} / ${S.stageWaves}`;
+  else $('wave-val').textContent = stageEl.classList.contains('tiny')
+    ? `S${S.stage} · ${S.wave}/${S.stageWaves}`
+    : `S${S.stage}${sd && sd.tierName ? ' ' + sd.tierName : ''} · 웨이브 ${S.wave} / ${S.stageWaves}`;
   $('wave-val').style.color = sd && sd.tierColor ? sd.tierColor : '';
   syncInfPanel();
   const heldInfo = $('held-info');
@@ -3828,6 +3889,35 @@ function coachRender() {
   const cx = r.left + r.width / 2;
   tip.style.left = Math.max(8, Math.min(window.innerWidth - tw - 8, cx - tw / 2)) + 'px';
   tip.style.top = (r.top - th - 14 >= 8 ? r.top - th - 14 : Math.min(window.innerHeight - th - 8, r.top + r.height + 14)) + 'px';
+}
+
+// ==================== 화면 방향에 따른 아레나 교체 ====================
+// 가로/데스크톱은 16:9(cInf), 세로 폰은 세로 아레나(cInfP). 런 도중 돌려도 상태를 보존한 채 갈아끼운다.
+function screenIsPortrait() {
+  const cs = getComputedStyle(wrapEl);
+  const availW = wrapEl.clientWidth - (parseFloat(cs.paddingLeft) || 0) - (parseFloat(cs.paddingRight) || 0);
+  const availH = wrapEl.clientHeight - (parseFloat(cs.paddingTop) || 0) - (parseFloat(cs.paddingBottom) || 0);
+  return availH > 0 && availW / availH < 0.95;
+}
+function arenaKeyForScreen() { return screenIsPortrait() ? 'cInfP' : 'cInf'; }
+function relayoutArena(key) {
+  const INF = window.DKCONTENT && DKCONTENT.INFINITY;
+  if (!INF || S.mode !== 'infinity' || S.mapKey === key) return false;
+  // 좌표는 버리고 '어느 석단', '경로의 몇 %' 만 남긴다
+  const towers = S.towers.map(t => ({ spot: t.spot, face: t.face, def: t.def, lvl: t.lvl, skin: t.skin, cd: t.cd }));
+  const selSpot = S.selTower ? S.selTower.spot : -1;
+  const enemies = S.enemies.map(e => ({ e, ratio: e.dist / Math.max(1, laneLen(e)) }));
+  S.mapKey = key;
+  applyMapLayout(key, INF.tier);
+  for (const t of towers) { const sp = SPOTS[t.spot]; if (sp) { t.x = sp[0]; t.y = sp[1]; } }
+  S.towers = towers.filter(t => SPOTS[t.spot]).map(t => Object.assign(t, { kick: 0 }));
+  for (const { e, ratio } of enemies) e.dist = Math.min(laneLen(e) - 1, ratio * laneLen(e));
+  S.selTower = selSpot >= 0 ? (S.towers.find(t => t.spot === selSpot) || null) : null;
+  S.projs = []; S.beams = []; S.fxs = []; S.texts = [];   // 수명 1초 미만이라 버린다
+  if (DRAG.active) stopPlaceDrag();
+  fitStage();
+  syncUI();
+  return true;
 }
 
 function syncInfButtons() {
@@ -4357,9 +4447,12 @@ $('speed-btn').addEventListener('click', () => {
   S.speed = S.speed === 1 ? 2 : 1;
   $('speed-btn').textContent = 'x' + S.speed;
 });
+const ICON_SOUND = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 8.5a5 5 0 0 1 0 7"/><path d="M20 6a9 9 0 0 1 0 12"/></svg>';
+const ICON_MUTE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 9.5l5 5M22 9.5l-5 5"/></svg>';
 $('mute-btn').addEventListener('click', () => {
   S.muted = !S.muted;
-  $('mute-btn').innerHTML = S.muted ? '&#128263;' : '&#128266;';
+  $('mute-btn').innerHTML = S.muted ? ICON_MUTE : ICON_SOUND;
+  $('mute-btn').classList.toggle('off', S.muted);
 });
 
 $('ov-btn').addEventListener('click', () => {
