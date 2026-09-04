@@ -287,9 +287,6 @@ html, body {
 #exchange-btn { margin-top: 4px; font-size: 12px; padding: 4px 8px; border: 1px solid #c9a24a; background: #3a2c14; color: #ffd452; border-radius: 6px; cursor: pointer; }
 #exchange-btn:hover { filter: brightness(1.3); }
 #exchange-btn:disabled { opacity: .55; cursor: default; filter: none; }
-#gamble-btn { border: 1px solid #b76bff; background: #2a1a3a; color: #e0b8ff; border-radius: 8px; padding: 4px 8px; font-size: 12px; line-height: 1.1; cursor: pointer; display: flex; flex-direction: column; align-items: center; }
-#gamble-btn small { font-size: 10px; opacity: .8; }
-#gamble-btn.on { background: #6b2fb0; color: #fff; box-shadow: 0 0 10px rgba(183,107,255,.7); }
 #wave-btn {
   font-size: 15px;
   padding: 14px 18px;
@@ -565,8 +562,19 @@ body.placing #game { cursor: grabbing; }
 #chest-btn:disabled { opacity: .45; cursor: default; }
 #dice-bag { display: flex; gap: 4px; }
 .bag-label { font-size: 12px; color: #ffe9b8; padding: 0 4px; white-space: nowrap; }
-#gamble-hint { font-size: 11px; color: #e0b8ff; white-space: nowrap; }
-#inf-gacha.gambling .bag-die:not(.empty) { border-color: #b76bff; box-shadow: 0 0 8px rgba(183,107,255,.7); }
+/* 주머니 팝오버: absolute 라 HUD 폭·높이에 영향을 주지 않는다 */
+#bag-menu { position: absolute; bottom: calc(100% + 8px); left: 0; z-index: 9; width: 210px; display: flex; flex-direction: column; gap: 5px; padding: 8px; background: #1e1626; border: 1px solid #c9a24a; border-radius: 10px; box-shadow: 0 6px 22px rgba(0,0,0,.65); }
+#bag-menu.hidden { display: none !important; }
+#bag-menu::after { content: ''; position: absolute; top: 100%; left: var(--arrow, 50%); margin-left: -6px; border: 6px solid transparent; border-top-color: #c9a24a; }
+#bag-menu-title { font-size: 11px; color: #d9cdb0; text-align: center; padding-bottom: 2px; }
+#bag-menu button { display: flex; flex-direction: column; align-items: center; gap: 1px; font-family: inherit; font-size: 13px; padding: 6px 8px; border-radius: 8px; cursor: pointer; }
+#bag-menu button small { font-size: 10px; opacity: .85; }
+#bag-roll { background: linear-gradient(#7a5a1e, #4a350f); color: #ffe9b8; border: 1px solid #e8b64a; }
+#bag-gamble { background: #2a1a3a; color: #e0b8ff; border: 1px solid #b76bff; }
+#bag-menu button:hover:not(:disabled) { filter: brightness(1.25); }
+#bag-menu button:disabled { opacity: .45; cursor: default; }
+#keep-bag { display: flex; align-items: center; gap: 4px; width: 84px; flex-shrink: 0; font-size: 11px; color: #cfc3a5; line-height: 1.15; cursor: pointer; }
+#keep-bag input { accent-color: #b76bff; cursor: pointer; }
 #help-btn { width: 26px; height: 26px; border-radius: 50%; border: 1px solid #e8b64a; background: #3a2c14; color: var(--gold); font-weight: bold; cursor: pointer; font-family: inherit; }
 #help-btn:hover { filter: brightness(1.3); }
 #inf-help { position: absolute; inset: 0; z-index: 8; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,.62); }
@@ -579,7 +587,7 @@ body.placing #game { cursor: grabbing; }
 .help-card b { color: #ffe9b8; }
 #help-close { display: block; margin: 4px auto 0; padding: 6px 18px; border-radius: 8px; border: 1px solid #e8b64a; background: linear-gradient(#7a5a1e, #4a350f); color: #ffe9b8; font-family: inherit; font-size: 13px; cursor: pointer; }
 .bag-die { width: 40px; height: 44px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; background: linear-gradient(#3a2d21, #241a10); border: 1px solid #6b5636; border-radius: 8px; color: #e9dfc4; font-family: inherit; cursor: pointer; padding: 0; }
-.bag-die .bag-k { font-size: 11px; font-weight: bold; }
+.bag-die .bag-k { font-size: 11px; font-weight: bold; width: 22px; height: 22px; background: center/contain no-repeat; }
 .bag-die .bag-n { font-size: 12px; color: var(--gold); }
 .bag-die:hover:not(:disabled) { filter: brightness(1.3); }
 .bag-die:disabled { cursor: default; }

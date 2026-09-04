@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>주사위 성채 (Dicekeep)</title>
-<link rel="stylesheet" href="style.css?v=68" />
+<link rel="stylesheet" href="style.css?v=69" />
 <link rel="icon" href="ui/gold.png" />
 </head>
 <body>
@@ -23,8 +23,8 @@
         <h3>무한 투기장 안내</h3>
         <ol>
           <li><b>🎁 뽑기 160G</b> — 등급이 정해지고 바로 굴러 타워가 됩니다. 굴려 나온 숫자 = 타워 성(★).<br><small>일반 50% (1★) · 레어 33.1% (1~4★) · 고대 10.2% (1~6★) · 유물 5.1% (1~8★) · 서사 0.8% (1~12★) · 전설 0.5% (1~20★) · 에픽 0.2% (14★↑) · 신화 0.08% (18★↑) · 태초 0.019% (20★)</small></li>
-          <li><b>주머니</b> — 손에 타워가 있을 때 뽑은 주사위와 보스 보상 주사위가 쌓입니다. 눌러서 굴리세요.</li>
-          <li><b>승급 도박 20%</b> — 켜고 주머니 주사위를 누르면 그 주사위를 걸고 20%로 한 등급 위, 80%는 사라집니다.</li>
+          <li><b>주머니</b> — 보스 보상 주사위, 손에 타워가 있을 때 뽑은 주사위가 쌓입니다. <b>주사위를 누르면 「굴리기 / 도박」을 고릅니다.</b></li>
+          <li><b>도박</b> — 그 주사위를 걸고 20%로 한 등급 위(유물 → 서사), 80%는 사라집니다. 방금 뽑은 주사위로 도박하려면 뽑기 옆 <b>주머니에 보관</b>을 켜세요.</li>
           <li><b>교환</b> — 7★ 이상 타워를 고르면 다시 굴릴 수 있습니다 (전설 1600G 66% · 신화 4000G 50%). 실패하면 타워가 사라집니다.</li>
           <li><b>판매</b> — 7★ 이상은 팔 수 없습니다.</li>
           <li><b>파워업</b> — 골드로 눈(1~6)을 강화합니다. 강화할수록 비싸집니다. ★ 히든 타워는 6눈 파워업을 따릅니다.</li>
@@ -109,6 +109,7 @@
         <canvas id="slot-canvas" width="74" height="74" class="hidden"></canvas>
       </div>
       <button id="roll-btn">주사위 굴리기<small id="roll-cost">40 G</small></button>
+      <label id="keep-bag" class="hidden" title="켜면 뽑은 주사위가 바로 굴러가지 않고 주머니에 들어갑니다. 주머니에서 굴리기·도박을 고를 수 있습니다"><input type="checkbox"><span>주머니에<br>보관</span></label>
       <div id="held-info" class="hidden"><b id="held-name"></b><span id="held-desc"></span></div>
     </div>
 
@@ -136,9 +137,12 @@
         <button id="bag-myth" class="bag-die rare myth empty hidden" data-k="myth"><span class="bag-k">신화</span><span class="bag-n">0</span></button>
         <button id="bag-primal" class="bag-die rare primal empty hidden" data-k="primal"><span class="bag-k">태초</span><span class="bag-n">0</span></button>
       </div>
-      <button id="gamble-btn" title="주머니 주사위 하나를 걸고 20% 확률로 한 등급 위로 (실패하면 소멸)">&#127922; 승급 도박<small>20%</small></button>
-      <span id="gamble-hint" class="hidden">← 주머니 주사위를 누르면 도박</span>
       <button id="help-btn" title="무한 투기장 안내">?</button>
+      <div id="bag-menu" class="hidden">
+        <div id="bag-menu-title"></div>
+        <button id="bag-roll">&#127922; 굴리기<small>타워 만들기</small></button>
+        <button id="bag-gamble">&#128200; 도박<small>20% 승급 · 80% 소멸</small></button>
+      </div>
     </div>
 
     <div id="right-panel">
@@ -157,7 +161,7 @@
   <img id="ghost-tower" alt="">
   <div id="ghost-ring"></div>
 </div>
-<script src="content.js?v=68"></script>
-<script src="game.js?v=68"></script>
+<script src="content.js?v=69"></script>
+<script src="game.js?v=69"></script>
 </body>
 </html>

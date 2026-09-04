@@ -1409,6 +1409,34 @@ function rollByButton() {
 }
 
 // 인피니티 보물상자: 골드 → 다면체 주사위 1개 (가방). 가방의 주사위를 굴리면 나온 숫자 = 타워 성.
+// 주머니 주사위 팝오버: 주사위마다 '굴리기 / 도박'을 직접 고른다 (숨은 모드 토글 없음)
+let BAG_MENU_KIND = null;
+function closeBagMenu() {
+  BAG_MENU_KIND = null;
+  const m = $('bag-menu'); if (m) m.classList.add('hidden');
+}
+function openBagMenu(kind) {
+  const m = $('bag-menu'), ch = chestDef();
+  if (!m || !ch || !S.inf || !(S.inf.bag[kind] > 0)) { SFX.deny(); return; }
+  if (BAG_MENU_KIND === kind && !m.classList.contains('hidden')) { closeBagMenu(); return; }
+  BAG_MENU_KIND = kind;
+  const lo = ch.min[kind] || 1, hi = ch.sides[kind];
+  const idx = ch.kinds.indexOf(kind), up = idx >= 0 && idx < ch.kinds.length - 1 ? ch.kinds[idx + 1] : null;
+  $('bag-menu-title').innerHTML = `<b style="color:${dieKindColor(kind)}">${ch.grade[kind]} ${ch.label[kind]}</b> · 굴리면 ${lo === hi ? lo : lo + '~' + hi}★`;
+  const busy = SLOT.active || !!S.heldDie || DIE.state !== 'tray' || S.phase !== 'playing';
+  const rb = $('bag-roll'), gb = $('bag-gamble');
+  rb.disabled = busy;
+  rb.querySelector('small').textContent = busy ? (S.heldDie ? '손에 든 타워를 먼저 배치하세요' : '굴리는 중…') : '타워 만들기';
+  gb.disabled = !up || S.phase !== 'playing';
+  gb.querySelector('small').textContent = up ? `20% → ${ch.grade[up]} · 80% 소멸` : '더 올릴 등급이 없습니다';
+  // 버튼 위에 띄우되 HUD 폭에는 영향을 주지 않는다 (absolute)
+  const btn = $('bag-' + kind), host = $('inf-gacha');
+  m.classList.remove('hidden');
+  const center = btn.offsetLeft + btn.offsetWidth / 2;
+  const left = Math.max(4, Math.min(host.clientWidth - m.offsetWidth - 4, center - m.offsetWidth / 2));
+  m.style.left = left + 'px';
+  m.style.setProperty('--arrow', (center - left) + 'px'); // 화살표가 누른 주사위를 가리킨다
+}
 function openInfHelp() { const h = $('inf-help'); if (h) h.classList.remove('hidden'); }
 function closeInfHelp() { const h = $('inf-help'); if (h) h.classList.add('hidden'); }
 function chestDef() { const C = window.DKCONTENT; return C && C.INFINITY && C.INFINITY.chest; }
@@ -1430,8 +1458,8 @@ function buyChest() {
   if (rk >= 6) { S.shakeT = Math.max(S.shakeT || 0, 0.3); S.fxs.push({ kind: 'circle', x: W / 2, y: 150, t: 0, dur: 1.2, size: 200, color: col }); }
   if (rare >= 2) SFX.win(); else if (kind === 'd1') SFX.deny(); else SFX.coin();
   // 슬롯이 비어 있으면 바로 굴린다 (한 번 클릭 = 등급 → 굴림 → 손에 타워). 아니면 주머니에 보관
-  if (!SLOT.active && !S.heldDie && DIE.state === 'tray') startBagRoll(kind);
-  else S.texts.push({ str: '주머니에 보관 — 손이 비면 눌러서 굴리세요', x: W / 2, y: 166, t: 0, color: '#d9c9a0' });
+  if (!S.inf.keepBag && !SLOT.active && !S.heldDie && DIE.state === 'tray') startBagRoll(kind);
+  else S.texts.push({ str: '주머니에 보관 — 주사위를 눌러 굴리기·도박을 고르세요', x: W / 2, y: 166, t: 0, color: '#d9c9a0' });
   syncUI();
   return kind;
 }
@@ -1446,7 +1474,7 @@ function gambleDie(kind) {
   const idx = ch.kinds.indexOf(kind);
   if (idx < 0 || idx >= ch.kinds.length - 1) { S.texts.push({ str: '태초는 도박할 수 없습니다', x: W / 2, y: 140, t: 0, color: '#ffffff' }); SFX.deny(); return false; }
   S.inf.bag[kind]--;
-  S.inf.gambleOn = false;
+  closeBagMenu();
   const win = Math.random() < (INF.gamble ? INF.gamble.up : 0.2);
   if (win) {
     const nk = ch.kinds[idx + 1];
@@ -1461,10 +1489,7 @@ function gambleDie(kind) {
   syncUI();
   return win;
 }
-function rollBagDie(kind) {
-  if (S.inf && S.inf.gambleOn) return gambleDie(kind);
-  return startBagRoll(kind);
-}
+function rollBagDie(kind) { return startBagRoll(kind); } // 봇·테스트 훅 호환
 function startBagRoll(kind) {
   const ch = chestDef();
   if (!ch || S.mode !== 'infinity' || !S.inf || S.phase !== 'playing') return false;
@@ -1473,6 +1498,9 @@ function startBagRoll(kind) {
   SLOT.active = true; SLOT.kind = kind;
   SLOT.t = 0; SLOT.t2 = 0; SLOT.phase = 0; SLOT.sndT = 0;
   SLOT.final = ch.roll(kind);
+  SLOT.R = m3mul(m3axisAngle(Math.random(), Math.random(), Math.random() * 0.5 + 0.1, Math.random() * 6), TRAY_TILT);
+  SLOT.w = [14 + Math.random() * 8, 12 + Math.random() * 8, 9 + Math.random() * 6];
+  closeBagMenu();
   SFX.throwDie();
   syncUI();
   return true;
@@ -1496,22 +1524,7 @@ function finishSlot() {
 function updateSlot(dt) {
   if (!SLOT.active) return;
   SLOT.t += dt;
-  if (SLOT.kind && SLOT.kind !== 'd6') { // 다면체: 숫자가 빠르게 바뀌다가 멈춘다
-    if (SLOT.phase === 0) {
-      SLOT.sndT -= dt;
-      if (SLOT.sndT <= 0) { SFX.bounce(0.25); SLOT.sndT = 0.09; }
-      if (SLOT.t >= 0.8) {
-        SLOT.phase = 1; SLOT.t2 = 0;
-        const ch = chestDef();
-        if (DIE.forceFinal) { SLOT.final = Math.max(ch && ch.min ? ch.min[SLOT.kind] || 1 : 1, Math.min(ch ? ch.sides[SLOT.kind] : 6, DIE.forceFinal)); DIE.forceFinal = 0; }
-        SFX.settle();
-      }
-    } else {
-      SLOT.t2 += dt;
-      if (SLOT.t2 > 0.5) finishSlot();
-    }
-    return;
-  }
+  const poly = SLOT.kind && SLOT.kind !== 'd6';
   if (SLOT.phase === 0) {
     // 빠른 회전 (덜그럭 소리)
     const wl = Math.hypot(...SLOT.w);
@@ -1521,10 +1534,14 @@ function updateSlot(dt) {
     SLOT.w = SLOT.w.map(v => v * Math.pow(0.3, dt));
     SLOT.sndT -= dt;
     if (SLOT.sndT <= 0) { SFX.bounce(0.3); SLOT.sndT = 0.11; }
-    if (SLOT.t >= 0.55) {
+    if (SLOT.t >= (poly ? 0.7 : 0.55)) {
       SLOT.phase = 1;
-      if (DIE.forceFinal) { SLOT.final = DIE.forceFinal; DIE.forceFinal = 0; } // 테스트 훅
-      const Rt = faceTopR(SLOT.final);
+      if (DIE.forceFinal) { // 테스트 훅
+        const ch = chestDef();
+        SLOT.final = poly && ch ? Math.max(ch.min[SLOT.kind] || 1, Math.min(ch.sides[SLOT.kind], DIE.forceFinal)) : DIE.forceFinal;
+        DIE.forceFinal = 0;
+      }
+      const Rt = slotTargetR();
       const aa = m3toAxisAngle(m3mul(Rt, m3transpose(SLOT.R)));
       SLOT.from = SLOT.R; SLOT.axis = aa.axis; SLOT.ang = aa.ang;
       SFX.settle();
@@ -1540,31 +1557,106 @@ function updateSlot(dt) {
     if (SLOT.t2 > 0.45) finishSlot();
   }
 }
-// 다면체 주사위 (슬롯용): 그림이 있으면 회전, 없으면 변 수에 맞는 다각형 + 숫자
-const POLY_SIDES = { d1: 0, d4: 3, d8: 4, d12: 5, d20: 6 };
+// ==================== 다면체 주사위 (d4·d8·d12·d20) ====================
+// d6 은 drawCube, d1 은 구슬. 나머지는 정다면체 정점·면을 만들어 큐브와 같은 방식으로 3D 렌더한다.
 const BAG_KINDS = ['d1', 'd4', 'd6', 'd8', 'd12', 'd20', 'epic', 'myth', 'primal'];
-function drawPolyDie(g, cx, cy, size, kind, num, rot, col) {
-  const sp = A['poly' + kind];
+const POLY = (() => {
+  const N = v => { const l = Math.hypot(v[0], v[1], v[2]) || 1; return [v[0] / l, v[1] / l, v[2] / l]; };
+  const SUB = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+  const CROSS = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+  const DOT = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+  const CEN = vs => { let x = 0, y = 0, z = 0; for (const v of vs) { x += v[0]; y += v[1]; z += v[2]; } return [x / vs.length, y / vs.length, z / vs.length]; };
+  // 한 면의 정점을 바깥 법선 기준 반시계로 정렬
+  const face = (idx, verts) => {
+    const c = CEN(idx.map(i => verts[i])), n = N(c);
+    const ref = N(SUB(verts[idx[0]], c)), bi = CROSS(n, ref);
+    const ang = i => Math.atan2(DOT(SUB(verts[i], c), bi), DOT(SUB(verts[i], c), ref));
+    return { idx: idx.slice().sort((a, b) => ang(a) - ang(b)), n, c };
+  };
+  const solid = (verts, faceIdx) => { const vs = verts.map(N); return { verts: vs, faces: faceIdx.map(f => face(f, vs)) }; };
+  const tetra = solid([[1, 1, 1], [1, -1, -1], [-1, 1, -1], [-1, -1, 1]], [[0, 1, 2], [0, 3, 1], [0, 2, 3], [1, 3, 2]]);
+  const octa = solid([[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]],
+    [[0, 2, 4], [2, 1, 4], [1, 3, 4], [3, 0, 4], [2, 0, 5], [1, 2, 5], [3, 1, 5], [0, 3, 5]]);
+  // 정이십면체: 황금비 좌표 12개 → 최소 변 길이로 삼각형 20개를 찾는다
+  const phi = (1 + Math.sqrt(5)) / 2, iv = [];
+  for (const a of [1, -1]) for (const b of [1, -1]) iv.push([0, a, b * phi], [a, b * phi, 0], [b * phi, 0, a]);
+  const IV = iv.map(N);
+  let min = Infinity;
+  for (let i = 0; i < IV.length; i++) for (let j = i + 1; j < IV.length; j++) min = Math.min(min, Math.hypot(...SUB(IV[i], IV[j])));
+  const near = (a, b) => Math.abs(Math.hypot(...SUB(IV[a], IV[b])) - min) < 1e-6;
+  const itri = [];
+  for (let i = 0; i < 12; i++) for (let j = i + 1; j < 12; j++) for (let k = j + 1; k < 12; k++) if (near(i, j) && near(j, k) && near(i, k)) itri.push([i, j, k]);
+  const icosa = solid(iv, itri);
+  // 정십이면체 = 정이십면체의 쌍대: 삼각형 중심이 정점, 한 정점을 둘러싼 삼각형 5개가 한 면
+  const dodeca = solid(icosa.faces.map(f => f.n), Array.from({ length: 12 }, (_, i) => itri.map((t, ti) => (t.indexOf(i) >= 0 ? ti : -1)).filter(x => x >= 0)));
+  return { d4: tetra, d8: octa, d12: dodeca, d20: icosa };
+})();
+// 법선을 화면 쪽(+z)으로 보내는 회전
+function alignR(n) {
+  const l = Math.hypot(n[1], -n[0], 0);
+  if (l < 1e-6) return n[2] > 0 ? m3id() : m3axisAngle(1, 0, 0, Math.PI);
+  return m3axisAngle(n[1] / l, -n[0] / l, 0, Math.acos(Math.max(-1, Math.min(1, n[2]))));
+}
+// 최종 눈이 정면을 보는 자세 (d6 은 기존 faceTopR)
+function slotTargetR() {
+  if (SLOT.kind === 'd6' || !POLY[dieShape(SLOT.kind)]) return faceTopR(Math.max(1, Math.min(6, SLOT.final)));
+  const P = POLY[dieShape(SLOT.kind)];
+  return alignR(P.faces[Math.max(1, Math.min(P.faces.length, SLOT.final)) - 1].n);
+}
+// 정다면체 3D: 큐브와 같은 원근·뒷면 컬링·면별 조명. 면마다 숫자를 새긴다.
+function drawPoly3D(g, cx, cy, size, kind, R, col) {
+  const P = POLY[kind]; if (!P) return;
+  const persp = 10;
+  const pv = P.verts.map(v => { const p = m3apply(R, v); const w = persp / (persp - p[2]); return [cx + p[0] * size * w, cy + p[1] * size * w]; });
+  const order = P.faces.map((f, i) => ({ i, z: m3apply(R, f.n)[2] })).sort((a, b) => a.z - b.z);
   g.save();
-  g.translate(cx, cy);
-  g.rotate(rot);
-  if (sp && sp.cv) {
-    const h = size * 2.2, w = h * sp.w / sp.h;
-    g.drawImage(sp.cv, -w / 2, -h / 2, w, h);
-  } else {
-    const n = POLY_SIDES[kind] || 4;
-    g.beginPath();
-    if (n === 0) g.arc(0, 0, size, 0, Math.PI * 2);
-    else for (let i = 0; i < n; i++) { const a = -Math.PI / 2 + i * Math.PI * 2 / n; const x = Math.cos(a) * size, y = Math.sin(a) * size; if (i === 0) g.moveTo(x, y); else g.lineTo(x, y); }
-    g.closePath();
-    const gr = g.createLinearGradient(-size, -size, size, size); gr.addColorStop(0, '#fffaf0'); gr.addColorStop(1, col);
-    g.fillStyle = gr; g.fill();
-    g.strokeStyle = '#2a2018'; g.lineWidth = 2.5; g.stroke();
+  g.lineJoin = 'round';
+  for (const { i, z } of order) {
+    if (z <= 0.02) continue; // 뒷면
+    const f = P.faces[i];
+    const path = () => { g.beginPath(); f.idx.forEach((vi, k) => (k ? g.lineTo(pv[vi][0], pv[vi][1]) : g.moveTo(pv[vi][0], pv[vi][1]))); g.closePath(); };
+    const n = m3apply(R, f.n);
+    const br = 0.55 + 0.45 * Math.max(0, n[0] * LIGHT[0] + n[1] * LIGHT[1] + n[2] * LIGHT[2]);
+    path(); g.fillStyle = col; g.fill();
+    path(); g.fillStyle = `rgba(24,16,6,${Math.max(0, (1 - br) * 0.72)})`; g.fill();
+    path(); g.fillStyle = `rgba(255,250,235,${Math.max(0, (br - 0.72) * 0.9)})`; g.fill();
+    path(); g.strokeStyle = 'rgba(38,28,14,0.55)'; g.lineWidth = 1.2; g.stroke();
+    if (z > 0.42) { // 정면에 가까운 면에만 숫자
+      const c = m3apply(R, f.c), w = persp / (persp - c[2]);
+      const fs = size * (P.faces.length <= 8 ? 0.62 : 0.4) * z;
+      g.fillStyle = 'rgba(26,18,8,0.92)';
+      g.font = `bold ${Math.max(6, Math.round(fs))}px sans-serif`;
+      g.textAlign = 'center'; g.textBaseline = 'middle';
+      g.fillText(String(i + 1), cx + c[0] * size * w, cy + c[1] * size * w);
+    }
   }
-  g.rotate(-rot);
-  g.fillStyle = '#1a1208'; g.font = `bold ${Math.round(size * 0.95)}px sans-serif`; g.textAlign = 'center'; g.textBaseline = 'middle';
-  g.strokeStyle = 'rgba(255,255,255,0.8)'; g.lineWidth = 3; g.strokeText(String(num), 0, 1); g.fillText(String(num), 0, 1);
   g.restore();
+}
+// 구슬(d1)
+function drawOrb(g, cx, cy, size, col) {
+  const gr = g.createRadialGradient(cx - size * 0.35, cy - size * 0.4, size * 0.1, cx, cy, size);
+  gr.addColorStop(0, '#ffffff'); gr.addColorStop(0.45, col); gr.addColorStop(1, '#2a2430');
+  g.beginPath(); g.arc(cx, cy, size, 0, Math.PI * 2);
+  g.fillStyle = gr; g.fill();
+  g.strokeStyle = 'rgba(30,24,16,0.6)'; g.lineWidth = 1.5; g.stroke();
+  g.fillStyle = 'rgba(26,18,8,0.9)'; g.font = `bold ${Math.round(size * 0.9)}px sans-serif`;
+  g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('1', cx, cy + 1);
+}
+function drawPolyDie(g, cx, cy, size, kind, R, col) {
+  const sp = A['poly' + kind];
+  if (sp && sp.cv) { const h = size * 2.2, w = h * sp.w / sp.h; g.drawImage(sp.cv, cx - w / 2, cy - h / 2, w, h); return; }
+  if (kind === 'd1') drawOrb(g, cx, cy, size, col);
+  else drawPoly3D(g, cx, cy, size, kind, R, col);
+}
+// 주머니 버튼용 미니 아이콘 (등급 색 실루엣, 한 번만 그려 캐시)
+const dieIconCache = {};
+function dieKindIcon(kind) {
+  if (dieIconCache[kind]) return dieIconCache[kind];
+  const cv = document.createElement('canvas'); cv.width = 44; cv.height = 44;
+  const g = cv.getContext('2d');
+  const R = m3mul(m3axisAngle(1, 0, 0, -0.42), m3axisAngle(0, 1, 0, 0.5));
+  drawPolyDie(g, 22, 22, 17, dieShape(kind), R, dieKindColor(kind));
+  return (dieIconCache[kind] = cv.toDataURL());
 }
 
 function drawSlot() {
@@ -1576,12 +1668,7 @@ function drawSlot() {
   sctx.clearRect(0, 0, slotCanvas.width, slotCanvas.height);
   const bounce = SLOT.phase === 0 ? Math.abs(Math.sin(SLOT.t * 16)) * 4 : 0;
   if (SLOT.kind && SLOT.kind !== 'd6') {
-    const ch = chestDef();
-    const sides = ch ? ch.sides[SLOT.kind] : 6;
-    const num = SLOT.phase === 0 ? 1 + (Math.floor(SLOT.t * 22) * 7) % sides : SLOT.final;
-    const rot = SLOT.phase === 0 ? SLOT.t * 9 : Math.max(0, 0.4 - SLOT.t2) * 2;
-    const col = dieKindColor(SLOT.kind);
-    drawPolyDie(sctx, 37, 40 - bounce, 22, dieShape(SLOT.kind), num, rot, col);
+    drawPolyDie(sctx, 37, 40 - bounce, 21, dieShape(SLOT.kind), SLOT.R, dieKindColor(SLOT.kind));
     return;
   }
   drawCube(sctx, 37, 40 - bounce, 17, SLOT.R);
@@ -1973,7 +2060,7 @@ function startInfinity() {
   const INF = C && C.INFINITY;
   if (!INF) return;
   S.mode = 'infinity';
-  S.inf = { sp: 0, power: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 }, kills: 0, spent: 0, bag: { d1: 0, d4: 0, d6: 0, d8: 0, d12: 0, d20: 0, epic: 0, myth: 0, primal: 0 }, chests: 0, bossT: 0, gambleOn: false };
+  S.inf = { sp: 0, power: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 }, kills: 0, spent: 0, bag: { d1: 0, d4: 0, d6: 0, d8: 0, d12: 0, d20: 0, epic: 0, myth: 0, primal: 0 }, chests: 0, bossT: 0, keepBag: false };
   S.stage = 0;
   S.stageData = { n: 0, name: '무한 투기장', tier: INF.tier.tier, tierName: INF.tier.name, tierColor: INF.tier.color, lanes: INF.tier.lanes.length, waves: Infinity, bases: [], gem: 0 };
   S.stageWaves = Infinity;
@@ -3326,11 +3413,14 @@ function syncUI() {
     $('roll-cost').textContent = `${cost} G`;
     rollBtn.title = '골드로 주사위를 뽑습니다. 등급이 정해지고 바로 굴러 타워가 됩니다 (굴려 나온 숫자 = 성★)\n일반 50% · 레어 33.1% · 고대 10.2% · 유물 5.1% · 서사 0.8% · 전설 0.5% · 에픽 0.2% · 신화 0.08% · 태초 0.019%';
     rollBtn.disabled = !(S.inf && S.phase === 'playing' && S.gold >= cost);
+    const kb = $('keep-bag');
+    if (kb) { kb.classList.remove('hidden'); const cb = kb.querySelector('input'); if (cb.checked !== !!S.inf.keepBag) cb.checked = !!S.inf.keepBag; }
   } else {
     rollBtn.childNodes[0].nodeValue = '주사위 굴리기';
     $('roll-cost').textContent = `${ROLL_COST} G`;
     rollBtn.title = '';
     rollBtn.disabled = !canRoll();
+    const kb = $('keep-bag'); if (kb) kb.classList.add('hidden');
   }
   syncWaveBtn();
   syncInfo();
@@ -3365,11 +3455,6 @@ function syncInfPanel() {
     const cost = chestCost();
     const cb = $('chest-btn');
     if (cb) { cb.querySelector('small').textContent = `${cost} G`; cb.disabled = S.gold < cost; }
-    const gb = $('gamble-btn'), gh = $('gamble-hint');
-    const bagN = BAG_KINDS.reduce((a, k) => a + ((S.inf.bag && S.inf.bag[k]) || 0), 0);
-    if (gb) { gb.classList.toggle('on', !!S.inf.gambleOn); gb.disabled = bagN === 0 && !S.inf.gambleOn; gb.title = S.inf.gambleOn ? '켜짐: 주머니 주사위를 누르면 그 주사위를 걸고 20%로 한 등급 승급, 80%는 소멸' : '주머니 주사위 하나를 걸고 20% 확률로 한 등급 위로 (실패하면 소멸)'; }
-    if (gh) gh.classList.toggle('hidden', !S.inf.gambleOn);
-    gacha.classList.toggle('gambling', !!S.inf.gambleOn);
     const ch = chestDef();
     for (const k of BAG_KINDS) {
       const b = $('bag-' + k); if (!b) continue;
@@ -3377,7 +3462,9 @@ function syncInfPanel() {
       b.querySelector('.bag-n').textContent = n;
       b.classList.toggle('empty', n === 0);
       b.classList.toggle('hidden', b.classList.contains('rare') && n === 0); // 에픽·신화·태초 칸은 가지고 있을 때만
-      b.disabled = n === 0 || SLOT.active || !!S.heldDie || DIE.state !== 'tray';
+      b.disabled = n === 0; // 눌러서 굴리기·도박을 고른다 (손이 차 있어도 도박은 가능)
+      const ic = b.querySelector('.bag-k');
+      if (ic && !ic.dataset.icon) { ic.dataset.icon = '1'; ic.textContent = ''; ic.style.backgroundImage = `url(${dieKindIcon(k)})`; }
       const lo = ch && ch.min ? ch.min[k] || 1 : 1;
       b.title = ch ? `${ch.grade ? ch.grade[k] + ' ' : ''}${ch.label[k]} — 굴리면 ${lo === ch.sides[k] ? lo : lo + '~' + ch.sides[k]} 성 타워` : k;
     }
@@ -3912,6 +3999,7 @@ window.addEventListener('pointerup', ev => {
 document.addEventListener('keydown', ev => {
   if (ev.key === 'r' || ev.key === 'R' || ev.key === 'ㄱ') rollByButton();
   else if (S.mode === 'infinity' && ev.key >= '1' && ev.key <= '6') upgradeFace(parseInt(ev.key, 10));
+  else if (ev.key === 'Escape' && BAG_MENU_KIND) { closeBagMenu(); }
   else if (ev.key === 'Escape') {
     if (DRAG.active) stopPlaceDrag();
     S.selTower = null;
@@ -3956,11 +4044,15 @@ const ssInf = $('ss-inf-btn');
 if (ssInf) ssInf.addEventListener('click', () => { if (!infinityUnlocked()) return; audio(); startInfinity(); });
 for (let f = 1; f <= 6; f++) { const b = $('inf-face-' + f); if (b) b.addEventListener('click', () => upgradeFace(f)); }
 if ($('chest-btn')) $('chest-btn').addEventListener('click', () => { audio(); buyChest(); });
-if ($('gamble-btn')) $('gamble-btn').addEventListener('click', () => { audio(); if (!S.inf) return; S.inf.gambleOn = !S.inf.gambleOn; syncUI(); });
 if ($('help-btn')) $('help-btn').addEventListener('click', () => { audio(); openInfHelp(); });
 if ($('help-close')) $('help-close').addEventListener('click', () => { audio(); closeInfHelp(); });
 if ($('exchange-btn')) $('exchange-btn').addEventListener('click', () => { audio(); exchangeTower(); });
-for (const k of BAG_KINDS) { const b = $('bag-' + k); if (b) b.addEventListener('click', () => { audio(); rollBagDie(k); }); }
+for (const k of BAG_KINDS) { const b = $('bag-' + k); if (b) b.addEventListener('click', (ev) => { audio(); ev.stopPropagation(); openBagMenu(k); }); }
+if ($('bag-roll')) $('bag-roll').addEventListener('click', () => { audio(); const k = BAG_MENU_KIND; closeBagMenu(); if (k) startBagRoll(k); });
+if ($('bag-gamble')) $('bag-gamble').addEventListener('click', () => { audio(); const k = BAG_MENU_KIND; if (k) gambleDie(k); closeBagMenu(); });
+if ($('bag-menu')) $('bag-menu').addEventListener('click', (ev) => ev.stopPropagation());
+if ($('keep-bag')) $('keep-bag').addEventListener('change', (ev) => { if (S.inf) S.inf.keepBag = ev.target.checked; });
+document.addEventListener('click', () => closeBagMenu());
 $('btn-shop').addEventListener('click', () => { audio(); gotoShop(); });
 $('ss-back').addEventListener('click', () => gotoLobby());
 $('shop-back').addEventListener('click', () => gotoLobby());
@@ -4048,7 +4140,7 @@ function drawLoading(pr) {
   window.DKupgrade = upgradeFace;
   window.DKchest = buyChest; window.DKbag = () => S.inf && S.inf.bag; window.DKrollBag = rollBagDie; // 인피니티 갓챠 훅
   window.DKtowerSpr = towerSpr;
-  window.DKdamage = damageEnemy; window.DKgamble = gambleDie; window.DKexchange = exchangeTower; window.DKhelp = openInfHelp; // 메운디 시스템 테스트 훅
+  window.DKbagmenu = openBagMenu; window.DKdamage = damageEnemy; window.DKgamble = gambleDie; window.DKexchange = exchangeTower; window.DKhelp = openInfHelp; // 메운디 시스템 테스트 훅
   window.DKplace = tryPlace;                      // 보유 주사위를 석단 idx 에 놓기
   window.DKroll = () => { if (S.phase === 'playing' && !S.heldDie && S.gold >= ROLL_COST) { S.gold -= ROLL_COST; S.heldDie = pickUnlockedFace(); syncUI(); return S.heldDie; } return 0; }; // 즉시 굴림 (테스트용)
   window.DKspots = () => SPOTS;
