@@ -33,6 +33,14 @@
         <button id="help-close">알겠어요</button>
       </div>
     </div>
+    <!-- 스타크래프트식 로그·채팅: 화면에 잠깐 남았다 사라진다. 로그는 싱글에서도, 채팅은 멀티에서만 -->
+    <div id="log-panel">
+      <div id="log-lines"></div>
+      <form id="chat-form" class="hidden" autocomplete="off">
+        <span id="chat-tag">전체</span>
+        <input id="chat-input" type="text" maxlength="120" placeholder="메시지를 입력하고 Enter" />
+      </form>
+    </div>
     <div id="mini-top" class="mini hidden">
       <button id="speed-btn" title="게임 속도">x1</button>
       <button id="mute-btn" title="소리">&#128266;</button>
@@ -154,6 +162,7 @@
   <img id="ghost-tower" alt="">
   <div id="ghost-ring"></div>
 </div>
+<script src="net.js?v=71"></script>
 <script src="content.js?v=71"></script>
 <script src="game.js?v=71"></script>
 </body>

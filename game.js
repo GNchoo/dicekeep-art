@@ -1434,6 +1434,7 @@ function buyChest() {
   S.fxs.push({ kind: 'ring', x: W / 2, y: 150, t: 0, dur: 0.6 + rare * 0.2, size: 90 + rare * 40, color: col });
   if (rk >= 6) { S.shakeT = Math.max(S.shakeT || 0, 0.3); S.fxs.push({ kind: 'circle', x: W / 2, y: 150, t: 0, dur: 1.2, size: 200, color: col }); }
   if (rare >= 2) SFX.win(); else if (kind === 'd1') SFX.deny(); else SFX.coin();
+  if (rk >= 3) netLog(`${ch.grade[kind]} ${ch.label[kind]} 등장!`, 'gacha'); // 유물 이상은 방에 알린다
   rollDie(kind); // 뽑으면 무조건 굴러서 타워가 된다 — 배치부터 하고 다시 뽑는다
   syncUI();
   return kind;
@@ -1473,6 +1474,7 @@ function finishSlot() {
     S.fxs.push({ kind: 'ring', x: W / 2, y: H / 2, t: 0, dur: 0.9, size: 260, color: def.color });
     S.shakeT = S.heldDie >= 15 ? 0.5 : 0.2;
     if (S.heldDie >= 15) SFX.win(); else SFX.merge();
+    netLog(`★${S.heldDie} ${def.name.replace(/ ★\d+$/, '')} 획득!`, 'gacha');
   }
   syncUI();
 }
@@ -1970,6 +1972,7 @@ function startWave() {
     const INF = DKCONTENT.INFINITY, M = INF.monsterFor(S.wave), hi = INF.highArmor(S.wave);
     const who = M.boss ? '보스' : `${M.name} ×${M.count}`;
     S.texts.push({ str: `웨이브 ${S.wave} · ${who} · ${INF.sizeName[M.cls]}${M.armor ? ` · 방어 ${M.armor}` : ''}${hi ? ' · 고방어!' : ''}`, x: W / 2, y: H / 2 - 70, t: 0, color: hi ? '#ff7a7a' : M.boss ? '#ffd452' : '#ffe6b0' });
+    if (M.boss || hi || S.wave % 10 === 1) pushLog(`웨이브 ${S.wave} — ${who}${hi ? ' · 고방어!' : ''}`, M.boss ? 'boss' : 'sys'); // 굵직한 웨이브만
   }
   SFX.wave();
   syncUI();
@@ -2006,10 +2009,12 @@ function startInfinity(kind) {
   if (!INF) return;
   S.mode = 'infinity';
   const MODE = INF.modeOf(kind === 'clear' || kind === 'endless' ? kind : 'endless'); // 도전(클리어 있음) / 무한(진짜 무한)
+  clearLog();
   S.inf = { sp: 0, power: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 }, kills: 0, spent: 0, queue: [], chests: 0, bossT: 0, cleared: 0, mode: MODE.key, gauntlet: MODE.gauntlet };
   S.stage = 0;
   S.stageData = { n: 0, name: '무한 투기장', tier: INF.tier.tier, tierName: INF.tier.name + ' · ' + MODE.name, tierColor: INF.tier.color, lanes: INF.tier.lanes.length, waves: Infinity, bases: [], gem: 0 };
   S.stageWaves = Infinity;
+  setTimeout(() => pushLog(MODE.key === 'clear' ? `도전 시작 — ${INF.clearWave}웨이브 완주가 목표입니다` : '무한 시작 — 버틸 수 있는 데까지', 'sys'), 60);
   S.mapKey = INF.mapKey;
   S.gold = INF.startGold;
   S.lives = INF.lives;
@@ -2038,6 +2043,7 @@ function checkInfClear() {
   S.shakeT = Math.max(S.shakeT || 0, 0.5);
   for (let i = 0; i < 5; i++) S.fxs.push({ kind: 'ring', x: W / 2, y: 200, t: 0, dur: 1.1 + i * 0.25, size: 160 + i * 60, color: '#ffd452' });
   S.texts.push({ str: `무한 투기장 클리어! ${line}웨이브 완주`, x: W / 2, y: H / 2 - 90, t: 0, color: '#ffd452', big: true });
+  netLog(`무한 투기장 · 도전 ${line}웨이브 완주 — 클리어!`, 'up');
   endInfinity(true);
   return true;
 }
@@ -2057,6 +2063,7 @@ function endInfinity(won) {
   if (isBest) SAVE.infBest = wave;
   SAVE.infRuns = [{ wave, kills: S.inf.kills, mode: S.inf.mode, date: new Date().toISOString().slice(0, 10) }].concat(SAVE.infRuns || []).slice(0, 5);
   saveSave();
+  if (!won) netLog(`런 종료 — 웨이브 ${wave} 까지`, 'life');
   (won ? SFX.win : SFX.lose)();
   showOverlay(
     won ? '클리어!' : isBest ? '신기록!' : '런 종료',
@@ -2102,6 +2109,7 @@ function enforceFieldCap() {
     S.lives -= INF.capDmg || 1;
     S.hurtT = 0.5;
     SFX.leak();
+    netLog(old.isBoss ? `보스 ${old.name}가 한계선을 넘었습니다 — 런 종료` : `한계선 초과! ${old.name} 이탈 · 목숨 ${Math.max(0, S.lives)}`, 'life');
     if (old.isBoss) { S.lives = 0; S.inf.bossLeak = old.name; }
     S.enemies = S.enemies.filter(x => !x.dead);
     if (S.lives <= 0) { S.lives = 0; syncUI(); endInfinity(); return; }
@@ -2189,6 +2197,7 @@ function damageEnemy(e, dmg, src) {
           S.gold += r.gold;
           for (const k of r.dice) S.inf.queue.push(k); // 손이 비면 자동으로 굴러간다
           S.texts.push({ str: `보스 보상: +${r.gold}G · ${r.dice.map(k => ch.grade[k] + ' ' + ch.label[k]).join(' + ')}!`, x: W / 2, y: 170, t: 0, color: dieKindColor(r.dice[0]) });
+          netLog(`보스 ${e.name} 처치! +${r.gold}G · ${r.dice.map(k => ch.grade[k]).join(' + ')}`, 'boss');
         }
         if (!S.enemies.some(x => x !== e && !x.dead && x.isBoss)) S.inf.bossT = 0; // 제한시간 해제
       }
@@ -2435,6 +2444,7 @@ function update(dt) {
       S.lives -= e.def.dmg;
       S.hurtT = 0.5;
       SFX.leak();
+      pushLog(`${e.name || e.def.name} 이(가) 성채에 도달! 목숨 ${Math.max(0, S.lives)}`, 'life');
       S.fxs.push({ kind: 'impact', x: p.x, y: p.y - 20, t: 0, dur: 0.3, size: 80 });
       syncUI();
       if (S.lives <= 0) { S.lives = 0; if (S.mode === 'infinity') endInfinity(); else gameEnd(false); return; }
@@ -3487,19 +3497,23 @@ function enhanceTower() {
     S.fxs.push({ kind: 'ring', x: t.x, y: t.y - 20, t: 0, dur: 0.8, size: 130, color: col });
     S.fxs.push({ kind: 'circle', x: t.x, y: t.y + 4, t: 0, dur: 0.8, size: 120, color: col, pips: t.face <= 6 ? t.face : 0 });
     if (t.face >= 14) S.shakeT = Math.max(S.shakeT || 0, 0.3);
+    netLog(`확률강화 성공 — ${t.def.name}`, 'up');
     SFX.win(); syncUI(); return 'up';
   }
   if (r < en.up + en.keep) {
     S.texts.push({ str: '강화 실패 — 타워는 그대로', x, y, t: 0, color: '#d9c9a0' });
     S.fxs.push({ kind: 'ring', x: t.x, y: t.y - 20, t: 0, dur: 0.5, size: 80, color: '#9a9a9a' });
+    pushLog('확률강화 실패 — 타워는 그대로', 'sys');
     SFX.deny(); syncUI(); return 'keep';
   }
   S.texts.push({ str: '강화 실패 — 타워 소멸!', x, y, t: 0, color: '#ff7a7a', big: true });
   S.fxs.push({ kind: 'impact', x: t.x, y: t.y - 20, t: 0, dur: 0.45, size: 120 });
   S.fxs.push({ kind: 'ring', x: t.x, y: t.y - 20, t: 0, dur: 0.6, size: 140, color: '#ff7a7a' });
+  const lost = t.def.name;
   S.towers = S.towers.filter(o => o !== t);
   S.selTower = null;
   S.shakeT = Math.max(S.shakeT || 0, 0.35);
+  netLog(`확률강화 실패 — ${lost} 소멸!`, 'boom');
   SFX.deny(); syncUI(); return 'boom';
 }
 
@@ -3970,7 +3984,66 @@ window.addEventListener('pointerup', ev => {
   if (DRAG.active && ev.pointerId === DRAG.pid) endPlaceDrag(ev);
 }, { passive: false });
 
+// ==================== 로그 · 채팅 (스타크래프트식) ====================
+// 로그는 모드와 상관없이 뜬다. 채팅은 멀티(방 안)에서만 열린다.
+// 줄은 LOG.ttl 초 동안 남았다가 서서히 사라진다 — CSS 애니메이션이라 프레임 비용이 없다.
+const LOG = { ttl: 9, fade: 1.2, max: 8, nodes: [] };
+const LOG_KIND = { sys: 'sys', gacha: 'gacha', up: 'up', boom: 'boom', boss: 'boss', life: 'life', chat: 'chat' };
+function pushLog(text, kind, who) {
+  const box = $('log-lines');
+  if (!box) return;
+  const el = document.createElement('div');
+  el.className = 'log-line ' + (LOG_KIND[kind] || 'sys');
+  el.innerHTML = (who ? `<span class="who">${escapeHtml(who)}</span>: ` : '') + escapeHtml(text);
+  box.appendChild(el);
+  LOG.nodes.push(el);
+  while (LOG.nodes.length > LOG.max) { const old = LOG.nodes.shift(); if (old.parentNode) old.parentNode.removeChild(old); }
+  el._fadeT = setTimeout(() => el.classList.add('fade'), (LOG.ttl - LOG.fade) * 1000);
+  el._killT = setTimeout(() => {
+    const i = LOG.nodes.indexOf(el); if (i >= 0) LOG.nodes.splice(i, 1);
+    if (el.parentNode) el.parentNode.removeChild(el);
+  }, LOG.ttl * 1000);
+}
+function escapeHtml(s) { return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+function clearLog() { for (const el of LOG.nodes) { clearTimeout(el._fadeT); clearTimeout(el._killT); if (el.parentNode) el.parentNode.removeChild(el); } LOG.nodes.length = 0; }
+// 방 안이면 같은 줄을 다른 플레이어에게도 보낸다 (내 이름표를 달아서)
+function netLog(text, kind) {
+  pushLog(text, kind);
+  const N = window.DKNET;
+  if (N && N.inRoom()) N.broadcast('log', { text, kind });
+}
+// ---- 채팅 입력 ----
+const chatForm = $('chat-form'), chatInput = $('chat-input');
+function chatOpen() {
+  const N = window.DKNET;
+  if (!chatForm || !N || !N.inRoom()) return false;
+  chatForm.classList.remove('hidden');
+  chatInput.focus();
+  return true;
+}
+function chatClose() { if (chatForm) { chatForm.classList.add('hidden'); chatInput.value = ''; chatInput.blur(); } }
+function chatSend() {
+  const N = window.DKNET, txt = (chatInput.value || '').trim().slice(0, 120);
+  chatClose();
+  if (!txt || !N || !N.inRoom()) return;
+  N.broadcast('chat', { text: txt });
+  pushLog(txt, 'chat', (N.me && N.me.name) || '나');
+}
+if (chatForm) {
+  chatForm.addEventListener('submit', (ev) => { ev.preventDefault(); chatSend(); });
+  chatInput.addEventListener('keydown', (ev) => { ev.stopPropagation(); if (ev.key === 'Escape') chatClose(); });
+}
+if (window.DKNET) {
+  DKNET.on('chat', ({ from, data }) => pushLog(String(data && data.text || ''), 'chat', from && from.name));
+  DKNET.on('log', ({ from, data }) => pushLog(String(data && data.text || ''), (data && data.kind) || 'sys', from && from.name));
+  DKNET.on('peer-left', (p) => pushLog(`${p.name} 님이 나갔습니다`, 'sys'));
+  DKNET.on('host', (h) => pushLog(h.isHost ? '내가 방장이 되었습니다 (연결 상태 최상)' : '방장이 정해졌습니다', 'sys'));
+  DKNET.on('state', (st) => { if (st !== 'in-room') chatClose(); });
+}
+
 document.addEventListener('keydown', ev => {
+  if (document.activeElement === chatInput) return;                   // 채팅 입력 중에는 단축키를 막는다
+  if (ev.key === 'Enter' && chatOpen()) { ev.preventDefault(); return; } // 멀티: Enter 로 채팅
   if (ev.key === 'r' || ev.key === 'R' || ev.key === 'ㄱ') rollByButton();
   else if (S.mode === 'infinity' && ev.key >= '1' && ev.key <= '6') upgradeFace(parseInt(ev.key, 10));
   else if (ev.key === 'Escape') {
@@ -4111,6 +4184,7 @@ function drawLoading(pr) {
   window.DKtowerSpr = towerSpr;
   window.DKTD = TOWER_DEFS;                        // 테스트 훅
   window.DKdamage = damageEnemy; window.DKenhance = enhanceTower; window.DKqueue = () => S.inf && S.inf.queue; window.DKhelp = openInfHelp; // 메운디 시스템 테스트 훅
+  window.DKlog = pushLog; window.DKlogs = () => LOG.nodes.map(n => n.textContent); window.DKchatOpen = chatOpen; // 로그·채팅 훅
   window.DKplace = tryPlace;                      // 보유 주사위를 석단 idx 에 놓기
   window.DKroll = () => { if (S.phase === 'playing' && !S.heldDie && S.gold >= ROLL_COST) { S.gold -= ROLL_COST; S.heldDie = pickUnlockedFace(); syncUI(); return S.heldDie; } return 0; }; // 즉시 굴림 (테스트용)
   window.DKspots = () => SPOTS;

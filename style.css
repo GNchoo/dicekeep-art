@@ -157,6 +157,48 @@ html, body {
 #ov-btn:disabled { opacity: .7; cursor: default; }
 .hint { margin-top: 8px; font-size: 11px; color: #8d8065; flex-shrink: 0; word-break: keep-all; }
 
+
+/* ---- 스타크래프트식 로그·채팅 (스테이지 위 오버레이) ---- */
+#log-panel {
+  position: absolute; left: 10px; bottom: 10px; z-index: 6;
+  width: min(46%, 460px);
+  display: flex; flex-direction: column; gap: 4px;
+  pointer-events: none;
+}
+#log-lines { display: flex; flex-direction: column; gap: 2px; }
+.log-line {
+  font-size: 13px; line-height: 1.35; color: #e9dfc4;
+  text-shadow: 0 1px 2px #000, 0 0 6px rgba(0,0,0,.9);
+  word-break: keep-all; overflow-wrap: anywhere;
+  animation: logIn .16s ease-out;
+}
+.log-line.fade { animation: logOut 1.2s ease-in forwards; }
+.log-line b { color: #fff; }
+.log-line .who { color: #7fd4ff; }
+.log-line.sys { color: #b6a98c; }
+.log-line.gacha { color: #ffd452; }
+.log-line.up { color: #8ef0b0; }
+.log-line.boom { color: #ff8f8f; }
+.log-line.boss { color: #ffb07a; }
+.log-line.life { color: #ff7a7a; }
+.log-line.chat { color: #ffffff; }
+@keyframes logIn { from { opacity: 0; transform: translateX(-6px); } to { opacity: 1; transform: none; } }
+@keyframes logOut { from { opacity: 1; } to { opacity: 0; } }
+#chat-form { display: flex; align-items: center; gap: 6px; pointer-events: auto; }
+#chat-form.hidden { display: none !important; }
+#chat-tag { font-size: 12px; color: #ffd452; text-shadow: 0 1px 2px #000; white-space: nowrap; }
+#chat-input {
+  flex: 1; min-width: 0;
+  font-family: inherit; font-size: 13px; color: #fff;
+  background: rgba(10, 8, 6, .72); border: 1px solid #6b5636; border-radius: 6px;
+  padding: 5px 8px; outline: none;
+}
+#chat-input:focus { border-color: var(--gold); }
+@media (max-width: 720px) {
+  #log-panel { width: min(66%, 320px); left: 6px; bottom: 6px; }
+  .log-line { font-size: 11px; }
+}
+
 /* ---- 하단 HUD ---- */
 #hud {
   position: relative;
