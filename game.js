@@ -1246,7 +1246,7 @@ function saveSave() {
   try { localStorage.setItem(SAVE_KEY, JSON.stringify(SAVE)); } catch (e) { /* 무시 */ }
 }
 function stageUnlocked(n) { return n === 1 || SAVE.cleared.includes(n - 1); }
-function infinityUnlocked() { return window.DKINF_OPEN === true || SAVE.cleared.length >= 50; } // ?inf=1 이면 임시 개방
+function infinityUnlocked() { return true; } // 인피니티는 스테이지 진행과 무관하게 처음부터 열려 있다
 function stageCleared(n) { return SAVE.cleared.includes(n); }
 
 // 굴리기 결과를 해금된 눈으로 제한
@@ -1532,7 +1532,11 @@ function openInfHelp() {
   if (t) t.textContent = S.inf && S.inf.mode === 'clear' ? '무한 투기장 · 도전 안내' : '무한 투기장 · 무한 안내';
   h.classList.remove('hidden');
 }
-function closeInfHelp() { const h = $('inf-help'); if (h) h.classList.add('hidden'); }
+function closeInfHelp() {
+  const h = $('inf-help'); if (h) h.classList.add('hidden');
+  try { localStorage.setItem('dk_infHelpSeen', '1'); } catch (e) { /* 사파리 프라이빗 */ } // 실제로 닫아야 본 것으로 친다
+}
+function helpSeen() { try { return localStorage.getItem('dk_infHelpSeen') === '1'; } catch (e) { return false; } }
 function chestDef() { const C = window.DKCONTENT; return C && C.INFINITY && C.INFINITY.chest; }
 function chestCost() { const ch = chestDef(); return ch && S.inf ? ch.cost(S.inf.chests || 0) : Infinity; }
 function buyChest() {
@@ -1552,6 +1556,7 @@ function buyChest() {
   if (rare >= 2) SFX.win(); else if (kind === 'd1') SFX.deny(); else SFX.coin();
   if (rk >= 3) netLog(`${ch.grade[kind]} ${ch.label[kind]} 등장!`, 'gacha'); // 유물 이상은 방에 알린다
   rollDie(kind); // 뽑으면 무조건 굴러서 타워가 된다 — 배치부터 하고 다시 뽑는다
+  coachHit('roll');
   syncUI();
   return kind;
 }
@@ -2091,6 +2096,7 @@ function startWave() {
     if (M.boss || hi || S.wave % 10 === 1) pushLog(`웨이브 ${S.wave} — ${who}${hi ? ' · 고방어!' : ''}`, M.boss ? 'boss' : 'sys'); // 굵직한 웨이브만
   }
   SFX.wave();
+  coachHit('wave');
   syncUI();
 }
 
@@ -2142,7 +2148,10 @@ function startInfinity(kind) {
   SLOT.active = false;
   applyMapLayout(INF.mapKey, INF.tier);
   S.phase = 'playing';
-  try { if (!localStorage.getItem('dk_infHelpSeen')) { localStorage.setItem('dk_infHelpSeen', '1'); setTimeout(openInfHelp, 300); } } catch (e) { /* 무시 */ }
+  // 첫 런은 코치가 먼저 돈다. 코치가 끝나면 도움말을 한 번 연다.
+  // 이미 코치를 본 사람인데 도움말을 아직 안 봤다면 도움말만 연다.
+  if (!coachDone()) setTimeout(coachStart, 500);
+  else if (!helpSeen()) setTimeout(openInfHelp, 300);
   showScreen('playing');
   syncUI();
 }
@@ -2171,7 +2180,8 @@ function endInfinity(won) {
   S.waveActive = false;
   const wave = won ? S.wave : Math.max(0, S.wave - 1); // 클리어는 그 웨이브를 완료한 것
   const modeName = S.inf.mode === 'clear' ? '도전' : '무한';
-  const r = INF.gems(wave, SAVE.infMilestones);
+  const prevBest = SAVE.infBest || 0;
+  const r = INF.gems(wave, SAVE.infMilestones, prevBest);   // 신기록 보너스는 갱신 전 기록으로 판정
   let gems = r.gems + (won ? (INF.clearGems || 60) : 0);
   SAVE.gems += gems;
   SAVE.infMilestones = (SAVE.infMilestones || []).concat(r.newly);
@@ -2394,6 +2404,7 @@ function upgradeFace(f) {
     S.fxs.push({ kind: 'ring', x: t.x, y: t.y - 40, t: 0, dur: 0.45, size: 70, color: def.color });
   }
   S.texts.push({ str: `${def.name} 파워업 Lv${lv + 1}!`, x: W / 2, y: H / 2 - 70, t: 0, color: def.color, big: true });
+  coachHit('power');
   SFX.merge();
   syncUI();
   return true;
@@ -2536,6 +2547,7 @@ function update(dt) {
   if (S.phase !== 'playing') return;
 
   if (S.mode === 'infinity') pumpQueue(); // 보상 대기열: 손이 비면 자동으로 굴림
+  if (window.__coachOn) { COACH.t = (COACH.t || 0) + dt; if (COACH.t > 0.4) { COACH.t = 0; coachRender(); } } // 대상이 생기면 잡아준다
 
   // 스폰
   if (S.waveActive) {
@@ -3505,6 +3517,7 @@ function fitStage() {
   // 칩·미니버튼 축소는 뷰포트 폭이 아니라 실제 스테이지 폭으로 정한다 (가로 폰은 폭이 넓어도 스테이지가 좁다)
   stageEl.classList.toggle('small', w < 680);
   stageEl.classList.toggle('tiny', w < 520);
+  if (window.__coachOn) coachRender();   // 링·말풍선도 새 배치에 맞춘다
 }
 window.addEventListener('resize', fitStage);
 window.addEventListener('orientationchange', fitStage);
@@ -3632,10 +3645,13 @@ function syncInfo() {
   if (!S.selTower) {
     infoPanel.classList.add('hidden');
     if (hint) {
-      hint.textContent = S.mode === 'infinity'
-        ? '석단의 타워를 누르면 여기에서 판매·확률강화를 할 수 있습니다.'
-        : '석단의 타워를 누르면 여기에서 능력치와 판매를 확인할 수 있습니다.';
-      hint.classList.toggle('hidden', !!S.heldDie || S.phase !== 'playing');
+      // 손에 타워가 있는 그 순간이 "어떻게 놓지?" 인 순간이다 — 이때 숨기지 않는다
+      hint.textContent = S.heldDie
+        ? '빈 석단을 눌러 타워를 놓으세요 (끌어다 놓아도 됩니다). 같은 눈 위에 놓으면 합체.'
+        : S.mode === 'infinity'
+          ? '석단의 타워를 누르면 여기에서 판매·확률강화를 할 수 있습니다.'
+          : '석단의 타워를 누르면 여기에서 능력치와 판매를 확인할 수 있습니다.';
+      hint.classList.toggle('hidden', S.phase !== 'playing');
     }
     return;
   }
@@ -3740,39 +3756,114 @@ function gotoLobby() { S.phase = 'lobby'; showScreen('lobby'); }
 function gotoStageSelect() { S.phase = 'stageSelect'; showScreen('stageSelect'); }
 function gotoShop() { S.phase = 'shop'; showScreen('shop'); }
 
+// ==================== 첫 런 코치 (단계별 손잡이 안내) ====================
+// 인피니티가 처음부터 열려 있으므로, 스테이지 모드를 거치지 않은 사람에게 조작을 직접 가르친다.
+// 각 단계는 "실제로 그 행동을 했을 때"만 넘어간다. 링·말풍선만 얹고 클릭은 통과시킨다.
+const COACH = {
+  on: false, i: 0,
+  steps: [
+    { key: 'roll',   text: '<b>뽑기</b>를 눌러 주사위를 뽑으세요. 굴러 나온 숫자가 타워가 됩니다.', at: () => $('roll-btn') },
+    { key: 'place',  text: '<b>빈 석단을 눌러</b> 타워를 놓으세요. 끌어다 놓아도 됩니다.', at: () => coachSpot() },
+    { key: 'wave',   text: '준비됐으면 <b>웨이브를 시작</b>하세요. 적이 트랙을 돌기 시작합니다.', at: () => $('wave-btn') },
+    { key: 'select', text: '놓은 <b>타워를 누르면</b> 아래에서 판매·확률강화를 할 수 있습니다.', at: () => coachTower() },
+    { key: 'power',  text: '<b>파워업</b>은 골드로 그 눈의 타워를 전부 세게 만듭니다.', at: () => $('inf-panel') },
+  ],
+};
+function coachDone() { try { return localStorage.getItem('dk_coachDone') === '1'; } catch (e) { return true; } }
+function coachSpot() {   // 비어 있는 첫 석단을 화면 좌표로
+  for (let i = 0; i < SPOTS.length; i++) {
+    if (towerAt(i)) continue;
+    const p = canvasToClient(SPOTS[i][0], SPOTS[i][1]);
+    return { left: p.x - 34, top: p.y - 34, width: 68, height: 68 };
+  }
+  return null;
+}
+function coachTower() {  // 배치된 첫 타워를 화면 좌표로
+  const t = S.towers[0];
+  if (!t) return null;
+  const p = canvasToClient(t.x, t.y);
+  return { left: p.x - 34, top: p.y - 44, width: 68, height: 78 };
+}
+function coachStart() {
+  if (coachDone() || S.mode !== 'infinity') return;
+  COACH.on = true; COACH.i = 0;
+  window.__coachOn = true;
+  coachRender();
+}
+function coachStop(finished) {
+  if (!COACH.on) return;
+  COACH.on = false;
+  window.__coachOn = false;
+  const el = $('coach'); if (el) el.classList.add('hidden');
+  try { localStorage.setItem('dk_coachDone', '1'); } catch (e) { /* 사파리 프라이빗 */ }
+  if (finished && !helpSeen()) setTimeout(openInfHelp, 400); // 조작을 익힌 뒤에 시스템 설명
+}
+// 그 단계의 행동을 했을 때 호출한다 (buyChest / tryPlace / startWave / 타워 선택 / upgradeFace)
+function coachHit(key) {
+  if (!COACH.on) return;
+  const step = COACH.steps[COACH.i];
+  if (!step || step.key !== key) return;
+  COACH.i++;
+  if (COACH.i >= COACH.steps.length) { coachStop(true); return; }
+  coachRender();
+}
+function coachRender() {
+  const el = $('coach'), ring = $('coach-ring'), tip = $('coach-tip');
+  if (!el || !COACH.on) return;
+  const step = COACH.steps[COACH.i];
+  const target = step && step.at();
+  if (!target) { el.classList.add('hidden'); return; }   // 대상이 아직 없으면 다음 프레임에
+  const r = target.getBoundingClientRect ? target.getBoundingClientRect() : target;
+  const pad = 6;
+  el.classList.remove('hidden');
+  ring.style.left = (r.left - pad) + 'px';
+  ring.style.top = (r.top - pad) + 'px';
+  ring.style.width = (r.width + pad * 2) + 'px';
+  ring.style.height = (r.height + pad * 2) + 'px';
+  $('coach-step').textContent = `${COACH.i + 1} / ${COACH.steps.length}`;
+  $('coach-text').innerHTML = step.text;
+  // 말풍선은 대상 위에, 위가 좁으면 아래에 둔다
+  tip.style.left = '0px'; tip.style.top = '0px';
+  const tw = tip.offsetWidth, th = tip.offsetHeight;
+  const cx = r.left + r.width / 2;
+  tip.style.left = Math.max(8, Math.min(window.innerWidth - tw - 8, cx - tw / 2)) + 'px';
+  tip.style.top = (r.top - th - 14 >= 8 ? r.top - th - 14 : Math.min(window.innerHeight - th - 8, r.top + r.height + 14)) + 'px';
+}
+
 function syncInfButtons() {
-  const ok = infinityUnlocked();
   const INF = window.DKCONTENT && DKCONTENT.INFINITY;
   const line = (INF && INF.clearWave) || 101;
-  const setBtn = (id, icon, name, sub) => {           // 도전 / 무한 두 갈래
+  const setBtn = (id, icon, name, sub) => {           // 도전 / 무한 두 갈래 (해금 없음)
     const b = $(id);
     if (!b) return;
-    b.disabled = !ok;
-    b.classList.toggle('locked', !ok);
-    b.innerHTML = `${ok ? icon : '&#128274;'} 인피니티 · ${name}<small>${ok ? sub : '50 스테이지 클리어 후 해금'}</small>`;
+    b.disabled = false;
+    b.classList.remove('locked');
+    b.innerHTML = `${icon} 인피니티 · ${name}<small>${sub}</small>`;
   };
   setBtn('btn-inf-clear', '&#127942;', '도전', `${line}웨이브 완주 = 클리어`);
   setBtn('btn-infinity', '&#8734;', '무한', '끝이 없는 기록 도전');
-  const setBanner = (id, txt, lock) => {
+  const setBanner = (id, txt) => {
     const b = $(id);
     if (!b) return;
-    b.disabled = !ok;
-    b.classList.toggle('locked', !ok);
-    b.textContent = ok ? txt : lock;
+    b.disabled = false;
+    b.classList.remove('locked');
+    b.textContent = txt;
   };
-  setBanner('ss-inf-clear', `🏆 인피니티 · 도전 — ${line}웨이브 완주가 목표`, '🔒 인피니티 · 도전 — 50 스테이지 클리어 후 해금');
-  setBanner('ss-inf-btn', '∞ 인피니티 · 무한 — 끝이 없는 기록 도전', '🔒 인피니티 · 무한 — 50 스테이지 클리어 후 해금');
+  setBanner('ss-inf-clear', `🏆 인피니티 · 도전 — ${line}웨이브 완주가 목표`);
+  setBanner('ss-inf-btn', '∞ 인피니티 · 무한 — 끝이 없는 기록 도전');
   const info = $('lobby-inf');
   if (info) {
-    info.innerHTML = ok
+    const played = (SAVE.infBest || 0) > 0 || (SAVE.infRuns || []).length;
+    info.innerHTML = played   // 처음이면 모드 설명, 해 봤으면 기록
       ? `최고 기록 <b>${SAVE.infBest || 0}</b> 웨이브 · 도전 클리어 <b>${SAVE.infClears || 0}</b>회${(SAVE.infRuns || []).length ? ` · 최근 ${SAVE.infRuns.slice(0, 3).map(r => r.wave).join(' / ')}` : ''}`
-      : `인피니티는 로비 아래 <b>분홍 버튼</b>입니다. 50 스테이지를 모두 깨면 열립니다 (현재 ${SAVE.cleared.length}/50).`;
+      : `<b>도전</b>은 ${line}웨이브를 완주하면 클리어, <b>무한</b>은 끝이 없는 기록 도전입니다. 둘 다 6눈 타워와 석단 15칸이 처음부터 전부 열려 있습니다.`;
   }
 }
 
 function renderLobby() {
   $('lobby-gems').textContent = SAVE.gems;
-  $('lobby-progress').innerHTML = `클리어 <b>${SAVE.cleared.length}</b> / 50 스테이지 · 해금 타워 <b>${unlockedFaces().length}</b>/6`;
+  const un = (SAVE.unlockedTowers || []).length;
+  $('lobby-progress').innerHTML = `스테이지 클리어 <b>${SAVE.cleared.length}</b> / 50 · 스테이지용 해금 타워 <b>${un}</b>/6 <small>(인피니티는 6눈 전부 사용)</small>`;
   syncInfButtons();
 }
 
@@ -3946,6 +4037,7 @@ function tryPlace(idx) {
     S.texts.push({ str: def.name + '!', x: sx, y: sy - 90, t: 0, color: def.color });
     S.heldDie = 0;
     SFX.place();
+    coachHit('place');
   } else if (existing.face === S.heldDie) {
     if (existing.lvl < MAX_LVL) {
       existing.lvl++;
@@ -4160,6 +4252,7 @@ canvas.addEventListener('click', ev => {
       return;
     }
     S.selTower = towerAt(idx);
+    if (S.selTower) coachHit('select');
     syncUI();
     return;
   }
@@ -4289,6 +4382,7 @@ if (ssInf) ssInf.addEventListener('click', () => startInf('endless'));
 if ($('ss-inf-clear')) $('ss-inf-clear').addEventListener('click', () => startInf('clear'));
 for (let f = 1; f <= 6; f++) { const b = $('inf-face-' + f); if (b) b.addEventListener('click', () => upgradeFace(f)); }
 if ($('help-btn')) $('help-btn').addEventListener('click', () => { audio(); openInfHelp(); });
+if ($('coach-skip')) $('coach-skip').addEventListener('click', () => { audio(); coachStop(false); });
 if ($('rotate-hint')) $('rotate-hint').addEventListener('click', () => {
   rotateHintOff = true;
   try { localStorage.setItem('dk_rotateHint', 'off'); } catch (e) { /* 저장 못해도 이번 세션은 닫힌다 */ }

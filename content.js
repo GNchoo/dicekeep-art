@@ -1327,7 +1327,7 @@ window.DKCONTENT = (function () {
     },
     modeOf(key) { return this.modes[key] || this.modes.endless; },
     clearWave: 101,   // 도전 모드 클리어 선 (로스터 한 사이클 = 메운디 1~101R)
-    clearGems: 60,
+    clearGems: 80,
     lateFrom: 90, lateExp: 1.08, // 최종 관문(도전 모드): 91웨이브부터 체력이 한 번 더 가팔라진다 (1.08 → 실질 1.166)
     // ---- 보스 주기는 로스터 기준 (2주기부터 w % 10 과 어긋난다) ----
     isBossWave(w) { const r = this.getRoster()[(Math.max(1, w) - 1) % 101]; return !!(r && r.boss); },
@@ -1345,10 +1345,12 @@ window.DKCONTENT = (function () {
         elites: w >= 20 ? 3 : 2,
       };
     },
-    milestones: [25, 50, 100, 200],
-    // 런 종료 젬: 10웨이브당 2 + 최초 달성 마일스톤당 15
-    gems(wave, claimed) {
-      let g = Math.floor(wave / 10) * 2;
+    milestones: [10, 25, 50, 75, 100, 150, 200],
+    // 런 종료 젬: 5웨이브당 2 + 최고 기록 갱신 10 + 최초 달성 마일스톤당 15.
+    // 인피니티만 해도 상점(스킨 20 · 6눈 90)이 돌아가야 해서 예전 곡선(10웨이브당 2)에서 올렸다.
+    gems(wave, claimed, best) {
+      let g = Math.floor(wave / 5) * 2;                       // w20 → 8 · w50 → 20 · w101 → 40
+      if (best != null && wave > best) g += 10;               // 신기록 보너스
       const newly = [];
       for (const m of this.milestones) if (wave >= m && !(claimed || []).includes(m)) { g += 15; newly.push(m); }
       return { gems: g, newly };
