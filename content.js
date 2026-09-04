@@ -309,7 +309,7 @@ window.DKCONTENT = (function () {
     const spots = [];
     for (let r = 0; r < 3; r++) for (let c = 0; c < 5; c++) spots.push([512 + (c - 2) * 88, 300 + (r - 1) * 72]);
     return { path, path2: null, airPts: null, spots, spots2: [], portals: [], center: null, noGoal: true, loopAt,
-             roads: [entry, ring], board: { x: 290, y: 178, w: 444, h: 244 }, track: { L, R, T, B, rad, mid: MID } };
+             roads: [entry, ring], board: { x: 290, y: 178, w: 444, h: 244, cols: 5, rows: 3, gapX: 88, gapY: 72 }, track: { L, R, T, B, rad, mid: MID } };
   }
 
   // ===== 난이도 티어 =====
@@ -1141,7 +1141,7 @@ window.DKCONTENT = (function () {
     const spots = [];
     for (let r = 0; r < 5; r++) for (let c = 0; c < 3; c++) spots.push([cx + (c - 1) * gapX, MID + (r - 2) * gapY]);
     return { path, path2: null, airPts: null, spots, spots2: [], portals: [], center: null, noGoal: true, loopAt,
-             roads: [entry, ring], board: { x: cx - 210, y: MID - 310, w: 420, h: 620, gapX, gapY }, track: { L, R, T, B, rad, mid: MID } };
+             roads: [entry, ring], board: { x: cx - 210, y: MID - 310, w: 420, h: 620, cols: 3, rows: 5, gapX, gapY }, track: { L, R, T, B, rad, mid: MID } };
   }
 
   // 아레나 레이아웃 적용 (W/H/pathLength 가 정의된 뒤에 실행해야 한다)

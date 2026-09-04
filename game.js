@@ -3443,15 +3443,19 @@ function draw() {
   // 웨이브 예고
   if (S.phase === 'playing' && !S.waveActive && S.wave < S.stageWaves) {
     ctx.save();
-    const fs = Math.max(14, Math.round(W * 0.017));
-    ctx.font = uiFont(fs);
     ctx.textAlign = 'center';
     const msg = S.wave === 0
       ? (S.mode === 'infinity' ? '뽑기(160G)를 눌러 주사위를 뽑고, 굴러 나온 타워를 석단에 놓으세요!' : '주사위를 던져 타워를 배치하고, 준비되면 웨이브를 시작하세요!')
       : `다음 웨이브까지 ${Math.ceil(S.autoT)}초`;
-    // 좌상단 칩 아래. 캔버스 높이에 비례시켜 세로 아레나에서도 같은 자리에 온다
-    const by = Math.round(H * 0.105), tw = ctx.measureText(msg).width;
-    const pw = Math.min(W - 24, tw + 34), ph = fs + 18;
+    // 화면에서 항상 같은 크기로 읽히게 한다 (세로 아레나는 캔버스가 커서 그냥 비례시키면 깨알같이 작다)
+    const sc = stageScale() || 1;
+    let fs = Math.round(17 / sc);
+    ctx.font = uiFont(fs);
+    while (fs > 12 && ctx.measureText(msg).width > W - 48) { fs -= 1; ctx.font = uiFont(fs); }
+    const tw = ctx.measureText(msg).width;
+    const pw = Math.min(W - 40, tw + 34), ph = fs + 18;
+    // 좌상단 칩(HTML) 바로 아래. 칩 높이는 화면 기준이라 캔버스로 환산한다
+    const by = Math.round(58 / sc + ph / 2);   // 칩·미니버튼(화면 기준 ~52px) 아래
     ctx.fillStyle = 'rgba(14,10,6,0.72)';
     ctx.strokeStyle = 'rgba(232,182,74,0.5)';
     ctx.lineWidth = 1.5;
@@ -3900,12 +3904,30 @@ function screenIsPortrait() {
   return availH > 0 && availW / availH < 0.95;
 }
 function arenaKeyForScreen() { return screenIsPortrait() ? 'cInfP' : 'cInf'; }
+// 두 아레나는 보드가 3열×5행 / 5열×3행 이라 같은 석단 '번호'가 서로 다른 칸이다.
+// 화면을 돌리면 보드도 같이 돌아야 하므로 격자 좌표를 90° 회전시켜 옮긴다.
+function boardOf(key) {
+  const m = window.DKCONTENT && DKCONTENT.maps && DKCONTENT.maps.find(x => x.key === key);
+  return (m && m.board) || null;
+}
+function remapSpot(fromKey, toKey, idx) {
+  const a = boardOf(fromKey), b = boardOf(toKey);
+  if (!a || !b || !a.cols || !b.cols) return idx;
+  if (a.cols === b.cols) return idx;
+  const cf = idx % a.cols, rf = Math.floor(idx / a.cols);
+  // 넓어지면(세로→가로) 시계방향, 좁아지면(가로→세로) 반시계방향으로 돈다 — 되돌리면 제자리
+  const ct = b.cols > a.cols ? (b.cols - 1 - rf) : rf;
+  const rt = b.cols > a.cols ? cf : (a.cols - 1 - cf);
+  const out = rt * b.cols + ct;
+  return (out >= 0 && out < b.cols * b.rows) ? out : idx;
+}
 function relayoutArena(key) {
   const INF = window.DKCONTENT && DKCONTENT.INFINITY;
   if (!INF || S.mode !== 'infinity' || S.mapKey === key) return false;
-  // 좌표는 버리고 '어느 석단', '경로의 몇 %' 만 남긴다
-  const towers = S.towers.map(t => ({ spot: t.spot, face: t.face, def: t.def, lvl: t.lvl, skin: t.skin, cd: t.cd }));
-  const selSpot = S.selTower ? S.selTower.spot : -1;
+  // 좌표는 버리고 '어느 칸', '경로의 몇 %' 만 남긴다
+  const from = S.mapKey;
+  const towers = S.towers.map(t => ({ spot: remapSpot(from, key, t.spot), face: t.face, def: t.def, lvl: t.lvl, skin: t.skin, cd: t.cd }));
+  const selSpot = S.selTower ? remapSpot(from, key, S.selTower.spot) : -1;
   const enemies = S.enemies.map(e => ({ e, ratio: e.dist / Math.max(1, laneLen(e)) }));
   S.mapKey = key;
   applyMapLayout(key, INF.tier);
