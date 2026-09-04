@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>주사위 성채 (Dicekeep)</title>
-<link rel="stylesheet" href="style.css?v=69" />
+<link rel="stylesheet" href="style.css?v=70" />
 <link rel="icon" href="ui/gold.png" />
 </head>
 <body>
@@ -22,10 +22,9 @@
       <div class="help-card">
         <h3>무한 투기장 안내</h3>
         <ol>
-          <li><b>🎁 뽑기 160G</b> — 등급이 정해지고 바로 굴러 타워가 됩니다. 굴려 나온 숫자 = 타워 성(★).<br><small>일반 50% (1★) · 레어 33.1% (1~4★) · 고대 10.2% (1~6★) · 유물 5.1% (1~8★) · 서사 0.8% (1~12★) · 전설 0.5% (1~20★) · 에픽 0.2% (14★↑) · 신화 0.08% (18★↑) · 태초 0.019% (20★)</small></li>
-          <li><b>주머니</b> — 보스 보상 주사위, 손에 타워가 있을 때 뽑은 주사위가 쌓입니다. <b>주사위를 누르면 「굴리기 / 도박」을 고릅니다.</b></li>
-          <li><b>도박</b> — 그 주사위를 걸고 20%로 한 등급 위(유물 → 서사), 80%는 사라집니다. 방금 뽑은 주사위로 도박하려면 뽑기 옆 <b>주머니에 보관</b>을 켜세요.</li>
-          <li><b>교환</b> — 7★ 이상 타워를 고르면 다시 굴릴 수 있습니다 (전설 1600G 66% · 신화 4000G 50%). 실패하면 타워가 사라집니다.</li>
+          <li><b>&#127873; 뽑기 160G</b> — 등급이 정해지고 <b>바로 굴러 타워가 됩니다.</b> 굴려 나온 숫자 = 타워 성(★). 손에 타워가 있으면 먼저 석단에 배치해야 다시 뽑을 수 있습니다.<br><small>일반 50% (1★) · 레어 33.1% (1~4★) · 고대 10.2% (1~6★) · 유물 5.1% (1~8★) · 서사 0.8% (1~12★) · 전설 0.5% (1~20★) · 에픽 0.2% (14★↑) · 신화 0.08% (18★↑) · 태초 0.019% (20★)</small></li>
+          <li><b>보상 대기</b> — 보스를 잡으면 주사위를 받습니다. 손이 비는 대로 하나씩 자동으로 굴러갑니다.</li>
+          <li><b>확률강화</b> — 배치한 타워를 누르면 하단 상태창에 <b>판매 / 확률강화</b>가 뜹니다. 골드를 걸고 <b>강화(★+1) · 유지 · 소멸</b> 셋 중 하나가 나오며, 성(★)이 높을수록 비싸고 소멸 확률도 커집니다. 합체 레벨은 강화해도 유지됩니다.</li>
           <li><b>판매</b> — 7★ 이상은 팔 수 없습니다.</li>
           <li><b>파워업</b> — 골드로 눈(1~6)을 강화합니다. 강화할수록 비싸집니다. ★ 히든 타워는 6눈 파워업을 따릅니다.</li>
           <li><b>패배</b> — 필드에 적이 200마리를 넘으면 가장 오래된 적이 사라지며 목숨 −1. 보스는 5분 20초 안에 잡아야 합니다.</li>
@@ -108,9 +107,28 @@
         <span id="dice-q">?</span>
         <canvas id="slot-canvas" width="74" height="74" class="hidden"></canvas>
       </div>
-      <button id="roll-btn">주사위 굴리기<small id="roll-cost">40 G</small></button>
-      <label id="keep-bag" class="hidden" title="켜면 뽑은 주사위가 바로 굴러가지 않고 주머니에 들어갑니다. 주머니에서 굴리기·도박을 고를 수 있습니다"><input type="checkbox"><span>주머니에<br>보관</span></label>
+      <div id="draw-col">
+        <button id="roll-btn">주사위 굴리기<small id="roll-cost">40 G</small></button>
+        <span id="queue-chip" class="hidden" title="보스 보상 주사위입니다. 손이 비면 하나씩 자동으로 굴러갑니다">보상 대기 <b>0</b></span>
+      </div>
+    </div>
+
+    <div id="tower-panel">
       <div id="held-info" class="hidden"><b id="held-name"></b><span id="held-desc"></span></div>
+      <div id="info-panel" class="hidden">
+        <div id="info-head"><img id="info-dice" alt=""><b id="info-name"></b><span id="info-atk" class="hidden"></span></div>
+        <div id="info-body"></div>
+        <div id="info-actions">
+          <button id="sell-btn">판매</button>
+          <button id="enhance-btn" class="hidden" title="골드를 걸고 타워를 한 성(★) 위로 올립니다. 실패하면 타워가 사라집니다">확률강화</button>
+          <span id="enhance-odds" class="hidden"></span>
+        </div>
+      </div>
+      <div id="hud-hint" class="hidden">석단의 타워를 누르면 여기에서 판매·확률강화를 할 수 있습니다.</div>
+    </div>
+
+    <div id="right-panel">
+      <button id="wave-btn">웨이브 시작</button>
     </div>
 
     <div id="hud-break" class="hidden"></div>
@@ -122,37 +140,7 @@
       <button id="inf-face-4" class="inf-face"><span class="inf-pip">4</span><span class="inf-lv">Lv0</span><span class="inf-cost">1 SP</span></button>
       <button id="inf-face-5" class="inf-face"><span class="inf-pip">5</span><span class="inf-lv">Lv0</span><span class="inf-cost">1 SP</span></button>
       <button id="inf-face-6" class="inf-face"><span class="inf-pip">6</span><span class="inf-lv">Lv0</span><span class="inf-cost">1 SP</span></button>
-    </div>
-
-    <div id="inf-gacha" class="hidden" title="주머니: 손에 타워가 있을 때 뽑은 주사위와 보스 보상 주사위가 쌓입니다. 눌러서 굴리세요">
-      <span class="bag-label">주머니</span>
-      <div id="dice-bag">
-        <button id="bag-d1" class="bag-die empty" data-k="d1"><span class="bag-k">d1</span><span class="bag-n">0</span></button>
-        <button id="bag-d4" class="bag-die empty" data-k="d4"><span class="bag-k">d4</span><span class="bag-n">0</span></button>
-        <button id="bag-d6" class="bag-die empty" data-k="d6"><span class="bag-k">d6</span><span class="bag-n">0</span></button>
-        <button id="bag-d8" class="bag-die empty" data-k="d8"><span class="bag-k">d8</span><span class="bag-n">0</span></button>
-        <button id="bag-d12" class="bag-die empty" data-k="d12"><span class="bag-k">d12</span><span class="bag-n">0</span></button>
-        <button id="bag-d20" class="bag-die empty" data-k="d20"><span class="bag-k">d20</span><span class="bag-n">0</span></button>
-        <button id="bag-epic" class="bag-die rare epic empty hidden" data-k="epic"><span class="bag-k">에픽</span><span class="bag-n">0</span></button>
-        <button id="bag-myth" class="bag-die rare myth empty hidden" data-k="myth"><span class="bag-k">신화</span><span class="bag-n">0</span></button>
-        <button id="bag-primal" class="bag-die rare primal empty hidden" data-k="primal"><span class="bag-k">태초</span><span class="bag-n">0</span></button>
-      </div>
       <button id="help-btn" title="무한 투기장 안내">?</button>
-      <div id="bag-menu" class="hidden">
-        <div id="bag-menu-title"></div>
-        <button id="bag-roll">&#127922; 굴리기<small>타워 만들기</small></button>
-        <button id="bag-gamble">&#128200; 도박<small>20% 승급 · 80% 소멸</small></button>
-      </div>
-    </div>
-
-    <div id="right-panel">
-      <div id="info-panel" class="hidden">
-        <div id="info-head"><img id="info-dice" alt=""><b id="info-name"></b></div>
-        <div id="info-body"></div>
-        <button id="sell-btn">판매</button>
-        <button id="exchange-btn" class="hidden">교환</button>
-      </div>
-      <button id="wave-btn">웨이브 시작</button>
     </div>
   </div>
 </div>
@@ -161,7 +149,7 @@
   <img id="ghost-tower" alt="">
   <div id="ghost-ring"></div>
 </div>
-<script src="content.js?v=69"></script>
-<script src="game.js?v=69"></script>
+<script src="content.js?v=70"></script>
+<script src="game.js?v=70"></script>
 </body>
 </html>

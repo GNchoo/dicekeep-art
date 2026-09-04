@@ -177,7 +177,10 @@ html, body {
 #hud.hidden, .hidden { display: none !important; }
 
 /* 주사위 패널 */
-#dice-panel { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; }
+#dice-panel { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 0 0 auto; }
+#draw-col { display: flex; flex-direction: column; align-items: stretch; gap: 4px; }
+#queue-chip { text-align: center; font-size: 11px; color: #ffd452; background: rgba(60,40,10,.55); border: 1px solid #a07a2a; border-radius: 999px; padding: 2px 8px; }
+#queue-chip b { color: #fff; }
 #dice-slot {
   width: 80px; height: 80px;
   background: rgba(0,0,0,.4);
@@ -228,7 +231,10 @@ html, body {
 #roll-btn:hover:not(:disabled) { filter: brightness(1.25); }
 #roll-btn:disabled { opacity: .45; cursor: default; }
 
-/* 하단 HUD: 주사위 패널(좌) ↔ 웨이브 패널(우) */
+/* 가운데: 손에 든 주사위 / 선택한 타워 상태창 */
+#tower-panel { flex: 1; min-width: 0; min-height: 84px; display: flex; align-items: center; gap: 10px; }
+#tower-panel > * { max-height: 84px; }
+#hud-hint { color: #8d8065; font-size: 12px; line-height: 1.5; word-break: keep-all; }
 
 /* 획득한 주사위 안내 */
 #held-info {
@@ -251,28 +257,22 @@ html, body {
 /* 우측 패널 */
 #right-panel { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
 #info-panel {
-  position: absolute;
-  left: 50%;
-  bottom: calc(100% + 8px);
-  transform: translateX(-50%);
-  z-index: 8;
-  display: flex; flex-direction: column; gap: 4px;
-  background: rgba(12, 9, 6, .92);
+  display: flex; flex-direction: column; justify-content: center; gap: 2px;
+  background: rgba(0,0,0,.3);
   border: 1px solid #6b5636;
   border-radius: 8px;
-  padding: 8px 12px;
+  padding: 6px 12px;
   font-size: 12px;
-  min-width: 188px;
-  max-width: 240px;
-  box-shadow: 0 8px 28px rgba(0,0,0,.55);
-  pointer-events: auto;
+  min-width: 0;
+  line-height: 1.35;
 }
-#info-head { display: flex; align-items: center; gap: 6px; }
+#info-head { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 #info-head img { width: 22px; height: 22px; object-fit: contain; }
 #info-head b { color: var(--gold); font-size: 13px; }
-#info-body { color: #cfc3a5; line-height: 1.5; white-space: pre-line; }
+#info-atk { font-size: 10px; color: #cfe4ff; background: rgba(80,120,190,.28); border: 1px solid #5b7fb8; border-radius: 999px; padding: 1px 7px; }
+#info-body { color: #cfc3a5; line-height: 1.4; }
+#info-actions { display: flex; align-items: center; gap: 8px; margin-top: 2px; }
 #sell-btn {
-  margin-top: 2px;
   font-size: 12px;
   padding: 4px 8px;
   background: #5e2c22;
@@ -282,11 +282,14 @@ html, body {
   cursor: pointer;
   font-family: inherit;
 }
-#sell-btn:hover { filter: brightness(1.3); }
+#sell-btn:hover:not(:disabled) { filter: brightness(1.3); }
 #sell-btn:disabled { opacity: .55; cursor: default; filter: none; }
-#exchange-btn { margin-top: 4px; font-size: 12px; padding: 4px 8px; border: 1px solid #c9a24a; background: #3a2c14; color: #ffd452; border-radius: 6px; cursor: pointer; }
-#exchange-btn:hover { filter: brightness(1.3); }
-#exchange-btn:disabled { opacity: .55; cursor: default; filter: none; }
+#enhance-btn { font-size: 12px; padding: 4px 8px; border: 1px solid #b76bff; background: #2a1a3a; color: #e0b8ff; border-radius: 6px; cursor: pointer; font-family: inherit; white-space: nowrap; }
+#enhance-btn:hover:not(:disabled) { filter: brightness(1.3); }
+#enhance-btn:disabled { opacity: .55; cursor: default; filter: none; }
+#enhance-odds { font-size: 11px; color: #b6a98c; }
+#enhance-odds .up { color: #8ef0b0; }
+#enhance-odds .boom { color: #ff8f8f; }
 #wave-btn {
   font-size: 15px;
   padding: 14px 18px;
@@ -549,33 +552,14 @@ body.placing #game { cursor: grabbing; }
 .inf-face .inf-lv { font-size: 10px; color: #ffb8ea; }
 .inf-face .inf-cost { font-size: 9px; color: #e8b64a; }
 
-/* 인피니티: 강화 패널과 보물상자는 HUD 둘째 줄 (첫 줄은 주사위·굴리기·웨이브) */
+/* 인피니티: 파워업 패널은 HUD 둘째 줄 (첫 줄은 주사위·타워 상태창·웨이브) */
+#dice-panel { order: 1; }
+#tower-panel { order: 2; }
+#right-panel { order: 3; margin-left: auto; }
 #hud-break { flex-basis: 100%; height: 0; order: 4; }
 #inf-panel { order: 5; margin-left: 0; }
-#inf-gacha { order: 6; }
-#right-panel { order: 3; margin-left: auto; }
-/* 인피니티 보물상자 + 주사위 가방 */
-#inf-gacha { display: flex; align-items: center; gap: 6px; padding: 4px 8px; margin-left: 6px; background: rgba(60, 40, 10, .45); border: 1px solid #a07a2a; border-radius: 10px; flex-shrink: 0; }
-#chest-btn { display: flex; flex-direction: column; align-items: center; gap: 1px; font-size: 13px; padding: 6px 10px; background: linear-gradient(#7a5a1e, #4a350f); color: #ffe9b8; border: 1px solid #e8b64a; border-radius: 8px; cursor: pointer; font-family: inherit; white-space: nowrap; }
-#chest-btn small { font-size: 11px; color: var(--gold); }
-#chest-btn:hover:not(:disabled) { filter: brightness(1.25); }
-#chest-btn:disabled { opacity: .45; cursor: default; }
-#dice-bag { display: flex; gap: 4px; }
-.bag-label { font-size: 12px; color: #ffe9b8; padding: 0 4px; white-space: nowrap; }
-/* 주머니 팝오버: absolute 라 HUD 폭·높이에 영향을 주지 않는다 */
-#bag-menu { position: absolute; bottom: calc(100% + 8px); left: 0; z-index: 9; width: 210px; display: flex; flex-direction: column; gap: 5px; padding: 8px; background: #1e1626; border: 1px solid #c9a24a; border-radius: 10px; box-shadow: 0 6px 22px rgba(0,0,0,.65); }
-#bag-menu.hidden { display: none !important; }
-#bag-menu::after { content: ''; position: absolute; top: 100%; left: var(--arrow, 50%); margin-left: -6px; border: 6px solid transparent; border-top-color: #c9a24a; }
-#bag-menu-title { font-size: 11px; color: #d9cdb0; text-align: center; padding-bottom: 2px; }
-#bag-menu button { display: flex; flex-direction: column; align-items: center; gap: 1px; font-family: inherit; font-size: 13px; padding: 6px 8px; border-radius: 8px; cursor: pointer; }
-#bag-menu button small { font-size: 10px; opacity: .85; }
-#bag-roll { background: linear-gradient(#7a5a1e, #4a350f); color: #ffe9b8; border: 1px solid #e8b64a; }
-#bag-gamble { background: #2a1a3a; color: #e0b8ff; border: 1px solid #b76bff; }
-#bag-menu button:hover:not(:disabled) { filter: brightness(1.25); }
-#bag-menu button:disabled { opacity: .45; cursor: default; }
-#keep-bag { display: flex; align-items: center; gap: 4px; width: 84px; flex-shrink: 0; font-size: 11px; color: #cfc3a5; line-height: 1.15; cursor: pointer; }
-#keep-bag input { accent-color: #b76bff; cursor: pointer; }
-#help-btn { width: 26px; height: 26px; border-radius: 50%; border: 1px solid #e8b64a; background: #3a2c14; color: var(--gold); font-weight: bold; cursor: pointer; font-family: inherit; }
+/* 무한 투기장 안내 */
+#help-btn { margin-left: 4px; width: 26px; height: 26px; border-radius: 50%; border: 1px solid #e8b64a; background: #3a2c14; color: var(--gold); font-weight: bold; cursor: pointer; font-family: inherit; }
 #help-btn:hover { filter: brightness(1.3); }
 #inf-help { position: absolute; inset: 0; z-index: 8; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,.62); }
 #inf-help.hidden { display: none; }
@@ -586,26 +570,19 @@ body.placing #game { cursor: grabbing; }
 .help-card li small { color: #c9bda0; font-size: 11px; }
 .help-card b { color: #ffe9b8; }
 #help-close { display: block; margin: 4px auto 0; padding: 6px 18px; border-radius: 8px; border: 1px solid #e8b64a; background: linear-gradient(#7a5a1e, #4a350f); color: #ffe9b8; font-family: inherit; font-size: 13px; cursor: pointer; }
-.bag-die { width: 40px; height: 44px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; background: linear-gradient(#3a2d21, #241a10); border: 1px solid #6b5636; border-radius: 8px; color: #e9dfc4; font-family: inherit; cursor: pointer; padding: 0; }
-.bag-die .bag-k { font-size: 11px; font-weight: bold; width: 22px; height: 22px; background: center/contain no-repeat; }
-.bag-die .bag-n { font-size: 12px; color: var(--gold); }
-.bag-die:hover:not(:disabled) { filter: brightness(1.3); }
-.bag-die:disabled { cursor: default; }
-.bag-die.epic { border-color: #ff8a5c; color: #ffb08a; }
-.bag-die.myth { border-color: #ff5fa8; color: #ffa3cf; box-shadow: 0 0 8px rgba(255,95,168,.45); }
-.bag-die.primal { border-color: #fff; color: #fff; box-shadow: 0 0 12px rgba(255,255,255,.6); }
-.bag-die.empty { opacity: .35; }
-#bag-d20 { border-color: #ffd452; } #bag-d12 { border-color: #c78bff; } #bag-d8 { border-color: #7fd4ff; }
-@media (max-width: 720px) {
-  #inf-gacha { width: 100%; margin-left: 0; justify-content: center; }
-  .bag-die { width: 34px; height: 38px; }
-}
 
 /* 좁거나 낮은 화면(폰·작은 창): HUD 요소를 줄인다 */
 @media (max-width: 720px), (max-height: 520px) {
   #wrap { padding: 4px; gap: 4px; }
   #hud { padding: 6px 8px; gap: 6px 8px; min-height: 0; }
-  #dice-panel { flex: 1 1 auto; gap: 6px; }
+  #dice-panel { gap: 6px; }
+  /* 좁은 화면: 타워 상태창은 아래 줄 전체를 쓴다 */
+  #tower-panel { order: 6; flex-basis: 100%; min-height: 0; max-height: none; gap: 6px; }
+  #tower-panel > * { max-height: none; }
+  #info-panel { width: 100%; padding: 5px 8px; }
+  #info-actions { flex-wrap: wrap; gap: 6px; }
+  #hud-hint { font-size: 11px; }
+  #info-body { font-size: 11px; }
   #dice-slot { width: 60px; height: 60px; }
   #dice-slot img { width: 46px; height: 46px; }
   #dice-q { font-size: 24px; }

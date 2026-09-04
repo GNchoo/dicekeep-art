@@ -1305,8 +1305,15 @@ window.DKCONTENT = (function () {
       return { gold: 1600, dice: ['d20', n % 2 ? 'd8' : 'd12'] };
     },
     bossTimeLimit: 320, // 보스 라운드 5분 20초 안에 못 잡으면 패배
-    gamble: { up: 0.20 }, // 랜덤 도박: 주머니 주사위를 걸고 20% 확률로 한 등급 승급, 실패 시 소멸
-    exchange: { legend: { cost: 1600, p: 0.66, min: 7, max: 20 }, myth: { cost: 4000, p: 0.5, min: 18, max: 20 } }, // 전설 교환 100미네랄 66% · 신화 교환 250미네랄 50%
+    // 타워 확률강화(도박): 성공하면 한 단계 위 타워, 유지, 소멸 셋 중 하나. 등급이 높을수록 비싸고 위험하다.
+    enhance: {
+      maxFace: 20,
+      cost: (f) => Math.round((160 + 90 * f) / 10) * 10,            // 1눈 250G · 6눈 700G · 12★ 1,240G · 19★ 1,870G
+      odds: (f) => {                                                // 6눈 강화 51/유지 33/소멸 16 · 12★ 30/41/29 · 19★ 10/45/45
+        const up = Math.max(0.10, 0.72 - 0.035 * f), boom = Math.min(0.45, 0.03 + 0.022 * f);
+        return { up, boom, keep: Math.max(0, 1 - up - boom) };
+      },
+    },
     perks: { epic: [14, 17], myth: [18, 19], primal: [20, 20] }, // 에픽: 방어 무시+락다운 · 신화: 공속 ×1.5 · 태초: 트랙 전체 스플래시
     stun: { p: 0.12, dur: 1.0, bossDur: 0.4 },
     mythRate: 1.5,
