@@ -294,22 +294,26 @@ window.DKCONTENT = (function () {
   // 아래쪽 포탈에서 출발한 적이 (종류와 상관없이 전부) 시계 반대 방향으로 한 바퀴 돌아 위쪽 크리스탈에 닿는다.
   // 인피니티 아레나: 시작·도착 지점이 없다. 적은 왼쪽 화면 밖에서 입구 길로 들어와 가운데 트랙을 영원히 돈다.
   // 목숨은 '도착'이 아니라 필드 한계선(INFINITY.fieldCap)으로 깎인다 — game.js spawnEnemy.
-  function buildArenaLayout() {
-    const L = 250, R = 774, T = 150, B = 450, rad = 52, MID = 300; // 보드에 밀착: 가운데 줄에서 위·아래 트랙까지 150px
-    const arc = (cx, cy, a0, a1, n) => { const out = []; for (let i = 0; i <= n; i++) { const a = a0 + (a1 - a0) * i / n; out.push([Math.round(cx + rad * Math.cos(a)), Math.round(cy + rad * Math.sin(a))]); } return out; };
+  // W×H 는 화면 비율에 맞춰 game.js 가 정한다(arenaCanvasForScreen). 트랙·보드 치수는 고정이고 중심만 옮긴다.
+  // inset: 화면 위(자원 칩)·아래(겹침 HUD)가 가리는 만큼 트랙을 그 사이 가운데에 세운다.
+  function buildArenaLayout(W, H, inset) {
+    W = W || 1024; H = H || 576; inset = inset || {};
+    const cx = Math.round(W / 2), cy = Math.round((inset.top || 0) + (H - (inset.top || 0) - (inset.bottom || 0)) / 2);
+    const L = cx - 262, R = cx + 262, T = cy - 150, B = cy + 150, rad = 52, MID = cy; // 보드에 밀착: 가운데 줄에서 위·아래 트랙까지 150px
+    const arc = (ax, ay, a0, a1, n) => { const out = []; for (let i = 0; i <= n; i++) { const a = a0 + (a1 - a0) * i / n; out.push([Math.round(ax + rad * Math.cos(a)), Math.round(ay + rad * Math.sin(a))]); } return out; };
     const dedupe = (pts) => pts.filter((p, i) => i === 0 || p[0] !== pts[i - 1][0] || p[1] !== pts[i - 1][1]);
     // 시계 반대 방향 (화면 좌표계에서 y 아래가 +): 왼쪽 가운데 → 왼쪽 변 아래로 → 바닥 → 오른쪽 변 위로 → 위 변 왼쪽으로 → 왼쪽 가운데
     const ring = dedupe([[L, MID],
       ...arc(L + rad, B - rad, Math.PI, Math.PI / 2, 6), ...arc(R - rad, B - rad, Math.PI / 2, 0, 6),
       ...arc(R - rad, T + rad, 0, -Math.PI / 2, 6), ...arc(L + rad, T + rad, -Math.PI / 2, -Math.PI, 6), [L, MID]]);
-    const entry = [[-40, MID], [L, MID]];
+    const entry = [[-40, MID], [L, MID]];   // 캔버스 왼쪽 끝 밖에서 들어온다 — 캔버스가 넓어지면 입구 길도 같이 길어진다
     const path = dedupe([...entry, ...ring]);
-    const loopAt = L - entry[0][0]; // 입구 길이(290px). 경로 끝에 닿으면 여기로 되돌아가 계속 돈다
+    const loopAt = L - entry[0][0]; // 입구 길이. 경로 끝에 닿으면 여기로 되돌아가 계속 돈다
     // 석단 보드 3×5
     const spots = [];
-    for (let r = 0; r < 3; r++) for (let c = 0; c < 5; c++) spots.push([512 + (c - 2) * 88, 300 + (r - 1) * 72]);
+    for (let r = 0; r < 3; r++) for (let c = 0; c < 5; c++) spots.push([cx + (c - 2) * 88, cy + (r - 1) * 72]);
     return { path, path2: null, airPts: null, spots, spots2: [], portals: [], center: null, noGoal: true, loopAt,
-             roads: [entry, ring], board: { x: 290, y: 178, w: 444, h: 244, cols: 5, rows: 3, gapX: 88, gapY: 72 }, track: { L, R, T, B, rad, mid: MID } };
+             roads: [entry, ring], board: { x: cx - 222, y: cy - 122, w: 444, h: 244, cols: 5, rows: 3, gapX: 88, gapY: 72 }, track: { L, R, T, B, rad, mid: MID } };
   }
 
   // ===== 난이도 티어 =====
@@ -1123,11 +1127,13 @@ window.DKCONTENT = (function () {
     { id: 'lanternKoi', name: '등불잉어', hp: 1080, speed: 30, gold: 146, dmg: 5, size: 92, move: 'air', sprite: 'cLanternKoi', src: 'casual/bosses/lantern-koi.png' },
   ];
   // 세로 화면용 아레나: 캔버스 720×1080, 보드 3열×5행, 트랙은 세로로 긴 링
-  function buildArenaLayoutPortrait() {
-    const L = 90, R = 630, T = 200, B = 920, rad = 60, MID = 560;
-    const arc = (cx, cy, a0, a1, n) => {
+  function buildArenaLayoutPortrait(W, H, inset) {
+    W = W || 720; H = H || 1080; inset = inset || {};
+    const cx = Math.round(W / 2), cy = Math.round((inset.top || 0) + (H - (inset.top || 0) - (inset.bottom || 0)) / 2);
+    const L = cx - 270, R = cx + 270, T = cy - 360, B = cy + 360, rad = 60, MID = cy;
+    const arc = (ax, ay, a0, a1, n) => {
       const out = [];
-      for (let i = 0; i <= n; i++) { const a = a0 + (a1 - a0) * (i / n); out.push([cx + Math.cos(a) * rad, cy + Math.sin(a) * rad]); }
+      for (let i = 0; i <= n; i++) { const a = a0 + (a1 - a0) * (i / n); out.push([ax + Math.cos(a) * rad, ay + Math.sin(a) * rad]); }
       return out;
     };
     const dedupe = (pts) => pts.filter((p, i) => i === 0 || Math.hypot(p[0] - pts[i - 1][0], p[1] - pts[i - 1][1]) > 0.5);
@@ -1137,22 +1143,26 @@ window.DKCONTENT = (function () {
     const entry = [[-40, MID], [L, MID]];
     const path = dedupe([...entry, ...ring]);
     const loopAt = L - entry[0][0];
-    const gapX = 150, gapY = 118, cx = 360;
+    const gapX = 150, gapY = 118;
     const spots = [];
     for (let r = 0; r < 5; r++) for (let c = 0; c < 3; c++) spots.push([cx + (c - 1) * gapX, MID + (r - 2) * gapY]);
     return { path, path2: null, airPts: null, spots, spots2: [], portals: [], center: null, noGoal: true, loopAt,
              roads: [entry, ring], board: { x: cx - 210, y: MID - 310, w: 420, h: 620, cols: 3, rows: 5, gapX, gapY }, track: { L, R, T, B, rad, mid: MID } };
   }
 
-  // 아레나 레이아웃 적용 (W/H/pathLength 가 정의된 뒤에 실행해야 한다)
-  {
-    for (const inf of maps.filter((m) => m.arena)) {
-      const L = inf.arenaPortrait ? buildArenaLayoutPortrait() : buildArenaLayout();
-      inf.path = L.path; inf.path2 = L.path2; inf.airPts = L.airPts; inf.spots = L.spots; inf.spots2 = L.spots2;
-      inf.portals = L.portals; inf.center = L.center; inf.board = L.board; inf.track = L.track;
-      inf.noGoal = L.noGoal; inf.roads = L.roads; inf.loopAt = L.loopAt;
-    }
+  // 아레나 맵에 레이아웃을 (다시) 굽는다. 캔버스 크기가 화면 비율을 따르므로 game.js 가 판 시작·회전·리사이즈 때마다 부른다.
+  function layoutArena(inf, W, H, inset) {
+    const L = inf.arenaPortrait ? buildArenaLayoutPortrait(W, H, inset) : buildArenaLayout(W, H, inset);
+    inf.path = L.path; inf.path2 = L.path2; inf.airPts = L.airPts; inf.spots = L.spots; inf.spots2 = L.spots2;
+    inf.portals = L.portals; inf.center = L.center; inf.board = L.board; inf.track = L.track;
+    inf.noGoal = L.noGoal; inf.roads = L.roads; inf.loopAt = L.loopAt;
+    if (W && H) inf.canvas = [W, H];
+    inf.inset = { top: (inset && inset.top) || 0, bottom: (inset && inset.bottom) || 0 };
+    return inf;
   }
+
+  // 아레나 레이아웃 기본 적용 (기본 캔버스 크기. 실제 판에서는 game.js 가 화면 비율로 다시 굽는다)
+  for (const inf of maps.filter((m) => m.arena)) layoutArena(inf, inf.canvas[0], inf.canvas[1]);
 
   // ===== 걷기 시트 순차 연결 =====
   // 13~24번째 적과 보스 1~10 은 시트 파일이 아직 없어도 미리 연결해 둔다.
@@ -1400,7 +1410,7 @@ window.DKCONTENT = (function () {
   return {
     maps, towerSkins, skinLetters: SKIN_LETTERS, bases, bossBases, species, bosses, stages,
     INFINITY, DICE_POWER,
-    tiers: TIERS, tierOf, buildLayout, buildArenaLayout, makeAvoidFromImage, pathLength, pathAt, pathDist,
+    tiers: TIERS, tierOf, buildLayout, buildArenaLayout, buildArenaLayoutPortrait, layoutArena, makeAvoidFromImage, pathLength, pathAt, pathDist,
     TILE, GW, GH, THEMES, TILE_ASSETS, themeForStage, TEMPLATES_SINGLE, TEMPLATES_DUAL, buildGridLayout, templateForStage,
     mapCount: 50, stageCount: 50,
   };

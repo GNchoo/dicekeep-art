@@ -108,6 +108,11 @@ function buildLane(kind, pts, label) {
 function applyMapLayout(mapKey, tier) {
   const C = window.DKCONTENT;
   const m = C && C.maps && C.maps.find(x => x.key === mapKey);
+  // 아레나는 캔버스를 화면 비율로 만든다 (레터박스 없이 화면을 다 쓴다). 트랙·보드 치수는 그대로, 중심만 옮겨 굽는다
+  if (m && m.arena && C.layoutArena && typeof arenaCanvasForScreen === 'function') {
+    const a = arenaCanvasForScreen(mapKey);
+    C.layoutArena(m, a.w, a.h, a.inset);
+  }
   if (m && m.canvas) setCanvasSize(m.canvas[0], m.canvas[1]); else setCanvasSize(1024, 576);
   if (m && C.buildLayout) {
     // 배경 픽셀로 물 판정 → 코드 생성 석단이 물 위에 걸리지 않게
@@ -3519,45 +3524,88 @@ const $ = id => document.getElementById(id);
 const overlayEl = $('overlay'), statsEl = $('stats'), hudEl = $('hud'), miniEl = $('mini-top');
 const wrapEl = $('wrap'), stageEl = $('stage');
 
-// 화면에 맞춰 스테이지(16:9)와 HUD 를 배치한다. 두 가지 배치가 있고 JS 가 실제 가용 공간으로 고른다
+// 화면에 맞춰 스테이지와 HUD 를 배치한다. 세 가지 배치가 있고 JS 가 실제 가용 공간으로 고른다
 // (스테이지 크기는 뷰포트 폭이 아니라 세로 여유가 정하므로 미디어쿼리로는 맞출 수 없다):
-//   side    — 가로로 넓고 낮은 화면(가로 폰): #wrap 을 row 로, HUD 를 오른쪽 세로 열로. 스테이지가 세로를 꽉 쓴다
+//   over    — 인피니티 가로: 아레나 캔버스가 화면 비율로 만들어져 화면을 꽉 채우고, HUD 는 한 줄로 아레나 아래쪽에 겹친다
+//   bleed   — 인피니티 세로: 아래 두 줄 HUD 를 뺀 나머지를 아레나가 전부 쓴다 (캔버스 높이가 화면 비율을 따른다)
+//   side    — 스테이지 모드, 가로로 넓고 낮은 화면(가로 폰): #wrap 을 row 로, HUD 를 오른쪽 세로 열로
 //   stacked — 그 외(세로 폰·데스크톱): 스테이지 위, HUD 아래. 남는 세로 공간은 HUD 를 키워 채운다
 const SIDE_MIN_HUD = 150, SIDE_MAX_HUD = 240, ROOMY_GAP = 120, ROOMY_MAX = 430;
+const OVER_MAX_W = 1600, OVER_TOP_INSET = 44;   // 겹침 배치 최대 폭 · 위쪽 자원 칩 줄 높이(css px)
 let RELAYOUTING = false;
 let rotateHintOff = false;
 try { rotateHintOff = localStorage.getItem('dk_rotateHint') === 'off'; } catch (e) { /* 사파리 프라이빗 */ }
-function fitStage() {
+function wrapAvail() {
   const cs = getComputedStyle(wrapEl);
   const padX = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
   const padY = (parseFloat(cs.paddingTop) || 0) + (parseFloat(cs.paddingBottom) || 0);
-  const gap = parseFloat(cs.rowGap) || 8;
-  const availW = wrapEl.clientWidth - padX;
-  const availH = wrapEl.clientHeight - padY;
-  const hudHidden = hudEl.classList.contains('hidden');
-  if (!RELAYOUTING && S.mode === 'infinity' && S.phase === 'playing' && typeof arenaKeyForScreen === 'function') {
-    const want = arenaKeyForScreen();
-    if (want !== S.mapKey) { RELAYOUTING = true; try { relayoutArena(want); } finally { RELAYOUTING = false; } return; }
+  return { availW: wrapEl.clientWidth - padX, availH: wrapEl.clientHeight - padY, gap: parseFloat(cs.rowGap) || 8 };
+}
+const arenaPlaying = () => S.mode === 'infinity' && S.phase === 'playing';
+// 아레나 캔버스 크기: 짧은 변은 고정(가로 576 / 세로 720)이고 긴 변이 화면 비율을 따른다.
+// 가로는 위(칩 줄)·아래(겹침 HUD) 만큼 트랙을 비켜 세우도록 inset 을 캔버스 좌표로 넘긴다.
+function arenaCanvasForScreen(key) {
+  const { availW, availH, gap } = wrapAvail();
+  const hudH = hudEl.classList.contains('hidden') ? 0 : hudEl.offsetHeight;
+  if (key === 'cInfP') {
+    const boxH = Math.max(200, availH - hudH - gap);
+    const h = Math.max(1000, Math.min(1600, Math.round(720 * boxH / Math.max(200, availW))));
+    return { w: 720, h, inset: { top: 0, bottom: 0 } };
   }
-  const AR = W / H;                       // 현재 아레나 비율 (세로 아레나면 0.667)
+  const w = Math.max(720, Math.min(OVER_MAX_W, Math.round(576 * availW / Math.max(200, availH))));
+  const sc = Math.min(availH, availW / (w / 576)) / 576;      // 캔버스 1px 이 화면에서 몇 px 인지
+  return { w, h: 576, inset: { top: Math.round(OVER_TOP_INSET / sc), bottom: Math.round((hudH + 4) / sc) } };
+}
+function fitStage() {
+  const hudHidden = hudEl.classList.contains('hidden');
+  const inf = arenaPlaying();
+  const portraitScreen = typeof screenIsPortrait === 'function' && screenIsPortrait();
+  const over = inf && !hudHidden && !portraitScreen;
+  wrapEl.classList.toggle('bleed', inf);
+  wrapEl.classList.toggle('over', over);
+  const { availW, availH, gap } = wrapAvail();
+  if (!RELAYOUTING && inf && typeof arenaKeyForScreen === 'function') {
+    // 방향이 바뀌었거나 화면 비율이 캔버스와 2% 이상 어긋나면 아레나를 다시 굽는다 (타워 칸·적 진행률은 보존)
+    const want = arenaKeyForScreen();
+    const a = arenaCanvasForScreen(want);
+    const cur = (window.DKCONTENT.maps.find(x => x.key === S.mapKey) || {}).inset || { top: 0, bottom: 0 };
+    if (want !== S.mapKey || Math.abs(a.w / a.h - W / H) > 0.02 * (W / H) || Math.abs(a.inset.bottom - cur.bottom) > 10 || Math.abs(a.inset.top - cur.top) > 10) {
+      RELAYOUTING = true; try { relayoutArena(want, true); } finally { RELAYOUTING = false; } return;
+    }
+  }
+  const AR = W / H;                       // 현재 아레나 비율 (세로 아레나면 <1)
   const portraitArena = AR < 1;
   // 세로 아레나는 화면도 세로라는 뜻이므로 HUD 를 옆으로 보내지 않는다
-  const side = !portraitArena && !hudHidden && availH > 0 && availW / availH >= 1.45 && availH < 620;
+  const side = !inf && !portraitArena && !hudHidden && availH > 0 && availW / availH >= 1.45 && availH < 620;
   wrapEl.classList.toggle('side', side);
   const setPx = (el, k, v) => { const px = Math.floor(v) + 'px'; if (el.style[k] !== px) el.style[k] = px; };
   const clearPx = (el, k) => { if (el.style[k]) el.style[k] = ''; };
+  const rh = $('rotate-hint');
 
   let w;
-  if (side) {
+  if (over) {
+    // 아레나가 화면을 다 쓰고 HUD 한 줄이 그 아래쪽에 겹친다. 캔버스 비율이 화면과 같으니 보통 여백이 없다
+    w = Math.max(240, Math.min(availW, availH * AR, OVER_MAX_W));
+    const h = w / AR;
+    hudEl.classList.remove('roomy');
+    clearPx(hudEl, 'height');
+    setPx(hudEl, 'width', w);
+    setPx(hudEl, 'left', (wrapEl.clientWidth - w) / 2);
+    setPx(hudEl, 'bottom', (wrapEl.clientHeight - h) / 2);
+    wrapEl.style.setProperty('--hud-h', hudEl.offsetHeight + 'px');
+    if (rh) rh.classList.add('hidden');
+  } else if (side) {
     // HUD 를 오른쪽 세로 열로: 스테이지가 세로를 다 쓰고 남은 폭을 HUD 가 갖는다
     const hudW = Math.min(SIDE_MAX_HUD, Math.max(SIDE_MIN_HUD, availW - availH * AR - gap));
+    clearPx(hudEl, 'left'); clearPx(hudEl, 'bottom');
     setPx(hudEl, 'width', hudW);
     setPx(hudEl, 'height', availH);
     w = Math.max(240, Math.min(availW - hudW - gap, availH * AR));
     hudEl.classList.remove('roomy');
+    if (rh) rh.classList.add('hidden');
   } else {
-    clearPx(hudEl, 'height');
-    const maxW = Math.max(240, Math.min(availW, 1280));
+    clearPx(hudEl, 'height'); clearPx(hudEl, 'left'); clearPx(hudEl, 'bottom');
+    const maxW = Math.max(240, Math.min(availW, inf ? availW : 1280));
     const hudH = () => hudHidden ? 0 : hudEl.offsetHeight + gap;
     const stageW = (h) => Math.max(240, Math.min(maxW, (availH - h) * AR));
     setPx(hudEl, 'width', maxW);
@@ -3566,16 +3614,22 @@ function fitStage() {
     setPx(hudEl, 'width', w);
     if (!hudHidden && hudEl.offsetHeight + gap > wideH + 1) setPx(hudEl, 'width', maxW); // 좁히면 접히는 경우 → 넓은 폭 유지
     w = stageW(hudH());
-    // 세로 폰: 스테이지가 폭에 막혀 위아래가 남으면 그 공간을 HUD 에 준다 (터치 타겟 확대)
-    const target = availH - w / AR - gap;          // HUD 가 차지할 수 있는 높이
-    clearPx(hudEl, 'height');
-    const natural = hudEl.offsetHeight;            // 인라인 높이 없는 상태의 자연 높이
-    const roomy = !hudHidden && target > natural + ROOMY_GAP;
-    hudEl.classList.toggle('roomy', roomy);
-    const rh = $('rotate-hint'); // 세로로 크게 남을 때만 '가로로 돌리세요' 안내
-    if (rh) rh.classList.toggle('hidden', !roomy || rotateHintOff || availW >= availH);
-    // 남는 만큼 다 먹으면 빈 갈색 벽이 된다 — 적당히만 키우고 나머지는 위아래 여백으로 둔다
-    if (roomy) setPx(hudEl, 'height', Math.max(hudEl.offsetHeight, Math.min(target, ROOMY_MAX)));
+    if (inf) {
+      // 인피니티 세로: 남는 공간은 아레나 캔버스가 (화면 비율로) 먹었으므로 HUD 는 자연 높이 그대로
+      hudEl.classList.remove('roomy');
+      if (rh) rh.classList.add('hidden');
+    } else {
+      // 세로 폰: 스테이지가 폭에 막혀 위아래가 남으면 그 공간을 HUD 에 준다 (터치 타겟 확대)
+      const target = availH - w / AR - gap;          // HUD 가 차지할 수 있는 높이
+      clearPx(hudEl, 'height');
+      const natural = hudEl.offsetHeight;            // 인라인 높이 없는 상태의 자연 높이
+      const roomy = !hudHidden && target > natural + ROOMY_GAP;
+      hudEl.classList.toggle('roomy', roomy);
+      // 세로로 크게 남을 때만 '가로로 돌리세요' 안내
+      if (rh) rh.classList.toggle('hidden', !roomy || rotateHintOff || availW >= availH);
+      // 남는 만큼 다 먹으면 빈 갈색 벽이 된다 — 적당히만 키우고 나머지는 위아래 여백으로 둔다
+      if (roomy) setPx(hudEl, 'height', Math.max(hudEl.offsetHeight, Math.min(target, ROOMY_MAX)));
+    }
   }
   setPx(stageEl, 'width', w);
   // 칩·미니버튼 축소는 뷰포트 폭이 아니라 실제 스테이지 폭으로 정한다 (가로 폰은 폭이 넓어도 스테이지가 좁다)
@@ -3916,9 +3970,7 @@ function coachRender() {
 // ==================== 화면 방향에 따른 아레나 교체 ====================
 // 가로/데스크톱은 16:9(cInf), 세로 폰은 세로 아레나(cInfP). 런 도중 돌려도 상태를 보존한 채 갈아끼운다.
 function screenIsPortrait() {
-  const cs = getComputedStyle(wrapEl);
-  const availW = wrapEl.clientWidth - (parseFloat(cs.paddingLeft) || 0) - (parseFloat(cs.paddingRight) || 0);
-  const availH = wrapEl.clientHeight - (parseFloat(cs.paddingTop) || 0) - (parseFloat(cs.paddingBottom) || 0);
+  const { availW, availH } = wrapAvail();
   return availH > 0 && availW / availH < 0.95;
 }
 function arenaKeyForScreen() { return screenIsPortrait() ? 'cInfP' : 'cInf'; }
@@ -3939,9 +3991,10 @@ function remapSpot(fromKey, toKey, idx) {
   const out = rt * b.cols + ct;
   return (out >= 0 && out < b.cols * b.rows) ? out : idx;
 }
-function relayoutArena(key) {
+// force: 같은 방향이라도 캔버스 비율이 화면과 어긋났을 때 다시 굽는다 (타워는 같은 칸, 적은 같은 진행률)
+function relayoutArena(key, force) {
   const INF = window.DKCONTENT && DKCONTENT.INFINITY;
-  if (!INF || S.mode !== 'infinity' || S.mapKey === key) return false;
+  if (!INF || S.mode !== 'infinity' || (S.mapKey === key && !force)) return false;
   // 좌표는 버리고 '어느 칸', '경로의 몇 %' 만 남긴다
   const from = S.mapKey;
   const towers = S.towers.map(t => ({ spot: remapSpot(from, key, t.spot), face: t.face, def: t.def, lvl: t.lvl, skin: t.skin, cd: t.cd }));

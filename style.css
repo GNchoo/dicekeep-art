@@ -321,6 +321,54 @@ html, body {
 #wrap.side #dice-slot img { width: 42px; height: 42px; }
 #wrap.side #roll-btn { flex: 1; font-size: 13px; padding: 8px 6px; }
 
+/* ---- 인피니티(bleed): 아레나 캔버스가 화면 비율로 만들어져 화면을 다 쓴다. 테두리·여백 없음 ----
+   세로: HUD 두 줄이 아래에 따로 (1행 주사위·타워 상태·웨이브, 2행 파워업)
+   가로(over): HUD 한 줄이 아레나 아래쪽에 반투명으로 겹친다. 위치·폭은 fitStage() 가 스테이지에 맞춰 준다 */
+#wrap.bleed { padding: 0; gap: 0; }
+#wrap.bleed #stage { border: 0; border-radius: 0; box-shadow: none; }
+#wrap.bleed #hud { border-radius: 0; border-left: 0; border-right: 0; border-bottom: 0; min-height: 0; gap: 6px 8px;
+  padding: 6px max(8px, env(safe-area-inset-right)) max(6px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left)); }
+#wrap.bleed #stats { left: max(6px, env(safe-area-inset-left)); }
+#wrap.bleed #mini-top { right: max(6px, env(safe-area-inset-right)); }
+#wrap.bleed #rotate-hint { display: none !important; }
+#wrap.bleed:not(.over) #tower-panel { order: 2; flex: 1 1 0; min-width: 0; min-height: 0; padding: 0 8px; }
+#wrap.bleed:not(.over) #hud-hint { font-size: 11px; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+#wrap.bleed:not(.over) #inf-panel { order: 5; width: 100%; margin-left: 0; justify-content: center; }
+/* 타워 정보 카드: HUD 가 낮으니 카드는 HUD 아래 모서리에 붙어 위(아레나 쪽)로 자란다 */
+#wrap.bleed #info-panel { inset: auto 6px 6px 6px; min-height: calc(100% - 12px); }
+
+#wrap.over { position: relative; }
+#wrap.over #hud { position: absolute; z-index: 5; flex-wrap: nowrap; align-items: center; justify-content: flex-start; gap: 8px;
+  padding: 5px max(8px, env(safe-area-inset-right)) max(5px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left));
+  background: linear-gradient(rgba(52,38,22,.82), rgba(24,17,8,.93)); border: 0; border-top: 1px solid rgba(214,168,86,.55);
+  box-shadow: 0 -6px 24px rgba(0,0,0,.45); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+#wrap.over #hud-break { display: none !important; }
+#wrap.over #dice-panel { order: 1; gap: 6px; padding: 4px 8px; }
+#wrap.over #dice-slot { width: 48px; height: 48px; }
+#wrap.over #dice-slot img { width: 36px; height: 36px; }
+#wrap.over #dice-q { font-size: 20px; }
+#wrap.over #roll-btn { font-size: 12px; padding: 6px 9px; line-height: 1.15; }
+#wrap.over #roll-btn small { font-size: 10px; }
+#wrap.over #queue-chip { font-size: 10px; padding: 2px 8px; }
+#wrap.over #tower-panel { order: 2; flex: 1 1 0; min-width: 90px; min-height: 0; max-height: none; padding: 0 8px; gap: 8px; }
+#wrap.over #tower-panel > *:not(#info-panel) { max-height: 52px; }
+#wrap.over #hud-hint { font-size: 11px; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+#wrap.over #held-info { padding: 3px 8px; }
+#wrap.over #held-info b { font-size: 12px; }
+#wrap.over #inf-panel { order: 3; width: auto; margin-left: 0; padding: 3px 5px; gap: 4px; }
+#wrap.over .inf-sp-chip { display: none; }
+#wrap.over .inf-face { width: 38px; height: 48px; padding: 1px 0; }
+#wrap.over .inf-face .inf-pip { font-size: 13px; }
+#wrap.over .inf-face .inf-lv { font-size: 9px; }
+#wrap.over .inf-face .inf-cost { font-size: 8px; }
+#wrap.over #help-btn { width: 26px; height: 26px; margin-left: 2px; }
+#wrap.over #right-panel { order: 4; margin-left: 0; }
+#wrap.over #wave-btn { min-width: 112px; font-size: 13px; padding: 9px 10px; white-space: nowrap; }
+/* 타워 정보 카드: 겹침 HUD 가 낮으니 카드는 위(아레나 쪽)로 자란다 */
+#wrap.over #info-panel { inset: auto 6px 5px 6px; min-height: calc(100% - 10px); flex-direction: row; align-items: center; gap: 10px; padding: 6px 36px 6px 10px; }
+#wrap.over #info-panel #sell-btn, #wrap.over #info-panel #enhance-btn { min-height: 30px; padding: 5px 10px; font-size: 12px; }
+#wrap.over #log-panel { bottom: calc(var(--hud-h, 70px) + 8px); }
+
 /* ---- 세로에서 남는 공간을 HUD 가 먹은 상태: 터치 타겟을 키운다 ---- */
 #hud.roomy { align-content: space-evenly; padding: 10px 12px; }
 /* 세로에서만 뜨는 안내: 가로가 더 낫다는 것을 알려준다 (한 번 닫으면 다시 안 뜬다) */
