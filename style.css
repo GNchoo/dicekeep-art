@@ -142,15 +142,18 @@ html, body {
 @keyframes chipPulse { 0%, 100% { opacity: 1; } 50% { opacity: .55; } }
 
 /* ---- 오버레이 (타이틀 / 결과) ---- */
+/* 타이틀·결과 오버레이: 스테이지는 16:9 라 세로 폰에서 227px 밖에 안 된다.
+   fixed 로 화면 전체를 쓰고 배경엔 키아트를 깐다 (예전엔 잘려서 설명이 반만 보였다) */
 #overlay {
-  position: absolute; inset: 0;
+  position: fixed; inset: 0;
   display: flex; align-items: center; justify-content: center;
-  background: rgba(5, 4, 3, .62);
+  background-color: rgba(5, 4, 3, .62);
+  background-image: var(--keyart-bg, none);
   background-size: cover;
   background-position: center;
-  z-index: 10;
-  padding: 8px;
-  overflow: hidden;
+  z-index: 40;
+  padding: 12px;
+  overflow-y: auto;
 }
 #overlay.hidden { display: none; }
 #overlay-box {
@@ -556,15 +559,18 @@ body.placing #game { cursor: grabbing; }
 
 /* ==================== 로비 / 스테이지선택 / 상점 화면 ==================== */
 .screen {
-  position: absolute; inset: 0;
+  position: fixed; inset: 0;
   display: flex; align-items: center; justify-content: center;
-  background: rgba(6, 5, 3, .72);
-  backdrop-filter: blur(3px);
-  z-index: 11;
-  padding: 10px;
-  overflow: hidden;
+  background-color: rgba(6, 5, 3, .82);
+  background-image: var(--keyart-bg, none);
+  background-size: cover;
+  background-position: center;
+  z-index: 41;
+  padding: 12px;
+  overflow-y: auto;
 }
 .screen.hidden { display: none; }
+#lobby .screen-box { overflow-y: auto; }
 .screen-box {
   background: rgba(12, 9, 6, .92);
   border: 2px solid #6b5636;

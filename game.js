@@ -3846,7 +3846,7 @@ const COACH = {
     { key: 'place',  text: '<b>빈 석단을 눌러</b> 타워를 놓으세요. 끌어다 놓아도 됩니다.', at: () => coachSpot() },
     { key: 'wave',   text: '준비됐으면 <b>웨이브를 시작</b>하세요. 적이 트랙을 돌기 시작합니다.', at: () => $('wave-btn') },
     { key: 'select', text: '놓은 <b>타워를 누르면</b> 아래에서 판매·확률강화를 할 수 있습니다.', at: () => coachTower() },
-    { key: 'power',  text: '<b>파워업</b>은 골드로 그 눈의 타워를 전부 세게 만듭니다.', at: () => $('inf-panel') },
+    { key: 'power',  text: '마지막으로 <b>파워업</b> — 골드로 그 눈의 타워를 전부 세게 만듭니다.', at: () => $('inf-panel') },
   ],
 };
 function coachDone() { try { return localStorage.getItem('dk_coachDone') === '1'; } catch (e) { return true; } }
@@ -3885,6 +3885,9 @@ function coachHit(key) {
   if (!step || step.key !== key) return;
   COACH.i++;
   if (COACH.i >= COACH.steps.length) { coachStop(true); return; }
+  // 4단계에서 연 타워 정보창이 5단계 대상(파워업 패널)을 덮는다 — 다음 대상이 HUD 안이면 카드를 닫는다
+  const next = COACH.steps[COACH.i];
+  if (next && next.key === 'power' && S.selTower) { S.selTower = null; syncUI(); }
   coachRender();
 }
 function coachRender() {
@@ -4590,7 +4593,7 @@ function drawLoading(pr) {
     diceURLs = A.dice.map((d, i) => thumbURL(d, 96, SRCS['d' + (i + 1)]));
     $('icon-gold').src = A.gold ? thumbURL(A.gold, 44, SRCS.gold) : SRCS.gold;
     $('icon-heart').src = A.heart ? thumbURL(A.heart, 44, SRCS.heart) : SRCS.heart;
-    overlayEl.style.backgroundImage = `linear-gradient(rgba(5,4,3,.45), rgba(5,4,3,.7)), url('${SRCS.keyart}')`;
+    document.body.style.setProperty('--keyart-bg', `linear-gradient(rgba(5,4,3,.45), rgba(5,4,3,.7)), url('${SRCS.keyart}')`);
   } catch (e) { console.warn(e); }
   if (corsBlocked) {
     $('ov-desc').innerHTML += '<br><span style="color:#ff9f9f">⚠ file:// 로 열면 이미지 배경 보정이 생략됩니다. start.bat 또는 로컬 서버 사용을 권장합니다.</span>';
