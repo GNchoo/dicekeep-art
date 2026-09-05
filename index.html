@@ -2,9 +2,12 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>주사위 성채 (Dicekeep)</title>
-<link rel="stylesheet" href="style.css?v=69" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="style.css?v=77" />
 <link rel="icon" href="ui/gold.png" />
 </head>
 <body>
@@ -15,28 +18,21 @@
     <div id="stats" class="hidden">
       <span class="chip"><img id="icon-gold" src="ui/gold.png" alt="골드"><b id="gold-val">0</b></span>
       <span class="chip"><img id="icon-heart" src="ui/heart.png" alt="목숨"><b id="lives-val">0</b></span>
-      <span class="chip"><b id="wave-val">웨이브 0 / 10</b></span>
+      <span class="chip"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#ffd452" stroke-width="2.2" stroke-linecap="round"><path d="M4 12c0-2.2 1.6-3.6 3.4-3.6 2.6 0 3.6 3.6 6.2 3.6 1.8 0 3.4-1.4 3.4-3.6M4 12c0 2.2 1.6 3.6 3.4 3.6 2.6 0 3.6-3.6 6.2-3.6 1.8 0 3.4 1.4 3.4 3.6"/></svg></span><b id="wave-val">웨이브 0 / 10</b></span>
     </div>
 
-    <div id="inf-help" class="hidden">
-      <div class="help-card">
-        <h3>무한 투기장 안내</h3>
-        <ol>
-          <li><b>🎁 뽑기 160G</b> — 등급이 정해지고 바로 굴러 타워가 됩니다. 굴려 나온 숫자 = 타워 성(★).<br><small>일반 50% (1★) · 레어 33.1% (1~4★) · 고대 10.2% (1~6★) · 유물 5.1% (1~8★) · 서사 0.8% (1~12★) · 전설 0.5% (1~20★) · 에픽 0.2% (14★↑) · 신화 0.08% (18★↑) · 태초 0.019% (20★)</small></li>
-          <li><b>주머니</b> — 보스 보상 주사위, 손에 타워가 있을 때 뽑은 주사위가 쌓입니다. <b>주사위를 누르면 「굴리기 / 도박」을 고릅니다.</b></li>
-          <li><b>도박</b> — 그 주사위를 걸고 20%로 한 등급 위(유물 → 서사), 80%는 사라집니다. 방금 뽑은 주사위로 도박하려면 뽑기 옆 <b>주머니에 보관</b>을 켜세요.</li>
-          <li><b>교환</b> — 7★ 이상 타워를 고르면 다시 굴릴 수 있습니다 (전설 1600G 66% · 신화 4000G 50%). 실패하면 타워가 사라집니다.</li>
-          <li><b>판매</b> — 7★ 이상은 팔 수 없습니다.</li>
-          <li><b>파워업</b> — 골드로 눈(1~6)을 강화합니다. 강화할수록 비싸집니다. ★ 히든 타워는 6눈 파워업을 따릅니다.</li>
-          <li><b>패배</b> — 필드에 적이 200마리를 넘으면 가장 오래된 적이 사라지며 목숨 −1. 보스는 5분 20초 안에 잡아야 합니다.</li>
-        </ol>
-        <button id="help-close">알겠어요</button>
-      </div>
+    <!-- 스타크래프트식 로그·채팅: 화면에 잠깐 남았다 사라진다. 로그는 싱글에서도, 채팅은 멀티에서만 -->
+    <div id="log-panel">
+      <div id="log-lines"></div>
+      <form id="chat-form" class="hidden" autocomplete="off">
+        <span id="chat-tag">전체</span>
+        <input id="chat-input" type="text" maxlength="120" placeholder="메시지를 입력하고 Enter" />
+      </form>
     </div>
     <div id="mini-top" class="mini hidden">
       <button id="speed-btn" title="게임 속도">x1</button>
-      <button id="mute-btn" title="소리">&#128266;</button>
-      <button id="exit-btn" title="스테이지 선택으로">&#8801;</button>
+      <button id="mute-btn" title="소리"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 8.5a5 5 0 0 1 0 7"/><path d="M20 6a9 9 0 0 1 0 12"/></svg></button>
+      <button id="exit-btn" title="스테이지 선택으로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
 
     <div id="overlay">
@@ -47,27 +43,31 @@
           <span id="ov-load-txt">에셋 불러오는 중… 0%</span>
         </div>
         <p id="ov-desc">
-          주사위를 <b>휙 던지거나</b> 버튼으로 굴리세요. 나온 눈(1~6)의 타워가 됩니다. <b>6눈이 가장 강합니다.</b>
-          같은 눈을 겹치면 <b>레벨 업</b>. 굴린 주사위는 <b>끌어다 석단에 놓아</b> 변신합니다.
-          스테이지 <b>50개</b>를 정복하면 <b>인피니티(무한 투기장)</b>가 열립니다.
+          주사위를 굴려 나온 눈(1~6)이 타워가 됩니다. <b>석단을 눌러</b> 놓고(끌어다 놓아도 됩니다),
+          같은 눈을 겹치면 <b>레벨 업</b>. <b>6눈이 가장 강합니다.</b><br>
+          <b>인피니티(무한 투기장)</b>는 처음부터 바로 할 수 있고, <b>스테이지 50개</b>는 차근차근 배우는 모드입니다.
         </p>
         <button id="ov-btn" disabled>게임 시작</button>
-        <p class="hint">필드 휙 던지기 · 적에게 던지면 속도 피해 · 같은 눈 합체</p>
+        <p class="hint">스테이지: 필드 휙 던지기 · 적에게 던지면 속도 피해 &nbsp;·&nbsp; 인피니티: 골드로 뽑기</p>
       </div>
     </div>
 
     <div id="lobby" class="screen hidden">
       <div class="screen-box">
         <h1>주사위 성채</h1>
-        <p class="screen-sub">스테이지를 정복해 젬을 모으고, 상점에서 주사위 타워와 스킨을 해금하세요.<br>50개를 모두 깨면 <b>인피니티(무한 투기장)</b>가 열립니다.</p>
-        <div class="gem-chip big"><span class="gem-ico">&#128142;</span><b id="lobby-gems">0</b><span class="gem-lbl">젬</span></div>
-        <div id="lobby-progress" class="screen-sub"></div>
+        <p class="screen-sub">바로 한 판 하려면 <b>인피니티</b>, 차근차근 배우려면 <b>스테이지</b>. 둘은 따로 돌아갑니다.</p>
+        <div class="lobby-btns inf-btns">
+          <button id="btn-inf-clear" class="big-btn inf lobby-inf-btn">&#127942; 인피니티 · 도전<small>101웨이브 완주 = 클리어</small></button>
+          <button id="btn-infinity" class="big-btn inf lobby-inf-btn">&#8734; 인피니티 · 무한<small>끝이 없는 기록 도전</small></button>
+        </div>
+        <div id="lobby-inf" class="screen-sub inf-sub"></div>
+        <div class="lobby-sep"></div>
         <div class="lobby-btns">
-          <button id="btn-stage-select" class="big-btn">스테이지 선택</button>
+          <button id="btn-stage-select" class="big-btn alt">스테이지 선택</button>
           <button id="btn-shop" class="big-btn alt">상점</button>
         </div>
-        <button id="btn-infinity" class="big-btn inf lobby-inf-btn" disabled>&#128274; 인피니티 · 무한 투기장</button>
-        <div id="lobby-inf" class="screen-sub inf-sub"></div>
+        <div id="lobby-progress" class="screen-sub"></div>
+        <div class="gem-chip big"><span class="gem-ico">&#128142;</span><b id="lobby-gems">0</b><span class="gem-lbl">젬</span></div>
       </div>
     </div>
 
@@ -78,7 +78,8 @@
           <h2>스테이지 선택</h2>
           <div class="gem-chip"><span class="gem-ico">&#128142;</span><b id="ss-gems">0</b></div>
         </div>
-        <button id="ss-inf-btn" class="inf-banner" disabled>&#128274; 인피니티 · 무한 투기장 — 50 스테이지 클리어 후 해금</button>
+        <button id="ss-inf-clear" class="inf-banner">&#127942; 인피니티 · 도전 — 101웨이브 완주가 목표</button>
+        <button id="ss-inf-btn" class="inf-banner">&#8734; 인피니티 · 무한 — 끝이 없는 기록 도전</button>
         <div id="tier-legend" class="tier-legend"></div>
         <div id="stage-grid" class="stage-grid"></div>
       </div>
@@ -102,58 +103,74 @@
   </div>
 
   <div id="hud" class="hidden">
+    <button id="rotate-hint" class="hidden" title="닫기">📱 가로로 돌리면 게임 화면이 훨씬 커집니다 <span>✕</span></button>
     <div id="dice-panel">
       <div id="dice-slot" title="보유 주사위">
         <img id="dice-img" class="hidden" alt="" draggable="false">
         <span id="dice-q">?</span>
         <canvas id="slot-canvas" width="74" height="74" class="hidden"></canvas>
       </div>
-      <button id="roll-btn">주사위 굴리기<small id="roll-cost">40 G</small></button>
-      <label id="keep-bag" class="hidden" title="켜면 뽑은 주사위가 바로 굴러가지 않고 주머니에 들어갑니다. 주머니에서 굴리기·도박을 고를 수 있습니다"><input type="checkbox"><span>주머니에<br>보관</span></label>
+      <div id="draw-col">
+        <button id="roll-btn">주사위 굴리기<small id="roll-cost">40 G</small></button>
+        <span id="queue-chip" class="hidden" title="보스 보상 주사위입니다. 손이 비면 하나씩 자동으로 굴러갑니다">보상 대기 <b>0</b></span>
+      </div>
+    </div>
+
+    <div id="tower-panel">
       <div id="held-info" class="hidden"><b id="held-name"></b><span id="held-desc"></span></div>
-    </div>
-
-    <div id="hud-break" class="hidden"></div>
-    <div id="inf-panel" class="hidden" title="골드로 눈(1~6)을 파워업합니다. 강화할수록 비싸집니다 (단축키 1~6)">
-      <div class="inf-sp-chip">파워업</div>
-      <button id="inf-face-1" class="inf-face"><span class="inf-pip">1</span><span class="inf-lv">Lv0</span><span class="inf-cost">1 SP</span></button>
-      <button id="inf-face-2" class="inf-face"><span class="inf-pip">2</span><span class="inf-lv">Lv0</span><span class="inf-cost">1 SP</span></button>
-      <button id="inf-face-3" class="inf-face"><span class="inf-pip">3</span><span class="inf-lv">Lv0</span><span class="inf-cost">1 SP</span></button>
-      <button id="inf-face-4" class="inf-face"><span class="inf-pip">4</span><span class="inf-lv">Lv0</span><span class="inf-cost">1 SP</span></button>
-      <button id="inf-face-5" class="inf-face"><span class="inf-pip">5</span><span class="inf-lv">Lv0</span><span class="inf-cost">1 SP</span></button>
-      <button id="inf-face-6" class="inf-face"><span class="inf-pip">6</span><span class="inf-lv">Lv0</span><span class="inf-cost">1 SP</span></button>
-    </div>
-
-    <div id="inf-gacha" class="hidden" title="주머니: 손에 타워가 있을 때 뽑은 주사위와 보스 보상 주사위가 쌓입니다. 눌러서 굴리세요">
-      <span class="bag-label">주머니</span>
-      <div id="dice-bag">
-        <button id="bag-d1" class="bag-die empty" data-k="d1"><span class="bag-k">d1</span><span class="bag-n">0</span></button>
-        <button id="bag-d4" class="bag-die empty" data-k="d4"><span class="bag-k">d4</span><span class="bag-n">0</span></button>
-        <button id="bag-d6" class="bag-die empty" data-k="d6"><span class="bag-k">d6</span><span class="bag-n">0</span></button>
-        <button id="bag-d8" class="bag-die empty" data-k="d8"><span class="bag-k">d8</span><span class="bag-n">0</span></button>
-        <button id="bag-d12" class="bag-die empty" data-k="d12"><span class="bag-k">d12</span><span class="bag-n">0</span></button>
-        <button id="bag-d20" class="bag-die empty" data-k="d20"><span class="bag-k">d20</span><span class="bag-n">0</span></button>
-        <button id="bag-epic" class="bag-die rare epic empty hidden" data-k="epic"><span class="bag-k">에픽</span><span class="bag-n">0</span></button>
-        <button id="bag-myth" class="bag-die rare myth empty hidden" data-k="myth"><span class="bag-k">신화</span><span class="bag-n">0</span></button>
-        <button id="bag-primal" class="bag-die rare primal empty hidden" data-k="primal"><span class="bag-k">태초</span><span class="bag-n">0</span></button>
+      <div id="info-panel" class="hidden">
+        <button id="info-close" type="button" title="닫기" aria-label="타워 정보 닫기">&#10005;</button>
+        <div id="info-head"><img id="info-dice" alt=""><b id="info-name"></b><span id="info-atk" class="hidden"></span></div>
+        <div id="info-body"></div>
+        <div id="info-actions">
+          <button id="sell-btn">판매</button>
+          <button id="enhance-btn" class="hidden" title="골드를 걸고 타워를 한 성(★) 위로 올립니다. 실패하면 타워가 사라집니다">확률강화</button>
+          <span id="enhance-odds" class="hidden"></span>
+        </div>
       </div>
-      <button id="help-btn" title="무한 투기장 안내">?</button>
-      <div id="bag-menu" class="hidden">
-        <div id="bag-menu-title"></div>
-        <button id="bag-roll">&#127922; 굴리기<small>타워 만들기</small></button>
-        <button id="bag-gamble">&#128200; 도박<small>20% 승급 · 80% 소멸</small></button>
-      </div>
+      <div id="hud-hint" class="hidden">석단의 타워를 누르면 여기에서 판매·확률강화를 할 수 있습니다.</div>
     </div>
 
     <div id="right-panel">
-      <div id="info-panel" class="hidden">
-        <div id="info-head"><img id="info-dice" alt=""><b id="info-name"></b></div>
-        <div id="info-body"></div>
-        <button id="sell-btn">판매</button>
-        <button id="exchange-btn" class="hidden">교환</button>
-      </div>
       <button id="wave-btn">웨이브 시작</button>
     </div>
+
+    <div id="hud-break" class="hidden"></div>
+    <div id="inf-panel" class="hidden" title="골드로 눈(1~6)을 파워업합니다. 그 눈의 타워가 전부 세집니다. 강화할수록 비싸집니다 (단축키 1~6)">
+      <div class="inf-sp-chip">파워업</div>
+      <button id="inf-face-1" class="inf-face"><span class="inf-pip">1</span><span class="inf-lv">Lv0</span><span class="inf-cost">150 G</span></button>
+      <button id="inf-face-2" class="inf-face"><span class="inf-pip">2</span><span class="inf-lv">Lv0</span><span class="inf-cost">150 G</span></button>
+      <button id="inf-face-3" class="inf-face"><span class="inf-pip">3</span><span class="inf-lv">Lv0</span><span class="inf-cost">150 G</span></button>
+      <button id="inf-face-4" class="inf-face"><span class="inf-pip">4</span><span class="inf-lv">Lv0</span><span class="inf-cost">150 G</span></button>
+      <button id="inf-face-5" class="inf-face"><span class="inf-pip">5</span><span class="inf-lv">Lv0</span><span class="inf-cost">150 G</span></button>
+      <button id="inf-face-6" class="inf-face"><span class="inf-pip">6</span><span class="inf-lv">Lv0</span><span class="inf-cost">150 G</span></button>
+      <button id="help-btn" title="무한 투기장 안내">?</button>
+    </div>
+  </div>
+</div>
+<!-- 첫 런 단계별 안내: 대상 요소 위에 링 + 말풍선. 진행을 막지 않는다(pointer-events:none) -->
+<div id="coach" class="hidden" aria-live="polite">
+  <div id="coach-ring"></div>
+  <div id="coach-tip">
+    <b id="coach-step">1 / 5</b>
+    <span id="coach-text"></span>
+    <button id="coach-skip" type="button">건너뛰기</button>
+  </div>
+</div>
+<div id="inf-help" class="hidden">
+  <div class="help-card">
+    <h3 id="help-title">무한 투기장 안내</h3>
+    <div class="help-scroll"><ol>
+      <li><b>조작</b> — <b>뽑기</b>를 누르면 주사위가 굴러 손에 타워가 옵니다. <b>빈 석단을 누르면</b> 그 자리에 놓입니다(끌어다 놓아도 됩니다). <b>같은 눈 타워 위</b>에 놓으면 합체해 레벨이 오릅니다. 놓은 타워를 누르면 아래 상태창에서 <b>판매·확률강화</b>를 할 수 있습니다.<br><small>단축키 — 뽑기 <b>R</b> · 파워업 <b>1~6</b> · 선택 해제 <b>Esc</b></small></li>
+      <li><b>&#127873; 뽑기 160G</b> — 등급이 정해지고 <b>바로 굴러 타워가 됩니다.</b> 굴려 나온 숫자 = 타워 성(★). 손에 타워가 있으면 먼저 석단에 배치해야 다시 뽑을 수 있습니다.<br><small>일반 50% (1★) · 레어 33.1% (1~4★) · 고대 10.2% (1~6★) · 유물 5.1% (1~8★) · 서사 0.8% (1~12★) · 전설 0.5% (1~20★) · 에픽 0.2% (14★↑) · 신화 0.08% (18★↑) · 태초 0.019% (20★)</small></li>
+      <li><b>보상 대기</b> — 보스를 잡으면 주사위를 받습니다. 손이 비는 대로 하나씩 자동으로 굴러갑니다.</li>
+      <li><b>확률강화</b> — 배치한 타워를 누르면 하단 상태창에 <b>판매 / 확률강화</b>가 뜹니다. 골드를 걸고 <b>강화(★+1) · 유지 · 소멸</b> 셋 중 하나가 나오며, 성(★)이 높을수록 비싸고 소멸 확률도 커집니다. 합체 레벨은 강화해도 유지됩니다.</li>
+      <li><b>판매</b> — 7★ 이상은 팔 수 없습니다.</li>
+      <li><b>파워업</b> — 골드로 눈(1~6)을 강화합니다. 강화할수록 비싸집니다. ★ 히든 타워는 6눈 파워업을 따릅니다.</li>
+      <li><b>패배</b> — 필드에 적이 200마리를 넘으면 가장 오래된 적이 사라지며 목숨 −1. 보스는 5분 20초 안에 잡아야 합니다.</li>
+      <li><b>두 갈래</b> — <b>도전</b>은 <b>101웨이브 완주가 클리어</b>입니다. 91웨이브부터 체력이 한 번 더 가팔라지는 <b>최종 관문</b>이라 뽑기·확률강화 운이 아주 좋아야 닿습니다. <b>무한</b>은 클리어가 없는 진짜 무한 — 101웨이브를 넘으면 더 강해진 2주기가 이어지고, 최고 기록만 남습니다.</li>
+    </ol></div>
+    <button id="help-close">알겠어요</button>
   </div>
 </div>
 <div id="place-ghost" aria-hidden="true">
@@ -161,7 +178,8 @@
   <img id="ghost-tower" alt="">
   <div id="ghost-ring"></div>
 </div>
-<script src="content.js?v=69"></script>
-<script src="game.js?v=69"></script>
+<script src="net.js?v=77"></script>
+<script src="content.js?v=77"></script>
+<script src="game.js?v=77"></script>
 </body>
 </html>
