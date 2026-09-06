@@ -723,7 +723,9 @@ const BASE = (() => {
   return '/dicekeep/';
 })();
 const SRCS = {
-  map: BASE + 'map/battlefield.jpg', keyart: BASE + 'ui/title-keyart.jpg',
+  map: BASE + 'map/battlefield.jpg',
+  // 키아트(산 위 주사위 성): 가로용은 제목 글자 없는 윗부분(CSS 제목을 얹는다), 세로용은 그림 안의 돌 제목까지 (CSS 제목은 숨긴다)
+  keyart: BASE + 'ui/title-keyart-l.jpg', keyartP: BASE + 'ui/title-keyart-p.jpg',
   gold: BASE + 'ui/gold.png', heart: BASE + 'ui/heart.png',
   d1: BASE + 'dice/dice-1.png', d2: BASE + 'dice/dice-2.png', d3: BASE + 'dice/dice-3.png',
   d4: BASE + 'dice/dice-4.png', d5: BASE + 'dice/dice-5.png', d6: BASE + 'dice/dice-6.png',
@@ -934,7 +936,7 @@ async function loadAssets(onProgress) {
     for (const b of DKCONTENT.bossBases) if (b.walk) sheets.push(b.walk);
     if (DKCONTENT.INFINITY && DKCONTENT.INFINITY.artList) for (const a of DKCONTENT.INFINITY.artList()) if (a.sheet) sheets.push(a.key);
   }
-  const raw = ['map', 'keyart'];
+  const raw = ['map', 'keyart', 'keyartP'];
   if (window.DKCONTENT) for (const m of DKCONTENT.maps) if (m.src) raw.push(m.key);
   const isTexture = (k) => /^tl_.*_(floor|road|water|road-straight|board)$/.test(k); // 질감·바닥: 배경 제거 없이 그대로
   let pi = 0;
@@ -3996,7 +3998,7 @@ function syncUIRest() {
     $('held-name').textContent = (S.dieFocus ? '' : '보류 · ') + def.name;
     $('held-desc').textContent = S.dieFocus ? def.desc + ' · 같은 눈 타워에 놓으면 합체' : '주사위 칸을 다시 누르면 배치 모드로 돌아갑니다';
     const hs = $('held-sell');   // 약한 눈이 나와 놓을 데가 없을 때: 놓지 않고 바로 판다 (★7+ 는 판매 불가 규칙 그대로)
-    if (hs) { const canSell = S.phase === 'playing' && !(S.mode === 'infinity' && S.heldDie >= 7); hs.classList.toggle('hidden', !canSell); hs.textContent = `바로 판매 +${sellPrice({ face: S.heldDie, lvl: 1 })}G`; }
+    if (hs) { const canSell = S.phase === 'playing' && !(S.mode === 'infinity' && S.heldDie >= 7); hs.classList.toggle('hidden', !canSell); hs.textContent = `판매 +${sellPrice({ face: S.heldDie, lvl: 1 })}G`; }
   } else {
     diceSlot.classList.remove('has-die');
     diceSlot.classList.remove('unfocused');
@@ -4342,15 +4344,6 @@ function syncInfButtons() {
   };
   setBtn('btn-inf-clear', 'trophy', '&#127942;', '도전', `${line}웨이브 완주 = 클리어`);
   setBtn('btn-infinity', 'infinity', '&#8734;', '무한', '끝이 없는 기록 도전');
-  const setBanner = (id, txt) => {
-    const b = $(id);
-    if (!b) return;
-    b.disabled = false;
-    b.classList.remove('locked');
-    b.textContent = txt;
-  };
-  setBanner('ss-inf-clear', `🏆 인피니티 · 도전 — ${line}웨이브 완주가 목표`);
-  setBanner('ss-inf-btn', '∞ 인피니티 · 무한 — 끝이 없는 기록 도전');
   const info = $('lobby-inf');
   if (info) {
     const played = (SAVE.infBest || 0) > 0 || (SAVE.infRuns || []).length;
@@ -4968,9 +4961,6 @@ $('btn-stage-select').addEventListener('click', () => { audio(); gotoStageSelect
 const startInf = (kind) => { if (!infinityUnlocked()) return; audio(); startInfinity(kind); };
 $('btn-infinity').addEventListener('click', () => startInf('endless'));
 if ($('btn-inf-clear')) $('btn-inf-clear').addEventListener('click', () => startInf('clear'));
-const ssInf = $('ss-inf-btn');
-if (ssInf) ssInf.addEventListener('click', () => startInf('endless'));
-if ($('ss-inf-clear')) $('ss-inf-clear').addEventListener('click', () => startInf('clear'));
 for (let f = 1; f <= 6; f++) { const b = $('inf-face-' + f); if (b) b.addEventListener('click', () => upgradeFace(f)); }
 if ($('help-btn')) $('help-btn').addEventListener('click', () => { audio(); openInfHelp(); });
 if ($('coach-skip')) $('coach-skip').addEventListener('click', () => { audio(); coachStop(false); });
@@ -5685,7 +5675,8 @@ function drawLoading(pr) {
 (async () => {
   // 키아트는 로딩 첫 프레임부터 깔린다 (CSS 가 직접 받아온다 — 에셋 로딩을 기다리면 로딩 화면이 검은 화면이 된다)
   document.body.style.setProperty('--keyart-bg', `linear-gradient(rgba(5,4,3,.45), rgba(5,4,3,.7)), url('${SRCS.keyart}')`);
-  document.body.style.setProperty('--keyart-title', `linear-gradient(rgba(5,4,3,.12), rgba(5,4,3,.12) 45%, rgba(5,4,3,.82) 100%), url('${SRCS.keyart}')`);   // 타이틀: 그림을 살리고 아래만 어둡게
+  document.body.style.setProperty('--keyart-title', `linear-gradient(rgba(5,4,3,.10), rgba(5,4,3,.10) 45%, rgba(5,4,3,.82) 100%), url('${SRCS.keyart}')`);      // 가로·데스크톱 타이틀: 그림 위에 CSS 제목, 아래만 어둡게
+  document.body.style.setProperty('--keyart-title-p', `linear-gradient(rgba(5,4,3,.04), rgba(5,4,3,.04) 80%, rgba(5,4,3,.55) 100%), url('${SRCS.keyartP}')`);   // 세로 타이틀: 그림의 돌 제목을 그대로, 맨 아래(버튼 자리)만 살짝
   drawLoading(0);
   $('ov-btn').disabled = true;
   try {

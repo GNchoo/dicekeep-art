@@ -479,7 +479,7 @@ dicekeep-art/
   vfx/                레이저·포구·폭발·번개·주사위폭탄
   map/battlefield.jpg 구 전장
   props/              portal(추가 레인 포탈로 사용), crystal
-  ui/                 gold, heart, title-keyart
+  ui/                 gold, heart, title-keyart-p(세로·돌 제목 포함)·title-keyart-l(가로·윗부분), icon-*
 ```
 
 로드하지 않지만 삭제하지 말 것: `towers/archer.png` 등 옛 5종, `enemies/*` 구 정지컷, `props/crystal.png`.

@@ -892,6 +892,7 @@ Play 스토어 / App Store 출시(Capacitor, appId `com.fallman.dicekeep`, 이�
 | `resources/splash.png` · `splash-dark.png` | 2732², 불투명 | 스플래시(라이트/다크) | `@capacitor/splash-screen` |
 | `ui/splash-logo.png` | 1024², 투명 | 앱 스플래시(`resources/splash.png`)용 엠블럼 | 웹 로딩 화면은 쓰지 않는다 — `title-keyart.jpg` 전면 + 글자 제목 |
 | `ui/logo.png` | 1024×512, 투명 | (보류) 타이틀 로고 엠블럼 | 웹 타이틀·로비는 쓰지 않는다 — 키아트 + 글자 제목으로 확정 |
+| `ui/title-keyart-p.jpg` · `-l.jpg` | 1500×1717 · 1600×1113 | 타이틀·로딩·로비 배경 (산 위 주사위 성, Grok 앱 미리보기 그림) | 세로는 그림의 돌 제목까지(-p, CSS 제목 숨김), 가로·데스크톱은 제목 없는 윗부분(-l) + CSS 금박 제목 |
 | `store/feature-graphic.png` | 1024×500 | Play 스토어 피처 그래픽 | 스토어 등록용 (게임 미사용) |
 | `ui/frame-panel.png` | 96², 투명, slice 24 | 어두운 패널 프레임 (메뉴·팝업) | CSS `border-image`, body `ui-art` |
 | `ui/frame-card.png` | 96², 투명, slice 24 | 밝은 카드 프레임 (결과·순위표·상점 카드) | 위와 같음 |
