@@ -10,9 +10,15 @@
   "workers_dev": true,
   "preview_urls": false,
   "durable_objects": {
-    "bindings": [{ "name": "ROOM", "class_name": "Room" }]
+    "bindings": [
+      { "name": "ROOM", "class_name": "Room" },     // 방 하나 = 객체 하나
+      { "name": "LOBBY", "class_name": "Lobby" }    // 빠른 매칭 대기열 + 방 생성 상한 카운터 (단일 객체 'quick')
+    ]
   },
-  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["Room"] }],
+  "migrations": [
+    { "tag": "v1", "new_sqlite_classes": ["Room"] },
+    { "tag": "v2", "new_sqlite_classes": ["Lobby"] }
+  ],
   "vars": {
     "ALLOWED_ORIGINS": "",   // 커스텀 도메인 원점(쉼표 구분). workers.dev 운영·프리뷰·localhost 는 자동 허용
     "TIMING": ""             // "fast" 면 테스트용 짧은 판 (prep 2s · 막간 0.5s · 보스 5s · 12웨이브 클리어)

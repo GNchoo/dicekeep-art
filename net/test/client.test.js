@@ -1,4 +1,4 @@
-// 클라이언트 net.js(DKNET v2) 단위 테스트 — node:test, 의존성 없음.
+// 클라이언트 net.js(DKNET v3) 단위 테스트 — node:test, 의존성 없음.
 // net.js 는 window 에 붙는 클래식 스크립트라 vm 으로 가짜 브라우저(window/document/저장소/타이머/WebSocket) 안에 로드한다.
 // 타이머·performance 는 가짜 시계라 advance(ms) 로 결정적으로 돌린다.
 'use strict';
@@ -71,7 +71,7 @@ function makeEnv(opts = {}) {
   vm.runInNewContext(SRC, sandbox, { filename: 'net.js' });
   const N = sandbox.window.DKNET;
   const events = [];
-  for (const t of ['welcome', 'room', 'player', 'start', 'sched', 'hold', 'sum', 'chat', 'log', 'time', 'end', 'err', 'net:state', 'net:reconnecting', 'net:offset', 'net:closed']) N.on(t, (d) => events.push({ t, d }));
+  for (const t of ['welcome', 'room', 'player', 'start', 'sum', 'watched', 'queued', 'matched', 'chat', 'log', 'time', 'end', 'err', 'net:state', 'net:reconnecting', 'net:offset', 'net:closed']) N.on(t, (d) => events.push({ t, d }));
   const fire = (type, ev) => { for (const fn of listeners[type] || []) fn(ev || {}); };
   return { N, sandbox, sockets, clock, advance, fire, events, document, lastSock: () => sockets[sockets.length - 1] };
 }
@@ -82,8 +82,8 @@ function welcomeMsg(pid, extra = {}) {
   const room = Object.assign({
     code: CODE, phase: 'lobby', hostId: pid, ver: '78', now: 5000000,
     players: [
-      { pid, name: '민수', host: true, connected: true, status: 'alive', wave: 0, deathWave: 0, kills: 0, lag: 0, hidden: false, rank: 0 },
-      { pid: OTHER, name: '영희', host: false, connected: true, status: 'alive', wave: 0, deathWave: 0, kills: 0, lag: 0, hidden: false, rank: 0 },
+      { pid, name: '민수', host: true, connected: true, status: 'alive', wave: 0, deathWave: 0, kills: 0, sp: 1, dw: 0, hidden: false, rank: 0 },
+      { pid: OTHER, name: '영희', host: false, connected: true, status: 'alive', wave: 0, deathWave: 0, kills: 0, sp: 1, dw: 0, hidden: false, rank: 0 },
     ],
     game: null,
   }, extra.room || {});
@@ -108,11 +108,11 @@ test('node --check net.js', () => {
 
 test('CFG: 버전은 스크립트 ?v=, 주소는 location 없으면 null', () => {
   const { N } = makeEnv();
-  assert.equal(N.CFG.protocol, 2);
+  assert.equal(N.CFG.protocol, 3);
   assert.equal(N.CFG.ver, '78');
   assert.equal(N.CFG.url, null);
   assert.equal(N.CFG.sumInterval, 2000);
-  assert.equal(N.CFG.renderDelay, 100);
+  assert.equal(N.CFG.watchInterval, 1000);
   assert.equal(N.CFG.pingEvery, 25000);
   assert.equal(N.CFG.timeEvery, 30000);
   assert.equal(N.state, 'offline');
@@ -177,7 +177,7 @@ test('create: hello 형식 → welcome → 미러·세션·이벤트', async () 
   const { ws, hello, room } = await connected(env);
   assert.equal(ws.url, 'ws://test/ws/new');
   assert.equal(hello.t, 'hello');
-  assert.equal(hello.v, 2);
+  assert.equal(hello.v, 3);
   assert.equal(hello.ver, '78');
   assert.equal(hello.op, 'create');
   assert.match(hello.pid, /^[a-z0-9]{8}$/);
@@ -263,7 +263,7 @@ test('welcome 5초 타임아웃 → timeout 거절', async () => {
   assert.equal(N.state, 'offline');
 });
 
-test('room 미러: room/player/start/sched/hold/end 병합, 상태 전이, welcome 후 err 는 이벤트', async () => {
+test('room 미러: room/player/start/end 병합, 상태 전이, welcome 후 err 는 이벤트', async () => {
   const env = makeEnv();
   const { N, events } = env;
   const { ws, hello } = await connected(env);
@@ -277,7 +277,7 @@ test('room 미러: room/player/start/sched/hold/end 병합, 상태 전이, welco
   assert.equal(events.filter((e) => e.t === 'err').length, 1);
   assert.equal(N.start(), true);
   assert.equal(ws.last('start').t, 'start');
-  const timing = { prep: 20000, intermission: 6000, bossLimit: 320000, clearWave: 101 };
+  const timing = { prep: 20000, bossLimit: 320000, clearWave: 101 };
   ws._recv({ t: 'start', at: 3, seed: 42, t0: 5020000, timing, now: 5000000 });
   assert.equal(N.state, 'playing');
   assert.equal(N.inGame(), true);
@@ -285,53 +285,60 @@ test('room 미러: room/player/start/sched/hold/end 병합, 상태 전이, welco
   assert.equal(N.room.game.t0, 5020000);
   assert.equal(N.room.game.seed, 42);
   same(N.room.game.timing, timing);
-  ws._recv({ t: 'sched', at: 3, from: 1, ats: [5020000, 5035000, 5051000] });
-  same(N.room.game.waveAts, [null, 5020000, 5035000, 5051000]);
-  ws._recv({ t: 'sched', at: 3, from: 2, ats: [1, 2, 5070000] });
-  same(N.room.game.waveAts, [null, 5020000, 5035000, 5051000, 5070000], '받은 T 는 불변, 새 번호만 추가');
-  ws._recv({ t: 'sched', at: 3, from: 10, ats: [5200000] });
-  assert.equal(N.room.game.waveAts[10], 5200000);
-  assert.equal(N.room.game.waveAts[7], null, '구멍은 null');
-  ws._recv({ t: 'hold', at: 4, w: 10, deadline: 5523050, waiting: [OTHER], done: [hello.pid], released: false });
-  same(N.room.game.hold, { w: 10, deadline: 5523050, waiting: [OTHER], done: [hello.pid], released: false });
-  ws._recv({ t: 'sum', at: 5, pid: OTHER, w: 3, dw: 2, l: 20, g: 100, k: 5, f: 3, lag: 0, hid: 0, b: null, o: 'p', tw: [[0, 3, 1]] });
+  ws._recv({ t: 'sched', at: 3, from: 1, ats: [5020000] });
+  ws._recv({ t: 'hold', at: 4, w: 10 });
+  assert.equal(events.filter((e) => e.t === 'sched' || e.t === 'hold').length, 0, 'v2 시계 메시지는 버린다');
+  ws._recv({ t: 'sum', at: 5, pid: OTHER, w: 3, dw: 2, l: 20, g: 100, k: 5, f: 3, sp: 2, hid: 0, b: null, o: 'p', tw: [[0, 3, 1]], ll: 1800, en: '3,120,9;1000,40,5' });
   assert.equal(events.filter((e) => e.t === 'sum').length, 1);
   assert.equal(events.find((e) => e.t === 'sum').d.pid, OTHER);
+  assert.equal(events.find((e) => e.t === 'sum').d.en, '3,120,9;1000,40,5', 'en 은 그대로 전달');
+  ws._recv({ t: 'watched', at: 5, n: 2 });
+  assert.equal(events[events.length - 1].t, 'watched');
+  assert.equal(events[events.length - 1].d.n, 2);
   ws._recv({ t: 'chat', at: 5, pid: OTHER, name: '영희', text: '안녕' });
   ws._recv({ t: 'log', at: 5, pid: OTHER, name: '영희', text: '강화 성공', kind: 'up' });
   ws._recv({ t: 'bogus', at: 5 });
   ws._recv('not json');
   ws._recv('pong');
   same(events.slice(-2).map((e) => e.t), ['chat', 'log'], '허용목록 밖은 발화 안 함');
-  ws._recv({ t: 'room', at: 6, code: CODE, phase: 'playing', hostId: OTHER, ver: '78', now: 5, players: [{ pid: hello.pid, name: '민수', host: false }], game: { t0: 1, timing, wave: 3, waveAts: [null, 1, 2], hold: null, endAt: null } });
+  ws._recv({ t: 'room', at: 6, code: CODE, kind: 'code', phase: 'playing', hostId: OTHER, ver: '78', now: 5, players: [{ pid: hello.pid, name: '민수', host: false }], game: { t0: 1, timing, seed: 42 } });
   assert.equal(N.isHost(), false, 'room 스냅샷으로 통째로 교체');
   assert.equal(N.members().length, 1);
-  ws._recv({ t: 'end', at: 7, reason: 'cleared', seed: 42, ranking: [{ pid: OTHER, name: '영희', rank: 1, status: 'cleared', wave: 101, kills: 900 }, { pid: hello.pid, name: '민수', rank: 2, status: 'dead', wave: 40, kills: 300 }] });
+  ws._recv({ t: 'end', at: 7, reason: 'cleared', seed: 42, ranking: [{ pid: OTHER, name: '영희', rank: 1, status: 'cleared', wave: 101, kills: 900, clearAt: 7000000 }, { pid: hello.pid, name: '민수', rank: 2, status: 'dead', wave: 40, deathWave: 40, kills: 300 }] });
   assert.equal(N.state, 'ended');
   assert.equal(N.inRoom(), true);
   assert.equal(N.inGame(), false);
   assert.equal(N.room.game.reason, 'cleared');
   assert.equal(N.members().find((p) => p.pid === hello.pid).rank, 2);
   assert.equal(N.members().find((p) => p.pid === OTHER).status, 'cleared', '순위표의 모르는 pid 는 추가');
+  assert.equal(N.members().find((p) => p.pid === OTHER).clearAt, 7000000, 'clearAt 미러');
 });
 
-test('송신: sum 범위 클램프·tw 15개, done/dead/clear/chat/log, OPEN 아니면 false, 2000B 초과 폐기', async () => {
+test('송신: sum 범위 클램프·tw 15개·sp/ll/en, watch, done/dead/clear/chat/log, OPEN 아니면 false, 4000B 초과 폐기', async () => {
   const env = makeEnv();
   const { N } = env;
   assert.equal(N.sum({}), false, '접속 전');
   assert.equal(N.send('start', {}), false);
   const { ws } = await connected(env);
   const tw = []; for (let i = 0; i < 20; i++) tw.push([i, 25, 9]);
-  assert.equal(N.sum({ w: 999, dw: -1, l: 99, g: 1e9, k: 'x', f: 300, lag: 12.345, hid: true, b: 1.5, o: 'p', tw }), true);
+  assert.equal(N.sum({ w: 999, dw: -1, l: 99, g: 1e9, k: 'x', f: 300, sp: 7, hid: true, b: 1.5, o: 'p', tw, ll: 1234.6, en: '1,2,3;x4,5,6' }), true);
   const s = ws.last('sum');
   assert.equal(s.tw.length, 15);
   same(s.tw[0], [0, 20, 3]);
   same(s.tw[14], [14, 20, 3]);
   assert.equal(s.w, 101); assert.equal(s.dw, 0); assert.equal(s.l, 20); assert.equal(s.g, 1e7); assert.equal(s.k, 0); assert.equal(s.f, 200);
-  assert.equal(s.lag, 12.3); assert.equal(s.hid, 1); assert.equal(s.b, 1); assert.equal(s.o, 'p');
+  assert.equal(s.sp, 3); assert.equal(s.hid, 1); assert.equal(s.b, 1); assert.equal(s.o, 'p');
+  assert.equal(s.lag, undefined, 'lag 는 v3 에 없다');
+  assert.equal(s.ll, 1235); assert.equal(s.en, '1,2,3;4,5,6', 'en 은 숫자·;·, 만');
   assert.equal(N.sum({ w: 1, b: 0.4567, o: 'x' }).valueOf(), true);
   const s2 = ws.last('sum');
   assert.equal(s2.b, 0.457); assert.equal(s2.o, 'l'); assert.equal(s2.hid, 0); same(s2.tw, []);
+  assert.equal(s2.sp, 1, 'sp 기본 1'); assert.equal(s2.ll, undefined); assert.equal(s2.en, undefined, 'll/en 은 줬을 때만');
+  N.sum({ en: 'x'.repeat(10) + '1;'.repeat(2000) });
+  assert.ok(ws.last('sum').en.length <= 3000, 'en 3000자 절단');
+  assert.equal(N.watch(OTHER), true); same(ws.last('watch'), { t: 'watch', pid: OTHER });
+  assert.equal(N.watch('BAD PID'), true); same(ws.last('watch'), { t: 'watch', pid: null }, '형식이 틀리면 null');
+  N.watch(null); same(ws.last('watch'), { t: 'watch', pid: null });
   env.document.hidden = true;
   N.sum({});
   assert.equal(ws.last('sum').hid, 1, 'hid 생략 시 document.hidden');
@@ -343,7 +350,8 @@ test('송신: sum 범위 클램프·tw 15개, done/dead/clear/chat/log, OPEN 아
   N.chat(' 안녕 ' + 'x'.repeat(200)); assert.equal(ws.last('chat').text.length, 120);
   N.log('강화', 'up'); same(ws.last('log'), { t: 'log', text: '강화', kind: 'up' });
   N.log('뭔가', 'nope'); assert.equal(ws.last('log').kind, 'sys');
-  assert.equal(N.send('chat', { text: 'x'.repeat(2100) }), false, '2000B 초과');
+  assert.equal(N.send('chat', { text: 'x'.repeat(2100) }).valueOf(), true, '2,100B 는 v3 한도(4,000B) 안');
+  assert.equal(N.send('chat', { text: 'x'.repeat(4100) }), false, '4000B 초과');
   assert.equal(N.send('', {}), false);
   assert.equal(N.send('custom', { t: 'evil', a: 1 }).valueOf(), true);
   same(ws.last('custom'), { t: 'custom', a: 1 }, 't 는 인자가 이긴다');
@@ -401,6 +409,7 @@ test('재접속: 비의도 닫힘 → 백오프 → 같은 pid/key 로 join → 
   const { N, events, sockets } = env;
   const { ws, hello } = await connected(env);
   ws._recv({ t: 'start', at: 1, seed: 1, t0: 1, timing: {}, now: 1 });
+  N.watch(OTHER);
   ws._close(1006);
   await flush();
   assert.equal(N.state, 'reconnecting');
@@ -446,12 +455,13 @@ test('재접속: 비의도 닫힘 → 백오프 → 같은 pid/key 로 join → 
   const ws4 = env.lastSock();
   ws4._open();
   const evLen = events.length;
-  ws4._recv(welcomeMsg(hello.pid, { resumed: true, room: { phase: 'playing', game: { t0: 1, timing: {}, wave: 5, waveAts: [null, 1, 2, 3, 4, 5], hold: null, endAt: null } } }));
+  ws4._recv(welcomeMsg(hello.pid, { resumed: true, room: { phase: 'playing', game: { t0: 1, timing: {}, seed: 7 } } }));
   await flush();
   assert.equal(N.state, 'playing');
   same(events.slice(evLen).filter((e) => e.t !== 'net:offset').map((e) => e.t), ['net:state', 'welcome', 'room']);
   assert.equal(events.slice(evLen).find((e) => e.t === 'welcome').d.resumed, true);
-  same(N.room.game.waveAts, [null, 1, 2, 3, 4, 5]);
+  assert.equal(N.room.game.seed, 7);
+  same(ws4.last('watch'), { t: 'watch', pid: OTHER }, '재접속 뒤 보던 상대를 다시 등록한다');
   // 다음 끊김은 attempt 1 부터
   ws4._close(1001);
   same(events[events.length - 1].d, { attempt: 1, delay: 1000 });
@@ -536,7 +546,7 @@ test('resume: dk_mp 없으면 null, 있으면 같은 좌석으로 join, 방이 �
   ws._open();
   const h = ws.json()[0];
   assert.equal(h.op, 'join'); assert.equal(h.pid, 'abcdefgh'); assert.equal(h.key, 'b'.repeat(32)); assert.equal(h.name, '민수');
-  ws._recv(welcomeMsg('abcdefgh', { resumed: true, room: { phase: 'playing', game: { t0: 1, timing: {}, wave: 2, waveAts: [null, 1, 2], hold: null, endAt: null } } }));
+  ws._recv(welcomeMsg('abcdefgh', { resumed: true, room: { phase: 'playing', game: { t0: 1, timing: {}, seed: 1 } } }));
   const room = await p;
   assert.equal(room.phase, 'playing');
   assert.equal(env.N.state, 'playing');
@@ -555,6 +565,83 @@ test('resume: dk_mp 없으면 null, 있으면 같은 좌석으로 join, 방이 �
   env = makeEnv();
   env.sandbox.sessionStorage.setItem('dk_mp', '{"code":"bad","pid":"x"}');
   assert.equal(await env.N.resume(), null);
+});
+
+test('빠른 매칭: /ws/quick → welcome(대기열) → queued → matched → 대기열 소켓 버리고 방으로 join', async () => {
+  const env = makeEnv();
+  const { N, events, sockets } = env;
+  N.CFG.url = 'ws://test';
+  const p = N.quick('민수');
+  const q = env.lastSock();
+  assert.equal(q.url, 'ws://test/ws/quick');
+  q._open();
+  const hello = q.json()[0];
+  assert.equal(hello.op, 'quick'); assert.equal(hello.v, 3);
+  q._recv({ t: 'queued', at: 100, n: 1, eta: null });   // 대기열은 welcome 없이 queued 가 첫 프레임
+  assert.equal(await p, null, '대기열 진입은 방이 없으니 null');
+  same(events.filter((e) => e.t === 'queued').map((e) => e.d.n), [1], '첫 queued 도 이벤트로');
+  assert.equal(N.state, 'queue');
+  assert.equal(N.inQueue(), true); assert.equal(N.inRoom(), false);
+  assert.equal(N.code, null); assert.equal(N.room, null);
+  assert.equal(env.sandbox.sessionStorage.getItem('dk_mp'), null, '대기열은 세션에 저장하지 않는다');
+  q._recv({ t: 'queued', at: 101, n: 2, eta: 9000 });
+  same(events[events.length - 1], { t: 'queued', d: { t: 'queued', at: 101, n: 2, eta: 9000 } });
+  q._recv({ t: 'matched', at: 200, code: CODE });
+  assert.equal(events.find((e) => e.t === 'matched').d.code, CODE);
+  assert.equal(q.closed.code, 1000, '대기열 소켓은 우리가 먼저 버린다');
+  assert.equal(sockets.length, 2);
+  const ws = env.lastSock();
+  assert.equal(ws.url, 'ws://test/ws/room/' + CODE);
+  ws._open();
+  const h2 = ws.json()[0];
+  assert.equal(h2.op, 'join'); assert.equal(h2.pid, hello.pid); assert.equal(h2.key, hello.key);
+  ws._recv(welcomeMsg(hello.pid, { kind: 'quick', room: { kind: 'quick', hostId: null } }));
+  await flush();
+  assert.equal(N.state, 'lobby');
+  assert.equal(N.code, CODE);
+  assert.equal(N.isHost(), false, '빠른 매칭 방은 방장이 없다');
+  assert.equal(N.room.kind, 'quick');
+  same(JSON.parse(env.sandbox.sessionStorage.getItem('dk_mp')).code, CODE, '방에 들어가면 세션 저장');
+  q._close(4000, 'matched');
+  assert.equal(N.state, 'lobby', '버린 대기열 소켓의 닫힘은 무시');
+});
+
+test('빠른 매칭: 서버가 matched 뒤 바로 닫아도 방으로 간다 · 매칭 전 닫힘은 offline · 취소 = leave', async () => {
+  let env = makeEnv();
+  let { N, events } = env;
+  N.CFG.url = 'ws://test';
+  let p = N.quick('민수');
+  let q = env.lastSock(); q._open();
+  q._recv({ t: 'queued', at: 100, n: 1, eta: null });
+  await p;
+  // matched 와 닫힘이 같은 틱에
+  q._recv({ t: 'matched', at: 200, code: CODE });
+  q._close(4000, 'matched');
+  assert.equal(env.lastSock().url, 'ws://test/ws/room/' + CODE);
+  assert.notEqual(N.state, 'offline');
+  // 매칭 전 서버 닫힘(대기열 만료 등)
+  env = makeEnv(); ({ N, events } = env);
+  N.CFG.url = 'ws://test';
+  p = N.quick('민수');
+  q = env.lastSock(); q._open();
+  q._recv({ t: 'queued', at: 100, n: 1, eta: null });
+  await p;
+  q._close(4429, 'rate');
+  await flush();
+  assert.equal(N.state, 'offline');
+  same(events[events.length - 1], { t: 'net:closed', d: { code: 4429, reason: 'rate' } }, '재접속 없이 닫힘 통보');
+  // 취소
+  env = makeEnv(); ({ N } = env);
+  N.CFG.url = 'ws://test';
+  p = N.quick('민수');
+  q = env.lastSock(); q._open();
+  q._recv({ t: 'queued', at: 100, n: 1, eta: null });
+  await p;
+  N.leave();
+  assert.equal(q.last('leave').t, 'leave');
+  assert.equal(q.closed.code, 4000);
+  assert.equal(N.state, 'offline');
+  assert.equal(N.inQueue(), false);
 });
 
 test('on/off/emit: 해제 함수, 핸들러 예외 격리', () => {

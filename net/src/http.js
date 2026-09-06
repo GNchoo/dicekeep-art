@@ -21,10 +21,11 @@ export function originAllowed(origin, host, extra) {
   return false;
 }
 
-// 경로 → { kind:'health' } | { kind:'new' } | { kind:'room', code } | { kind:'bad-code' } | { kind:'none' }
+// 경로 → { kind:'health' } | { kind:'new' } | { kind:'quick' } | { kind:'room', code } | { kind:'bad-code' } | { kind:'none' }
 export function routeOf(pathname, normalize) {
   if (pathname === '/health') return { kind: 'health' };
   if (pathname === '/ws/new') return { kind: 'new' };
+  if (pathname === '/ws/quick') return { kind: 'quick' };
   const m = /^\/ws\/room\/([^/]+)$/.exec(pathname);
   if (m) {
     let raw = m[1];

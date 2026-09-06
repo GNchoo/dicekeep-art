@@ -1,7 +1,8 @@
-// U4~U9 — Room 순수 상태 머신. 시간은 전부 now 주입, 소켓·타이머 없음.
+// U4~U10 — Room 순수 상태 머신. 시간은 전부 now 주입, 소켓·타이머 없음.
+// 개별 진행 규칙: 서버는 웨이브 시계가 없다. start 뒤 각자 sum/done/dead/clear 를 보고하고 서버는 중계·순위·종료만 맡는다.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { createRoom, emptyLive, reduce, snapshot, ranking, nextAlarm, waveAt, liveFromSockets } from '../src/room-core.js';
+import { createRoom, emptyLive, reduce, snapshot, ranking, nextAlarm, liveFromSockets } from '../src/room-core.js';
 import * as T from '../src/timing.js';
 
 const KEY = (pid) => (pid + pid + pid + pid).replace(/[^0-9a-f]/g, 'a').slice(0, 32).padEnd(32, '0');
@@ -10,10 +11,10 @@ const A = 'aaaa1111', B = 'bbbb2222', C = 'cccc3333', D = 'dddd4444', E = 'eeee5
 const T0 = 1_700_000_000_000;
 
 // ---- 작은 하네스: 상태를 들고 이벤트를 넣고 effects 를 분류한다 ----
-function harness(now = T0, timing = T.timingFor('')) {
+function harness(now = T0, timing = T.timingFor(''), opts = {}) {
   const h = {
     now,
-    state: createRoom({ code: 'ABC234', now, timing }),
+    state: createRoom({ code: 'ABC234', now, timing, ...opts }),
     live: emptyLive(now),
     trace: [],                       // 매 단계 { ev, now, persist, alarm } (U9 불변식용)
     step(ev, at) {
@@ -29,13 +30,13 @@ function harness(now = T0, timing = T.timingFor('')) {
     hello(sid, pid, opts = {}, at) {
       const op = opts.op || 'join';
       if (!opts.noOpen) h.open(sid, op, at);
-      const m = { t: 'hello', v: opts.v == null ? 2 : opts.v, ver: opts.ver || '78', op, pid, key: opts.key || KEY(pid), name: opts.name || pid.slice(0, 4).toUpperCase() };
+      const m = { t: 'hello', v: opts.v == null ? 3 : opts.v, ver: opts.ver || '78', op, pid, key: opts.key || KEY(pid), name: opts.name || pid.slice(0, 4).toUpperCase() };
       return h.step({ k: 'hello', sid, op, m }, at);
     },
     msg(pid, m, at) { const sid = h.live.players[pid] && h.live.players[pid].sid; return h.step({ k: 'msg', pid, sid, m }, at); },
     close(sid, at) { return h.step({ k: 'close', sid }, at); },
     alarm(at) { return h.step({ k: 'alarm' }, at); },
-    sum(pid, o = {}, at) { const now = at != null ? at : h.now; return h.msg(pid, { t: 'sum', w: waveAt(h.state, now), dw: 0, l: 20, g: 0, k: 0, f: 0, lag: 0, hid: 0, b: null, o: 'l', tw: [], ...o }, at); },
+    sum(pid, o = {}, at) { return h.msg(pid, { t: 'sum', w: 0, dw: 0, l: 20, g: 0, k: 0, f: 0, sp: 1, hid: 0, b: null, o: 'l', tw: [], ...o }, at); },
     get alarmAt() { return nextAlarm(h.state, h.live, h.now); },
   };
   return h;
@@ -59,6 +60,7 @@ function playing(pids = [A, B], now = T0, timing) {
   return h;
 }
 const g = (h) => h.state.game;
+const t0 = (h) => g(h).t0;
 
 // ==================== U4 참가 ====================
 test('U4 create → claimed → hello create → lobby (방장)', () => {
@@ -74,10 +76,12 @@ test('U4 create → claimed → hello create → lobby (방장)', () => {
   assert.equal(w.sid, 's1');
   assert.equal(w.m.pid, A);
   assert.equal(w.m.code, 'ABC234');
+  assert.equal(w.m.kind, 'code');
   assert.equal(w.m.resumed, false);
   assert.equal(w.m.at, T0);
   assert.equal(w.m.room.t, 'room');
   assert.equal(w.m.room.phase, 'lobby');
+  assert.equal(w.m.room.reserveUntil, null);
   assert.deepEqual(w.m.room.players.map((p) => [p.pid, p.host, p.connected, p.status]), [[A, true, true, 'idle']]);
   assert.equal(w.m.room.game, null);
   assert.equal(h.state.expireAt, T0 + T.LOBBY_TTL);
@@ -93,7 +97,7 @@ test('U4 claimed 에 join 은 bad-code, 없는 방(state null)도 bad-code + per
   assert.equal(r.persist, false);
   assert.equal(h.state.phase, 'claimed');
   // 없는 방
-  const r2 = reduce({ state: null, live: emptyLive(T0) }, { k: 'hello', sid: 'x', op: 'join', m: { t: 'hello', v: 2, ver: '78', op: 'join', pid: A, key: KEY(A), name: 'A' } }, T0);
+  const r2 = reduce({ state: null, live: emptyLive(T0) }, { k: 'hello', sid: 'x', op: 'join', m: { t: 'hello', v: 3, ver: '78', op: 'join', pid: A, key: KEY(A), name: 'A' } }, T0);
   assert.equal(r2.state, null);
   assert.equal(r2.persist, false);
   assert.equal(errOf(r2), 'bad-code');
@@ -118,17 +122,20 @@ test('U4 join ×3 → room 방송, 5번째 full 4409', () => {
   assert.equal(Object.keys(h.state.players).length, 4);
 });
 
-test('U4 ver 불일치 4426 · 프로토콜 v 불일치 4426 · key 불일치 4403 · playing 에 모르는 pid started 4409', () => {
+test('U4 ver 불일치 4426 · 프로토콜 v2 4426 · key 불일치 4403 · op quick 4400 · playing 에 모르는 pid started 4409', () => {
   const h = lobby([A]);
   let r = h.hello('sB', B, { ver: '77' });
   assert.equal(errOf(r), 'version'); assert.equal(closes(r)[0].code, 4426);
-  r = h.hello('sB2', B, { v: 1 });
+  r = h.hello('sB2', B, { v: 2 });
   assert.equal(errOf(r), 'version'); assert.equal(closes(r)[0].code, 4426);
   r = h.hello('sA2', A, { key: 'f'.repeat(32) });
   assert.equal(errOf(r), 'bad-key'); assert.equal(closes(r)[0].code, 4403);
   // 경로 op 와 hello op 불일치
   h.open('sX', 'join');
-  r = h.step({ k: 'hello', sid: 'sX', op: 'join', m: { t: 'hello', v: 2, ver: '78', op: 'create', pid: C, key: KEY(C), name: 'C' } });
+  r = h.step({ k: 'hello', sid: 'sX', op: 'join', m: { t: 'hello', v: 3, ver: '78', op: 'create', pid: C, key: KEY(C), name: 'C' } });
+  assert.equal(errOf(r), 'bad-request'); assert.equal(closes(r)[0].code, 4400);
+  // 빠른 매칭 op 는 Room 에서 거절
+  r = h.hello('sQ', C, { op: 'quick' });
   assert.equal(errOf(r), 'bad-request'); assert.equal(closes(r)[0].code, 4400);
   h.hello('sB3', B);
   h.step({ k: 'seed', value: 1 });
@@ -214,8 +221,8 @@ test('U4 claimed 60초 · hello 없는 소켓 5초 → 4400', () => {
   assert.equal(nextAlarm(null, r.live, h.now), null);
 });
 
-// ==================== U5 시작 · 체인 ====================
-test('U5 start: 접속 1명 not-ready · 방장 아님 not-host · 2명 OK → waveAts[1]=t0, sched 1..10', () => {
+// ==================== U5 시작 ====================
+test('U5 start: 접속 1명 not-ready · 방장 아님 not-host · 2명 OK → start{seed,t0,timing,now} + room{playing}', () => {
   const h = lobby([A]);
   let r = h.msg(A, { t: 'start' });
   assert.equal(errOf(r), 'not-ready');
@@ -229,242 +236,108 @@ test('U5 start: 접속 1명 not-ready · 방장 아님 not-host · 2명 OK → w
   assert.equal(r.persist, true);
   assert.equal(h.state.phase, 'playing');
   assert.equal(h.state.seed, 0xdeadbeef);
-  const st = sends(r, 'start')[0].m;
-  assert.equal(st.t0, at + 20000);
-  assert.equal(st.seed, 0xdeadbeef);
-  assert.deepEqual(st.timing, { prep: 20000, intermission: 6000, bossLimit: 320000, clearWave: 101 });
-  assert.equal(st.now, at);
-  const sc = sends(r, 'sched')[0].m;
-  assert.equal(sc.from, 1);
-  assert.equal(sc.ats.length, 10);
-  assert.equal(sc.ats[0], at + 20000);
-  const wa = g(h).waveAts;
-  assert.equal(wa[0], null);
-  assert.equal(wa.length, 11);
-  for (let w = 1; w < 10; w++) assert.equal(wa[w + 1], wa[w] + T.spawnEnd(w) + 6000, `T_${w + 1}`);
-  assert.deepEqual(sc.ats, wa.slice(1));
-  assert.equal(g(h).endAt, null);
+  assert.equal(h.state.expireAt, null);
+  const st = sends(r, 'start')[0];
+  assert.equal(st.to, '*');
+  assert.deepEqual(st.m, { t: 'start', seed: 0xdeadbeef, t0: at + 20000, timing: { prep: 20000, bossLimit: 320000, clearWave: 101 }, now: at, at });
+  assert.equal(sends(r, 'sched').length, 0);
+  assert.equal(sends(r, 'hold').length, 0);
+  assert.deepEqual(g(h), { t0: at + 20000, timing: { prep: 20000, bossLimit: 320000, clearWave: 101 }, endedAt: null, reason: null, ranking: null });
   const room = sends(r, 'room')[0].m;
   assert.equal(room.phase, 'playing');
-  assert.deepEqual(room.players.map((p) => p.status), ['alive', 'alive']);
-  assert.equal(room.game.wave, 0);
-  assert.equal(room.game.seed, 0xdeadbeef);
-  assert.deepEqual(room.game.waveAts, wa);
-  assert.equal(h.alarmAt, wa[10]);
-  assert.equal(waveAt(h.state, at + 20000 - 1), 0);
-  assert.equal(waveAt(h.state, at + 20000), 1);
-  assert.equal(waveAt(h.state, wa[3] + 5), 3);
-});
-
-test('U5 알람 2초 지연에도 waveAts 불변 · 같은 n 재방송 없음 · 시작 뒤 start 거절', () => {
-  const h = playing();
-  const wa = g(h).waveAts.slice();
-  h.alarm(wa[5] + 2000);
-  h.alarm(wa[10] + 2000);
-  assert.deepEqual(g(h).waveAts.slice(0, 11), wa);
-  const allSched = h.trace.flatMap((t) => t.effects).filter((e) => e.send && e.send.m.t === 'sched');
-  assert.equal(allSched.length, 1);
-  assert.equal(g(h).hold.w, 10);
-  assert.equal(g(h).hold.deadline, wa[10] + T.spawnEnd(10) + 320000 + 2000);
-  const r = h.msg(A, { t: 'start' });
+  assert.deepEqual(room.players.map((p) => [p.status, p.wave, p.dw, p.sp]), [['alive', 0, 0, 1], ['alive', 0, 0, 1]]);
+  assert.deepEqual(room.game, { t0: at + 20000, timing: { prep: 20000, bossLimit: 320000, clearWave: 101 }, seed: 0xdeadbeef });
+  assert.equal(h.alarmAt, at + 20000 + T.GAME_CAP);
+  // 시작 뒤 start 거절 · 알람은 GAME_CAP 뿐 (서버 웨이브 시계 없음)
+  r = h.msg(A, { t: 'start' });
   assert.equal(errOf(r), 'not-ready');
+  r = h.alarm(at + 60 * 60000);
+  assert.equal(h.state.phase, 'playing');
+  assert.equal(sends(r, 'sched').length + sends(r, 'hold').length, 0);
+  // fast 표
+  const hf = playing([A, B], T0, T.timingFor('fast'));
+  assert.deepEqual(g(hf).timing, { prep: 2000, bossLimit: 5000, clearWave: 12 });
 });
 
-// ==================== U6 보스 홀드 ====================
-test('U6 T10 → hold{waiting:[A,B]} · A done → [B] · B done → T11=now+6000, sched 11..20', () => {
-  const h = playing();
-  const wa = g(h).waveAts;
-  h.sum(A, {}, wa[10] - 1000); h.sum(B, {}, wa[10] - 1000);
-  let r = h.alarm(wa[10]);
-  assert.equal(r.persist, true);
-  let hold = sends(r, 'hold')[0].m;
-  assert.deepEqual([hold.w, hold.waiting, hold.done, hold.released], [10, [A, B], [], false]);
-  assert.equal(hold.deadline, wa[10] + 1050 + 320000 + 2000);
-  assert.equal(h.alarmAt, wa[10] + T.HOLD_RECHECK);
-  // 재검사 알람: 변화 없으면 hold 재방송 없음
-  r = h.alarm(wa[10] + T.HOLD_RECHECK);
-  assert.equal(sends(r, 'hold').length, 0);
-  assert.equal(h.alarmAt, wa[10] + 2 * T.HOLD_RECHECK);
-  // A 보스 처치 (신선도 유지)
-  h.sum(A, {}, wa[10] + 30000); h.sum(B, {}, wa[10] + 30000);
-  r = h.msg(A, { t: 'done', w: 10 }, wa[10] + 31000);
-  assert.equal(r.persist, true);
-  hold = sends(r, 'hold')[0].m;
-  assert.deepEqual([hold.waiting, hold.done, hold.released], [[B], [A], false]);
-  assert.deepEqual(h.state.players[A].bossDone, [10]);
-  // 멱등: 같은 done 다시 → persist false, hold 재방송 없음
-  r = h.msg(A, { t: 'done', w: 10 }, wa[10] + 32000);
+// ==================== U6 개별 진행: sum · done · dead · clear ====================
+test('U6 sum: wave/dw/kills 는 max, clearWave 로 클램프 · done 범위 · dead 는 deathWave = w−1', () => {
+  const h = playing([A, B], T0, T.timingFor('fast'));
+  let r = h.sum(A, { w: 3, dw: 2, k: 10, sp: 3 }, t0(h) + 100);
   assert.equal(r.persist, false);
-  assert.equal(sends(r, 'hold').length, 0);
-  // B 처치 → 해제
-  const rel = wa[10] + 60000;
-  h.sum(B, {}, rel - 500); h.sum(A, {}, rel - 500);   // B 가 먼저 신선해져야 한다 — B 가 stale 이면 A 의 bossDone 만으로 풀린다(W2)
-  r = h.msg(B, { t: 'done', w: 10 }, rel);
-  assert.equal(r.persist, true);
-  hold = sends(r, 'hold')[0].m;
-  assert.deepEqual([hold.waiting, hold.done, hold.released], [[], [A, B], true]);
-  const sc = sends(r, 'sched')[0].m;
-  assert.equal(sc.from, 11);
-  assert.equal(sc.ats.length, 10);
-  assert.equal(sc.ats[0], rel + 6000);
-  assert.equal(g(h).waveAts[11], rel + 6000);
-  assert.equal(g(h).waveAts[20], g(h).waveAts[19] + T.spawnEnd(19) + 6000);
-  assert.equal(g(h).waveAts.length, 21);
-  assert.equal(h.alarmAt, g(h).waveAts[20]);
-  assert.equal(logs(r, 'hold.release')[0].by, 'done');
-});
-
-test('U6 이른 done 수락+anomaly · 미래 웨이브 done 폐기 · 늦은 done 기록', () => {
-  const h = playing();
-  const wa = g(h).waveAts;
-  // 웨이브 10 시작 직후 (보스 스폰 1.05초 전)
-  h.sum(A, {}, wa[10] - 100); h.sum(B, {}, wa[10] - 100);
-  let r = h.msg(A, { t: 'done', w: 10 }, wa[10] + 20);
-  assert.deepEqual(h.state.players[A].bossDone, [10]);
-  assert.equal(logs(r, 'anomaly')[0].kind, 'done-early');
-  // 아직 시작 안 한 웨이브
-  r = h.msg(B, { t: 'done', w: 11 }, wa[10] + 30);
-  assert.equal(logs(r, 'anomaly')[0].kind, 'done-future');
-  assert.equal(h.state.players[B].wave, 9);          // 마지막 sum 이 9 였고, 미래 done 은 wave 도 올리지 않는다
-  // 늦은 done (w < waveAt): 기록만
-  r = h.msg(B, { t: 'done', w: 3 }, wa[10] + 40);
+  assert.deepEqual([h.state.players[A].wave, h.state.players[A].dw, h.state.players[A].kills], [3, 2, 10]);
+  assert.equal(h.live.players[A].sum.sp, 3);
+  h.sum(A, { w: 1, dw: 1, k: 5 }, t0(h) + 200);            // 뒤로 가지 않는다
+  assert.deepEqual([h.state.players[A].wave, h.state.players[A].dw, h.state.players[A].kills], [3, 2, 10]);
+  h.sum(A, { w: 99, dw: 101 }, t0(h) + 300);               // clearWave(12) 클램프
+  assert.deepEqual([h.state.players[A].wave, h.state.players[A].dw], [12, 12]);
+  assert.equal(snapshot(h.state, h.live, h.now).players[0].sp, 1);
+  // done: 1..clearWave 만, 통계용
+  r = h.msg(B, { t: 'done', w: 0 });
+  assert.equal(logs(r, 'anomaly')[0].kind, 'done-range');
+  r = h.msg(B, { t: 'done', w: 13 });
+  assert.equal(logs(r, 'anomaly')[0].kind, 'done-range');
+  r = h.msg(B, { t: 'done', w: 4 });
+  assert.equal(r.persist, false);
+  assert.deepEqual([h.state.players[B].wave, h.state.players[B].dw], [4, 4]);
   assert.equal(logs(r, 'anomaly').length, 0);
-  assert.equal(h.state.players[B].wave, 9);
-});
-
-test('U6 B hidden 8초 → waiting [A] · 둘 다 hidden ∧ done 없음 → deadline 까지 해제 안 됨 · deadline → 해제, 아무도 dead 아님', () => {
-  const h = playing();
-  const wa = g(h).waveAts;
-  h.sum(A, {}, wa[10] - 100); h.sum(B, { hid: 1 }, wa[10] - 100);
-  let r = h.alarm(wa[10]);
-  let hold = sends(r, 'hold')[0].m;
-  assert.deepEqual(hold.waiting, [A]);
-  // A 도 조용해진다(8초 무응답) → 재검사 알람에 waiting [] 인데 done 없음 → 해제 안 됨
-  r = h.alarm(wa[10] + 8000);
-  hold = sends(r, 'hold')[0].m;
-  assert.deepEqual([hold.waiting, hold.released], [[], false]);
-  assert.equal(g(h).hold.released, false);
-  // lag 31초도 stale
-  h.sum(A, { lag: 31 }, wa[10] + 9000);
-  assert.deepEqual(snapshot(h.state, h.live, h.now).game.hold.waiting, []);
-  h.sum(A, { lag: 29 }, wa[10] + 9500);
-  assert.deepEqual(snapshot(h.state, h.live, h.now).game.hold.waiting, [A]);
-  // 마감까지 아무 보고 없음 → 해제, 아무도 죽지 않는다
-  const dl = g(h).hold.deadline;
-  assert.equal(h.alarmAt <= dl, true);
-  r = h.alarm(dl);
-  hold = sends(r, 'hold')[0].m;
-  assert.equal(hold.released, true);
-  assert.equal(logs(r, 'hold.release')[0].by, 'deadline');
-  assert.deepEqual(Object.values(h.state.players).map((p) => p.status), ['alive', 'alive']);
-  assert.equal(g(h).waveAts[11], dl + 6000);
-  // 보스 산술: 강제 다음 웨이브는 로컬 사망(321.05s)보다 항상 뒤
-  assert.ok(g(h).waveAts[11] - wa[10] >= 321050 + 6000);
-  assert.equal(g(h).waveAts[11] - wa[10], T.spawnEnd(10) + 320000 + 2000 + 6000);
-});
-
-test('U6 sum.dw=10 만으로 bossDone 도출 → 해제', () => {
-  const h = playing();
-  const wa = g(h).waveAts;
-  h.sum(A, {}, wa[10] - 100); h.sum(B, {}, wa[10] - 100);
-  h.alarm(wa[10]);
-  h.sum(B, {}, wa[10] + 39000);       // B 신선
-  let r = h.sum(A, { dw: 10 }, wa[10] + 40000);
+  // dead
+  r = h.msg(B, { t: 'dead', w: 5, k: 30, r: 'lives' }, t0(h) + 5000);
+  assert.deepEqual(sends(r, 'player')[0].m, { t: 'player', pid: B, status: 'dead', wave: 5, deathWave: 4, kills: 30, at: h.now });
   assert.equal(r.persist, true);
-  assert.deepEqual(h.state.players[A].bossDone, [10]);
-  assert.deepEqual(sends(r, 'hold')[0].m.waiting, [B]);
-  r = h.sum(B, { dw: 10 }, wa[10] + 45000);
-  assert.equal(g(h).hold.released, true);
-  assert.equal(sends(r, 'sched')[0].m.from, 11);
-  // dw 는 waveAt(now+1s) 로 클램프: 미래 보스는 도출되지 않는다
-  r = h.sum(A, { dw: 20, w: 20 }, wa[10] + 46000);      // T11 = 45000+6000 이라 아직 10
-  assert.deepEqual(h.state.players[A].bossDone, [10]);
-  assert.equal(h.state.players[A].wave, 10);
-  r = h.sum(A, { dw: 20, w: 20 }, wa[10] + 52000);
-  assert.equal(h.state.players[A].wave, 11);
-  assert.deepEqual(h.state.players[A].bossDone, [10]);
+  assert.equal(h.state.players[B].deathAt, t0(h) + 5000);
+  assert.equal(h.state.phase, 'playing');
+  // 죽은 뒤 sum/done/clear 무시
+  r = h.sum(B, { k: 999 });
+  assert.equal(h.state.players[B].kills, 30);
+  assert.equal(sends(r, 'sum').length, 0);
+  r = h.msg(B, { t: 'clear', w: 12, k: 1 });
+  assert.equal(h.state.players[B].status, 'dead');
+  // dead.w 클램프: 0 → deathWave 0, 100 → 11
+  const h2 = playing([A, B], T0, T.timingFor('fast'));
+  h2.msg(A, { t: 'dead', w: 0, k: 0, r: 'afk' });
+  assert.equal(h2.state.players[A].deathWave, 0);
+  h2.msg(B, { t: 'dead', w: 100, k: 0, r: 'reload' });
+  assert.equal(h2.state.players[B].deathWave, 11);
 });
 
-test('U6 죽은 사람은 waiting 에서 빠지고, 죽은 사람의 bossDone 만으로는 해제되지 않는다', () => {
-  const h = playing([A, B, C]);
-  const wa = g(h).waveAts;
-  for (const p of [A, B, C]) h.sum(p, {}, wa[10] - 100);
-  h.alarm(wa[10]);
-  h.msg(A, { t: 'done', w: 10 }, wa[10] + 1000);
-  let r = h.msg(A, { t: 'dead', w: 10, k: 50, r: 'lives' }, wa[10] + 2000);
-  assert.equal(h.state.players[A].status, 'dead');
-  assert.equal(h.state.players[A].deathWave, 9);
-  // B·C 가 hidden → waiting 비었지만 살아있는 bossDone 없음 → 홀드 유지
-  h.sum(B, { hid: 1 }, wa[10] + 3000); h.sum(C, { hid: 1 }, wa[10] + 3000);
-  assert.equal(g(h).hold.released, false);
-  assert.deepEqual(snapshot(h.state, h.live, h.now).game.hold.waiting, []);
-  h.sum(B, { hid: 0, dw: 10 }, wa[10] + 4000);
-  assert.equal(g(h).hold.released, true);
-});
-
-// ==================== U7 종료 · 순위 ====================
-test('U7 ranking: cleared(공동 1위) > lost > dead > left, deathWave desc → deathAt desc → kills desc', () => {
-  const st = createRoom({ code: 'ABC234', now: T0, timing: T.timingFor('') });
-  const mk = (pid, o) => ({ pid, name: pid, key: 'k', joinedAt: T0, status: 'alive', wave: 0, deathWave: null, deathAt: null, kills: 0, bossDone: [], clearAt: null, rank: null, ...o });
-  st.players = {
-    p1: mk('p1', { status: 'dead', deathWave: 40, deathAt: T0 + 5, kills: 100 }),
-    p2: mk('p2', { status: 'cleared', wave: 101, deathWave: 101, deathAt: T0 + 9, kills: 10 }),
-    p3: mk('p3', { status: 'left', deathWave: 60, deathAt: T0 + 3, kills: 900 }),
-    p4: mk('p4', { status: 'cleared', wave: 101, deathWave: 101, deathAt: T0 + 8, kills: 999 }),
-    p5: mk('p5', { status: 'dead', deathWave: 40, deathAt: T0 + 7, kills: 50 }),
-    p6: mk('p6', { status: 'lost', wave: 101, deathWave: 101, deathAt: T0 + 1, kills: 1 }),
-    p7: mk('p7', { status: 'dead', deathWave: 40, deathAt: T0 + 7, kills: 60 }),
-  };
-  const rk = ranking(st);
-  assert.deepEqual(rk.map((r) => [r.pid, r.rank, r.wave]), [['p2', 1, 101], ['p4', 1, 101], ['p6', 3, 101], ['p7', 4, 40], ['p5', 5, 40], ['p1', 6, 40], ['p3', 7, 60]]);
-  assert.deepEqual(Object.keys(rk[0]).sort(), ['kills', 'name', 'pid', 'rank', 'status', 'wave']);
-});
-
-test('U7 clear 는 bossDone 10개 없으면 폐기 · 조건 충족 시 cleared · 전원 결과 → end cleared', () => {
-  const h = playing();
-  // 101 까지 시각을 강제로 확정한다 (홀드 전부 즉시 해제 흉내: 보스마다 done)
-  let now = h.now;
-  for (let b = 10; b <= 100; b += 10) {
-    const wa = g(h).waveAts;
-    now = wa[b];
-    h.sum(A, {}, now - 100); h.sum(B, {}, now - 100);
-    h.alarm(now);
-    h.msg(A, { t: 'done', w: b }, now + 2000);
-    if (b < 100) h.msg(B, { t: 'done', w: b }, now + 2000);   // 100 은 B 가 못 잡는다
-    else h.msg(B, { t: 'dead', w: 100, k: 7, r: 'bossTimeout' }, now + 2000);
-  }
-  assert.equal(g(h).waveAts.length, 102);
-  assert.ok(g(h).endAt > g(h).waveAts[101]);
-  assert.equal(g(h).endAt, g(h).waveAts[101] + T.spawnEnd(101));
-  // 이른 clear (101 전) → 폐기
-  let r = h.msg(A, { t: 'clear', w: 101, k: 3 }, g(h).waveAts[101] - 5000);
+test('U6 clear: w < clearWave 는 anomaly 폐기 · 수락 시 player{cleared, clearAt} · 전원 확정 → end', () => {
+  const h = playing([A, B, C], T0, T.timingFor('fast'));
+  let r = h.msg(A, { t: 'clear', w: 11, k: 3 }, t0(h) + 1000);
   assert.equal(h.state.players[A].status, 'alive');
   assert.equal(logs(r, 'anomaly')[0].kind, 'clear-early');
-  // bossDone 부족 → 폐기
-  const saved = h.state.players[A].bossDone.slice();
-  h.state.players[A].bossDone = saved.slice(0, 9);
-  r = h.msg(A, { t: 'clear', w: 101, k: 3 }, g(h).endAt);
-  assert.equal(h.state.players[A].status, 'alive');
-  assert.equal(logs(r, 'anomaly')[0].kind, 'clear-boss');
-  h.state.players[A].bossDone = saved;
-  r = h.msg(A, { t: 'clear', w: 101, k: 3 }, g(h).endAt + 10);
+  assert.equal(r.persist, false);
+  // 서버는 보스 처치를 검증하지 않는다 — 12 이면 수락 (클라가 검증)
+  r = h.msg(A, { t: 'clear', w: 12, k: 100 }, t0(h) + 60000);
+  assert.equal(r.persist, true);
+  const pA = sends(r, 'player')[0];
+  assert.equal(pA.to, '*');
+  assert.deepEqual(pA.m, { t: 'player', pid: A, status: 'cleared', wave: 12, kills: 100, clearAt: t0(h) + 60000, at: t0(h) + 60000 });
+  assert.equal(h.state.players[A].deathWave, 12);
+  assert.equal(sends(r, 'end').length, 0);
+  assert.equal(h.state.phase, 'playing');
+  // 완주 뒤 다시 clear/dead 는 무시
+  r = h.msg(A, { t: 'dead', w: 3, k: 1, r: 'quit' });
   assert.equal(h.state.players[A].status, 'cleared');
-  assert.equal(sends(r, 'player')[0].m.status, 'cleared');
+  h.msg(B, { t: 'dead', w: 8, k: 20, r: 'bossTimeout' }, t0(h) + 70000);
+  r = h.msg(C, { t: 'clear', w: 12, k: 50 }, t0(h) + 80000);
   const end = sends(r, 'end')[0].m;
   assert.equal(end.reason, 'cleared');
   assert.equal(end.seed, 424242);
-  assert.deepEqual(end.ranking.map((x) => [x.pid, x.rank, x.status, x.wave]), [[A, 1, 'cleared', 101], [B, 2, 'dead', 99]]);
+  assert.deepEqual(end.ranking.map((x) => [x.pid, x.rank, x.status, x.wave, x.deathWave, x.clearAt]),
+    [[A, 1, 'cleared', 12, 12, t0(h) + 60000], [C, 2, 'cleared', 12, 12, t0(h) + 80000], [B, 3, 'dead', 7, 7, null]]);
+  assert.deepEqual(Object.keys(end.ranking[0]).sort(), ['clearAt', 'deathWave', 'kills', 'name', 'pid', 'rank', 'status', 'wave']);
   assert.equal(h.state.phase, 'ended');
   assert.equal(h.state.expireAt, h.now + T.END_TTL);
   assert.equal(h.alarmAt, h.now + T.END_TTL);
   assert.equal(r.persist, true);
+  assert.equal(h.state.players[A].rank, 1);
   // 끝난 뒤 sum/done 무시, 재접속은 welcome + end 재전송, 모르는 pid 는 expired
-  r = h.msg(A, { t: 'done', w: 101 });
+  r = h.msg(A, { t: 'done', w: 12 });
   assert.equal(r.persist, false);
   r = h.hello('sA-again', A);
   assert.equal(sends(r, 'welcome')[0].m.room.phase, 'ended');
   assert.equal(sends(r, 'end')[0].m.reason, 'cleared');
-  r = h.hello('sC', C);
+  r = h.hello('sD', D);
   assert.equal(errOf(r), 'expired'); assert.equal(closes(r)[0].code, 4410);
   // END_TTL → 전원 4410 + destroy
   r = h.alarm(h.state.expireAt);
@@ -472,140 +345,134 @@ test('U7 clear 는 bossDone 10개 없으면 폐기 · 조건 충족 시 cleared 
   assert.ok(r.effects.some((e) => e.destroy));
 });
 
-test('U7 endAt+END_GRACE 미보고 → lost → end timeout', () => {
-  const h = playing([A, B], T0, T.timingFor('fast'));
-  const wa = g(h).waveAts;
-  h.sum(A, {}, wa[10] - 100); h.sum(B, {}, wa[10] - 100);
-  h.alarm(wa[10]);
-  h.msg(A, { t: 'done', w: 10 }, wa[10] + 1500);
-  h.msg(B, { t: 'done', w: 10 }, wa[10] + 1500);
-  assert.equal(g(h).waveAts.length, 13);
-  assert.equal(g(h).endAt, g(h).waveAts[12] + T.spawnEnd(12));
-  h.msg(A, { t: 'clear', w: 12, k: 1 }, g(h).endAt + 100);
-  assert.equal(h.state.phase, 'playing');
-  assert.equal(h.alarmAt, g(h).endAt + 5000);
-  const r = h.alarm(g(h).endAt + 5000);
-  assert.equal(h.state.players[B].status, 'lost');
-  assert.equal(sends(r, 'player')[0].m.status, 'lost');
+// ==================== U7 종료 · 순위 ====================
+test('U7 ranking: cleared 는 clearAt 오름차순(공동 없음) → 나머지 deathWave desc → kills desc → joinedAt', () => {
+  const st = createRoom({ code: 'ABC234', now: T0, timing: T.timingFor('') });
+  const mk = (pid, o) => ({ pid, name: pid, key: 'k', joinedAt: T0, status: 'alive', wave: 0, dw: 0, deathWave: null, deathAt: null, kills: 0, clearAt: null, rank: null, ...o });
+  st.players = {
+    p1: mk('p1', { status: 'dead', deathWave: 40, deathAt: T0 + 5, kills: 100 }),
+    p2: mk('p2', { status: 'cleared', wave: 101, deathWave: 101, clearAt: T0 + 9, kills: 10 }),
+    p3: mk('p3', { status: 'left', deathWave: 60, deathAt: T0 + 3, kills: 900 }),
+    p4: mk('p4', { status: 'cleared', wave: 101, deathWave: 101, clearAt: T0 + 8, kills: 999 }),
+    p5: mk('p5', { status: 'dead', deathWave: 40, deathAt: T0 + 7, kills: 50, joinedAt: T0 + 1 }),
+    p6: mk('p6', { status: 'lost', wave: 101, deathWave: 101, deathAt: T0 + 1, kills: 1 }),
+    p7: mk('p7', { status: 'dead', deathWave: 40, deathAt: T0 + 7, kills: 50, joinedAt: T0 + 2 }),
+    p8: mk('p8', { status: 'cleared', wave: 101, deathWave: 101, clearAt: T0 + 8, kills: 0, joinedAt: T0 + 1 }),   // p4 와 동시각 → joinedAt
+  };
+  const rk = ranking(st);
+  assert.deepEqual(rk.map((r) => [r.pid, r.rank, r.wave]),
+    [['p4', 1, 101], ['p8', 2, 101], ['p2', 3, 101], ['p6', 4, 101], ['p3', 5, 60], ['p1', 6, 40], ['p5', 7, 40], ['p7', 8, 40]]);
+  assert.deepEqual(rk.map((r) => r.rank), [1, 2, 3, 4, 5, 6, 7, 8]);
+});
+
+test('U7 alive 0 → all-dead · 탈락 웨이브 순 · 같은 웨이브면 kills', () => {
+  const h = playing([A, B, C], T0, T.timingFor('fast'));
+  h.msg(A, { t: 'dead', w: 5, k: 30, r: 'lives' }, t0(h) + 100);
+  h.msg(B, { t: 'dead', w: 5, k: 40, r: 'lives' }, t0(h) + 200);
+  const r = h.msg(C, { t: 'dead', w: 9, k: 1, r: 'quit' }, t0(h) + 300);
   const end = sends(r, 'end')[0].m;
-  assert.equal(end.reason, 'timeout');
-  assert.deepEqual(end.ranking.map((x) => [x.pid, x.rank, x.status]), [[A, 1, 'cleared'], [B, 2, 'lost']]);
+  assert.equal(end.reason, 'all-dead');
+  assert.deepEqual(end.ranking.map((x) => [x.pid, x.rank, x.wave, x.kills]), [[C, 1, 8, 1], [B, 2, 4, 40], [A, 3, 4, 30]]);
 });
 
-test('U7 alive 0 → all-dead · dead 는 deathWave = w-1 · 죽은 뒤 done/clear/sum 무시', () => {
+test('U7 전원 끊김 3분 → empty · GAME_CAP → 남은 alive 는 lost → timeout', () => {
   const h = playing();
-  const wa = g(h).waveAts;
-  let r = h.msg(A, { t: 'dead', w: 5, k: 30, r: 'lives' }, wa[5] + 100);
-  assert.deepEqual(sends(r, 'player')[0].m, { t: 'player', pid: A, status: 'dead', wave: 5, deathWave: 4, kills: 30, at: h.now });
-  assert.equal(r.persist, true);
-  assert.equal(h.state.phase, 'playing');
-  r = h.msg(A, { t: 'done', w: 5 });
-  assert.equal(r.persist, false);
-  r = h.sum(A, { k: 999 });
-  assert.equal(h.state.players[A].kills, 30);
-  assert.equal(sends(r, 'sum').length, 0);
-  r = h.msg(B, { t: 'dead', w: 7, k: 10, r: 'quit' }, wa[7] + 100);
-  assert.equal(sends(r, 'end')[0].m.reason, 'all-dead');
-  assert.deepEqual(sends(r, 'end')[0].m.ranking.map((x) => [x.pid, x.rank]), [[B, 1], [A, 2]]);
-  // dead.w 는 waveAt(now+1s) 로 클램프
-  const h2 = playing();
-  h2.msg(A, { t: 'dead', w: 101, k: 0, r: 'afk' }, g(h2).waveAts[3] + 10);
-  assert.equal(h2.state.players[A].deathWave, 2);
-});
-
-test('U7 전원 끊김 3분 → empty · GAME_CAP → timeout', () => {
-  const h = playing();
-  const wa = g(h).waveAts;
-  let r = h.close('sA', wa[2]);
-  assert.deepEqual(sends(r, 'player')[0].m, { t: 'player', pid: A, connected: false, at: wa[2] });
+  let r = h.close('sA', t0(h) + 1000);
+  assert.deepEqual(sends(r, 'player')[0].m, { t: 'player', pid: A, connected: false, at: t0(h) + 1000 });
   assert.equal(r.persist, false);
   assert.equal(h.live.emptySince, null);
-  h.close('sB', wa[2] + 1000);
-  assert.equal(h.live.emptySince, wa[2] + 1000);
-  assert.equal(h.alarmAt, Math.min(wa[10], wa[2] + T.RECONNECT_GRACE, wa[2] + 1000 + T.EMPTY_END));
-  h.alarm(wa[10]);                             // 보스 홀드는 서고
-  assert.equal(h.state.phase, 'playing');
-  r = h.alarm(wa[2] + 1000 + T.EMPTY_END);     // 3분 → empty
+  h.close('sB', t0(h) + 2000);
+  assert.equal(h.live.emptySince, t0(h) + 2000);
+  assert.equal(h.alarmAt, Math.min(t0(h) + 1000 + T.RECONNECT_GRACE, t0(h) + 2000 + T.EMPTY_END));
+  r = h.alarm(t0(h) + 2000 + T.EMPTY_END);
   assert.equal(sends(r, 'end')[0].m.reason, 'empty');
   assert.deepEqual(Object.values(h.state.players).map((p) => p.status), ['left', 'left']);
-  // GAME_CAP
-  const h2 = playing();
-  const cap = g(h2).t0 + T.GAME_CAP;
-  h2.sum(A, {}, cap - 1000); h2.sum(B, {}, cap - 1000);
+  // GAME_CAP: A 는 완주, B 는 미보고 → lost(deathWave = wave)
+  const h2 = playing([A, B], T0, T.timingFor('fast'));
+  const cap = t0(h2) + T.GAME_CAP;
+  h2.msg(A, { t: 'clear', w: 12, k: 5 }, t0(h2) + 5000);
+  h2.sum(B, { w: 7, dw: 6 }, cap - 1000);
+  assert.equal(h2.alarmAt, cap);
   r = h2.alarm(cap);
-  assert.equal(sends(r, 'end')[0].m.reason, 'timeout');
-  assert.deepEqual(Object.values(h2.state.players).map((p) => p.status), ['lost', 'lost']);
+  const end = sends(r, 'end')[0].m;
+  assert.equal(end.reason, 'timeout');
+  assert.deepEqual(sends(r, 'player').map((s) => [s.m.pid, s.m.status, s.m.deathWave]), [[B, 'lost', 7]]);
+  assert.deepEqual(end.ranking.map((x) => [x.pid, x.rank, x.status, x.wave]), [[A, 1, 'cleared', 12], [B, 2, 'lost', 7]]);
 });
 
 // ==================== U8 재접속 · 유예 ====================
 test('U8 playing 중 close → 180s → left(alive 만) · 유예 안 hello → 상태 불변 · status 확정 후 done/clear 무시', () => {
   const h = playing([A, B, C]);
-  const wa = g(h).waveAts;
-  h.msg(C, { t: 'dead', w: 3, k: 1, r: 'lives' }, wa[3] + 10);
-  h.close('sC', wa[3] + 20);                    // 죽은 사람 끊김 → 유예 대상 아님
-  h.close('sB', wa[3] + 100);
-  assert.equal(h.alarmAt, Math.min(wa[10], wa[3] + 100 + T.RECONNECT_GRACE));
+  const at = t0(h) + 10000;
+  h.msg(C, { t: 'dead', w: 3, k: 1, r: 'lives' }, at);
+  h.close('sC', at + 20);                    // 죽은 사람 끊김 → 유예 대상 아님
+  h.close('sB', at + 100);
+  assert.equal(h.alarmAt, at + 100 + T.RECONNECT_GRACE);
   // 유예 안 재접속
-  let r = h.hello('sB2', B, {}, wa[3] + 50000);
-  assert.equal(sends(r, 'welcome')[0].m.resumed, true);
-  assert.deepEqual(sends(r, 'welcome')[0].m.room.game.waveAts, g(h).waveAts);
+  let r = h.hello('sB2', B, {}, at + 50000);
+  const w = sends(r, 'welcome')[0].m;
+  assert.equal(w.resumed, true);
+  assert.deepEqual(w.room.game, { t0: t0(h), timing: g(h).timing, seed: 424242 });
   assert.equal(sends(r, 'player')[0].m.connected, true);
   assert.equal(h.state.players[B].status, 'alive');
   assert.equal(r.persist, false);
-  assert.equal(h.alarmAt, wa[10]);
+  assert.equal(h.alarmAt, t0(h) + T.GAME_CAP);
   // 다시 끊기고 유예 만료
-  h.close('sB2', wa[4]);
-  r = h.alarm(wa[4] + T.RECONNECT_GRACE);
+  h.close('sB2', at + 60000);
+  r = h.alarm(at + 60000 + T.RECONNECT_GRACE);
   assert.equal(h.state.players[B].status, 'left');
   assert.equal(h.state.players[B].deathWave, h.state.players[B].wave);
   assert.deepEqual(sends(r, 'player')[0].m, { t: 'player', pid: B, status: 'left', wave: h.state.players[B].wave, deathWave: h.state.players[B].deathWave, at: h.now });
   assert.equal(r.persist, true);
   assert.equal(h.state.players[C].status, 'dead');
   // left 뒤 재접속: 관전은 되지만 done/clear/dead 는 무시
-  r = h.hello('sB3', B, {}, wa[4] + T.RECONNECT_GRACE + 1000);
+  r = h.hello('sB3', B, {}, h.now + 1000);
   assert.equal(sends(r, 'welcome')[0].m.resumed, true);
   r = h.msg(B, { t: 'done', w: 4 });
   assert.equal(r.persist, false);
   assert.equal(h.state.players[B].status, 'left');
   r = h.msg(B, { t: 'dead', w: 4, k: 0, r: 'lives' });
   assert.equal(h.state.players[B].status, 'left');
-  // 방장 A 가 playing 중 leave → left, 방장 위임 → room 방송
+  // 방장 A 가 playing 중 leave → left, 방장 위임 → room 방송, alive 0 → all-dead
   r = h.msg(A, { t: 'leave' }, h.now + 1000);
   assert.equal(h.state.players[A].status, 'left');
   assert.deepEqual(closes(r), [{ sid: 'sA', code: 4000, reason: 'leave' }]);
   assert.equal(h.state.hostId, C);                    // B 는 left 라 제외, 죽었어도 C 가 방장
-  assert.equal(sends(r, 'end')[0].m.reason, 'all-dead');   // alive 0 (C dead)
+  assert.equal(sends(r, 'end')[0].m.reason, 'all-dead');
 });
 
-test('U8 하이버네이션 복귀: attachment 로 live 재구성 (lastBeat=now, lag=0)', () => {
+test('U8 하이버네이션 복귀: attachment 로 live 재구성', () => {
   const h = playing([A, B]);
-  const wa = g(h).waveAts;
-  h.sum(A, { lag: 20, hid: 1 }, wa[2]);
+  h.sum(A, { hid: 1, sp: 2 }, t0(h) + 100);
   const st = JSON.parse(JSON.stringify(h.state));
-  const live = liveFromSockets(st, [{ sid: 'nA', pid: A, op: 'join' }, { sid: 'pending1', op: 'join' }], wa[3]);
+  const at = t0(h) + 5000;
+  const live = liveFromSockets(st, [{ sid: 'nA', pid: A, op: 'join' }, { sid: 'pending1', op: 'join' }], at);
   assert.equal(live.players[A].connected, true);
-  assert.equal(live.players[A].lastBeat, wa[3]);
-  assert.equal(live.players[A].lag, 0);
+  assert.equal(live.players[A].lastBeat, at);
   assert.equal(live.players[A].hidden, false);
+  assert.equal(live.players[A].watching, null);
   assert.equal(live.players[B].connected, false);
-  assert.equal(live.players[B].disconnectedAt, wa[3]);
-  assert.deepEqual(live.pending.pending1, { openedAt: wa[3], op: 'join' });
+  assert.equal(live.players[B].disconnectedAt, at);
+  assert.deepEqual(live.pending.pending1, { openedAt: at, op: 'join' });
   assert.equal(live.emptySince, null);
-  assert.equal(nextAlarm(st, live, wa[3]), wa[3] + T.HELLO_TIMEOUT);
-  const r = reduce({ state: st, live }, { k: 'alarm' }, wa[10]);
-  assert.equal(r.state.game.hold.w, 10);
-  assert.equal(r.live.holdCheckAt, wa[10] + T.HOLD_RECHECK);
+  assert.equal(nextAlarm(st, live, at), at + T.HELLO_TIMEOUT);
+  const r = reduce({ state: st, live }, { k: 'alarm' }, at + T.RECONNECT_GRACE);
+  assert.equal(r.state.players[B].status, 'left');
+  // 전원 끊긴 채 복귀 → emptySince = now
+  const live2 = liveFromSockets(st, [], at);
+  assert.equal(live2.emptySince, at);
 });
 
-// ==================== U9 불변식 · 중계 · 잡다 ====================
-test('U9 persist 집합: sum/chat/log/time/close 는 false, 전이는 true · alarm ≥ now', () => {
+// ==================== U9 불변식 · 중계 · 관전 · 잡다 ====================
+test('U9 persist 집합: sum/done/watch/chat/log/time/close 는 false, 전이는 true · alarm ≥ now', () => {
   const h = playing([A, B]);
-  const wa = g(h).waveAts;
-  const r1 = h.sum(A, {}, wa[1] + 10);
+  const r1 = h.sum(A, {}, t0(h) + 10);
   const r2 = h.msg(A, { t: 'chat', text: 'hi' });
   const r3 = h.msg(A, { t: 'log', text: 'x', kind: 'up' });
   const r4 = h.msg(A, { t: 'time', c: 5 });
-  assert.deepEqual([r1.persist, r2.persist, r3.persist, r4.persist], [false, false, false, false]);
+  const r5 = h.msg(A, { t: 'watch', pid: B });
+  const r6 = h.msg(A, { t: 'done', w: 1 });
+  assert.deepEqual([r1.persist, r2.persist, r3.persist, r4.persist, r5.persist, r6.persist], [false, false, false, false, false, false]);
   assert.deepEqual(sends(r2, 'chat').map((s) => [s.to, s.except, s.m.name, s.m.text]), [['*', undefined, 'AAAA', 'hi']]);
   assert.deepEqual(sends(r3, 'log').map((s) => [s.to, s.except, s.m.kind]), [['*', A, 'up']]);
   assert.deepEqual(sends(r4, 'time')[0].m, { t: 'time', c: 5, s: h.now, at: h.now });
@@ -614,22 +481,72 @@ test('U9 persist 집합: sum/chat/log/time/close 는 false, 전이는 true · al
   for (const t of h.trace) assert.ok(t.alarm == null || t.alarm >= t.now, `${t.ev}: alarm ${t.alarm} < now ${t.now}`);
 });
 
-test('U9 sum 중계: 1.5초 간격 · w 클램프 · 본인 제외 · 원문 그대로', () => {
-  const h = playing([A, B, C]);
-  const wa = g(h).waveAts;
-  let r = h.sum(A, { w: 50, dw: 50, tw: [[0, 6, 2]], b: 0.5 }, wa[2] + 10);
-  const s = sends(r, 'sum');
+test('U9 sum 중계: 1.5초 간격 · 본인 제외 · en/ll 은 뗀다 · 보는 사람에게는 en/ll 포함 1초 간격', () => {
+  const h = playing([A, B, C], T0, T.timingFor('fast'));
+  const at = t0(h) + 10;
+  const full = { w: 5, dw: 4, tw: [[0, 6, 2]], b: 0.5, sp: 2, ll: 1234, en: '1,2,3;4,5,6' };
+  let r = h.sum(A, full, at);
+  let s = sends(r, 'sum');
   assert.equal(s.length, 1);
-  assert.equal(s[0].to, '*'); assert.equal(s[0].except, A);
-  assert.deepEqual(s[0].m, { t: 'sum', pid: A, w: 2, dw: 2, l: 20, g: 0, k: 0, f: 0, lag: 0, hid: 0, b: 0.5, o: 'l', tw: [[0, 6, 2]], at: wa[2] + 10 });
-  r = h.sum(A, {}, wa[2] + 1000);
+  assert.equal(s[0].to, '*'); assert.deepEqual(s[0].except, [A]);
+  assert.deepEqual(s[0].m, { t: 'sum', pid: A, w: 5, dw: 4, l: 20, g: 0, k: 0, f: 0, sp: 2, hid: 0, b: 0.5, o: 'l', tw: [[0, 6, 2]], at });
+  assert.ok(!('en' in s[0].m) && !('ll' in s[0].m));
+  r = h.sum(A, full, at + 1000);
   assert.equal(sends(r, 'sum').length, 0);
-  r = h.sum(A, {}, wa[2] + 1510);
+  r = h.sum(A, full, at + 1510);
   assert.equal(sends(r, 'sum').length, 1);
-  assert.equal(h.state.players[A].wave, 2);
-  // 시각 오차 1초 여유: T3 − 500 에 w=3 은 허용
-  r = h.sum(A, { w: 3 }, wa[3] - 500);
-  assert.equal(h.state.players[A].wave, 3);
+  // B 가 A 를 본다 → A 에게 watched{n:1}
+  r = h.msg(B, { t: 'watch', pid: A }, at + 2000);
+  assert.deepEqual(sends(r, 'watched').map((x) => [x.to, x.m.n]), [[A, 1]]);
+  assert.equal(h.live.players[B].watching, A);
+  // 같은 watch 다시 → 알림 없음
+  r = h.msg(B, { t: 'watch', pid: A }, at + 2100);
+  assert.equal(sends(r, 'watched').length, 0);
+  // A 의 sum: B 에게는 en/ll 포함(1초 간격), C 에게는 뗀 것(1.5초 간격)
+  r = h.sum(A, full, at + 3100);
+  s = sends(r, 'sum');
+  assert.equal(s.length, 2);
+  const light = s.find((x) => x.to === '*'), watch = s.find((x) => Array.isArray(x.to));
+  assert.deepEqual(light.except, [A, B]);
+  assert.ok(!('en' in light.m));
+  assert.deepEqual(watch.to, [B]);
+  assert.equal(watch.m.en, '1,2,3;4,5,6'); assert.equal(watch.m.ll, 1234); assert.equal(watch.m.pid, A);
+  r = h.sum(A, full, at + 3900);              // 0.8초 뒤: 둘 다 아직
+  assert.equal(sends(r, 'sum').length, 0);
+  r = h.sum(A, full, at + 4150);              // 1.05초 뒤: 보는 사람만
+  s = sends(r, 'sum');
+  assert.equal(s.length, 1); assert.deepEqual(s[0].to, [B]); assert.equal(s[0].m.en, full.en);
+  r = h.sum(A, full, at + 4700);              // 1.6초 뒤(light 기준): 뗀 것만
+  s = sends(r, 'sum');
+  assert.equal(s.length, 1); assert.equal(s[0].to, '*'); assert.ok(!('en' in s[0].m));
+  // C 도 A 를 본다 → watched{n:2}. B 가 그만(null) → watched{n:1}. B 가 C 로 바꿈 → A 에게 n 그대로 1, C 에게 1
+  r = h.msg(C, { t: 'watch', pid: A }, at + 5000);
+  assert.deepEqual(sends(r, 'watched').map((x) => [x.to, x.m.n]), [[A, 2]]);
+  r = h.msg(B, { t: 'watch', pid: null }, at + 5100);
+  assert.deepEqual(sends(r, 'watched').map((x) => [x.to, x.m.n]), [[A, 1]]);
+  r = h.msg(B, { t: 'watch', pid: C }, at + 5200);
+  assert.deepEqual(sends(r, 'watched').map((x) => [x.to, x.m.n]), [[C, 1]]);
+  r = h.msg(B, { t: 'watch', pid: A }, at + 5300);
+  assert.deepEqual(sends(r, 'watched').map((x) => [x.to, x.m.n]), [[C, 0], [A, 2]]);
+  // 자기 자신·모르는 pid 는 무시
+  r = h.msg(B, { t: 'watch', pid: 'zzzz9999' }, at + 5400);
+  assert.equal(sends(r, 'watched').length, 0); assert.equal(h.live.players[B].watching, A);
+  r = h.msg(A, { t: 'watch', pid: A }, at + 5500);
+  assert.equal(h.live.players[A].watching, null);
+  // 보는 사람이 끊기면 대상에게 watched 갱신, 돌아오면 다시 (watching 유지)
+  r = h.close('sC', at + 6000);
+  assert.deepEqual(sends(r, 'watched').map((x) => [x.to, x.m.n]), [[A, 1]]);
+  r = h.hello('sC2', C, {}, at + 7000);
+  assert.deepEqual(sends(r, 'watched').map((x) => [x.to, x.m.n]), [[A, 2]]);
+  // 대상이 죽어도 watching 은 그대로. 죽은 사람의 sum 은 오지 않으니 중계도 없다
+  h.msg(A, { t: 'dead', w: 6, k: 3, r: 'lives' }, at + 8000);
+  assert.equal(h.live.players[B].watching, A);
+  r = h.sum(A, full, at + 9000);
+  assert.equal(sends(r, 'sum').length, 0);
+  // 보는 사람이 하나도 없을 때는 en 만 뗀 방송 한 갈래뿐
+  r = h.sum(C, full, at + 9100);
+  s = sends(r, 'sum');
+  assert.equal(s.length, 1); assert.deepEqual(s[0].except, [C]);
 });
 
 test('U9 채팅·로그 속도 제한 (1/s 버스트 5 · 2/s 버스트 4)', () => {
@@ -650,13 +567,134 @@ test('U9 채팅·로그 속도 제한 (1/s 버스트 5 · 2/s 버스트 4)', () 
 
 test('U9 snapshot 필드 · 상태 문서가 JSON 왕복에 안전', () => {
   const h = playing([A, B]);
-  const wa = g(h).waveAts;
-  h.sum(A, { lag: 3, hid: 1 }, wa[2]);
-  const s = snapshot(h.state, h.live, wa[2] + 1);
-  assert.deepEqual(Object.keys(s).sort(), ['code', 'game', 'hostId', 'now', 'phase', 'players', 't', 'ver'].sort());
-  assert.deepEqual(Object.keys(s.players[0]).sort(), ['connected', 'deathWave', 'host', 'hidden', 'kills', 'lag', 'name', 'pid', 'rank', 'status', 'wave'].sort());
-  assert.deepEqual(Object.keys(s.game).sort(), ['endAt', 'hold', 'seed', 't0', 'timing', 'wave', 'waveAts'].sort());
-  assert.equal(s.players[0].lag, 3); assert.equal(s.players[0].hidden, true);
-  assert.equal(s.game.wave, 2);
+  h.sum(A, { w: 2, dw: 1, sp: 3, hid: 1 }, t0(h) + 100);
+  const s = snapshot(h.state, h.live, h.now + 1);
+  assert.deepEqual(Object.keys(s).sort(), ['code', 'game', 'hostId', 'kind', 'now', 'phase', 'players', 'reserveUntil', 't', 'ver'].sort());
+  assert.deepEqual(Object.keys(s.players[0]).sort(), ['connected', 'deathWave', 'dw', 'host', 'hidden', 'kills', 'name', 'pid', 'rank', 'sp', 'status', 'wave'].sort());
+  assert.deepEqual(Object.keys(s.game).sort(), ['seed', 't0', 'timing'].sort());
+  assert.deepEqual([s.players[0].wave, s.players[0].dw, s.players[0].sp, s.players[0].hidden], [2, 1, 3, true]);
+  assert.deepEqual([s.players[1].sp, s.players[1].hidden], [1, false]);
   assert.deepEqual(JSON.parse(JSON.stringify(h.state)), h.state);
+});
+
+// ==================== U10 빠른 매칭 예약 방 ====================
+const reserve = (pids, until) => ({ players: pids.map((p) => ({ pid: p, key: KEY(p), name: p.slice(0, 4).toUpperCase() })), until });
+function reserved(pids = [A, B], until = T0 + T.RESERVE_TTL, timing = T.timingFor('fast')) {
+  return harness(T0, timing, { kind: 'quick', ver: '78', reserve: reserve(pids, until) });
+}
+
+test('U10 예약 방: lobby · 방장 없음 · 예약 좌석 idle/offline · 알람 = reserveUntil · 예약 밖 pid 는 full', () => {
+  const h = reserved([A, B, C]);
+  assert.equal(h.state.phase, 'lobby');
+  assert.equal(h.state.kind, 'quick');
+  assert.equal(h.state.hostId, null);
+  assert.equal(h.state.ver, '78');
+  assert.equal(h.state.reserveUntil, T0 + T.RESERVE_TTL);
+  assert.deepEqual(Object.values(h.state.players).map((p) => [p.pid, p.status, p.reserved, p.name]), [[A, 'idle', true, 'AAAA'], [B, 'idle', true, 'BBBB'], [C, 'idle', true, 'CCCC']]);
+  assert.equal(h.alarmAt, T0 + T.RESERVE_TTL);
+  // 알람이 빨리 와도(아직 마감 전) 아무 일 없음
+  let r = h.alarm(T0 + 1000);
+  assert.equal(h.state.phase, 'lobby');
+  assert.equal(closes(r).length, 0);
+  // 예약 밖 → full
+  r = h.hello('sD', D);
+  assert.equal(errOf(r), 'full'); assert.equal(closes(r)[0].code, 4409);
+  // 예약 pid 의 첫 hello: key 검사 · resumed false · 이름은 예약 이름 · 남에게 room
+  r = h.hello('sA', A, { key: 'f'.repeat(32) });
+  assert.equal(errOf(r), 'bad-key');
+  r = h.hello('sA', A, { name: '다른이름' }, T0 + 2000);
+  const w = sends(r, 'welcome')[0].m;
+  assert.equal(w.resumed, false); assert.equal(w.kind, 'quick');
+  assert.equal(w.room.hostId, null); assert.equal(w.room.reserveUntil, T0 + T.RESERVE_TTL);
+  assert.deepEqual(w.room.players.map((p) => [p.pid, p.connected, p.host]), [[A, true, false], [B, false, false], [C, false, false]]);
+  assert.equal(h.state.players[A].name, 'AAAA');
+  assert.equal(h.state.players[A].reserved, undefined);
+  assert.equal(r.persist, true);
+  assert.equal(h.state.phase, 'lobby');
+  // start 메시지는 무시(not-host)
+  r = h.msg(A, { t: 'start' });
+  assert.equal(errOf(r), 'not-host');
+  // 예약 좌석은 LOBBY_GRACE 로 지워지지 않는다
+  r = h.alarm(T0 + T.RESERVE_TTL - 1);
+  assert.equal(Object.keys(h.state.players).length, 3);
+  assert.equal(h.state.phase, 'lobby');
+  // 재접속(같은 pid 새 소켓) → 옛 소켓 4001, resumed true
+  r = h.hello('sA2', A, {}, T0 + 3000);
+  assert.deepEqual(closes(r), [{ sid: 'sA', code: 4001, reason: 'replaced' }]);
+  assert.equal(sends(r, 'welcome')[0].m.resumed, true);
+});
+
+test('U10 예약 전원 접속 즉시 자동 시작 (방장 없이) · 알람은 GAME_CAP', () => {
+  const h = reserved([A, B]);
+  h.step({ k: 'seed', value: 777 });
+  h.hello('sA', A, {}, T0 + 1000);
+  assert.equal(h.state.phase, 'lobby');
+  const r = h.hello('sB', B, {}, T0 + 2000);
+  assert.equal(h.state.phase, 'playing');
+  const st = sends(r, 'start')[0].m;
+  assert.deepEqual(st, { t: 'start', seed: 777, t0: T0 + 2000 + 2000, timing: { prep: 2000, bossLimit: 5000, clearWave: 12 }, now: T0 + 2000, at: T0 + 2000 });
+  assert.equal(sends(r, 'welcome')[0].m.room.phase, 'lobby');     // welcome 은 시작 전 스냅샷, 이어서 start·room
+  const room = sends(r, 'room').find((x) => x.m.phase === 'playing').m;
+  assert.equal(room.reserveUntil, null);
+  assert.deepEqual(room.players.map((p) => [p.pid, p.status, p.host]), [[A, 'alive', false], [B, 'alive', false]]);
+  assert.equal(h.state.reserveUntil, null);
+  assert.equal(logs(r, 'start')[0].kind, 'quick');
+  assert.equal(h.alarmAt, T0 + 4000 + T.GAME_CAP);
+  // 이후 규칙은 일반 방과 같다 (dead → all-dead)
+  h.msg(A, { t: 'dead', w: 2, k: 0, r: 'lives' }, T0 + 9000);
+  const r2 = h.msg(B, { t: 'dead', w: 3, k: 0, r: 'lives' }, T0 + 9500);
+  assert.equal(sends(r2, 'end')[0].m.reason, 'all-dead');
+  assert.equal(h.state.hostId, null);
+});
+
+test('U10 reserveUntil: 접속 2명 이상이면 미접속 좌석을 빼고 시작 · 1명 이하면 err expired + 4410 + destroy', () => {
+  const h = reserved([A, B, C]);
+  h.hello('sA', A, {}, T0 + 1000);
+  h.hello('sB', B, {}, T0 + 2000);
+  assert.equal(h.state.phase, 'lobby');
+  // B 가 잠시 끊겼다 돌아와도 좌석 유지
+  h.close('sB', T0 + 3000);
+  assert.equal(Object.keys(h.state.players).length, 3);
+  h.hello('sB2', B, {}, T0 + 4000);
+  let r = h.alarm(T0 + T.RESERVE_TTL);
+  assert.equal(h.state.phase, 'playing');
+  assert.deepEqual(Object.keys(h.state.players).sort(), [A, B]);
+  assert.equal(logs(r, 'reserve-drop')[0].pid, C);
+  assert.equal(sends(r, 'start').length, 1);
+  // 늦게 온 C 는 시작한 방 → started
+  r = h.hello('sC', C, {}, T0 + T.RESERVE_TTL + 10);
+  assert.equal(errOf(r), 'started');
+  // 1명뿐 → 폐기
+  const h2 = reserved([A, B]);
+  h2.hello('sA', A, {}, T0 + 1000);
+  h2.open('sP', 'join', T0 + T.RESERVE_TTL - 100);   // hello 전 소켓도 함께 닫는다
+  r = h2.alarm(T0 + T.RESERVE_TTL);
+  const err = sends(r, 'err')[0];
+  assert.equal(err.sid, 'sA'); assert.equal(err.m.code, 'expired'); assert.equal(err.m.msg, '상대가 오지 않았습니다');
+  assert.deepEqual(closes(r).map((c) => [c.sid, c.code]), [['sA', 4410], ['sP', 4410]]);
+  assert.ok(r.effects.some((e) => e.destroy));
+  assert.equal(r.state, null);
+  // 아무도 안 옴 → 폐기
+  const h3 = reserved([A, B]);
+  r = h3.alarm(T0 + T.RESERVE_TTL);
+  assert.ok(r.effects.some((e) => e.destroy));
+  // 한 명이 leave 하고 남은 전원(2명)이 접속 중이면 즉시 시작
+  const h4 = reserved([A, B, C]);
+  h4.hello('sA', A, {}, T0 + 1000);
+  h4.hello('sB', B, {}, T0 + 2000);
+  h4.hello('sC', C, {}, T0 + 2500);
+  assert.equal(h4.state.phase, 'playing');
+  const h5 = reserved([A, B, C]);
+  h5.hello('sA', A, {}, T0 + 1000);
+  h5.hello('sC', C, {}, T0 + 1500);
+  r = h5.msg(C, { t: 'leave' }, T0 + 2000);
+  assert.equal(h5.state.phase, 'lobby');
+  assert.deepEqual(Object.keys(h5.state.players).sort(), [A, B]);
+  r = h5.hello('sB', B, {}, T0 + 3000);
+  assert.equal(h5.state.phase, 'playing');
+  // 잘못된 예약 항목은 버린다
+  const st = createRoom({ code: 'ABC234', now: T0, kind: 'quick', ver: '1', timing: T.timingFor('fast'), reserve: { players: [{ pid: 'BAD', key: 'x', name: 'x' }, { pid: A, key: KEY(A), name: '' }], until: T0 + 100 } });
+  assert.deepEqual(Object.keys(st.players), [A]);
+  assert.equal(st.players[A].name, '플레이어-aaaa');
+  assert.equal(createRoom({ code: 'ABC234', now: T0, kind: 'quick', reserve: { players: [] }, timing: T.timingFor('') }).phase, 'claimed');
 });
