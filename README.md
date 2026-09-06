@@ -72,6 +72,34 @@ cd net && npm test                                # 규칙 단위 테스트 (의
 | 5 | 테슬라 (연쇄) |
 | 6 | 왕관 요새 (폭발 주사위) |
 
+## 앱 빌드 (Android) / iOS 메모
+
+웹은 그대로 두고, Capacitor 가 `www/` 를 네이티브 껍데기(`android/`, `ios/`)에 넣는다. 앱 ID `com.fallman.dicekeep`, 이름 **주사위 성채**. 스토어 자료·출시 절차·개인정보처리방침은 `STORE.md`·`privacy.html`.
+
+준비(Windows): Node LTS + Android Studio(SDK 35). 그 다음:
+
+```bash
+npm i                                  # Capacitor · sharp · 글꼴
+npm run fonts                          # fonts/ 갱신 (Google Fonts 대신 로컬 글꼴, 웹도 같이 씀)
+npm run build:www -- --optimize        # www/ 생성 (~118 MB; 급하면 --quantize)
+npx cap sync android                   # www → android/app/src/main/assets/public
+npx cap open android                   # Android Studio → USB 실기기 Run
+```
+
+- `app.js` 는 앱 안에서만 동작하는 다리(뒤로가기·스플래시·백그라운드 음악·멀티 서버 주소). 빌드 때 Capacitor UMD 와 합쳐 `www/app.js` 가 되며 index.html 의 `<!-- APP -->` 자리에 끼워진다. 웹 배포에는 안 올라간다(`.assetsignore`).
+- 앱 안에서는 hostname 이 localhost 라서 net.js 가 `window.DK_NET_URL`(운영 서버)을 먼저 쓴다. `?net=`·저장값은 여전히 우선.
+- 아이콘·스플래시 원본은 `resources/` (지금은 자리표시). 같은 이름으로 바꾼 뒤 `npx @capacitor/assets generate --android --ios --assetPath resources --iconBackgroundColor '#1a140d' --iconBackgroundColorDark '#1a140d' --splashBackgroundColor '#0d0b09' --splashBackgroundColorDark '#0d0b09'`.
+- 출시 서명: `android/keystore.properties.example` → `keystore.properties`(커밋 금지). 없으면 debug 빌드만 서명된다. 키 파일은 잃어버리면 업데이트를 못 올리니 백업.
+- 버전: `android/app/build.gradle` 의 versionName 을 index.html `?v=` 와 같이 올리고 versionCode 는 업로드마다 +1. 멀티 서버가 `?v=` 로 방 버전을 맞추므로 웹 배포와 앱 업데이트를 같이 한다.
+- 브라우저에서 www 확인: `npm run serve:www` (http://localhost:8140).
+- 실기기 체크리스트: 채팅 키보드가 올라올 때 레이아웃, 뒤로가기 체인(설정→도움말→채팅→필드 보기→나가기→로비 두 번 = 종료), 몰입 모드, 펀치홀/노치 아래 칩(`--safe-area-inset-*`), 회전, 멀티 `wss` 접속, 첫 터치 뒤 소리·BGM.
+
+iOS: `ios/` 도 커밋되어 있고 SPM 이라 CocoaPods 이 필요 없다. Mac 이 없으면 Codemagic/Appflow 같은 클라우드 빌드로 `npx cap sync ios` + Xcode Archive → TestFlight. Apple Developer($99/년)·번들 ID 등록이 먼저. 웹뷰 원점 `capacitor://localhost` 는 멀티 서버가 이미 허용한다.
+
+### 기기 레이아웃 검증
+
+`scratchpad/devices-test.js`(저장소 밖, 세션 스크래치)가 iPhone SE~17 Pro Max · Galaxy S/A · Z Fold 펼침/접힘 · Z Flip · 태블릿 16기기 × 2방향 × 11화면을 Playwright 로 열어 스크린샷과 자동 검사(가로 스크롤·HUD 줄 수·안전영역·가림·줄바꿈·레터박스)를 남긴다. 실기기 뷰포트가 다르면 `window.innerWidth/innerHeight` 를 표에 반영한다. 안전영역은 `--sa-t/r/b/l` CSS 변수로 흉내낸다(GAME-SPEC §3).
+
 ## 아트 (2026-09-02)
 
 | 항목 | 수량 | 경로 |
@@ -80,7 +108,9 @@ cd net && npm test                                # 규칙 단위 테스트 (의
 | 몬스터 | 500 + 걷기 36 | `casual/enemies/` |
 | 보스 | 100 + 걷기 10 | `casual/bosses/` |
 | 타워 | 6 인게임 + 스킨 24 (+ 공격시트 6, 미사용) | `casual/towers/` |
-| VFX | 레이저·포격·룬·서리·번개·주사위폭탄 | `vfx/` |
+| VFX | 레이저·포격·룬·서리·번개·주사위폭탄 (+ 획득 연출 7장 예정, §7.8) | `vfx/` |
+| UI·아이콘·스플래시 | 앱 아이콘·스플래시·HUD 프레임·버튼·아이콘 23·로고 (ART-PROMPTS §7, 납품 전엔 CSS) | `resources/`, `ui/` |
+| BGM | 로비·전투·보스 3곡 (코드 합성이 기본, 파일은 `MUSIC-PROMPTS.md`) | `audio/` |
 
 스타일: Kingdom Rush + Random Dice, 2D 아이소메트릭. 추가 배치 프롬프트는 `ART-PROMPTS.md`.
 
