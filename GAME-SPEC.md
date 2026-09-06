@@ -148,7 +148,7 @@ Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크�
 - **보상 대기열** `S.inf.queue`: 보스 보상 주사위는 큐에 쌓이고, 매 프레임 `pumpQueue()` 가 손이 비는 대로 하나씩 자동으로 굴린다. 남은 개수는 뽑기 버튼 아래 `#queue-chip`(`보상 대기 N`).
 - **도움말** `#inf-help`(스테이지 위 카드, `?` 버튼·`DKhelp()`): 뽑기 확률표→즉시 타워, 보상 대기, 확률강화, 판매 제한, 파워업, 패배 조건. 첫 인피니티 진입 시 자동으로 한 번 열림(`localStorage.dk_infHelpSeen`).
 - 라운드 락은 넣지 않는다. 원작 4.04에서 몰래 넣었다가 확률 조작으로 밝혀진 요소(나무위키 §7.1)라 확률표를 있는 그대로 쓴다.
-- **보스 보상 스케줄** `INFINITY.bossReward(w)` (원작 24/37/58/79/90/95/96~100R, 1미네랄 = 16G): 웨이브 10 → 800G+유물(d8) · 20·30 → 800G+서사(d12) · 40 → 1120G+전설(d20) · 50 → 1600G+전설 · 60 → 2400G+전설 · 70 이상 → 1600G+전설+(유물/서사 번갈아). 같은 웨이브의 마지막 보스를 잡을 때 1회.
+- **보스 보상 스케줄** `INFINITY.bossReward(w)` (원작 24/37/58/79/90/95/96~100R, 1미네랄 = 16G): 웨이브 10 → 800G+유물(d8) · 20·30 → 800G+서사(d12) · 40 → 1120G+전설(d20) · 50 → 1600G+전설 · 60 → 2400G+전설 · 70 이상 → 1600G+전설+(유물/서사 번갈아). 보스가 n마리인 웨이브는 보스마다 주사위 전부 + 골드 1/n (2026-09-06, 주사위 손실 수정).
 - **상성** (`TOWER_DEFS[*].atk`, `INFINITY.sizeMult`): 진동형(궁수 1) 소100/중50/대25 · 폭발형(대포 2·폭군 6·별 7~19★) 소50/중75/대100 · 일반형(마법 3·서리 4·전격 5·태초 20★) 전부 100. 웨이브 크기는 원작 1~101R 표(`sizeSeq`)를 순환(`sizeOf(w)`), 소 ×0.9 / 대 ×1.15 로 그려진다. 웨이브 시작 텍스트·칩에 소형/중형/대형 표시, 타워 패널에 공격형 표시.
 - **방어력** `INFINITY.armor(w) = ⌊max(0, w−20)/4⌋`, 33의 배수 웨이브는 ×8(고방어, 버블피시 255). 피해 = max(피해×0.1, 피해−방어). 에픽(14~17★)은 무시.
 - **첫 런 코치** (`game.js` `COACH`, `#coach`): 스테이지 모드를 거치지 않고 들어온 사람에게 조작을 직접 가르친다. 대상 요소 위에 링과 말풍선만 얹고 `pointer-events: none` 이라 진행을 막지 않는다 — HUD 는 `getBoundingClientRect()`, 캔버스 석단·타워는 `canvasToClient()` 로 좌표를 잡는다. 5단계(뽑기 → 석단에 배치 → 웨이브 시작 → 타워 선택 → 파워업)이고 **실제로 그 행동을 해야** 넘어간다. `건너뛰기` 또는 완주 시 `localStorage.dk_coachDone`. 4단계(타워 선택)에서 연 정보 카드가 5단계 대상(파워업 패널)을 덮으므로, 5단계로 넘어갈 때 카드를 자동으로 닫는다. 코치가 끝나면 도움말 카드를 한 번 연다.
@@ -472,19 +472,21 @@ dicekeep-art/
 
 ---
 
-## 6.5 멀티 — 인피니티 · 함께 (`net/` 서버 · `net.js` DKNET v2 · `game.js` 멀티 블록)
+## 6.5 멀티 — 인피니티 · 함께 (`net/` 서버 · `net.js` DKNET v3 · `game.js` 멀티 블록)
 
-**설계 원칙: 서버는 방·시계·시드·중계만 맡고, 시뮬레이션은 각 클라이언트가 자기 보드만 돌린다.**
-게임 방식은 메운디 원작식 **각자 보드 · 같은 웨이브**: 2~4명이 각자 자기 아레나에서 같은 웨이브 번호를 같은 서버 시각에 시작한다.
+**설계 원칙: 서버는 방·시드·중계·순위만 맡고, 시뮬레이션(웨이브·배속 포함)은 각 클라이언트가 자기 보드만 자기 속도로 돌린다.**
+게임 방식은 **각자 보드 · 각자 속도**(2026-09-06, v3): 시작 신호(`start{seed,t0,timing}`)만 같고, 그 뒤는 각자 싱글과 똑같이 진행한다 —
+막간 6초 자동, 웨이브 버튼으로 앞당기기, 배속 x1/x2/x3, 보스 320초 로컬 타이머. 아무도 누구를 기다리지 않는다.
 상호 간섭은 없다. 먼저 죽으면 관전, 101웨이브 완주 = 클리어(도전 규칙 그대로 — 목숨 20 · 한계선 200 · 보스 320초).
-웨이브 구성 `buildInfinityWave(w)` 는 `(w, gauntlet)` 만으로 결정적이라 시드 없이도 '같은 웨이브' 가 성립한다.
-아레나가 기기(가로 cInf / 세로 cInfP)마다 달라도 각자 보드라 문제 없다.
+순위는 **완주는 빠른 순(`clearAt`), 탈락은 웨이브 순**. 아레나가 기기(가로 cInf / 세로 cInfP)마다 달라도 각자 보드라 문제 없다.
+(v2 '각자 보드 · 같은 웨이브 · 서버 시계 · 보스 홀드' 는 폐기 — 보스 대기가 답답하고 배속을 못 쓰는 문제.)
 
 ```
 [브라우저 A] game.js ── DKNET(net.js, WebSocket 1개) ──wss──┐
 [브라우저 B·C·D] …                                        ├─ dicekeep-net (별도 Worker, 루트 net/)
-                                                           │   ├ src/index.js  Origin 검사 · IP 속도 · 코드 검사 · /ws/new /ws/room/:code /health
-                                                           │   └ Room DO      방마다 1개 · 명단 · 시계 · 시드 · 보스 홀드 · 순위 · sum/chat/log 중계
+                                                           │   ├ src/index.js  Origin 검사 · IP 속도 · 코드 검사 · /ws/new /ws/room/:code /ws/quick /health
+                                                           │   ├ Room DO      방마다 1개 · 명단 · 시드 · 순위 · sum/chat/log 중계 · watch(필드 보기) 라우팅
+                                                           │   └ Lobby DO     빠른 매칭 대기열 1개 · 4명 즉시 / 2명 이상 10초 → Room /claim 예약 · 시간당 방 생성 상한
 [정적 Worker dicekeep] index.html/game.js/net.js ──────────┘  (루트 wrangler.jsonc 그대로 · 브랜치 프리뷰 유지)
 ```
 
@@ -492,57 +494,57 @@ DO 가 있는 Worker 는 브랜치 프리뷰 URL 이 생기지 않으므로 서�
 
 ### 접속 · 인증
 - 클라 `DKNET.CFG.url` 은 경로 없는 원점. `?net=off` · `?net=ws://…`(localStorage `dk_net` 저장, `?net=clear` 삭제) · localhost → `ws://localhost:8787` · `dicekeep.<계정>.workers.dev`(프리뷰 `xxx-dicekeep.…` 포함) → `wss://dicekeep-net.<계정>.workers.dev`. 없으면 로비 블록이 비활성.
-- 방 만들기 `/ws/new`, 참가·재접속 `/ws/room/{CODE}`. **인증은 URL 이 아니라 첫 프레임 `hello`** `{v:2, ver, op, pid, key, name}` (URL·로그에 좌석 토큰이 남지 않게). `pid`(8자)·`key`(32 hex) 는 탭 단위 sessionStorage → 새로고침 = 같은 좌석, 다른 탭 = 다른 플레이어.
+- 방 만들기 `/ws/new`, 참가·재접속 `/ws/room/{CODE}`, 빠른 매칭 `/ws/quick`(`op:'quick'`). **인증은 URL 이 아니라 첫 프레임 `hello`** `{v:3, ver, op, pid, key, name}` (URL·로그에 좌석 토큰이 남지 않게). `pid`(8자)·`key`(32 hex) 는 탭 단위 sessionStorage → 새로고침 = 같은 좌석, 다른 탭 = 다른 플레이어.
 - 방 코드: `ABCDEFGHJKMNPQRSTUVWXYZ23456789` 6자리. 거절은 항상 accept 뒤 `err`+close(4404 없는 방 · 4409 full/started · 4410 expired · 4426 version · 4403 bad-key · 4429 rate · 4400 bad-request · 4001 replaced · 4000 leave).
 - 방장 = 만든 사람(이탈 시 가장 먼저 들어온 접속자에게 위임). **접속 2명 이상이면 시작**(준비 체크 없음). 방 안 게임 버전(`ver` = index.html `?v=`)이 다르면 `version` 거절.
+- **빠른 매칭**: `/ws/quick` → Lobby DO 대기열(같은 `ver` 끼리) → `queued{n,eta}` 방송(변화마다·5초) → **4명이면 즉시, 2명 이상이고 가장 오래 기다린 사람이 10초를 넘기면** 묶어 Room `/claim`(좌석 예약 30초) → 각자 `matched{code}` → 대기열 소켓을 버리고 `/ws/room/{code}` 로 join(예약된 pid·key 는 통과) → 예약 인원 전원 접속 또는 30초 경과·2명 이상이면 **자동 start**(방장 없음), 1명이면 방 폐기(`expired`). 클라 `DKNET.quick(name)` → 상태 `queue` → `queued`/`matched` 이벤트, 나가기 = 취소.
 
 ### 프로토콜 (JSON 1개 = 프레임 1개, 봉투 없음, 서버→클라는 `at` 서버 ms 포함, 모든 시각은 서버 ms epoch)
 | 방향 | `t` | 필드 |
 |---|---|---|
 | →서버 | `hello` `start` `leave` `time{c}` | 위 참조 · `time` 은 시각 동기 왕복 |
-| →서버 | `sum` | `w dw l g k f lag hid b o tw` — 현재 웨이브·마지막 완료 웨이브·목숨·골드·처치·필드 수·지연(초)·백그라운드·보스 HP 비율·보드 방향(l/p)·타워 `[[spot,face,lvl]…]≤15`. **벽시계 setInterval 2초**(rAF 밖이라 백그라운드에서도 `hid:1` 로 감). 서버는 범위 검사 위반을 폐기하고 `dw` 로 bossDone 을 도출한다 |
+| →서버 | `sum` | `w dw l g k f sp hid b o tw [ll en]` — 현재 웨이브·마지막 완료 웨이브·목숨·골드·처치·필드 수·배속(1~3)·백그라운드·보스 HP 비율·보드 방향(l/p)·타워 `[[spot,face,lvl]…]≤15`. **벽시계 setInterval 2초**(rAF 밖이라 백그라운드에서도 `hid:1` 로 감). 누가 내 필드를 보고 있으면(`watched{n>0}`) **1초 주기**에 `ll`(내 레인 길이)·`en`(적 스트림 `"i,d,h;…"` — i = bases 인덱스(보스 1000+bossBases), d = dist 정수, h = 체력 0~9, ≤200마리·≤3,000자) 를 싣는다. 서버는 `en` 을 보는 사람에게만 중계(다른 멤버에게는 떼고 1.5초 간격) |
+| →서버 | `watch{pid\|null}` | 상대 필드 보기 시작/끝. 대상에게 `watched{n}` |
 | →서버 | `done{w}` `dead{w,k,r}` `clear{w,k}` | 완료 블록·`endInfinity`·`checkInfClear` 훅. `r ∈ lives|bossLeak|bossTimeout|quit|reload|afk` |
 | →서버 | `chat{text}` `log{text,kind}` | 120자 · chat 1/s · log 2/s |
-| →클라 | `welcome{pid,code,resumed,now,room}` `room{…players[],game{t0,timing,wave,waveAts,hold,endAt}}` `player{pid,+변경}` | 명단·재접속 스냅샷(`waveAts` 전체 포함) |
-| →클라 | `start{seed,t0,timing}` `sched{from,ats[]}` `hold{w,deadline,waiting,done,released}` | 시계. **한 번 방송한 T 는 불변**, `sched` 는 웨이브 번호로 멱등 |
-| →클라 | `sum{pid,…}` `chat{pid,name,text}` `log{pid,name,text,kind}` `time{c,s}` `end{reason,ranking,seed}` `err{code,msg}` | 중계·결과 |
+| →클라 | `welcome{pid,code,resumed,now,room}` `room{…players[],game{t0,timing,seed}}` `player{pid,+변경}` | 명단·재접속 스냅샷 |
+| →클라 | `start{seed,t0,timing{prep,bossLimit,clearWave}}` | 시작 신호. `t0 = now + prep(20초)`. 그 뒤 서버에 웨이브 시계는 없다 |
+| →클라 | `sum{pid,…}` `chat{pid,name,text}` `log{pid,name,text,kind}` `watched{n}` `time{c,s}` `end{reason,ranking[{pid,name,rank,status,wave,kills,clearAt}],seed}` `err{code,msg}` | 중계·결과 |
+| →클라(대기열) | `queued{n,eta}` `matched{code}` | 빠른 매칭 |
 
 `net.js` 는 서버 `t` 를 허용목록으로만 같은 이름의 버스 이벤트로 발화하고, 내부 이벤트는 `net:` 접두(`net:state` `net:reconnecting` `net:offset` `net:closed`) — 이름 충돌이 없다.
 
-### 웨이브 시계 (서버 `room-core.js` · 클라 `frameNet`)
+### 개별 진행 (서버 `room-core.js` · 클라 싱글 경로 그대로)
 | # | 규칙 |
 |---|---|
-| W0 | 방장 `start` → `t0 = now + PREP(20초)`, `T_1 = t0`. 준비 시간엔 스폰 없음(뽑기·배치 가능) |
-| W1 | **일반 웨이브는 결정적 스케줄을 미리 방송**: `T_{w+1} = T_w + spawnEnd(w) + 6초`. 다음 보스 웨이브까지 한 번에 `sched`. 클라 보고·알람 지연·자리 비움 어느 것도 이 시각을 바꾸지 못한다 → **아무도 기다리지 않는다**. `spawnEnd(w)` 는 content.js 웨이브 공식(count·gap·bosses)을 복제한 **상한값**(대형·빠른 공중 웨이브는 막간이 6→최대 약 9초) — `net/test/timing.test.js` 가 content.js 와 패리티를 고정 |
-| W2 | **보스 웨이브만 홀드**: `deadline = T_w + spawnEnd + 320초 + 2초`. `waiting = 살아 있고 신선한(최근 7초 sum · 백그라운드 아님 · 지연 ≤30초) 사람 중 아직 안 잡은 사람`. 해제 = waiting 비어 있고 누군가 잡았음 ∨ 마감 → `T_{w+1} = now + 6초` 확정 → 다음 보스까지 체인 |
-| W3 | **서버는 보스 시간초과로 아무도 죽이지 않는다.** 사망은 각 클라의 로컬 320초 타이머가 자기 시뮬 시간축에서 낸다(로컬 사망 `T_w+321.05` < 강제 다음 웨이브 `≥ T_w+329`). 서버가 status 를 바꾸는 것은 `left`(끊김 180초)·`lost`(101 미보고) 뿐이고 그때는 서버 판정이 우선 |
-| W4 | 신선하지 않은 사람은 홀드에서 빠진다. 돌아오면 시뮬 클록이 밀린 웨이브를 **시뮬 시간 순서대로** 연다(보스와 다음 웨이브가 겹칠 수 있다 — 대기실·도움말에 명시) |
-| W5 | `endAt = T_101 + spawnEnd(101)`. `clear` 수락 = alive ∧ bossDone ⊇ {10,…,100}. 전원 결과 → end(`cleared`), 미보고는 60초 뒤 `lost` |
-| W8 | 배속 없음(`S.speed` 1 고정·버튼 숨김) · 웨이브 버튼은 표시용(카운트다운·보스 대기·따라잡는 중) |
-
-클라 시뮬 클록 `frameNet`: `simT` 는 서버 시각 기준 게임 시간, 고정 스텝 1/60, 프레임당 벽시계 30ms 예산 안에서 `target = (serverNow − 100ms − t0)` 까지 따라잡는다.
-`runDue` 가 `waveAts[n] ≤ simT` 인 웨이브를 오름차순으로 `startWaveNet(n, atSim)` — `S.wave = n`(증가 아님), `S.waveT = simT − atSim` 으로 스폰 타임라인을 서버 시각에 정렬, 보스 웨이브면 `bossT = 0`.
-멀티에서는 `infBossHold` 가 웨이브 번호가 아니라 **'필드에 보스가 있다'** 기준이라 보스가 살아 있는 동안 어떤 웨이브도 완료(`done`)되지 않는다 → `sum.dw ≥ b ⇒ 보스 b 사망`.
-못 따라잡은 만큼은 `behind`(= `sum.lag`)로 보고돼 홀드에서 빠지고, 600초를 넘으면 `dead{afk}`. 캐치업 중엔 소리를 끄고 끝나면 연출을 비운다.
-시각 동기: `time` 왕복 표본 중 RTT 최소 표본의 offset, `performance.now()` 단조 시각. 접속 직후 5회·플레이 중 30초·재접속/visible 직후 즉시.
+| P0 | 방장 `start`(빠른 매칭 방은 자동) → `t0 = now + PREP(20초)`, 전원 `startInfinity('clear', net)` 로 보드를 열고 `S.autoT = (t0 − serverNow)/1000` — 준비 시간엔 스폰 없음(뽑기·배치 가능). 배속은 전원 x1 로 출발 |
+| P1 | `t0` 에 첫 웨이브가 **자동으로** 열린다(웨이브 버튼으로 앞당길 수 있다). 그 뒤는 싱글과 동일: 막간 6초 자동·버튼 조기 시작·`#speed-btn` x1→x2→x3 순환·보스 웨이브는 로컬 320초(`timing.bossLimit`)·`infBossHold` 는 웨이브 번호 기준 |
+| P2 | 서버는 `sum`(진행 보고)·`done{w}`(통계)·`dead`/`clear` 만 받는다. 검증은 `w ≤ clearWave` 정도. **홀드·스케줄·따라잡기 없음** — 백그라운드에 가면 그 사람 게임만 멈춘다(rAF) |
+| P3 | 순위 `ranking`: `cleared` 는 `clearAt` 오름차순(먼저 완주 = 위, 동시는 pid 순) → `dead`/`lost`/`left` 는 `deathWave` 내림차순 → `kills` 내림차순. 공동 없음 |
+| P4 | 종료: alive 0 → `cleared`(완주자 있음) / `all-dead` · 전원 left → `empty` · `t0 + GAME_CAP(100분)` → 남은 alive 는 `lost` → `timeout` |
+| P5 | 클라 `frame()` 은 단일 경로 `for (i < S.speed) update(dt)` + `mpTick()`(0.5초: 카드 배지·웨이브 버튼). 상대 카드에 `x2`/`x3` 배지(`sum.sp`) |
 
 ### 사망 · 관전 · 결과 · 저장
 - `endInfinity(won)` 는 멀티면 `netRunOver(won)`: **젬·최고 기록·infRuns(`mp:1, code`) 를 그 즉시 저장**(`settleInfRun`) → `dead`/`clear` 보고 → `S.phase='spectate'`(update 조기 반환으로 보드 정지) → `#spectate` 패널(현재 순위·남은 인원·작게 보기·나가기). 먼저 죽은 사람이 나가도 보상을 잃지 않는다.
-- `end` 수신 → 순위표 오버레이(`table.rank`). 순위: cleared(공동 1위) > lost > dead > left, 같은 status 는 deathWave → deathAt → kills. `SAVE.mp {games, wins, best}` 적립, `infRuns[0].rank`.
+- `end` 수신 → 순위표 오버레이(`table.rank`). 완주자는 `완주 · 38분 12초`(`clearAt − t0`), 탈락은 `웨이브 N`. `SAVE.mp {games, wins, best}` 적립, `infRuns[0].rank`.
 - 재접속: 4000 이 아닌 닫힘이면 백오프(1·2·4·8·16·30초) + visible/online 즉시. 플레이 중 끊김은 180초, **대기실 끊김(새로고침·백그라운드)은 45초** 동안 좌석·방장을 지킨다(`LOBBY_GRACE`). 새로고침은 보드가 없으므로 `dead{r:'reload'}` 후 관전 복귀(`sessionStorage dk_mp` · `dk_mp_run`), 대기실이면 같은 방으로 복귀. 보드 복구는 로드맵.
 - 서버가 내 status 를 `left`/`lost` 로 바꾸면 클라는 즉시 관전(서버 판정 우선).
 
 ### 상대 요약 카드 `#rivals` · 대기실 `#mp-room` · 로비 `#mp-block`
-- 카드 ≤3: 좌석색·이름·배지(`💀 W34` `🏆` `📵 나감` `⌛ 미완료` `↻ 재접속` `⏸ 자리 비움/응답 없음` `⏳ 지연 n초`)·`W♥⚔필드`·보스 HP 바·미니보드(칸 색 `TOWER_DEFS[face].color`, lvl 점). 상대 보드 방향(`sum.o`)이 내 것과 다르면 `remapSpot` 으로 칸을 돌린다. 렌더는 `try/catch` 로 격리하고 `sum` 수신 핸들러·0.5초 틱에서만 돈다(`syncUI`/`update` 밖).
+- 카드 ≤3: 좌석색·이름·배지(`💀 W34` `🏆` `📵 나감` `⌛ 미완료` `↻ 재접속` `⏸ 자리 비움/응답 없음` `x2`/`x3` 배속)·`W♥⚔필드`·보스 HP 바·미니보드(칸 색 `TOWER_DEFS[face].color`, lvl 점). 상대 보드 방향(`sum.o`)이 내 것과 다르면 `remapSpot` 으로 칸을 돌린다. 렌더는 `try/catch` 로 격리하고 `sum` 수신 핸들러·0.5초 틱에서만 돈다(`syncUI`/`update` 밖).
 - 자리: 가로(`over`)는 오른쪽 세로 열, 크기는 **가용 높이 ÷ 상대 수 · 트랙 여백 폭**으로(full/mid/slim/line·compact). 세로(`bleed`)는 **아래 띠 오른쪽**(`#log-panel` 왼쪽 46% 회피). `fitStage` 끝에서 `mpLayoutCards()`.
-- 로비 `#mp-block`: 이름(`SAVE.name`) · 방 만들기 · 코드로 참가 · 빠른 매칭(다음 단계). 대기실: 코드 크게 + 복사 · 슬롯 4 · 규칙 문구 · 방장 시작 버튼.
+- 로비 `#mp-block`: 이름(`SAVE.name`) · 방 만들기 · 코드로 참가 · **빠른 매칭**. 대기실: 코드 크게 + 복사 · 슬롯 4 · 규칙 문구 · 방장 시작 버튼 · **대기실 채팅 `#mp-chat`**(최근 30줄, 좌석색 이름, 게임 중 채팅도 쌓인다). 빠른 매칭이면 코드 대신 `#mp-queue`(스피너 · `상대를 찾는 중 n/4 · k초 뒤 시작`), 나가기 = 취소, 방이 잡히면 `상대를 찾았습니다 — 전원이 들어오면 바로 시작`.
+
+### 상대 필드 보기 (`mpView` · `VIEW` · `withView`)
+- 카드(또는 관전 목록 카드)를 탭하면 `watch{pid}` 를 보내고, 그 플레이어의 `sum.tw`(타워 → `remapSpot` 으로 내 석단에) · `sum.en/ll`(적 → `dist = d / ll × 내 레인 길이`, base 참조로 그림·크기, 체력 0~9) 로 `VIEW.towers/enemies` 를 만든다. 살아 있을 때도 볼 수 있다 — **내 시뮬은 그대로 돈다**(타워는 알아서 싸운다).
+- `frame()` 이 `withView(draw)` 로 `S.towers/enemies/projs/beams/fxs/texts/corpses/selTower/heldDie/shakeT/bannerT/glowT/hurtT/mouse` 를 VIEW 것으로 바꿔 그리고 되돌린다. 1초 요약 사이에는 `mpViewAdvance` 가 상대 배속으로 전진시킨다. 캔버스 클릭·드래그·R·1~6 은 뷰 중 무시, HUD 는 숨기고 `#view-bar`(`민수의 필드 · W37 ♥12 · 필드 88 · x2 · 나 W35 ♥9 · [내 필드로]`) 로 대체. 나가기: 내 필드로 · Esc · 상대 탈락/이탈·판 종료 시 자동.
 
 ### 남용 방지 · 예산
-Origin 검사(불일치 403, 비브라우저는 통과) · IP 버킷(new 10/분, room 60/분) · 코드 정규식은 DO 앞 · 없는 방은 상태 저장 없이 4404 · 소켓당 20/s 버킷 · 2,048 B 초과 1009 · `sum` 엄격 스키마(악성 값으로 남의 화면이 죽지 않게) · 만료 알람(대기실 15분·종료 10분·판 100분·전원 끊김 3분·claimed 60초).
+Origin 검사(불일치 403, 비브라우저는 통과) · IP 버킷(new 10/분, room 60/분, quick 30/분) · 시간당 방 생성 상한 120(Lobby DO 카운터) · 대기열 최대 200 · 코드 정규식은 DO 앞 · 없는 방은 상태 저장 없이 4404 · 소켓당 20/s 버킷 · 4,096 B 초과 1009 · `sum` 엄격 스키마(`en` 은 `[0-9;,]` 만, 악성 값으로 남의 화면이 죽지 않게) · 만료 알람(대기실 15분·종료 10분·판 100분·전원 끊김 3분·claimed 60초·예약 좌석 30초).
 무료 플랜: `sum` 2초 주기라 판 내내 DO 활성 ≈ 0.67 객체-시간/판 → **하루 ≈ 40판**(13,000 GB-s/일). 넘으면 그날 멀티만 멈춘다 → Workers Paid $5/월(선형, 판당 ≈ $0.004). 대기실·관전·종료는 하이버네이션.
 
-### 아직 없는 것 (로드맵 M2/M3)
-빠른 매칭(Lobby DO) · prep '준비 완료' 투표 · 플레이어별 시드 운 스트림(`chest.draw/roll`·`enhanceTower` 에 rnd 주입) · `again` 재대전 · `?room=CODE` 초대 링크 · 대기실 채팅 · 새로고침 뒤 보드 복구 · 정확한 6초 막간(`INFINITY.spawnEnd` 표) · 안티치트(친구 방 전제).
+### 아직 없는 것 (로드맵 M3)
+prep '준비 완료' 투표 · 플레이어별 시드 운 스트림(`chest.draw/roll`·`enhanceTower` 에 rnd 주입) · `again` 재대전 · `?room=CODE` 초대 링크 · 새로고침 뒤 보드 복구 · 안티치트(친구 방 전제).
 
 **로그 · 채팅 (`#log-panel`)** — 스타크래프트처럼 화면 왼쪽 아래에 잠깐 남았다가 사라진다.
 - `pushLog(text, kind, who)`: `LOG.ttl` 9초 뒤 제거, 마지막 1.2초는 CSS 로 페이드. 최대 8줄.
@@ -550,8 +552,8 @@ Origin 검사(불일치 403, 비브라우저는 통과) · IP 버킷(new 10/분,
 - `netLog(text, kind)`: 내 화면에 찍고 방 안이면 서버를 통해 같은 방에 중계한다(120자 · 초당 2개, kind 화이트리스트).
 - 자동으로 찍히는 것: 유물 이상 뽑기 · ★7 이상 획득 · 확률강화 성공/유지/소멸 · 보스 처치와 보상 ·
   한계선 초과와 목숨 · 보스/고방어 웨이브 시작 · 클리어 · 런 종료 · 스테이지 모드 적 도달.
-- **채팅은 멀티에서만**: 게임·관전 중 `Enter` 로 입력창(`#chat-form`)이 열리고, `Enter` 전송 · `Esc` 취소. 서버가 본인에게도 에코한다.
-  입력 중에는 게임 단축키(R·1~6·Esc)가 막힌다. 방이 없거나 대기실이면 `chatOpen()` 이 `false` 를 돌려주고 아무 일도 없다(대기실 채팅은 로드맵).
+- **채팅은 멀티에서만**: 게임·관전·필드 보기 중 `Enter` 또는 `#mini-top` 의 💬 버튼(`#chat-btn`, 모바일용)으로 입력창(`#chat-form`)이 열리고, `Enter` 전송 · `Esc` 취소. 서버가 본인에게도 에코한다. 채팅 줄은 좌석색 `●이름`.
+  입력 중에는 게임 단축키(R·1~6·Esc)가 막힌다. 대기실에서는 `#mp-chat` 입력칸이 항상 열려 있고(`Enter` 가 포커스), 방이 없으면 `chatOpen()` 이 `false`.
 - 훅: `DKlog(text, kind)` · `DKlogs()` · `DKchatOpen()`.
 
 ---
@@ -583,7 +585,7 @@ Origin 검사(불일치 403, 비브라우저는 통과) · IP 버킷(new 10/분,
 7. 디버그 훅: `DKroll()` 즉시 굴림, `DKplace(idx)` 배치, `DKspots()`, `DKSAVE` — 자동 플레이 봇용
 8. **인피니티 아레나 바닥 생성** (ART-PROMPTS §5, 길·석단 없는 바닥만) → 파일만 넣으면 끝. 도로 화풍이 아쉬우면 Grok 타일셋으로 `drawRoad()` 교체
 9. 인피니티 밸런스 손플레이 확인 (봇 기준 목표: 무전략 봇이 웨이브 50~70 에서 종료 — 현재 중앙값 59)
-10. ~~멀티 1단계 (M1)~~ → 완료: `net/` 서버 + DKNET v2 + 함께하기(방 코드 · 같은 웨이브 · 관전 · 순위표 · 재접속). §6.5
+10. ~~멀티 1단계 (M1)~~ → 완료: `net/` 서버 + DKNET + 함께하기(방 코드 · 관전 · 순위표 · 재접속). ~~M2~~ → 완료(v3): 개별 진행(배속 x3) · 빠른 매칭 · 상대 필드 보기 · 대기실 채팅. §6.5
 11. **멀티 M2**: 빠른 매칭(Lobby DO, 같은 ver 끼리 4명 즉시 / 2명+8초) · prep '준비 완료 (n/m)' 투표(`T_1` 미방송 상태에서만) · 플레이어별 시드 운 스트림 · `again` 재대전 · `?room=CODE` 초대 링크·공유 · 대기실 채팅 · 시간당 방 생성 상한 · 구조화 로그
 12. **멀티 M3**: 새로고침 뒤 보드 복구(sessionStorage 스냅샷) · `SAVE.mp` 로비 표시 · 관전 중 상대 보드 확대 · 정확한 6초 막간(`INFINITY.spawnEnd` 표) · 예산 실측 후 `SUM_INTERVAL` 조정 · DO 위치 힌트
 

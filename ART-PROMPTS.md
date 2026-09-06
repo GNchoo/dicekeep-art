@@ -17,6 +17,7 @@
 | §1 하드 배경 | 20 | `casual/maps/map-NN-<theme>-hard.jpg` | **폐기** (배경 맞춤 방식 종료) |
 | §2 걷기 시트 (적 24 + 보스 10) | 34 | `casual/enemies/<id>-walk-2x2.png`, `casual/bosses/<file>-walk-2x2.png` | **이미 연결됨** — 파일만 넣으면 됨 |
 | §3 타워 스킨 b~e | 24 | `casual/towers/tN-<letter>.png` 덮어쓰기 | **이미 연결됨** |
+| §6 인피니티 101웨이브 몬스터 | 111 | `casual/enemies/inf/wNNN.png`, `casual/bosses/inf/bNNN[-2].png` | **연결됨** — 파일을 넣고 `content.js` `INF_ART_READY` 에 웨이브 번호를 적으면 그 웨이브만 교체 (2026-09-06) |
 
 ---
 
@@ -225,3 +226,644 @@ Hand-painted casual tower defense arena FLOOR ONLY, Kingdom Rush and Random Dice
 ```
 
 연결: 파일을 `casual/maps/map-inf-arena.jpg` 로 저장하면 끝. 좌표 작업 없음 (나선 도로·석단은 `content.js` `buildArenaLayout` 이 만든다).
+
+---
+
+## §6. 인피니티 101웨이브 몬스터 (새 그림 111장 · 2026-09-06 설계)
+
+인피니티(도전·함께) 101웨이브의 몬스터를 **10단계 테마 × 10웨이브 + 보스** 로 다시 설계했다. 지금은 기존 적 그림을 겉보기 강함 순으로 재배치해 쓰고 있고(`content.js` `look`), **아래 파일명으로 그림을 넣고 `INF_ART_READY` 에 웨이브 번호를 적으면 그 웨이브만 새 그림·새 이름으로 바뀐다** (부분 납품 가능, 나머지는 기존 그림 폴백).
+
+규칙
+- 정지컷 `casual/enemies/inf/wNNN.png` (1024², 연회색 배경, **오른쪽을 본다** — 코드가 왼쪽 이동 때 반전한다). 걷기 시트는 선택: `casual/enemies/inf/wNNN-walk-2x2.png`.
+- 보스 `casual/bosses/inf/bNNN.png`, 20웨이브부터 보스가 2마리라 부관은 `casual/bosses/inf/bNNN-2.png`.
+- 크기 등급(S/M/L)은 원작 크기표(`sizeSeq`)를 따른다 — 그림 안 비율이 아니라 **덩치 느낌**(S 작고 가벼움 · L 크고 무거움)으로 그려 달라는 뜻. 이동형은 4의 배수 공중, 7의 배수 땅굴(7이 우선).
+- 방어력이 높은 33·66·99 웨이브는 두꺼운 판금을 두른다. 단계가 오를수록 갑옷·무기·발광·크기감이 늘어나야 한다.
+- 코드 연결: `content.js` `INF_MONSTERS`(이름·등급·테마) + `INF_ART_READY`, `game.js` 는 `infW<w>` / `infB<w>` 키로 로드해 `spawnEnemy` 가 정지컷·시트를 우선 쓴다.
+
+### 단계 테마
+
+| 단계 | 웨이브 | 테마 | 분위기 |
+|---|---|---|---|
+| 1 | 1~10 | 초원의 작은 것들 | soft rounded shapes, bright pastel colors, cute and harmless looking, no weapons, no armor |
+| 2 | 11~20 | 숲의 야수 | natural fur and feathers, slightly fierce eyes, a few leaves and twigs stuck on the body, still cute |
+| 3 | 21~30 | 늪과 동굴 | slimy or chitinous skin, murky green and purple tones, glowing eyes, drips of swamp water |
+| 4 | 31~40 | 산적과 고블린 | ragged leather clothes, crude iron weapons, patched cloth, mischievous grin |
+| 5 | 41~50 | 왕국의 병사와 기사 | polished steel armor with a red and gold heraldic emblem, disciplined pose, proper weapons and shields |
+| 6 | 51~60 | 언데드 | pale bone and rotten cloth, cold blue-green glow in eye sockets, tattered burial wrappings, faint mist |
+| 7 | 61~70 | 마법 생물과 정령 | body made of glowing elemental energy or crystal, floating runes and sparks, vivid magical colors |
+| 8 | 71~80 | 용족과 거대 야수 | thick scales, horns and spikes, heavy muscular build, embers or frost breath, imposing size |
+| 9 | 81~90 | 악마 | dark red and black skin, curved horns, hellfire glow from cracks in the skin, bat-like wings or chains |
+| 10 | 91~101 | 심연과 파멸 | obsidian black body with violet void energy, eyes like stars, ornate ruinous armor, world-ending presence |
+
+### 정지컷 공통 프롬프트 (각 웨이브 프롬프트에 이미 포함됨)
+
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame.
+```
+
+### 걷기 시트 공통 프롬프트 (선택 — 앞에 붙이고 정지컷 설명을 이어 쓴다)
+
+```text
+Hand-painted 2x2 sprite sheet, four frames of a walk cycle read left-to-right then top-to-bottom (contact, down, passing, up), of the same chibi character moving toward the RIGHT, side 3/4 view. Kingdom Rush and Random Dice casual style, thick clean outlines, identical character size and identical ground pivot in every cell, generous margins, plain light gray background, no text, no watermark. Match the idle design exactly:
+```
+
+### 단계 1 · 초원의 작은 것들 (웨이브 1~10)
+
+| 웨이브 | 이름 | 등급 | 이동 | 파일 |
+|---|---|---|---|---|
+| 1 | 들쥐 | S | 지상 | `w001.png` |
+| 2 | 청개구리 | S | 지상 | `w002.png` |
+| 3 | 뭉게양 | L | 지상 | `w003.png` |
+| 4 | 참새 | S | 공중 | `w004.png` |
+| 5 | 당근토끼 | M | 지상 | `w005.png` |
+| 6 | 얼룩젖소 | L | 지상 | `w006.png` |
+| 7 | 왕두더지 | L | 땅굴 | `w007.png` |
+| 8 | 꿀벌 | S | 공중 | `w008.png` |
+| 9 | 골목거위 | L | 지상 | `w009.png` |
+| **10 보스** | 황금 숫양 | L | 보스 | `b010.png` |
+
+**1 · 들쥐** → `casual/enemies/inf/w001.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A tiny field mouse with a wheat stalk in its mouth, a small creature, walking on the ground. Theme: meadow critters — soft rounded shapes, bright pastel colors, cute and harmless looking, no weapons, no armor. Power level 1 of 10: looks weak and cute.
+```
+**2 · 청개구리** → `casual/enemies/inf/w002.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A small green tree frog with big round eyes, a small creature, walking on the ground. Theme: meadow critters — soft rounded shapes, bright pastel colors, cute and harmless looking, no weapons, no armor. Power level 1 of 10: looks weak and cute.
+```
+**3 · 뭉게양** → `casual/enemies/inf/w003.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A fat fluffy sheep like a walking cloud, stubby legs, a large bulky creature, walking on the ground. Theme: meadow critters — soft rounded shapes, bright pastel colors, cute and harmless looking, no weapons, no armor. Power level 1 of 10: looks weak and cute.
+```
+**4 · 참새** → `casual/enemies/inf/w004.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A chubby sparrow flying with tiny wings spread, a small creature, flying in the air with wings or floating clearly off the ground. Theme: meadow critters — soft rounded shapes, bright pastel colors, cute and harmless looking, no weapons, no armor. Power level 1 of 10: looks weak and cute.
+```
+**5 · 당근토끼** → `casual/enemies/inf/w005.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A rabbit holding a carrot like a club, a medium creature, walking on the ground. Theme: meadow critters — soft rounded shapes, bright pastel colors, cute and harmless looking, no weapons, no armor. Power level 1 of 10: looks weak and cute.
+```
+**6 · 얼룩젖소** → `casual/enemies/inf/w006.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A plump spotted dairy cow with a bell, a large bulky creature, walking on the ground. Theme: meadow critters — soft rounded shapes, bright pastel colors, cute and harmless looking, no weapons, no armor. Power level 1 of 10: looks weak and cute.
+```
+**7 · 왕두더지** → `casual/enemies/inf/w007.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A big mole with huge digging claws, half out of a dirt mound, a large bulky creature, emerging from a hole in the ground, dirt and debris flying, lower body underground. Theme: meadow critters — soft rounded shapes, bright pastel colors, cute and harmless looking, no weapons, no armor. Power level 1 of 10: looks weak and cute.
+```
+**8 · 꿀벌** → `casual/enemies/inf/w008.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A round honeybee with a tiny stinger, flying, a small creature, flying in the air with wings or floating clearly off the ground. Theme: meadow critters — soft rounded shapes, bright pastel colors, cute and harmless looking, no weapons, no armor. Power level 1 of 10: looks weak and cute.
+```
+**9 · 골목거위** → `casual/enemies/inf/w009.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. An oversized angry goose with neck stretched forward, a large bulky creature, walking on the ground. Theme: meadow critters — soft rounded shapes, bright pastel colors, cute and harmless looking, no weapons, no armor. Power level 1 of 10: looks weak and cute.
+```
+**10 보스 · 황금 숫양** → `casual/bosses/inf/b010.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 90% of a 1024x1024 frame. BOSS: the Golden Ram King, a huge fluffy ram with golden curled horns and a tiny crown, much larger and more imposing than regular enemies, ornate details, the lord of the meadow critters. Theme: soft rounded shapes, bright pastel colors, cute and harmless looking, no weapons, no armor. Power level 1 of 10.
+```
+
+### 단계 2 · 숲의 야수 (웨이브 11~20)
+
+| 웨이브 | 이름 | 등급 | 이동 | 파일 |
+|---|---|---|---|---|
+| 11 | 도토리다람쥐 | S | 지상 | `w011.png` |
+| 12 | 수리부엉이 | L | 공중 | `w012.png` |
+| 13 | 아기여우 | S | 지상 | `w013.png` |
+| 14 | 오소리 | L | 땅굴 | `w014.png` |
+| 15 | 도적너구리 | M | 지상 | `w015.png` |
+| 16 | 검독수리 | L | 공중 | `w016.png` |
+| 17 | 회색늑대 | M | 지상 | `w017.png` |
+| 18 | 가시고슴도치 | S | 지상 | `w018.png` |
+| 19 | 불곰 | L | 지상 | `w019.png` |
+| **20 보스** | 고목 정령 + 거대 수사슴 | L | 보스 | `b020.png` · `b020-2.png` |
+
+**11 · 도토리다람쥐** → `casual/enemies/inf/w011.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A squirrel carrying an acorn like a bomb, a small creature, walking on the ground. Theme: forest beasts — natural fur and feathers, slightly fierce eyes, a few leaves and twigs stuck on the body, still cute. Power level 2 of 10: looks weak and cute.
+```
+**12 · 수리부엉이** → `casual/enemies/inf/w012.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A large great horned owl in flight, wings wide, a large bulky creature, flying in the air with wings or floating clearly off the ground. Theme: forest beasts — natural fur and feathers, slightly fierce eyes, a few leaves and twigs stuck on the body, still cute. Power level 2 of 10: looks weak and cute.
+```
+**13 · 아기여우** → `casual/enemies/inf/w013.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A small orange fox cub with a sly grin, a small creature, walking on the ground. Theme: forest beasts — natural fur and feathers, slightly fierce eyes, a few leaves and twigs stuck on the body, still cute. Power level 2 of 10: looks weak and cute.
+```
+**14 · 오소리** → `casual/enemies/inf/w014.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A stocky badger bursting out of the ground, dirt flying, a large bulky creature, emerging from a hole in the ground, dirt and debris flying, lower body underground. Theme: forest beasts — natural fur and feathers, slightly fierce eyes, a few leaves and twigs stuck on the body, still cute. Power level 2 of 10: looks weak and cute.
+```
+**15 · 도적너구리** → `casual/enemies/inf/w015.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A raccoon with a black bandit mask and a small sack, a medium creature, walking on the ground. Theme: forest beasts — natural fur and feathers, slightly fierce eyes, a few leaves and twigs stuck on the body, still cute. Power level 2 of 10: looks weak and cute.
+```
+**16 · 검독수리** → `casual/enemies/inf/w016.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A large golden eagle diving with talons out, a large bulky creature, flying in the air with wings or floating clearly off the ground. Theme: forest beasts — natural fur and feathers, slightly fierce eyes, a few leaves and twigs stuck on the body, still cute. Power level 2 of 10: looks weak and cute.
+```
+**17 · 회색늑대** → `casual/enemies/inf/w017.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A lean grey wolf baring its teeth, a medium creature, walking on the ground. Theme: forest beasts — natural fur and feathers, slightly fierce eyes, a few leaves and twigs stuck on the body, still cute. Power level 2 of 10: looks weak and cute.
+```
+**18 · 가시고슴도치** → `casual/enemies/inf/w018.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A hedgehog with extra long spikes, curled slightly, a small creature, walking on the ground. Theme: forest beasts — natural fur and feathers, slightly fierce eyes, a few leaves and twigs stuck on the body, still cute. Power level 2 of 10: looks weak and cute.
+```
+**19 · 불곰** → `casual/enemies/inf/w019.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A big brown bear standing on all fours, roaring, a large bulky creature, walking on the ground. Theme: forest beasts — natural fur and feathers, slightly fierce eyes, a few leaves and twigs stuck on the body, still cute. Power level 2 of 10: looks weak and cute.
+```
+**20 보스 · 고목 정령** → `casual/bosses/inf/b020.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 90% of a 1024x1024 frame. BOSS: the Elder Treant, a huge walking tree with a face in the bark and glowing green sap, much larger and more imposing than regular enemies, ornate details, the lord of the forest beasts. Theme: natural fur and feathers, slightly fierce eyes, a few leaves and twigs stuck on the body, still cute. Power level 2 of 10.
+```
+**20 부관 · 거대 수사슴** → `casual/bosses/inf/b020-2.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 90% of a 1024x1024 frame. BOSS: the Great Stag, an enormous stag with antlers like a tree crown, much larger and more imposing than regular enemies, ornate details, a lieutenant of the forest beasts. Theme: natural fur and feathers, slightly fierce eyes, a few leaves and twigs stuck on the body, still cute. Power level 2 of 10.
+```
+
+### 단계 3 · 늪과 동굴 (웨이브 21~30)
+
+| 웨이브 | 이름 | 등급 | 이동 | 파일 |
+|---|---|---|---|---|
+| 21 | 늪지렁이 | S | 땅굴 | `w021.png` |
+| 22 | 왕두꺼비 | L | 지상 | `w022.png` |
+| 23 | 도롱뇽 | S | 지상 | `w023.png` |
+| 24 | 왕모기 | S | 공중 | `w024.png` |
+| 25 | 동굴거미 | M | 지상 | `w025.png` |
+| 26 | 독전갈 | S | 지상 | `w026.png` |
+| 27 | 늪악어 | L | 지상 | `w027.png` |
+| 28 | 개미귀신 | L | 땅굴 | `w028.png` |
+| 29 | 아나콘다 | L | 지상 | `w029.png` |
+| **30 보스** | 두꺼비 마녀 + 박쥐 군주 | S | 보스 | `b030.png` · `b030-2.png` |
+
+**21 · 늪지렁이** → `casual/enemies/inf/w021.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A fat pink swamp worm poking out of mud, a small creature, emerging from a hole in the ground, dirt and debris flying, lower body underground. Theme: swamp and cave creatures — slimy or chitinous skin, murky green and purple tones, glowing eyes, drips of swamp water. Power level 3 of 10: looks weak and cute.
+```
+**22 · 왕두꺼비** → `casual/enemies/inf/w022.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A huge warty toad with a wide mouth and swamp drips, a large bulky creature, walking on the ground. Theme: swamp and cave creatures — slimy or chitinous skin, murky green and purple tones, glowing eyes, drips of swamp water. Power level 3 of 10: looks weak and cute.
+```
+**23 · 도롱뇽** → `casual/enemies/inf/w023.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A small spotted salamander with a curling tail, a small creature, walking on the ground. Theme: swamp and cave creatures — slimy or chitinous skin, murky green and purple tones, glowing eyes, drips of swamp water. Power level 3 of 10: looks weak and cute.
+```
+**24 · 왕모기** → `casual/enemies/inf/w024.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A giant mosquito with a long needle and glowing eyes, flying, a small creature, flying in the air with wings or floating clearly off the ground. Theme: swamp and cave creatures — slimy or chitinous skin, murky green and purple tones, glowing eyes, drips of swamp water. Power level 3 of 10: looks weak and cute.
+```
+**25 · 동굴거미** → `casual/enemies/inf/w025.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A hairy cave spider with eight glowing eyes, a medium creature, walking on the ground. Theme: swamp and cave creatures — slimy or chitinous skin, murky green and purple tones, glowing eyes, drips of swamp water. Power level 3 of 10: looks weak and cute.
+```
+**26 · 독전갈** → `casual/enemies/inf/w026.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A small black scorpion with a glowing green stinger, a small creature, walking on the ground. Theme: swamp and cave creatures — slimy or chitinous skin, murky green and purple tones, glowing eyes, drips of swamp water. Power level 3 of 10: looks weak and cute.
+```
+**27 · 늪악어** → `casual/enemies/inf/w027.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A big armored crocodile with moss on its back, a large bulky creature, walking on the ground. Theme: swamp and cave creatures — slimy or chitinous skin, murky green and purple tones, glowing eyes, drips of swamp water. Power level 3 of 10: looks weak and cute.
+```
+**28 · 개미귀신** → `casual/enemies/inf/w028.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A giant antlion with huge jaws rising out of a sand pit, a large bulky creature, emerging from a hole in the ground, dirt and debris flying, lower body underground. Theme: swamp and cave creatures — slimy or chitinous skin, murky green and purple tones, glowing eyes, drips of swamp water. Power level 3 of 10: looks weak and cute.
+```
+**29 · 아나콘다** → `casual/enemies/inf/w029.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A thick green anaconda coiled and rearing up, a large bulky creature, walking on the ground. Theme: swamp and cave creatures — slimy or chitinous skin, murky green and purple tones, glowing eyes, drips of swamp water. Power level 3 of 10: looks weak and cute.
+```
+**30 보스 · 두꺼비 마녀** → `casual/bosses/inf/b030.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 90% of a 1024x1024 frame. BOSS: the Toad Witch, a big toad in a witch hat stirring a bubbling cauldron on its back, much larger and more imposing than regular enemies, ornate details, the lord of the swamp and cave creatures. Theme: slimy or chitinous skin, murky green and purple tones, glowing eyes, drips of swamp water. Power level 3 of 10.
+```
+**30 부관 · 박쥐 군주** → `casual/bosses/inf/b030-2.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 90% of a 1024x1024 frame. BOSS: the Bat Lord, a giant bat with a cape-like wingspan and a tiny crown, much larger and more imposing than regular enemies, ornate details, a lieutenant of the swamp and cave creatures. Theme: slimy or chitinous skin, murky green and purple tones, glowing eyes, drips of swamp water. Power level 3 of 10.
+```
+
+### 단계 4 · 산적과 고블린 (웨이브 31~40)
+
+| 웨이브 | 이름 | 등급 | 이동 | 파일 |
+|---|---|---|---|---|
+| 31 | 고블린 정찰병 | S | 지상 | `w031.png` |
+| 32 | 고블린 글라이더 | S | 공중 | `w032.png` |
+| 33 | 방패 고블린 | S | 지상 · 고방어 | `w033.png` |
+| 34 | 오크 전사 | L | 지상 | `w034.png` |
+| 35 | 트롤 굴착병 | L | 땅굴 | `w035.png` |
+| 36 | 와이번 기수 | L | 공중 | `w036.png` |
+| 37 | 홉고블린 궁수 | M | 지상 | `w037.png` |
+| 38 | 코볼트 | S | 지상 | `w038.png` |
+| 39 | 산적 두목 | M | 지상 | `w039.png` |
+| **40 보스** | 고블린 왕 + 오우거 장사 | S | 보스 | `b040.png` · `b040-2.png` |
+
+**31 · 고블린 정찰병** → `casual/enemies/inf/w031.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A small goblin scout with a wooden dagger and leaf hood, a small creature, walking on the ground. Theme: bandits and goblins — ragged leather clothes, crude iron weapons, patched cloth, mischievous grin. Power level 4 of 10: looks dangerous and battle-worn.
+```
+**32 · 고블린 글라이더** → `casual/enemies/inf/w032.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A goblin hanging from a patched bat-wing glider, flying, a small creature, flying in the air with wings or floating clearly off the ground. Theme: bandits and goblins — ragged leather clothes, crude iron weapons, patched cloth, mischievous grin. Power level 4 of 10: looks dangerous and battle-worn.
+```
+**33 · 방패 고블린** → `casual/enemies/inf/w033.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A goblin hiding behind an oversized iron tower shield covered in dents, a small creature, walking on the ground. Theme: bandits and goblins — ragged leather clothes, crude iron weapons, patched cloth, mischievous grin. Power level 4 of 10: looks dangerous and battle-worn. Heavily armored: thick layered metal plates cover most of the body.
+```
+**34 · 오크 전사** → `casual/enemies/inf/w034.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A big green orc warrior with a cleaver and shoulder pads, a large bulky creature, walking on the ground. Theme: bandits and goblins — ragged leather clothes, crude iron weapons, patched cloth, mischievous grin. Power level 4 of 10: looks dangerous and battle-worn.
+```
+**35 · 트롤 굴착병** → `casual/enemies/inf/w035.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A hunched troll with a giant pickaxe climbing out of a tunnel, a large bulky creature, emerging from a hole in the ground, dirt and debris flying, lower body underground. Theme: bandits and goblins — ragged leather clothes, crude iron weapons, patched cloth, mischievous grin. Power level 4 of 10: looks dangerous and battle-worn.
+```
+**36 · 와이번 기수** → `casual/enemies/inf/w036.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A goblin riding a small wyvern, flying, a large bulky creature, flying in the air with wings or floating clearly off the ground. Theme: bandits and goblins — ragged leather clothes, crude iron weapons, patched cloth, mischievous grin. Power level 4 of 10: looks dangerous and battle-worn.
+```
+**37 · 홉고블린 궁수** → `casual/enemies/inf/w037.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A tall hobgoblin archer drawing a crude bow, a medium creature, walking on the ground. Theme: bandits and goblins — ragged leather clothes, crude iron weapons, patched cloth, mischievous grin. Power level 4 of 10: looks dangerous and battle-worn.
+```
+**38 · 코볼트** → `casual/enemies/inf/w038.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A tiny lizard-like kobold with a candle on its helmet, a small creature, walking on the ground. Theme: bandits and goblins — ragged leather clothes, crude iron weapons, patched cloth, mischievous grin. Power level 4 of 10: looks dangerous and battle-worn.
+```
+**39 · 산적 두목** → `casual/enemies/inf/w039.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A burly human bandit chief with an eye patch and two axes, a medium creature, walking on the ground. Theme: bandits and goblins — ragged leather clothes, crude iron weapons, patched cloth, mischievous grin. Power level 4 of 10: looks dangerous and battle-worn.
+```
+**40 보스 · 고블린 왕** → `casual/bosses/inf/b040.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 90% of a 1024x1024 frame. BOSS: the Goblin King carried on a throne-litter by four tiny goblins, holding a stolen scepter, much larger and more imposing than regular enemies, ornate details, the lord of the bandits and goblins. Theme: ragged leather clothes, crude iron weapons, patched cloth, mischievous grin. Power level 4 of 10.
+```
+**40 부관 · 오우거 장사** → `casual/bosses/inf/b040-2.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 90% of a 1024x1024 frame. BOSS: the Ogre Brute, a massive ogre with a tree trunk club and a barrel belly, much larger and more imposing than regular enemies, ornate details, a lieutenant of the bandits and goblins. Theme: ragged leather clothes, crude iron weapons, patched cloth, mischievous grin. Power level 4 of 10.
+```
+
+### 단계 5 · 왕국의 병사와 기사 (웨이브 41~50)
+
+| 웨이브 | 이름 | 등급 | 이동 | 파일 |
+|---|---|---|---|---|
+| 41 | 방패병 | L | 지상 | `w041.png` |
+| 42 | 공병 | M | 땅굴 | `w042.png` |
+| 43 | 창기병 | L | 지상 | `w043.png` |
+| 44 | 그리폰 기사 | L | 공중 | `w044.png` |
+| 45 | 중장기사 | L | 지상 | `w045.png` |
+| 46 | 종자 | S | 지상 | `w046.png` |
+| 47 | 석궁병 | M | 지상 | `w047.png` |
+| 48 | 페가수스 기사 | L | 공중 | `w048.png` |
+| 49 | 굴착 노움 | S | 땅굴 | `w049.png` |
+| **50 보스** | 강철 성주 + 공성 골렘 | L | 보스 | `b050.png` · `b050-2.png` |
+
+**41 · 방패병** → `casual/enemies/inf/w041.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A heavy footman behind a big kite shield, spear ready, a large bulky creature, walking on the ground. Theme: kingdom soldiers and knights — polished steel armor with a red and gold heraldic emblem, disciplined pose, proper weapons and shields. Power level 5 of 10: looks dangerous and battle-worn.
+```
+**42 · 공병** → `casual/enemies/inf/w042.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. An army sapper with a helmet lamp and a shovel, coming out of a tunnel, a medium creature, emerging from a hole in the ground, dirt and debris flying, lower body underground. Theme: kingdom soldiers and knights — polished steel armor with a red and gold heraldic emblem, disciplined pose, proper weapons and shields. Power level 5 of 10: looks dangerous and battle-worn.
+```
+**43 · 창기병** → `casual/enemies/inf/w043.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A pikeman in chainmail with a very long pike, a large bulky creature, walking on the ground. Theme: kingdom soldiers and knights — polished steel armor with a red and gold heraldic emblem, disciplined pose, proper weapons and shields. Power level 5 of 10: looks dangerous and battle-worn.
+```
+**44 · 그리폰 기사** → `casual/enemies/inf/w044.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A knight riding a griffin, flying, a large bulky creature, flying in the air with wings or floating clearly off the ground. Theme: kingdom soldiers and knights — polished steel armor with a red and gold heraldic emblem, disciplined pose, proper weapons and shields. Power level 5 of 10: looks dangerous and battle-worn.
+```
+**45 · 중장기사** → `casual/enemies/inf/w045.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A full plate armor knight with a greatsword and closed helmet, a large bulky creature, walking on the ground. Theme: kingdom soldiers and knights — polished steel armor with a red and gold heraldic emblem, disciplined pose, proper weapons and shields. Power level 5 of 10: looks dangerous and battle-worn.
+```
+**46 · 종자** → `casual/enemies/inf/w046.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A small squire boy carrying a shield too big for him, a small creature, walking on the ground. Theme: kingdom soldiers and knights — polished steel armor with a red and gold heraldic emblem, disciplined pose, proper weapons and shields. Power level 5 of 10: looks dangerous and battle-worn.
+```
+**47 · 석궁병** → `casual/enemies/inf/w047.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A crossbowman in a padded coat aiming a crossbow, a medium creature, walking on the ground. Theme: kingdom soldiers and knights — polished steel armor with a red and gold heraldic emblem, disciplined pose, proper weapons and shields. Power level 5 of 10: looks dangerous and battle-worn.
+```
+**48 · 페가수스 기사** → `casual/enemies/inf/w048.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A knight on a white winged pegasus, flying, a large bulky creature, flying in the air with wings or floating clearly off the ground. Theme: kingdom soldiers and knights — polished steel armor with a red and gold heraldic emblem, disciplined pose, proper weapons and shields. Power level 5 of 10: looks dangerous and battle-worn.
+```
+**49 · 굴착 노움** → `casual/enemies/inf/w049.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A gnome engineer driving a small steam drill cart underground, a small creature, emerging from a hole in the ground, dirt and debris flying, lower body underground. Theme: kingdom soldiers and knights — polished steel armor with a red and gold heraldic emblem, disciplined pose, proper weapons and shields. Power level 5 of 10: looks dangerous and battle-worn.
+```
+**50 보스 · 강철 성주** → `casual/bosses/inf/b050.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 90% of a 1024x1024 frame. BOSS: the Iron Castellan, a giant knight in ornate golden plate armor with a tower shield, much larger and more imposing than regular enemies, ornate details, the lord of the kingdom soldiers and knights. Theme: polished steel armor with a red and gold heraldic emblem, disciplined pose, proper weapons and shields. Power level 5 of 10.
+```
+**50 부관 · 공성 골렘** → `casual/bosses/inf/b050-2.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 90% of a 1024x1024 frame. BOSS: the Siege Golem, a walking siege engine with a battering ram arm, much larger and more imposing than regular enemies, ornate details, a lieutenant of the kingdom soldiers and knights. Theme: polished steel armor with a red and gold heraldic emblem, disciplined pose, proper weapons and shields. Power level 5 of 10.
+```
+
+### 단계 6 · 언데드 (웨이브 51~60)
+
+| 웨이브 | 이름 | 등급 | 이동 | 파일 |
+|---|---|---|---|---|
+| 51 | 좀비 | L | 지상 | `w051.png` |
+| 52 | 도깨비불 | S | 공중 | `w052.png` |
+| 53 | 해골 병사 | M | 지상 | `w053.png` |
+| 54 | 뼈다귀 강아지 | S | 지상 | `w054.png` |
+| 55 | 구울 | L | 지상 | `w055.png` |
+| 56 | 무덤손 | L | 땅굴 | `w056.png` |
+| 57 | 해골 기사 | L | 지상 | `w057.png` |
+| 58 | 저주 인형 | S | 지상 | `w058.png` |
+| 59 | 밴시 | M | 지상 | `w059.png` |
+| **60 보스** | 리치 + 뼈 용 | L | 보스 | `b060.png` · `b060-2.png` |
+
+**51 · 좀비** → `casual/enemies/inf/w051.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A shambling green zombie with torn clothes, a large bulky creature, walking on the ground. Theme: undead — pale bone and rotten cloth, cold blue-green glow in eye sockets, tattered burial wrappings, faint mist. Power level 6 of 10: looks dangerous and battle-worn.
+```
+**52 · 도깨비불** → `casual/enemies/inf/w052.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A floating pale ghost wisp with a sad face, flying, a small creature, flying in the air with wings or floating clearly off the ground. Theme: undead — pale bone and rotten cloth, cold blue-green glow in eye sockets, tattered burial wrappings, faint mist. Power level 6 of 10: looks dangerous and battle-worn.
+```
+**53 · 해골 병사** → `casual/enemies/inf/w053.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A skeleton soldier with a rusty sword and round shield, a medium creature, walking on the ground. Theme: undead — pale bone and rotten cloth, cold blue-green glow in eye sockets, tattered burial wrappings, faint mist. Power level 6 of 10: looks dangerous and battle-worn.
+```
+**54 · 뼈다귀 강아지** → `casual/enemies/inf/w054.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A small skeleton dog with a glowing collar, a small creature, walking on the ground. Theme: undead — pale bone and rotten cloth, cold blue-green glow in eye sockets, tattered burial wrappings, faint mist. Power level 6 of 10: looks dangerous and battle-worn.
+```
+**55 · 구울** → `casual/enemies/inf/w055.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A big hunched ghoul with long claws and a hungry grin, a large bulky creature, walking on the ground. Theme: undead — pale bone and rotten cloth, cold blue-green glow in eye sockets, tattered burial wrappings, faint mist. Power level 6 of 10: looks dangerous and battle-worn.
+```
+**56 · 무덤손** → `casual/enemies/inf/w056.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A giant undead hand and arm clawing out of a grave, a large bulky creature, emerging from a hole in the ground, dirt and debris flying, lower body underground. Theme: undead — pale bone and rotten cloth, cold blue-green glow in eye sockets, tattered burial wrappings, faint mist. Power level 6 of 10: looks dangerous and battle-worn.
+```
+**57 · 해골 기사** → `casual/enemies/inf/w057.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A skeletal knight on a skeletal horse, black armor, a large bulky creature, walking on the ground. Theme: undead — pale bone and rotten cloth, cold blue-green glow in eye sockets, tattered burial wrappings, faint mist. Power level 6 of 10: looks dangerous and battle-worn.
+```
+**58 · 저주 인형** → `casual/enemies/inf/w058.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A small cursed rag doll with button eyes and a needle, a small creature, walking on the ground. Theme: undead — pale bone and rotten cloth, cold blue-green glow in eye sockets, tattered burial wrappings, faint mist. Power level 6 of 10: looks dangerous and battle-worn.
+```
+**59 · 밴시** → `casual/enemies/inf/w059.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A wailing banshee in a torn white dress, floating just above ground, a medium creature, walking on the ground. Theme: undead — pale bone and rotten cloth, cold blue-green glow in eye sockets, tattered burial wrappings, faint mist. Power level 6 of 10: looks dangerous and battle-worn.
+```
+**60 보스 · 리치** → `casual/bosses/inf/b060.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 90% of a 1024x1024 frame. BOSS: the Lich, a skeletal sorcerer in a tattered royal robe with a floating phylactery, much larger and more imposing than regular enemies, ornate details, the lord of the undead. Theme: pale bone and rotten cloth, cold blue-green glow in eye sockets, tattered burial wrappings, faint mist. Power level 6 of 10.
+```
+**60 부관 · 뼈 용** → `casual/bosses/inf/b060-2.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 90% of a 1024x1024 frame. BOSS: the Bone Wyrm, a dragon skeleton with glowing green fire inside its ribs, much larger and more imposing than regular enemies, ornate details, a lieutenant of the undead. Theme: pale bone and rotten cloth, cold blue-green glow in eye sockets, tattered burial wrappings, faint mist. Power level 6 of 10.
+```
+
+### 단계 7 · 마법 생물과 정령 (웨이브 61~70)
+
+| 웨이브 | 이름 | 등급 | 이동 | 파일 |
+|---|---|---|---|---|
+| 61 | 불 정령 | M | 지상 | `w061.png` |
+| 62 | 서리 요정 | S | 지상 | `w062.png` |
+| 63 | 흙 정령 | S | 땅굴 | `w063.png` |
+| 64 | 천둥새 | M | 공중 | `w064.png` |
+| 65 | 바위 골렘 | L | 지상 | `w065.png` |
+| 66 | 수정 정령 | L | 지상 · 고방어 | `w066.png` |
+| 67 | 마법 고양이 | S | 지상 | `w067.png` |
+| 68 | 살아있는 마도서 | S | 공중 | `w068.png` |
+| 69 | 수정 골렘 | L | 지상 | `w069.png` |
+| **70 보스** | 대마법사 + 폭풍 정령 | S | 보스 | `b070.png` · `b070-2.png` |
+
+**61 · 불 정령** → `casual/enemies/inf/w061.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A fire elemental made of living flame with ember eyes, a medium creature, walking on the ground. Theme: magical creatures and elementals — body made of glowing elemental energy or crystal, floating runes and sparks, vivid magical colors. Power level 7 of 10: looks powerful and menacing.
+```
+**62 · 서리 요정** → `casual/enemies/inf/w062.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A tiny ice fairy with snowflake wings and a frosty wand, a small creature, walking on the ground. Theme: magical creatures and elementals — body made of glowing elemental energy or crystal, floating runes and sparks, vivid magical colors. Power level 7 of 10: looks powerful and menacing.
+```
+**63 · 흙 정령** → `casual/enemies/inf/w063.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A small earth sprite made of soil and roots, coming out of the ground, a small creature, emerging from a hole in the ground, dirt and debris flying, lower body underground. Theme: magical creatures and elementals — body made of glowing elemental energy or crystal, floating runes and sparks, vivid magical colors. Power level 7 of 10: looks powerful and menacing.
+```
+**64 · 천둥새** → `casual/enemies/inf/w064.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A thunderbird crackling with lightning, flying, a medium creature, flying in the air with wings or floating clearly off the ground. Theme: magical creatures and elementals — body made of glowing elemental energy or crystal, floating runes and sparks, vivid magical colors. Power level 7 of 10: looks powerful and menacing.
+```
+**65 · 바위 골렘** → `casual/enemies/inf/w065.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A big golem made of mossy boulders, a large bulky creature, walking on the ground. Theme: magical creatures and elementals — body made of glowing elemental energy or crystal, floating runes and sparks, vivid magical colors. Power level 7 of 10: looks powerful and menacing.
+```
+**66 · 수정 정령** → `casual/enemies/inf/w066.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A water elemental encased in thick crystal armor plates, a large bulky creature, walking on the ground. Theme: magical creatures and elementals — body made of glowing elemental energy or crystal, floating runes and sparks, vivid magical colors. Power level 7 of 10: looks powerful and menacing. Heavily armored: thick layered metal plates cover most of the body.
+```
+**67 · 마법 고양이** → `casual/enemies/inf/w067.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A black cat with glowing purple runes and a witch hat, a small creature, walking on the ground. Theme: magical creatures and elementals — body made of glowing elemental energy or crystal, floating runes and sparks, vivid magical colors. Power level 7 of 10: looks powerful and menacing.
+```
+**68 · 살아있는 마도서** → `casual/enemies/inf/w068.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A flying spellbook with teeth and glowing pages, a small creature, flying in the air with wings or floating clearly off the ground. Theme: magical creatures and elementals — body made of glowing elemental energy or crystal, floating runes and sparks, vivid magical colors. Power level 7 of 10: looks powerful and menacing.
+```
+**69 · 수정 골렘** → `casual/enemies/inf/w069.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A large golem made of glowing blue crystal, a large bulky creature, walking on the ground. Theme: magical creatures and elementals — body made of glowing elemental energy or crystal, floating runes and sparks, vivid magical colors. Power level 7 of 10: looks powerful and menacing.
+```
+**70 보스 · 대마법사** → `casual/bosses/inf/b070.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 90% of a 1024x1024 frame. BOSS: the Archmage, a small hooded mage floating on a spinning ring of spellbooks and runes, much larger and more imposing than regular enemies, ornate details, the lord of the magical creatures and elementals. Theme: body made of glowing elemental energy or crystal, floating runes and sparks, vivid magical colors. Power level 7 of 10.
+```
+**70 부관 · 폭풍 정령** → `casual/bosses/inf/b070-2.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 90% of a 1024x1024 frame. BOSS: the Storm Elemental, a towering thundercloud creature with lightning arms, much larger and more imposing than regular enemies, ornate details, a lieutenant of the magical creatures and elementals. Theme: body made of glowing elemental energy or crystal, floating runes and sparks, vivid magical colors. Power level 7 of 10.
+```
+
+### 단계 8 · 용족과 거대 야수 (웨이브 71~80)
+
+| 웨이브 | 이름 | 등급 | 이동 | 파일 |
+|---|---|---|---|---|
+| 71 | 드레이크 | L | 지상 | `w071.png` |
+| 72 | 새끼용 | S | 공중 | `w072.png` |
+| 73 | 매머드 | L | 지상 | `w073.png` |
+| 74 | 도마뱀 인간 | S | 지상 | `w074.png` |
+| 75 | 코카트리스 | S | 지상 | `w075.png` |
+| 76 | 와이번 | S | 공중 | `w076.png` |
+| 77 | 모래 벌레 | S | 땅굴 | `w077.png` |
+| 78 | 베히모스 | L | 지상 | `w078.png` |
+| 79 | 용 전사 | M | 지상 | `w079.png` |
+| **80 보스** | 화룡 + 히드라 | M | 보스 | `b080.png` · `b080-2.png` |
+
+**71 · 드레이크** → `casual/enemies/inf/w071.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A large wingless drake lizard with a spiked tail, a large bulky creature, walking on the ground. Theme: dragonkin and giant beasts — thick scales, horns and spikes, heavy muscular build, embers or frost breath, imposing size. Power level 8 of 10: looks powerful and menacing.
+```
+**72 · 새끼용** → `casual/enemies/inf/w072.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A small red baby dragon flapping tiny wings, flying, a small creature, flying in the air with wings or floating clearly off the ground. Theme: dragonkin and giant beasts — thick scales, horns and spikes, heavy muscular build, embers or frost breath, imposing size. Power level 8 of 10: looks powerful and menacing.
+```
+**73 · 매머드** → `casual/enemies/inf/w073.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A huge woolly mammoth with curved tusks, a large bulky creature, walking on the ground. Theme: dragonkin and giant beasts — thick scales, horns and spikes, heavy muscular build, embers or frost breath, imposing size. Power level 8 of 10: looks powerful and menacing.
+```
+**74 · 도마뱀 인간** → `casual/enemies/inf/w074.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A lizardman warrior with a bone spear, a small creature, walking on the ground. Theme: dragonkin and giant beasts — thick scales, horns and spikes, heavy muscular build, embers or frost breath, imposing size. Power level 8 of 10: looks powerful and menacing.
+```
+**75 · 코카트리스** → `casual/enemies/inf/w075.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A small cockatrice, rooster head on a lizard body, a small creature, walking on the ground. Theme: dragonkin and giant beasts — thick scales, horns and spikes, heavy muscular build, embers or frost breath, imposing size. Power level 8 of 10: looks powerful and menacing.
+```
+**76 · 와이번** → `casual/enemies/inf/w076.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A lean wyvern with a venomous tail, flying, a small creature, flying in the air with wings or floating clearly off the ground. Theme: dragonkin and giant beasts — thick scales, horns and spikes, heavy muscular build, embers or frost breath, imposing size. Power level 8 of 10: looks powerful and menacing.
+```
+**77 · 모래 벌레** → `casual/enemies/inf/w077.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A young sand wyrm with a ring of teeth emerging from sand, a small creature, emerging from a hole in the ground, dirt and debris flying, lower body underground. Theme: dragonkin and giant beasts — thick scales, horns and spikes, heavy muscular build, embers or frost breath, imposing size. Power level 8 of 10: looks powerful and menacing.
+```
+**78 · 베히모스** → `casual/enemies/inf/w078.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A colossal armored behemoth beast with a bony back, a large bulky creature, walking on the ground. Theme: dragonkin and giant beasts — thick scales, horns and spikes, heavy muscular build, embers or frost breath, imposing size. Power level 8 of 10: looks powerful and menacing.
+```
+**79 · 용 전사** → `casual/enemies/inf/w079.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A dragonkin warrior in scale armor with a flaming greataxe, a medium creature, walking on the ground. Theme: dragonkin and giant beasts — thick scales, horns and spikes, heavy muscular build, embers or frost breath, imposing size. Power level 8 of 10: looks powerful and menacing.
+```
+**80 보스 · 화룡** → `casual/bosses/inf/b080.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 90% of a 1024x1024 frame. BOSS: the Fire Dragon, a huge red dragon with lava veins and smoke from its nostrils, much larger and more imposing than regular enemies, ornate details, the lord of the dragonkin and giant beasts. Theme: thick scales, horns and spikes, heavy muscular build, embers or frost breath, imposing size. Power level 8 of 10.
+```
+**80 부관 · 히드라** → `casual/bosses/inf/b080-2.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 90% of a 1024x1024 frame. BOSS: the Hydra, a five-headed swamp dragon with snapping heads, much larger and more imposing than regular enemies, ornate details, a lieutenant of the dragonkin and giant beasts. Theme: thick scales, horns and spikes, heavy muscular build, embers or frost breath, imposing size. Power level 8 of 10.
+```
+
+### 단계 9 · 악마 (웨이브 81~90)
+
+| 웨이브 | 이름 | 등급 | 이동 | 파일 |
+|---|---|---|---|---|
+| 81 | 임프 | S | 지상 | `w081.png` |
+| 82 | 헬하운드 | M | 지상 | `w082.png` |
+| 83 | 지옥 오우거 | L | 지상 | `w083.png` |
+| 84 | 지옥 벌레 | L | 땅굴 | `w084.png` |
+| 85 | 그림자 악귀 | S | 지상 | `w085.png` |
+| 86 | 임프 주술사 | S | 지상 | `w086.png` |
+| 87 | 화염 악마 | L | 지상 | `w087.png` |
+| 88 | 가고일 | S | 공중 | `w088.png` |
+| 89 | 지옥 기사 | L | 지상 | `w089.png` |
+| **90 보스** | 마왕 + 구덩이 악마 | L | 보스 | `b090.png` · `b090-2.png` |
+
+**81 · 임프** → `casual/enemies/inf/w081.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A small red imp with a pitchfork and a mischievous grin, a small creature, walking on the ground. Theme: demons — dark red and black skin, curved horns, hellfire glow from cracks in the skin, bat-like wings or chains. Power level 9 of 10: looks powerful and menacing.
+```
+**82 · 헬하운드** → `casual/enemies/inf/w082.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A hellhound with a burning mane and flaming paws, a medium creature, walking on the ground. Theme: demons — dark red and black skin, curved horns, hellfire glow from cracks in the skin, bat-like wings or chains. Power level 9 of 10: looks powerful and menacing.
+```
+**83 · 지옥 오우거** → `casual/enemies/inf/w083.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A huge demonic ogre with lava cracks and a spiked club, a large bulky creature, walking on the ground. Theme: demons — dark red and black skin, curved horns, hellfire glow from cracks in the skin, bat-like wings or chains. Power level 9 of 10: looks powerful and menacing.
+```
+**84 · 지옥 벌레** → `casual/enemies/inf/w084.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A giant hell worm with a mouth of fire rising from cracked ground, a large bulky creature, emerging from a hole in the ground, dirt and debris flying, lower body underground. Theme: demons — dark red and black skin, curved horns, hellfire glow from cracks in the skin, bat-like wings or chains. Power level 9 of 10: looks powerful and menacing.
+```
+**85 · 그림자 악귀** → `casual/enemies/inf/w085.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A small shadow fiend, smoky body with glowing red eyes, a small creature, walking on the ground. Theme: demons — dark red and black skin, curved horns, hellfire glow from cracks in the skin, bat-like wings or chains. Power level 9 of 10: looks powerful and menacing.
+```
+**86 · 임프 주술사** → `casual/enemies/inf/w086.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. An imp shaman with a skull staff and floating fire orbs, a small creature, walking on the ground. Theme: demons — dark red and black skin, curved horns, hellfire glow from cracks in the skin, bat-like wings or chains. Power level 9 of 10: looks powerful and menacing.
+```
+**87 · 화염 악마** → `casual/enemies/inf/w087.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A large flame demon with a burning whip and wings, a large bulky creature, walking on the ground. Theme: demons — dark red and black skin, curved horns, hellfire glow from cracks in the skin, bat-like wings or chains. Power level 9 of 10: looks powerful and menacing.
+```
+**88 · 가고일** → `casual/enemies/inf/w088.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A stone gargoyle with bat wings, flying, a small creature, flying in the air with wings or floating clearly off the ground. Theme: demons — dark red and black skin, curved horns, hellfire glow from cracks in the skin, bat-like wings or chains. Power level 9 of 10: looks powerful and menacing.
+```
+**89 · 지옥 기사** → `casual/enemies/inf/w089.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A hell knight in black spiked armor wreathed in hellfire, a large bulky creature, walking on the ground. Theme: demons — dark red and black skin, curved horns, hellfire glow from cracks in the skin, bat-like wings or chains. Power level 9 of 10: looks powerful and menacing.
+```
+**90 보스 · 마왕** → `casual/bosses/inf/b090.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 90% of a 1024x1024 frame. BOSS: the Demon Lord, a giant demon with a lava crown, four wings and a burning greatsword, much larger and more imposing than regular enemies, ornate details, the lord of the demons. Theme: dark red and black skin, curved horns, hellfire glow from cracks in the skin, bat-like wings or chains. Power level 9 of 10.
+```
+**90 부관 · 구덩이 악마** → `casual/bosses/inf/b090-2.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 90% of a 1024x1024 frame. BOSS: the Pit Fiend, a bloated demon chained with molten links and a spiked mace, much larger and more imposing than regular enemies, ornate details, a lieutenant of the demons. Theme: dark red and black skin, curved horns, hellfire glow from cracks in the skin, bat-like wings or chains. Power level 9 of 10.
+```
+
+### 단계 10 · 심연과 파멸 (웨이브 91~101)
+
+| 웨이브 | 이름 | 등급 | 이동 | 파일 |
+|---|---|---|---|---|
+| 91 | 심연 촉수 | S | 땅굴 | `w091.png` |
+| 92 | 공허의 눈 | S | 공중 | `w092.png` |
+| 93 | 심연 거인 | L | 지상 | `w093.png` |
+| 94 | 파멸 기사 | L | 지상 | `w094.png` |
+| 95 | 그림자 암살자 | M | 지상 | `w095.png` |
+| 96 | 파멸 까마귀 | S | 공중 | `w096.png` |
+| 97 | 공허 골렘 | L | 지상 | `w097.png` |
+| 98 | 공허 벌레 | M | 땅굴 | `w098.png` |
+| 99 | 흑요석 거상 | L | 지상 · 고방어 | `w099.png` |
+| **100 보스** | 파멸의 군주 + 공허 용 | S | 보스 | `b100.png` · `b100-2.png` |
+| 101 | 종말의 사자 | M | 지상 | `w101.png` |
+
+**91 · 심연 촉수** → `casual/enemies/inf/w091.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A dark tentacle with an eye rising from a void rift in the ground, a small creature, emerging from a hole in the ground, dirt and debris flying, lower body underground. Theme: the abyss and doom — obsidian black body with violet void energy, eyes like stars, ornate ruinous armor, world-ending presence. Power level 10 of 10: looks apocalyptic and overwhelming.
+```
+**92 · 공허의 눈** → `casual/enemies/inf/w092.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A floating eyeball wrapped in violet void energy, flying, a small creature, flying in the air with wings or floating clearly off the ground. Theme: the abyss and doom — obsidian black body with violet void energy, eyes like stars, ornate ruinous armor, world-ending presence. Power level 10 of 10: looks apocalyptic and overwhelming.
+```
+**93 · 심연 거인** → `casual/enemies/inf/w093.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A huge abyssal titan with starry cracks across its black body, a large bulky creature, walking on the ground. Theme: the abyss and doom — obsidian black body with violet void energy, eyes like stars, ornate ruinous armor, world-ending presence. Power level 10 of 10: looks apocalyptic and overwhelming.
+```
+**94 · 파멸 기사** → `casual/enemies/inf/w094.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A doom knight in ornate obsidian armor with a void greatsword, a large bulky creature, walking on the ground. Theme: the abyss and doom — obsidian black body with violet void energy, eyes like stars, ornate ruinous armor, world-ending presence. Power level 10 of 10: looks apocalyptic and overwhelming.
+```
+**95 · 그림자 암살자** → `casual/enemies/inf/w095.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A shadow assassin with twin void daggers, cloaked, a medium creature, walking on the ground. Theme: the abyss and doom — obsidian black body with violet void energy, eyes like stars, ornate ruinous armor, world-ending presence. Power level 10 of 10: looks apocalyptic and overwhelming.
+```
+**96 · 파멸 까마귀** → `casual/enemies/inf/w096.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A three-eyed raven made of void smoke, flying, a small creature, flying in the air with wings or floating clearly off the ground. Theme: the abyss and doom — obsidian black body with violet void energy, eyes like stars, ornate ruinous armor, world-ending presence. Power level 10 of 10: looks apocalyptic and overwhelming.
+```
+**97 · 공허 골렘** → `casual/enemies/inf/w097.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A massive golem of obsidian shards held together by void light, a large bulky creature, walking on the ground. Theme: the abyss and doom — obsidian black body with violet void energy, eyes like stars, ornate ruinous armor, world-ending presence. Power level 10 of 10: looks apocalyptic and overwhelming.
+```
+**98 · 공허 벌레** → `casual/enemies/inf/w098.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A void worm with a spiral maw bursting out of a rift, a medium creature, emerging from a hole in the ground, dirt and debris flying, lower body underground. Theme: the abyss and doom — obsidian black body with violet void energy, eyes like stars, ornate ruinous armor, world-ending presence. Power level 10 of 10: looks apocalyptic and overwhelming.
+```
+**99 · 흑요석 거상** → `casual/enemies/inf/w099.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. A towering obsidian colossus covered in thick layered plate armor, a large bulky creature, walking on the ground. Theme: the abyss and doom — obsidian black body with violet void energy, eyes like stars, ornate ruinous armor, world-ending presence. Power level 10 of 10: looks apocalyptic and overwhelming. Heavily armored: thick layered metal plates cover most of the body.
+```
+**100 보스 · 파멸의 군주** → `casual/bosses/inf/b100.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 90% of a 1024x1024 frame. BOSS: the Lord of Ruin, a colossal armored figure of obsidian with a galaxy inside its open chest, much larger and more imposing than regular enemies, ornate details, the lord of the the abyss and doom. Theme: obsidian black body with violet void energy, eyes like stars, ornate ruinous armor, world-ending presence. Power level 10 of 10.
+```
+**100 부관 · 공허 용** → `casual/bosses/inf/b100-2.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 90% of a 1024x1024 frame. BOSS: the Void Dragon, a dragon made of night sky and violet void light, much larger and more imposing than regular enemies, ornate details, a lieutenant of the the abyss and doom. Theme: obsidian black body with violet void energy, eyes like stars, ornate ruinous armor, world-ending presence. Power level 10 of 10.
+```
+**101 · 종말의 사자** → `casual/enemies/inf/w101.png`
+```text
+Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. The harbinger of the end, a cloaked figure with a void scythe and a crown of stars, a medium creature, walking on the ground. Theme: the abyss and doom — obsidian black body with violet void energy, eyes like stars, ornate ruinous armor, world-ending presence. Power level 11 of 10: looks apocalyptic and overwhelming.
+```

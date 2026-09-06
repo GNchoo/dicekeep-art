@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="style.css?v=78" />
+<link rel="stylesheet" href="style.css?v=79" />
 <link rel="icon" href="ui/gold.png" />
 </head>
 <body>
@@ -30,6 +30,7 @@
       </form>
     </div>
     <div id="mini-top" class="mini hidden">
+      <button id="chat-btn" class="hidden" title="채팅">&#128172;</button>
       <button id="speed-btn" title="게임 속도">x1</button>
       <button id="mute-btn" title="소리"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 8.5a5 5 0 0 1 0 7"/><path d="M20 6a9 9 0 0 1 0 12"/></svg></button>
       <button id="exit-btn" title="스테이지 선택으로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
@@ -61,14 +62,14 @@
           <button id="btn-infinity" class="big-btn inf lobby-inf-btn">&#8734; 인피니티 · 무한<small>끝이 없는 기록 도전</small></button>
         </div>
         <div id="lobby-inf" class="screen-sub inf-sub"></div>
-        <!-- 함께하기: 각자 보드 · 같은 웨이브. 서버(Cloudflare Worker + Durable Object)가 방·시계만 맡는다 -->
+        <!-- 함께하기: 각자 보드, 각자 속도. 서버(Cloudflare Worker + Durable Object)가 방·중계·순위만 맡는다 -->
         <div id="mp-block">
-          <div class="mp-head">&#128101; 인피니티 · 함께 <small>2~4인 · 도전 규칙(101웨이브 완주) · 각자 보드, 같은 웨이브 · 먼저 죽으면 관전</small></div>
+          <div class="mp-head">&#128101; 인피니티 · 함께 <small>2~4인 · 도전 규칙(101웨이브 완주) · 각자 자기 속도로 · 먼저 완주하면 1위</small></div>
           <div class="mp-row"><label for="mp-name">이름</label><input id="mp-name" type="text" maxlength="12" placeholder="플레이어" autocomplete="nickname" spellcheck="false"></div>
           <div class="lobby-btns mp-btns">
             <button id="mp-create" class="big-btn inf">방 만들기<small>친구에게 코드 공유</small></button>
             <button id="mp-join" class="big-btn alt">코드로 참가<small>6자리</small></button>
-            <button id="mp-quick" class="big-btn alt" disabled title="준비 중">빠른 매칭<small>준비 중</small></button>
+            <button id="mp-quick" class="big-btn alt">빠른 매칭<small>2명 이상 10초 · 4명 즉시</small></button>
           </div>
           <form id="mp-join-form" class="hidden" autocomplete="off">
             <input id="mp-code" type="text" maxlength="6" autocapitalize="characters" inputmode="latin" placeholder="ABC123" spellcheck="false" aria-label="방 코드">
@@ -116,24 +117,31 @@
       </div>
     </div>
 
-    <!-- 함께하기 대기실: 코드 공유 → 2명 이상 모이면 방장이 시작 -->
+    <!-- 함께하기 대기실: 코드 공유 → 2명 이상 모이면 방장이 시작. 빠른 매칭이면 코드 대신 대기열 상태를 보여 준다 -->
     <div id="mp-room" class="screen hidden">
       <div class="screen-box">
         <div class="screen-head">
           <button class="back-btn" id="mp-leave">&#8592; 나가기</button>
-          <h2>대기실</h2>
+          <h2 id="mp-room-title">대기실</h2>
           <span id="mp-count" class="gem-chip">0/4</span>
         </div>
         <div id="mp-code-wrap"><span class="mp-code-lbl">방 코드</span><b id="mp-code-big">------</b><button id="mp-copy" class="back-btn" type="button">복사</button></div>
+        <div id="mp-queue" class="hidden"><div class="mp-spin"></div><div id="mp-queue-txt">상대를 찾는 중…</div></div>
         <div id="mp-slots"></div>
-        <p id="mp-note" class="screen-sub">각자 보드 · 같은 웨이브 · <b>101웨이브 완주 = 클리어</b> · 먼저 죽으면 관전<br><b>방은 아무도 기다리지 않습니다</b> — 잠시 자리를 비우면 돌아왔을 때 밀린 웨이브를 이어서 맞습니다. 보스 웨이브만 전원이 잡을 때까지(최대 5분 20초) 기다립니다.</p>
+        <p id="mp-note" class="screen-sub">각자 보드 · <b>각자 자기 속도(x1~x3)</b> · <b>101웨이브 완주 = 클리어</b> · 먼저 죽으면 관전<br>순위는 <b>완주는 빠른 순, 탈락은 웨이브 순</b>. 왼쪽 상대 카드를 누르면 그 필드를 라이브로 볼 수 있고, Enter(💬)로 채팅합니다.</p>
         <div class="lobby-btns"><button id="mp-start" class="big-btn inf hidden">시작 (0/4)</button></div>
         <div id="mp-room-status" class="screen-sub"></div>
+        <div id="mp-chat">
+          <div id="mp-chat-lines"></div>
+          <form id="mp-chat-form" autocomplete="off"><input id="mp-chat-input" type="text" maxlength="120" placeholder="대기실 채팅 — 메시지를 입력하고 Enter" /><button class="back-btn" type="submit">보내기</button></form>
+        </div>
       </div>
     </div>
 
     <!-- 함께하기: 상대 요약 카드(가로는 오른쪽 열 · 세로는 아래 띠) 와 관전 패널 -->
     <div id="rivals" class="hidden" aria-live="off"></div>
+    <!-- 상대 필드 보기: 카드를 누르면 그 플레이어의 타워·적을 내 캔버스에 그린다 (내 게임은 뒤에서 계속 돈다) -->
+    <div id="view-bar" class="hidden"><span id="view-txt"></span><button id="view-back" type="button" class="back-btn">내 필드로</button></div>
     <div id="spectate" class="hidden">
       <div class="spec-card">
         <h3 id="spec-title">관전</h3>
@@ -212,7 +220,7 @@
       <li><b>파워업</b> — 골드로 눈(1~6)을 강화합니다. 강화할수록 비싸집니다. ★ 히든 타워는 6눈 파워업을 따릅니다.</li>
       <li><b>패배</b> — 필드에 적이 200마리를 넘으면 가장 오래된 적이 사라지며 목숨 −1. 보스는 5분 20초 안에 잡아야 합니다.</li>
       <li><b>두 갈래</b> — <b>도전</b>은 <b>101웨이브 완주가 클리어</b>입니다. 91웨이브부터 체력이 한 번 더 가팔라지는 <b>최종 관문</b>이라 뽑기·확률강화 운이 아주 좋아야 닿습니다. <b>무한</b>은 클리어가 없는 진짜 무한 — 101웨이브를 넘으면 더 강해진 2주기가 이어지고, 최고 기록만 남습니다.</li>
-      <li><b>함께 하기</b> — 2~4명이 <b>각자 보드</b>에서 <b>같은 웨이브</b>를 동시에 맞습니다(도전 규칙). 방은 아무도 기다리지 않고(보스 웨이브만 전원 처치까지 최대 5분 20초), 먼저 죽으면 관전, 101웨이브 완주 = 클리어. 첫 웨이브 전 20초 동안 타워를 놓으세요. <b>Enter</b> 로 채팅.</li>
+      <li><b>함께 하기</b> — 2~4명이 <b>각자 보드</b>에서 <b>각자 속도</b>(배속 x1~x3)로 101웨이브 완주에 도전합니다(도전 규칙). 먼저 죽으면 관전, 순위는 <b>완주는 빠른 순, 탈락은 웨이브 순</b>. 첫 웨이브 전 20초 동안 타워를 놓으세요. 상대 카드를 누르면 그 필드를 라이브로 보고, <b>Enter</b>/💬 로 채팅. 방 코드 또는 빠른 매칭(2명 이상 10초, 4명 즉시).</li>
     </ol></div>
     <button id="help-close">알겠어요</button>
   </div>
@@ -222,8 +230,8 @@
   <img id="ghost-tower" alt="">
   <div id="ghost-ring"></div>
 </div>
-<script src="net.js?v=78"></script>
-<script src="content.js?v=78"></script>
-<script src="game.js?v=78"></script>
+<script src="net.js?v=79"></script>
+<script src="content.js?v=79"></script>
+<script src="game.js?v=79"></script>
 </body>
 </html>

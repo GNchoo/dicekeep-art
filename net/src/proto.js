@@ -2,7 +2,10 @@
 // 텍스트 프레임 1개 = JSON 객체 1개, 봉투 없음. t 가 종류, 나머지는 평평한 필드.
 // parse() 는 알려진 필드만 골라 범위를 검사한 '깨끗한' 객체를 돌려준다(모르는 필드는 버린다).
 // 실패는 { ok:false, err } — 서버는 조용히 폐기하고 연속 3회면 4400 으로 닫는다.
-export const PROTOCOL = 2;
+// 서버→클라 전용 종류(welcome·room·player·start·sum(pid 포함)·watched·queued·matched·chat·log·time·end·err)는 여기 없다.
+import { EN_MAX, LANE_MAX } from './timing.js';
+
+export const PROTOCOL = 3;
 
 export const CLOSE = Object.freeze({
   LEAVE: 4000,        // 클라가 leave
@@ -14,16 +17,18 @@ export const CLOSE = Object.freeze({
   EXPIRED: 4410,      // 끝난 방 · 만료
   VERSION: 4426,      // 프로토콜·게임 버전 불일치
   RATE: 4429,         // 소켓 속도 제한
-  TOO_BIG: 1009,      // 프레임 2,048 B 초과
+  TOO_BIG: 1009,      // 프레임 4,096 B 초과
 });
 
-export const ERR = ['bad-code', 'full', 'started', 'bad-key', 'version', 'name', 'rate', 'origin', 'not-host', 'not-ready', 'expired', 'bad-request'];
+export const ERR = ['bad-code', 'full', 'started', 'bad-key', 'version', 'name', 'rate', 'origin', 'not-host', 'not-ready', 'expired', 'bad-request', 'busy'];
 export const DEAD_REASONS = ['lives', 'bossLeak', 'bossTimeout', 'quit', 'reload', 'afk'];
 export const LOG_KINDS = ['sys', 'gacha', 'up', 'boom', 'boss', 'life'];
 export const NAME_MAX = 12, TEXT_MAX = 120, VER_MAX = 16, TOWERS_MAX = 15;
+export const HELLO_OPS = ['create', 'join', 'quick'];
+const EN_RE = /^[0-9;,]*$/;   // 적 스트림: 숫자·세미콜론·쉼표만
 
-const PID_RE = /^[a-z0-9]{8,16}$/;
-const KEY_RE = /^[0-9a-f]{32}$/;
+export const PID_RE = /^[a-z0-9]{8,16}$/;
+export const KEY_RE = /^[0-9a-f]{32}$/;
 // 제어문자 + 폭 없는 공백·방향 제어·BOM
 const CTRL_RE = /[\u0000-\u001f\u007f-\u009f\u200b-\u200f\u2028\u2029\ufeff]/g;
 
@@ -58,16 +63,17 @@ const SCHEMA = {
   hello(m) {
     if (!isInt(m.v, 0, 1e6)) return null;
     if (!isStr(m.ver, 64)) return null;
-    if (m.op !== 'create' && m.op !== 'join') return null;
+    if (!HELLO_OPS.includes(m.op)) return null;
     if (typeof m.pid !== 'string' || !PID_RE.test(m.pid)) return null;
     if (typeof m.key !== 'string' || !KEY_RE.test(m.key)) return null;
     if (typeof m.name !== 'string' || m.name.length > 256) return null;
     return { t: 'hello', v: m.v, ver: cleanText(m.ver, VER_MAX), op: m.op, pid: m.pid, key: m.key, name: sanitizeName(m.name, m.pid) };
   },
   start() { return { t: 'start' }; },
+  // sp 배속(1|2|3) · ll 레인 길이(선택) · en 적 스트림(선택, ≤ EN_MAX 자, [0-9;,] 만). lag 는 v3 에서 없어졌다
   sum(m) {
     if (!isInt(m.w, 0, 101) || !isInt(m.dw, 0, 101) || !isInt(m.l, 0, 20) || !isInt(m.g, 0, 1e7)) return null;
-    if (!isInt(m.k, 0, 1e6) || !isInt(m.f, 0, 200) || !isNum(m.lag, 0, 3600)) return null;
+    if (!isInt(m.k, 0, 1e6) || !isInt(m.f, 0, 200) || !isInt(m.sp, 1, 3)) return null;
     if (m.hid !== 0 && m.hid !== 1) return null;
     if (m.b !== null && !isNum(m.b, 0, 1)) return null;
     if (m.o !== 'l' && m.o !== 'p') return null;
@@ -78,7 +84,15 @@ const SCHEMA = {
       if (!isInt(it[0], 0, 14) || !isInt(it[1], 1, 20) || !isInt(it[2], 1, 3)) return null;
       tw.push([it[0], it[1], it[2]]);
     }
-    return { t: 'sum', w: m.w, dw: m.dw, l: m.l, g: m.g, k: m.k, f: m.f, lag: m.lag, hid: m.hid, b: m.b, o: m.o, tw };
+    const out = { t: 'sum', w: m.w, dw: m.dw, l: m.l, g: m.g, k: m.k, f: m.f, sp: m.sp, hid: m.hid, b: m.b, o: m.o, tw };
+    if (m.ll !== undefined) { if (!isInt(m.ll, 0, LANE_MAX)) return null; out.ll = m.ll; }
+    if (m.en !== undefined) { if (!isStr(m.en, EN_MAX) || !EN_RE.test(m.en)) return null; out.en = m.en; }
+    return out;
+  },
+  // 내가 보는 상대 (null = 그만)
+  watch(m) {
+    if (m.pid === null) return { t: 'watch', pid: null };
+    return typeof m.pid === 'string' && PID_RE.test(m.pid) ? { t: 'watch', pid: m.pid } : null;
   },
   done(m) { return isInt(m.w, 0, 101) ? { t: 'done', w: m.w } : null; },
   dead(m) {

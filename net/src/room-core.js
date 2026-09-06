@@ -2,39 +2,65 @@
 // 타이머·난수·I/O 를 쓰지 않는다. 시간은 now(서버 ms) 인자로만 들어온다.
 //   createRoom(opts) → state
 //   reduce({ state, live }, ev, now) → { state, live, effects, persist }
-//   snapshot(state, live, now) → 'room' 메시지 · ranking(state) · nextAlarm(state, live, now) · waveAt(state, now)
+//   snapshot(state, live, now) → 'room' 메시지 · ranking(state) · nextAlarm(state, live, now)
 // 이벤트: { k:'open', sid, op } 소켓 수락 · { k:'hello', sid, op, m } 첫 프레임 · { k:'close', sid } 닫힘
-//         { k:'msg', pid, sid, m } proto.parse 통과 메시지 · { k:'alarm' } · { k:'seed', value } start 직전 난수
-// effects: { send:{ to: pid|pid[]|'*', except?, m } } · { send:{ sid, m } } (hello 전 소켓) · { close:{ sid, code, reason } }
+//         { k:'msg', pid, sid, m } proto.parse 통과 메시지 · { k:'alarm' } · { k:'seed', value } start 전 난수
+// effects: { send:{ to: pid|pid[]|'*', except?: pid|pid[], m } } · { send:{ sid, m } } (hello 전 소켓) · { close:{ sid, code, reason } }
 //          · { alarm: ts|null } (항상 마지막에 하나) · { log:{ ev, … } } · { destroy:true }
-// state 는 storage 에 통째로 저장되는 문서(§3.3), live 는 메모리 전용(소켓·신선도·버킷). 둘 다 이 함수가 제자리에서 고친다.
+// state 는 storage 에 통째로 저장되는 문서, live 는 메모리 전용(소켓·신선도·버킷·관전 대상). 둘 다 이 함수가 제자리에서 고친다.
 //   state.players[pid].status: 'idle'(대기실) | 'alive' | 'dead' | 'cleared' | 'lost' | 'left'
-// 시계 규칙 W0~W9 는 timing.js 상수와 함께 tick() 에 모여 있다.
+//
+// 진행 규칙: 서버는 웨이브 시계를 갖지 않는다. start 로 seed·t0·timing 만 나눠 주면 각 클라가 싱글처럼 자기 웨이브를 돌리고
+// 서버는 sum(진행 요약)·done·dead·clear 보고를 받아 중계·순위·종료만 맡는다.
+//   순위: cleared 는 clearAt 오름차순(먼저 완주 = 1위, 공동 없음) → 그다음 lost/dead/left 는 deathWave 내림차순 → kills 내림차순 → joinedAt
+//   종료: alive 0 → cleared(완주자 있음) / all-dead(dead·lost 있음) / empty(전원 left)
+//         t0 + GAME_CAP → 남은 alive 를 lost(deathWave = wave) 로 → timeout · 전원 끊김 EMPTY_END → empty
+// 빠른 매칭 방(kind 'quick'): Lobby 가 예약 좌석(pid·key·name)을 넣어 만든다. 방장 없음, 예약 전원 접속 즉시 또는 reserveUntil 에
+//   접속 2명 이상이면 서버가 시작, 1명 이하면 err expired + 4410 후 폐기.
 import * as T from './timing.js';
-import { CLOSE, PROTOCOL } from './proto.js';
+import { CLOSE, PROTOCOL, PID_RE, KEY_RE, sanitizeName } from './proto.js';
 import { take } from './ratelimit.js';
 
 const ALIVE = 'alive';
 
 // ---- 생성 · live 골격 ----
-export function createRoom({ code, kind = 'code', now, ver = null, timing }) {
+// reserve = { players: [{ pid, key, name }], until } (빠른 매칭). 있으면 바로 lobby, hostId 없음
+export function createRoom({ code, kind = 'code', now, ver = null, timing, reserve = null }) {
   const tm = timing ? { ...timing } : T.timingFor('');
-  return {
-    sv: 1, code, kind, createdAt: now, ver,
+  const st = {
+    sv: 2, code, kind, createdAt: now, ver,
     phase: 'claimed', hostId: null, seed: null,
-    timing: tm,                         // 서버 타이밍 표 전체 (endGrace 포함)
+    timing: tm,
     players: {},
     game: null,
+    reserveUntil: null,
     alarmAt: null, expireAt: now + T.CLAIM_TTL,
   };
+  const seats = reserve && Array.isArray(reserve.players)
+    ? reserve.players.filter((p) => p && typeof p.pid === 'string' && PID_RE.test(p.pid) && typeof p.key === 'string' && KEY_RE.test(p.key)).slice(0, T.ROOM_SIZE)
+    : [];
+  if (seats.length) {
+    st.phase = 'lobby';
+    st.reserveUntil = Number.isFinite(reserve.until) ? reserve.until : now + T.RESERVE_TTL;
+    st.expireAt = st.reserveUntil + T.LOBBY_TTL;
+    seats.forEach((p, i) => {
+      if (st.players[p.pid]) return;
+      st.players[p.pid] = { ...newPlayer(p.pid, dedupeName(st, sanitizeName(p.name, p.pid), p.pid), p.key, now + i), reserved: true };
+    });
+  }
+  return st;
+}
+
+function newPlayer(pid, name, key, joinedAt) {
+  return { pid, name, key, joinedAt, status: 'idle', wave: 0, dw: 0, deathWave: null, deathAt: null, kills: 0, clearAt: null, rank: null };
 }
 
 export function emptyLive(now) {
-  return { players: {}, pending: {}, seed: null, holdCheckAt: null, holdSent: null, emptySince: null, rebuiltAt: now };
+  return { players: {}, pending: {}, seed: null, emptySince: null, rebuiltAt: now };
 }
 
 function liveEntry(sid, now) {
-  return { sid, connected: true, lastBeat: now, lag: 0, hidden: false, sum: null, bossHp: null, disconnectedAt: null, relayAt: null, chatB: null, logB: null };
+  return { sid, connected: true, lastBeat: now, hidden: false, sum: null, disconnectedAt: null, relayAt: null, watchRelayAt: null, watching: null, chatB: null, logB: null };
 }
 
 function offlineEntry(now) {
@@ -43,7 +69,7 @@ function offlineEntry(now) {
   return e;
 }
 
-// 하이버네이션 복귀: 소켓 attachment [{ sid, pid?, op? }] 로 live 재구성 (lastBeat=now, lag=0 → 전원 stale 오판 방지)
+// 하이버네이션 복귀: 소켓 attachment [{ sid, pid?, op? }] 로 live 재구성 (관전 대상은 잃는다 — 클라가 watch 를 다시 보낸다)
 export function liveFromSockets(state, atts, now) {
   const live = emptyLive(now);
   for (const a of atts || []) {
@@ -53,46 +79,9 @@ export function liveFromSockets(state, atts, now) {
   }
   if (state) {
     for (const pid of Object.keys(state.players)) if (!live.players[pid]) live.players[pid] = offlineEntry(now);
-    if (state.phase === 'playing') {
-      const anyOn = Object.values(live.players).some((l) => l.connected);
-      live.emptySince = anyOn ? null : now;
-      const h = state.game && state.game.hold;
-      live.holdCheckAt = h && !h.released ? now + T.HOLD_RECHECK : null;
-    }
+    if (state.phase === 'playing') live.emptySince = Object.values(live.players).some((l) => l.connected) ? null : now;
   }
   return live;
-}
-
-// ---- 시계 산술 ----
-export function waveAt(state, now) {
-  const g = state && state.game;
-  if (!g) return 0;
-  const a = g.waveAts;
-  for (let n = a.length - 1; n >= 1; n--) if (a[n] != null && a[n] <= now) return n;
-  return 0;
-}
-
-// waveAts[from] 이 정해진 상태에서 다음 보스(또는 clearWave)까지 체인을 확정한다. 확정된 T 는 다시 쓰지 않는다.
-function extendChain(g, from) {
-  const cw = g.timing.clearWave;
-  for (let w = from; w < cw && !T.isBoss(w); w++) {
-    if (g.waveAts[w + 1] == null) g.waveAts[w + 1] = g.waveAts[w] + T.spawnEnd(w) + g.timing.intermission;
-  }
-  if (g.endAt == null && g.waveAts[cw] != null) g.endAt = g.waveAts[cw] + T.spawnEnd(cw);
-}
-
-function fresh(live, pid, now) {
-  const L = live.players[pid];
-  return !!(L && L.connected && now - L.lastBeat <= T.FRESH_BEAT && !L.hidden && L.lag * 1000 <= T.FRESH_LAG);
-}
-
-function holdView(state, live, now) {
-  const h = state.game && state.game.hold;
-  if (!h) return null;
-  const ps = Object.values(state.players);
-  const waiting = ps.filter((p) => p.status === ALIVE && fresh(live, p.pid, now) && !p.bossDone.includes(h.w)).map((p) => p.pid);
-  const done = ps.filter((p) => p.bossDone.includes(h.w)).map((p) => p.pid);
-  return { w: h.w, deadline: h.deadline, waiting, done, released: !!h.released };
 }
 
 // ---- 스냅샷 · 순위 ----
@@ -100,35 +89,28 @@ export function snapshot(state, live, now) {
   const players = Object.values(state.players).sort((a, b) => a.joinedAt - b.joinedAt || (a.pid < b.pid ? -1 : 1)).map((p) => {
     const L = live.players[p.pid];
     return { pid: p.pid, name: p.name, host: p.pid === state.hostId, connected: !!(L && L.connected), status: p.status,
-             wave: p.wave, deathWave: p.deathWave, kills: p.kills, lag: L ? L.lag : 0, hidden: !!(L && L.hidden), rank: p.rank };
+             wave: p.wave, dw: p.dw || 0, deathWave: p.deathWave, kills: p.kills, sp: (L && L.sum && L.sum.sp) || 1, hidden: !!(L && L.hidden), rank: p.rank };
   });
   const g = state.game;
-  const game = g ? { t0: g.t0, timing: g.timing, seed: state.seed, wave: waveAt(state, now), waveAts: g.waveAts.slice(), hold: holdView(state, live, now), endAt: g.endAt } : null;
-  return { t: 'room', code: state.code, phase: state.phase, hostId: state.hostId, ver: state.ver, now, players, game };
+  const game = g ? { t0: g.t0, timing: g.timing, seed: state.seed } : null;
+  return { t: 'room', code: state.code, kind: state.kind, phase: state.phase, hostId: state.hostId, ver: state.ver, reserveUntil: state.reserveUntil, now, players, game };
 }
 
-const STATUS_ORDER = { cleared: 0, alive: 1, lost: 2, dead: 3, left: 4, idle: 5 };
+// cleared 가 먼저(clearAt 오름차순) → 나머지는 deathWave 내림차순 → kills 내림차순 → joinedAt. 공동 순위 없음
 function rankKey(p) {
-  const o = STATUS_ORDER[p.status] == null ? 9 : STATUS_ORDER[p.status];
-  if (p.status === 'cleared') return [o, 0, 0, 0];             // 완주는 전원 공동 1위
+  if (p.status === 'cleared') return [0, p.clearAt || 0, 0];
   const w = p.deathWave != null ? p.deathWave : (p.wave || 0);
-  return [o, -w, -(p.deathAt || 0), -(p.kills || 0)];
+  return [1, -w, -(p.kills || 0)];
 }
 function cmpKey(a, b) { for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) return a[i] - b[i]; return 0; }
 
-// cleared(공동 1위) > lost > dead > left · 같은 status 는 deathWave desc → deathAt desc → kills desc. 공동이면 같은 숫자
 export function ranking(state) {
   const ps = Object.values(state.players).map((p) => ({ p, k: rankKey(p) }));
   ps.sort((a, b) => cmpKey(a.k, b.k) || (a.p.joinedAt - b.p.joinedAt) || (a.p.pid < b.p.pid ? -1 : 1));
-  const out = [];
-  let rank = 0;
-  for (let i = 0; i < ps.length; i++) {
-    if (i === 0 || cmpKey(ps[i - 1].k, ps[i].k) !== 0) rank = i + 1;
-    const p = ps[i].p;
+  return ps.map(({ p }, i) => {
     const wave = p.status === 'cleared' ? p.wave : (p.deathWave != null ? p.deathWave : p.wave);
-    out.push({ pid: p.pid, name: p.name, rank, status: p.status, wave, kills: p.kills });
-  }
-  return out;
+    return { pid: p.pid, name: p.name, rank: i + 1, status: p.status, wave, deathWave: p.deathWave, kills: p.kills, clearAt: p.clearAt };
+  });
 }
 
 // ---- 알람 하나: 다음에 서버가 스스로 깨어나야 할 시각 ----
@@ -137,18 +119,14 @@ export function nextAlarm(state, live, now) {
   for (const p of Object.values(live.pending)) t = Math.min(t, p.openedAt + T.HELLO_TIMEOUT);
   if (!state) return Number.isFinite(t) ? t : null;
   if (state.phase === 'playing') {
-    const g = state.game;
-    t = Math.min(t, g.t0 + T.GAME_CAP);
-    for (const b of T.bossWaves(g.timing.clearWave)) {
-      if (g.waveAts[b] != null && (!g.hold || g.hold.w < b)) { t = Math.min(t, g.waveAts[b]); break; }
-    }
-    if (g.hold && !g.hold.released) t = Math.min(t, g.hold.deadline, live.holdCheckAt != null ? live.holdCheckAt : now + T.HOLD_RECHECK);
-    if (g.endAt != null) t = Math.min(t, g.endAt + g.endGrace);
+    t = Math.min(t, state.game.t0 + T.GAME_CAP);
     for (const p of Object.values(state.players)) {
       const L = live.players[p.pid];
       if (p.status === ALIVE && L && !L.connected && L.disconnectedAt != null) t = Math.min(t, L.disconnectedAt + T.RECONNECT_GRACE);
     }
     if (live.emptySince != null) t = Math.min(t, live.emptySince + T.EMPTY_END);
+  } else if (state.phase === 'lobby' && state.reserveUntil != null) {
+    t = Math.min(t, state.reserveUntil);
   } else if (state.expireAt != null) {
     t = Math.min(t, state.expireAt);
     if (state.phase === 'lobby') for (const p of Object.values(state.players)) {
@@ -202,7 +180,10 @@ export function reduce({ state, live }, ev, now) {
     default: break;
   }
   if (c.state && c.state.phase === 'playing') tick(c);
-  if (c.state && c.state.phase === 'lobby') lobbySweep(c);
+  if (c.state && c.state.phase === 'lobby') {
+    if (c.state.reserveUntil != null) reserveTick(c);
+    else lobbySweep(c);
+  }
   c.effects.push({ alarm: nextAlarm(c.state, c.live, now) });
   return { state: c.state, live: c.live, effects: c.effects, persist: c.persist };
 }
@@ -228,6 +209,7 @@ function onHello(c, ev) {
   delete c.live.pending[sid];
   const routeOp = ev.op || (pend && pend.op) || m.op;
   if (m.v !== PROTOCOL) return c.reject(sid, 'version', CLOSE.VERSION, '서버와 프로토콜 버전이 다릅니다. 새로고침하세요');
+  if (m.op === 'quick') return c.reject(sid, 'bad-request', CLOSE.BAD_REQUEST, '빠른 매칭은 /ws/quick 으로 접속합니다');
   if (m.op !== routeOp) return c.reject(sid, 'bad-request', CLOSE.BAD_REQUEST, '요청 경로와 op 가 다릅니다');
   const st = c.state;
   if (!st) return c.reject(sid, 'bad-code', CLOSE.NO_ROOM, '없는 방 코드입니다');
@@ -240,6 +222,7 @@ function onHello(c, ev) {
     case 'lobby':
       if (m.op !== 'join') return c.reject(sid, 'bad-request', CLOSE.BAD_REQUEST, '이미 만들어진 방입니다');
       if (st.ver !== m.ver) return c.reject(sid, 'version', CLOSE.VERSION, '방장과 게임 버전이 다릅니다. 새로고침하세요');
+      if (st.reserveUntil != null) return c.reject(sid, 'full', CLOSE.CONFLICT, '예약된 방입니다');
       if (Object.keys(st.players).length >= T.ROOM_SIZE) return c.reject(sid, 'full', CLOSE.CONFLICT, '방이 가득 찼습니다');
       return join(c, sid, m);
     case 'playing':
@@ -257,8 +240,7 @@ function dedupeName(st, name, selfPid) {
 }
 
 function addPlayer(c, m) {
-  c.state.players[m.pid] = { pid: m.pid, name: dedupeName(c.state, m.name, m.pid), key: m.key, joinedAt: c.now, status: 'idle',
-                              wave: 0, deathWave: null, deathAt: null, kills: 0, bossDone: [], clearAt: null, rank: null };
+  c.state.players[m.pid] = newPlayer(m.pid, dedupeName(c.state, m.name, m.pid), m.key, c.now);
 }
 
 function welcome(c, sid, pid, resumed) {
@@ -286,6 +268,7 @@ function join(c, sid, m) {
   c.log('join', { pid: m.pid });
 }
 
+// 아는 pid: 재접속, 또는 예약 좌석의 첫 접속(resumed=false)
 function resume(c, sid, m, P) {
   const st = c.state;
   if (P.key !== m.key) return c.reject(sid, 'bad-key', CLOSE.FORBIDDEN, '좌석 키가 맞지 않습니다');
@@ -293,14 +276,17 @@ function resume(c, sid, m, P) {
   const old = c.live.players[P.pid];
   if (old && old.connected && old.sid && old.sid !== sid) c.close(old.sid, CLOSE.REPLACED, 'replaced');
   const L = liveEntry(sid, c.now);
-  if (old) { L.chatB = old.chatB; L.logB = old.logB; }
+  if (old) { L.chatB = old.chatB; L.logB = old.logB; L.watching = old.watching; }
   c.live.players[P.pid] = L;
   c.live.emptySince = null;
-  welcome(c, sid, P.pid, true);
+  const first = !!P.reserved;
+  if (first) { delete P.reserved; c.persist = true; }
+  welcome(c, sid, P.pid, !first);
   if (st.phase === 'playing') c.bcast({ t: 'player', pid: P.pid, connected: true }, P.pid);
   if (st.phase === 'lobby') c.bcast(c.room(), P.pid);
   if (st.phase === 'ended' && st.game) c.send(P.pid, { t: 'end', reason: st.game.reason, ranking: st.game.ranking, seed: st.seed });
-  c.log('back', { pid: P.pid });
+  if (L.watching) notifyWatched(c, L.watching);
+  c.log(first ? 'join' : 'back', { pid: P.pid });
 }
 
 // ---- 닫힘 ----
@@ -317,6 +303,7 @@ function onClose(c, ev) {
 }
 
 function anyConnected(c) { return Object.values(c.live.players).some((l) => l.connected); }
+function connectedCount(c) { return Object.values(c.live.players).filter((l) => l.connected).length; }
 
 // 소켓이 사라졌다(끊김·leave 공통). reason 'drop' 은 유예 후 left/제거, 'leave' 는 즉시
 function disconnect(c, pid, reason) {
@@ -331,6 +318,7 @@ function disconnect(c, pid, reason) {
     else c.bcast({ t: 'player', pid, connected: false }, pid);
     if (!anyConnected(c)) c.live.emptySince = c.now;
   }
+  if (L.watching) notifyWatched(c, L.watching);
   c.log(reason, { pid, w: P ? P.wave : undefined });
 }
 
@@ -351,9 +339,10 @@ function markLeft(c, P) {
   c.persist = true;
 }
 
-// 방장 이탈 → 가장 먼저 들어온 (접속 중인) 사람에게 위임. 바뀌면 room 방송
+// 방장 이탈 → 가장 먼저 들어온 (접속 중인) 사람에게 위임. 바뀌면 room 방송. 빠른 매칭 방은 방장이 없다
 function delegateHost(c) {
   const st = c.state;
+  if (st.kind === 'quick') return;
   const cur = st.players[st.hostId];
   if (cur && cur.status !== 'left') return;
   const cands = Object.values(st.players).filter((p) => p.status !== 'left')
@@ -376,6 +365,7 @@ function onMsg(c, ev) {
   switch (m.t) {
     case 'start': return onStart(c, P);
     case 'sum': return onSum(c, P, L, m);
+    case 'watch': return onWatch(c, P, L, m);
     case 'done': return onDone(c, P, m);
     case 'dead': return onDead(c, P, m);
     case 'clear': return onClear(c, P, m);
@@ -396,71 +386,93 @@ function fallbackSeed(now, code) {
 function onStart(c, P) {
   const st = c.state;
   if (st.phase !== 'lobby') return c.err(P.pid, 'not-ready', '대기실에서만 시작할 수 있습니다');
-  if (P.pid !== st.hostId) return c.err(P.pid, 'not-host', '방장만 시작할 수 있습니다');
-  const on = Object.values(c.live.players).filter((l) => l.connected).length;
-  if (on < 2) return c.err(P.pid, 'not-ready', '2명 이상 접속해야 시작할 수 있습니다');
-  const tm = st.timing;
+  if (st.kind === 'quick' || P.pid !== st.hostId) return c.err(P.pid, 'not-host', '방장만 시작할 수 있습니다');
+  if (connectedCount(c) < 2) return c.err(P.pid, 'not-ready', '2명 이상 접속해야 시작할 수 있습니다');
+  startGame(c, P.pid);
+}
+
+// 시작: seed · t0 · timing 을 나눠 주고 전원 alive. 이후 진행은 각 클라 몫
+function startGame(c, byPid) {
+  const st = c.state, tm = st.timing;
   const t0 = c.now + tm.prep;
-  const g = { t0, timing: T.wireTiming(tm), endGrace: tm.endGrace, waveAts: [null, t0], hold: null, endAt: null, endedAt: null, reason: null, ranking: null };
-  extendChain(g, 1);
   st.seed = c.live.seed != null ? c.live.seed : fallbackSeed(c.now, st.code);
   c.live.seed = null;
   for (const p of Object.values(st.players)) {
-    Object.assign(p, { status: ALIVE, wave: 0, deathWave: null, deathAt: null, kills: 0, bossDone: [], clearAt: null, rank: null });
+    Object.assign(p, { status: ALIVE, wave: 0, dw: 0, deathWave: null, deathAt: null, kills: 0, clearAt: null, rank: null });
+    delete p.reserved;
     const L = c.live.players[p.pid];
-    if (L) { L.lastBeat = c.now; L.lag = 0; L.hidden = false; L.sum = null; L.bossHp = null; }
+    if (L) { L.lastBeat = c.now; L.hidden = false; L.sum = null; L.relayAt = null; L.watchRelayAt = null; }
   }
-  st.game = g; st.phase = 'playing'; st.expireAt = null;
+  st.game = { t0, timing: T.wireTiming(tm), endedAt: null, reason: null, ranking: null };
+  st.phase = 'playing'; st.expireAt = null; st.reserveUntil = null;
   c.live.emptySince = anyConnected(c) ? null : c.now;
-  c.live.holdSent = null; c.live.holdCheckAt = null;
-  c.bcast({ t: 'start', seed: st.seed, t0, timing: g.timing, now: c.now });
-  c.bcast({ t: 'sched', from: 1, ats: g.waveAts.slice(1) });
+  c.bcast({ t: 'start', seed: st.seed, t0, timing: st.game.timing, now: c.now });
   c.bcast(c.room());
   c.persist = true;
-  c.log('start', { pid: P.pid, n: on });
+  c.log('start', { pid: byPid, n: connectedCount(c), kind: st.kind });
 }
 
-function addBossDone(c, P, b) {
-  if (P.bossDone.includes(b)) return false;
-  P.bossDone.push(b);
-  P.bossDone.sort((x, y) => x - y);
-  c.persist = true;
-  return true;
-}
+const clampWave = (w, cw) => Math.max(0, Math.min(cw, w));
 
+// 진행 요약: 기록 갱신 + 중계. 보는 사람(watching === pid)에게는 en·ll 포함 1초 간격, 나머지에게는 en·ll 을 떼고 1.5초 간격
 function onSum(c, P, L, m) {
   const st = c.state;
   if (st.phase !== 'playing' || P.status !== ALIVE) return;
-  const cap = waveAt(st, c.now + 1000);
-  const w = Math.min(m.w, cap), dw = Math.min(m.dw, cap);
-  L.lastBeat = c.now; L.lag = m.lag; L.hidden = m.hid === 1; L.bossHp = m.b;
+  const cw = st.game.timing.clearWave;
+  const w = clampWave(m.w, cw), dw = clampWave(m.dw, cw);
+  L.lastBeat = c.now; L.hidden = m.hid === 1;
   L.sum = { ...m, w, dw };
   P.wave = Math.max(P.wave, w);
+  P.dw = Math.max(P.dw || 0, dw);
   P.kills = Math.max(P.kills, m.k);
-  // dw 로 bossDone 도출: 멀티 클라는 보스가 필드에 있는 동안 어떤 웨이브도 완료하지 않으므로 dw ≥ b ⇒ 보스 b 처치
-  for (const b of T.bossWaves(st.game.timing.clearWave)) if (b <= dw && addBossDone(c, P, b)) c.log('bossDone', { pid: P.pid, w: b, via: 'sum' });
+  const watchers = watchersOf(c, P.pid);
   if (L.relayAt == null || c.now - L.relayAt >= T.SUM_RELAY_MIN) {
     L.relayAt = c.now;
-    c.bcast({ t: 'sum', pid: P.pid, ...L.sum }, P.pid);
+    const { en, ll, t, ...rest } = L.sum;
+    c.bcast({ t: 'sum', pid: P.pid, ...rest }, [P.pid, ...watchers]);
+  }
+  if (watchers.length && (L.watchRelayAt == null || c.now - L.watchRelayAt >= T.SUM_WATCH_MIN)) {
+    L.watchRelayAt = c.now;
+    const { t, ...rest } = L.sum;
+    c.send(watchers, { t: 'sum', pid: P.pid, ...rest });
   }
 }
 
+// pid 를 보고 있는 접속 중인 멤버(본인 제외)
+function watchersOf(c, pid) {
+  return Object.entries(c.live.players).filter(([q, l]) => q !== pid && l.connected && l.watching === pid).map(([q]) => q);
+}
+
+function notifyWatched(c, pid) {
+  if (!c.state.players[pid]) return;
+  c.send(pid, { t: 'watched', n: watchersOf(c, pid).length });
+}
+
+// 내가 보는 상대. 대상이 방에 없으면 무시. 대상(과 이전 대상)에게 watched{n}
+function onWatch(c, P, L, m) {
+  const target = m.pid === P.pid ? null : m.pid;
+  if (target && !c.state.players[target]) return;
+  const prev = L.watching;
+  if (prev === target) return;
+  L.watching = target;
+  if (prev) notifyWatched(c, prev);
+  if (target) notifyWatched(c, target);
+}
+
+// 웨이브 완료 (통계용)
 function onDone(c, P, m) {
   const st = c.state;
   if (st.phase !== 'playing' || P.status !== ALIVE) return;
-  const g = st.game;
-  const cap = waveAt(st, c.now + 1000);
-  if (m.w < 1 || m.w > cap) return c.log('anomaly', { pid: P.pid, w: m.w, kind: 'done-future', cap });
+  const cw = st.game.timing.clearWave;
+  if (m.w < 1 || m.w > cw) return c.log('anomaly', { pid: P.pid, w: m.w, kind: 'done-range', cw });
   P.wave = Math.max(P.wave, m.w);
-  if (T.isBoss(m.w) && addBossDone(c, P, m.w)) c.log('bossDone', { pid: P.pid, w: m.w, via: 'done' });
-  const earliest = g.waveAts[m.w] + (T.isBoss(m.w) ? 1050 : T.spawnEnd(m.w)) - 1000;   // 1초는 시각 오차 여유
-  if (c.now < earliest) c.log('anomaly', { pid: P.pid, w: m.w, kind: 'done-early', ms: earliest - c.now });
+  P.dw = Math.max(P.dw || 0, m.w);
 }
 
 function onDead(c, P, m) {
   const st = c.state;
   if (st.phase !== 'playing' || P.status !== ALIVE) return;
-  const w = Math.min(m.w, waveAt(st, c.now + 1000));
+  const w = clampWave(m.w, st.game.timing.clearWave);
   P.status = 'dead'; P.wave = Math.max(P.wave, w); P.deathWave = Math.max(0, w - 1); P.deathAt = c.now;
   P.kills = Math.max(P.kills, m.k); P.deathReason = m.r;
   c.bcast({ t: 'player', pid: P.pid, status: 'dead', wave: P.wave, deathWave: P.deathWave, kills: P.kills });
@@ -468,15 +480,14 @@ function onDead(c, P, m) {
   c.log('dead', { pid: P.pid, w: P.deathWave, r: m.r });
 }
 
+// 완주: 보스 처치·완주 검증은 클라 몫. w ≥ clearWave 면 수락
 function onClear(c, P, m) {
   const st = c.state;
   if (st.phase !== 'playing' || P.status !== ALIVE) return;
   const cw = st.game.timing.clearWave;
-  if (waveAt(st, c.now + 1000) < cw) return c.log('anomaly', { pid: P.pid, w: m.w, kind: 'clear-early' });
-  const need = T.bossWaves(cw);
-  if (!need.every((b) => P.bossDone.includes(b))) return c.log('anomaly', { pid: P.pid, w: m.w, kind: 'clear-boss', have: P.bossDone.length, need: need.length });
-  P.status = 'cleared'; P.wave = cw; P.deathWave = cw; P.clearAt = c.now; P.deathAt = c.now; P.kills = Math.max(P.kills, m.k);
-  c.bcast({ t: 'player', pid: P.pid, status: 'cleared', wave: P.wave, kills: P.kills });
+  if (m.w < cw) return c.log('anomaly', { pid: P.pid, w: m.w, kind: 'clear-early', cw });
+  P.status = 'cleared'; P.wave = cw; P.dw = cw; P.deathWave = cw; P.clearAt = c.now; P.deathAt = c.now; P.kills = Math.max(P.kills, m.k);
+  c.bcast({ t: 'player', pid: P.pid, status: 'cleared', wave: P.wave, kills: P.kills, clearAt: P.clearAt });
   c.persist = true;
   c.log('clear', { pid: P.pid, w: cw });
 }
@@ -505,74 +516,51 @@ function onLeave(c, P, L) {
 function onAlarm(c) {
   const st = c.state;
   if (!st) return;
+  if (st.phase === 'lobby' && st.reserveUntil != null) return;   // reserveTick 이 처리
   if (st.phase !== 'playing' && st.expireAt != null && c.now >= st.expireAt) expire(c);
 }
 
-function expire(c) {
+function expire(c, msg) {
   const st = c.state;
   for (const L of Object.values(c.live.players)) {
-    if (L.connected && L.sid) { c.sendSid(L.sid, { t: 'err', code: 'expired', msg: '방이 만료되었습니다' }); c.close(L.sid, CLOSE.EXPIRED, 'expired'); }
+    if (L.connected && L.sid) { c.sendSid(L.sid, { t: 'err', code: 'expired', msg: msg || '방이 만료되었습니다' }); c.close(L.sid, CLOSE.EXPIRED, 'expired'); }
   }
   for (const sid of Object.keys(c.live.pending)) c.close(sid, CLOSE.EXPIRED, 'expired');
-  c.log('expire', { phase: st.phase });
+  c.log('expire', { phase: st.phase, kind: st.kind });
   c.effects.push({ destroy: true });
   c.state = null;
   c.live = emptyLive(c.now);
 }
 
-// ---- 플레이 중 시계 (W1~W6, W9): 어떤 이벤트 뒤에도 한 번 돈다. 멱등 ----
+// ---- 예약 방(빠른 매칭) 대기실: 전원 접속 즉시 시작 · 마감에 2명 이상이면 시작 · 아니면 폐기 ----
+function reserveTick(c) {
+  const st = c.state;
+  const ps = Object.values(st.players);
+  const on = ps.filter((p) => { const L = c.live.players[p.pid]; return L && L.connected; });
+  if (on.length >= 2 && on.length === ps.length) return startGame(c, null);
+  if (c.now < st.reserveUntil) return;
+  if (on.length < 2) return expire(c, '상대가 오지 않았습니다');
+  for (const p of ps) {
+    const L = c.live.players[p.pid];
+    if (!L || !L.connected) { delete st.players[p.pid]; delete c.live.players[p.pid]; c.log('reserve-drop', { pid: p.pid }); }
+  }
+  startGame(c, null);
+}
+
+// ---- 플레이 중: 어떤 이벤트 뒤에도 한 번 돈다. 멱등 ----
 function tick(c) {
   const st = c.state, g = st.game, now = c.now;
-  const ps = Object.values(st.players);
   // 재접속 유예 만료 → left (alive 였을 때만)
-  for (const p of ps) {
+  for (const p of Object.values(st.players)) {
     const L = c.live.players[p.pid];
     if (p.status === ALIVE && L && !L.connected && L.disconnectedAt != null && now >= L.disconnectedAt + T.RECONNECT_GRACE) {
       markLeft(c, p);
       c.log('left', { pid: p.pid, w: p.wave });
     }
   }
-  // 절대 상한 · 전원 끊김 · 101 마감
   if (now >= g.t0 + T.GAME_CAP) return forceEnd(c, 'lost', 'timeout');
   if (c.live.emptySince != null && now >= c.live.emptySince + T.EMPTY_END) return forceEnd(c, 'left', 'empty');
-  if (g.endAt != null && now >= g.endAt + g.endGrace) return forceEnd(c, 'lost', 'timeout');
-  // 보스 웨이브 시작 → 홀드
-  for (const b of T.bossWaves(g.timing.clearWave)) {
-    if (g.waveAts[b] != null && g.waveAts[b] <= now && (!g.hold || g.hold.w < b)) {
-      g.hold = { w: b, deadline: g.waveAts[b] + T.spawnEnd(b) + g.timing.bossLimit + T.BOSS_GRACE, released: false };
-      c.live.holdCheckAt = now + T.HOLD_RECHECK;
-      c.live.holdSent = null;
-      c.persist = true;
-      c.log('hold', { w: b });
-      break;
-    }
-  }
-  evaluateHold(c);
   checkEnd(c);
-}
-
-function evaluateHold(c) {
-  const st = c.state, g = st.game, h = g.hold, now = c.now;
-  if (!h || h.released) return;
-  const view = holdView(st, c.live, now);
-  const aliveDone = Object.values(st.players).some((p) => p.status === ALIVE && p.bossDone.includes(h.w));
-  if ((view.waiting.length === 0 && aliveDone) || now >= h.deadline) {
-    h.released = true;
-    const from = h.w + 1;
-    if (from <= g.timing.clearWave) {
-      g.waveAts[from] = now + g.timing.intermission;
-      extendChain(g, from);
-    }
-    c.bcast({ t: 'hold', ...holdView(st, c.live, now) });
-    if (from <= g.timing.clearWave) c.bcast({ t: 'sched', from, ats: g.waveAts.slice(from) });
-    c.live.holdSent = null; c.live.holdCheckAt = null;
-    c.persist = true;
-    c.log('hold.release', { w: h.w, by: now >= h.deadline ? 'deadline' : 'done', waiting: view.waiting.length });
-    return;
-  }
-  const key = JSON.stringify([h.w, view.waiting, view.done]);
-  if (c.live.holdSent !== key) { c.live.holdSent = key; c.bcast({ t: 'hold', ...view }); }
-  if (c.live.holdCheckAt == null || now >= c.live.holdCheckAt) c.live.holdCheckAt = now + T.HOLD_RECHECK;
 }
 
 // alive 전원 → status 로 바꾸고 종료

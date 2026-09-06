@@ -764,6 +764,8 @@ if (window.DKCONTENT) {
     SRCS[b.sprite] = BASE + b.src;
     if (b.walk && b.walkSrc) SRCS[b.walk] = BASE + b.walkSrc;
   }
+  // 인피니티 101웨이브 새 그림 (준비된 웨이브만 — content.js INF_ART_READY)
+  if (DKCONTENT.INFINITY && DKCONTENT.INFINITY.artList) for (const a of DKCONTENT.INFINITY.artList()) SRCS[a.key] = BASE + a.src;
 }
 const A = {};
 let corsBlocked = false;
@@ -926,6 +928,7 @@ async function loadAssets(onProgress) {
   if (window.DKCONTENT) {
     for (const b of DKCONTENT.bases) if (b.walk) sheets.push(b.walk);
     for (const b of DKCONTENT.bossBases) if (b.walk) sheets.push(b.walk);
+    if (DKCONTENT.INFINITY && DKCONTENT.INFINITY.artList) for (const a of DKCONTENT.INFINITY.artList()) if (a.sheet) sheets.push(a.key);
   }
   const raw = ['map', 'keyart'];
   if (window.DKCONTENT) for (const m of DKCONTENT.maps) if (m.src) raw.push(m.key);
@@ -1231,9 +1234,9 @@ const S = {
   mapKey: 'g1',
   stage: 1, stageData: null, stageWaves: 10,
   mode: 'stage', inf: null, // 'stage' | 'infinity', inf = { sp, power{1..6}, kills, spent }
-  net: null,       // 멀티(함께하기) 중이면 { code, pid, seed, t0, timing, simT, behind, waveAts, hold, rivals, … } — 싱글은 항상 null
+  net: null,       // 멀티(함께하기) 중이면 { code, pid, seed, t0, timing, rivals, status, … } — 싱글은 항상 null. 웨이브·배속은 싱글과 똑같이 각자 진행한다
   speed: 1, muted: false,
-  time: 0, hurtT: 0,
+  time: 0, hurtT: 0, glowT: 0, glowColor: '',
   mouse: { x: -100, y: -100 },
 };
 
@@ -1513,9 +1516,14 @@ const SLOT = {
   from: null, axis: [0, 0, 1], ang: 0, sndT: 0,
 };
 
+// 새 굴림을 시작해도 되는가 — 손이 비어 있고 슬롯이 놀고 있을 때만. 뽑기·보상 큐·캐주얼 굴림이 전부 이 하나를 본다
+// (손에 든 주사위를 덮어쓰는 경로가 생기지 않도록 게이트를 한 곳에 둔다)
+function canStartRoll() {
+  return S.phase === 'playing' && !S.heldDie && !SLOT.active && (S.mode === 'infinity' || DIE.state === 'tray');
+}
 function canRoll() {
   if (S.mode === 'infinity') return false; // 인피니티는 기본 주사위 없음 — 뽑기(보물상자)만
-  return S.phase === 'playing' && DIE.state === 'tray' && !SLOT.active && !S.heldDie && S.gold >= ROLL_COST;
+  return canStartRoll() && S.gold >= ROLL_COST;
 }
 
 function throwDie(vx, vy) {
@@ -1540,6 +1548,7 @@ function throwDie(vx, vy) {
 }
 
 function rollByButton() {
+  if (VIEW.pid) return;
   if (S.mode === 'infinity') { buyChest(); return; } // 인피니티: 뽑기 버튼
   if (!canRoll()) return;
   S.gold -= ROLL_COST;
@@ -1574,6 +1583,7 @@ function buyChest() {
   const ch = chestDef();
   if (!ch || S.mode !== 'infinity' || !S.inf || S.phase !== 'playing') return null;
   const cost = chestCost();
+  if (!canStartRoll() || !canPlaceAnywhere()) { SFX.deny(); return null; }   // 배치부터 — 굴리는 중·손이 찬 채로는 뽑지 않는다
   if (S.gold < cost) { SFX.deny(); return null; }
   S.gold -= cost;
   S.inf.chests = (S.inf.chests || 0) + 1;
@@ -1583,9 +1593,10 @@ function buyChest() {
   const col = dieKindColor(kind);
   S.texts.push({ str: kind === 'd1' ? '꽝… 일반: 외눈 주사위' : `보물상자: ${ch.grade[kind]} — ${ch.label[kind]} 획득!`, x: W / 2, y: 140, t: 0, color: col });
   S.fxs.push({ kind: 'ring', x: W / 2, y: 150, t: 0, dur: 0.6 + rare * 0.2, size: 90 + rare * 40, color: col });
+  if (rk >= 3) spawnBurst(W / 2, 150, col, 6 + rk * 3, 80 + rk * 20, 0.6);
   if (rk >= 6) { S.shakeT = Math.max(S.shakeT || 0, 0.3); S.fxs.push({ kind: 'circle', x: W / 2, y: 150, t: 0, dur: 1.2, size: 200, color: col }); }
   if (rare >= 2) SFX.win(); else if (kind === 'd1') SFX.deny(); else SFX.coin();
-  if (rk >= 3) netLog(`${ch.grade[kind]} ${ch.label[kind]} 등장!`, 'gacha'); // 유물 이상은 방에 알린다
+  if (rk >= 3) netLog(`${ch.grade[kind]} ${ch.label[kind]}를 뽑았습니다`, 'gacha'); // 유물 이상은 방에 알린다
   rollDie(kind); // 뽑으면 무조건 굴러서 타워가 된다 — 배치부터 하고 다시 뽑는다
   coachHit('roll');
   syncUI();
@@ -1598,7 +1609,7 @@ const dieShape = k => { const ch = chestDef(); return (ch && ch.shape && ch.shap
 function rollDie(kind) {
   const ch = chestDef();
   if (!ch || S.mode !== 'infinity' || !S.inf || S.phase !== 'playing') return false;
-  if (SLOT.active || S.heldDie || DIE.state !== 'tray') { S.inf.queue.push(kind); syncUI(); return false; }
+  if (!canStartRoll()) return false;            // 손이 차 있으면 굴리지 않는다 — 큐는 호출자(pumpQueue)가 든다
   SLOT.active = true; SLOT.kind = kind;
   SLOT.t = 0; SLOT.t2 = 0; SLOT.phase = 0; SLOT.sndT = 0;
   SLOT.final = ch.roll(kind);
@@ -1616,30 +1627,55 @@ function canPlaceAnywhere() {
 }
 function pumpQueue() {
   if (S.mode !== 'infinity' || !S.inf || !S.inf.queue || !S.inf.queue.length) return;
-  if (SLOT.active || S.heldDie || DIE.state !== 'tray' || S.phase !== 'playing') return;
+  if (!canStartRoll()) return;
   if (!canPlaceAnywhere()) return;   // 자리가 날 때까지 보상은 큐에 남는다
-  rollDie(S.inf.queue.shift());
+  if (rollDie(S.inf.queue[0])) S.inf.queue.shift();   // 굴림이 실제로 시작됐을 때만 큐에서 뺀다 (주사위가 조용히 사라지지 않게)
 }
 function finishSlot() {
+  if (S.heldDie) return;             // 손이 차 있으면 절대 덮어쓰지 않는다 — 슬롯은 '완성 대기'로 남아 손이 빌 때 온다
   SLOT.active = false;
   S.heldDie = SLOT.final;
   S.dieFocus = true;      // 새로 온 주사위는 배치 모드로 시작
   SFX.coin();
   diceSlot.classList.add('pop');
   setTimeout(() => diceSlot.classList.remove('pop'), 350);
-  if (S.heldDie > 6) { // 성 타워 당첨 연출
-    const def = TOWER_DEFS[S.heldDie];
-    S.texts.push({ str: `★${S.heldDie} ${def.name.replace(/ ★\d+$/, '')} 등장!`, x: W / 2, y: 120, t: 0, color: def.color, big: true });
-    S.fxs.push({ kind: 'ring', x: W / 2, y: H / 2, t: 0, dur: 0.9, size: 260, color: def.color });
-    S.shakeT = S.heldDie >= 15 ? 0.5 : 0.2;
-    if (S.heldDie >= 15) SFX.win(); else SFX.merge();
-    netLog(`★${S.heldDie} ${def.name.replace(/ ★\d+$/, '')} 획득!`, 'gacha');
-  }
+  acquireFx(S.heldDie);
   syncUI();
+}
+// 굴려 나온 눈(1~20)에 따라 단계별 획득 연출. 뽑기·보스 보상·큐 재개가 전부 finishSlot 으로 수렴하므로 여기 한 곳
+function acquireFx(face) {
+  const def = TOWER_DEFS[face]; if (!def) return;
+  const col = def.color, cx = W / 2, cy = H / 2;
+  const name = def.name.replace(/ ★\d+$/, '');
+  if (face <= 6) {                                            // 1~6눈: 작은 링 + 눈 색
+    S.fxs.push({ kind: 'ring', x: cx, y: cy, t: 0, dur: 0.5, size: 120, color: col });
+    spawnBurst(cx, cy, col, 6, 90, 0.45);
+    return;
+  }
+  const tier = face >= 19 ? 4 : face >= 15 ? 3 : face >= 11 ? 2 : 1;   // ★7~10 · ★11~14 · ★15~18 · ★19~20
+  S.texts.push({ str: `★${face}성 ${name} 획득!`, x: cx, y: 120, t: 0, color: col, big: true });
+  S.fxs.push({ kind: 'ring', x: cx, y: cy, t: 0, dur: 0.9, size: 260 + tier * 60, color: col });
+  S.fxs.push({ kind: 'circle', x: cx, y: cy + 40, t: 0, dur: 1.1 + tier * 0.15, size: 180 + tier * 40, color: col, pips: Math.min(12, face - 6) });
+  spawnBurst(cx, cy, col, 12 + tier * 10, 140 + tier * 40, 0.7 + tier * 0.1);
+  if (tier >= 2) { S.fxs.push({ kind: 'ring', x: cx, y: cy, t: 0, dur: 1.3, size: 420, color: '#ffffff' }); }
+  if (tier >= 3) { S.glowT = 0.9; S.glowColor = col; }        // 화면 가장자리 빛 (★15+)
+  if (tier >= 4) { for (let i = 0; i < 3; i++) S.fxs.push({ kind: 'ring', x: cx, y: cy, t: -i * 0.18, dur: 1.2, size: 520, color: ['#ff7ad9', '#ffd452', '#7fd4ff'][i] }); spawnBurst(cx, cy, '#ffffff', 24, 260, 1.1); }
+  S.shakeT = Math.max(S.shakeT || 0, [0, 0.2, 0.3, 0.5, 0.7][tier]);
+  if (tier >= 3) { SFX.win(); if (tier >= 4 && SFX.bossRoar) SFX.bossRoar(); } else SFX.merge();
+  netLog(`★${face}성 ${name} 타워를 획득하였습니다`, 'gacha');   // ★7 이상만 방에 알린다
+}
+// '#rrggbb' → 'rgba(r,g,b,a)'
+function hexA(hex, a) { const m = /^#?([0-9a-f]{6})$/i.exec(String(hex || '')); if (!m) return `rgba(255,212,82,${a})`; const n = parseInt(m[1], 16); return `rgba(${n >> 16},${(n >> 8) & 255},${n & 255},${a})`; }
+// 색 파티클 다발 (burst): 중심에서 퍼지며 중력으로 떨어진다
+function spawnBurst(x, y, color, n, speed, dur) {
+  for (let i = 0; i < n; i++) {
+    const a = Math.random() * Math.PI * 2, v = speed * (0.5 + Math.random() * 0.7);
+    S.fxs.push({ kind: 'burst', x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v * 0.6 - speed * 0.35, t: 0, dur: dur * (0.7 + Math.random() * 0.5), size: 3 + Math.random() * 4, color });
+  }
 }
 
 function updateSlot(dt) {
-  if (!SLOT.active) return;
+  if (!SLOT.active || S.phase !== 'playing') return;
   SLOT.t += dt;
   const poly = SLOT.kind && SLOT.kind !== 'd6';
   if (SLOT.phase === 0) {
@@ -1671,7 +1707,7 @@ function updateSlot(dt) {
     if (SLOT.ang > 1e-4) {
       SLOT.R = m3mul(m3axisAngle(SLOT.axis[0], SLOT.axis[1], SLOT.axis[2], SLOT.ang * ease), SLOT.from);
     }
-    if (SLOT.t2 > 0.45) finishSlot();
+    if (SLOT.t2 > 0.45) { if (S.heldDie) return; finishSlot(); }   // 손이 차 있으면(다른 경로로 들어온 주사위) 굴린 결과를 보존한 채 기다린다
   }
 }
 // ==================== 다면체 주사위 (d4·d8·d12·d20) ====================
@@ -2045,10 +2081,10 @@ function buildInfinityWave(w) {
   if (M.boss) {
     t += 0.6;
     for (let k = 0; k < P.bosses; k++) {
-      const bi = (INF.bossOrdinal(w) - 1 + k * 37) % C.bosses.length; // 2주기부터 w % 10 과 어긋나므로 순번으로 센다
-      const boss = C.bosses[bi];
+      const boss = INF.bossFor ? INF.bossFor(INF.bossOrdinal(w), k) : C.bosses[(INF.bossOrdinal(w) - 1 + k * 37) % C.bosses.length]; // 겉보기 약한 보스부터 (순번 기준)
       const bbase = C.bossBases.find((b) => b.id === boss.base) || C.bossBases[0];
-      add(bbase.id, { name: M.prefix + boss.name, hue: boss.hue, hpMult: P.hpMult * P.bossHp, isBoss: true, lane: laneFor(bbase.move, k) });
+      const bart = INF.art ? INF.art((w - 1) % 101 + 1, k) : null;   // 새 보스 그림이 준비됐으면 설계된 군주·부관으로
+      add(bbase.id, { name: M.prefix + (bart ? bart.name : boss.name), hue: bart ? 0 : boss.hue, hpMult: P.hpMult * P.bossHp, isBoss: true, bossCount: P.bosses, lane: laneFor(bbase.move, k), art: bart && bart.key });
       t += 1.5;
     }
     return q;
@@ -2058,7 +2094,7 @@ function buildInfinityWave(w) {
   for (let i = 0; i < M.count; i++) {
     const elite = eliteSlots.has(i);
     add(M.base.id, {
-      name: (elite ? '정예 ' : '') + M.name, hue: M.hue, lane: laneFor(M.base.move, i),
+      name: (elite ? '정예 ' : '') + M.name, hue: M.hue, lane: laneFor(M.base.move, i), art: M.art && M.art.key, artWalk: M.art && M.art.walkKey,
       hpMult: P.hpMult * M.hpMult * (elite ? 3 : 1), goldMult: P.goldMult * (elite ? 3 : 1), isElite: elite,
     });
     t += P.gap * (FAST_AIR.has(M.base.id) ? 0.72 : 1);
@@ -2132,7 +2168,7 @@ function startWave() {
   coachHit('wave');
   syncUI();
 }
-// 메운디: 크기·방어력 예고 (싱글 startWave 와 멀티 startWaveNet 이 같이 쓴다)
+// 메운디: 크기·방어력 예고
 function announceWave(n) {
   if (S.mode !== 'infinity' || !window.DKCONTENT) return;
   const INF = DKCONTENT.INFINITY, M = INF.monsterFor(n), hi = INF.highArmor(n);
@@ -2166,7 +2202,7 @@ function startStage(n) {
 }
 
 // 인피니티 런 시작 (로비에서 호출)
-// net: 함께하기 방 정보 { code, pid, seed, t0, timing } — 있으면 도전 규칙으로 서버 시계에 맞춰 돈다 (mpStartRun 이 만든다)
+// net: 함께하기 방 정보 { code, pid, seed, t0, timing } — 있으면 도전 규칙(101웨이브 완주)으로, 웨이브·배속은 각자 진행 (mpOnStart 가 만든다)
 function startInfinity(kind, net) {
   const C = window.DKCONTENT;
   const INF = C && C.INFINITY;
@@ -2180,7 +2216,7 @@ function startInfinity(kind, net) {
   S.stage = 0;
   S.stageData = { n: 0, name: '무한 투기장', tier: INF.tier.tier, tierName: INF.tier.name + ' · ' + MODE.name, tierColor: INF.tier.color, lanes: INF.tier.lanes.length, waves: Infinity, bases: [], gem: 0 };
   S.stageWaves = Infinity;
-  setTimeout(() => pushLog(net ? `함께하기 — 첫 웨이브까지 ${Math.round(net.timing.prep / 1000)}초 · 방은 아무도 기다리지 않습니다` : MODE.key === 'clear' ? `도전 시작 — ${INF.clearWave}웨이브 완주가 목표입니다` : '무한 시작 — 버틸 수 있는 데까지', 'sys'), 60);
+  setTimeout(() => pushLog(net ? `함께하기 — 첫 웨이브까지 ${Math.round(net.timing.prep / 1000)}초 · 각자 자기 속도로 진행합니다. 먼저 완주하면 1위` : MODE.key === 'clear' ? `도전 시작 — ${INF.clearWave}웨이브 완주가 목표입니다` : '무한 시작 — 버틸 수 있는 데까지', 'sys'), 60);
   S.mapKey = arenaKeyForScreen();   // 세로 화면이면 세로 아레나
   S.gold = INF.startGold;
   S.lives = INF.lives;
@@ -2189,11 +2225,13 @@ function startInfinity(kind, net) {
   S.spawnQ = []; S.waveActive = false; S.autoT = 0; S.waveT = 0;
   S.heldDie = 0; S.dieFocus = true; S.selTower = null; S.shakeT = 0; S.bannerT = 0;
   DIE.state = 'tray'; DIE.z = 0; DIE.final = 0;
-  SLOT.active = false;
+  SLOT.active = false; SLOT.final = 0;
   applyMapLayout(S.mapKey, INF.tier);
   S.phase = 'playing';
-  if (net) { S.speed = 1; $('speed-btn').textContent = 'x1'; }   // 멀티: 배속 없음 (서버 시계)
-  $('speed-btn').classList.toggle('hidden', !!net);
+  if (net) {   // 멀티: 전원 x1 로 출발 (배속은 각자 바꾼다). 첫 웨이브는 준비 시간이 끝나면 자동으로, 버튼으로 앞당길 수도 있다
+    setSpeed(1);
+    S.autoT = Math.max(1, (net.t0 - (window.DKNET ? DKNET.serverNow() : Date.now())) / 1000);
+  }
   stageEl.classList.toggle('mp', !!net);
   // 첫 런은 코치가 먼저 돈다. 코치가 끝나면 도움말을 한 번 연다.
   // 이미 코치를 본 사람인데 도움말을 아직 안 봤다면 도움말만 연다. (멀티는 시계가 흐르므로 생략)
@@ -2328,9 +2366,11 @@ function spawnEnemy(item) {
     animT: Math.random(), face: 1, dead: false,
     move, sprite, hue, name: name || def.name,
     hidden: false, burrowT: Math.random() * 2,
-    isBoss, lane, flashT: 0,
+    isBoss, bossCount: item.bossCount || 1, lane, flashT: 0,
     entranceT: isBoss ? 0 : -1, // 보스 등장 연출 (>=0 이면 진행 중)
     stompPhase: 0,
+    art: item.art && A[item.art] && A[item.art].cv ? item.art : null,                     // 인피니티 새 그림 (오른쪽을 본다)
+    artWalk: item.artWalk && Array.isArray(A[item.artWalk]) && A[item.artWalk].length ? item.artWalk : null,
   };
   S.enemies.push(e);
   if (S.mode === 'infinity') enforceFieldCap();
@@ -2374,16 +2414,16 @@ function damageEnemy(e, dmg, src) {
     spawnDeath(e, p);
     if (e.isBoss || e.type === 'boss') {
       const ch = chestDef();
-      if (S.mode === 'infinity' && S.inf && ch && DKCONTENT.INFINITY.bossReward) { // 메운디 보스 보상 스케줄 (같은 웨이브의 마지막 보스 처치 시 1회)
-        const others = S.enemies.some(x => x !== e && !x.dead && x.isBoss && x.wave === e.wave);
-        if (!others) {
-          const r = DKCONTENT.INFINITY.bossReward(e.wave || S.wave);
-          S.gold += r.gold;
-          for (const k of r.dice) S.inf.queue.push(k); // 손이 비면 자동으로 굴러간다
-          S.texts.push({ str: `보스 보상: +${r.gold}G · ${r.dice.map(k => ch.grade[k] + ' ' + ch.label[k]).join(' + ')}!`, x: W / 2, y: 170, t: 0, color: dieKindColor(r.dice[0]) });
-          netLog(`보스 ${e.name} 처치! +${r.gold}G · ${r.dice.map(k => ch.grade[k]).join(' + ')}`, 'boss');
-          syncUI();   // '보상 대기' 칩을 바로 갱신 (자리가 없으면 큐에 쌓인 채로 기다린다)
-        }
+      if (S.mode === 'infinity' && S.inf && ch && DKCONTENT.INFINITY.bossReward) { // 메운디 보스 보상 — 보스 한 마리마다 (주사위는 전부, 골드는 그 웨이브 보스 수로 나눈다)
+        const r = DKCONTENT.INFINITY.bossReward(e.wave || S.wave);
+        const nBoss = Math.max(1, e.bossCount || 1);
+        const gold = Math.round(r.gold / nBoss);
+        S.gold += gold;
+        for (const k of r.dice) S.inf.queue.push(k); // 손이 비면 자동으로 굴러간다 (손이 차 있어도 큐에서 기다린다)
+        const left = S.enemies.filter(x => x !== e && !x.dead && x.isBoss && x.wave === e.wave).length;
+        S.texts.push({ str: `보스 보상: +${gold}G · ${r.dice.map(k => ch.grade[k] + ' ' + ch.label[k]).join(' + ')}!`, x: W / 2, y: 170, t: 0, color: dieKindColor(r.dice[0]) });
+        netLog(`보스 ${e.name} 처치! +${gold}G · ${r.dice.map(k => ch.grade[k]).join(' + ')}${left ? ` (보스 ${left}마리 남음)` : ''}`, 'boss');
+        syncUI();   // '보상 대기' 칩을 바로 갱신 (자리가 없으면 큐에 쌓인 채로 기다린다)
         if (!S.enemies.some(x => x !== e && !x.dead && x.isBoss)) S.inf.bossT = 0; // 제한시간 해제
       }
       S.fxs.push({ kind: 'impact', x: p.x, y: p.y - 20, t: 0, dur: 0.45, size: 150 });
@@ -2396,12 +2436,20 @@ function damageEnemy(e, dmg, src) {
   }
 }
 
+// 그림을 좌우로 뒤집어야 하는가. 걷기 시트는 전부 오른쪽 향(ART-PROMPTS §2)이고, 정지컷은 그림마다 달라
+// content.js 의 base 에 faceLeft(정지컷이 왼쪽을 봄) 를 적어 둔다. 시트를 쓰는 동안은 faceLeft 를 무시한다
+function enemyFlip(e) {
+  const movingLeft = e.face < 0;
+  const usingSheet = !!(e.def && e.def.walk && A[e.def.walk]);
+  const nativeLeft = !e.art && !e.artWalk && !usingSheet && !!(e.def && e.def.faceLeft);   // 인피니티 새 그림은 전부 오른쪽 향
+  return movingLeft !== nativeLeft;
+}
 // 사망 연출: 스프라이트가 떠오르며 희미해지고 발밑에 먼지가 퍼진다
 function spawnDeath(e, p) {
   const airY = e.move === 'air' ? 42 : 0;
   const fr = currentEnemyFrame(e);
   if (fr) {
-    S.corpses.push({ fr, x: p.x, y: p.y + 4 - airY, h: e.def.size, hue: e.hue, t: 0, dur: e.isBoss ? 0.7 : 0.42, boss: e.isBoss });
+    S.corpses.push({ fr, x: p.x, y: p.y + 4 - airY, h: e.def.size, hue: e.hue, t: 0, dur: e.isBoss ? 0.7 : 0.42, boss: e.isBoss, flip: enemyFlip(e) });
   }
   const n = e.isBoss ? 18 : 7;
   for (let i = 0; i < n; i++) {
@@ -2414,6 +2462,8 @@ function spawnDeath(e, p) {
 
 // 지금 화면에 그려질 적 프레임 (걷기 시트 > 정지컷 > 구 시트)
 function currentEnemyFrame(e) {
+  if (e.artWalk) { const aw = A[e.artWalk]; const fr = aw[Math.floor(e.animT * 5) % aw.length]; if (fr && fr.cv) return fr; }
+  if (e.art) { const a = A[e.art]; if (a && a.cv) return a; }
   const walk = e.def && e.def.walk && A[e.def.walk];
   if (Array.isArray(walk) && walk.length) {
     const fr = walk[Math.floor(e.animT * 5) % walk.length];
@@ -2609,6 +2659,7 @@ function projHit(p) {
 function update(dt) {
   S.time += dt;
   if (S.hurtT > 0) S.hurtT -= dt;
+  if (S.glowT > 0) S.glowT -= dt;
   if (S.phase !== 'playing') return;
 
   if (S.mode === 'infinity') pumpQueue(); // 보상 대기열: 손이 비면 자동으로 굴림
@@ -2714,9 +2765,7 @@ function update(dt) {
   }
   // 웨이브 종료 판정
   // 인피니티: 스폰이 끝나면 완료 (남은 적은 계속 돈다). 단 보스 웨이브는 메운디 보스 라운드처럼 보스를 잡을 때까지 다음 웨이브를 막는다 (제한시간 5분 20초)
-  // 멀티(함께하기)는 웨이브 번호와 무관하게 '필드에 보스가 있는 동안' 어떤 웨이브도 완료되지 않는다 —
-  // 따라잡기로 보스 웨이브를 지나쳐도 완료 보고(done)가 보스 처치를 함의하게 하기 위해서다
-  const infBossHold = S.mode === 'infinity' && (S.net ? true : DKCONTENT.INFINITY.isBossWave(S.wave)) && S.enemies.some(e => e.isBoss && !e.dead);
+  const infBossHold = S.mode === 'infinity' && DKCONTENT.INFINITY.isBossWave(S.wave) && S.enemies.some(e => e.isBoss && !e.dead);
   if (S.waveActive && S.spawnQ.length === 0 && (S.enemies.length === 0 || (S.mode === 'infinity' && !infBossHold))) {
     S.waveActive = false;
     const bonus = 20 + S.wave * 3 + S.stage * 2;
@@ -2724,9 +2773,9 @@ function update(dt) {
     S.texts.push({ str: '웨이브 클리어! +' + bonus + 'G', x: W / 2, y: H / 2 - 40, t: 0, color: '#a0ffc8' });
     SFX.coin();
     if (S.mode === 'infinity') {
-      if (S.net) { S.net.doneW = S.wave; if (window.DKNET) DKNET.done(S.wave); }   // 방에 완료 보고 (보스 웨이브면 처치 증명)
+      if (S.net) { S.net.doneW = S.wave; if (window.DKNET) DKNET.done(S.wave); }   // 방에 완료 보고 (통계·카드용)
       if (checkInfClear()) return;              // 도전 모드: 101웨이브 완주 = 클리어
-      if (!S.net) S.autoT = DKCONTENT.INFINITY.intermission;   // 멀티는 서버 시계가 다음 웨이브를 연다
+      S.autoT = DKCONTENT.INFINITY.intermission;
       syncUI();
       return;
     }
@@ -2734,7 +2783,7 @@ function update(dt) {
     S.autoT = INTERMISSION;
     syncUI();
   }
-  if (!S.net && !S.waveActive && S.wave > 0 && S.wave < S.stageWaves && S.autoT > 0) {
+  if (!S.waveActive && (S.wave > 0 || S.net) && S.wave < S.stageWaves && S.autoT > 0) {   // 멀티는 첫 웨이브도 준비 시간이 끝나면 자동
     S.autoT -= dt;
     if (S.autoT <= 0) startWave();
     else syncWaveBtn();
@@ -3141,7 +3190,9 @@ function draw() {
       ctx.save();
       ctx.globalAlpha = (1 - pr) * 0.85;
       if (c.hue) ctx.filter = `hue-rotate(${c.hue}deg)`;
-      ctx.drawImage(fr.cv, c.x - w / 2, c.y - h - pr * 26, w, h);
+      ctx.translate(c.x, c.y - pr * 26);
+      if (c.flip) ctx.scale(-1, 1);            // 죽을 때 보던 방향 그대로
+      ctx.drawImage(fr.cv, -w / 2, -h, w, h);
       ctx.filter = 'none';
       ctx.restore();
     } else {
@@ -3174,7 +3225,8 @@ function draw() {
       ctx.save();
       if (e.hidden) ctx.globalAlpha = 0.22;
       ctx.translate(p.x, drawY);
-      ctx.scale(sx * (e.face < 0 && e.isBoss ? 1 : 1), sy);
+      // 진행 방향(e.face: 접선 부호, 세로 구간은 직전 값 유지) ⊕ 그림의 원래 방향(faceLeft) → 왼쪽으로 갈 때 뒤집는다
+      ctx.scale(sx * (enemyFlip(e) ? -1 : 1), sy);
       if (e.hue) ctx.filter = `hue-rotate(${e.hue}deg)`;
       if (fr && fr.cv) {
         const h = e.def.size;
@@ -3354,6 +3406,16 @@ function draw() {
       ctx.globalAlpha = 1 - pr * 0.4;
       ctx.drawImage(fr.cv, f.x - fr.w * s / 2, f.y - fr.h * s / 2, fr.w * s, fr.h * s);
       ctx.restore();
+    } else if (f.kind === 'burst') {
+      const g = 320;                                            // 중력
+      const tt = Math.max(0, f.t);
+      const bx = f.x + f.vx * tt, by = f.y + f.vy * tt + 0.5 * g * tt * tt;
+      ctx.save();
+      ctx.globalAlpha = Math.max(0, 1 - pr) * 0.95;
+      ctx.fillStyle = f.color || '#ffe9a0';
+      ctx.shadowColor = f.color || '#ffe9a0'; ctx.shadowBlur = 8;
+      ctx.beginPath(); ctx.arc(bx, by, f.size * (1 - pr * 0.5), 0, Math.PI * 2); ctx.fill();
+      ctx.restore();
     } else if (f.kind === 'spark') {
       const sp = A.spark;
       const s = f.size / Math.max(sp.w, sp.h) * (1 + pr * 0.6);
@@ -3381,6 +3443,7 @@ function draw() {
       ctx.beginPath(); ctx.arc(f.x, f.y, f.size * (1 - pr * 0.5), 0, Math.PI * 2); ctx.fill();
       ctx.restore();
     } else if (f.kind === 'ring') {
+      if (pr < 0) continue;                                     // 시작을 늦춘 링(t<0)은 아직 그리지 않는다
       ctx.save();
       ctx.globalAlpha = (1 - pr) * 0.9;
       ctx.strokeStyle = f.color || '#ffe9a0';
@@ -3469,6 +3532,16 @@ function draw() {
   }
 
   // 피격 시 붉은 테두리
+  if (S.glowT > 0) {                                          // 고성 획득: 가장자리가 타워 색으로 빛난다
+    ctx.save();
+    const a = Math.min(0.55, S.glowT * 0.7);
+    const grad = ctx.createRadialGradient(W / 2, H / 2, Math.hypot(W, H) * 0.28, W / 2, H / 2, Math.hypot(W, H) * 0.56);
+    grad.addColorStop(0, 'rgba(255,255,255,0)');
+    grad.addColorStop(1, hexA(S.glowColor || '#ffd452', a));
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+    ctx.restore();
+  }
   if (S.hurtT > 0) {
     ctx.save();
     const a = Math.min(0.5, S.hurtT);
@@ -3481,12 +3554,12 @@ function draw() {
   }
 
   // 웨이브 예고
-  if (S.phase === 'playing' && !S.waveActive && S.wave < S.stageWaves) {
+  if (S.phase === 'playing' && !S.waveActive && S.wave < S.stageWaves && !VIEW.pid) {
     ctx.save();
     ctx.textAlign = 'center';
     const cd = waveCountdown();
     const msg = S.net
-      ? (S.wave === 0 ? `첫 웨이브까지 ${cd}초 — 뽑기(160G)로 타워를 놓으세요` : cd == null ? '보스를 잡아야 다음 웨이브가 열립니다' : `다음 웨이브까지 ${cd}초`)
+      ? (S.wave === 0 ? `첫 웨이브까지 ${cd}초 — 뽑기(160G)로 타워를 놓으세요` : `다음 웨이브까지 ${cd}초`)
       : S.wave === 0
         ? (S.mode === 'infinity' ? '뽑기(160G)를 눌러 주사위를 뽑고, 굴러 나온 타워를 석단에 놓으세요!' : '주사위를 던져 타워를 배치하고, 준비되면 웨이브를 시작하세요!')
         : `다음 웨이브까지 ${cd}초`;
@@ -3796,20 +3869,15 @@ function syncInfPanel() {
   }
 }
 
-// 다음 웨이브까지 남은 초. 싱글은 autoT, 멀티는 서버가 미리 방송한 시각(waveAts). 멀티 보스 홀드 중(다음 시각 미정)은 null
-function waveCountdown() {
-  if (!S.net) return Math.ceil(S.autoT);
-  const at = S.net.waveAts[S.wave + 1];
-  if (at == null || !window.DKNET) return null;
-  return Math.max(0, Math.ceil((at - DKNET.serverNow()) / 1000));
-}
+// 다음 웨이브까지 남은 초 (싱글·멀티 공통 autoT)
+function waveCountdown() { return Math.max(0, Math.ceil(S.autoT)); }
 function syncWaveBtn() {
-  if (S.net) { waveBtn.disabled = true; waveBtn.textContent = mpWaveBtnText(); return; }   // 멀티: 서버 시계 표시만
+  if (S.phase === 'spectate') { waveBtn.disabled = true; waveBtn.textContent = '관전 중'; return; }
   if (S.phase !== 'playing' || (S.wave >= S.stageWaves && !S.waveActive)) { waveBtn.disabled = true; waveBtn.textContent = '웨이브 종료'; return; }
   waveBtn.disabled = S.waveActive;
   waveBtn.textContent = S.waveActive
-    ? `웨이브 ${S.wave} 진행 중`
-    : (S.wave === 0 ? '웨이브 시작' : `다음 웨이브 (${Math.ceil(S.autoT)}초)`);
+    ? (S.enemies.some(e => e.isBoss && !e.dead) ? `보스 웨이브 ${S.wave}` : `웨이브 ${S.wave} 진행 중`)
+    : (S.wave === 0 ? (S.net ? `첫 웨이브 (${waveCountdown()}초)` : '웨이브 시작') : `다음 웨이브 (${waveCountdown()}초)`);
 }
 
 function syncInfo() {
@@ -3876,7 +3944,7 @@ function enhanceTower() {
     S.fxs.push({ kind: 'ring', x: t.x, y: t.y - 20, t: 0, dur: 0.8, size: 130, color: col });
     S.fxs.push({ kind: 'circle', x: t.x, y: t.y + 4, t: 0, dur: 0.8, size: 120, color: col, pips: t.face <= 6 ? t.face : 4 + Math.min(8, t.face - 6) });
     if (t.face >= 14) S.shakeT = Math.max(S.shakeT || 0, 0.3);
-    netLog(`확률강화 성공 — ${t.def.name}`, 'up');
+    netLog(`${t.def.name} 확률강화에 성공했습니다`, 'up');
     SFX.win(); syncUI(); return 'up';
   }
   if (r < en.up + en.keep) {
@@ -3892,7 +3960,7 @@ function enhanceTower() {
   S.towers = S.towers.filter(o => o !== t);
   S.selTower = null;
   S.shakeT = Math.max(S.shakeT || 0, 0.35);
-  netLog(`확률강화 실패 — ${lost} 소멸!`, 'boom');
+  netLog(`확률강화에 실패해 ${lost}가 소멸했습니다`, 'boom');
   SFX.deny(); syncUI(); return 'boom';
 }
 
@@ -3906,7 +3974,7 @@ function showOverlay(title, descHTML, btnLabel) {
   statsEl.classList.add('hidden');
   hudEl.classList.add('hidden');
   miniEl.classList.add('hidden');
-  for (const id of ['rivals', 'spectate']) { const el = $(id); if (el) el.classList.add('hidden'); }
+  for (const id of ['rivals', 'spectate', 'view-bar']) { const el = $(id); if (el) el.classList.add('hidden'); }
   overlayEl.classList.remove('hidden');
 }
 
@@ -3918,7 +3986,8 @@ function showScreen(name) {
   statsEl.classList.add('hidden');
   hudEl.classList.add('hidden');
   miniEl.classList.add('hidden');
-  for (const id of ['rivals', 'spectate']) { const el = $(id); if (el) el.classList.add('hidden'); }
+  for (const id of ['rivals', 'spectate', 'view-bar']) { const el = $(id); if (el) el.classList.add('hidden'); }
+  { const cb = $('chat-btn'); if (cb) cb.classList.toggle('hidden', !(S.net && name === 'playing')); }
   if (name === 'title' || name === 'result') overlayEl.classList.remove('hidden');
   else if (name === 'lobby') { $('lobby').classList.remove('hidden'); renderLobby(); }
   else if (name === 'stageSelect') { $('stage-select').classList.remove('hidden'); renderStageSelect(); }
@@ -4347,7 +4416,7 @@ function updateGhost(clientX, clientY) {
 }
 
 function startPlaceDrag(ev) {
-  if (S.phase !== 'playing' || !S.heldDie || SLOT.active) return;
+  if (S.phase !== 'playing' || !S.heldDie || SLOT.active || VIEW.pid) return;
   DRAG.active = true;
   DRAG.face = S.heldDie;
   DRAG.morph = 0;
@@ -4400,6 +4469,7 @@ function stopPlaceDrag() {
 let suppressClick = false;
 
 canvas.addEventListener('pointerdown', ev => {
+  if (VIEW.pid) return;                                   // 상대 필드 보기: 캔버스 조작 없음
   const p = canvasPos(ev);
   S.mouse = p;
   // 트레이의 주사위 잡기
@@ -4469,7 +4539,7 @@ canvas.addEventListener('pointercancel', endGrab);
 
 canvas.addEventListener('click', ev => {
   if (suppressClick) { suppressClick = false; return; }
-  if (DRAG.active) return;
+  if (DRAG.active || VIEW.pid) return;
   if (S.phase !== 'playing') return;
   const { x, y } = canvasPos(ev);
   const idx = spotAt(x, y, touchExtra(24)); // 탭 선택: 화면 기준 24px 반경(=48px 타겟)
@@ -4504,12 +4574,16 @@ window.addEventListener('pointerup', ev => {
 // 줄은 LOG.ttl 초 동안 남았다가 서서히 사라진다 — CSS 애니메이션이라 프레임 비용이 없다.
 const LOG = { ttl: 9, fade: 1.2, max: 8, nodes: [] };
 const LOG_KIND = { sys: 'sys', gacha: 'gacha', up: 'up', boom: 'boom', boss: 'boss', life: 'life', chat: 'chat' };
-function pushLog(text, kind, who) {
+function pushLog(text, kind, who, color) {
   const box = $('log-lines');
   if (!box) return;
   const el = document.createElement('div');
   el.className = 'log-line ' + (LOG_KIND[kind] || 'sys');
-  el.innerHTML = (who ? `<span class="who">${escapeHtml(who)}</span>: ` : '') + escapeHtml(text);
+  const asPlayer = who && (kind === 'gacha' || kind === 'up' || kind === 'boom' || kind === 'boss' || kind === 'life');
+  const whoTag = who ? `<span class="who"${color ? ` style="color:${color}"` : ''}>${kind === 'chat' ? '● ' : ''}${escapeHtml(who)}</span>` : '';
+  el.innerHTML = who
+    ? (asPlayer ? `${whoTag} 플레이어가 ${escapeHtml(text)}` : `${whoTag}: ${escapeHtml(text)}`)
+    : escapeHtml(text);
   box.appendChild(el);
   LOG.nodes.push(el);
   while (LOG.nodes.length > LOG.max) { const old = LOG.nodes.shift(); if (old.parentNode) old.parentNode.removeChild(old); }
@@ -4531,7 +4605,9 @@ function netLog(text, kind) {
 const chatForm = $('chat-form'), chatInput = $('chat-input');
 function chatOpen() {
   const N = window.DKNET;
-  if (!chatForm || !N || !N.inRoom() || !(S.phase === 'playing' || S.phase === 'spectate')) return false;   // 대기실 채팅은 다음 단계
+  if (!chatForm || !N || !N.inRoom()) return false;
+  if (S.phase === 'mpRoom') { const inp = $('mp-chat-input'); if (inp) inp.focus(); return true; }   // 대기실은 항상 열려 있는 입력칸
+  if (!(S.phase === 'playing' || S.phase === 'spectate')) return false;
   chatForm.classList.remove('hidden');
   chatInput.focus();
   return true;
@@ -4547,21 +4623,40 @@ if (chatForm) {
   chatForm.addEventListener('submit', (ev) => { ev.preventDefault(); chatSend(); });
   chatInput.addEventListener('keydown', (ev) => { ev.stopPropagation(); if (ev.key === 'Escape') chatClose(); });
 }
+// 대기실 채팅 목록 (#mp-chat-lines, 최근 30줄). 게임 중 채팅도 여기 쌓여 대기실로 돌아와도 남는다
+function pushRoomChat(name, text, color) {
+  const box = $('mp-chat-lines'); if (!box) return;
+  const el = document.createElement('div');
+  el.className = 'mp-chat-line';
+  el.innerHTML = `<span class="who" style="color:${color || '#7fd4ff'}">${escapeHtml(name)}</span> ${escapeHtml(text)}`;
+  box.appendChild(el);
+  while (box.childElementCount > 30) box.removeChild(box.firstChild);
+  box.scrollTop = box.scrollHeight;
+}
+function clearRoomChat() { const box = $('mp-chat-lines'); if (box) box.innerHTML = ''; }
 if (window.DKNET) {
   const LOG_KINDS = ['sys', 'gacha', 'up', 'boom', 'boss', 'life'];
-  DKNET.on('chat', (m) => pushLog(String(m.text || '').slice(0, 120), 'chat', String(m.name || '?').slice(0, 12)));
+  DKNET.on('chat', (m) => {
+    const name = String(m.name || '?').slice(0, 12), text = String(m.text || '').slice(0, 120);
+    const color = typeof PC !== 'undefined' && m.pid ? PC[mpSeat(m.pid)] : '';
+    pushRoomChat(name, text, color);
+    if (S.phase !== 'mpRoom') pushLog(text, 'chat', name, color);
+  });
   DKNET.on('log', (m) => pushLog(String(m.text || '').slice(0, 120), LOG_KINDS.includes(m.kind) ? m.kind : 'sys', String(m.name || '?').slice(0, 12)));
   DKNET.on('net:state', (st) => { if (!DKNET.inRoom()) chatClose(); });
 }
 
 document.addEventListener('keydown', ev => {
   if (document.activeElement === chatInput) return;                   // 채팅 입력 중에는 단축키를 막는다
+  if (document.activeElement === $('mp-chat-input')) return;
   if (ev.key === 'Enter' && chatOpen()) { ev.preventDefault(); return; } // 멀티: Enter 로 채팅
+  if (VIEW.pid && ev.key !== 'Escape') return;                              // 상대 필드를 보는 중에는 내 조작을 막는다
   if (ev.key === 'r' || ev.key === 'R' || ev.key === 'ㄱ') rollByButton();
   else if (S.mode === 'infinity' && ev.key >= '1' && ev.key <= '6') upgradeFace(parseInt(ev.key, 10));
   else if (ev.key === 'Escape') {
     const help = $('inf-help');
     if (help && !help.classList.contains('hidden')) { closeInfHelp(); return; } // 도움말이 열려 있으면 먼저 닫는다
+    if (VIEW.pid) { mpViewExit(); return; }
     if (DRAG.active) stopPlaceDrag();
     S.selTower = null;
     syncUI();
@@ -4569,7 +4664,7 @@ document.addEventListener('keydown', ev => {
 });
 
 rollBtn.addEventListener('click', rollByButton);
-waveBtn.addEventListener('click', () => { if (S.net) return; startWave(); });   // 멀티는 서버 시계가 연다 (버튼은 표시용)
+waveBtn.addEventListener('click', () => startWave());
 $('sell-btn').addEventListener('click', () => {
   if (!S.selTower) return;
   if (S.mode === 'infinity' && S.selTower.face >= 7) { SFX.deny(); return; } // 전설 이상 판매 불가
@@ -4579,10 +4674,9 @@ $('sell-btn').addEventListener('click', () => {
   SFX.sell();
   syncUI();
 });
+function setSpeed(n) { S.speed = Math.max(1, Math.min(3, n | 0)); $('speed-btn').textContent = 'x' + S.speed; }
 $('speed-btn').addEventListener('click', () => {
-  if (S.net) return;                                    // 멀티: 배속 없음
-  S.speed = S.speed === 1 ? 2 : 1;
-  $('speed-btn').textContent = 'x' + S.speed;
+  setSpeed(S.speed >= 3 ? 1 : S.speed + 1);           // x1 → x2 → x3 → x1 (싱글·멀티 공통, 멀티는 각자)
 });
 const ICON_SOUND = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 8.5a5 5 0 0 1 0 7"/><path d="M20 6a9 9 0 0 1 0 12"/></svg>';
 const ICON_MUTE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 9.5l5 5M22 9.5l-5 5"/></svg>';
@@ -4650,10 +4744,12 @@ $('exit-btn').addEventListener('click', () => {
 // ==================== 멀티 (인피니티 · 함께) ====================
 // 서버(Cloudflare Worker + Room DO)는 방·시계·시드·중계만 갖고, 시뮬레이션은 각자 자기 보드에서 돈다 (GAME-SPEC §6.5).
 // net.js(DKNET) 가 소켓·재접속·시각 동기를 맡고, 여기서는 게임 규칙에 붙인다:
-//   - 웨이브는 서버가 미리 방송한 시각(waveAts)에 시뮬 클록(frameNet)이 연다. 아무도 버튼을 누르지 않는다
+//   - 시작 신호(start{seed,t0,timing})만 같고, 그 뒤는 각자 싱글과 똑같이 진행한다 (막간 자동·웨이브 버튼·배속 x1~x3). 아무도 기다리지 않는다
 //   - 2초마다 요약(sum)을 보내고 상대 요약으로 카드(#rivals)를 그린다
-//   - 먼저 죽으면 기록·젬을 그 즉시 저장하고 관전(#spectate)으로. 전원 결과가 모이면 순위표
-const MP = { sumTimer: 0, tickAt: 0, resumeRoom: null, pauseUntil: 0, statsDone: false };
+//   - 먼저 죽으면 기록·젬을 그 즉시 저장하고 관전(#spectate)으로. 전원이 완주/탈락하면 순위표 (완주는 빠른 순, 탈락은 웨이브 순)
+const MP = { sumTimer: 0, sumEvery: 0, tickAt: 0, resumeRoom: null, statsDone: false, quick: false, queue: null, baseIdx: null };
+// 상대 필드 보기: 상대 sum(tw·en·ll) 으로 만든 타워·적 목록. frame() 이 draw() 직전에 S 와 바꿔 그린다
+const VIEW = { pid: null, towers: [], enemies: [], sum: null, at: 0 };
 const PC = ['#7fd4ff', '#ffd452', '#8ef0b0', '#ff7ad9'];   // 좌석색 (입장 순)
 const MP_LOG_KINDS = ['sys', 'gacha', 'up', 'boom', 'boss', 'life'];
 const mpOn = () => !!(window.DKNET && DKNET.CFG && DKNET.CFG.url);
@@ -4665,7 +4761,7 @@ const mpErrText = (e) => {
   const c = e && e.code;
   const T = { 'bad-code': '그런 방이 없습니다', full: '방이 가득 찼습니다 (최대 4명)', started: '이미 시작된 방입니다', version: '게임 버전이 다릅니다 — 새로고침해 주세요',
     expired: '끝난 방입니다', rate: '너무 자주 시도했습니다. 잠시 뒤 다시', origin: '허용되지 않은 주소입니다', name: '이름을 확인해 주세요', timeout: '서버가 응답하지 않습니다',
-    'not-ready': '2명 이상 모여야 시작할 수 있습니다', 'not-host': '방장만 시작할 수 있습니다', 'bad-key': '이 방의 좌석이 아닙니다', 'bad-request': '잘못된 요청' };
+    'not-ready': '2명 이상 모여야 시작할 수 있습니다', 'not-host': '방장만 시작할 수 있습니다', 'bad-key': '이 방의 좌석이 아닙니다', 'bad-request': '잘못된 요청', busy: '지금은 방을 더 만들 수 없습니다. 잠시 뒤 다시', left: '상대가 나가 매칭이 취소되었습니다' };
   return T[c] || (`연결 실패${c ? ` (${c})` : ''}`);
 };
 function mpStatus(txt, err) { const el = $('mp-status'); if (el) { el.textContent = txt || ''; el.classList.toggle('err', !!err); } }
@@ -4678,7 +4774,13 @@ function mpNameInput() {
 async function mpCreate() {
   if (!mpOn() || S.phase !== 'lobby') return;
   audio(); mpStatus('방을 만드는 중…');
-  try { await DKNET.create(mpNameInput()); mpStatus(''); gotoMpRoom(); }
+  try { await DKNET.create(mpNameInput()); MP.quick = false; clearRoomChat(); mpStatus(''); gotoMpRoom(); }
+  catch (e) { mpStatus(mpErrText(e), true); }
+}
+async function mpQuick() {
+  if (!mpOn() || S.phase !== 'lobby') return;
+  audio(); mpStatus('매칭 서버에 붙는 중…');
+  try { await DKNET.quick(mpNameInput()); MP.quick = true; MP.queue = null; clearRoomChat(); mpStatus(''); gotoMpRoom(); }
   catch (e) { mpStatus(mpErrText(e), true); }
 }
 async function mpJoin(code) {
@@ -4686,23 +4788,37 @@ async function mpJoin(code) {
   code = String(code || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
   if (code.length !== 6) { mpStatus('방 코드는 6자리입니다', true); return; }
   audio(); mpStatus('방에 들어가는 중…');
-  try { await DKNET.join(code, mpNameInput()); mpStatus(''); gotoMpRoom(); }
+  try { await DKNET.join(code, mpNameInput()); MP.quick = false; clearRoomChat(); mpStatus(''); gotoMpRoom(); }
   catch (e) { mpStatus(mpErrText(e), true); }
 }
 function mpLeave() {
   mpStopSum();
-  MP.resumeRoom = null;
+  if (VIEW.pid) mpViewExit(true);
+  MP.resumeRoom = null; MP.quick = false; MP.queue = null;
   S.net = null;                                  // leave() 가 net:closed 를 동기 발화하므로 먼저 비운다
   if (window.DKNET) DKNET.leave();
   const rv = $('rivals'); if (rv) { rv.innerHTML = ''; rv.classList.add('hidden'); }
   const sp = $('spectate'); if (sp) sp.classList.add('hidden');
   stageEl.classList.remove('spectating', 'mp');
-  $('speed-btn').classList.remove('hidden');
 }
 
 // ---- 대기실 ----
 function renderMpRoom() {
-  const N = window.DKNET; if (!N || !N.room) return;
+  const N = window.DKNET; if (!N) return;
+  const queue = N.inQueue();
+  $('mp-queue').classList.toggle('hidden', !queue);
+  $('mp-code-wrap').classList.toggle('hidden', queue || MP.quick);
+  $('mp-slots').classList.toggle('hidden', queue);
+  $('mp-room-title').textContent = queue || MP.quick ? '빠른 매칭' : '대기실';
+  if (queue) {   // 대기열: 방이 아직 없다
+    const q = MP.queue || { n: 1, eta: null };
+    $('mp-count').textContent = `${q.n || 1}/4`;
+    $('mp-queue-txt').innerHTML = (q.n || 1) >= 2 ? `상대를 찾는 중 <b>${q.n}/4</b> · ${q.eta != null ? `${Math.max(0, Math.ceil(q.eta / 1000))}초 뒤 시작` : '곧 시작'}` : '상대를 찾는 중… <small>(2명 이상 모이면 10초 뒤, 4명이면 바로 시작)</small>';
+    $('mp-start').classList.add('hidden');
+    $('mp-room-status').textContent = '나가기를 누르면 매칭을 취소합니다';
+    return;
+  }
+  if (!N.room) return;
   const ps = mpPlayers(), me = mpMePid();
   $('mp-code-big').textContent = N.code || '------';
   $('mp-count').textContent = `${ps.length}/4`;
@@ -4715,129 +4831,181 @@ function renderMpRoom() {
       : '<span class="mp-slot-name dim">초대 대기</span>';
     slots.appendChild(d);
   }
-  const host = N.isHost(), conn = ps.filter(p => p.connected).length, st = $('mp-start');
+  const quickRoom = MP.quick || (N.room && N.room.kind === 'quick');
+  const host = N.isHost() && !quickRoom, conn = ps.filter(p => p.connected).length, st = $('mp-start');
   st.classList.toggle('hidden', !host);
   st.disabled = conn < 2;
   st.textContent = `시작 (${conn}/4)`;
-  $('mp-room-status').textContent = host ? (conn < 2 ? '친구가 코드로 들어오면 시작할 수 있습니다 (2명 이상)' : '준비되면 시작을 누르세요') : '방장이 시작하면 바로 게임이 열립니다';
+  $('mp-room-status').textContent = quickRoom ? `상대를 찾았습니다 — 전원이 들어오면 바로 시작합니다 (${conn}/${ps.length})` : host ? (conn < 2 ? '친구가 코드로 들어오면 시작할 수 있습니다 (2명 이상)' : '준비되면 시작을 누르세요') : '방장이 시작하면 바로 게임이 열립니다';
 }
 
-// ---- 런 시작 · 시뮬 클록 ----
+// ---- 런 시작 ----
 function mpOnStart(m) {
   const N = window.DKNET;
-  const net = { code: N.code, pid: mpMePid(), seed: m.seed, t0: m.t0, timing: m.timing, simT: 0, behind: 0, catching: false, waveAts: [], hold: null,
-    rivals: {}, status: 'alive', doneW: 0, savedResult: null, spectating: false, forced: false, ended: null, opened: [], desync: 0 };
-  net.simT = (N.serverNow() - N.CFG.renderDelay - net.t0) / 1000;
+  const net = { code: N.code, pid: mpMePid(), seed: m.seed, t0: m.t0, timing: m.timing,
+    rivals: {}, status: 'alive', doneW: 0, savedResult: null, spectating: false, forced: false, ended: null, watchers: 0 };
+  if (VIEW.pid) mpViewExit(true);
   startInfinity('clear', net);
   mpStartSum();
   mpRenderRivals();
   mpLayoutCards();
 }
-function mpApplyGame(g) {   // room 스냅샷의 game 부분 (재접속·시작 직후)
-  if (!S.net || !g) return;
-  if (Array.isArray(g.waveAts)) for (let n = 1; n < g.waveAts.length; n++) if (g.waveAts[n] != null) S.net.waveAts[n] = g.waveAts[n];
-  S.net.hold = g.hold && !g.hold.released ? g.hold : null;
-  if (g.endAt != null) S.net.endAt = g.endAt;
-  syncWaveBtn();
-}
-function frameNet() {
-  const N = window.DKNET, net = S.net;
-  if (!N || !net) return;
-  const STEP = 1 / 60;
-  if (MP.pauseUntil && performance.now() < MP.pauseUntil) return;   // 테스트 훅: 백그라운드 흉내
-  const target = (N.serverNow() - N.CFG.renderDelay - net.t0) / 1000;
-  const budgetEnd = performance.now() + 30;
-  let steps = 0;
-  while (net.simT + STEP <= target && performance.now() < budgetEnd) {
-    net.simT += STEP;
-    if (S.phase === 'playing') runDue(net.simT);
-    update(STEP);
-    steps++;
-    if (S.phase !== 'playing' && S.phase !== 'spectate') break;
-  }
-  net.behind = Math.max(0, target - net.simT);
-  const catching = steps > 2 || net.behind > 0.5;
-  if (catching !== net.catching) {
-    net.catching = catching;
-    if (catching) { if (!S.muted) { S.muted = true; net.mutedByCatch = true; } }
-    else { if (net.mutedByCatch) { S.muted = false; net.mutedByCatch = false; } S.fxs = []; S.texts = S.texts.filter(t => t.big); }
-    syncWaveBtn();
-  }
-  if (net.behind >= 600 && S.phase === 'playing') { S.inf.afk = true; endInfinity(false); return; }   // 무한 따라잡기 방지
+// 0.5초마다: 카드 배지(자리 비움·응답 없음)·웨이브 버튼 갱신
+function mpTick() {
   const now = performance.now();
-  if (now - MP.tickAt > 500) { MP.tickAt = now; syncWaveBtn(); mpRenderRivals(); }   // 카운트다운·배지(자리 비움) 갱신
-}
-function runDue(t) {
-  const net = S.net;
-  while (S.phase === 'playing') {
-    const n = S.wave + 1, at = net.waveAts[n];
-    if (at == null) break;
-    const atSim = (at - net.t0) / 1000;
-    if (atSim > t) break;
-    startWaveNet(n, atSim);
-  }
-}
-function startWaveNet(n, atSim) {
-  const net = S.net;
-  const q = buildWave(n);
-  if (S.spawnQ.length) {   // 불변식 위반(이전 웨이브 스폰이 남음): 남은 것은 즉시 내보내고 이어 붙인다
-    net.desync++;
-    console.warn('[mp] 이전 웨이브 스폰이 남은 채 다음 웨이브', n, S.spawnQ.length);
-    for (const it of S.spawnQ) it.t = 0;
-    S.spawnQ = S.spawnQ.concat(q);
-  } else S.spawnQ = q;
-  S.wave = n;
-  S.waveActive = true;
-  S.waveT = Math.max(0, net.simT - atSim);   // 늦게 열려도 스폰 타임라인은 서버 시각에 정렬
-  S.autoT = 0;
-  if (DKCONTENT.INFINITY.isBossWave(n)) S.inf.bossT = 0;   // 보스 제한시간은 첫 보스 스폰 때 새로 켠다
-  net.opened.push(n);
-  announceWave(n);
-  SFX.wave();
-  syncUI();
-}
-function mpWaveBtnText() {
-  const net = S.net, N = window.DKNET;
-  if (!net) return '';
-  if (S.phase === 'spectate') return '관전 중';
-  if (N && N.state === 'reconnecting') return '⟳ 다시 연결 중';
-  if (net.catching) return `⏳ 따라잡는 중 ${Math.ceil(net.behind)}초`;
-  const cd = waveCountdown();
-  if (S.wave === 0) return cd == null ? '준비' : `준비 ${cd}초`;
-  if (S.waveActive) return S.enemies.some(e => e.isBoss && !e.dead) ? `보스 웨이브 ${S.wave}` : `웨이브 ${S.wave} 진행 중`;
-  if (cd == null) {
-    const h = net.hold;
-    if (h && h.w === S.wave) {
-      const names = (h.waiting || []).filter(p => p !== mpMePid()).map(mpNameOf).join(', ');
-      return names ? `보스 대기 — ${names}` : '보스 대기';
-    }
-    return '다음 웨이브 대기';
-  }
-  return `다음 웨이브 ${cd}초`;
+  if (now - MP.tickAt < 500) return;
+  MP.tickAt = now;
+  syncWaveBtn();
+  mpRenderRivals();
 }
 
 // ---- 요약 송신 ----
-function mpSummary() {
+function mpSummary(withField) {
   const net = S.net, boss = S.enemies.find(e => e.isBoss && !e.dead);
-  return {
+  const m = {
     w: Math.max(0, Math.min(101, S.wave | 0)), dw: Math.max(0, Math.min(101, net.doneW | 0)),
     l: Math.max(0, Math.min(20, S.lives | 0)), g: Math.max(0, Math.min(1e7, Math.floor(S.gold))), k: Math.max(0, Math.min(1e6, S.inf.kills | 0)),
-    f: Math.min(200, S.enemies.length), lag: Math.max(0, Math.min(3600, Math.round(net.behind || 0))), hid: document.hidden ? 1 : 0,
+    f: Math.min(200, S.enemies.length), sp: Math.max(1, Math.min(3, S.speed | 0)), hid: document.hidden ? 1 : 0,
     b: boss ? Math.max(0, Math.min(1, boss.hp / Math.max(1, boss.max))) : null, o: W < H ? 'p' : 'l',
     tw: S.towers.slice(0, 15).map(t => [t.spot, t.face, t.lvl]),
   };
+  if (withField) { m.ll = Math.round(LANES[0] ? LANES[0].len : 0); m.en = mpEnemyStream(); }
+  return m;
+}
+// 적 스트림 "i,d,h;…" — i: bases 인덱스(보스는 1000+bossBases 인덱스), d: 진행 거리(정수), h: 체력 0~9. 보는 사람이 있을 때만 싣는다
+function mpBaseIdx(e) {
+  if (!MP.baseIdx) {
+    const C = window.DKCONTENT, map = {};
+    (C.bases || []).forEach((b, i) => { map[b.id] = i; });
+    (C.bossBases || []).forEach((b, i) => { map['B:' + b.id] = 1000 + i; });
+    MP.baseIdx = map;
+  }
+  const k = e.isBoss ? MP.baseIdx['B:' + e.type] : undefined;
+  return k != null ? k : MP.baseIdx[e.type];   // 보스 그림이 일반 base 인 경우도 있다
+}
+function mpEnemyStream() {
+  const parts = [];
+  for (const e of S.enemies) {
+    if (e.dead || parts.length >= 200) continue;
+    const i = mpBaseIdx(e);
+    if (i == null) continue;
+    parts.push(`${i},${Math.max(0, Math.round(e.dist))},${Math.max(0, Math.min(9, Math.round(e.hp / Math.max(1, e.max) * 9)))}`);
+  }
+  let out = parts.join(';');
+  while (out.length > 3000) { parts.pop(); out = parts.join(';'); }
+  return out;
 }
 function mpStartSum() {
+  const every = (S.net && S.net.watchers > 0) ? ((window.DKNET && DKNET.CFG.watchInterval) || 1000) : ((window.DKNET && DKNET.CFG.sumInterval) || 2000);
+  if (MP.sumTimer && MP.sumEvery === every) return;
   mpStopSum();
+  MP.sumEvery = every;
   const send = () => {
     if (!S.net || S.phase !== 'playing' || !window.DKNET || !DKNET.inGame()) return;
-    DKNET.sum(mpSummary());
+    DKNET.sum(mpSummary(S.net.watchers > 0));
     try { sessionStorage.setItem('dk_mp_run', JSON.stringify({ wave: S.wave, kills: S.inf.kills | 0 })); } catch (e) { /* 저장 못해도 진행 */ }
   };
-  MP.sumTimer = setInterval(send, (window.DKNET && DKNET.CFG.sumInterval) || 2000);
+  MP.sumTimer = setInterval(send, every);
   send();
 }
-function mpStopSum() { if (MP.sumTimer) { clearInterval(MP.sumTimer); MP.sumTimer = 0; } }
+function mpStopSum() { if (MP.sumTimer) { clearInterval(MP.sumTimer); MP.sumTimer = 0; MP.sumEvery = 0; } }
+
+// ---- 상대 필드 보기 ----
+// 카드를 누르면 그 플레이어의 타워(tw)·적(en) 을 내 아레나 좌표로 옮겨 그린다. 내 게임은 뒤에서 그대로 돈다 (타워는 알아서 싸운다)
+function mpView(pid) {
+  if (!S.net || !pid || pid === mpMePid()) { mpViewExit(); return; }
+  const p = mpPlayers().find(x => x.pid === pid);
+  if (!p || (p.status !== 'alive' && p.status !== 'cleared')) { pushLog('지금은 볼 수 없는 필드입니다', 'sys'); return; }
+  if (VIEW.pid === pid) { mpViewExit(); return; }
+  VIEW.pid = pid; VIEW.towers = []; VIEW.enemies = []; VIEW.sum = null; VIEW.at = 0;
+  if (window.DKNET) DKNET.watch(pid);
+  const last = S.net.rivals[pid];
+  if (last) mpViewBuild(last);
+  stageEl.classList.add('viewing'); wrapEl.classList.add('viewing');
+  $('view-bar').classList.remove('hidden');
+  if (S.phase === 'spectate') mpSpectateCollapse(true);
+  if (DRAG.active) stopPlaceDrag();
+  S.selTower = null;
+  mpViewBar();
+  mpRenderRivals();
+  fitStage();
+}
+function mpViewExit(silent) {
+  if (!VIEW.pid) return;
+  VIEW.pid = null; VIEW.towers = []; VIEW.enemies = []; VIEW.sum = null;
+  if (!silent && window.DKNET && DKNET.inRoom()) DKNET.watch(null);
+  stageEl.classList.remove('viewing'); wrapEl.classList.remove('viewing');
+  $('view-bar').classList.add('hidden');
+  if (S.net) mpRenderRivals();
+  syncUI();
+  fitStage();
+}
+function mpViewBar() {
+  if (!VIEW.pid) return;
+  const p = mpPlayers().find(x => x.pid === VIEW.pid), sum = VIEW.sum || S.net.rivals[VIEW.pid];
+  const name = p ? p.name : '?', seat = mpSeat(VIEW.pid);
+  const st = sum ? `W${sum.w} ♥${sum.l} · 필드 ${sum.f}${sum.sp > 1 ? ` · x${sum.sp}` : ''}` : '요약을 기다리는 중…';
+  const mine = S.net.status === 'alive' ? ` <small>· 나 W${S.wave} ♥${S.lives}</small>` : '';
+  $('view-txt').innerHTML = `<span class="mp-dot" style="background:${PC[seat]}"></span><b>${escapeHtml(name)}</b>의 필드 · ${st}${mine}`;
+}
+function mpViewBuild(sum) {
+  const C = window.DKCONTENT;
+  VIEW.sum = sum; VIEW.at = performance.now();
+  const myKey = S.mapKey === 'cInfP' ? 'cInfP' : 'cInf', fromKey = sum.o === 'p' ? 'cInfP' : 'cInf';
+  const towers = [];
+  for (const t of (Array.isArray(sum.tw) ? sum.tw.slice(0, 15) : [])) {
+    if (!Array.isArray(t)) continue;
+    const spot = t[0] | 0, face = t[1] | 0, lvl = t[2] | 0;
+    if (spot < 0 || spot > 14 || face < 1 || face > 20 || lvl < 1 || lvl > 3) continue;
+    const idx = remapSpot(fromKey, myKey, spot), def = TOWER_DEFS[face];
+    if (!def || idx < 0 || !SPOTS[idx]) continue;
+    towers.push({ face, def, lvl, spot: idx, x: SPOTS[idx][0], y: SPOTS[idx][1], cd: 0, kick: 0, skin: 0 });
+  }
+  VIEW.towers = towers;
+  const ll = sum.ll | 0, len = LANES[0] ? LANES[0].len : 0, k = ll > 0 && len > 0 ? len / ll : 1;
+  const prev = new Map();
+  for (const e of VIEW.enemies) prev.set(e.key, e);
+  const enemies = [];
+  if (typeof sum.en === 'string' && sum.en) {
+    const parts = sum.en.split(';');
+    for (let n = 0; n < parts.length && n < 200; n++) {
+      const f = parts[n].split(',');
+      if (f.length < 3) continue;
+      const i = f[0] | 0, d = f[1] | 0, h = Math.max(0, Math.min(9, f[2] | 0));
+      const isBoss = i >= 1000, base = isBoss ? C.bossBases[i - 1000] : C.bases[i];
+      if (!base) continue;
+      const key = i + ':' + n, old = prev.get(key);
+      const e = old || { type: base.id, def: base, sprite: base.sprite, move: base.move, name: base.name, lane: laneFor(base.move, 0), animT: Math.random(), face: 1, dead: false, hidden: false, hue: 0, slowT: 0, stunT: 0, flashT: 0, isElite: false, isBoss, entranceT: -1, stompPhase: 0, key, view: true };
+      e.dist = d * k; e.max = base.hp; e.hp = base.hp * h / 9;
+      if (isBoss) e.def = base;
+      enemies.push(e);
+    }
+  }
+  VIEW.enemies = enemies;
+  mpViewBar();
+}
+// 요약 사이(1초)에는 상대 배속으로 전진시켜 흔들리지 않게 한다
+function mpViewAdvance(dt) {
+  const sp = VIEW.sum ? Math.max(1, Math.min(3, VIEW.sum.sp | 0)) : 1;
+  for (const e of VIEW.enemies) {
+    const ln = LANES[e.lane || 0] || LANES[0]; if (!ln) continue;
+    const spd = (e.def && e.def.speed) || 40;
+    e.dist += spd * dt * sp;
+    if (e.dist >= ln.len) { if (ln.loopAt != null) e.dist = ln.loopAt + (e.dist - ln.len); else e.dist = ln.len; }
+    e.animT += dt * sp;
+    const p = posAt(e.dist, e.lane || 0);
+    if (Math.abs(p.dx) > 0.3) e.face = Math.sign(p.dx);
+  }
+}
+// draw() 가 읽는 S 필드를 VIEW 것으로 바꿔 그리고 되돌린다
+const VIEW_KEYS = ['towers', 'enemies', 'projs', 'beams', 'fxs', 'texts', 'corpses', 'selTower', 'heldDie', 'shakeT', 'bannerT', 'glowT', 'hurtT', 'mouse'];
+function withView(fn) {
+  const saved = {};
+  for (const k of VIEW_KEYS) saved[k] = S[k];
+  S.towers = VIEW.towers; S.enemies = VIEW.enemies; S.projs = []; S.beams = []; S.fxs = []; S.texts = []; S.corpses = [];
+  S.selTower = null; S.heldDie = 0; S.shakeT = 0; S.bannerT = 0; S.glowT = 0; S.hurtT = 0; S.mouse = { x: -999, y: -999 };
+  try { fn(); } finally { for (const k of VIEW_KEYS) S[k] = saved[k]; }
+}
 
 // ---- 사망 · 완주 · 관전 · 결과 ----
 function netRunOver(won) {
@@ -4858,6 +5026,7 @@ function netRunOver(won) {
   (won ? SFX.win : SFX.lose)();
   S.phase = 'spectate';
   S.selTower = null; S.heldDie = 0;
+  SLOT.active = false; SLOT.final = 0;
   if (DRAG.active) stopPlaceDrag();
   mpOpenSpectate(won, res);
   if (net.ended) mpShowResult(net.ended);   // 방 결과가 먼저 와 있었다면 바로 순위표
@@ -4886,7 +5055,7 @@ function mpRenderSpectate() {
   $('spec-sub').innerHTML = `${S.net.status === 'cleared' ? '완주했습니다' : `현재 <b>${myRank}위</b>`} · 남은 <b>${alive.length}</b>명${res ? ` · 젬 <b>+${res.gems}</b> · 기록 저장됨` : ''}<br><small>Enter 로 채팅 · 방이 끝나면 순위표가 나옵니다</small>`;
   $('spec-pill').textContent = `관전 중 · 남은 ${alive.length}명`;
   const list = $('spec-list'); list.innerHTML = '';
-  for (const p of ps) list.appendChild(mpCardEl(p, true));
+  for (const p of ps) { const el = mpCardEl(p, true); if (p.pid !== me) el.addEventListener('click', () => { audio(); mpView(p.pid); }); else el.classList.add('me'); list.appendChild(el); }
 }
 function mpLiveRank(pid) {   // 관전 중 '현재 순위': 살아 있는 사람은 전부 나보다 위
   const ps = mpPlayers(), me = ps.find(p => p.pid === pid);
@@ -4896,6 +5065,7 @@ function mpLiveRank(pid) {   // 관전 중 '현재 순위': 살아 있는 사람
 }
 function mpOnEnd(m) {
   if (!S.net) return;
+  if (VIEW.pid) mpViewExit(true);
   S.net.ended = m;
   if (S.phase === 'playing') { S.net.forced = true; endInfinity(!!S.inf.cleared); return; }   // 서버 판정 우선 (lost 등) → netRunOver 가 순위표까지
   mpShowResult(m);
@@ -4914,16 +5084,19 @@ function mpShowResult(m) {
   }
   const REASON = { lives: '목숨', bossLeak: '보스 한계선', bossTimeout: '보스 시간초과', quit: '포기', reload: '새로고침', afk: '자리 비움' };
   const STATUS = { cleared: '🏆 클리어', dead: '탈락', lost: '미완료', left: '나감', alive: '진행 중' };
-  const rows = ranking.map(r => `<tr class="${r.pid === me ? 'me' : ''}"><td>${r.rank || '-'}</td><td><span class="mp-dot" style="background:${PC[mpSeat(r.pid)]}"></span>${escapeHtml(r.name || '?')}</td><td>${STATUS[r.status] || r.status || ''}</td><td>${r.status === 'cleared' ? `${net.timing.clearWave} 완주` : `웨이브 ${r.wave || 0}`}</td><td>${r.kills || 0}</td></tr>`).join('');
+  const clearTxt = (r) => (r.clearAt != null && net.t0 != null ? `완주 · ${mpDur(r.clearAt - net.t0)}` : `${net.timing.clearWave} 완주`);
+  const rows = ranking.map(r => `<tr class="${r.pid === me ? 'me' : ''}"><td>${r.rank || '-'}</td><td><span class="mp-dot" style="background:${PC[mpSeat(r.pid)]}"></span>${escapeHtml(r.name || '?')}</td><td>${STATUS[r.status] || r.status || ''}</td><td>${r.status === 'cleared' ? clearTxt(r) : `웨이브 ${r.wave || 0}`}</td><td>${r.kills || 0}</td></tr>`).join('');
   const html = `<table class="rank"><thead><tr><th>순위</th><th>이름</th><th>결과</th><th>도달</th><th>처치</th></tr></thead><tbody>${rows}</tbody></table>` +
-    `<div class="rank-reason">${m.reason === 'cleared' ? '누군가 101웨이브를 완주해 판이 끝났습니다' : m.reason === 'all-dead' ? '전원 탈락' : m.reason === 'timeout' ? '시간 종료' : m.reason === 'empty' ? '모두 나가 방이 닫혔습니다' : ''}${S.inf && S.inf.bossLeak && !saved.won ? ` · 내 탈락 사유: ${REASON[S.inf.bossTimeout ? 'bossTimeout' : 'bossLeak']}` : ''}</div>` +
+    `<div class="rank-reason">${m.reason === 'cleared' ? '전원 완주 또는 탈락 — 완주는 빠른 순, 탈락은 웨이브 순' : m.reason === 'all-dead' ? '전원 탈락' : m.reason === 'timeout' ? '시간 종료' : m.reason === 'empty' ? '모두 나가 방이 닫혔습니다' : ''}${S.inf && S.inf.bossLeak && !saved.won ? ` · 내 탈락 사유: ${REASON[S.inf.bossTimeout ? 'bossTimeout' : 'bossLeak']}` : ''}</div>` +
     infResultHTML(saved.won, saved.res);
-  const title = saved.won ? (mine.rank === 1 ? '클리어! 1위' : `클리어! 공동 ${mine.rank || 1}위`) : mine.rank === 1 ? '1위!' : `${mine.rank || '-'}위 · 웨이브 ${saved.res.wave}`;
+  const title = saved.won ? (mine.rank === 1 ? '클리어! 1위' : `클리어! ${mine.rank || '-'}위`) : mine.rank === 1 ? '1위!' : `${mine.rank || '-'}위 · 웨이브 ${saved.res.wave}`;
   S.phase = 'over';
   showOverlay(title, html, '로비로');
 }
+function mpDur(ms) { const t = Math.max(0, Math.round(ms / 1000)); return t >= 60 ? `${Math.floor(t / 60)}분 ${t % 60}초` : `${t}초`; }
 function mpDisconnected(code) {
   if (!S.net) return;
+  if (VIEW.pid) mpViewExit(true);
   pushLog('방과의 연결이 끊어졌습니다', 'life');
   if (S.phase === 'playing') { S.net.forced = true; endInfinity(!!S.inf.cleared); }
   if (S.phase === 'spectate' && !S.net.ended) {
@@ -4958,9 +5131,10 @@ function mpFillCard(card, p) {
   else if (!p.connected) badge = '↻ 재접속';
   else if (sum && sum.hid) badge = '⏸ 자리 비움';
   else if (stale) badge = '⏸ 응답 없음';
-  else if (sum && sum.lag > 5) badge = `⏳ 지연 ${sum.lag}초`;
+  else if (sum && sum.sp > 1) badge = `x${sum.sp}`;
   card.querySelector('.rv-badge').textContent = badge;
   card.classList.toggle('out', p.status === 'dead' || p.status === 'left' || p.status === 'lost');
+  card.classList.toggle('viewing', VIEW.pid === p.pid);
   card.classList.toggle('done', p.status === 'cleared');
   const w = sum ? sum.w : (p.wave || 0), l = sum ? sum.l : '·', k = sum ? sum.k : (p.kills || 0), f = sum ? sum.f : 0;
   card.querySelector('.rv-stats').innerHTML = `<b>W${w}</b> <span class="rv-l">♥${l}</span> <span class="rv-k">⚔${k}</span> <span class="rv-f">필드 ${f}</span>`;
@@ -4999,7 +5173,7 @@ function mpRenderRivals(onlyPid) {
       let card = wrap.querySelector(`.rival[data-pid="${p.pid}"]`);
       if (!card) {
         card = mpCardEl(p, false);
-        card.addEventListener('click', () => { card.classList.add('zoom'); setTimeout(() => card.classList.remove('zoom'), 1500); });
+        card.addEventListener('click', () => { audio(); mpView(p.pid); });
         wrap.appendChild(card);
       } else if (!onlyPid || onlyPid === p.pid) mpFillCard(card, p);
     }
@@ -5050,7 +5224,6 @@ function mpLayoutCards() {
 function mpOnRoom(m) {
   if (S.phase === 'mpRoom') renderMpRoom();
   if (!S.net) return;
-  if (m.game) mpApplyGame(m.game);
   mpRenderRivals();
   if (S.phase === 'spectate') mpRenderSpectate();
   syncUI();
@@ -5063,6 +5236,7 @@ function mpOnPlayer(m) {
     S.net.forced = true; endInfinity(false); return;
   }
   if (m.status && m.pid !== mpMePid()) {
+    if (VIEW.pid === m.pid && m.status !== 'alive' && m.status !== 'cleared') mpViewExit();
     const p = mpPlayers().find(x => x.pid === m.pid);
     if (m.status === 'dead') pushLog(`${p ? p.name : '?'} 탈락 — 웨이브 ${m.deathWave != null ? m.deathWave : (p && p.deathWave) || 0}까지`, 'life');
     else if (m.status === 'cleared') pushLog(`${p ? p.name : '?'} 완주!`, 'up');
@@ -5072,34 +5246,26 @@ function mpOnPlayer(m) {
   if (S.phase === 'spectate') mpRenderSpectate();
   syncUI();
 }
-function mpOnSched(m) {
-  if (!S.net || !Array.isArray(m.ats)) return;
-  for (let i = 0; i < m.ats.length; i++) {
-    const n = m.from + i, at = m.ats[i];
-    if (at == null) continue;
-    if (S.net.waveAts[n] != null && Math.abs(S.net.waveAts[n] - at) > 1) console.warn('[mp] 웨이브 시각이 바뀜', n);
-    S.net.waveAts[n] = at;
-  }
-  syncWaveBtn();
-}
-function mpOnHold(m) {
-  if (!S.net) return;
-  const was = S.net.hold;
-  S.net.hold = m.released ? null : m;
-  if (!was && !m.released && S.phase === 'playing' && !(m.done || []).includes(mpMePid())) pushLog('보스 웨이브 — 전원이 잡아야 다음 웨이브가 열립니다', 'boss');
-  syncWaveBtn();
-}
 function mpOnSum(m) {
   if (!S.net || !m.pid) return;
   m._at = performance.now();
   S.net.rivals[m.pid] = m;
+  if (VIEW.pid === m.pid) mpViewBuild(m);
   mpRenderRivals(m.pid);
 }
+function mpOnWatched(m) {   // 내 필드를 보는 사람 수 — 있으면 1초마다 적 스트림을 실어 보낸다
+  if (!S.net) return;
+  S.net.watchers = Math.max(0, m.n | 0);
+  if (S.phase === 'playing') mpStartSum();
+}
+function mpOnQueued(m) { MP.queue = { n: m.n | 0, eta: m.eta == null ? null : +m.eta }; if (S.phase === 'mpRoom') renderMpRoom(); }
+function mpOnMatched() { MP.queue = null; if (S.phase === 'mpRoom') $('mp-room-status').textContent = '상대를 찾았습니다! 방으로 이동 중…'; }
 function mpOnErr(m) {
   if (S.phase === 'lobby') mpStatus(mpErrText(m), true);
   else pushLog(`오류: ${mpErrText(m)}`, 'life');
 }
 function mpOnState(st) {
+  if (S.phase === 'mpRoom') { renderMpRoom(); return; }
   if (!S.net) return;
   if (st === 'reconnecting') pushLog('연결이 끊겨 다시 붙는 중…', 'sys');
   syncWaveBtn();
@@ -5130,7 +5296,6 @@ function mpResumeAfterTitle() {
     let last = { wave: 0, kills: 0 };
     try { last = JSON.parse(sessionStorage.getItem('dk_mp_run') || 'null') || last; } catch (e) { /* 없음 */ }
     mpOnStart({ seed: room.game.seed || 0, t0: room.game.t0, timing: room.game.timing });
-    mpApplyGame(room.game);
     S.wave = Math.max(0, last.wave | 0); S.inf.kills = last.kills | 0; S.inf.reload = true;
     endInfinity(false);
     return true;
@@ -5143,6 +5308,11 @@ function mpInit() {
   const nameInp = $('mp-name'); if (nameInp) nameInp.value = SAVE.name || '';
   if (!mpOn()) { $('mp-block').classList.add('off'); mpStatus('이 주소에는 멀티 서버가 없습니다 (?net=ws://… 로 지정할 수 있습니다)'); }
   $('mp-create').addEventListener('click', mpCreate);
+  $('mp-quick').addEventListener('click', mpQuick);
+  $('mp-chat-form').addEventListener('submit', (ev) => { ev.preventDefault(); const inp = $('mp-chat-input'); const txt = (inp.value || '').trim().slice(0, 120); inp.value = ''; if (txt && N.inRoom()) N.chat(txt); });
+  $('mp-chat-input').addEventListener('keydown', (ev) => { ev.stopPropagation(); if (ev.key === 'Escape') ev.target.blur(); });
+  $('chat-btn').addEventListener('click', () => { audio(); if (chatForm && !chatForm.classList.contains('hidden')) chatClose(); else chatOpen(); });
+  $('view-back').addEventListener('click', () => { audio(); mpViewExit(); });
   $('mp-join').addEventListener('click', () => { audio(); const f = $('mp-join-form'); f.classList.toggle('hidden'); if (!f.classList.contains('hidden')) $('mp-code').focus(); });
   $('mp-join-form').addEventListener('submit', (ev) => { ev.preventDefault(); mpJoin($('mp-code').value); });
   $('mp-code').addEventListener('input', () => { const el = $('mp-code'); el.value = el.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 6); });
@@ -5156,16 +5326,17 @@ function mpInit() {
   $('spec-collapse').addEventListener('click', () => mpSpectateCollapse(true));
   $('spec-pill').addEventListener('click', () => mpSpectateCollapse(false));
   $('spec-leave').addEventListener('click', () => { audio(); mpLeave(); S.mode = 'stage'; S.inf = null; gotoLobby(); });
-  N.on('room', mpOnRoom); N.on('player', mpOnPlayer); N.on('start', mpOnStart); N.on('sched', mpOnSched); N.on('hold', mpOnHold);
+  N.on('room', mpOnRoom); N.on('player', mpOnPlayer); N.on('start', mpOnStart);
   N.on('sum', mpOnSum); N.on('end', mpOnEnd); N.on('err', mpOnErr); N.on('net:state', mpOnState); N.on('net:closed', mpOnClosed);
+  N.on('watched', mpOnWatched); N.on('queued', mpOnQueued); N.on('matched', mpOnMatched);
   window.DKMP = {   // 테스트 훅
     state: () => S.net,
-    pause: (ms) => { MP.pauseUntil = performance.now() + (ms || 0); },
+    speed: setSpeed,
     die: (r) => { if (S.net && S.phase === 'playing') { if (r === 'quit') S.inf.quit = true; else if (r === 'afk') S.inf.afk = true; S.lives = 0; endInfinity(false); } },
     bossKill: () => { let n = 0; for (const e of S.enemies) if (e.isBoss && !e.dead) { damageEnemy(e, e.hp * 100 + 1e9); n++; } return n; },
     summary: mpSummary,
-    catchUp: () => (S.net ? S.net.behind : 0),
     render: () => { mpRenderRivals(); mpLayoutCards(); },
+    view: mpView, viewExit: mpViewExit, viewState: () => VIEW, quick: mpQuick,
   };
 }
 
@@ -5175,11 +5346,12 @@ let lastTs = 0;
 function frame(ts) {
   const dt = Math.min(0.05, (ts - lastTs) / 1000 || 0);
   lastTs = ts;
-  if (S.net && S.net.t0 != null) frameNet();            // 함께하기: 서버 시각에 정렬된 고정 스텝
-  else for (let i = 0; i < S.speed; i++) update(dt);
+  for (let i = 0; i < S.speed; i++) update(dt);
+  if (S.net) mpTick();
   updateDie(dt); // 주사위 물리는 배속과 무관하게 실제 시간으로
-  updateSlot(dt);
-  draw();
+  updateSlot(dt * S.speed);   // 뽑기 슬롯은 배속을 따라간다 (x3 에서 보상 큐가 굳지 않게)
+  if (VIEW.pid) { mpViewAdvance(dt); withView(draw); }   // 상대 필드 보기: 내 시뮬은 위에서 돌았고, 그리기만 상대 것으로
+  else draw();
   drawSlot();
   requestAnimationFrame(frame);
 }

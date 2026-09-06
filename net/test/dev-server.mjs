@@ -1,17 +1,17 @@
 #!/usr/bin/env node
 // ==================== 테스트 더블: 의존성 없는 최소 WebSocket 서버 ====================
-// wrangler dev(workerd) 없이 index.js/room.js 와 같은 라우팅·규칙(room-core · host)을 Node 로 돌린다.
+// wrangler dev(workerd) 없이 index.js/room.js/lobby.js 와 같은 라우팅·규칙(room-core · lobby-core · host)을 Node 로 돌린다.
 // RFC6455 는 텍스트 프레임·close·ping/pong 만 구현(클라이언트 → 서버 마스킹 필수). 저장은 메모리, 알람은 setTimeout.
 //   TIMING=fast PORT=8787 node test/dev-server.mjs
-// Origin 규칙·IP 버킷·코드 검사·'ping' 문자열 → 'pong' 자동응답 전부 실서버와 같다.
+// Origin 규칙·IP 버킷·코드 검사·빠른 매칭(/ws/quick)·방 생성 상한·'ping' 문자열 → 'pong' 자동응답 전부 실서버와 같다.
 import http from 'node:http';
 import crypto from 'node:crypto';
-import { RoomHost } from '../src/host.js';
+import { RoomHost, LobbyHost } from '../src/host.js';
 import { gen, normalize } from '../src/codes.js';
 import { originAllowed, routeOf, isUpgrade } from '../src/http.js';
 import { BucketMap } from '../src/ratelimit.js';
 import { PROTOCOL } from '../src/proto.js';
-import { timingFor, IP_NEW_PER_MIN, IP_ROOM_PER_MIN } from '../src/timing.js';
+import { timingFor, IP_NEW_PER_MIN, IP_ROOM_PER_MIN, IP_QUICK_PER_MIN, RESERVE_TTL } from '../src/timing.js';
 
 const PORT = +(process.env.PORT || 8787);
 const TIMING = timingFor(process.env.TIMING);
@@ -98,6 +98,43 @@ class LocalRoom {
   }
 }
 
+// 코드 생성 → 방 (index.js claimRoom 의 자리). kind 'quick' 이면 예약 좌석
+async function claimLocal(body) {
+  for (let i = 0; i < 5; i++) {
+    const code = gen();
+    if (rooms.has(code)) continue;
+    const room = new LocalRoom(code);
+    rooms.set(code, room);
+    await room.host.claim({ code, timing: TIMING, ...body });
+    return { ok: true, code, room };
+  }
+  return { ok: false, error: 'busy' };
+}
+
+// ---- 빠른 매칭 대기열 하나 (Lobby DO 의 자리) ----
+class LocalLobby {
+  constructor() {
+    this.conns = new Map();
+    this.timer = null;
+    this.host = new LobbyHost({
+      now: () => Date.now(),
+      send: (sid, text) => { const c = this.conns.get(sid); if (c) c.send(text); },
+      close: (sid, code, reason) => { const c = this.conns.get(sid); if (c) c.close(code, reason); },
+      setAlarm: (ts) => {
+        clearTimeout(this.timer); this.timer = null;
+        if (ts != null) this.timer = setTimeout(() => this.host.alarm().catch((e) => log({ ev: 'alarm.error', code: 'lobby', err: String(e) })), Math.max(0, ts - Date.now()));
+      },
+      log,
+      putQuota: () => {},
+      claim: async ({ ver, players }) => {
+        const r = await claimLocal({ kind: 'quick', ver, reserve: { players, until: Date.now() + RESERVE_TTL } });
+        return r.ok ? { ok: true, code: r.code } : { ok: false, err: r.error };
+      },
+    });
+  }
+}
+const lobby = new LocalLobby();
+
 const STATUS = { 403: 'Forbidden', 404: 'Not Found', 426: 'Upgrade Required', 429: 'Too Many Requests', 503: 'Service Unavailable' };
 function rejectUpgrade(socket, status, body) {
   const text = JSON.stringify(body);
@@ -126,15 +163,15 @@ server.on('upgrade', async (req, socket, head) => {
   let room, op;
   if (route.kind === 'new') {
     if (!buckets.take('new:' + ip, now, IP_NEW_PER_MIN / 60, IP_NEW_PER_MIN)) return rejectUpgrade(socket, 429, { error: 'rate' });
-    for (let i = 0; i < 5 && !room; i++) {
-      const code = gen();
-      if (rooms.has(code)) continue;
-      room = new LocalRoom(code);
-      rooms.set(code, room);
-      await room.host.claim({ code, kind: 'code', timing: TIMING });
-    }
-    if (!room) return rejectUpgrade(socket, 503, { error: 'busy' });
+    if (!(await lobby.host.quota())) return rejectUpgrade(socket, 429, { error: 'rate' });
+    const r = await claimLocal({ kind: 'code' });
+    if (!r.ok) return rejectUpgrade(socket, 503, { error: 'busy' });
+    room = r.room;
     op = 'create';
+  } else if (route.kind === 'quick') {
+    if (!buckets.take('quick:' + ip, now, IP_QUICK_PER_MIN / 60, IP_QUICK_PER_MIN)) return rejectUpgrade(socket, 429, { error: 'rate' });
+    room = lobby;
+    op = 'quick';
   } else {
     if (!buckets.take('room:' + ip, now, IP_ROOM_PER_MIN / 60, IP_ROOM_PER_MIN)) return rejectUpgrade(socket, 429, { error: 'rate' });
     room = rooms.get(route.code) || new LocalRoom(route.code);   // 없는 코드: state null 인 임시 방 (hello → bad-code)
@@ -153,7 +190,7 @@ server.on('upgrade', async (req, socket, head) => {
   socket.on('close', () => {
     room.conns.delete(sid);
     room.host.closed(sid).catch(() => {});
-    room.gc();
+    if (room.gc) room.gc();
   });
   socket.on('data', (chunk) => {
     conn.buf = Buffer.concat([conn.buf, chunk]);
@@ -181,6 +218,7 @@ async function handleFrame(room, conn, f) {
       const data = op === 1 ? payload.toString('utf8') : payload;
       const r = await room.host.message(conn.sid, conn.att, data);
       if (r && r.pid) conn.att = { ...conn.att, pid: r.pid };
+      if (r && r.att) conn.att = r.att;
       return;
     }
     case 8: return conn.close(1000, '');
