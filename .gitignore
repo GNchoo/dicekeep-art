@@ -1,2 +1,23 @@
-.wrangler/
+# 공통
 node_modules/
+.wrangler/
+.DS_Store
+
+# 앱 빌드 산출물 (tools/build-www.mjs 가 만든다)
+www/
+
+# Android (android/.gitignore 가 build 산출물을 더 거른다)
+android/app/build/
+android/build/
+android/.gradle/
+android/local.properties
+android/keystore.properties
+*.keystore
+*.jks
+
+# iOS
+ios/App/Pods/
+ios/App/build/
+ios/App/App.xcworkspace/xcuserdata/
+ios/App/App.xcodeproj/xcuserdata/
+ios/App/App.xcodeproj/project.xcworkspace/xcuserdata/

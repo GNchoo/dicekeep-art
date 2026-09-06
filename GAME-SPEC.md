@@ -195,8 +195,16 @@ Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크�
   - **bleed** (인피니티 + 세로 화면): 여백 없이 아레나가 HUD 위 전부를 쓰고, HUD 는 **정확히 두 줄** — 1행 주사위·뽑기 + 타워 상태(flex, 안내 2줄 클램프) + 웨이브, 2행 파워업. (예전엔 `@media ≤720px` 의 `#tower-panel { flex-basis: 100% }` 가 셋째 줄을 만들고 아래 ~50px 이 검게 남았다.) `roomy`·`#rotate-hint` 는 인피니티에서 쓰지 않는다 — 남는 공간은 캔버스가 먹는다. 안전영역(`env(safe-area-inset-*)`)은 HUD 패딩과 칩·미니버튼 오프셋에만 준다.
   - **side** (스테이지 모드, `availW/availH ≥ 1.45 && availH < 620`, 가로 폰): `#wrap` 이 `row`, HUD 가 오른쪽 세로 열(폭 150~240px)이 되고 16:9 스테이지가 **세로를 꽉 쓴다**. 파워업은 3×2 그리드, `#hud-break` 는 숨긴다.
   - **stacked** (스테이지 모드, 세로 폰·데스크톱): 스테이지 위, HUD 아래. 세로에서 스테이지가 폭에 막혀 남는 높이는 `#hud.roomy` 가 가져가 슬롯·버튼·파워업을 키운다(최대 `ROOMY_MAX` 430px). 세로에서만 `#rotate-hint` 로 가로를 권한다(닫으면 `localStorage.dk_rotateHint`).
-  - 칩(`#stats`)·미니버튼(`#mini-top`) 축소는 뷰포트 폭이 아니라 **스테이지 폭** 기준(`#stage.small` < 680px, `#stage.tiny` < 520px) — 가로 폰은 폭이 넓어도 스테이지가 좁다.
-  - `visualViewport` 의 `resize`/`scroll` 에도 다시 맞춘다(모바일 주소창).
+  - 칩(`#stats`)·미니버튼(`#mini-top`) 축소는 뷰포트 폭이 아니라 **스테이지 폭** 기준(`#stage.small` < 680px, `#stage.tiny` < 520px) — 가로 폰은 폭이 넓어도 스테이지가 좁다. 칩 줄의 오른쪽 여유는 `--mini-w`(미니 버튼 실제 폭, `fitStage` 가 기록)로 — 멀티는 💬 가 더 붙어 버튼이 4개다.
+  - `visualViewport` 의 `resize`/`scroll` 에도 다시 맞춘다(모바일 주소창). 단 **채팅 입력 중 키보드가 올라와** `visualViewport.height < innerHeight×0.8` 이면 아레나를 다시 굽지 않고 `--kb` 만 기록해 `#log-panel` 을 올린다(`chatClose()` 뒤 다시 맞춤).
+  - **좁은 가로**(over, 작은 폰 가로): `availW < 760` 이면 `#wrap.narrow`(슬롯 40·파워업 32×42·웨이브 84·타워 패널 60 → 한 줄 최소 ≈ 560px, iPhone SE 가로 667 통과), `< 600` 이면 `#wrap.xnarrow`(HUD 두 줄 허용, 파워업 줄이 아래로).
+  - **아레나 클램프**(`arenaCanvasForScreen`): 세로 h `880~2000`(880 = 트랙 ±360 + 여백, 2000 = 폴더블 커버·초장신), 가로 w `680~1600`. **거의 정사각 화면**(폴더블 펼침, 비율 0.8~0.95)은 세로 아레나를 쓰되 HUD 두 줄 위의 상자가 납작하면 **캔버스를 옆으로 넓혀**(w = 880×availW/boxH, ≤1400) 여백을 채운다 — 보드·트랙은 가운데 그대로, 남는 폭은 바닥 장식.
+  - **안전영역**(노치·홈바·펀치홀): `style.css :root` 의 `--sa-t/r/b/l`(= `env(safe-area-inset-*)`, 앱은 safe-area 플러그인이 `--safe-area-inset-*` 로 주입) 을 칩·미니버튼·로그·뷰 바·관전 알약·상대 카드·오버레이·메뉴 화면·도움말·설정·`#wrap` 패딩 전부에 준다. `#wrap.bleed` 만 패딩 0(아레나는 노치 밑까지, 칩·HUD 가 비킨다). 테스트는 `documentElement.style` 로 `--sa-*` 를 덮어써 기기를 흉내낸다(`scratchpad/devices-test.js`: 16기기 × 2방향 × 11화면 — 가로 스크롤·HUD 줄 수·안전영역 밖 요소·가림·줄바꿈·레터박스·칩/미니버튼 충돌 자동 검사).
+  - 짧은 가로 메뉴 `@media (max-height: 480px)`: `.screen-box` 패딩·h1·큰 버튼 축소, `#mp-note` 숨김, 대기실 채팅 64px.
+  - 뷰포트 메타 `user-scalable=no, maximum-scale=1` + `touch-action: manipulation` + `overscroll-behavior: none` + `#wrap { height: 100dvh }`(웹뷰·주소창).
+- **오디오** (`game.js` 사운드 블록 + `music.js` `DKBGM`): `audio()` 가 `AudioContext` 와 버스 `MASTER(음소거) ← SFX_BUS · MUSIC_BUS` 를 만들고 `DKBGM.attach(ac, MUSIC_BUS)`. 효과음 `tone/noise` 는 `SFX_BUS` 로. 음량은 `SAVE.audio = { music, sfx, muted }`(`applyAudioSettings`), 설정 모달 `#settings`(로비·대기실 ⚙, 슬라이더 2개 + 음소거, Esc/뒤로가기 체인 최우선), `#mute-btn` 도 저장. **첫 제스처**(`pointerdown/keydown/touchend` once)에서 컨텍스트를 깨우고 BGM 시작, `visibilitychange` 로 suspend/resume.
+  BGM 트랙: `bgmFor()` = playing/spectate 이면 보스가 살아 있을 때 `boss` 아니면 `battle`, 그 외 `lobby`. 훅: `showScreen`·`showOverlay`·보스 스폰(`DKBGM.set('boss')`+`duck`)·마지막 보스 사망(`battle`). `music.js` 는 25ms 룩어헤드 스케줄러로 3트랙을 합성(로비 84BPM Dm · 배틀 128BPM Am · 보스 150BPM D프리지안)하고, `audio/bgm-<track>.ogg|mp3` 가 있으면 `fetch`+`decodeAudioData` 루프로 자동 교체(MUSIC-PROMPTS.md). ★15+ 획득은 `SFX.win`+덕킹, ★19~20 은 `SFX.jackpot`.
+- **획득 연출 아트** (`acquireFx` → `acquireFxArt` / `acquireFxCode`): `vfx/acquire-burst-2x2.png` 가 로드됐으면(`hasArt`) 그림 경로 — 시트 `acquireBurst`·`confetti`·`chestOpen`, fx kind `ringImg`(그림 링 회전·확대, `lighter`)·`column`(빛기둥)·`sprite`(반짝이 파티클) — 아니면 기존 코드 프리미티브. 콘솔 `DKacquire(20)` 로 미리보기. `body.ui-art`(`ui/frame-panel.png` 로드 시)는 HUD·카드·버튼·칩 바·슬롯을 9-slice `border-image` 와 `ui/icon-*.png` 로 바꾼다(ART-PROMPTS §7).
 - **터치 타겟**: 캔버스 내부 좌표와 화면 크기가 다르므로 `stageScale()`·`touchExtra(cssRadius)` 로 판정 반경을 화면 기준으로 고정한다 — 탭 선택 24px, 드래그 배치 50px, 던지기 임계값도 `330 × stageScale()`.
 - **도움말 카드** `#inf-help`: `#stage` 밖 body 직속 `position: fixed` 모달. `.help-card` 는 머리말·`<ol>`(스크롤)·`#help-close`(고정) 3단 플렉스라 **어떤 화면 높이에서도 닫기 버튼이 보인다**. 배경 클릭과 `Esc` 로도 닫힌다.
 - **하단 HUD 구성** (`index.html` `#hud`, `style.css`): 첫 줄 `#dice-panel`(슬롯 + `#draw-col`: 뽑기 버튼·`#queue-chip`) → `#tower-panel`(`flex: 1`) → `#right-panel`(웨이브 버튼, `margin-left: auto`). 인피니티는 `#hud-break` 뒤 둘째 줄에 `#inf-panel`(파워업 1~6 + `?`).
@@ -434,9 +442,15 @@ Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크�
 
 ```
 dicekeep-art/
-  index.html          엔트리 (?v= 캐시버스트)
-  game.js             게임 루프, 레인 이동, 전투, 연출, 입력, 로비/상점, 로그·채팅
-  net.js              멀티 클라이언트 DKNET v2 (WebSocket 하나: 방 만들기/참가/재접속 · 시각 동기 · 요약 송신). 서버 주소가 없으면 offline
+  index.html          엔트리 (?v= 캐시버스트, <!-- APP --> 자리에 앱 빌드가 app.js 를 끼운다)
+  game.js             게임 루프, 레인 이동, 전투, 연출, 입력, 로비/상점, 로그·채팅, 오디오 버스·설정, DKAPP(뒤로가기)
+  music.js            BGM 합성 3트랙 + audio/ 파일 대체 (window.DKBGM)
+  app.js              앱(Capacitor) 전용 다리 — 빌드 때 Capacitor UMD 와 합쳐 www/app.js 로 (웹 배포 제외)
+  fonts/              자체 호스팅 글꼴 (Do Hyeon · Noto Sans KR, tools/copy-fonts.mjs 가 만든다)
+  privacy.html        개인정보처리방침 (스토어 등록용 URL)
+  package.json · capacitor.config.json · tools/ · resources/ · android/ · ios/   앱 패키징 (§6.6, 웹 배포 제외)
+  STORE.md · MUSIC-PROMPTS.md   스토어 등록 자료 · BGM 생성 프롬프트
+  net.js              멀티 클라이언트 DKNET v3 (WebSocket 하나: 방 만들기/참가/재접속 · 시각 동기 · 요약 송신). 서버 주소가 없으면 offline
   net/                멀티 서버 — 별도 Cloudflare Worker `dicekeep-net` (Room Durable Object: 방·시계·시드·중계). 정적 배포에서 제외(.assetsignore)
     wrangler.jsonc    main src/index.js · DO 바인딩 ROOM · migrations v1
     src/index.js      Origin 검사 · /ws/new · /ws/room/:code · /health · IP 속도 제한
@@ -543,6 +557,12 @@ DO 가 있는 Worker 는 브랜치 프리뷰 URL 이 생기지 않으므로 서�
 Origin 검사(불일치 403, 비브라우저는 통과) · IP 버킷(new 10/분, room 60/분, quick 30/분) · 시간당 방 생성 상한 120(Lobby DO 카운터) · 대기열 최대 200 · 코드 정규식은 DO 앞 · 없는 방은 상태 저장 없이 4404 · 소켓당 20/s 버킷 · 4,096 B 초과 1009 · `sum` 엄격 스키마(`en` 은 `[0-9;,]` 만, 악성 값으로 남의 화면이 죽지 않게) · 만료 알람(대기실 15분·종료 10분·판 100분·전원 끊김 3분·claimed 60초·예약 좌석 30초).
 무료 플랜: `sum` 2초 주기라 판 내내 DO 활성 ≈ 0.67 객체-시간/판 → **하루 ≈ 40판**(13,000 GB-s/일). 넘으면 그날 멀티만 멈춘다 → Workers Paid $5/월(선형, 판당 ≈ $0.004). 대기실·관전·종료는 하이버네이션.
 
+### 6.6 앱 (Capacitor · `com.fallman.dicekeep` · 주사위 성채)
+- `npm run build:www`(`tools/build-www.mjs`) 가 허용 목록으로 `www/` 를 만든다: 코드·`fonts/`·`ui/ vfx/ dice/ props/ map/ towers/ enemies/`·`casual/` 은 코드가 참조하는 파일만(폐기 맵·공격 시트 제외) ≈ 118MB. `index.html` 의 `<!-- APP -->` 에 `app.js`(Capacitor core UMD + App·SplashScreen·StatusBar·SafeArea 플러그인 + 우리 다리)가 끼워진다. `npx cap sync` 가 `www/` 를 `android/app/src/main/assets/public`·`ios/App/App/public` 에 복사(둘 다 gitignore).
+- `app.js`(네이티브에서만): `window.DK_NET_URL = wss://dicekeep-net.<acct>.workers.dev` 를 net.js 보다 먼저 두고, `net.js _resolveUrl(…, native)` 가 localhost 규칙보다 앞서 이를 쓴다(`?net=`·저장값은 여전히 우선). 하드웨어 뒤로가기 → `DKAPP.back()`(설정 → 도움말 → 채팅 → 필드 보기 → 타워 선택 해제 → 플레이/관전 나가기 → 각 화면 back → 타이틀/결과 버튼 → 로비는 false → 2초 내 두 번이면 종료, `#toast`). pause/resume → `DKBGM.suspend/resume`. `StatusBar.hide()`, 몰입 모드는 `MainActivity.java`(`WindowInsetsControllerCompat`), 스플래시는 부팅 끝에 `DKAPP_NATIVE.ready()` 로 내린다. 화면 켜짐 유지는 `navigator.wakeLock`(`wakeLockSync`, 웹에서도 동작).
+- 서버: `originAllowed` 가 `capacitor://localhost`(iOS)·`https://localhost`(Android, `androidScheme: https`)·`ionic://localhost` 를 허용(`net/test/http.test.js`).
+- 아이콘·스플래시 원본 `resources/`(지금은 자리표시자, ART-PROMPTS §7.1~7.3) → `npx @capacitor/assets generate`. 서명·스토어 절차·데이터 보안 답은 `STORE.md`, 빌드 절차는 README.
+
 ### 아직 없는 것 (로드맵 M3)
 prep '준비 완료' 투표 · 플레이어별 시드 운 스트림(`chest.draw/roll`·`enhanceTower` 에 rnd 주입) · `again` 재대전 · `?room=CODE` 초대 링크 · 새로고침 뒤 보드 복구 · 안티치트(친구 방 전제).
 
@@ -586,7 +606,7 @@ prep '준비 완료' 투표 · 플레이어별 시드 운 스트림(`chest.draw/
 8. **인피니티 아레나 바닥 생성** (ART-PROMPTS §5, 길·석단 없는 바닥만) → 파일만 넣으면 끝. 도로 화풍이 아쉬우면 Grok 타일셋으로 `drawRoad()` 교체
 9. 인피니티 밸런스 손플레이 확인 (봇 기준 목표: 무전략 봇이 웨이브 50~70 에서 종료 — 현재 중앙값 59)
 10. ~~멀티 1단계 (M1)~~ → 완료: `net/` 서버 + DKNET + 함께하기(방 코드 · 관전 · 순위표 · 재접속). ~~M2~~ → 완료(v3): 개별 진행(배속 x3) · 빠른 매칭 · 상대 필드 보기 · 대기실 채팅. §6.5
-11. **멀티 M2**: 빠른 매칭(Lobby DO, 같은 ver 끼리 4명 즉시 / 2명+8초) · prep '준비 완료 (n/m)' 투표(`T_1` 미방송 상태에서만) · 플레이어별 시드 운 스트림 · `again` 재대전 · `?room=CODE` 초대 링크·공유 · 대기실 채팅 · 시간당 방 생성 상한 · 구조화 로그
+11. **출시 배치(2026-09-06)** → 완료: 기기 매트릭스 감사·안전영역·좁은 가로·정사각 화면 · 자체 글꼴 · 오디오 버스·BGM 3트랙·설정 · 획득 연출 아트 훅 · HUD 폴리시 · Capacitor(`android/`·`ios/`) · STORE/privacy. **남은 것**: Grok 그림 납품(아이콘·스플래시·프레임·아이콘 23·VFX, ART-PROMPTS §7) · BGM 파일(MUSIC-PROMPTS) · 실기기 확인(키보드·뒤로가기·펀치홀) · 서명키·스토어 등록 · 채팅 신고/차단(정책 요구 시)
 12. **멀티 M3**: 새로고침 뒤 보드 복구(sessionStorage 스냅샷) · `SAVE.mp` 로비 표시 · 관전 중 상대 보드 확대 · 정확한 6초 막간(`INFINITY.spawnEnd` 표) · 예산 실측 후 `SUM_INTERVAL` 조정 · DO 위치 힌트
 
 ---

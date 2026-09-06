@@ -738,6 +738,10 @@ const SRCS = {
   arcaneBurst: BASE + 'vfx/arcane-burst-2x2.png', frostBurst: BASE + 'vfx/frost-burst-2x2.png',
   lightningArc: BASE + 'vfx/lightning-arc.png', dieBomb: BASE + 'vfx/die-bomb.png',
   dieExplode: BASE + 'vfx/die-explode-2x2.png',
+  // 획득 연출 아트 (ART-PROMPTS §7.8) — 없으면 코드 그림으로 폴백
+  acquireBurst: BASE + 'vfx/acquire-burst-2x2.png', acquireRing: BASE + 'vfx/acquire-ring.png', acquireRingRainbow: BASE + 'vfx/acquire-ring-rainbow.png',
+  acquireColumn: BASE + 'vfx/acquire-column.png', confetti: BASE + 'vfx/confetti-2x2.png', starSpark: BASE + 'vfx/star-spark.png', chestOpen: BASE + 'vfx/chest-open-2x2.png',
+  uiFrame: BASE + 'ui/frame-panel.png',   // 있으면 body.ui-art (HUD 프레임 그림 사용)
   portal: BASE + 'props/portal.png',
   crystal: BASE + 'props/crystal.png',
   chest: BASE + 'ui/chest.png',
@@ -923,7 +927,7 @@ async function loadAssets(onProgress) {
   }));
   const sheets = [
     'miteWalk', 'runnerWalk', 'huskWalk', 'bossWalk', 'impact',
-    'cannonBlast', 'arcaneBurst', 'frostBurst', 'dieExplode',
+    'cannonBlast', 'arcaneBurst', 'frostBurst', 'dieExplode', 'acquireBurst', 'confetti', 'chestOpen',
   ];
   if (window.DKCONTENT) {
     for (const b of DKCONTENT.bases) if (b.walk) sheets.push(b.walk);
@@ -942,6 +946,7 @@ async function loadAssets(onProgress) {
     await new Promise(r => setTimeout(r, 0));
   }
   A.dice = [A.d1, A.d2, A.d3, A.d4, A.d5, A.d6];
+  if (A.uiFrame && !A.uiFrame.missing && A.uiFrame.w > 8) document.body.classList.add('ui-art');   // HUD 프레임 그림이 있으면 CSS 가 border-image 를 쓴다
   // 아레나 등 배경이 아직 없는 맵은 지정된 다른 맵 배경으로 폴백
   if (window.DKCONTENT) for (const m of DKCONTENT.maps) {
     if (m.fallbackKey && (!A[m.key] || A[m.key].missing) && A[m.fallbackKey]) A[m.key] = A[m.fallbackKey];
@@ -1164,12 +1169,38 @@ function paintTowerBody(t, sp) {
 
 // ==================== 사운드 (WebAudio 신디사이저) ====================
 
-let AC = null;
+// 버스: MASTER(음소거) ← SFX_BUS(효과음) · MUSIC_BUS(BGM, music.js 가 붙는다). 음량은 SAVE.audio 에 저장된다
+let AC = null, MASTER = null, SFX_BUS = null, MUSIC_BUS = null;
 function audio() {
-  if (!AC) AC = new (window.AudioContext || window.webkitAudioContext)();
+  if (!AC) {
+    AC = new (window.AudioContext || window.webkitAudioContext)();
+    MASTER = AC.createGain(); MASTER.connect(AC.destination);
+    SFX_BUS = AC.createGain(); SFX_BUS.connect(MASTER);
+    MUSIC_BUS = AC.createGain(); MUSIC_BUS.connect(MASTER);
+    applyAudioSettings();
+    if (window.DKBGM) { try { DKBGM.base = BASE; DKBGM.attach(AC, MUSIC_BUS); } catch (e) { console.warn('[bgm]', e); } }
+  }
   if (AC.state === 'suspended') AC.resume();
   return AC;
 }
+function applyAudioSettings() {
+  const a = (SAVE && SAVE.audio) || { music: 0.6, sfx: 0.8, muted: false };
+  S.muted = !!a.muted;
+  if (MASTER) { MASTER.gain.value = a.muted ? 0 : 1; SFX_BUS.gain.value = a.sfx; MUSIC_BUS.gain.value = a.music; }
+  const mb = $('mute-btn');
+  if (mb) { mb.innerHTML = a.muted ? ICON_MUTE : ICON_SOUND; mb.classList.toggle('off', a.muted); mb.dataset.icon = a.muted ? 'mute' : 'sound'; }
+  const sm = $('set-mute'); if (sm) sm.textContent = a.muted ? '🔇 음소거 해제' : '🔊 음소거';
+  const sMusic = $('set-music'), sSfx = $('set-sfx');
+  if (sMusic && document.activeElement !== sMusic) sMusic.value = a.music;
+  if (sSfx && document.activeElement !== sSfx) sSfx.value = a.sfx;
+}
+// BGM 트랙 선택: 플레이 중 보스가 살아 있으면 boss, 아니면 battle. 그 외 화면은 lobby
+const bossAlive = () => S.enemies.some(e => !e.dead && (e.isBoss || e.type === 'boss'));
+function bgmFor() { return (S.phase === 'playing' || S.phase === 'spectate') ? (bossAlive() ? 'boss' : 'battle') : 'lobby'; }
+function bgmSync() { if (window.DKBGM) { try { DKBGM.set(bgmFor()); } catch (e) { /* 무시 */ } } }
+// 첫 제스처에서 오디오 컨텍스트를 깨우고 BGM 을 시작한다 (iOS·Chrome 자동재생 정책)
+for (const ev of ['pointerdown', 'keydown', 'touchend']) document.addEventListener(ev, function unlock() { try { audio(); bgmSync(); } catch (e) { /* 무시 */ } }, { once: true, passive: true });
+document.addEventListener('visibilitychange', () => { if (!window.DKBGM) return; try { if (document.hidden) DKBGM.suspend(); else DKBGM.resume(); } catch (e) { /* 무시 */ } });
 function tone(freq, dur, type = 'sine', vol = 0.15, slide = 0) {
   if (S.muted) return;
   try {
@@ -1179,7 +1210,7 @@ function tone(freq, dur, type = 'sine', vol = 0.15, slide = 0) {
     if (slide) o.frequency.exponentialRampToValueAtTime(Math.max(30, freq + slide), ac.currentTime + dur);
     g.gain.setValueAtTime(vol, ac.currentTime);
     g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + dur);
-    o.connect(g).connect(ac.destination);
+    o.connect(g).connect(SFX_BUS || ac.destination);
     o.start(); o.stop(ac.currentTime + dur);
   } catch (e) { /* 무시 */ }
 }
@@ -1194,7 +1225,7 @@ function noise(dur, vol = 0.2, lp = 1200) {
     const src = ac.createBufferSource(); src.buffer = buf;
     const f = ac.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = lp;
     const g = ac.createGain(); g.gain.value = vol;
-    src.connect(f).connect(g).connect(ac.destination);
+    src.connect(f).connect(g).connect(SFX_BUS || ac.destination);
     src.start();
   } catch (e) { /* 무시 */ }
 }
@@ -1220,6 +1251,7 @@ const SFX = {
   dieHit: (v) => { noise(0.12, Math.min(0.35, 0.12 + v * 0.2), 1800); tone(220 + v * 80, 0.09, 'square', 0.12, -80); },
   bossRoar: () => { noise(0.6, 0.35, 380); tone(90, 0.7, 'sawtooth', 0.16, -40); setTimeout(() => tone(60, 0.5, 'square', 0.12, -20), 180); },
   stomp: () => { noise(0.08, 0.12, 400); tone(70, 0.1, 'sine', 0.1, -30); },
+  jackpot: () => { [523, 659, 784, 1046, 1318].forEach((f, i) => setTimeout(() => tone(f, 0.28, 'triangle', 0.16), i * 90)); setTimeout(() => noise(0.5, 0.12, 7000), 120); },   // ★19~20 획득
 };
 
 // ==================== 게임 상태 ====================
@@ -1249,7 +1281,7 @@ function defaultSave() {
   const skins = {}, equip = {};
   for (let f = 1; f <= 6; f++) { skins[f] = ['a']; equip[f] = 'a'; }
   return { cleared: [], gems: 40, unlockedTowers: [1, 2, 3], unlockedSkins: skins, equippedSkin: equip, infBest: 0, infRuns: [], infMilestones: [], infClears: 0,
-           name: '', mp: { games: 0, wins: 0, best: 0 } };   // name: 멀티 닉네임 · mp: 함께하기 전적
+           name: '', mp: { games: 0, wins: 0, best: 0 }, audio: { music: 0.6, sfx: 0.8, muted: false } };   // name: 멀티 닉네임 · mp: 함께하기 전적 · audio: 음량
 }
 let SAVE = defaultSave();
 function loadSave() {
@@ -1270,7 +1302,10 @@ function loadSave() {
       infClears: typeof s.infClears === 'number' ? s.infClears : 0,
       name: typeof s.name === 'string' ? s.name.slice(0, 12) : '',
       mp: Object.assign(d.mp, (s.mp && typeof s.mp === 'object') ? s.mp : {}),
+      audio: Object.assign(d.audio, (s.audio && typeof s.audio === 'object') ? s.audio : {}),
     };
+    const cl = (v, dv) => (typeof v === 'number' && isFinite(v) ? Math.max(0, Math.min(1, v)) : dv);
+    SAVE.audio = { music: cl(SAVE.audio.music, 0.6), sfx: cl(SAVE.audio.sfx, 0.8), muted: !!SAVE.audio.muted };
     // 기본 3종은 항상 해금 보장
     for (const f of [1, 2, 3]) if (!SAVE.unlockedTowers.includes(f)) SAVE.unlockedTowers.push(f);
     SAVE.unlockedTowers.sort((a, b) => a - b);
@@ -1595,6 +1630,7 @@ function buyChest() {
   S.fxs.push({ kind: 'ring', x: W / 2, y: 150, t: 0, dur: 0.6 + rare * 0.2, size: 90 + rare * 40, color: col });
   if (rk >= 3) spawnBurst(W / 2, 150, col, 6 + rk * 3, 80 + rk * 20, 0.6);
   if (rk >= 6) { S.shakeT = Math.max(S.shakeT || 0, 0.3); S.fxs.push({ kind: 'circle', x: W / 2, y: 150, t: 0, dur: 1.2, size: 200, color: col }); }
+  if (rk >= 3 && hasArt('chestOpen')) S.fxs.push({ kind: 'chestOpen', x: W / 2, y: 150, t: 0, dur: 0.6 + rare * 0.15, size: 220 + rare * 40, add: true });
   if (rare >= 2) SFX.win(); else if (kind === 'd1') SFX.deny(); else SFX.coin();
   if (rk >= 3) netLog(`${ch.grade[kind]} ${ch.label[kind]}를 뽑았습니다`, 'gacha'); // 유물 이상은 방에 알린다
   rollDie(kind); // 뽑으면 무조건 굴러서 타워가 된다 — 배치부터 하고 다시 뽑는다
@@ -1636,33 +1672,58 @@ function finishSlot() {
   SLOT.active = false;
   S.heldDie = SLOT.final;
   S.dieFocus = true;      // 새로 온 주사위는 배치 모드로 시작
-  SFX.coin();
+  if (SLOT.final <= 6) SFX.coin();   // ★7+ 는 acquireFx 가 소리를 낸다 (겹침 방지)
   diceSlot.classList.add('pop');
   setTimeout(() => diceSlot.classList.remove('pop'), 350);
   acquireFx(S.heldDie);
   syncUI();
 }
+// 그림 에셋이 실제로 로드됐는가 (없으면 코드 그림으로 폴백)
+const hasArt = (k) => { const a = A[k]; return !!(a && !a.missing && (Array.isArray(a) ? a.length && a[0] && a[0].cv : a.cv && a.w > 8)); };
 // 굴려 나온 눈(1~20)에 따라 단계별 획득 연출. 뽑기·보스 보상·큐 재개가 전부 finishSlot 으로 수렴하므로 여기 한 곳
+// 그림(vfx/acquire-*, ART-PROMPTS §7.8)이 있으면 그림 연출, 없으면 코드 프리미티브(링·마법진·파티클)
 function acquireFx(face) {
   const def = TOWER_DEFS[face]; if (!def) return;
   const col = def.color, cx = W / 2, cy = H / 2;
   const name = def.name.replace(/ ★\d+$/, '');
-  if (face <= 6) {                                            // 1~6눈: 작은 링 + 눈 색
+  const tier = face <= 6 ? 0 : face >= 19 ? 4 : face >= 15 ? 3 : face >= 11 ? 2 : 1;   // ★7~10 · ★11~14 · ★15~18 · ★19~20
+  if (hasArt('acquireBurst')) acquireFxArt(face, tier, col, cx, cy); else acquireFxCode(face, tier, col, cx, cy);
+  if (!tier) return;
+  S.texts.push({ str: `★${face}성 ${name} 획득!`, x: cx, y: 120, t: 0, color: col, big: true });
+  if (tier >= 3) { S.glowT = 0.9; S.glowColor = col; }        // 화면 가장자리 빛 (★15+)
+  S.shakeT = Math.max(S.shakeT || 0, [0, 0.2, 0.3, 0.5, 0.7][tier]);
+  if (tier >= 4) SFX.jackpot(); else if (tier >= 3) SFX.win(); else SFX.merge();
+  if (tier >= 3 && window.DKBGM) { try { DKBGM.duck(0.45, 1.4); } catch (e) { /* 무시 */ } }
+  netLog(`★${face}성 ${name} 타워를 획득하였습니다`, 'gacha');   // ★7 이상만 방에 알린다
+}
+function acquireFxCode(face, tier, col, cx, cy) {
+  if (!tier) {                                                // 1~6눈: 작은 링 + 눈 색
     S.fxs.push({ kind: 'ring', x: cx, y: cy, t: 0, dur: 0.5, size: 120, color: col });
     spawnBurst(cx, cy, col, 6, 90, 0.45);
     return;
   }
-  const tier = face >= 19 ? 4 : face >= 15 ? 3 : face >= 11 ? 2 : 1;   // ★7~10 · ★11~14 · ★15~18 · ★19~20
-  S.texts.push({ str: `★${face}성 ${name} 획득!`, x: cx, y: 120, t: 0, color: col, big: true });
   S.fxs.push({ kind: 'ring', x: cx, y: cy, t: 0, dur: 0.9, size: 260 + tier * 60, color: col });
   S.fxs.push({ kind: 'circle', x: cx, y: cy + 40, t: 0, dur: 1.1 + tier * 0.15, size: 180 + tier * 40, color: col, pips: Math.min(12, face - 6) });
   spawnBurst(cx, cy, col, 12 + tier * 10, 140 + tier * 40, 0.7 + tier * 0.1);
   if (tier >= 2) { S.fxs.push({ kind: 'ring', x: cx, y: cy, t: 0, dur: 1.3, size: 420, color: '#ffffff' }); }
-  if (tier >= 3) { S.glowT = 0.9; S.glowColor = col; }        // 화면 가장자리 빛 (★15+)
   if (tier >= 4) { for (let i = 0; i < 3; i++) S.fxs.push({ kind: 'ring', x: cx, y: cy, t: -i * 0.18, dur: 1.2, size: 520, color: ['#ff7ad9', '#ffd452', '#7fd4ff'][i] }); spawnBurst(cx, cy, '#ffffff', 24, 260, 1.1); }
-  S.shakeT = Math.max(S.shakeT || 0, [0, 0.2, 0.3, 0.5, 0.7][tier]);
-  if (tier >= 3) { SFX.win(); if (tier >= 4 && SFX.bossRoar) SFX.bossRoar(); } else SFX.merge();
-  netLog(`★${face}성 ${name} 타워를 획득하였습니다`, 'gacha');   // ★7 이상만 방에 알린다
+}
+function acquireFxArt(face, tier, col, cx, cy) {
+  const sparks = (n, spread, sz) => { for (let i = 0; i < n; i++) { const a = Math.random() * Math.PI * 2, v = spread * (0.4 + Math.random() * 0.8); S.fxs.push({ kind: 'sprite', img: 'starSpark', x: cx, y: cy, vx: Math.cos(a) * v, vy: Math.sin(a) * v - spread * 0.3, t: -Math.random() * 0.15, dur: 0.6 + Math.random() * 0.4, size: sz * (0.6 + Math.random() * 0.8), phase: Math.random() * 6 }); } };
+  if (!tier) { S.fxs.push({ kind: 'ring', x: cx, y: cy, t: 0, dur: 0.5, size: 120, color: col }); if (hasArt('starSpark')) sparks(4, 90, 26); else spawnBurst(cx, cy, col, 6, 90, 0.45); return; }
+  S.fxs.push({ kind: 'acquireBurst', x: cx, y: cy, t: 0, dur: 0.6 + tier * 0.1, size: 280 + tier * 50, add: true });
+  if (hasArt('acquireRing')) S.fxs.push({ kind: 'ringImg', img: 'acquireRing', x: cx, y: cy, t: 0, dur: 0.9, size: 320 + tier * 40 });
+  else S.fxs.push({ kind: 'ring', x: cx, y: cy, t: 0, dur: 0.9, size: 260 + tier * 60, color: col });
+  spawnBurst(cx, cy, col, 8 + tier * 6, 120 + tier * 30, 0.6 + tier * 0.1);
+  if (hasArt('starSpark')) sparks(6 + tier * 4, 160 + tier * 40, 30);
+  if (tier >= 2) { if (hasArt('acquireColumn')) S.fxs.push({ kind: 'column', x: cx, y: cy + 40, t: 0, dur: 0.8, size: 420 + tier * 40 }); S.fxs.push({ kind: 'ring', x: cx, y: cy, t: 0, dur: 1.3, size: 420, color: '#ffffff' }); }
+  if (tier >= 3) { if (hasArt('confetti')) S.fxs.push({ kind: 'confetti', x: cx, y: cy - 40, t: 0, dur: 1.1, size: 520 + tier * 40 }); if (hasArt('acquireColumn')) S.fxs.push({ kind: 'column', x: cx, y: cy + 40, t: -0.15, dur: 0.9, size: 520 }); }
+  if (tier >= 4) {
+    const img = hasArt('acquireRingRainbow') ? 'acquireRingRainbow' : 'acquireRing';
+    for (let i = 0; i < 3; i++) { if (hasArt(img)) S.fxs.push({ kind: 'ringImg', img, x: cx, y: cy, t: -i * 0.18, dur: 1.2, size: 560, spin: 0.8 + i * 0.4, phase: i * 2 }); else S.fxs.push({ kind: 'ring', x: cx, y: cy, t: -i * 0.18, dur: 1.2, size: 520, color: ['#ff7ad9', '#ffd452', '#7fd4ff'][i] }); }
+    if (hasArt('confetti')) S.fxs.push({ kind: 'confetti', x: cx, y: cy - 60, t: -0.35, dur: 1.2, size: 640 });
+    spawnBurst(cx, cy, '#ffffff', 24, 260, 1.1);
+  }
 }
 // '#rrggbb' → 'rgba(r,g,b,a)'
 function hexA(hex, a) { const m = /^#?([0-9a-f]{6})$/i.exec(String(hex || '')); if (!m) return `rgba(255,212,82,${a})`; const n = parseInt(m[1], 16); return `rgba(${n >> 16},${(n >> 8) & 255},${n & 255},${a})`; }
@@ -2285,8 +2346,8 @@ function infResultHTML(won, res) {
   return (won
       ? `<b>무한 투기장 · ${modeName}</b> ${line}웨이브를 완주했습니다 — <b>클리어!</b><br>통산 클리어 <b>${SAVE.infClears || 0}</b>회<br>`
       : `${S.inf.bossLeak ? (S.inf.bossTimeout ? `보스 <b>${S.inf.bossLeak}</b>: 제한시간(5분 20초) 안에 잡지 못했습니다!<br>` : `보스 <b>${S.inf.bossLeak}</b>가 한계선을 넘었습니다!<br>`) : ''}<b>무한 투기장 · ${modeName}</b> 웨이브 <b>${res.wave}</b> 까지 버텼습니다${res.isBest ? ' — <b>최고 기록 갱신!</b>' : ` (최고 ${SAVE.infBest})`}<br>`) +
-    `처치 <b>${S.inf.kills}</b> · 파워업·강화에 쓴 골드 <b>${S.inf.spent}</b><br>` +
-    `젬 <b>+${res.gems}</b>${res.newly.length ? ` (마일스톤 ${res.newly.join(', ')} 달성 보너스 포함)` : ''}${won ? ` (클리어 보너스 +${INF.clearGems || 60} 포함)` : ''}`;
+    `<div class="stat-grid"><span>도달 웨이브</span><b>${won ? `${line} 완주` : res.wave}</b><span>처치</span><b>${S.inf.kills}</b><span>쓴 골드</span><b>${S.inf.spent}</b><span>젬</span><b class="gem">+${res.gems}</b></div>` +
+    `<small>${res.newly.length ? `마일스톤 ${res.newly.join(', ')} 달성 보너스 포함` : ''}${won ? `${res.newly.length ? ' · ' : ''}클리어 보너스 +${INF.clearGems || 60} 포함` : ''}</small>`;
 }
 function endInfinity(won) {
   if (S.net && !S.net.spectating) return netRunOver(won);   // 함께하기: 기록은 즉시 저장하고 관전으로
@@ -2388,6 +2449,7 @@ function spawnEnemy(item) {
       S.fxs.push({ kind: 'dust', x: p.x, y: p.y, vx: Math.cos(a) * 110, vy: Math.sin(a) * 50 - 30, t: 0, dur: 0.7, size: 5 + Math.random() * 4 });
     }
     SFX.bossRoar();
+    if (window.DKBGM) { try { DKBGM.set('boss'); DKBGM.duck(0.4, 1.0); } catch (err) { /* 무시 */ } }
   } else {
     // 일반 적: 포탈에서 살짝 튀어나오는 스폰 링
     S.fxs.push({ kind: 'ring', x: p.x, y: p.y - (move === 'air' ? 42 : 10), t: 0, dur: 0.35, size: 34, color: move === 'air' ? '#cfe9ff' : move === 'burrow' ? '#c9a06a' : '#d9a0ff' });
@@ -2430,6 +2492,7 @@ function damageEnemy(e, dmg, src) {
       S.fxs.push({ kind: 'ring', x: p.x, y: p.y - 20, t: 0, dur: 0.8, size: 160, color: '#ffd870' });
       S.shakeT = Math.max(S.shakeT || 0, 0.45);
       noise(0.4, 0.3, 500);
+      if (!S.enemies.some(x => x !== e && !x.dead && (x.isBoss || x.type === 'boss')) && window.DKBGM) { try { DKBGM.set('battle'); } catch (err) { /* 무시 */ } }
     }
     SFX.coin();
     syncUI();
@@ -3397,14 +3460,40 @@ function draw() {
     const sheetMap = {
       impact: A.impact, cannonBlast: A.cannonBlast, arcaneBurst: A.arcaneBurst,
       frostBurst: A.frostBurst, dieExplode: A.dieExplode,
+      acquireBurst: A.acquireBurst, confetti: A.confetti, chestOpen: A.chestOpen,
     };
+    if (pr < 0) continue;                                       // 지연 시작 (t 가 음수)
     if (sheetMap[f.kind]) {
       const frames = sheetMap[f.kind];
       const fr = frames[Math.min(3, Math.floor(pr * 4))];
       const s = f.size / Math.max(fr.w, fr.h);
       ctx.save();
       ctx.globalAlpha = 1 - pr * 0.4;
+      if (f.add) ctx.globalCompositeOperation = 'lighter';
       ctx.drawImage(fr.cv, f.x - fr.w * s / 2, f.y - fr.h * s / 2, fr.w * s, fr.h * s);
+      ctx.restore();
+    } else if (f.kind === 'ringImg') {                          // 그림 링: 회전하며 커지고 사라진다
+      const im = A[f.img]; if (!im || !im.cv) continue;
+      const sz = f.size * (0.3 + 0.9 * pr);
+      ctx.save();
+      ctx.globalAlpha = Math.max(0, 1 - pr) * 0.95; ctx.globalCompositeOperation = 'lighter';
+      ctx.translate(f.x, f.y); ctx.rotate(S.time * (f.spin || 1.2) + (f.phase || 0));
+      ctx.drawImage(im.cv, -sz / 2, -sz / 2, sz, sz);
+      ctx.restore();
+    } else if (f.kind === 'column') {                           // 빛기둥: 아래에서 위로 뻗는다
+      const im = A.acquireColumn; if (!im || !im.cv) continue;
+      const hgt = f.size * Math.min(1, pr * 3), wd = hgt * (im.w / im.h);
+      ctx.save();
+      ctx.globalAlpha = Math.max(0, 1 - pr) * 0.9; ctx.globalCompositeOperation = 'lighter';
+      ctx.drawImage(im.cv, f.x - wd / 2, f.y - hgt, wd, hgt);
+      ctx.restore();
+    } else if (f.kind === 'sprite') {                           // 단일 그림 파티클 (반짝이)
+      const im = A[f.img]; if (!im || !im.cv) continue;
+      const tt = Math.max(0, f.t), sz = f.size * (1 + pr * 0.4);
+      ctx.save();
+      ctx.globalAlpha = Math.max(0, 1 - pr); ctx.globalCompositeOperation = 'lighter';
+      ctx.translate(f.x + (f.vx || 0) * tt, f.y + (f.vy || 0) * tt); ctx.rotate(S.time * 3 + (f.phase || 0));
+      ctx.drawImage(im.cv, -sz / 2, -sz / 2, sz, sz);
       ctx.restore();
     } else if (f.kind === 'burst') {
       const g = 320;                                            // 중력
@@ -3652,14 +3741,21 @@ function arenaCanvasForScreen(key) {
   const hudH = hudEl.classList.contains('hidden') ? 0 : hudEl.offsetHeight;
   if (key === 'cInfP') {
     const boxH = Math.max(200, availH - hudH - gap);
-    const h = Math.max(1000, Math.min(1600, Math.round(720 * boxH / Math.max(200, availW))));
-    return { w: 720, h, inset: { top: 0, bottom: 0 } };
+    const h = Math.max(880, Math.min(2000, Math.round(720 * boxH / Math.max(200, availW))));   // 880: 트랙(±360)+여백 · 2000: 폴더블 커버·초장신 화면
+    // 거의 정사각형 화면(폴더블 펼침): HUD 두 줄 위의 상자가 납작하면 세로 아레나를 옆으로 넓혀 여백을 채운다 (보드·트랙은 가운데 그대로)
+    const w = h === 880 && boxH / Math.max(200, availW) < 880 / 720 ? Math.min(1400, Math.round(880 * availW / boxH)) : 720;
+    return { w, h, inset: { top: 0, bottom: 0 } };
   }
-  const w = Math.max(720, Math.min(OVER_MAX_W, Math.round(576 * availW / Math.max(200, availH))));
+  const w = Math.max(680, Math.min(OVER_MAX_W, Math.round(576 * availW / Math.max(200, availH))));   // 680: 트랙(±262+52)+여백 — 거의 정사각 화면(폴더블 펼침)도 레터박스 없이
   const sc = Math.min(availH, availW / (w / 576)) / 576;      // 캔버스 1px 이 화면에서 몇 px 인지
   return { w, h: 576, inset: { top: Math.round(OVER_TOP_INSET / sc), bottom: Math.round((hudH + 4) / sc) } };
 }
 function fitStage() {
+  // 모바일 키보드: 채팅 입력 중 visualViewport 가 줄어들면 아레나를 다시 굽지 않는다 (로그 패널만 --kb 만큼 올린다)
+  const ae = document.activeElement;
+  const kb = ae && /^(INPUT|TEXTAREA)$/.test(ae.tagName) && window.visualViewport && visualViewport.height < window.innerHeight * 0.8;
+  if (kb) { wrapEl.style.setProperty('--kb', Math.max(0, window.innerHeight - visualViewport.height - visualViewport.offsetTop) + 'px'); return; }
+  wrapEl.style.setProperty('--kb', '0px');
   const hudHidden = hudEl.classList.contains('hidden');
   const inf = arenaPlaying();
   const portraitScreen = typeof screenIsPortrait === 'function' && screenIsPortrait();
@@ -3667,6 +3763,12 @@ function fitStage() {
   wrapEl.classList.toggle('bleed', inf);
   wrapEl.classList.toggle('over', over);
   const { availW, availH, gap } = wrapAvail();
+  // 좁은 가로(작은 폰 가로): 겹침 HUD 한 줄이 안 들어가면 부품을 줄이고(narrow), 그래도 모자라면 파워업 줄을 아래로(xnarrow)
+  wrapEl.classList.toggle('narrow', over && availW < 760);
+  wrapEl.classList.toggle('xnarrow', over && availW < 600);
+  wrapEl.classList.toggle('short', !inf && availH < 480);
+  // 우상단 미니 버튼 폭 → 좌상단 칩이 비킬 여유 (버튼 수가 멀티에서 늘어난다)
+  stageEl.style.setProperty('--mini-w', miniEl.classList.contains('hidden') ? '0px' : miniEl.offsetWidth + 'px');
   if (!RELAYOUTING && inf && typeof arenaKeyForScreen === 'function') {
     // 방향이 바뀌었거나 화면 비율이 캔버스와 2% 이상 어긋나면 아레나를 다시 굽는다 (타워 칸·적 진행률은 보존)
     const want = arenaKeyForScreen();
@@ -3967,6 +4069,8 @@ function enhanceTower() {
 const sellPrice = t => 6 + 5 * t.face + 12 * (t.lvl - 1);
 
 function showOverlay(title, descHTML, btnLabel) {
+  bgmSync();
+  $('overlay-box').classList.toggle('result', S.phase !== 'title' && S.phase !== 'loading');
   $('ov-title').textContent = title;
   $('ov-desc').innerHTML = descHTML;
   $('ov-btn').textContent = btnLabel;
@@ -3994,7 +4098,19 @@ function showScreen(name) {
   else if (name === 'shop') { $('shop').classList.remove('hidden'); renderShop(); }
   else if (name === 'mpRoom') { $('mp-room').classList.remove('hidden'); renderMpRoom(); }
   else if (name === 'playing') { statsEl.classList.remove('hidden'); hudEl.classList.remove('hidden'); miniEl.classList.remove('hidden'); if (S.net) $('rivals').classList.remove('hidden'); }
+  bgmSync();
+  wakeLockSync(name === 'playing');
+  if (name === 'playing') fitStage();   // 💬 버튼 유무로 미니 버튼 폭이 바뀐다
 }
+// 플레이 중 화면 꺼짐 방지 (지원 브라우저·앱 웹뷰에서만, 실패는 무시)
+let WAKE = null;
+function wakeLockSync(on) {
+  try {
+    if (on) { if (!WAKE && navigator.wakeLock) navigator.wakeLock.request('screen').then(w => { WAKE = w; w.addEventListener('release', () => { WAKE = null; }); }).catch(() => {}); }
+    else if (WAKE) { WAKE.release().catch(() => {}); WAKE = null; }
+  } catch (e) { /* 무시 */ }
+}
+document.addEventListener('visibilitychange', () => { if (!document.hidden && S.phase === 'playing') wakeLockSync(true); });
 function gotoLobby() { S.phase = 'lobby'; showScreen('lobby'); }
 function gotoMpRoom() { S.phase = 'mpRoom'; showScreen('mpRoom'); }
 function gotoStageSelect() { S.phase = 'stageSelect'; showScreen('stageSelect'); }
@@ -4054,6 +4170,12 @@ function coachHit(key) {
   if (next && next.key === 'power' && S.selTower) { S.selTower = null; syncUI(); }
   coachRender();
 }
+// 안전영역(노치·홈바) — style.css 의 --sa-* 를 숫자로 (앱은 플러그인, 테스트는 인라인 변수로 채운다)
+function safeArea() {
+  const cs = getComputedStyle(document.documentElement);
+  const n = (k) => { const v = parseFloat(cs.getPropertyValue(k)); return isFinite(v) ? Math.max(0, v) : 0; };
+  return { t: n('--sa-t'), r: n('--sa-r'), b: n('--sa-b'), l: n('--sa-l') };
+}
 function coachRender() {
   const el = $('coach'), ring = $('coach-ring'), tip = $('coach-tip');
   if (!el || !COACH.on) return;
@@ -4073,8 +4195,9 @@ function coachRender() {
   tip.style.left = '0px'; tip.style.top = '0px';
   const tw = tip.offsetWidth, th = tip.offsetHeight;
   const cx = r.left + r.width / 2;
-  tip.style.left = Math.max(8, Math.min(window.innerWidth - tw - 8, cx - tw / 2)) + 'px';
-  tip.style.top = (r.top - th - 14 >= 8 ? r.top - th - 14 : Math.min(window.innerHeight - th - 8, r.top + r.height + 14)) + 'px';
+  const sa = safeArea();
+  tip.style.left = Math.max(8 + sa.l, Math.min(window.innerWidth - sa.r - tw - 8, cx - tw / 2)) + 'px';
+  tip.style.top = (r.top - th - 14 >= 8 + sa.t ? r.top - th - 14 : Math.min(window.innerHeight - sa.b - th - 8, r.top + r.height + 14)) + 'px';
 }
 
 // ==================== 화면 방향에 따른 아레나 교체 ====================
@@ -4612,7 +4735,7 @@ function chatOpen() {
   chatInput.focus();
   return true;
 }
-function chatClose() { if (chatForm) { chatForm.classList.add('hidden'); chatInput.value = ''; chatInput.blur(); } }
+function chatClose() { if (chatForm) { chatForm.classList.add('hidden'); chatInput.value = ''; chatInput.blur(); } setTimeout(fitStage, 50); }
 function chatSend() {
   const N = window.DKNET, txt = (chatInput.value || '').trim().slice(0, 120);
   chatClose();
@@ -4654,6 +4777,7 @@ document.addEventListener('keydown', ev => {
   if (ev.key === 'r' || ev.key === 'R' || ev.key === 'ㄱ') rollByButton();
   else if (S.mode === 'infinity' && ev.key >= '1' && ev.key <= '6') upgradeFace(parseInt(ev.key, 10));
   else if (ev.key === 'Escape') {
+    if (settingsOpen()) { closeSettings(); return; }
     const help = $('inf-help');
     if (help && !help.classList.contains('hidden')) { closeInfHelp(); return; } // 도움말이 열려 있으면 먼저 닫는다
     if (VIEW.pid) { mpViewExit(); return; }
@@ -4674,17 +4798,49 @@ $('sell-btn').addEventListener('click', () => {
   SFX.sell();
   syncUI();
 });
-function setSpeed(n) { S.speed = Math.max(1, Math.min(3, n | 0)); $('speed-btn').textContent = 'x' + S.speed; }
+function setSpeed(n) { S.speed = Math.max(1, Math.min(3, n | 0)); const b = $('speed-btn'); b.textContent = 'x' + S.speed; b.dataset.icon = 'speed' + S.speed; }
 $('speed-btn').addEventListener('click', () => {
   setSpeed(S.speed >= 3 ? 1 : S.speed + 1);           // x1 → x2 → x3 → x1 (싱글·멀티 공통, 멀티는 각자)
 });
 const ICON_SOUND = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 8.5a5 5 0 0 1 0 7"/><path d="M20 6a9 9 0 0 1 0 12"/></svg>';
 const ICON_MUTE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 9.5l5 5M22 9.5l-5 5"/></svg>';
-$('mute-btn').addEventListener('click', () => {
-  S.muted = !S.muted;
-  $('mute-btn').innerHTML = S.muted ? ICON_MUTE : ICON_SOUND;
-  $('mute-btn').classList.toggle('off', S.muted);
-});
+$('mute-btn').addEventListener('click', () => { audio(); SAVE.audio.muted = !SAVE.audio.muted; applyAudioSettings(); saveSave(); });
+// ---- 토스트 · 앱(Capacitor) 다리: 뒤로가기 체인 ----
+let TOAST_T = 0;
+function toast(msg, ms) {
+  const el = $('toast'); if (!el) return;
+  el.textContent = msg; el.classList.remove('hidden');
+  clearTimeout(TOAST_T); TOAST_T = setTimeout(() => el.classList.add('hidden'), ms || 1600);
+}
+// 하드웨어 뒤로가기: 열린 것을 하나 닫으면 true, 더 닫을 게 없으면(로비) false → app.js 가 두 번 누름으로 종료
+window.DKAPP = {
+  toast,
+  back() {
+    if (settingsOpen()) { closeSettings(); return true; }
+    const help = $('inf-help'); if (help && !help.classList.contains('hidden')) { closeInfHelp(); return true; }
+    if (chatForm && !chatForm.classList.contains('hidden')) { chatClose(); return true; }
+    if (typeof VIEW !== 'undefined' && VIEW.pid) { mpViewExit(); return true; }
+    if (S.phase === 'playing' && S.selTower) { S.selTower = null; syncUI(); return true; }
+    if (S.phase === 'playing' || S.phase === 'spectate') { $('exit-btn').click(); return true; }
+    if (S.phase === 'stageSelect' || S.phase === 'shop') { const b = document.querySelector(`#${S.phase === 'shop' ? 'shop' : 'stage-select'} .back-btn`); if (b) b.click(); return true; }
+    if (S.phase === 'mpRoom') { $('mp-leave').click(); return true; }
+    if (S.phase === 'title' || S.phase === 'over' || S.phase === 'win' || S.phase === 'stageClear') { $('ov-btn').click(); return true; }
+    return false;
+  },
+};
+// ---- 설정 모달 (음악·효과음 음량, 음소거) — 로비·대기실의 ⚙ 와 앱 뒤로가기 체인 ----
+function openSettings() { const el = $('settings'); if (!el) return; audio(); applyAudioSettings(); el.classList.remove('hidden'); }
+function closeSettings() { const el = $('settings'); if (el) el.classList.add('hidden'); }
+function settingsOpen() { const el = $('settings'); return !!(el && !el.classList.contains('hidden')); }
+for (const id of ['lobby-settings', 'room-settings']) { const b = $(id); if (b) b.addEventListener('click', openSettings); }
+if ($('settings')) {
+  $('settings-close').addEventListener('click', closeSettings);
+  $('settings').addEventListener('click', (ev) => { if (ev.target === $('settings')) closeSettings(); });
+  $('set-music').addEventListener('input', () => { SAVE.audio.music = +$('set-music').value; applyAudioSettings(); saveSave(); });
+  $('set-sfx').addEventListener('input', () => { SAVE.audio.sfx = +$('set-sfx').value; applyAudioSettings(); saveSave(); });
+  $('set-sfx').addEventListener('change', () => SFX.coin());
+  $('set-mute').addEventListener('click', () => { SAVE.audio.muted = !SAVE.audio.muted; applyAudioSettings(); saveSave(); });
+}
 
 $('ov-btn').addEventListener('click', () => {
   if (S.phase === 'loading') return;
@@ -5207,7 +5363,8 @@ function mpLayoutCards() {
   const track = (window.DKCONTENT.maps.find(m => m.key === S.mapKey) || {}).track;
   const halfTrack = track ? Math.max(track.R - W / 2, W / 2 - track.L) : 262;
   const margin = (W / 2 - halfTrack - 24) * sc;
-  const top = stageEl.classList.contains('small') ? 42 : 52;
+  const sa = safeArea();
+  const top = (stageEl.classList.contains('small') ? 42 : 52) + sa.t;
   const hudH = over && !hudEl.classList.contains('hidden') ? hudEl.offsetHeight + 8 : 8;
   const availH = sr.height - top - hudH;
   const cardW = Math.max(60, Math.min(150, margin - 12));
@@ -5393,6 +5550,7 @@ function drawLoading(pr) {
     $('ov-desc').innerHTML += '<br><span style="color:#ff9f9f">⚠ file:// 로 열면 이미지 배경 보정이 생략됩니다. start.bat 또는 로컬 서버 사용을 권장합니다.</span>';
   }
   loadSave();
+  applyAudioSettings();
   // 개발용 URL 플래그: ?unlock=all → 50 스테이지 클리어·타워 전부 해금 상태로 시작 (저장은 플레이 후 갱신될 때만)
   //                    ?start=inf  → 타이틀 버튼을 누르면 로비 대신 바로 인피니티 시작
   //                    ?inf=1      → 인피니티만 임시 개방 (50 스테이지 클리어 없이, 저장 데이터 변경 없음)
@@ -5422,6 +5580,11 @@ function drawLoading(pr) {
   window.DKlog = pushLog; window.DKlogs = () => LOG.nodes.map(n => n.textContent); window.DKchatOpen = chatOpen; // 로그·채팅 훅
   window.DKNETLOG = window.DKNET && DKNET._debug;   // 멀티 소켓 로그
   window.DKplace = tryPlace;                      // 보유 주사위를 석단 idx 에 놓기
+  window.DKend = gameEnd;                         // 결과 화면 (레이아웃 테스트)
+  window.DKlobby = () => { if (S.net) mpLeave(); closeInfHelp(); closeSettings(); if (COACH.on) coachStop(false); S.mode = 'stage'; S.inf = null; S.selTower = null; S.heldDie = 0; DIE.state = 'tray'; SLOT.active = false; gotoLobby(); fitStage(); };   // 레이아웃 테스트: 어느 화면에서든 로비로
+  window.DKacquire = acquireFx;                   // 획득 연출 미리보기 (콘솔: DKacquire(20))
+  window.DKsync = syncUI;
+  window.DKsafeArea = safeArea;
   window.DKroll = () => { if (S.phase === 'playing' && !S.heldDie && S.gold >= ROLL_COST) { S.gold -= ROLL_COST; S.heldDie = pickUnlockedFace(); syncUI(); return S.heldDie; } return 0; }; // 즉시 굴림 (테스트용)
   window.DKspots = () => SPOTS;
   window.DKrange = towerRange;                     // 테스트 훅
@@ -5434,6 +5597,7 @@ function drawLoading(pr) {
   $('ov-btn').disabled = false;
   $('ov-btn').textContent = '게임 시작';
   requestAnimationFrame(frame);
+  if (window.DKAPP_NATIVE && DKAPP_NATIVE.ready) { try { DKAPP_NATIVE.ready(); } catch (e) { /* 무시 */ } }   // 앱: 스플래시 내림
 })();
 
 })();

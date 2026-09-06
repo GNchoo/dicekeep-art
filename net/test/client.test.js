@@ -140,6 +140,10 @@ test('_resolveUrl: 호스트·쿼리·저장값 규칙', () => {
   assert.equal(r('example.com', '', 'ws://stored:1'), 'ws://stored:1', '저장값');
   assert.equal(r('example.com', '', null, 'wss://fallback'), 'wss://fallback', 'window.DK_NET_URL');
   assert.equal(r('example.com', '?net=http://nope', null), null, 'ws(s) 아닌 지정은 무시');
+  assert.equal(r('localhost', '', null, 'wss://fallback/', true), 'wss://fallback', '앱(native)은 hostname 이 localhost 라도 폴백(운영 서버) 우선');
+  assert.equal(r('localhost', '', null, null, true), 'ws://localhost:8787', '앱이라도 폴백이 없으면 기존 규칙');
+  assert.equal(r('localhost', '?net=off', null, 'wss://fallback', true), null, '앱에서도 ?net=off 가 이긴다');
+  assert.equal(r('localhost', '', 'ws://stored:1', 'wss://fallback', true), 'ws://stored:1', '앱에서도 저장값이 폴백보다 먼저');
 });
 
 test('resolveUrl 부작용: ?net=ws… 저장 · ?net=clear 삭제', () => {

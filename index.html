@@ -2,12 +2,13 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no, maximum-scale=1" />
+<meta name="theme-color" content="#0d0b09" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
 <title>주사위 성채 (Dicekeep)</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="style.css?v=79" />
+<link rel="stylesheet" href="fonts/fonts.css?v=80" />
+<link rel="stylesheet" href="style.css?v=80" />
 <link rel="icon" href="ui/gold.png" />
 </head>
 <body>
@@ -30,10 +31,10 @@
       </form>
     </div>
     <div id="mini-top" class="mini hidden">
-      <button id="chat-btn" class="hidden" title="채팅">&#128172;</button>
-      <button id="speed-btn" title="게임 속도">x1</button>
-      <button id="mute-btn" title="소리"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 8.5a5 5 0 0 1 0 7"/><path d="M20 6a9 9 0 0 1 0 12"/></svg></button>
-      <button id="exit-btn" title="스테이지 선택으로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <button id="chat-btn" class="hidden" data-icon="chat" title="채팅">&#128172;</button>
+      <button id="speed-btn" data-icon="speed1" title="게임 속도">x1</button>
+      <button id="mute-btn" data-icon="sound" title="소리"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 8.5a5 5 0 0 1 0 7"/><path d="M20 6a9 9 0 0 1 0 12"/></svg></button>
+      <button id="exit-btn" data-icon="menu" title="메뉴"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
 
     <div id="overlay">
@@ -55,11 +56,12 @@
 
     <div id="lobby" class="screen hidden">
       <div class="screen-box">
+        <button id="lobby-settings" class="back-btn icon-btn" type="button" title="설정" aria-label="설정">&#9881;</button>
         <h1>주사위 성채</h1>
         <p class="screen-sub">바로 한 판 하려면 <b>인피니티</b>, 차근차근 배우려면 <b>스테이지</b>. 둘은 따로 돌아갑니다.</p>
         <div class="lobby-btns inf-btns">
-          <button id="btn-inf-clear" class="big-btn inf lobby-inf-btn">&#127942; 인피니티 · 도전<small>101웨이브 완주 = 클리어</small></button>
-          <button id="btn-infinity" class="big-btn inf lobby-inf-btn">&#8734; 인피니티 · 무한<small>끝이 없는 기록 도전</small></button>
+          <button id="btn-inf-clear" class="big-btn inf lobby-inf-btn"><span class="bi" data-icon="trophy">&#127942;</span>인피니티 · 도전<small>101웨이브 완주 = 클리어</small></button>
+          <button id="btn-infinity" class="big-btn inf lobby-inf-btn"><span class="bi" data-icon="infinity">&#8734;</span>인피니티 · 무한<small>끝이 없는 기록 도전</small></button>
         </div>
         <div id="lobby-inf" class="screen-sub inf-sub"></div>
         <!-- 함께하기: 각자 보드, 각자 속도. 서버(Cloudflare Worker + Durable Object)가 방·중계·순위만 맡는다 -->
@@ -67,9 +69,9 @@
           <div class="mp-head">&#128101; 인피니티 · 함께 <small>2~4인 · 도전 규칙(101웨이브 완주) · 각자 자기 속도로 · 먼저 완주하면 1위</small></div>
           <div class="mp-row"><label for="mp-name">이름</label><input id="mp-name" type="text" maxlength="12" placeholder="플레이어" autocomplete="nickname" spellcheck="false"></div>
           <div class="lobby-btns mp-btns">
-            <button id="mp-create" class="big-btn inf">방 만들기<small>친구에게 코드 공유</small></button>
-            <button id="mp-join" class="big-btn alt">코드로 참가<small>6자리</small></button>
-            <button id="mp-quick" class="big-btn alt">빠른 매칭<small>2명 이상 10초 · 4명 즉시</small></button>
+            <button id="mp-create" class="big-btn inf"><span class="bi" data-icon="users">&#128101;</span>방 만들기<small>친구에게 코드 공유</small></button>
+            <button id="mp-join" class="big-btn alt"><span class="bi" data-icon="copy">&#128273;</span>코드로 참가<small>6자리</small></button>
+            <button id="mp-quick" class="big-btn alt"><span class="bi" data-icon="wave">&#9889;</span>빠른 매칭<small>2명 이상 10초 · 4명 즉시</small></button>
           </div>
           <form id="mp-join-form" class="hidden" autocomplete="off">
             <input id="mp-code" type="text" maxlength="6" autocapitalize="characters" inputmode="latin" placeholder="ABC123" spellcheck="false" aria-label="방 코드">
@@ -79,8 +81,8 @@
         </div>
         <div class="lobby-sep"></div>
         <div class="lobby-btns">
-          <button id="btn-stage-select" class="big-btn alt">스테이지 선택</button>
-          <button id="btn-shop" class="big-btn alt">상점</button>
+          <button id="btn-stage-select" class="big-btn alt"><span class="bi" data-icon="stage">&#127937;</span>스테이지 선택</button>
+          <button id="btn-shop" class="big-btn alt"><span class="bi" data-icon="shop">&#128722;</span>상점</button>
         </div>
         <div id="lobby-progress" class="screen-sub"></div>
         <div class="gem-chip big"><span class="gem-ico">&#128142;</span><b id="lobby-gems">0</b><span class="gem-lbl">젬</span></div>
@@ -124,6 +126,7 @@
           <button class="back-btn" id="mp-leave">&#8592; 나가기</button>
           <h2 id="mp-room-title">대기실</h2>
           <span id="mp-count" class="gem-chip">0/4</span>
+          <button id="room-settings" class="back-btn icon-btn" type="button" title="설정" aria-label="설정">&#9881;</button>
         </div>
         <div id="mp-code-wrap"><span class="mp-code-lbl">방 코드</span><b id="mp-code-big">------</b><button id="mp-copy" class="back-btn" type="button">복사</button></div>
         <div id="mp-queue" class="hidden"><div class="mp-spin"></div><div id="mp-queue-txt">상대를 찾는 중…</div></div>
@@ -208,6 +211,17 @@
     <button id="coach-skip" type="button">건너뛰기</button>
   </div>
 </div>
+<!-- 설정: 음악·효과음 음량, 음소거 (로비·대기실 ⚙, 앱 뒤로가기 체인 최우선) -->
+<div id="settings" class="hidden">
+  <div class="help-card settings-card">
+    <h3>설정</h3>
+    <label class="set-row"><span>음악</span><input id="set-music" type="range" min="0" max="1" step="0.05" value="0.6"></label>
+    <label class="set-row"><span>효과음</span><input id="set-sfx" type="range" min="0" max="1" step="0.05" value="0.8"></label>
+    <div class="set-btns"><button id="set-mute" class="back-btn" type="button">🔊 음소거</button><button id="settings-close" class="big-btn" type="button">닫기</button></div>
+    <p class="screen-sub">배경음악은 코드로 합성됩니다. <code>audio/bgm-*.ogg</code> 파일이 있으면 그 곡을 씁니다.</p>
+  </div>
+</div>
+<div id="toast" class="hidden"></div>
 <div id="inf-help" class="hidden">
   <div class="help-card">
     <h3 id="help-title">무한 투기장 안내</h3>
@@ -230,8 +244,10 @@
   <img id="ghost-tower" alt="">
   <div id="ghost-ring"></div>
 </div>
-<script src="net.js?v=79"></script>
-<script src="content.js?v=79"></script>
-<script src="game.js?v=79"></script>
+<!-- APP -->
+<script src="music.js?v=80"></script>
+<script src="net.js?v=80"></script>
+<script src="content.js?v=80"></script>
+<script src="game.js?v=80"></script>
 </body>
 </html>

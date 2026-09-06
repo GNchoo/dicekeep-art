@@ -18,6 +18,7 @@
 | §2 걷기 시트 (적 24 + 보스 10) | 34 | `casual/enemies/<id>-walk-2x2.png`, `casual/bosses/<file>-walk-2x2.png` | **이미 연결됨** — 파일만 넣으면 됨 |
 | §3 타워 스킨 b~e | 24 | `casual/towers/tN-<letter>.png` 덮어쓰기 | **이미 연결됨** |
 | §6 인피니티 101웨이브 몬스터 | 111 | `casual/enemies/inf/wNNN.png`, `casual/bosses/inf/bNNN[-2].png` | **연결됨** — 파일을 넣고 `content.js` `INF_ART_READY` 에 웨이브 번호를 적으면 그 웨이브만 교체 (2026-09-06) |
+| §7 출시용 UI·아이콘·스플래시·연출 | 약 50 | `resources/*.png`, `store/*.png`, `ui/*.png`, `vfx/*.png` | **연결됨** — 투명 PNG(UI)·회색 시트(VFX), 파일만 넣으면 됨. 요약본 `GROK-BRIEF.md` §G (2026-09-06) |
 
 ---
 
@@ -867,3 +868,258 @@ Hand-painted single character illustration for a casual tower-defense game, chib
 ```text
 Hand-painted single character illustration for a casual tower-defense game, chibi proportions, 3/4 side view FACING RIGHT, full body, idle pose, Kingdom Rush and Random Dice style, thick clean outlines, saturated colors, soft cel shading, plain light gray background, no text, no watermark, character centered filling about 80% of a 1024x1024 frame. The harbinger of the end, a cloaked figure with a void scythe and a crown of stars, a medium creature, walking on the ground. Theme: the abyss and doom — obsidian black body with violet void energy, eyes like stars, ornate ruinous armor, world-ending presence. Power level 11 of 10: looks apocalyptic and overwhelming.
 ```
+
+---
+
+## §7. 출시용 UI · 아이콘 · 스플래시 · 연출 (2026-09-06)
+
+Play 스토어 / App Store 출시(Capacitor, appId `com.fallman.dicekeep`, 이름 「주사위 성채 / Dicekeep」)에 필요한 **앱 아이콘·스플래시·스토어 그래픽**과, 인게임 HUD 를 그림으로 바꾸기 위한 **프레임·버튼·아이콘 23종·획득 연출 시트**. 모든 파일은 **선택** — 없으면 지금처럼 CSS/캔버스가 그리고, 파일을 넣으면 그 요소만 교체된다. 부분 납품 가능.
+
+규칙 (§0~§6 과 다른 점에 주의)
+- **UI 프레임·버튼·아이콘·로고는 투명 배경 PNG.** 회색 배경이 **아니다**. 이 파일들은 코드가 키잉(회색 제거)하지 않고 CSS `background-image` / `border-image` / `<img>` 로 **그대로** 쓴다. 회색이 남으면 화면에 회색 네모가 그대로 보인다. 프롬프트에 `transparent background PNG, alpha channel` 을 반드시 넣고, 저장 시 PNG(알파 포함)인지 확인할 것.
+- **VFX 2×2 시트만 §2 와 같은 연회색 #C8C8C8 배경** (2열 2행, 좌상→우상→좌하→우하 = 프레임 0,1,2,3, 모든 칸 같은 크기·같은 중심). 단품 VFX(링·빛기둥·반짝이)는 투명 PNG.
+- **글자를 절대 넣지 않는다.** 특히 한글은 생성 모델이 망가뜨린다. 제목·버튼 라벨·숫자·"DICEKEEP" 모두 CSS(Do Hyeon / Noto Sans KR)가 그림 위에 얹는다. 아이콘의 `?` `✕` `←` `∞` `▶` 는 글꼴이 아니라 **그려진 도형**으로 요청한다.
+- **파일명·크기는 표 그대로.** 크기가 다르면 9-slice 모서리가 어긋난다. 생성은 큰 해상도(1024 급)로 하고 저장할 때 지정 크기로 축소한다(비율은 생성 때부터 맞출 것).
+- 스타일은 기존과 같다: Kingdom Rush + Random Dice 캐주얼 치비, 두꺼운 외곽선. 팔레트는 `style.css` 와 맞춘다 — 금색 `#e8b64a`/`#ffd452`, 어두운 나무 `#3a2c1b`/`#2a1e12`/`#1c1409`, 크림 잉크 `#e9dfc4`, 강조 초록 `#8ef0b0` · 마젠타 `#ff7ad9` · 파랑 `#7fd4ff` · 빨강 `#ff7a7a` · 보라 `#c78bff`. 기존 `ui/gold.png`·`ui/heart.png`·`ui/title-keyart.jpg` 를 참고 이미지로 함께 넣으면 톤이 맞는다.
+
+### 목록
+
+| 파일 | 크기 | 용도 | 코드 연결 |
+|---|---|---|---|
+| `resources/icon-only.png` | 1024², **불투명** | 앱 아이콘 (Play·iOS 공통 원본) | `npx capacitor-assets generate` 가 모든 크기 생성 |
+| `resources/icon-foreground.png` | 1024², 투명 | Android 적응형 아이콘 전경 | 위와 같음 |
+| `resources/icon-background.png` | 1024², 불투명 | Android 적응형 아이콘 배경 | 위와 같음 |
+| `resources/splash.png` · `splash-dark.png` | 2732², 불투명 | 스플래시(라이트/다크) | `@capacitor/splash-screen` |
+| `ui/splash-logo.png` | 1024², 투명 | 웹 로딩 화면 로고 | 로더 (없으면 글자 로고) |
+| `ui/logo.png` | 1024×512, 투명 | 타이틀 로고 엠블럼 (한글 제목은 CSS) | 타이틀 화면 (없으면 `title-keyart.jpg` + 글자) |
+| `store/feature-graphic.png` | 1024×500 | Play 스토어 피처 그래픽 | 스토어 등록용 (게임 미사용) |
+| `ui/frame-panel.png` | 96², 투명, slice 24 | 어두운 패널 프레임 (메뉴·팝업) | CSS `border-image`, body `ui-art` |
+| `ui/frame-card.png` | 96², 투명, slice 24 | 밝은 카드 프레임 (결과·순위표·상점 카드) | 위와 같음 |
+| `ui/btn-gold.png` `btn-green.png` `btn-magenta.png` `btn-danger.png` `btn-violet.png` | 96×48, 투명, slice 16 | 버튼 5색 | 위와 같음 |
+| `ui/chip-bar.png` | 192×48, 투명, slice 20 | 상단 정보 바(골드·목숨·웨이브) | 위와 같음 |
+| `ui/slot-socket.png` | 256², 투명 | 주사위 놓는 석재 소켓 | 캔버스 (없으면 코드 소켓) |
+| `ui/icon-<name>.png` ×23 | 64², 투명 | HUD·메뉴 아이콘 | `<img>` 교체 (없으면 이모지/글자) |
+| `vfx/acquire-burst-2x2.png` | 1024², 회색 시트 | ★획득 별 폭발 4프레임 | `DKacquire` 연출 |
+| `vfx/acquire-ring.png` · `acquire-ring-rainbow.png` | 512², 투명 | 획득 룬 링 (일반/전설) | 위와 같음 |
+| `vfx/acquire-column.png` | 256×1024, 투명 | 획득 빛기둥 | 위와 같음 |
+| `vfx/confetti-2x2.png` | 1024², 회색 시트 | 색종이 4프레임 (결과·승리) | 위와 같음 |
+| `vfx/star-spark.png` | 128², 투명 | 4각 반짝이 파티클 | 위와 같음 |
+| `vfx/chest-open-2x2.png` | 1024², 회색 시트 | 상자 열림 4프레임 | 상자 구매 연출 |
+| `ui/chest.png` | 1024², 회색 | 보물상자 (닫힘) | `GROK-BRIEF.md` §E-3 과 동일 |
+
+### UI 공통 프롬프트 (7.4·7.6·7.7·7.9 앞에 붙일 것)
+
+```text
+Hand-painted casual mobile game UI asset, Kingdom Rush and Random Dice style, chibi-cute proportions, thick clean dark outlines, saturated warm colors, gold (#e8b64a) metal trim on dark wood (#3a2c1b) with cream (#e9dfc4) accents, soft cel shading, flat front view. No text, no letters, no numbers, no watermark.
+```
+
+### 7.1 앱 아이콘 → `resources/icon-only.png` (1024², 불투명 · 알파 없음)
+
+정사각 **풀블리드**. OS 가 둥근/원형 마스크를 씌우므로 **가장자리 10% 는 잘려도 되는 장식**만, 엠블럼은 중앙 80% 안에. Play 는 알파를 받지 않고 iOS 는 알파를 제거하므로 **투명 영역이 없어야** 한다. 글자 없음(이름은 OS 가 아래에 표시).
+
+```text
+Mobile app icon, 1024x1024, fully opaque square, full-bleed edge to edge, no transparency, no rounded corners (the OS applies its own mask: keep every important element inside the central 80%, only background texture may touch the edges). Hand-painted casual game style, Kingdom Rush and Random Dice, chibi-cute proportions, thick clean dark outlines, saturated colors. Subject: a large ivory six-sided die with red pips seen slightly from above, and a small cute stone castle keep with a red roof and a gold-trimmed blue banner standing on top of the die, a warm golden glow behind them. Background: deep dark-brown wood and stone (#2a1e12) with a subtle gold rune ring near the edges. Bold simple shapes that stay readable at 48 pixels. No text, no letters, no watermark.
+```
+
+### 7.2 적응형 아이콘 (Android) → `resources/icon-foreground.png` (1024², 투명) · `resources/icon-background.png` (1024², 불투명)
+
+전경은 **중앙 66%(=676px 원) 안에 엠블럼만**, 나머지는 완전 투명(OS 가 흔들며 확대·마스킹한다). 배경은 단색에 가까운 미세 질감(나무결 또는 어두운 돌) — 물체·비네팅·하이라이트 없이 가장자리까지 고르게.
+
+전경:
+```text
+Android adaptive app icon FOREGROUND layer, 1024x1024, transparent background PNG with alpha. Hand-painted casual game style, Kingdom Rush and Random Dice, chibi-cute proportions, thick clean dark outlines, saturated colors. Subject: the same emblem as the app icon — a large ivory six-sided die with red pips seen slightly from above and a small cute stone castle keep with a red roof and a gold-trimmed blue banner standing on top of it, a soft golden glow hugging the emblem. Framing: the whole emblem including its glow must fit inside the central 66% of the canvas (a 676-pixel circle in the middle); everything outside that circle is fully transparent, no drop shadow, no background. No text, no letters, no watermark.
+```
+
+배경:
+```text
+Android adaptive app icon BACKGROUND layer, 1024x1024, fully opaque, no alpha. A flat, even dark wood-grain texture in deep brown (#2a1e12 to #3a2c1b) with very subtle grain lines, or alternatively a dark worn stone texture — uniform edge to edge, seamless, no objects, no emblem, no vignette, no highlights, no gradient hotspot. No text, no watermark.
+```
+
+### 7.3 스플래시 → `resources/splash.png` · `resources/splash-dark.png` (2732², 불투명) · `ui/splash-logo.png` (1024², 투명)
+
+배경 `#0d0b09` 위에 **중앙 로고**. 기기마다 다르게 잘리므로 **모든 요소가 중앙 1200×1200 안에** 있어야 하고, 그 밖은 아무것도 없는 `#0d0b09` 단색. `splash-dark.png` 는 배경이 원래 어두워 **같은 파일을 복사**해도 된다. `ui/splash-logo.png` 는 웹 로딩 화면용 투명 로고(스플래시 안의 엠블럼과 같은 그림) — 먼저 이걸 만들고, 스플래시는 편집기에서 `#0d0b09` 캔버스 중앙에 얹어도 된다.
+
+로고(투명):
+```text
+Game logo emblem, 1024x1024, transparent background PNG with alpha, centered, filling about 85% of the frame. Hand-painted casual game style, Kingdom Rush and Random Dice, chibi-cute proportions, thick clean dark outlines, saturated colors. Subject: a large ivory six-sided die with red pips seen slightly from above, a small cute stone castle keep with a red roof standing on top of it, two crossed gold-trimmed banners behind, a few small gold sparkles, warm gold rim light. Nothing outside the emblem, no drop shadow, no background. No text, no letters, no watermark.
+```
+
+스플래시(불투명):
+```text
+Mobile app splash screen, 2732x2732 square, fully opaque. Background: a solid near-black warm dark color #0d0b09 filling the entire canvas edge to edge, completely plain — no vignette, no pattern, no gradient, no particles. In the exact center, the game emblem: a large ivory six-sided die with red pips seen slightly from above, a small cute stone castle keep with a red roof standing on top of it, crossed gold-trimmed banners behind, a soft golden glow and a few gold sparkles. Hand-painted casual Kingdom Rush and Random Dice style, chibi-cute proportions, thick clean dark outlines. Framing: every element including the glow stays inside the central 1200x1200 area; everything outside is plain #0d0b09. No text, no letters, no watermark.
+```
+
+### 7.4 타이틀 로고 → `ui/logo.png` (1024×512, 투명)
+
+2:1 가로 캔버스. **엠블럼(주사위 위에 작은 성)만** 넣고, **영문 "DICEKEEP" 은 넣지 않는다** — 한글 「주사위 성채」는 CSS(Do Hyeon)가 얹는다. 글자 자리를 위해 **아래 35% 띠는 완전 투명**으로 비운다.
+
+```text
+Hand-painted casual mobile game UI asset, Kingdom Rush and Random Dice style, chibi-cute proportions, thick clean dark outlines, saturated warm colors, gold (#e8b64a) metal trim on dark wood (#3a2c1b) with cream (#e9dfc4) accents, soft cel shading, flat front view. No text, no letters, no numbers, no watermark. Title logo emblem on a 2:1 landscape canvas (1024x512), transparent background PNG with alpha. Subject: a large ivory six-sided die with red pips seen slightly from above, a small cute stone castle keep with a red roof and a blue banner standing on top of it, gold sparkles and a warm golden rim light, two small decorative gold scroll flourishes at the left and right of the die. Framing: the emblem is centered horizontally in the upper 65% of the canvas; the bottom 35% is a completely empty transparent band reserved for a title that will be added later. No wordmark, no letters of any kind, no background, no drop shadow, no watermark.
+```
+
+### 7.5 피처 그래픽 → `store/feature-graphic.png` (1024×500, 불투명)
+
+Play 스토어 상단 배너. **왼쪽 40% 는 제목을 얹을 조용한 빈 공간**(어두운 단색에 가까운 배경, 물체 없음), 오른쪽 60% 에 성채·주사위 타워·몬스터 장면. 글자 없음(제목은 편집기에서 얹거나 비워 둔다).
+
+```text
+Mobile game store feature banner, 1024x500 landscape, fully opaque. Hand-painted casual tower defense style, Kingdom Rush and Random Dice, chibi-cute proportions, thick clean dark outlines, saturated colors, 3/4 top-down view. Composition: the LEFT 40% of the canvas is a quiet empty area — a plain deep dark-brown night sky (#1c1409) with only a faint soft golden glow, no objects, no characters — reserved for a title to be added later. The RIGHT 60%: a cute stone castle keep with a glowing crystal, several ivory dice towers with red pips on round stone pads firing colorful shots along a winding dirt road, a crowd of small cute chibi monsters (slime, goblin, bat) marching toward the castle, sparkles and explosions, warm gold and violet lighting. No text, no letters, no logo, no watermark.
+```
+
+### 7.6 HUD 프레임·버튼 9-slice (투명 PNG)
+
+**9-slice 란**: 코드가 그림을 3×3 으로 자른 뒤 **모서리는 그대로, 가장자리는 늘리고, 가운데는 채워서** 어떤 크기의 패널·버튼이든 만든다. 그래서
+- **모서리 사각형 안에 장식이 전부** 들어가야 한다 (`frame-*` 은 24px, `btn-*` 은 16px, `chip-bar` 는 20px).
+- **가장자리(모서리 사이 띠)는 늘려도 티가 안 나는 단순 직선 띠**여야 한다 — 리벳·무늬·곡선 금지.
+- **가운데는 평평한 단순 질감** — 하이라이트·비네팅·물체 금지.
+- 생성은 큰 해상도로 하되 **비율을 정확히**(96² → 1:1, 96×48 → 2:1, 192×48 → 4:1) 하고, 저장 때 지정 크기로 축소. 축소 후 외곽선이 2px 안팎으로 남도록 굵게 그린다.
+
+`ui/frame-panel.png` (96², slice 24 — 어두운 패널):
+```text
+Hand-painted casual mobile game UI asset, Kingdom Rush and Random Dice style, chibi-cute proportions, thick clean dark outlines, saturated warm colors, gold (#e8b64a) metal trim on dark wood (#3a2c1b) with cream (#e9dfc4) accents, soft cel shading, flat front view. No text, no letters, no numbers, no watermark. A square 9-slice PANEL frame (1:1 canvas, saved at 96x96), transparent background PNG with alpha. A dark panel of aged wood (#2a1e12) planks with a plain dark leather center, bordered by a gold metal band with small rivets and curled corner caps. 9-SLICE RULES: all ornament (corner caps, rivets, curls) must sit inside the four corner squares that are 25% of the side (24 of 96 pixels); the four edge strips between the corners are plain straight gold-band-over-wood bands with no rivets or pattern so they can be stretched; the center is a flat even dark leather texture with no highlight, no vignette, no objects. Only the panel itself is opaque; outside its outline is fully transparent. No text, no watermark.
+```
+
+`ui/frame-card.png` (96², slice 24 — 밝은 카드):
+```text
+Hand-painted casual mobile game UI asset, Kingdom Rush and Random Dice style, chibi-cute proportions, thick clean dark outlines, saturated warm colors, gold (#e8b64a) metal trim on dark wood (#3a2c1b) with cream (#e9dfc4) accents, soft cel shading, flat front view. No text, no letters, no numbers, no watermark. A square 9-slice CARD frame (1:1 canvas, saved at 96x96), transparent background PNG with alpha. A light card of cream parchment (#e9dfc4) or pale stone slab, bordered by a thin dark-wood edge with small gold corner ornaments. 9-SLICE RULES: all ornament must sit inside the four corner squares that are 25% of the side (24 of 96 pixels); the four edge strips between the corners are plain straight bands with no pattern so they can be stretched; the center is a flat even cream parchment texture with no highlight, no vignette, no objects. Only the card itself is opaque; outside its outline is fully transparent. No text, no watermark.
+```
+
+`ui/btn-<color>.png` (96×48, slice 16 — 5색, `{COLOR}` 만 바꿔 5번 생성):
+```text
+Hand-painted casual mobile game UI asset, Kingdom Rush and Random Dice style, chibi-cute proportions, thick clean dark outlines, saturated warm colors, gold (#e8b64a) metal trim on dark wood (#3a2c1b) with cream (#e9dfc4) accents, soft cel shading, flat front view. No text, no letters, no numbers, no watermark. A 9-slice BUTTON on a 2:1 landscape canvas (saved at 96x48), transparent background PNG with alpha. A rounded pill-shaped button with a glossy {COLOR} body, a bright highlight band along the top third, a darker bottom rim, a thick dark outline and a thin inner gold hairline. 9-SLICE RULES: the rounded ends and any ornament stay inside the outer 1/6 of the width on each side (16 of 96 pixels) and the top/bottom 1/3 of the height (16 of 48 pixels); the middle of the button is a plain straight horizontal band of even color and even highlight that can be stretched; no sparkles, no icons, no objects in the center. Only the button is opaque; outside its outline is fully transparent. No text, no watermark.
+```
+
+| 파일 | `{COLOR}` |
+|---|---|
+| `btn-gold.png` | `golden yellow (#e8b64a body, #ffd452 highlight)` |
+| `btn-green.png` | `mint green (#8ef0b0 body, lighter mint highlight)` |
+| `btn-magenta.png` | `magenta pink (#ff7ad9 body, lighter pink highlight)` |
+| `btn-danger.png` | `coral red (#ff7a7a body, lighter salmon highlight)` |
+| `btn-violet.png` | `violet purple (#c78bff body, lighter lavender highlight)` |
+
+`ui/chip-bar.png` (192×48, slice 20 — 상단 정보 바):
+```text
+Hand-painted casual mobile game UI asset, Kingdom Rush and Random Dice style, chibi-cute proportions, thick clean dark outlines, saturated warm colors, gold (#e8b64a) metal trim on dark wood (#3a2c1b) with cream (#e9dfc4) accents, soft cel shading, flat front view. No text, no letters, no numbers, no watermark. A 9-slice HUD INFO BAR on a 4:1 landscape canvas (saved at 192x48), transparent background PNG with alpha. A long rounded dark-wood strip (#2a1e12) with a thin gold metal rim, small gold end-caps on the left and right, a very slightly lighter flat center. 9-SLICE RULES: the end-caps and all ornament stay inside the outer 20 pixels of each side (of 192) and the top/bottom 20 pixels (of 48); everything between is a plain straight band with even color so it can be stretched; the center is flat with no highlight, no icons, no objects. Only the bar is opaque; outside its outline is fully transparent. No text, no watermark.
+```
+
+`ui/slot-socket.png` (256², 투명 — 주사위 소켓):
+```text
+Hand-painted casual mobile game UI asset, Kingdom Rush and Random Dice style, chibi-cute proportions, thick clean dark outlines, saturated warm colors, gold (#e8b64a) metal trim on dark wood (#3a2c1b) with cream (#e9dfc4) accents, soft cel shading. No text, no letters, no numbers, no watermark. A single round stone dice SOCKET seen from a 3/4 top-down view, 1:1 canvas saved at 256x256, transparent background PNG with alpha, centered, filling about 85% of the frame. A sunken circular socket of worn gray-violet stone with a thin gold rune ring around the rim and a dark recessed empty center, a short soft shadow directly under the socket only. Nothing else in the frame, no die inside, no background. No text, no watermark.
+```
+
+### 7.7 아이콘 23종 → `ui/icon-<name>.png` (64², 투명)
+
+아이콘 공통 프롬프트 (앞에 붙일 것):
+```text
+Flat casual game UI icon, Kingdom Rush and Random Dice style, 1:1 canvas saved at 64x64, transparent background PNG with alpha, one symbol centered filling about 80% of the frame, a bold 2-pixel dark outline, gold (#e8b64a, #ffd452) and cream (#e9dfc4) palette with dark wood (#3a2c1b) shadows, simple readable silhouette, soft cel shading, no background shape, no drop shadow. Any glyph is a drawn shape, not typography. No text, no letters, no numbers, no watermark.
+```
+
+| # | 파일 | 꼬리 프롬프트 |
+|---|---|---|
+| 1 | `icon-wave.png` | `Icon: a charging forward arrow with a small war horn, meaning "next wave".` |
+| 2 | `icon-speed1.png` | `Icon: a single right-pointing play triangle.` |
+| 3 | `icon-speed2.png` | `Icon: two right-pointing play triangles side by side (fast forward).` |
+| 4 | `icon-speed3.png` | `Icon: three right-pointing play triangles side by side, slightly smaller each (fastest).` |
+| 5 | `icon-sound.png` | `Icon: a small horn speaker with two curved sound waves.` |
+| 6 | `icon-mute.png` | `Icon: the same horn speaker crossed by a diagonal red slash, no sound waves.` |
+| 7 | `icon-chat.png` | `Icon: a rounded speech bubble with three dots inside.` |
+| 8 | `icon-menu.png` | `Icon: three horizontal bars drawn as little wooden planks stacked vertically.` |
+| 9 | `icon-help.png` | `Icon: a bold rounded question-mark shape drawn as a gold ornament.` |
+| 10 | `icon-sell.png` | `Icon: a small tied cloth sack with a gold coin peeking out of the top.` |
+| 11 | `icon-enhance.png` | `Icon: a gold star with a thick upward arrow beneath it (upgrade).` |
+| 12 | `icon-chest.png` | `Icon: a small closed wooden treasure chest with gold bands and a lock.` |
+| 13 | `icon-dice.png` | `Icon: an ivory six-sided die with red pips, slightly tilted.` |
+| 14 | `icon-gear.png` | `Icon: a chunky settings cog gear.` |
+| 15 | `icon-back.png` | `Icon: a bold left-pointing arrow with a rounded tail.` |
+| 16 | `icon-trophy.png` | `Icon: a gold trophy cup with two handles on a small base.` |
+| 17 | `icon-infinity.png` | `Icon: a bold infinity loop shape drawn as a gold ribbon.` |
+| 18 | `icon-users.png` | `Icon: two overlapping chibi person silhouettes, head and shoulders (multiplayer).` |
+| 19 | `icon-shop.png` | `Icon: a small market stall with a striped awning tent.` |
+| 20 | `icon-stage.png` | `Icon: a folded map with a small flag planted on it.` |
+| 21 | `icon-copy.png` | `Icon: two overlapping sheets of parchment, the front one offset down-right.` |
+| 22 | `icon-gem.png` | `Icon: a faceted violet gem (#c78bff) with a bright highlight.` |
+| 23 | `icon-close.png` | `Icon: a bold rounded X cross shape, two thick strokes.` |
+
+**대안 납품 — 4×6 그리드 시트 1장** (`ui/icons-sheet.png`, 1024², 투명, 칸 256²): 한 장에 23개를 위 순서대로 **좌→우, 위→아래**(1행 1~4, 2행 5~8, … 6행 21·22·23·빈칸)로 넣으면 스크립트가 잘라 `ui/icon-<name>.png` 로 저장한다. 시트 프롬프트는 공통 프롬프트 앞에 `A 4-column by 6-row grid sheet, 1024x1024, 24 equal square cells of 256 pixels, one icon centered in each cell in this order, last cell empty:` 을 붙이고 23개 설명을 번호 순으로 이어 쓴다. 각 칸 안에서 아이콘 크기·위치가 같아야 한다. 잘랐을 때 순서가 어긋나면 그 칸만 개별 생성.
+
+| 행 | 칸 1 | 칸 2 | 칸 3 | 칸 4 |
+|---|---|---|---|---|
+| 1 | wave | speed1 | speed2 | speed3 |
+| 2 | sound | mute | chat | menu |
+| 3 | help | sell | enhance | chest |
+| 4 | dice | gear | back | trophy |
+| 5 | infinity | users | shop | stage |
+| 6 | copy | gem | close | (빈칸) |
+
+### 7.8 획득 연출 VFX (`vfx/`)
+
+★획득·상자 열림·승리 연출. 2×2 시트는 회색 배경(코드가 지운다), 단품은 투명. 시트는 **네 칸 모두 같은 중심**, 프레임 순서 좌상→우상→좌하→우하.
+
+`vfx/acquire-burst-2x2.png` (1024², 회색 시트, 4프레임 — 작→크→흩어짐→사라짐):
+```text
+Hand-painted 2x2 sprite sheet of a visual effect, four frames read left-to-right then top-to-bottom, Kingdom Rush and Random Dice casual style, thick clean outlines, bold simple shapes, all four cells the same size with the effect centered at the same point, plain light gray #C8C8C8 background, no text, no watermark. Effect: a golden star burst — frame 1 a small bright gold spark with four short rays; frame 2 a large burst of thick gold rays and a white core; frame 3 the rays break into scattered gold stars and sparkles flying outward; frame 4 only a few faint fading sparkles remain. Gold (#ffd452) and white, no characters, no background objects.
+```
+
+`vfx/acquire-ring.png` (512², 투명 — 금색 룬 링, 가운데 비움):
+```text
+Single visual-effect element, 1:1 canvas saved at 512x512, transparent background PNG with alpha, centered, filling about 90% of the frame. Kingdom Rush and Random Dice casual style, thick clean outlines. Effect: a glowing golden magic ring seen flat from the front — a thick gold (#e8b64a) circle with small engraved rune marks and tiny sparkles around it, soft golden outer glow. The CENTER of the ring is completely empty and transparent. No characters, no background. No text, no letters, no watermark.
+```
+
+`vfx/acquire-ring-rainbow.png` (512², 투명 — 무지개 룬 링, 전설용):
+```text
+Single visual-effect element, 1:1 canvas saved at 512x512, transparent background PNG with alpha, centered, filling about 90% of the frame. Kingdom Rush and Random Dice casual style, thick clean outlines. Effect: a glowing magic ring seen flat from the front — a thick circle whose color cycles smoothly around the ring through pink, violet, blue, mint and gold, with small engraved rune marks and tiny sparkles, soft prismatic outer glow. The CENTER of the ring is completely empty and transparent. No characters, no background. No text, no letters, no watermark.
+```
+
+`vfx/acquire-column.png` (256×1024, 투명 — 빛기둥, 아래 밝고 위로 투명):
+```text
+Single visual-effect element on a 1:4 portrait canvas (saved at 256x1024), transparent background PNG with alpha, centered horizontally. Kingdom Rush and Random Dice casual style, soft glow. Effect: a vertical pillar of golden light — bright, opaque pale-gold (#ffd452) at the bottom, fading smoothly to fully transparent at the top, with a few small rising gold sparkles inside; straight soft edges, slightly narrower at the top. No characters, no floor, no background. No text, no watermark.
+```
+
+`vfx/confetti-2x2.png` (1024², 회색 시트, 4프레임 — 색종이·별 흩날림):
+```text
+Hand-painted 2x2 sprite sheet of a visual effect, four frames read left-to-right then top-to-bottom, Kingdom Rush and Random Dice casual style, thick clean outlines, bold simple shapes, all four cells the same size with the effect centered at the same point, plain light gray #C8C8C8 background, no text, no watermark. Effect: a shower of confetti and stars — frame 1 a tight cluster of confetti pieces and small stars just popping upward from the center; frame 2 the pieces spread wide in an arc; frame 3 the pieces fall and tumble, spread across the cell; frame 4 only a few pieces near the bottom, fading. Colors: gold (#ffd452), mint (#8ef0b0), pink (#ff7ad9), blue (#7fd4ff), violet (#c78bff). No characters, no background objects.
+```
+
+`vfx/star-spark.png` (128², 투명 — 4각 반짝이):
+```text
+Single visual-effect element, 1:1 canvas saved at 128x128, transparent background PNG with alpha, centered, filling about 90% of the frame. Kingdom Rush and Random Dice casual style. Effect: one four-pointed sparkle star — a bright white core with pale-gold (#ffd452) points, long thin vertical points and shorter horizontal points, soft golden glow around it. Nothing else, no background. No text, no watermark.
+```
+
+`vfx/chest-open-2x2.png` (1024², 회색 시트, 4프레임 — 상자가 열리며 빛 터짐, `ui/chest.png` 참고 이미지 첨부):
+```text
+Hand-painted 2x2 sprite sheet, four frames read left-to-right then top-to-bottom, Kingdom Rush and Random Dice casual style, thick clean outlines, all four cells the same size with the chest at the same position and same size in every cell, plain light gray #C8C8C8 background, no text, no watermark. Subject: the same closed treasure chest as the reference — dark wood with gold bands and a glowing golden lock, 3/4 view. Frame 1 the chest closed and shaking slightly; frame 2 the lid cracked open with a thin line of gold light; frame 3 the lid wide open with a big burst of golden light and small sparkles pouring out; frame 4 the lid fully open, the light calming to a soft glow, a few ivory dice visible inside. No characters, no background objects.
+```
+
+### 7.9 보물상자 → `ui/chest.png` (1024², 회색 배경)
+
+`GROK-BRIEF.md` §E-3 과 같은 파일. 7.8 의 `chest-open-2x2` 와 같은 디자인이어야 하므로 이걸 먼저 만들고 참고 이미지로 쓴다.
+
+```text
+Single closed treasure chest icon on a solid plain light gray #C8C8C8 background, centered, 3/4 view, hand-painted casual Kingdom Rush style, dark wood with gold bands and a glowing golden lock, a few dice peeking from under the lid, thick clean outlines, no text, no watermark.
+```
+
+### 7.10 스토어 스크린샷 가이드 (생성 아님 — 실제 게임 캡처)
+
+| 방향 | 크기 | 수량 | 장면 |
+|---|---|---|---|
+| 세로 | 1080×1920 | 4 | ① 로비(스테이지 선택) ② 인피니티 세로 플레이(주사위 보드가 가득 찬 순간) ③ ★획득 연출(전설 링이 뜬 순간) ④ 결과 순위표 |
+| 가로 | 1920×1080 | 2 | ⑤ 가로 플레이(타워가 많이 지어진 후반 웨이브) ⑥ 함께하기 필드 보기(두 플레이어 보드가 보이는 화면) |
+
+- 실제 플레이를 캡처한다(브라우저 기기 에뮬레이션 또는 실기기). 생성 이미지·합성 장면은 스토어 정책상 쓰지 않는다.
+- **상단 1/5 에 짧은 카피 한 줄**(예: 「주사위를 굴려 성을 지켜라」)을 편집기에서 얹는다 — 한글은 생성 모델이 아니라 편집기로. 나머지 4/5 는 게임 화면 그대로.
+- 폰 프레임(기기 목업) 없이, 텍스트는 최소. 카피 외에 글자를 덧붙이지 않는다.
+- 파일명 `store/shot-portrait-1~4.png`, `store/shot-landscape-1~2.png`.
+
+### 납품 순서 권장
+
+1. **아이콘·스플래시** (7.1 → 7.2 → 7.3) — 스토어 등록에 먼저 필요. `resources/` 에 넣고 `npx capacitor-assets generate`.
+2. **로고** (7.4, 7.5)
+3. **프레임·버튼** (7.6) — 패널 → 카드 → 버튼 5색 → 정보 바 → 소켓. 첫 프레임 하나를 넣어 9-slice 가 늘어날 때 깨지지 않는지 확인한 뒤 나머지.
+4. **아이콘 23종** (7.7)
+5. **VFX** (7.9 상자 → 7.8 시트·단품)
+
+### 확인 방법
+
+- 파일을 넣고 `http://localhost:8137` (file:// 금지)에서 Ctrl+F5. 콘솔에서 `document.body.classList.contains('ui-art')` 가 `true` 면 UI 아트가 감지·적용된 것(프레임·버튼·아이콘 중 하나라도 로드되면 켜진다). `false` 면 파일명·경로·PNG 알파를 확인.
+- 프레임은 크기가 다른 패널(설정 팝업·결과 창)을 모두 열어 모서리가 늘어나 찌그러지지 않는지 본다. 찌그러지면 장식이 모서리 사각형 밖으로 나간 것.
+- 획득 연출은 콘솔에서 `DKacquire(20)` (★20 획득 연출 재생, 숫자는 성) 으로 바로 확인. 링·빛기둥·별 폭발·색종이가 모두 그림으로 바뀌었는지 본다.
+- 앱 아이콘은 `npx capacitor-assets generate` 후 Android 런처에서 원형·둥근 사각형 마스크 둘 다 확인(엠블럼이 잘리지 않는지).

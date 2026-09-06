@@ -1,0 +1,35 @@
+{
+  "appId": "com.fallman.dicekeep",
+  "appName": "주사위 성채",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "allowMixedContent": false,
+    "backgroundColor": "#0d0b09"
+  },
+  "ios": {
+    "contentInset": "never",
+    "backgroundColor": "#0d0b09"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": false,
+      "backgroundColor": "#0d0b09",
+      "androidScaleType": "CENTER_CROP",
+      "splashImmersive": true
+    },
+    "StatusBar": {
+      "overlaysWebView": true,
+      "style": "DARK"
+    },
+    "SafeArea": {
+      "enabled": true,
+      "customColorsForSystemBars": true,
+      "statusBarColor": "#00000000",
+      "navigationBarColor": "#00000000",
+      "offset": 0
+    }
+  }
+}
