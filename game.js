@@ -1233,7 +1233,7 @@ const S = {
   mode: 'stage', inf: null, // 'stage' | 'infinity', inf = { sp, power{1..6}, kills, spent }
   net: null,       // 멀티(함께하기) 중이면 { code, pid, seed, t0, timing, simT, behind, waveAts, hold, rivals, … } — 싱글은 항상 null
   speed: 1, muted: false,
-  time: 0, hurtT: 0,
+  time: 0, hurtT: 0, glowT: 0, glowColor: '',
   mouse: { x: -100, y: -100 },
 };
 
@@ -1589,9 +1589,10 @@ function buyChest() {
   const col = dieKindColor(kind);
   S.texts.push({ str: kind === 'd1' ? '꽝… 일반: 외눈 주사위' : `보물상자: ${ch.grade[kind]} — ${ch.label[kind]} 획득!`, x: W / 2, y: 140, t: 0, color: col });
   S.fxs.push({ kind: 'ring', x: W / 2, y: 150, t: 0, dur: 0.6 + rare * 0.2, size: 90 + rare * 40, color: col });
+  if (rk >= 3) spawnBurst(W / 2, 150, col, 6 + rk * 3, 80 + rk * 20, 0.6);
   if (rk >= 6) { S.shakeT = Math.max(S.shakeT || 0, 0.3); S.fxs.push({ kind: 'circle', x: W / 2, y: 150, t: 0, dur: 1.2, size: 200, color: col }); }
   if (rare >= 2) SFX.win(); else if (kind === 'd1') SFX.deny(); else SFX.coin();
-  if (rk >= 3) netLog(`${ch.grade[kind]} ${ch.label[kind]} 등장!`, 'gacha'); // 유물 이상은 방에 알린다
+  if (rk >= 3) netLog(`${ch.grade[kind]} ${ch.label[kind]}를 뽑았습니다`, 'gacha'); // 유물 이상은 방에 알린다
   rollDie(kind); // 뽑으면 무조건 굴러서 타워가 된다 — 배치부터 하고 다시 뽑는다
   coachHit('roll');
   syncUI();
@@ -1634,15 +1635,39 @@ function finishSlot() {
   SFX.coin();
   diceSlot.classList.add('pop');
   setTimeout(() => diceSlot.classList.remove('pop'), 350);
-  if (S.heldDie > 6) { // 성 타워 당첨 연출
-    const def = TOWER_DEFS[S.heldDie];
-    S.texts.push({ str: `★${S.heldDie} ${def.name.replace(/ ★\d+$/, '')} 등장!`, x: W / 2, y: 120, t: 0, color: def.color, big: true });
-    S.fxs.push({ kind: 'ring', x: W / 2, y: H / 2, t: 0, dur: 0.9, size: 260, color: def.color });
-    S.shakeT = S.heldDie >= 15 ? 0.5 : 0.2;
-    if (S.heldDie >= 15) SFX.win(); else SFX.merge();
-    netLog(`★${S.heldDie} ${def.name.replace(/ ★\d+$/, '')} 획득!`, 'gacha');
-  }
+  acquireFx(S.heldDie);
   syncUI();
+}
+// 굴려 나온 눈(1~20)에 따라 단계별 획득 연출. 뽑기·보스 보상·큐 재개가 전부 finishSlot 으로 수렴하므로 여기 한 곳
+function acquireFx(face) {
+  const def = TOWER_DEFS[face]; if (!def) return;
+  const col = def.color, cx = W / 2, cy = H / 2;
+  const name = def.name.replace(/ ★\d+$/, '');
+  if (face <= 6) {                                            // 1~6눈: 작은 링 + 눈 색
+    S.fxs.push({ kind: 'ring', x: cx, y: cy, t: 0, dur: 0.5, size: 120, color: col });
+    spawnBurst(cx, cy, col, 6, 90, 0.45);
+    return;
+  }
+  const tier = face >= 19 ? 4 : face >= 15 ? 3 : face >= 11 ? 2 : 1;   // ★7~10 · ★11~14 · ★15~18 · ★19~20
+  S.texts.push({ str: `★${face}성 ${name} 획득!`, x: cx, y: 120, t: 0, color: col, big: true });
+  S.fxs.push({ kind: 'ring', x: cx, y: cy, t: 0, dur: 0.9, size: 260 + tier * 60, color: col });
+  S.fxs.push({ kind: 'circle', x: cx, y: cy + 40, t: 0, dur: 1.1 + tier * 0.15, size: 180 + tier * 40, color: col, pips: Math.min(12, face - 6) });
+  spawnBurst(cx, cy, col, 12 + tier * 10, 140 + tier * 40, 0.7 + tier * 0.1);
+  if (tier >= 2) { S.fxs.push({ kind: 'ring', x: cx, y: cy, t: 0, dur: 1.3, size: 420, color: '#ffffff' }); }
+  if (tier >= 3) { S.glowT = 0.9; S.glowColor = col; }        // 화면 가장자리 빛 (★15+)
+  if (tier >= 4) { for (let i = 0; i < 3; i++) S.fxs.push({ kind: 'ring', x: cx, y: cy, t: -i * 0.18, dur: 1.2, size: 520, color: ['#ff7ad9', '#ffd452', '#7fd4ff'][i] }); spawnBurst(cx, cy, '#ffffff', 24, 260, 1.1); }
+  S.shakeT = Math.max(S.shakeT || 0, [0, 0.2, 0.3, 0.5, 0.7][tier]);
+  if (tier >= 3) { SFX.win(); if (tier >= 4 && SFX.bossRoar) SFX.bossRoar(); } else SFX.merge();
+  netLog(`★${face}성 ${name} 타워를 획득하였습니다`, 'gacha');   // ★7 이상만 방에 알린다
+}
+// '#rrggbb' → 'rgba(r,g,b,a)'
+function hexA(hex, a) { const m = /^#?([0-9a-f]{6})$/i.exec(String(hex || '')); if (!m) return `rgba(255,212,82,${a})`; const n = parseInt(m[1], 16); return `rgba(${n >> 16},${(n >> 8) & 255},${n & 255},${a})`; }
+// 색 파티클 다발 (burst): 중심에서 퍼지며 중력으로 떨어진다
+function spawnBurst(x, y, color, n, speed, dur) {
+  for (let i = 0; i < n; i++) {
+    const a = Math.random() * Math.PI * 2, v = speed * (0.5 + Math.random() * 0.7);
+    S.fxs.push({ kind: 'burst', x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v * 0.6 - speed * 0.35, t: 0, dur: dur * (0.7 + Math.random() * 0.5), size: 3 + Math.random() * 4, color });
+  }
 }
 
 function updateSlot(dt) {
@@ -2623,6 +2648,7 @@ function projHit(p) {
 function update(dt) {
   S.time += dt;
   if (S.hurtT > 0) S.hurtT -= dt;
+  if (S.glowT > 0) S.glowT -= dt;
   if (S.phase !== 'playing') return;
 
   if (S.mode === 'infinity') pumpQueue(); // 보상 대기열: 손이 비면 자동으로 굴림
@@ -3371,6 +3397,16 @@ function draw() {
       ctx.globalAlpha = 1 - pr * 0.4;
       ctx.drawImage(fr.cv, f.x - fr.w * s / 2, f.y - fr.h * s / 2, fr.w * s, fr.h * s);
       ctx.restore();
+    } else if (f.kind === 'burst') {
+      const g = 320;                                            // 중력
+      const tt = Math.max(0, f.t);
+      const bx = f.x + f.vx * tt, by = f.y + f.vy * tt + 0.5 * g * tt * tt;
+      ctx.save();
+      ctx.globalAlpha = Math.max(0, 1 - pr) * 0.95;
+      ctx.fillStyle = f.color || '#ffe9a0';
+      ctx.shadowColor = f.color || '#ffe9a0'; ctx.shadowBlur = 8;
+      ctx.beginPath(); ctx.arc(bx, by, f.size * (1 - pr * 0.5), 0, Math.PI * 2); ctx.fill();
+      ctx.restore();
     } else if (f.kind === 'spark') {
       const sp = A.spark;
       const s = f.size / Math.max(sp.w, sp.h) * (1 + pr * 0.6);
@@ -3398,6 +3434,7 @@ function draw() {
       ctx.beginPath(); ctx.arc(f.x, f.y, f.size * (1 - pr * 0.5), 0, Math.PI * 2); ctx.fill();
       ctx.restore();
     } else if (f.kind === 'ring') {
+      if (pr < 0) continue;                                     // 시작을 늦춘 링(t<0)은 아직 그리지 않는다
       ctx.save();
       ctx.globalAlpha = (1 - pr) * 0.9;
       ctx.strokeStyle = f.color || '#ffe9a0';
@@ -3486,6 +3523,16 @@ function draw() {
   }
 
   // 피격 시 붉은 테두리
+  if (S.glowT > 0) {                                          // 고성 획득: 가장자리가 타워 색으로 빛난다
+    ctx.save();
+    const a = Math.min(0.55, S.glowT * 0.7);
+    const grad = ctx.createRadialGradient(W / 2, H / 2, Math.hypot(W, H) * 0.28, W / 2, H / 2, Math.hypot(W, H) * 0.56);
+    grad.addColorStop(0, 'rgba(255,255,255,0)');
+    grad.addColorStop(1, hexA(S.glowColor || '#ffd452', a));
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+    ctx.restore();
+  }
   if (S.hurtT > 0) {
     ctx.save();
     const a = Math.min(0.5, S.hurtT);
@@ -3893,7 +3940,7 @@ function enhanceTower() {
     S.fxs.push({ kind: 'ring', x: t.x, y: t.y - 20, t: 0, dur: 0.8, size: 130, color: col });
     S.fxs.push({ kind: 'circle', x: t.x, y: t.y + 4, t: 0, dur: 0.8, size: 120, color: col, pips: t.face <= 6 ? t.face : 4 + Math.min(8, t.face - 6) });
     if (t.face >= 14) S.shakeT = Math.max(S.shakeT || 0, 0.3);
-    netLog(`확률강화 성공 — ${t.def.name}`, 'up');
+    netLog(`${t.def.name} 확률강화에 성공했습니다`, 'up');
     SFX.win(); syncUI(); return 'up';
   }
   if (r < en.up + en.keep) {
@@ -3909,7 +3956,7 @@ function enhanceTower() {
   S.towers = S.towers.filter(o => o !== t);
   S.selTower = null;
   S.shakeT = Math.max(S.shakeT || 0, 0.35);
-  netLog(`확률강화 실패 — ${lost} 소멸!`, 'boom');
+  netLog(`확률강화에 실패해 ${lost}가 소멸했습니다`, 'boom');
   SFX.deny(); syncUI(); return 'boom';
 }
 
@@ -4526,7 +4573,10 @@ function pushLog(text, kind, who) {
   if (!box) return;
   const el = document.createElement('div');
   el.className = 'log-line ' + (LOG_KIND[kind] || 'sys');
-  el.innerHTML = (who ? `<span class="who">${escapeHtml(who)}</span>: ` : '') + escapeHtml(text);
+  const asPlayer = who && (kind === 'gacha' || kind === 'up' || kind === 'boom' || kind === 'boss' || kind === 'life');
+  el.innerHTML = who
+    ? (asPlayer ? `<span class="who">${escapeHtml(who)}</span> 플레이어가 ${escapeHtml(text)}` : `<span class="who">${escapeHtml(who)}</span>: ${escapeHtml(text)}`)
+    : escapeHtml(text);
   box.appendChild(el);
   LOG.nodes.push(el);
   while (LOG.nodes.length > LOG.max) { const old = LOG.nodes.shift(); if (old.parentNode) old.parentNode.removeChild(old); }
