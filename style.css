@@ -1120,21 +1120,7 @@ table.rank tr.me td:first-child { color: var(--gold); font-weight: bold; }
 }
 button:focus-visible, input:focus-visible, .inf-face:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 button, .inf-face, .mini button, .rival, .chip { -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none; touch-action: manipulation; }
-/* 상단 정보 바: 칩들을 한 프레임 안의 세그먼트로 (tiny 는 칩 개별 유지) */
-#stage:not(.tiny) #stats { gap: 0; padding: 2px; background: linear-gradient(rgba(38, 27, 14, .93), rgba(14, 10, 6, .95)); border: 1px solid #8a6c36; border-radius: var(--r-pill); box-shadow: var(--bevel), 0 2px 8px rgba(0,0,0,.55); backdrop-filter: blur(3px); width: fit-content; max-width: 100%; }
-#stage:not(.tiny) #stats .chip { background: none; border: 0; box-shadow: none; backdrop-filter: none; border-radius: 0; padding-right: 12px; }
-#stage:not(.tiny) #stats .chip + .chip { border-left: 1px solid rgba(255,255,255,.12); padding-left: 6px; }
-#stage:not(.tiny) #stats .chip:last-child { padding-right: 14px; }
-/* 미니 버튼 클러스터: 하나의 프레임 */
-.mini { gap: 2px; padding: 2px; background: linear-gradient(rgba(38, 27, 14, .93), rgba(14, 10, 6, .95)); border: 1px solid #8a6c36; border-radius: var(--r-md); box-shadow: var(--bevel), 0 2px 8px rgba(0,0,0,.55); backdrop-filter: blur(3px); }
-.mini button { border: 0; box-shadow: none; background: transparent; border-radius: var(--r-sm); width: 40px; height: 32px; }
-.mini button:hover { filter: none; transform: none; background: rgba(255,255,255,.08); }
-.mini button:active { transform: none; background: rgba(0,0,0,.35); box-shadow: inset 0 2px 4px rgba(0,0,0,.6); }
-.mini button + button { border-left: 1px solid rgba(255,255,255,.08); border-radius: 0; }
-.mini button:last-child { border-radius: 0 var(--r-sm) var(--r-sm) 0; }
-.mini button:first-child { border-radius: var(--r-sm) 0 0 var(--r-sm); }
-#stage.small .mini button { width: 34px; height: 28px; }
-#stage.tiny .mini button { width: 30px; height: 26px; }
+/* 상단 칩·미니 버튼은 기존 개별 칩/버튼 모양을 유지한다 (한 프레임으로 묶은 시안은 사용자 피드백으로 철회, 2026-09-06) */
 /* HUD 그룹 공통 프레임 (주사위 · 타워 · 파워업 · 웨이브) */
 #dice-panel, #right-panel { border-radius: var(--r-md); }
 #dice-panel { border: 1px solid rgba(255,255,255,.07); }
@@ -1150,30 +1136,11 @@ button, .inf-face, .mini button, .rival, .chip { -webkit-tap-highlight-color: tr
 #ov-desc small { display: block; margin-top: 4px; color: var(--ink-3); font-size: 11px; }
 #overlay-box.result #ov-desc { font-size: 13px; }
 /* ---- 그림 UI (ui/frame-*.png 등이 있을 때만 — game.js 가 body.ui-art 를 붙인다, ART-PROMPTS §7) ---- */
-body.ui-art #hud, body.ui-art #wrap.bleed #hud { border: 12px solid transparent; border-image: url(ui/frame-panel.png) 24 fill / 12px stretch; background: none; border-radius: 0; box-shadow: none; }
-body.ui-art #wrap.over #hud { border: 0; border-image: none; }
-body.ui-art .screen-box, body.ui-art #overlay-box, body.ui-art .help-card, body.ui-art #info-panel { border: 14px solid transparent; border-image: url(ui/frame-card.png) 24 / 14px stretch; background-clip: padding-box; border-radius: 0; }
-body.ui-art .big-btn, body.ui-art #ov-btn, body.ui-art #help-close, body.ui-art #mp-start { border: 10px solid transparent; border-image: url(ui/btn-gold.png) 16 fill / 10px stretch; background: none; border-radius: 0; box-shadow: none; color: #2a1a08; text-shadow: 0 1px 0 rgba(255,255,255,.35); }
-body.ui-art .big-btn small { color: #4a3416; opacity: 1; }
-body.ui-art .big-btn.alt { border-image-source: url(ui/btn-green.png); color: #0f2e1e; }
-body.ui-art .big-btn.alt small { color: #1e4a33; }
-body.ui-art .big-btn.inf { border-image-source: url(ui/btn-magenta.png); color: #3a0f30; }
-body.ui-art .big-btn.inf small { color: #5a2650; }
-body.ui-art #btn-inf-clear { border-image-source: url(ui/btn-gold.png); color: #2a1a08; }
-body.ui-art #btn-inf-clear small { color: #4a3416; }
-body.ui-art .big-btn:hover, body.ui-art #ov-btn:hover { filter: brightness(1.06); transform: none; }
-body.ui-art .big-btn:active, body.ui-art #ov-btn:active { filter: brightness(.92); transform: translateY(1px); }
-body.ui-art #wave-btn { border: 10px solid transparent; border-image: url(ui/btn-green.png) 16 fill / 10px stretch; background: none; box-shadow: none; animation: none; color: #0f2e1e; text-shadow: none; }
-body.ui-art #wave-btn:disabled { filter: grayscale(.5); opacity: .6; }
-body.ui-art #sell-btn { border: 8px solid transparent; border-image: url(ui/btn-danger.png) 16 fill / 8px stretch; background: none; box-shadow: none; color: #3a0c0c; text-shadow: none; }
-body.ui-art #enhance-btn { border: 8px solid transparent; border-image: url(ui/btn-violet.png) 16 fill / 8px stretch; background: none; box-shadow: none; color: #2a1040; text-shadow: none; }
-body.ui-art #roll-btn { border: 8px solid transparent; border-image: url(ui/btn-gold.png) 16 fill / 8px stretch; background: none; box-shadow: none; color: #2a1a08; text-shadow: none; }
-body.ui-art #roll-btn small { color: #4a3416; }
-body.ui-art #stage:not(.tiny) #stats { border: 8px solid transparent; border-image: url(ui/chip-bar.png) 20 fill / 8px stretch; background: none; border-radius: 0; box-shadow: none; backdrop-filter: none; }
-body.ui-art .mini { border: 8px solid transparent; border-image: url(ui/chip-bar.png) 20 fill / 8px stretch; background: none; border-radius: 0; box-shadow: none; backdrop-filter: none; padding: 0; }
-body.ui-art .mini button + button { border-left: 0; }
+/* 프레임·버튼 9-slice(frame-*.png · btn-*.png · chip-bar.png)는 납품본이 평면 픽셀 스타일이라 그림 배경과 어울리지 않아 쓰지 않는다.
+   그림 UI 는 로고·아이콘·주사위 소켓만 쓴다. 다시 켜려면 아래 주석의 규칙을 살린다.
+   body.ui-art #hud { border: 12px solid transparent; border-image: url(ui/frame-panel.png) 24 fill / 12px stretch; }
+   body.ui-art .big-btn { border: 10px solid transparent; border-image: url(ui/btn-gold.png) 16 fill / 10px stretch; } */
 body.ui-art #dice-slot { background: url(ui/slot-socket.png) center / 100% 100% no-repeat; border: 0; box-shadow: none; }
-body.ui-art .mini button svg, body.ui-art .mini button[data-icon] { color: transparent; }
 body.ui-art .mini button[data-icon] { background-position: center; background-size: 22px 22px; background-repeat: no-repeat; font-size: 0; }
 body.ui-art .mini button[data-icon] svg { display: none; }
 body.ui-art .bi[data-icon] { font-size: 0; background-position: center; background-size: contain; background-repeat: no-repeat; }
