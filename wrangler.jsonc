@@ -1,6 +1,6 @@
 // Cloudflare Workers 배포 설정 (정적 에셋만 제공).
 // 대시보드: 컴퓨트 → Workers & Pages → 만들기 → 저장소 가져오기 → 배포 명령 `npx wrangler deploy`
-// 나중에 서버 기능(랭킹 API 등)을 붙일 때는 "main": "src/worker.js" 와 D1 바인딩을 추가한다.
+// 서버(멀티 방·시계 중계)는 net/ 의 별도 Worker `dicekeep-net` 이다 — 이 Worker 에 main/Durable Object 를 넣으면 브랜치 프리뷰 URL 이 사라진다.
 {
   "$schema": "https://esm.sh/wrangler/config-schema.json",
   "name": "dicekeep",

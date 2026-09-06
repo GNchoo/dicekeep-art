@@ -1,0 +1,21 @@
+// dicekeep-net — 멀티플레이 중계 Worker (루트의 정적 Worker `dicekeep` 와 별개).
+// Durable Object 가 있는 Worker 는 브랜치 프리뷰 URL 이 생기지 않으므로 preview_urls 를 끈다.
+// 대시보드: 같은 저장소를 한 번 더 가져오기 → 이름 dicekeep-net · 루트 디렉터리 net · 배포 `npx wrangler deploy` · 비프로덕션 빌드 끄기.
+// 로컬: `npx wrangler dev --port 8787` (짧은 판은 `--var TIMING:fast`).
+{
+  "$schema": "https://esm.sh/wrangler/config-schema.json",
+  "name": "dicekeep-net",
+  "main": "src/index.js",
+  "compatibility_date": "2026-09-01",
+  "workers_dev": true,
+  "preview_urls": false,
+  "durable_objects": {
+    "bindings": [{ "name": "ROOM", "class_name": "Room" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["Room"] }],
+  "vars": {
+    "ALLOWED_ORIGINS": "",   // 커스텀 도메인 원점(쉼표 구분). workers.dev 운영·프리뷰·localhost 는 자동 허용
+    "TIMING": ""             // "fast" 면 테스트용 짧은 판 (prep 2s · 막간 0.5s · 보스 5s · 12웨이브 클리어)
+  },
+  "observability": { "enabled": true }
+}

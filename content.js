@@ -283,7 +283,9 @@ window.DKCONTENT = (function () {
     });
   }
   // 인피니티 전용 아레나: 배경은 '바닥 그림'만 쓰고 순환 도로·석단·포탈은 코드가 만든다 (buildArenaLayout, game.js buildRoadLayer)
-  maps.push({ key: 'cInf', src: 'casual/maps/map-inf-arena.jpg', name: '무한 투기장', infinity: true, arena: true, renderRoads: true });
+  maps.push({ key: 'cInf', name: '무한 투기장', infinity: true, arena: true, renderRoads: true, canvas: [1024, 576], rangeBonus: 160 });
+  // 세로 화면용 아레나 (랜덤다이스식): 같은 15칸을 3열×5행으로 세우고 트랙을 세로로 길게 두른다
+  maps.push({ key: 'cInfP', name: '무한 투기장 (세로)', infinity: true, arena: true, arenaPortrait: true, renderRoads: true, canvas: [720, 1080], rangeBonus: 280 });
 
   // ===== 무한 투기장: 나선 순환 도로 생성기 =====
   // 왼쪽 가장자리 포탈에서 출발해 중심 크리스탈을 1.5바퀴 돌아 들어간다. 오른쪽 포탈은 두 번째 바퀴로 곧장 합류하는 지름길.
@@ -292,22 +294,26 @@ window.DKCONTENT = (function () {
   // 아래쪽 포탈에서 출발한 적이 (종류와 상관없이 전부) 시계 반대 방향으로 한 바퀴 돌아 위쪽 크리스탈에 닿는다.
   // 인피니티 아레나: 시작·도착 지점이 없다. 적은 왼쪽 화면 밖에서 입구 길로 들어와 가운데 트랙을 영원히 돈다.
   // 목숨은 '도착'이 아니라 필드 한계선(INFINITY.fieldCap)으로 깎인다 — game.js spawnEnemy.
-  function buildArenaLayout() {
-    const L = 250, R = 774, T = 150, B = 450, rad = 52, MID = 300; // 보드에 밀착: 가운데 줄에서 위·아래 트랙까지 150px
-    const arc = (cx, cy, a0, a1, n) => { const out = []; for (let i = 0; i <= n; i++) { const a = a0 + (a1 - a0) * i / n; out.push([Math.round(cx + rad * Math.cos(a)), Math.round(cy + rad * Math.sin(a))]); } return out; };
+  // W×H 는 화면 비율에 맞춰 game.js 가 정한다(arenaCanvasForScreen). 트랙·보드 치수는 고정이고 중심만 옮긴다.
+  // inset: 화면 위(자원 칩)·아래(겹침 HUD)가 가리는 만큼 트랙을 그 사이 가운데에 세운다.
+  function buildArenaLayout(W, H, inset) {
+    W = W || 1024; H = H || 576; inset = inset || {};
+    const cx = Math.round(W / 2), cy = Math.round((inset.top || 0) + (H - (inset.top || 0) - (inset.bottom || 0)) / 2);
+    const L = cx - 262, R = cx + 262, T = cy - 150, B = cy + 150, rad = 52, MID = cy; // 보드에 밀착: 가운데 줄에서 위·아래 트랙까지 150px
+    const arc = (ax, ay, a0, a1, n) => { const out = []; for (let i = 0; i <= n; i++) { const a = a0 + (a1 - a0) * i / n; out.push([Math.round(ax + rad * Math.cos(a)), Math.round(ay + rad * Math.sin(a))]); } return out; };
     const dedupe = (pts) => pts.filter((p, i) => i === 0 || p[0] !== pts[i - 1][0] || p[1] !== pts[i - 1][1]);
     // 시계 반대 방향 (화면 좌표계에서 y 아래가 +): 왼쪽 가운데 → 왼쪽 변 아래로 → 바닥 → 오른쪽 변 위로 → 위 변 왼쪽으로 → 왼쪽 가운데
     const ring = dedupe([[L, MID],
       ...arc(L + rad, B - rad, Math.PI, Math.PI / 2, 6), ...arc(R - rad, B - rad, Math.PI / 2, 0, 6),
       ...arc(R - rad, T + rad, 0, -Math.PI / 2, 6), ...arc(L + rad, T + rad, -Math.PI / 2, -Math.PI, 6), [L, MID]]);
-    const entry = [[-40, MID], [L, MID]];
+    const entry = [[-40, MID], [L, MID]];   // 캔버스 왼쪽 끝 밖에서 들어온다 — 캔버스가 넓어지면 입구 길도 같이 길어진다
     const path = dedupe([...entry, ...ring]);
-    const loopAt = L - entry[0][0]; // 입구 길이(290px). 경로 끝에 닿으면 여기로 되돌아가 계속 돈다
+    const loopAt = L - entry[0][0]; // 입구 길이. 경로 끝에 닿으면 여기로 되돌아가 계속 돈다
     // 석단 보드 3×5
     const spots = [];
-    for (let r = 0; r < 3; r++) for (let c = 0; c < 5; c++) spots.push([512 + (c - 2) * 88, 300 + (r - 1) * 72]);
+    for (let r = 0; r < 3; r++) for (let c = 0; c < 5; c++) spots.push([cx + (c - 2) * 88, cy + (r - 1) * 72]);
     return { path, path2: null, airPts: null, spots, spots2: [], portals: [], center: null, noGoal: true, loopAt,
-             roads: [entry, ring], board: { x: 290, y: 178, w: 444, h: 244 }, track: { L, R, T, B, rad, mid: MID } };
+             roads: [entry, ring], board: { x: cx - 222, y: cy - 122, w: 444, h: 244, cols: 5, rows: 3, gapX: 88, gapY: 72 }, track: { L, R, T, B, rad, mid: MID } };
   }
 
   // ===== 난이도 티어 =====
@@ -1120,16 +1126,43 @@ window.DKCONTENT = (function () {
     { id: 'toyKing', name: '장난감왕', hp: 1220, speed: 24, gold: 150, dmg: 5, size: 92, move: 'ground', sprite: 'cToyKing', src: 'casual/bosses/toy-king.png' },
     { id: 'lanternKoi', name: '등불잉어', hp: 1080, speed: 30, gold: 146, dmg: 5, size: 92, move: 'air', sprite: 'cLanternKoi', src: 'casual/bosses/lantern-koi.png' },
   ];
-  // 아레나 레이아웃 적용 (W/H/pathLength 가 정의된 뒤에 실행해야 한다)
-  {
-    const inf = maps.find((m) => m.arena);
-    if (inf) {
-      const L = buildArenaLayout();
-      inf.path = L.path; inf.path2 = L.path2; inf.airPts = L.airPts; inf.spots = L.spots; inf.spots2 = L.spots2;
-      inf.portals = L.portals; inf.center = L.center; inf.board = L.board; inf.track = L.track;
-      inf.noGoal = L.noGoal; inf.roads = L.roads; inf.loopAt = L.loopAt;
-    }
+  // 세로 화면용 아레나: 캔버스 720×1080, 보드 3열×5행, 트랙은 세로로 긴 링
+  function buildArenaLayoutPortrait(W, H, inset) {
+    W = W || 720; H = H || 1080; inset = inset || {};
+    const cx = Math.round(W / 2), cy = Math.round((inset.top || 0) + (H - (inset.top || 0) - (inset.bottom || 0)) / 2);
+    const L = cx - 270, R = cx + 270, T = cy - 360, B = cy + 360, rad = 60, MID = cy;
+    const arc = (ax, ay, a0, a1, n) => {
+      const out = [];
+      for (let i = 0; i <= n; i++) { const a = a0 + (a1 - a0) * (i / n); out.push([ax + Math.cos(a) * rad, ay + Math.sin(a) * rad]); }
+      return out;
+    };
+    const dedupe = (pts) => pts.filter((p, i) => i === 0 || Math.hypot(p[0] - pts[i - 1][0], p[1] - pts[i - 1][1]) > 0.5);
+    const ring = dedupe([[L, MID],
+      ...arc(L + rad, B - rad, Math.PI, Math.PI / 2, 6), ...arc(R - rad, B - rad, Math.PI / 2, 0, 6),
+      ...arc(R - rad, T + rad, 0, -Math.PI / 2, 6), ...arc(L + rad, T + rad, -Math.PI / 2, -Math.PI, 6), [L, MID]]);
+    const entry = [[-40, MID], [L, MID]];
+    const path = dedupe([...entry, ...ring]);
+    const loopAt = L - entry[0][0];
+    const gapX = 150, gapY = 118;
+    const spots = [];
+    for (let r = 0; r < 5; r++) for (let c = 0; c < 3; c++) spots.push([cx + (c - 1) * gapX, MID + (r - 2) * gapY]);
+    return { path, path2: null, airPts: null, spots, spots2: [], portals: [], center: null, noGoal: true, loopAt,
+             roads: [entry, ring], board: { x: cx - 210, y: MID - 310, w: 420, h: 620, cols: 3, rows: 5, gapX, gapY }, track: { L, R, T, B, rad, mid: MID } };
   }
+
+  // 아레나 맵에 레이아웃을 (다시) 굽는다. 캔버스 크기가 화면 비율을 따르므로 game.js 가 판 시작·회전·리사이즈 때마다 부른다.
+  function layoutArena(inf, W, H, inset) {
+    const L = inf.arenaPortrait ? buildArenaLayoutPortrait(W, H, inset) : buildArenaLayout(W, H, inset);
+    inf.path = L.path; inf.path2 = L.path2; inf.airPts = L.airPts; inf.spots = L.spots; inf.spots2 = L.spots2;
+    inf.portals = L.portals; inf.center = L.center; inf.board = L.board; inf.track = L.track;
+    inf.noGoal = L.noGoal; inf.roads = L.roads; inf.loopAt = L.loopAt;
+    if (W && H) inf.canvas = [W, H];
+    inf.inset = { top: (inset && inset.top) || 0, bottom: (inset && inset.bottom) || 0 };
+    return inf;
+  }
+
+  // 아레나 레이아웃 기본 적용 (기본 캔버스 크기. 실제 판에서는 game.js 가 화면 비율로 다시 굽는다)
+  for (const inf of maps.filter((m) => m.arena)) layoutArena(inf, inf.canvas[0], inf.canvas[1]);
 
   // ===== 걷기 시트 순차 연결 =====
   // 13~24번째 적과 보스 1~10 은 시트 파일이 아직 없어도 미리 연결해 둔다.
@@ -1296,7 +1329,7 @@ window.DKCONTENT = (function () {
     highArmor(w) { return w % 33 === 0; },
     // ---- 보스 보상 스케줄 (1미네랄 = 16G): 24R 50+유물 · 37/58R 50+서사 · 79R 70+전설 · 90R 100+전설 · 95R 150+전설 · 96~100R 유물·서사 추가 ----
     bossReward(w) {
-      const n = Math.max(1, Math.round(w / this.bossEvery));
+      const n = Math.max(1, this.bossOrdinal(w));
       if (n === 1) return { gold: 800, dice: ['d8'] };
       if (n <= 3) return { gold: 800, dice: ['d12'] };
       if (n === 4) return { gold: 1120, dice: ['d20'] };
@@ -1305,30 +1338,52 @@ window.DKCONTENT = (function () {
       return { gold: 1600, dice: ['d20', n % 2 ? 'd8' : 'd12'] };
     },
     bossTimeLimit: 320, // 보스 라운드 5분 20초 안에 못 잡으면 패배
-    gamble: { up: 0.20 }, // 랜덤 도박: 주머니 주사위를 걸고 20% 확률로 한 등급 승급, 실패 시 소멸
-    exchange: { legend: { cost: 1600, p: 0.66, min: 7, max: 20 }, myth: { cost: 4000, p: 0.5, min: 18, max: 20 } }, // 전설 교환 100미네랄 66% · 신화 교환 250미네랄 50%
+    // 타워 확률강화(도박): 성공하면 한 단계 위 타워, 유지, 소멸 셋 중 하나. 등급이 높을수록 비싸고 위험하다.
+    enhance: {
+      maxFace: 20,
+      cost: (f) => Math.round((160 + 90 * f) / 10) * 10,            // 1눈 250G · 6눈 700G · 12★ 1,240G · 19★ 1,870G
+      odds: (f) => {                                                // 6눈 강화 51/유지 33/소멸 16 · 12★ 30/41/29 · 19★ 10/45/45
+        const up = Math.max(0.10, 0.72 - 0.035 * f), boom = Math.min(0.45, 0.03 + 0.022 * f);
+        return { up, boom, keep: Math.max(0, 1 - up - boom) };
+      },
+    },
     perks: { epic: [14, 17], myth: [18, 19], primal: [20, 20] }, // 에픽: 방어 무시+락다운 · 신화: 공속 ×1.5 · 태초: 트랙 전체 스플래시
     stun: { p: 0.12, dur: 1.0, bossDur: 0.4 },
     mythRate: 1.5,
     bossEvery: 10,   // 10 웨이브마다 보스 (20 부터 2마리)
     eliteEvery: 5,   // 5 웨이브마다 정예 (HP×3, 크기×1.2, 골드×3)
     unlockAir: 1, unlockBurrow: 1,
-    wave(w) {
+    // ---- 두 갈래: 도전(클리어 있음, 멀티 예정) / 무한(진짜 무한, 싱글 기록) ----
+    modes: {
+      clear:   { key: 'clear',   name: '도전',  sub: '101웨이브 완주가 목표 · 91웨이브부터 최종 관문', gauntlet: true,  clearWave: 101 },
+      endless: { key: 'endless', name: '무한',  sub: '끝이 없는 기록 도전 · 주기마다 적이 강해진다',   gauntlet: false, clearWave: 0 },
+    },
+    modeOf(key) { return this.modes[key] || this.modes.endless; },
+    clearWave: 101,   // 도전 모드 클리어 선 (로스터 한 사이클 = 메운디 1~101R)
+    clearGems: 80,
+    lateFrom: 90, lateExp: 1.08, // 최종 관문(도전 모드): 91웨이브부터 체력이 한 번 더 가팔라진다 (1.08 → 실질 1.166)
+    // ---- 보스 주기는 로스터 기준 (2주기부터 w % 10 과 어긋난다) ----
+    isBossWave(w) { const r = this.getRoster()[(Math.max(1, w) - 1) % 101]; return !!(r && r.boss); },
+    bossOrdinal(w) { const c = Math.floor((Math.max(1, w) - 1) / 101), i = (Math.max(1, w) - 1) % 101 + 1; return c * 10 + Math.round(i / this.bossEvery); },
+    wave(w, gauntlet) {
+      const late = gauntlet && w > this.lateFrom ? Math.pow(this.lateExp, w - this.lateFrom) : 1;
       return {
-        hpMult: +(1.8 * Math.pow(1.08, w - 1)).toFixed(3),   // w30 ≈ 16.8×, w50 ≈ 78×, w70 ≈ 364× — 무한 순환·필드 한계선·사거리 160 기준 봇 재보정(1.06→83, 1.08→60, 1.10→50 웨이브)
+        hpMult: +(1.8 * Math.pow(1.08, w - 1) * late).toFixed(3),   // w30 ≈ 16.8×, w50 ≈ 78×, w70 ≈ 364×, w101 ≈ 6,700× — 무한 순환·필드 한계선·사거리 160 기준 봇 재보정
         count: Math.min(36, 12 + Math.floor(w * 0.6)),
         gap: Math.max(0.3, 0.8 - w * 0.01),
         goldMult: +(1 + w * 0.025).toFixed(3),
         speedMult: Math.min(1.5, 1 + Math.max(0, w - 40) * 0.01),
         bossHp: +(0.7 + w * 0.012).toFixed(2),                 // 보스 개별 보정(hpM)은 인피니티에서 쓰지 않는다
-        bosses: w >= 20 && w % 10 === 0 ? 2 : 1,
+        bosses: this.isBossWave(w) && this.bossOrdinal(w) >= 2 ? 2 : 1,
         elites: w >= 20 ? 3 : 2,
       };
     },
-    milestones: [25, 50, 100, 200],
-    // 런 종료 젬: 10웨이브당 2 + 최초 달성 마일스톤당 15
-    gems(wave, claimed) {
-      let g = Math.floor(wave / 10) * 2;
+    milestones: [10, 25, 50, 75, 100, 150, 200],
+    // 런 종료 젬: 5웨이브당 2 + 최고 기록 갱신 10 + 최초 달성 마일스톤당 15.
+    // 인피니티만 해도 상점(스킨 20 · 6눈 90)이 돌아가야 해서 예전 곡선(10웨이브당 2)에서 올렸다.
+    gems(wave, claimed, best) {
+      let g = Math.floor(wave / 5) * 2;                       // w20 → 8 · w50 → 20 · w101 → 40
+      if (best != null && wave > best) g += 10;               // 신기록 보너스
       const newly = [];
       for (const m of this.milestones) if (wave >= m && !(claimed || []).includes(m)) { g += 15; newly.push(m); }
       return { gems: g, newly };
@@ -1355,7 +1410,7 @@ window.DKCONTENT = (function () {
   return {
     maps, towerSkins, skinLetters: SKIN_LETTERS, bases, bossBases, species, bosses, stages,
     INFINITY, DICE_POWER,
-    tiers: TIERS, tierOf, buildLayout, buildArenaLayout, makeAvoidFromImage, pathLength, pathAt, pathDist,
+    tiers: TIERS, tierOf, buildLayout, buildArenaLayout, buildArenaLayoutPortrait, layoutArena, makeAvoidFromImage, pathLength, pathAt, pathDist,
     TILE, GW, GH, THEMES, TILE_ASSETS, themeForStage, TEMPLATES_SINGLE, TEMPLATES_DUAL, buildGridLayout, templateForStage,
     mapCount: 50, stageCount: 50,
   };

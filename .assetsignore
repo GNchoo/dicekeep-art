@@ -13,3 +13,5 @@ wrangler.jsonc
 .gitignore
 # 폐기된 배경 그림 (맵은 이제 코드 + 타일). 저장소에는 남기되 배포에서는 뺀다
 casual/maps/map-[0-9][0-9]-*.jpg
+# 멀티 서버(Cloudflare Worker + Durable Object)는 별도 Worker dicekeep-net 로 배포한다 — 정적 에셋에 소스가 올라가면 안 된다
+net
