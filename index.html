@@ -7,8 +7,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="mobile-web-app-capable" content="yes" />
 <title>주사위 성채 (Dicekeep)</title>
-<link rel="stylesheet" href="fonts/fonts.css?v=81" />
-<link rel="stylesheet" href="style.css?v=81" />
+<link rel="stylesheet" href="fonts/fonts.css?v=82" />
+<link rel="stylesheet" href="style.css?v=82" />
 <link rel="icon" href="ui/gold.png" />
 </head>
 <body>
@@ -57,7 +57,7 @@
 
     <div id="lobby" class="screen hidden">
       <div class="screen-box">
-        <button id="lobby-settings" class="back-btn icon-btn" type="button" title="설정" aria-label="설정">&#9881;</button>
+        <button id="lobby-settings" class="back-btn icon-btn" type="button" title="설정" aria-label="설정" data-icon="gear">&#9881;</button>
         <img id="lobby-logo" class="logo" src="ui/logo.png" alt="" draggable="false">
         <h1>주사위 성채</h1>
         <p class="screen-sub">바로 한 판 하려면 <b>인피니티</b>, 차근차근 배우려면 <b>스테이지</b>. 둘은 따로 돌아갑니다.</p>
@@ -68,12 +68,12 @@
         <div id="lobby-inf" class="screen-sub inf-sub"></div>
         <!-- 함께하기: 각자 보드, 각자 속도. 서버(Cloudflare Worker + Durable Object)가 방·중계·순위만 맡는다 -->
         <div id="mp-block">
-          <div class="mp-head">&#128101; 인피니티 · 함께 <small>2~4인 · 도전 규칙(101웨이브 완주) · 각자 자기 속도로 · 먼저 완주하면 1위</small></div>
+          <div class="mp-head"><span class="bi" data-icon="users">&#128101;</span>인피니티 · 함께 <small>2~4인 · 도전 규칙(101웨이브 완주) · 각자 자기 속도로 · 먼저 완주하면 1위</small></div>
           <div class="mp-row"><label for="mp-name">이름</label><input id="mp-name" type="text" maxlength="12" placeholder="플레이어" autocomplete="nickname" spellcheck="false"></div>
           <div class="lobby-btns mp-btns">
             <button id="mp-create" class="big-btn inf"><span class="bi" data-icon="users">&#128101;</span>방 만들기<small>친구에게 코드 공유</small></button>
-            <button id="mp-join" class="big-btn alt"><span class="bi" data-icon="copy">&#128273;</span>코드로 참가<small>6자리</small></button>
-            <button id="mp-quick" class="big-btn alt"><span class="bi" data-icon="wave">&#9889;</span>빠른 매칭<small>2명 이상 10초 · 4명 즉시</small></button>
+            <button id="mp-join" class="big-btn alt"><span class="bi" data-icon="enter">&#128273;</span>코드로 참가<small>6자리</small></button>
+            <button id="mp-quick" class="big-btn alt"><span class="bi" data-icon="speed3">&#9889;</span>빠른 매칭<small>2명 이상 10초 · 4명 즉시</small></button>
           </div>
           <form id="mp-join-form" class="hidden" autocomplete="off">
             <input id="mp-code" type="text" maxlength="6" autocapitalize="characters" inputmode="latin" placeholder="ABC123" spellcheck="false" aria-label="방 코드">
@@ -229,10 +229,10 @@
     <h3>메뉴</h3>
     <div id="menu-note" class="screen-sub"></div>
     <button id="menu-resume" class="big-btn" type="button">계속하기</button>
-    <button id="menu-pause" class="back-btn" type="button">⏸ 일시정지</button>
-    <button id="menu-settings" class="back-btn" type="button">🔊 볼륨 조절</button>
-    <button id="menu-help" class="back-btn" type="button">❓ 게임 방법</button>
-    <button id="menu-quit" class="back-btn danger" type="button">포기하고 나가기</button>
+    <button id="menu-pause" class="back-btn" type="button"><span class="bi" data-icon="pause">&#9208;</span><span id="menu-pause-txt">일시정지</span></button>
+    <button id="menu-settings" class="back-btn" type="button"><span class="bi" data-icon="sound">&#128266;</span>볼륨 조절</button>
+    <button id="menu-help" class="back-btn" type="button"><span class="bi" data-icon="help">&#10067;</span>게임 방법</button>
+    <button id="menu-quit" class="back-btn danger" type="button"><span class="bi" data-icon="close">&#10060;</span><span id="menu-quit-txt">포기하고 나가기</span></button>
   </div>
 </div>
 <div id="toast" class="hidden"></div>
@@ -259,9 +259,9 @@
   <div id="ghost-ring"></div>
 </div>
 <!-- APP -->
-<script src="music.js?v=81"></script>
-<script src="net.js?v=81"></script>
-<script src="content.js?v=81"></script>
-<script src="game.js?v=81"></script>
+<script src="music.js?v=82"></script>
+<script src="net.js?v=82"></script>
+<script src="content.js?v=82"></script>
+<script src="game.js?v=82"></script>
 </body>
 </html>

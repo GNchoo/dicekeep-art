@@ -1550,6 +1550,8 @@ const SLOT = {
   R: m3id(), w: [0, 0, 0], final: 1,
   from: null, axis: [0, 0, 1], ang: 0, sndT: 0,
 };
+// 굴림이 끝난 뒤 화면 중앙에 잠깐 남는 주사위 (획득 연출과 겹쳐 '이게 나왔다'를 보여준다). drawCenterRoll 이 그린다
+const ROLL_SHOW = { t: 0, dur: 0.45, R: null, kind: 'd6' };
 
 // 새 굴림을 시작해도 되는가 — 손이 비어 있고 슬롯이 놀고 있을 때만. 뽑기·보상 큐·캐주얼 굴림이 전부 이 하나를 본다
 // (손에 든 주사위를 덮어쓰는 경로가 생기지 않도록 게이트를 한 곳에 둔다)
@@ -1626,11 +1628,13 @@ function buyChest() {
   const rk = ch.rank(kind);
   const rare = rk >= 5 ? 3 : rk === 4 ? 2 : rk === 3 ? 1 : 0;
   const col = dieKindColor(kind);
-  S.texts.push({ str: kind === 'd1' ? '꽝… 일반: 외눈 주사위' : `보물상자: ${ch.grade[kind]} — ${ch.label[kind]} 획득!`, x: W / 2, y: 140, t: 0, color: col });
-  S.fxs.push({ kind: 'ring', x: W / 2, y: 150, t: 0, dur: 0.6 + rare * 0.2, size: 90 + rare * 40, color: col });
-  if (rk >= 3) spawnBurst(W / 2, 150, col, 6 + rk * 3, 80 + rk * 20, 0.6);
-  if (rk >= 6) { S.shakeT = Math.max(S.shakeT || 0, 0.3); S.fxs.push({ kind: 'circle', x: W / 2, y: 150, t: 0, dur: 1.2, size: 200, color: col }); }
-  if (rk >= 3 && hasArt('chestOpen')) S.fxs.push({ kind: 'chestOpen', x: W / 2, y: 150, t: 0, dur: 0.6 + rare * 0.15, size: 220 + rare * 40, add: true });
+  // 글자는 위쪽 HUD 바로 아래, 상자 열림·링·버스트는 주사위가 크게 뜨는 화면 중앙(drawCenterRoll)과 같은 자리
+  S.texts.push({ str: kind === 'd1' ? '꽝… 일반: 외눈 주사위' : `보물상자: ${ch.grade[kind]} — ${ch.label[kind]} 획득!`, x: W / 2, y: topTextY(), t: 0, color: col });
+  const fx = W / 2, fy = H / 2;
+  S.fxs.push({ kind: 'ring', x: fx, y: fy, t: 0, dur: 0.6 + rare * 0.2, size: 140 + rare * 50, color: col });
+  if (rk >= 3) spawnBurst(fx, fy, col, 6 + rk * 3, 100 + rk * 24, 0.6);
+  if (rk >= 6) { S.shakeT = Math.max(S.shakeT || 0, 0.3); S.fxs.push({ kind: 'circle', x: fx, y: fy, t: 0, dur: 1.2, size: 260, color: col }); }
+  if (rk >= 3 && hasArt('chestOpen')) S.fxs.push({ kind: 'chestOpen', x: fx, y: fy, t: 0, dur: 0.6 + rare * 0.15, size: 260 + rare * 50, add: true });
   if (rare >= 2) SFX.win(); else if (kind === 'd1') SFX.deny(); else SFX.coin();
   if (rk >= 3) netLog(`${ch.grade[kind]} ${ch.label[kind]}를 뽑았습니다`, 'gacha'); // 유물 이상은 방에 알린다
   rollDie(kind); // 뽑으면 무조건 굴러서 타워가 된다 — 배치부터 하고 다시 뽑는다
@@ -1670,6 +1674,7 @@ function pumpQueue() {
 function finishSlot() {
   if (S.heldDie) return;             // 손이 차 있으면 절대 덮어쓰지 않는다 — 슬롯은 '완성 대기'로 남아 손이 빌 때 온다
   SLOT.active = false;
+  ROLL_SHOW.t = ROLL_SHOW.dur; ROLL_SHOW.R = SLOT.R; ROLL_SHOW.kind = SLOT.kind || 'd6';
   S.heldDie = SLOT.final;
   S.dieFocus = true;      // 새로 온 주사위는 배치 모드로 시작
   if (SLOT.final <= 6) SFX.coin();   // ★7+ 는 acquireFx 가 소리를 낸다 (겹침 방지)
@@ -1689,7 +1694,7 @@ function acquireFx(face) {
   const tier = face <= 6 ? 0 : face >= 19 ? 4 : face >= 15 ? 3 : face >= 11 ? 2 : 1;   // ★7~10 · ★11~14 · ★15~18 · ★19~20
   if (hasArt('acquireBurst')) acquireFxArt(face, tier, col, cx, cy); else acquireFxCode(face, tier, col, cx, cy);
   if (!tier) return;
-  S.texts.push({ str: `★${face}성 ${name} 획득!`, x: cx, y: 120, t: 0, color: col, big: true });
+  S.texts.push({ str: `★${face}성 ${name} 획득!`, x: cx, y: topTextY() + 34, t: 0, color: col, big: true });
   if (tier >= 3) { S.glowT = 0.9; S.glowColor = col; }        // 화면 가장자리 빛 (★15+)
   S.shakeT = Math.max(S.shakeT || 0, [0, 0.2, 0.3, 0.5, 0.7][tier]);
   if (tier >= 4) SFX.jackpot(); else if (tier >= 3) SFX.win(); else SFX.merge();
@@ -1875,6 +1880,43 @@ function drawSlot() {
     return;
   }
   drawCube(sctx, 37, 40 - bounce, 17, SLOT.R);
+}
+
+// 굴리는 동안 아레나 한가운데에 큰 주사위. 획득 연출(acquireFx)이 같은 자리(W/2,H/2)에서 터지므로 굴림→결과가 한 곳에서 이어진다.
+// 상대 필드를 보는 중(VIEW)에는 내 굴림을 그리지 않는다
+function drawCenterRoll() {
+  if (VIEW.pid || S.phase !== 'playing') return;
+  const live = SLOT.active, linger = !live && ROLL_SHOW.t > 0 && ROLL_SHOW.R;
+  if (!live && !linger) return;
+  const cx = W / 2, cy = H / 2;
+  const base = Math.round(Math.min(W, H) * 0.085);   // 큐브 반변 — 세로 아레나(720 폭)에서 61 → 주사위가 화면 폭의 1/5 쯤
+  const kind = live ? (SLOT.kind || 'd6') : ROLL_SHOW.kind, R = live ? SLOT.R : ROLL_SHOW.R;
+  const poly = kind !== 'd6';
+  let scale = 1, alpha = 1, bounce = 0, glow = 0;
+  if (live) {
+    if (SLOT.t < 0.16) scale = 0.55 + 0.45 * (SLOT.t / 0.16);                      // 팝인
+    bounce = SLOT.phase === 0 ? Math.abs(Math.sin(SLOT.t * 16)) * base * 0.35 : 0; // 튀기
+    if (SLOT.phase === 1) glow = Math.min(1, SLOT.t2 / 0.25);                     // 멈추면서 금빛
+  } else {
+    const p = ROLL_SHOW.t / ROLL_SHOW.dur;                                          // 여운: 살짝 커지며 사라진다
+    alpha = Math.min(1, p * 1.6); scale = 1 + (1 - p) * 0.3; glow = p;
+  }
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  const halo = ctx.createRadialGradient(cx, cy, base * 0.5, cx, cy, base * 2.8);   // 어두운 원반 — 배경 위에서 주사위가 읽히게
+  halo.addColorStop(0, 'rgba(0,0,0,0.46)'); halo.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = halo; ctx.beginPath(); ctx.arc(cx, cy, base * 2.8, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = 'rgba(0,0,0,0.38)';                                               // 바닥 그림자 (튀어오르면 작아진다)
+  const sh = 1 - bounce / (base * 0.35) * 0.3;
+  ctx.beginPath(); ctx.ellipse(cx, cy + base * 1.35, base * 1.15 * scale * sh, base * 0.4 * scale * sh, 0, 0, Math.PI * 2); ctx.fill();
+  const size = base * scale, dy = cy - bounce;
+  if (poly) {
+    if (glow > 0) { const g = ctx.createRadialGradient(cx, dy, size * 0.3, cx, dy, size * 2.4); g.addColorStop(0, hexA('#ffd452', 0.4 * glow)); g.addColorStop(1, hexA('#ffd452', 0)); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, dy, size * 2.4, 0, Math.PI * 2); ctx.fill(); }
+    drawPolyDie(ctx, cx, dy, size * 1.24, dieShape(kind), R, dieKindColor(kind));
+  } else {
+    drawCube(ctx, cx, dy, size, R, glow > 0 ? '#ffd452' : null, glow * 0.6);
+  }
+  ctx.restore();
 }
 
 // 현재 자세에서 화면(위)을 향한 눈
@@ -2818,6 +2860,7 @@ function update(dt) {
   S.corpses = S.corpses.filter(c => c.t < c.dur);
   if (S.shakeT > 0) S.shakeT -= dt;
   if (S.bannerT > 0) S.bannerT -= dt;
+  if (ROLL_SHOW.t > 0) ROLL_SHOW.t -= dt;
 
   // 타워 공격
   for (const t of S.towers) towerFire(t, dt);
@@ -3611,6 +3654,8 @@ function draw() {
 
   // 물리 주사위 (개체 위에 표시)
   drawDie();
+  // 뽑기·굴림 주사위를 화면 중앙에 크게 (좌하단 슬롯의 작은 굴림은 그대로 두고, 눈에 띄는 쪽을 하나 더)
+  drawCenterRoll();
 
   // 플로팅 텍스트
   for (const t of S.texts) {
@@ -3666,8 +3711,8 @@ function draw() {
     while (fs > 12 && ctx.measureText(msg).width > W - 48) { fs -= 1; ctx.font = uiFont(fs); }
     const tw = ctx.measureText(msg).width;
     const pw = Math.min(W - 40, tw + 34), ph = fs + 18;
-    // 좌상단 칩(HTML) 바로 아래. 칩 높이는 화면 기준이라 캔버스로 환산한다
-    const by = Math.round(58 / sc + ph / 2);   // 칩·미니버튼(화면 기준 ~52px) 아래
+    // 좌상단 칩·우상단 미니 버튼(HTML) 바로 아래. 높이는 화면 기준이라 캔버스로 환산한다 (좁은 세로 화면은 미니 버튼이 둘째 줄로 내려온다)
+    const by = Math.round(hudTopPx() / sc + ph / 2);
     ctx.fillStyle = 'rgba(14,10,6,0.72)';
     ctx.strokeStyle = 'rgba(232,182,74,0.5)';
     ctx.lineWidth = 1.5;
@@ -3928,7 +3973,7 @@ function syncUIRest() {
     heldInfo.classList.remove('hidden');
     heldInfo.classList.toggle('parked', !S.dieFocus);
     heldInfo.style.setProperty('--elem', def.color);
-    $('held-name').textContent = (S.dieFocus ? '' : '보류 중 · ') + def.name;
+    $('held-name').textContent = (S.dieFocus ? '' : '보류 · ') + def.name;
     $('held-desc').textContent = S.dieFocus ? def.desc + ' · 같은 눈 타워에 놓으면 합체' : '주사위 칸을 다시 누르면 배치 모드로 돌아갑니다';
     const hs = $('held-sell');   // 약한 눈이 나와 놓을 데가 없을 때: 놓지 않고 바로 판다 (★7+ 는 판매 불가 규칙 그대로)
     if (hs) { const canSell = S.phase === 'playing' && !(S.mode === 'infinity' && S.heldDie >= 7); hs.classList.toggle('hidden', !canSell); hs.textContent = `바로 판매 +${sellPrice({ face: S.heldDie, lvl: 1 })}G`; }
@@ -3943,7 +3988,7 @@ function syncUIRest() {
   diceSlot.classList.toggle('rolling', SLOT.active);
   if (S.mode === 'infinity') { // 인피니티: 뽑기 버튼 (보물상자)
     const cost = chestCost();
-    rollBtn.childNodes[0].nodeValue = '🎁 뽑기';
+    rollBtn.childNodes[0].nodeValue = document.body.classList.contains('ui-art') ? '뽑기' : '🎁 뽑기';   // 그림 아이콘(::before 상자)이 있으면 이모지는 뺀다 (아이콘 두 개 방지)
     rollBtn.title = '골드로 주사위를 뽑습니다. 등급이 정해지고 바로 굴러 타워가 되니 먼저 석단에 배치하세요 (굴려 나온 숫자 = 성★)\n일반 50% · 레어 33.1% · 고대 10.2% · 유물 5.1% · 서사 0.8% · 전설 0.5% · 에픽 0.2% · 신화 0.08% · 태초 0.019%';
     const busy = SLOT.active || !!S.heldDie;
     const full = !busy && !canPlaceAnywhere();   // 빈 칸도 합체 여지도 없다
@@ -4265,15 +4310,15 @@ function relayoutArena(key, force) {
 function syncInfButtons() {
   const INF = window.DKCONTENT && DKCONTENT.INFINITY;
   const line = (INF && INF.clearWave) || 101;
-  const setBtn = (id, icon, name, sub) => {           // 도전 / 무한 두 갈래 (해금 없음)
+  const setBtn = (id, icon, emoji, name, sub) => {    // 도전 / 무한 두 갈래 (해금 없음)
     const b = $(id);
     if (!b) return;
     b.disabled = false;
     b.classList.remove('locked');
-    b.innerHTML = `${icon} 인피니티 · ${name}<small>${sub}</small>`;
+    b.innerHTML = `<span class="bi" data-icon="${icon}">${emoji}</span>인피니티 · ${name}<small>${sub}</small>`;   // 아이콘 슬롯(.bi): 그림이 있으면 ui/icon-*.png, 없으면 이모지
   };
-  setBtn('btn-inf-clear', '&#127942;', '도전', `${line}웨이브 완주 = 클리어`);
-  setBtn('btn-infinity', '&#8734;', '무한', '끝이 없는 기록 도전');
+  setBtn('btn-inf-clear', 'trophy', '&#127942;', '도전', `${line}웨이브 완주 = 클리어`);
+  setBtn('btn-infinity', 'infinity', '&#8734;', '무한', '끝이 없는 기록 도전');
   const setBanner = (id, txt) => {
     const b = $(id);
     if (!b) return;
@@ -4444,6 +4489,19 @@ function canvasToClient(cx, cy) {
 // 스테이지가 줄어들면 캔버스 내부 좌표 1px 이 화면에서 1px 보다 작아진다.
 // 터치 판정은 화면(CSS px) 기준으로 고정해야 작은 폰에서도 석단을 누를 수 있다.
 function stageScale() { const r = canvas.getBoundingClientRect(); return r.width > 0 ? r.width / W : 1; }
+// 캔버스 위에 얹힌 HTML(좌상단 칩·우상단 미니 버튼)의 아래 끝 — 캔버스 위쪽 기준 css px. 안내 말풍선을 그 밑에 놓는다. 0.5초 캐시
+let HUD_TOP = { v: 58, at: -1e9 };
+// 위쪽 HUD·안내 말풍선 밑에 놓는 알림 글자의 y (캔버스 좌표)
+function topTextY() { const sc = stageScale() || 1; return Math.round((hudTopPx() + 62) / sc); }
+function hudTopPx() {
+  const now = performance.now();
+  if (now - HUD_TOP.at < 500) return HUD_TOP.v;
+  HUD_TOP.at = now;
+  const cr = canvas.getBoundingClientRect(); let bottom = 0;
+  for (const id of ['stats', 'mini-top']) { const el = $(id); if (!el || el.classList.contains('hidden')) continue; const r = el.getBoundingClientRect(); if (r.height > 0) bottom = Math.max(bottom, r.bottom - cr.top); }
+  HUD_TOP.v = Math.max(58, Math.round(bottom + 6));
+  return HUD_TOP.v;
+}
 // 화면 기준 반경(css px) 을 캔버스 내부 좌표 여유로 바꾼다
 function touchExtra(cssRadius) { return Math.max(6, cssRadius / stageScale() - SPOT_R); }
 function spotAt(x, y, extra) {
@@ -4920,7 +4978,11 @@ function menuOpen() { return !$('menu').classList.contains('hidden'); }
 function setPaused(on) {
   S.paused = !!on && !S.net && S.phase === 'playing';
   const b = $('menu-pause');
-  if (b) { b.disabled = !!S.net || S.phase !== 'playing'; b.textContent = S.net ? '⏸ 일시정지 (멀티에서는 불가)' : S.paused ? '▶ 재개 (메뉴는 열어 둠)' : '⏸ 일시정지'; }
+  if (b) {
+    b.disabled = !!S.net || S.phase !== 'playing';
+    $('menu-pause-txt').textContent = S.net ? '일시정지 (멀티에서는 불가)' : S.paused ? '재개 (메뉴는 열어 둠)' : '일시정지';
+    b.querySelector('.bi').dataset.icon = S.paused ? 'speed1' : 'pause';
+  }
   if (window.DKBGM) { try { DKBGM.duck(S.paused ? 0.35 : 1, 0.3); } catch (e) { /* 무시 */ } }
 }
 function openMenu() {
@@ -4929,7 +4991,7 @@ function openMenu() {
   $('menu').classList.remove('hidden');
   const spec = S.phase === 'spectate';
   $('menu-note').innerHTML = spec ? '관전 중입니다. 기록·젬은 이미 저장됐습니다.' : S.net ? '<b>함께하기</b> 중에는 게임이 멈추지 않습니다. 포기하면 관전으로 넘어가고 기록·젬은 저장됩니다.' : (S.mode === 'infinity' ? '메뉴가 열려 있는 동안 게임이 멈춥니다. 포기하면 지금까지의 기록·젬이 저장됩니다.' : '메뉴가 열려 있는 동안 게임이 멈춥니다.');
-  $('menu-quit').textContent = spec ? '관전 끝내고 나가기' : S.mode === 'infinity' ? '포기하고 나가기 (기록 저장)' : '스테이지 선택으로 나가기';
+  $('menu-quit-txt').textContent = spec ? '관전 끝내고 나가기' : S.mode === 'infinity' ? '포기하고 나가기 (기록 저장)' : '스테이지 선택으로 나가기';
   $('menu-help').classList.toggle('hidden', S.mode !== 'infinity');
   setPaused(!spec);
 }

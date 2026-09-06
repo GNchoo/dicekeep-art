@@ -345,7 +345,9 @@ body { touch-action: manipulation; }
 #wrap.bleed #rotate-hint { display: none !important; }
 #wrap.bleed:not(.over) #tower-panel { order: 2; flex: 1 1 0; min-width: 0; min-height: 0; padding: 0 8px; }
 #wrap.bleed #wave-btn { white-space: nowrap; min-width: 0; }
-#wrap.bleed:not(.over) #held-info { max-width: none; }
+#wrap.bleed:not(.over) #held-info { max-width: none; flex: 1 1 auto; }
+/* 폰(bleed): 손에 든 주사위 상태창과 안내 문장이 한 칸에 같이 들어갈 폭이 없다 — 상태창이 있으면 안내는 숨긴다 (겹침 방지) */
+#wrap.bleed #held-info:not(.hidden) ~ #hud-hint { display: none; }
 #wrap.bleed:not(.over) #hud-hint { font-size: 11px; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 #wrap.bleed:not(.over) #inf-panel { order: 5; width: 100%; margin-left: 0; justify-content: center; }
 /* 타워 정보 카드: HUD 가 낮으니 카드는 HUD 아래 모서리에 붙어 위(아레나 쪽)로 자란다 */
@@ -440,7 +442,9 @@ body { touch-action: manipulation; }
 #slot-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 /* 손에 든 주사위를 잠시 내려놓은 상태 — 석단 클릭이 타워 선택으로 간다 */
 #dice-slot.unfocused { border-color: #6b5636; box-shadow: inset 0 3px 10px rgba(0,0,0,.85), var(--edge-sm); }
-#dice-slot.unfocused img { opacity: .42; filter: grayscale(.6); }
+#dice-slot.unfocused img { opacity: .62; filter: saturate(.45) brightness(.9); }
+#dice-slot.unfocused::after { content: '보류'; position: absolute; left: 50%; bottom: 3px; transform: translateX(-50%); font-size: 10px; line-height: 1; padding: 2px 6px; border-radius: var(--r-pill); color: #e8dcc0; background: rgba(20,14,8,.85); border: 1px solid #6b5636; font-family: var(--font-display); white-space: nowrap; pointer-events: none; }
+#wrap.over #dice-slot.unfocused::after, #wrap.over.narrow #dice-slot.unfocused::after { font-size: 8px; padding: 1px 4px; bottom: 1px; }
 #dice-slot.rolling { border-color: var(--gold); box-shadow: inset 0 3px 10px rgba(0,0,0,.7), var(--glow-gold); }
 #dice-slot.pop { animation: pop .32s ease-out; }
 @keyframes pop {
@@ -471,7 +475,7 @@ body { touch-action: manipulation; }
 
 /* 획득한 주사위 안내 */
 #held-info {
-  display: flex; flex-direction: column; justify-content: center; gap: 3px;
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: 'name name' 'desc sell'; align-items: center; align-content: center; column-gap: 8px; row-gap: 3px;
   border-left: 3px solid var(--elem, var(--gold));
   padding: 6px 12px;
   background: rgba(0,0,0,.3);
@@ -480,8 +484,8 @@ body { touch-action: manipulation; }
   max-width: 200px;
   min-width: 0;
 }
-#held-info b { color: var(--elem, var(--gold)); font-size: 14px; white-space: nowrap; }
-#held-info span { color: #cfc3a5; font-size: 11px; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+#held-info b { grid-area: name; color: var(--elem, var(--gold)); font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#held-info span { grid-area: desc; color: #cfc3a5; font-size: 11px; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 @keyframes slidein {
   from { opacity: 0; transform: translateX(-8px); }
   to { opacity: 1; transform: translateX(0); }
@@ -1140,7 +1144,7 @@ button, .inf-face, .mini button, .rival, .chip { -webkit-tap-highlight-color: tr
    그림 UI 는 로고·아이콘·주사위 소켓만 쓴다. 다시 켜려면 아래 주석의 규칙을 살린다.
    body.ui-art #hud { border: 12px solid transparent; border-image: url(ui/frame-panel.png) 24 fill / 12px stretch; }
    body.ui-art .big-btn { border: 10px solid transparent; border-image: url(ui/btn-gold.png) 16 fill / 10px stretch; } */
-body.ui-art #dice-slot { background: url(ui/slot-socket.png) center / 100% 100% no-repeat; border: 0; box-shadow: none; }
+/* 주사위 슬롯 받침 그림(ui/slot-socket.png)은 쓰지 않는다 — 보류 상태에서 주사위가 받침에 묻혀 안 보였다. CSS 슬롯이 최종 */
 body.ui-art .mini button[data-icon] { background-position: center; background-size: 22px 22px; background-repeat: no-repeat; font-size: 0; }
 body.ui-art .mini button[data-icon] svg { display: none; }
 body.ui-art .bi[data-icon] { font-size: 0; background-position: center; background-size: contain; background-repeat: no-repeat; }
@@ -1169,6 +1173,10 @@ body.ui-art [data-icon=stage] { background-image: url(ui/icon-stage.png); }
 body.ui-art [data-icon=copy] { background-image: url(ui/icon-copy.png); }
 body.ui-art [data-icon=gem] { background-image: url(ui/icon-gem.png); }
 body.ui-art [data-icon=close] { background-image: url(ui/icon-close.png); }
+body.ui-art [data-icon=enter] { background-image: url(ui/icon-back.png); transform: scaleX(-1); }   /* 참가 = 뒤로 화살표를 뒤집은 '들어가기' */
+body.ui-art .bi[data-icon=pause] { background-image: linear-gradient(#f4cf73, #d9a640), linear-gradient(#f4cf73, #d9a640); background-size: 5px 16px, 5px 16px; background-position: calc(50% - 5px) center, calc(50% + 5px) center; background-repeat: no-repeat; }   /* 일시정지 막대 두 개 (그림 없음) */
+body.ui-art .icon-btn[data-icon] { font-size: 0; background-position: center; background-size: 22px 22px; background-repeat: no-repeat; }
+.mp-head .bi { width: 22px; height: 22px; margin-right: 4px; vertical-align: -5px; }
 
 /* ---- 좁은 가로(작은 폰 가로, fitStage 가 narrow/xnarrow 를 붙인다): 겹침 HUD 한 줄에 다 들어가도록 줄인다 ---- */
 #wrap.over.narrow #hud { gap: 6px; padding-left: max(6px, var(--sa-l)); padding-right: max(6px, var(--sa-r)); }
@@ -1246,7 +1254,8 @@ body.ui-art #overlay-box.result #ov-logo { display: none; }
 #menu { position: fixed; inset: 0; z-index: 55; display: flex; align-items: center; justify-content: center; padding: max(12px, var(--sa-t)) max(12px, var(--sa-r)) max(12px, var(--sa-b)) max(12px, var(--sa-l)); background: rgba(0,0,0,.72); }
 #menu.hidden { display: none; }
 .menu-card { max-width: 320px; gap: 8px; }
-.menu-card .back-btn, .menu-card .big-btn { width: 100%; text-align: center; }
+.menu-card .back-btn, .menu-card .big-btn { width: 100%; text-align: center; display: flex; align-items: center; justify-content: center; gap: 6px; }
+.menu-card .bi { margin: 0; width: 22px; height: 22px; font-size: 16px; vertical-align: 0; }
 .menu-card .back-btn:disabled { opacity: .45; cursor: default; filter: none; }
 .menu-card .back-btn.danger { border-color: #a3563f; color: #ffb3a3; }
 #menu-note { margin: 0 0 4px; font-size: 12px; min-height: 16px; }
@@ -1256,7 +1265,7 @@ body.ui-art #overlay-box.result #ov-logo { display: none; }
 .rv-board .cell { overflow: hidden; }
 #held-info.parked { border-left-style: dashed; opacity: .85; }
 #held-info.parked b { color: var(--ink-2); }
-#held-sell { align-self: flex-start; margin-top: 2px; padding: 3px 9px; font-size: 11px; font-family: var(--font-display); color: #ffd6a0; background: var(--btn-danger); border: 1px solid var(--btn-danger-line); border-radius: var(--r-pill); cursor: pointer; box-shadow: var(--bevel); }
+#held-sell { grid-area: sell; align-self: center; justify-self: end; white-space: nowrap; padding: 3px 9px; font-size: 11px; font-family: var(--font-display); color: #ffd6a0; background: var(--btn-danger); border: 1px solid var(--btn-danger-line); border-radius: var(--r-pill); cursor: pointer; box-shadow: var(--bevel); }
 #held-sell.hidden { display: none; }
 #wrap.over #held-sell { padding: 2px 7px; font-size: 10px; }
 #stage.viewing #spec-pill { top: calc(max(6px, var(--sa-t)) + 104px); }
