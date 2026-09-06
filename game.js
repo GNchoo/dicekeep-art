@@ -724,8 +724,6 @@ const BASE = (() => {
 })();
 const SRCS = {
   map: BASE + 'map/battlefield.jpg',
-  // 키아트(산 위 주사위 성): 가로용은 제목 글자 없는 윗부분(CSS 제목을 얹는다), 세로용은 그림 안의 돌 제목까지 (CSS 제목은 숨긴다)
-  keyart: BASE + 'ui/title-keyart-l.jpg', keyartP: BASE + 'ui/title-keyart-p.jpg',
   gold: BASE + 'ui/gold.png', heart: BASE + 'ui/heart.png',
   d1: BASE + 'dice/dice-1.png', d2: BASE + 'dice/dice-2.png', d3: BASE + 'dice/dice-3.png',
   d4: BASE + 'dice/dice-4.png', d5: BASE + 'dice/dice-5.png', d6: BASE + 'dice/dice-6.png',
@@ -936,7 +934,7 @@ async function loadAssets(onProgress) {
     for (const b of DKCONTENT.bossBases) if (b.walk) sheets.push(b.walk);
     if (DKCONTENT.INFINITY && DKCONTENT.INFINITY.artList) for (const a of DKCONTENT.INFINITY.artList()) if (a.sheet) sheets.push(a.key);
   }
-  const raw = ['map', 'keyart', 'keyartP'];
+  const raw = ['map'];
   if (window.DKCONTENT) for (const m of DKCONTENT.maps) if (m.src) raw.push(m.key);
   const isTexture = (k) => /^tl_.*_(floor|road|water|road-straight|board)$/.test(k); // 질감·바닥: 배경 제거 없이 그대로
   let pi = 0;
@@ -3949,7 +3947,7 @@ function dieIconURL(face) {
 }
 
 function syncUI() { syncStats(); syncUIRest(); }
-// 상단 칩 (골드·목숨·웨이브/보스 시간) — frame() 이 4Hz 로도 부른다
+// 상단 칩 (골드·목숨·웨이브) — syncUI 에서만 돈다. 보스 남은 시간·막간 카운트다운은 draw() 의 캔버스 말풍선이 매 프레임 그린다
 function syncStats() {
   $('gold-val').textContent = S.gold;
   $('lives-val').textContent = S.lives;
@@ -5648,7 +5646,6 @@ function frame(ts) {
     updateSlot(dt * S.speed);   // 뽑기 슬롯은 배속을 따라간다 (x3 에서 보상 큐가 굳지 않게)
   }
   if (S.net) mpTick();
-  // 보스 제한시간·막간 카운트다운은 매 프레임 바뀌므로 칩 문구를 4Hz 로 따로 갱신한다 (syncUI 는 이벤트 때만 돈다)
   if (VIEW.pid) { mpViewAdvance(dt); withView(draw); }   // 상대 필드 보기: 내 시뮬은 위에서 돌았고, 그리기만 상대 것으로
   else draw();
   drawSlot();
@@ -5674,9 +5671,11 @@ function drawLoading(pr) {
 
 (async () => {
   // 키아트는 로딩 첫 프레임부터 깔린다 (CSS 가 직접 받아온다 — 에셋 로딩을 기다리면 로딩 화면이 검은 화면이 된다)
-  document.body.style.setProperty('--keyart-bg', `linear-gradient(rgba(5,4,3,.45), rgba(5,4,3,.7)), url('${SRCS.keyart}')`);
-  document.body.style.setProperty('--keyart-title', `linear-gradient(rgba(5,4,3,.10), rgba(5,4,3,.10) 45%, rgba(5,4,3,.82) 100%), url('${SRCS.keyart}')`);      // 가로·데스크톱 타이틀: 그림 위에 CSS 제목, 아래만 어둡게
-  document.body.style.setProperty('--keyart-title-p', `linear-gradient(rgba(5,4,3,.04), rgba(5,4,3,.04) 80%, rgba(5,4,3,.55) 100%), url('${SRCS.keyartP}')`);   // 세로 타이틀: 그림의 돌 제목을 그대로, 맨 아래(버튼 자리)만 살짝
+  // 키아트(산 위 주사위 성)는 CSS 배경으로만 쓴다 — SRCS 에 넣으면 loadAssets 가 두 방향을 다 내려받는다. CSS 는 미디어 쿼리에 맞는 한 장만 받는다
+  const KEYART = { l: BASE + 'ui/title-keyart-l.jpg', p: BASE + 'ui/title-keyart-p.jpg' };   // l: 제목 없는 윗부분(CSS 제목을 얹는다) · p: 그림 안의 돌 제목까지
+  document.body.style.setProperty('--keyart-bg', `linear-gradient(rgba(5,4,3,.45), rgba(5,4,3,.7)), url('${KEYART.l}')`);
+  document.body.style.setProperty('--keyart-title', `linear-gradient(rgba(5,4,3,.10), rgba(5,4,3,.10) 45%, rgba(5,4,3,.82) 100%), url('${KEYART.l}')`);      // 가로·데스크톱 타이틀: 그림 위에 CSS 제목, 아래만 어둡게
+  document.body.style.setProperty('--keyart-title-p', `linear-gradient(rgba(5,4,3,.04), rgba(5,4,3,.04) 80%, rgba(5,4,3,.55) 100%), url('${KEYART.p}')`);   // 세로 타이틀: 그림의 돌 제목을 그대로, 맨 아래(버튼 자리)만 살짝
   drawLoading(0);
   $('ov-btn').disabled = true;
   try {
