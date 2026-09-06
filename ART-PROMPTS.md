@@ -890,8 +890,8 @@ Play 스토어 / App Store 출시(Capacitor, appId `com.fallman.dicekeep`, 이�
 | `resources/icon-foreground.png` | 1024², 투명 | Android 적응형 아이콘 전경 | 위와 같음 |
 | `resources/icon-background.png` | 1024², 불투명 | Android 적응형 아이콘 배경 | 위와 같음 |
 | `resources/splash.png` · `splash-dark.png` | 2732², 불투명 | 스플래시(라이트/다크) | `@capacitor/splash-screen` |
-| `ui/splash-logo.png` | 1024², 투명 | 웹 로딩 화면 로고 | 로더 (없으면 글자 로고) |
-| `ui/logo.png` | 1024×512, 투명 | 타이틀 로고 엠블럼 (한글 제목은 CSS) | 타이틀 화면 (없으면 `title-keyart.jpg` + 글자) |
+| `ui/splash-logo.png` | 1024², 투명 | 앱 스플래시(`resources/splash.png`)용 엠블럼 | 웹 로딩 화면은 쓰지 않는다 — `title-keyart.jpg` 전면 + 글자 제목 |
+| `ui/logo.png` | 1024×512, 투명 | (보류) 타이틀 로고 엠블럼 | 웹 타이틀·로비는 쓰지 않는다 — 키아트 + 글자 제목으로 확정 |
 | `store/feature-graphic.png` | 1024×500 | Play 스토어 피처 그래픽 | 스토어 등록용 (게임 미사용) |
 | `ui/frame-panel.png` | 96², 투명, slice 24 | 어두운 패널 프레임 (메뉴·팝업) | CSS `border-image`, body `ui-art` |
 | `ui/frame-card.png` | 96², 투명, slice 24 | 밝은 카드 프레임 (결과·순위표·상점 카드) | 위와 같음 |

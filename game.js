@@ -3892,8 +3892,20 @@ function fitStage() {
   // 칩·미니버튼 축소는 뷰포트 폭이 아니라 실제 스테이지 폭으로 정한다 (가로 폰은 폭이 넓어도 스테이지가 좁다)
   stageEl.classList.toggle('small', w < 680);
   stageEl.classList.toggle('tiny', w < 520);
+  fitTopRow(w);
   if (window.__coachOn) coachRender();   // 링·말풍선도 새 배치에 맞춘다
   if (S.net && typeof mpLayoutCards === 'function') mpLayoutCards();   // 상대 요약 카드도 새 배치에 맞춘다
+}
+// 좌상단 칩 + 우상단 미니 버튼이 한 줄에 들어가면 같은 줄, 안 들어가면(작은 폰 + 멀티 채팅 버튼 등) 미니 버튼만 둘째 줄로.
+// 칩은 overflow:hidden 으로 줄어들 수 있어 scrollWidth(원래 폭)로 잰다 — 줄어든 폭으로 재면 항상 '들어간다'가 된다
+function fitTopRow(w) {
+  w = w || stageEl.clientWidth || stageEl.offsetWidth;
+  if (!w || miniEl.classList.contains('hidden') || statsEl.classList.contains('hidden')) { stageEl.classList.remove('mini-drop'); return; }
+  const sa = safeArea();
+  let chips = 0, n = 0;
+  for (const c of statsEl.children) { if (c.classList.contains('hidden') || !c.offsetWidth) continue; chips += Math.max(c.offsetWidth, c.scrollWidth + 2); n++; }
+  const need = Math.max(10, sa.l) + chips + 8 * Math.max(0, n - 1) + 8 + miniEl.offsetWidth + Math.max(10, sa.r);
+  stageEl.classList.toggle('mini-drop', need > w);
 }
 window.addEventListener('resize', fitStage);
 window.addEventListener('orientationchange', fitStage);
@@ -3957,6 +3969,7 @@ function syncStats() {
     ? `S${S.stage} · ${S.wave}/${S.stageWaves}`
     : `S${S.stage}${sd && sd.tierName ? ' ' + sd.tierName : ''} · 웨이브 ${S.wave} / ${S.stageWaves}`;
   $('wave-val').style.color = sd && sd.tierColor ? sd.tierColor : '';
+  if (S.phase === 'playing' && typeof fitTopRow === 'function') fitTopRow();   // 칩 글자 길이가 바뀌면 미니 버튼 줄도 다시 판정
 }
 function syncUIRest() {
   syncInfPanel();
@@ -4129,7 +4142,10 @@ const sellPrice = t => 6 + 5 * t.face + 12 * (t.lvl - 1);
 
 function showOverlay(title, descHTML, btnLabel) {
   bgmSync();
-  $('overlay-box').classList.toggle('result', S.phase !== 'title' && S.phase !== 'loading');
+  const isTitle = S.phase === 'title' || S.phase === 'loading';
+  $('overlay-box').classList.toggle('result', !isTitle);
+  $('overlay-box').classList.toggle('title', isTitle);
+  $('overlay').classList.toggle('title', isTitle);
   $('ov-title').textContent = title;
   $('ov-desc').innerHTML = descHTML;
   $('ov-btn').textContent = btnLabel;
@@ -4333,14 +4349,14 @@ function syncInfButtons() {
     const played = (SAVE.infBest || 0) > 0 || (SAVE.infRuns || []).length;
     info.innerHTML = played   // 처음이면 모드 설명, 해 봤으면 기록
       ? `최고 기록 <b>${SAVE.infBest || 0}</b> 웨이브 · 도전 클리어 <b>${SAVE.infClears || 0}</b>회${(SAVE.infRuns || []).length ? ` · 최근 ${SAVE.infRuns.slice(0, 3).map(r => r.wave).join(' / ')}` : ''}`
-      : `<b>도전</b>은 ${line}웨이브를 완주하면 클리어, <b>무한</b>은 끝이 없는 기록 도전입니다. 둘 다 6눈 타워와 석단 15칸이 처음부터 전부 열려 있습니다.`;
+      : `<b>도전</b> ${line}웨이브 완주 = 클리어 · <b>무한</b> 끝없는 기록`;
   }
 }
 
 function renderLobby() {
   $('lobby-gems').textContent = SAVE.gems;
   const un = (SAVE.unlockedTowers || []).length;
-  $('lobby-progress').innerHTML = `스테이지 클리어 <b>${SAVE.cleared.length}</b> / 50 · 스테이지용 해금 타워 <b>${un}</b>/6 <small>(인피니티는 6눈 전부 사용)</small>`;
+  $('lobby-progress').innerHTML = `스테이지 <b>${SAVE.cleared.length}</b>/50 클리어 · 해금 타워 <b>${un}</b>/6`;
   syncInfButtons();
 }
 
@@ -5653,10 +5669,11 @@ function drawLoading(pr) {
   const bar = $('ov-load-bar');
   const txt = $('ov-load-txt');
   const box = $('overlay-box');
-  if (box) box.classList.add('loading');
+  if (box) { box.classList.add('loading'); box.classList.add('title'); }
+  const ov = $('overlay'); if (ov) ov.classList.add('title');
   if (load) load.classList.remove('hidden');
   if (bar) bar.style.width = pct + '%';
-  if (txt) txt.textContent = '에셋 불러오는 중… ' + pct + '%';
+  if (txt) txt.textContent = '불러오는 중 ' + pct + '%';
 }
 
 (async () => {
@@ -5675,6 +5692,7 @@ function drawLoading(pr) {
     $('icon-gold').src = A.gold ? thumbURL(A.gold, 44, SRCS.gold) : SRCS.gold;
     $('icon-heart').src = A.heart ? thumbURL(A.heart, 44, SRCS.heart) : SRCS.heart;
     document.body.style.setProperty('--keyart-bg', `linear-gradient(rgba(5,4,3,.45), rgba(5,4,3,.7)), url('${SRCS.keyart}')`);
+    document.body.style.setProperty('--keyart-title', `linear-gradient(rgba(5,4,3,.12), rgba(5,4,3,.12) 45%, rgba(5,4,3,.82) 100%), url('${SRCS.keyart}')`);   // 타이틀: 그림을 살리고 아래만 어둡게
   } catch (e) { console.warn(e); }
   if (corsBlocked) {
     $('ov-desc').innerHTML += '<br><span style="color:#ff9f9f">⚠ file:// 로 열면 이미지 배경 보정이 생략됩니다. start.bat 또는 로컬 서버 사용을 권장합니다.</span>';

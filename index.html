@@ -7,8 +7,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="mobile-web-app-capable" content="yes" />
 <title>주사위 성채 (Dicekeep)</title>
-<link rel="stylesheet" href="fonts/fonts.css?v=83" />
-<link rel="stylesheet" href="style.css?v=83" />
+<link rel="stylesheet" href="fonts/fonts.css?v=84" />
+<link rel="stylesheet" href="style.css?v=84" />
 <link rel="icon" href="ui/gold.png" />
 </head>
 <body>
@@ -39,52 +39,45 @@
 
     <div id="overlay">
       <div id="overlay-box" class="loading">
-        <img id="ov-logo" class="logo" src="ui/logo.png" alt="" draggable="false">
+        <!-- 타이틀·로딩: 키아트 위에 제목과 진행 막대만. 설명은 결과 화면(#ov-desc)에서만 쓴다 -->
         <h1 id="ov-title">주사위 성채</h1>
         <div id="ov-load">
           <div id="ov-load-track"><div id="ov-load-bar"></div></div>
-          <span id="ov-load-txt">에셋 불러오는 중… 0%</span>
+          <span id="ov-load-txt">불러오는 중 0%</span>
         </div>
-        <p id="ov-desc">
-          주사위를 굴려 나온 눈(1~6)이 타워가 됩니다. <b>석단을 눌러</b> 놓고(끌어다 놓아도 됩니다),
-          같은 눈을 겹치면 <b>레벨 업</b>. <b>6눈이 가장 강합니다.</b><br>
-          <b>인피니티(무한 투기장)</b>는 처음부터 바로 할 수 있고, <b>스테이지 50개</b>는 차근차근 배우는 모드입니다.
-        </p>
-        <button id="ov-btn" disabled>게임 시작</button>
-        <p class="hint">스테이지: 필드 휙 던지기 · 적에게 던지면 속도 피해 &nbsp;·&nbsp; 인피니티: 골드로 뽑기</p>
+        <p id="ov-desc"></p>
+        <button id="ov-btn" class="big-btn primary" disabled>게임 시작</button>
       </div>
     </div>
 
     <div id="lobby" class="screen hidden">
       <div class="screen-box">
         <button id="lobby-settings" class="back-btn icon-btn" type="button" title="설정" aria-label="설정" data-icon="gear">&#9881;</button>
-        <img id="lobby-logo" class="logo" src="ui/logo.png" alt="" draggable="false">
         <h1>주사위 성채</h1>
-        <p class="screen-sub">바로 한 판 하려면 <b>인피니티</b>, 차근차근 배우려면 <b>스테이지</b>. 둘은 따로 돌아갑니다.</p>
         <div class="lobby-btns inf-btns">
-          <button id="btn-inf-clear" class="big-btn inf lobby-inf-btn"><span class="bi" data-icon="trophy">&#127942;</span>인피니티 · 도전<small>101웨이브 완주 = 클리어</small></button>
+          <button id="btn-inf-clear" class="big-btn primary lobby-inf-btn"><span class="bi" data-icon="trophy">&#127942;</span>인피니티 · 도전<small>101웨이브 완주 = 클리어</small></button>
           <button id="btn-infinity" class="big-btn inf lobby-inf-btn"><span class="bi" data-icon="infinity">&#8734;</span>인피니티 · 무한<small>끝이 없는 기록 도전</small></button>
         </div>
         <div id="lobby-inf" class="screen-sub inf-sub"></div>
         <!-- 함께하기: 각자 보드, 각자 속도. 서버(Cloudflare Worker + Durable Object)가 방·중계·순위만 맡는다 -->
         <div id="mp-block">
-          <div class="mp-head"><span class="bi" data-icon="users">&#128101;</span>인피니티 · 함께 <small>2~4인 · 도전 규칙(101웨이브 완주) · 각자 자기 속도로 · 먼저 완주하면 1위</small></div>
+          <div class="mp-head"><span class="bi" data-icon="users">&#128101;</span>인피니티 · 함께 <small>2~4인 · 각자 자기 판 · 먼저 완주하면 1위</small></div>
           <div class="mp-row"><label for="mp-name">이름</label><input id="mp-name" type="text" maxlength="12" placeholder="플레이어" autocomplete="nickname" spellcheck="false"></div>
           <div class="lobby-btns mp-btns">
             <button id="mp-create" class="big-btn inf"><span class="bi" data-icon="users">&#128101;</span>방 만들기<small>친구에게 코드 공유</small></button>
-            <button id="mp-join" class="big-btn alt"><span class="bi" data-icon="enter">&#128273;</span>코드로 참가<small>6자리</small></button>
-            <button id="mp-quick" class="big-btn alt"><span class="bi" data-icon="speed3">&#9889;</span>빠른 매칭<small>2명 이상 10초 · 4명 즉시</small></button>
+            <button id="mp-join" class="big-btn"><span class="bi" data-icon="enter">&#128273;</span>코드로 참가<small>6자리</small></button>
+            <button id="mp-quick" class="big-btn"><span class="bi" data-icon="speed3">&#9889;</span>빠른 매칭<small>2명 이상 10초 · 4명 즉시</small></button>
           </div>
           <form id="mp-join-form" class="hidden" autocomplete="off">
             <input id="mp-code" type="text" maxlength="6" autocapitalize="characters" inputmode="latin" placeholder="ABC123" spellcheck="false" aria-label="방 코드">
-            <button id="mp-join-go" class="big-btn" type="submit">참가</button>
+            <button id="mp-join-go" class="big-btn primary" type="submit">참가</button>
           </form>
           <div id="mp-status" class="screen-sub"></div>
         </div>
         <div class="lobby-sep"></div>
         <div class="lobby-btns">
-          <button id="btn-stage-select" class="big-btn alt"><span class="bi" data-icon="stage">&#127937;</span>스테이지 선택</button>
-          <button id="btn-shop" class="big-btn alt"><span class="bi" data-icon="shop">&#128722;</span>상점</button>
+          <button id="btn-stage-select" class="big-btn"><span class="bi" data-icon="stage">&#127937;</span>스테이지 선택</button>
+          <button id="btn-shop" class="big-btn"><span class="bi" data-icon="shop">&#128722;</span>상점</button>
         </div>
         <div id="lobby-progress" class="screen-sub"></div>
         <div class="gem-chip big"><span class="gem-ico">&#128142;</span><b id="lobby-gems">0</b><span class="gem-lbl">젬</span></div>
@@ -134,7 +127,7 @@
         <div id="mp-queue" class="hidden"><div class="mp-spin"></div><div id="mp-queue-txt">상대를 찾는 중…</div></div>
         <div id="mp-slots"></div>
         <p id="mp-note" class="screen-sub">각자 보드 · <b>각자 자기 속도(x1~x3)</b> · <b>101웨이브 완주 = 클리어</b> · 먼저 죽으면 관전<br>순위는 <b>완주는 빠른 순, 탈락은 웨이브 순</b>. 왼쪽 상대 카드를 누르면 그 필드를 라이브로 볼 수 있고, Enter(💬)로 채팅합니다.</p>
-        <div class="lobby-btns"><button id="mp-start" class="big-btn inf hidden">시작 (0/4)</button></div>
+        <div class="lobby-btns"><button id="mp-start" class="big-btn primary hidden">시작 (0/4)</button></div>
         <div id="mp-room-status" class="screen-sub"></div>
         <div id="mp-chat">
           <div id="mp-chat-lines"></div>
@@ -228,7 +221,7 @@
   <div class="help-card menu-card">
     <h3>메뉴</h3>
     <div id="menu-note" class="screen-sub"></div>
-    <button id="menu-resume" class="big-btn" type="button">계속하기</button>
+    <button id="menu-resume" class="big-btn primary" type="button">계속하기</button>
     <button id="menu-pause" class="back-btn" type="button"><span class="bi" data-icon="pause">&#9208;</span><span id="menu-pause-txt">일시정지</span></button>
     <button id="menu-settings" class="back-btn" type="button"><span class="bi" data-icon="sound">&#128266;</span>볼륨 조절</button>
     <button id="menu-help" class="back-btn" type="button"><span class="bi" data-icon="help">&#10067;</span>게임 방법</button>
@@ -259,9 +252,9 @@
   <div id="ghost-ring"></div>
 </div>
 <!-- APP -->
-<script src="music.js?v=83"></script>
-<script src="net.js?v=83"></script>
-<script src="content.js?v=83"></script>
-<script src="game.js?v=83"></script>
+<script src="music.js?v=84"></script>
+<script src="net.js?v=84"></script>
+<script src="content.js?v=84"></script>
+<script src="game.js?v=84"></script>
 </body>
 </html>
