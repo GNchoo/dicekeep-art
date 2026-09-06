@@ -3694,16 +3694,20 @@ function draw() {
     ctx.restore();
   }
 
-  // 웨이브 예고
-  if (S.phase === 'playing' && !S.waveActive && S.wave < S.stageWaves && !VIEW.pid) {
+  // 웨이브 예고 · 보스 남은 시간 — 같은 말풍선. (보스 시간을 칩에 넣으면 칩이 길어져 우상단 미니 버튼이 둘째 줄로 밀린다)
+  const bossT = S.mode === 'infinity' && S.inf && S.inf.bossT > 0 ? S.inf.bossT : 0;
+  if (S.phase === 'playing' && !VIEW.pid && (bossT > 0 || (!S.waveActive && S.wave < S.stageWaves))) {
     ctx.save();
     ctx.textAlign = 'center';
     const cd = waveCountdown();
-    const msg = S.net
-      ? (S.wave === 0 ? `첫 웨이브까지 ${cd}초 — 뽑기(160G)로 타워를 놓으세요` : `다음 웨이브까지 ${cd}초`)
-      : S.wave === 0
-        ? (S.mode === 'infinity' ? '뽑기(160G)를 눌러 주사위를 뽑고, 굴러 나온 타워를 석단에 놓으세요!' : '주사위를 던져 타워를 배치하고, 준비되면 웨이브를 시작하세요!')
-        : `다음 웨이브까지 ${cd}초`;
+    const urgent = bossT > 0 && bossT < 30;
+    const msg = bossT > 0
+      ? `보스 웨이브 ${S.wave} · 남은 시간 ${Math.floor(bossT / 60)}:${String(Math.floor(bossT % 60)).padStart(2, '0')}`
+      : S.net
+        ? (S.wave === 0 ? `첫 웨이브까지 ${cd}초 — 뽑기(160G)로 타워를 놓으세요` : `다음 웨이브까지 ${cd}초`)
+        : S.wave === 0
+          ? (S.mode === 'infinity' ? '뽑기(160G)를 눌러 주사위를 뽑고, 굴러 나온 타워를 석단에 놓으세요!' : '주사위를 던져 타워를 배치하고, 준비되면 웨이브를 시작하세요!')
+          : `다음 웨이브까지 ${cd}초`;
     // 화면에서 항상 같은 크기로 읽히게 한다 (세로 아레나는 캔버스가 커서 그냥 비례시키면 깨알같이 작다)
     const sc = stageScale() || 1;
     let fs = Math.round(17 / sc);
@@ -3713,11 +3717,11 @@ function draw() {
     const pw = Math.min(W - 40, tw + 34), ph = fs + 18;
     // 좌상단 칩·우상단 미니 버튼(HTML) 바로 아래. 높이는 화면 기준이라 캔버스로 환산한다 (좁은 세로 화면은 미니 버튼이 둘째 줄로 내려온다)
     const by = Math.round(hudTopPx() / sc + ph / 2);
-    ctx.fillStyle = 'rgba(14,10,6,0.72)';
-    ctx.strokeStyle = 'rgba(232,182,74,0.5)';
-    ctx.lineWidth = 1.5;
+    ctx.fillStyle = bossT > 0 ? 'rgba(46,8,8,0.78)' : 'rgba(14,10,6,0.72)';                         // 보스: 붉은 말풍선, 30초 밑이면 테두리·글자가 깜빡인다
+    ctx.strokeStyle = urgent ? (Math.floor(S.time * 2) % 2 ? 'rgba(255,110,110,0.95)' : 'rgba(255,60,60,0.6)') : bossT > 0 ? 'rgba(255,140,120,0.65)' : 'rgba(232,182,74,0.5)';
+    ctx.lineWidth = urgent ? 2 : 1.5;
     ctx.beginPath(); ctx.roundRect(W / 2 - pw / 2, by - ph / 2, pw, ph, ph / 2); ctx.fill(); ctx.stroke();
-    ctx.fillStyle = 'rgba(255,240,200,0.95)';
+    ctx.fillStyle = urgent ? '#ffb0a0' : bossT > 0 ? '#ffe0d0' : 'rgba(255,240,200,0.95)';
     ctx.textBaseline = 'middle';
     ctx.fillText(msg, W / 2, by);
     ctx.restore();
@@ -3901,11 +3905,14 @@ function fitStage() {
 function fitTopRow(w) {
   w = w || stageEl.clientWidth || stageEl.offsetWidth;
   if (!w || miniEl.classList.contains('hidden') || statsEl.classList.contains('hidden')) { stageEl.classList.remove('mini-drop'); return; }
-  const sa = safeArea();
+  // 여백·칩 간격은 CSS 가 화면 폭마다 다르게 준다(10/6px, gap 8/3px) — 추정하지 말고 실측한다 (추정치는 360px 폰에서 6~8px 과대 → 늘 둘째 줄이었다)
+  const sg = stageEl.getBoundingClientRect(), sr = statsEl.getBoundingClientRect(), mr = miniEl.getBoundingClientRect();
+  const gap = parseFloat(getComputedStyle(statsEl).columnGap) || 8;
   let chips = 0, n = 0;
   for (const c of statsEl.children) { if (c.classList.contains('hidden') || !c.offsetWidth) continue; chips += Math.max(c.offsetWidth, c.scrollWidth + 2); n++; }
-  const need = Math.max(10, sa.l) + chips + 8 * Math.max(0, n - 1) + 8 + miniEl.offsetWidth + Math.max(10, sa.r);
-  stageEl.classList.toggle('mini-drop', need > w);
+  const left = Math.max(0, sr.left - sg.left), right = Math.max(0, sg.right - mr.right);
+  const need = left + chips + gap * Math.max(0, n - 1) + 6 + miniEl.offsetWidth + right;
+  stageEl.classList.toggle('mini-drop', need > w + 0.5);
 }
 window.addEventListener('resize', fitStage);
 window.addEventListener('orientationchange', fitStage);
@@ -3950,7 +3957,7 @@ function syncStats() {
     const INF = DKCONTENT.INFINITY, cap = INF.fieldCap || 200, n = S.enemies.length;
     const M = S.wave > 0 && INF.monsterFor ? INF.monsterFor(S.wave) : null;
     const sz = M ? ` · ${M.boss ? '보스' : M.name}(${INF.sizeName[M.cls]})` : '';
-    const bt = S.inf && S.inf.bossT > 0 ? ` · 보스 ${Math.floor(S.inf.bossT / 60)}:${String(Math.floor(S.inf.bossT % 60)).padStart(2, '0')}` : '';
+    // 보스 남은 시간은 칩에 넣지 않는다 — 칩이 길어져 우상단 미니 버튼이 둘째 줄로 밀렸다. 캔버스 말풍선(draw)이 보여준다
     const line = INF.clearWave || 101, cyc = Math.floor(Math.max(0, S.wave - 1) / 101);
     const wtxt = S.inf && S.inf.mode === 'clear'
       ? `${S.wave}/${S.net ? S.net.timing.clearWave : line}`  // 도전: 101웨이브 완주가 클리어
@@ -3959,11 +3966,11 @@ function syncStats() {
     // 좁은 화면에서는 칩이 두 줄로 넘쳐 아레나를 가린다 — 몬스터 이름·최고 기록을 접는다
     const tight = stageEl.classList.contains('tiny'), mid = stageEl.classList.contains('small');
     $('wave-val').textContent = tight
-      ? `${S.wave}${S.inf && S.inf.mode === 'clear' ? '/' + line : ''} · ${n}/${cap}${bt}`
+      ? `${S.wave}${S.inf && S.inf.mode === 'clear' ? '/' + line : ''} · ${n}/${cap}`
       : mid
-        ? `웨이브 ${wtxt} · 필드 ${n}/${cap}${bt}${roomTxt}`
-        : `∞ 웨이브 ${wtxt}${sz} · 최고 ${SAVE.infBest || 0} · 필드 ${n}/${cap}${bt}${roomTxt}`;
-    $('wave-val').classList.toggle('hot', n >= cap * 0.9 || (S.inf && S.inf.bossT > 0 && S.inf.bossT < 30));
+        ? `웨이브 ${wtxt} · 필드 ${n}/${cap}${roomTxt}`
+        : `∞ 웨이브 ${wtxt}${sz} · 최고 ${SAVE.infBest || 0} · 필드 ${n}/${cap}${roomTxt}`;
+    $('wave-val').classList.toggle('hot', n >= cap * 0.9);
   }
   else $('wave-val').textContent = stageEl.classList.contains('tiny')
     ? `S${S.stage} · ${S.wave}/${S.stageWaves}`
@@ -5641,7 +5648,7 @@ function mpInit() {
 
 // ==================== 메인 루프 ====================
 
-let lastTs = 0, HUD_TICK = 0;
+let lastTs = 0;
 function frame(ts) {
   const dt = Math.min(0.05, (ts - lastTs) / 1000 || 0);
   lastTs = ts;
@@ -5652,7 +5659,6 @@ function frame(ts) {
   }
   if (S.net) mpTick();
   // 보스 제한시간·막간 카운트다운은 매 프레임 바뀌므로 칩 문구를 4Hz 로 따로 갱신한다 (syncUI 는 이벤트 때만 돈다)
-  if (S.phase === 'playing' && S.inf && S.inf.bossT > 0 && ts - HUD_TICK > 250) { HUD_TICK = ts; syncStats(); }
   if (VIEW.pid) { mpViewAdvance(dt); withView(draw); }   // 상대 필드 보기: 내 시뮬은 위에서 돌았고, 그리기만 상대 것으로
   else draw();
   drawSlot();
@@ -5677,6 +5683,9 @@ function drawLoading(pr) {
 }
 
 (async () => {
+  // 키아트는 로딩 첫 프레임부터 깔린다 (CSS 가 직접 받아온다 — 에셋 로딩을 기다리면 로딩 화면이 검은 화면이 된다)
+  document.body.style.setProperty('--keyart-bg', `linear-gradient(rgba(5,4,3,.45), rgba(5,4,3,.7)), url('${SRCS.keyart}')`);
+  document.body.style.setProperty('--keyart-title', `linear-gradient(rgba(5,4,3,.12), rgba(5,4,3,.12) 45%, rgba(5,4,3,.82) 100%), url('${SRCS.keyart}')`);   // 타이틀: 그림을 살리고 아래만 어둡게
   drawLoading(0);
   $('ov-btn').disabled = true;
   try {
@@ -5691,8 +5700,6 @@ function drawLoading(pr) {
     diceURLs = A.dice.map((d, i) => thumbURL(d, 96, SRCS['d' + (i + 1)]));
     $('icon-gold').src = A.gold ? thumbURL(A.gold, 44, SRCS.gold) : SRCS.gold;
     $('icon-heart').src = A.heart ? thumbURL(A.heart, 44, SRCS.heart) : SRCS.heart;
-    document.body.style.setProperty('--keyart-bg', `linear-gradient(rgba(5,4,3,.45), rgba(5,4,3,.7)), url('${SRCS.keyart}')`);
-    document.body.style.setProperty('--keyart-title', `linear-gradient(rgba(5,4,3,.12), rgba(5,4,3,.12) 45%, rgba(5,4,3,.82) 100%), url('${SRCS.keyart}')`);   // 타이틀: 그림을 살리고 아래만 어둡게
   } catch (e) { console.warn(e); }
   if (corsBlocked) {
     $('ov-desc').innerHTML += '<br><span style="color:#ff9f9f">⚠ file:// 로 열면 이미지 배경 보정이 생략됩니다. start.bat 또는 로컬 서버 사용을 권장합니다.</span>';

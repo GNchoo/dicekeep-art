@@ -238,12 +238,27 @@ body { touch-action: manipulation; }
 /* 타이틀·로딩: 상자 없이 키아트 위에 제목·진행 막대·시작 버튼만 (아래쪽 1/4) */
 #overlay.title { background-image: var(--keyart-title, var(--keyart-bg, none)); background-color: #0d0b09; }
 #overlay-box.title { background: none; border: 0; box-shadow: none; padding: 0 0 max(6vh, 24px); width: 100%; max-width: none; height: 100%; justify-content: flex-end; align-items: center; overflow: visible; }
-#overlay-box.title #ov-title { font-size: clamp(38px, 9vw, 72px); letter-spacing: 6px; margin: 0 0 18px; color: #fff3d6; text-shadow: 0 3px 0 #1a120a, 0 0 30px rgba(232,182,74,.55), 0 6px 40px rgba(0,0,0,.9); }
+/* 제목: 금박 그라데이션 글자 + 어두운 윤곽 + 깊은 그림자, 아래에 작은 영문 부제와 금선 */
+#overlay-box.title #ov-title {
+  font-size: clamp(46px, 11vw, 88px); letter-spacing: 8px; line-height: 1.05; margin: 0 0 4px; padding: 0 6px;
+  background: linear-gradient(180deg, #fff8e0 0%, #f7dc8a 34%, #e0a63a 56%, #a8701c 78%, #6b4410 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1px rgba(58,34,6,.55);
+  filter: drop-shadow(0 2px 0 #3a2408) drop-shadow(0 4px 0 #1a1006) drop-shadow(0 0 16px rgba(232,182,74,.45)) drop-shadow(0 10px 26px rgba(0,0,0,.85));
+}
+#ov-sub { display: none; }
+#overlay-box.title #ov-sub {
+  display: flex; align-items: center; gap: 12px; margin: 0 0 16px;
+  font-family: var(--font-display); font-size: clamp(11px, 2.6vw, 15px); letter-spacing: .5em; text-indent: .5em; color: #f0e2c0;
+  text-shadow: 0 1px 0 #000, 0 0 12px rgba(0,0,0,.9);
+}
+#overlay-box.title #ov-sub::before, #overlay-box.title #ov-sub::after { content: ''; width: clamp(40px, 12vw, 90px); height: 1px; background: linear-gradient(90deg, transparent, #e8b64a); box-shadow: 0 1px 0 rgba(0,0,0,.7); }
+#overlay-box.title #ov-sub::after { background: linear-gradient(90deg, #e8b64a, transparent); }
 #overlay-box.title #ov-desc { display: none; }
 #overlay-box.title #ov-load { width: min(300px, 72%); margin-bottom: 10px; }
 #overlay-box.title #ov-load-track { height: 8px; background: rgba(10,7,4,.7); }
 #overlay-box.title #ov-load-txt { font-size: 12px; color: #e9dcc0; text-shadow: 0 1px 0 #000; }
-@media (max-height: 460px) { #overlay-box.title #ov-title { font-size: clamp(28px, 7vw, 44px); margin-bottom: 8px; } #overlay-box.title { padding-bottom: 12px; } }
+@media (max-height: 460px) { #overlay-box.title #ov-title { font-size: clamp(30px, 7.5vw, 48px); letter-spacing: 5px; } #overlay-box.title #ov-sub { margin-bottom: 8px; } #overlay-box.title { padding-bottom: 12px; } }
 
 
 /* ---- 스타크래프트식 로그·채팅 (스테이지 위 오버레이) ---- */
@@ -902,7 +917,8 @@ body.placing #game { cursor: grabbing; }
 #stage.small .mini button { width: 36px; height: 30px; font-size: 12px; }
 /* 아주 좁으면 우상단 버튼을 칩 아래 줄로 */
 #stage.mini-drop #mini-top { top: calc(max(6px, var(--sa-t)) + 38px); }
-#stage.tiny .mini button { width: 32px; height: 28px; font-size: 11px; }
+#stage.tiny .mini button { width: 28px; height: 28px; font-size: 11px; }
+#stage.tiny .mini { gap: 4px; }   /* 360px 폰: 칩 3개 + 버튼 3개가 한 줄에 들어가도록 (fitTopRow 가 실측) */
 #stage.tiny .chip { font-size: 10px; padding: 2px 5px 2px 3px; }
 #stage.tiny .chip img { width: 14px; height: 14px; }
 @media (max-width: 400px) {
