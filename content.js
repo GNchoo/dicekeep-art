@@ -1292,6 +1292,140 @@ window.DKCONTENT = (function () {
     return roster;
   }
 
+  // ---- 101웨이브 몬스터 설계 (ART-PROMPTS.md §6): 10단계 테마 × 10웨이브 + 보스 ----
+  // 그림이 들어온 웨이브만 INF_ART_READY 에 적는다 (보스 부관은 '20-2' 처럼). 적힌 웨이브는 새 그림·새 이름을 쓰고, 나머지는 기존 로스터 그림으로 돈다.
+  const INF_TIERS = ['', '초원의 작은 것들', '숲의 야수', '늪과 동굴', '산적과 고블린', '왕국의 병사와 기사', '언데드', '마법 생물과 정령', '용족과 거대 야수', '악마', '심연과 파멸'];
+  const INF_MONSTERS = {
+    1: { name: '들쥐', cls: 'S', move: 'ground', tier: 1 },
+    2: { name: '청개구리', cls: 'S', move: 'ground', tier: 1 },
+    3: { name: '뭉게양', cls: 'L', move: 'ground', tier: 1 },
+    4: { name: '참새', cls: 'S', move: 'air', tier: 1 },
+    5: { name: '당근토끼', cls: 'M', move: 'ground', tier: 1 },
+    6: { name: '얼룩젖소', cls: 'L', move: 'ground', tier: 1 },
+    7: { name: '왕두더지', cls: 'L', move: 'burrow', tier: 1 },
+    8: { name: '꿀벌', cls: 'S', move: 'air', tier: 1 },
+    9: { name: '골목거위', cls: 'L', move: 'ground', tier: 1 },
+    10: { boss: true, name: '황금 숫양', second: null, cls: 'L', tier: 1 },
+    11: { name: '도토리다람쥐', cls: 'S', move: 'ground', tier: 2 },
+    12: { name: '수리부엉이', cls: 'L', move: 'air', tier: 2 },
+    13: { name: '아기여우', cls: 'S', move: 'ground', tier: 2 },
+    14: { name: '오소리', cls: 'L', move: 'burrow', tier: 2 },
+    15: { name: '도적너구리', cls: 'M', move: 'ground', tier: 2 },
+    16: { name: '검독수리', cls: 'L', move: 'air', tier: 2 },
+    17: { name: '회색늑대', cls: 'M', move: 'ground', tier: 2 },
+    18: { name: '가시고슴도치', cls: 'S', move: 'ground', tier: 2 },
+    19: { name: '불곰', cls: 'L', move: 'ground', tier: 2 },
+    20: { boss: true, name: '고목 정령', second: '거대 수사슴', cls: 'L', tier: 2 },
+    21: { name: '늪지렁이', cls: 'S', move: 'burrow', tier: 3 },
+    22: { name: '왕두꺼비', cls: 'L', move: 'ground', tier: 3 },
+    23: { name: '도롱뇽', cls: 'S', move: 'ground', tier: 3 },
+    24: { name: '왕모기', cls: 'S', move: 'air', tier: 3 },
+    25: { name: '동굴거미', cls: 'M', move: 'ground', tier: 3 },
+    26: { name: '독전갈', cls: 'S', move: 'ground', tier: 3 },
+    27: { name: '늪악어', cls: 'L', move: 'ground', tier: 3 },
+    28: { name: '개미귀신', cls: 'L', move: 'burrow', tier: 3 },
+    29: { name: '아나콘다', cls: 'L', move: 'ground', tier: 3 },
+    30: { boss: true, name: '두꺼비 마녀', second: '박쥐 군주', cls: 'S', tier: 3 },
+    31: { name: '고블린 정찰병', cls: 'S', move: 'ground', tier: 4 },
+    32: { name: '고블린 글라이더', cls: 'S', move: 'air', tier: 4 },
+    33: { name: '방패 고블린', cls: 'S', move: 'ground', tier: 4 },
+    34: { name: '오크 전사', cls: 'L', move: 'ground', tier: 4 },
+    35: { name: '트롤 굴착병', cls: 'L', move: 'burrow', tier: 4 },
+    36: { name: '와이번 기수', cls: 'L', move: 'air', tier: 4 },
+    37: { name: '홉고블린 궁수', cls: 'M', move: 'ground', tier: 4 },
+    38: { name: '코볼트', cls: 'S', move: 'ground', tier: 4 },
+    39: { name: '산적 두목', cls: 'M', move: 'ground', tier: 4 },
+    40: { boss: true, name: '고블린 왕', second: '오우거 장사', cls: 'S', tier: 4 },
+    41: { name: '방패병', cls: 'L', move: 'ground', tier: 5 },
+    42: { name: '공병', cls: 'M', move: 'burrow', tier: 5 },
+    43: { name: '창기병', cls: 'L', move: 'ground', tier: 5 },
+    44: { name: '그리폰 기사', cls: 'L', move: 'air', tier: 5 },
+    45: { name: '중장기사', cls: 'L', move: 'ground', tier: 5 },
+    46: { name: '종자', cls: 'S', move: 'ground', tier: 5 },
+    47: { name: '석궁병', cls: 'M', move: 'ground', tier: 5 },
+    48: { name: '페가수스 기사', cls: 'L', move: 'air', tier: 5 },
+    49: { name: '굴착 노움', cls: 'S', move: 'burrow', tier: 5 },
+    50: { boss: true, name: '강철 성주', second: '공성 골렘', cls: 'L', tier: 5 },
+    51: { name: '좀비', cls: 'L', move: 'ground', tier: 6 },
+    52: { name: '도깨비불', cls: 'S', move: 'air', tier: 6 },
+    53: { name: '해골 병사', cls: 'M', move: 'ground', tier: 6 },
+    54: { name: '뼈다귀 강아지', cls: 'S', move: 'ground', tier: 6 },
+    55: { name: '구울', cls: 'L', move: 'ground', tier: 6 },
+    56: { name: '무덤손', cls: 'L', move: 'burrow', tier: 6 },
+    57: { name: '해골 기사', cls: 'L', move: 'ground', tier: 6 },
+    58: { name: '저주 인형', cls: 'S', move: 'ground', tier: 6 },
+    59: { name: '밴시', cls: 'M', move: 'ground', tier: 6 },
+    60: { boss: true, name: '리치', second: '뼈 용', cls: 'L', tier: 6 },
+    61: { name: '불 정령', cls: 'M', move: 'ground', tier: 7 },
+    62: { name: '서리 요정', cls: 'S', move: 'ground', tier: 7 },
+    63: { name: '흙 정령', cls: 'S', move: 'burrow', tier: 7 },
+    64: { name: '천둥새', cls: 'M', move: 'air', tier: 7 },
+    65: { name: '바위 골렘', cls: 'L', move: 'ground', tier: 7 },
+    66: { name: '수정 정령', cls: 'L', move: 'ground', tier: 7 },
+    67: { name: '마법 고양이', cls: 'S', move: 'ground', tier: 7 },
+    68: { name: '살아있는 마도서', cls: 'S', move: 'air', tier: 7 },
+    69: { name: '수정 골렘', cls: 'L', move: 'ground', tier: 7 },
+    70: { boss: true, name: '대마법사', second: '폭풍 정령', cls: 'S', tier: 7 },
+    71: { name: '드레이크', cls: 'L', move: 'ground', tier: 8 },
+    72: { name: '새끼용', cls: 'S', move: 'air', tier: 8 },
+    73: { name: '매머드', cls: 'L', move: 'ground', tier: 8 },
+    74: { name: '도마뱀 인간', cls: 'S', move: 'ground', tier: 8 },
+    75: { name: '코카트리스', cls: 'S', move: 'ground', tier: 8 },
+    76: { name: '와이번', cls: 'S', move: 'air', tier: 8 },
+    77: { name: '모래 벌레', cls: 'S', move: 'burrow', tier: 8 },
+    78: { name: '베히모스', cls: 'L', move: 'ground', tier: 8 },
+    79: { name: '용 전사', cls: 'M', move: 'ground', tier: 8 },
+    80: { boss: true, name: '화룡', second: '히드라', cls: 'M', tier: 8 },
+    81: { name: '임프', cls: 'S', move: 'ground', tier: 9 },
+    82: { name: '헬하운드', cls: 'M', move: 'ground', tier: 9 },
+    83: { name: '지옥 오우거', cls: 'L', move: 'ground', tier: 9 },
+    84: { name: '지옥 벌레', cls: 'L', move: 'burrow', tier: 9 },
+    85: { name: '그림자 악귀', cls: 'S', move: 'ground', tier: 9 },
+    86: { name: '임프 주술사', cls: 'S', move: 'ground', tier: 9 },
+    87: { name: '화염 악마', cls: 'L', move: 'ground', tier: 9 },
+    88: { name: '가고일', cls: 'S', move: 'air', tier: 9 },
+    89: { name: '지옥 기사', cls: 'L', move: 'ground', tier: 9 },
+    90: { boss: true, name: '마왕', second: '구덩이 악마', cls: 'L', tier: 9 },
+    91: { name: '심연 촉수', cls: 'S', move: 'burrow', tier: 10 },
+    92: { name: '공허의 눈', cls: 'S', move: 'air', tier: 10 },
+    93: { name: '심연 거인', cls: 'L', move: 'ground', tier: 10 },
+    94: { name: '파멸 기사', cls: 'L', move: 'ground', tier: 10 },
+    95: { name: '그림자 암살자', cls: 'M', move: 'ground', tier: 10 },
+    96: { name: '파멸 까마귀', cls: 'S', move: 'air', tier: 10 },
+    97: { name: '공허 골렘', cls: 'L', move: 'ground', tier: 10 },
+    98: { name: '공허 벌레', cls: 'M', move: 'burrow', tier: 10 },
+    99: { name: '흑요석 거상', cls: 'L', move: 'ground', tier: 10 },
+    100: { boss: true, name: '파멸의 군주', second: '공허 용', cls: 'S', tier: 10 },
+    101: { name: '종말의 사자', cls: 'M', move: 'ground', tier: 10 },
+  };
+  const INF_ART_READY = new Set([]);   // 예: [1, 2, 3, '10', '20-2'] — casual/enemies/inf/w001.png … casual/bosses/inf/b020-2.png
+  const pad3 = (n) => String(n).padStart(3, '0');
+  // 웨이브 w 의 새 그림 (준비된 것만): 일반 { key, src, walkKey, walkSrc } · 보스 k(0 군주·1 부관) { key, src, name }
+  function infArt(w, k) {
+    const m = INF_MONSTERS[w];
+    if (!m) return null;
+    if (m.boss) {
+      const tag = k ? `${w}-2` : String(w);
+      if (!INF_ART_READY.has(tag) && !INF_ART_READY.has(k ? tag : w)) return null;
+      const name = k ? m.second : m.name;
+      return name ? { key: `infB${tag}`, src: `casual/bosses/inf/b${pad3(w)}${k ? '-2' : ''}.png`, name } : null;
+    }
+    if (!INF_ART_READY.has(w) && !INF_ART_READY.has(String(w))) return null;
+    return { key: `infW${w}`, src: `casual/enemies/inf/w${pad3(w)}.png`, walkKey: `infW${w}Walk`, walkSrc: `casual/enemies/inf/w${pad3(w)}-walk-2x2.png`, name: m.name };
+  }
+  // 로더용: 준비된 새 그림 전부 [{ key, src }, { key(walk), src, sheet: true }]
+  function infArtList() {
+    const out = [];
+    for (let w = 1; w <= 101; w++) {
+      const m = INF_MONSTERS[w]; if (!m) continue;
+      if (m.boss) { for (let k = 0; k < 2; k++) { const a = infArt(w, k); if (a) out.push({ key: a.key, src: a.src }); } continue; }
+      const a = infArt(w, 0); if (!a) continue;
+      out.push({ key: a.key, src: a.src });
+      out.push({ key: a.walkKey, src: a.walkSrc, sheet: true, optional: true });
+    }
+    return out;
+  }
+
   const INFINITY = {
     mapKey: 'cInf',
     tier: { tier: 6, name: '무한', color: '#ff7ad9', lanes: ['ground'], extraSpots: 0, hpScale: 1, countBonus: 0, startGold: 400 }, // 랜덤다이스식: 트랙 하나(공중·땅굴 적도 같은 트랙), 석단 15개 처음부터 전부
@@ -1338,7 +1472,8 @@ window.DKCONTENT = (function () {
       const hue = cycle ? (cycle * 97) % 360 : 0, prefix = cycle ? `${cycle + 1}주기 ` : '';
       if (r.boss) return { boss: true, cls: r.cls, hue, prefix, armor: this.armor(w), count: 0, name: '보스' };
       const base = bases.find((b) => b.id === r.id);
-      return { boss: false, base, name: prefix + base.name, hue, cls: r.cls, move: base.move, tank: r.tank,
+      const art = infArt((w - 1) % 101 + 1, 0);   // 새 그림이 준비된 웨이브는 설계된 이름으로 (그림은 game.js 가 spawnEnemy 에서 붙인다)
+      return { boss: false, base, name: prefix + (art ? art.name : base.name), hue, cls: r.cls, move: base.move, tank: r.tank, art,
                count: this.countOf(w, r.cls), armor: this.armor(w) + (r.tank ? 2 + cycle : 0), hpMult: r.tank ? 1.25 : 1 };
     },
     // ---- 방어력: 후반으로 갈수록 타격당 고정 감소, 33의 배수 웨이브는 고방어(버블피시 255) ----
@@ -1382,6 +1517,8 @@ window.DKCONTENT = (function () {
     // ---- 보스 주기는 로스터 기준 (2주기부터 w % 10 과 어긋난다) ----
     isBossWave(w) { const r = this.getRoster()[(Math.max(1, w) - 1) % 101]; return !!(r && r.boss); },
     bossFor,   // (순번, k) → 겉보기 순 보스 (bosses 항목)
+    monsters: INF_MONSTERS, tiers: INF_TIERS, artReady: INF_ART_READY, art: infArt, artList: infArtList,   // 101웨이브 설계 + 새 그림 파이프라인 (ART-PROMPTS.md §6)
+    tierOf(w) { return INF_TIERS[Math.min(10, Math.floor(((Math.max(1, w) - 1) % 101) / 10) + 1)]; },
     bossOrdinal(w) { const c = Math.floor((Math.max(1, w) - 1) / 101), i = (Math.max(1, w) - 1) % 101 + 1; return c * 10 + Math.round(i / this.bossEvery); },
     wave(w, gauntlet) {
       const late = gauntlet && w > this.lateFrom ? Math.pow(this.lateExp, w - this.lateFrom) : 1;
