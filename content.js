@@ -1126,7 +1126,7 @@ window.DKCONTENT = (function () {
     { id: 'toyKing', name: '장난감왕', hp: 1220, speed: 24, gold: 150, dmg: 5, size: 92, move: 'ground', sprite: 'cToyKing', src: 'casual/bosses/toy-king.png' },
     { id: 'lanternKoi', name: '등불잉어', hp: 1080, speed: 30, gold: 146, dmg: 5, size: 92, move: 'air', sprite: 'cLanternKoi', src: 'casual/bosses/lantern-koi.png' },
   ];
-  // 세로 화면용 아레나: 캔버스 720×1080, 보드 3열×5행, 트랙은 세로로 긴 링
+  // 세로 화면용 아레나: 캔버스 720×1080, 보드 3열×5행, 트랙은 세로로 긴 링. 가로 아레나를 시계 방향 90° 회전한 배치(입구 위쪽)
   function buildArenaLayoutPortrait(W, H, inset) {
     W = W || 720; H = H || 1080; inset = inset || {};
     const cx = Math.round(W / 2), cy = Math.round((inset.top || 0) + (H - (inset.top || 0) - (inset.bottom || 0)) / 2);
@@ -1137,12 +1137,13 @@ window.DKCONTENT = (function () {
       return out;
     };
     const dedupe = (pts) => pts.filter((p, i) => i === 0 || Math.hypot(p[0] - pts[i - 1][0], p[1] - pts[i - 1][1]) > 0.5);
-    const ring = dedupe([[L, MID],
-      ...arc(L + rad, B - rad, Math.PI, Math.PI / 2, 6), ...arc(R - rad, B - rad, Math.PI / 2, 0, 6),
-      ...arc(R - rad, T + rad, 0, -Math.PI / 2, 6), ...arc(L + rad, T + rad, -Math.PI / 2, -Math.PI, 6), [L, MID]]);
-    const entry = [[-40, MID], [L, MID]];
+    // 가로 아레나를 시계 방향으로 90° 돌린 것과 같게: 입구가 위(12시) 가운데, 트랙은 위 변 왼쪽으로 → 왼쪽 변 아래로 → 바닥 → 오른쪽 변 위로 → 위 변 가운데
+    const ring = dedupe([[cx, T],
+      ...arc(L + rad, T + rad, -Math.PI / 2, -Math.PI, 6), ...arc(L + rad, B - rad, Math.PI, Math.PI / 2, 6),
+      ...arc(R - rad, B - rad, Math.PI / 2, 0, 6), ...arc(R - rad, T + rad, 0, -Math.PI / 2, 6), [cx, T]]);
+    const entry = [[cx, -40], [cx, T]];   // 캔버스 위쪽 끝 밖에서 들어온다 (가로의 왼쪽 입구에 해당)
     const path = dedupe([...entry, ...ring]);
-    const loopAt = L - entry[0][0];
+    const loopAt = T - entry[0][1];
     const gapX = 150, gapY = 118;
     const spots = [];
     for (let r = 0; r < 5; r++) for (let c = 0; c < 3; c++) spots.push([cx + (c - 1) * gapX, MID + (r - 2) * gapY]);

@@ -663,11 +663,12 @@ body.placing #game { cursor: grabbing; }
 .screen-head h2 { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .back-btn {
   font-size: 14px; padding: 10px 16px;
-  background: #3a2d21; color: #e5d8b4;
-  border: 1px solid #6b5636; border-radius: 8px; cursor: pointer; font-family: inherit;
+  background: linear-gradient(#4a3a2a, #3a2d21 46%, #24190f); color: #e9dcb8;
+  border: 1px solid #6b5636; border-radius: var(--r-md); cursor: pointer;
+  letter-spacing: .3px; text-shadow: 0 1px 0 rgba(0,0,0,.5);
   min-height: 40px;
 }
-.back-btn:hover { filter: brightness(1.3); }
+.back-btn:hover { filter: brightness(1.2); }
 
 .gem-chip {
   display: inline-flex; align-items: center; gap: 6px;
@@ -682,15 +683,16 @@ body.placing #game { cursor: grabbing; }
 
 .lobby-btns { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 4px; flex-shrink: 0; }
 .lobby-btns .big-btn { flex: 1 1 140px; }
+/* 큰 버튼: 게임 HUD 버튼(뽑기·웨이브 시작)과 같은 벌 — 제목 글꼴 + 3단 그라데이션 + 베벨. 아이콘(.bi)과 글자는 flex 로 가운데 정렬 */
 .big-btn {
   font-size: 17px; padding: 12px 18px;
-  background: linear-gradient(#8a6a34, #5e4520); color: #fff2d0;
-  border: 1px solid #c9a35a; border-radius: 10px; cursor: pointer; font-family: inherit;
-  transition: transform .08s, filter .12s;
+  background: var(--btn-gold); color: #ffeec2;
+  border: 1px solid var(--btn-gold-line); border-radius: var(--r-md); cursor: pointer;
+  letter-spacing: .5px; text-shadow: 0 1px 0 rgba(0,0,0,.6);
   min-height: 44px;
+  display: inline-flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 2px 0;
 }
-.big-btn.alt { background: linear-gradient(#2e5b46, #1c3d2d); border-color: #55a382; color: #c9f0dd; }
-.big-btn:hover { filter: brightness(1.18); transform: translateY(-1px); }
+.big-btn.alt { background: var(--btn-green); border-color: var(--btn-green-line); color: #d8ffee; }
 .lobby-inf-btn { width: 100%; margin-top: 10px; flex-shrink: 0; letter-spacing: 0.5px; }
 /* 로비: 인피니티가 맨 위 주 동선, 스테이지·상점은 그 아래 보조 */
 .lobby-sep { width: 100%; height: 1px; margin: 14px 0 2px; background: linear-gradient(90deg, transparent, #4c3d2c, transparent); flex-shrink: 0; }
@@ -700,11 +702,8 @@ body.placing #game { cursor: grabbing; }
 .inf-btns { margin-top: 0; }
 .inf-btns .big-btn { flex: 1 1 200px; margin-top: 10px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 2px 0; }
 .inf-btns .big-btn small, .mp-btns .big-btn small { flex-basis: 100%; text-align: center; }
-.big-btn small { font-size: 11px; font-weight: normal; opacity: .85; letter-spacing: 0; }
-#ss-inf-clear { background: linear-gradient(#7a5a1e, #4a350f); border-color: #e8b64a; color: #ffe9b8; }
-#btn-inf-clear { background: linear-gradient(#7a5a1e, #4a350f); border-color: #e8b64a; color: #ffe9b8; }
-.big-btn.alt { background: linear-gradient(#2e5b46, #1c3d2d); border-color: #55a382; color: #c9f0dd; }
-.big-btn:hover { filter: brightness(1.18); transform: translateY(-1px); }
+.big-btn small { flex-basis: 100%; text-align: center; font-size: 11px; font-weight: normal; opacity: .85; letter-spacing: 0; font-family: var(--font-ui); text-shadow: none; }
+#ss-inf-clear, #btn-inf-clear { background: var(--btn-gold); border-color: var(--gold); color: #ffe9b8; }
 
 /* 스테이지 그리드 */
 .stage-grid {
@@ -799,7 +798,7 @@ body.placing #game { cursor: grabbing; }
 .inf-banner:disabled, .inf-banner.locked { opacity: .55; cursor: default; filter: none; }
 
 /* ==================== 인피니티 모드 ==================== */
-.big-btn.inf { background: linear-gradient(#7a2f6a, #4a1a40); border-color: #ff7ad9; color: #ffd6f3; }
+.big-btn.inf { background: var(--btn-magenta); border-color: var(--btn-magenta-line); color: #ffd6f3; }
 .big-btn.inf.locked, .big-btn.inf:disabled { opacity: .55; cursor: default; filter: none; transform: none; }
 .inf-sub { margin-top: 10px; color: #e6b8dc; }
 #inf-panel {
