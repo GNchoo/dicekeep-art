@@ -1,0 +1,31 @@
+{
+  "name": "dicekeep",
+  "version": "1.0.0",
+  "private": true,
+  "description": "주사위 성채 (Dicekeep) — 캔버스 타워 디펜스. 웹은 정적 배포, 앱은 Capacitor 로 www/ 를 감싼다.",
+  "scripts": {
+    "fonts": "node tools/copy-fonts.mjs",
+    "build:www": "node tools/build-www.mjs",
+    "cap:sync": "npm run build:www && npx cap sync",
+    "android": "npx cap open android",
+    "serve:www": "http-server www -p 8140 -c-1",
+    "test:net": "cd net && npm test"
+  },
+  "dependencies": {
+    "@capacitor-community/safe-area": "^7.0.0",
+    "@capacitor/android": "^7.0.0",
+    "@capacitor/app": "^7.0.0",
+    "@capacitor/cli": "^7.0.0",
+    "@capacitor/core": "^7.0.0",
+    "@capacitor/ios": "^7.0.0",
+    "@capacitor/splash-screen": "^7.0.0",
+    "@capacitor/status-bar": "^7.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
+    "@fontsource/do-hyeon": "^5.0.0",
+    "@fontsource/noto-sans-kr": "^5.0.0",
+    "http-server": "^14.1.1",
+    "sharp": "^0.34.0"
+  }
+}
