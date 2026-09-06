@@ -2052,8 +2052,7 @@ function buildInfinityWave(w) {
   if (M.boss) {
     t += 0.6;
     for (let k = 0; k < P.bosses; k++) {
-      const bi = (INF.bossOrdinal(w) - 1 + k * 37) % C.bosses.length; // 2주기부터 w % 10 과 어긋나므로 순번으로 센다
-      const boss = C.bosses[bi];
+      const boss = INF.bossFor ? INF.bossFor(INF.bossOrdinal(w), k) : C.bosses[(INF.bossOrdinal(w) - 1 + k * 37) % C.bosses.length]; // 겉보기 약한 보스부터 (순번 기준)
       const bbase = C.bossBases.find((b) => b.id === boss.base) || C.bossBases[0];
       add(bbase.id, { name: M.prefix + boss.name, hue: boss.hue, hpMult: P.hpMult * P.bossHp, isBoss: true, bossCount: P.bosses, lane: laneFor(bbase.move, k) });
       t += 1.5;
@@ -2403,12 +2402,20 @@ function damageEnemy(e, dmg, src) {
   }
 }
 
+// 그림을 좌우로 뒤집어야 하는가. 걷기 시트는 전부 오른쪽 향(ART-PROMPTS §2)이고, 정지컷은 그림마다 달라
+// content.js 의 base 에 faceLeft(정지컷이 왼쪽을 봄) 를 적어 둔다. 시트를 쓰는 동안은 faceLeft 를 무시한다
+function enemyFlip(e) {
+  const movingLeft = e.face < 0;
+  const usingSheet = !!(e.def && e.def.walk && A[e.def.walk]);
+  const nativeLeft = !usingSheet && !!(e.def && e.def.faceLeft);
+  return movingLeft !== nativeLeft;
+}
 // 사망 연출: 스프라이트가 떠오르며 희미해지고 발밑에 먼지가 퍼진다
 function spawnDeath(e, p) {
   const airY = e.move === 'air' ? 42 : 0;
   const fr = currentEnemyFrame(e);
   if (fr) {
-    S.corpses.push({ fr, x: p.x, y: p.y + 4 - airY, h: e.def.size, hue: e.hue, t: 0, dur: e.isBoss ? 0.7 : 0.42, boss: e.isBoss });
+    S.corpses.push({ fr, x: p.x, y: p.y + 4 - airY, h: e.def.size, hue: e.hue, t: 0, dur: e.isBoss ? 0.7 : 0.42, boss: e.isBoss, flip: enemyFlip(e) });
   }
   const n = e.isBoss ? 18 : 7;
   for (let i = 0; i < n; i++) {
@@ -3148,7 +3155,9 @@ function draw() {
       ctx.save();
       ctx.globalAlpha = (1 - pr) * 0.85;
       if (c.hue) ctx.filter = `hue-rotate(${c.hue}deg)`;
-      ctx.drawImage(fr.cv, c.x - w / 2, c.y - h - pr * 26, w, h);
+      ctx.translate(c.x, c.y - pr * 26);
+      if (c.flip) ctx.scale(-1, 1);            // 죽을 때 보던 방향 그대로
+      ctx.drawImage(fr.cv, -w / 2, -h, w, h);
       ctx.filter = 'none';
       ctx.restore();
     } else {
@@ -3181,7 +3190,8 @@ function draw() {
       ctx.save();
       if (e.hidden) ctx.globalAlpha = 0.22;
       ctx.translate(p.x, drawY);
-      ctx.scale(sx * (e.face < 0 && e.isBoss ? 1 : 1), sy);
+      // 진행 방향(e.face: 접선 부호, 세로 구간은 직전 값 유지) ⊕ 그림의 원래 방향(faceLeft) → 왼쪽으로 갈 때 뒤집는다
+      ctx.scale(sx * (enemyFlip(e) ? -1 : 1), sy);
       if (e.hue) ctx.filter = `hue-rotate(${e.hue}deg)`;
       if (fr && fr.cv) {
         const h = e.def.size;
