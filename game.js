@@ -1711,17 +1711,17 @@ function acquireFxCode(face, tier, col, cx, cy) {
 function acquireFxArt(face, tier, col, cx, cy) {
   const sparks = (n, spread, sz) => { for (let i = 0; i < n; i++) { const a = Math.random() * Math.PI * 2, v = spread * (0.4 + Math.random() * 0.8); S.fxs.push({ kind: 'sprite', img: 'starSpark', x: cx, y: cy, vx: Math.cos(a) * v, vy: Math.sin(a) * v - spread * 0.3, t: -Math.random() * 0.15, dur: 0.6 + Math.random() * 0.4, size: sz * (0.6 + Math.random() * 0.8), phase: Math.random() * 6 }); } };
   if (!tier) { S.fxs.push({ kind: 'ring', x: cx, y: cy, t: 0, dur: 0.5, size: 120, color: col }); if (hasArt('starSpark')) sparks(4, 90, 26); else spawnBurst(cx, cy, col, 6, 90, 0.45); return; }
-  S.fxs.push({ kind: 'acquireBurst', x: cx, y: cy, t: 0, dur: 0.6 + tier * 0.1, size: 280 + tier * 50, add: true });
+  S.fxs.push({ kind: 'acquireBurst', x: cx, y: cy, t: 0, dur: 0.6 + tier * 0.1, size: 240 + tier * 40, add: true });
   if (hasArt('acquireRing')) S.fxs.push({ kind: 'ringImg', img: 'acquireRing', x: cx, y: cy, t: 0, dur: 0.9, size: 320 + tier * 40 });
   else S.fxs.push({ kind: 'ring', x: cx, y: cy, t: 0, dur: 0.9, size: 260 + tier * 60, color: col });
   spawnBurst(cx, cy, col, 8 + tier * 6, 120 + tier * 30, 0.6 + tier * 0.1);
   if (hasArt('starSpark')) sparks(6 + tier * 4, 160 + tier * 40, 30);
   if (tier >= 2) { if (hasArt('acquireColumn')) S.fxs.push({ kind: 'column', x: cx, y: cy + 40, t: 0, dur: 0.8, size: 420 + tier * 40 }); S.fxs.push({ kind: 'ring', x: cx, y: cy, t: 0, dur: 1.3, size: 420, color: '#ffffff' }); }
-  if (tier >= 3) { if (hasArt('confetti')) S.fxs.push({ kind: 'confetti', x: cx, y: cy - 40, t: 0, dur: 1.1, size: 520 + tier * 40 }); if (hasArt('acquireColumn')) S.fxs.push({ kind: 'column', x: cx, y: cy + 40, t: -0.15, dur: 0.9, size: 520 }); }
+  if (tier >= 3) { if (hasArt('confetti')) S.fxs.push({ kind: 'confetti', x: cx, y: cy - 40, t: 0, dur: 1.1, size: 380 + tier * 30 }); if (hasArt('acquireColumn')) S.fxs.push({ kind: 'column', x: cx, y: cy + 40, t: -0.15, dur: 0.9, size: 520 }); }
   if (tier >= 4) {
     const img = hasArt('acquireRingRainbow') ? 'acquireRingRainbow' : 'acquireRing';
     for (let i = 0; i < 3; i++) { if (hasArt(img)) S.fxs.push({ kind: 'ringImg', img, x: cx, y: cy, t: -i * 0.18, dur: 1.2, size: 560, spin: 0.8 + i * 0.4, phase: i * 2 }); else S.fxs.push({ kind: 'ring', x: cx, y: cy, t: -i * 0.18, dur: 1.2, size: 520, color: ['#ff7ad9', '#ffd452', '#7fd4ff'][i] }); }
-    if (hasArt('confetti')) S.fxs.push({ kind: 'confetti', x: cx, y: cy - 60, t: -0.35, dur: 1.2, size: 640 });
+    if (hasArt('confetti')) S.fxs.push({ kind: 'confetti', x: cx, y: cy - 60, t: -0.35, dur: 1.2, size: 460 });
     spawnBurst(cx, cy, '#ffffff', 24, 260, 1.1);
   }
 }
