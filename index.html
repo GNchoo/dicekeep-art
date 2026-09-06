@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="style.css?v=77" />
+<link rel="stylesheet" href="style.css?v=78" />
 <link rel="icon" href="ui/gold.png" />
 </head>
 <body>
@@ -61,6 +61,21 @@
           <button id="btn-infinity" class="big-btn inf lobby-inf-btn">&#8734; 인피니티 · 무한<small>끝이 없는 기록 도전</small></button>
         </div>
         <div id="lobby-inf" class="screen-sub inf-sub"></div>
+        <!-- 함께하기: 각자 보드 · 같은 웨이브. 서버(Cloudflare Worker + Durable Object)가 방·시계만 맡는다 -->
+        <div id="mp-block">
+          <div class="mp-head">&#128101; 인피니티 · 함께 <small>2~4인 · 도전 규칙(101웨이브 완주) · 각자 보드, 같은 웨이브 · 먼저 죽으면 관전</small></div>
+          <div class="mp-row"><label for="mp-name">이름</label><input id="mp-name" type="text" maxlength="12" placeholder="플레이어" autocomplete="nickname" spellcheck="false"></div>
+          <div class="lobby-btns mp-btns">
+            <button id="mp-create" class="big-btn inf">방 만들기<small>친구에게 코드 공유</small></button>
+            <button id="mp-join" class="big-btn alt">코드로 참가<small>6자리</small></button>
+            <button id="mp-quick" class="big-btn alt" disabled title="준비 중">빠른 매칭<small>준비 중</small></button>
+          </div>
+          <form id="mp-join-form" class="hidden" autocomplete="off">
+            <input id="mp-code" type="text" maxlength="6" autocapitalize="characters" inputmode="latin" placeholder="ABC123" spellcheck="false" aria-label="방 코드">
+            <button id="mp-join-go" class="big-btn" type="submit">참가</button>
+          </form>
+          <div id="mp-status" class="screen-sub"></div>
+        </div>
         <div class="lobby-sep"></div>
         <div class="lobby-btns">
           <button id="btn-stage-select" class="big-btn alt">스테이지 선택</button>
@@ -99,6 +114,34 @@
           <div id="shop-skins" class="shop-skins"></div>
         </div>
       </div>
+    </div>
+
+    <!-- 함께하기 대기실: 코드 공유 → 2명 이상 모이면 방장이 시작 -->
+    <div id="mp-room" class="screen hidden">
+      <div class="screen-box">
+        <div class="screen-head">
+          <button class="back-btn" id="mp-leave">&#8592; 나가기</button>
+          <h2>대기실</h2>
+          <span id="mp-count" class="gem-chip">0/4</span>
+        </div>
+        <div id="mp-code-wrap"><span class="mp-code-lbl">방 코드</span><b id="mp-code-big">------</b><button id="mp-copy" class="back-btn" type="button">복사</button></div>
+        <div id="mp-slots"></div>
+        <p id="mp-note" class="screen-sub">각자 보드 · 같은 웨이브 · <b>101웨이브 완주 = 클리어</b> · 먼저 죽으면 관전<br><b>방은 아무도 기다리지 않습니다</b> — 잠시 자리를 비우면 돌아왔을 때 밀린 웨이브를 이어서 맞습니다. 보스 웨이브만 전원이 잡을 때까지(최대 5분 20초) 기다립니다.</p>
+        <div class="lobby-btns"><button id="mp-start" class="big-btn inf hidden">시작 (0/4)</button></div>
+        <div id="mp-room-status" class="screen-sub"></div>
+      </div>
+    </div>
+
+    <!-- 함께하기: 상대 요약 카드(가로는 오른쪽 열 · 세로는 아래 띠) 와 관전 패널 -->
+    <div id="rivals" class="hidden" aria-live="off"></div>
+    <div id="spectate" class="hidden">
+      <div class="spec-card">
+        <h3 id="spec-title">관전</h3>
+        <div id="spec-sub" class="screen-sub"></div>
+        <div id="spec-list"></div>
+        <div class="spec-btns"><button id="spec-collapse" class="back-btn" type="button">작게 보기</button><button id="spec-leave" class="back-btn" type="button">나가기 (기록은 이미 저장됨)</button></div>
+      </div>
+      <button id="spec-pill" type="button">관전 중</button>
     </div>
   </div>
 
@@ -169,6 +212,7 @@
       <li><b>파워업</b> — 골드로 눈(1~6)을 강화합니다. 강화할수록 비싸집니다. ★ 히든 타워는 6눈 파워업을 따릅니다.</li>
       <li><b>패배</b> — 필드에 적이 200마리를 넘으면 가장 오래된 적이 사라지며 목숨 −1. 보스는 5분 20초 안에 잡아야 합니다.</li>
       <li><b>두 갈래</b> — <b>도전</b>은 <b>101웨이브 완주가 클리어</b>입니다. 91웨이브부터 체력이 한 번 더 가팔라지는 <b>최종 관문</b>이라 뽑기·확률강화 운이 아주 좋아야 닿습니다. <b>무한</b>은 클리어가 없는 진짜 무한 — 101웨이브를 넘으면 더 강해진 2주기가 이어지고, 최고 기록만 남습니다.</li>
+      <li><b>함께 하기</b> — 2~4명이 <b>각자 보드</b>에서 <b>같은 웨이브</b>를 동시에 맞습니다(도전 규칙). 방은 아무도 기다리지 않고(보스 웨이브만 전원 처치까지 최대 5분 20초), 먼저 죽으면 관전, 101웨이브 완주 = 클리어. 첫 웨이브 전 20초 동안 타워를 놓으세요. <b>Enter</b> 로 채팅.</li>
     </ol></div>
     <button id="help-close">알겠어요</button>
   </div>
@@ -178,8 +222,8 @@
   <img id="ghost-tower" alt="">
   <div id="ghost-ring"></div>
 </div>
-<script src="net.js?v=77"></script>
-<script src="content.js?v=77"></script>
-<script src="game.js?v=77"></script>
+<script src="net.js?v=78"></script>
+<script src="content.js?v=78"></script>
+<script src="game.js?v=78"></script>
 </body>
 </html>
