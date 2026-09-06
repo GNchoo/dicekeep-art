@@ -173,7 +173,7 @@
     </div>
 
     <div id="tower-panel">
-      <div id="held-info" class="hidden"><b id="held-name"></b><span id="held-desc"></span></div>
+      <div id="held-info" class="hidden"><b id="held-name"></b><span id="held-desc"></span><button id="held-sell" class="hidden" type="button" title="들고 있는 주사위를 놓지 않고 바로 팝니다">바로 판매</button></div>
       <div id="info-panel" class="hidden">
         <button id="info-close" type="button" title="닫기" aria-label="타워 정보 닫기">&#10005;</button>
         <div id="info-head"><img id="info-dice" alt=""><b id="info-name"></b><span id="info-atk" class="hidden"></span></div>
@@ -221,6 +221,18 @@
     <label class="set-row"><span>효과음</span><input id="set-sfx" type="range" min="0" max="1" step="0.05" value="0.8"></label>
     <div class="set-btns"><button id="set-mute" class="back-btn" type="button">🔊 음소거</button><button id="settings-close" class="big-btn" type="button">닫기</button></div>
     <p class="screen-sub">배경음악은 코드로 합성됩니다. <code>audio/bgm-*.ogg</code> 파일이 있으면 그 곡을 씁니다.</p>
+  </div>
+</div>
+<!-- 게임 메뉴 (우상단 ≡): 계속·일시정지·볼륨·게임 방법·포기. 싱글은 열리는 동안 멈추고, 멀티는 계속 돈다 -->
+<div id="menu" class="hidden">
+  <div class="help-card menu-card">
+    <h3>메뉴</h3>
+    <div id="menu-note" class="screen-sub"></div>
+    <button id="menu-resume" class="big-btn" type="button">계속하기</button>
+    <button id="menu-pause" class="back-btn" type="button">⏸ 일시정지</button>
+    <button id="menu-settings" class="back-btn" type="button">🔊 볼륨 조절</button>
+    <button id="menu-help" class="back-btn" type="button">❓ 게임 방법</button>
+    <button id="menu-quit" class="back-btn danger" type="button">포기하고 나가기</button>
   </div>
 </div>
 <div id="toast" class="hidden"></div>

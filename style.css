@@ -1212,3 +1212,55 @@ body.ui-art [data-icon=close] { background-image: url(ui/icon-close.png); }
 body.ui-art .logo { display: block; }
 body.ui-art #overlay-box.result #ov-logo { display: none; }
 @media (max-height: 600px) { .logo { width: min(30%, 120px); } }
+
+/* ---- 로비 가로형 (폰 가로: 넓고 낮은 화면) — 스크롤 대신 좌우 두 열로 ---- */
+@media (min-aspect-ratio: 4/3) and (max-height: 640px) {
+  #lobby .screen-box {
+    width: min(96%, 980px); max-width: none;
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); grid-auto-rows: max-content; align-content: center;
+    column-gap: 18px; row-gap: 6px; padding: 10px 16px 10px; overflow-y: auto;
+  }
+  #lobby .screen-box > * { grid-column: 1; }
+  #lobby .screen-box > #mp-block { grid-column: 2; grid-row: 1 / span 12; align-self: center; margin-top: 0; }
+  #lobby .screen-box > #lobby-settings { grid-column: auto; }
+  #lobby .lobby-sep { display: none; }
+  #lobby .logo { width: 64px; margin: 0 auto; }
+  #lobby h1 { font-size: 24px; margin-bottom: 0; }
+  #lobby .screen-sub { margin: 0 0 4px; font-size: 12px; }
+  #lobby .screen-box > p.screen-sub { display: none; }   /* 소개 문장은 세로에서만 */
+  #lobby-inf { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  #lobby-progress { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+  #lobby .inf-btns { margin-top: 0; }
+  #lobby .inf-btns .big-btn { min-height: 46px; padding: 6px 10px; font-size: 15px; margin-top: 4px; flex: 1 1 140px; }
+  #lobby .inf-btns .big-btn small { font-size: 10px; }
+  #lobby-inf { font-size: 11px; margin-top: 2px; }
+  #lobby .lobby-btns:not(.inf-btns):not(.mp-btns) .big-btn { min-height: 40px; padding: 6px 10px; font-size: 14px; }
+  #lobby #lobby-progress { font-size: 11px; margin: 0; }
+  #lobby .gem-chip.big { font-size: 15px; padding: 3px 12px; margin: 2px auto 0; }
+  #mp-block .mp-head { font-size: 16px; }
+  #mp-block .mp-btns .big-btn { min-height: 48px; padding: 6px 8px; font-size: 14px; }
+  #mp-block .mp-btns .big-btn small { font-size: 10px; }
+}
+
+/* ---- 게임 메뉴 ---- */
+#menu { position: fixed; inset: 0; z-index: 55; display: flex; align-items: center; justify-content: center; padding: max(12px, var(--sa-t)) max(12px, var(--sa-r)) max(12px, var(--sa-b)) max(12px, var(--sa-l)); background: rgba(0,0,0,.72); }
+#menu.hidden { display: none; }
+.menu-card { max-width: 320px; gap: 8px; }
+.menu-card .back-btn, .menu-card .big-btn { width: 100%; text-align: center; }
+.menu-card .back-btn:disabled { opacity: .45; cursor: default; filter: none; }
+.menu-card .back-btn.danger { border-color: #a3563f; color: #ffb3a3; }
+#menu-note { margin: 0 0 4px; font-size: 12px; min-height: 16px; }
+#menu-note b { color: var(--gold); }
+/* 관전 뷰 중에는 카드 확대(zoomall)를 쓰지 않는다 — 확대된 카드가 화면 밖으로 나가 깨져 보인다 */
+#stage.viewing #rivals .rival, #stage.viewing #rivals.zoomall .rival { transform: none; }
+.rv-board .cell { overflow: hidden; }
+#held-info.parked { border-left-style: dashed; opacity: .85; }
+#held-info.parked b { color: var(--ink-2); }
+#held-sell { align-self: flex-start; margin-top: 2px; padding: 3px 9px; font-size: 11px; font-family: var(--font-display); color: #ffd6a0; background: var(--btn-danger); border: 1px solid var(--btn-danger-line); border-radius: var(--r-pill); cursor: pointer; box-shadow: var(--bevel); }
+#held-sell.hidden { display: none; }
+#wrap.over #held-sell { padding: 2px 7px; font-size: 10px; }
+#stage.viewing #spec-pill { top: calc(max(6px, var(--sa-t)) + 104px); }
+@media (min-aspect-ratio: 4/3) and (max-height: 640px) and (max-width: 900px) {
+  #lobby .inf-btns .big-btn { flex: 1 1 100%; margin-top: 4px; }   /* 좁은 가로: 인피니티 버튼 두 개를 세로로 */
+  #lobby .lobby-btns:not(.inf-btns):not(.mp-btns) .big-btn { flex: 1 1 100%; }
+}

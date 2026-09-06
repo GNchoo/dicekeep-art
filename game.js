@@ -1202,7 +1202,7 @@ function bgmSync() { if (window.DKBGM) { try { DKBGM.set(bgmFor()); } catch (e) 
 for (const ev of ['pointerdown', 'keydown', 'touchend']) document.addEventListener(ev, function unlock() { try { audio(); bgmSync(); } catch (e) { /* 무시 */ } }, { once: true, passive: true });
 document.addEventListener('visibilitychange', () => { if (!window.DKBGM) return; try { if (document.hidden) DKBGM.suspend(); else DKBGM.resume(); } catch (e) { /* 무시 */ } });
 function tone(freq, dur, type = 'sine', vol = 0.15, slide = 0) {
-  if (S.muted) return;
+  if (S.muted || COSMETIC) return;
   try {
     const ac = audio();
     const o = ac.createOscillator(), g = ac.createGain();
@@ -1215,7 +1215,7 @@ function tone(freq, dur, type = 'sine', vol = 0.15, slide = 0) {
   } catch (e) { /* 무시 */ }
 }
 function noise(dur, vol = 0.2, lp = 1200) {
-  if (S.muted) return;
+  if (S.muted || COSMETIC) return;
   try {
     const ac = audio();
     const n = Math.floor(ac.sampleRate * dur);
@@ -1267,7 +1267,7 @@ const S = {
   stage: 1, stageData: null, stageWaves: 10,
   mode: 'stage', inf: null, // 'stage' | 'infinity', inf = { sp, power{1..6}, kills, spent }
   net: null,       // 멀티(함께하기) 중이면 { code, pid, seed, t0, timing, rivals, status, … } — 싱글은 항상 null. 웨이브·배속은 싱글과 똑같이 각자 진행한다
-  speed: 1, muted: false,
+  speed: 1, muted: false, paused: false,
   time: 0, hurtT: 0, glowT: 0, glowColor: '',
   mouse: { x: -100, y: -100 },
 };
@@ -2456,8 +2456,10 @@ function spawnEnemy(item) {
   }
 }
 
+let COSMETIC = false;   // 관전 뷰의 시각 전용 시뮬: 피해·처치·소리 없음, 명중 연출만
 function damageEnemy(e, dmg, src) {
   if (e.dead) return;
+  if (COSMETIC) { e.flashT = 0.13; return; }
   if (S.mode === 'infinity' && S.inf && window.DKCONTENT) { // 메운디: 상성 · 방어력 · 에픽 락다운 (인피니티 전용)
     const INF = DKCONTENT.INFINITY, def = src && src.def;
     if (def && e.sizeClass && INF.sizeMult) { const m = INF.sizeMult[def.atk || 'norm']; if (m && m[e.sizeClass] != null) dmg *= m[e.sizeClass]; }
@@ -2662,6 +2664,36 @@ function towerFire(t, dt) {
   }
 }
 
+// 투사체·이펙트·빔·텍스트 갱신 — update() 와 관전 뷰(mpViewAdvance, 시각 전용 시뮬)가 같이 쓴다
+function updateVisuals(dt) {
+  // 투사체
+  for (const p of S.projs) {
+    if (p.tgt.dead || (LANES[p.tgt.lane || 0].loopAt == null && p.tgt.dist >= laneLen(p.tgt))) { p.gone = true; continue; }
+    const tp = epos(p.tgt);
+    const tx = tp.x, ty = tp.y - p.tgt.def.size * 0.4 - (p.tgt.move === 'air' ? 42 : 0);
+    const dx = tx - p.x, dy = ty - p.y;
+    const d = Math.hypot(dx, dy);
+    p.rot = Math.atan2(dy, dx);
+    p.spin += dt * 13;
+    const step = p.spd * dt;
+    if (p.trail) { p.trail.push({ x: p.x, y: p.y }); if (p.trail.length > 3) p.trail.shift(); }
+    if (d <= step + 8) { projHit(p); p.gone = true; }
+    else { p.x += dx / d * step; p.y += dy / d * step; }
+  }
+  S.projs = S.projs.filter(p => !p.gone);
+
+  // 이펙트
+  for (const f of S.fxs) {
+    f.t += dt;
+    if (f.vx !== undefined) { f.x += f.vx * dt; f.y += f.vy * dt; f.vy += 160 * dt; }
+  }
+  S.fxs = S.fxs.filter(f => f.t < f.dur);
+  for (const b of S.beams) b.t += dt;
+  S.beams = S.beams.filter(b => b.t < b.dur);
+  for (const tx of S.texts) tx.t += dt;
+  S.texts = S.texts.filter(tx => tx.t < 1.1);
+}
+
 function sheetHit(kind, x, y, size, dur) {
   S.fxs.push({ kind, x, y, t: 0, dur: dur || 0.32, size });
 }
@@ -2790,32 +2822,7 @@ function update(dt) {
   // 타워 공격
   for (const t of S.towers) towerFire(t, dt);
 
-  // 투사체
-  for (const p of S.projs) {
-    if (p.tgt.dead || (LANES[p.tgt.lane || 0].loopAt == null && p.tgt.dist >= laneLen(p.tgt))) { p.gone = true; continue; }
-    const tp = epos(p.tgt);
-    const tx = tp.x, ty = tp.y - p.tgt.def.size * 0.4 - (p.tgt.move === 'air' ? 42 : 0);
-    const dx = tx - p.x, dy = ty - p.y;
-    const d = Math.hypot(dx, dy);
-    p.rot = Math.atan2(dy, dx);
-    p.spin += dt * 13;
-    const step = p.spd * dt;
-    if (p.trail) { p.trail.push({ x: p.x, y: p.y }); if (p.trail.length > 3) p.trail.shift(); }
-    if (d <= step + 8) { projHit(p); p.gone = true; }
-    else { p.x += dx / d * step; p.y += dy / d * step; }
-  }
-  S.projs = S.projs.filter(p => !p.gone);
-
-  // 이펙트
-  for (const f of S.fxs) {
-    f.t += dt;
-    if (f.vx !== undefined) { f.x += f.vx * dt; f.y += f.vy * dt; f.vy += 160 * dt; }
-  }
-  S.fxs = S.fxs.filter(f => f.t < f.dur);
-  for (const b of S.beams) b.t += dt;
-  S.beams = S.beams.filter(b => b.t < b.dur);
-  for (const tx of S.texts) tx.t += dt;
-  S.texts = S.texts.filter(tx => tx.t < 1.1);
+  updateVisuals(dt);
 
   // 메운디 보스 제한시간: 보스가 살아있는 동안 카운트다운, 0이 되면 런 종료
   if (S.mode === 'infinity' && S.inf && S.inf.bossT > 0) {
@@ -3875,7 +3882,9 @@ function dieIconURL(face) {
   return (starIconCache[face] = cv.toDataURL());
 }
 
-function syncUI() {
+function syncUI() { syncStats(); syncUIRest(); }
+// 상단 칩 (골드·목숨·웨이브/보스 시간) — frame() 이 4Hz 로도 부른다
+function syncStats() {
   $('gold-val').textContent = S.gold;
   $('lives-val').textContent = S.lives;
   $('lives-val').parentElement.classList.toggle('low', S.lives > 0 && S.lives <= 5);
@@ -3903,6 +3912,8 @@ function syncUI() {
     ? `S${S.stage} · ${S.wave}/${S.stageWaves}`
     : `S${S.stage}${sd && sd.tierName ? ' ' + sd.tierName : ''} · 웨이브 ${S.wave} / ${S.stageWaves}`;
   $('wave-val').style.color = sd && sd.tierColor ? sd.tierColor : '';
+}
+function syncUIRest() {
   syncInfPanel();
   const heldInfo = $('held-info');
   if (S.heldDie) {
@@ -3915,9 +3926,12 @@ function syncUI() {
       ? def.name + ' — 석단을 눌러 설치 (한 번 더 누르면 잠시 내려놓기)'
       : def.name + ' — 내려놓은 상태입니다. 다시 누르면 배치 모드';
     heldInfo.classList.remove('hidden');
+    heldInfo.classList.toggle('parked', !S.dieFocus);
     heldInfo.style.setProperty('--elem', def.color);
-    $('held-name').textContent = def.name;
-    $('held-desc').textContent = def.desc + ' · 같은 눈 타워에 놓으면 합체';
+    $('held-name').textContent = (S.dieFocus ? '' : '보류 중 · ') + def.name;
+    $('held-desc').textContent = S.dieFocus ? def.desc + ' · 같은 눈 타워에 놓으면 합체' : '주사위 칸을 다시 누르면 배치 모드로 돌아갑니다';
+    const hs = $('held-sell');   // 약한 눈이 나와 놓을 데가 없을 때: 놓지 않고 바로 판다 (★7+ 는 판매 불가 규칙 그대로)
+    if (hs) { const canSell = S.phase === 'playing' && !(S.mode === 'infinity' && S.heldDie >= 7); hs.classList.toggle('hidden', !canSell); hs.textContent = `바로 판매 +${sellPrice({ face: S.heldDie, lvl: 1 })}G`; }
   } else {
     diceSlot.classList.remove('has-die');
     diceSlot.classList.remove('unfocused');
@@ -3933,7 +3947,7 @@ function syncUI() {
     rollBtn.title = '골드로 주사위를 뽑습니다. 등급이 정해지고 바로 굴러 타워가 되니 먼저 석단에 배치하세요 (굴려 나온 숫자 = 성★)\n일반 50% · 레어 33.1% · 고대 10.2% · 유물 5.1% · 서사 0.8% · 전설 0.5% · 에픽 0.2% · 신화 0.08% · 태초 0.019%';
     const busy = SLOT.active || !!S.heldDie;
     const full = !busy && !canPlaceAnywhere();   // 빈 칸도 합체 여지도 없다
-    $('roll-cost').textContent = busy ? '배치 후 가능' : full ? '석단이 가득 참' : `${cost} G`;
+    $('roll-cost').textContent = SLOT.active ? '굴리는 중…' : S.heldDie ? (S.dieFocus ? '배치 후 가능' : '주사위 보류 중') : full ? '석단이 가득 참' : `${cost} G`;
     rollBtn.disabled = busy || full || !(S.inf && S.phase === 'playing' && S.gold >= cost);
     const q = $('queue-chip');
     if (q) { const n = (S.inf && S.inf.queue) ? S.inf.queue.length : 0; q.classList.toggle('hidden', n === 0); q.querySelector('b').textContent = n; }
@@ -3991,7 +4005,7 @@ function syncInfo() {
       hint.textContent = S.heldDie
         ? (S.dieFocus
             ? '빈 석단을 눌러 타워를 놓으세요 (끌어다 놓아도 됩니다). 같은 눈 위에 놓으면 합체.'
-            : '주사위를 내려놨습니다. 타워를 눌러 판매·확률강화하고, 주사위 칸을 다시 누르면 배치 모드로 돌아갑니다.')
+            : '주사위를 보류했습니다. 타워를 눌러 판매·확률강화할 수 있고, 주사위 칸을 다시 누르면 배치 모드, 아래 "바로 판매"로 팔 수도 있습니다.')
         : S.mode === 'infinity'
           ? '석단의 타워를 누르면 여기에서 판매·확률강화를 할 수 있습니다.'
           : '석단의 타워를 누르면 여기에서 능력치와 판매를 확인할 수 있습니다.';
@@ -4085,6 +4099,8 @@ function showOverlay(title, descHTML, btnLabel) {
 // ==================== 화면 전환 (로비 / 스테이지선택 / 상점 / 플레이) ====================
 const SCREENS = ['lobby', 'stage-select', 'shop', 'mp-room'];   // 전체화면 .screen 들 — 전환 때 전부 숨긴다
 function showScreen(name) {
+  if (S.paused) setPaused(false);
+  if (menuOpen()) $('menu').classList.add('hidden');
   overlayEl.classList.add('hidden');
   for (const id of SCREENS) $(id).classList.add('hidden');
   statsEl.classList.add('hidden');
@@ -4780,6 +4796,7 @@ document.addEventListener('keydown', ev => {
     if (settingsOpen()) { closeSettings(); return; }
     const help = $('inf-help');
     if (help && !help.classList.contains('hidden')) { closeInfHelp(); return; } // 도움말이 열려 있으면 먼저 닫는다
+    if (menuOpen()) { closeMenu(); return; }
     if (VIEW.pid) { mpViewExit(); return; }
     if (DRAG.active) stopPlaceDrag();
     S.selTower = null;
@@ -4789,6 +4806,17 @@ document.addEventListener('keydown', ev => {
 
 rollBtn.addEventListener('click', rollByButton);
 waveBtn.addEventListener('click', () => startWave());
+$('held-sell').addEventListener('click', () => {   // 손에 든 주사위 바로 판매
+  if (!S.heldDie || S.phase !== 'playing') return;
+  if (S.mode === 'infinity' && S.heldDie >= 7) { SFX.deny(); return; }
+  const price = sellPrice({ face: S.heldDie, lvl: 1 }), def = TOWER_DEFS[S.heldDie];
+  S.gold += price;
+  S.texts.push({ str: `${def.name} 판매 +${price}G`, x: W / 2, y: H / 2 - 30, t: 0, color: '#ffd452' });
+  S.heldDie = 0; S.dieFocus = true;
+  if (DRAG.active) stopPlaceDrag();
+  SFX.sell();
+  syncUI();
+});
 $('sell-btn').addEventListener('click', () => {
   if (!S.selTower) return;
   if (S.mode === 'infinity' && S.selTower.face >= 7) { SFX.deny(); return; } // 전설 이상 판매 불가
@@ -4818,10 +4846,11 @@ window.DKAPP = {
   back() {
     if (settingsOpen()) { closeSettings(); return true; }
     const help = $('inf-help'); if (help && !help.classList.contains('hidden')) { closeInfHelp(); return true; }
+    if (menuOpen()) { closeMenu(); return true; }
     if (chatForm && !chatForm.classList.contains('hidden')) { chatClose(); return true; }
     if (typeof VIEW !== 'undefined' && VIEW.pid) { mpViewExit(); return true; }
     if (S.phase === 'playing' && S.selTower) { S.selTower = null; syncUI(); return true; }
-    if (S.phase === 'playing' || S.phase === 'spectate') { $('exit-btn').click(); return true; }
+    if (S.phase === 'playing' || S.phase === 'spectate') { openMenu(); return true; }
     if (S.phase === 'stageSelect' || S.phase === 'shop') { const b = document.querySelector(`#${S.phase === 'shop' ? 'shop' : 'stage-select'} .back-btn`); if (b) b.click(); return true; }
     if (S.phase === 'mpRoom') { $('mp-leave').click(); return true; }
     if (S.phase === 'title' || S.phase === 'over' || S.phase === 'win' || S.phase === 'stageClear') { $('ov-btn').click(); return true; }
@@ -4886,16 +4915,39 @@ $('shop-back').addEventListener('click', () => gotoLobby());
   if (!el) return;
   el.addEventListener('click', (e) => { if (e.target === el) gotoLobby(); });
 });
-$('exit-btn').addEventListener('click', () => {
+// ---- 게임 메뉴 (≡): 싱글은 여는 동안 멈춘다. 멀티는 계속 돈다(일시정지 불가) ----
+function menuOpen() { return !$('menu').classList.contains('hidden'); }
+function setPaused(on) {
+  S.paused = !!on && !S.net && S.phase === 'playing';
+  const b = $('menu-pause');
+  if (b) { b.disabled = !!S.net || S.phase !== 'playing'; b.textContent = S.net ? '⏸ 일시정지 (멀티에서는 불가)' : S.paused ? '▶ 재개 (메뉴는 열어 둠)' : '⏸ 일시정지'; }
+  if (window.DKBGM) { try { DKBGM.duck(S.paused ? 0.35 : 1, 0.3); } catch (e) { /* 무시 */ } }
+}
+function openMenu() {
+  if (S.phase !== 'playing' && S.phase !== 'spectate') return;
+  audio();
+  $('menu').classList.remove('hidden');
+  const spec = S.phase === 'spectate';
+  $('menu-note').innerHTML = spec ? '관전 중입니다. 기록·젬은 이미 저장됐습니다.' : S.net ? '<b>함께하기</b> 중에는 게임이 멈추지 않습니다. 포기하면 관전으로 넘어가고 기록·젬은 저장됩니다.' : (S.mode === 'infinity' ? '메뉴가 열려 있는 동안 게임이 멈춥니다. 포기하면 지금까지의 기록·젬이 저장됩니다.' : '메뉴가 열려 있는 동안 게임이 멈춥니다.');
+  $('menu-quit').textContent = spec ? '관전 끝내고 나가기' : S.mode === 'infinity' ? '포기하고 나가기 (기록 저장)' : '스테이지 선택으로 나가기';
+  $('menu-help').classList.toggle('hidden', S.mode !== 'infinity');
+  setPaused(!spec);
+}
+function closeMenu() { $('menu').classList.add('hidden'); setPaused(false); }
+function quitToMenu() {
+  closeMenu();
   if (S.phase === 'spectate') { mpLeave(); S.mode = 'stage'; S.inf = null; gotoLobby(); return; }   // 관전 중 나가기 (기록은 이미 저장됨)
   if (S.phase !== 'playing') return;
-  if (S.mode === 'infinity') {
-    if (S.net && !confirm('포기하면 관전으로 넘어갑니다. 기록·젬은 지금까지 것으로 저장됩니다.')) return;
-    S.inf.quit = true;
-    endInfinity(); return;                              // 포기 = 런 종료 (기록 저장)
-  }
+  if (S.mode === 'infinity') { S.inf.quit = true; endInfinity(); return; }   // 포기 = 런 종료 (기록 저장)
   gotoStageSelect();
-});
+}
+$('exit-btn').addEventListener('click', () => { if (menuOpen()) closeMenu(); else openMenu(); });
+$('menu-resume').addEventListener('click', () => { audio(); closeMenu(); });
+$('menu-pause').addEventListener('click', () => { audio(); setPaused(!S.paused); });
+$('menu-settings').addEventListener('click', () => { audio(); openSettings(); });
+$('menu-help').addEventListener('click', () => { audio(); closeMenu(); openInfHelp(); });
+$('menu-quit').addEventListener('click', () => { audio(); quitToMenu(); });
+$('menu').addEventListener('click', (ev) => { if (ev.target === $('menu')) closeMenu(); });
 
 // ==================== 멀티 (인피니티 · 함께) ====================
 // 서버(Cloudflare Worker + Room DO)는 방·시계·시드·중계만 갖고, 시뮬레이션은 각자 자기 보드에서 돈다 (GAME-SPEC §6.5).
@@ -4905,7 +4957,7 @@ $('exit-btn').addEventListener('click', () => {
 //   - 먼저 죽으면 기록·젬을 그 즉시 저장하고 관전(#spectate)으로. 전원이 완주/탈락하면 순위표 (완주는 빠른 순, 탈락은 웨이브 순)
 const MP = { sumTimer: 0, sumEvery: 0, tickAt: 0, resumeRoom: null, statsDone: false, quick: false, queue: null, baseIdx: null };
 // 상대 필드 보기: 상대 sum(tw·en·ll) 으로 만든 타워·적 목록. frame() 이 draw() 직전에 S 와 바꿔 그린다
-const VIEW = { pid: null, towers: [], enemies: [], sum: null, at: 0 };
+const VIEW = { pid: null, towers: [], enemies: [], projs: [], beams: [], fxs: [], sum: null, at: 0 };
 const PC = ['#7fd4ff', '#ffd452', '#8ef0b0', '#ff7ad9'];   // 좌석색 (입장 순)
 const MP_LOG_KINDS = ['sys', 'gacha', 'up', 'boom', 'boss', 'life'];
 const mpOn = () => !!(window.DKNET && DKNET.CFG && DKNET.CFG.url);
@@ -5073,7 +5125,7 @@ function mpView(pid) {
   const p = mpPlayers().find(x => x.pid === pid);
   if (!p || (p.status !== 'alive' && p.status !== 'cleared')) { pushLog('지금은 볼 수 없는 필드입니다', 'sys'); return; }
   if (VIEW.pid === pid) { mpViewExit(); return; }
-  VIEW.pid = pid; VIEW.towers = []; VIEW.enemies = []; VIEW.sum = null; VIEW.at = 0;
+  VIEW.pid = pid; VIEW.towers = []; VIEW.enemies = []; VIEW.projs = []; VIEW.beams = []; VIEW.fxs = []; VIEW.sum = null; VIEW.at = 0;
   if (window.DKNET) DKNET.watch(pid);
   const last = S.net.rivals[pid];
   if (last) mpViewBuild(last);
@@ -5088,7 +5140,7 @@ function mpView(pid) {
 }
 function mpViewExit(silent) {
   if (!VIEW.pid) return;
-  VIEW.pid = null; VIEW.towers = []; VIEW.enemies = []; VIEW.sum = null;
+  VIEW.pid = null; VIEW.towers = []; VIEW.enemies = []; VIEW.projs = []; VIEW.beams = []; VIEW.fxs = []; VIEW.sum = null;
   if (!silent && window.DKNET && DKNET.inRoom()) DKNET.watch(null);
   stageEl.classList.remove('viewing'); wrapEl.classList.remove('viewing');
   $('view-bar').classList.add('hidden');
@@ -5108,14 +5160,15 @@ function mpViewBuild(sum) {
   const C = window.DKCONTENT;
   VIEW.sum = sum; VIEW.at = performance.now();
   const myKey = S.mapKey === 'cInfP' ? 'cInfP' : 'cInf', fromKey = sum.o === 'p' ? 'cInfP' : 'cInf';
-  const towers = [];
+  const towers = [], prevT = new Map();
+  for (const t of VIEW.towers) prevT.set(t.spot + ':' + t.face + ':' + t.lvl, t);
   for (const t of (Array.isArray(sum.tw) ? sum.tw.slice(0, 15) : [])) {
     if (!Array.isArray(t)) continue;
     const spot = t[0] | 0, face = t[1] | 0, lvl = t[2] | 0;
     if (spot < 0 || spot > 14 || face < 1 || face > 20 || lvl < 1 || lvl > 3) continue;
     const idx = remapSpot(fromKey, myKey, spot), def = TOWER_DEFS[face];
     if (!def || idx < 0 || !SPOTS[idx]) continue;
-    towers.push({ face, def, lvl, spot: idx, x: SPOTS[idx][0], y: SPOTS[idx][1], cd: 0, kick: 0, skin: 0 });
+    towers.push(prevT.get(idx + ':' + face + ':' + lvl) || { face, def, lvl, spot: idx, x: SPOTS[idx][0], y: SPOTS[idx][1], cd: Math.random() * 0.5, kick: 0, skin: 0 });
   }
   VIEW.towers = towers;
   const ll = sum.ll | 0, len = LANES[0] ? LANES[0].len : 0, k = ll > 0 && len > 0 ? len / ll : 1;
@@ -5138,6 +5191,8 @@ function mpViewBuild(sum) {
     }
   }
   VIEW.enemies = enemies;
+  const alive = new Set(enemies);   // 요약이 바뀌어 사라진 적을 노리던 투사체는 버린다
+  VIEW.projs = VIEW.projs.filter(p => alive.has(p.tgt));
   mpViewBar();
 }
 // 요약 사이(1초)에는 상대 배속으로 전진시켜 흔들리지 않게 한다
@@ -5152,13 +5207,22 @@ function mpViewAdvance(dt) {
     const p = posAt(e.dist, e.lane || 0);
     if (Math.abs(p.dx) > 0.3) e.face = Math.sign(p.dx);
   }
+  // 상대 타워의 공격 연출: 피해·처치·소리 없는 시각 전용 시뮬 (COSMETIC) — 실제 전투는 상대 기기에서 돈다
+  withView(() => {
+    COSMETIC = true;
+    try {
+      for (let i = 0; i < sp; i++) { for (const t of S.towers) towerFire(t, dt); updateVisuals(dt); }
+      for (const e of S.enemies) if (e.flashT > 0) e.flashT -= dt;
+    } finally { COSMETIC = false; }
+    VIEW.projs = S.projs; VIEW.beams = S.beams; VIEW.fxs = S.fxs;
+  });
 }
 // draw() 가 읽는 S 필드를 VIEW 것으로 바꿔 그리고 되돌린다
 const VIEW_KEYS = ['towers', 'enemies', 'projs', 'beams', 'fxs', 'texts', 'corpses', 'selTower', 'heldDie', 'shakeT', 'bannerT', 'glowT', 'hurtT', 'mouse'];
 function withView(fn) {
   const saved = {};
   for (const k of VIEW_KEYS) saved[k] = S[k];
-  S.towers = VIEW.towers; S.enemies = VIEW.enemies; S.projs = []; S.beams = []; S.fxs = []; S.texts = []; S.corpses = [];
+  S.towers = VIEW.towers; S.enemies = VIEW.enemies; S.projs = VIEW.projs; S.beams = VIEW.beams; S.fxs = VIEW.fxs; S.texts = []; S.corpses = [];
   S.selTower = null; S.heldDie = 0; S.shakeT = 0; S.bannerT = 0; S.glowT = 0; S.hurtT = 0; S.mouse = { x: -999, y: -999 };
   try { fn(); } finally { for (const k of VIEW_KEYS) S[k] = saved[k]; }
 }
@@ -5499,14 +5563,18 @@ function mpInit() {
 
 // ==================== 메인 루프 ====================
 
-let lastTs = 0;
+let lastTs = 0, HUD_TICK = 0;
 function frame(ts) {
   const dt = Math.min(0.05, (ts - lastTs) / 1000 || 0);
   lastTs = ts;
-  for (let i = 0; i < S.speed; i++) update(dt);
+  if (!S.paused) {
+    for (let i = 0; i < S.speed; i++) update(dt);
+    updateDie(dt); // 주사위 물리는 배속과 무관하게 실제 시간으로
+    updateSlot(dt * S.speed);   // 뽑기 슬롯은 배속을 따라간다 (x3 에서 보상 큐가 굳지 않게)
+  }
   if (S.net) mpTick();
-  updateDie(dt); // 주사위 물리는 배속과 무관하게 실제 시간으로
-  updateSlot(dt * S.speed);   // 뽑기 슬롯은 배속을 따라간다 (x3 에서 보상 큐가 굳지 않게)
+  // 보스 제한시간·막간 카운트다운은 매 프레임 바뀌므로 칩 문구를 4Hz 로 따로 갱신한다 (syncUI 는 이벤트 때만 돈다)
+  if (S.phase === 'playing' && S.inf && S.inf.bossT > 0 && ts - HUD_TICK > 250) { HUD_TICK = ts; syncStats(); }
   if (VIEW.pid) { mpViewAdvance(dt); withView(draw); }   // 상대 필드 보기: 내 시뮬은 위에서 돌았고, 그리기만 상대 것으로
   else draw();
   drawSlot();
