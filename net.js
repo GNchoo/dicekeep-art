@@ -76,12 +76,14 @@ window.DKNET = (function () {
   }
   const isWsUrl = (u) => /^wss?:\/\/\S+$/i.test(String(u || ''));
   const trimUrl = (u) => String(u).trim().replace(/\/+$/, '');
-  // 순수 함수(테스트용): hostname · location.search · 저장값 · 마지막 폴백(window.DK_NET_URL)
-  function _resolveUrl(hostname, search, stored, fallback) {
+  // 순수 함수(테스트용): hostname · location.search · 저장값 · 마지막 폴백(window.DK_NET_URL) · native(Capacitor 앱 안)
+  // 앱 안에서는 hostname 이 localhost(capacitor://localhost 등)라서 호스트 규칙이 로컬 서버를 가리킨다 → 폴백(운영 서버)을 먼저 쓴다
+  function _resolveUrl(hostname, search, stored, fallback, native) {
     const q = parseSearch(search), net = q.net != null ? String(q.net).trim() : null;
     if (net === 'off') return null;
     if (net && isWsUrl(net)) return trimUrl(net);
     if (net !== 'clear' && stored && isWsUrl(stored)) return trimUrl(stored);
+    if (native && fallback && isWsUrl(fallback)) return trimUrl(fallback);
     const h = String(hostname || '').toLowerCase();
     if (/^(localhost|127\.0\.0\.1|\[::1\])$/.test(h)) return 'ws://localhost:8787';
     const m = /^(?:[a-z0-9-]+-)?dicekeep\.([^.]+)\.workers\.dev$/.exec(h);   // 운영 dicekeep.<acct> · 브랜치 프리뷰 <br>-dicekeep.<acct>
@@ -94,7 +96,8 @@ window.DKNET = (function () {
     const q = parseSearch(search), net = q.net != null ? String(q.net).trim() : null;
     if (net && isWsUrl(net)) sSet(LS(), 'dk_net', trimUrl(net));        // ?net=ws://… 는 기억한다
     else if (net === 'clear') sDel(LS(), 'dk_net');                     // ?net=clear 로 잊는다
-    return _resolveUrl(hostname, search, sGet(LS(), 'dk_net'), W.DK_NET_URL);
+    const native = !!(W.Capacitor && W.Capacitor.isNativePlatform && W.Capacitor.isNativePlatform());
+    return _resolveUrl(hostname, search, sGet(LS(), 'dk_net'), W.DK_NET_URL, native);
   }
   // 게임 버전 = index.html 의 <script src="net.js?v=NN"> 값 (서버가 방 안 버전 일치를 검사한다)
   function scriptVer() {

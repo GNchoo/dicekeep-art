@@ -2,12 +2,15 @@
 // Origin 검사: 헤더가 '있는데' 허용 목록과 다르면 거절. 없으면(비브라우저 클라이언트) 통과 —
 // 이 검사는 타 사이트 브라우저의 소켓 남용만 막는 장치다.
 //   허용: http(s)://localhost:* · 127.0.0.1:* · [::1]:*
+//         Capacitor 앱 웹뷰 원점: capacitor://localhost (iOS) · https://localhost (Android, androidScheme https) · ionic://localhost (구형)
 //         요청 Host 가 dicekeep-net.<acct>.workers.dev 이면 https://dicekeep.<acct>.workers.dev · https://*-dicekeep.<acct>.workers.dev
 //         extra(vars.ALLOWED_ORIGINS, 쉼표 구분) 의 원점 그대로
+//   프로토콜은 http: https: capacitor: ionic: 만 (file: · chrome-extension: 등은 거절)
+const ORIGIN_PROTOCOLS = new Set(['http:', 'https:', 'capacitor:', 'ionic:']);
 export function originAllowed(origin, host, extra) {
   let u;
   try { u = new URL(origin); } catch (e) { return false; }
-  if (u.protocol !== 'http:' && u.protocol !== 'https:') return false;
+  if (!ORIGIN_PROTOCOLS.has(u.protocol)) return false;
   const h = u.hostname.toLowerCase();
   if (h === 'localhost' || h === '127.0.0.1' || h === '[::1]') return true;
   const acct = /^dicekeep-net\.([a-z0-9-]+)\.workers\.dev$/i.exec(String(host || '').split(':')[0]);
