@@ -1513,9 +1513,14 @@ const SLOT = {
   from: null, axis: [0, 0, 1], ang: 0, sndT: 0,
 };
 
+// 새 굴림을 시작해도 되는가 — 손이 비어 있고 슬롯이 놀고 있을 때만. 뽑기·보상 큐·캐주얼 굴림이 전부 이 하나를 본다
+// (손에 든 주사위를 덮어쓰는 경로가 생기지 않도록 게이트를 한 곳에 둔다)
+function canStartRoll() {
+  return S.phase === 'playing' && !S.heldDie && !SLOT.active && (S.mode === 'infinity' || DIE.state === 'tray');
+}
 function canRoll() {
   if (S.mode === 'infinity') return false; // 인피니티는 기본 주사위 없음 — 뽑기(보물상자)만
-  return S.phase === 'playing' && DIE.state === 'tray' && !SLOT.active && !S.heldDie && S.gold >= ROLL_COST;
+  return canStartRoll() && S.gold >= ROLL_COST;
 }
 
 function throwDie(vx, vy) {
@@ -1574,6 +1579,7 @@ function buyChest() {
   const ch = chestDef();
   if (!ch || S.mode !== 'infinity' || !S.inf || S.phase !== 'playing') return null;
   const cost = chestCost();
+  if (!canStartRoll() || !canPlaceAnywhere()) { SFX.deny(); return null; }   // 배치부터 — 굴리는 중·손이 찬 채로는 뽑지 않는다
   if (S.gold < cost) { SFX.deny(); return null; }
   S.gold -= cost;
   S.inf.chests = (S.inf.chests || 0) + 1;
@@ -1598,7 +1604,7 @@ const dieShape = k => { const ch = chestDef(); return (ch && ch.shape && ch.shap
 function rollDie(kind) {
   const ch = chestDef();
   if (!ch || S.mode !== 'infinity' || !S.inf || S.phase !== 'playing') return false;
-  if (SLOT.active || S.heldDie || DIE.state !== 'tray') { S.inf.queue.push(kind); syncUI(); return false; }
+  if (!canStartRoll()) return false;            // 손이 차 있으면 굴리지 않는다 — 큐는 호출자(pumpQueue)가 든다
   SLOT.active = true; SLOT.kind = kind;
   SLOT.t = 0; SLOT.t2 = 0; SLOT.phase = 0; SLOT.sndT = 0;
   SLOT.final = ch.roll(kind);
@@ -1616,11 +1622,12 @@ function canPlaceAnywhere() {
 }
 function pumpQueue() {
   if (S.mode !== 'infinity' || !S.inf || !S.inf.queue || !S.inf.queue.length) return;
-  if (SLOT.active || S.heldDie || DIE.state !== 'tray' || S.phase !== 'playing') return;
+  if (!canStartRoll()) return;
   if (!canPlaceAnywhere()) return;   // 자리가 날 때까지 보상은 큐에 남는다
-  rollDie(S.inf.queue.shift());
+  if (rollDie(S.inf.queue[0])) S.inf.queue.shift();   // 굴림이 실제로 시작됐을 때만 큐에서 뺀다 (주사위가 조용히 사라지지 않게)
 }
 function finishSlot() {
+  if (S.heldDie) return;             // 손이 차 있으면 절대 덮어쓰지 않는다 — 슬롯은 '완성 대기'로 남아 손이 빌 때 온다
   SLOT.active = false;
   S.heldDie = SLOT.final;
   S.dieFocus = true;      // 새로 온 주사위는 배치 모드로 시작
@@ -1639,7 +1646,7 @@ function finishSlot() {
 }
 
 function updateSlot(dt) {
-  if (!SLOT.active) return;
+  if (!SLOT.active || S.phase !== 'playing') return;
   SLOT.t += dt;
   const poly = SLOT.kind && SLOT.kind !== 'd6';
   if (SLOT.phase === 0) {
@@ -1671,7 +1678,7 @@ function updateSlot(dt) {
     if (SLOT.ang > 1e-4) {
       SLOT.R = m3mul(m3axisAngle(SLOT.axis[0], SLOT.axis[1], SLOT.axis[2], SLOT.ang * ease), SLOT.from);
     }
-    if (SLOT.t2 > 0.45) finishSlot();
+    if (SLOT.t2 > 0.45) { if (S.heldDie) return; finishSlot(); }   // 손이 차 있으면(다른 경로로 들어온 주사위) 굴린 결과를 보존한 채 기다린다
   }
 }
 // ==================== 다면체 주사위 (d4·d8·d12·d20) ====================
@@ -2048,7 +2055,7 @@ function buildInfinityWave(w) {
       const bi = (INF.bossOrdinal(w) - 1 + k * 37) % C.bosses.length; // 2주기부터 w % 10 과 어긋나므로 순번으로 센다
       const boss = C.bosses[bi];
       const bbase = C.bossBases.find((b) => b.id === boss.base) || C.bossBases[0];
-      add(bbase.id, { name: M.prefix + boss.name, hue: boss.hue, hpMult: P.hpMult * P.bossHp, isBoss: true, lane: laneFor(bbase.move, k) });
+      add(bbase.id, { name: M.prefix + boss.name, hue: boss.hue, hpMult: P.hpMult * P.bossHp, isBoss: true, bossCount: P.bosses, lane: laneFor(bbase.move, k) });
       t += 1.5;
     }
     return q;
@@ -2189,7 +2196,7 @@ function startInfinity(kind, net) {
   S.spawnQ = []; S.waveActive = false; S.autoT = 0; S.waveT = 0;
   S.heldDie = 0; S.dieFocus = true; S.selTower = null; S.shakeT = 0; S.bannerT = 0;
   DIE.state = 'tray'; DIE.z = 0; DIE.final = 0;
-  SLOT.active = false;
+  SLOT.active = false; SLOT.final = 0;
   applyMapLayout(S.mapKey, INF.tier);
   S.phase = 'playing';
   if (net) { S.speed = 1; $('speed-btn').textContent = 'x1'; }   // 멀티: 배속 없음 (서버 시계)
@@ -2328,7 +2335,7 @@ function spawnEnemy(item) {
     animT: Math.random(), face: 1, dead: false,
     move, sprite, hue, name: name || def.name,
     hidden: false, burrowT: Math.random() * 2,
-    isBoss, lane, flashT: 0,
+    isBoss, bossCount: item.bossCount || 1, lane, flashT: 0,
     entranceT: isBoss ? 0 : -1, // 보스 등장 연출 (>=0 이면 진행 중)
     stompPhase: 0,
   };
@@ -2374,16 +2381,16 @@ function damageEnemy(e, dmg, src) {
     spawnDeath(e, p);
     if (e.isBoss || e.type === 'boss') {
       const ch = chestDef();
-      if (S.mode === 'infinity' && S.inf && ch && DKCONTENT.INFINITY.bossReward) { // 메운디 보스 보상 스케줄 (같은 웨이브의 마지막 보스 처치 시 1회)
-        const others = S.enemies.some(x => x !== e && !x.dead && x.isBoss && x.wave === e.wave);
-        if (!others) {
-          const r = DKCONTENT.INFINITY.bossReward(e.wave || S.wave);
-          S.gold += r.gold;
-          for (const k of r.dice) S.inf.queue.push(k); // 손이 비면 자동으로 굴러간다
-          S.texts.push({ str: `보스 보상: +${r.gold}G · ${r.dice.map(k => ch.grade[k] + ' ' + ch.label[k]).join(' + ')}!`, x: W / 2, y: 170, t: 0, color: dieKindColor(r.dice[0]) });
-          netLog(`보스 ${e.name} 처치! +${r.gold}G · ${r.dice.map(k => ch.grade[k]).join(' + ')}`, 'boss');
-          syncUI();   // '보상 대기' 칩을 바로 갱신 (자리가 없으면 큐에 쌓인 채로 기다린다)
-        }
+      if (S.mode === 'infinity' && S.inf && ch && DKCONTENT.INFINITY.bossReward) { // 메운디 보스 보상 — 보스 한 마리마다 (주사위는 전부, 골드는 그 웨이브 보스 수로 나눈다)
+        const r = DKCONTENT.INFINITY.bossReward(e.wave || S.wave);
+        const nBoss = Math.max(1, e.bossCount || 1);
+        const gold = Math.round(r.gold / nBoss);
+        S.gold += gold;
+        for (const k of r.dice) S.inf.queue.push(k); // 손이 비면 자동으로 굴러간다 (손이 차 있어도 큐에서 기다린다)
+        const left = S.enemies.filter(x => x !== e && !x.dead && x.isBoss && x.wave === e.wave).length;
+        S.texts.push({ str: `보스 보상: +${gold}G · ${r.dice.map(k => ch.grade[k] + ' ' + ch.label[k]).join(' + ')}!`, x: W / 2, y: 170, t: 0, color: dieKindColor(r.dice[0]) });
+        netLog(`보스 ${e.name} 처치! +${gold}G · ${r.dice.map(k => ch.grade[k]).join(' + ')}${left ? ` (보스 ${left}마리 남음)` : ''}`, 'boss');
+        syncUI();   // '보상 대기' 칩을 바로 갱신 (자리가 없으면 큐에 쌓인 채로 기다린다)
         if (!S.enemies.some(x => x !== e && !x.dead && x.isBoss)) S.inf.bossT = 0; // 제한시간 해제
       }
       S.fxs.push({ kind: 'impact', x: p.x, y: p.y - 20, t: 0, dur: 0.45, size: 150 });
@@ -4858,6 +4865,7 @@ function netRunOver(won) {
   (won ? SFX.win : SFX.lose)();
   S.phase = 'spectate';
   S.selTower = null; S.heldDie = 0;
+  SLOT.active = false; SLOT.final = 0;
   if (DRAG.active) stopPlaceDrag();
   mpOpenSpectate(won, res);
   if (net.ended) mpShowResult(net.ended);   // 방 결과가 먼저 와 있었다면 바로 순위표
@@ -5178,7 +5186,7 @@ function frame(ts) {
   if (S.net && S.net.t0 != null) frameNet();            // 함께하기: 서버 시각에 정렬된 고정 스텝
   else for (let i = 0; i < S.speed; i++) update(dt);
   updateDie(dt); // 주사위 물리는 배속과 무관하게 실제 시간으로
-  updateSlot(dt);
+  updateSlot(dt * S.speed);   // 뽑기 슬롯은 배속을 따라간다 (x3 에서 보상 큐가 굳지 않게)
   draw();
   drawSlot();
   requestAnimationFrame(frame);
