@@ -1,0 +1,2609 @@
+{
+  "expectedVersion": "91",
+  "baseUrl": "http://127.0.0.1:8137",
+  "localAssets": {
+    "title-keyart-p.jpg": {
+      "file": "ui/title-keyart-p.jpg",
+      "sha256": "31ad026c1fa1675bb027df0d57791a47a819f3fe70ae291006401ab4229349df"
+    },
+    "title-keyart-l.jpg": {
+      "file": "ui/title-keyart-l.jpg",
+      "sha256": "10eefca1484eb2d47fcf012b0ec94a51055874439fa92875bd802e5bc4ac19d7"
+    },
+    "title-keyart-l-blur.jpg": {
+      "file": "ui/title-keyart-l-blur.jpg",
+      "sha256": "94f7fabb2458d13becc239d55aa0d1fb6c2047143b992aeb0be3c780d8da24d5"
+    }
+  },
+  "scope": "Four Chromium viewport checks of actual key-art bytes, preload/version selection, decoded loading state, title readiness and layout. Normal PNG requests are delayed only until the loading screenshot; all original responses are then released. D6 pip count and chip aesthetics require visual review.",
+  "cases": [
+    {
+      "name": "portrait-393x852",
+      "width": 393,
+      "height": 852,
+      "branch": "p",
+      "heldPngRequests": 838,
+      "responses": [
+        {
+          "url": "http://127.0.0.1:8137/ui/title-keyart-p.jpg?v=91",
+          "status": 200,
+          "sha256": "31ad026c1fa1675bb027df0d57791a47a819f3fe70ae291006401ab4229349df",
+          "matchesLocalPromotedFile": true
+        },
+        {
+          "url": "http://127.0.0.1:8137/ui/title-keyart-p.jpg?v=91",
+          "status": 200,
+          "sha256": "31ad026c1fa1675bb027df0d57791a47a819f3fe70ae291006401ab4229349df",
+          "matchesLocalPromotedFile": true
+        }
+      ],
+      "pageErrors": [],
+      "keyartErrors": [],
+      "otherHttpErrors": [
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/floor.jpg",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/floor.jpg",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/floor.jpg",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/floor.jpg",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/floor.jpg",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-07.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-08.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-09.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-10.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-11.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-12.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-13.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-14.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-15.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-16.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-18.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-17.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-19.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-20.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/dice/poly-d1.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/dice/poly-d4.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/dice/poly-d8.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/dice/poly-d12.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/dice/poly-d20.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/plains/road.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/road.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/water.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/pad.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/start.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/end.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/prop-1.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/prop-2.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/prop-3.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/prop-4.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/prop-5.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/prop-6.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/road-straight.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/road.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/water.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/pad.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/start.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/end.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/prop-1.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/prop-2.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/prop-3.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/prop-4.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/prop-5.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/prop-6.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/road-straight.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/road.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/water.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/pad.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/start.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/prop-1.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/end.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/prop-2.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/prop-3.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/prop-4.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/prop-5.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/prop-6.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/road-straight.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/water.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/road.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/pad.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/start.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/end.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/prop-1.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/prop-2.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/prop-3.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/prop-4.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/prop-5.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/prop-6.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/road-straight.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/road.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/water.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/pad.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/start.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/end.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/prop-1.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/prop-2.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/prop-3.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/prop-4.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/prop-5.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/prop-6.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/road-straight.png",
+          "status": 404
+        }
+      ],
+      "checks": [
+        {
+          "stage": "loading",
+          "phase": null,
+          "viewport": {
+            "width": 393,
+            "height": 852
+          },
+          "portraitMedia": true,
+          "boxClasses": "loading title",
+          "keyart": {
+            "landscape": "http://127.0.0.1:8137/ui/title-keyart-l.jpg?v=91",
+            "blur": "http://127.0.0.1:8137/ui/title-keyart-l-blur.jpg?v=91",
+            "portrait": "http://127.0.0.1:8137/ui/title-keyart-p.jpg?v=91",
+            "displayed": [
+              "http://127.0.0.1:8137/ui/title-keyart-p.jpg?v=91"
+            ],
+            "backgroundSize": "cover, cover",
+            "backgroundPosition": "50% 50%, 50% 50%"
+          },
+          "preloads": [
+            {
+              "href": "http://127.0.0.1:8137/ui/title-keyart-p.jpg?v=91",
+              "media": "(max-aspect-ratio: 3/4)",
+              "active": true
+            },
+            {
+              "href": "http://127.0.0.1:8137/ui/title-keyart-l.jpg?v=91",
+              "media": "(min-aspect-ratio: 3001/4000)",
+              "active": false
+            }
+          ],
+          "titleText": "주사위 성채",
+          "loadingText": "불러오는 중 1%",
+          "button": {
+            "visible": false,
+            "disabled": true,
+            "text": "게임 시작"
+          },
+          "document": {
+            "scrollWidth": 393,
+            "clientWidth": 393,
+            "scrollHeight": 852,
+            "clientHeight": 852
+          },
+          "elements": [
+            {
+              "id": "overlay",
+              "visible": true,
+              "x": 0,
+              "y": 0,
+              "width": 393,
+              "height": 852,
+              "right": 393,
+              "bottom": 852,
+              "scrollWidth": 393,
+              "clientWidth": 393,
+              "scrollHeight": 852,
+              "clientHeight": 852
+            },
+            {
+              "id": "overlay-box",
+              "visible": true,
+              "x": 12,
+              "y": 12,
+              "width": 369,
+              "height": 828,
+              "right": 381,
+              "bottom": 840,
+              "scrollWidth": 369,
+              "clientWidth": 369,
+              "scrollHeight": 828,
+              "clientHeight": 828
+            },
+            {
+              "id": "ov-title",
+              "visible": true,
+              "x": 68.015625,
+              "y": 665.71875,
+              "width": 256.96875,
+              "height": 54.6875,
+              "right": 324.984375,
+              "bottom": 720.40625,
+              "scrollWidth": 257,
+              "clientWidth": 257,
+              "scrollHeight": 55,
+              "clientHeight": 55
+            },
+            {
+              "id": "ov-sub",
+              "visible": true,
+              "x": 87.34375,
+              "y": 726.40625,
+              "width": 218.296875,
+              "height": 14,
+              "right": 305.640625,
+              "bottom": 740.40625,
+              "scrollWidth": 218,
+              "clientWidth": 218,
+              "scrollHeight": 14,
+              "clientHeight": 14
+            },
+            {
+              "id": "ov-load",
+              "visible": true,
+              "x": 63.65625,
+              "y": 756.40625,
+              "width": 265.671875,
+              "height": 31,
+              "right": 329.328125,
+              "bottom": 787.40625,
+              "scrollWidth": 266,
+              "clientWidth": 266,
+              "scrollHeight": 31,
+              "clientHeight": 31
+            },
+            {
+              "id": "ov-btn",
+              "visible": false,
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "right": 0,
+              "bottom": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollHeight": 0,
+              "clientHeight": 0
+            }
+          ]
+        },
+        {
+          "stage": "title",
+          "phase": "title",
+          "viewport": {
+            "width": 393,
+            "height": 852
+          },
+          "portraitMedia": true,
+          "boxClasses": "title",
+          "keyart": {
+            "landscape": "http://127.0.0.1:8137/ui/title-keyart-l.jpg?v=91",
+            "blur": "http://127.0.0.1:8137/ui/title-keyart-l-blur.jpg?v=91",
+            "portrait": "http://127.0.0.1:8137/ui/title-keyart-p.jpg?v=91",
+            "displayed": [
+              "http://127.0.0.1:8137/ui/title-keyart-p.jpg?v=91"
+            ],
+            "backgroundSize": "cover, cover",
+            "backgroundPosition": "50% 50%, 50% 50%"
+          },
+          "preloads": [
+            {
+              "href": "http://127.0.0.1:8137/ui/title-keyart-p.jpg?v=91",
+              "media": "(max-aspect-ratio: 3/4)",
+              "active": true
+            },
+            {
+              "href": "http://127.0.0.1:8137/ui/title-keyart-l.jpg?v=91",
+              "media": "(min-aspect-ratio: 3001/4000)",
+              "active": false
+            }
+          ],
+          "titleText": "주사위 성채",
+          "loadingText": "불러오는 중 100%",
+          "button": {
+            "visible": true,
+            "disabled": false,
+            "text": "게임 시작"
+          },
+          "document": {
+            "scrollWidth": 393,
+            "clientWidth": 393,
+            "scrollHeight": 852,
+            "clientHeight": 852
+          },
+          "elements": [
+            {
+              "id": "overlay",
+              "visible": true,
+              "x": 0,
+              "y": 0,
+              "width": 393,
+              "height": 852,
+              "right": 393,
+              "bottom": 852,
+              "scrollWidth": 393,
+              "clientWidth": 393,
+              "scrollHeight": 852,
+              "clientHeight": 852
+            },
+            {
+              "id": "overlay-box",
+              "visible": true,
+              "x": 12,
+              "y": 12,
+              "width": 369,
+              "height": 828,
+              "right": 381,
+              "bottom": 840,
+              "scrollWidth": 369,
+              "clientWidth": 369,
+              "scrollHeight": 828,
+              "clientHeight": 828
+            },
+            {
+              "id": "ov-title",
+              "visible": true,
+              "x": 68.015625,
+              "y": 655.71875,
+              "width": 256.96875,
+              "height": 54.6875,
+              "right": 324.984375,
+              "bottom": 710.40625,
+              "scrollWidth": 257,
+              "clientWidth": 257,
+              "scrollHeight": 55,
+              "clientHeight": 55
+            },
+            {
+              "id": "ov-sub",
+              "visible": true,
+              "x": 87.34375,
+              "y": 716.40625,
+              "width": 218.296875,
+              "height": 14,
+              "right": 305.640625,
+              "bottom": 730.40625,
+              "scrollWidth": 218,
+              "clientWidth": 218,
+              "scrollHeight": 14,
+              "clientHeight": 14
+            },
+            {
+              "id": "ov-load",
+              "visible": false,
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "right": 0,
+              "bottom": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollHeight": 0,
+              "clientHeight": 0
+            },
+            {
+              "id": "ov-btn",
+              "visible": true,
+              "x": 112.765625,
+              "y": 746.40625,
+              "width": 167.453125,
+              "height": 51,
+              "right": 280.21875,
+              "bottom": 797.40625,
+              "scrollWidth": 165,
+              "clientWidth": 165,
+              "scrollHeight": 49,
+              "clientHeight": 49
+            }
+          ]
+        }
+      ],
+      "errors": [],
+      "decodedDisplayedImages": [
+        {
+          "url": "http://127.0.0.1:8137/ui/title-keyart-p.jpg?v=91",
+          "width": 1400,
+          "height": 2100
+        }
+      ]
+    },
+    {
+      "name": "screenshot-754x836",
+      "width": 754,
+      "height": 836,
+      "branch": "l",
+      "heldPngRequests": 838,
+      "responses": [
+        {
+          "url": "http://127.0.0.1:8137/ui/title-keyart-l.jpg?v=91",
+          "status": 200,
+          "sha256": "10eefca1484eb2d47fcf012b0ec94a51055874439fa92875bd802e5bc4ac19d7",
+          "matchesLocalPromotedFile": true
+        },
+        {
+          "url": "http://127.0.0.1:8137/ui/title-keyart-l.jpg?v=91",
+          "status": 200,
+          "sha256": "10eefca1484eb2d47fcf012b0ec94a51055874439fa92875bd802e5bc4ac19d7",
+          "matchesLocalPromotedFile": true
+        },
+        {
+          "url": "http://127.0.0.1:8137/ui/title-keyart-l-blur.jpg?v=91",
+          "status": 200,
+          "sha256": "94f7fabb2458d13becc239d55aa0d1fb6c2047143b992aeb0be3c780d8da24d5",
+          "matchesLocalPromotedFile": true
+        }
+      ],
+      "pageErrors": [],
+      "keyartErrors": [],
+      "otherHttpErrors": [
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/floor.jpg",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/floor.jpg",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/floor.jpg",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/floor.jpg",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/floor.jpg",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-07.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-08.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-09.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-10.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-11.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-12.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-13.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-14.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-15.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-16.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-17.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-18.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-19.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-20.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/dice/poly-d1.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/dice/poly-d4.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/dice/poly-d8.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/dice/poly-d12.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/dice/poly-d20.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/plains/road.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/road.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/water.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/pad.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/start.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/end.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/prop-1.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/prop-2.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/prop-3.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/prop-4.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/prop-5.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/prop-6.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/road-straight.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/road.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/water.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/pad.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/end.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/prop-1.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/start.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/prop-2.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/prop-3.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/prop-4.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/prop-5.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/prop-6.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/road-straight.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/road.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/water.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/pad.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/start.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/prop-1.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/end.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/prop-2.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/prop-3.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/prop-4.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/prop-5.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/prop-6.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/road-straight.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/road.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/water.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/pad.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/start.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/prop-1.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/end.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/prop-2.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/prop-3.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/prop-4.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/prop-5.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/prop-6.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/road-straight.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/road.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/water.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/pad.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/start.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/end.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/prop-1.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/prop-2.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/prop-3.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/prop-4.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/prop-5.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/prop-6.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/road-straight.png",
+          "status": 404
+        }
+      ],
+      "checks": [
+        {
+          "stage": "loading",
+          "phase": null,
+          "viewport": {
+            "width": 754,
+            "height": 836
+          },
+          "portraitMedia": false,
+          "boxClasses": "loading title",
+          "keyart": {
+            "landscape": "http://127.0.0.1:8137/ui/title-keyart-l.jpg?v=91",
+            "blur": "http://127.0.0.1:8137/ui/title-keyart-l-blur.jpg?v=91",
+            "portrait": "http://127.0.0.1:8137/ui/title-keyart-p.jpg?v=91",
+            "displayed": [
+              "http://127.0.0.1:8137/ui/title-keyart-l.jpg?v=91",
+              "http://127.0.0.1:8137/ui/title-keyart-l-blur.jpg?v=91"
+            ],
+            "backgroundSize": "auto, auto 100%, cover",
+            "backgroundPosition": "50% 50%, 50% 50%, 50% 50%"
+          },
+          "preloads": [
+            {
+              "href": "http://127.0.0.1:8137/ui/title-keyart-p.jpg?v=91",
+              "media": "(max-aspect-ratio: 3/4)",
+              "active": false
+            },
+            {
+              "href": "http://127.0.0.1:8137/ui/title-keyart-l.jpg?v=91",
+              "media": "(min-aspect-ratio: 3001/4000)",
+              "active": true
+            }
+          ],
+          "titleText": "주사위 성채",
+          "loadingText": "불러오는 중 1%",
+          "button": {
+            "visible": false,
+            "disabled": true,
+            "text": "게임 시작"
+          },
+          "document": {
+            "scrollWidth": 754,
+            "clientWidth": 754,
+            "scrollHeight": 836,
+            "clientHeight": 836
+          },
+          "elements": [
+            {
+              "id": "overlay",
+              "visible": true,
+              "x": 0,
+              "y": 0,
+              "width": 754,
+              "height": 836,
+              "right": 754,
+              "bottom": 836,
+              "scrollWidth": 754,
+              "clientWidth": 754,
+              "scrollHeight": 836,
+              "clientHeight": 836
+            },
+            {
+              "id": "overlay-box",
+              "visible": true,
+              "x": 12,
+              "y": 12,
+              "width": 730,
+              "height": 812,
+              "right": 742,
+              "bottom": 824,
+              "scrollWidth": 730,
+              "clientWidth": 730,
+              "scrollHeight": 812,
+              "clientHeight": 812
+            },
+            {
+              "id": "ov-title",
+              "visible": true,
+              "x": 148.625,
+              "y": 594.28125,
+              "width": 456.75,
+              "height": 97.5625,
+              "right": 605.375,
+              "bottom": 691.84375,
+              "scrollWidth": 457,
+              "clientWidth": 457,
+              "scrollHeight": 104,
+              "clientHeight": 98
+            },
+            {
+              "id": "ov-sub",
+              "visible": true,
+              "x": 206.828125,
+              "y": 697.84375,
+              "width": 340.34375,
+              "height": 19,
+              "right": 547.171875,
+              "bottom": 716.84375,
+              "scrollWidth": 340,
+              "clientWidth": 340,
+              "scrollHeight": 19,
+              "clientHeight": 19
+            },
+            {
+              "id": "ov-load",
+              "visible": true,
+              "x": 227,
+              "y": 732.84375,
+              "width": 300,
+              "height": 31,
+              "right": 527,
+              "bottom": 763.84375,
+              "scrollWidth": 300,
+              "clientWidth": 300,
+              "scrollHeight": 31,
+              "clientHeight": 31
+            },
+            {
+              "id": "ov-btn",
+              "visible": false,
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "right": 0,
+              "bottom": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollHeight": 0,
+              "clientHeight": 0
+            }
+          ]
+        },
+        {
+          "stage": "title",
+          "phase": "title",
+          "viewport": {
+            "width": 754,
+            "height": 836
+          },
+          "portraitMedia": false,
+          "boxClasses": "title",
+          "keyart": {
+            "landscape": "http://127.0.0.1:8137/ui/title-keyart-l.jpg?v=91",
+            "blur": "http://127.0.0.1:8137/ui/title-keyart-l-blur.jpg?v=91",
+            "portrait": "http://127.0.0.1:8137/ui/title-keyart-p.jpg?v=91",
+            "displayed": [
+              "http://127.0.0.1:8137/ui/title-keyart-l.jpg?v=91",
+              "http://127.0.0.1:8137/ui/title-keyart-l-blur.jpg?v=91"
+            ],
+            "backgroundSize": "auto, auto 100%, cover",
+            "backgroundPosition": "50% 50%, 50% 50%, 50% 50%"
+          },
+          "preloads": [
+            {
+              "href": "http://127.0.0.1:8137/ui/title-keyart-p.jpg?v=91",
+              "media": "(max-aspect-ratio: 3/4)",
+              "active": false
+            },
+            {
+              "href": "http://127.0.0.1:8137/ui/title-keyart-l.jpg?v=91",
+              "media": "(min-aspect-ratio: 3001/4000)",
+              "active": true
+            }
+          ],
+          "titleText": "주사위 성채",
+          "loadingText": "불러오는 중 100%",
+          "button": {
+            "visible": true,
+            "disabled": false,
+            "text": "게임 시작"
+          },
+          "document": {
+            "scrollWidth": 754,
+            "clientWidth": 754,
+            "scrollHeight": 836,
+            "clientHeight": 836
+          },
+          "elements": [
+            {
+              "id": "overlay",
+              "visible": true,
+              "x": 0,
+              "y": 0,
+              "width": 754,
+              "height": 836,
+              "right": 754,
+              "bottom": 836,
+              "scrollWidth": 754,
+              "clientWidth": 754,
+              "scrollHeight": 836,
+              "clientHeight": 836
+            },
+            {
+              "id": "overlay-box",
+              "visible": true,
+              "x": 12,
+              "y": 12,
+              "width": 730,
+              "height": 812,
+              "right": 742,
+              "bottom": 824,
+              "scrollWidth": 730,
+              "clientWidth": 730,
+              "scrollHeight": 812,
+              "clientHeight": 812
+            },
+            {
+              "id": "ov-title",
+              "visible": true,
+              "x": 148.625,
+              "y": 584.28125,
+              "width": 456.75,
+              "height": 97.5625,
+              "right": 605.375,
+              "bottom": 681.84375,
+              "scrollWidth": 457,
+              "clientWidth": 457,
+              "scrollHeight": 104,
+              "clientHeight": 98
+            },
+            {
+              "id": "ov-sub",
+              "visible": true,
+              "x": 206.828125,
+              "y": 687.84375,
+              "width": 340.34375,
+              "height": 19,
+              "right": 547.171875,
+              "bottom": 706.84375,
+              "scrollWidth": 340,
+              "clientWidth": 340,
+              "scrollHeight": 19,
+              "clientHeight": 19
+            },
+            {
+              "id": "ov-load",
+              "visible": false,
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "right": 0,
+              "bottom": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollHeight": 0,
+              "clientHeight": 0
+            },
+            {
+              "id": "ov-btn",
+              "visible": true,
+              "x": 293.265625,
+              "y": 722.84375,
+              "width": 167.453125,
+              "height": 51,
+              "right": 460.71875,
+              "bottom": 773.84375,
+              "scrollWidth": 165,
+              "clientWidth": 165,
+              "scrollHeight": 49,
+              "clientHeight": 49
+            }
+          ]
+        }
+      ],
+      "errors": [],
+      "decodedDisplayedImages": [
+        {
+          "url": "http://127.0.0.1:8137/ui/title-keyart-l.jpg?v=91",
+          "width": 2400,
+          "height": 1000
+        },
+        {
+          "url": "http://127.0.0.1:8137/ui/title-keyart-l-blur.jpg?v=91",
+          "width": 480,
+          "height": 200
+        }
+      ]
+    },
+    {
+      "name": "desktop-1280x800",
+      "width": 1280,
+      "height": 800,
+      "branch": "l",
+      "heldPngRequests": 838,
+      "responses": [
+        {
+          "url": "http://127.0.0.1:8137/ui/title-keyart-l.jpg?v=91",
+          "status": 200,
+          "sha256": "10eefca1484eb2d47fcf012b0ec94a51055874439fa92875bd802e5bc4ac19d7",
+          "matchesLocalPromotedFile": true
+        },
+        {
+          "url": "http://127.0.0.1:8137/ui/title-keyart-l.jpg?v=91",
+          "status": 200,
+          "sha256": "10eefca1484eb2d47fcf012b0ec94a51055874439fa92875bd802e5bc4ac19d7",
+          "matchesLocalPromotedFile": true
+        },
+        {
+          "url": "http://127.0.0.1:8137/ui/title-keyart-l-blur.jpg?v=91",
+          "status": 200,
+          "sha256": "94f7fabb2458d13becc239d55aa0d1fb6c2047143b992aeb0be3c780d8da24d5",
+          "matchesLocalPromotedFile": true
+        }
+      ],
+      "pageErrors": [],
+      "keyartErrors": [],
+      "otherHttpErrors": [
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/floor.jpg",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/floor.jpg",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/floor.jpg",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/floor.jpg",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/floor.jpg",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-07.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-08.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-09.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-10.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-11.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-12.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-13.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-14.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-15.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-16.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-17.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-18.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-19.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-20.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/dice/poly-d1.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/dice/poly-d4.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/dice/poly-d8.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/dice/poly-d20.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/dice/poly-d12.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/plains/road.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/road.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/water.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/pad.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/start.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/end.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/prop-1.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/prop-2.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/prop-3.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/prop-4.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/prop-5.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/prop-6.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/road-straight.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/road.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/water.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/pad.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/start.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/end.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/prop-2.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/prop-1.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/prop-3.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/prop-4.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/prop-5.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/prop-6.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/road-straight.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/road.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/water.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/pad.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/start.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/end.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/prop-1.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/prop-2.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/prop-3.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/prop-4.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/prop-5.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/prop-6.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/road-straight.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/road.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/water.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/pad.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/start.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/end.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/prop-1.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/prop-2.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/prop-3.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/prop-4.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/prop-5.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/prop-6.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/road-straight.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/road.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/water.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/pad.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/start.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/end.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/prop-1.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/prop-2.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/prop-3.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/prop-4.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/prop-6.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/prop-5.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/road-straight.png",
+          "status": 404
+        }
+      ],
+      "checks": [
+        {
+          "stage": "loading",
+          "phase": null,
+          "viewport": {
+            "width": 1280,
+            "height": 800
+          },
+          "portraitMedia": false,
+          "boxClasses": "loading title",
+          "keyart": {
+            "landscape": "http://127.0.0.1:8137/ui/title-keyart-l.jpg?v=91",
+            "blur": "http://127.0.0.1:8137/ui/title-keyart-l-blur.jpg?v=91",
+            "portrait": "http://127.0.0.1:8137/ui/title-keyart-p.jpg?v=91",
+            "displayed": [
+              "http://127.0.0.1:8137/ui/title-keyart-l.jpg?v=91",
+              "http://127.0.0.1:8137/ui/title-keyart-l-blur.jpg?v=91"
+            ],
+            "backgroundSize": "auto, auto 100%, cover",
+            "backgroundPosition": "50% 50%, 50% 50%, 50% 50%"
+          },
+          "preloads": [
+            {
+              "href": "http://127.0.0.1:8137/ui/title-keyart-p.jpg?v=91",
+              "media": "(max-aspect-ratio: 3/4)",
+              "active": false
+            },
+            {
+              "href": "http://127.0.0.1:8137/ui/title-keyart-l.jpg?v=91",
+              "media": "(min-aspect-ratio: 3001/4000)",
+              "active": true
+            }
+          ],
+          "titleText": "주사위 성채",
+          "loadingText": "불러오는 중 1%",
+          "button": {
+            "visible": false,
+            "disabled": true,
+            "text": "게임 시작"
+          },
+          "document": {
+            "scrollWidth": 1280,
+            "clientWidth": 1280,
+            "scrollHeight": 800,
+            "clientHeight": 800
+          },
+          "elements": [
+            {
+              "id": "overlay",
+              "visible": true,
+              "x": 0,
+              "y": 0,
+              "width": 1280,
+              "height": 800,
+              "right": 1280,
+              "bottom": 800,
+              "scrollWidth": 1280,
+              "clientWidth": 1280,
+              "scrollHeight": 800,
+              "clientHeight": 800
+            },
+            {
+              "id": "overlay-box",
+              "visible": true,
+              "x": 12,
+              "y": 12,
+              "width": 1256,
+              "height": 776,
+              "right": 1268,
+              "bottom": 788,
+              "scrollWidth": 1256,
+              "clientWidth": 1256,
+              "scrollHeight": 776,
+              "clientHeight": 776
+            },
+            {
+              "id": "ov-title",
+              "visible": true,
+              "x": 399.265625,
+              "y": 554.96875,
+              "width": 481.453125,
+              "height": 103.03125,
+              "right": 880.71875,
+              "bottom": 658,
+              "scrollWidth": 481,
+              "clientWidth": 481,
+              "scrollHeight": 111,
+              "clientHeight": 103
+            },
+            {
+              "id": "ov-sub",
+              "visible": true,
+              "x": 469.828125,
+              "y": 664,
+              "width": 340.34375,
+              "height": 19,
+              "right": 810.171875,
+              "bottom": 683,
+              "scrollWidth": 340,
+              "clientWidth": 340,
+              "scrollHeight": 19,
+              "clientHeight": 19
+            },
+            {
+              "id": "ov-load",
+              "visible": true,
+              "x": 490,
+              "y": 699,
+              "width": 300,
+              "height": 31,
+              "right": 790,
+              "bottom": 730,
+              "scrollWidth": 300,
+              "clientWidth": 300,
+              "scrollHeight": 31,
+              "clientHeight": 31
+            },
+            {
+              "id": "ov-btn",
+              "visible": false,
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "right": 0,
+              "bottom": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollHeight": 0,
+              "clientHeight": 0
+            }
+          ]
+        },
+        {
+          "stage": "title",
+          "phase": "title",
+          "viewport": {
+            "width": 1280,
+            "height": 800
+          },
+          "portraitMedia": false,
+          "boxClasses": "title",
+          "keyart": {
+            "landscape": "http://127.0.0.1:8137/ui/title-keyart-l.jpg?v=91",
+            "blur": "http://127.0.0.1:8137/ui/title-keyart-l-blur.jpg?v=91",
+            "portrait": "http://127.0.0.1:8137/ui/title-keyart-p.jpg?v=91",
+            "displayed": [
+              "http://127.0.0.1:8137/ui/title-keyart-l.jpg?v=91",
+              "http://127.0.0.1:8137/ui/title-keyart-l-blur.jpg?v=91"
+            ],
+            "backgroundSize": "auto, auto 100%, cover",
+            "backgroundPosition": "50% 50%, 50% 50%, 50% 50%"
+          },
+          "preloads": [
+            {
+              "href": "http://127.0.0.1:8137/ui/title-keyart-p.jpg?v=91",
+              "media": "(max-aspect-ratio: 3/4)",
+              "active": false
+            },
+            {
+              "href": "http://127.0.0.1:8137/ui/title-keyart-l.jpg?v=91",
+              "media": "(min-aspect-ratio: 3001/4000)",
+              "active": true
+            }
+          ],
+          "titleText": "주사위 성채",
+          "loadingText": "불러오는 중 100%",
+          "button": {
+            "visible": true,
+            "disabled": false,
+            "text": "게임 시작"
+          },
+          "document": {
+            "scrollWidth": 1280,
+            "clientWidth": 1280,
+            "scrollHeight": 800,
+            "clientHeight": 800
+          },
+          "elements": [
+            {
+              "id": "overlay",
+              "visible": true,
+              "x": 0,
+              "y": 0,
+              "width": 1280,
+              "height": 800,
+              "right": 1280,
+              "bottom": 800,
+              "scrollWidth": 1280,
+              "clientWidth": 1280,
+              "scrollHeight": 800,
+              "clientHeight": 800
+            },
+            {
+              "id": "overlay-box",
+              "visible": true,
+              "x": 12,
+              "y": 12,
+              "width": 1256,
+              "height": 776,
+              "right": 1268,
+              "bottom": 788,
+              "scrollWidth": 1256,
+              "clientWidth": 1256,
+              "scrollHeight": 776,
+              "clientHeight": 776
+            },
+            {
+              "id": "ov-title",
+              "visible": true,
+              "x": 399.265625,
+              "y": 544.96875,
+              "width": 481.453125,
+              "height": 103.03125,
+              "right": 880.71875,
+              "bottom": 648,
+              "scrollWidth": 481,
+              "clientWidth": 481,
+              "scrollHeight": 111,
+              "clientHeight": 103
+            },
+            {
+              "id": "ov-sub",
+              "visible": true,
+              "x": 469.828125,
+              "y": 654,
+              "width": 340.34375,
+              "height": 19,
+              "right": 810.171875,
+              "bottom": 673,
+              "scrollWidth": 340,
+              "clientWidth": 340,
+              "scrollHeight": 19,
+              "clientHeight": 19
+            },
+            {
+              "id": "ov-load",
+              "visible": false,
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "right": 0,
+              "bottom": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollHeight": 0,
+              "clientHeight": 0
+            },
+            {
+              "id": "ov-btn",
+              "visible": true,
+              "x": 556.265625,
+              "y": 689,
+              "width": 167.453125,
+              "height": 51,
+              "right": 723.71875,
+              "bottom": 740,
+              "scrollWidth": 165,
+              "clientWidth": 165,
+              "scrollHeight": 49,
+              "clientHeight": 49
+            }
+          ]
+        }
+      ],
+      "errors": [],
+      "decodedDisplayedImages": [
+        {
+          "url": "http://127.0.0.1:8137/ui/title-keyart-l.jpg?v=91",
+          "width": 2400,
+          "height": 1000
+        },
+        {
+          "url": "http://127.0.0.1:8137/ui/title-keyart-l-blur.jpg?v=91",
+          "width": 480,
+          "height": 200
+        }
+      ]
+    },
+    {
+      "name": "landscape-852x393",
+      "width": 852,
+      "height": 393,
+      "branch": "l",
+      "heldPngRequests": 838,
+      "responses": [
+        {
+          "url": "http://127.0.0.1:8137/ui/title-keyart-l.jpg?v=91",
+          "status": 200,
+          "sha256": "10eefca1484eb2d47fcf012b0ec94a51055874439fa92875bd802e5bc4ac19d7",
+          "matchesLocalPromotedFile": true
+        },
+        {
+          "url": "http://127.0.0.1:8137/ui/title-keyart-l.jpg?v=91",
+          "status": 200,
+          "sha256": "10eefca1484eb2d47fcf012b0ec94a51055874439fa92875bd802e5bc4ac19d7",
+          "matchesLocalPromotedFile": true
+        },
+        {
+          "url": "http://127.0.0.1:8137/ui/title-keyart-l-blur.jpg?v=91",
+          "status": 200,
+          "sha256": "94f7fabb2458d13becc239d55aa0d1fb6c2047143b992aeb0be3c780d8da24d5",
+          "matchesLocalPromotedFile": true
+        }
+      ],
+      "pageErrors": [],
+      "keyartErrors": [],
+      "otherHttpErrors": [
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/floor.jpg",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/floor.jpg",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/floor.jpg",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/floor.jpg",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/floor.jpg",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-07.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-08.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-09.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-10.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-11.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-12.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-13.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-14.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-15.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-16.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-17.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-18.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-19.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/towers/star-20.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/dice/poly-d1.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/dice/poly-d4.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/dice/poly-d8.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/dice/poly-d12.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/dice/poly-d20.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/plains/road.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/road.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/water.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/pad.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/start.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/end.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/prop-1.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/prop-2.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/prop-3.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/prop-4.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/prop-5.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/prop-6.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/forest/road-straight.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/road.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/water.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/pad.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/start.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/end.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/prop-1.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/prop-2.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/prop-3.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/prop-4.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/prop-5.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/prop-6.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/lake/road-straight.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/road.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/water.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/pad.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/start.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/end.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/prop-1.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/prop-2.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/prop-3.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/prop-4.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/prop-5.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/prop-6.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/road.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/water.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/darkforest/road-straight.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/pad.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/start.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/end.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/prop-1.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/prop-2.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/prop-3.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/prop-4.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/prop-5.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/prop-6.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/castle/road-straight.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/road.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/water.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/pad.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/start.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/end.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/prop-1.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/prop-2.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/prop-3.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/prop-4.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/prop-5.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/prop-6.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:8137/casual/tiles/hell/road-straight.png",
+          "status": 404
+        }
+      ],
+      "checks": [
+        {
+          "stage": "loading",
+          "phase": null,
+          "viewport": {
+            "width": 852,
+            "height": 393
+          },
+          "portraitMedia": false,
+          "boxClasses": "loading title",
+          "keyart": {
+            "landscape": "http://127.0.0.1:8137/ui/title-keyart-l.jpg?v=91",
+            "blur": "http://127.0.0.1:8137/ui/title-keyart-l-blur.jpg?v=91",
+            "portrait": "http://127.0.0.1:8137/ui/title-keyart-p.jpg?v=91",
+            "displayed": [
+              "http://127.0.0.1:8137/ui/title-keyart-l.jpg?v=91",
+              "http://127.0.0.1:8137/ui/title-keyart-l-blur.jpg?v=91"
+            ],
+            "backgroundSize": "auto, auto 100%, cover",
+            "backgroundPosition": "50% 50%, 50% 50%, 50% 50%"
+          },
+          "preloads": [
+            {
+              "href": "http://127.0.0.1:8137/ui/title-keyart-p.jpg?v=91",
+              "media": "(max-aspect-ratio: 3/4)",
+              "active": false
+            },
+            {
+              "href": "http://127.0.0.1:8137/ui/title-keyart-l.jpg?v=91",
+              "media": "(min-aspect-ratio: 3001/4000)",
+              "active": true
+            }
+          ],
+          "titleText": "주사위 성채",
+          "loadingText": "불러오는 중 1%",
+          "button": {
+            "visible": false,
+            "disabled": true,
+            "text": "게임 시작"
+          },
+          "document": {
+            "scrollWidth": 852,
+            "clientWidth": 852,
+            "scrollHeight": 393,
+            "clientHeight": 393
+          },
+          "elements": [
+            {
+              "id": "overlay",
+              "visible": true,
+              "x": 0,
+              "y": 0,
+              "width": 852,
+              "height": 393,
+              "right": 852,
+              "bottom": 393,
+              "scrollWidth": 852,
+              "clientWidth": 852,
+              "scrollHeight": 393,
+              "clientHeight": 393
+            },
+            {
+              "id": "overlay-box",
+              "visible": true,
+              "x": 12,
+              "y": 12,
+              "width": 828,
+              "height": 369,
+              "right": 840,
+              "bottom": 381,
+              "scrollWidth": 828,
+              "clientWidth": 828,
+              "scrollHeight": 369,
+              "clientHeight": 369
+            },
+            {
+              "id": "ov-title",
+              "visible": true,
+              "x": 291.875,
+              "y": 235.171875,
+              "width": 268.25,
+              "height": 59.828125,
+              "right": 560.125,
+              "bottom": 295,
+              "scrollWidth": 268,
+              "clientWidth": 268,
+              "scrollHeight": 60,
+              "clientHeight": 60
+            },
+            {
+              "id": "ov-sub",
+              "visible": true,
+              "x": 255.828125,
+              "y": 301,
+              "width": 340.34375,
+              "height": 19,
+              "right": 596.171875,
+              "bottom": 320,
+              "scrollWidth": 340,
+              "clientWidth": 340,
+              "scrollHeight": 19,
+              "clientHeight": 19
+            },
+            {
+              "id": "ov-load",
+              "visible": true,
+              "x": 276,
+              "y": 328,
+              "width": 300,
+              "height": 31,
+              "right": 576,
+              "bottom": 359,
+              "scrollWidth": 300,
+              "clientWidth": 300,
+              "scrollHeight": 31,
+              "clientHeight": 31
+            },
+            {
+              "id": "ov-btn",
+              "visible": false,
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "right": 0,
+              "bottom": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollHeight": 0,
+              "clientHeight": 0
+            }
+          ]
+        },
+        {
+          "stage": "title",
+          "phase": "title",
+          "viewport": {
+            "width": 852,
+            "height": 393
+          },
+          "portraitMedia": false,
+          "boxClasses": "title",
+          "keyart": {
+            "landscape": "http://127.0.0.1:8137/ui/title-keyart-l.jpg?v=91",
+            "blur": "http://127.0.0.1:8137/ui/title-keyart-l-blur.jpg?v=91",
+            "portrait": "http://127.0.0.1:8137/ui/title-keyart-p.jpg?v=91",
+            "displayed": [
+              "http://127.0.0.1:8137/ui/title-keyart-l.jpg?v=91",
+              "http://127.0.0.1:8137/ui/title-keyart-l-blur.jpg?v=91"
+            ],
+            "backgroundSize": "auto, auto 100%, cover",
+            "backgroundPosition": "50% 50%, 50% 50%, 50% 50%"
+          },
+          "preloads": [
+            {
+              "href": "http://127.0.0.1:8137/ui/title-keyart-p.jpg?v=91",
+              "media": "(max-aspect-ratio: 3/4)",
+              "active": false
+            },
+            {
+              "href": "http://127.0.0.1:8137/ui/title-keyart-l.jpg?v=91",
+              "media": "(min-aspect-ratio: 3001/4000)",
+              "active": true
+            }
+          ],
+          "titleText": "주사위 성채",
+          "loadingText": "불러오는 중 100%",
+          "button": {
+            "visible": true,
+            "disabled": false,
+            "text": "게임 시작"
+          },
+          "document": {
+            "scrollWidth": 852,
+            "clientWidth": 852,
+            "scrollHeight": 393,
+            "clientHeight": 393
+          },
+          "elements": [
+            {
+              "id": "overlay",
+              "visible": true,
+              "x": 0,
+              "y": 0,
+              "width": 852,
+              "height": 393,
+              "right": 852,
+              "bottom": 393,
+              "scrollWidth": 852,
+              "clientWidth": 852,
+              "scrollHeight": 393,
+              "clientHeight": 393
+            },
+            {
+              "id": "overlay-box",
+              "visible": true,
+              "x": 12,
+              "y": 12,
+              "width": 828,
+              "height": 369,
+              "right": 840,
+              "bottom": 381,
+              "scrollWidth": 828,
+              "clientWidth": 828,
+              "scrollHeight": 369,
+              "clientHeight": 369
+            },
+            {
+              "id": "ov-title",
+              "visible": true,
+              "x": 291.875,
+              "y": 225.171875,
+              "width": 268.25,
+              "height": 59.828125,
+              "right": 560.125,
+              "bottom": 285,
+              "scrollWidth": 268,
+              "clientWidth": 268,
+              "scrollHeight": 60,
+              "clientHeight": 60
+            },
+            {
+              "id": "ov-sub",
+              "visible": true,
+              "x": 255.828125,
+              "y": 291,
+              "width": 340.34375,
+              "height": 19,
+              "right": 596.171875,
+              "bottom": 310,
+              "scrollWidth": 340,
+              "clientWidth": 340,
+              "scrollHeight": 19,
+              "clientHeight": 19
+            },
+            {
+              "id": "ov-load",
+              "visible": false,
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "right": 0,
+              "bottom": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollHeight": 0,
+              "clientHeight": 0
+            },
+            {
+              "id": "ov-btn",
+              "visible": true,
+              "x": 342.265625,
+              "y": 318,
+              "width": 167.453125,
+              "height": 51,
+              "right": 509.71875,
+              "bottom": 369,
+              "scrollWidth": 165,
+              "clientWidth": 165,
+              "scrollHeight": 49,
+              "clientHeight": 49
+            }
+          ]
+        }
+      ],
+      "errors": [],
+      "decodedDisplayedImages": [
+        {
+          "url": "http://127.0.0.1:8137/ui/title-keyart-l.jpg?v=91",
+          "width": 2400,
+          "height": 1000
+        },
+        {
+          "url": "http://127.0.0.1:8137/ui/title-keyart-l-blur.jpg?v=91",
+          "width": 480,
+          "height": 200
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

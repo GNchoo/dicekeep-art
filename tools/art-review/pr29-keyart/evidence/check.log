@@ -1,0 +1,6 @@
+browser C:\Program Files\Google\Chrome\Application\chrome.exe
+PASS portrait-393x852 branch=p keyartResponses=2 pageErrors=0 keyartErrors=0 otherHttpErrors=85
+PASS screenshot-754x836 branch=l keyartResponses=3 pageErrors=0 keyartErrors=0 otherHttpErrors=85
+PASS desktop-1280x800 branch=l keyartResponses=3 pageErrors=0 keyartErrors=0 otherHttpErrors=85
+PASS landscape-852x393 branch=l keyartResponses=3 pageErrors=0 keyartErrors=0 otherHttpErrors=85
+PASS key-art loading/title: four viewports, eight captures, promoted bytes and preload versions verified

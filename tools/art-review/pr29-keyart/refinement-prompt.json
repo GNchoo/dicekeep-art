@@ -1,0 +1,7 @@
+{
+  "tool": "built-in imagegen",
+  "key": "landscape-corner-refinement",
+  "reference": "sources/landscape-d6-initial.png",
+  "output": "sources/landscape-d6.png",
+  "prompt": "Use case: precise-object-edit. Make ONE very small localized edit to this existing finished WIDE loading background. Keep the correct die pips EXACTLY as they are: LEFT face FIVE(4corners+center), RIGHT face THREE diagonal, no other holes. Preserve all composition, framing, cube proportions, castle, sky, birds, mountains, darkness, colors and image12:5 aspect ratio.\nThe stone die currently looks weathered but intact from a distance. Add ONE SMALL clearly readable missing stone CHIP at the TOP CENTRAL CORNER where the two visible faces meet, cutting into the outer silhouette at the apex. A tiny wedge/notch about6%of the die's width and5%of its height is missing, exposing a rough angular stone fracture surface with a short hairline crack. Keep the rest of the die intact, restrained damage. This is an irregular open-edge fracture, not a new black round pit or pip. Do not alter or obscure any pip. No falling debris, major split, blown-up castle or extra damage elsewhere. Only refine this corner chip so it reads as slightly broken stone at the small loading-screen scale. All other pixels/content should stay as close to input as possible."
+}
