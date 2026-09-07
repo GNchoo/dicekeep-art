@@ -1,0 +1,80 @@
+{
+  "verifiedAt": "2026-09-07T08:41:10.573Z",
+  "assetStage": "Final alpha cleanup preserving enclosed highlights",
+  "browser": "C:/Program Files/Google/Chrome/Application/chrome.exe",
+  "exitCodes": {
+    "walkSelfTest": 0,
+    "walkJitter": 0,
+    "desktopArt11": 0,
+    "phoneArt11": 0,
+    "singleSmoke": 0
+  },
+  "regressionFailureCases": 11,
+  "loadedMetricsMatch": true,
+  "walk": {
+    "sheets": 9,
+    "frames": 36,
+    "errors": [],
+    "failures": [],
+    "maximumAnchorPercent": 0.2995652689720065
+  },
+  "desktop": {
+    "viewport": [
+      1240,
+      860
+    ],
+    "waves": 11,
+    "errors": [],
+    "failures": [],
+    "pngFiles": 49
+  },
+  "phone": {
+    "viewport": [
+      440,
+      956
+    ],
+    "clip": [
+      340,
+      240
+    ],
+    "waves": 11,
+    "errors": [],
+    "failures": [],
+    "pngFiles": 49,
+    "command": "node tools/e2e/inf-art-check.js 11 --phone"
+  },
+  "smoke": {
+    "viewports": [
+      [
+        1240,
+        860
+      ],
+      [
+        440,
+        956
+      ]
+    ],
+    "pageErrors": 0,
+    "consoleDiagnostics": 178,
+    "result": "PASS lobby -> wave 1 -> results -> lobby on desktop and phone"
+  },
+  "boss10": {
+    "art": "infB10",
+    "walk": null,
+    "size": 120
+  },
+  "fallback11": {
+    "name": "대추야자",
+    "art": null,
+    "walk": null,
+    "sprite": "cDatefruit",
+    "size": 36
+  },
+  "commands": {
+    "walkSelfTest": "node tools/e2e/walk-jitter.js --self-test",
+    "walkJitter": "node tools/e2e/walk-jitter.js",
+    "desktopArt11": "node tools/e2e/inf-art-check.js 11",
+    "phoneArt11": "node tools/e2e/inf-art-check.js 11 --phone",
+    "singleSmoke": "node tools/e2e/single-smoke.js"
+  }
+}

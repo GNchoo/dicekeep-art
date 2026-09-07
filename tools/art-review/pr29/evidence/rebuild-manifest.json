@@ -1,0 +1,97 @@
+[
+  {
+    "file": "casual/enemies/inf/w001.png",
+    "sha256": "d919b6ed09a5999f2c8ea3a4c021a5e8569bd0c5bb93742ee77bfa4236f466ee",
+    "matchesCommitted": true
+  },
+  {
+    "file": "casual/enemies/inf/w001-walk-2x2.png",
+    "sha256": "b8b5641ec27e935fdfeb79188aab063711cf1d78420853c88b3f707ed4f2c493",
+    "matchesCommitted": true
+  },
+  {
+    "file": "casual/enemies/inf/w002.png",
+    "sha256": "053d6957e31a6c4bd9e51ddc30e0f7e891de9df7b06213f5edd7ff2f12d20ab3",
+    "matchesCommitted": true
+  },
+  {
+    "file": "casual/enemies/inf/w002-walk-2x2.png",
+    "sha256": "a90d8e2cb3236767e9515a7bd3c4d94a4a11e31fba96eb9c978c1233d6e7d2a9",
+    "matchesCommitted": true
+  },
+  {
+    "file": "casual/enemies/inf/w003.png",
+    "sha256": "8d0a9207ec31efe4ea4cdee902559bb90f4fb31ba602bb22f84d5dea9810e726",
+    "matchesCommitted": true
+  },
+  {
+    "file": "casual/enemies/inf/w003-walk-2x2.png",
+    "sha256": "e1c579190643a88e1bc7c8ca095c5c956a996cd51a19bed68716c714296c48ad",
+    "matchesCommitted": true
+  },
+  {
+    "file": "casual/enemies/inf/w004.png",
+    "sha256": "164ee4014d4b0f8d208b4c39a194c8d1c8e7fe2f096381bf0cba7def0176f5ac",
+    "matchesCommitted": true
+  },
+  {
+    "file": "casual/enemies/inf/w004-walk-2x2.png",
+    "sha256": "84059d7f1eb217c144b03ca3fdc15a4fc569b7e7bfb429b873e47ce504fff2e7",
+    "matchesCommitted": true
+  },
+  {
+    "file": "casual/enemies/inf/w005.png",
+    "sha256": "c549923e5e5287b01f4b446a19e6b16b5713f9c9bddbdd4a6034138c20af6aba",
+    "matchesCommitted": true
+  },
+  {
+    "file": "casual/enemies/inf/w005-walk-2x2.png",
+    "sha256": "f55916fb4b526bcfa4fc32c2038532a6033ab5d8caded6c9c90abb8e13046f9e",
+    "matchesCommitted": true
+  },
+  {
+    "file": "casual/enemies/inf/w006.png",
+    "sha256": "9d6e347c67c2b9d36ab9ac8550007e4d44fe49bf3e58c600cc6935d183c9d516",
+    "matchesCommitted": true
+  },
+  {
+    "file": "casual/enemies/inf/w006-walk-2x2.png",
+    "sha256": "ad605881d02d9553bb725988b19cd661f72d4a58bf747537704520bbffffad29",
+    "matchesCommitted": true
+  },
+  {
+    "file": "casual/enemies/inf/w007.png",
+    "sha256": "d70e90a71fc19497497f7ac423852263bdeff1e7cf6e4f0aa309f764dd884673",
+    "matchesCommitted": true
+  },
+  {
+    "file": "casual/enemies/inf/w007-walk-2x2.png",
+    "sha256": "210f5788ff51a5c10da9599a5f800ecf175e11bb186cf4595bb56595839640c9",
+    "matchesCommitted": true
+  },
+  {
+    "file": "casual/enemies/inf/w008.png",
+    "sha256": "65043dc99fc4a4aa566e45931e432496bb8f56ea14aa83de8e40f6921ab7b06f",
+    "matchesCommitted": true
+  },
+  {
+    "file": "casual/enemies/inf/w008-walk-2x2.png",
+    "sha256": "3efc2859ae34016163cefae3d5ad9aa6f24f7f673350c56624600f5402206d41",
+    "matchesCommitted": true
+  },
+  {
+    "file": "casual/enemies/inf/w009.png",
+    "sha256": "a7e214600a4203e9a0c2bb06a50d43e2296404100e433cdcc02171a43500dfaf",
+    "matchesCommitted": true
+  },
+  {
+    "file": "casual/enemies/inf/w009-walk-2x2.png",
+    "sha256": "fa643bf6d9467dfbbfcc4bd4b1e0f89ed906c4aca94df371b7cf3a9ff02233ea",
+    "matchesCommitted": true
+  },
+  {
+    "file": "casual/bosses/inf/b010.png",
+    "sha256": "92614851724a0b200d4d96f80f382051171ce20cff98505d18a4c4ba9970d305",
+    "matchesCommitted": true
+  }
+]

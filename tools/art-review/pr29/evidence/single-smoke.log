@@ -1,0 +1,17 @@
+browser C:\Program Files\Google\Chrome\Application\chrome.exe
+desk lobby {"phase":"lobby","mpBlock":true,"off":true,"status":"이 주소에는 멀티 서버가 없습니다 (?net=ws://… 로 지정할 수 있습니다)","name":""}
+desk play {"phase":"playing","wave":1,"waveActive":true,"enemies":3,"net":null,"btn":"웨이브 1 진행 중","speedHidden":false,"rivalsHidden":true,"wrap":"bleed over"}
+desk after-wave {"waveActive":false,"autoT":5.5,"btn":"다음 웨이브 (6초)"}
+desk over {"phase":"over","title":"런 종료","overlay":true}
+desk back lobby
+phoneP lobby {"phase":"lobby","mpBlock":true,"off":true,"status":"이 주소에는 멀티 서버가 없습니다 (?net=ws://… 로 지정할 수 있습니다)","name":""}
+phoneP play {"phase":"playing","wave":1,"waveActive":true,"enemies":3,"net":null,"btn":"웨이브 1 진행 중","speedHidden":false,"rivalsHidden":true,"wrap":"bleed"}
+phoneP after-wave {"waveActive":false,"autoT":5.5,"btn":"다음 웨이브 (6초)"}
+phoneP over {"phase":"over","title":"런 종료","overlay":true}
+phoneP back lobby
+CONSOLE DIAGNOSTICS 178 desk CONSOLE Failed to load resource: the server responded with a status of 404 (File not found)
+desk CONSOLE Failed to load resource: the server responded with a status of 404 (File not found)
+desk CONSOLE Failed to load resource: the server responded with a status of 404 (File not found)
+desk CONSOLE Failed to load resource: the server responded with a status of 404 (File not found)
+desk CONSOLE Failed to load resource: the server responded with a status of 404 (File not found)
+ERRORS 0 

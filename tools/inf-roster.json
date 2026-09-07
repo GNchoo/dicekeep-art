@@ -1,55 +1,55 @@
 {
- "_note": "인피니티 101웨이브 몬스터의 영문 묘사(desc)와 보행 방식(gait: biped·quad·fly·slither·float). 이름·등급·이동·단계·팔레트는 content.js INF_MONSTERS / INF_PALETTE 가 원본이고, tools/inf-jobs.mjs 가 둘을 합쳐 잡 파일을 만든다. 색은 적지 않는다 — 단계 팔레트가 프롬프트에 붙는다.",
+ "_note": "인피니티 101웨이브 몬스터의 영문 묘사(desc)와 보행 방식(gait: biped·quad·fly·slither·float). 이름·등급·이동·단계·팔레트는 content.js INF_MONSTERS / INF_PALETTE 가 원본이고, tools/inf-jobs.mjs 가 둘을 합쳐 잡 파일을 만든다. 1~10은 과한 혐오감을 덜어낸 게임 캐릭터 방향으로 수정했다. 11~101의 기존 묘사는 유지하되 재생성 시 inf-jobs.mjs의 공통 아트 제한(고어·신체 훼손·실사 공포 금지)이 묘사·팔레트·참조 이미지보다 우선한다. 단계 팔레트는 의상·장비의 색으로 해석하며 구체적인 캐릭터 색과 명암 가독성을 유지한다.",
  "1": {
   "name": "역병쥐",
   "gait": "quad",
-  "desc": "A mangy plague rat the size of a dog, patchy fur with bald sores, glowing eyes, yellow teeth bared, dragging a short rusted chain from a collar. Small, fast, harmless-looking but sick."
+  "desc": "A small adventurous rat with intact charcoal fur, a rounded compact body, alert expressive eyes, a leather collar and exactly one simple curved tail. Four sturdy little paws, a curious determined face and a clean game-character silhouette."
  },
  "2": {
   "name": "해골 잡졸",
   "gait": "biped",
-  "desc": "A small skeleton footman, brittle yellowed bones, a dented iron kettle helm, a torn tabard, holding a broken spear shaft. Hunched, light, clattering."
+  "desc": "A small skeleton footman with clean simplified ivory bones and a rounded expressive skull, wearing an iron kettle helmet, an olive tabard and sturdy boots, carrying a compact spear. Chunky toy-like joints and a determined but approachable face."
  },
  "3": {
   "name": "묘지 오우거",
   "gait": "biped",
-  "desc": "A hulking bloated grave ogre, stitched skin, a sack hood with one eye hole, a heavy wooden club studded with nails resting on the shoulder. Slow and massive."
+  "desc": "A broad, chunky grave ogre with intact olive skin, a simple brown hood, a leather vest and a solid wooden club. Rounded shoulders, sturdy boots, a grumpy expressive face and a heavy but balanced game-character build."
  },
  "4": {
   "name": "까마귀 정찰병",
   "gait": "fly",
-  "desc": "A ragged raven scout in flight, a tiny leather harness carrying a small dim lantern, one glowing eye, tattered feathers."
+  "desc": "A compact raven scout in flight with intact charcoal feathers, a rounded body, a clear expressive eye and a tiny leather harness carrying a small warm lantern. Broad simplified wings and a clean readable silhouette."
  },
  "5": {
   "name": "고블린 창병",
   "gait": "biped",
-  "desc": "A goblin spearman, sickly skin, patched leather armor, a crude iron spear and a small round wooden shield, a sneering grin with a broken tooth. Wiry."
+  "desc": "A wiry goblin spearman with smooth muted green skin, large expressive ears, simple leather armor, a compact iron spear and a small round wooden shield. A mischievous determined grin, sturdy boots and clearly separated limbs."
  },
  "6": {
   "name": "썩은 멧돼지",
   "gait": "quad",
-  "desc": "A rotting wild boar, ribs showing through torn hide, rusted iron caps on its tusks, one ear missing, black bile dripping from the jaw. Heavy, charging low."
+  "desc": "A stocky wild boar with intact brown fur, a rounded sturdy body, both ears intact and small worn metal caps on its tusks. Four stout legs, an expressive determined face and a heavy low-running silhouette."
  },
  "7": {
   "name": "무덤 파는 구울",
   "gait": "biped",
-  "desc": "A grave-digging ghoul, hunched with long clawed hands caked in soil, a tattered burial shroud, a broken shovel slung on its back, mouth full of grave dirt. Big and stooped."
+  "desc": "A stooped grave-digging ghoul with a smooth gray-green face, simple hood and work tunic, complete gloves and sturdy boots, carrying a compact shovel. Broad rounded shapes, a tired grumpy expression and a clean intact game-character body."
  },
  "8": {
   "name": "시체파리 떼",
   "gait": "fly",
-  "desc": "A dense swarm of corpse flies clustered around a floating cracked skull, compound eyes glinting, a few flies trailing behind. Small and buzzing."
+  "desc": "A small organized group of rounded dark teal fantasy flies with simple expressive eyes and translucent cartoon wings, clustered around one small carved skull-shaped amulet. Keep the group compact and its fly count, body positions and amulet identical across frames; only the wings beat."
  },
  "9": {
   "name": "녹슨 철갑 오크",
   "gait": "biped",
-  "desc": "An orc brute in rusted, dented plate armor with a chipped tower shield strapped to one arm, dragging a chained cleaver, jaw tusks and a scarred face. Massive."
+  "desc": "A broad orc guard with an intact expressive face, small rounded tusks and complete rust-colored plate armor with a sturdy helmet. Carrying a compact axe and shield, with chunky boots and a massive balanced silhouette."
  },
  "10": {
   "name": "역병 쥐왕",
   "boss": true,
   "second": null,
-  "bossDesc": "The Plague Rat King: a gigantic scarred rat wearing a rusted iron crown, a dozen tails knotted together into a swollen mass behind it, glowing eyes, a collar of skulls on a chain, standing atop a mound of bones and refuse."
+  "bossDesc": "The Plague Rat King: a large upright rat monarch with intact charcoal fur and a rounded expressive face, wearing a simple crown, broad bracers and a wine-red cape. Exactly one curved tail, two sturdy feet and a proud imposing but approachable stance. Full character standing freely, with no pedestal, bone pile or surrounding debris."
  },
  "11": {
   "name": "도토리다람쥐",

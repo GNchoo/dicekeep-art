@@ -1,0 +1,120 @@
+{
+  "version": 1,
+  "coordinateSystem": "Zero-based x,y pixels in the original source PNG, before layout or resizing.",
+  "method": "Only manually reviewed background-colored components receive extra flood-fill seeds. All unseeded enclosed highlights retain the default mask behavior.",
+  "sources": {
+    "w001-w005-source.png": {
+      "backgroundSeeds": [
+        [
+          896,
+          1008
+        ],
+        [
+          902,
+          1015
+        ],
+        [
+          455,
+          1085
+        ],
+        [
+          698,
+          1091
+        ],
+        [
+          950,
+          1094
+        ],
+        [
+          185,
+          1095
+        ]
+      ],
+      "reviewedGaps": [
+        "W4 frame 4, two enclosed pieces between the wings",
+        "W4 frames 2, 3, 4, 1: interiors of lantern suspension rings"
+      ],
+      "sha256": "af45dda68dc656526d8a05c170fbc1a5270e8d6981e8a072b441ba3638a47476"
+    },
+    "w006-w009-source.png": {
+      "backgroundSeeds": [
+        [
+          598,
+          489
+        ],
+        [
+          363,
+          494
+        ],
+        [
+          842,
+          500
+        ],
+        [
+          162,
+          616
+        ],
+        [
+          418,
+          616
+        ],
+        [
+          893,
+          617
+        ],
+        [
+          658,
+          618
+        ],
+        [
+          666,
+          622
+        ],
+        [
+          653,
+          625
+        ]
+      ],
+      "reviewedGaps": [
+        "W7 frames 3, 2, 4: shovel/hood gaps",
+        "W7 frames 1, 2, 4: lantern/tunic gaps",
+        "W7 frame 3: lantern ring interior and the two enclosed gaps beside it"
+      ],
+      "sha256": "6be19219b57c6cf1c7cc631bda610faca5b3494e4b2a5cc0e99c584413933fae"
+    },
+    "w009-source.png": {
+      "backgroundSeeds": [
+        [
+          791,
+          164
+        ],
+        [
+          207,
+          165
+        ],
+        [
+          219,
+          767
+        ],
+        [
+          790,
+          769
+        ],
+        [
+          923,
+          520
+        ],
+        [
+          999,
+          962
+        ]
+      ],
+      "reviewedGaps": [
+        "W9 frames 2, 1, 3, 4: axe/shoulder gaps",
+        "W9 frame 2: gap between the raised boot and the supporting leg",
+        "W9 frame 4: shield/thigh gap"
+      ],
+      "sha256": "b1d72e920d14216d42492ddc4d8e5fb4bacab70760365917c17b6e237cc17fe4"
+    }
+  }
+}

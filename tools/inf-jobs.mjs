@@ -24,8 +24,9 @@ const INF = ctx.window.DKCONTENT.INFINITY;
 const roster = JSON.parse(fs.readFileSync(new URL('./inf-roster.json', import.meta.url), 'utf8'));
 const pad3 = (w) => String(w).padStart(3, '0');
 
-const STYLE = 'Dark fantasy painted game sprite, semi-realistic, gritty painterly texture, weathered materials, dramatic rim light, strong readable silhouette.';
-const palette = (w) => { const p = INF.paletteOf(w); return `Palette of this tier: ${p.en}. Overall dark and desaturated; NO bright, pastel or neon colors; any glow is small and dim.`; };
+// 이 공통 제한은 이전 로스터 묘사·팔레트 문구·참조 이미지보다 우선한다. 11~101도 재생성할 때 적용한다.
+const STYLE = 'Stylized hand-painted fantasy game character with chunky proportions, simplified shapes, clean readable contours, soft painted shading and lightly weathered equipment. Moderately dark adventure mood, expressive and characterful, readable at small tower-defense game scale. ART DIRECTION OVERRIDE: these rules take precedence over any conflicting creature description, palette wording or reference detail. No gore, blood stains, open wounds, sores, exposed organs, rotting flesh, mutilation, grotesque fused anatomy or photorealistic body horror. Interpret disease, decay and corpse-themed names as costume motifs, muted colors and playful fantasy character design, never literal injury. Skeletons use clean simplified bones; skull motifs are small carved ornaments. Preserve complete bodies, friendly-readable faces and distinct equipment silhouettes.';
+const palette = (w) => { const p = INF.paletteOf(w); return `Palette of this tier: ${p.en}. Treat palette terms as color cues only: blood means muted wine-red cloth or rust, and skin cracks mean decorative armor or magical markings, never wounds. Use controlled midtone colors and clear light-dark separation so the character remains readable against the arena; avoid muddy all-black shading, pastel washes and neon saturation; any glow is small and restrained.`; };
 const GAIT = {
   biped: {
     4: 'frame 1 CONTACT: right leg forward and left leg back, both feet on the ground, stride at its widest; frame 2 PASSING: the back leg swings forward under the body, body at its highest; frame 3 CONTACT mirrored: left leg forward and right leg back; frame 4 PASSING mirrored: the other leg swings under the body',

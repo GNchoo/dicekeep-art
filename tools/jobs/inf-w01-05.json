@@ -1,0 +1,50 @@
+{
+  "style": "Stylized hand-painted fantasy game character with chunky proportions, simplified shapes, clean readable contours, soft painted shading and lightly weathered equipment. Moderately dark adventure mood, expressive and characterful, readable at small tower-defense game scale. ART DIRECTION OVERRIDE: these rules take precedence over any conflicting creature description, palette wording or reference detail. No gore, blood stains, open wounds, sores, exposed organs, rotting flesh, mutilation, grotesque fused anatomy or photorealistic body horror. Interpret disease, decay and corpse-themed names as costume motifs, muted colors and playful fantasy character design, never literal injury. Skeletons use clean simplified bones; skull motifs are small carved ornaments. Preserve complete bodies, friendly-readable faces and distinct equipment silhouettes.",
+  "jobs": [
+    {
+      "id": "w001-walk",
+      "n": 1,
+      "size": "1024x1024",
+      "quality": "medium",
+      "background": "transparent",
+      "out": "gen/inf/w001-walk",
+      "prompt": "A small adventurous rat with intact charcoal fur, a rounded compact body, alert expressive eyes, a leather collar and exactly one simple curved tail. Four sturdy little paws, a curious determined face and a clean game-character silhouette. (small and light). Walk cycle — diagonal trot: frame 1 front-right and back-left legs reach forward while the other pair pushes back; frame 2 all four legs gather under the body; frame 3 front-left and back-right legs reach forward; frame 4 legs gather again. 2x2 sprite sheet: 4 frames of ONE looping walk cycle of the same creature moving toward the RIGHT, 3/4 side view, read left-to-right then top-to-bottom. The head, torso, gear and overall size are IDENTICAL in every frame — only the limbs or wings change. The feet (or lowest point) rest on the same invisible ground line at the same height in every cell, the body is horizontally centered in its cell, and the creature fills about 65% of its cell leaving at least 15% empty margin on every side; nothing touches or crosses the cell borders. Transparent background, no ground shadow, no grid lines, no text, no watermark. Palette of this tier: rust red, dried blood, ash-grey skin, small ember accents. Treat palette terms as color cues only: blood means muted wine-red cloth or rust, and skin cracks mean decorative armor or magical markings, never wounds. Use controlled midtone colors and clear light-dark separation so the character remains readable against the arena; avoid muddy all-black shading, pastel washes and neon saturation; any glow is small and restrained."
+    },
+    {
+      "id": "w002-walk",
+      "n": 1,
+      "size": "1024x1024",
+      "quality": "medium",
+      "background": "transparent",
+      "out": "gen/inf/w002-walk",
+      "prompt": "A small skeleton footman with clean simplified ivory bones and a rounded expressive skull, wearing an iron kettle helmet, an olive tabard and sturdy boots, carrying a compact spear. Chunky toy-like joints and a determined but approachable face. (small and light). Walk cycle — frame 1 CONTACT: right leg forward and left leg back, both feet on the ground, stride at its widest; frame 2 PASSING: the back leg swings forward under the body, body at its highest; frame 3 CONTACT mirrored: left leg forward and right leg back; frame 4 PASSING mirrored: the other leg swings under the body. 2x2 sprite sheet: 4 frames of ONE looping walk cycle of the same creature moving toward the RIGHT, 3/4 side view, read left-to-right then top-to-bottom. The head, torso, gear and overall size are IDENTICAL in every frame — only the limbs or wings change. The feet (or lowest point) rest on the same invisible ground line at the same height in every cell, the body is horizontally centered in its cell, and the creature fills about 65% of its cell leaving at least 15% empty margin on every side; nothing touches or crosses the cell borders. Transparent background, no ground shadow, no grid lines, no text, no watermark. Palette of this tier: rust red, dried blood, ash-grey skin, small ember accents. Treat palette terms as color cues only: blood means muted wine-red cloth or rust, and skin cracks mean decorative armor or magical markings, never wounds. Use controlled midtone colors and clear light-dark separation so the character remains readable against the arena; avoid muddy all-black shading, pastel washes and neon saturation; any glow is small and restrained."
+    },
+    {
+      "id": "w003-walk",
+      "n": 1,
+      "size": "1024x1024",
+      "quality": "medium",
+      "background": "transparent",
+      "out": "gen/inf/w003-walk",
+      "prompt": "A broad, chunky grave ogre with intact olive skin, a simple brown hood, a leather vest and a solid wooden club. Rounded shoulders, sturdy boots, a grumpy expressive face and a heavy but balanced game-character build. (large, heavy and massive). Walk cycle — frame 1 CONTACT: right leg forward and left leg back, both feet on the ground, stride at its widest; frame 2 PASSING: the back leg swings forward under the body, body at its highest; frame 3 CONTACT mirrored: left leg forward and right leg back; frame 4 PASSING mirrored: the other leg swings under the body. 2x2 sprite sheet: 4 frames of ONE looping walk cycle of the same creature moving toward the RIGHT, 3/4 side view, read left-to-right then top-to-bottom. The head, torso, gear and overall size are IDENTICAL in every frame — only the limbs or wings change. The feet (or lowest point) rest on the same invisible ground line at the same height in every cell, the body is horizontally centered in its cell, and the creature fills about 65% of its cell leaving at least 15% empty margin on every side; nothing touches or crosses the cell borders. Transparent background, no ground shadow, no grid lines, no text, no watermark. Palette of this tier: rust red, dried blood, ash-grey skin, small ember accents. Treat palette terms as color cues only: blood means muted wine-red cloth or rust, and skin cracks mean decorative armor or magical markings, never wounds. Use controlled midtone colors and clear light-dark separation so the character remains readable against the arena; avoid muddy all-black shading, pastel washes and neon saturation; any glow is small and restrained."
+    },
+    {
+      "id": "w004-walk",
+      "n": 1,
+      "size": "1024x1024",
+      "quality": "medium",
+      "background": "transparent",
+      "out": "gen/inf/w004-walk",
+      "prompt": "A compact raven scout in flight with intact charcoal feathers, a rounded body, a clear expressive eye and a tiny leather harness carrying a small warm lantern. Broad simplified wings and a clean readable silhouette. (small and light). Walk cycle — wing beat while gliding: frame 1 wings raised high; frame 2 wings level; frame 3 wings swept down; frame 4 wings level; the body, head and legs stay at the same height and size. 2x2 sprite sheet: 4 frames of ONE looping walk cycle of the same creature moving toward the RIGHT, 3/4 side view, read left-to-right then top-to-bottom. The head, torso, gear and overall size are IDENTICAL in every frame — only the limbs or wings change. The feet (or lowest point) rest on the same invisible ground line at the same height in every cell, the body is horizontally centered in its cell, and the creature fills about 65% of its cell leaving at least 15% empty margin on every side; nothing touches or crosses the cell borders. Transparent background, no ground shadow, no grid lines, no text, no watermark. Palette of this tier: rust red, dried blood, ash-grey skin, small ember accents. Treat palette terms as color cues only: blood means muted wine-red cloth or rust, and skin cracks mean decorative armor or magical markings, never wounds. Use controlled midtone colors and clear light-dark separation so the character remains readable against the arena; avoid muddy all-black shading, pastel washes and neon saturation; any glow is small and restrained."
+    },
+    {
+      "id": "w005-walk",
+      "n": 1,
+      "size": "1024x1024",
+      "quality": "medium",
+      "background": "transparent",
+      "out": "gen/inf/w005-walk",
+      "prompt": "A wiry goblin spearman with smooth muted green skin, large expressive ears, simple leather armor, a compact iron spear and a small round wooden shield. A mischievous determined grin, sturdy boots and clearly separated limbs. (medium build). Walk cycle — frame 1 CONTACT: right leg forward and left leg back, both feet on the ground, stride at its widest; frame 2 PASSING: the back leg swings forward under the body, body at its highest; frame 3 CONTACT mirrored: left leg forward and right leg back; frame 4 PASSING mirrored: the other leg swings under the body. 2x2 sprite sheet: 4 frames of ONE looping walk cycle of the same creature moving toward the RIGHT, 3/4 side view, read left-to-right then top-to-bottom. The head, torso, gear and overall size are IDENTICAL in every frame — only the limbs or wings change. The feet (or lowest point) rest on the same invisible ground line at the same height in every cell, the body is horizontally centered in its cell, and the creature fills about 65% of its cell leaving at least 15% empty margin on every side; nothing touches or crosses the cell borders. Transparent background, no ground shadow, no grid lines, no text, no watermark. Palette of this tier: rust red, dried blood, ash-grey skin, small ember accents. Treat palette terms as color cues only: blood means muted wine-red cloth or rust, and skin cracks mean decorative armor or magical markings, never wounds. Use controlled midtone colors and clear light-dark separation so the character remains readable against the arena; avoid muddy all-black shading, pastel washes and neon saturation; any glow is small and restrained."
+    }
+  ]
+}

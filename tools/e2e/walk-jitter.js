@@ -1,35 +1,109 @@
-// 인피니티 걷기 시트가 게임 안에서 안정화됐는지: 로더가 만든 프레임(DKA.infW*Walk)마다 실루엣 발 y·무게중심 x·높이를 재서 칸끼리의 편차를 보고한다.
-//   사용: node walk-jitter.js   → 시트마다 한 줄, 편차가 프레임 높이의 2% 를 넘으면 실패 (종료 1)
-const { chromium } = require('playwright-core');
-(async () => {
-  const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium', args: ['--no-sandbox'] });
-  const p = await b.newPage();
-  await p.goto('http://localhost:8137/index.html?unlock=all&net=off&v=' + Date.now());
-  await p.waitForFunction(() => window.DK && window.DK.phase === 'title', null, { timeout: 120000 });
-  const rows = await p.evaluate(() => {
-    const out = [];
-    for (const k of Object.keys(DKA)) {
-      if (!/^infW\d+Walk$/.test(k) || !Array.isArray(DKA[k])) continue;
-      const fr = DKA[k].map((f) => {
-        const g = f.cv.getContext('2d'), d = g.getImageData(0, 0, f.w, f.h).data;
-        let x0 = 1e9, x1 = -1, y0 = 1e9, y1 = -1, n = 0, sx = 0;
-        for (let y = 0; y < f.h; y++) for (let x = 0; x < f.w; x++) { if (d[(y * f.w + x) * 4 + 3] <= 28) continue; n++; sx += x; if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
-        return { w: f.w, h: f.h, foot: y1 + 1, top: y0, mx: sx / n, height: y1 - y0 + 1, n };
-      });
-      const span = (a) => Math.max(...a) - Math.min(...a);
-      // 날것(move 'air')은 무게중심 y 기준으로 맞추므로 발 대신 무게중심 y 편차를 본다
-      const w = +(/^infW(\d+)Walk$/.exec(k)[1]), mon = DKCONTENT.INFINITY.monsters[w], air = !!(mon && mon.move === 'air');
-      const my = (f) => { const g = f.cv.getContext('2d'), d = g.getImageData(0, 0, f.w, f.h).data; let n = 0, s = 0; for (let y = 0; y < f.h; y++) for (let x = 0; x < f.w; x++) if (d[(y * f.w + x) * 4 + 3] > 28) { n++; s += y; } return s / n; };
-      out.push({ key: k, air, dims: `${fr[0].w}×${fr[0].h}`, foot: air ? span(DKA[k].map(my)) : span(fr.map((f) => f.foot)), mx: span(fr.map((f) => f.mx)), height: span(fr.map((f) => f.height)), area: span(fr.map((f) => f.n)) / Math.max(...fr.map((f) => f.n)), fh: fr[0].h });
-    }
-    return out;
-  });
-  let fail = 0;
-  for (const r of rows) {
-    const bad = r.foot / r.fh > 0.02 || r.mx / r.fh > 0.02;
-    if (bad) fail++;
-    console.log(`${r.key} ${r.dims}: ${r.air ? '무게중심 y' : '발 y'} 편차 ${r.foot.toFixed(1)}px · 중심 x 편차 ${r.mx.toFixed(1)}px · 높이 편차 ${r.height}px · 넓이 편차 ${(r.area * 100).toFixed(0)}%${bad ? '  ← 흔들림' : '  · 안정'}`);
+// 로더가 실제 만든 1~9웨이브 4프레임을 검사한다. 10웨이브 보스는 정지컷이다.
+const fs = require('node:fs');
+const { launchBrowser, gameUrl, outputPath, watchArtErrors } = require('./browser.cjs');
+
+function inspectWalkSheets() {
+  const inf = globalThis.DKCONTENT.INFINITY;
+  const waves = Array.from({ length: 9 }, (_, i) => i + 1);
+  // 향후 준비된 일반 몬스터도 빠뜨리지 않는다.
+  for (const tag of inf.artReady) {
+    const wave = Number(tag);
+    if (Number.isInteger(wave) && inf.monsters[wave] && !inf.monsters[wave].boss && !waves.includes(wave)) waves.push(wave);
   }
-  await b.close();
-  process.exit(fail ? 1 : 0);
-})().catch((e) => { console.error('FAIL', e); process.exit(1); });
+  return waves.sort((a, b) => a - b).map(wave => {
+    const key = 'infW' + wave + 'Walk', frames = globalThis.DKA[key], mon = inf.monsters[wave];
+    const expected = wave <= 9 ? 4 : (mon.walk || '2x2').split('x').reduce((a, b) => a * Number(b), 1);
+    const errors = [];
+    if (!inf.artReady.has(wave) && !inf.artReady.has(String(wave))) errors.push('required wave is not artReady');
+    if (!Array.isArray(frames) || frames.length !== expected) errors.push('expected ' + expected + ' frames, got ' + (Array.isArray(frames) ? frames.length : 'missing sheet'));
+    const metrics = (Array.isArray(frames) ? frames : []).map((frame, index) => {
+      if (!frame || !frame.cv || !Number.isInteger(frame.w) || !Number.isInteger(frame.h) || frame.w <= 0 || frame.h <= 0 || frame.cv.width !== frame.w || frame.cv.height !== frame.h) {
+        errors.push('frame ' + index + ': invalid canvas/dimensions'); return null;
+      }
+      const data = frame.cv.getContext('2d').getImageData(0, 0, frame.w, frame.h).data;
+      let top = frame.h, foot = 0, n = 0, sx = 0, sy = 0;
+      for (let y = 0; y < frame.h; y++) for (let x = 0; x < frame.w; x++) {
+        if (data[(y * frame.w + x) * 4 + 3] <= 28) continue;
+        n++; sx += x; sy += y; top = Math.min(top, y); foot = Math.max(foot, y + 1);
+      }
+      if (!n) { errors.push('frame ' + index + ': empty silhouette'); return null; }
+      return { w: frame.w, h: frame.h, foot, mx: sx / n, my: sy / n, height: foot - top, n };
+    });
+    const valid = metrics.filter(Boolean);
+    if (valid.some(frame => frame.w !== valid[0].w || frame.h !== valid[0].h)) errors.push('inconsistent frame dimensions');
+    if (errors.length || !valid.length) return { key, errors, expected, frames: metrics };
+    const span = values => Math.max(...values) - Math.min(...values);
+    const air = mon.move === 'air';
+    return {
+      key, errors, expected, air, dims: valid[0].w + '×' + valid[0].h, fh: valid[0].h, frames: metrics,
+      foot: span(valid.map(frame => air ? frame.my : frame.foot)), mx: span(valid.map(frame => frame.mx)),
+      height: span(valid.map(frame => frame.height)), area: span(valid.map(frame => frame.n)) / Math.max(...valid.map(frame => frame.n)),
+    };
+  });
+}
+
+function rowFailures(row) {
+  const failures = [...row.errors];
+  if (!row.frames || row.frames.length !== row.expected || row.frames.some(frame => !frame)) failures.push('invalid frame count/data');
+  if (failures.length) return failures;
+  if (![row.foot, row.mx, row.height, row.area, row.fh].every(Number.isFinite) || row.fh <= 0 || row.frames.some(frame => !Object.values(frame).every(Number.isFinite) || frame.n <= 0)) failures.push('non-finite or empty frame metrics');
+  if (row.foot / row.fh > 0.02 || row.mx / row.fh > 0.02) failures.push('anchor jitter exceeds 2% of frame height');
+  return failures;
+}
+
+function selfTest() {
+  const assert = require('node:assert/strict');
+  const frame = { w: 100, h: 100, foot: 90, mx: 50, my: 50, height: 80, n: 100 };
+  const good = { key: 'test', errors: [], expected: 4, frames: Array(4).fill(frame), foot: 1, mx: 1, height: 0, area: 0, fh: 100 };
+  assert.deepEqual(rowFailures(good), []);
+  for (const bad of [
+    { ...good, frames: [] }, { ...good, frames: [frame, frame, frame] },
+    { ...good, frames: [null, frame, frame, frame] }, { ...good, mx: NaN },
+    { ...good, frames: [{ ...frame, n: 0 }, frame, frame, frame] }, { ...good, foot: Infinity },
+    { ...good, foot: 2.1 }, { ...good, mx: 2.1 },
+  ]) assert.ok(rowFailures(bad).length, 'malformed/missing/empty/jittering data must fail');
+  // 실제 검사 함수도 DKA의 존재하는 키만 순회해 누락 시트를 놓치지 않아야 한다.
+  const previousContent = globalThis.DKCONTENT, previousArt = globalThis.DKA;
+  try {
+    const pixels = new Uint8ClampedArray(10 * 10 * 4);
+    for (let y = 2; y < 8; y++) for (let x = 2; x < 8; x++) pixels[(y * 10 + x) * 4 + 3] = 255;
+    const sprite = { w: 10, h: 10, cv: { width: 10, height: 10, getContext: () => ({ getImageData: () => ({ data: pixels }) }) } };
+    const waves = Array.from({ length: 9 }, (_, i) => i + 1);
+    globalThis.DKCONTENT = { INFINITY: { artReady: new Set(waves), monsters: Object.fromEntries(waves.map(wave => [wave, { move: 'ground' }])) } };
+    globalThis.DKA = Object.fromEntries(waves.map(wave => ['infW' + wave + 'Walk', Array(4).fill(sprite)]));
+    assert.ok(inspectWalkSheets().every(row => !rowFailures(row).length));
+    delete globalThis.DKA.infW3Walk;
+    assert.ok(rowFailures(inspectWalkSheets().find(row => row.key === 'infW3Walk')).length, 'missing expected sheet must be checked');
+    globalThis.DKA.infW4Walk[0] = { ...sprite, cv: { ...sprite.cv, getContext: () => ({ getImageData: () => ({ data: new Uint8ClampedArray(400) }) }) } };
+    assert.ok(rowFailures(inspectWalkSheets().find(row => row.key === 'infW4Walk')).length, 'empty alpha frame must fail');
+    globalThis.DKA.infW5Walk[0] = { ...sprite, w: NaN };
+    assert.ok(rowFailures(inspectWalkSheets().find(row => row.key === 'infW5Walk')).length, 'NaN dimensions must fail');
+  } finally {
+    if (previousContent === undefined) delete globalThis.DKCONTENT; else globalThis.DKCONTENT = previousContent;
+    if (previousArt === undefined) delete globalThis.DKA; else globalThis.DKA = previousArt;
+  }
+  console.log('PASS walk-jitter assertion self-test (11 failure cases)');
+}
+
+async function main() {
+  if (process.argv.includes('--self-test')) return selfTest();
+  const browser = await launchBrowser();
+  try {
+    const page = await browser.newPage(), errors = watchArtErrors(page);
+    await page.goto(gameUrl());
+    await page.waitForFunction(() => window.DK && DK.phase === 'title', null, { timeout: 120000 });
+    const rows = await page.evaluate(inspectWalkSheets);
+    if (!rows.length) throw new Error('No expected walking sheets were checked');
+    for (const row of rows) {
+      row.failures = rowFailures(row);
+      const metrics = row.dims ? row.dims + ': ' + (row.air ? '중심 y' : '발 y') + ' ' + row.foot.toFixed(2) + 'px · 중심 x ' + row.mx.toFixed(2) + 'px · 높이 ' + row.height + 'px · 넓이 ' + (row.area * 100).toFixed(1) + '%' : 'invalid sheet';
+      console.log((row.failures.length ? 'FAIL ' : 'PASS ') + row.key + ' ' + metrics + (row.failures.length ? ' · ' + row.failures.join('; ') : ''));
+    }
+    fs.writeFileSync(outputPath('walk-jitter.json'), JSON.stringify({ rows, errors }, null, 2) + '\n');
+    console.log('W10: infB10 정지컷 — 걷기 시트 검사 대상 아님');
+    if (errors.length || rows.some(row => row.failures.length)) throw new Error([...errors, 'Walking sheet validation failed; see walk-jitter.json'].join('\n'));
+  } finally { await browser.close(); }
+}
+
+if (require.main === module) main().catch(error => { console.error('FAIL', error); process.exitCode = 1; });
+module.exports = { inspectWalkSheets, rowFailures };
