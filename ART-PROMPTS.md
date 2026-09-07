@@ -17,7 +17,7 @@
 | §1 하드 배경 | 20 | `casual/maps/map-NN-<theme>-hard.jpg` | **폐기** (배경 맞춤 방식 종료) |
 | §2 걷기 시트 (적 24 + 보스 10) | 34 | `casual/enemies/<id>-walk-2x2.png`, `casual/bosses/<file>-walk-2x2.png` | **이미 연결됨** — 파일만 넣으면 됨 |
 | §3 타워 스킨 b~e | 24 | `casual/towers/tN-<letter>.png` 덮어쓰기 | **이미 연결됨** |
-| §6 인피니티 101웨이브 몬스터 | 111 | `casual/enemies/inf/wNNN.png`, `casual/bosses/inf/bNNN[-2].png` | **연결됨** — 파일을 넣고 `content.js` `INF_ART_READY` 에 웨이브 번호를 적으면 그 웨이브만 교체 (2026-09-06) |
+| §6 인피니티 101웨이브 몬스터 | 110종 설계 | `casual/enemies/inf/wNNN.png`, `casual/bosses/inf/bNNN[-2].png` | **1~10 적용 범위** — 나머지는 파일을 넣고 `content.js` `INF_ART_READY` 에 웨이브 번호를 적으면 그 웨이브만 교체 |
 | §7 출시용 UI·아이콘·스플래시·연출 | 약 50 | `resources/*.png`, `store/*.png`, `ui/*.png`, `vfx/*.png` | **연결됨** — 투명 PNG(UI)·회색 시트(VFX), 파일만 넣으면 됨. 요약본 `GROK-BRIEF.md` §G (2026-09-06) |
 
 ---
@@ -230,26 +230,42 @@ Hand-painted casual tower defense arena FLOOR ONLY, Kingdom Rush and Random Dice
 
 ---
 
-## §6. 인피니티 101웨이브 몬스터 (새 그림 111장 · 2026-09-06 설계)
+## §6. 인피니티 101웨이브 몬스터 (전체 로스터 설계 · 실제 적용 범위는 INF_ART_READY)
 
-> **2026-09-07 방침 변경 — 그림체는 다크 판타지 반실사(산 위 주사위 성 키아트 톤), 생성은 OpenAI 이미지 API**(참조 이미지 편집·투명 배경 지원). 1단계(1~10)는 '초원의 작은 것들' 대신 **폐허의 잡졸**(역병쥐·해골·오우거·까마귀·고블린…)로 재설계한다. 1~5 는 `tools/jobs/inf-w01-05.json`(정지컷) → `tools/jobs/inf-w01-05-walk.json`(정지컷을 참조로 2×2 시트) 로 뽑는다:
+> **2026-09-07 PR #29 아트 방향 수정 — 덩어리감 있는 페인터리 판타지 게임 캐릭터**. 어두운 모험 분위기는 유지하되 과한 징그러움과 실사 신체 공포를 없앤다. 둥근 비율·간결한 외곽선·표정·분명한 장비를 사용하고, 작은 게임 화면에서도 몸과 팔다리가 읽히게 그린다. 1단계(1~10) **폐허의 잡졸**의 한국어 이름은 호환성을 위해 유지한다 (역병쥐·해골 잡졸·묘지 오우거·까마귀 정찰병·고블린 창병·썩은 멧돼지·무덤 파는 구울·시체파리 떼·녹슨 철갑 오크·보스 역병 쥐왕).
+>
+> **공통 제한은 모든 묘사·팔레트·참조 이미지보다 우선한다**: 고어, 피 얼룩, 열린 상처, 종기, 내장 노출, 썩어 벗겨진 살, 절단, 뒤엉킨 신체를 그리지 않는다. 역병·시체·썩음이라는 이름은 의상·색·작은 장식으로만 표현한다. 해골은 깨끗하고 단순한 뼈, 해골 장식은 작은 조각 부적이다. 11~101의 기존 로스터 묘사는 아직 유지되며, 이후 재생성할 때에도 생성기의 이 제한을 적용한다. **이번 아트 교체·검증 범위는 1~10이며 101웨이브 전체의 신규 아트 납품을 뜻하지 않는다.**
+>
+> **1~10 캐릭터 기준**: 1 온전한 숯빛 털·가죽 목걸이·꼬리 하나의 쥐, 2 투구·올리브 타바드·장화·짧은 창의 해골 병사, 3 온전한 올리브 피부·갈색 후드·가죽 조끼·몽둥이의 오우거, 4 하네스와 등불을 단 까마귀, 5 창·방패 고블린, 6 온전한 갈색 털·금속 엄니 덮개의 멧돼지, 7 매끈한 회녹색 얼굴·후드·작업복·장갑·장화·삽의 구울, 8 작은 해골 모양 부적 주위의 둥근 청록 파리들, 9 온전한 녹빛 갑옷·투구·짧은 도끼·방패의 오크, 10 왕관·완갑·와인빛 망토·꼬리 하나의 직립 쥐왕(뼈 더미·받침 없음).
+>
+> **현행 파이프라인 (2026-09-07 걷기 시트 수정 이후)** — 몬스터 묘사(영문)·보행 방식은 `tools/inf-roster.json`, 이름·등급·이동·단계·**팔레트**는 `content.js`(`INF_MONSTERS`·`INF_PALETTE`), 둘을 합쳐 `tools/inf-jobs.mjs` 가 잡 파일을 만든다. 아래 §6 의 치비 공통 프롬프트와 웨이브별 프롬프트는 **폐기(참고용)** — 실제 프롬프트는 생성기가 조립한다.
 >
 > ```
-> OPENAI_API_KEY=… node tools/img-gen.mjs tools/jobs/inf-w01-05.json          # gen/inf/w001-1.png … (투명 배경, 오른쪽을 봄)
-> #  마음에 드는 후보를 casual/enemies/inf/w001.png 로 복사 (또는 sheet-check --still-out)
-> OPENAI_API_KEY=… node tools/img-gen.mjs tools/jobs/inf-w01-05-walk.json     # 정지컷을 참조로 gen/inf/w001-walk-1.png …
-> node tools/sheet-check.mjs gen/inf/w001-walk-1.png --sheet-out=casual/enemies/inf/w001-walk-2x2.png   # 칸 편차 검사 + 저장
-> #  content.js INF_ART_READY 에 웨이브 번호를 적는다
+> node tools/inf-jobs.mjs --waves=1-5 --out=tools/jobs/inf-w01-05.json            # 참조 없는 신규 걷기 시트 잡
+> node tools/inf-jobs.mjs --waves=6-10 --mode=multi --out=tools/jobs/inf-w06-10.json   # 한 장에 5마리(행) × 4프레임(열) + 보스 정지컷 — 이미지 값 몬스터당 약 1/5
+> OPENAI_API_KEY=… node tools/img-gen.mjs tools/jobs/inf-w06-10.json                   # gen/inf/w006-w009-1.png · gen/inf/b010-1.png
+> node tools/sheet-split.mjs gen/inf/w006-w009-1.png --rows=w006,w007,w008,w009 --cols=4 --pack   # 행마다 안정화 → casual/enemies/inf/wNNN-walk-2x2.png + wNNN.png(정지컷 = 1칸)
+> node tools/inf-jobs.mjs --waves=1-5 --refs --out=tools/jobs/inf-w01-05-walk.json    # 몬스터마다 시트 1장, 정지컷을 참조로 (--frames=6 → 3x2)
+> node tools/sheet-check.mjs gen/inf/w001-walk-1.png --sheet-out=casual/enemies/inf/w001-walk-2x2.png --pack   # 편차·자세 판정 + 안정화 저장
+> #  content.js INF_ART_READY 에 웨이브 번호를 적는다 (6프레임 시트는 INF_MONSTERS[w].walk = '3x2')
 > ```
 >
-> 키아트: `node tools/img-gen.mjs tools/jobs/keyart.json` → `node tools/keyart-build.mjs --portrait=gen/keyart/portrait-1.png --landscape=gen/keyart/landscape-1.png`. 키는 환경변수로만, 파일에 쓰지 않는다. 아래 치비 공통 프롬프트·1단계 표는 6~101 웨이브가 아직 옛 설계라 남겨 둔다.
+> - **걷기 주기**: 프레임마다 자세를 지정한다 — 두발: 접지(오른발 앞·보폭 최대) → 통과(뒷다리가 몸 아래로, 몸 최고점) → 접지(왼발 앞) → 통과. 네발: 대각 속보(앞오른·뒤왼 앞으로 → 모음 → 앞왼·뒤오른 → 모음). 날것: 날개 위·수평·아래·수평(몸 높이 고정). 뱀·벌레: S자가 1/4 파장씩 이동. 유령: 제자리 부유(옷자락·기운만 한 바퀴). `inf-roster.json` `gait` = biped·quad·fly·slither·float. 머리·몸통·장비·크기는 모든 칸에서 동일, 발은 같은 바닥선, 칸의 65% 이하·여백 15%, 경계 접촉 금지.
+> - **안정화**: 그래도 칸마다 크기(높이 10~30%)·발 위치(5~15%)·가로 위치가 어긋나 재생하면 '커졌다 작아졌다·앞뒤로 미끄러짐' 으로 보인다. `sheet-check`·`sheet-split` 이 실루엣 넓이로 크기를 ±15% 안에서 맞추고 발끝을 공통 바닥선에, 무게중심 x 를 공통 축에 맞춰 다시 굽는다. 이웃 칸에서 넘어온 창끝 같은 경계 조각(실루엣 3% 미만)은 지운다. `game.js processSheet` 도 같은 규칙으로 인피니티 시트를 맞춘다(이미 넣은 1~5 도 흔들리지 않음). 확인 `tools/e2e/walk-jitter.js`. 자세 판정 `static`·`twoPose` 가 뜨면 그 시트(행)만 다시 뽑는다.
+> - **한 장에 여러 마리(`--mode=multi`)**: 세로 1024×1536 에 5행 × 4열, 칸 256×307 — 게임은 42~58px(3배 DPR 174px)로 그리므로 충분. 한 행이 나쁘면 그 장을 다시 뽑는다. L 등급이 많은 단계·보스·세부가 중요한 것은 `--mode=single`(2x2 1024², 6프레임은 3x2 1536×1024). 정지컷은 시트 1칸(접지)에서 자르므로 정지컷 잡은 따로 없다. `n` 기본 1.
+> - **단계 팔레트**(10웨이브마다 색이 조금씩 바뀐다): 원본은 `content.js INF_PALETTE`. 생성기는 기존의 피·살 틈 같은 단어를 와인빛 천·녹슨 장비·마법 문양의 **색상 지시**로만 해석한다. 단계별 색을 유지하면서 중간 명도와 밝고 어두운 면을 구분한다. 검게 뭉개진 음영·파스텔 일색·네온 과포화를 피하고, 공통 고어 금지 규칙이 팔레트 표현보다 우선한다.
+> - **날것·보스**: 날것은 발끝 대신 무게중심 y 로 맞춘다(`--anchor=center`, `sheet-split`·게임 로더는 `move: 'air'` 로 자동). 보스는 정지컷 1장 `casual/bosses/inf/bNNN.png`(부관 `-2`), 크기 `INFINITY.artSizeBoss`(S 96 · M 108 · L 120).
 >
-> **2026-09-07 납품 — 키아트 2장 + 1~5 정지컷·시트 (`gpt-image-2`)**: 세로 `portrait-1`(5눈 주사위, 아래 1/4 안개), 가로 `landscape-2`(달빛, 아래 1/3 안개) → 세로·가로 모두 글자 없는 그림 위에 CSS 금박 제목(`?v=90`). 몬스터는 후보 2장 중 w001-2 · w002-1 · w003-2 · w004-1 · w005-1, 걷기 시트는 여백 지시(칸의 70% 이하)를 넣은 2차 생성에서 w001-2 · w002-1 · w003-2 · w004-2 · w005-1(`sheet-check` 경고 0~2칸, 경계선 침범 없음). `png-pack` 으로 정지컷 512²·시트 1024² 팔레트 PNG(합계 2.1MB). 크기는 `INFINITY.artSize`(S 42·M 50·L 58) 고정. `INF_ART_READY = [1,2,3,4,5]`.
+> **이전 납품 기록 — PR #29 아트 방향 수정 이전의 2차 생성 (`gpt-image-2`, 7장, 이미지 출력 11,908 토큰)**: 1~5 는 정지컷을 참조로 시트만 다시 뽑았고, 6~9 는 세로 한 장(4행×4열, 칸 256×384)에서 `sheet-split` 로 나눴다. 10 보스 역병 쥐왕은 정지컷. 당시 `INF_ART_READY = [1..10]`. 이 기록은 이전 생성 이력이며 현재 이미지의 보행 품질 판정을 대신하지 않는다.
+>
+> 키아트: `node tools/img-gen.mjs tools/jobs/keyart.json` → `node tools/keyart-build.mjs --portrait=gen/keyart/portrait-1.png --landscape=gen/keyart/landscape-1.png`. 키는 환경변수로만, 파일에 쓰지 않는다.
+>
+> **이전 납품 기록 — 키아트 2장 + 1~5 첫 정지컷·시트 (`gpt-image-2`)**: 세로 `portrait-1`(5눈 주사위, 아래 1/4 안개), 가로 `landscape-2`(달빛, 아래 1/3 안개) → 세로·가로 모두 글자 없는 그림 위에 CSS 금박 제목(`?v=90`). 몬스터는 후보 2장 중 w001-2 · w002-1 · w003-2 · w004-1 · w005-1, 걷기 시트는 여백 지시(칸의 70% 이하)를 넣은 2차 생성에서 w001-2 · w002-1 · w003-2 · w004-2 · w005-1. 당시 `png-pack` 으로 정지컷 512²·시트 1024² 팔레트 PNG(합계 2.1MB), `INF_ART_READY = [1,2,3,4,5]`. 현재 검증 수치는 PR의 최신 검증 결과를 따른다.
 
 인피니티(도전·함께) 101웨이브의 몬스터를 **10단계 테마 × 10웨이브 + 보스** 로 다시 설계했다. 지금은 기존 적 그림을 겉보기 강함 순으로 재배치해 쓰고 있고(`content.js` `look`), **아래 파일명으로 그림을 넣고 `INF_ART_READY` 에 웨이브 번호를 적으면 그 웨이브만 새 그림·새 이름으로 바뀐다** (부분 납품 가능, 나머지는 기존 그림 폴백).
 
 규칙
-- 정지컷 `casual/enemies/inf/wNNN.png` (1024², 연회색 배경, **오른쪽을 본다** — 코드가 왼쪽 이동 때 반전한다). 걷기 시트는 선택: `casual/enemies/inf/wNNN-walk-2x2.png`.
+- 정지컷 `casual/enemies/inf/wNNN.png` (시트의 접지 프레임에서 추출, 투명 배경, **오른쪽을 본다** — 코드가 왼쪽 이동 때 반전한다). 걷기 시트: `casual/enemies/inf/wNNN-walk-2x2.png`.
 - 보스 `casual/bosses/inf/bNNN.png`, 20웨이브부터 보스가 2마리라 부관은 `casual/bosses/inf/bNNN-2.png`.
 - 크기 등급(S/M/L)은 원작 크기표(`sizeSeq`)를 따른다 — 그림 안 비율이 아니라 **덩치 느낌**(S 작고 가벼움 · L 크고 무거움)으로 그려 달라는 뜻. 이동형은 4의 배수 공중, 7의 배수 땅굴(7이 우선).
 - 방어력이 높은 33·66·99 웨이브는 두꺼운 판금을 두른다. 단계가 오를수록 갑옷·무기·발광·크기감이 늘어나야 한다.
@@ -257,18 +273,18 @@ Hand-painted casual tower defense arena FLOOR ONLY, Kingdom Rush and Random Dice
 
 ### 단계 테마
 
-| 단계 | 웨이브 | 테마 | 분위기 |
-|---|---|---|---|
-| 1 | 1~10 | 폐허의 잡졸 (구 '초원의 작은 것들') | 1~5: dark fantasy semi-realistic — mangy, bony, patched leather, rusted iron, sickly greens and greys (tools/jobs/inf-w01-05.json). 6~10 은 미정 |
-| 2 | 11~20 | 숲의 야수 | natural fur and feathers, slightly fierce eyes, a few leaves and twigs stuck on the body, still cute |
-| 3 | 21~30 | 늪과 동굴 | slimy or chitinous skin, murky green and purple tones, glowing eyes, drips of swamp water |
-| 4 | 31~40 | 산적과 고블린 | ragged leather clothes, crude iron weapons, patched cloth, mischievous grin |
-| 5 | 41~50 | 왕국의 병사와 기사 | polished steel armor with a red and gold heraldic emblem, disciplined pose, proper weapons and shields |
-| 6 | 51~60 | 언데드 | pale bone and rotten cloth, cold blue-green glow in eye sockets, tattered burial wrappings, faint mist |
-| 7 | 61~70 | 마법 생물과 정령 | body made of glowing elemental energy or crystal, floating runes and sparks, vivid magical colors |
-| 8 | 71~80 | 용족과 거대 야수 | thick scales, horns and spikes, heavy muscular build, embers or frost breath, imposing size |
-| 9 | 81~90 | 악마 | dark red and black skin, curved horns, hellfire glow from cracks in the skin, bat-like wings or chains |
-| 10 | 91~101 | 심연과 파멸 | obsidian black body with violet void energy, eyes like stars, ornate ruinous armor, world-ending presence |
+| 단계 | 웨이브 | 테마 | 분위기 (구 치비 설계 — 참고용) | 팔레트 (`INF_PALETTE`, 현행) |
+|---|---|---|---|---|
+| 1 | 1~10 | 폐허의 잡졸 (구 '초원의 작은 것들') | 덩어리감 있는 페인터리 게임 캐릭터, 온전한 피부·털·의상, 단순한 장비·표정 | 녹빛 장비 · 와인빛 천 · 회색과 올리브 중간 명도 (고어 표현 금지) |
+| 2 | 11~20 | 숲의 야수 | natural fur and feathers, slightly fierce eyes, a few leaves and twigs stuck on the body, still cute  검은 털 · 먹빛 초록 · 탁한 호박색 눈 |
+| 3 | 21~30 | 늪과 동굴 | slimy or chitinous skin, murky green and purple tones, glowing eyes, drips of swamp water  탁한 청록 · 검보라 · 독의 점광 |
+| 4 | 31~40 | 산적과 고블린 | ragged leather clothes, crude iron weapons, patched cloth, mischievous grin  와인빛 자주 · 검은 가죽 · 녹슨 쇠 |
+| 5 | 41~50 | 왕국의 병사와 기사 | polished steel armor with a red and gold heraldic emblem, disciplined pose, proper weapons and shields  검푸른 강철 · 검붉은 휘장 · 바랜 금 |
+| 6 | 51~60 | 언데드 | pale bone and rotten cloth, cold blue-green glow in eye sockets, tattered burial wrappings, faint mist  창백한 뼈 · 검보라 그림자 · 차가운 회청 빛 |
+| 7 | 61~70 | 마법 생물과 정령 | body made of glowing elemental energy or crystal, floating runes and sparks, vivid magical colors  짙은 보라 · 자수정 · 검은 마력 연기 |
+| 8 | 71~80 | 용족과 거대 야수 | thick scales, horns and spikes, heavy muscular build, embers or frost breath, imposing size  검붉은 비늘 · 흑요석 · 꺼져가는 불씨 |
+| 9 | 81~90 | 악마 | dark red and black skin, curved horns, hellfire glow from cracks in the skin, bat-like wings or chains  지옥의 진홍 · 검은 뿔 · 살 틈의 주홍빛 |
+| 10 | 91~101 | 심연과 파멸 | obsidian black body with violet void energy, eyes like stars, ornate ruinous armor, world-ending presence  심연의 검정 · 보라 공허 광채 · 별빛 눈 |
 
 ### 정지컷 공통 프롬프트 (각 웨이브 프롬프트에 이미 포함됨)
 
@@ -278,11 +294,15 @@ Hand-painted single character illustration for a casual tower-defense game, chib
 
 ### 걷기 시트 공통 프롬프트 (선택 — 앞에 붙이고 정지컷 설명을 이어 쓴다)
 
+> **PR #29 지상 7종(W1·2·3·5·6·7·9)은 아래 4프레임 방식으로 재생성하지 않는다.** 같은 다리가 계속 앞에 남는 문제가 확인되어, [부품 생성 프롬프트](tools/art-review/pr29-gait/prompts.json)와 [8프레임 관절 설정](tools/art-review/pr29-gait/rig-config.json)으로 교체했다. `node tools/art-review/pr29-gait/rebuild.mjs`로 재현한다. 양발의 앞뒤 순서 반전·지지 교대·들림·게임 내 접지를 확인해야 보행으로 승인한다. W4·8 날갯짓은 기존 4프레임, W10은 정지 보스다.
+
 ```text
 Hand-painted 2x2 sprite sheet, four frames of a walk cycle read left-to-right then top-to-bottom (contact, down, passing, up), of the same chibi character moving toward the RIGHT, side 3/4 view. Kingdom Rush and Random Dice casual style, thick clean outlines, identical character size and identical ground pivot in every cell, generous margins, plain light gray background, no text, no watermark. Match the idle design exactly:
 ```
 
 ### 단계 1 · 폐허의 잡졸 (웨이브 1~10)
+
+> 1~10 의 현행 프롬프트는 `tools/inf-roster.json`(영문 묘사·보행) + `tools/inf-jobs.mjs` 로 만든다. 아래 표의 이름은 현행이며, 이름에 담긴 역병·썩음·시체 표현은 고어로 그리지 않는다. 그 밑의 치비 프롬프트는 폐기.
 
 | 웨이브 | 이름 | 등급 | 이동 | 파일 |
 |---|---|---|---|---|
@@ -291,11 +311,11 @@ Hand-painted 2x2 sprite sheet, four frames of a walk cycle read left-to-right th
 | 3 | 묘지 오우거 | L | 지상 | `w003.png` |
 | 4 | 까마귀 정찰병 | S | 공중 | `w004.png` |
 | 5 | 고블린 창병 | M | 지상 | `w005.png` |
-| 6 | 얼룩젖소 | L | 지상 | `w006.png` |
-| 7 | 왕두더지 | L | 땅굴 | `w007.png` |
-| 8 | 꿀벌 | S | 공중 | `w008.png` |
-| 9 | 골목거위 | L | 지상 | `w009.png` |
-| **10 보스** | 황금 숫양 | L | 보스 | `b010.png` |
+| 6 | 썩은 멧돼지 | L | 지상 | `w006.png` |
+| 7 | 무덤 파는 구울 | L | 땅굴 | `w007.png` |
+| 8 | 시체파리 떼 | S | 공중 | `w008.png` |
+| 9 | 녹슨 철갑 오크 | L | 지상 | `w009.png` |
+| **10 보스** | 역병 쥐왕 | L | 보스 | `b010.png` |
 
 **1 · 들쥐** → `casual/enemies/inf/w001.png`
 ```text

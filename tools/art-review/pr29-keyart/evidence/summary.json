@@ -1,0 +1,94 @@
+{
+  "verifiedAt": "2026-09-07T11:46:34.850Z",
+  "version": "91",
+  "viewports": [
+    {
+      "name": "portrait-393x852",
+      "width": 393,
+      "height": 852,
+      "branch": "p",
+      "heldPngRequests": 838,
+      "keyartResponses": 2,
+      "matchingKeyartResponses": 2,
+      "pageErrors": 0,
+      "keyartErrors": 0,
+      "otherHttpErrors": 85,
+      "errors": []
+    },
+    {
+      "name": "screenshot-754x836",
+      "width": 754,
+      "height": 836,
+      "branch": "l",
+      "heldPngRequests": 838,
+      "keyartResponses": 3,
+      "matchingKeyartResponses": 3,
+      "pageErrors": 0,
+      "keyartErrors": 0,
+      "otherHttpErrors": 85,
+      "errors": []
+    },
+    {
+      "name": "desktop-1280x800",
+      "width": 1280,
+      "height": 800,
+      "branch": "l",
+      "heldPngRequests": 838,
+      "keyartResponses": 3,
+      "matchingKeyartResponses": 3,
+      "pageErrors": 0,
+      "keyartErrors": 0,
+      "otherHttpErrors": 85,
+      "errors": []
+    },
+    {
+      "name": "landscape-852x393",
+      "width": 852,
+      "height": 393,
+      "branch": "l",
+      "heldPngRequests": 838,
+      "keyartResponses": 3,
+      "matchingKeyartResponses": 3,
+      "pageErrors": 0,
+      "keyartErrors": 0,
+      "otherHttpErrors": 85,
+      "errors": []
+    }
+  ],
+  "screenshots": [
+    "portrait-393x852-loading.png",
+    "portrait-393x852-title.png",
+    "screenshot-754x836-loading.png",
+    "screenshot-754x836-title.png",
+    "desktop-1280x800-loading.png",
+    "desktop-1280x800-title.png",
+    "landscape-852x393-loading.png",
+    "landscape-852x393-title.png"
+  ],
+  "localAssets": {
+    "title-keyart-p.jpg": {
+      "file": "ui/title-keyart-p.jpg",
+      "sha256": "31ad026c1fa1675bb027df0d57791a47a819f3fe70ae291006401ab4229349df"
+    },
+    "title-keyart-l.jpg": {
+      "file": "ui/title-keyart-l.jpg",
+      "sha256": "10eefca1484eb2d47fcf012b0ec94a51055874439fa92875bd802e5bc4ac19d7"
+    },
+    "title-keyart-l-blur.jpg": {
+      "file": "ui/title-keyart-l-blur.jpg",
+      "sha256": "94f7fabb2458d13becc239d55aa0d1fb6c2047143b992aeb0be3c780d8da24d5"
+    }
+  },
+  "errors": [],
+  "reproducibleHelper": "tools/art-review/pr29-keyart/check-loading.cjs",
+  "helperPortabilityCheck": "Syntax PASS; only import/repo/output paths and default version changed after the completed browser run.",
+  "visualReview": {
+    "reviewedScreenshots": 8,
+    "frontFacePips": 5,
+    "sideFacePips": 3,
+    "pipLayout": "Five uses four corners plus center; three lies on a diagonal. Both art variants retain those visible face counts.",
+    "chipAppearance": "Localized top-corner damage is visible; landscape damage is subtle at the smallest852x393 view.",
+    "titleAndControls": "Korean title, DICEKEEP subtitle, loading progress and enabled start button are legible and within all four viewports.",
+    "limitations": "Chromium viewport screenshots, not native mobile hardware; pip count and chip appearance were checked visually, not inferred from image hashes."
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "scope": "Archive integrity and image decoding only; accepted complete eight-frame cycles:0.",
+  "filesVerified": 69,
+  "imagesDecoded": 56,
+  "originalPngs": 10,
+  "uniqueOriginalPngs": 10,
+  "gifPages": [
+    {
+      "file": "initial/w02-preview.gif",
+      "pages": 8,
+      "delay": [
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120
+      ]
+    },
+    {
+      "file": "initial/w06-preview.gif",
+      "pages": 8,
+      "delay": [
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120
+      ]
+    }
+  ],
+  "referencesChecked": 30,
+  "errors": [],
+  "passed": true
+}

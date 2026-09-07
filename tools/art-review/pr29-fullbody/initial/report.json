@@ -1,0 +1,557 @@
+{
+  "purpose": "Review only: eight supplied full-drawing poses, with no inferred rig or gameplay gait validation.",
+  "config": "config.json",
+  "globalScale": 1,
+  "fixedOutputRootX": 256,
+  "fixedOutputFloorY": 460,
+  "frameDelayMs": 120,
+  "waves": [
+    {
+      "wave": 2,
+      "source": "../sources/w002-initial-sheet.png",
+      "sourceSha256": "0ae925ca910faf5b4e8c83231b21d234e6e444544ddae43d26b8c239e694784f",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "backgroundSeeds": [
+        [
+          192,
+          208
+        ],
+        [
+          590,
+          228
+        ],
+        [
+          269,
+          239
+        ],
+        [
+          1279,
+          241
+        ],
+        [
+          937,
+          246
+        ],
+        [
+          940,
+          298
+        ],
+        [
+          193,
+          696
+        ],
+        [
+          591,
+          721
+        ],
+        [
+          1300,
+          726
+        ],
+        [
+          269,
+          727
+        ],
+        [
+          940,
+          736
+        ],
+        [
+          946,
+          786
+        ],
+        [
+          560,
+          801
+        ]
+      ],
+      "notes": [
+        "Manual variable-width gutters preserve the first pose's toe and the spear tips; equal 384px columns would cut artwork.",
+        "Root X is manually registered at the torso/belt center. One source floor per row preserves pose-to-pose height changes and residual drawing drift.",
+        "The supplied second row appears to repeat the first row's contact/pass/up/contact phases; this preview does not claim eight distinct gait phases."
+      ],
+      "frames": [
+        {
+          "index": 0,
+          "roi": [
+            0,
+            0,
+            430,
+            512
+          ],
+          "rootX": 247,
+          "sourceFloorY": 452,
+          "sourceBounds": [
+            89,
+            32,
+            314,
+            418
+          ],
+          "outputBounds": [
+            98,
+            40,
+            314,
+            418
+          ],
+          "scale": 1,
+          "foregroundPixels": 44470,
+          "removedBoundaryPixels": 0
+        },
+        {
+          "index": 1,
+          "roi": [
+            430,
+            0,
+            350,
+            512
+          ],
+          "rootX": 567,
+          "sourceFloorY": 452,
+          "sourceBounds": [
+            457,
+            33,
+            270,
+            418
+          ],
+          "outputBounds": [
+            146,
+            41,
+            270,
+            418
+          ],
+          "scale": 1,
+          "foregroundPixels": 41631,
+          "removedBoundaryPixels": 0
+        },
+        {
+          "index": 2,
+          "roi": [
+            780,
+            0,
+            315,
+            512
+          ],
+          "rootX": 918,
+          "sourceFloorY": 452,
+          "sourceBounds": [
+            834,
+            33,
+            215,
+            420
+          ],
+          "outputBounds": [
+            172,
+            41,
+            215,
+            420
+          ],
+          "scale": 1,
+          "foregroundPixels": 40078,
+          "removedBoundaryPixels": 0
+        },
+        {
+          "index": 3,
+          "roi": [
+            1095,
+            0,
+            441,
+            512
+          ],
+          "rootX": 1253,
+          "sourceFloorY": 452,
+          "sourceBounds": [
+            1107,
+            33,
+            298,
+            417
+          ],
+          "outputBounds": [
+            110,
+            41,
+            298,
+            417
+          ],
+          "scale": 1,
+          "foregroundPixels": 42294,
+          "removedBoundaryPixels": 0
+        },
+        {
+          "index": 4,
+          "roi": [
+            0,
+            512,
+            430,
+            512
+          ],
+          "rootX": 248,
+          "sourceFloorY": 940,
+          "sourceBounds": [
+            84,
+            519,
+            317,
+            417
+          ],
+          "outputBounds": [
+            92,
+            39,
+            317,
+            417
+          ],
+          "scale": 1,
+          "foregroundPixels": 44347,
+          "removedBoundaryPixels": 0
+        },
+        {
+          "index": 5,
+          "roi": [
+            430,
+            512,
+            350,
+            512
+          ],
+          "rootX": 568,
+          "sourceFloorY": 940,
+          "sourceBounds": [
+            461,
+            520,
+            265,
+            417
+          ],
+          "outputBounds": [
+            149,
+            40,
+            265,
+            417
+          ],
+          "scale": 1,
+          "foregroundPixels": 40660,
+          "removedBoundaryPixels": 0
+        },
+        {
+          "index": 6,
+          "roi": [
+            780,
+            512,
+            315,
+            512
+          ],
+          "rootX": 920,
+          "sourceFloorY": 940,
+          "sourceBounds": [
+            841,
+            519,
+            212,
+            421
+          ],
+          "outputBounds": [
+            177,
+            39,
+            212,
+            421
+          ],
+          "scale": 1,
+          "foregroundPixels": 39673,
+          "removedBoundaryPixels": 0
+        },
+        {
+          "index": 7,
+          "roi": [
+            1095,
+            512,
+            441,
+            512
+          ],
+          "rootX": 1260,
+          "sourceFloorY": 940,
+          "sourceBounds": [
+            1126,
+            518,
+            302,
+            418
+          ],
+          "outputBounds": [
+            122,
+            38,
+            302,
+            418
+          ],
+          "scale": 1,
+          "foregroundPixels": 42334,
+          "removedBoundaryPixels": 0
+        }
+      ],
+      "outputSheet": "w02-sheet.png",
+      "outputReviewSheet": "w02-review-sheet.png",
+      "outputGif": "w02-preview.gif",
+      "encodedGif": {
+        "pages": 8,
+        "width": 512,
+        "height": 512,
+        "delay": [
+          120,
+          120,
+          120,
+          120,
+          120,
+          120,
+          120,
+          120
+        ],
+        "loop": 0
+      }
+    },
+    {
+      "wave": 6,
+      "source": "../sources/w006-initial-sheet.png",
+      "sourceSha256": "ff9baf3e3bfef5bacd3f9b5fd168e96d37cfc0abeff49bfde7a4e61784f7d97f",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "backgroundSeeds": [
+        [
+          993,
+          415
+        ]
+      ],
+      "notes": [
+        "Manual variable-width gutters preserve snouts, tails and hooves; equal 384px columns would cut the first snout.",
+        "Root X is manually registered at the torso/harness. Each row shares a fixed source floor; drawing drift is retained for review.",
+        "The eight drawings are shown in supplied row-major order. Anatomical continuity and distinct footfall phases require visual review."
+      ],
+      "frames": [
+        {
+          "index": 0,
+          "roi": [
+            0,
+            0,
+            402,
+            512
+          ],
+          "rootX": 198,
+          "sourceFloorY": 464,
+          "sourceBounds": [
+            38,
+            232,
+            359,
+            231
+          ],
+          "outputBounds": [
+            96,
+            228,
+            359,
+            231
+          ],
+          "scale": 1,
+          "foregroundPixels": 51185,
+          "removedBoundaryPixels": 0
+        },
+        {
+          "index": 1,
+          "roi": [
+            402,
+            0,
+            378,
+            512
+          ],
+          "rootX": 571,
+          "sourceFloorY": 464,
+          "sourceBounds": [
+            407,
+            232,
+            362,
+            231
+          ],
+          "outputBounds": [
+            92,
+            228,
+            362,
+            231
+          ],
+          "scale": 1,
+          "foregroundPixels": 50847,
+          "removedBoundaryPixels": 0
+        },
+        {
+          "index": 2,
+          "roi": [
+            780,
+            0,
+            364,
+            512
+          ],
+          "rootX": 943,
+          "sourceFloorY": 464,
+          "sourceBounds": [
+            786,
+            237,
+            350,
+            227
+          ],
+          "outputBounds": [
+            99,
+            233,
+            350,
+            227
+          ],
+          "scale": 1,
+          "foregroundPixels": 48101,
+          "removedBoundaryPixels": 0
+        },
+        {
+          "index": 3,
+          "roi": [
+            1144,
+            0,
+            392,
+            512
+          ],
+          "rootX": 1318,
+          "sourceFloorY": 464,
+          "sourceBounds": [
+            1152,
+            240,
+            368,
+            222
+          ],
+          "outputBounds": [
+            90,
+            236,
+            368,
+            222
+          ],
+          "scale": 1,
+          "foregroundPixels": 50292,
+          "removedBoundaryPixels": 0
+        },
+        {
+          "index": 4,
+          "roi": [
+            0,
+            512,
+            394,
+            512
+          ],
+          "rootX": 190,
+          "sourceFloorY": 806,
+          "sourceBounds": [
+            31,
+            582,
+            355,
+            219
+          ],
+          "outputBounds": [
+            97,
+            236,
+            355,
+            219
+          ],
+          "scale": 1,
+          "foregroundPixels": 47680,
+          "removedBoundaryPixels": 0
+        },
+        {
+          "index": 5,
+          "roi": [
+            394,
+            512,
+            368,
+            512
+          ],
+          "rootX": 560,
+          "sourceFloorY": 806,
+          "sourceBounds": [
+            401,
+            581,
+            351,
+            222
+          ],
+          "outputBounds": [
+            97,
+            235,
+            351,
+            222
+          ],
+          "scale": 1,
+          "foregroundPixels": 46489,
+          "removedBoundaryPixels": 0
+        },
+        {
+          "index": 6,
+          "roi": [
+            762,
+            512,
+            382,
+            512
+          ],
+          "rootX": 933,
+          "sourceFloorY": 806,
+          "sourceBounds": [
+            775,
+            582,
+            356,
+            224
+          ],
+          "outputBounds": [
+            98,
+            236,
+            356,
+            224
+          ],
+          "scale": 1,
+          "foregroundPixels": 48810,
+          "removedBoundaryPixels": 0
+        },
+        {
+          "index": 7,
+          "roi": [
+            1144,
+            512,
+            392,
+            512
+          ],
+          "rootX": 1311,
+          "sourceFloorY": 806,
+          "sourceBounds": [
+            1150,
+            582,
+            363,
+            224
+          ],
+          "outputBounds": [
+            95,
+            236,
+            363,
+            224
+          ],
+          "scale": 1,
+          "foregroundPixels": 49843,
+          "removedBoundaryPixels": 0
+        }
+      ],
+      "outputSheet": "w06-sheet.png",
+      "outputReviewSheet": "w06-review-sheet.png",
+      "outputGif": "w06-preview.gif",
+      "encodedGif": {
+        "pages": 8,
+        "width": 512,
+        "height": 512,
+        "delay": [
+          120,
+          120,
+          120,
+          120,
+          120,
+          120,
+          120,
+          120
+        ],
+        "loop": 0
+      }
+    }
+  ],
+  "pathBase": "initial-directory"
+}

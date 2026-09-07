@@ -1,0 +1,101 @@
+[
+  {
+    "key": "infW1Walk",
+    "dims": "389×236",
+    "anchor": "foot",
+    "anchorY": 0,
+    "centerX": 0.7069740347739355,
+    "anchorYPercent": 0,
+    "centerXPercent": 0.2995652689720065,
+    "heightSpan": 7,
+    "areaSpanPercent": 0.31789187493464394
+  },
+  {
+    "key": "infW2Walk",
+    "dims": "348×419",
+    "anchor": "foot",
+    "anchorY": 0,
+    "centerX": 0.04311723224981279,
+    "anchorYPercent": 0,
+    "centerXPercent": 0.010290508890170117,
+    "heightSpan": 15,
+    "areaSpanPercent": 0.43839889100675794
+  },
+  {
+    "key": "infW3Walk",
+    "dims": "344×419",
+    "anchor": "foot",
+    "anchorY": 0,
+    "centerX": 0.28192622317138216,
+    "anchorYPercent": 0,
+    "centerXPercent": 0.067285494790306,
+    "heightSpan": 10,
+    "areaSpanPercent": 0.8960647479043647
+  },
+  {
+    "key": "infW4Walk",
+    "dims": "415×328",
+    "anchor": "center",
+    "anchorY": 0.5757792103963766,
+    "centerX": 0.5499342619222318,
+    "anchorYPercent": 0.17554244219401724,
+    "centerXPercent": 0.16766288473238777,
+    "heightSpan": 93,
+    "areaSpanPercent": 0.5133514516198612
+  },
+  {
+    "key": "infW5Walk",
+    "dims": "393×364",
+    "anchor": "foot",
+    "anchorY": 0,
+    "centerX": 0.17388223667401803,
+    "anchorYPercent": 0,
+    "centerXPercent": 0.04776984524011484,
+    "heightSpan": 26,
+    "areaSpanPercent": 0.9684430148656873
+  },
+  {
+    "key": "infW6Walk",
+    "dims": "407×409",
+    "anchor": "foot",
+    "anchorY": 0,
+    "centerX": 0.5475199199765939,
+    "anchorYPercent": 0,
+    "centerXPercent": 0.13386795109452174,
+    "heightSpan": 22,
+    "areaSpanPercent": 0.7456379644190549
+  },
+  {
+    "key": "infW7Walk",
+    "dims": "297×413",
+    "anchor": "foot",
+    "anchorY": 0,
+    "centerX": 0.48714648154773954,
+    "anchorYPercent": 0,
+    "centerXPercent": 0.1179531432318982,
+    "heightSpan": 10,
+    "areaSpanPercent": 0.8191461250990902
+  },
+  {
+    "key": "infW8Walk",
+    "dims": "420×288",
+    "anchor": "center",
+    "anchorY": 0.29466259301563014,
+    "centerX": 0.39170021242611597,
+    "anchorYPercent": 0.10231340035264935,
+    "centerXPercent": 0.1360070182035125,
+    "heightSpan": 42,
+    "areaSpanPercent": 1.2981624184943688
+  },
+  {
+    "key": "infW9Walk",
+    "dims": "342×419",
+    "anchor": "foot",
+    "anchorY": 0,
+    "centerX": 0.5874941197469354,
+    "anchorYPercent": 0,
+    "centerXPercent": 0.14021339373435213,
+    "heightSpan": 24,
+    "areaSpanPercent": 0.8740754970704062
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "file": "ui/title-keyart-p.jpg",
+    "width": 1400,
+    "height": 2100,
+    "bytes": 145999,
+    "sha256": "31ad026c1fa1675bb027df0d57791a47a819f3fe70ae291006401ab4229349df",
+    "matchesRuntime": true
+  },
+  {
+    "file": "ui/title-keyart-l.jpg",
+    "width": 2400,
+    "height": 1000,
+    "bytes": 134067,
+    "sha256": "10eefca1484eb2d47fcf012b0ec94a51055874439fa92875bd802e5bc4ac19d7",
+    "matchesRuntime": true
+  },
+  {
+    "file": "ui/title-keyart-l-blur.jpg",
+    "width": 480,
+    "height": 200,
+    "bytes": 2812,
+    "sha256": "94f7fabb2458d13becc239d55aa0d1fb6c2047143b992aeb0be3c780d8da24d5",
+    "matchesRuntime": true
+  }
+]

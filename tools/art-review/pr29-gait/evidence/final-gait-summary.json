@@ -1,0 +1,1378 @@
+{
+  "input": "ground-gait-check.json",
+  "manifest": "tools/art-review/pr29-gait/rig-manifest.json",
+  "command": "E2E_BASE_URL=http://127.0.0.1:8137 E2E_OUTPUT_DIR=../e2e-gait-anatomy node tools/e2e/ground-gait-check.cjs",
+  "actualProductionAssets": true,
+  "counts": {
+    "waves": 7,
+    "uniqueWaveFramesObserved": 56,
+    "namedLimbs": 18,
+    "completeStancePoseCaptures": 88,
+    "sourceTextureSoles": 144,
+    "loadedTextureSoles": 144,
+    "matchingSourceAtlasHashes": 7
+  },
+  "bipedAnatomy": {
+    "sampledSupportKneeDegrees": [
+      167.87548730720818,
+      168.000012932489
+    ],
+    "sampledSwingKneeDegrees": [
+      119.25677457610178,
+      168.0000129324891
+    ],
+    "minimumSwingKneePerLimbDegrees": [
+      119.25677457610178,
+      119.63312522793916
+    ],
+    "sourcePelvisHeightSpanPixels": [
+      4.858622232122286,
+      5.3577248986841255
+    ],
+    "sourceMidstanceRisePixels": [
+      4.858622232122286,
+      5.3577248986841255
+    ]
+  },
+  "gameplay": {
+    "footLiftPixels": [
+      1.866269058295984,
+      2.657094627373226
+    ],
+    "maximumSampledStanceXSpanPixels": 1.1211541799398432,
+    "maximumSampledStanceYSpanPixels": 0,
+    "stunFrozenAll": true,
+    "slowRatioRange": [
+      0.499999999999995,
+      0.5000000000000124
+    ],
+    "positiveContinuousWrapAll": true,
+    "runtimeErrors": [],
+    "outOfScopeAssetErrors": []
+  },
+  "maximumBoneErrorSourcePixels": 7.105427357601002e-14,
+  "maximumBodyLocalSocketDriftSourcePixels": 5.684341886080802e-14,
+  "interpretation": "Geometry and source-atlas provenance checks do not validate the separate assembled anatomical masters or replace visual review of socket anatomy, occlusion, texture seams, character tone or perceived weight. Gameplay planting is measured at the first actual draw of each pose within a complete contact event; discrete frames allow movement between captures.",
+  "errors": [],
+  "waves": [
+    {
+      "wave": 1,
+      "framesObserved": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "actualFrameOrder": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        0
+      ],
+      "namedLimbs": 4,
+      "completeStancePoseCaptures": 24,
+      "sourceTextureSoles": 32,
+      "loadedTextureSoles": 32,
+      "sourceAtlas": {
+        "file": "tools/art-review/pr29-gait/sources/w001-anatomy-puppet.png",
+        "sha256": "abe0bfa4a035842a9d98fe96a35f55c9a83675335b44dd08a8b31e8a0db6c6fc",
+        "matchesReviewedAtlas": true
+      },
+      "anatomy": {
+        "profile": "fixed-body",
+        "bipedSupportKneeRange": null,
+        "bipedSwingKneeRange": null,
+        "bipedMinimumSwingKneeByLimb": null,
+        "pelvis": null,
+        "maximumBoneError": 5.684341886080802e-14,
+        "maximumSocketDrift": 0,
+        "footfalls": {
+          "starts": [
+            {
+              "id": "nearHind",
+              "phase": 0
+            },
+            {
+              "id": "nearFore",
+              "phase": 0.25
+            },
+            {
+              "id": "farHind",
+              "phase": 0.5
+            },
+            {
+              "id": "farFore",
+              "phase": 0.75
+            }
+          ],
+          "supportingFeetPerFrame": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        "reviewedSocketRegions": [
+          {
+            "id": "nearFore",
+            "reviewedRoi": [
+              0.58,
+              0.48,
+              0.18,
+              0.28
+            ],
+            "normalizedPoints": [
+              [
+                0.67,
+                0.65
+              ],
+              [
+                0.67,
+                0.65
+              ],
+              [
+                0.67,
+                0.65
+              ],
+              [
+                0.67,
+                0.65
+              ],
+              [
+                0.67,
+                0.65
+              ],
+              [
+                0.67,
+                0.65
+              ],
+              [
+                0.67,
+                0.65
+              ],
+              [
+                0.67,
+                0.65
+              ]
+            ],
+            "sourceSocket": [
+              601.0600000000001,
+              421.45000000000005
+            ],
+            "sourceAtlas": "tools/art-review/pr29-gait/sources/w001-anatomy-puppet.png"
+          },
+          {
+            "id": "farFore",
+            "reviewedRoi": [
+              0.58,
+              0.48,
+              0.18,
+              0.28
+            ],
+            "normalizedPoints": [
+              [
+                0.682,
+                0.64
+              ],
+              [
+                0.682,
+                0.64
+              ],
+              [
+                0.682,
+                0.64
+              ],
+              [
+                0.682,
+                0.64
+              ],
+              [
+                0.682,
+                0.64
+              ],
+              [
+                0.682,
+                0.64
+              ],
+              [
+                0.682,
+                0.64
+              ],
+              [
+                0.682,
+                0.64
+              ]
+            ],
+            "sourceSocket": [
+              610.8760000000001,
+              418.52
+            ],
+            "sourceAtlas": "tools/art-review/pr29-gait/sources/w001-anatomy-puppet.png"
+          },
+          {
+            "id": "nearHind",
+            "reviewedRoi": [
+              0.25,
+              0.36,
+              0.2,
+              0.32
+            ],
+            "normalizedPoints": [
+              [
+                0.34,
+                0.56
+              ],
+              [
+                0.34,
+                0.56
+              ],
+              [
+                0.34,
+                0.56
+              ],
+              [
+                0.34,
+                0.56
+              ],
+              [
+                0.34,
+                0.56
+              ],
+              [
+                0.34,
+                0.56
+              ],
+              [
+                0.34,
+                0.56
+              ],
+              [
+                0.34,
+                0.56
+              ]
+            ],
+            "sourceSocket": [
+              331.12,
+              395.08000000000004
+            ],
+            "sourceAtlas": "tools/art-review/pr29-gait/sources/w001-anatomy-puppet.png"
+          },
+          {
+            "id": "farHind",
+            "reviewedRoi": [
+              0.25,
+              0.36,
+              0.2,
+              0.32
+            ],
+            "normalizedPoints": [
+              [
+                0.352,
+                0.55
+              ],
+              [
+                0.352,
+                0.55
+              ],
+              [
+                0.352,
+                0.55
+              ],
+              [
+                0.352,
+                0.55
+              ],
+              [
+                0.352,
+                0.55
+              ],
+              [
+                0.352,
+                0.55
+              ],
+              [
+                0.352,
+                0.55
+              ],
+              [
+                0.352,
+                0.55
+              ]
+            ],
+            "sourceSocket": [
+              340.936,
+              392.15
+            ],
+            "sourceAtlas": "tools/art-review/pr29-gait/sources/w001-anatomy-puppet.png"
+          }
+        ]
+      },
+      "gameplay": {
+        "sourceFrameCrop": {
+          "x": 47,
+          "y": 123,
+          "w": 418,
+          "h": 192
+        },
+        "renderedStride": 18.846153846153843,
+        "feet": [
+          {
+            "id": "nearFore",
+            "stanceFrames": 6,
+            "capturedPoseIndices": [
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "maximumWorldSwingLift": 2.5621302180975363,
+            "sampledStanceWorldXSpan": 1.0246618711031346,
+            "sampledStanceWorldYSpan": 0
+          },
+          {
+            "id": "farFore",
+            "stanceFrames": 6,
+            "capturedPoseIndices": [
+              6,
+              7,
+              0,
+              1,
+              2,
+              3
+            ],
+            "maximumWorldSwingLift": 2.5621302180975363,
+            "sampledStanceWorldXSpan": 1.1211541799398432,
+            "sampledStanceWorldYSpan": 0
+          },
+          {
+            "id": "nearHind",
+            "stanceFrames": 6,
+            "capturedPoseIndices": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "maximumWorldSwingLift": 2.5621302180975363,
+            "sampledStanceWorldXSpan": 1.0246616326845626,
+            "sampledStanceWorldYSpan": 0
+          },
+          {
+            "id": "farHind",
+            "stanceFrames": 6,
+            "capturedPoseIndices": [
+              4,
+              5,
+              6,
+              7,
+              0,
+              1
+            ],
+            "maximumWorldSwingLift": 2.5621302180975363,
+            "sampledStanceWorldXSpan": 1.0246618711031417,
+            "sampledStanceWorldYSpan": 0
+          }
+        ],
+        "stunFrozen": true,
+        "slowRatio": 0.499999999999998,
+        "wrapDistanceDelta": 1.427599999999984
+      },
+      "errors": []
+    },
+    {
+      "wave": 2,
+      "framesObserved": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "actualFrameOrder": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        0
+      ],
+      "namedLimbs": 2,
+      "completeStancePoseCaptures": 8,
+      "sourceTextureSoles": 16,
+      "loadedTextureSoles": 16,
+      "sourceAtlas": {
+        "file": "tools/art-review/pr29-gait/sources/w002-puppet.png",
+        "sha256": "a79943e950b598e1c046e7634ae96d7f98274b82585144a112268ebb543c8c1b",
+        "matchesReviewedAtlas": true
+      },
+      "anatomy": {
+        "profile": "support-leg-pelvis",
+        "bipedSupportKneeRange": [
+          167.87690883204644,
+          168.0000000000008
+        ],
+        "bipedSwingKneeRange": [
+          119.63312522793909,
+          168.0000000000007
+        ],
+        "bipedMinimumSwingKneeByLimb": [
+          {
+            "id": "near",
+            "degrees": 119.63312522793909
+          },
+          {
+            "id": "far",
+            "degrees": 119.63312522793916
+          }
+        ],
+        "pelvis": {
+          "sourceHeightSpan": 5.272683950885693,
+          "midstanceRises": [
+            {
+              "id": "near",
+              "startFrame": 0,
+              "centerFrame": 2,
+              "rise": 5.272683950885693
+            },
+            {
+              "id": "far",
+              "startFrame": 4,
+              "centerFrame": 6,
+              "rise": 5.272683950885693
+            }
+          ]
+        },
+        "maximumBoneError": 4.263256414560601e-14,
+        "maximumSocketDrift": 0,
+        "footfalls": null,
+        "reviewedSocketRegions": []
+      },
+      "gameplay": {
+        "sourceFrameCrop": {
+          "x": 145,
+          "y": 14,
+          "w": 222,
+          "h": 446
+        },
+        "renderedStride": 14.930152466367716,
+        "feet": [
+          {
+            "id": "near",
+            "stanceFrames": 4,
+            "capturedPoseIndices": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "maximumWorldSwingLift": 1.866269058295984,
+            "sampledStanceWorldXSpan": 0.6287308272631211,
+            "sampledStanceWorldYSpan": 0
+          },
+          {
+            "id": "far",
+            "stanceFrames": 4,
+            "capturedPoseIndices": [
+              4,
+              5,
+              6,
+              7
+            ],
+            "maximumWorldSwingLift": 1.866269058295984,
+            "sampledStanceWorldXSpan": 0.6287317809374358,
+            "sampledStanceWorldYSpan": 0
+          }
+        ],
+        "stunFrozen": true,
+        "slowRatio": 0.5000000000000009,
+        "wrapDistanceDelta": 0.8350000000000364
+      },
+      "errors": []
+    },
+    {
+      "wave": 3,
+      "framesObserved": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "actualFrameOrder": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        0
+      ],
+      "namedLimbs": 2,
+      "completeStancePoseCaptures": 8,
+      "sourceTextureSoles": 16,
+      "loadedTextureSoles": 16,
+      "sourceAtlas": {
+        "file": "tools/art-review/pr29-gait/sources/w003-puppet.png",
+        "sha256": "92da3b77c3415e98f25934abb3a081ea4f29a22a1576732a97c8a11a2d8c9bf1",
+        "matchesReviewedAtlas": true
+      },
+      "anatomy": {
+        "profile": "support-leg-pelvis",
+        "bipedSupportKneeRange": [
+          167.87593555707886,
+          168.000012932489
+        ],
+        "bipedSwingKneeRange": [
+          119.37762842497233,
+          168.0000129324891
+        ],
+        "bipedMinimumSwingKneeByLimb": [
+          {
+            "id": "near",
+            "degrees": 119.37765979640912
+          },
+          {
+            "id": "far",
+            "degrees": 119.37762842497233
+          }
+        ],
+        "pelvis": {
+          "sourceHeightSpan": 5.3491308620334905,
+          "midstanceRises": [
+            {
+              "id": "near",
+              "startFrame": 0,
+              "centerFrame": 2,
+              "rise": 5.3491308620334905
+            },
+            {
+              "id": "far",
+              "startFrame": 4,
+              "centerFrame": 6,
+              "rise": 5.3491308620334905
+            }
+          ]
+        },
+        "maximumBoneError": 5.684341886080802e-14,
+        "maximumSocketDrift": 5.684341886080802e-14,
+        "footfalls": null,
+        "reviewedSocketRegions": []
+      },
+      "gameplay": {
+        "sourceFrameCrop": {
+          "x": 159,
+          "y": 11,
+          "w": 222,
+          "h": 449
+        },
+        "renderedStride": 20.777692650334078,
+        "feet": [
+          {
+            "id": "near",
+            "stanceFrames": 4,
+            "capturedPoseIndices": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "maximumWorldSwingLift": 2.597211581291731,
+            "sampledStanceWorldXSpan": 0.008365089231716638,
+            "sampledStanceWorldYSpan": 0
+          },
+          {
+            "id": "far",
+            "stanceFrames": 4,
+            "capturedPoseIndices": [
+              4,
+              5,
+              6,
+              7
+            ],
+            "maximumWorldSwingLift": 2.597211581291731,
+            "sampledStanceWorldXSpan": 0.008365446859587067,
+            "sampledStanceWorldYSpan": 0
+          }
+        ],
+        "stunFrozen": true,
+        "slowRatio": 0.499999999999995,
+        "wrapDistanceDelta": 0.8632000000000062
+      },
+      "errors": []
+    },
+    {
+      "wave": 5,
+      "framesObserved": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "actualFrameOrder": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        0
+      ],
+      "namedLimbs": 2,
+      "completeStancePoseCaptures": 8,
+      "sourceTextureSoles": 16,
+      "loadedTextureSoles": 16,
+      "sourceAtlas": {
+        "file": "tools/art-review/pr29-gait/sources/w005-puppet.png",
+        "sha256": "273a81d49006b6d372f6b934ebb29afdd2e39619ae67808cb21dd1b8fa126570",
+        "matchesReviewedAtlas": true
+      },
+      "anatomy": {
+        "profile": "support-leg-pelvis",
+        "bipedSupportKneeRange": [
+          167.87690608618044,
+          168.00000871734392
+        ],
+        "bipedSwingKneeRange": [
+          119.63286453276515,
+          168.00000871734392
+        ],
+        "bipedMinimumSwingKneeByLimb": [
+          {
+            "id": "near",
+            "degrees": 119.63286453276515
+          },
+          {
+            "id": "far",
+            "degrees": 119.63288270069577
+          }
+        ],
+        "pelvis": {
+          "sourceHeightSpan": 5.3577248986841255,
+          "midstanceRises": [
+            {
+              "id": "near",
+              "startFrame": 0,
+              "centerFrame": 2,
+              "rise": 5.3577248986841255
+            },
+            {
+              "id": "far",
+              "startFrame": 4,
+              "centerFrame": 6,
+              "rise": 5.3577248986841255
+            }
+          ]
+        },
+        "maximumBoneError": 5.684341886080802e-14,
+        "maximumSocketDrift": 0,
+        "footfalls": null,
+        "reviewedSocketRegions": []
+      },
+      "gameplay": {
+        "sourceFrameCrop": {
+          "x": 108,
+          "y": 20,
+          "w": 296,
+          "h": 440
+        },
+        "renderedStride": 18.306818181818183,
+        "feet": [
+          {
+            "id": "near",
+            "stanceFrames": 4,
+            "capturedPoseIndices": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "maximumWorldSwingLift": 2.288409090909113,
+            "sampledStanceWorldXSpan": 0.6349431818181834,
+            "sampledStanceWorldYSpan": 0
+          },
+          {
+            "id": "far",
+            "stanceFrames": 4,
+            "capturedPoseIndices": [
+              4,
+              5,
+              6,
+              7
+            ],
+            "maximumWorldSwingLift": 2.288409090909113,
+            "sampledStanceWorldXSpan": 0.6349422281438706,
+            "sampledStanceWorldYSpan": 0
+          }
+        ],
+        "stunFrozen": true,
+        "slowRatio": 0.49999999999999645,
+        "wrapDistanceDelta": 0.8300000000001546
+      },
+      "errors": []
+    },
+    {
+      "wave": 6,
+      "framesObserved": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "actualFrameOrder": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        0,
+        1
+      ],
+      "namedLimbs": 4,
+      "completeStancePoseCaptures": 24,
+      "sourceTextureSoles": 32,
+      "loadedTextureSoles": 32,
+      "sourceAtlas": {
+        "file": "tools/art-review/pr29-gait/sources/w006-anatomy-puppet.png",
+        "sha256": "813bd2f5632d711f4b87a19897c7c0661037f1554c6584773f983439bb4dd275",
+        "matchesReviewedAtlas": true
+      },
+      "anatomy": {
+        "profile": "fixed-body",
+        "bipedSupportKneeRange": null,
+        "bipedSwingKneeRange": null,
+        "bipedMinimumSwingKneeByLimb": null,
+        "pelvis": null,
+        "maximumBoneError": 7.105427357601002e-14,
+        "maximumSocketDrift": 0,
+        "footfalls": {
+          "starts": [
+            {
+              "id": "nearHind",
+              "phase": 0
+            },
+            {
+              "id": "nearFore",
+              "phase": 0.25
+            },
+            {
+              "id": "farHind",
+              "phase": 0.5
+            },
+            {
+              "id": "farFore",
+              "phase": 0.75
+            }
+          ],
+          "supportingFeetPerFrame": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        "reviewedSocketRegions": [
+          {
+            "id": "nearFore",
+            "reviewedRoi": [
+              0.52,
+              0.45,
+              0.2,
+              0.32
+            ],
+            "normalizedPoints": [
+              [
+                0.61,
+                0.63
+              ],
+              [
+                0.61,
+                0.63
+              ],
+              [
+                0.61,
+                0.63
+              ],
+              [
+                0.61,
+                0.63
+              ],
+              [
+                0.61,
+                0.63
+              ],
+              [
+                0.61,
+                0.63
+              ],
+              [
+                0.61,
+                0.63
+              ],
+              [
+                0.61,
+                0.63
+              ]
+            ],
+            "sourceSocket": [
+              556.96,
+              667.23
+            ],
+            "sourceAtlas": "tools/art-review/pr29-gait/sources/w006-anatomy-puppet.png"
+          },
+          {
+            "id": "farFore",
+            "reviewedRoi": [
+              0.52,
+              0.45,
+              0.2,
+              0.32
+            ],
+            "normalizedPoints": [
+              [
+                0.624,
+                0.62
+              ],
+              [
+                0.624,
+                0.62
+              ],
+              [
+                0.624,
+                0.62
+              ],
+              [
+                0.624,
+                0.62
+              ],
+              [
+                0.624,
+                0.62
+              ],
+              [
+                0.624,
+                0.62
+              ],
+              [
+                0.624,
+                0.62
+              ],
+              [
+                0.624,
+                0.62
+              ]
+            ],
+            "sourceSocket": [
+              568.664,
+              663.02
+            ],
+            "sourceAtlas": "tools/art-review/pr29-gait/sources/w006-anatomy-puppet.png"
+          },
+          {
+            "id": "nearHind",
+            "reviewedRoi": [
+              0.14,
+              0.33,
+              0.2,
+              0.35
+            ],
+            "normalizedPoints": [
+              [
+                0.23000000000000004,
+                0.5100000000000001
+              ],
+              [
+                0.23000000000000004,
+                0.5100000000000001
+              ],
+              [
+                0.23000000000000004,
+                0.5100000000000001
+              ],
+              [
+                0.23000000000000004,
+                0.5100000000000001
+              ],
+              [
+                0.23000000000000004,
+                0.5100000000000001
+              ],
+              [
+                0.23000000000000004,
+                0.5100000000000001
+              ],
+              [
+                0.23000000000000004,
+                0.5100000000000001
+              ],
+              [
+                0.23000000000000004,
+                0.5100000000000001
+              ]
+            ],
+            "sourceSocket": [
+              239.28000000000003,
+              616.71
+            ],
+            "sourceAtlas": "tools/art-review/pr29-gait/sources/w006-anatomy-puppet.png"
+          },
+          {
+            "id": "farHind",
+            "reviewedRoi": [
+              0.14,
+              0.33,
+              0.2,
+              0.35
+            ],
+            "normalizedPoints": [
+              [
+                0.24399999999999997,
+                0.5
+              ],
+              [
+                0.24399999999999997,
+                0.5
+              ],
+              [
+                0.24399999999999997,
+                0.5
+              ],
+              [
+                0.24399999999999997,
+                0.5
+              ],
+              [
+                0.24399999999999997,
+                0.5
+              ],
+              [
+                0.24399999999999997,
+                0.5
+              ],
+              [
+                0.24399999999999997,
+                0.5
+              ],
+              [
+                0.24399999999999997,
+                0.5
+              ]
+            ],
+            "sourceSocket": [
+              250.98399999999998,
+              612.5
+            ],
+            "sourceAtlas": "tools/art-review/pr29-gait/sources/w006-anatomy-puppet.png"
+          }
+        ]
+      },
+      "gameplay": {
+        "sourceFrameCrop": {
+          "x": 48,
+          "y": 55,
+          "w": 416,
+          "h": 295
+        },
+        "renderedStride": 20.56844850065189,
+        "feet": [
+          {
+            "id": "nearFore",
+            "stanceFrames": 6,
+            "capturedPoseIndices": [
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "maximumWorldSwingLift": 2.657094627373226,
+            "sampledStanceWorldXSpan": 0.7062565630697648,
+            "sampledStanceWorldYSpan": 0
+          },
+          {
+            "id": "farFore",
+            "stanceFrames": 6,
+            "capturedPoseIndices": [
+              6,
+              7,
+              0,
+              1,
+              2,
+              3
+            ],
+            "maximumWorldSwingLift": 2.657094627373226,
+            "sampledStanceWorldXSpan": 0.7062560862326137,
+            "sampledStanceWorldYSpan": 0
+          },
+          {
+            "id": "nearHind",
+            "stanceFrames": 6,
+            "capturedPoseIndices": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "maximumWorldSwingLift": 2.657094627373226,
+            "sampledStanceWorldXSpan": 0.7256802648422465,
+            "sampledStanceWorldYSpan": 0
+          },
+          {
+            "id": "farHind",
+            "stanceFrames": 6,
+            "capturedPoseIndices": [
+              4,
+              5,
+              6,
+              7,
+              0,
+              1
+            ],
+            "maximumWorldSwingLift": 2.657094627373226,
+            "sampledStanceWorldXSpan": 0.7200812429306254,
+            "sampledStanceWorldYSpan": 0
+          }
+        ],
+        "stunFrozen": true,
+        "slowRatio": 0.5000000000000079,
+        "wrapDistanceDelta": 0.9296000000001641
+      },
+      "errors": []
+    },
+    {
+      "wave": 7,
+      "framesObserved": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "actualFrameOrder": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        0
+      ],
+      "namedLimbs": 2,
+      "completeStancePoseCaptures": 8,
+      "sourceTextureSoles": 16,
+      "loadedTextureSoles": 16,
+      "sourceAtlas": {
+        "file": "tools/art-review/pr29-gait/sources/w007-puppet.png",
+        "sha256": "41c3249ae3dc198e49ee66536c7f537ebcec812192bf42a3213498a799772e66",
+        "matchesReviewedAtlas": true
+      },
+      "anatomy": {
+        "profile": "support-leg-pelvis",
+        "bipedSupportKneeRange": [
+          167.8767809831467,
+          168.00000346451202
+        ],
+        "bipedSwingKneeRange": [
+          119.60136395319248,
+          168.0000034645121
+        ],
+        "bipedMinimumSwingKneeByLimb": [
+          {
+            "id": "near",
+            "degrees": 119.60136395319248
+          },
+          {
+            "id": "far",
+            "degrees": 119.60136690946626
+          }
+        ],
+        "pelvis": {
+          "sourceHeightSpan": 5.296167942996789,
+          "midstanceRises": [
+            {
+              "id": "near",
+              "startFrame": 0,
+              "centerFrame": 2,
+              "rise": 5.296167942996789
+            },
+            {
+              "id": "far",
+              "startFrame": 4,
+              "centerFrame": 6,
+              "rise": 5.296167942996789
+            }
+          ]
+        },
+        "maximumBoneError": 4.263256414560601e-14,
+        "maximumSocketDrift": 0,
+        "footfalls": null,
+        "reviewedSocketRegions": []
+      },
+      "gameplay": {
+        "sourceFrameCrop": {
+          "x": 132,
+          "y": 15,
+          "w": 256,
+          "h": 445
+        },
+        "renderedStride": 20.755919101123595,
+        "feet": [
+          {
+            "id": "near",
+            "stanceFrames": 4,
+            "capturedPoseIndices": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "maximumWorldSwingLift": 2.5944898876404636,
+            "sampledStanceWorldXSpan": 0.5709099021697384,
+            "sampledStanceWorldYSpan": 0
+          },
+          {
+            "id": "far",
+            "stanceFrames": 4,
+            "capturedPoseIndices": [
+              4,
+              5,
+              6,
+              7
+            ],
+            "maximumWorldSwingLift": 2.5944898876404636,
+            "sampledStanceWorldXSpan": 0.17966984297505917,
+            "sampledStanceWorldYSpan": 0
+          }
+        ],
+        "stunFrozen": true,
+        "slowRatio": 0.5000000000000124,
+        "wrapDistanceDelta": 0.6346000000000913
+      },
+      "errors": []
+    },
+    {
+      "wave": 9,
+      "framesObserved": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "actualFrameOrder": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        0
+      ],
+      "namedLimbs": 2,
+      "completeStancePoseCaptures": 8,
+      "sourceTextureSoles": 16,
+      "loadedTextureSoles": 16,
+      "sourceAtlas": {
+        "file": "tools/art-review/pr29-gait/sources/w009-puppet.png",
+        "sha256": "fa76d2c8be8a372a2f7813d3a508f2e2ae00d04ef376ec79832e88e12fe0eea3",
+        "matchesReviewedAtlas": true
+      },
+      "anatomy": {
+        "profile": "support-leg-pelvis",
+        "bipedSupportKneeRange": [
+          167.87548730720818,
+          168.00000000000006
+        ],
+        "bipedSwingKneeRange": [
+          119.25677457610178,
+          167.99999999999994
+        ],
+        "bipedMinimumSwingKneeByLimb": [
+          {
+            "id": "near",
+            "degrees": 119.25677457610178
+          },
+          {
+            "id": "far",
+            "degrees": 119.25677457610178
+          }
+        ],
+        "pelvis": {
+          "sourceHeightSpan": 4.858622232122286,
+          "midstanceRises": [
+            {
+              "id": "near",
+              "startFrame": 0,
+              "centerFrame": 2,
+              "rise": 4.858622232122286
+            },
+            {
+              "id": "far",
+              "startFrame": 4,
+              "centerFrame": 6,
+              "rise": 4.858622232122286
+            }
+          ]
+        },
+        "maximumBoneError": 4.973799150320701e-14,
+        "maximumSocketDrift": 5.684341886080802e-14,
+        "footfalls": null,
+        "reviewedSocketRegions": []
+      },
+      "gameplay": {
+        "sourceFrameCrop": {
+          "x": 126,
+          "y": 36,
+          "w": 260,
+          "h": 424
+        },
+        "renderedStride": 19.98592452830189,
+        "feet": [
+          {
+            "id": "near",
+            "stanceFrames": 4,
+            "capturedPoseIndices": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "maximumWorldSwingLift": 2.4982405660377367,
+            "sampledStanceWorldXSpan": 0.7033599855674844,
+            "sampledStanceWorldYSpan": 0
+          },
+          {
+            "id": "far",
+            "stanceFrames": 4,
+            "capturedPoseIndices": [
+              4,
+              5,
+              6,
+              7
+            ],
+            "maximumWorldSwingLift": 2.4982405660377367,
+            "sampledStanceWorldXSpan": 0.2947209351737605,
+            "sampledStanceWorldYSpan": 0
+          }
+        ],
+        "stunFrozen": true,
+        "slowRatio": 0.5000000000000089,
+        "wrapDistanceDelta": 0.8015999999997803
+      },
+      "errors": []
+    }
+  ]
+}

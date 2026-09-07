@@ -1,0 +1,1224 @@
+{
+  "maxWave": 11,
+  "loaded": [
+    {
+      "key": "infW1Walk",
+      "errors": [],
+      "expected": 4,
+      "air": false,
+      "dims": "389×236",
+      "fh": 236,
+      "frames": [
+        {
+          "w": 389,
+          "h": 236,
+          "foot": 236,
+          "mx": 204.17739126785978,
+          "my": 122.9374357468057,
+          "height": 229,
+          "n": 47663
+        },
+        {
+          "w": 389,
+          "h": 236,
+          "foot": 236,
+          "mx": 203.62541385524497,
+          "my": 109.31486526130506,
+          "height": 236,
+          "n": 47722
+        },
+        {
+          "w": 389,
+          "h": 236,
+          "foot": 236,
+          "mx": 203.69278030573088,
+          "my": 124.14883935498753,
+          "height": 229,
+          "n": 47689
+        },
+        {
+          "w": 389,
+          "h": 236,
+          "foot": 236,
+          "mx": 203.47041723308584,
+          "my": 116.2012966642267,
+          "height": 233,
+          "n": 47815
+        }
+      ],
+      "foot": 0,
+      "mx": 0.7069740347739355,
+      "height": 7,
+      "area": 0.0031789187493464393
+    },
+    {
+      "key": "infW2Walk",
+      "errors": [],
+      "expected": 4,
+      "air": false,
+      "dims": "348×419",
+      "fh": 419,
+      "frames": [
+        {
+          "w": 348,
+          "h": 419,
+          "foot": 419,
+          "mx": 132.02442925947176,
+          "my": 224.76492271312574,
+          "height": 404,
+          "n": 57513
+        },
+        {
+          "w": 348,
+          "h": 419,
+          "foot": 419,
+          "mx": 132.00278469116034,
+          "my": 224.2215743947648,
+          "height": 404,
+          "n": 57457
+        },
+        {
+          "w": 348,
+          "h": 419,
+          "foot": 419,
+          "mx": 132.02318162115301,
+          "my": 224.75202427394885,
+          "height": 409,
+          "n": 57675
+        },
+        {
+          "w": 348,
+          "h": 419,
+          "foot": 419,
+          "mx": 132.04590192341016,
+          "my": 211.8270143822561,
+          "height": 419,
+          "n": 57710
+        }
+      ],
+      "foot": 0,
+      "mx": 0.04311723224981279,
+      "height": 15,
+      "area": 0.00438398891006758
+    },
+    {
+      "key": "infW3Walk",
+      "errors": [],
+      "expected": 4,
+      "air": false,
+      "dims": "344×419",
+      "fh": 419,
+      "frames": [
+        {
+          "w": 344,
+          "h": 419,
+          "foot": 419,
+          "mx": 143.0277215729997,
+          "my": 226.4032704298633,
+          "height": 409,
+          "n": 72651
+        },
+        {
+          "w": 344,
+          "h": 419,
+          "foot": 419,
+          "mx": 142.98739322127307,
+          "my": 215.17052907136951,
+          "height": 417,
+          "n": 72580
+        },
+        {
+          "w": 344,
+          "h": 419,
+          "foot": 419,
+          "mx": 143.04907066286253,
+          "my": 221.594609567602,
+          "height": 417,
+          "n": 72202
+        },
+        {
+          "w": 344,
+          "h": 419,
+          "foot": 419,
+          "mx": 143.26931944444445,
+          "my": 211.52565277777776,
+          "height": 419,
+          "n": 72000
+        }
+      ],
+      "foot": 0,
+      "mx": 0.28192622317138216,
+      "height": 10,
+      "area": 0.008960647479043647
+    },
+    {
+      "key": "infW4Walk",
+      "errors": [],
+      "expected": 4,
+      "air": true,
+      "dims": "415×328",
+      "fh": 328,
+      "frames": [
+        {
+          "w": 415,
+          "h": 328,
+          "foot": 328,
+          "mx": 216.93742833034034,
+          "my": 165.80226746576082,
+          "height": 328,
+          "n": 46219
+        },
+        {
+          "w": 415,
+          "h": 328,
+          "foot": 305,
+          "mx": 216.56575752319833,
+          "my": 165.82178475414102,
+          "height": 235,
+          "n": 46124
+        },
+        {
+          "w": 415,
+          "h": 328,
+          "foot": 298,
+          "mx": 216.3874940684181,
+          "my": 166.3780466761572,
+          "height": 242,
+          "n": 46362
+        },
+        {
+          "w": 415,
+          "h": 328,
+          "foot": 322,
+          "mx": 216.54675372408275,
+          "my": 165.95018701489633,
+          "height": 287,
+          "n": 46253
+        }
+      ],
+      "foot": 0.5757792103963766,
+      "mx": 0.5499342619222318,
+      "height": 93,
+      "area": 0.005133514516198611
+    },
+    {
+      "key": "infW5Walk",
+      "errors": [],
+      "expected": 4,
+      "air": false,
+      "dims": "393×364",
+      "fh": 364,
+      "frames": [
+        {
+          "w": 393,
+          "h": 364,
+          "foot": 364,
+          "mx": 142.87464447487622,
+          "my": 197.80901717054672,
+          "height": 338,
+          "n": 56958
+        },
+        {
+          "w": 393,
+          "h": 364,
+          "foot": 364,
+          "mx": 143.04852671155024,
+          "my": 190.37011454052637,
+          "height": 353,
+          "n": 57185
+        },
+        {
+          "w": 393,
+          "h": 364,
+          "foot": 364,
+          "mx": 143.047403708489,
+          "my": 184.97344344728847,
+          "height": 364,
+          "n": 57274
+        },
+        {
+          "w": 393,
+          "h": 364,
+          "foot": 364,
+          "mx": 142.92094236286187,
+          "my": 190.15526384421455,
+          "height": 351,
+          "n": 57515
+        }
+      ],
+      "foot": 0,
+      "mx": 0.17388223667401803,
+      "height": 26,
+      "area": 0.009684430148656872
+    },
+    {
+      "key": "infW6Walk",
+      "errors": [],
+      "expected": 4,
+      "air": false,
+      "dims": "407×409",
+      "fh": 409,
+      "frames": [
+        {
+          "w": 407,
+          "h": 409,
+          "foot": 409,
+          "mx": 202.57548915776073,
+          "my": 221.0947826738128,
+          "height": 387,
+          "n": 93477
+        },
+        {
+          "w": 407,
+          "h": 409,
+          "foot": 409,
+          "mx": 202.72767292902896,
+          "my": 211.71146719221954,
+          "height": 396,
+          "n": 93362
+        },
+        {
+          "w": 407,
+          "h": 409,
+          "foot": 409,
+          "mx": 202.27988900436054,
+          "my": 205.89618264996733,
+          "height": 409,
+          "n": 93337
+        },
+        {
+          "w": 407,
+          "h": 409,
+          "foot": 409,
+          "mx": 202.82740892433713,
+          "my": 207.7889523604225,
+          "height": 407,
+          "n": 92780
+        }
+      ],
+      "foot": 0,
+      "mx": 0.5475199199765939,
+      "height": 22,
+      "area": 0.00745637964419055
+    },
+    {
+      "key": "infW7Walk",
+      "errors": [],
+      "expected": 4,
+      "air": false,
+      "dims": "297×413",
+      "fh": 413,
+      "frames": [
+        {
+          "w": 297,
+          "h": 413,
+          "foot": 413,
+          "mx": 151.1090812209789,
+          "my": 197.36026743802492,
+          "height": 403,
+          "n": 78822
+        },
+        {
+          "w": 297,
+          "h": 413,
+          "foot": 413,
+          "mx": 151.2231895378723,
+          "my": 196.79960187471653,
+          "height": 406,
+          "n": 79372
+        },
+        {
+          "w": 297,
+          "h": 413,
+          "foot": 413,
+          "mx": 150.85685704578913,
+          "my": 188.5264051942169,
+          "height": 410,
+          "n": 79473
+        },
+        {
+          "w": 297,
+          "h": 413,
+          "foot": 413,
+          "mx": 151.34400352733687,
+          "my": 190.53924162257496,
+          "height": 413,
+          "n": 79380
+        }
+      ],
+      "foot": 0,
+      "mx": 0.48714648154773954,
+      "height": 10,
+      "area": 0.008191461250990902
+    },
+    {
+      "key": "infW8Walk",
+      "errors": [],
+      "expected": 4,
+      "air": true,
+      "dims": "420×288",
+      "fh": 288,
+      "frames": [
+        {
+          "w": 420,
+          "h": 288,
+          "foot": 287,
+          "mx": 213.45356723750422,
+          "my": 152.35099548501302,
+          "height": 287,
+          "n": 50277
+        },
+        {
+          "w": 420,
+          "h": 288,
+          "foot": 270,
+          "mx": 213.08310610551274,
+          "my": 152.48614898241453,
+          "height": 247,
+          "n": 50610
+        },
+        {
+          "w": 420,
+          "h": 288,
+          "foot": 274,
+          "mx": 213.47480631793886,
+          "my": 152.26318739615238,
+          "height": 249,
+          "n": 49953
+        },
+        {
+          "w": 420,
+          "h": 288,
+          "foot": 274,
+          "mx": 213.33415821824858,
+          "my": 152.1914863893989,
+          "height": 245,
+          "n": 50108
+        }
+      ],
+      "foot": 0.29466259301563014,
+      "mx": 0.39170021242611597,
+      "height": 42,
+      "area": 0.012981624184943688
+    },
+    {
+      "key": "infW9Walk",
+      "errors": [],
+      "expected": 4,
+      "air": false,
+      "dims": "342×419",
+      "fh": 419,
+      "frames": [
+        {
+          "w": 342,
+          "h": 419,
+          "foot": 419,
+          "mx": 161.1962373730423,
+          "my": 223.26111309900637,
+          "height": 395,
+          "n": 72662
+        },
+        {
+          "w": 342,
+          "h": 419,
+          "foot": 419,
+          "mx": 161.43391472868217,
+          "my": 198.81950442967886,
+          "height": 419,
+          "n": 72240
+        },
+        {
+          "w": 342,
+          "h": 419,
+          "foot": 419,
+          "mx": 161.78373149278923,
+          "my": 220.9861821974011,
+          "height": 405,
+          "n": 72877
+        },
+        {
+          "w": 342,
+          "h": 419,
+          "foot": 419,
+          "mx": 161.4250995905721,
+          "my": 209.0197244660839,
+          "height": 411,
+          "n": 72296
+        }
+      ],
+      "foot": 0,
+      "mx": 0.5874941197469354,
+      "height": 24,
+      "area": 0.008740754970704062
+    }
+  ],
+  "waves": [
+    {
+      "wave": 1,
+      "name": "역병쥐",
+      "art": "infW1",
+      "artWalk": "infW1Walk",
+      "sprite": "cShrimp",
+      "size": 42,
+      "cls": "S",
+      "move": "ground",
+      "boss": false,
+      "elite": false,
+      "frames": 4,
+      "fr": [
+        389,
+        236
+      ],
+      "pixels": 47663,
+      "face": 1,
+      "animT": 6.367671298540815,
+      "dist": 220.74480000000014,
+      "ready": true,
+      "expected": {
+        "name": "역병쥐",
+        "art": "infW1",
+        "artWalk": "infW1Walk",
+        "cls": "S",
+        "size": 42,
+        "move": "ground",
+        "boss": false,
+        "sprite": "cShrimp"
+      },
+      "shots": [
+        {
+          "x": 229.7954271961492,
+          "y": 449.6475208007813,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.405239719593443,
+          "dist": 222.1724,
+          "frame": 0,
+          "filename": "inf-w01-frame0.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 462.4801000108507,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.6315555090671285,
+          "dist": 230.77240000000003,
+          "frame": 1,
+          "filename": "inf-w01-frame1.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 473.1696384928387,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.820076561698711,
+          "dist": 237.93620000000013,
+          "frame": 2,
+          "filename": "inf-w01-frame2.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 483.8591769748265,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.008597614330288,
+          "dist": 245.10000000000005,
+          "frame": 3,
+          "filename": "inf-w01-frame3.png"
+        }
+      ],
+      "failures": []
+    },
+    {
+      "wave": 2,
+      "name": "해골 잡졸",
+      "art": "infW2",
+      "artWalk": "infW2Walk",
+      "sprite": "cMarshmallow",
+      "size": 42,
+      "cls": "S",
+      "move": "ground",
+      "boss": false,
+      "elite": false,
+      "frames": 4,
+      "fr": [
+        348,
+        419
+      ],
+      "pixels": 57513,
+      "face": 1,
+      "animT": 6.532371305063197,
+      "dist": 220,
+      "ready": true,
+      "expected": {
+        "name": "해골 잡졸",
+        "art": "infW2",
+        "artWalk": "infW2Walk",
+        "cls": "S",
+        "size": 42,
+        "move": "ground",
+        "boss": false,
+        "sprite": "cMarshmallow"
+      },
+      "shots": [
+        {
+          "x": 229.7954271961492,
+          "y": 446.40595160590277,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.532371305063197,
+          "dist": 220,
+          "frame": 0,
+          "filename": "inf-w02-frame0.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 451.38230645073793,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.620134462957934,
+          "dist": 223.33500000000004,
+          "frame": 1,
+          "filename": "inf-w02-frame1.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 462.57350925021706,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.817502884010565,
+          "dist": 230.83500000000004,
+          "frame": 2,
+          "filename": "inf-w02-frame2.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 473.76471204969624,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.014871305063197,
+          "dist": 238.33500000000004,
+          "frame": 3,
+          "filename": "inf-w02-frame3.png"
+        }
+      ],
+      "failures": []
+    },
+    {
+      "wave": 3,
+      "name": "묘지 오우거",
+      "art": "infW3",
+      "artWalk": "infW3Walk",
+      "sprite": "cEgg",
+      "size": 58,
+      "cls": "L",
+      "move": "ground",
+      "boss": false,
+      "elite": false,
+      "frames": 4,
+      "fr": [
+        344,
+        419
+      ],
+      "pixels": 72651,
+      "face": 1,
+      "animT": 6.300116486723602,
+      "dist": 220.13679999999957,
+      "ready": true,
+      "expected": {
+        "name": "묘지 오우거",
+        "art": "infW3",
+        "artWalk": "infW3Walk",
+        "cls": "L",
+        "size": 58,
+        "move": "ground",
+        "boss": false,
+        "sprite": "cEgg"
+      },
+      "shots": [
+        {
+          "x": 229.7954271961492,
+          "y": 453.0735210177944,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.414105960407811,
+          "dist": 224.46839999999952,
+          "frame": 0,
+          "filename": "inf-w03-frame0.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 464.7046126953116,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.61923227619728,
+          "dist": 232.2631999999994,
+          "frame": 1,
+          "filename": "inf-w03-frame1.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 475.04767153862747,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.801642802513069,
+          "dist": 239.19479999999933,
+          "frame": 2,
+          "filename": "inf-w03-frame2.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 486.68652245008576,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.0069059604078054,
+          "dist": 246.99479999999932,
+          "frame": 3,
+          "filename": "inf-w03-frame3.png"
+        }
+      ],
+      "failures": []
+    },
+    {
+      "wave": 4,
+      "name": "까마귀 정찰병",
+      "art": "infW4",
+      "artWalk": "infW4Walk",
+      "sprite": "cSwift",
+      "size": 42,
+      "cls": "S",
+      "move": "air",
+      "boss": false,
+      "elite": false,
+      "frames": 4,
+      "fr": [
+        415,
+        328
+      ],
+      "pixels": 46219,
+      "face": 1,
+      "animT": 6.236809665722575,
+      "dist": 220.4076000000005,
+      "ready": true,
+      "expected": {
+        "name": "까마귀 정찰병",
+        "art": "infW4",
+        "artWalk": "infW4Walk",
+        "cls": "S",
+        "size": 42,
+        "move": "air",
+        "boss": false,
+        "sprite": "cSwift"
+      },
+      "shots": [
+        {
+          "x": 229.7954271961492,
+          "y": 458.34323459201437,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.436609665722571,
+          "dist": 228.00000000000037,
+          "frame": 0,
+          "filename": "inf-w04-frame0.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 469.689323638238,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.636709665722563,
+          "dist": 235.60380000000006,
+          "frame": 1,
+          "filename": "inf-w04-frame1.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 481.03541268446264,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.836809665722576,
+          "dist": 243.20760000000058,
+          "frame": 2,
+          "filename": "inf-w04-frame2.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 492.3644911024312,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.0366096657225725,
+          "dist": 250.80000000000044,
+          "frame": 3,
+          "filename": "inf-w04-frame3.png"
+        }
+      ],
+      "failures": []
+    },
+    {
+      "wave": 5,
+      "name": "고블린 창병",
+      "art": "infW5",
+      "artWalk": "infW5Walk",
+      "sprite": "cMoon",
+      "size": 50,
+      "cls": "M",
+      "move": "ground",
+      "boss": false,
+      "elite": false,
+      "frames": 4,
+      "fr": [
+        393,
+        364
+      ],
+      "pixels": 56958,
+      "face": 1,
+      "animT": 6.619636235346249,
+      "dist": 220.00499999999994,
+      "ready": true,
+      "expected": {
+        "name": "고블린 창병",
+        "art": "infW5",
+        "artWalk": "infW5Walk",
+        "cls": "M",
+        "size": 50,
+        "move": "ground",
+        "boss": false,
+        "sprite": "cMoon"
+      },
+      "shots": [
+        {
+          "x": 229.7954271961492,
+          "y": 479.9870208062067,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.211741498504148,
+          "dist": 242.50500000000005,
+          "frame": 0,
+          "filename": "inf-w05-frame0.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 491.17822360568584,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.40910991955678,
+          "dist": 250.00500000000005,
+          "frame": 1,
+          "filename": "inf-w05-frame1.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 502.36942640516503,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.606478340609414,
+          "dist": 257.50500000000005,
+          "frame": 2,
+          "filename": "inf-w05-frame2.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 513.5680900065109,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.803978340609421,
+          "dist": 265.01000000000033,
+          "frame": 3,
+          "filename": "inf-w05-frame3.png"
+        }
+      ],
+      "failures": []
+    },
+    {
+      "wave": 6,
+      "name": "썩은 멧돼지",
+      "art": "infW6",
+      "artWalk": "infW6Walk",
+      "sprite": "cClownfish",
+      "size": 58,
+      "cls": "L",
+      "move": "ground",
+      "boss": false,
+      "elite": false,
+      "frames": 4,
+      "fr": [
+        407,
+        409
+      ],
+      "pixels": 93477,
+      "face": 1,
+      "animT": 6.292539452747145,
+      "dist": 220.26479999999967,
+      "ready": true,
+      "expected": {
+        "name": "썩은 멧돼지",
+        "art": "infW6",
+        "artWalk": "infW6Walk",
+        "cls": "L",
+        "size": 58,
+        "move": "ground",
+        "boss": false,
+        "sprite": "cClownfish"
+      },
+      "shots": [
+        {
+          "x": 229.7954271961492,
+          "y": 453.7617053819442,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.415297347483992,
+          "dist": 224.92959999999982,
+          "frame": 0,
+          "filename": "inf-w06-frame0.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 464.90038413628463,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.611739452747153,
+          "dist": 232.39439999999996,
+          "frame": 1,
+          "filename": "inf-w06-frame1.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 476.03906289062513,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.808181558010315,
+          "dist": 239.85920000000007,
+          "frame": 2,
+          "filename": "inf-w06-frame2.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 487.18609774305577,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.004771031694527,
+          "dist": 247.32960000000014,
+          "frame": 3,
+          "filename": "inf-w06-frame3.png"
+        }
+      ],
+      "failures": []
+    },
+    {
+      "wave": 7,
+      "name": "무덤 파는 구울",
+      "art": "infW7",
+      "artWalk": "infW7Walk",
+      "sprite": "cEchidna",
+      "size": 58,
+      "cls": "L",
+      "move": "burrow",
+      "boss": false,
+      "elite": false,
+      "frames": 4,
+      "fr": [
+        297,
+        413
+      ],
+      "pixels": 78822,
+      "face": 1,
+      "animT": 6.68972909676795,
+      "dist": 220.40380000000025,
+      "ready": true,
+      "expected": {
+        "name": "무덤 파는 구울",
+        "art": "infW7",
+        "artWalk": "infW7Walk",
+        "cls": "L",
+        "size": 58,
+        "move": "burrow",
+        "boss": false,
+        "sprite": "cEchidna"
+      },
+      "shots": [
+        {
+          "x": 229.7954271961492,
+          "y": 476.3007878200958,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.206329096767954,
+          "dist": 240.03460000000024,
+          "frame": 0,
+          "filename": "inf-w07-frame0.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 487.64687686631976,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.406429096767954,
+          "dist": 247.63840000000022,
+          "frame": 1,
+          "filename": "inf-w07-frame1.png"
+        },
+        {
+          "x": 238.61069328636873,
+          "y": 588.3997689665425,
+          "face": 1,
+          "hidden": false,
+          "animT": 9.206429096767947,
+          "dist": 316.03839999999985,
+          "frame": 2,
+          "filename": "inf-w07-frame2.png"
+        },
+        {
+          "x": 244.24021379423291,
+          "y": 598.1369702320158,
+          "face": 1,
+          "hidden": false,
+          "animT": 9.406429096767942,
+          "dist": 323.63839999999976,
+          "frame": 3,
+          "filename": "inf-w07-frame3.png"
+        }
+      ],
+      "failures": []
+    },
+    {
+      "wave": 8,
+      "name": "시체파리 떼",
+      "art": "infW8",
+      "artWalk": "infW8Walk",
+      "sprite": "cDandelion",
+      "size": 42,
+      "cls": "S",
+      "move": "air",
+      "boss": false,
+      "elite": false,
+      "frames": 4,
+      "fr": [
+        420,
+        288
+      ],
+      "pixels": 50277,
+      "face": 1,
+      "animT": 6.037452040615708,
+      "dist": 221.66999999999967,
+      "ready": true,
+      "expected": {
+        "name": "시체파리 떼",
+        "art": "infW8",
+        "artWalk": "infW8Walk",
+        "cls": "S",
+        "size": 42,
+        "move": "air",
+        "boss": false,
+        "sprite": "cDandelion"
+      },
+      "shots": [
+        {
+          "x": 229.7954271961492,
+          "y": 471.265343424479,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.431925724826238,
+          "dist": 236.65999999999983,
+          "frame": 0,
+          "filename": "inf-w08-frame0.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 481.2180531141486,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.607452040615704,
+          "dist": 243.32999999999953,
+          "frame": 1,
+          "filename": "inf-w08-frame1.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 493.6477490234372,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.826662566931501,
+          "dist": 251.65999999999983,
+          "frame": 2,
+          "filename": "inf-w08-frame2.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 503.6004587131069,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.002188882720967,
+          "dist": 258.32999999999953,
+          "frame": 3,
+          "filename": "inf-w08-frame3.png"
+        }
+      ],
+      "failures": []
+    },
+    {
+      "wave": 9,
+      "name": "녹슨 철갑 오크",
+      "art": "infW9",
+      "artWalk": "infW9Walk",
+      "sprite": "cGuava",
+      "size": 58,
+      "cls": "L",
+      "move": "ground",
+      "boss": false,
+      "elite": false,
+      "frames": 4,
+      "fr": [
+        342,
+        419
+      ],
+      "pixels": 72662,
+      "face": 1,
+      "animT": 6.124352728545215,
+      "dist": 220.79520000000002,
+      "ready": true,
+      "expected": {
+        "name": "녹슨 철갑 오크",
+        "art": "infW9",
+        "artWalk": "infW9Walk",
+        "cls": "L",
+        "size": 58,
+        "move": "ground",
+        "boss": false,
+        "sprite": "cGuava"
+      },
+      "shots": [
+        {
+          "x": 229.7954271961492,
+          "y": 464.30948862847293,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.419173781176807,
+          "dist": 231.99840000000046,
+          "frame": 0,
+          "filename": "inf-w09-frame0.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 475.0530433159729,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.6086474653873335,
+          "dist": 239.19840000000048,
+          "frame": 1,
+          "filename": "inf-w09-frame1.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 486.98555138888906,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.819089570650481,
+          "dist": 247.19520000000009,
+          "frame": 2,
+          "filename": "inf-w09-frame2.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 497.7291060763889,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.008563254861007,
+          "dist": 254.39520000000007,
+          "frame": 3,
+          "filename": "inf-w09-frame3.png"
+        }
+      ],
+      "failures": []
+    },
+    {
+      "wave": 10,
+      "name": "역병 쥐왕",
+      "art": "infB10",
+      "artWalk": null,
+      "sprite": "cKingSlime",
+      "size": 120,
+      "cls": "L",
+      "move": "ground",
+      "boss": true,
+      "elite": false,
+      "frames": 0,
+      "fr": [
+        390,
+        409
+      ],
+      "pixels": 89640,
+      "face": 1,
+      "animT": 6.181822486716674,
+      "dist": 220.26760000000044,
+      "ready": true,
+      "expected": {
+        "name": "역병 쥐왕",
+        "art": "infB10",
+        "artWalk": null,
+        "cls": "L",
+        "size": 120,
+        "move": "ground",
+        "boss": true,
+        "sprite": "cKingSlime"
+      },
+      "shots": [
+        {
+          "x": 229.7954271961492,
+          "y": 446.80525372178886,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.181822486716674,
+          "dist": 220.26760000000044,
+          "frame": null,
+          "filename": "inf-w10-static.png"
+        }
+      ],
+      "failures": []
+    },
+    {
+      "wave": 11,
+      "name": "대추야자",
+      "art": null,
+      "artWalk": null,
+      "sprite": "cDatefruit",
+      "size": 36,
+      "cls": "S",
+      "move": "ground",
+      "boss": false,
+      "elite": false,
+      "frames": 0,
+      "fr": [
+        224,
+        274
+      ],
+      "pixels": 36679,
+      "face": 1,
+      "animT": 6.387918570151964,
+      "dist": 220.50360000000012,
+      "ready": false,
+      "expected": {
+        "name": "대추야자",
+        "art": null,
+        "artWalk": null,
+        "cls": "S",
+        "size": 36,
+        "move": "ground",
+        "boss": false,
+        "sprite": "cDatefruit"
+      },
+      "shots": [
+        {
+          "x": 229.7954271961492,
+          "y": 447.1574035698787,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.387918570151964,
+          "dist": 220.50360000000012,
+          "frame": null,
+          "filename": "inf-w11-static.png"
+        }
+      ],
+      "failures": []
+    }
+  ],
+  "errors": [],
+  "failures": []
+}

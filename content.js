@@ -1296,18 +1296,33 @@ window.DKCONTENT = (function () {
   // ---- 101웨이브 몬스터 설계 (ART-PROMPTS.md §6): 10단계 테마 × 10웨이브 + 보스 ----
   // 그림이 들어온 웨이브만 INF_ART_READY 에 적는다 (보스 부관은 '20-2' 처럼). 적힌 웨이브는 새 그림·새 이름을 쓰고, 나머지는 기존 로스터 그림으로 돈다.
   const INF_TIERS = ['', '폐허의 잡졸', '숲의 야수', '늪과 동굴', '산적과 고블린', '왕국의 병사와 기사', '언데드', '마법 생물과 정령', '용족과 거대 야수', '악마', '심연과 파멸'];
+  // 단계 팔레트 (10웨이브마다 색이 조금씩 바뀐다). tools/inf-jobs.mjs 는 피·살갗 등 기존 명칭을 의상·장비 색으로 해석하고 고어 금지·명암 가독성 규칙을 우선한다.
+  const INF_PALETTE = ['',
+    { ko: '핏빛 녹 · 마른 피 · 잿빛 살갗', en: 'rust red, dried blood, ash-grey skin, small ember accents' },
+    { ko: '검은 털 · 먹빛 초록 · 탁한 호박색 눈', en: 'black fur and feathers, ink-dark green, dull amber eyes, dried mud' },
+    { ko: '탁한 청록 · 검보라 · 독의 점광', en: 'murky teal, black-purple, faint toxic glints on wet chitin' },
+    { ko: '와인빛 자주 · 검은 가죽 · 녹슨 쇠', en: 'wine-purple cloth, black leather, rusted iron' },
+    { ko: '검푸른 강철 · 검붉은 휘장 · 바랜 금', en: 'blued black steel, dark red banners, tarnished gold' },
+    { ko: '창백한 뼈 · 검보라 그림자 · 차가운 회청 빛', en: 'pale bone, black-violet shadow, cold grey-blue glow' },
+    { ko: '짙은 보라 · 자수정 · 검은 마력 연기', en: 'deep violet, amethyst, black arcane smoke' },
+    { ko: '검붉은 비늘 · 흑요석 · 꺼져가는 불씨', en: 'dark crimson scales, obsidian, smoldering embers' },
+    { ko: '지옥의 진홍 · 검은 뿔 · 살 틈의 주홍빛', en: 'hellish crimson, black horns, dim orange glow in skin cracks' },
+    { ko: '심연의 검정 · 보라 공허 광채 · 별빛 눈', en: 'abyssal black, violet void glow, star-like eyes' },
+  ];
   const INF_MONSTERS = {
-    // 1~5: 다크 판타지 반실사로 재설계 (OpenAI 이미지 API, tools/jobs/inf-w01-05*.json · ART-PROMPTS §6). 그림이 INF_ART_READY 에 적힌 뒤에만 이 이름·그림이 쓰인다
-    1: { name: '역병쥐', cls: 'S', move: 'ground', tier: 1 },
-    2: { name: '해골 잡졸', cls: 'S', move: 'ground', tier: 1 },
-    3: { name: '묘지 오우거', cls: 'L', move: 'ground', tier: 1 },
+    // 1~10: 덩어리감 있는 페인터리 판타지 게임 캐릭터, 고어·신체 훼손·실사 공포 제외 (tools/inf-roster.json · ART-PROMPTS §6). 그림이 INF_ART_READY 에 적힌 뒤에만 이 이름·그림이 쓰인다
+    // 리깅 시트의 walkStride는 원본 PNG 픽셀 단위 한 주기의 전진 거리. 런타임이 실제 표시 높이로 환산한다.
+    1: { name: '역병쥐', cls: 'S', move: 'ground', tier: 1, walk: '4x2', stabilize: false, walkStride: 86.15384615384615 },
+    2: { name: '해골 잡졸', cls: 'S', move: 'ground', tier: 1, walk: '4x2', stabilize: false, walkStride: 158.544 },
+    3: { name: '묘지 오우거', cls: 'L', move: 'ground', tier: 1, walk: '4x2', stabilize: false, walkStride: 160.848 },
     4: { name: '까마귀 정찰병', cls: 'S', move: 'air', tier: 1 },
-    5: { name: '고블린 창병', cls: 'M', move: 'ground', tier: 1 },
-    6: { name: '얼룩젖소', cls: 'L', move: 'ground', tier: 1 },
-    7: { name: '왕두더지', cls: 'L', move: 'burrow', tier: 1 },
-    8: { name: '꿀벌', cls: 'S', move: 'air', tier: 1 },
-    9: { name: '골목거위', cls: 'L', move: 'ground', tier: 1 },
-    10: { boss: true, name: '황금 숫양', second: null, cls: 'L', tier: 1 },
+    5: { name: '고블린 창병', cls: 'M', move: 'ground', tier: 1, walk: '4x2', stabilize: false, walkStride: 161.1 },
+    // 6~10 도 폐허의 잡졸로 재설계 (구 얼룩젖소·왕두더지·꿀벌·골목거위·황금 숫양). 프롬프트는 tools/inf-roster.json
+    6: { name: '썩은 멧돼지', cls: 'L', move: 'ground', tier: 1, walk: '4x2', stabilize: false, walkStride: 104.61538461538461 },
+    7: { name: '무덤 파는 구울', cls: 'L', move: 'burrow', tier: 1, walk: '4x2', stabilize: false, walkStride: 159.248 },
+    8: { name: '시체파리 떼', cls: 'S', move: 'air', tier: 1 },
+    9: { name: '녹슨 철갑 오크', cls: 'L', move: 'ground', tier: 1, walk: '4x2', stabilize: false, walkStride: 146.104 },
+    10: { boss: true, name: '역병 쥐왕', second: null, cls: 'L', tier: 1 },
     11: { name: '도토리다람쥐', cls: 'S', move: 'ground', tier: 2 },
     12: { name: '수리부엉이', cls: 'L', move: 'air', tier: 2 },
     13: { name: '아기여우', cls: 'S', move: 'ground', tier: 2 },
@@ -1400,20 +1415,23 @@ window.DKCONTENT = (function () {
     100: { boss: true, name: '파멸의 군주', second: '공허 용', cls: 'S', tier: 10 },
     101: { name: '종말의 사자', cls: 'M', move: 'ground', tier: 10 },
   };
-  const INF_ART_READY = new Set([1, 2, 3, 4, 5]);   // 예: [1, 2, 3, '10', '20-2'] — casual/enemies/inf/w001.png … casual/bosses/inf/b020-2.png
+  const INF_ART_READY = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);   // 예: [1, 2, 3, '10', '20-2'] — casual/enemies/inf/w001.png … casual/bosses/inf/b020-2.png
   const pad3 = (n) => String(n).padStart(3, '0');
   // 웨이브 w 의 새 그림 (준비된 것만): 일반 { key, src, walkKey, walkSrc } · 보스 k(0 군주·1 부관) { key, src, name }
   function infArt(w, k) {
     const m = INF_MONSTERS[w];
     if (!m) return null;
+    const revision = w >= 1 && w <= 10 ? '?v=92' : ''; // 이번 납품 아트만 새 URL로 로드한다.
     if (m.boss) {
       const tag = k ? `${w}-2` : String(w);
       if (!INF_ART_READY.has(tag) && !INF_ART_READY.has(k ? tag : w)) return null;
       const name = k ? m.second : m.name;
-      return name ? { key: `infB${tag}`, src: `casual/bosses/inf/b${pad3(w)}${k ? '-2' : ''}.png`, name } : null;
+      return name ? { key: `infB${tag}`, src: `casual/bosses/inf/b${pad3(w)}${k ? '-2' : ''}.png${revision}`, name } : null;
     }
     if (!INF_ART_READY.has(w) && !INF_ART_READY.has(String(w))) return null;
-    return { key: `infW${w}`, src: `casual/enemies/inf/w${pad3(w)}.png`, walkKey: `infW${w}Walk`, walkSrc: `casual/enemies/inf/w${pad3(w)}-walk-2x2.png`, name: m.name };
+    // 격자는 m.walk ('2x2' 기본 · '3x2' 6프레임 · '4x2' 8프레임)를 파일명에서 읽는다.
+    // 리깅 시트는 stabilize:false로 원본 좌표·크기를 보존하고 walkStride로 이동 거리에 맞춰 재생한다. 기존 hop도 안정화하지 않는다.
+    return { key: `infW${w}`, src: `casual/enemies/inf/w${pad3(w)}.png${revision}`, walkKey: `infW${w}Walk`, walkSrc: `casual/enemies/inf/w${pad3(w)}-walk-${m.walk || '2x2'}.png${revision}`, name: m.name, stabilize: m.stabilize !== false && !m.hop, anchor: m.move === 'air' ? 'center' : 'foot', walkStride: m.walkStride || 0 };
   }
   // 로더용: 준비된 새 그림 전부 [{ key, src }, { key(walk), src, sheet: true }]
   function infArtList() {
@@ -1423,7 +1441,7 @@ window.DKCONTENT = (function () {
       if (m.boss) { for (let k = 0; k < 2; k++) { const a = infArt(w, k); if (a) out.push({ key: a.key, src: a.src }); } continue; }
       const a = infArt(w, 0); if (!a) continue;
       out.push({ key: a.key, src: a.src });
-      out.push({ key: a.walkKey, src: a.walkSrc, sheet: true, optional: true });
+      out.push({ key: a.walkKey, src: a.walkSrc, sheet: true, optional: true, stabilize: a.stabilize, anchor: a.anchor, walkStride: a.walkStride });
     }
     return out;
   }
@@ -1462,8 +1480,9 @@ window.DKCONTENT = (function () {
     sizeMult: { vib: { S: 1, M: 0.5, L: 0.25 }, exp: { S: 0.5, M: 0.75, L: 1 }, norm: { S: 1, M: 1, L: 1 } },
     sizeName: { S: '소형', M: '중형', L: '대형' },
     sizeScale: { S: 0.9, M: 1, L: 1.15 },
-    // 새 그림(INF_ART_READY, 반실사 다크 판타지)은 base 의 크기와 무관하게 등급별 고정 높이(캔버스 px) — 실루엣이 가늘어 기존 만화 로스터(40~55)보다 작게 읽혀서 위쪽 값으로 맞춘다
+    // 새 그림(INF_ART_READY)은 base 의 크기와 무관하게 등급별 고정 높이(캔버스 px) — 1~10은 덩어리감 있는 게임 캐릭터 실루엣으로 가독성을 확보한다
     artSize: { S: 42, M: 50, L: 58 },
+    artSizeBoss: { S: 96, M: 108, L: 120 },   // 새 보스 정지컷(casual/bosses/inf/bNNN.png), 받침 없이 캐릭터 전신만 — 구 보스 86~92px 보다 크게
     // 원작 1~101R 몬스터 크기 표 그대로 (보스 라운드 포함). 웨이브 w 의 크기 = sizeSeq[(w-1)%101]
     sizeSeq: ('SSLSMLLSLL' + 'SLSLMLMSLL' + 'SLSSMSLLLS' + 'SSSLLLMSMS' + 'LMLLLSMLSL' + 'LSMSLLLSML' + 'MSSMLLSSLS' + 'LSLSSSSLMM' + 'SMLLSSLSLL' + 'SSLLMSLMLSM').split(''),
     sizeOf(w) { return this.sizeSeq[(Math.max(1, w) - 1) % this.sizeSeq.length]; },
@@ -1521,8 +1540,10 @@ window.DKCONTENT = (function () {
     // ---- 보스 주기는 로스터 기준 (2주기부터 w % 10 과 어긋난다) ----
     isBossWave(w) { const r = this.getRoster()[(Math.max(1, w) - 1) % 101]; return !!(r && r.boss); },
     bossFor,   // (순번, k) → 겉보기 순 보스 (bosses 항목)
-    monsters: INF_MONSTERS, tiers: INF_TIERS, artReady: INF_ART_READY, art: infArt, artList: infArtList,   // 101웨이브 설계 + 새 그림 파이프라인 (ART-PROMPTS.md §6)
-    tierOf(w) { return INF_TIERS[Math.min(10, Math.floor(((Math.max(1, w) - 1) % 101) / 10) + 1)]; },
+    monsters: INF_MONSTERS, tiers: INF_TIERS, palette: INF_PALETTE, artReady: INF_ART_READY, art: infArt, artList: infArtList,   // 101웨이브 설계 + 새 그림 파이프라인 (ART-PROMPTS.md §6)
+    tierIndex(w) { return Math.min(10, Math.floor(((Math.max(1, w) - 1) % 101) / 10) + 1); },
+    tierOf(w) { return INF_TIERS[this.tierIndex(w)]; },
+    paletteOf(w) { return INF_PALETTE[this.tierIndex(w)]; },
     bossOrdinal(w) { const c = Math.floor((Math.max(1, w) - 1) / 101), i = (Math.max(1, w) - 1) % 101 + 1; return c * 10 + Math.round(i / this.bossEvery); },
     wave(w, gauntlet) {
       const late = gauntlet && w > this.lateFrom ? Math.pow(this.lateExp, w - this.lateFrom) : 1;

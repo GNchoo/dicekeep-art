@@ -1,0 +1,748 @@
+{
+  "verifiedAt": "2026-09-07T12:01:56.164Z",
+  "base": "http://localhost:8137/index.html?net=off&v=1788782503920&unlock=all",
+  "scope": "Actual browser image requests after v92 release bump; validates asset byte identity and loader frame counts, not gait aesthetics.",
+  "contentScript": "http://localhost:8137/content.js?v=92",
+  "contentScriptSha256": "083bed6def201715a16d7aa9c1774bcbd88272ba37c128b6b4c54626a000ab84",
+  "contentScriptMatchesLocal": true,
+  "behaviorUnchanged": true,
+  "futureUndeliveredArtUnversioned": true,
+  "requests": [
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/w001.png?v=92",
+      "resourceType": "image"
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/w001-walk-4x2.png?v=92",
+      "resourceType": "image"
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/w002.png?v=92",
+      "resourceType": "image"
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/w002-walk-4x2.png?v=92",
+      "resourceType": "image"
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/w003.png?v=92",
+      "resourceType": "image"
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/w003-walk-4x2.png?v=92",
+      "resourceType": "image"
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/w004.png?v=92",
+      "resourceType": "image"
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/w004-walk-2x2.png?v=92",
+      "resourceType": "image"
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/w005.png?v=92",
+      "resourceType": "image"
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/w005-walk-4x2.png?v=92",
+      "resourceType": "image"
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/w006.png?v=92",
+      "resourceType": "image"
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/w006-walk-4x2.png?v=92",
+      "resourceType": "image"
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/w007.png?v=92",
+      "resourceType": "image"
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/w007-walk-4x2.png?v=92",
+      "resourceType": "image"
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/w008.png?v=92",
+      "resourceType": "image"
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/w008-walk-2x2.png?v=92",
+      "resourceType": "image"
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/w009.png?v=92",
+      "resourceType": "image"
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/w009-walk-4x2.png?v=92",
+      "resourceType": "image"
+    },
+    {
+      "url": "http://localhost:8137/casual/bosses/inf/b010.png?v=92",
+      "resourceType": "image"
+    }
+  ],
+  "checks": [
+    {
+      "key": "infW1",
+      "src": "casual/enemies/inf/w001.png?v=92",
+      "sheet": false,
+      "frames": 1,
+      "dimensions": [
+        {
+          "w": 418,
+          "h": 192,
+          "missing": false
+        }
+      ],
+      "url": "http://localhost:8137/casual/enemies/inf/w001.png?v=92",
+      "status": 200,
+      "responseSha256": "eade54ba9981728e2d744d07c53d3277526092d689d4a90486cdd29401d088c4",
+      "localSha256": "eade54ba9981728e2d744d07c53d3277526092d689d4a90486cdd29401d088c4",
+      "reviewedSha256": "eade54ba9981728e2d744d07c53d3277526092d689d4a90486cdd29401d088c4",
+      "expectedFrames": 1,
+      "pass": true
+    },
+    {
+      "key": "infW1Walk",
+      "src": "casual/enemies/inf/w001-walk-4x2.png?v=92",
+      "sheet": true,
+      "frames": 8,
+      "dimensions": [
+        {
+          "w": 418,
+          "h": 192,
+          "missing": false
+        },
+        {
+          "w": 418,
+          "h": 192,
+          "missing": false
+        },
+        {
+          "w": 418,
+          "h": 192,
+          "missing": false
+        },
+        {
+          "w": 418,
+          "h": 192,
+          "missing": false
+        },
+        {
+          "w": 418,
+          "h": 192,
+          "missing": false
+        },
+        {
+          "w": 418,
+          "h": 192,
+          "missing": false
+        },
+        {
+          "w": 418,
+          "h": 192,
+          "missing": false
+        },
+        {
+          "w": 418,
+          "h": 192,
+          "missing": false
+        }
+      ],
+      "url": "http://localhost:8137/casual/enemies/inf/w001-walk-4x2.png?v=92",
+      "status": 200,
+      "responseSha256": "a65e187cb4f459963840c834a246cc15be35a475e09e21d7a7ad6311e95e866b",
+      "localSha256": "a65e187cb4f459963840c834a246cc15be35a475e09e21d7a7ad6311e95e866b",
+      "reviewedSha256": "a65e187cb4f459963840c834a246cc15be35a475e09e21d7a7ad6311e95e866b",
+      "expectedFrames": 8,
+      "pass": true
+    },
+    {
+      "key": "infW2",
+      "src": "casual/enemies/inf/w002.png?v=92",
+      "sheet": false,
+      "frames": 1,
+      "dimensions": [
+        {
+          "w": 222,
+          "h": 440,
+          "missing": false
+        }
+      ],
+      "url": "http://localhost:8137/casual/enemies/inf/w002.png?v=92",
+      "status": 200,
+      "responseSha256": "f1515c82027f068ce2ff6e9c128425fdfbde845cd243306c57ae18083d400ef6",
+      "localSha256": "f1515c82027f068ce2ff6e9c128425fdfbde845cd243306c57ae18083d400ef6",
+      "reviewedSha256": "f1515c82027f068ce2ff6e9c128425fdfbde845cd243306c57ae18083d400ef6",
+      "expectedFrames": 1,
+      "pass": true
+    },
+    {
+      "key": "infW2Walk",
+      "src": "casual/enemies/inf/w002-walk-4x2.png?v=92",
+      "sheet": true,
+      "frames": 8,
+      "dimensions": [
+        {
+          "w": 222,
+          "h": 446,
+          "missing": false
+        },
+        {
+          "w": 222,
+          "h": 446,
+          "missing": false
+        },
+        {
+          "w": 222,
+          "h": 446,
+          "missing": false
+        },
+        {
+          "w": 222,
+          "h": 446,
+          "missing": false
+        },
+        {
+          "w": 222,
+          "h": 446,
+          "missing": false
+        },
+        {
+          "w": 222,
+          "h": 446,
+          "missing": false
+        },
+        {
+          "w": 222,
+          "h": 446,
+          "missing": false
+        },
+        {
+          "w": 222,
+          "h": 446,
+          "missing": false
+        }
+      ],
+      "url": "http://localhost:8137/casual/enemies/inf/w002-walk-4x2.png?v=92",
+      "status": 200,
+      "responseSha256": "43de4465786e6084ad8b24c079ce99354ed6c3698b46dabceb2e14b8dbcb8466",
+      "localSha256": "43de4465786e6084ad8b24c079ce99354ed6c3698b46dabceb2e14b8dbcb8466",
+      "reviewedSha256": "43de4465786e6084ad8b24c079ce99354ed6c3698b46dabceb2e14b8dbcb8466",
+      "expectedFrames": 8,
+      "pass": true
+    },
+    {
+      "key": "infW3",
+      "src": "casual/enemies/inf/w003.png?v=92",
+      "sheet": false,
+      "frames": 1,
+      "dimensions": [
+        {
+          "w": 222,
+          "h": 443,
+          "missing": false
+        }
+      ],
+      "url": "http://localhost:8137/casual/enemies/inf/w003.png?v=92",
+      "status": 200,
+      "responseSha256": "385a7b6bbae8662d5ff9f4bded0350f9d1e2634c2e1f2208f3e80a879d1b701b",
+      "localSha256": "385a7b6bbae8662d5ff9f4bded0350f9d1e2634c2e1f2208f3e80a879d1b701b",
+      "reviewedSha256": "385a7b6bbae8662d5ff9f4bded0350f9d1e2634c2e1f2208f3e80a879d1b701b",
+      "expectedFrames": 1,
+      "pass": true
+    },
+    {
+      "key": "infW3Walk",
+      "src": "casual/enemies/inf/w003-walk-4x2.png?v=92",
+      "sheet": true,
+      "frames": 8,
+      "dimensions": [
+        {
+          "w": 222,
+          "h": 449,
+          "missing": false
+        },
+        {
+          "w": 222,
+          "h": 449,
+          "missing": false
+        },
+        {
+          "w": 222,
+          "h": 449,
+          "missing": false
+        },
+        {
+          "w": 222,
+          "h": 449,
+          "missing": false
+        },
+        {
+          "w": 222,
+          "h": 449,
+          "missing": false
+        },
+        {
+          "w": 222,
+          "h": 449,
+          "missing": false
+        },
+        {
+          "w": 222,
+          "h": 449,
+          "missing": false
+        },
+        {
+          "w": 222,
+          "h": 449,
+          "missing": false
+        }
+      ],
+      "url": "http://localhost:8137/casual/enemies/inf/w003-walk-4x2.png?v=92",
+      "status": 200,
+      "responseSha256": "e7a9dac95b49b91563beeed508b5a05bc5fedea9465b5273c7f5df294f8ea437",
+      "localSha256": "e7a9dac95b49b91563beeed508b5a05bc5fedea9465b5273c7f5df294f8ea437",
+      "reviewedSha256": "e7a9dac95b49b91563beeed508b5a05bc5fedea9465b5273c7f5df294f8ea437",
+      "expectedFrames": 8,
+      "pass": true
+    },
+    {
+      "key": "infW4",
+      "src": "casual/enemies/inf/w004.png?v=92",
+      "sheet": false,
+      "frames": 1,
+      "dimensions": [
+        {
+          "w": 169,
+          "h": 189,
+          "missing": false
+        }
+      ],
+      "url": "http://localhost:8137/casual/enemies/inf/w004.png?v=92",
+      "status": 200,
+      "responseSha256": "164ee4014d4b0f8d208b4c39a194c8d1c8e7fe2f096381bf0cba7def0176f5ac",
+      "localSha256": "164ee4014d4b0f8d208b4c39a194c8d1c8e7fe2f096381bf0cba7def0176f5ac",
+      "reviewedSha256": "164ee4014d4b0f8d208b4c39a194c8d1c8e7fe2f096381bf0cba7def0176f5ac",
+      "expectedFrames": 1,
+      "pass": true
+    },
+    {
+      "key": "infW4Walk",
+      "src": "casual/enemies/inf/w004-walk-2x2.png?v=92",
+      "sheet": true,
+      "frames": 4,
+      "dimensions": [
+        {
+          "w": 415,
+          "h": 328,
+          "missing": false
+        },
+        {
+          "w": 415,
+          "h": 328,
+          "missing": false
+        },
+        {
+          "w": 415,
+          "h": 328,
+          "missing": false
+        },
+        {
+          "w": 415,
+          "h": 328,
+          "missing": false
+        }
+      ],
+      "url": "http://localhost:8137/casual/enemies/inf/w004-walk-2x2.png?v=92",
+      "status": 200,
+      "responseSha256": "84059d7f1eb217c144b03ca3fdc15a4fc569b7e7bfb429b873e47ce504fff2e7",
+      "localSha256": "84059d7f1eb217c144b03ca3fdc15a4fc569b7e7bfb429b873e47ce504fff2e7",
+      "reviewedSha256": "84059d7f1eb217c144b03ca3fdc15a4fc569b7e7bfb429b873e47ce504fff2e7",
+      "expectedFrames": 4,
+      "pass": true
+    },
+    {
+      "key": "infW5",
+      "src": "casual/enemies/inf/w005.png?v=92",
+      "sheet": false,
+      "frames": 1,
+      "dimensions": [
+        {
+          "w": 296,
+          "h": 434,
+          "missing": false
+        }
+      ],
+      "url": "http://localhost:8137/casual/enemies/inf/w005.png?v=92",
+      "status": 200,
+      "responseSha256": "870de3512d18f1cfb183e278d181dc8428b6132f7c5664c220905053048d950b",
+      "localSha256": "870de3512d18f1cfb183e278d181dc8428b6132f7c5664c220905053048d950b",
+      "reviewedSha256": "870de3512d18f1cfb183e278d181dc8428b6132f7c5664c220905053048d950b",
+      "expectedFrames": 1,
+      "pass": true
+    },
+    {
+      "key": "infW5Walk",
+      "src": "casual/enemies/inf/w005-walk-4x2.png?v=92",
+      "sheet": true,
+      "frames": 8,
+      "dimensions": [
+        {
+          "w": 296,
+          "h": 440,
+          "missing": false
+        },
+        {
+          "w": 296,
+          "h": 440,
+          "missing": false
+        },
+        {
+          "w": 296,
+          "h": 440,
+          "missing": false
+        },
+        {
+          "w": 296,
+          "h": 440,
+          "missing": false
+        },
+        {
+          "w": 296,
+          "h": 440,
+          "missing": false
+        },
+        {
+          "w": 296,
+          "h": 440,
+          "missing": false
+        },
+        {
+          "w": 296,
+          "h": 440,
+          "missing": false
+        },
+        {
+          "w": 296,
+          "h": 440,
+          "missing": false
+        }
+      ],
+      "url": "http://localhost:8137/casual/enemies/inf/w005-walk-4x2.png?v=92",
+      "status": 200,
+      "responseSha256": "dc384f84781bf9c6c5655d7014df068604592e5034d7a9a7d502f5c42b35bf08",
+      "localSha256": "dc384f84781bf9c6c5655d7014df068604592e5034d7a9a7d502f5c42b35bf08",
+      "reviewedSha256": "dc384f84781bf9c6c5655d7014df068604592e5034d7a9a7d502f5c42b35bf08",
+      "expectedFrames": 8,
+      "pass": true
+    },
+    {
+      "key": "infW6",
+      "src": "casual/enemies/inf/w006.png?v=92",
+      "sheet": false,
+      "frames": 1,
+      "dimensions": [
+        {
+          "w": 416,
+          "h": 295,
+          "missing": false
+        }
+      ],
+      "url": "http://localhost:8137/casual/enemies/inf/w006.png?v=92",
+      "status": 200,
+      "responseSha256": "018fcafb5e9fac4f6c4c72cd8490bd8036af632c440d3d5be0220b5a2847335e",
+      "localSha256": "018fcafb5e9fac4f6c4c72cd8490bd8036af632c440d3d5be0220b5a2847335e",
+      "reviewedSha256": "018fcafb5e9fac4f6c4c72cd8490bd8036af632c440d3d5be0220b5a2847335e",
+      "expectedFrames": 1,
+      "pass": true
+    },
+    {
+      "key": "infW6Walk",
+      "src": "casual/enemies/inf/w006-walk-4x2.png?v=92",
+      "sheet": true,
+      "frames": 8,
+      "dimensions": [
+        {
+          "w": 416,
+          "h": 295,
+          "missing": false
+        },
+        {
+          "w": 416,
+          "h": 295,
+          "missing": false
+        },
+        {
+          "w": 416,
+          "h": 295,
+          "missing": false
+        },
+        {
+          "w": 416,
+          "h": 295,
+          "missing": false
+        },
+        {
+          "w": 416,
+          "h": 295,
+          "missing": false
+        },
+        {
+          "w": 416,
+          "h": 295,
+          "missing": false
+        },
+        {
+          "w": 416,
+          "h": 295,
+          "missing": false
+        },
+        {
+          "w": 416,
+          "h": 295,
+          "missing": false
+        }
+      ],
+      "url": "http://localhost:8137/casual/enemies/inf/w006-walk-4x2.png?v=92",
+      "status": 200,
+      "responseSha256": "2a47f8b83ea3ddc2d6ba18fc705c8e2a10564850a0d18683a49c9ea5bfde4cd7",
+      "localSha256": "2a47f8b83ea3ddc2d6ba18fc705c8e2a10564850a0d18683a49c9ea5bfde4cd7",
+      "reviewedSha256": "2a47f8b83ea3ddc2d6ba18fc705c8e2a10564850a0d18683a49c9ea5bfde4cd7",
+      "expectedFrames": 8,
+      "pass": true
+    },
+    {
+      "key": "infW7",
+      "src": "casual/enemies/inf/w007.png?v=92",
+      "sheet": false,
+      "frames": 1,
+      "dimensions": [
+        {
+          "w": 255,
+          "h": 439,
+          "missing": false
+        }
+      ],
+      "url": "http://localhost:8137/casual/enemies/inf/w007.png?v=92",
+      "status": 200,
+      "responseSha256": "960835b16440343810ef6f33163489c60086c4ee3e9a724293b879770e8194ed",
+      "localSha256": "960835b16440343810ef6f33163489c60086c4ee3e9a724293b879770e8194ed",
+      "reviewedSha256": "960835b16440343810ef6f33163489c60086c4ee3e9a724293b879770e8194ed",
+      "expectedFrames": 1,
+      "pass": true
+    },
+    {
+      "key": "infW7Walk",
+      "src": "casual/enemies/inf/w007-walk-4x2.png?v=92",
+      "sheet": true,
+      "frames": 8,
+      "dimensions": [
+        {
+          "w": 256,
+          "h": 445,
+          "missing": false
+        },
+        {
+          "w": 256,
+          "h": 445,
+          "missing": false
+        },
+        {
+          "w": 256,
+          "h": 445,
+          "missing": false
+        },
+        {
+          "w": 256,
+          "h": 445,
+          "missing": false
+        },
+        {
+          "w": 256,
+          "h": 445,
+          "missing": false
+        },
+        {
+          "w": 256,
+          "h": 445,
+          "missing": false
+        },
+        {
+          "w": 256,
+          "h": 445,
+          "missing": false
+        },
+        {
+          "w": 256,
+          "h": 445,
+          "missing": false
+        }
+      ],
+      "url": "http://localhost:8137/casual/enemies/inf/w007-walk-4x2.png?v=92",
+      "status": 200,
+      "responseSha256": "d265ba27402e389a2d08331e29c5b1d4a032f7a8884726308a080eb31aae3fd7",
+      "localSha256": "d265ba27402e389a2d08331e29c5b1d4a032f7a8884726308a080eb31aae3fd7",
+      "reviewedSha256": "d265ba27402e389a2d08331e29c5b1d4a032f7a8884726308a080eb31aae3fd7",
+      "expectedFrames": 8,
+      "pass": true
+    },
+    {
+      "key": "infW8",
+      "src": "casual/enemies/inf/w008.png?v=92",
+      "sheet": false,
+      "frames": 1,
+      "dimensions": [
+        {
+          "w": 313,
+          "h": 242,
+          "missing": false
+        }
+      ],
+      "url": "http://localhost:8137/casual/enemies/inf/w008.png?v=92",
+      "status": 200,
+      "responseSha256": "65043dc99fc4a4aa566e45931e432496bb8f56ea14aa83de8e40f6921ab7b06f",
+      "localSha256": "65043dc99fc4a4aa566e45931e432496bb8f56ea14aa83de8e40f6921ab7b06f",
+      "reviewedSha256": "65043dc99fc4a4aa566e45931e432496bb8f56ea14aa83de8e40f6921ab7b06f",
+      "expectedFrames": 1,
+      "pass": true
+    },
+    {
+      "key": "infW8Walk",
+      "src": "casual/enemies/inf/w008-walk-2x2.png?v=92",
+      "sheet": true,
+      "frames": 4,
+      "dimensions": [
+        {
+          "w": 420,
+          "h": 288,
+          "missing": false
+        },
+        {
+          "w": 420,
+          "h": 288,
+          "missing": false
+        },
+        {
+          "w": 420,
+          "h": 288,
+          "missing": false
+        },
+        {
+          "w": 420,
+          "h": 288,
+          "missing": false
+        }
+      ],
+      "url": "http://localhost:8137/casual/enemies/inf/w008-walk-2x2.png?v=92",
+      "status": 200,
+      "responseSha256": "3efc2859ae34016163cefae3d5ad9aa6f24f7f673350c56624600f5402206d41",
+      "localSha256": "3efc2859ae34016163cefae3d5ad9aa6f24f7f673350c56624600f5402206d41",
+      "reviewedSha256": "3efc2859ae34016163cefae3d5ad9aa6f24f7f673350c56624600f5402206d41",
+      "expectedFrames": 4,
+      "pass": true
+    },
+    {
+      "key": "infW9",
+      "src": "casual/enemies/inf/w009.png?v=92",
+      "sheet": false,
+      "frames": 1,
+      "dimensions": [
+        {
+          "w": 260,
+          "h": 419,
+          "missing": false
+        }
+      ],
+      "url": "http://localhost:8137/casual/enemies/inf/w009.png?v=92",
+      "status": 200,
+      "responseSha256": "da09b785b9196ca33d1167de9ff0eb9163f922ff0cd825c2c02c75c2e21f0123",
+      "localSha256": "da09b785b9196ca33d1167de9ff0eb9163f922ff0cd825c2c02c75c2e21f0123",
+      "reviewedSha256": "da09b785b9196ca33d1167de9ff0eb9163f922ff0cd825c2c02c75c2e21f0123",
+      "expectedFrames": 1,
+      "pass": true
+    },
+    {
+      "key": "infW9Walk",
+      "src": "casual/enemies/inf/w009-walk-4x2.png?v=92",
+      "sheet": true,
+      "frames": 8,
+      "dimensions": [
+        {
+          "w": 260,
+          "h": 424,
+          "missing": false
+        },
+        {
+          "w": 260,
+          "h": 424,
+          "missing": false
+        },
+        {
+          "w": 260,
+          "h": 424,
+          "missing": false
+        },
+        {
+          "w": 260,
+          "h": 424,
+          "missing": false
+        },
+        {
+          "w": 260,
+          "h": 424,
+          "missing": false
+        },
+        {
+          "w": 260,
+          "h": 424,
+          "missing": false
+        },
+        {
+          "w": 260,
+          "h": 424,
+          "missing": false
+        },
+        {
+          "w": 260,
+          "h": 424,
+          "missing": false
+        }
+      ],
+      "url": "http://localhost:8137/casual/enemies/inf/w009-walk-4x2.png?v=92",
+      "status": 200,
+      "responseSha256": "33cb6a2c83719807a9a579a27fe425c5cd685b4b2ad214b29e58a08e21ecde25",
+      "localSha256": "33cb6a2c83719807a9a579a27fe425c5cd685b4b2ad214b29e58a08e21ecde25",
+      "reviewedSha256": "33cb6a2c83719807a9a579a27fe425c5cd685b4b2ad214b29e58a08e21ecde25",
+      "expectedFrames": 8,
+      "pass": true
+    },
+    {
+      "key": "infB10",
+      "src": "casual/bosses/inf/b010.png?v=92",
+      "sheet": false,
+      "frames": 1,
+      "dimensions": [
+        {
+          "w": 390,
+          "h": 409,
+          "missing": false
+        }
+      ],
+      "url": "http://localhost:8137/casual/bosses/inf/b010.png?v=92",
+      "status": 200,
+      "responseSha256": "92614851724a0b200d4d96f80f382051171ce20cff98505d18a4c4ba9970d305",
+      "localSha256": "92614851724a0b200d4d96f80f382051171ce20cff98505d18a4c4ba9970d305",
+      "reviewedSha256": "92614851724a0b200d4d96f80f382051171ce20cff98505d18a4c4ba9970d305",
+      "expectedFrames": 1,
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "passed": 19,
+  "total": 19
+}

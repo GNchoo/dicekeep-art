@@ -1,0 +1,107 @@
+{
+  "generatedOriginals": [
+    {
+      "id": "w002-initial-sheet",
+      "file": "sources/w002-initial-sheet.png",
+      "originalOutputFilename": "exec-ee3a8c34-ea43-4116-8e43-05570cc543e7.png",
+      "sha256": "0ae925ca910faf5b4e8c83231b21d234e6e444544ddae43d26b8c239e694784f",
+      "wave": 2,
+      "stage": "initial-full-sheet",
+      "pose": null
+    },
+    {
+      "id": "w006-initial-sheet",
+      "file": "sources/w006-initial-sheet.png",
+      "originalOutputFilename": "exec-67faecca-32f5-43d5-b4cd-1a7e98bfe995.png",
+      "sha256": "ff9baf3e3bfef5bacd3f9b5fd168e96d37cfc0abeff49bfde7a4e61784f7d97f",
+      "wave": 6,
+      "stage": "initial-full-sheet",
+      "pose": null
+    },
+    {
+      "id": "w002-guided-sheet",
+      "file": "sources/w002-guided-sheet.png",
+      "originalOutputFilename": "exec-98b020ed-6894-46bd-8fd1-a946311f410b.png",
+      "sha256": "cb026c006d0c920829d1bf35845677d57df6a86dbca808275d6446039e726c52",
+      "wave": 2,
+      "stage": "guided-full-sheet",
+      "pose": null
+    },
+    {
+      "id": "w006-guided-sheet",
+      "file": "sources/w006-guided-sheet.png",
+      "originalOutputFilename": "exec-9ff8f2fc-fa5a-468b-b40b-27f78dd448f8.png",
+      "sha256": "9672c330f3513f126da53a017c7f7239204b192ac33590835faa1f96b7325a01",
+      "wave": 6,
+      "stage": "guided-full-sheet",
+      "pose": null
+    },
+    {
+      "id": "w002-single-pose-05",
+      "file": "sources/w002-single-pose-05.png",
+      "originalOutputFilename": "exec-bff0e7dc-99e5-4a4d-9986-6e500434c71e.png",
+      "sha256": "86b2fc7c311e89764a7995fd0ba4e1ab211f57417f5463e4e68879926f7f7043",
+      "wave": 2,
+      "stage": "individual-full-body-pose",
+      "pose": "biped-5"
+    },
+    {
+      "id": "w002-single-pose-07",
+      "file": "sources/w002-single-pose-07.png",
+      "originalOutputFilename": "exec-8a7f8778-99ea-4e42-9047-1690f0f633c4.png",
+      "sha256": "ad30644888602e6af6f893e813e34be68c973f380adc5e926abdb36b9d0934d1",
+      "wave": 2,
+      "stage": "individual-full-body-pose",
+      "pose": "biped-7"
+    },
+    {
+      "id": "w006-single-pose-01",
+      "file": "sources/w006-single-pose-01.png",
+      "originalOutputFilename": "exec-27a48385-5ff3-422c-ac7b-223a3003e966.png",
+      "sha256": "2780d7a23c3a5a476ae6d6a6cadd5e45051fff002c619b4326549cd53fa6b78c",
+      "wave": 6,
+      "stage": "individual-full-body-pose",
+      "pose": "quad-1"
+    },
+    {
+      "id": "w006-single-pose-03",
+      "file": "sources/w006-single-pose-03.png",
+      "originalOutputFilename": "exec-b84bfaca-e22d-4a4b-9ee7-671bc5dc00ed.png",
+      "sha256": "b6235486457159e4be5f0baebf2353f53e09325094fa582854ca8f361d746fa6",
+      "wave": 6,
+      "stage": "individual-full-body-pose",
+      "pose": "quad-3"
+    },
+    {
+      "id": "w002-single-pose-01",
+      "file": "sources/w002-single-pose-01.png",
+      "originalOutputFilename": "exec-009d5b67-95e4-4789-906a-382d3e0885b8.png",
+      "sha256": "28667a24e9c2e28308bbd0c21d5d5e0a67230aa2208ac4346ec26db4467466b8",
+      "wave": 2,
+      "stage": "individual-full-body-pose",
+      "pose": "biped-1"
+    },
+    {
+      "id": "w002-single-pose-03",
+      "file": "sources/w002-single-pose-03.png",
+      "originalOutputFilename": "exec-adffd50b-91f2-416c-9524-3f084316fad1.png",
+      "sha256": "f376391d9ebea614ec8b1de12c195e141944f62f839f2207922f71de687f7341",
+      "wave": 2,
+      "stage": "individual-full-body-pose",
+      "pose": "biped-3"
+    }
+  ],
+  "originalCatalogs": [
+    {
+      "name": "sprite8-generations.json",
+      "records": 2,
+      "sha256": "82570a888cfded4f064770130885f854df4adc0e4632976c2a64c08765a1e5a5"
+    },
+    {
+      "name": "sprite8-generations-latest.json",
+      "records": 10,
+      "sha256": "f4abe79b39e1592d8e3820afe8914215ea6bcdd9ce126a76def8173730d24520"
+    }
+  ],
+  "deduplication": "12 catalog records contain10unique source image hashes; the first two records recur unchanged in the latest catalog."
+}

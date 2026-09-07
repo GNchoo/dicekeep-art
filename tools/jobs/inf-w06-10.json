@@ -1,0 +1,31 @@
+{
+  "style": "Stylized hand-painted fantasy game character with chunky proportions, simplified shapes, clean readable contours, soft painted shading and lightly weathered equipment. Moderately dark adventure mood, expressive and characterful, readable at small tower-defense game scale. ART DIRECTION OVERRIDE: these rules take precedence over any conflicting creature description, palette wording or reference detail. No gore, blood stains, open wounds, sores, exposed organs, rotting flesh, mutilation, grotesque fused anatomy or photorealistic body horror. Interpret disease, decay and corpse-themed names as costume motifs, muted colors and playful fantasy character design, never literal injury. Skeletons use clean simplified bones; skull motifs are small carved ornaments. Preserve complete bodies, friendly-readable faces and distinct equipment silhouettes.",
+  "jobs": [
+    {
+      "id": "t1-006-009",
+      "n": 1,
+      "size": "1024x1536",
+      "quality": "medium",
+      "background": "transparent",
+      "out": "gen/inf/w006-w009",
+      "rows": [
+        "w006",
+        "w007",
+        "w008",
+        "w009"
+      ],
+      "cols": 4,
+      "prompt": "Sprite sheet with 4 horizontal rows and 4 columns on a transparent background. Each row is a DIFFERENT creature and each row is ONE looping walk cycle of that creature moving toward the RIGHT (3/4 side view), frames read left-to-right. In every row the creature's head, torso, gear and size are identical across its frames — only limbs or wings change; feet rest on the same invisible ground line at the same height in every cell; each creature is horizontally centered in its cell and fills about 65% of the cell with at least 15% empty margin; nothing touches or crosses the cell borders; the rows are evenly spaced and do not overlap. No ground shadow, no grid lines, no text, no watermark. Row 1 (wave 6): A stocky wild boar with intact brown fur, a rounded sturdy body, both ears intact and small worn metal caps on its tusks. Four stout legs, an expressive determined face and a heavy low-running silhouette. (large, heavy and massive); diagonal trot: frame 1 front-right and back-left legs reach forward while the other pair pushes back; frame 2 all four legs gather under the body; frame 3 front-left and back-right legs reach forward; frame 4 legs gather again. Row 2 (wave 7): A stooped grave-digging ghoul with a smooth gray-green face, simple hood and work tunic, complete gloves and sturdy boots, carrying a compact shovel. Broad rounded shapes, a tired grumpy expression and a clean intact game-character body. (large, heavy and massive); frame 1 CONTACT: right leg forward and left leg back, both feet on the ground, stride at its widest; frame 2 PASSING: the back leg swings forward under the body, body at its highest; frame 3 CONTACT mirrored: left leg forward and right leg back; frame 4 PASSING mirrored: the other leg swings under the body. Row 3 (wave 8): A small organized group of rounded dark teal fantasy flies with simple expressive eyes and translucent cartoon wings, clustered around one small carved skull-shaped amulet. Keep the group compact and its fly count, body positions and amulet identical across frames; only the wings beat. (small and light); wing beat while gliding: frame 1 wings raised high; frame 2 wings level; frame 3 wings swept down; frame 4 wings level; the body, head and legs stay at the same height and size. Row 4 (wave 9): A broad orc guard with an intact expressive face, small rounded tusks and complete rust-colored plate armor with a sturdy helmet. Carrying a compact axe and shield, with chunky boots and a massive balanced silhouette. (large, heavy and massive); frame 1 CONTACT: right leg forward and left leg back, both feet on the ground, stride at its widest; frame 2 PASSING: the back leg swings forward under the body, body at its highest; frame 3 CONTACT mirrored: left leg forward and right leg back; frame 4 PASSING mirrored: the other leg swings under the body. Palette of this tier: rust red, dried blood, ash-grey skin, small ember accents. Treat palette terms as color cues only: blood means muted wine-red cloth or rust, and skin cracks mean decorative armor or magical markings, never wounds. Use controlled midtone colors and clear light-dark separation so the character remains readable against the arena; avoid muddy all-black shading, pastel washes and neon saturation; any glow is small and restrained.",
+      "split": "node tools/sheet-split.mjs gen/inf/w006-w009-1.png --rows=w006,w007,w008,w009 --cols=4 --pack"
+    },
+    {
+      "id": "b010",
+      "n": 1,
+      "size": "1024x1024",
+      "quality": "medium",
+      "background": "transparent",
+      "out": "gen/inf/b010",
+      "prompt": "BOSS \"역병 쥐왕\": The Plague Rat King: a large upright rat monarch with intact charcoal fur and a rounded expressive face, wearing a simple crown, broad bracers and a wine-red cape. Exactly one curved tail, two sturdy feet and a proud imposing but approachable stance. Full character standing freely, with no pedestal, bone pile or surrounding debris. (large, heavy and massive, imposing). Full body, 3/4 side view FACING RIGHT, centered, feet at the bottom center, filling about 80% of the frame. Transparent background, no ground shadow, no text, no watermark. Palette of this tier: rust red, dried blood, ash-grey skin, small ember accents. Treat palette terms as color cues only: blood means muted wine-red cloth or rust, and skin cracks mean decorative armor or magical markings, never wounds. Use controlled midtone colors and clear light-dark separation so the character remains readable against the arena; avoid muddy all-black shading, pastel washes and neon saturation; any glow is small and restrained."
+    }
+  ]
+}

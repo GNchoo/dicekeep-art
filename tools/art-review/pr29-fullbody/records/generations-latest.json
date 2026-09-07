@@ -1,0 +1,122 @@
+{
+  "method": "Built-in imagegen; full-body frame-by-frame sprite prototypes; not runtime assets",
+  "generations": [
+    {
+      "wave": 2,
+      "stage": "initial-full-sheet",
+      "prompt": "Use case: stylized-concept. Input image is a character IDENTITY AND PAINTING STYLE REFERENCE, not a pose to copy. Create a NEW finished sprite animation sheet, exactly EIGHT individually drawn full-body frames of this same friendly fantasy skeleton soldier WALKING TOWARD THE RIGHT in side view. This is true frame-by-frame whole-character animation: redraw the silhouette, body weight shift, ankle and knee articulation and foot roll in every pose; NOT separated puppet parts, NOT eight near-identical standing characters. Preserve rusty helmet, ivory skull and bones, olive rag tunic, brown belt and boots, spear in the same hand. Consistent face, equipment, proportions and painterly game style; no gore or horror.\nLayout: landscape sheet, exactly4 equal columns by2 equal rows, read left to right top row frames1-4 then bottom row5-8. Wide empty gutters, complete spear/helmet/boots in every cell, identical camera/scale, body root centered per cell, a common invisible floor within each row. No labels, numbers, border, ground shadow or ground line. True transparent alpha background, otherwise pure white.\nAnimation: one complete balanced biped WALK cycle sampled at8 consecutive phases. The near leg is brighter, the far leg slightly shaded and behind. They must visibly exchange front/back order. The support knee is nearly extended; only load absorption and swinging leg bend. No continuous squat, no backward knees.\nFRAME1 near heel reaches FORWARD to the right, far foot trails LEFT behind on its toe; widest split/contact.\nFRAME2 near foot accepts weight, pelvis drops slightly, far heel lifts behind with knee flexing.\nFRAME3 near leg supports nearly STRAIGHT under the hip, pelvis high, far leg bends and passes forward beside the supporting knee; narrow passing silhouette.\nFRAME4 near foot is now BEHIND pushing off its toe, far shin reaches FORWARD preparing heel contact.\nFRAME5 OPPOSITE contact: far heel fully FORWARD to the right, near foot trails LEFT behind on toe; widest split, opposite foot identity to frame1.\nFRAME6 far foot accepts weight, near heel lifts behind, slight pelvis drop.\nFRAME7 far support leg nearly STRAIGHT under hip; near knee flexed and passing FORWARD, pelvis high.\nFRAME8 far foot behind pushing off toe; near shin swings forward ready to return seamlessly to frame1.\nSmall coordinated shoulder counter-rotation, natural arm/spear follow-through and tunic movement. Keep head recognizably stable without stretching body parts. Precisely8 complete distinct walking drawings, not disconnected limbs or a rig.",
+      "reference": "references/w002-identity.png",
+      "result": "sources/w002-initial-sheet.png",
+      "review": "Rejected as complete walk: second half repeats same support leg.",
+      "originalOutputFilename": "exec-ee3a8c34-ea43-4116-8e43-05570cc543e7.png"
+    },
+    {
+      "wave": 6,
+      "stage": "initial-full-sheet",
+      "prompt": "Use case: stylized-concept. Input image is the complete assembled boar character IDENTITY, ANATOMY AND STYLE reference. Create a NEW finished sprite animation sheet of this exact stocky fantasy boar WALKING TOWARD THE RIGHT, strict consistent side view, using EIGHT individually drawn whole-character poses across ONE full natural quadruped walking cycle. Redraw complete continuous anatomy per frame, no detached puppet parts or pasted round thigh patches.\nPreserve long horizontal barrel ribcage, full hind rump, large shoulder, short stout legs, real front elbows and rear stifle/hock bends, orange eye, mane, short ivory tusks, healthy brown fur and leather harness. Friendly determined painted game character, no gore, rot or realistic horror. Consistent shape/scale/markings/equipment through all8.\nLayout exactly4 equal columns ×2 equal rows on a landscape sheet. Frames1-4 top,5-8 bottom;8full animals only. Identical camera/root center, stable size and invisible floor at same relative height per row; generous empty gutters; all tail/hooves/nose in cell. True transparent alpha background, otherwise pure white. NO text, numbers, borders, floor or shadows.\nMotion is a deliberate FOUR-BEAT WALK, not trot, hop or shuffle. Four different anatomically attached limbs, near legs brighter and far legs darker. Near/far FRONT feet exchange anterior/posterior order during the cycle, and near/far HIND feet also exchange order; front shoulders stay front and rear hips stay rear. Clear leg swing under the belly, real lifted hooves, stance feet moving backward relative to body, heel/hoof lift at toe-off. Shoulder/scapula slides beneath the fur, weight shifts subtly, back/mane/tail have small coordinated motion. Keep contact legs bearing weight.\nEight consecutive phases, with an individual foot landing every two frames:\n1 near HIND hoof reaches forward and contacts, near FRONT leg beginning to swing forward; far hind supports.\n2 near FRONT foreleg swings visibly forward with bent elbow and raised hoof; other legs support.\n3 near FRONT hoof now lands ahead of shoulder; far HIND leg begins its forward swing with bent stifle/hock.\n4 far HIND hoof travels forward beneath rump; near fore bears weight and rear near leg pushes backward.\n5 far HIND hoof lands forward; far FRONT begins swinging forward. Near/far hind order is reversed from1.\n6 far FRONT hoof swings forward; near front foot trails backward pushing off.\n7 far FRONT hoof lands ahead of shoulder; near HIND starts forward swing with hock folded. Near/far front order is reversed from3.\n8 near HIND hoof swings forward to return to frame1; other feet support.\nUse substantial readable alternating strides, clear changing silhouettes, not eight copies of the reference stance. Hooves must not all remain in their original forward/back positions. Finished integrated full-character animation drawings, no rig seams, no whole-body translation pretending to walk.",
+      "reference": "references/w006-anatomy-master.png",
+      "result": "sources/w006-initial-sheet.png",
+      "review": "Unified full-body art improved; foreleg alternating swing ambiguous.",
+      "originalOutputFilename": "exec-67faecca-32f5-43d5-b4cd-1a7e98bfe995.png"
+    },
+    {
+      "stage": "guided-full-sheet",
+      "character": "skeleton",
+      "prompt": "Create a polished EIGHT-FRAME full-body walking sprite sheet. Input1 is the skeleton soldier's identity/painting reference. Input2 is the REQUIRED pose-and-timing template, not artwork to reproduce. Follow EACH of the eight diagram poses exactly, in the same4×2 order; translate the colored bones into this character's anatomically drawn legs and boots.\nCRITICAL: CYAN always means the same NEAR/camera-side leg. ORANGE always means the same FAR/background leg. These are identity labels only: paint natural ivory bones and brown boots, with the far leg somewhat darker. The near leg must visibly travel BEHIND the far leg in the opposite half of the walk even though it remains in the foreground drawing layer. Frames1 and5 are opposite-foot contacts; frames3 and7 are opposite-leg passing poses. Never repeat the top row on the bottom.\nDraw the COMPLETE character anew in every pose with continuous natural anatomy and coordinated shoulders, hip weight shifts, foot roll and tunic movement. Keep upright supporting legs, bent swinging knees, heel contact and toe push-off from the template. It is NOT a puppet parts atlas and NOT rotation of cutout limbs. Match identity, rusty helmet, friendly ivory skull, olive tunic, brown belt and boots, spear in the same hand, approachable fantasy painted game style with no gore. All face RIGHT in consistent side view.\nExactly4 equal columns and2equal rows,8 full characters, generous blank cell gutters, nothing cut off, consistent scale and camera. Preserve the guide's different foot positions, floor line and body-height changes. No guide lines/colors/labels/numbers/borders/shadows in the final art. Use actual transparent alpha background, otherwise plain pure white. Pay special attention to the LOWER ROW: it is the other foot's step, with the foreground leg behind in frame5, swinging through in7 and reaching forward in8.",
+      "review": "Not accepted: foot roles do not consistently follow pose guide.",
+      "result": "sources/w002-guided-sheet.png",
+      "originalOutputFilename": "exec-98b020ed-6894-46bd-8fd1-a946311f410b.png",
+      "references": [
+        "references/w002-identity.png",
+        "guides/sprite8-guide.png"
+      ],
+      "referenceProvenance": "Guided-generation inputs recovered from the task inventory; the original catalog did not list reference paths."
+    },
+    {
+      "stage": "guided-full-sheet",
+      "character": "boar",
+      "prompt": "Create a polished EIGHT-FRAME full-body walking sprite sheet. Input1 is the full assembled boar identity/anatomy/painting reference. Input2 is the REQUIRED pose-and-timing template. Copy ALL FOUR feet's relative X/Y positions and each limb's identity in EACH template frame. The template's colored joints/lines are pose instructions, NOT colors or objects for the final art. Follow its legend mapping near fore / far fore / near hind / far hind exactly, keep the near legs in the foreground and far legs slightly shaded behind.\nThis must be one complete four-beat WALK, not repeated standing poses. Both FRONT legs alternately bend, lift their hooves, pass beneath the shoulder, reach forward and take weight. In particular the near/camera-front leg MUST show its swinging raised hoof in the guide's first two frames; it cannot remain planted in every cell. Both HIND legs likewise alternate, preserving the real stifle and hock direction. Foot order reverses in both the front pair and hind pair. Never invent a fifth limb, detach a thigh, or draw a human knee on the animal.\nRedraw eight whole continuous character paintings with natural shoulder/scapula motion, muscular haunches blending into the rump, subtle back/head/tail follow-through. Preserve the same long horizontal ribcage, full hind rump, short stout legs, healthy brown fur, orange eye, small tusks, mane and harness in all8 frames. Friendly determined fantasy game animal, no gore/injury/rot. NO pasted limb patches or puppet joints.\nExactly4 equal columns×2equal rows matching the guide reading order, all8 complete RIGHT-FACING side-view boars at consistent camera/scale/root; generous empty gutters, all hooves/nose/tail inside their cell. Keep the guide's individual hoof positions and common floor. No diagram lines/colors/text/numbers/frame borders/shadows in the output. True transparent alpha background, otherwise plain pure white. Preserve this character's warm painted art finish. Every pose should be a finished whole-body sprite suitable for frame-by-frame animation. The guide is schematic: retain the reference's STOCKY short-leg boar proportions, never elongate the legs to the diagram's scale. Transfer the limb identities and swing/support timing to the reference anatomy.",
+      "review": "Not accepted: foot roles do not consistently follow pose guide.",
+      "result": "sources/w006-guided-sheet.png",
+      "originalOutputFilename": "exec-9ff8f2fc-fa5a-468b-b40b-27f78dd448f8.png",
+      "references": [
+        "references/w006-anatomy-master.png",
+        "guides/sprite8-quad-guide.png"
+      ],
+      "referenceProvenance": "Guided-generation inputs recovered from the task inventory; the original catalog did not list reference paths."
+    },
+    {
+      "stage": "individual-full-body-pose",
+      "pose": "biped-5",
+      "prompt": "Create ONE finished full-body sprite, NOT a sheet or a set. Input1 is the exact skeleton soldier identity and painted fantasy game style. Input2 is the exact target POSE. Draw the entire character in that single pose. Cyan=the camera-NEAR leg, orange=the FAR leg behind. These colors only identify legs in the diagram: output natural ivory bones and brown boots, with the far leg darker. Keep each leg's identity and occlusion when its foot moves forward or backward. The pose guide overrides the reference's original leg positions. Preserve helmet, skull, olive tunic, belt, spear hand and friendly game tone. FaceRIGHT, consistent side view. Support knee nearly straight, realistic swinging knee, rolled heel/toe, continuous anatomy with no pasted parts. ONE square sprite tile, generous empty margins, helmet top about10% and invisible floor about90% of image, all spear and boots inside; preserve reference proportions. True transparent alpha or plain white background. No guide/colored lines/text/labels/shadow.\nREQUIRED POSE: far/background leg extends FORWARD to the RIGHT landing on heel; near/foreground leg extends BACKWARD to the LEFT with heel raised and only toe touching. The near leg must be the REAR trailing leg in this picture, not the forward leg. Match the guide, a moderate open stride.",
+      "references": [
+        "references/w002-identity.png",
+        "guides/poses/biped-5.png"
+      ],
+      "review": "Single exploratory pose; not accepted as a coherent complete cycle.",
+      "result": "sources/w002-single-pose-05.png",
+      "originalOutputFilename": "exec-bff0e7dc-99e5-4a4d-9986-6e500434c71e.png"
+    },
+    {
+      "stage": "individual-full-body-pose",
+      "pose": "biped-7",
+      "prompt": "Create ONE finished full-body sprite, NOT a sheet or a set. Input1 is the exact skeleton soldier identity and painted fantasy game style. Input2 is the exact target POSE. Draw the entire character in that single pose. Cyan=the camera-NEAR leg, orange=the FAR leg behind. These colors only identify legs in the diagram: output natural ivory bones and brown boots, with the far leg darker. Keep each leg's identity and occlusion when its foot moves forward or backward. The pose guide overrides the reference's original leg positions. Preserve helmet, skull, olive tunic, belt, spear hand and friendly game tone. FaceRIGHT, consistent side view. Support knee nearly straight, realistic swinging knee, rolled heel/toe, continuous anatomy with no pasted parts. ONE square sprite tile, generous empty margins, helmet top about10% and invisible floor about90% of image, all spear and boots inside; preserve reference proportions. True transparent alpha or plain white background. No guide/colored lines/text/labels/shadow.\nREQUIRED POSE: far/background leg is the ONE nearly straight support under the hip with flat foot on the floor. Near/foreground leg is bent at the raised knee toward the RIGHT, with its boot OFF the floor passing across IN FRONT of the support leg. Match the guide's narrow passing pose, pelvis slightlyhigher than contact.",
+      "references": [
+        "references/w002-identity.png",
+        "guides/poses/biped-7.png"
+      ],
+      "review": "Single exploratory pose; not accepted as a coherent complete cycle.",
+      "result": "sources/w002-single-pose-07.png",
+      "originalOutputFilename": "exec-8a7f8778-99ea-4e42-9047-1690f0f633c4.png"
+    },
+    {
+      "stage": "individual-full-body-pose",
+      "pose": "quad-1",
+      "prompt": "Create ONE finished whole-character sprite, NOT a sheet or set. Input1 is this exact friendly brown boar identity, short-stocky quadruped anatomy, harness and painterly game style. Input2 is the exact target POSE. Transfer all FOUR leg identities and hoof support/swing positions from the diagram while retaining the short stout proportions from the boar reference. Cyan=nearfore, orange=farfore, lime=nearhind, purple=farhind. These are guide colors only: final legs all natural brown fur, far legs darker and behind. The guide overrides the old reference leg positions. Continuous muscular shoulder and haunch anatomy, real elbows and stifle/hock bends, no puppet seams. FaceRIGHT same side view, same long fullbody, mane/tusks/orangeeye/harness, no gore. ONE square image tile, wholebody occupying same approximately85%width, rootcenter, common imaginaryfloor at75%imageheight, generousempty margins, no cropping. True transparentalpha orplainwhite background. No text, labels, diagram, colors, outlines, ground shadows.\nREQUIRED POSE: NEAR FRONT leg (cyan) bends its elbow and has its hoof CLEARLY RAISED OFF the floor, starting its forward swing. Do NOT plant that nearest front hoof. FAR FRONT (orange) supports on the floor ahead of it. NEAR HIND (lime) lands forward; FAR HIND (purple) trails grounded. Exactlyfourlegs,threehoofcontacts.",
+      "references": [
+        "references/w006-anatomy-master.png",
+        "guides/poses/quad-1.png"
+      ],
+      "review": "Near foreleg lifted correctly in this single pose; not a complete walk cycle.",
+      "result": "sources/w006-single-pose-01.png",
+      "originalOutputFilename": "exec-27a48385-5ff3-422c-ac7b-223a3003e966.png"
+    },
+    {
+      "stage": "individual-full-body-pose",
+      "pose": "quad-3",
+      "prompt": "Create ONE finished whole-character sprite, NOT a sheet or set. Input1 is this exact friendly brown boar identity, short-stocky quadruped anatomy, harness and painterly game style. Input2 is the exact target POSE. Transfer all FOUR leg identities and hoof support/swing positions from the diagram while retaining the short stout proportions from the boar reference. Cyan=nearfore, orange=farfore, lime=nearhind, purple=farhind. These are guide colors only: final legs all natural brown fur, far legs darker and behind. The guide overrides the old reference leg positions. Continuous muscular shoulder and haunch anatomy, real elbows and stifle/hock bends, no puppet seams. FaceRIGHT same side view, same long fullbody, mane/tusks/orangeeye/harness, no gore. ONE square image tile, wholebody occupying same approximately85%width, rootcenter, common imaginaryfloor at75%imageheight, generousempty margins, no cropping. True transparentalpha orplainwhite background. No text, labels, diagram, colors, outlines, ground shadows.\nREQUIRED POSE: NEAR FRONT leg(cyan) has advanced FORWARD to the RIGHT and now plants its hoof AHEAD of the FAR FRONT(orange) hoof. FAR HIND(purple) bends/lifts its hoof CLEARLY OFF the floor behind the near hind. Near hind supports. Exactlyfourlegs,threehoofcontacts; retain natural short boar proportions.",
+      "references": [
+        "references/w006-anatomy-master.png",
+        "guides/poses/quad-3.png"
+      ],
+      "review": "Single exploratory pose; not accepted as a coherent complete cycle.",
+      "result": "sources/w006-single-pose-03.png",
+      "originalOutputFilename": "exec-b84bfaca-e22d-4a4b-9ee7-671bc5dc00ed.png"
+    },
+    {
+      "stage": "individual-full-body-pose",
+      "pose": "biped-1",
+      "prompt": "Edit this ONE complete skeleton sprite into the OPPOSITE step of a walk. Preserve exact skull, helmet, weapon hand, outfit, side-facingRIGHT camera, paintedstyle, proportions, squarecanvas andfloorheight. Redraw the leg pose, not the equipment. The previous image has two uncrossed thighs; the new pose must have the THIGHS OVERLAP/CROSS IN SIDE-VIEW PROJECTION as the feet exchange forward/backward positions relative to their hip sockets. The camera-near thigh beginning under the LEFT edge of the tunic must extend diagonally DOWN AND RIGHT, across IN FRONT of the far thigh, ending in the forward RIGHT boot landing on its heel. The far thigh beginning under the RIGHT tunic hem must extend DOWN AND LEFT BEHIND that near thigh, ending in the trailing LEFT boot on its toe. Keep two distinct natural human knees and ankles; no fusedlegs, no knock-kneedcrouch, no mirroredcharacter. Clear opposite-legged contact pose, long readable stride, supportknees gentlyextended. One full-body handpainted sprite, transparentalpha orpurewhite, no text/shadow.",
+      "references": [
+        "sources/w002-single-pose-05.png"
+      ],
+      "review": "Single exploratory pose; not accepted as a coherent complete cycle.",
+      "result": "sources/w002-single-pose-01.png",
+      "originalOutputFilename": "exec-009d5b67-95e4-4789-906a-382d3e0885b8.png"
+    },
+    {
+      "stage": "individual-full-body-pose",
+      "pose": "biped-3",
+      "prompt": "Edit this ONE complete skeleton sprite into the OPPOSITE passing step of a walk. Preserve exact skull,helmet,spear hand,outfit,RIGHT-facing camera,scale,squarecanvas andfloor. Swap which anatomical leg is supporting and which is swinging. The CAMERA-NEAR LEG from the LEFT tunic/hip is now the nearlySTRAIGHT support with its boot flat on the floor. The FAR LEG from the RIGHT tunic/hip bends its knee forward but its raisedboot passes BEHIND the straight support shin, partly OCCLUDED BY the near support leg. In the reference the raisedboot overlaps IN FRONT; reverse this overlap in the output. Draw two distinct legs with consistent hip origins, straight visible supporting shin in front, bent swinging leg behind. A narrow passing silhouette, pelvis slightlyhigh, no squat or legholes. Integratedwholecharacter illustration, no puppet parts, friendlypaintedgameart, transparentalpha orplainwhite, no guidecolors/text/shadow.",
+      "references": [
+        "sources/w002-single-pose-07.png"
+      ],
+      "review": "Single exploratory pose; not accepted as a coherent complete cycle.",
+      "result": "sources/w002-single-pose-03.png",
+      "originalOutputFilename": "exec-adffd50b-91f2-416c-9524-3f084316fad1.png"
+    }
+  ],
+  "disposition": "Exploratory full-body animation trials; no completed eight-frame cycle accepted or promoted. Source/pose identity remains unreliable in generated sheets. Repo/PR runtime assets untouched this turn.",
+  "pathBase": "package-root",
+  "portability": "Exact prompt and review text retained. Local output_hint boilerplate replaced by result and originalOutputFilename; reference paths resolve within this package."
+}

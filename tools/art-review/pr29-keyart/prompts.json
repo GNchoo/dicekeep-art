@@ -1,0 +1,18 @@
+{
+  "tool": "built-in imagegen",
+  "referenceCommit": "f9038af528dc610384f545f5c055bf9abb151f4a",
+  "jobs": [
+    {
+      "key": "portrait",
+      "reference": "ui/title-keyart-p.jpg",
+      "output": "sources/portrait-d6.png",
+      "prompt": "Use case: precise-object-edit. EDIT this existing game loading-screen BACKGROUND. Change ONLY the large stone six-sided die atop the castle. Preserve the castle, stairway, mountains, birds, clouds, lighting, palette, dark empty UI area, composition and full framing.\nCorrect the die to a physically possible standard six-sided D6. The TWO visible adjacent faces must have DIFFERENT proper pip patterns: screen-LEFT face exactly FIVE circular recessed pips (four corners plus center); screen-RIGHT face exactly THREE circular recessed pips in ONE DIAGONAL (upper-left, center, lower-right within that perspective face). Dark carved stone holes of consistent size in perspective, regularly spaced in the standard3×3 face grid. Erase unwanted holes completely, filling with matching aged ivory stone; no ghost holes or dot-shaped stains. No duplicated5/5 faces. Standard hidden opposite pairs1–6,2–5,3–4; do not add another visible face or rotate the cube.\nAdd SUBTLE physical damage: a small irregular chip missing from one upper outside corner, a little edge spalling and a few restrained hairline cracks. Still a solid recognizable cube, slightly broken, not shattered or collapsing. Keep all pips intact, distinct and separate from cracks/chips. Photorealistic weathered ivory stone matching the dark fantasy key art. No text, logo, UI, loading bar, border, new objects or composition changes. Preserve the original aspect ratio.\nKeep PORTRAIT2:3 framing (original1400×2100), existing large die/castle location and scale."
+    },
+    {
+      "key": "landscape",
+      "reference": "ui/title-keyart-l.jpg",
+      "output": "sources/landscape-d6-initial.png",
+      "prompt": "Use case: precise-object-edit. EDIT this existing game loading-screen BACKGROUND. Change ONLY the large stone six-sided die atop the castle. Preserve the castle, stairway, mountains, birds, clouds, lighting, palette, dark empty UI area, composition and full framing.\nCorrect the die to a physically possible standard six-sided D6. The TWO visible adjacent faces must have DIFFERENT proper pip patterns: screen-LEFT face exactly FIVE circular recessed pips (four corners plus center); screen-RIGHT face exactly THREE circular recessed pips in ONE DIAGONAL (upper-left, center, lower-right within that perspective face). Dark carved stone holes of consistent size in perspective, regularly spaced in the standard3×3 face grid. Erase unwanted holes completely, filling with matching aged ivory stone; no ghost holes or dot-shaped stains. No duplicated5/5 faces. Standard hidden opposite pairs1–6,2–5,3–4; do not add another visible face or rotate the cube.\nAdd SUBTLE physical damage: a small irregular chip missing from one upper outside corner, a little edge spalling and a few restrained hairline cracks. Still a solid recognizable cube, slightly broken, not shattered or collapsing. Keep all pips intact, distinct and separate from cracks/chips. Photorealistic weathered ivory stone matching the dark fantasy key art. No text, logo, UI, loading bar, border, new objects or composition changes. Preserve the original aspect ratio.\nKeep WIDE LANDSCAPE12:5 framing (original2400×1000), small centered distant castle/die and dark extended sides unchanged."
+    }
+  ]
+}

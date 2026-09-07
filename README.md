@@ -119,20 +119,30 @@ iOS: `ios/` 도 커밋되어 있고 SPM 이라 CocoaPods 이 필요 없다. Mac 
 키아트·인피니티 몬스터는 `tools/img-gen.mjs` 로 뽑는다. 키는 **환경변수로만** 준다(파일·커밋 금지).
 
 ```bash
-OPENAI_API_KEY=… node tools/img-gen.mjs tools/jobs/keyart.json            # gen/keyart/portrait-*.png, landscape-*.png (n=2 씩)
+OPENAI_API_KEY=… node tools/img-gen.mjs tools/jobs/keyart.json            # gen/keyart/portrait-*.png, landscape-*.png
 node tools/keyart-build.mjs --portrait=gen/keyart/portrait-1.png --landscape=gen/keyart/landscape-1.png   # ui/title-keyart-p|l|l-blur.jpg
-OPENAI_API_KEY=… node tools/img-gen.mjs tools/jobs/inf-w01-05.json       # 정지컷 (투명 배경) → 고른 것을 casual/enemies/inf/wNNN.png 로
-OPENAI_API_KEY=… node tools/img-gen.mjs tools/jobs/inf-w01-05-walk.json  # 정지컷을 참조로 2×2 걷기 시트
-node tools/sheet-check.mjs gen/inf/w001-walk-1.png --sheet-out=casual/enemies/inf/w001-walk-2x2.png     # 칸 편차 검사 + 저장
-node tools/png-pack.mjs --size=512 casual/enemies/inf/w001.png            # 게임용으로 줄이기: 정지컷 512², 시트 --size=1024 (256색 팔레트, 2MB → 0.1~0.35MB)
+
+# 몬스터 — 잡 파일은 생성기가 만든다 (content.js 이름·등급·이동·단계 팔레트 + tools/inf-roster.json 영문 묘사·보행 방식)
+node tools/inf-jobs.mjs --waves=6-10 --mode=multi --out=tools/jobs/inf-w06-10.json   # 한 장에 몬스터 5마리(행) × 4프레임(열) + 보스 정지컷
+OPENAI_API_KEY=… node tools/img-gen.mjs tools/jobs/inf-w06-10.json                   # gen/inf/w006-w009-1.png, gen/inf/b010-1.png
+node tools/sheet-split.mjs gen/inf/w006-w009-1.png --rows=w006,w007,w008,w009 --cols=4 --pack   # 행마다 안정화 → casual/enemies/inf/wNNN-walk-2x2.png + wNNN.png(정지컷 = 1칸)
+
+node tools/inf-jobs.mjs --waves=1-5 --refs --out=tools/jobs/inf-w01-05-walk.json    # 몬스터마다 시트 1장 (정지컷을 참조로 같은 캐릭터), --frames=6 이면 3x2
+OPENAI_API_KEY=… node tools/img-gen.mjs tools/jobs/inf-w01-05-walk.json
+node tools/sheet-check.mjs gen/inf/w001-walk-1.png --sheet-out=casual/enemies/inf/w001-walk-2x2.png --pack   # 편차·자세 판정 + 안정화 저장 (--still-out=… 으로 정지컷도)
 ```
 
+- **걷기 주기**: 프롬프트가 프레임마다 자세를 지정한다 — 접지(오른발 앞) → 통과(뒷다리가 몸 아래로) → 접지(왼발 앞) → 통과. 네발은 대각 속보, 날것은 날개 위·수평·아래·수평, 뱀은 S자 이동, 유령은 제자리 부유(`inf-roster.json` `gait`). 머리·몸통·장비·크기는 모든 칸에서 같고 발은 같은 바닥선, 칸의 65% 이하·여백 15%.
+- **안정화**: 그래도 칸마다 크기·발 위치·가로 위치가 조금씩 어긋나므로(높이 10~30%, 발 5~15%) `sheet-check`/`sheet-split` 이 실루엣 넓이로 크기를 ±15% 안에서 맞추고 발끝을 공통 바닥선에, 무게중심을 공통 축에 맞춰 다시 굽는다. 이웃 칸에서 넘어온 창끝 같은 경계 조각(실루엣 3% 미만)은 지운다. `game.js processSheet` 도 같은 규칙으로 인피니티 시트를 맞추므로 예전에 넣은 시트도 흔들리지 않는다. 확인: `tools/e2e/walk-jitter.js`(발·중심 편차 0~1px), 자세 판정 `static`(안 걷음)·`twoPose`(두 자세 반복)가 뜨면 다시 뽑는다.
+- **한 장에 여러 마리(`--mode=multi`)**: 세로 1024×1536 에 5행(몬스터) × 4열(프레임), 칸 256×307. 게임은 42~58px(3배 DPR 174px)로 그리므로 충분하고 이미지 값이 몬스터당 약 1/5 로 준다. 대신 한 행이 나쁘면 그 장을 통째로 다시 뽑는다 — L 등급이 많은 단계나 세부가 중요한 보스는 `--mode=single`. 정지컷은 시트 1칸(접지 자세)에서 자르므로 정지컷 잡은 따로 없다. `n` 은 기본 1 (후보 2장은 값도 2배).
+- **날것·보스**: 날것(`move: 'air'`)은 날개가 내려간 칸의 맨 아래가 발이 아니라 날개 끝이므로 발끝 대신 **무게중심 y** 로 맞춘다(`sheet-check --anchor=center`, `sheet-split` 은 content.js 를 읽어 자동, 게임 로더도 동일). 보스는 걷기 시트 없이 정지컷 1장(`casual/bosses/inf/bNNN.png`, 1024² 팔레트 PNG)이고 `INFINITY.artSizeBoss`(S 96 · M 108 · L 120)로 그린다.
+- **2026-09-07 납품 (`gpt-image-2`, 7장 ≈ 이미지 출력 11,908 토큰)**: 1~5 걷기 시트 재생성(정지컷 참조, 접지→통과→접지→통과 주기 확인), 6~9 는 한 장(1024×1536, 4행×4열)에서 분할, 10 보스 역병 쥐왕 정지컷. `INF_ART_READY = [1..10]`.
+- **단계 팔레트**: 10웨이브마다 색이 조금씩 바뀐다 — 전부 악당 톤(붉은·검은·보라 계열, 밝은 색·파스텔 금지). `content.js INF_PALETTE`(`INFINITY.paletteOf(w)`) 가 원본이고 생성기가 프롬프트 끝에 붙인다. 1단계 핏빛 녹·잿빛 → 2 검은 털·먹빛 초록 → 3 탁한 청록·검보라 → 4 와인빛 자주·검은 가죽 → 5 검푸른 강철·검붉은 휘장 → 6 창백한 뼈·검보라 → 7 짙은 보라·자수정 → 8 검붉은 비늘·흑요석 → 9 지옥의 진홍·검은 뿔 → 10 심연의 검정·보라 공허.
 - 프록시 환경(Claude Code 클라우드 등)에서는 Node 내장 fetch 가 `HTTPS_PROXY` 를 안 읽으므로 `NODE_USE_ENV_PROXY=1` 을 함께 준다.
 - 모델은 `gpt-image-*` 중 최신을 고른다(`--model=` 로 고정 가능). `gpt-image-2` 는 `input_fidelity` 를 받지 않아 스크립트가 알아서 뺀다.
-- 시트 검사 경고는 대부분 '캐릭터가 칸을 96% 넘게 채움'이라 곧바로 불량은 아니다 — 칸 경계선을 넘는지(이웃 칸에 조각이 남는지)와 발 위치 편차를 눈으로 보고 고른다. 잡 파일의 여백 지시(칸의 70% 이하)를 넣은 뒤로 경계 접촉이 줄었다.
 - 새 그림은 실루엣이 가늘어 기존 만화 로스터보다 작게 읽히므로 `content.js` `INFINITY.artSize`(S 42 · M 50 · L 58, 캔버스 px)로 등급별 고정 높이를 준다(`game.js spawnEnemy`). 게임 안 확인은 `tools/e2e/inf-art-check.js`.
 
-그 뒤 `content.js` `INF_ART_READY` 에 웨이브 번호를 적으면 그 웨이브가 새 그림·새 이름을 쓴다(ART-PROMPTS §6). `gen/` 은 중간 산출물이라 커밋하지 않는다.
+그 뒤 `content.js` `INF_ART_READY` 에 웨이브 번호를 적으면 그 웨이브가 새 그림·새 이름을 쓴다(ART-PROMPTS §6). 6프레임 시트(`--frames=6`, 3x2)는 `INF_MONSTERS[w].walk = '3x2'` 로 적는다. `gen/` 은 중간 산출물이라 커밋하지 않는다.
 
 ## 라이선스
 

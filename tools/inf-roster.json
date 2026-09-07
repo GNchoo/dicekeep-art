@@ -1,0 +1,545 @@
+{
+ "_note": "인피니티 101웨이브 몬스터의 영문 묘사(desc)와 보행 방식(gait: biped·quad·fly·slither·float). 이름·등급·이동·단계·팔레트는 content.js INF_MONSTERS / INF_PALETTE 가 원본이고, tools/inf-jobs.mjs 가 둘을 합쳐 잡 파일을 만든다. 1~10은 과한 혐오감을 덜어낸 게임 캐릭터 방향으로 수정했다. 11~101의 기존 묘사는 유지하되 재생성 시 inf-jobs.mjs의 공통 아트 제한(고어·신체 훼손·실사 공포 금지)이 묘사·팔레트·참조 이미지보다 우선한다. 단계 팔레트는 의상·장비의 색으로 해석하며 구체적인 캐릭터 색과 명암 가독성을 유지한다.",
+ "1": {
+  "name": "역병쥐",
+  "gait": "quad",
+  "desc": "A small adventurous rat with intact charcoal fur, a rounded compact body, alert expressive eyes, a leather collar and exactly one simple curved tail. Four sturdy little paws, a curious determined face and a clean game-character silhouette."
+ },
+ "2": {
+  "name": "해골 잡졸",
+  "gait": "biped",
+  "desc": "A small skeleton footman with clean simplified ivory bones and a rounded expressive skull, wearing an iron kettle helmet, an olive tabard and sturdy boots, carrying a compact spear. Chunky toy-like joints and a determined but approachable face."
+ },
+ "3": {
+  "name": "묘지 오우거",
+  "gait": "biped",
+  "desc": "A broad, chunky grave ogre with intact olive skin, a simple brown hood, a leather vest and a solid wooden club. Rounded shoulders, sturdy boots, a grumpy expressive face and a heavy but balanced game-character build."
+ },
+ "4": {
+  "name": "까마귀 정찰병",
+  "gait": "fly",
+  "desc": "A compact raven scout in flight with intact charcoal feathers, a rounded body, a clear expressive eye and a tiny leather harness carrying a small warm lantern. Broad simplified wings and a clean readable silhouette."
+ },
+ "5": {
+  "name": "고블린 창병",
+  "gait": "biped",
+  "desc": "A wiry goblin spearman with smooth muted green skin, large expressive ears, simple leather armor, a compact iron spear and a small round wooden shield. A mischievous determined grin, sturdy boots and clearly separated limbs."
+ },
+ "6": {
+  "name": "썩은 멧돼지",
+  "gait": "quad",
+  "desc": "A stocky wild boar with intact brown fur, a rounded sturdy body, both ears intact and small worn metal caps on its tusks. Four stout legs, an expressive determined face and a heavy low-running silhouette."
+ },
+ "7": {
+  "name": "무덤 파는 구울",
+  "gait": "biped",
+  "desc": "A stooped grave-digging ghoul with a smooth gray-green face, simple hood and work tunic, complete gloves and sturdy boots, carrying a compact shovel. Broad rounded shapes, a tired grumpy expression and a clean intact game-character body."
+ },
+ "8": {
+  "name": "시체파리 떼",
+  "gait": "fly",
+  "desc": "A small organized group of rounded dark teal fantasy flies with simple expressive eyes and translucent cartoon wings, clustered around one small carved skull-shaped amulet. Keep the group compact and its fly count, body positions and amulet identical across frames; only the wings beat."
+ },
+ "9": {
+  "name": "녹슨 철갑 오크",
+  "gait": "biped",
+  "desc": "A broad orc guard with an intact expressive face, small rounded tusks and complete rust-colored plate armor with a sturdy helmet. Carrying a compact axe and shield, with chunky boots and a massive balanced silhouette."
+ },
+ "10": {
+  "name": "역병 쥐왕",
+  "boss": true,
+  "second": null,
+  "bossDesc": "The Plague Rat King: a large upright rat monarch with intact charcoal fur and a rounded expressive face, wearing a simple crown, broad bracers and a wine-red cape. Exactly one curved tail, two sturdy feet and a proud imposing but approachable stance. Full character standing freely, with no pedestal, bone pile or surrounding debris."
+ },
+ "11": {
+  "name": "도토리다람쥐",
+  "gait": "quad",
+  "desc": "A gaunt black-furred squirrel with a ragged, mud-caked tail, clutching a cracked acorn studded with thorns like a mace; bared chipped teeth, dull amber eyes glaring, hunched on its haunches ready to lunge."
+ },
+ "12": {
+  "name": "수리부엉이",
+  "gait": "fly",
+  "desc": "A massive eagle owl with tattered black feathers and ink-dark green mottling, hooked scarred beak, huge dull amber eyes fixed in a hateful stare; talons caked in dried mud, wings half-spread as it hovers menacingly."
+ },
+ "13": {
+  "name": "아기여우",
+  "gait": "quad",
+  "desc": "A small fox cub with matted black fur, torn ear and a dried-mud muzzle, lips peeled back over needle fangs; dull amber eyes glow with feral hunger, body low and tense, tail bristling like a burnt brush."
+ },
+ "14": {
+  "name": "오소리",
+  "gait": "quad",
+  "desc": "A hulking badger with coarse black fur streaked ink-dark green with moss, thick claws worn to digging blades, crusted in dried mud; scarred snout wrinkled in a snarl, dull amber eyes narrowed, shoulders braced low over the earth."
+ },
+ "15": {
+  "name": "도적너구리",
+  "gait": "biped",
+  "desc": "A wiry raccoon standing upright, black fur patched with dried mud, a ragged ink-dark green hood over its bandit mask, a stolen notched dagger in one paw and a burlap loot sack slung behind; dull amber eyes sly and cruel."
+ },
+ "16": {
+  "name": "검독수리",
+  "gait": "fly",
+  "desc": "A huge eagle cloaked in black feathers, scarred hooked beak, dull amber eyes burning with predatory hate; ragged wingtips, talons clotted with dried mud, chest scored with old wounds, hovering with wings spread wide and head lowered."
+ },
+ "17": {
+  "name": "회색늑대",
+  "gait": "quad",
+  "desc": "A lean, scarred wolf with shaggy black fur matted in dried mud and ink-dark green forest grime, one ear torn, lips curled over long fangs, dull amber eyes glaring; head low, hackles raised, stance stiff and ready to strike."
+ },
+ "18": {
+  "name": "가시고슴도치",
+  "gait": "quad",
+  "desc": "A small hedgehog bristling with long black quills sharpened like iron needles, several snapped and caked with dried mud; ink-dark green moss clings to its back, pinched face sneering, dull amber eyes glinting, hunched and ready to roll."
+ },
+ "19": {
+  "name": "불곰",
+  "gait": "quad",
+  "desc": "A colossal bear with matted black fur crusted in dried mud, muzzle crossed with deep scars, chipped claws long as knives; ink-dark green moss hangs from its shoulders, jaws open in a roar, dull amber eyes murderous, weight set on all fours."
+ },
+ "20": {
+  "name": "고목 정령",
+  "boss": true,
+  "gait": "biped",
+  "bossDesc": "An ancient hollow tree spirit towering on gnarled root-legs, black bark split with rot and ink-dark green fungus, a crooked face carved by lightning with two dull amber eyes smoldering deep in the knots; broken branches raised like claws, dried mud and bones tangled in its roots.",
+  "second": "거대 수사슴",
+  "secondGait": "quad",
+  "secondDesc": "A giant stag with black hide scarred by old traps, antlers sprawling like dead thorn-branches hung with ink-dark green moss and shreds of rotted banner; hooves caked in dried mud, nostrils flared, dull amber eyes wild with rage, head lowered to gore."
+ },
+ "21": {
+  "name": "늪지렁이",
+  "gait": "slither",
+  "desc": "A thick swamp worm with glistening black-purple segments and a murky teal underbelly, a ringed mouth of tiny hooked teeth gaping open; faint toxic glints bead along its slime-coated hide as it rears from the muck."
+ },
+ "22": {
+  "name": "왕두꺼비",
+  "gait": "quad",
+  "desc": "A bloated giant toad with warty murky teal skin blotched black-purple, wet folds sagging over a wide scarred jaw, faint toxic glints oozing from its poison glands; bulging eyes with slit pupils glare hatefully, squat body coiled to leap."
+ },
+ "23": {
+  "name": "도롱뇽",
+  "gait": "quad",
+  "desc": "A sleek cave salamander with slick black-purple skin, murky teal spots weeping faint toxic glints, a wide flat head with needle teeth and pale sightless eyes; long tail curled, claws splayed on wet stone, body tensed low."
+ },
+ "24": {
+  "name": "왕모기",
+  "gait": "fly",
+  "desc": "A giant mosquito with a body of wet black-purple chitin, murky teal veined wings a blur, a long barbed proboscis dripping faint toxic glints; spindly jointed legs dangling, compound eyes cold and hungry as it hovers."
+ },
+ "25": {
+  "name": "동굴거미",
+  "gait": "quad",
+  "desc": "A cave spider with a bulbous abdomen of wet black-purple chitin, murky teal markings, eight bristled legs braced on slick rock; clustered eyes gleam with faint toxic glints, fangs dripping venom, web strands trailing from its spinnerets."
+ },
+ "26": {
+  "name": "독전갈",
+  "gait": "quad",
+  "desc": "A poison scorpion armored in wet black-purple chitin with murky teal seams, pincers raised and serrated, segmented tail arched high with a barbed stinger beading faint toxic glints; tiny eyes glitter above clicking mandibles."
+ },
+ "27": {
+  "name": "늪악어",
+  "gait": "quad",
+  "desc": "A monstrous swamp crocodile with black-purple armored hide slick with slime, murky teal algae crusting its ridged back, a scarred snout full of broken teeth; faint toxic glints in the water beading on its scales, low and coiled to lunge."
+ },
+ "28": {
+  "name": "개미귀신",
+  "gait": "quad",
+  "desc": "A giant antlion larva heaving out of a sand pit, plated in wet black-purple chitin with murky teal underplates, enormous sickle jaws spread wide and studded with spines; small cold eyes, faint toxic glints dripping from its mandibles."
+ },
+ "29": {
+  "name": "아나콘다",
+  "gait": "slither",
+  "desc": "A colossal anaconda with thick coils of black-purple scales patterned in murky teal, wet from the swamp, a broad scarred head with fangs bared and a forked tongue flicking; faint toxic glints in its slit eyes, body half-raised to strike."
+ },
+ "30": {
+  "name": "두꺼비 마녀",
+  "boss": true,
+  "gait": "biped",
+  "bossDesc": "A hunched toad witch with warty murky teal skin and a sagging black-purple robe of rotted swamp weed, a crooked staff topped with a skull leaking faint toxic glints; bulging eyes narrowed in malice, a wide mouth split in a cruel grin, webbed fingers clutching a bubbling poison vial.",
+  "second": "박쥐 군주",
+  "secondGait": "fly",
+  "secondDesc": "A monstrous bat lord with vast torn wings of black-purple membrane, matted fur crusted murky teal with cave slime, a crown of jagged bone spurs above a snarling snout; fangs bared, ears slashed, faint toxic glints in its eyes as it hangs mid-hover."
+ },
+ "31": {
+  "name": "고블린 정찰병",
+  "gait": "biped",
+  "desc": "A scrawny goblin scout in a tattered wine-purple hood and black leather jerkin, a rusted iron knife clutched low, a scarred pointed ear notched with old fights; beady eyes darting with cunning, crouched ready to bolt."
+ },
+ "32": {
+  "name": "고블린 글라이더",
+  "gait": "fly",
+  "desc": "A wiry goblin strapped into a crude glider of wine-purple sailcloth stretched over rusted iron struts and black leather harness, dangling a spiked bomb from one claw; cracked goggles, sharp teeth bared in a mad grin, hovering on the wind."
+ },
+ "33": {
+  "name": "방패 고블린",
+  "gait": "biped",
+  "desc": "A stocky goblin buried in thick rusted iron plate armor far too large for it, a massive dented tower shield strapped to one arm, wine-purple rags trailing from the black leather straps; only a snarling underbite and cruel eyes show beneath the visor."
+ },
+ "34": {
+  "name": "오크 전사",
+  "gait": "biped",
+  "desc": "A hulking orc warrior with scarred hide, black leather pauldrons and a wine-purple war sash, hefting a huge rusted iron cleaver across his shoulders; tusks jutting from a heavy jaw, brow furrowed in murderous rage, feet planted wide."
+ },
+ "35": {
+  "name": "트롤 굴착병",
+  "gait": "biped",
+  "desc": "A massive troll digger with warty hide and a hunched spine, black leather apron over a wine-purple loincloth, gripping a huge rusted iron pickaxe caked in soil; jagged teeth, small furious eyes, knuckles scraping the ground."
+ },
+ "36": {
+  "name": "와이번 기수",
+  "gait": "fly",
+  "desc": "A goblin rider in wine-purple rags and black leather perched atop a scarred wyvern with tattered wings and a rusted iron saddle, spear couched, both faces twisted in hatred; the wyvern's tail barb dangles as it hovers, jaws agape."
+ },
+ "37": {
+  "name": "홉고블린 궁수",
+  "gait": "biped",
+  "desc": "A tall hobgoblin archer in black leather brigandine and a wine-purple cloak, a recurved bow with rusted iron arrowheads drawn to the cheek, quiver bristling at his hip; scarred flat face, narrowed eyes sighting down the shaft."
+ },
+ "38": {
+  "name": "코볼트",
+  "gait": "biped",
+  "desc": "A small scaly kobold in a patched wine-purple tunic and black leather scraps, clutching a rusted iron spear taller than itself, a dented iron cap over its snout; sharp little teeth bared, eyes glinting with spite, tail lashing."
+ },
+ "39": {
+  "name": "산적 두목",
+  "gait": "biped",
+  "desc": "A burly human bandit chief in a wine-purple coat over a black leather vest, twin rusted iron sabers at his belt, a cracked skull-mask pushed up on his brow; grizzled beard, gap-toothed sneer, one boot on a looted chest."
+ },
+ "40": {
+  "name": "고블린 왕",
+  "boss": true,
+  "gait": "biped",
+  "bossDesc": "A squat goblin king swathed in a moth-eaten wine-purple mantle and black leather armor studded with rusted iron, a crooked crown of scrap metal hammered onto his skull, a jagged iron scepter in one claw; sunken eyes hateful and cunning, thin lips curled in a rotten-toothed sneer, shoulders hunched.",
+  "second": "오우거 장사",
+  "secondGait": "biped",
+  "secondDesc": "A towering ogre strongman with slab-like scarred muscle, black leather harness and wine-purple breeches, rusted iron chains wrapped around his fists and a massive iron-bound club resting on one shoulder; tiny brutal eyes, a jutting jaw of broken teeth, standing wide-legged like a wall."
+ },
+ "41": {
+  "name": "방패병",
+  "gait": "biped",
+  "desc": "A broad kingdom shieldbearer in dented blued black steel plate, a tall kite shield emblazoned with a flaking tarnished gold crest, a dark red tabard torn at the hem; a short sword drawn, visor raised over a grim scarred face."
+ },
+ "42": {
+  "name": "공병",
+  "gait": "biped",
+  "desc": "A kingdom sapper in scuffed blued black steel half-plate and a dark red hood, shouldering a heavy iron mattock and a coil of fuse, powder kegs strapped to his back with tarnished gold buckles; soot-blackened face, hard cold eyes."
+ },
+ "43": {
+  "name": "창기병",
+  "gait": "quad",
+  "desc": "A fallen kingdom lancer astride an armored warhorse, both in blued black steel barding and plate, a long lance couched with a tattered dark red pennon, tarnished gold trim on the saddle; the horse's eyes wild, the rider's visor lowered."
+ },
+ "44": {
+  "name": "그리폰 기사",
+  "gait": "fly",
+  "desc": "A griffon knight in blued black steel plate mounted on a scarred griffon with black feathers and a beaked head in a tarnished gold chamfron, a dark red banner streaming from the lance; the beast hovers with wings spread, talons flexed."
+ },
+ "45": {
+  "name": "중장기사",
+  "gait": "biped",
+  "desc": "A massive heavy knight encased head to toe in thick blued black steel plate, a great two-handed sword planted before him, a shredded dark red cloak and tarnished gold heraldry across the breastplate; the slit visor empty and merciless."
+ },
+ "46": {
+  "name": "종자",
+  "gait": "biped",
+  "desc": "A young squire in an ill-fitting blued black steel breastplate over a dark red gambeson, carrying a chipped sword and his lord's tarnished gold-fringed banner; gaunt face hardened by war, eyes cold and fanatical, stance rigid."
+ },
+ "47": {
+  "name": "석궁병",
+  "gait": "biped",
+  "desc": "A kingdom crossbowman in blued black steel brigandine and a dark red surcoat, a heavy crossbow raised and loaded with a barbed bolt, a tarnished gold badge on his kettle helm; jaw clenched, one eye squinting down the stock."
+ },
+ "48": {
+  "name": "페가수스 기사",
+  "gait": "fly",
+  "desc": "A pegasus knight in blued black steel plate atop a corrupted pegasus with black feathered wings and tarnished gold barding, a dark red caparison trailing, lance leveled; the winged horse's eyes glow cold, hovering with a slow beat."
+ },
+ "49": {
+  "name": "굴착 노움",
+  "gait": "biped",
+  "desc": "A stunted gnome sapper in a blued black steel helm and mail, dark red scarf over a wiry beard, gripping a blued steel drill-auger and a tarnished gold-plated lantern; squinting hateful eyes, dirt-caked hands, hunched over a fresh tunnel."
+ },
+ "50": {
+  "name": "강철 성주",
+  "boss": true,
+  "gait": "biped",
+  "bossDesc": "A towering castellan in ornate blued black steel full plate etched with tarnished gold filigree, a great dark red cloak hanging in tatters, a massive warhammer crowned with the kingdom's broken sigil; horned helm with a cold slit visor, one gauntlet resting on the hammer, radiating tyrannical stillness.",
+  "second": "공성 골렘",
+  "secondGait": "biped",
+  "secondDesc": "A colossal siege golem of riveted blued black steel plates and grinding gears, a battering-ram fist on one arm and a fortress shield on the other, tarnished gold rivets and a dark red banner nailed to its back; furnace-slit eyes glowing cold, standing like a walking tower."
+ },
+ "51": {
+  "name": "좀비",
+  "gait": "biped",
+  "desc": "A hulking zombie with rotting grey-blue flesh sloughing from pale bone, black-violet shadow pooling in its hollow chest, one arm hanging by sinew, a broken blade lodged in its shoulder; slack jaw, milky eyes lit with a cold grey-blue glow."
+ },
+ "52": {
+  "name": "도깨비불",
+  "gait": "float",
+  "desc": "A will-o'-wisp of cold grey-blue flame wrapped in black-violet shadow, a faint pale bone skull grinning inside the fire, wisps of smoke trailing below like tattered cloth; the flame flickers with a malicious, watchful intelligence as it hovers."
+ },
+ "53": {
+  "name": "해골 병사",
+  "gait": "biped",
+  "desc": "A skeleton soldier of pale cracked bone in a battered breastplate and rotted black-violet tabard, a notched sword and a splintered round shield raised; cold grey-blue glow burning in its empty sockets, jaw locked in a silent snarl."
+ },
+ "54": {
+  "name": "뼈다귀 강아지",
+  "gait": "quad",
+  "desc": "A small skeletal hound of pale bone held together by black-violet shadow, ribs exposed, a spiked collar of black iron, jaws of needle teeth parted in a growl; cold grey-blue glow flickering in the eye sockets, hackles of bone spurs raised."
+ },
+ "55": {
+  "name": "구울",
+  "gait": "biped",
+  "desc": "A lanky ghoul with taut grey-blue skin stretched over pale bone, long filthy claws, black-violet shadow clinging to its hunched back, a torn grave shroud around its waist; lipless mouth of jagged teeth, eyes lit with a cold grey-blue glow."
+ },
+ "56": {
+  "name": "무덤손",
+  "gait": "quad",
+  "desc": "A gigantic grave hand of pale bone and rotted sinew clawing up from the earth, fingers tipped with cracked black talons, black-violet shadow dripping from the wrist, an iron manacle and chain; cold grey-blue glow seeping between the knuckles."
+ },
+ "57": {
+  "name": "해골 기사",
+  "gait": "biped",
+  "desc": "A skeleton knight in blackened full plate with pale bone showing at every joint, a great sword and a battered shield bearing a faded crest, black-violet shadow billowing as a cloak; cold grey-blue glow burning behind a cracked visor, stance unshakable."
+ },
+ "58": {
+  "name": "저주 인형",
+  "gait": "biped",
+  "desc": "A small cursed doll of stitched grey-blue cloth and pale bone porcelain, cracked face split by a sewn grin, one button eye replaced by a cold grey-blue glow, black needles jutting from its body; black-violet shadow trails from its jointed limbs."
+ },
+ "59": {
+  "name": "밴시",
+  "gait": "float",
+  "desc": "A wailing banshee with a gaunt pale bone face and hollow sockets lit by cold grey-blue glow, long tangled hair drifting, her body dissolving below the waist into black-violet shadow and torn funeral veils; mouth stretched wide in a silent scream."
+ },
+ "60": {
+  "name": "리치",
+  "boss": true,
+  "gait": "float",
+  "bossDesc": "An ancient lich in layered black-violet robes hung with pale bone talismans, a crown of jagged bone fused to its fleshless skull, a phylactery of cold grey-blue glow chained at its chest, gripping a staff topped with a screaming skull; sockets burning with cold light, posture frozen in arrogant command.",
+  "second": "뼈 용",
+  "secondGait": "fly",
+  "secondDesc": "A colossal bone dragon of pale bleached skeleton with tattered wing membranes of black-violet shadow, a horned skull with a broken jaw of dagger teeth, cold grey-blue glow burning in its sockets and between its ribs; talons dug into the ground, neck arched to roar."
+ },
+ "61": {
+  "name": "불 정령",
+  "gait": "float",
+  "desc": "A fire elemental of roaring deep violet flame with an amethyst-hot core, a hunched torso and clawed arms of fire, a snarling face of shifting embers; black arcane smoke pours from its shoulders as it burns in place."
+ },
+ "62": {
+  "name": "서리 요정",
+  "gait": "fly",
+  "desc": "A cruel frost fairy with jagged amethyst ice wings, skin frosted deep violet, a gown of rime and torn arcane silk, a shard-of-ice dagger held ready; sharp teeth bared in a spiteful smile, black arcane smoke curling from her frostbitten fingertips."
+ },
+ "63": {
+  "name": "흙 정령",
+  "gait": "biped",
+  "desc": "A squat earth elemental of cracked deep violet stone and packed soil, amethyst crystals jutting from its back like spines, thick stubby arms ending in rock fists; a crude scowling face of stone slabs, black arcane smoke seeping from the fissures."
+ },
+ "64": {
+  "name": "천둥새",
+  "gait": "fly",
+  "desc": "A thunderbird with feathers of deep violet storm cloud edged in amethyst lightning, a hooked beak crackling with arcs, talons clenched like grappling hooks; eyes blazing amethyst, black arcane smoke streaming from its wingtips as it hovers."
+ },
+ "65": {
+  "name": "바위 골렘",
+  "gait": "biped",
+  "desc": "A hulking rock golem of deep violet boulders bound by glowing amethyst runes, massive slab arms hanging to the ground, a jagged crevice mouth and two dim amethyst eyes; black arcane smoke drifts from the seams between its stones, stance immovable."
+ },
+ "66": {
+  "name": "수정 정령",
+  "gait": "biped",
+  "desc": "A towering crystal spirit encased in thick plate armor of faceted amethyst and deep violet crystal, a spectral form of black arcane smoke visible through the gaps, a crystalline greatshield and jagged blade; a faceless helm glowing cold from within."
+ },
+ "67": {
+  "name": "마법 고양이",
+  "gait": "quad",
+  "desc": "A sleek arcane cat with deep violet fur and amethyst runes glowing along its spine, split tails trailing black arcane smoke, a tattered enchanted collar; ears flat, fangs bared, slit amethyst eyes narrowed with malevolent cunning."
+ },
+ "68": {
+  "name": "살아있는 마도서",
+  "gait": "fly",
+  "desc": "A living grimoire bound in deep violet leather and amethyst clasps, its pages flapping like wings, a fanged mouth and a single glaring eye opening from the cover; black arcane smoke and torn runes spill from the spine as it hovers."
+ },
+ "69": {
+  "name": "수정 골렘",
+  "gait": "biped",
+  "desc": "A massive crystal golem of jagged amethyst clusters grown over a deep violet stone core, arms ending in shard-cleavers, a head of fractured prisms with a burning inner glow; black arcane smoke leaks from cracks, its weight sunk into a solid stance."
+ },
+ "70": {
+  "name": "대마법사",
+  "boss": true,
+  "gait": "biped",
+  "bossDesc": "A gaunt archmage in sweeping deep violet robes embroidered with amethyst sigils, a tall staff crowned by a floating amethyst orb, spellbooks chained to his belt, black arcane smoke coiling around his skeletal fingers; a hooded, withered face with glowing eyes and a cold contemptuous sneer, poised mid-incantation.",
+  "second": "폭풍 정령",
+  "secondGait": "float",
+  "secondDesc": "A towering storm elemental of churning deep violet thunderheads shot through with amethyst lightning, a vaguely humanoid torso with arms of spiraling wind and a howling face of cloud, black arcane smoke spun into its vortex; crackling arcs leap between clenched storm fists as it looms."
+ },
+ "71": {
+  "name": "드레이크",
+  "gait": "quad",
+  "desc": "A heavy four-legged drake with dark crimson scales and obsidian ridges along its spine, a broad horned skull and jaws leaking smoldering embers, tail ending in a bony club; scarred flanks, claws gouging the ground, eyes burning like coals."
+ },
+ "72": {
+  "name": "새끼용",
+  "gait": "fly",
+  "desc": "A vicious dragon hatchling with dark crimson scales still soft at the belly, stubby obsidian horns, torn membrane wings beating hard to hover; smoldering embers glowing in its throat, tiny fangs bared in a hungry snarl, claws twitching."
+ },
+ "73": {
+  "name": "매머드",
+  "gait": "quad",
+  "desc": "A colossal war mammoth with shaggy dark crimson-stained hide, obsidian-capped tusks curving like scythes, chains and a charred howdah strapped to its back; small furious eyes, scarred trunk raised, smoldering embers clinging to its singed fur."
+ },
+ "74": {
+  "name": "도마뱀 인간",
+  "gait": "biped",
+  "desc": "A lean lizardman with dark crimson scales and an obsidian-scale crest, a crude obsidian-bladed spear and a hide shield, bone fetishes on a cord; forked tongue flicking between fangs, slit eyes glowing like smoldering embers, crouched to strike."
+ },
+ "75": {
+  "name": "코카트리스",
+  "gait": "biped",
+  "desc": "A cockatrice with a rooster's scarred head and obsidian beak, a wattled neck of dark crimson scale, tattered wings and a serpentine tail tipped with a barb; eyes glowing like smoldering embers with petrifying malice, talons splayed."
+ },
+ "76": {
+  "name": "와이번",
+  "gait": "fly",
+  "desc": "A wiry wyvern with dark crimson scales and obsidian spines, torn leathery wings spread wide as it hovers, a whip tail ending in a venom barb; long jaws parted to show fangs and a glow of smoldering embers deep in its throat."
+ },
+ "77": {
+  "name": "모래 벌레",
+  "gait": "slither",
+  "desc": "A young sand worm rearing from cracked earth, ringed body of dark crimson plates edged in obsidian grit, a circular maw lined with rows of glassy teeth; smoldering embers glow between its segments, dust sifting from its hide."
+ },
+ "78": {
+  "name": "베히모스",
+  "gait": "quad",
+  "desc": "A mountainous behemoth with dark crimson hide plated in obsidian slabs, a low horned skull and a maw of tusks, thick legs like pillars braced wide; smoldering embers vent from cracks along its back, small eyes seething beneath a heavy brow."
+ },
+ "79": {
+  "name": "용 전사",
+  "gait": "biped",
+  "desc": "A dragonkin warrior with dark crimson scales, obsidian plate strapped over its chest and shoulders, a huge obsidian greatsword held two-handed, curved horns and a scarred snout; smoldering embers glow from its eyes and between its fangs."
+ },
+ "80": {
+  "name": "화룡",
+  "boss": true,
+  "gait": "quad",
+  "bossDesc": "A great fire dragon armored in dark crimson scales and obsidian horn-plates, vast ragged wings half-folded, a maw of jagged fangs leaking smoldering embers and smoke, heavy chains from old shackles still hanging from its neck; furnace-bright eyes narrowed with ancient hatred, claws sunk into scorched stone.",
+  "second": "히드라",
+  "secondGait": "quad",
+  "secondDesc": "A monstrous hydra with five serpentine heads on scarred necks, dark crimson scales ridged with obsidian spikes, several heads bearing old cauterized stumps regrown into twisted new maws; smoldering embers glow in every eye and throat, fangs dripping, the massive body coiled low and heaving."
+ },
+ "81": {
+  "name": "임프",
+  "gait": "biped",
+  "desc": "A spindly imp with hellish crimson skin cracked to show a dim orange glow beneath, small curling black horns, a barbed tail and a crude iron trident; wide mouth of needle teeth in a wicked grin, crouched on clawed feet."
+ },
+ "82": {
+  "name": "헬하운드",
+  "gait": "quad",
+  "desc": "A hellhound with hairless hellish crimson hide split by fissures glowing dim orange, a ridge of black horn spikes down its spine, iron-studded collar; jaws smoking, fangs long and blackened, eyes like embers, head low in a stalking crouch."
+ },
+ "83": {
+  "name": "지옥 오우거",
+  "gait": "biped",
+  "desc": "A colossal hell ogre with hellish crimson hide seamed with cracks of dim orange glow, thick black horns curling from its brow, chains and a black iron maul slung over one shoulder; tusked underbite, small hateful eyes, hunched and immense."
+ },
+ "84": {
+  "name": "지옥 벌레",
+  "gait": "slither",
+  "desc": "A gigantic hell worm bursting from scorched ground, armored in hellish crimson plates with dim orange glow pulsing through the cracks, rings of black horn spikes around each segment; a flower-like maw peeled open to reveal spiraling teeth."
+ },
+ "85": {
+  "name": "그림자 악귀",
+  "gait": "float",
+  "desc": "A small shadow fiend of smoky black form with a hellish crimson core and thin black horns, long tapering claws, its face a hollow mask cracked with dim orange glow; body trailing into wisps, hovering low with predatory stillness."
+ },
+ "86": {
+  "name": "임프 주술사",
+  "gait": "biped",
+  "desc": "A hunched imp shaman with hellish crimson hide cracked with dim orange glow, black horns hung with bone charms, a skull-topped staff and a bandolier of vials; face painted with ash sigils, teeth bared in a cackling sneer."
+ },
+ "87": {
+  "name": "화염 악마",
+  "gait": "biped",
+  "desc": "A towering flame demon with hellish crimson skin fissured by dim orange glow, great sweeping black horns, membranous wings folded behind, a massive flaming whip and a black iron blade; a bestial face roaring, chest heaving, feet cloven."
+ },
+ "88": {
+  "name": "가고일",
+  "gait": "fly",
+  "desc": "A stone gargoyle with weathered hide of hellish crimson basalt, cracks glowing dim orange, short black horns and bat-like wings spread as it hovers, claws hooked; a grotesque snarling face with fangs, eyes burning cold."
+ },
+ "89": {
+  "name": "지옥 기사",
+  "gait": "biped",
+  "desc": "A hell knight in heavy black iron plate forged with hellish crimson filigree, dim orange glow leaking from every joint, a horned helm of black horn, a serrated greatsword and a shield of demon-face iron; posture rigid, radiating menace."
+ },
+ "90": {
+  "name": "마왕",
+  "boss": true,
+  "gait": "biped",
+  "bossDesc": "A colossal horned demon king with hellish crimson skin webbed by cracks of dim orange glow, four great black horns sweeping back from a crowned brow, vast ragged wings, a black iron greatsword wreathed in fire and armor of fused demon skulls; face set in cold imperial cruelty.",
+  "second": "구덩이 악마",
+  "secondGait": "biped",
+  "secondDesc": "A hulking pit fiend with slab-muscled hellish crimson body, skin cracked with dim orange glow, thick ridged black horns and a spiked tail, wearing black iron chains and a spiked collar; enormous clawed hands, a fanged maw dripping fire, hunched forward like a beast ready to charge."
+ },
+ "91": {
+  "name": "심연 촉수",
+  "gait": "slither",
+  "desc": "A single abyssal black tentacle thrust up from a rift, slick and ridged with rows of barbed suckers, a violet void glow pulsing through translucent veins, tiny star-like eyes dotting its length; the tip curled like a hook, dripping."
+ },
+ "92": {
+  "name": "공허의 눈",
+  "gait": "float",
+  "desc": "A floating eye of the void, an abyssal black orb of veined flesh with a vast star-like pupil ringed by violet void glow, smaller eyes budding from its surface, thin barbed tendrils hanging below; it hovers with unblinking, hateful focus."
+ },
+ "93": {
+  "name": "심연 거인",
+  "gait": "biped",
+  "desc": "A colossal abyss giant of abyssal black flesh and cracked stone-like hide, violet void glow seething in the fissures across its chest and fists, a dozen star-like eyes scattered over a faceless head; shoulders hunched, knuckles dragging, immense and silent."
+ },
+ "94": {
+  "name": "파멸 기사",
+  "gait": "biped",
+  "desc": "A doom knight in jagged abyssal black armor etched with runes of violet void glow, a tattered cloak of shadow, a colossal cleaving sword and a spiked helm; star-like eyes burn behind the visor, every plate edged like a blade, stance unyielding."
+ },
+ "95": {
+  "name": "그림자 암살자",
+  "gait": "biped",
+  "desc": "A lithe shadow assassin wrapped in abyssal black cloth and shadow that frays into smoke, twin curved daggers glowing with violet void light, a hooded, featureless face save for two star-like eyes; crouched low, one blade reversed, utterly silent."
+ },
+ "96": {
+  "name": "파멸 까마귀",
+  "gait": "fly",
+  "desc": "A doom crow with ragged abyssal black feathers that dissolve into void at the edges, a cracked beak leaking violet void glow, three star-like eyes clustered on its skull, talons of black glass; hovering with wings spread, head cocked in cold judgement."
+ },
+ "97": {
+  "name": "공허 골렘",
+  "gait": "biped",
+  "desc": "A towering void golem of floating abyssal black stone fragments held together by violet void glow, a hollow chest revealing a swirling starfield, arms of drifting shards ending in crushing fists; a single star-like eye burning in its jagged head."
+ },
+ "98": {
+  "name": "공허 벌레",
+  "gait": "slither",
+  "desc": "A void worm coiling up from a tear in the ground, abyssal black segmented hide split by seams of violet void glow, a gaping maw of concentric teeth, star-like eyes ringing its head; its body fades into nothing where the light fails."
+ },
+ "99": {
+  "name": "흑요석 거상",
+  "gait": "biped",
+  "desc": "An obsidian colossus clad in thick layered plate armor of abyssal black volcanic glass, seams and runes lit with violet void glow, a monolithic tower shield and a pillar-sized hammer; star-like eyes glare from a slit visor, standing like a fortress."
+ },
+ "100": {
+  "name": "파멸의 군주",
+  "boss": true,
+  "gait": "float",
+  "bossDesc": "A lord of doom in flowing abyssal black robes and jagged armor that drinks the light, a crown of broken void shards hovering above a hooded skull-like face lit by two star-like eyes; a scythe of violet void glow held loosely, void rifts tearing open at his feet.",
+  "second": "공허 용",
+  "secondGait": "fly",
+  "secondDesc": "A vast void dragon of abyssal black scales that fade into starless nothing, wings torn into ribbons of violet void glow, a long skull-like head with a maw of glassy fangs, countless star-like eyes glittering down its neck; talons anchored in stone, body coiled with cosmic menace."
+ },
+ "101": {
+  "name": "종말의 사자",
+  "gait": "biped",
+  "desc": "A hooded herald of the apocalypse in tattered abyssal black vestments, a tall bell-staff and a scroll of violet void glow unfurling from its sleeve, a gaunt masked face with star-like eyes; skeletal hands raised in proclamation, void motes drifting from its hem."
+ }
+}

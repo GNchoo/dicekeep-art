@@ -1,0 +1,261 @@
+{
+  "version": 1,
+  "purpose": "Review only: eight supplied full-drawing poses, with no inferred rig or gameplay gait validation.",
+  "cell": 512,
+  "scale": 1,
+  "outputRootX": 256,
+  "outputFloorY": 460,
+  "frameDelayMs": 120,
+  "waves": [
+    {
+      "wave": 2,
+      "name": "Skeleton / full drawings",
+      "source": "../sources/w002-initial-sheet.png",
+      "background": "checkerboard",
+      "backgroundSeeds": [
+        [
+          192,
+          208
+        ],
+        [
+          590,
+          228
+        ],
+        [
+          269,
+          239
+        ],
+        [
+          1279,
+          241
+        ],
+        [
+          937,
+          246
+        ],
+        [
+          940,
+          298
+        ],
+        [
+          193,
+          696
+        ],
+        [
+          591,
+          721
+        ],
+        [
+          1300,
+          726
+        ],
+        [
+          269,
+          727
+        ],
+        [
+          940,
+          736
+        ],
+        [
+          946,
+          786
+        ],
+        [
+          560,
+          801
+        ]
+      ],
+      "notes": [
+        "Manual variable-width gutters preserve the first pose's toe and the spear tips; equal 384px columns would cut artwork.",
+        "Root X is manually registered at the torso/belt center. One source floor per row preserves pose-to-pose height changes and residual drawing drift.",
+        "The supplied second row appears to repeat the first row's contact/pass/up/contact phases; this preview does not claim eight distinct gait phases."
+      ],
+      "frames": [
+        {
+          "roi": [
+            0,
+            0,
+            430,
+            512
+          ],
+          "rootX": 247,
+          "floorY": 452
+        },
+        {
+          "roi": [
+            430,
+            0,
+            350,
+            512
+          ],
+          "rootX": 567,
+          "floorY": 452
+        },
+        {
+          "roi": [
+            780,
+            0,
+            315,
+            512
+          ],
+          "rootX": 918,
+          "floorY": 452
+        },
+        {
+          "roi": [
+            1095,
+            0,
+            441,
+            512
+          ],
+          "rootX": 1253,
+          "floorY": 452
+        },
+        {
+          "roi": [
+            0,
+            512,
+            430,
+            512
+          ],
+          "rootX": 248,
+          "floorY": 940
+        },
+        {
+          "roi": [
+            430,
+            512,
+            350,
+            512
+          ],
+          "rootX": 568,
+          "floorY": 940
+        },
+        {
+          "roi": [
+            780,
+            512,
+            315,
+            512
+          ],
+          "rootX": 920,
+          "floorY": 940
+        },
+        {
+          "roi": [
+            1095,
+            512,
+            441,
+            512
+          ],
+          "rootX": 1260,
+          "floorY": 940
+        }
+      ],
+      "sourceSha256": "0ae925ca910faf5b4e8c83231b21d234e6e444544ddae43d26b8c239e694784f",
+      "backgroundSeedReview": "Each listed neutral-white component was visually checked in the seed-candidate source overlay: enclosed arm/torso, weapon/body, leg or hoof gap only; colored bones/metal highlights preserved."
+    },
+    {
+      "wave": 6,
+      "name": "Boar / full drawings",
+      "source": "../sources/w006-initial-sheet.png",
+      "background": "checkerboard",
+      "backgroundSeeds": [
+        [
+          993,
+          415
+        ]
+      ],
+      "notes": [
+        "Manual variable-width gutters preserve snouts, tails and hooves; equal 384px columns would cut the first snout.",
+        "Root X is manually registered at the torso/harness. Each row shares a fixed source floor; drawing drift is retained for review.",
+        "The eight drawings are shown in supplied row-major order. Anatomical continuity and distinct footfall phases require visual review."
+      ],
+      "frames": [
+        {
+          "roi": [
+            0,
+            0,
+            402,
+            512
+          ],
+          "rootX": 198,
+          "floorY": 464
+        },
+        {
+          "roi": [
+            402,
+            0,
+            378,
+            512
+          ],
+          "rootX": 571,
+          "floorY": 464
+        },
+        {
+          "roi": [
+            780,
+            0,
+            364,
+            512
+          ],
+          "rootX": 943,
+          "floorY": 464
+        },
+        {
+          "roi": [
+            1144,
+            0,
+            392,
+            512
+          ],
+          "rootX": 1318,
+          "floorY": 464
+        },
+        {
+          "roi": [
+            0,
+            512,
+            394,
+            512
+          ],
+          "rootX": 190,
+          "floorY": 806
+        },
+        {
+          "roi": [
+            394,
+            512,
+            368,
+            512
+          ],
+          "rootX": 560,
+          "floorY": 806
+        },
+        {
+          "roi": [
+            762,
+            512,
+            382,
+            512
+          ],
+          "rootX": 933,
+          "floorY": 806
+        },
+        {
+          "roi": [
+            1144,
+            512,
+            392,
+            512
+          ],
+          "rootX": 1311,
+          "floorY": 806
+        }
+      ],
+      "sourceSha256": "ff9baf3e3bfef5bacd3f9b5fd168e96d37cfc0abeff49bfde7a4e61784f7d97f",
+      "backgroundSeedReview": "Each listed neutral-white component was visually checked in the seed-candidate source overlay: enclosed arm/torso, weapon/body, leg or hoof gap only; colored bones/metal highlights preserved."
+    }
+  ]
+}

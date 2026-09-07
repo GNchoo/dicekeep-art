@@ -1,0 +1,727 @@
+{
+  "version": 1,
+  "scope": "W2/W6 exploratory full-body drawing archive. Accepted complete eight-frame redraw cycles: 0.",
+  "hashPolicy": "PNG/GIF: original bytes. Text/SVG: UTF-8 with CRLF normalized to LF for portable Git checkouts.",
+  "excluded": [
+    "manifest.json",
+    "evidence/validation.json"
+  ],
+  "files": [
+    {
+      "file": "README.md",
+      "role": "documentation-or-tool",
+      "hashMode": "utf8-lf",
+      "sha256": "a096ff893b3373cc61cd02dd27a2c51774686d81d875848e2e24348d7631b7da"
+    },
+    {
+      "file": "REVIEW.md",
+      "role": "documentation-or-tool",
+      "hashMode": "utf8-lf",
+      "sha256": "207a9483b489fbb98a5adc836534c1072d3162971f12106d79504dba25579049"
+    },
+    {
+      "file": "evidence/rebuild-verification.json",
+      "role": "verification-evidence",
+      "hashMode": "utf8-lf",
+      "sha256": "6b303addb90d93b57f9c63c203d12d91a0afe4cb83003049eb901f6a5b7fd046"
+    },
+    {
+      "file": "guides/poses/biped-1.png",
+      "role": "instructional-guide",
+      "hashMode": "bytes",
+      "sha256": "3a0f41e44312e2c6ee54843e7a4fdfea7aed86656f142763a3defcb7b2a3a370",
+      "image": {
+        "format": "png",
+        "width": 384,
+        "height": 512
+      }
+    },
+    {
+      "file": "guides/poses/biped-2.png",
+      "role": "instructional-guide",
+      "hashMode": "bytes",
+      "sha256": "e2e6148d810634275a84821e040d2f835c88d26958a7a0c6448db9a5c38bbaec",
+      "image": {
+        "format": "png",
+        "width": 384,
+        "height": 512
+      }
+    },
+    {
+      "file": "guides/poses/biped-3.png",
+      "role": "instructional-guide",
+      "hashMode": "bytes",
+      "sha256": "e59acce057d9b835d8287f55195810af3ac99a5a62b57a79f35c90d173f42e00",
+      "image": {
+        "format": "png",
+        "width": 384,
+        "height": 512
+      }
+    },
+    {
+      "file": "guides/poses/biped-4.png",
+      "role": "instructional-guide",
+      "hashMode": "bytes",
+      "sha256": "ddaeafbdb1aad06586624a94bfb20f11dbfd66e2eea4fc08474a7345a633e4b3",
+      "image": {
+        "format": "png",
+        "width": 384,
+        "height": 512
+      }
+    },
+    {
+      "file": "guides/poses/biped-5.png",
+      "role": "instructional-guide",
+      "hashMode": "bytes",
+      "sha256": "4ef430aac6ecd060288bebc2a35d3913b85905abf3a500a5a0605c212e3f9f51",
+      "image": {
+        "format": "png",
+        "width": 384,
+        "height": 512
+      }
+    },
+    {
+      "file": "guides/poses/biped-6.png",
+      "role": "instructional-guide",
+      "hashMode": "bytes",
+      "sha256": "93b6117f3e4241c9ab33795d77a4875c82f6a17f7404cd11aefbaca631e02794",
+      "image": {
+        "format": "png",
+        "width": 384,
+        "height": 512
+      }
+    },
+    {
+      "file": "guides/poses/biped-7.png",
+      "role": "instructional-guide",
+      "hashMode": "bytes",
+      "sha256": "8c20007853c3265fe6cebf950fdde673f5c7c7c15fd731445489bf2429d4ef86",
+      "image": {
+        "format": "png",
+        "width": 384,
+        "height": 512
+      }
+    },
+    {
+      "file": "guides/poses/biped-8.png",
+      "role": "instructional-guide",
+      "hashMode": "bytes",
+      "sha256": "93df13163e69adac06cd2dbdfd42497689e7117939bdf49981e0963446619bb7",
+      "image": {
+        "format": "png",
+        "width": 384,
+        "height": 512
+      }
+    },
+    {
+      "file": "guides/poses/quad-1.png",
+      "role": "instructional-guide",
+      "hashMode": "bytes",
+      "sha256": "029396ab07b7b245c9ceb2cd6139c82f091369ba9cf945093b68f34dc3293012",
+      "image": {
+        "format": "png",
+        "width": 384,
+        "height": 512
+      }
+    },
+    {
+      "file": "guides/poses/quad-2.png",
+      "role": "instructional-guide",
+      "hashMode": "bytes",
+      "sha256": "10516e9d681beeea59f4ec4cb68895c239ae1df2d1add27db93830d91794e9a9",
+      "image": {
+        "format": "png",
+        "width": 384,
+        "height": 512
+      }
+    },
+    {
+      "file": "guides/poses/quad-3.png",
+      "role": "instructional-guide",
+      "hashMode": "bytes",
+      "sha256": "74786b520853975ff2604023c051dfec8df3e5054ddd4eaf0d5c0280da9531d0",
+      "image": {
+        "format": "png",
+        "width": 384,
+        "height": 512
+      }
+    },
+    {
+      "file": "guides/poses/quad-4.png",
+      "role": "instructional-guide",
+      "hashMode": "bytes",
+      "sha256": "fe53448bd81c1fa3321ea26d744aa72a125529e53e6c68b3e3b5fc83b0df2b37",
+      "image": {
+        "format": "png",
+        "width": 384,
+        "height": 512
+      }
+    },
+    {
+      "file": "guides/poses/quad-5.png",
+      "role": "instructional-guide",
+      "hashMode": "bytes",
+      "sha256": "403ac5190f6554bb3f410416a1b8c606815f7f8aa17c8c4cac010a6b40ad7dd0",
+      "image": {
+        "format": "png",
+        "width": 384,
+        "height": 512
+      }
+    },
+    {
+      "file": "guides/poses/quad-6.png",
+      "role": "instructional-guide",
+      "hashMode": "bytes",
+      "sha256": "a6d27817b24302ea2f6443fedc41ef6613e09282191b73bdccaf355c9796b3c7",
+      "image": {
+        "format": "png",
+        "width": 384,
+        "height": 512
+      }
+    },
+    {
+      "file": "guides/poses/quad-7.png",
+      "role": "instructional-guide",
+      "hashMode": "bytes",
+      "sha256": "401f4dc6b3f442b0125b71abba99f23a4284a1a19091d490dce5483d711642aa",
+      "image": {
+        "format": "png",
+        "width": 384,
+        "height": 512
+      }
+    },
+    {
+      "file": "guides/poses/quad-8.png",
+      "role": "instructional-guide",
+      "hashMode": "bytes",
+      "sha256": "9f5a2851f2042f053aa735a516c6777786432797e1a7445eb3a3e355f45e8bd2",
+      "image": {
+        "format": "png",
+        "width": 384,
+        "height": 512
+      }
+    },
+    {
+      "file": "guides/rebuild-boards.mjs",
+      "role": "instructional-guide",
+      "hashMode": "utf8-lf",
+      "sha256": "2a4f73bb4553c0e290366dda9a669fece3008c74c707accb554ad35491089198"
+    },
+    {
+      "file": "guides/sprite8-guide.png",
+      "role": "instructional-guide",
+      "hashMode": "bytes",
+      "sha256": "7ca4258a2ee2b255932210d832db58cce2d2be9c0f871a6619df827f9768aa99",
+      "image": {
+        "format": "png",
+        "width": 1536,
+        "height": 1024
+      }
+    },
+    {
+      "file": "guides/sprite8-guide.svg",
+      "role": "instructional-guide",
+      "hashMode": "utf8-lf",
+      "sha256": "25a77df59ab0958be30681b3405bd2ddd535d021a7508093ac048417e670c0ab",
+      "image": {
+        "format": "svg",
+        "width": 1536,
+        "height": 1024
+      }
+    },
+    {
+      "file": "guides/sprite8-quad-guide.png",
+      "role": "instructional-guide",
+      "hashMode": "bytes",
+      "sha256": "26f620c0a75e695c91c8fba6e3aa6779c528039458345135862ad0f6751d1ccc",
+      "image": {
+        "format": "png",
+        "width": 1536,
+        "height": 1024
+      }
+    },
+    {
+      "file": "guides/sprite8-quad-guide.svg",
+      "role": "instructional-guide",
+      "hashMode": "utf8-lf",
+      "sha256": "02d6020911c30d004d32e1b36e79c3c6cbf4c6cb22b1f9b710ba3a15f253b27b",
+      "image": {
+        "format": "svg",
+        "width": 1536,
+        "height": 1024
+      }
+    },
+    {
+      "file": "initial/config.json",
+      "role": "initial-rejected-preview",
+      "hashMode": "utf8-lf",
+      "sha256": "022e41b5ef00da786c771ada78b95b4dd9ca0c3f1259de655980b7f393e7f320"
+    },
+    {
+      "file": "initial/report.json",
+      "role": "initial-rejected-preview",
+      "hashMode": "utf8-lf",
+      "sha256": "23692fd3bef8a56212b870bbfc331afe4f8d6f9ac94d4332c9f267724432f785"
+    },
+    {
+      "file": "initial/seed-review/w2-seed-candidates.json",
+      "role": "initial-rejected-preview",
+      "hashMode": "utf8-lf",
+      "sha256": "4317a0e682b2d944b3a7ae69e9da93168a4905741b545c4a43e7fc7eca5a7cfe"
+    },
+    {
+      "file": "initial/seed-review/w2-seed-candidates.png",
+      "role": "initial-rejected-preview",
+      "hashMode": "bytes",
+      "sha256": "83ab4f5321ae6913403a38f0aeadd5a8e4a8f4b1ed779ef4e5296bd561b176af",
+      "image": {
+        "format": "png",
+        "width": 1536,
+        "height": 1024
+      }
+    },
+    {
+      "file": "initial/seed-review/w6-seed-candidates.json",
+      "role": "initial-rejected-preview",
+      "hashMode": "utf8-lf",
+      "sha256": "a6d80ffa2ada5cf192427e7844dbe5b8efc4fe36367f72fabab89301ef61eb36"
+    },
+    {
+      "file": "initial/seed-review/w6-seed-candidates.png",
+      "role": "initial-rejected-preview",
+      "hashMode": "bytes",
+      "sha256": "5a95993f8cdd95320b7bb1ead3f5adc43e3f90606217d95ade83f576cd01d083",
+      "image": {
+        "format": "png",
+        "width": 1536,
+        "height": 1024
+      }
+    },
+    {
+      "file": "initial/w02-frame1.png",
+      "role": "initial-rejected-preview",
+      "hashMode": "bytes",
+      "sha256": "7ce8bf9e0c32ceb735f1068ea104d5fa5919bbabfa1a958a950a33877a9785e0",
+      "image": {
+        "format": "png",
+        "width": 512,
+        "height": 512
+      }
+    },
+    {
+      "file": "initial/w02-frame2.png",
+      "role": "initial-rejected-preview",
+      "hashMode": "bytes",
+      "sha256": "b2df5e8e28c8d057df951fed92afb2b6b2e4942aaf36a213123c9d79336d71a1",
+      "image": {
+        "format": "png",
+        "width": 512,
+        "height": 512
+      }
+    },
+    {
+      "file": "initial/w02-frame3.png",
+      "role": "initial-rejected-preview",
+      "hashMode": "bytes",
+      "sha256": "9195a145eedfec99015b178ab87a2dc80b391a90f21d6aeba040ccb59fd8a6b5",
+      "image": {
+        "format": "png",
+        "width": 512,
+        "height": 512
+      }
+    },
+    {
+      "file": "initial/w02-frame4.png",
+      "role": "initial-rejected-preview",
+      "hashMode": "bytes",
+      "sha256": "1d3b740d32ba7ea22d14d99254860778b2434ca110582ae8d36d45b13a986e01",
+      "image": {
+        "format": "png",
+        "width": 512,
+        "height": 512
+      }
+    },
+    {
+      "file": "initial/w02-frame5.png",
+      "role": "initial-rejected-preview",
+      "hashMode": "bytes",
+      "sha256": "ac46d08f72238d08576d9d1d0de03b9614a9656c8bd357f8063f18d1dbc7f3da",
+      "image": {
+        "format": "png",
+        "width": 512,
+        "height": 512
+      }
+    },
+    {
+      "file": "initial/w02-frame6.png",
+      "role": "initial-rejected-preview",
+      "hashMode": "bytes",
+      "sha256": "aae21821d63e23106f3fc7a75127eec25b2585008d07fefa2581abf76393db51",
+      "image": {
+        "format": "png",
+        "width": 512,
+        "height": 512
+      }
+    },
+    {
+      "file": "initial/w02-frame7.png",
+      "role": "initial-rejected-preview",
+      "hashMode": "bytes",
+      "sha256": "59edc94149c311d3d2c4a8d3fc27531bbc2a61914a04a6e6a6e2dba6e94b9dc8",
+      "image": {
+        "format": "png",
+        "width": 512,
+        "height": 512
+      }
+    },
+    {
+      "file": "initial/w02-frame8.png",
+      "role": "initial-rejected-preview",
+      "hashMode": "bytes",
+      "sha256": "afe9731308cba3234256bbc4be93f34d9639bdb2fe505e499e517a81c56989fe",
+      "image": {
+        "format": "png",
+        "width": 512,
+        "height": 512
+      }
+    },
+    {
+      "file": "initial/w02-preview.gif",
+      "role": "initial-rejected-preview",
+      "hashMode": "bytes",
+      "sha256": "3ac50629eff8508123dfac70927ac5749de4dcb1d1a1f32df9622db5b403a7db",
+      "image": {
+        "format": "gif",
+        "width": 512,
+        "height": 512,
+        "pages": 8,
+        "delay": [
+          120,
+          120,
+          120,
+          120,
+          120,
+          120,
+          120,
+          120
+        ]
+      }
+    },
+    {
+      "file": "initial/w02-review-sheet.png",
+      "role": "initial-rejected-preview",
+      "hashMode": "bytes",
+      "sha256": "5f0f795152688fd84b7c4993de38a698f06e0e340c56b3d64e8286fef3848f79",
+      "image": {
+        "format": "png",
+        "width": 2048,
+        "height": 1024
+      }
+    },
+    {
+      "file": "initial/w02-sheet.png",
+      "role": "initial-rejected-preview",
+      "hashMode": "bytes",
+      "sha256": "e2d991193990fb3cc126cbdb0daa9f7292c138d01eee298de8dfac2632a4efde",
+      "image": {
+        "format": "png",
+        "width": 2048,
+        "height": 1024
+      }
+    },
+    {
+      "file": "initial/w06-frame1.png",
+      "role": "initial-rejected-preview",
+      "hashMode": "bytes",
+      "sha256": "0ff1ad7b4c092ed462d55054dd680d04bd3141c3f5b36869322ba125ea888fe4",
+      "image": {
+        "format": "png",
+        "width": 512,
+        "height": 512
+      }
+    },
+    {
+      "file": "initial/w06-frame2.png",
+      "role": "initial-rejected-preview",
+      "hashMode": "bytes",
+      "sha256": "ddf870b85cf62dc825066d39d3c0bdd2b5c16f460fd84c931289570e06864d11",
+      "image": {
+        "format": "png",
+        "width": 512,
+        "height": 512
+      }
+    },
+    {
+      "file": "initial/w06-frame3.png",
+      "role": "initial-rejected-preview",
+      "hashMode": "bytes",
+      "sha256": "da9482b62c3f797aaef7bf140299f561e0474c4bb401711920b19ea96b423878",
+      "image": {
+        "format": "png",
+        "width": 512,
+        "height": 512
+      }
+    },
+    {
+      "file": "initial/w06-frame4.png",
+      "role": "initial-rejected-preview",
+      "hashMode": "bytes",
+      "sha256": "47fd0daaaf6b7ad238fdf026d635345ace9d34db1024a044752a8eefeb4fa072",
+      "image": {
+        "format": "png",
+        "width": 512,
+        "height": 512
+      }
+    },
+    {
+      "file": "initial/w06-frame5.png",
+      "role": "initial-rejected-preview",
+      "hashMode": "bytes",
+      "sha256": "d3c4d3007238ea90642396ace1cf0bda0a8e514c4d12faf19abb002b48273616",
+      "image": {
+        "format": "png",
+        "width": 512,
+        "height": 512
+      }
+    },
+    {
+      "file": "initial/w06-frame6.png",
+      "role": "initial-rejected-preview",
+      "hashMode": "bytes",
+      "sha256": "3aeea06034a84f103f9a606617c2b381dde17cf810a7f89099d59847cf335a90",
+      "image": {
+        "format": "png",
+        "width": 512,
+        "height": 512
+      }
+    },
+    {
+      "file": "initial/w06-frame7.png",
+      "role": "initial-rejected-preview",
+      "hashMode": "bytes",
+      "sha256": "6b4060b7b1f2c3234d639cb61cc56e5b1d978ee404ad3111f6de0bf5c870e6b5",
+      "image": {
+        "format": "png",
+        "width": 512,
+        "height": 512
+      }
+    },
+    {
+      "file": "initial/w06-frame8.png",
+      "role": "initial-rejected-preview",
+      "hashMode": "bytes",
+      "sha256": "db004750cf4c326053ceaf7645ef14bc6c9823b7c05c9f1075c80badfb3eb815",
+      "image": {
+        "format": "png",
+        "width": 512,
+        "height": 512
+      }
+    },
+    {
+      "file": "initial/w06-preview.gif",
+      "role": "initial-rejected-preview",
+      "hashMode": "bytes",
+      "sha256": "d1f0548a00b523eef4b5ab35770212c70d0bec593c25dbb9a3e70af631159faf",
+      "image": {
+        "format": "gif",
+        "width": 512,
+        "height": 512,
+        "pages": 8,
+        "delay": [
+          120,
+          120,
+          120,
+          120,
+          120,
+          120,
+          120,
+          120
+        ]
+      }
+    },
+    {
+      "file": "initial/w06-review-sheet.png",
+      "role": "initial-rejected-preview",
+      "hashMode": "bytes",
+      "sha256": "1ca8b6e23e373623a271d45dd48e0311d2298fb1c9c20181240072af10a8731d",
+      "image": {
+        "format": "png",
+        "width": 2048,
+        "height": 1024
+      }
+    },
+    {
+      "file": "initial/w06-sheet.png",
+      "role": "initial-rejected-preview",
+      "hashMode": "bytes",
+      "sha256": "4299eb947466ec4c58606cbeca66b91ae4b68b3dbe1ab0fcb611876b720ab124",
+      "image": {
+        "format": "png",
+        "width": 2048,
+        "height": 1024
+      }
+    },
+    {
+      "file": "rebuild-preview.mjs",
+      "role": "documentation-or-tool",
+      "hashMode": "utf8-lf",
+      "sha256": "b3c8aa41dba7c5b7475adb8b6815559b18e85abeac02efb1709e0d6622155160"
+    },
+    {
+      "file": "records/generations-initial.json",
+      "role": "provenance-record",
+      "hashMode": "utf8-lf",
+      "sha256": "5010e6d6d7c845ac23f4180ec81b271e0264a2d9c4c4e4f094dbf68c37efe6bd"
+    },
+    {
+      "file": "records/generations-latest.json",
+      "role": "provenance-record",
+      "hashMode": "utf8-lf",
+      "sha256": "fd55055a19baa30acd68d758a67c900fe19b7e95c57a56666eeb5289e0de69f4"
+    },
+    {
+      "file": "records/source-index.json",
+      "role": "provenance-record",
+      "hashMode": "utf8-lf",
+      "sha256": "20a9527769c29b96d4543beba89a494fba7c7b0ca5019222579792620d497963"
+    },
+    {
+      "file": "references/w002-identity.png",
+      "role": "identity-reference",
+      "hashMode": "bytes",
+      "sha256": "f1515c82027f068ce2ff6e9c128425fdfbde845cd243306c57ae18083d400ef6",
+      "image": {
+        "format": "png",
+        "width": 512,
+        "height": 512
+      }
+    },
+    {
+      "file": "references/w006-anatomy-master.png",
+      "role": "identity-reference",
+      "hashMode": "bytes",
+      "sha256": "24581becae841b5d8200749af4901bb6093b4ba001011f377308ea161988fff3",
+      "image": {
+        "format": "png",
+        "width": 1254,
+        "height": 1254
+      }
+    },
+    {
+      "file": "sources/w002-guided-sheet.png",
+      "role": "generated-original",
+      "hashMode": "bytes",
+      "sha256": "cb026c006d0c920829d1bf35845677d57df6a86dbca808275d6446039e726c52",
+      "image": {
+        "format": "png",
+        "width": 1536,
+        "height": 1024
+      }
+    },
+    {
+      "file": "sources/w002-initial-sheet.png",
+      "role": "generated-original",
+      "hashMode": "bytes",
+      "sha256": "0ae925ca910faf5b4e8c83231b21d234e6e444544ddae43d26b8c239e694784f",
+      "image": {
+        "format": "png",
+        "width": 1536,
+        "height": 1024
+      }
+    },
+    {
+      "file": "sources/w002-single-pose-01.png",
+      "role": "generated-original",
+      "hashMode": "bytes",
+      "sha256": "28667a24e9c2e28308bbd0c21d5d5e0a67230aa2208ac4346ec26db4467466b8",
+      "image": {
+        "format": "png",
+        "width": 1254,
+        "height": 1254
+      }
+    },
+    {
+      "file": "sources/w002-single-pose-03.png",
+      "role": "generated-original",
+      "hashMode": "bytes",
+      "sha256": "f376391d9ebea614ec8b1de12c195e141944f62f839f2207922f71de687f7341",
+      "image": {
+        "format": "png",
+        "width": 1254,
+        "height": 1254
+      }
+    },
+    {
+      "file": "sources/w002-single-pose-05.png",
+      "role": "generated-original",
+      "hashMode": "bytes",
+      "sha256": "86b2fc7c311e89764a7995fd0ba4e1ab211f57417f5463e4e68879926f7f7043",
+      "image": {
+        "format": "png",
+        "width": 1254,
+        "height": 1254
+      }
+    },
+    {
+      "file": "sources/w002-single-pose-07.png",
+      "role": "generated-original",
+      "hashMode": "bytes",
+      "sha256": "ad30644888602e6af6f893e813e34be68c973f380adc5e926abdb36b9d0934d1",
+      "image": {
+        "format": "png",
+        "width": 1254,
+        "height": 1254
+      }
+    },
+    {
+      "file": "sources/w006-guided-sheet.png",
+      "role": "generated-original",
+      "hashMode": "bytes",
+      "sha256": "9672c330f3513f126da53a017c7f7239204b192ac33590835faa1f96b7325a01",
+      "image": {
+        "format": "png",
+        "width": 1536,
+        "height": 1024
+      }
+    },
+    {
+      "file": "sources/w006-initial-sheet.png",
+      "role": "generated-original",
+      "hashMode": "bytes",
+      "sha256": "ff9baf3e3bfef5bacd3f9b5fd168e96d37cfc0abeff49bfde7a4e61784f7d97f",
+      "image": {
+        "format": "png",
+        "width": 1536,
+        "height": 1024
+      }
+    },
+    {
+      "file": "sources/w006-single-pose-01.png",
+      "role": "generated-original",
+      "hashMode": "bytes",
+      "sha256": "2780d7a23c3a5a476ae6d6a6cadd5e45051fff002c619b4326549cd53fa6b78c",
+      "image": {
+        "format": "png",
+        "width": 1254,
+        "height": 1254
+      }
+    },
+    {
+      "file": "sources/w006-single-pose-03.png",
+      "role": "generated-original",
+      "hashMode": "bytes",
+      "sha256": "b6235486457159e4be5f0baebf2353f53e09325094fa582854ca8f361d746fa6",
+      "image": {
+        "format": "png",
+        "width": 1254,
+        "height": 1254
+      }
+    },
+    {
+      "file": "validate.mjs",
+      "role": "documentation-or-tool",
+      "hashMode": "utf8-lf",
+      "sha256": "71eefc209285f227f4939e13c213745ef94e3a3d999fd25cc270c39a7a938ecd"
+    }
+  ]
+}
