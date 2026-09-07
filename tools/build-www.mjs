@@ -32,7 +32,7 @@ const CAP_UMD = [
 const EXCLUDE = [
   /^casual\/maps\/map-[0-9][0-9]-[^/]*\.jpg$/i,
   /^casual\/towers\/[^/]*-attack-2x2\.png$/i,
-  /^editor\./i, /\.md$/i, /^net\//, /^serve\.py$/, /^start\.bat$/, /^wrangler\.jsonc$/, /^tools\//, /^resources\//,
+  /^editor\./i, /\.md$/i, /^net\//, /^serve\.py$/, /^start\.bat$/, /^wrangler\.jsonc$/, /^tools\//, /^resources\//, /^store\//, /^ui\/icons-sheet\.png$/,
 ];
 const excluded = (rel) => EXCLUDE.some((re) => re.test(rel));
 
