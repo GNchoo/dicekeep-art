@@ -1,0 +1,103 @@
+{
+  "passed": true,
+  "artReleaseCommit": "8f325ea02c1f295262e1ce51e08f59d32b93331b",
+  "verifiedAt": "2026-09-07T17:02:55.918Z",
+  "productionUrl": "https://dicekeep.cgn3731.workers.dev/",
+  "webBuild": {
+    "id": "40beafde-878d-41c4-a97d-df791242f614",
+    "version": "f8b475b9-5f76-4d96-91b8-663699cd1f1a",
+    "conclusion": "success"
+  },
+  "summary": {
+    "matchedCodeFiles": 5,
+    "matchedDirectionalPngs": 660,
+    "matchedTowerPngs": 14,
+    "devices": 2,
+    "actorChecks": 12,
+    "directionChecks": 48,
+    "actualTowerDraws": 4
+  },
+  "scope": "Unmodified server responses and PNG bytes. Public debug state selects waves/positions; wrappers only observe the original frame factory and drawImage calls. This is sampled deployment verification, not the exhaustive source release audit.",
+  "files": [
+    {
+      "path": "directional-production.json",
+      "bytes": 221835,
+      "sha256": "d5f82f656eb9539f005ec6114501fbe9b7692f091652c64ee7485eef200d7aff"
+    },
+    {
+      "path": "desktop-b070-2-front.jpg",
+      "bytes": 181841,
+      "sha256": "bf6cacbf7f385b64252898ad0838008901888386e12a1980f0fea3ecd9a655e3"
+    },
+    {
+      "path": "desktop-b070-front.jpg",
+      "bytes": 182455,
+      "sha256": "2528fc304cfb79aa56aec909a414ff2b7d87811566b4d30d917bd55c1dec04aa"
+    },
+    {
+      "path": "desktop-b100-2-front.jpg",
+      "bytes": 180405,
+      "sha256": "96237cb352db01c1d4c707c26538ebeb2149178c6f59b16c0eb0bcae825b2453"
+    },
+    {
+      "path": "desktop-b100-front.jpg",
+      "bytes": 180460,
+      "sha256": "e39f0f0c6b02246b34f0c4d85a38d5fafc7860e5ea27ba8e51f9bb7ebd844bb2"
+    },
+    {
+      "path": "desktop-title.jpg",
+      "bytes": 130317,
+      "sha256": "d8e12551d7b85cdfd9e5061eb46436e7691c67aaa17d52a1d052884fe6abfc9b"
+    },
+    {
+      "path": "desktop-w001-front.jpg",
+      "bytes": 180711,
+      "sha256": "29bbd38f025579f1bd6de5d43ff9b1344b84a0f6343115621c459f1bcb29e406"
+    },
+    {
+      "path": "desktop-w101-front.jpg",
+      "bytes": 182180,
+      "sha256": "255f546634e917ababd35abd6ea5341f1f33769766d73bacb179a871710d9674"
+    },
+    {
+      "path": "phone-b070-2-front.jpg",
+      "bytes": 92301,
+      "sha256": "b2db58714d180c5d7536a001cf4771a2f581f75127e6a79dcab66b6413e2f5bb"
+    },
+    {
+      "path": "phone-b070-front.jpg",
+      "bytes": 92112,
+      "sha256": "2ecbc623547cde4ed16bfc47ebc914bce6d0e67c62d7479702235e2b86fb6215"
+    },
+    {
+      "path": "phone-b100-2-front.jpg",
+      "bytes": 90925,
+      "sha256": "11db9211fe411efefa1e83fcb8442dee5e264dde92cd60cbf649cca9e9dd640d"
+    },
+    {
+      "path": "phone-b100-front.jpg",
+      "bytes": 91205,
+      "sha256": "61f3bd5270f88fc6bcac48f249c0f25d66a96345c65c03f56271d27e22ebf534"
+    },
+    {
+      "path": "phone-title.jpg",
+      "bytes": 59938,
+      "sha256": "f287e48dfcd060d4f4f97b4faa340e2dfaae9047490e52aac091a7c4b2e874da"
+    },
+    {
+      "path": "phone-w001-front.jpg",
+      "bytes": 92384,
+      "sha256": "7faa424c555aeee2966d376a8bdf527898b890fbc851faf1a8e308de670868ee"
+    },
+    {
+      "path": "phone-w101-front.jpg",
+      "bytes": 92388,
+      "sha256": "fe7c3742a6cbdc9cbbd4acfc09dcfedb05e1da9021510e92862cb67bc0cc01d4"
+    }
+  ],
+  "notes": [
+    "Index redirects to the application directory on Workers; final navigation HTML is hashed as index.html.",
+    "The source release contains 110 identities; live rendering samples 6 identities in four directions on two viewports. All674 new PNGs are byte-verified.",
+    "The separate dicekeep-net build was already failing on the prior main and failed again. Its server implementation was not modified; client protocol3 is retained."
+  ]
+}

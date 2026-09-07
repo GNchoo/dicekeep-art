@@ -48,6 +48,8 @@ node tools/audit-directional-release.mjs <명시한 최종 출력 폴더 전부>
 
 [자동 검사 기록](evidence/checks/checks.json)은 방향 리그 25개, 시트 분할 13개, 기존 리그 4개, 출시 감사 자기검사 19개를 통과했다. [네트워크 회귀 90/90](evidence/www-package/net-regression.json)도 통과했다. 원본 파일과 캡처·JSON의 SHA256을 함께 보관하며 `node tools/art-review/directional-101/record-runtime-release.mjs`로 완료된 실행 증거만 다시 모을 수 있다. 메인 반영과 실제 배포 상태는 후속 PR의 병합 상태 및 배포 검증 댓글에서 확인한다.
 
+[PR #30](https://github.com/GNchoo/dicekeep-art/pull/30)은 메인 커밋 `8f325ea02c1f295262e1ce51e08f59d32b93331b`로 병합됐고 Cloudflare 웹 배포가 성공했다. [운영 검증 기록](evidence/production/deployment.json)과 [상세 HTTP·렌더 결과](evidence/production/directional-production.json)는 실제 `https://dicekeep.cgn3731.workers.dev/`에서 코드5개·PNG674개(122,424,331바이트)의 원본 일치, 데스크톱·휴대폰 각각110종/330fallback 부팅, W1/70/100/101의6정체성×4방향×2화면 총48개 렌더 검사, 7/20성 타워의 실제 표시를 확인한다. 샘플 전경 노출100%, 새 아트·페이지 오류0이었다. 운영 서버의 `/index.html`→`/` 정규화도 처리하며 HTTP 응답을 로컬 코드로 대체하지 않는다. 별도 `dicekeep-net` 빌드는 이전 main부터 실패 상태였으며 이 변경에서 서버 구현은 수정하지 않았다.
+
 ## 시각 검수의 범위
 
 다리의 접지 위치·관절 길이와 몸통 종횡비를 고정하며, 털·장비·무기·날개의 앞뒤 방향을 원본과 최종 시트에서 확인했다. 고어, 상처나 부패 묘사 대신 온전한 갑옷·의상·털·껍질로 만든 판타지 게임 캐릭터를 사용한다.

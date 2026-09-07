@@ -98,9 +98,15 @@ async function main() {
       page.on('pageerror', e => row.errors.push('PAGE ' + e.message));
       page.on('requestfailed', r => { if (requiredPaths.has(new URL(r.url()).pathname)) row.errors.push('REQUEST ' + r.url() + ': ' + r.failure()?.errorText); });
       page.on('response', response => {
-        const u = new URL(response.url()); if (!requiredPaths.has(u.pathname)) return;
+        const u = new URL(response.url());
+        // Workers redirects /index.html to the application directory. Hash the
+        // final main-document bytes as index.html, while still rejecting bad assets.
+        const mainDocument = response.request().isNavigationRequest() && response.frame() === page.mainFrame()
+          && u.origin === base.origin && [base.pathname, new URL('index.html', base).pathname].includes(u.pathname);
+        if (!requiredPaths.has(u.pathname) && !mainDocument) return;
+        if (mainDocument && response.status() >= 300 && response.status() < 400) return;
         if (response.status() !== 200) row.errors.push('HTTP ' + response.status() + ': ' + u.href);
-        const name = u.pathname.split('/').at(-1);
+        const name = mainDocument ? 'index.html' : u.pathname.split('/').at(-1);
         if (codeFiles.includes(name)) pending.push(response.body().then(bytes => { compare(bytes, sourcePins[name], name); row.codes.push({ file: name, sha256: sha(bytes), status: response.status() }); }).catch(e => row.errors.push(e.message)));
         else row.newAssetResponses++;
       });
