@@ -946,7 +946,11 @@ async function loadAssets(onProgress) {
     await new Promise(r => setTimeout(r, 0));
   }
   A.dice = [A.d1, A.d2, A.d3, A.d4, A.d5, A.d6];
-  if (A.uiFrame && !A.uiFrame.missing && A.uiFrame.w > 8) document.body.classList.add('ui-art');   // HUD 프레임 그림이 있으면 CSS 가 border-image 를 쓴다
+  if (A.uiFrame && !A.uiFrame.missing && A.uiFrame.w > 8) {
+    document.body.classList.add('ui-art');   // 그림 아이콘(ui/icon-*.png) 사용
+    // CSS 배경 아이콘은 처음 쓰일 때 받는다 → 배속을 x2 로 바꾸는 순간 아이콘이 잠깐 비었다. 전부 미리 받아 둔다 (23장, 장당 ~5KB)
+    window.__iconCache = ['speed1', 'speed2', 'speed3', 'sound', 'mute', 'chat', 'menu', 'close', 'back', 'gear', 'help', 'chest', 'sell', 'enhance', 'trophy', 'infinity', 'users', 'shop', 'stage', 'copy', 'gem', 'dice', 'wave'].map((n) => { const im = new Image(); im.src = BASE + 'ui/icon-' + n + '.png'; return im; });
+  }
   // 아레나 등 배경이 아직 없는 맵은 지정된 다른 맵 배경으로 폴백
   if (window.DKCONTENT) for (const m of DKCONTENT.maps) {
     if (m.fallbackKey && (!A[m.key] || A[m.key].missing) && A[m.fallbackKey]) A[m.key] = A[m.fallbackKey];
@@ -4195,7 +4199,18 @@ function wakeLockSync(on) {
   } catch (e) { /* 무시 */ }
 }
 document.addEventListener('visibilitychange', () => { if (!document.hidden && S.phase === 'playing') wakeLockSync(true); });
-function gotoLobby() { S.phase = 'lobby'; showScreen('lobby'); }
+// 로비는 허브(싱글·멀티·상점) 아래 갈래(single/multi)가 같은 상자 안에서 펼쳐진다. 어디서 돌아왔는지에 따라 그 갈래를 바로 연다
+let LOBBY_VIEW = 'hub';
+function lobbyShow(view) {
+  view = view === 'single' || view === 'multi' ? view : 'hub';
+  LOBBY_VIEW = view;
+  for (const v of ['hub', 'single', 'multi']) { const el = $('lobby-' + v); if (el) el.classList.toggle('hidden', v !== view); }
+  const box = $('lobby-box'); if (box) box.dataset.view = view;
+  const back = $('lobby-back'); if (back) back.classList.toggle('hidden', view === 'hub');
+  const h = $('lobby-title'); if (h) h.textContent = view === 'single' ? '싱글플레이' : view === 'multi' ? '멀티플레이' : '주사위 성채';
+  const box2 = document.querySelector('#lobby .screen-box'); if (box2) box2.scrollTop = 0;
+}
+function gotoLobby(view) { S.phase = 'lobby'; showScreen('lobby'); lobbyShow(view || 'hub'); }
 function gotoMpRoom() { S.phase = 'mpRoom'; showScreen('mpRoom'); }
 function gotoStageSelect() { S.phase = 'stageSelect'; showScreen('stageSelect'); }
 function gotoShop() { S.phase = 'shop'; showScreen('shop'); }
@@ -4866,6 +4881,7 @@ document.addEventListener('keydown', ev => {
   else if (S.mode === 'infinity' && ev.key >= '1' && ev.key <= '6') upgradeFace(parseInt(ev.key, 10));
   else if (ev.key === 'Escape') {
     if (settingsOpen()) { closeSettings(); return; }
+    if (S.phase === 'lobby' && LOBBY_VIEW !== 'hub') { lobbyShow('hub'); return; }
     const help = $('inf-help');
     if (help && !help.classList.contains('hidden')) { closeInfHelp(); return; } // 도움말이 열려 있으면 먼저 닫는다
     if (menuOpen()) { closeMenu(); return; }
@@ -4926,6 +4942,7 @@ window.DKAPP = {
     if (S.phase === 'stageSelect' || S.phase === 'shop') { const b = document.querySelector(`#${S.phase === 'shop' ? 'shop' : 'stage-select'} .back-btn`); if (b) b.click(); return true; }
     if (S.phase === 'mpRoom') { $('mp-leave').click(); return true; }
     if (S.phase === 'title' || S.phase === 'over' || S.phase === 'win' || S.phase === 'stageClear') { $('ov-btn').click(); return true; }
+    if (S.phase === 'lobby' && LOBBY_VIEW !== 'hub') { lobbyShow('hub'); return true; }   // 갈래 → 허브, 허브에서는 앱 종료(두 번)
     return false;
   },
 };
@@ -4947,7 +4964,7 @@ $('ov-btn').addEventListener('click', () => {
   if (S.phase === 'loading') return;
   audio();
   if (S.phase === 'over' || S.phase === 'win' || S.phase === 'stageClear') {
-    if (S.mode === 'infinity') { if (S.net) mpLeave(); S.mode = 'stage'; S.inf = null; gotoLobby(); } else gotoStageSelect();
+    if (S.mode === 'infinity') { const wasNet = !!S.net; if (S.net) mpLeave(); S.mode = 'stage'; S.inf = null; gotoLobby(wasNet ? 'multi' : 'single'); } else gotoStageSelect();
     return;
   }
   // 타이틀 → 로비 (?start=inf 이면 바로 인피니티, 새로고침 전 방이 있으면 그 방으로)
@@ -4976,8 +4993,11 @@ if ($('enhance-btn')) $('enhance-btn').addEventListener('click', () => {
 });
 if ($('info-close')) $('info-close').addEventListener('click', () => { audio(); S.selTower = null; syncUI(); });
 $('btn-shop').addEventListener('click', () => { audio(); gotoShop(); });
-$('ss-back').addEventListener('click', () => gotoLobby());
-$('shop-back').addEventListener('click', () => gotoLobby());
+$('ss-back').addEventListener('click', () => gotoLobby('single'));
+$('shop-back').addEventListener('click', () => gotoLobby('hub'));
+$('hub-single').addEventListener('click', () => { audio(); lobbyShow('single'); });
+$('hub-multi').addEventListener('click', () => { audio(); lobbyShow('multi'); });
+$('lobby-back').addEventListener('click', () => { audio(); lobbyShow('hub'); });
 // 어두운 배경을 누르면 로비로 (상점에 갇히지 않게)
 ['shop', 'stage-select'].forEach((id) => {
   const el = $(id);
@@ -5009,7 +5029,7 @@ function openMenu() {
 function closeMenu() { $('menu').classList.add('hidden'); setPaused(false); }
 function quitToMenu() {
   closeMenu();
-  if (S.phase === 'spectate') { mpLeave(); S.mode = 'stage'; S.inf = null; gotoLobby(); return; }   // 관전 중 나가기 (기록은 이미 저장됨)
+  if (S.phase === 'spectate') { mpLeave(); S.mode = 'stage'; S.inf = null; gotoLobby('multi'); return; }   // 관전 중 나가기 (기록은 이미 저장됨)
   if (S.phase !== 'playing') return;
   if (S.mode === 'infinity') { S.inf.quit = true; endInfinity(); return; }   // 포기 = 런 종료 (기록 저장)
   gotoStageSelect();
@@ -5569,7 +5589,7 @@ function mpOnClosed(m) {
   const code = m && m.code;
   if (code === 4000) return;                                        // 내가 나간 것 (mpLeave)
   const why = code === 4001 ? '다른 탭에서 같은 좌석으로 들어와 이 탭의 연결이 끊겼습니다' : mpErrText({ code: (m && typeof m.reason === 'string' && m.reason) || CLOSE_CODE_NAME[code] });
-  if (S.phase === 'mpRoom') { mpLeave(); gotoLobby(); mpStatus(why, true); return; }
+  if (S.phase === 'mpRoom') { mpLeave(); gotoLobby('multi'); mpStatus(why, true); return; }
   if (S.net && (S.phase === 'playing' || S.phase === 'spectate')) mpDisconnected(code);
 }
 
@@ -5610,7 +5630,7 @@ function mpInit() {
   $('mp-join').addEventListener('click', () => { audio(); const f = $('mp-join-form'); f.classList.toggle('hidden'); if (!f.classList.contains('hidden')) $('mp-code').focus(); });
   $('mp-join-form').addEventListener('submit', (ev) => { ev.preventDefault(); mpJoin($('mp-code').value); });
   $('mp-code').addEventListener('input', () => { const el = $('mp-code'); el.value = el.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 6); });
-  $('mp-leave').addEventListener('click', () => { audio(); mpLeave(); gotoLobby(); });
+  $('mp-leave').addEventListener('click', () => { audio(); mpLeave(); gotoLobby('multi'); });
   $('mp-copy').addEventListener('click', async () => {
     const code = N.code || '';
     try { await navigator.clipboard.writeText(code); $('mp-copy').textContent = '복사됨'; setTimeout(() => { $('mp-copy').textContent = '복사'; }, 1200); }
@@ -5619,7 +5639,7 @@ function mpInit() {
   $('mp-start').addEventListener('click', () => { audio(); if (!N.start()) mpStatus('시작할 수 없습니다', true); });
   $('spec-collapse').addEventListener('click', () => mpSpectateCollapse(true));
   $('spec-pill').addEventListener('click', () => mpSpectateCollapse(false));
-  $('spec-leave').addEventListener('click', () => { audio(); mpLeave(); S.mode = 'stage'; S.inf = null; gotoLobby(); });
+  $('spec-leave').addEventListener('click', () => { audio(); mpLeave(); S.mode = 'stage'; S.inf = null; gotoLobby('multi'); });
   N.on('room', mpOnRoom); N.on('player', mpOnPlayer); N.on('start', mpOnStart);
   N.on('sum', mpOnSum); N.on('end', mpOnEnd); N.on('err', mpOnErr); N.on('net:state', mpOnState); N.on('net:closed', mpOnClosed);
   N.on('watched', mpOnWatched); N.on('queued', mpOnQueued); N.on('matched', mpOnMatched);
@@ -5672,12 +5692,17 @@ function drawLoading(pr) {
 (async () => {
   // 키아트는 로딩 첫 프레임부터 깔린다 (CSS 가 직접 받아온다 — 에셋 로딩을 기다리면 로딩 화면이 검은 화면이 된다)
   // 키아트(산 위 주사위 성)는 CSS 배경으로만 쓴다 — SRCS 에 넣으면 loadAssets 가 두 방향을 다 내려받는다. CSS 는 미디어 쿼리에 맞는 한 장만 받는다
-  const KEYART = { l: BASE + 'ui/title-keyart-l.jpg', p: BASE + 'ui/title-keyart-p.jpg' };   // l: 제목 없는 윗부분(CSS 제목을 얹는다) · p: 그림 안의 돌 제목까지
+  const KEYART = { l: BASE + 'ui/title-keyart-l.jpg', p: BASE + 'ui/title-keyart-p.jpg', blur: BASE + 'ui/title-keyart-l-blur.jpg' };   // l: 제목 없는 윗부분(CSS 제목을 얹는다) · p: 그림 안의 돌 제목까지 · blur: 가로 양옆 밑바탕
   document.body.style.setProperty('--keyart-bg', `linear-gradient(rgba(5,4,3,.45), rgba(5,4,3,.7)), url('${KEYART.l}')`);
-  document.body.style.setProperty('--keyart-title', `linear-gradient(rgba(5,4,3,.10), rgba(5,4,3,.10) 45%, rgba(5,4,3,.82) 100%), url('${KEYART.l}')`);      // 가로·데스크톱 타이틀: 그림 위에 CSS 제목, 아래만 어둡게
+  document.body.style.setProperty('--keyart-title', `linear-gradient(rgba(5,4,3,.10), rgba(5,4,3,.10) 45%, rgba(5,4,3,.82) 100%), url('${KEYART.l}'), url('${KEYART.blur}')`);   // 가로·데스크톱 타이틀: 그림을 높이에 맞춰 통째로 + 양옆은 흐린 밑바탕, 위에 CSS 제목
   document.body.style.setProperty('--keyart-title-p', `linear-gradient(rgba(5,4,3,.04), rgba(5,4,3,.04) 80%, rgba(5,4,3,.55) 100%), url('${KEYART.p}')`);   // 세로 타이틀: 그림의 돌 제목을 그대로, 맨 아래(버튼 자리)만 살짝
   drawLoading(0);
   $('ov-btn').disabled = true;
+  // 키아트가 화면에 뜬 뒤에 에셋 로딩을 시작한다 — 800장 넘는 PNG 요청과 섞이면 폰에서 배경이 한참 검게 남았다. (실패·지연은 4초에서 끊고 진행)
+  { const box = $('overlay-box'); if (box) box.classList.add('preload');
+    const portrait = window.matchMedia && matchMedia('(max-aspect-ratio: 3/4)').matches;
+    await new Promise((res) => { const im = new Image(); let done = false; const fin = () => { if (!done) { done = true; res(); } }; im.onload = () => { (im.decode ? im.decode().catch(() => {}) : Promise.resolve()).then(fin); }; im.onerror = fin; im.src = portrait ? KEYART.p : KEYART.l; setTimeout(fin, 4000); });
+    if (box) box.classList.remove('preload'); }
   try {
     await loadAssets(pr => drawLoading(pr));
   } catch (e) {
@@ -5726,6 +5751,7 @@ function drawLoading(pr) {
   window.DKNETLOG = window.DKNET && DKNET._debug;   // 멀티 소켓 로그
   window.DKplace = tryPlace;                      // 보유 주사위를 석단 idx 에 놓기
   window.DKend = gameEnd;                         // 결과 화면 (레이아웃 테스트)
+  window.DKlobbyView = lobbyShow;                  // 로비 갈래 열기 (테스트: 'hub' | 'single' | 'multi')
   window.DKlobby = () => { if (S.net) mpLeave(); closeInfHelp(); closeSettings(); if (COACH.on) coachStop(false); S.mode = 'stage'; S.inf = null; S.selTower = null; S.heldDie = 0; DIE.state = 'tray'; SLOT.active = false; gotoLobby(); fitStage(); };   // 레이아웃 테스트: 어느 화면에서든 로비로
   window.DKacquire = acquireFx;                   // 획득 연출 미리보기 (콘솔: DKacquire(20))
   window.DKsync = syncUI;

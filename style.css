@@ -236,10 +236,12 @@ body { touch-action: manipulation; }
 #ov-btn { font-size: 20px; padding: 12px 44px; letter-spacing: 2px; flex-shrink: 0; min-height: 48px; align-self: center; }
 #ov-btn:disabled { opacity: .7; cursor: default; }
 /* 타이틀·로딩: 상자 없이 키아트 위에 제목·진행 막대·시작 버튼만 (아래쪽 1/4) */
-#overlay.title { background-image: var(--keyart-title, var(--keyart-bg, none)); background-color: #0d0b09; background-position: center 30%; }
+/* 가로·데스크톱: 그림을 높이에 맞춰 통째로 보이고(auto 100%), 남는 양옆은 같은 그림을 흐리고 어둡게 한 밑바탕(-l-blur)으로 채운다 */
+#overlay.title { background-image: var(--keyart-title, var(--keyart-bg, none)); background-color: #0d0b09; background-size: auto, auto 100%, cover; background-position: center, center, center; background-repeat: no-repeat; }
+#overlay-box.preload #ov-load { visibility: hidden; }   /* 키아트가 뜨기 전에는 진행 막대를 숨긴다 (그림 → 막대 순) */
 /* 세로 폰·태블릿(가로:세로 ≤ 3:4): 제목 글자가 새겨진 세로 키아트를 쓰고 CSS 제목·부제는 숨긴다 (그림의 돌 제목이 제목) */
 @media (max-aspect-ratio: 3/4) {
-  #overlay.title { background-image: var(--keyart-title-p, var(--keyart-title, var(--keyart-bg, none))); background-position: center; }
+  #overlay.title { background-image: var(--keyart-title-p, var(--keyart-title, var(--keyart-bg, none))); background-size: cover; background-position: center; }
   #overlay #overlay-box.title #ov-title, #overlay #overlay-box.title #ov-sub { display: none; }   /* 뒤에 오는 '#overlay-box.title #ov-sub {display:flex}' 보다 우선 */
   #overlay #overlay-box.title { padding-bottom: max(5vh, 22px); }   /* 뒤의 '#overlay-box.title {padding: …}' 보다 우선 */
 }
@@ -248,15 +250,18 @@ body { touch-action: manipulation; }
    아래에 작은 영문 부제와 금선. 그라데이션 글자(.wm)와 그림자 필터(h1)를 분리한다 — WebKit 에서 filter 가 background-clip:text 를 깨는 문제 회피.
    기본 #ov-title 의 text-shadow 는 반드시 끈다: 투명 글자 위로 그림자가 비쳐 글자 아랫부분이 검게 탁해진다 */
 #overlay-box.title #ov-title {
-  font-size: clamp(46px, 11vw, 88px); letter-spacing: 6px; line-height: 1.08; margin: 0 0 6px; padding: 0 6px 6px;
+  font-size: clamp(46px, 11vw, 88px); letter-spacing: 6px; line-height: 1.08; margin: 0 0 6px; padding: 0 8px 8px;
   color: #f5d470; text-shadow: none;
-  filter: drop-shadow(0 2px 0 #4a2c0c) drop-shadow(0 2px 0 #2e1c0a) drop-shadow(0 1px 0 #150c04) drop-shadow(0 6px 6px rgba(0,0,0,.55)) drop-shadow(0 0 3px rgba(232,182,74,.28));
+  /* 윤곽은 text-stroke 가 아니라 사방 1px 그림자로 — text-stroke 는 글꼴 획이 겹치는 자리마다 선이 보인다(도현체) */
+  filter: drop-shadow(1px 0 0 #2c1705) drop-shadow(-1px 0 0 #2c1705) drop-shadow(0 1px 0 #2c1705) drop-shadow(0 -1px 0 #2c1705)
+          drop-shadow(0 2px 0 #4a2c0c) drop-shadow(0 2px 0 #2e1c0a) drop-shadow(0 1px 0 #150c04)
+          drop-shadow(0 6px 6px rgba(0,0,0,.55)) drop-shadow(0 0 3px rgba(232,182,74,.28));
 }
 #overlay-box.title #ov-title .wm {
   display: inline-block;
   background: linear-gradient(180deg, #fffdf0 0%, #fbeeb8 16%, #f5d470 26%, #fffbe6 30%, #fffbe6 34%, #f3c650 39%, #e2a63a 56%, #b8802a 76%, #6f4712 100%);
   -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
-  -webkit-text-stroke: 1.5px #2c1705; text-shadow: none;
+  text-shadow: none;
 }
 #ov-sub { display: none; }
 #overlay-box.title #ov-sub {
@@ -270,7 +275,7 @@ body { touch-action: manipulation; }
 #overlay-box.title #ov-load { width: min(300px, 72%); margin-bottom: 10px; }
 #overlay-box.title #ov-load-track { height: 8px; background: rgba(10,7,4,.7); }
 #overlay-box.title #ov-load-txt { font-size: 12px; color: #e9dcc0; text-shadow: 0 1px 0 #000; }
-@media (max-height: 460px) { #overlay-box.title #ov-title { font-size: clamp(30px, 7.5vw, 48px); letter-spacing: 3px; } #overlay-box.title #ov-title .wm { -webkit-text-stroke-width: 1px; } #overlay-box.title #ov-sub { margin-bottom: 8px; } #overlay-box.title { padding-bottom: 12px; } }
+@media (max-height: 460px) { #overlay-box.title #ov-title { font-size: clamp(30px, 7.5vw, 48px); letter-spacing: 3px; } #overlay-box.title #ov-sub { margin-bottom: 8px; } #overlay-box.title { padding-bottom: 12px; } }
 
 
 /* ---- 스타크래프트식 로그·채팅 (스테이지 위 오버레이) ---- */
@@ -1125,6 +1130,19 @@ table.rank tr.me td:first-child { color: var(--gold); font-weight: bold; }
 .settings-card code { color: #ffd6a0; }
 .icon-btn { width: 40px; min-height: 40px; padding: 0; font-size: 20px; line-height: 1; display: inline-flex; align-items: center; justify-content: center; }
 #lobby-settings { position: absolute; top: 10px; right: 10px; z-index: 2; }
+#lobby-back { position: absolute; top: 10px; left: 10px; z-index: 2; }
+/* 로비 허브·갈래: 같은 상자 안에서 한 갈래씩 보인다 */
+.lobby-view { display: flex; flex-direction: column; gap: 6px; min-height: 0; }
+.lobby-view.hidden { display: none; }
+.hub-btns { flex-direction: column; gap: 12px; margin-top: 6px; }
+.hub-btns .big-btn { flex: 1 1 auto; width: 100%; min-height: 76px; font-size: 21px; padding: 14px 18px; letter-spacing: 1px; }
+.hub-btns .big-btn .bi { width: 32px; height: 32px; font-size: 24px; margin-right: 6px; }
+.hub-btns .big-btn small { font-size: 12px; margin-top: 2px; }
+#lobby-hub .gem-chip.big { margin-top: 14px; }
+#lobby-box[data-view=single] h1, #lobby-box[data-view=multi] h1 { font-size: 26px; letter-spacing: 2px; }
+#lobby-single .inf-btns { margin-top: 4px; }
+#lobby-single .lobby-btns .lobby-inf-btn { margin-top: 4px; }
+#lobby-multi #mp-block { margin-top: 4px; }
 #lobby .screen-box { position: relative; }
 #toast { position: fixed; left: 50%; bottom: calc(max(16px, var(--sa-b)) + 24px); transform: translateX(-50%); z-index: 70; padding: 10px 18px; background: rgba(20,14,8,.94); border: 1px solid var(--gold); border-radius: var(--r-pill); color: var(--ink-1); font-size: 14px; white-space: nowrap; box-shadow: var(--elev-2); pointer-events: none; animation: logIn .16s ease-out; }
 #toast.hidden { display: none; }
@@ -1157,7 +1175,7 @@ button, .inf-face, .mini button, .rival, .chip { -webkit-tap-highlight-color: tr
    body.ui-art #hud { border: 12px solid transparent; border-image: url(ui/frame-panel.png) 24 fill / 12px stretch; }
    body.ui-art .big-btn { border: 10px solid transparent; border-image: url(ui/btn-gold.png) 16 fill / 10px stretch; } */
 /* 주사위 슬롯 받침 그림(ui/slot-socket.png)은 쓰지 않는다 — 보류 상태에서 주사위가 받침에 묻혀 안 보였다. CSS 슬롯이 최종 */
-body.ui-art .mini button[data-icon] { background-position: center; background-size: 22px 22px; background-repeat: no-repeat; font-size: 0; }
+body.ui-art .mini button[data-icon] { background-position: center; background-size: 22px 22px; background-repeat: no-repeat; font-size: 0 !important; color: transparent; }   /* !important: #stage.small/tiny 의 font-size 가 이겨 폰에서 x1·x2 글자가 아이콘과 겹쳤다 */
 body.ui-art .mini button[data-icon] svg { display: none; }
 body.ui-art .bi[data-icon] { font-size: 0; background-position: center; background-size: contain; background-repeat: no-repeat; }
 body.ui-art #help-btn { font-size: 0; background: url(ui/icon-help.png) center / 22px 22px no-repeat; border: 0; box-shadow: none; }
@@ -1232,18 +1250,15 @@ body.ui-art .icon-btn[data-icon] { font-size: 0; background-position: center; ba
 
 /* ---- 로비 가로형 (폰 가로: 넓고 낮은 화면) — 스크롤 대신 좌우 두 열로 ---- */
 @media (min-aspect-ratio: 4/3) and (max-height: 640px) {
-  #lobby .screen-box {
-    width: min(96%, 980px); max-width: none;
-    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); grid-auto-rows: max-content; align-content: safe center;   /* 넘치면 위부터 스크롤 (center 는 위가 잘린다) */
-    column-gap: 18px; row-gap: 4px; padding: 8px 16px 8px; overflow-y: auto;
-  }
-  #lobby .screen-box > * { grid-column: 1; }
-  #lobby .screen-box > #mp-block { grid-column: 2; grid-row: 1 / span 12; align-self: center; margin-top: 0; }
-  #lobby .screen-box > #lobby-settings { grid-column: auto; }
-  #lobby .lobby-sep { display: none; }
+  #lobby .screen-box { width: min(96%, 900px); max-width: none; padding: 8px 16px 8px; overflow-y: auto; }
+  .hub-btns { flex-direction: row; gap: 10px; margin-top: 4px; }
+  .hub-btns .big-btn { flex: 1 1 180px; width: auto; min-height: 64px; font-size: 17px; padding: 8px 10px; }
+  .hub-btns .big-btn .bi { width: 26px; height: 26px; }
+  #lobby-hub .gem-chip.big { margin-top: 6px; }
+  #lobby-single .lobby-btns .lobby-inf-btn { width: auto; flex: 1 1 200px; }
+  #lobby-single .lobby-btns:not(.inf-btns) { flex-direction: row; }
   #lobby h1 { font-size: 22px; margin-bottom: 0; line-height: 1.1; }
   #lobby .screen-sub { margin: 0 0 4px; font-size: 12px; }
-  #lobby .screen-box > p.screen-sub { display: none; }   /* 소개 문장은 세로에서만 */
   #lobby-inf { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   #lobby-progress { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
   #lobby .inf-btns { margin-top: 0; }
