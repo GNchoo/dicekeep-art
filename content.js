@@ -1312,16 +1312,16 @@ window.DKCONTENT = (function () {
   const INF_MONSTERS = {
     // 1~10: 덩어리감 있는 페인터리 판타지 게임 캐릭터, 고어·신체 훼손·실사 공포 제외 (tools/inf-roster.json · ART-PROMPTS §6). 그림이 INF_ART_READY 에 적힌 뒤에만 이 이름·그림이 쓰인다
     // 리깅 시트의 walkStride는 원본 PNG 픽셀 단위 한 주기의 전진 거리. 런타임이 실제 표시 높이로 환산한다.
-    1: { name: '역병쥐', cls: 'S', move: 'ground', tier: 1, walk: '4x2', stabilize: false, walkStride: 112 },
-    2: { name: '해골 잡졸', cls: 'S', move: 'ground', tier: 1, walk: '4x2', stabilize: false, walkStride: 200 },
-    3: { name: '묘지 오우거', cls: 'L', move: 'ground', tier: 1, walk: '4x2', stabilize: false, walkStride: 200 },
+    1: { name: '역병쥐', cls: 'S', move: 'ground', tier: 1, walk: '4x2', stabilize: false, walkStride: 86.15384615384615 },
+    2: { name: '해골 잡졸', cls: 'S', move: 'ground', tier: 1, walk: '4x2', stabilize: false, walkStride: 158.544 },
+    3: { name: '묘지 오우거', cls: 'L', move: 'ground', tier: 1, walk: '4x2', stabilize: false, walkStride: 160.848 },
     4: { name: '까마귀 정찰병', cls: 'S', move: 'air', tier: 1 },
-    5: { name: '고블린 창병', cls: 'M', move: 'ground', tier: 1, walk: '4x2', stabilize: false, walkStride: 192 },
+    5: { name: '고블린 창병', cls: 'M', move: 'ground', tier: 1, walk: '4x2', stabilize: false, walkStride: 161.1 },
     // 6~10 도 폐허의 잡졸로 재설계 (구 얼룩젖소·왕두더지·꿀벌·골목거위·황금 숫양). 프롬프트는 tools/inf-roster.json
-    6: { name: '썩은 멧돼지', cls: 'L', move: 'ground', tier: 1, walk: '4x2', stabilize: false, walkStride: 152 },
-    7: { name: '무덤 파는 구울', cls: 'L', move: 'burrow', tier: 1, walk: '4x2', stabilize: false, walkStride: 192 },
+    6: { name: '썩은 멧돼지', cls: 'L', move: 'ground', tier: 1, walk: '4x2', stabilize: false, walkStride: 104.61538461538461 },
+    7: { name: '무덤 파는 구울', cls: 'L', move: 'burrow', tier: 1, walk: '4x2', stabilize: false, walkStride: 159.248 },
     8: { name: '시체파리 떼', cls: 'S', move: 'air', tier: 1 },
-    9: { name: '녹슨 철갑 오크', cls: 'L', move: 'ground', tier: 1, walk: '4x2', stabilize: false, walkStride: 220 },
+    9: { name: '녹슨 철갑 오크', cls: 'L', move: 'ground', tier: 1, walk: '4x2', stabilize: false, walkStride: 146.104 },
     10: { boss: true, name: '역병 쥐왕', second: null, cls: 'L', tier: 1 },
     11: { name: '도토리다람쥐', cls: 'S', move: 'ground', tier: 2 },
     12: { name: '수리부엉이', cls: 'L', move: 'air', tier: 2 },

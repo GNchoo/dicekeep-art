@@ -1,32 +1,32 @@
 [
   {
     "file": "casual/enemies/inf/w001.png",
-    "sha256": "b69980763eb40d96249e2e1207faab5b5cdbe521276cceaeb19984a0bcf5f2b2",
+    "sha256": "eade54ba9981728e2d744d07c53d3277526092d689d4a90486cdd29401d088c4",
     "matchesCommitted": true
   },
   {
     "file": "casual/enemies/inf/w001-walk-4x2.png",
-    "sha256": "fc5a786dc3b2442abbebc5652c8cd6759ceb42e2d3fcf927af2d4a413b356542",
+    "sha256": "a65e187cb4f459963840c834a246cc15be35a475e09e21d7a7ad6311e95e866b",
     "matchesCommitted": true
   },
   {
     "file": "casual/enemies/inf/w002.png",
-    "sha256": "97edce565c10f7e6cdb5efde61fe2a67638a5f099284cc1102e5a418c3b89b93",
+    "sha256": "f1515c82027f068ce2ff6e9c128425fdfbde845cd243306c57ae18083d400ef6",
     "matchesCommitted": true
   },
   {
     "file": "casual/enemies/inf/w002-walk-4x2.png",
-    "sha256": "aa2c910abb48c3af3dc95add7ed06dee485cf142d100f8a00d79f84ce7d1101c",
+    "sha256": "43de4465786e6084ad8b24c079ce99354ed6c3698b46dabceb2e14b8dbcb8466",
     "matchesCommitted": true
   },
   {
     "file": "casual/enemies/inf/w003.png",
-    "sha256": "4bced16c194ab5c2c11473ba80c7b0d7a972d6e37dcfe79e80dd369c8b80f3bf",
+    "sha256": "385a7b6bbae8662d5ff9f4bded0350f9d1e2634c2e1f2208f3e80a879d1b701b",
     "matchesCommitted": true
   },
   {
     "file": "casual/enemies/inf/w003-walk-4x2.png",
-    "sha256": "994faee189783417d0b730b5fcb392f1041c5670f023212a8f401ee07e89b7a5",
+    "sha256": "e7a9dac95b49b91563beeed508b5a05bc5fedea9465b5273c7f5df294f8ea437",
     "matchesCommitted": true
   },
   {
@@ -41,32 +41,32 @@
   },
   {
     "file": "casual/enemies/inf/w005.png",
-    "sha256": "fac043578c47eb53f7cc0a817bfec317ee81490674ed60dda6e2042ecfe51cf7",
+    "sha256": "870de3512d18f1cfb183e278d181dc8428b6132f7c5664c220905053048d950b",
     "matchesCommitted": true
   },
   {
     "file": "casual/enemies/inf/w005-walk-4x2.png",
-    "sha256": "9292c0baa994d24eb8b546b075b188053b3f451b49fc73f1d0cd7d9da217db46",
+    "sha256": "dc384f84781bf9c6c5655d7014df068604592e5034d7a9a7d502f5c42b35bf08",
     "matchesCommitted": true
   },
   {
     "file": "casual/enemies/inf/w006.png",
-    "sha256": "4457917b989cce811a4a0dd98ef9202481dc47fbbb7f3c5c6d598c9f161aea5b",
+    "sha256": "018fcafb5e9fac4f6c4c72cd8490bd8036af632c440d3d5be0220b5a2847335e",
     "matchesCommitted": true
   },
   {
     "file": "casual/enemies/inf/w006-walk-4x2.png",
-    "sha256": "e51bff6ff098d207b7aa7787cf2b59b393123c1050ec64d8b18ec633f253eff2",
+    "sha256": "2a47f8b83ea3ddc2d6ba18fc705c8e2a10564850a0d18683a49c9ea5bfde4cd7",
     "matchesCommitted": true
   },
   {
     "file": "casual/enemies/inf/w007.png",
-    "sha256": "fd6489fb4844125a724526655b70a70264e0633be48ed2e0b7b7d82d8cfd557d",
+    "sha256": "960835b16440343810ef6f33163489c60086c4ee3e9a724293b879770e8194ed",
     "matchesCommitted": true
   },
   {
     "file": "casual/enemies/inf/w007-walk-4x2.png",
-    "sha256": "e741816232f4e522837ea2530b1df262a62297ae5bf6bb79615960317b07deee",
+    "sha256": "d265ba27402e389a2d08331e29c5b1d4a032f7a8884726308a080eb31aae3fd7",
     "matchesCommitted": true
   },
   {
@@ -81,12 +81,12 @@
   },
   {
     "file": "casual/enemies/inf/w009.png",
-    "sha256": "0842689301d4ed1d167f6389b19972571915513bc153552a3c1fad1d12194704",
+    "sha256": "da09b785b9196ca33d1167de9ff0eb9163f922ff0cd825c2c02c75c2e21f0123",
     "matchesCommitted": true
   },
   {
     "file": "casual/enemies/inf/w009-walk-4x2.png",
-    "sha256": "8a4af2cedf9fc6a40d6b59d27f050f7260c22472524781d2779019a232743b17",
+    "sha256": "33cb6a2c83719807a9a579a27fe425c5cd685b4b2ad214b29e58a08e21ecde25",
     "matchesCommitted": true
   },
   {

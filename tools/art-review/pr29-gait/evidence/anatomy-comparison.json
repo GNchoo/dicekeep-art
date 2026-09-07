@@ -1,0 +1,126 @@
+{
+  "priorCommit": "f4fe78cef5fdb173c1dfda7388c1b4cffbbf6d24",
+  "angleConvention": "180deg is straight; only stance samples are support",
+  "bipeds": [
+    {
+      "wave": 2,
+      "priorSupportKneeDeg": [
+        99.59480671778357,
+        106.65021965605966
+      ],
+      "currentSupportKneeDeg": [
+        167.87690883204644,
+        168.0000000000008
+      ],
+      "currentSwingKneeDeg": [
+        119.63312522793909,
+        168.0000000000007
+      ],
+      "denseSupportKneeDeg": [
+        162.49385240513007,
+        169.9302791191346
+      ],
+      "pelvisRangePx": [
+        14.425511105212479,
+        19.69819505609817
+      ]
+    },
+    {
+      "wave": 3,
+      "priorSupportKneeDeg": [
+        90.7608510627231,
+        98.07993822560046
+      ],
+      "currentSupportKneeDeg": [
+        167.87593555707886,
+        168.000012932489
+      ],
+      "currentSwingKneeDeg": [
+        119.37762842497233,
+        168.0000129324891
+      ],
+      "denseSupportKneeDeg": [
+        162.45666897499476,
+        169.947178324133
+      ],
+      "pelvisRangePx": [
+        11.377422627132432,
+        16.726553489165923
+      ]
+    },
+    {
+      "wave": 5,
+      "priorSupportKneeDeg": [
+        94.5258669501954,
+        103.32657372032865
+      ],
+      "currentSupportKneeDeg": [
+        167.87690608618044,
+        168.00000871734392
+      ],
+      "currentSwingKneeDeg": [
+        119.63286453276515,
+        168.00000871734392
+      ],
+      "denseSupportKneeDeg": [
+        162.49388723650853,
+        169.93026291793652
+      ],
+      "pelvisRangePx": [
+        20.463859055960484,
+        25.82158395464461
+      ]
+    },
+    {
+      "wave": 7,
+      "priorSupportKneeDeg": [
+        94.91894030216818,
+        103.14419789080411
+      ],
+      "currentSupportKneeDeg": [
+        167.8767809831467,
+        168.00000346451202
+      ],
+      "currentSwingKneeDeg": [
+        119.60136395319248,
+        168.0000034645121
+      ],
+      "denseSupportKneeDeg": [
+        162.48914327837062,
+        169.93241312983213
+      ],
+      "pelvisRangePx": [
+        15.563462068736158,
+        20.859630011732946
+      ]
+    },
+    {
+      "wave": 9,
+      "priorSupportKneeDeg": [
+        118.18174098112128,
+        131.80750291178887
+      ],
+      "currentSupportKneeDeg": [
+        167.87548730720818,
+        168.00000000000006
+      ],
+      "currentSwingKneeDeg": [
+        119.25677457610178,
+        167.99999999999994
+      ],
+      "denseSupportKneeDeg": [
+        162.4391887737881,
+        169.9551461247462
+      ],
+      "pelvisRangePx": [
+        35.75207213097838,
+        40.61069436310066
+      ]
+    }
+  ],
+  "quadVisualReview": {
+    "basis": "Separate assembled masters, reconstructed neutral poses, all8poses, gameplay-size and enlarged views",
+    "w1": "Shoulder and outer haunch now join a full horizontal body",
+    "w6": "Full rump and horizontal ribcage replace upright bust; thin lower haunch composite rim remains when enlarged"
+  }
+}

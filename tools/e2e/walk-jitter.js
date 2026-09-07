@@ -110,7 +110,7 @@ async function main() {
     for (const row of rows) {
       row.failures = rowFailures(row);
       const metrics = row.dims ? row.dims + ': ' + (row.air ? '중심 y' : '발 y') + ' ' + row.foot.toFixed(2) + 'px · 중심 x ' + row.mx.toFixed(2) + 'px · 높이 ' + row.height + 'px · 넓이 ' + (row.area * 100).toFixed(1) + '%' : 'invalid sheet';
-      console.log((row.failures.length ? 'FAIL ' : 'PASS ') + row.key + ' ' + row.expected + ' frames · ' + metrics + (row.rigged ? ' · LOADER ONLY: centroid threshold excluded; see ground-gait-check.cjson for gait' : ' · silhouette-anchor check') + (row.failures.length ? ' · ' + row.failures.join('; ') : ''));
+      console.log((row.failures.length ? 'FAIL ' : 'PASS ') + row.key + ' ' + row.expected + ' frames · ' + metrics + (row.rigged ? ' · LOADER ONLY: centroid threshold excluded; see ground-gait-check.json for gait' : ' · silhouette-anchor check') + (row.failures.length ? ' · ' + row.failures.join('; ') : ''));
     }
     fs.writeFileSync(outputPath('walk-jitter.json'), JSON.stringify({ rows, errors }, null, 2) + '\n');
     console.log('W10: infB10 정지컷 — 걷기 시트 검사 대상 아님. 리깅의 보행·접지 검증은 ground-gait-check.cjs 별도 실행.');

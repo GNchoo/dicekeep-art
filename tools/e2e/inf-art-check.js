@@ -161,7 +161,7 @@ async function main() {
       console.log((failures.length ? 'FAIL' : 'PASS') + ' W' + wave + (wave === 10 ? ' static boss (no walking sheet)' : wave === 11 ? ' original-roster fallback' : '') + (failures.length ? ': ' + failures.join('; ') : ''));
     }
     if (report.errors.length || report.failures.length) throw new Error([...report.errors, ...report.failures].join('\n'));
-    console.log('PASS actual rendered progression: seven 8-frame ground rigs, two 4-frame flyers, W10 static boss, W11 fallback; no infinity-art load errors or pageerrors. See ground-gait-check.cjson for planted-foot validation.');
+    console.log('PASS actual rendered progression: seven 8-frame ground rigs, two 4-frame flyers, W10 static boss, W11 fallback; no infinity-art load errors or pageerrors. See ground-gait-check.json for planted-foot validation.');
   } catch (error) {
     report.failures.push(error.message);
     throw error;

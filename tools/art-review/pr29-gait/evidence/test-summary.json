@@ -1,5 +1,6 @@
 {
   "date": "2026-09-07",
+  "assetStage": "Final anatomy master-based quadrupeds and support-geometry biped pelvis",
   "sheetRegression": {
     "passed": 13,
     "failed": 0
@@ -9,8 +10,13 @@
     "failed": 0
   },
   "gaitSelfTest": {
-    "rejectedKinematicFixtures": 13,
-    "rejectedTextureFixtures": 2
+    "rejectedGaitAnatomyFixtures": 27,
+    "positiveProfiles": [
+      "upright biped",
+      "four-footfall quadruped"
+    ],
+    "wrappedStanceCapture": "PASS",
+    "missingAndDisplacedTexture": "PASS"
   },
   "loaderSelfTest": {
     "rejectedFixtures": 14
@@ -22,11 +28,10 @@
   "smoke": {
     "desktop": "PASS",
     "phone": "PASS",
-    "newInfinityArtErrors": 0,
     "pageErrors": 0,
     "legacy404ConsoleDiagnostics": 178
   },
   "syntax": "PASS",
   "diffWhitespace": "PASS",
-  "notes": "Runtime frame loading is separate from named-foot gait and visual review. Phone is Chromium viewport emulation."
+  "notes": "Geometry and atlas SHA checks do not replace visual anatomical review. Actual final game assets tested with no preview overrides. Phone is Chromium viewport emulation."
 }

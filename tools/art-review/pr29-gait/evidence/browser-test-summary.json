@@ -1,17 +1,45 @@
 {
-  "verifiedAt": "2026-09-07T09:29:51.472Z",
-  "assetStage": "Final torso occlusion cleanup; parent confirmed renderer frozen",
+  "verifiedAt": "2026-09-07T10:25:24.035Z",
+  "assetStage": "Final anatomy masters and tapered proximal limb blend; parent confirmed promotion and renderer freeze",
+  "baseUrl": "http://127.0.0.1:8137",
+  "manifestSha256": "d1e5a132c068ba3b1b51f2f85617853d4514f987bdbf6eb0697937052879709a",
   "exitCodes": {
+    "loaderSelfTest": 0,
     "loader": 0,
     "desktop": 0,
     "phone": 0,
     "preview": 0
   },
+  "commands": [
+    {
+      "command": "node tools/e2e/walk-jitter.js --self-test",
+      "outputDir": "../e2e-gait-anatomy"
+    },
+    {
+      "command": "node tools/e2e/walk-jitter.js",
+      "outputDir": "../e2e-gait-anatomy"
+    },
+    {
+      "command": "node tools/e2e/inf-art-check.js 11",
+      "outputDir": "../e2e-gait-anatomy"
+    },
+    {
+      "command": "node tools/e2e/inf-art-check.js 11 --phone",
+      "outputDir": "../e2e-gait-anatomy-phone"
+    },
+    {
+      "command": "node tools/e2e/walk-preview.cjs",
+      "outputDir": "../e2e-gait-anatomy"
+    }
+  ],
   "loaderSelfTestFailureCases": 14,
-  "scope": "Actual loaded/rendered frames; ground anatomy, planting and slip belong to ground-gait-check.cjs",
+  "loadedWalkSheets": 9,
+  "loaderErrors": [],
+  "loaderFailures": [],
+  "scope": "Actual loaded/rendered frames; ground centroid motion excluded from jitter thresholds. Anatomical anchors, planted feet and world slip are separately checked by ground-gait-check.cjs.",
   "runs": [
     {
-      "dir": "../e2e-gait",
+      "dir": "../e2e-gait-anatomy",
       "viewport": {
         "width": 1240,
         "height": 860
@@ -21,12 +49,22 @@
       "failures": [],
       "groundFrames": 56,
       "flyerFrames": 8,
+      "staticFrames": 2,
       "staticBossWave": 10,
       "fallbackWave": 11,
-      "screenshots": 77
+      "screenshots": 77,
+      "groundSourceStrides": {
+        "1": 86.15384615384615,
+        "2": 158.544,
+        "3": 160.848,
+        "5": 161.1,
+        "6": 104.61538461538461,
+        "7": 159.248,
+        "9": 146.104
+      }
     },
     {
-      "dir": "../e2e-gait-phone",
+      "dir": "../e2e-gait-anatomy-phone",
       "viewport": {
         "width": 440,
         "height": 956
@@ -36,9 +74,92 @@
       "failures": [],
       "groundFrames": 56,
       "flyerFrames": 8,
+      "staticFrames": 2,
       "staticBossWave": 10,
       "fallbackWave": 11,
-      "screenshots": 77
+      "screenshots": 77,
+      "groundSourceStrides": {
+        "1": 86.15384615384615,
+        "2": 158.544,
+        "3": 160.848,
+        "5": 161.1,
+        "6": 104.61538461538461,
+        "7": 159.248,
+        "9": 146.104
+      }
     }
-  ]
+  ],
+  "preview": {
+    "source": "actual DKA loader canvases, no synthetic replacement limbs",
+    "scale": 3,
+    "sampleDelayMs": 100,
+    "groundCycleSeconds": 0.8,
+    "groundTiming": "normalized review cycle; game frames instead follow actual distance and vary with speed",
+    "groundMotion": "forward travel = source-pixel walkStride × drawHeight / loadedFrameHeight; fixed ground ticks; replay returns to start",
+    "flyerTiming": "4 frames, 5fps, existing sequence",
+    "variants": [
+      {
+        "name": "ground-walk-preview",
+        "waves": [
+          1,
+          2,
+          3,
+          5,
+          6,
+          7,
+          9
+        ],
+        "labeled": true,
+        "width": 1209,
+        "height": 868,
+        "samples": 8
+      },
+      {
+        "name": "walk-preview",
+        "waves": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "labeled": false,
+        "width": 1209,
+        "height": 780,
+        "samples": 8
+      }
+    ]
+  },
+  "visualReview": {
+    "reviewedWaves": [
+      1,
+      2,
+      6,
+      9
+    ],
+    "evidence": [
+      "ground-walk-preview.png",
+      "ground-walk-preview.gif",
+      "walk-preview.png",
+      "walk-preview.gif",
+      "ground-selected-phases.png",
+      "inf-w01-frame3.png",
+      "inf-w02-frame3.png",
+      "inf-w06-frame3.png",
+      "inf-w09-frame3.png",
+      "../e2e-gait-anatomy-phone/inf-w01-wide.png",
+      "../e2e-gait-anatomy-phone/inf-w06-wide.png"
+    ],
+    "verdict": "Upright biped support legs and coherent shoulder/pelvis attachments in complete quadruped bodies are visible. No new missing art or clipping observed in reviewed gameplay captures. Moderate painted game-character appearance without gore.",
+    "limitations": [
+      "Boar shoulder/haunch seams remain visible at enlarged 3x review scale; they mostly blend into fur shading at gameplay size.",
+      "Eight-pose cutout motion has limited torso/tail deformation and should not be described as fluid full-body animation.",
+      "Preview timing is normalized to 0.8 seconds per ground cycle, while game playback is driven by actual distance; preview is not game speed or sole-slip proof.",
+      "W10 uses a static boss sprite and has no walking sheet."
+    ]
+  }
 }

@@ -11,6 +11,7 @@
   ],
   "browserRequested": true,
   "previewAssets": false,
+  "interpretation": "Geometry and source-atlas provenance checks do not validate the separate assembled anatomical masters or replace visual review of socket anatomy, occlusion, texture seams, character tone or perceived weight. Gameplay planting is measured at the first actual draw of each pose within a complete contact event; discrete frames allow movement between captures.",
   "kinematics": [
     {
       "wave": 1,
@@ -18,53 +19,399 @@
       "limbs": [
         {
           "id": "nearFore",
-          "stanceFrames": 4,
-          "maximumLift": 24,
-          "footXSpan": 56,
-          "maximumReferenceSlip": 0,
-          "maximumLoopStep": 22.000000000000018
+          "stanceFrames": 6,
+          "maximumLift": 11.712595282731456,
+          "footXSpan": 53.84615384615387,
+          "maximumReferenceSlip": 5.329070518200751e-15,
+          "maximumLoopStep": 29.646941854931043
         },
         {
           "id": "farFore",
-          "stanceFrames": 4,
-          "maximumLift": 24,
-          "footXSpan": 56,
-          "maximumReferenceSlip": 0,
-          "maximumLoopStep": 22.000000000000018
+          "stanceFrames": 6,
+          "maximumLift": 11.712595282731456,
+          "footXSpan": 53.84615384615387,
+          "maximumReferenceSlip": 5.329070518200751e-15,
+          "maximumLoopStep": 29.646941854930994
         },
         {
           "id": "nearHind",
-          "stanceFrames": 4,
-          "maximumLift": 24,
-          "footXSpan": 56,
-          "maximumReferenceSlip": 0,
-          "maximumLoopStep": 22.000000000000018
+          "stanceFrames": 6,
+          "maximumLift": 11.712595282731456,
+          "footXSpan": 53.84615384615384,
+          "maximumReferenceSlip": 2.3092638912203256e-14,
+          "maximumLoopStep": 29.646941854931015
         },
         {
           "id": "farHind",
-          "stanceFrames": 4,
-          "maximumLift": 24,
-          "footXSpan": 56,
-          "maximumReferenceSlip": 0,
-          "maximumLoopStep": 22.000000000000018
+          "stanceFrames": 6,
+          "maximumLift": 11.712595282731456,
+          "footXSpan": 53.84615384615384,
+          "maximumReferenceSlip": 2.3092638912203256e-14,
+          "maximumLoopStep": 29.646941854931043
         }
       ],
       "pairs": [
         {
           "pair": "fore",
-          "minimumNearMinusFarX": -56,
-          "maximumNearMinusFarX": 56,
-          "phaseError": 0,
+          "minimumNearMinusFarX": -48.10217904961934,
+          "maximumNearMinusFarX": 38.05166710422685,
+          "phaseError": 2.0097183471152322e-14,
           "liftError": 0
         },
         {
           "pair": "hind",
-          "minimumNearMinusFarX": -56,
-          "maximumNearMinusFarX": 56,
-          "phaseError": 0,
+          "minimumNearMinusFarX": -48.10217904961928,
+          "maximumNearMinusFarX": 38.05166710422685,
+          "phaseError": 2.4613922385709617e-14,
           "liftError": 0
         }
-      ]
+      ],
+      "anatomy": {
+        "profile": "fixed-body",
+        "limbs": [
+          {
+            "id": "nearFore",
+            "kneeAngles": [
+              104.35327871722717,
+              97.78952633881075,
+              148.40900119342967,
+              134.56531023599274,
+              128.5432057445441,
+              128.02153354936505,
+              132.86558718520263,
+              144.69370961904576
+            ],
+            "stanceKneeRange": [
+              128.02153354936505,
+              148.40900119342967
+            ],
+            "swingKneeRange": [
+              97.78952633881075,
+              104.35327871722717
+            ],
+            "maximumSocketDrift": 0,
+            "maximumBoneError": 4.263256414560601e-14,
+            "bendSigns": [
+              1
+            ],
+            "maximumJointStep": 29.646941854931043,
+            "maximumAngleStep": 50.61947485461893,
+            "maximumBodyStep": 0
+          },
+          {
+            "id": "farFore",
+            "kneeAngles": [
+              134.0933619749148,
+              133.52591340232792,
+              138.85142047069684,
+              152.72273133833136,
+              108.13336094504206,
+              101.38686719722274,
+              157.59822450568458,
+              140.7549053632907
+            ],
+            "stanceKneeRange": [
+              133.52591340232792,
+              157.59822450568458
+            ],
+            "swingKneeRange": [
+              101.38686719722274,
+              108.13336094504206
+            ],
+            "maximumSocketDrift": 0,
+            "maximumBoneError": 5.684341886080802e-14,
+            "bendSigns": [
+              1
+            ],
+            "maximumJointStep": 29.646941854930994,
+            "maximumAngleStep": 56.21135730846184,
+            "maximumBodyStep": 0
+          },
+          {
+            "id": "nearHind",
+            "kneeAngles": [
+              122.68813099349275,
+              114.77062374386992,
+              110.82801837084382,
+              110.4749834201539,
+              113.68384254195297,
+              120.7462982913549,
+              94.29270361009833,
+              89.28677330165921
+            ],
+            "stanceKneeRange": [
+              110.4749834201539,
+              122.68813099349275
+            ],
+            "swingKneeRange": [
+              89.28677330165921,
+              94.29270361009833
+            ],
+            "maximumSocketDrift": 0,
+            "maximumBoneError": 2.842170943040401e-14,
+            "bendSigns": [
+              -1
+            ],
+            "maximumJointStep": 29.646941854931015,
+            "maximumAngleStep": 33.40135769183354,
+            "maximumBodyStep": 0
+          },
+          {
+            "id": "farHind",
+            "kneeAngles": [
+              117.20113515326457,
+              124.51789226223997,
+              97.04786293372901,
+              91.96241550844644,
+              126.54771307090891,
+              118.32111160676219,
+              114.26704443895635,
+              113.905188813534
+            ],
+            "stanceKneeRange": [
+              113.905188813534,
+              126.54771307090891
+            ],
+            "swingKneeRange": [
+              91.96241550844644,
+              97.04786293372901
+            ],
+            "maximumSocketDrift": 0,
+            "maximumBoneError": 2.842170943040401e-14,
+            "bendSigns": [
+              -1
+            ],
+            "maximumJointStep": 29.646941854931043,
+            "maximumAngleStep": 34.58529756246247,
+            "maximumBodyStep": 0
+          }
+        ],
+        "pelvis": null,
+        "sockets": [
+          {
+            "id": "nearFore",
+            "reviewedRoi": [
+              0.58,
+              0.48,
+              0.18,
+              0.28
+            ],
+            "normalizedPoints": [
+              [
+                0.67,
+                0.65
+              ],
+              [
+                0.67,
+                0.65
+              ],
+              [
+                0.67,
+                0.65
+              ],
+              [
+                0.67,
+                0.65
+              ],
+              [
+                0.67,
+                0.65
+              ],
+              [
+                0.67,
+                0.65
+              ],
+              [
+                0.67,
+                0.65
+              ],
+              [
+                0.67,
+                0.65
+              ]
+            ],
+            "sourceSocket": [
+              601.0600000000001,
+              421.45000000000005
+            ],
+            "sourceAtlas": "tools/art-review/pr29-gait/sources/w001-anatomy-puppet.png"
+          },
+          {
+            "id": "farFore",
+            "reviewedRoi": [
+              0.58,
+              0.48,
+              0.18,
+              0.28
+            ],
+            "normalizedPoints": [
+              [
+                0.682,
+                0.64
+              ],
+              [
+                0.682,
+                0.64
+              ],
+              [
+                0.682,
+                0.64
+              ],
+              [
+                0.682,
+                0.64
+              ],
+              [
+                0.682,
+                0.64
+              ],
+              [
+                0.682,
+                0.64
+              ],
+              [
+                0.682,
+                0.64
+              ],
+              [
+                0.682,
+                0.64
+              ]
+            ],
+            "sourceSocket": [
+              610.8760000000001,
+              418.52
+            ],
+            "sourceAtlas": "tools/art-review/pr29-gait/sources/w001-anatomy-puppet.png"
+          },
+          {
+            "id": "nearHind",
+            "reviewedRoi": [
+              0.25,
+              0.36,
+              0.2,
+              0.32
+            ],
+            "normalizedPoints": [
+              [
+                0.34,
+                0.56
+              ],
+              [
+                0.34,
+                0.56
+              ],
+              [
+                0.34,
+                0.56
+              ],
+              [
+                0.34,
+                0.56
+              ],
+              [
+                0.34,
+                0.56
+              ],
+              [
+                0.34,
+                0.56
+              ],
+              [
+                0.34,
+                0.56
+              ],
+              [
+                0.34,
+                0.56
+              ]
+            ],
+            "sourceSocket": [
+              331.12,
+              395.08000000000004
+            ],
+            "sourceAtlas": "tools/art-review/pr29-gait/sources/w001-anatomy-puppet.png"
+          },
+          {
+            "id": "farHind",
+            "reviewedRoi": [
+              0.25,
+              0.36,
+              0.2,
+              0.32
+            ],
+            "normalizedPoints": [
+              [
+                0.352,
+                0.55
+              ],
+              [
+                0.352,
+                0.55
+              ],
+              [
+                0.352,
+                0.55
+              ],
+              [
+                0.352,
+                0.55
+              ],
+              [
+                0.352,
+                0.55
+              ],
+              [
+                0.352,
+                0.55
+              ],
+              [
+                0.352,
+                0.55
+              ],
+              [
+                0.352,
+                0.55
+              ]
+            ],
+            "sourceSocket": [
+              340.936,
+              392.15
+            ],
+            "sourceAtlas": "tools/art-review/pr29-gait/sources/w001-anatomy-puppet.png"
+          }
+        ],
+        "footfalls": {
+          "starts": [
+            {
+              "id": "nearHind",
+              "phase": 0
+            },
+            {
+              "id": "nearFore",
+              "phase": 0.25
+            },
+            {
+              "id": "farHind",
+              "phase": 0.5
+            },
+            {
+              "id": "farFore",
+              "phase": 0.75
+            }
+          ],
+          "supportingFeetPerFrame": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        }
+      }
     },
     {
       "wave": 2,
@@ -73,29 +420,111 @@
         {
           "id": "near",
           "stanceFrames": 4,
-          "maximumLift": 38,
-          "footXSpan": 100,
-          "maximumReferenceSlip": 0,
-          "maximumLoopStep": 36.70149860700513
+          "maximumLift": 19.817999999999984,
+          "footXSpan": 79.27199999999999,
+          "maximumReferenceSlip": 1.7763568394002505e-14,
+          "maximumLoopStep": 28.62165507748982
         },
         {
           "id": "far",
           "stanceFrames": 4,
-          "maximumLift": 38,
-          "footXSpan": 100,
-          "maximumReferenceSlip": 0,
-          "maximumLoopStep": 36.70149860700513
+          "maximumLift": 19.817999999999984,
+          "footXSpan": 79.27199999999999,
+          "maximumReferenceSlip": 1.7763568394002505e-14,
+          "maximumLoopStep": 28.62165507748982
         }
       ],
       "pairs": [
         {
           "pair": "legs",
-          "minimumNearMinusFarX": -100,
-          "maximumNearMinusFarX": 100,
-          "phaseError": 0,
+          "minimumNearMinusFarX": -79.58456396932019,
+          "maximumNearMinusFarX": 78.9594360306798,
+          "phaseError": 2.842170943040401e-14,
           "liftError": 0
         }
-      ]
+      ],
+      "anatomy": {
+        "profile": "support-leg-pelvis",
+        "limbs": [
+          {
+            "id": "near",
+            "kneeAngles": [
+              168.0000000000006,
+              167.87690883204644,
+              168.00000000000014,
+              167.8769088320465,
+              168.0000000000004,
+              131.73370986194615,
+              119.63312522793909,
+              131.73370986194612
+            ],
+            "stanceKneeRange": [
+              167.87690883204644,
+              168.0000000000006
+            ],
+            "swingKneeRange": [
+              119.63312522793909,
+              168.0000000000004
+            ],
+            "maximumSocketDrift": 0,
+            "maximumBoneError": 4.263256414560601e-14,
+            "bendSigns": [
+              -1
+            ],
+            "maximumJointStep": 29.07113349366151,
+            "maximumAngleStep": 36.26629013805447,
+            "maximumBodyStep": 3.9545129631642713
+          },
+          {
+            "id": "far",
+            "kneeAngles": [
+              168.0000000000007,
+              131.7337098619462,
+              119.63312522793916,
+              131.7337098619462,
+              168.0000000000008,
+              167.8769088320467,
+              168.00000000000054,
+              167.8769088320469
+            ],
+            "stanceKneeRange": [
+              167.8769088320467,
+              168.0000000000008
+            ],
+            "swingKneeRange": [
+              119.63312522793916,
+              168.0000000000007
+            ],
+            "maximumSocketDrift": 0,
+            "maximumBoneError": 4.263256414560601e-14,
+            "bendSigns": [
+              -1
+            ],
+            "maximumJointStep": 29.071133493661655,
+            "maximumAngleStep": 36.266290138054586,
+            "maximumBodyStep": 3.9545129631642713
+          }
+        ],
+        "pelvis": {
+          "sourceHeightSpan": 5.272683950885693,
+          "midstanceRises": [
+            {
+              "id": "near",
+              "startFrame": 0,
+              "centerFrame": 2,
+              "rise": 5.272683950885693
+            },
+            {
+              "id": "far",
+              "startFrame": 4,
+              "centerFrame": 6,
+              "rise": 5.272683950885693
+            }
+          ]
+        },
+        "sockets": [],
+        "footfalls": null
+      }
     },
     {
       "wave": 3,
@@ -104,29 +533,111 @@
         {
           "id": "near",
           "stanceFrames": 4,
-          "maximumLift": 38,
-          "footXSpan": 100,
-          "maximumReferenceSlip": 0,
-          "maximumLoopStep": 36.70149860700513
+          "maximumLift": 20.105999999999995,
+          "footXSpan": 80.42399999999998,
+          "maximumReferenceSlip": 7.105427357601002e-15,
+          "maximumLoopStep": 29.037591936018252
         },
         {
           "id": "far",
           "stanceFrames": 4,
-          "maximumLift": 38,
-          "footXSpan": 100,
-          "maximumReferenceSlip": 0,
-          "maximumLoopStep": 36.70149860700513
+          "maximumLift": 20.105999999999995,
+          "footXSpan": 80.42399999999998,
+          "maximumReferenceSlip": 7.105427357601002e-15,
+          "maximumLoopStep": 29.037591936018252
         }
       ],
       "pairs": [
         {
           "pair": "legs",
-          "minimumNearMinusFarX": -100,
-          "maximumNearMinusFarX": 100,
+          "minimumNearMinusFarX": -80.21525840722347,
+          "maximumNearMinusFarX": 80.63274159277648,
           "phaseError": 0,
           "liftError": 0
         }
-      ]
+      ],
+      "anatomy": {
+        "profile": "support-leg-pelvis",
+        "limbs": [
+          {
+            "id": "near",
+            "kneeAngles": [
+              167.99998706754633,
+              167.87593555707886,
+              167.9999999999999,
+              167.87593555707886,
+              167.9999870675463,
+              131.54144124506385,
+              119.37765979640912,
+              131.54144124506382
+            ],
+            "stanceKneeRange": [
+              167.87593555707886,
+              167.9999999999999
+            ],
+            "swingKneeRange": [
+              119.37765979640912,
+              167.9999870675463
+            ],
+            "maximumSocketDrift": 5.684341886080802e-14,
+            "maximumBoneError": 5.684341886080802e-14,
+            "bendSigns": [
+              -1
+            ],
+            "maximumJointStep": 29.538769510045558,
+            "maximumAngleStep": 36.458545822482506,
+            "maximumBodyStep": 4.01184814652512
+          },
+          {
+            "id": "far",
+            "kneeAngles": [
+              168.0000129324891,
+              131.54142109616635,
+              119.37762842497233,
+              131.54142109616637,
+              168.000012932489,
+              167.8759417480246,
+              167.99999999999994,
+              167.87594174802453
+            ],
+            "stanceKneeRange": [
+              167.87594174802453,
+              168.000012932489
+            ],
+            "swingKneeRange": [
+              119.37762842497233,
+              168.0000129324891
+            ],
+            "maximumSocketDrift": 5.684341886080802e-14,
+            "maximumBoneError": 5.684341886080802e-14,
+            "bendSigns": [
+              -1
+            ],
+            "maximumJointStep": 29.53877572764865,
+            "maximumAngleStep": 36.45859183632277,
+            "maximumBodyStep": 4.01184814652512
+          }
+        ],
+        "pelvis": {
+          "sourceHeightSpan": 5.3491308620334905,
+          "midstanceRises": [
+            {
+              "id": "near",
+              "startFrame": 0,
+              "centerFrame": 2,
+              "rise": 5.3491308620334905
+            },
+            {
+              "id": "far",
+              "startFrame": 4,
+              "centerFrame": 6,
+              "rise": 5.3491308620334905
+            }
+          ]
+        },
+        "sockets": [],
+        "footfalls": null
+      }
     },
     {
       "wave": 5,
@@ -135,29 +646,111 @@
         {
           "id": "near",
           "stanceFrames": 4,
-          "maximumLift": 38,
-          "footXSpan": 96,
-          "maximumReferenceSlip": 0,
-          "maximumLoopStep": 36.027767069303636
+          "maximumLift": 20.137999999999977,
+          "footXSpan": 80.55000000000001,
+          "maximumReferenceSlip": 1.7763568394002505e-14,
+          "maximumLoopStep": 29.083114730086635
         },
         {
           "id": "far",
           "stanceFrames": 4,
-          "maximumLift": 38,
-          "footXSpan": 96,
-          "maximumReferenceSlip": 0,
-          "maximumLoopStep": 36.027767069303636
+          "maximumLift": 20.137999999999977,
+          "footXSpan": 80.54999999999998,
+          "maximumReferenceSlip": 1.0658141036401503e-14,
+          "maximumLoopStep": 29.083114730086606
         }
       ],
       "pairs": [
         {
           "pair": "legs",
-          "minimumNearMinusFarX": -96,
-          "maximumNearMinusFarX": 96,
-          "phaseError": 0,
+          "minimumNearMinusFarX": -80.75686895803256,
+          "maximumNearMinusFarX": 80.34313104196744,
+          "phaseError": 1.7404671430534633e-14,
           "liftError": 0
         }
-      ]
+      ],
+      "anatomy": {
+        "profile": "support-leg-pelvis",
+        "limbs": [
+          {
+            "id": "near",
+            "kneeAngles": [
+              168.00000871734392,
+              167.87691027124671,
+              168.00000000000014,
+              167.8769102712467,
+              168.00000871734392,
+              131.7334588791039,
+              119.63286453276515,
+              131.73345887910392
+            ],
+            "stanceKneeRange": [
+              167.8769102712467,
+              168.00000871734392
+            ],
+            "swingKneeRange": [
+              119.63286453276515,
+              168.00000871734392
+            ],
+            "maximumSocketDrift": 0,
+            "maximumBoneError": 4.263256414560601e-14,
+            "bendSigns": [
+              -1
+            ],
+            "maximumJointStep": 29.53958026916742,
+            "maximumAngleStep": 36.266549838240024,
+            "maximumBodyStep": 4.018293674013094
+          },
+          {
+            "id": "far",
+            "kneeAngles": [
+              167.99999128267183,
+              131.73347021995238,
+              119.63288270069577,
+              131.73347021995247,
+              167.99999128267183,
+              167.87690608618058,
+              168.0000000000001,
+              167.87690608618044
+            ],
+            "stanceKneeRange": [
+              167.87690608618044,
+              168.0000000000001
+            ],
+            "swingKneeRange": [
+              119.63288270069577,
+              167.99999128267183
+            ],
+            "maximumSocketDrift": 0,
+            "maximumBoneError": 5.684341886080802e-14,
+            "bendSigns": [
+              -1
+            ],
+            "maximumJointStep": 29.53957239582565,
+            "maximumAngleStep": 36.26652106271945,
+            "maximumBodyStep": 4.018293674013094
+          }
+        ],
+        "pelvis": {
+          "sourceHeightSpan": 5.3577248986841255,
+          "midstanceRises": [
+            {
+              "id": "near",
+              "startFrame": 0,
+              "centerFrame": 2,
+              "rise": 5.3577248986841255
+            },
+            {
+              "id": "far",
+              "startFrame": 4,
+              "centerFrame": 6,
+              "rise": 5.3577248986841255
+            }
+          ]
+        },
+        "sockets": [],
+        "footfalls": null
+      }
     },
     {
       "wave": 6,
@@ -165,53 +758,399 @@
       "limbs": [
         {
           "id": "nearFore",
-          "stanceFrames": 4,
-          "maximumLift": 32,
-          "footXSpan": 76,
-          "maximumReferenceSlip": 0,
-          "maximumLoopStep": 29.546573405388326
+          "stanceFrames": 6,
+          "maximumLift": 13.51453301853627,
+          "footXSpan": 65.38461538461536,
+          "maximumReferenceSlip": 3.907985046680551e-14,
+          "maximumLoopStep": 35.99508917891475
         },
         {
           "id": "farFore",
-          "stanceFrames": 4,
-          "maximumLift": 32,
-          "footXSpan": 76,
-          "maximumReferenceSlip": 0,
-          "maximumLoopStep": 29.546573405388326
+          "stanceFrames": 6,
+          "maximumLift": 13.51453301853627,
+          "footXSpan": 65.38461538461542,
+          "maximumReferenceSlip": 3.907985046680551e-14,
+          "maximumLoopStep": 35.99508917891475
         },
         {
           "id": "nearHind",
-          "stanceFrames": 4,
-          "maximumLift": 32,
-          "footXSpan": 76,
-          "maximumReferenceSlip": 0,
-          "maximumLoopStep": 29.546573405388326
+          "stanceFrames": 6,
+          "maximumLift": 13.51453301853627,
+          "footXSpan": 65.38461538461539,
+          "maximumReferenceSlip": 1.7763568394002505e-14,
+          "maximumLoopStep": 35.99508917891475
         },
         {
           "id": "farHind",
-          "stanceFrames": 4,
-          "maximumLift": 32,
-          "footXSpan": 76,
-          "maximumReferenceSlip": 0,
-          "maximumLoopStep": 29.546573405388326
+          "stanceFrames": 6,
+          "maximumLift": 13.51453301853627,
+          "footXSpan": 65.38461538461539,
+          "maximumReferenceSlip": 1.7763568394002505e-14,
+          "maximumLoopStep": 35.99508917891475
         }
       ],
       "pairs": [
         {
           "pair": "fore",
-          "minimumNearMinusFarX": -76,
-          "maximumNearMinusFarX": 76,
-          "phaseError": 0,
+          "minimumNearMinusFarX": -58.145792070162656,
+          "maximumNearMinusFarX": 46.469592545221985,
+          "phaseError": 6.665481691674458e-14,
           "liftError": 0
         },
         {
           "pair": "hind",
-          "minimumNearMinusFarX": -76,
-          "maximumNearMinusFarX": 76,
+          "minimumNearMinusFarX": -58.1457920701626,
+          "maximumNearMinusFarX": 46.46959254522204,
           "phaseError": 0,
           "liftError": 0
         }
-      ]
+      ],
+      "anatomy": {
+        "profile": "fixed-body",
+        "limbs": [
+          {
+            "id": "nearFore",
+            "kneeAngles": [
+              117.53624313495541,
+              113.23604772405254,
+              147.45054995863512,
+              140.58483655919508,
+              137.36719015410551,
+              137.08450648661,
+              139.68631930487962,
+              145.70775770736626
+            ],
+            "stanceKneeRange": [
+              137.08450648661,
+              147.45054995863512
+            ],
+            "swingKneeRange": [
+              113.23604772405254,
+              117.53624313495541
+            ],
+            "maximumSocketDrift": 0,
+            "maximumBoneError": 7.105427357601002e-14,
+            "bendSigns": [
+              1
+            ],
+            "maximumJointStep": 35.99508917891475,
+            "maximumAngleStep": 34.21450223458258,
+            "maximumBodyStep": 0
+          },
+          {
+            "id": "farFore",
+            "kneeAngles": [
+              142.5905300366445,
+              142.27565817940746,
+              145.19694051679537,
+              152.2243923099447,
+              121.07027995198021,
+              116.58751891025618,
+              154.36021369365264,
+              146.21915731345564
+            ],
+            "stanceKneeRange": [
+              142.27565817940746,
+              154.36021369365264
+            ],
+            "swingKneeRange": [
+              116.58751891025618,
+              121.07027995198021
+            ],
+            "maximumSocketDrift": 0,
+            "maximumBoneError": 4.973799150320701e-14,
+            "bendSigns": [
+              1
+            ],
+            "maximumJointStep": 35.99508917891475,
+            "maximumAngleStep": 37.77269478339646,
+            "maximumBodyStep": 0
+          },
+          {
+            "id": "nearHind",
+            "kneeAngles": [
+              135.016465792091,
+              129.70515155215733,
+              127.08292000720884,
+              126.84910081313635,
+              128.98044683898829,
+              133.70986461231016,
+              111.07053484135284,
+              107.27703766928096
+            ],
+            "stanceKneeRange": [
+              126.84910081313635,
+              135.016465792091
+            ],
+            "swingKneeRange": [
+              107.27703766928096,
+              111.07053484135284
+            ],
+            "maximumSocketDrift": 0,
+            "maximumBoneError": 4.973799150320701e-14,
+            "bendSigns": [
+              -1
+            ],
+            "maximumJointStep": 35.99508917891475,
+            "maximumAngleStep": 27.73942812281004,
+            "maximumBodyStep": 0
+          },
+          {
+            "id": "farHind",
+            "kneeAngles": [
+              133.00315030099782,
+              138.07244693972558,
+              114.0669961368207,
+              110.1551982755703,
+              139.49006959601664,
+              133.7743844987127,
+              130.99199888194653,
+              130.744952582072
+            ],
+            "stanceKneeRange": [
+              130.744952582072,
+              139.49006959601664
+            ],
+            "swingKneeRange": [
+              110.1551982755703,
+              114.0669961368207
+            ],
+            "maximumSocketDrift": 0,
+            "maximumBoneError": 5.684341886080802e-14,
+            "bendSigns": [
+              -1
+            ],
+            "maximumJointStep": 35.99508917891475,
+            "maximumAngleStep": 29.33487132044634,
+            "maximumBodyStep": 0
+          }
+        ],
+        "pelvis": null,
+        "sockets": [
+          {
+            "id": "nearFore",
+            "reviewedRoi": [
+              0.52,
+              0.45,
+              0.2,
+              0.32
+            ],
+            "normalizedPoints": [
+              [
+                0.61,
+                0.63
+              ],
+              [
+                0.61,
+                0.63
+              ],
+              [
+                0.61,
+                0.63
+              ],
+              [
+                0.61,
+                0.63
+              ],
+              [
+                0.61,
+                0.63
+              ],
+              [
+                0.61,
+                0.63
+              ],
+              [
+                0.61,
+                0.63
+              ],
+              [
+                0.61,
+                0.63
+              ]
+            ],
+            "sourceSocket": [
+              556.96,
+              667.23
+            ],
+            "sourceAtlas": "tools/art-review/pr29-gait/sources/w006-anatomy-puppet.png"
+          },
+          {
+            "id": "farFore",
+            "reviewedRoi": [
+              0.52,
+              0.45,
+              0.2,
+              0.32
+            ],
+            "normalizedPoints": [
+              [
+                0.624,
+                0.62
+              ],
+              [
+                0.624,
+                0.62
+              ],
+              [
+                0.624,
+                0.62
+              ],
+              [
+                0.624,
+                0.62
+              ],
+              [
+                0.624,
+                0.62
+              ],
+              [
+                0.624,
+                0.62
+              ],
+              [
+                0.624,
+                0.62
+              ],
+              [
+                0.624,
+                0.62
+              ]
+            ],
+            "sourceSocket": [
+              568.664,
+              663.02
+            ],
+            "sourceAtlas": "tools/art-review/pr29-gait/sources/w006-anatomy-puppet.png"
+          },
+          {
+            "id": "nearHind",
+            "reviewedRoi": [
+              0.14,
+              0.33,
+              0.2,
+              0.35
+            ],
+            "normalizedPoints": [
+              [
+                0.23000000000000004,
+                0.5100000000000001
+              ],
+              [
+                0.23000000000000004,
+                0.5100000000000001
+              ],
+              [
+                0.23000000000000004,
+                0.5100000000000001
+              ],
+              [
+                0.23000000000000004,
+                0.5100000000000001
+              ],
+              [
+                0.23000000000000004,
+                0.5100000000000001
+              ],
+              [
+                0.23000000000000004,
+                0.5100000000000001
+              ],
+              [
+                0.23000000000000004,
+                0.5100000000000001
+              ],
+              [
+                0.23000000000000004,
+                0.5100000000000001
+              ]
+            ],
+            "sourceSocket": [
+              239.28000000000003,
+              616.71
+            ],
+            "sourceAtlas": "tools/art-review/pr29-gait/sources/w006-anatomy-puppet.png"
+          },
+          {
+            "id": "farHind",
+            "reviewedRoi": [
+              0.14,
+              0.33,
+              0.2,
+              0.35
+            ],
+            "normalizedPoints": [
+              [
+                0.24399999999999997,
+                0.5
+              ],
+              [
+                0.24399999999999997,
+                0.5
+              ],
+              [
+                0.24399999999999997,
+                0.5
+              ],
+              [
+                0.24399999999999997,
+                0.5
+              ],
+              [
+                0.24399999999999997,
+                0.5
+              ],
+              [
+                0.24399999999999997,
+                0.5
+              ],
+              [
+                0.24399999999999997,
+                0.5
+              ],
+              [
+                0.24399999999999997,
+                0.5
+              ]
+            ],
+            "sourceSocket": [
+              250.98399999999998,
+              612.5
+            ],
+            "sourceAtlas": "tools/art-review/pr29-gait/sources/w006-anatomy-puppet.png"
+          }
+        ],
+        "footfalls": {
+          "starts": [
+            {
+              "id": "nearHind",
+              "phase": 0
+            },
+            {
+              "id": "nearFore",
+              "phase": 0.25
+            },
+            {
+              "id": "farHind",
+              "phase": 0.5
+            },
+            {
+              "id": "farFore",
+              "phase": 0.75
+            }
+          ],
+          "supportingFeetPerFrame": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        }
+      }
     },
     {
       "wave": 7,
@@ -220,29 +1159,111 @@
         {
           "id": "near",
           "stanceFrames": 4,
-          "maximumLift": 38,
-          "footXSpan": 96,
-          "maximumReferenceSlip": 0,
-          "maximumLoopStep": 36.027767069303636
+          "maximumLift": 19.906000000000006,
+          "footXSpan": 79.62400000000002,
+          "maximumReferenceSlip": 6.394884621840902e-14,
+          "maximumLoopStep": 28.748746895373486
         },
         {
           "id": "far",
           "stanceFrames": 4,
-          "maximumLift": 38,
-          "footXSpan": 96,
-          "maximumReferenceSlip": 0,
-          "maximumLoopStep": 36.027767069303636
+          "maximumLift": 19.906000000000006,
+          "footXSpan": 79.62400000000002,
+          "maximumReferenceSlip": 7.105427357601002e-15,
+          "maximumLoopStep": 28.748746895373536
         }
       ],
       "pairs": [
         {
           "pair": "legs",
-          "minimumNearMinusFarX": -96,
-          "maximumNearMinusFarX": 96,
-          "phaseError": 0,
+          "minimumNearMinusFarX": -79.78777040590046,
+          "maximumNearMinusFarX": 79.46022959409959,
+          "phaseError": 3.4809342861069267e-14,
           "liftError": 0
         }
-      ]
+      ],
+      "anatomy": {
+        "profile": "support-leg-pelvis",
+        "limbs": [
+          {
+            "id": "near",
+            "kneeAngles": [
+              168.00000346451202,
+              167.87678266276623,
+              167.99999999999972,
+              167.87678266276617,
+              168.0000034645121,
+              131.70984580481613,
+              119.60136395319248,
+              131.70984580481613
+            ],
+            "stanceKneeRange": [
+              167.87678266276617,
+              168.00000346451202
+            ],
+            "swingKneeRange": [
+              119.60136395319248,
+              168.0000034645121
+            ],
+            "maximumSocketDrift": 0,
+            "maximumBoneError": 4.263256414560601e-14,
+            "bendSigns": [
+              -1
+            ],
+            "maximumJointStep": 29.217151223201334,
+            "maximumAngleStep": 36.29015765969598,
+            "maximumBodyStep": 3.9721259572475915
+          },
+          {
+            "id": "far",
+            "kneeAngles": [
+              167.99999653548932,
+              131.70984710357865,
+              119.60136690946626,
+              131.70984710357868,
+              167.99999653548932,
+              167.8767809831467,
+              168.00000000000014,
+              167.8767809831467
+            ],
+            "stanceKneeRange": [
+              167.8767809831467,
+              168.00000000000014
+            ],
+            "swingKneeRange": [
+              119.60136690946626,
+              167.99999653548932
+            ],
+            "maximumSocketDrift": 0,
+            "maximumBoneError": 4.263256414560601e-14,
+            "bendSigns": [
+              -1
+            ],
+            "maximumJointStep": 29.21715052750225,
+            "maximumAngleStep": 36.29014943191066,
+            "maximumBodyStep": 3.9721259572475915
+          }
+        ],
+        "pelvis": {
+          "sourceHeightSpan": 5.296167942996789,
+          "midstanceRises": [
+            {
+              "id": "near",
+              "startFrame": 0,
+              "centerFrame": 2,
+              "rise": 5.296167942996789
+            },
+            {
+              "id": "far",
+              "startFrame": 4,
+              "centerFrame": 6,
+              "rise": 5.296167942996789
+            }
+          ]
+        },
+        "sockets": [],
+        "footfalls": null
+      }
     },
     {
       "wave": 9,
@@ -251,264 +1272,351 @@
         {
           "id": "near",
           "stanceFrames": 4,
-          "maximumLift": 42,
-          "footXSpan": 110,
-          "maximumReferenceSlip": 0,
-          "maximumLoopStep": 40.47530111067737
+          "maximumLift": 18.262999999999977,
+          "footXSpan": 73.05200000000005,
+          "maximumReferenceSlip": 3.197442310920451e-14,
+          "maximumLoopStep": 26.375884886476797
         },
         {
           "id": "far",
           "stanceFrames": 4,
-          "maximumLift": 42,
-          "footXSpan": 110,
-          "maximumReferenceSlip": 0,
-          "maximumLoopStep": 40.47530111067737
+          "maximumLift": 18.262999999999977,
+          "footXSpan": 73.05200000000002,
+          "maximumReferenceSlip": 3.197442310920451e-14,
+          "maximumLoopStep": 26.37588488647677
         }
       ],
       "pairs": [
         {
           "pair": "legs",
-          "minimumNearMinusFarX": -110,
-          "maximumNearMinusFarX": 110,
-          "phaseError": 0,
+          "minimumNearMinusFarX": -73.0324819941662,
+          "maximumNearMinusFarX": 73.07151800583387,
+          "phaseError": 5.123796534383003e-14,
           "liftError": 0
         }
-      ]
+      ],
+      "anatomy": {
+        "profile": "support-leg-pelvis",
+        "limbs": [
+          {
+            "id": "near",
+            "kneeAngles": [
+              168.00000000000006,
+              167.87548730720818,
+              167.99999999999997,
+              167.87548730720818,
+              167.99999999999994,
+              131.45043674521816,
+              119.25677457610178,
+              131.45043674521816
+            ],
+            "stanceKneeRange": [
+              167.87548730720818,
+              168.00000000000006
+            ],
+            "swingKneeRange": [
+              119.25677457610178,
+              167.99999999999994
+            ],
+            "maximumSocketDrift": 5.684341886080802e-14,
+            "maximumBoneError": 4.973799150320701e-14,
+            "bendSigns": [
+              -1
+            ],
+            "maximumJointStep": 26.82820534250438,
+            "maximumAngleStep": 36.5495632547819,
+            "maximumBodyStep": 3.6439666740917147
+          },
+          {
+            "id": "far",
+            "kneeAngles": [
+              167.99999999999994,
+              131.45043674521816,
+              119.25677457610178,
+              131.45043674521816,
+              168.00000000000006,
+              167.87548730720818,
+              167.99999999999997,
+              167.87548730720818
+            ],
+            "stanceKneeRange": [
+              167.87548730720818,
+              168.00000000000006
+            ],
+            "swingKneeRange": [
+              119.25677457610178,
+              167.99999999999994
+            ],
+            "maximumSocketDrift": 5.684341886080802e-14,
+            "maximumBoneError": 4.973799150320701e-14,
+            "bendSigns": [
+              -1
+            ],
+            "maximumJointStep": 26.82820534250438,
+            "maximumAngleStep": 36.5495632547819,
+            "maximumBodyStep": 3.6439666740917147
+          }
+        ],
+        "pelvis": {
+          "sourceHeightSpan": 4.858622232122286,
+          "midstanceRises": [
+            {
+              "id": "near",
+              "startFrame": 0,
+              "centerFrame": 2,
+              "rise": 4.858622232122286
+            },
+            {
+              "id": "far",
+              "startFrame": 4,
+              "centerFrame": 6,
+              "rise": 4.858622232122286
+            }
+          ]
+        },
+        "sockets": [],
+        "footfalls": null
+      }
     }
   ],
   "textures": [
     {
       "wave": 1,
       "file": "casual/enemies/inf/w001-walk-4x2.png",
+      "sourceAtlas": {
+        "file": "tools/art-review/pr29-gait/sources/w001-anatomy-puppet.png",
+        "sha256": "abe0bfa4a035842a9d98fe96a35f55c9a83675335b44dd08a8b31e8a0db6c6fc",
+        "matchesReviewedAtlas": true
+      },
       "crop": {
-        "x": 49,
-        "y": 100,
-        "w": 414,
-        "h": 255
+        "x": 47,
+        "y": 123,
+        "w": 418,
+        "h": 192
       },
       "feet": [
         {
           "frame": 0,
           "id": "nearFore",
-          "pixels": 38,
-          "closest": 1.7732542530204178,
+          "pixels": 40,
+          "closest": 1.444744786664816,
           "valid": true
         },
         {
           "frame": 0,
           "id": "farFore",
           "pixels": 38,
-          "closest": 1.7732542530204178,
+          "closest": 1.5034614934774688,
           "valid": true
         },
         {
           "frame": 0,
           "id": "nearHind",
           "pixels": 37,
-          "closest": 2.0005324734966923,
+          "closest": 1.2645044048800818,
           "valid": true
         },
         {
           "frame": 0,
           "id": "farHind",
           "pixels": 37,
-          "closest": 2.0005324734966923,
+          "closest": 1.2335587483594337,
           "valid": true
         },
         {
           "frame": 1,
           "id": "nearFore",
-          "pixels": 38,
-          "closest": 1.7732542530204178,
+          "pixels": 87,
+          "closest": 0.35914936497326977,
           "valid": true
         },
         {
           "frame": 1,
           "id": "farFore",
           "pixels": 37,
-          "closest": 1.790020028010271,
+          "closest": 1.6827976821174673,
           "valid": true
         },
         {
           "frame": 1,
           "id": "nearHind",
-          "pixels": 61,
-          "closest": 0.9543002865892366,
+          "pixels": 38,
+          "closest": 1.4175420297346035,
           "valid": true
         },
         {
           "frame": 1,
           "id": "farHind",
-          "pixels": 37,
-          "closest": 2.0005324734966923,
+          "pixels": 38,
+          "closest": 1.3814032162840995,
           "valid": true
         },
         {
           "frame": 2,
           "id": "nearFore",
           "pixels": 38,
-          "closest": 1.7732542530204178,
+          "closest": 1.1850496059089002,
           "valid": true
         },
         {
           "frame": 2,
           "id": "farFore",
-          "pixels": 73,
-          "closest": 1.4643874643874142,
+          "pixels": 37,
+          "closest": 2.0427626986569494,
           "valid": true
         },
         {
           "frame": 2,
           "id": "nearHind",
-          "pixels": 56,
-          "closest": 2.0005324734966923,
+          "pixels": 35,
+          "closest": 2.013813927804518,
           "valid": true
         },
         {
           "frame": 2,
           "id": "farHind",
-          "pixels": 37,
-          "closest": 2.0005324734966923,
+          "pixels": 64,
+          "closest": 0.6785941711460309,
           "valid": true
         },
         {
           "frame": 3,
           "id": "nearFore",
-          "pixels": 38,
-          "closest": 1.7732542530204178,
+          "pixels": 39,
+          "closest": 1.3232837151469432,
           "valid": true
         },
         {
           "frame": 3,
           "id": "farFore",
-          "pixels": 37,
-          "closest": 1.790020028010271,
+          "pixels": 39,
+          "closest": 1.2900367567043782,
           "valid": true
         },
         {
           "frame": 3,
           "id": "nearHind",
-          "pixels": 37,
-          "closest": 2.0299620034334036,
+          "pixels": 34,
+          "closest": 2.0536260228832464,
           "valid": true
         },
         {
           "frame": 3,
           "id": "farHind",
-          "pixels": 37,
-          "closest": 2.0005324734966923,
+          "pixels": 36,
+          "closest": 1.5987457722881901,
           "valid": true
         },
         {
           "frame": 4,
           "id": "nearFore",
           "pixels": 38,
-          "closest": 1.7732542530204178,
+          "closest": 1.4846972380997394,
           "valid": true
         },
         {
           "frame": 4,
           "id": "farFore",
-          "pixels": 38,
-          "closest": 1.7732542530204178,
+          "pixels": 64,
+          "closest": 0.8132476627646754,
           "valid": true
         },
         {
           "frame": 4,
           "id": "nearHind",
           "pixels": 37,
-          "closest": 2.0005324734966923,
+          "closest": 1.218942994420469,
           "valid": true
         },
         {
           "frame": 4,
           "id": "farHind",
           "pixels": 37,
-          "closest": 2.0005324734966923,
+          "closest": 1.2801179969945888,
           "valid": true
         },
         {
           "frame": 5,
           "id": "nearFore",
-          "pixels": 37,
-          "closest": 1.790020028010271,
+          "pixels": 36,
+          "closest": 1.6625525142408382,
           "valid": true
         },
         {
           "frame": 5,
           "id": "farFore",
           "pixels": 38,
-          "closest": 1.7732542530204178,
+          "closest": 1.5209590973975373,
           "valid": true
         },
         {
           "frame": 5,
           "id": "nearHind",
-          "pixels": 37,
-          "closest": 2.0005324734966923,
+          "pixels": 38,
+          "closest": 1.3641015655624158,
           "valid": true
         },
         {
           "frame": 5,
           "id": "farHind",
-          "pixels": 61,
-          "closest": 0.9543002865892366,
+          "pixels": 38,
+          "closest": 1.4355531007647457,
           "valid": true
         },
         {
           "frame": 6,
           "id": "nearFore",
-          "pixels": 73,
-          "closest": 1.4643874643874142,
+          "pixels": 37,
+          "closest": 1.852118978936211,
           "valid": true
         },
         {
           "frame": 6,
           "id": "farFore",
-          "pixels": 38,
-          "closest": 1.7732542530204178,
+          "pixels": 37,
+          "closest": 1.1987910311841607,
           "valid": true
         },
         {
           "frame": 6,
           "id": "nearHind",
           "pixels": 37,
-          "closest": 2.0005324734966923,
+          "closest": 1.8632203820880073,
           "valid": true
         },
         {
           "frame": 6,
           "id": "farHind",
-          "pixels": 56,
-          "closest": 2.0005324734966923,
+          "pixels": 35,
+          "closest": 2.0169230258641693,
           "valid": true
         },
         {
           "frame": 7,
           "id": "nearFore",
-          "pixels": 37,
-          "closest": 1.790020028010271,
+          "pixels": 38,
+          "closest": 1.2742316889575802,
           "valid": true
         },
         {
           "frame": 7,
           "id": "farFore",
-          "pixels": 38,
-          "closest": 1.7732542530204178,
+          "pixels": 39,
+          "closest": 1.3399603581967348,
           "valid": true
         },
         {
           "frame": 7,
           "id": "nearHind",
-          "pixels": 37,
-          "closest": 2.0005324734966923,
+          "pixels": 84,
+          "closest": 0.7167781145844745,
           "valid": true
         },
         {
           "frame": 7,
           "id": "farHind",
-          "pixels": 37,
-          "closest": 2.0299620034334036,
+          "pixels": 33,
+          "closest": 2.0595068344358003,
           "valid": true
         }
       ],
@@ -517,123 +1625,128 @@
     {
       "wave": 2,
       "file": "casual/enemies/inf/w002-walk-4x2.png",
+      "sourceAtlas": {
+        "file": "tools/art-review/pr29-gait/sources/w002-puppet.png",
+        "sha256": "a79943e950b598e1c046e7634ae96d7f98274b82585144a112268ebb543c8c1b",
+        "matchesReviewedAtlas": true
+      },
       "crop": {
-        "x": 141,
-        "y": 50,
-        "w": 226,
-        "h": 410
+        "x": 145,
+        "y": 14,
+        "w": 222,
+        "h": 446
       },
       "feet": [
         {
           "frame": 0,
           "id": "near",
-          "pixels": 18,
-          "closest": 3.0929013113810795,
+          "pixels": 19,
+          "closest": 3.1549897474129596,
           "valid": true
         },
         {
           "frame": 0,
           "id": "far",
-          "pixels": 18,
-          "closest": 3.474298368665746,
+          "pixels": 19,
+          "closest": 3.167782208877638,
           "valid": true
         },
         {
           "frame": 1,
           "id": "near",
-          "pixels": 18,
-          "closest": 3.0929013113810795,
+          "pixels": 19,
+          "closest": 3.21599228103032,
           "valid": true
         },
         {
           "frame": 1,
           "id": "far",
-          "pixels": 20,
-          "closest": 2.9752696385556416,
+          "pixels": 19,
+          "closest": 3.4006862730545095,
           "valid": true
         },
         {
           "frame": 2,
           "id": "near",
           "pixels": 18,
-          "closest": 3.0929013113810795,
+          "closest": 3.285955020540033,
           "valid": true
         },
         {
           "frame": 2,
           "id": "far",
-          "pixels": 110,
-          "closest": 0.2476446837146682,
+          "pixels": 112,
+          "closest": 0.3915912309606808,
           "valid": true
         },
         {
           "frame": 3,
           "id": "near",
-          "pixels": 18,
-          "closest": 3.0929013113810795,
+          "pixels": 17,
+          "closest": 3.3643190161424776,
           "valid": true
         },
         {
           "frame": 3,
           "id": "far",
-          "pixels": 95,
-          "closest": 0.27966568358778066,
+          "pixels": 106,
+          "closest": 0.32012508189661526,
           "valid": true
         },
         {
           "frame": 4,
           "id": "near",
-          "pixels": 18,
-          "closest": 3.0929013113810795,
+          "pixels": 19,
+          "closest": 3.081657777246537,
           "valid": true
         },
         {
           "frame": 4,
           "id": "far",
-          "pixels": 18,
-          "closest": 3.474298368665746,
+          "pixels": 19,
+          "closest": 3.265306198874569,
           "valid": true
         },
         {
           "frame": 5,
           "id": "near",
-          "pixels": 21,
-          "closest": 2.9752696385556416,
+          "pixels": 19,
+          "closest": 3.2627691411503728,
           "valid": true
         },
         {
           "frame": 5,
           "id": "far",
-          "pixels": 18,
-          "closest": 3.474298368665746,
+          "pixels": 17,
+          "closest": 3.3413536033480447,
           "valid": true
         },
         {
           "frame": 6,
+          "id": "near",
+          "pixels": 112,
+          "closest": 0.38627265672412947,
+          "valid": true
+        },
+        {
+          "frame": 6,
+          "id": "far",
+          "pixels": 18,
+          "closest": 3.4253921283270845,
+          "valid": true
+        },
+        {
+          "frame": 7,
           "id": "near",
           "pixels": 110,
-          "closest": 0.2476446837146682,
-          "valid": true
-        },
-        {
-          "frame": 6,
-          "id": "far",
-          "pixels": 18,
-          "closest": 3.474298368665746,
-          "valid": true
-        },
-        {
-          "frame": 7,
-          "id": "near",
-          "pixels": 90,
-          "closest": 0.27966568358778066,
+          "closest": 0.36783899052717534,
           "valid": true
         },
         {
           "frame": 7,
           "id": "far",
           "pixels": 18,
-          "closest": 3.474298368665746,
+          "closest": 3.5168489536804586,
           "valid": true
         }
       ],
@@ -642,123 +1755,128 @@
     {
       "wave": 3,
       "file": "casual/enemies/inf/w003-walk-4x2.png",
+      "sourceAtlas": {
+        "file": "tools/art-review/pr29-gait/sources/w003-puppet.png",
+        "sha256": "92da3b77c3415e98f25934abb3a081ea4f29a22a1576732a97c8a11a2d8c9bf1",
+        "matchesReviewedAtlas": true
+      },
       "crop": {
         "x": 159,
-        "y": 55,
+        "y": 11,
         "w": 222,
-        "h": 405
+        "h": 449
       },
       "feet": [
         {
           "frame": 0,
           "id": "near",
-          "pixels": 46,
-          "closest": 1.0099701572541584,
+          "pixels": 44,
+          "closest": 1.000203666458542,
           "valid": true
         },
         {
           "frame": 0,
           "id": "far",
-          "pixels": 41,
-          "closest": 1.5176175882733662,
+          "pixels": 39,
+          "closest": 2.0298918638093846,
           "valid": true
         },
         {
           "frame": 1,
           "id": "near",
-          "pixels": 46,
-          "closest": 1.0099701572541584,
+          "pixels": 45,
+          "closest": 1.0079297000306822,
           "valid": true
         },
         {
           "frame": 1,
           "id": "far",
           "pixels": 42,
-          "closest": 1.138775374501434,
+          "closest": 1.787280364263312,
           "valid": true
         },
         {
           "frame": 2,
-          "id": "near",
-          "pixels": 46,
-          "closest": 1.0099701572541584,
-          "valid": true
-        },
-        {
-          "frame": 2,
-          "id": "far",
-          "pixels": 112,
-          "closest": 0.14156171284633956,
-          "valid": true
-        },
-        {
-          "frame": 3,
-          "id": "near",
-          "pixels": 46,
-          "closest": 1.0099701572541584,
-          "valid": true
-        },
-        {
-          "frame": 3,
-          "id": "far",
-          "pixels": 50,
-          "closest": 1.138775374501434,
-          "valid": true
-        },
-        {
-          "frame": 4,
-          "id": "near",
-          "pixels": 46,
-          "closest": 1.0099701572541584,
-          "valid": true
-        },
-        {
-          "frame": 4,
-          "id": "far",
-          "pixels": 40,
-          "closest": 2.005003670456488,
-          "valid": true
-        },
-        {
-          "frame": 5,
           "id": "near",
           "pixels": 44,
-          "closest": 1.138775374501434,
+          "closest": 1.0266007919394806,
+          "valid": true
+        },
+        {
+          "frame": 2,
+          "id": "far",
+          "pixels": 113,
+          "closest": 0.453487544784997,
+          "valid": true
+        },
+        {
+          "frame": 3,
+          "id": "near",
+          "pixels": 43,
+          "closest": 1.0556363444944448,
+          "valid": true
+        },
+        {
+          "frame": 3,
+          "id": "far",
+          "pixels": 84,
+          "closest": 0.21719377068835957,
+          "valid": true
+        },
+        {
+          "frame": 4,
+          "id": "near",
+          "pixels": 44,
+          "closest": 1.094211587228182,
+          "valid": true
+        },
+        {
+          "frame": 4,
+          "id": "far",
+          "pixels": 37,
+          "closest": 2.0130590419369807,
+          "valid": true
+        },
+        {
+          "frame": 5,
+          "id": "near",
+          "pixels": 47,
+          "closest": 0.8510372713848776,
           "valid": true
         },
         {
           "frame": 5,
           "id": "far",
-          "pixels": 40,
-          "closest": 2.005003670456488,
+          "pixels": 37,
+          "closest": 2.0278498045465994,
           "valid": true
         },
         {
           "frame": 6,
           "id": "near",
           "pixels": 112,
-          "closest": 0.14156171284633956,
+          "closest": 0.25523555005282345,
           "valid": true
         },
         {
           "frame": 6,
           "id": "far",
-          "pixels": 40,
-          "closest": 2.005003670456488,
+          "pixels": 38,
+          "closest": 2.048027088022794,
           "valid": true
         },
         {
           "frame": 7,
           "id": "near",
-          "pixels": 55,
-          "closest": 1.138775374501434,
+          "pixels": 88,
+          "closest": 0.2965288068950441,
           "valid": true
         },
         {
           "frame": 7,
           "id": "far",
-          "pixels": 40,
-          "closest": 2.005003670456488,
+          "pixels": 38,
+          "closest": 2.050677169932919,
           "valid": true
         }
       ],
@@ -767,123 +1885,128 @@
     {
       "wave": 5,
       "file": "casual/enemies/inf/w005-walk-4x2.png",
+      "sourceAtlas": {
+        "file": "tools/art-review/pr29-gait/sources/w005-puppet.png",
+        "sha256": "273a81d49006b6d372f6b934ebb29afdd2e39619ae67808cb21dd1b8fa126570",
+        "matchesReviewedAtlas": true
+      },
       "crop": {
         "x": 108,
-        "y": 60,
+        "y": 20,
         "w": 296,
-        "h": 400
+        "h": 440
       },
       "feet": [
         {
           "frame": 0,
           "id": "near",
           "pixels": 49,
-          "closest": 1.029589591236767,
+          "closest": 1.0427065604942256,
           "valid": true
         },
         {
           "frame": 0,
           "id": "far",
           "pixels": 49,
-          "closest": 1.029589591236767,
+          "closest": 1.001140431083767,
           "valid": true
         },
         {
           "frame": 1,
           "id": "near",
-          "pixels": 49,
-          "closest": 1.029589591236767,
+          "pixels": 50,
+          "closest": 1.012383070387188,
           "valid": true
         },
         {
           "frame": 1,
           "id": "far",
-          "pixels": 53,
-          "closest": 1.1562112096887769,
+          "pixels": 47,
+          "closest": 1.7781590303972288,
           "valid": true
         },
         {
           "frame": 2,
           "id": "near",
           "pixels": 49,
-          "closest": 1.029589591236767,
+          "closest": 1.0002072240868265,
           "valid": true
         },
         {
           "frame": 2,
           "id": "far",
-          "pixels": 110,
-          "closest": 0.2450606585788364,
+          "pixels": 113,
+          "closest": 0.2658506532824754,
           "valid": true
         },
         {
           "frame": 3,
           "id": "near",
-          "pixels": 49,
-          "closest": 1.029589591236767,
+          "pixels": 50,
+          "closest": 1.006837623961462,
           "valid": true
         },
         {
           "frame": 3,
           "id": "far",
-          "pixels": 65,
-          "closest": 1.1562112096887769,
+          "pixels": 75,
+          "closest": 1.426627902792959,
           "valid": true
         },
         {
           "frame": 4,
           "id": "near",
           "pixels": 49,
-          "closest": 1.029589591236767,
+          "closest": 1.0319118232355213,
           "valid": true
         },
         {
           "frame": 4,
           "id": "far",
-          "pixels": 49,
-          "closest": 1.029589591236767,
+          "pixels": 48,
+          "closest": 1.1170393686581555,
           "valid": true
         },
         {
           "frame": 5,
           "id": "near",
-          "pixels": 57,
-          "closest": 1.1562112096887769,
+          "pixels": 62,
+          "closest": 0.8877674892179993,
           "valid": true
         },
         {
           "frame": 5,
           "id": "far",
           "pixels": 49,
-          "closest": 1.029589591236767,
+          "closest": 1.0644371862166337,
           "valid": true
         },
         {
           "frame": 6,
           "id": "near",
-          "pixels": 110,
-          "closest": 0.2450606585788364,
+          "pixels": 113,
+          "closest": 0.1394936956119117,
           "valid": true
         },
         {
           "frame": 6,
           "id": "far",
           "pixels": 49,
-          "closest": 1.029589591236767,
+          "closest": 1.0254913797057124,
           "valid": true
         },
         {
           "frame": 7,
           "id": "near",
-          "pixels": 70,
-          "closest": 1.1562112096887769,
+          "pixels": 85,
+          "closest": 0.9094595752194871,
           "valid": true
         },
         {
           "frame": 7,
           "id": "far",
-          "pixels": 49,
-          "closest": 1.029589591236767,
+          "pixels": 50,
+          "closest": 1.0040174880452333,
           "valid": true
         }
       ],
@@ -892,235 +2015,240 @@
     {
       "wave": 6,
       "file": "casual/enemies/inf/w006-walk-4x2.png",
+      "sourceAtlas": {
+        "file": "tools/art-review/pr29-gait/sources/w006-anatomy-puppet.png",
+        "sha256": "813bd2f5632d711f4b87a19897c7c0661037f1554c6584773f983439bb4dd275",
+        "matchesReviewedAtlas": true
+      },
       "crop": {
-        "x": 78,
-        "y": 45,
-        "w": 342,
-        "h": 360
+        "x": 48,
+        "y": 55,
+        "w": 416,
+        "h": 295
       },
       "feet": [
         {
           "frame": 0,
           "id": "nearFore",
-          "pixels": 45,
-          "closest": 1.1049047713350695,
+          "pixels": 48,
+          "closest": 1.283846410059346,
           "valid": true
         },
         {
           "frame": 0,
           "id": "farFore",
-          "pixels": 45,
-          "closest": 1.1049047713350695,
+          "pixels": 44,
+          "closest": 1.040423496900086,
           "valid": true
         },
         {
           "frame": 0,
           "id": "nearHind",
-          "pixels": 49,
-          "closest": 1.0838117955920499,
+          "pixels": 48,
+          "closest": 1.1096549597239997,
           "valid": true
         },
         {
           "frame": 0,
           "id": "farHind",
           "pixels": 49,
-          "closest": 1.0838117955920499,
+          "closest": 1.0012211831174198,
           "valid": true
         },
         {
           "frame": 1,
           "id": "nearFore",
-          "pixels": 45,
-          "closest": 1.1049047713350695,
+          "pixels": 112,
+          "closest": 0.5327431498917833,
           "valid": true
         },
         {
           "frame": 1,
           "id": "farFore",
+          "pixels": 44,
+          "closest": 1.0642283972684623,
+          "valid": true
+        },
+        {
+          "frame": 1,
+          "id": "nearHind",
+          "pixels": 49,
+          "closest": 1.0933694267692788,
+          "valid": true
+        },
+        {
+          "frame": 1,
+          "id": "farHind",
+          "pixels": 49,
+          "closest": 1.0003777152044775,
+          "valid": true
+        },
+        {
+          "frame": 2,
+          "id": "nearFore",
+          "pixels": 44,
+          "closest": 1.0004075037261164,
+          "valid": true
+        },
+        {
+          "frame": 2,
+          "id": "farFore",
+          "pixels": 44,
+          "closest": 1.0929398106620645,
+          "valid": true
+        },
+        {
+          "frame": 2,
+          "id": "nearHind",
+          "pixels": 49,
+          "closest": 1.0645927538349311,
+          "valid": true
+        },
+        {
+          "frame": 2,
+          "id": "farHind",
+          "pixels": 104,
+          "closest": 0.31525470201931705,
+          "valid": true
+        },
+        {
+          "frame": 3,
+          "id": "nearFore",
+          "pixels": 44,
+          "closest": 1.0011692335755913,
+          "valid": true
+        },
+        {
+          "frame": 3,
+          "id": "farFore",
+          "pixels": 43,
+          "closest": 1.1101163634315145,
+          "valid": true
+        },
+        {
+          "frame": 3,
+          "id": "nearHind",
+          "pixels": 49,
+          "closest": 1.0407175789658558,
+          "valid": true
+        },
+        {
+          "frame": 3,
+          "id": "farHind",
+          "pixels": 48,
+          "closest": 1.4894734960524332,
+          "valid": true
+        },
+        {
+          "frame": 4,
+          "id": "nearFore",
+          "pixels": 45,
+          "closest": 1.007818840135355,
+          "valid": true
+        },
+        {
+          "frame": 4,
+          "id": "farFore",
+          "pixels": 100,
+          "closest": 0.4295310004260484,
+          "valid": true
+        },
+        {
+          "frame": 4,
+          "id": "nearHind",
+          "pixels": 49,
+          "closest": 1.0220874455475293,
+          "valid": true
+        },
+        {
+          "frame": 4,
+          "id": "farHind",
+          "pixels": 49,
+          "closest": 1.0618569539116776,
+          "valid": true
+        },
+        {
+          "frame": 5,
+          "id": "nearFore",
+          "pixels": 44,
+          "closest": 1.0202412039963125,
+          "valid": true
+        },
+        {
+          "frame": 5,
+          "id": "farFore",
+          "pixels": 46,
+          "closest": 1.5336242253081371,
+          "valid": true
+        },
+        {
+          "frame": 5,
+          "id": "nearHind",
+          "pixels": 50,
+          "closest": 1.0089929301287675,
+          "valid": true
+        },
+        {
+          "frame": 5,
+          "id": "farHind",
+          "pixels": 49,
+          "closest": 1.0385155887220794,
+          "valid": true
+        },
+        {
+          "frame": 6,
+          "id": "nearFore",
+          "pixels": 44,
+          "closest": 1.038229133505004,
+          "valid": true
+        },
+        {
+          "frame": 6,
+          "id": "farFore",
+          "pixels": 45,
+          "closest": 1.0088517999092448,
+          "valid": true
+        },
+        {
+          "frame": 6,
+          "id": "nearHind",
           "pixels": 54,
-          "closest": 1.4507924218102226,
-          "valid": true
-        },
-        {
-          "frame": 1,
-          "id": "nearHind",
-          "pixels": 72,
-          "closest": 0.5598804351524516,
-          "valid": true
-        },
-        {
-          "frame": 1,
-          "id": "farHind",
-          "pixels": 49,
-          "closest": 1.0838117955920499,
-          "valid": true
-        },
-        {
-          "frame": 2,
-          "id": "nearFore",
-          "pixels": 45,
-          "closest": 1.1049047713350695,
-          "valid": true
-        },
-        {
-          "frame": 2,
-          "id": "farFore",
-          "pixels": 110,
-          "closest": 0.46990909090908417,
-          "valid": true
-        },
-        {
-          "frame": 2,
-          "id": "nearHind",
-          "pixels": 110,
-          "closest": 0.4179090909090917,
-          "valid": true
-        },
-        {
-          "frame": 2,
-          "id": "farHind",
-          "pixels": 49,
-          "closest": 1.0838117955920499,
-          "valid": true
-        },
-        {
-          "frame": 3,
-          "id": "nearFore",
-          "pixels": 45,
-          "closest": 1.1049047713350695,
-          "valid": true
-        },
-        {
-          "frame": 3,
-          "id": "farFore",
-          "pixels": 47,
-          "closest": 1.4507924218102226,
-          "valid": true
-        },
-        {
-          "frame": 3,
-          "id": "nearHind",
-          "pixels": 47,
-          "closest": 1.4347934017577,
-          "valid": true
-        },
-        {
-          "frame": 3,
-          "id": "farHind",
-          "pixels": 49,
-          "closest": 1.0838117955920499,
-          "valid": true
-        },
-        {
-          "frame": 4,
-          "id": "nearFore",
-          "pixels": 45,
-          "closest": 1.1049047713350695,
-          "valid": true
-        },
-        {
-          "frame": 4,
-          "id": "farFore",
-          "pixels": 45,
-          "closest": 1.1049047713350695,
-          "valid": true
-        },
-        {
-          "frame": 4,
-          "id": "nearHind",
-          "pixels": 49,
-          "closest": 1.0838117955920499,
-          "valid": true
-        },
-        {
-          "frame": 4,
-          "id": "farHind",
-          "pixels": 49,
-          "closest": 1.0838117955920499,
-          "valid": true
-        },
-        {
-          "frame": 5,
-          "id": "nearFore",
-          "pixels": 54,
-          "closest": 1.4507924218102226,
-          "valid": true
-        },
-        {
-          "frame": 5,
-          "id": "farFore",
-          "pixels": 45,
-          "closest": 1.1049047713350695,
-          "valid": true
-        },
-        {
-          "frame": 5,
-          "id": "nearHind",
-          "pixels": 49,
-          "closest": 1.0838117955920499,
-          "valid": true
-        },
-        {
-          "frame": 5,
-          "id": "farHind",
-          "pixels": 72,
-          "closest": 0.5598804351524516,
-          "valid": true
-        },
-        {
-          "frame": 6,
-          "id": "nearFore",
-          "pixels": 110,
-          "closest": 0.46990909090908417,
-          "valid": true
-        },
-        {
-          "frame": 6,
-          "id": "farFore",
-          "pixels": 45,
-          "closest": 1.1049047713350695,
-          "valid": true
-        },
-        {
-          "frame": 6,
-          "id": "nearHind",
-          "pixels": 49,
-          "closest": 1.0838117955920499,
+          "closest": 1.3122373399407876,
           "valid": true
         },
         {
           "frame": 6,
           "id": "farHind",
-          "pixels": 110,
-          "closest": 0.4179090909090917,
+          "pixels": 49,
+          "closest": 1.0204525393145727,
           "valid": true
         },
         {
           "frame": 7,
           "id": "nearFore",
-          "pixels": 47,
-          "closest": 1.4507924218102226,
+          "pixels": 44,
+          "closest": 1.0614997279848213,
           "valid": true
         },
         {
           "frame": 7,
           "id": "farFore",
-          "pixels": 45,
-          "closest": 1.1049047713350695,
+          "pixels": 44,
+          "closest": 1.0218680657392436,
           "valid": true
         },
         {
           "frame": 7,
           "id": "nearHind",
-          "pixels": 49,
-          "closest": 1.0838117955920499,
+          "pixels": 115,
+          "closest": 0.5560214740831548,
           "valid": true
         },
         {
           "frame": 7,
           "id": "farHind",
-          "pixels": 47,
-          "closest": 1.4347934017577,
+          "pixels": 50,
+          "closest": 1.0079516166438707,
           "valid": true
         }
       ],
@@ -1129,123 +2257,128 @@
     {
       "wave": 7,
       "file": "casual/enemies/inf/w007-walk-4x2.png",
+      "sourceAtlas": {
+        "file": "tools/art-review/pr29-gait/sources/w007-puppet.png",
+        "sha256": "41c3249ae3dc198e49ee66536c7f537ebcec812192bf42a3213498a799772e66",
+        "matchesReviewedAtlas": true
+      },
       "crop": {
         "x": 132,
-        "y": 55,
-        "w": 248,
-        "h": 405
+        "y": 15,
+        "w": 256,
+        "h": 445
       },
       "feet": [
         {
           "frame": 0,
           "id": "near",
-          "pixels": 40,
-          "closest": 2.023376294878982,
+          "pixels": 39,
+          "closest": 2.011654019639338,
           "valid": true
         },
         {
           "frame": 0,
           "id": "far",
           "pixels": 38,
-          "closest": 2.023376294878982,
+          "closest": 2.026001890072567,
           "valid": true
         },
         {
           "frame": 1,
           "id": "near",
           "pixels": 40,
-          "closest": 2.023376294878982,
+          "closest": 2.0037310658335095,
           "valid": true
         },
         {
           "frame": 1,
           "id": "far",
-          "pixels": 67,
-          "closest": 0.33307151766952386,
-          "valid": true
-        },
-        {
-          "frame": 2,
-          "id": "near",
-          "pixels": 40,
-          "closest": 2.023376294878982,
-          "valid": true
-        },
-        {
-          "frame": 2,
-          "id": "far",
-          "pixels": 110,
-          "closest": 0.30667838312831464,
-          "valid": true
-        },
-        {
-          "frame": 3,
-          "id": "near",
-          "pixels": 40,
-          "closest": 2.023376294878982,
-          "valid": true
-        },
-        {
-          "frame": 3,
-          "id": "far",
-          "pixels": 73,
-          "closest": 1.727477360766768,
-          "valid": true
-        },
-        {
-          "frame": 4,
-          "id": "near",
-          "pixels": 40,
-          "closest": 2.023376294878982,
-          "valid": true
-        },
-        {
-          "frame": 4,
-          "id": "far",
-          "pixels": 38,
-          "closest": 2.023376294878982,
-          "valid": true
-        },
-        {
-          "frame": 5,
-          "id": "near",
           "pixels": 71,
-          "closest": 0.33307151766952386,
+          "closest": 0.9244672134507124,
+          "valid": true
+        },
+        {
+          "frame": 2,
+          "id": "near",
+          "pixels": 40,
+          "closest": 2.000199108499327,
+          "valid": true
+        },
+        {
+          "frame": 2,
+          "id": "far",
+          "pixels": 114,
+          "closest": 0.16495274186465514,
+          "valid": true
+        },
+        {
+          "frame": 3,
+          "id": "near",
+          "pixels": 40,
+          "closest": 2.001081398418541,
+          "valid": true
+        },
+        {
+          "frame": 3,
+          "id": "far",
+          "pixels": 92,
+          "closest": 0.29669487511075104,
+          "valid": true
+        },
+        {
+          "frame": 4,
+          "id": "near",
+          "pixels": 40,
+          "closest": 2.006372112184549,
+          "valid": true
+        },
+        {
+          "frame": 4,
+          "id": "far",
+          "pixels": 39,
+          "closest": 2.000687670657195,
           "valid": true
         },
         {
           "frame": 5,
-          "id": "far",
-          "pixels": 38,
-          "closest": 2.023376294878982,
-          "valid": true
-        },
-        {
-          "frame": 6,
-          "id": "near",
-          "pixels": 110,
-          "closest": 0.30667838312831464,
-          "valid": true
-        },
-        {
-          "frame": 6,
-          "id": "far",
-          "pixels": 38,
-          "closest": 2.023376294878982,
-          "valid": true
-        },
-        {
-          "frame": 7,
           "id": "near",
           "pixels": 77,
-          "closest": 1.1708207658327079,
+          "closest": 0.1948494629810429,
+          "valid": true
+        },
+        {
+          "frame": 5,
+          "id": "far",
+          "pixels": 39,
+          "closest": 2.0004315237678574,
+          "valid": true
+        },
+        {
+          "frame": 6,
+          "id": "near",
+          "pixels": 113,
+          "closest": 0.0981451661647234,
+          "valid": true
+        },
+        {
+          "frame": 6,
+          "id": "far",
+          "pixels": 40,
+          "closest": 2.00458808912172,
+          "valid": true
+        },
+        {
+          "frame": 7,
+          "id": "near",
+          "pixels": 96,
+          "closest": 0.1445076822275539,
           "valid": true
         },
         {
           "frame": 7,
           "id": "far",
-          "pixels": 38,
-          "closest": 2.023376294878982,
+          "pixels": 39,
+          "closest": 2.013130033756673,
           "valid": true
         }
       ],
@@ -1254,123 +2387,128 @@
     {
       "wave": 9,
       "file": "casual/enemies/inf/w009-walk-4x2.png",
+      "sourceAtlas": {
+        "file": "tools/art-review/pr29-gait/sources/w009-puppet.png",
+        "sha256": "fa76d2c8be8a372a2f7813d3a508f2e2ae00d04ef376ec79832e88e12fe0eea3",
+        "matchesReviewedAtlas": true
+      },
       "crop": {
         "x": 126,
-        "y": 55,
+        "y": 36,
         "w": 260,
-        "h": 405
+        "h": 424
       },
       "feet": [
         {
           "frame": 0,
           "id": "near",
-          "pixels": 41,
-          "closest": 2.009549845819981,
+          "pixels": 40,
+          "closest": 2.0013789600323064,
           "valid": true
         },
         {
           "frame": 0,
           "id": "far",
-          "pixels": 46,
-          "closest": 1.0189654473215024,
+          "pixels": 45,
+          "closest": 1.0000038184504836,
           "valid": true
         },
         {
           "frame": 1,
           "id": "near",
           "pixels": 40,
-          "closest": 2.023020213971872,
+          "closest": 2.0088839367123583,
           "valid": true
         },
         {
           "frame": 1,
           "id": "far",
-          "pixels": 67,
-          "closest": 1.3366198324014995,
+          "pixels": 111,
+          "closest": 0.31117032842979025,
           "valid": true
         },
         {
           "frame": 2,
           "id": "near",
-          "pixels": 41,
-          "closest": 2.009549845819981,
+          "pixels": 40,
+          "closest": 2.050377916556329,
           "valid": true
         },
         {
           "frame": 2,
           "id": "far",
-          "pixels": 112,
-          "closest": 0.19567979669631086,
+          "pixels": 116,
+          "closest": 0.5396599316053918,
           "valid": true
         },
         {
           "frame": 3,
           "id": "near",
           "pixels": 40,
-          "closest": 2.023020213971872,
+          "closest": 2.020243929788331,
           "valid": true
         },
         {
           "frame": 3,
           "id": "far",
-          "pixels": 47,
-          "closest": 1.3366198324014995,
-          "valid": true
-        },
-        {
-          "frame": 4,
-          "id": "near",
-          "pixels": 41,
-          "closest": 2.009549845819981,
-          "valid": true
-        },
-        {
-          "frame": 4,
-          "id": "far",
-          "pixels": 46,
-          "closest": 1.0189654473215024,
-          "valid": true
-        },
-        {
-          "frame": 5,
-          "id": "near",
-          "pixels": 67,
-          "closest": 1.3366198324014995,
-          "valid": true
-        },
-        {
-          "frame": 5,
-          "id": "far",
-          "pixels": 44,
-          "closest": 1.0452802428721202,
-          "valid": true
-        },
-        {
-          "frame": 6,
-          "id": "near",
           "pixels": 112,
-          "closest": 0.19567979669631086,
+          "closest": 0.36679644611537565,
+          "valid": true
+        },
+        {
+          "frame": 4,
+          "id": "near",
+          "pixels": 40,
+          "closest": 2.0001241124909113,
+          "valid": true
+        },
+        {
+          "frame": 4,
+          "id": "far",
+          "pixels": 45,
+          "closest": 1.0014983977027956,
+          "valid": true
+        },
+        {
+          "frame": 5,
+          "id": "near",
+          "pixels": 111,
+          "closest": 0.2924643991470175,
+          "valid": true
+        },
+        {
+          "frame": 5,
+          "id": "far",
+          "pixels": 44,
+          "closest": 1.0214511447890284,
+          "valid": true
+        },
+        {
+          "frame": 6,
+          "id": "near",
+          "pixels": 116,
+          "closest": 0.522703166913938,
           "valid": true
         },
         {
           "frame": 6,
           "id": "far",
-          "pixels": 46,
-          "closest": 1.0189654473215024,
+          "pixels": 44,
+          "closest": 1.1054699642144732,
           "valid": true
         },
         {
           "frame": 7,
           "id": "near",
-          "pixels": 46,
-          "closest": 1.3366198324014995,
+          "pixels": 113,
+          "closest": 0.3857962038697391,
           "valid": true
         },
         {
           "frame": 7,
           "id": "far",
-          "pixels": 44,
-          "closest": 1.0452802428721202,
+          "pixels": 45,
+          "closest": 1.034712634660459,
           "valid": true
         }
       ],
@@ -1387,7 +2525,7 @@
             {
               "frame": 0,
               "id": "nearFore",
-              "pixels": 38
+              "pixels": 40
             },
             {
               "frame": 0,
@@ -1407,7 +2545,7 @@
             {
               "frame": 1,
               "id": "nearFore",
-              "pixels": 38
+              "pixels": 87
             },
             {
               "frame": 1,
@@ -1417,12 +2555,12 @@
             {
               "frame": 1,
               "id": "nearHind",
-              "pixels": 61
+              "pixels": 38
             },
             {
               "frame": 1,
               "id": "farHind",
-              "pixels": 37
+              "pixels": 38
             },
             {
               "frame": 2,
@@ -1432,37 +2570,37 @@
             {
               "frame": 2,
               "id": "farFore",
-              "pixels": 73
+              "pixels": 37
             },
             {
               "frame": 2,
               "id": "nearHind",
-              "pixels": 56
+              "pixels": 35
             },
             {
               "frame": 2,
               "id": "farHind",
-              "pixels": 37
+              "pixels": 64
             },
             {
               "frame": 3,
               "id": "nearFore",
-              "pixels": 38
+              "pixels": 39
             },
             {
               "frame": 3,
               "id": "farFore",
-              "pixels": 37
+              "pixels": 39
             },
             {
               "frame": 3,
               "id": "nearHind",
-              "pixels": 37
+              "pixels": 34
             },
             {
               "frame": 3,
               "id": "farHind",
-              "pixels": 37
+              "pixels": 36
             },
             {
               "frame": 4,
@@ -1472,7 +2610,7 @@
             {
               "frame": 4,
               "id": "farFore",
-              "pixels": 38
+              "pixels": 64
             },
             {
               "frame": 4,
@@ -1487,7 +2625,7 @@
             {
               "frame": 5,
               "id": "nearFore",
-              "pixels": 37
+              "pixels": 36
             },
             {
               "frame": 5,
@@ -1497,22 +2635,22 @@
             {
               "frame": 5,
               "id": "nearHind",
-              "pixels": 37
+              "pixels": 38
             },
             {
               "frame": 5,
               "id": "farHind",
-              "pixels": 61
+              "pixels": 38
             },
             {
               "frame": 6,
               "id": "nearFore",
-              "pixels": 73
+              "pixels": 37
             },
             {
               "frame": 6,
               "id": "farFore",
-              "pixels": 38
+              "pixels": 37
             },
             {
               "frame": 6,
@@ -1522,33 +2660,33 @@
             {
               "frame": 6,
               "id": "farHind",
-              "pixels": 56
+              "pixels": 35
             },
             {
               "frame": 7,
               "id": "nearFore",
-              "pixels": 37
-            },
-            {
-              "frame": 7,
-              "id": "farFore",
               "pixels": 38
             },
             {
               "frame": 7,
+              "id": "farFore",
+              "pixels": 39
+            },
+            {
+              "frame": 7,
               "id": "nearHind",
-              "pixels": 37
+              "pixels": 84
             },
             {
               "frame": 7,
               "id": "farHind",
-              "pixels": 37
+              "pixels": 33
             }
           ]
         },
         "errors": [],
         "setup": {
-          "stride": 18.44705882352941,
+          "stride": 18.846153846153843,
           "size": 42,
           "speed": 86
         },
@@ -1562,7 +2700,14 @@
           6,
           7,
           0,
-          1
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          0
         ],
         "feet": [
           {
@@ -1570,25 +2715,25 @@
             "points": [
               {
                 "index": 0,
-                "contact": true,
+                "contact": false,
                 "xy": [
-                  -17.122607582339064,
-                  277
+                  -13.64982723677786,
+                  274.77666672173154
                 ]
               },
               {
                 "index": 1,
-                "contact": true,
+                "contact": false,
                 "xy": [
-                  -18.000889074684537,
-                  277
+                  -5.745813437702367,
+                  274.43786978190246
                 ]
               },
               {
                 "index": 2,
                 "contact": true,
                 "xy": [
-                  -17.434371143812236,
+                  0.5940489440160661,
                   277
                 ]
               },
@@ -1596,105 +2741,150 @@
                 "index": 3,
                 "contact": true,
                 "xy": [
-                  -18.30405430852099,
+                  -0.3255210985207384,
                   277
                 ]
               },
               {
                 "index": 4,
-                "contact": false,
+                "contact": true,
                 "xy": [
-                  -17.737536377648695,
+                  0.182509719538146,
                   277
                 ]
               },
               {
                 "index": 5,
-                "contact": false,
+                "contact": true,
                 "xy": [
-                  -12.567853975879387,
-                  274.2048484884861
+                  0.6991407725823962,
+                  277
                 ]
               },
               {
                 "index": 6,
-                "contact": false,
+                "contact": true,
                 "xy": [
-                  -8.825771481031474,
-                  273.0470588235294
+                  -0.22902855126545063,
+                  277
                 ]
               },
               {
                 "index": 7,
-                "contact": false,
+                "contact": true,
                 "xy": [
-                  -3.664689314247525,
-                  274.2048484884861
+                  0.28760250177879243,
+                  277
                 ]
               }
             ],
-            "stanceFrames": 4,
-            "maximumWorldSwingLift": 3.952941176470574,
-            "stanceWorldXSpan": 1.1814467261819246,
+            "stanceSamples": [
+              {
+                "index": 2,
+                "xy": [
+                  0.5940489440160661,
+                  277
+                ]
+              },
+              {
+                "index": 3,
+                "xy": [
+                  -0.3255210985207384,
+                  277
+                ]
+              },
+              {
+                "index": 4,
+                "xy": [
+                  0.182509719538146,
+                  277
+                ]
+              },
+              {
+                "index": 5,
+                "xy": [
+                  0.6991407725823962,
+                  277
+                ]
+              },
+              {
+                "index": 6,
+                "xy": [
+                  -0.22902855126545063,
+                  277
+                ]
+              },
+              {
+                "index": 7,
+                "xy": [
+                  0.28760250177879243,
+                  277
+                ]
+              }
+            ],
+            "stanceFrames": 6,
+            "measurement": "First actual draw of each pose within one complete contact event; discrete poses do not prove zero slip between captures.",
+            "maximumWorldSwingLift": 2.5621302180975363,
+            "stanceWorldXSpan": 1.0246618711031346,
             "stanceWorldYSpan": 0,
-            "slipTolerance": 2.3058823529411763
+            "slipTolerance": 2.3557692307692304
           },
           {
             "id": "farFore",
             "points": [
               {
                 "index": 0,
-                "contact": false,
+                "contact": true,
                 "xy": [
-                  -26.346136994103773,
+                  -7.3182159179042685,
                   277
                 ]
               },
               {
                 "index": 1,
-                "contact": false,
+                "contact": true,
                 "xy": [
-                  -22.612653780566887,
-                  274.2048484884861
+                  -8.246384288077806,
+                  277
                 ]
               },
               {
                 "index": 2,
-                "contact": false,
+                "contact": true,
                 "xy": [
-                  -17.434371143812236,
-                  273.0470588235294
+                  -7.729753235033556,
+                  277
                 ]
               },
               {
                 "index": 3,
-                "contact": false,
+                "contact": true,
                 "xy": [
-                  -13.692289602638638,
-                  274.2048484884861
+                  -8.649323277570367,
+                  277
                 ]
               },
               {
                 "index": 4,
-                "contact": true,
+                "contact": false,
                 "xy": [
-                  -8.514006965883986,
-                  277
+                  -3.950552111280821,
+                  274.77666672173154
                 ]
               },
               {
                 "index": 5,
-                "contact": true,
+                "contact": false,
                 "xy": [
-                  -7.956089269997037,
-                  277
+                  5.398261111012445,
+                  274.43786978190246
                 ]
               },
               {
                 "index": 6,
                 "contact": true,
                 "xy": [
-                  -8.825771481031474,
+                  10.293323115838788,
                   277
                 ]
               },
@@ -1702,57 +2892,102 @@
                 "index": 7,
                 "contact": true,
                 "xy": [
-                  -8.276454020129876,
+                  10.809954168883024,
                   277
                 ]
               }
             ],
-            "stanceFrames": 4,
-            "maximumWorldSwingLift": 3.952941176470574,
-            "stanceWorldXSpan": 0.8696822110344371,
+            "stanceSamples": [
+              {
+                "index": 6,
+                "xy": [
+                  10.293323115838788,
+                  277
+                ]
+              },
+              {
+                "index": 7,
+                "xy": [
+                  10.809954168883024,
+                  277
+                ]
+              },
+              {
+                "index": 0,
+                "xy": [
+                  11.317984986941923,
+                  277
+                ]
+              },
+              {
+                "index": 1,
+                "xy": [
+                  10.389815663094069,
+                  277
+                ]
+              },
+              {
+                "index": 2,
+                "xy": [
+                  10.906446239301161,
+                  277
+                ]
+              },
+              {
+                "index": 3,
+                "xy": [
+                  11.414477295778632,
+                  277
+                ]
+              }
+            ],
+            "stanceFrames": 6,
+            "measurement": "First actual draw of each pose within one complete contact event; discrete poses do not prove zero slip between captures.",
+            "maximumWorldSwingLift": 2.5621302180975363,
+            "stanceWorldXSpan": 1.1211541799398432,
             "stanceWorldYSpan": 0,
-            "slipTolerance": 2.3058823529411763
+            "slipTolerance": 2.3557692307692304
           },
           {
             "id": "nearHind",
             "points": [
               {
                 "index": 0,
-                "contact": false,
+                "contact": true,
                 "xy": [
-                  -51.61502253122459,
+                  -32.11325309500082,
                   277
                 ]
               },
               {
                 "index": 1,
-                "contact": false,
+                "contact": true,
                 "xy": [
-                  -47.88153931768771,
-                  274.2048484884861
+                  -33.04142146517435,
+                  277
                 ]
               },
               {
                 "index": 2,
-                "contact": false,
+                "contact": true,
                 "xy": [
-                  -42.70325668093306,
-                  273.0470588235294
+                  -32.52479041213011,
+                  277
                 ]
               },
               {
                 "index": 3,
-                "contact": false,
+                "contact": true,
                 "xy": [
-                  -38.96117513975946,
-                  274.2048484884861
+                  -33.44436045466691,
+                  277
                 ]
               },
               {
                 "index": 4,
                 "contact": true,
                 "xy": [
-                  -33.7828925030048,
+                  -32.936329636608015,
                   277
                 ]
               },
@@ -1760,32 +2995,77 @@
                 "index": 5,
                 "contact": true,
                 "xy": [
-                  -33.22497480711786,
+                  -32.41969858356377,
                   277
                 ]
               },
               {
                 "index": 6,
-                "contact": true,
+                "contact": false,
                 "xy": [
-                  -34.0946570181523,
-                  277
+                  -29.157127559180978,
+                  274.77666672173154
                 ]
               },
               {
                 "index": 7,
-                "contact": true,
+                "contact": false,
                 "xy": [
-                  -33.5453395572507,
+                  -19.80831433688772,
+                  274.43786978190246
+                ]
+              }
+            ],
+            "stanceSamples": [
+              {
+                "index": 0,
+                "xy": [
+                  -13.47705219015463,
+                  277
+                ]
+              },
+              {
+                "index": 1,
+                "xy": [
+                  -14.405221514002477,
+                  277
+                ]
+              },
+              {
+                "index": 2,
+                "xy": [
+                  -13.888590937795392,
+                  277
+                ]
+              },
+              {
+                "index": 3,
+                "xy": [
+                  -13.380559881317915,
+                  277
+                ]
+              },
+              {
+                "index": 4,
+                "xy": [
+                  -14.308729205165754,
+                  277
+                ]
+              },
+              {
+                "index": 5,
+                "xy": [
+                  -13.79209839054009,
                   277
                 ]
               }
             ],
-            "stanceFrames": 4,
-            "maximumWorldSwingLift": 3.952941176470574,
-            "stanceWorldXSpan": 0.8696822110344371,
+            "stanceFrames": 6,
+            "measurement": "First actual draw of each pose within one complete contact event; discrete poses do not prove zero slip between captures.",
+            "maximumWorldSwingLift": 2.5621302180975363,
+            "stanceWorldXSpan": 1.0246616326845626,
             "stanceWorldYSpan": 0,
-            "slipTolerance": 2.3058823529411763
+            "slipTolerance": 2.3557692307692304
           },
           {
             "id": "farHind",
@@ -1794,7 +3074,7 @@
                 "index": 0,
                 "contact": true,
                 "xy": [
-                  -42.39149311945988,
+                  -40.437055274050444,
                   277
                 ]
               },
@@ -1802,68 +3082,113 @@
                 "index": 1,
                 "contact": true,
                 "xy": [
-                  -43.26977461180536,
+                  -41.365223644223974,
                   277
                 ]
               },
               {
                 "index": 2,
-                "contact": true,
+                "contact": false,
                 "xy": [
-                  -42.70325668093306,
-                  277
+                  -36.65785224294909,
+                  274.77666672173154
                 ]
               },
               {
                 "index": 3,
-                "contact": true,
+                "contact": false,
                 "xy": [
-                  -43.57293984564181,
-                  277
+                  -28.74524011623688,
+                  274.43786978190246
                 ]
               },
               {
                 "index": 4,
-                "contact": false,
+                "contact": true,
                 "xy": [
-                  -43.00642191476951,
+                  -22.413977969503797,
                   277
                 ]
               },
               {
                 "index": 5,
-                "contact": false,
+                "contact": true,
                 "xy": [
-                  -37.83673951300021,
-                  274.2048484884861
+                  -21.897346916459554,
+                  277
                 ]
               },
               {
                 "index": 6,
-                "contact": false,
+                "contact": true,
                 "xy": [
-                  -34.0946570181523,
-                  273.0470588235294
+                  -22.825516240307394,
+                  277
                 ]
               },
               {
                 "index": 7,
-                "contact": false,
+                "contact": true,
                 "xy": [
-                  -28.933574851368345,
-                  274.2048484884861
+                  -22.30888518726315,
+                  277
                 ]
               }
             ],
-            "stanceFrames": 4,
-            "maximumWorldSwingLift": 3.952941176470574,
-            "stanceWorldXSpan": 1.1814467261819317,
+            "stanceSamples": [
+              {
+                "index": 4,
+                "xy": [
+                  -22.413977969503797,
+                  277
+                ]
+              },
+              {
+                "index": 5,
+                "xy": [
+                  -21.897346916459554,
+                  277
+                ]
+              },
+              {
+                "index": 6,
+                "xy": [
+                  -22.825516240307394,
+                  277
+                ]
+              },
+              {
+                "index": 7,
+                "xy": [
+                  -22.30888518726315,
+                  277
+                ]
+              },
+              {
+                "index": 0,
+                "xy": [
+                  -21.800854369204252,
+                  277
+                ]
+              },
+              {
+                "index": 1,
+                "xy": [
+                  -22.7290236930521,
+                  277
+                ]
+              }
+            ],
+            "stanceFrames": 6,
+            "measurement": "First actual draw of each pose within one complete contact event; discrete poses do not prove zero slip between captures.",
+            "maximumWorldSwingLift": 2.5621302180975363,
+            "stanceWorldXSpan": 1.0246618711031417,
             "stanceWorldYSpan": 0,
-            "slipTolerance": 2.3058823529411763
+            "slipTolerance": 2.3557692307692304
           }
         ],
         "stunFrozen": true,
-        "slowRatio": 0.49999999999999795,
+        "slowRatio": 0.499999999999998,
         "wrapDistanceDelta": 1.427599999999984
       },
       {
@@ -1874,22 +3199,22 @@
             {
               "frame": 0,
               "id": "near",
-              "pixels": 18
+              "pixels": 19
             },
             {
               "frame": 0,
               "id": "far",
-              "pixels": 18
+              "pixels": 19
             },
             {
               "frame": 1,
               "id": "near",
-              "pixels": 18
+              "pixels": 19
             },
             {
               "frame": 1,
               "id": "far",
-              "pixels": 20
+              "pixels": 19
             },
             {
               "frame": 2,
@@ -1899,42 +3224,42 @@
             {
               "frame": 2,
               "id": "far",
-              "pixels": 110
+              "pixels": 112
             },
             {
               "frame": 3,
               "id": "near",
-              "pixels": 18
+              "pixels": 17
             },
             {
               "frame": 3,
               "id": "far",
-              "pixels": 95
+              "pixels": 106
             },
             {
               "frame": 4,
               "id": "near",
-              "pixels": 18
+              "pixels": 19
             },
             {
               "frame": 4,
               "id": "far",
-              "pixels": 18
+              "pixels": 19
             },
             {
               "frame": 5,
               "id": "near",
-              "pixels": 21
+              "pixels": 19
             },
             {
               "frame": 5,
               "id": "far",
-              "pixels": 18
+              "pixels": 17
             },
             {
               "frame": 6,
               "id": "near",
-              "pixels": 110
+              "pixels": 112
             },
             {
               "frame": 6,
@@ -1944,7 +3269,7 @@
             {
               "frame": 7,
               "id": "near",
-              "pixels": 90
+              "pixels": 110
             },
             {
               "frame": 7,
@@ -1955,7 +3280,7 @@
         },
         "errors": [],
         "setup": {
-          "stride": 20.48780487804878,
+          "stride": 14.930152466367716,
           "size": 42,
           "speed": 50
         },
@@ -1969,7 +3294,14 @@
           6,
           7,
           0,
-          1
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          0
         ],
         "feet": [
           {
@@ -1979,7 +3311,7 @@
                 "index": 0,
                 "contact": true,
                 "xy": [
-                  -26.117198663615188,
+                  -26.43625254228683,
                   277
                 ]
               },
@@ -1987,7 +3319,7 @@
                 "index": 1,
                 "contact": true,
                 "xy": [
-                  -26.18317343413789,
+                  -26.637520685055446,
                   277
                 ]
               },
@@ -1995,7 +3327,7 @@
                 "index": 2,
                 "contact": true,
                 "xy": [
-                  -26.244149043893984,
+                  -26.833789667057466,
                   277
                 ]
               },
@@ -2003,7 +3335,7 @@
                 "index": 3,
                 "contact": true,
                 "xy": [
-                  -26.305124653650083,
+                  -27.035059717174722,
                   277
                 ]
               },
@@ -2011,7 +3343,7 @@
                 "index": 4,
                 "contact": false,
                 "xy": [
-                  -26.36610026340618,
+                  -27.23132869917674,
                   277
                 ]
               },
@@ -2019,32 +3351,63 @@
                 "index": 5,
                 "contact": false,
                 "xy": [
-                  -21.305124653650083,
-                  274.2474575054299
+                  -23.643092756630832,
+                  275.68034849336027
                 ]
               },
               {
                 "index": 6,
                 "contact": false,
                 "xy": [
-                  -16.239148929453066,
-                  273.10731707317075
+                  -19.333789667057466,
+                  275.133730941704
                 ]
               },
               {
                 "index": 7,
                 "contact": false,
                 "xy": [
-                  -11.183173434137888,
-                  274.2474575054299
+                  -15.029487645599339,
+                  275.68034849336027
+                ]
+              }
+            ],
+            "stanceSamples": [
+              {
+                "index": 0,
+                "xy": [
+                  -12.266251512318567,
+                  277
+                ]
+              },
+              {
+                "index": 1,
+                "xy": [
+                  -11.637520685055446,
+                  277
+                ]
+              },
+              {
+                "index": 2,
+                "xy": [
+                  -11.838789781498384,
+                  277
+                ]
+              },
+              {
+                "index": 3,
+                "xy": [
+                  -12.035058763500405,
+                  277
                 ]
               }
             ],
             "stanceFrames": 4,
-            "maximumWorldSwingLift": 3.892682926829252,
-            "stanceWorldXSpan": 0.18792599003489485,
+            "measurement": "First actual draw of each pose within one complete contact event; discrete poses do not prove zero slip between captures.",
+            "maximumWorldSwingLift": 1.866269058295984,
+            "stanceWorldXSpan": 0.6287308272631211,
             "stanceWorldYSpan": 0,
-            "slipTolerance": 2.5609756097560976
+            "slipTolerance": 2
           },
           {
             "id": "far",
@@ -2053,7 +3416,7 @@
                 "index": 0,
                 "contact": false,
                 "xy": [
-                  -36.36110110263958,
+                  -33.87189450033291,
                   277
                 ]
               },
@@ -2061,31 +3424,31 @@
                 "index": 1,
                 "contact": false,
                 "xy": [
-                  -31.305124653650083,
-                  274.2474575054299
+                  -31.113658481493054,
+                  275.68034849336027
                 ]
               },
               {
                 "index": 2,
                 "contact": false,
                 "xy": [
-                  -26.244149043893984,
-                  273.10731707317075
+                  -26.804355391919692,
+                  275.133730941704
                 ]
               },
               {
                 "index": 3,
                 "contact": false,
                 "xy": [
-                  -21.18317343413789,
-                  274.2474575054299
+                  -22.500053370461565,
+                  275.68034849336027
                 ]
               },
               {
                 "index": 4,
                 "contact": true,
                 "xy": [
-                  -16.12219782438179,
+                  -19.736818190855104,
                   277
                 ]
               },
@@ -2093,7 +3456,7 @@
                 "index": 5,
                 "contact": true,
                 "xy": [
-                  -16.18317343413789,
+                  -19.108086409917668,
                   277
                 ]
               },
@@ -2101,7 +3464,7 @@
                 "index": 6,
                 "contact": true,
                 "xy": [
-                  -16.239148929453066,
+                  -19.304355391919692,
                   277
                 ]
               },
@@ -2109,20 +3472,51 @@
                 "index": 7,
                 "contact": true,
                 "xy": [
-                  -16.305124653650083,
+                  -19.505625442036944,
+                  277
+                ]
+              }
+            ],
+            "stanceSamples": [
+              {
+                "index": 4,
+                "xy": [
+                  -19.736818190855104,
+                  277
+                ]
+              },
+              {
+                "index": 5,
+                "xy": [
+                  -19.108086409917668,
+                  277
+                ]
+              },
+              {
+                "index": 6,
+                "xy": [
+                  -19.304355391919692,
+                  277
+                ]
+              },
+              {
+                "index": 7,
+                "xy": [
+                  -19.505625442036944,
                   277
                 ]
               }
             ],
             "stanceFrames": 4,
-            "maximumWorldSwingLift": 3.892682926829252,
-            "stanceWorldXSpan": 0.1829268292682933,
+            "measurement": "First actual draw of each pose within one complete contact event; discrete poses do not prove zero slip between captures.",
+            "maximumWorldSwingLift": 1.866269058295984,
+            "stanceWorldXSpan": 0.6287317809374358,
             "stanceWorldYSpan": 0,
-            "slipTolerance": 2.5609756097560976
+            "slipTolerance": 2
           }
         ],
         "stunFrozen": true,
-        "slowRatio": 0.5000000000000003,
+        "slowRatio": 0.5000000000000009,
         "wrapDistanceDelta": 0.8350000000000364
       },
       {
@@ -2133,17 +3527,17 @@
             {
               "frame": 0,
               "id": "near",
-              "pixels": 46
+              "pixels": 44
             },
             {
               "frame": 0,
               "id": "far",
-              "pixels": 41
+              "pixels": 39
             },
             {
               "frame": 1,
               "id": "near",
-              "pixels": 46
+              "pixels": 45
             },
             {
               "frame": 1,
@@ -2153,42 +3547,42 @@
             {
               "frame": 2,
               "id": "near",
-              "pixels": 46
+              "pixels": 44
             },
             {
               "frame": 2,
               "id": "far",
-              "pixels": 112
+              "pixels": 113
             },
             {
               "frame": 3,
               "id": "near",
-              "pixels": 46
+              "pixels": 43
             },
             {
               "frame": 3,
               "id": "far",
-              "pixels": 50
+              "pixels": 84
             },
             {
               "frame": 4,
-              "id": "near",
-              "pixels": 46
-            },
-            {
-              "frame": 4,
-              "id": "far",
-              "pixels": 40
-            },
-            {
-              "frame": 5,
               "id": "near",
               "pixels": 44
             },
             {
+              "frame": 4,
+              "id": "far",
+              "pixels": 37
+            },
+            {
+              "frame": 5,
+              "id": "near",
+              "pixels": 47
+            },
+            {
               "frame": 5,
               "id": "far",
-              "pixels": 40
+              "pixels": 37
             },
             {
               "frame": 6,
@@ -2198,23 +3592,23 @@
             {
               "frame": 6,
               "id": "far",
-              "pixels": 40
+              "pixels": 38
             },
             {
               "frame": 7,
               "id": "near",
-              "pixels": 55
+              "pixels": 88
             },
             {
               "frame": 7,
               "id": "far",
-              "pixels": 40
+              "pixels": 38
             }
           ]
         },
         "errors": [],
         "setup": {
-          "stride": 28.641975308641975,
+          "stride": 20.777692650334078,
           "size": 58,
           "speed": 52
         },
@@ -2228,7 +3622,14 @@
           6,
           7,
           0,
-          1
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          0
         ],
         "feet": [
           {
@@ -2238,7 +3639,7 @@
                 "index": 0,
                 "contact": true,
                 "xy": [
-                  -20.661943674800177,
+                  -21.38885119815489,
                   277
                 ]
               },
@@ -2246,7 +3647,7 @@
                 "index": 1,
                 "contact": true,
                 "xy": [
-                  -20.773791540528862,
+                  -22.24926163198571,
                   277
                 ]
               },
@@ -2254,7 +3655,7 @@
                 "index": 2,
                 "contact": true,
                 "xy": [
-                  -20.885637498908913,
+                  -22.246472831807743,
                   277
                 ]
               },
@@ -2262,7 +3663,7 @@
                 "index": 3,
                 "contact": true,
                 "xy": [
-                  -21.002684797010645,
+                  -22.24368593897841,
                   277
                 ]
               },
@@ -2270,7 +3671,7 @@
                 "index": 4,
                 "contact": false,
                 "xy": [
-                  -21.11973209511238,
+                  -22.24089713880044,
                   277
                 ]
               },
@@ -2278,32 +3679,63 @@
                 "index": 5,
                 "contact": false,
                 "xy": [
-                  -14.065884793958888,
-                  273.1519423562095
+                  -18.11948543736247,
+                  275.16349407869234
                 ]
               },
               {
                 "index": 6,
                 "contact": false,
                 "xy": [
-                  -7.022438264900126,
-                  271.558024691358
+                  -11.846473213277468,
+                  274.40278841870827
                 ]
               },
               {
                 "index": 7,
                 "contact": false,
                 "xy": [
-                  0.02100874099579464,
-                  273.1519423562095
+                  -5.57346194286678,
+                  275.16349407869234
+                ]
+              }
+            ],
+            "stanceSamples": [
+              {
+                "index": 0,
+                "xy": [
+                  -1.4520502414288128,
+                  277
+                ]
+              },
+              {
+                "index": 1,
+                "xy": [
+                  -1.4492619180880073,
+                  277
+                ]
+              },
+              {
+                "index": 2,
+                "xy": [
+                  -1.4464735947471947,
+                  277
+                ]
+              },
+              {
+                "index": 3,
+                "xy": [
+                  -1.4436851521970961,
+                  277
                 ]
               }
             ],
             "stanceFrames": 4,
-            "maximumWorldSwingLift": 5.441975308641986,
-            "stanceWorldXSpan": 0.34074112221046704,
+            "measurement": "First actual draw of each pose within one complete contact event; discrete poses do not prove zero slip between captures.",
+            "maximumWorldSwingLift": 2.597211581291731,
+            "stanceWorldXSpan": 0.008365089231716638,
             "stanceWorldYSpan": 0,
-            "slipTolerance": 3.580246913580247
+            "slipTolerance": 2.5972115812917598
           },
           {
             "id": "far",
@@ -2312,7 +3744,7 @@
                 "index": 0,
                 "contact": false,
                 "xy": [
-                  -34.98293132912117,
+                  -31.80466191615274,
                   277
                 ]
               },
@@ -2320,31 +3752,31 @@
                 "index": 1,
                 "contact": false,
                 "xy": [
-                  -27.934285367689355,
-                  273.1519423562095
+                  -28.546449448723564,
+                  275.16349407869234
                 ]
               },
               {
                 "index": 2,
                 "contact": false,
                 "xy": [
-                  -20.885637498908913,
-                  271.558024691358
+                  -22.273437224638563,
+                  274.40278841870827
                 ]
               },
               {
                 "index": 3,
                 "contact": false,
                 "xy": [
-                  -13.842190969850153,
-                  273.1519423562095
+                  -16.000426907902188,
+                  275.16349407869234
                 ]
               },
               {
                 "index": 4,
                 "contact": true,
                 "xy": [
-                  -6.79874444079139,
+                  -11.879015206464222,
                   277
                 ]
               },
@@ -2352,7 +3784,7 @@
                 "index": 5,
                 "contact": true,
                 "xy": [
-                  -6.905390966798395,
+                  -11.876226406286255,
                   277
                 ]
               },
@@ -2360,7 +3792,7 @@
                 "index": 6,
                 "contact": true,
                 "xy": [
-                  -7.022438264900126,
+                  -11.873437606108288,
                   277
                 ]
               },
@@ -2368,21 +3800,52 @@
                 "index": 7,
                 "contact": true,
                 "xy": [
-                  -7.139485086164699,
+                  -11.870649759604635,
+                  277
+                ]
+              }
+            ],
+            "stanceSamples": [
+              {
+                "index": 4,
+                "xy": [
+                  -11.879015206464222,
+                  277
+                ]
+              },
+              {
+                "index": 5,
+                "xy": [
+                  -11.876226406286255,
+                  277
+                ]
+              },
+              {
+                "index": 6,
+                "xy": [
+                  -11.873437606108288,
+                  277
+                ]
+              },
+              {
+                "index": 7,
+                "xy": [
+                  -11.870649759604635,
                   277
                 ]
               }
             ],
             "stanceFrames": 4,
-            "maximumWorldSwingLift": 5.441975308641986,
-            "stanceWorldXSpan": 0.34074064537330884,
+            "measurement": "First actual draw of each pose within one complete contact event; discrete poses do not prove zero slip between captures.",
+            "maximumWorldSwingLift": 2.597211581291731,
+            "stanceWorldXSpan": 0.008365446859587067,
             "stanceWorldYSpan": 0,
-            "slipTolerance": 3.580246913580247
+            "slipTolerance": 2.5972115812917598
           }
         ],
         "stunFrozen": true,
-        "slowRatio": 0.49999999999999223,
-        "wrapDistanceDelta": 0.8684000000000651
+        "slowRatio": 0.499999999999995,
+        "wrapDistanceDelta": 0.8632000000000062
       },
       {
         "wave": 5,
@@ -2402,12 +3865,12 @@
             {
               "frame": 1,
               "id": "near",
-              "pixels": 49
+              "pixels": 50
             },
             {
               "frame": 1,
               "id": "far",
-              "pixels": 53
+              "pixels": 47
             },
             {
               "frame": 2,
@@ -2417,17 +3880,17 @@
             {
               "frame": 2,
               "id": "far",
-              "pixels": 110
+              "pixels": 113
             },
             {
               "frame": 3,
               "id": "near",
-              "pixels": 49
+              "pixels": 50
             },
             {
               "frame": 3,
               "id": "far",
-              "pixels": 65
+              "pixels": 75
             },
             {
               "frame": 4,
@@ -2437,12 +3900,12 @@
             {
               "frame": 4,
               "id": "far",
-              "pixels": 49
+              "pixels": 48
             },
             {
               "frame": 5,
               "id": "near",
-              "pixels": 57
+              "pixels": 62
             },
             {
               "frame": 5,
@@ -2452,7 +3915,7 @@
             {
               "frame": 6,
               "id": "near",
-              "pixels": 110
+              "pixels": 113
             },
             {
               "frame": 6,
@@ -2462,18 +3925,18 @@
             {
               "frame": 7,
               "id": "near",
-              "pixels": 70
+              "pixels": 85
             },
             {
               "frame": 7,
               "id": "far",
-              "pixels": 49
+              "pixels": 50
             }
           ]
         },
         "errors": [],
         "setup": {
-          "stride": 24,
+          "stride": 18.306818181818183,
           "size": 50,
           "speed": 50
         },
@@ -2487,7 +3950,14 @@
           6,
           7,
           0,
-          1
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          0
         ],
         "feet": [
           {
@@ -2497,7 +3967,7 @@
                 "index": 0,
                 "contact": true,
                 "xy": [
-                  -25.75936833320499,
+                  -25.50007291096704,
                   277
                 ]
               },
@@ -2505,7 +3975,7 @@
                 "index": 1,
                 "contact": true,
                 "xy": [
-                  -26.254367265089755,
+                  -26.123424268166968,
                   277
                 ]
               },
@@ -2513,7 +3983,7 @@
                 "index": 2,
                 "contact": true,
                 "xy": [
-                  -25.9293665021503,
+                  -25.906777380127643,
                   277
                 ]
               },
@@ -2521,7 +3991,7 @@
                 "index": 3,
                 "contact": true,
                 "xy": [
-                  -26.4243673413837,
+                  -25.695129652854913,
                   277
                 ]
               },
@@ -2529,7 +3999,7 @@
                 "index": 4,
                 "contact": false,
                 "xy": [
-                  -26.094367417677645,
+                  -26.318481010054843,
                   277
                 ]
               },
@@ -2537,32 +4007,63 @@
                 "index": 5,
                 "contact": false,
                 "xy": [
-                  -20.594367417677645,
-                  273.6412427893639
+                  -22.4779952841785,
+                  275.3818504136892
                 ]
               },
               {
                 "index": 6,
                 "contact": false,
                 "xy": [
-                  -14.264367493971593,
-                  272.25
+                  -16.741777418274616,
+                  274.7115909090909
                 ]
               },
               {
                 "index": 7,
                 "contact": false,
                 "xy": [
-                  -7.9243673413837,
-                  273.6412427893639
+                  -11.005558598696403,
+                  275.3818504136892
+                ]
+              }
+            ],
+            "stanceSamples": [
+              {
+                "index": 0,
+                "xy": [
+                  -8.000072910967042,
+                  277
+                ]
+              },
+              {
+                "index": 1,
+                "xy": [
+                  -7.7884251836943115,
+                  277
+                ]
+              },
+              {
+                "index": 2,
+                "xy": [
+                  -7.576777456421587,
+                  277
+                ]
+              },
+              {
+                "index": 3,
+                "xy": [
+                  -7.365129729148858,
+                  277
                 ]
               }
             ],
             "stanceFrames": 4,
-            "maximumWorldSwingLift": 4.75,
-            "stanceWorldXSpan": 0.6649990081787109,
+            "measurement": "First actual draw of each pose within one complete contact event; discrete poses do not prove zero slip between captures.",
+            "maximumWorldSwingLift": 2.288409090909113,
+            "stanceWorldXSpan": 0.6349431818181834,
             "stanceWorldYSpan": 0,
-            "slipTolerance": 3
+            "slipTolerance": 2.288352272727273
           },
           {
             "id": "far",
@@ -2571,7 +4072,7 @@
                 "index": 0,
                 "contact": false,
                 "xy": [
-                  -37.75936833320499,
+                  -34.629974165736066,
                   277
                 ]
               },
@@ -2579,31 +4080,31 @@
                 "index": 1,
                 "contact": false,
                 "xy": [
-                  -32.254367265089755,
-                  273.6412427893639
+                  -31.62448752433238,
+                  275.3818504136892
                 ]
               },
               {
                 "index": 2,
                 "contact": false,
                 "xy": [
-                  -25.9293665021503,
-                  272.25
+                  -25.883269543987577,
+                  274.7115909090909
                 ]
               },
               {
                 "index": 3,
                 "contact": false,
                 "xy": [
-                  -20.4243673413837,
-                  273.6412427893639
+                  -20.14705072440937,
+                  275.3818504136892
                 ]
               },
               {
                 "index": 4,
                 "contact": true,
                 "xy": [
-                  -14.094367417677645,
+                  -17.14156408300569,
                   277
                 ]
               },
@@ -2611,7 +4112,7 @@
                 "index": 5,
                 "contact": true,
                 "xy": [
-                  -14.594367417677645,
+                  -16.92991635573296,
                   277
                 ]
               },
@@ -2619,7 +4120,7 @@
                 "index": 6,
                 "contact": true,
                 "xy": [
-                  -14.264367493971593,
+                  -16.71826958213455,
                   277
                 ]
               },
@@ -2627,20 +4128,51 @@
                 "index": 7,
                 "contact": true,
                 "xy": [
-                  -13.9243673413837,
+                  -16.50662185486182,
+                  277
+                ]
+              }
+            ],
+            "stanceSamples": [
+              {
+                "index": 4,
+                "xy": [
+                  -17.14156408300569,
+                  277
+                ]
+              },
+              {
+                "index": 5,
+                "xy": [
+                  -16.92991635573296,
+                  277
+                ]
+              },
+              {
+                "index": 6,
+                "xy": [
+                  -16.71826958213455,
+                  277
+                ]
+              },
+              {
+                "index": 7,
+                "xy": [
+                  -16.50662185486182,
                   277
                 ]
               }
             ],
             "stanceFrames": 4,
-            "maximumWorldSwingLift": 4.75,
-            "stanceWorldXSpan": 0.6700000762939453,
+            "measurement": "First actual draw of each pose within one complete contact event; discrete poses do not prove zero slip between captures.",
+            "maximumWorldSwingLift": 2.288409090909113,
+            "stanceWorldXSpan": 0.6349422281438706,
             "stanceWorldYSpan": 0,
-            "slipTolerance": 3
+            "slipTolerance": 2.288352272727273
           }
         ],
         "stunFrozen": true,
-        "slowRatio": 0.4999999999999949,
+        "slowRatio": 0.49999999999999645,
         "wrapDistanceDelta": 0.8300000000001546
       },
       {
@@ -2651,17 +4183,17 @@
             {
               "frame": 0,
               "id": "nearFore",
-              "pixels": 45
+              "pixels": 48
             },
             {
               "frame": 0,
               "id": "farFore",
-              "pixels": 45
+              "pixels": 44
             },
             {
               "frame": 0,
               "id": "nearHind",
-              "pixels": 49
+              "pixels": 48
             },
             {
               "frame": 0,
@@ -2671,152 +4203,160 @@
             {
               "frame": 1,
               "id": "nearFore",
-              "pixels": 45
+              "pixels": 112
             },
             {
               "frame": 1,
               "id": "farFore",
+              "pixels": 44
+            },
+            {
+              "frame": 1,
+              "id": "nearHind",
+              "pixels": 49
+            },
+            {
+              "frame": 1,
+              "id": "farHind",
+              "pixels": 49
+            },
+            {
+              "frame": 2,
+              "id": "nearFore",
+              "pixels": 44
+            },
+            {
+              "frame": 2,
+              "id": "farFore",
+              "pixels": 44
+            },
+            {
+              "frame": 2,
+              "id": "nearHind",
+              "pixels": 49
+            },
+            {
+              "frame": 2,
+              "id": "farHind",
+              "pixels": 104
+            },
+            {
+              "frame": 3,
+              "id": "nearFore",
+              "pixels": 44
+            },
+            {
+              "frame": 3,
+              "id": "farFore",
+              "pixels": 43
+            },
+            {
+              "frame": 3,
+              "id": "nearHind",
+              "pixels": 49
+            },
+            {
+              "frame": 3,
+              "id": "farHind",
+              "pixels": 48
+            },
+            {
+              "frame": 4,
+              "id": "nearFore",
+              "pixels": 45
+            },
+            {
+              "frame": 4,
+              "id": "farFore",
+              "pixels": 100
+            },
+            {
+              "frame": 4,
+              "id": "nearHind",
+              "pixels": 49
+            },
+            {
+              "frame": 4,
+              "id": "farHind",
+              "pixels": 49
+            },
+            {
+              "frame": 5,
+              "id": "nearFore",
+              "pixels": 44
+            },
+            {
+              "frame": 5,
+              "id": "farFore",
+              "pixels": 46
+            },
+            {
+              "frame": 5,
+              "id": "nearHind",
+              "pixels": 50
+            },
+            {
+              "frame": 5,
+              "id": "farHind",
+              "pixels": 49
+            },
+            {
+              "frame": 6,
+              "id": "nearFore",
+              "pixels": 44
+            },
+            {
+              "frame": 6,
+              "id": "farFore",
+              "pixels": 45
+            },
+            {
+              "frame": 6,
+              "id": "nearHind",
               "pixels": 54
             },
             {
-              "frame": 1,
-              "id": "nearHind",
-              "pixels": 72
-            },
-            {
-              "frame": 1,
-              "id": "farHind",
-              "pixels": 49
-            },
-            {
-              "frame": 2,
-              "id": "nearFore",
-              "pixels": 45
-            },
-            {
-              "frame": 2,
-              "id": "farFore",
-              "pixels": 110
-            },
-            {
-              "frame": 2,
-              "id": "nearHind",
-              "pixels": 110
-            },
-            {
-              "frame": 2,
-              "id": "farHind",
-              "pixels": 49
-            },
-            {
-              "frame": 3,
-              "id": "nearFore",
-              "pixels": 45
-            },
-            {
-              "frame": 3,
-              "id": "farFore",
-              "pixels": 47
-            },
-            {
-              "frame": 3,
-              "id": "nearHind",
-              "pixels": 47
-            },
-            {
-              "frame": 3,
-              "id": "farHind",
-              "pixels": 49
-            },
-            {
-              "frame": 4,
-              "id": "nearFore",
-              "pixels": 45
-            },
-            {
-              "frame": 4,
-              "id": "farFore",
-              "pixels": 45
-            },
-            {
-              "frame": 4,
-              "id": "nearHind",
-              "pixels": 49
-            },
-            {
-              "frame": 4,
-              "id": "farHind",
-              "pixels": 49
-            },
-            {
-              "frame": 5,
-              "id": "nearFore",
-              "pixels": 54
-            },
-            {
-              "frame": 5,
-              "id": "farFore",
-              "pixels": 45
-            },
-            {
-              "frame": 5,
-              "id": "nearHind",
-              "pixels": 49
-            },
-            {
-              "frame": 5,
-              "id": "farHind",
-              "pixels": 72
-            },
-            {
-              "frame": 6,
-              "id": "nearFore",
-              "pixels": 110
-            },
-            {
-              "frame": 6,
-              "id": "farFore",
-              "pixels": 45
-            },
-            {
-              "frame": 6,
-              "id": "nearHind",
-              "pixels": 49
-            },
-            {
               "frame": 6,
               "id": "farHind",
-              "pixels": 110
+              "pixels": 49
             },
             {
               "frame": 7,
               "id": "nearFore",
-              "pixels": 47
+              "pixels": 44
             },
             {
               "frame": 7,
               "id": "farFore",
-              "pixels": 45
+              "pixels": 44
             },
             {
               "frame": 7,
               "id": "nearHind",
-              "pixels": 49
+              "pixels": 115
             },
             {
               "frame": 7,
               "id": "farHind",
-              "pixels": 47
+              "pixels": 50
             }
           ]
         },
         "errors": [],
         "setup": {
-          "stride": 24.488888888888887,
+          "stride": 20.56844850065189,
           "size": 58,
           "speed": 56
         },
         "actualFrameOrder": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
           0,
           1,
           2,
@@ -2834,25 +4374,25 @@
             "points": [
               {
                 "index": 0,
-                "contact": true,
+                "contact": false,
                 "xy": [
-                  -14.962730060430971,
-                  277
+                  -23.396549134099324,
+                  274.69425969577225
                 ]
               },
               {
                 "index": 1,
-                "contact": true,
+                "contact": false,
                 "xy": [
-                  -15.229440002718839,
-                  277
+                  -14.46347633694269,
+                  274.3429053726268
                 ]
               },
               {
                 "index": 2,
                 "contact": true,
                 "xy": [
-                  -15.490551876769402,
+                  -7.87913191639732,
                   277
                 ]
               },
@@ -2860,105 +4400,150 @@
                 "index": 3,
                 "contact": true,
                 "xy": [
-                  -15.746063775234028,
+                  -7.655788717504201,
                   277
                 ]
               },
               {
                 "index": 4,
-                "contact": false,
+                "contact": true,
                 "xy": [
-                  -15.07757397997307,
+                  -7.421243660090568,
                   277
                 ]
               },
               {
                 "index": 5,
-                "contact": false,
+                "contact": true,
                 "xy": [
-                  -9.216462678127094,
-                  273.3544717058827
+                  -8.127500223160332,
+                  277
                 ]
               },
               {
                 "index": 6,
-                "contact": false,
+                "contact": true,
                 "xy": [
-                  -3.355352329955437,
-                  271.84444444444443
+                  -7.89855609500696,
+                  277
                 ]
               },
               {
                 "index": 7,
-                "contact": false,
+                "contact": true,
                 "xy": [
-                  2.5113589474764737,
-                  273.3544717058827
+                  -7.6696129205278964,
+                  277
                 ]
               }
             ],
-            "stanceFrames": 4,
-            "maximumWorldSwingLift": 5.155555555555566,
-            "stanceWorldXSpan": 0.7833337148030566,
+            "stanceSamples": [
+              {
+                "index": 2,
+                "xy": [
+                  -7.87913191639732,
+                  277
+                ]
+              },
+              {
+                "index": 3,
+                "xy": [
+                  -7.655788717504201,
+                  277
+                ]
+              },
+              {
+                "index": 4,
+                "xy": [
+                  -7.421243660090568,
+                  277
+                ]
+              },
+              {
+                "index": 5,
+                "xy": [
+                  -8.127500223160332,
+                  277
+                ]
+              },
+              {
+                "index": 6,
+                "xy": [
+                  -7.89855609500696,
+                  277
+                ]
+              },
+              {
+                "index": 7,
+                "xy": [
+                  -7.6696129205278964,
+                  277
+                ]
+              }
+            ],
+            "stanceFrames": 6,
+            "measurement": "First actual draw of each pose within one complete contact event; discrete poses do not prove zero slip between captures.",
+            "maximumWorldSwingLift": 2.657094627373226,
+            "stanceWorldXSpan": 0.7062565630697648,
             "stanceWorldYSpan": 0,
-            "slipTolerance": 3.061111111111111
+            "slipTolerance": 2.5710560625814862
           },
           {
             "id": "farFore",
             "points": [
               {
                 "index": 0,
-                "contact": false,
+                "contact": true,
                 "xy": [
-                  -27.207174504875415,
+                  -16.53821490167347,
                   277
                 ]
               },
               {
                 "index": 1,
-                "contact": false,
+                "contact": true,
                 "xy": [
-                  -21.35166222494106,
-                  273.3544717058827
+                  -17.244471464743242,
+                  277
                 ]
               },
               {
                 "index": 2,
-                "contact": false,
+                "contact": true,
                 "xy": [
-                  -15.490551876769402,
-                  271.84444444444443
+                  -17.015526382915546,
+                  277
                 ]
               },
               {
                 "index": 3,
-                "contact": false,
+                "contact": true,
                 "xy": [
-                  -9.623841553011808,
-                  273.3544717058827
+                  -16.792183184022427,
+                  277
                 ]
               },
               {
                 "index": 4,
-                "contact": true,
+                "contact": false,
                 "xy": [
-                  -2.8331295355286272,
-                  277
+                  -11.98391832490097,
+                  274.69425969577225
                 ]
               },
               {
                 "index": 5,
-                "contact": true,
+                "contact": false,
                 "xy": [
-                  -3.094240455904874,
-                  277
+                  -3.050845527744336,
+                  274.3429053726268
                 ]
               },
               {
                 "index": 6,
                 "contact": true,
                 "xy": [
-                  -3.355352329955437,
+                  3.533497939126711,
                   277
                 ]
               },
@@ -2966,57 +4551,102 @@
                 "index": 7,
                 "contact": true,
                 "xy": [
-                  -3.6108632747457463,
+                  3.7624411136057674,
                   277
                 ]
               }
             ],
-            "stanceFrames": 4,
-            "maximumWorldSwingLift": 5.155555555555566,
-            "stanceWorldXSpan": 0.7777337392171191,
+            "stanceSamples": [
+              {
+                "index": 6,
+                "xy": [
+                  3.533497939126711,
+                  277
+                ]
+              },
+              {
+                "index": 7,
+                "xy": [
+                  3.7624411136057674,
+                  277
+                ]
+              },
+              {
+                "index": 0,
+                "xy": [
+                  3.9969852173450846,
+                  277
+                ]
+              },
+              {
+                "index": 1,
+                "xy": [
+                  3.290729131112471,
+                  277
+                ]
+              },
+              {
+                "index": 2,
+                "xy": [
+                  3.5196732592658506,
+                  277
+                ]
+              },
+              {
+                "index": 3,
+                "xy": [
+                  3.7430171734147066,
+                  277
+                ]
+              }
+            ],
+            "stanceFrames": 6,
+            "measurement": "First actual draw of each pose within one complete contact event; discrete poses do not prove zero slip between captures.",
+            "maximumWorldSwingLift": 2.657094627373226,
+            "stanceWorldXSpan": 0.7062560862326137,
             "stanceWorldYSpan": 0,
-            "slipTolerance": 3.061111111111111
+            "slipTolerance": 2.5710560625814862
           },
           {
             "id": "nearHind",
             "points": [
               {
                 "index": 0,
-                "contact": false,
+                "contact": true,
                 "xy": [
-                  -50.39879672709763,
+                  -40.1695337536731,
                   277
                 ]
               },
               {
                 "index": 1,
-                "contact": false,
+                "contact": true,
                 "xy": [
-                  -44.54328444716328,
-                  273.3544717058827
+                  -40.875790316742865,
+                  277
                 ]
               },
               {
                 "index": 2,
-                "contact": false,
+                "contact": true,
                 "xy": [
-                  -38.682174098991624,
-                  271.84444444444443
+                  -40.646845234915176,
+                  277
                 ]
               },
               {
                 "index": 3,
-                "contact": false,
+                "contact": true,
                 "xy": [
-                  -32.81546377523403,
-                  273.3544717058827
+                  -40.42350203602205,
+                  277
                 ]
               },
               {
                 "index": 4,
                 "contact": true,
                 "xy": [
-                  -26.02475175775085,
+                  -40.188956978608424,
                   277
                 ]
               },
@@ -3024,32 +4654,77 @@
                 "index": 5,
                 "contact": true,
                 "xy": [
-                  -26.285862678127096,
+                  -40.89521354167819,
                   277
                 ]
               },
               {
                 "index": 6,
-                "contact": true,
+                "contact": false,
                 "xy": [
-                  -26.54697455217766,
-                  277
+                  -36.09254961181699,
+                  274.69425969577225
                 ]
               },
               {
                 "index": 7,
-                "contact": true,
+                "contact": false,
                 "xy": [
-                  -26.802485496967968,
+                  -26.224277077111534,
+                  274.3429053726268
+                ]
+              }
+            ],
+            "stanceSamples": [
+              {
+                "index": 0,
+                "xy": [
+                  -19.634333634654546,
+                  277
+                ]
+              },
+              {
+                "index": 1,
+                "xy": [
+                  -20.340589720887152,
+                  277
+                ]
+              },
+              {
+                "index": 2,
+                "xy": [
+                  -20.111645592733776,
+                  277
+                ]
+              },
+              {
+                "index": 3,
+                "xy": [
+                  -19.888301678584916,
+                  277
+                ]
+              },
+              {
+                "index": 4,
+                "xy": [
+                  -19.653757694054896,
+                  277
+                ]
+              },
+              {
+                "index": 5,
+                "xy": [
+                  -20.360013899496792,
                   277
                 ]
               }
             ],
-            "stanceFrames": 4,
-            "maximumWorldSwingLift": 5.155555555555566,
-            "stanceWorldXSpan": 0.7777337392171191,
+            "stanceFrames": 6,
+            "measurement": "First actual draw of each pose within one complete contact event; discrete poses do not prove zero slip between captures.",
+            "maximumWorldSwingLift": 2.657094627373226,
+            "stanceWorldXSpan": 0.7256802648422465,
             "stanceWorldYSpan": 0,
-            "slipTolerance": 3.061111111111111
+            "slipTolerance": 2.5710560625814862
           },
           {
             "id": "farHind",
@@ -3058,7 +4733,7 @@
                 "index": 0,
                 "contact": true,
                 "xy": [
-                  -38.15435228265319,
+                  -49.30592822019133,
                   277
                 ]
               },
@@ -3066,69 +4741,114 @@
                 "index": 1,
                 "contact": true,
                 "xy": [
-                  -38.42106222494106,
+                  -50.0121847832611,
                   277
                 ]
               },
               {
                 "index": 2,
-                "contact": true,
+                "contact": false,
                 "xy": [
-                  -38.682174098991624,
-                  277
+                  -45.20951989972558,
+                  274.69425969577225
                 ]
               },
               {
                 "index": 3,
-                "contact": true,
+                "contact": false,
                 "xy": [
-                  -38.93768599745625,
-                  277
+                  -35.34684734060606,
+                  274.3429053726268
                 ]
               },
               {
                 "index": 4,
-                "contact": false,
+                "contact": true,
                 "xy": [
-                  -38.26919620219529,
+                  -28.75690294447476,
                   277
                 ]
               },
               {
                 "index": 5,
-                "contact": false,
+                "contact": true,
                 "xy": [
-                  -32.408084900349316,
-                  273.3544717058827
+                  -29.463159507544525,
+                  277
                 ]
               },
               {
                 "index": 6,
-                "contact": false,
+                "contact": true,
                 "xy": [
-                  -26.54697455217766,
-                  271.84444444444443
+                  -29.234215379391152,
+                  277
                 ]
               },
               {
                 "index": 7,
-                "contact": false,
+                "contact": true,
                 "xy": [
-                  -20.680263274745748,
-                  273.3544717058827
+                  -29.005272204912085,
+                  277
                 ]
               }
             ],
-            "stanceFrames": 4,
-            "maximumWorldSwingLift": 5.155555555555566,
-            "stanceWorldXSpan": 0.7833337148030566,
+            "stanceSamples": [
+              {
+                "index": 4,
+                "xy": [
+                  -28.75690294447476,
+                  277
+                ]
+              },
+              {
+                "index": 5,
+                "xy": [
+                  -29.463159507544525,
+                  277
+                ]
+              },
+              {
+                "index": 6,
+                "xy": [
+                  -29.234215379391152,
+                  277
+                ]
+              },
+              {
+                "index": 7,
+                "xy": [
+                  -29.005272204912085,
+                  277
+                ]
+              },
+              {
+                "index": 0,
+                "xy": [
+                  -28.77072810117278,
+                  277
+                ]
+              },
+              {
+                "index": 1,
+                "xy": [
+                  -29.476984187405385,
+                  277
+                ]
+              }
+            ],
+            "stanceFrames": 6,
+            "measurement": "First actual draw of each pose within one complete contact event; discrete poses do not prove zero slip between captures.",
+            "maximumWorldSwingLift": 2.657094627373226,
+            "stanceWorldXSpan": 0.7200812429306254,
             "stanceWorldYSpan": 0,
-            "slipTolerance": 3.061111111111111
+            "slipTolerance": 2.5710560625814862
           }
         ],
         "stunFrozen": true,
-        "slowRatio": 0.5000000000000048,
-        "wrapDistanceDelta": 0.9352000000001226
+        "slowRatio": 0.5000000000000079,
+        "wrapDistanceDelta": 0.9296000000001641
       },
       {
         "wave": 7,
@@ -3138,7 +4858,7 @@
             {
               "frame": 0,
               "id": "near",
-              "pixels": 40
+              "pixels": 39
             },
             {
               "frame": 0,
@@ -3153,73 +4873,73 @@
             {
               "frame": 1,
               "id": "far",
-              "pixels": 67
-            },
-            {
-              "frame": 2,
-              "id": "near",
-              "pixels": 40
-            },
-            {
-              "frame": 2,
-              "id": "far",
-              "pixels": 110
-            },
-            {
-              "frame": 3,
-              "id": "near",
-              "pixels": 40
-            },
-            {
-              "frame": 3,
-              "id": "far",
-              "pixels": 73
-            },
-            {
-              "frame": 4,
-              "id": "near",
-              "pixels": 40
-            },
-            {
-              "frame": 4,
-              "id": "far",
-              "pixels": 38
-            },
-            {
-              "frame": 5,
-              "id": "near",
               "pixels": 71
             },
             {
-              "frame": 5,
-              "id": "far",
-              "pixels": 38
-            },
-            {
-              "frame": 6,
+              "frame": 2,
               "id": "near",
-              "pixels": 110
+              "pixels": 40
             },
             {
-              "frame": 6,
+              "frame": 2,
               "id": "far",
-              "pixels": 38
+              "pixels": 114
             },
             {
-              "frame": 7,
+              "frame": 3,
+              "id": "near",
+              "pixels": 40
+            },
+            {
+              "frame": 3,
+              "id": "far",
+              "pixels": 92
+            },
+            {
+              "frame": 4,
+              "id": "near",
+              "pixels": 40
+            },
+            {
+              "frame": 4,
+              "id": "far",
+              "pixels": 39
+            },
+            {
+              "frame": 5,
               "id": "near",
               "pixels": 77
             },
             {
+              "frame": 5,
+              "id": "far",
+              "pixels": 39
+            },
+            {
+              "frame": 6,
+              "id": "near",
+              "pixels": 113
+            },
+            {
+              "frame": 6,
+              "id": "far",
+              "pixels": 40
+            },
+            {
+              "frame": 7,
+              "id": "near",
+              "pixels": 96
+            },
+            {
               "frame": 7,
               "id": "far",
-              "pixels": 38
+              "pixels": 39
             }
           ]
         },
         "errors": [],
         "setup": {
-          "stride": 27.496296296296297,
+          "stride": 20.755919101123595,
           "size": 58,
           "speed": 38
         },
@@ -3233,7 +4953,14 @@
           6,
           7,
           0,
-          1
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          0
         ],
         "feet": [
           {
@@ -3243,7 +4970,7 @@
                 "index": 0,
                 "contact": true,
                 "xy": [
-                  -18.958798138539574,
+                  -19.361426422800427,
                   277
                 ]
               },
@@ -3251,7 +4978,7 @@
                 "index": 1,
                 "contact": true,
                 "xy": [
-                  -19.226636185708447,
+                  -19.425116444718213,
                   277
                 ]
               },
@@ -3259,7 +4986,7 @@
                 "index": 2,
                 "contact": true,
                 "xy": [
-                  -19.502073109830445,
+                  -19.485007028159455,
                   277
                 ]
               },
@@ -3267,7 +4994,7 @@
                 "index": 3,
                 "contact": true,
                 "xy": [
-                  -19.13530956398174,
+                  -19.544895704252045,
                   277
                 ]
               },
@@ -3275,7 +5002,7 @@
                 "index": 4,
                 "contact": false,
                 "xy": [
-                  -19.406947049627174,
+                  -19.608585726169846,
                   277
                 ]
               },
@@ -3283,32 +5010,63 @@
                 "index": 5,
                 "contact": false,
                 "xy": [
-                  -12.169909821855274,
-                  273.1519423562095
+                  -15.550369994754131,
+                  275.16541860672953
                 ]
               },
               {
                 "index": 6,
                 "contact": false,
                 "xy": [
-                  -5.563672841275757,
-                  271.558024691358
+                  -9.350406388816193,
+                  274.40551011235954
                 ]
               },
               {
                 "index": 7,
                 "contact": false,
                 "xy": [
-                  1.0387647008271976,
-                  273.1519423562095
+                  -3.1466433444016886,
+                  275.16541860672953
+                ]
+              }
+            ],
+            "stanceSamples": [
+              {
+                "index": 0,
+                "xy": [
+                  0.9039735100609008,
+                  277
+                ]
+              },
+              {
+                "index": 1,
+                "xy": [
+                  0.8440834034568354,
+                  277
+                ]
+              },
+              {
+                "index": 2,
+                "xy": [
+                  0.7841937736899105,
+                  277
+                ]
+              },
+              {
+                "index": 3,
+                "xy": [
+                  1.3551036758596489,
+                  277
                 ]
               }
             ],
             "stanceFrames": 4,
-            "maximumWorldSwingLift": 5.441975308641986,
-            "stanceWorldXSpan": 0.5432749712908702,
+            "measurement": "First actual draw of each pose within one complete contact event; discrete poses do not prove zero slip between captures.",
+            "maximumWorldSwingLift": 2.5944898876404636,
+            "stanceWorldXSpan": 0.5709099021697384,
             "stanceWorldYSpan": 0,
-            "slipTolerance": 3.437037037037037
+            "slipTolerance": 2.5944898876404494
           },
           {
             "id": "far",
@@ -3317,7 +5075,7 @@
                 "index": 0,
                 "contact": false,
                 "xy": [
-                  -32.706946286687725,
+                  -29.718040617087567,
                   277
                 ]
               },
@@ -3325,31 +5083,31 @@
                 "index": 1,
                 "contact": false,
                 "xy": [
-                  -26.10071025978252,
-                  273.1519423562095
+                  -25.667423762624985,
+                  275.16541860672953
                 ]
               },
               {
                 "index": 2,
                 "contact": false,
                 "xy": [
-                  -19.502073109830445,
-                  271.558024691358
+                  -19.46366167188479,
+                  274.40551011235954
                 ]
               },
               {
                 "index": 3,
                 "contact": false,
                 "xy": [
-                  -12.261235489907666,
-                  273.1519423562095
+                  -13.259897673795969,
+                  275.16541860672953
                 ]
               },
               {
                 "index": 4,
                 "contact": true,
                 "xy": [
-                  -5.658798901479027,
+                  -9.209280819333383,
                   277
                 ]
               },
@@ -3357,7 +5115,7 @@
                 "index": 5,
                 "contact": true,
                 "xy": [
-                  -5.295835747781201,
+                  -9.265371964298051,
                   277
                 ]
               },
@@ -3365,7 +5123,7 @@
                 "index": 6,
                 "contact": true,
                 "xy": [
-                  -5.563672841275757,
+                  -9.329061032541528,
                   277
                 ]
               },
@@ -3373,20 +5131,51 @@
                 "index": 7,
                 "contact": true,
                 "xy": [
-                  -5.835309373246876,
+                  -9.388950662308442,
+                  277
+                ]
+              }
+            ],
+            "stanceSamples": [
+              {
+                "index": 4,
+                "xy": [
+                  -9.209280819333383,
+                  277
+                ]
+              },
+              {
+                "index": 5,
+                "xy": [
+                  -9.265371964298051,
+                  277
+                ]
+              },
+              {
+                "index": 6,
+                "xy": [
+                  -9.329061032541528,
+                  277
+                ]
+              },
+              {
+                "index": 7,
+                "xy": [
+                  -9.388950662308442,
                   277
                 ]
               }
             ],
             "stanceFrames": 4,
-            "maximumWorldSwingLift": 5.441975308641986,
-            "stanceWorldXSpan": 0.5394736254656749,
+            "measurement": "First actual draw of each pose within one complete contact event; discrete poses do not prove zero slip between captures.",
+            "maximumWorldSwingLift": 2.5944898876404636,
+            "stanceWorldXSpan": 0.17966984297505917,
             "stanceWorldYSpan": 0,
-            "slipTolerance": 3.437037037037037
+            "slipTolerance": 2.5944898876404494
           }
         ],
         "stunFrozen": true,
-        "slowRatio": 0.5000000000000133,
+        "slowRatio": 0.5000000000000124,
         "wrapDistanceDelta": 0.6346000000000913
       },
       {
@@ -3397,12 +5186,12 @@
             {
               "frame": 0,
               "id": "near",
-              "pixels": 41
+              "pixels": 40
             },
             {
               "frame": 0,
               "id": "far",
-              "pixels": 46
+              "pixels": 45
             },
             {
               "frame": 1,
@@ -3412,17 +5201,17 @@
             {
               "frame": 1,
               "id": "far",
-              "pixels": 67
+              "pixels": 111
             },
             {
               "frame": 2,
               "id": "near",
-              "pixels": 41
+              "pixels": 40
             },
             {
               "frame": 2,
               "id": "far",
-              "pixels": 112
+              "pixels": 116
             },
             {
               "frame": 3,
@@ -3432,53 +5221,53 @@
             {
               "frame": 3,
               "id": "far",
-              "pixels": 47
-            },
-            {
-              "frame": 4,
-              "id": "near",
-              "pixels": 41
-            },
-            {
-              "frame": 4,
-              "id": "far",
-              "pixels": 46
-            },
-            {
-              "frame": 5,
-              "id": "near",
-              "pixels": 67
-            },
-            {
-              "frame": 5,
-              "id": "far",
-              "pixels": 44
-            },
-            {
-              "frame": 6,
-              "id": "near",
               "pixels": 112
             },
             {
+              "frame": 4,
+              "id": "near",
+              "pixels": 40
+            },
+            {
+              "frame": 4,
+              "id": "far",
+              "pixels": 45
+            },
+            {
+              "frame": 5,
+              "id": "near",
+              "pixels": 111
+            },
+            {
+              "frame": 5,
+              "id": "far",
+              "pixels": 44
+            },
+            {
+              "frame": 6,
+              "id": "near",
+              "pixels": 116
+            },
+            {
               "frame": 6,
               "id": "far",
-              "pixels": 46
+              "pixels": 44
             },
             {
               "frame": 7,
               "id": "near",
-              "pixels": 46
+              "pixels": 113
             },
             {
               "frame": 7,
               "id": "far",
-              "pixels": 44
+              "pixels": 45
             }
           ]
         },
         "errors": [],
         "setup": {
-          "stride": 31.506172839506174,
+          "stride": 19.98592452830189,
           "size": 58,
           "speed": 48
         },
@@ -3492,7 +5281,14 @@
           6,
           7,
           0,
-          1
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          0
         ],
         "feet": [
           {
@@ -3502,7 +5298,7 @@
                 "index": 0,
                 "contact": true,
                 "xy": [
-                  -20.577784625317054,
+                  -21.254277084316026,
                   277
                 ]
               },
@@ -3510,7 +5306,7 @@
                 "index": 1,
                 "contact": true,
                 "xy": [
-                  -21.31445520181294,
+                  -21.35731692098365,
                   277
                 ]
               },
@@ -3518,7 +5314,7 @@
                 "index": 2,
                 "contact": true,
                 "xy": [
-                  -21.249528183093986,
+                  -21.45555786849111,
                   277
                 ]
               },
@@ -3526,7 +5322,7 @@
                 "index": 3,
                 "contact": true,
                 "xy": [
-                  -21.194198942695344,
+                  -21.524997851643107,
                   277
                 ]
               },
@@ -3534,7 +5330,7 @@
                 "index": 4,
                 "contact": false,
                 "xy": [
-                  -21.129270970302073,
+                  -21.65203976350604,
                   277
                 ]
               },
@@ -3542,32 +5338,63 @@
                 "index": 5,
                 "contact": false,
                 "xy": [
-                  -13.18779883435794,
-                  272.74688365686313
+                  -17.788602796112865,
+                  275.2334771547194
                 ]
               },
               {
                 "index": 6,
                 "contact": false,
                 "xy": [
-                  -5.255927337757072,
-                  270.9851851851852
+                  -11.855557487021382,
+                  274.50175943396226
                 ]
               },
               {
                 "index": 7,
                 "contact": false,
                 "xy": [
-                  2.6807442400968498,
-                  272.74688365686313
+                  -5.922512177929903,
+                  275.2334771547194
+                ]
+              }
+            ],
+            "stanceSamples": [
+              {
+                "index": 0,
+                "xy": [
+                  -2.063876960719835,
+                  277
+                ]
+              },
+              {
+                "index": 1,
+                "xy": [
+                  -1.3605169751523505,
+                  277
+                ]
+              },
+              {
+                "index": 2,
+                "xy": [
+                  -1.4491577601537067,
+                  277
+                ]
+              },
+              {
+                "index": 3,
+                "xy": [
+                  -1.5569983933301188,
+                  277
                 ]
               }
             ],
             "stanceFrames": 4,
-            "maximumWorldSwingLift": 6.014814814814827,
-            "stanceWorldXSpan": 0.7366705764958859,
+            "measurement": "First actual draw of each pose within one complete contact event; discrete poses do not prove zero slip between captures.",
+            "maximumWorldSwingLift": 2.4982405660377367,
+            "stanceWorldXSpan": 0.7033599855674844,
             "stanceWorldYSpan": 0,
-            "slipTolerance": 3.9382716049382718
+            "slipTolerance": 2.4982405660377363
           },
           {
             "id": "far",
@@ -3576,7 +5403,7 @@
                 "index": 0,
                 "contact": false,
                 "xy": [
-                  -36.33087104507014,
+                  -31.24990926435934,
                   277
                 ]
               },
@@ -3584,31 +5411,31 @@
                 "index": 1,
                 "contact": false,
                 "xy": [
-                  -29.190998411689485,
-                  272.74688365686313
+                  -27.391273093474954,
+                  275.2334771547194
                 ]
               },
               {
                 "index": 2,
                 "contact": false,
                 "xy": [
-                  -21.249528183093986,
-                  270.9851851851852
+                  -21.45822778438347,
+                  274.50175943396226
                 ]
               },
               {
                 "index": 3,
                 "contact": false,
                 "xy": [
-                  -13.3176557328188,
-                  272.74688365686313
+                  -15.496381510936526,
+                  275.2334771547194
                 ]
               },
               {
                 "index": 4,
                 "contact": true,
                 "xy": [
-                  -5.376184550548988,
+                  -11.661747415247454,
                   277
                 ]
               },
@@ -3616,7 +5443,7 @@
                 "index": 5,
                 "contact": true,
                 "xy": [
-                  -5.311255624481397,
+                  -11.759986455406288,
                   277
                 ]
               },
@@ -3624,7 +5451,7 @@
                 "index": 6,
                 "contact": true,
                 "xy": [
-                  -5.255927337757072,
+                  -11.858227402913744,
                   277
                 ]
               },
@@ -3632,21 +5459,52 @@
                 "index": 7,
                 "contact": true,
                 "xy": [
-                  -5.195798969779693,
+                  -11.956468350421215,
+                  277
+                ]
+              }
+            ],
+            "stanceSamples": [
+              {
+                "index": 4,
+                "xy": [
+                  -11.661747415247454,
+                  277
+                ]
+              },
+              {
+                "index": 5,
+                "xy": [
+                  -11.759986455406288,
+                  277
+                ]
+              },
+              {
+                "index": 6,
+                "xy": [
+                  -11.858227402913744,
+                  277
+                ]
+              },
+              {
+                "index": 7,
+                "xy": [
+                  -11.956468350421215,
                   277
                 ]
               }
             ],
             "stanceFrames": 4,
-            "maximumWorldSwingLift": 6.014814814814827,
-            "stanceWorldXSpan": 0.18038558076929512,
+            "measurement": "First actual draw of each pose within one complete contact event; discrete poses do not prove zero slip between captures.",
+            "maximumWorldSwingLift": 2.4982405660377367,
+            "stanceWorldXSpan": 0.2947209351737605,
             "stanceWorldYSpan": 0,
-            "slipTolerance": 3.9382716049382718
+            "slipTolerance": 2.4982405660377363
           }
         ],
         "stunFrozen": true,
-        "slowRatio": 0.5000000000000017,
-        "wrapDistanceDelta": 0.8016000000000076
+        "slowRatio": 0.5000000000000089,
+        "wrapDistanceDelta": 0.8015999999997803
       }
     ],
     "errors": [],
