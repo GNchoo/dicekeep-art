@@ -1126,7 +1126,7 @@ window.DKCONTENT = (function () {
     { id: 'toyKing', name: '장난감왕', hp: 1220, speed: 24, gold: 150, dmg: 5, size: 92, move: 'ground', sprite: 'cToyKing', src: 'casual/bosses/toy-king.png' },
     { id: 'lanternKoi', name: '등불잉어', hp: 1080, speed: 30, gold: 146, dmg: 5, size: 92, move: 'air', sprite: 'cLanternKoi', src: 'casual/bosses/lantern-koi.png' },
   ];
-  // 세로 화면용 아레나: 캔버스 720×1080, 보드 3열×5행, 트랙은 세로로 긴 링
+  // 세로 화면용 아레나: 캔버스 720×1080, 보드 3열×5행, 트랙은 세로로 긴 링. 가로 아레나를 시계 방향 90° 회전한 배치(입구 위쪽)
   function buildArenaLayoutPortrait(W, H, inset) {
     W = W || 720; H = H || 1080; inset = inset || {};
     const cx = Math.round(W / 2), cy = Math.round((inset.top || 0) + (H - (inset.top || 0) - (inset.bottom || 0)) / 2);
@@ -1137,12 +1137,13 @@ window.DKCONTENT = (function () {
       return out;
     };
     const dedupe = (pts) => pts.filter((p, i) => i === 0 || Math.hypot(p[0] - pts[i - 1][0], p[1] - pts[i - 1][1]) > 0.5);
-    const ring = dedupe([[L, MID],
-      ...arc(L + rad, B - rad, Math.PI, Math.PI / 2, 6), ...arc(R - rad, B - rad, Math.PI / 2, 0, 6),
-      ...arc(R - rad, T + rad, 0, -Math.PI / 2, 6), ...arc(L + rad, T + rad, -Math.PI / 2, -Math.PI, 6), [L, MID]]);
-    const entry = [[-40, MID], [L, MID]];
+    // 가로 아레나를 시계 방향으로 90° 돌린 것과 같게: 입구가 위(12시) 가운데, 트랙은 위 변 왼쪽으로 → 왼쪽 변 아래로 → 바닥 → 오른쪽 변 위로 → 위 변 가운데
+    const ring = dedupe([[cx, T],
+      ...arc(L + rad, T + rad, -Math.PI / 2, -Math.PI, 6), ...arc(L + rad, B - rad, Math.PI, Math.PI / 2, 6),
+      ...arc(R - rad, B - rad, Math.PI / 2, 0, 6), ...arc(R - rad, T + rad, 0, -Math.PI / 2, 6), [cx, T]]);
+    const entry = [[cx, -40], [cx, T]];   // 캔버스 위쪽 끝 밖에서 들어온다 (가로의 왼쪽 입구에 해당)
     const path = dedupe([...entry, ...ring]);
-    const loopAt = L - entry[0][0];
+    const loopAt = T - entry[0][1];
     const gapX = 150, gapY = 118;
     const spots = [];
     for (let r = 0; r < 5; r++) for (let c = 0; c < 3; c++) spots.push([cx + (c - 1) * gapX, MID + (r - 2) * gapY]);
@@ -1294,13 +1295,14 @@ window.DKCONTENT = (function () {
 
   // ---- 101웨이브 몬스터 설계 (ART-PROMPTS.md §6): 10단계 테마 × 10웨이브 + 보스 ----
   // 그림이 들어온 웨이브만 INF_ART_READY 에 적는다 (보스 부관은 '20-2' 처럼). 적힌 웨이브는 새 그림·새 이름을 쓰고, 나머지는 기존 로스터 그림으로 돈다.
-  const INF_TIERS = ['', '초원의 작은 것들', '숲의 야수', '늪과 동굴', '산적과 고블린', '왕국의 병사와 기사', '언데드', '마법 생물과 정령', '용족과 거대 야수', '악마', '심연과 파멸'];
+  const INF_TIERS = ['', '폐허의 잡졸', '숲의 야수', '늪과 동굴', '산적과 고블린', '왕국의 병사와 기사', '언데드', '마법 생물과 정령', '용족과 거대 야수', '악마', '심연과 파멸'];
   const INF_MONSTERS = {
-    1: { name: '들쥐', cls: 'S', move: 'ground', tier: 1 },
-    2: { name: '청개구리', cls: 'S', move: 'ground', tier: 1 },
-    3: { name: '뭉게양', cls: 'L', move: 'ground', tier: 1 },
-    4: { name: '참새', cls: 'S', move: 'air', tier: 1 },
-    5: { name: '당근토끼', cls: 'M', move: 'ground', tier: 1 },
+    // 1~5: 다크 판타지 반실사로 재설계 (OpenAI 이미지 API, tools/jobs/inf-w01-05*.json · ART-PROMPTS §6). 그림이 INF_ART_READY 에 적힌 뒤에만 이 이름·그림이 쓰인다
+    1: { name: '역병쥐', cls: 'S', move: 'ground', tier: 1 },
+    2: { name: '해골 잡졸', cls: 'S', move: 'ground', tier: 1 },
+    3: { name: '묘지 오우거', cls: 'L', move: 'ground', tier: 1 },
+    4: { name: '까마귀 정찰병', cls: 'S', move: 'air', tier: 1 },
+    5: { name: '고블린 창병', cls: 'M', move: 'ground', tier: 1 },
     6: { name: '얼룩젖소', cls: 'L', move: 'ground', tier: 1 },
     7: { name: '왕두더지', cls: 'L', move: 'burrow', tier: 1 },
     8: { name: '꿀벌', cls: 'S', move: 'air', tier: 1 },
@@ -1398,7 +1400,7 @@ window.DKCONTENT = (function () {
     100: { boss: true, name: '파멸의 군주', second: '공허 용', cls: 'S', tier: 10 },
     101: { name: '종말의 사자', cls: 'M', move: 'ground', tier: 10 },
   };
-  const INF_ART_READY = new Set([]);   // 예: [1, 2, 3, '10', '20-2'] — casual/enemies/inf/w001.png … casual/bosses/inf/b020-2.png
+  const INF_ART_READY = new Set([1, 2, 3, 4, 5]);   // 예: [1, 2, 3, '10', '20-2'] — casual/enemies/inf/w001.png … casual/bosses/inf/b020-2.png
   const pad3 = (n) => String(n).padStart(3, '0');
   // 웨이브 w 의 새 그림 (준비된 것만): 일반 { key, src, walkKey, walkSrc } · 보스 k(0 군주·1 부관) { key, src, name }
   function infArt(w, k) {
@@ -1460,6 +1462,8 @@ window.DKCONTENT = (function () {
     sizeMult: { vib: { S: 1, M: 0.5, L: 0.25 }, exp: { S: 0.5, M: 0.75, L: 1 }, norm: { S: 1, M: 1, L: 1 } },
     sizeName: { S: '소형', M: '중형', L: '대형' },
     sizeScale: { S: 0.9, M: 1, L: 1.15 },
+    // 새 그림(INF_ART_READY, 반실사 다크 판타지)은 base 의 크기와 무관하게 등급별 고정 높이(캔버스 px) — 실루엣이 가늘어 기존 만화 로스터(40~55)보다 작게 읽혀서 위쪽 값으로 맞춘다
+    artSize: { S: 42, M: 50, L: 58 },
     // 원작 1~101R 몬스터 크기 표 그대로 (보스 라운드 포함). 웨이브 w 의 크기 = sizeSeq[(w-1)%101]
     sizeSeq: ('SSLSMLLSLL' + 'SLSLMLMSLL' + 'SLSSMSLLLS' + 'SSSLLLMSMS' + 'LMLLLSMLSL' + 'LSMSLLLSML' + 'MSSMLLSSLS' + 'LSLSSSSLMM' + 'SMLLSSLSLL' + 'SSLLMSLMLSM').split(''),
     sizeOf(w) { return this.sizeSeq[(Math.max(1, w) - 1) % this.sizeSeq.length]; },
