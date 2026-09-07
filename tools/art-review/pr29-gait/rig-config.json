@@ -1,0 +1,489 @@
+{
+  "cell": 512,
+  "frames": 8,
+  "waves": [
+    {
+      "wave": 1,
+      "type": "quad",
+      "regions": {
+        "body": [
+          0,
+          0,
+          0.7,
+          1
+        ],
+        "fore": [
+          0.73,
+          0,
+          0.27,
+          0.5
+        ],
+        "hind": [
+          0.73,
+          0.5,
+          0.27,
+          0.5
+        ]
+      },
+      "bodyHeight": 190,
+      "bodyTop": 100,
+      "foreHip": [
+        0.6,
+        0.83
+      ],
+      "hindHip": [
+        0.23,
+        0.84
+      ],
+      "amplitude": 28,
+      "lift": 24,
+      "groundY": 355,
+      "legScales": {
+        "fore": 0.3,
+        "hind": 0.31
+      },
+      "source": "tools/art-review/pr29-gait/sources/w001-puppet.png",
+      "sourceJoints": {
+        "fore": {
+          "hip": [
+            0.38,
+            0.1
+          ],
+          "knee": [
+            0.42,
+            0.48
+          ],
+          "ankle": [
+            0.42,
+            0.85
+          ]
+        },
+        "hind": {
+          "hip": [
+            0.4,
+            0.12
+          ],
+          "knee": [
+            0.25,
+            0.48
+          ],
+          "ankle": [
+            0.4,
+            0.84
+          ]
+        }
+      },
+      "rootCover": 60,
+      "sourceSha256": "c8737106e710ac4344b8363a5608edc4ce428cd324608d19e328846b39acca8d"
+    },
+    {
+      "wave": 2,
+      "type": "biped",
+      "regions": {
+        "body": [
+          0,
+          0,
+          0.63,
+          1
+        ],
+        "near": [
+          0.66,
+          0,
+          0.33999999999999997,
+          0.5
+        ],
+        "far": [
+          0.66,
+          0.5,
+          0.33999999999999997,
+          0.5
+        ]
+      },
+      "bodyHeight": 290,
+      "bodyTop": 50,
+      "hip": [
+        0.4,
+        0.9
+      ],
+      "amplitude": 50,
+      "lift": 38,
+      "groundY": 460,
+      "legScale": 0.42,
+      "source": "tools/art-review/pr29-gait/sources/w002-puppet.png",
+      "sourceJoints": {
+        "near": {
+          "hip": [
+            0.28,
+            0.1
+          ],
+          "knee": [
+            0.28,
+            0.48
+          ],
+          "ankle": [
+            0.28,
+            0.84
+          ]
+        },
+        "far": {
+          "hip": [
+            0.28,
+            0.1
+          ],
+          "knee": [
+            0.28,
+            0.48
+          ],
+          "ankle": [
+            0.28,
+            0.84
+          ]
+        }
+      },
+      "rootCover": 60,
+      "sourceSha256": "a79943e950b598e1c046e7634ae96d7f98274b82585144a112268ebb543c8c1b"
+    },
+    {
+      "wave": 3,
+      "type": "biped",
+      "regions": {
+        "body": [
+          0,
+          0,
+          0.6,
+          1
+        ],
+        "near": [
+          0.62,
+          0,
+          0.38,
+          0.5
+        ],
+        "far": [
+          0.62,
+          0.5,
+          0.38,
+          0.5
+        ]
+      },
+      "bodyHeight": 290,
+      "bodyTop": 55,
+      "hip": [
+        0.62,
+        0.91
+      ],
+      "amplitude": 50,
+      "lift": 38,
+      "groundY": 460,
+      "legScale": 0.42,
+      "source": "tools/art-review/pr29-gait/sources/w003-puppet.png",
+      "sourceJoints": {
+        "near": {
+          "hip": [
+            0.35,
+            0.1
+          ],
+          "knee": [
+            0.32,
+            0.51
+          ],
+          "ankle": [
+            0.36,
+            0.85
+          ]
+        },
+        "far": {
+          "hip": [
+            0.35,
+            0.1
+          ],
+          "knee": [
+            0.32,
+            0.51
+          ],
+          "ankle": [
+            0.36,
+            0.85
+          ]
+        }
+      },
+      "rootCover": 60,
+      "sourceSha256": "92da3b77c3415e98f25934abb3a081ea4f29a22a1576732a97c8a11a2d8c9bf1"
+    },
+    {
+      "wave": 5,
+      "type": "biped",
+      "regions": {
+        "body": [
+          0,
+          0,
+          0.65,
+          1
+        ],
+        "near": [
+          0.69,
+          0,
+          0.31,
+          0.46
+        ],
+        "far": [
+          0.69,
+          0.46,
+          0.31,
+          0.54
+        ]
+      },
+      "bodyHeight": 280,
+      "bodyTop": 60,
+      "hip": [
+        0.43,
+        0.9
+      ],
+      "amplitude": 48,
+      "lift": 38,
+      "groundY": 460,
+      "legScale": 0.5,
+      "source": "tools/art-review/pr29-gait/sources/w005-puppet.png",
+      "sourceJoints": {
+        "near": {
+          "hip": [
+            0.35,
+            0.1
+          ],
+          "knee": [
+            0.35,
+            0.48
+          ],
+          "ankle": [
+            0.38,
+            0.84
+          ]
+        },
+        "far": {
+          "hip": [
+            0.35,
+            0.1
+          ],
+          "knee": [
+            0.35,
+            0.48
+          ],
+          "ankle": [
+            0.38,
+            0.84
+          ]
+        }
+      },
+      "rootCover": 60,
+      "sourceSha256": "273a81d49006b6d372f6b934ebb29afdd2e39619ae67808cb21dd1b8fa126570"
+    },
+    {
+      "wave": 6,
+      "type": "quad",
+      "regions": {
+        "body": [
+          0,
+          0,
+          0.67,
+          1
+        ],
+        "fore": [
+          0.7,
+          0,
+          0.30000000000000004,
+          0.5
+        ],
+        "hind": [
+          0.7,
+          0.5,
+          0.30000000000000004,
+          0.5
+        ]
+      },
+      "bodyHeight": 265,
+      "bodyTop": 45,
+      "foreHip": [
+        0.63,
+        0.84
+      ],
+      "hindHip": [
+        0.19,
+        0.79
+      ],
+      "amplitude": 38,
+      "lift": 32,
+      "groundY": 405,
+      "legScales": {
+        "fore": 0.44,
+        "hind": 0.45
+      },
+      "source": "tools/art-review/pr29-gait/sources/w006-puppet.png",
+      "sourceJoints": {
+        "fore": {
+          "hip": [
+            0.5,
+            0.1
+          ],
+          "knee": [
+            0.45,
+            0.51
+          ],
+          "ankle": [
+            0.47,
+            0.85
+          ]
+        },
+        "hind": {
+          "hip": [
+            0.4,
+            0.1
+          ],
+          "knee": [
+            0.38,
+            0.51
+          ],
+          "ankle": [
+            0.44,
+            0.85
+          ]
+        }
+      },
+      "rootCover": 60,
+      "sourceSha256": "1c200b2ef085f31821a4c1ef4a4f110ecc42da73a49110a3b9c5fa3a3da7c69a"
+    },
+    {
+      "wave": 7,
+      "type": "biped",
+      "regions": {
+        "body": [
+          0,
+          0,
+          0.63,
+          1
+        ],
+        "near": [
+          0.66,
+          0,
+          0.33999999999999997,
+          0.5
+        ],
+        "far": [
+          0.66,
+          0.5,
+          0.33999999999999997,
+          0.5
+        ]
+      },
+      "bodyHeight": 285,
+      "bodyTop": 55,
+      "hip": [
+        0.6,
+        0.9
+      ],
+      "amplitude": 48,
+      "lift": 38,
+      "groundY": 460,
+      "legScale": 0.56,
+      "source": "tools/art-review/pr29-gait/sources/w007-puppet.png",
+      "sourceJoints": {
+        "near": {
+          "hip": [
+            0.36,
+            0.1
+          ],
+          "knee": [
+            0.34,
+            0.48
+          ],
+          "ankle": [
+            0.34,
+            0.83
+          ]
+        },
+        "far": {
+          "hip": [
+            0.36,
+            0.1
+          ],
+          "knee": [
+            0.34,
+            0.48
+          ],
+          "ankle": [
+            0.34,
+            0.83
+          ]
+        }
+      },
+      "rootCover": 60,
+      "sourceSha256": "41c3249ae3dc198e49ee66536c7f537ebcec812192bf42a3213498a799772e66"
+    },
+    {
+      "wave": 9,
+      "type": "biped",
+      "regions": {
+        "body": [
+          0,
+          0,
+          0.64,
+          1
+        ],
+        "near": [
+          0.68,
+          0,
+          0.31999999999999995,
+          0.5
+        ],
+        "far": [
+          0.68,
+          0.5,
+          0.31999999999999995,
+          0.5
+        ]
+      },
+      "bodyHeight": 290,
+      "bodyTop": 55,
+      "hip": [
+        0.52,
+        0.86
+      ],
+      "amplitude": 55,
+      "lift": 42,
+      "groundY": 460,
+      "legScale": 0.48,
+      "source": "tools/art-review/pr29-gait/sources/w009-puppet.png",
+      "sourceJoints": {
+        "near": {
+          "hip": [
+            0.4,
+            0.1
+          ],
+          "knee": [
+            0.4,
+            0.5
+          ],
+          "ankle": [
+            0.4,
+            0.82
+          ]
+        },
+        "far": {
+          "hip": [
+            0.4,
+            0.1
+          ],
+          "knee": [
+            0.4,
+            0.5
+          ],
+          "ankle": [
+            0.4,
+            0.82
+          ]
+        }
+      },
+      "rootCover": 60,
+      "sourceSha256": "fa76d2c8be8a372a2f7813d3a508f2e2ae00d04ef376ec79832e88e12fe0eea3"
+    }
+  ]
+}

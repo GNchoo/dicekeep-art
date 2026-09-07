@@ -294,6 +294,8 @@ Hand-painted single character illustration for a casual tower-defense game, chib
 
 ### 걷기 시트 공통 프롬프트 (선택 — 앞에 붙이고 정지컷 설명을 이어 쓴다)
 
+> **PR #29 지상 7종(W1·2·3·5·6·7·9)은 아래 4프레임 방식으로 재생성하지 않는다.** 같은 다리가 계속 앞에 남는 문제가 확인되어, [부품 생성 프롬프트](tools/art-review/pr29-gait/prompts.json)와 [8프레임 관절 설정](tools/art-review/pr29-gait/rig-config.json)으로 교체했다. `node tools/art-review/pr29-gait/rebuild.mjs`로 재현한다. 양발의 앞뒤 순서 반전·지지 교대·들림·게임 내 접지를 확인해야 보행으로 승인한다. W4·8 날갯짓은 기존 4프레임, W10은 정지 보스다.
+
 ```text
 Hand-painted 2x2 sprite sheet, four frames of a walk cycle read left-to-right then top-to-bottom (contact, down, passing, up), of the same chibi character moving toward the RIGHT, side 3/4 view. Kingdom Rush and Random Dice casual style, thick clean outlines, identical character size and identical ground pivot in every cell, generous margins, plain light gray background, no text, no watermark. Match the idle design exactly:
 ```

@@ -1,5 +1,5 @@
 // 기본 검사: 1~9 걷기, 10 보스 정지컷, 11 기존 로스터 폴백. 실패 시 종료 1.
-// 각 걷기 프레임을 실제 애니메이션으로 기다린 뒤 잠시 정지해 확대 캡처한다.
+// drawImage에 전달된 실제 프레임을 관찰한 뒤 정지·캡처한다. 거리 기반 리깅 8프레임과 비행 4프레임을 구분한다.
 const fs = require('node:fs');
 const assert = require('node:assert/strict');
 const { launchBrowser, gameUrl, outputPath, watchArtErrors } = require('./browser.cjs');
@@ -13,7 +13,7 @@ async function main() {
   assert.ok(Number.isInteger(maxWave) && maxWave >= 11 && maxWave <= 101, 'maxWave must be 11..101 so W10 static boss and W11 fallback are always checked');
   const viewport = phone ? { width: 440, height: 956 } : { width: 1240, height: 860 };
   const browser = await launchBrowser();
-  const report = { maxWave, viewport, loaded: [], waves: [], errors: [], failures: [] };
+  const report = { maxWave, viewport, scope: 'asset loading and actual rendered frame progression; anatomical gait/planting/slip is checked separately by ground-gait-check.cjs', loaded: [], waves: [], errors: [], failures: [] };
   try {
     const context = await browser.newContext({ viewport, deviceScaleFactor: 2 });
     const page = await context.newPage();
@@ -28,6 +28,20 @@ async function main() {
     for (const row of report.loaded) {
       for (const failure of rowFailures(row)) report.failures.push(row.key + ': ' + failure);
     }
+    // 테스트 페이지에서만 실제 렌더 호출을 관찰한다. 프레임 선택 수식을 복제하거나 animT/거리를 강제로 바꾸지 않는다.
+    await page.evaluate(() => {
+      const lookup = new Map();
+      for (const [key, frames] of Object.entries(DKA)) if (/^infW\d+Walk$/.test(key) && Array.isArray(frames)) frames.forEach((frame, index) => { if (frame && frame.cv) lookup.set(frame.cv, { key, index }); });
+      const drawImage = CanvasRenderingContext2D.prototype.drawImage;
+      CanvasRenderingContext2D.prototype.drawImage = function (source, ...args) {
+        const result = drawImage.call(this, source, ...args), frame = lookup.get(source);
+        if (this.canvas.id === 'game' && frame) {
+          const enemy = DK.enemies.find(enemy => enemy.artWalk === frame.key);
+          if (enemy) window.__walkLastDraw = { ...frame, dist: enemy.dist, animT: enemy.animT, artWalkDistance: enemy.artWalkDistance, hidden: enemy.hidden, face: enemy.face };
+        }
+        return result;
+      };
+    });
     await page.click('#ov-btn');
     await page.evaluate(() => { DK.muted = true; DKstartInf('clear'); DK.gold = 90000; DK.speed = 1; });
     await page.waitForFunction(() => DK.phase === 'playing');
@@ -39,12 +53,14 @@ async function main() {
     for (let wave = 1; wave <= maxWave; wave++) {
       await page.evaluate(wave => {
         DK.paused = false; DK.enemies = []; DK.spawnQ = []; DK.waveActive = false; DK.wave = wave - 1; DK.autoT = 0;
+        window.__walkLastDraw = null;
         DKsync();
         document.getElementById('wave-btn').disabled = false;
       }, wave);
       await page.click('#wave-btn');
       await page.waitForFunction(() => DK.enemies.length > 0, null, { timeout: 15000 });
       await page.waitForFunction(() => DK.enemies[0] && DK.enemies[0].dist >= 220, null, { timeout: 20000 });
+      await page.evaluate(() => { DK.enemies = [DK.enemies[0]]; DK.spawnQ = []; }); // 같은 종의 다른 개체와 렌더 관찰이 섞이지 않게 한다.
       const info = await page.evaluate(wave => {
         const inf = DKCONTENT.INFINITY, mon = inf.monsters[wave], enemy = DK.enemies[0];
         const boss = !!mon.boss, art = inf.art(wave, 0);
@@ -63,6 +79,7 @@ async function main() {
           size: enemy.def.size, cls: enemy.sizeClass, move: enemy.move, boss: enemy.isBoss, elite: enemy.isElite,
           frames: enemy.artWalk ? DKA[enemy.artWalk]?.length : 0, fr: sprite ? [sprite.w, sprite.h] : null, pixels,
           face: enemy.face, animT: enemy.animT, dist: enemy.dist,
+          artWalkStride: enemy.artWalkStride ?? 0, artWalkDistance: enemy.artWalkDistance ?? 0,
           ready: inf.artReady.has(wave) || inf.artReady.has(String(wave)),
           expected: {
             name: (enemy.isElite ? '정예 ' : '') + (art ? mon.name : base.name),
@@ -70,6 +87,8 @@ async function main() {
             artWalk: wave <= 9 ? 'infW' + wave + 'Walk' : (art?.walkKey || null),
             cls: mon.cls, size: enemy.isElite ? Math.round(size * 1.2) : size,
             move: art && !boss ? mon.move : base.move, boss, sprite: base.sprite,
+            frames: art?.walkKey ? (mon.walk || '2x2').split('x').reduce((a, b) => a * Number(b), 1) : 0,
+            artWalkStride: art?.walkStride || 0,
           },
         };
       }, wave);
@@ -80,25 +99,27 @@ async function main() {
       }
       if (wave <= 10 && !info.ready) failures.push('required artReady wave is missing');
       if (wave === 11 && (info.ready || info.art !== null || info.artWalk !== null || info.sprite !== info.expected.sprite)) failures.push('W11 must use the original roster sprite with no infinity art');
-      if (wave <= 9 && info.frames !== 4) failures.push('expected exactly 4 walking frames');
+      if (info.frames !== info.expected.frames) failures.push('expected exactly ' + info.expected.frames + ' walking frames');
+      if (info.artWalkStride !== info.expected.artWalkStride) failures.push('source-pixel stride differs from the declared rig');
       if (!info.fr || !info.fr.every(n => Number.isFinite(n) && n > 0) || info.pixels <= 0) failures.push('rendered art is missing, empty or has invalid dimensions');
-      if (![info.size, info.animT, info.dist].every(Number.isFinite)) failures.push('non-finite enemy state');
+      if (![info.size, info.animT, info.dist, info.artWalkStride, info.artWalkDistance].every(Number.isFinite)) failures.push('non-finite enemy state');
       console.log('w' + wave, JSON.stringify(info));
 
-      // 입력한 animT로 그림을 강제하지 않고 정상 업데이트가 모든 프레임을 선택하는지 확인한다.
+      // 정상 업데이트와 실제 drawImage 호출이 모든 프레임을 선택하는지 확인한다.
       const walking = info.artWalk && info.frames > 0;
       const shots = [], frameCount = walking ? info.frames : 1;
-      const initial = await page.evaluate(() => ({ animT: DK.enemies[0].animT, dist: DK.enemies[0].dist }));
+      const initial = await page.evaluate(() => ({ animT: DK.enemies[0].animT, dist: DK.enemies[0].dist, laps: DK.enemies[0].laps || 0, artWalkDistance: DK.enemies[0].artWalkDistance ?? 0 }));
       for (let index = 0; index < frameCount; index++) {
         await page.evaluate(() => { DK.paused = false; });
         await page.waitForFunction(({ index, walking }) => {
           const enemy = DK.enemies[0];
           if (!enemy || !Number.isFinite(enemy.animT)) return false;
           if (enemy.hidden) return false; // 땅굴 몬스터는 지상에 나온 프레임으로 아트를 비교한다.
-          if (walking && Math.floor(enemy.animT * 5) % DKA[enemy.artWalk].length !== index) return false;
+          const rendered = window.__walkLastDraw;
+          if (walking && (!rendered || rendered.key !== enemy.artWalk || rendered.index !== index || rendered.dist !== enemy.dist || rendered.hidden)) return false;
           DK.paused = true;
           return true;
-        }, { index, walking: !!walking }, { timeout: 10000 });
+        }, { index, walking: !!walking }, { timeout: 10000, polling: 'raf' });
         // 정지 상태가 적어도 한 번 그려진 후 캡처한다.
         await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
         const shot = await page.evaluate(() => {
@@ -114,7 +135,9 @@ async function main() {
           return {
             x: rect.left + pos.x * rect.width / canvas.width, y: rect.top + pos.y * rect.height / canvas.height,
             face: enemy.face, hidden: enemy.hidden, animT: enemy.animT, dist: enemy.dist,
-            frame: enemy.artWalk ? Math.floor(enemy.animT * 5) % DKA[enemy.artWalk].length : null,
+            artWalkDistance: enemy.artWalkDistance ?? 0,
+            frame: enemy.artWalk ? window.__walkLastDraw?.index : null,
+            observedBy: enemy.artWalk ? 'CanvasRenderingContext2D.drawImage source identity' : 'static sprite',
           };
         });
         const filename = 'inf-w' + String(wave).padStart(2, '0') + '-' + (walking ? 'frame' + index : 'static') + '.png';
@@ -129,7 +152,8 @@ async function main() {
       await page.evaluate(() => { DK.paused = false; });
       await page.waitForFunction(initial => {
         const enemy = DK.enemies[0];
-        return enemy && Number.isFinite(enemy.animT) && Number.isFinite(enemy.dist) && enemy.animT > initial.animT && enemy.dist > initial.dist;
+        const moved = enemy && (enemy.artWalkStride > 0 ? enemy.artWalkDistance > initial.artWalkDistance : (enemy.laps || 0) > initial.laps || enemy.dist > initial.dist);
+        return enemy && Number.isFinite(enemy.animT) && Number.isFinite(enemy.dist) && enemy.animT > initial.animT && moved;
       }, initial, { timeout: 5000 });
       if (walking && new Set(shots.map(shot => shot.frame)).size !== frameCount) failures.push('not all walking frames advanced naturally');
       report.waves.push({ ...info, shots, failures });
@@ -137,7 +161,7 @@ async function main() {
       console.log((failures.length ? 'FAIL' : 'PASS') + ' W' + wave + (wave === 10 ? ' static boss (no walking sheet)' : wave === 11 ? ' original-roster fallback' : '') + (failures.length ? ': ' + failures.join('; ') : ''));
     }
     if (report.errors.length || report.failures.length) throw new Error([...report.errors, ...report.failures].join('\n'));
-    console.log('PASS W1–9 walking, W10 static boss, W11 fallback; no infinity-art load errors or pageerrors');
+    console.log('PASS actual rendered progression: seven 8-frame ground rigs, two 4-frame flyers, W10 static boss, W11 fallback; no infinity-art load errors or pageerrors. See ground-gait-check.cjson for planted-foot validation.');
   } catch (error) {
     report.failures.push(error.message);
     throw error;

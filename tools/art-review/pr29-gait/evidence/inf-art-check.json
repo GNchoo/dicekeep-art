@@ -1,0 +1,1964 @@
+{
+  "maxWave": 11,
+  "viewport": {
+    "width": 1240,
+    "height": 860
+  },
+  "scope": "asset loading and actual rendered frame progression; anatomical gait/planting/slip is checked separately by ground-gait-check.cjs",
+  "loaded": [
+    {
+      "key": "infW1Walk",
+      "errors": [],
+      "expected": 8,
+      "air": false,
+      "rigged": true,
+      "walkStride": 112,
+      "anchorValidation": "excluded: silhouette centroid moves with articulated limbs; ground-gait-check.cjs validates body/sole anchors and world slip",
+      "dims": "414×255",
+      "fh": 255,
+      "frames": [
+        {
+          "w": 414,
+          "h": 255,
+          "foot": 255,
+          "mx": 199.7202979827572,
+          "my": 120.64514940989369,
+          "height": 255,
+          "n": 59735
+        },
+        {
+          "w": 414,
+          "h": 255,
+          "foot": 255,
+          "mx": 200.8716530090297,
+          "my": 116.43615707152426,
+          "height": 255,
+          "n": 57477
+        },
+        {
+          "w": 414,
+          "h": 255,
+          "foot": 255,
+          "mx": 201.50498977576595,
+          "my": 115.89157068703358,
+          "height": 255,
+          "n": 57217
+        },
+        {
+          "w": 414,
+          "h": 255,
+          "foot": 255,
+          "mx": 201.22052488625158,
+          "my": 117.08765981004446,
+          "height": 255,
+          "n": 57803
+        },
+        {
+          "w": 414,
+          "h": 255,
+          "foot": 255,
+          "mx": 199.7202979827572,
+          "my": 120.64514940989369,
+          "height": 255,
+          "n": 59735
+        },
+        {
+          "w": 414,
+          "h": 255,
+          "foot": 255,
+          "mx": 200.8716530090297,
+          "my": 116.43615707152426,
+          "height": 255,
+          "n": 57477
+        },
+        {
+          "w": 414,
+          "h": 255,
+          "foot": 255,
+          "mx": 201.50498977576595,
+          "my": 115.89157068703358,
+          "height": 255,
+          "n": 57217
+        },
+        {
+          "w": 414,
+          "h": 255,
+          "foot": 255,
+          "mx": 201.2200269886855,
+          "my": 117.0857755786997,
+          "height": 255,
+          "n": 57802
+        }
+      ],
+      "foot": 0,
+      "mx": 1.7846917930087614,
+      "height": 0,
+      "area": 0.04215284171758601
+    },
+    {
+      "key": "infW2Walk",
+      "errors": [],
+      "expected": 8,
+      "air": false,
+      "rigged": true,
+      "walkStride": 200,
+      "anchorValidation": "excluded: silhouette centroid moves with articulated limbs; ground-gait-check.cjs validates body/sole anchors and world slip",
+      "dims": "226×410",
+      "fh": 410,
+      "frames": [
+        {
+          "w": 226,
+          "h": 410,
+          "foot": 410,
+          "mx": 92.39400955608411,
+          "my": 217.67816624218568,
+          "height": 410,
+          "n": 47509
+        },
+        {
+          "w": 226,
+          "h": 410,
+          "foot": 410,
+          "mx": 92.53066058818271,
+          "my": 206.95181907571288,
+          "height": 410,
+          "n": 44748
+        },
+        {
+          "w": 226,
+          "h": 410,
+          "foot": 410,
+          "mx": 92.42421795699917,
+          "my": 201.6961797545446,
+          "height": 410,
+          "n": 43348
+        },
+        {
+          "w": 226,
+          "h": 410,
+          "foot": 410,
+          "mx": 93.16685223122829,
+          "my": 206.91932395118909,
+          "height": 410,
+          "n": 44908
+        },
+        {
+          "w": 226,
+          "h": 410,
+          "foot": 410,
+          "mx": 92.46522837297411,
+          "my": 217.6758787623658,
+          "height": 410,
+          "n": 47510
+        },
+        {
+          "w": 226,
+          "h": 410,
+          "foot": 410,
+          "mx": 92.51752835633907,
+          "my": 206.83771449025704,
+          "height": 410,
+          "n": 44699
+        },
+        {
+          "w": 226,
+          "h": 410,
+          "foot": 410,
+          "mx": 92.43476455252289,
+          "my": 201.6870544263203,
+          "height": 410,
+          "n": 43343
+        },
+        {
+          "w": 226,
+          "h": 410,
+          "foot": 410,
+          "mx": 93.15145583557621,
+          "my": 207.07680672642746,
+          "height": 410,
+          "n": 44957
+        }
+      ],
+      "foot": 0,
+      "mx": 0.7728426751441759,
+      "height": 0,
+      "area": 0.08770785097874131
+    },
+    {
+      "key": "infW3Walk",
+      "errors": [],
+      "expected": 8,
+      "air": false,
+      "rigged": true,
+      "walkStride": 200,
+      "anchorValidation": "excluded: silhouette centroid moves with articulated limbs; ground-gait-check.cjs validates body/sole anchors and world slip",
+      "dims": "222×405",
+      "fh": 405,
+      "frames": [
+        {
+          "w": 222,
+          "h": 405,
+          "foot": 405,
+          "mx": 114.16747018099925,
+          "my": 207.25873717574444,
+          "height": 405,
+          "n": 59945
+        },
+        {
+          "w": 222,
+          "h": 405,
+          "foot": 405,
+          "mx": 113.59230645708067,
+          "my": 196.10378789230467,
+          "height": 405,
+          "n": 56047
+        },
+        {
+          "w": 222,
+          "h": 405,
+          "foot": 405,
+          "mx": 113.08121771421219,
+          "my": 191.51184807985734,
+          "height": 405,
+          "n": 54397
+        },
+        {
+          "w": 222,
+          "h": 405,
+          "foot": 405,
+          "mx": 113.85548770660603,
+          "my": 195.05853911860035,
+          "height": 405,
+          "n": 55843
+        },
+        {
+          "w": 222,
+          "h": 405,
+          "foot": 405,
+          "mx": 114.16791959061891,
+          "my": 207.34984081476173,
+          "height": 405,
+          "n": 59993
+        },
+        {
+          "w": 222,
+          "h": 405,
+          "foot": 405,
+          "mx": 113.59749942033638,
+          "my": 196.12292435835695,
+          "height": 405,
+          "n": 56067
+        },
+        {
+          "w": 222,
+          "h": 405,
+          "foot": 405,
+          "mx": 113.04800529713624,
+          "my": 191.4227776858136,
+          "height": 405,
+          "n": 54369
+        },
+        {
+          "w": 222,
+          "h": 405,
+          "foot": 405,
+          "mx": 113.84175808417581,
+          "my": 194.91141464114148,
+          "height": 405,
+          "n": 55788
+        }
+      ],
+      "foot": 0,
+      "mx": 1.1199142934826654,
+      "height": 0,
+      "area": 0.09374427016485257
+    },
+    {
+      "key": "infW4Walk",
+      "errors": [],
+      "expected": 4,
+      "air": true,
+      "rigged": false,
+      "walkStride": 0,
+      "anchorValidation": "silhouette centroid/anchor threshold (not anatomical gait proof)",
+      "dims": "415×328",
+      "fh": 328,
+      "frames": [
+        {
+          "w": 415,
+          "h": 328,
+          "foot": 328,
+          "mx": 216.93742833034034,
+          "my": 165.80226746576082,
+          "height": 328,
+          "n": 46219
+        },
+        {
+          "w": 415,
+          "h": 328,
+          "foot": 305,
+          "mx": 216.56575752319833,
+          "my": 165.82178475414102,
+          "height": 235,
+          "n": 46124
+        },
+        {
+          "w": 415,
+          "h": 328,
+          "foot": 298,
+          "mx": 216.3874940684181,
+          "my": 166.3780466761572,
+          "height": 242,
+          "n": 46362
+        },
+        {
+          "w": 415,
+          "h": 328,
+          "foot": 322,
+          "mx": 216.54675372408275,
+          "my": 165.95018701489633,
+          "height": 287,
+          "n": 46253
+        }
+      ],
+      "foot": 0.5757792103963766,
+      "mx": 0.5499342619222318,
+      "height": 93,
+      "area": 0.005133514516198611
+    },
+    {
+      "key": "infW5Walk",
+      "errors": [],
+      "expected": 8,
+      "air": false,
+      "rigged": true,
+      "walkStride": 192,
+      "anchorValidation": "excluded: silhouette centroid moves with articulated limbs; ground-gait-check.cjs validates body/sole anchors and world slip",
+      "dims": "296×400",
+      "fh": 400,
+      "frames": [
+        {
+          "w": 296,
+          "h": 400,
+          "foot": 400,
+          "mx": 130.05643879173292,
+          "my": 203.51491989727285,
+          "height": 400,
+          "n": 65416
+        },
+        {
+          "w": 296,
+          "h": 400,
+          "foot": 400,
+          "mx": 130.4219505817754,
+          "my": 192.67636292325795,
+          "height": 400,
+          "n": 61192
+        },
+        {
+          "w": 296,
+          "h": 400,
+          "foot": 400,
+          "mx": 130.65730327662783,
+          "my": 188.51207575630605,
+          "height": 400,
+          "n": 59665
+        },
+        {
+          "w": 296,
+          "h": 400,
+          "foot": 400,
+          "mx": 131.02547594210458,
+          "my": 192.46575498761246,
+          "height": 400,
+          "n": 61352
+        },
+        {
+          "w": 296,
+          "h": 400,
+          "foot": 400,
+          "mx": 130.45108347810185,
+          "my": 203.77740696717564,
+          "height": 400,
+          "n": 65622
+        },
+        {
+          "w": 296,
+          "h": 400,
+          "foot": 400,
+          "mx": 130.78570263835894,
+          "my": 192.92502364413136,
+          "height": 400,
+          "n": 61326
+        },
+        {
+          "w": 296,
+          "h": 400,
+          "foot": 400,
+          "mx": 130.61097767849645,
+          "my": 188.32496346932263,
+          "height": 400,
+          "n": 59539
+        },
+        {
+          "w": 296,
+          "h": 400,
+          "foot": 400,
+          "mx": 130.71866986786875,
+          "my": 192.31850327469908,
+          "height": 400,
+          "n": 61227
+        }
+      ],
+      "foot": 0,
+      "mx": 0.9690371503716619,
+      "height": 0,
+      "area": 0.09269757093657614
+    },
+    {
+      "key": "infW6Walk",
+      "errors": [],
+      "expected": 8,
+      "air": false,
+      "rigged": true,
+      "walkStride": 152,
+      "anchorValidation": "excluded: silhouette centroid moves with articulated limbs; ground-gait-check.cjs validates body/sole anchors and world slip",
+      "dims": "342×360",
+      "fh": 360,
+      "frames": [
+        {
+          "w": 342,
+          "h": 360,
+          "foot": 360,
+          "mx": 167.36408472710968,
+          "my": 187.8339424736077,
+          "height": 360,
+          "n": 73601
+        },
+        {
+          "w": 342,
+          "h": 360,
+          "foot": 360,
+          "mx": 169.47573621508258,
+          "my": 178.23226821240277,
+          "height": 360,
+          "n": 68662
+        },
+        {
+          "w": 342,
+          "h": 360,
+          "foot": 360,
+          "mx": 170.6367019077432,
+          "my": 176.26190124623471,
+          "height": 360,
+          "n": 67724
+        },
+        {
+          "w": 342,
+          "h": 360,
+          "foot": 360,
+          "mx": 169.99209206170215,
+          "my": 179.42256147807606,
+          "height": 360,
+          "n": 69171
+        },
+        {
+          "w": 342,
+          "h": 360,
+          "foot": 360,
+          "mx": 167.36408472710968,
+          "my": 187.8339424736077,
+          "height": 360,
+          "n": 73601
+        },
+        {
+          "w": 342,
+          "h": 360,
+          "foot": 360,
+          "mx": 169.47573621508258,
+          "my": 178.23226821240277,
+          "height": 360,
+          "n": 68662
+        },
+        {
+          "w": 342,
+          "h": 360,
+          "foot": 360,
+          "mx": 170.6367019077432,
+          "my": 176.26190124623471,
+          "height": 360,
+          "n": 67724
+        },
+        {
+          "w": 342,
+          "h": 360,
+          "foot": 360,
+          "mx": 169.99209206170215,
+          "my": 179.42256147807606,
+          "height": 360,
+          "n": 69171
+        }
+      ],
+      "foot": 0,
+      "mx": 3.2726171806335174,
+      "height": 0,
+      "area": 0.07984945856713903
+    },
+    {
+      "key": "infW7Walk",
+      "errors": [],
+      "expected": 8,
+      "air": false,
+      "rigged": true,
+      "walkStride": 192,
+      "anchorValidation": "excluded: silhouette centroid moves with articulated limbs; ground-gait-check.cjs validates body/sole anchors and world slip",
+      "dims": "248×405",
+      "fh": 405,
+      "frames": [
+        {
+          "w": 248,
+          "h": 405,
+          "foot": 405,
+          "mx": 139.9673634685248,
+          "my": 197.95034542314335,
+          "height": 405,
+          "n": 67164
+        },
+        {
+          "w": 248,
+          "h": 405,
+          "foot": 405,
+          "mx": 139.62888351830063,
+          "my": 186.38277101154324,
+          "height": 405,
+          "n": 62894
+        },
+        {
+          "w": 248,
+          "h": 405,
+          "foot": 405,
+          "mx": 139.26474676609593,
+          "my": 181.68519517898903,
+          "height": 405,
+          "n": 61149
+        },
+        {
+          "w": 248,
+          "h": 405,
+          "foot": 405,
+          "mx": 139.71406247508492,
+          "my": 185.76582207835696,
+          "height": 405,
+          "n": 62713
+        },
+        {
+          "w": 248,
+          "h": 405,
+          "foot": 405,
+          "mx": 140.01262017442033,
+          "my": 197.99877965294522,
+          "height": 405,
+          "n": 67194
+        },
+        {
+          "w": 248,
+          "h": 405,
+          "foot": 405,
+          "mx": 139.66427640156454,
+          "my": 186.37402613921836,
+          "height": 405,
+          "n": 62894
+        },
+        {
+          "w": 248,
+          "h": 405,
+          "foot": 405,
+          "mx": 139.27672801635993,
+          "my": 181.61022494887524,
+          "height": 405,
+          "n": 61125
+        },
+        {
+          "w": 248,
+          "h": 405,
+          "foot": 405,
+          "mx": 139.6784968018758,
+          "my": 185.71622031167755,
+          "height": 405,
+          "n": 62693
+        }
+      ],
+      "foot": 0,
+      "mx": 0.7478734083244092,
+      "height": 0,
+      "area": 0.09032056433610144
+    },
+    {
+      "key": "infW8Walk",
+      "errors": [],
+      "expected": 4,
+      "air": true,
+      "rigged": false,
+      "walkStride": 0,
+      "anchorValidation": "silhouette centroid/anchor threshold (not anatomical gait proof)",
+      "dims": "420×288",
+      "fh": 288,
+      "frames": [
+        {
+          "w": 420,
+          "h": 288,
+          "foot": 287,
+          "mx": 213.45356723750422,
+          "my": 152.35099548501302,
+          "height": 287,
+          "n": 50277
+        },
+        {
+          "w": 420,
+          "h": 288,
+          "foot": 270,
+          "mx": 213.08310610551274,
+          "my": 152.48614898241453,
+          "height": 247,
+          "n": 50610
+        },
+        {
+          "w": 420,
+          "h": 288,
+          "foot": 274,
+          "mx": 213.47480631793886,
+          "my": 152.26318739615238,
+          "height": 249,
+          "n": 49953
+        },
+        {
+          "w": 420,
+          "h": 288,
+          "foot": 274,
+          "mx": 213.33415821824858,
+          "my": 152.1914863893989,
+          "height": 245,
+          "n": 50108
+        }
+      ],
+      "foot": 0.29466259301563014,
+      "mx": 0.39170021242611597,
+      "height": 42,
+      "area": 0.012981624184943688
+    },
+    {
+      "key": "infW9Walk",
+      "errors": [],
+      "expected": 8,
+      "air": false,
+      "rigged": true,
+      "walkStride": 220,
+      "anchorValidation": "excluded: silhouette centroid moves with articulated limbs; ground-gait-check.cjs validates body/sole anchors and world slip",
+      "dims": "260×405",
+      "fh": 405,
+      "frames": [
+        {
+          "w": 260,
+          "h": 405,
+          "foot": 405,
+          "mx": 134.0848550622061,
+          "my": 211.7507353056827,
+          "height": 405,
+          "n": 63579
+        },
+        {
+          "w": 260,
+          "h": 405,
+          "foot": 405,
+          "mx": 136.378727123175,
+          "my": 198.9730104873535,
+          "height": 405,
+          "n": 58356
+        },
+        {
+          "w": 260,
+          "h": 405,
+          "foot": 405,
+          "mx": 136.92130603014186,
+          "my": 194.2051979716956,
+          "height": 405,
+          "n": 56599
+        },
+        {
+          "w": 260,
+          "h": 405,
+          "foot": 405,
+          "mx": 136.88370294399516,
+          "my": 200.99964692233974,
+          "height": 405,
+          "n": 59477
+        },
+        {
+          "w": 260,
+          "h": 405,
+          "foot": 405,
+          "mx": 133.99665089073727,
+          "my": 211.6912372836051,
+          "height": 405,
+          "n": 63599
+        },
+        {
+          "w": 260,
+          "h": 405,
+          "foot": 405,
+          "mx": 136.40464367658643,
+          "my": 199.0635080990377,
+          "height": 405,
+          "n": 58402
+        },
+        {
+          "w": 260,
+          "h": 405,
+          "foot": 405,
+          "mx": 136.90443788550928,
+          "my": 194.1700040649688,
+          "height": 405,
+          "n": 56581
+        },
+        {
+          "w": 260,
+          "h": 405,
+          "foot": 405,
+          "mx": 136.88799515363647,
+          "my": 200.8996735435668,
+          "height": 405,
+          "n": 59426
+        }
+      ],
+      "foot": 0,
+      "mx": 2.9246551394045923,
+      "height": 0,
+      "area": 0.11034764697558137
+    }
+  ],
+  "waves": [
+    {
+      "wave": 1,
+      "name": "역병쥐",
+      "art": "infW1",
+      "artWalk": "infW1Walk",
+      "sprite": "cShrimp",
+      "size": 42,
+      "cls": "S",
+      "move": "ground",
+      "boss": false,
+      "elite": false,
+      "frames": 8,
+      "fr": [
+        414,
+        255
+      ],
+      "pixels": 59735,
+      "face": 1,
+      "animT": 6.74737564794603,
+      "dist": 220.73620000000003,
+      "artWalkStride": 112,
+      "artWalkDistance": 220.73620000000003,
+      "ready": true,
+      "expected": {
+        "name": "역병쥐",
+        "art": "infW1",
+        "artWalk": "infW1Walk",
+        "cls": "S",
+        "size": 42,
+        "move": "ground",
+        "boss": false,
+        "sprite": "cShrimp",
+        "frames": 8,
+        "artWalkStride": 112
+      },
+      "shots": [
+        {
+          "x": 229.7954271961492,
+          "y": 449.64752080078085,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.785170384788128,
+          "dist": 222.17239999999978,
+          "artWalkDistance": 222.17239999999978,
+          "frame": 0,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w01-frame0.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 453.9336022569439,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.860759858472334,
+          "dist": 225.04479999999958,
+          "artWalkDistance": 225.04479999999958,
+          "frame": 1,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w01-frame1.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 456.06381040581505,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.8983282795249625,
+          "dist": 226.47239999999945,
+          "artWalkDistance": 226.47239999999945,
+          "frame": 2,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w01-frame2.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 460.3498918619781,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.973917753209168,
+          "dist": 229.34479999999925,
+          "artWalkDistance": 229.34479999999925,
+          "frame": 3,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w01-frame3.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 462.4801000108494,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.011486174261797,
+          "dist": 230.77239999999912,
+          "artWalkDistance": 230.77239999999912,
+          "frame": 4,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w01-frame4.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 466.7533488878024,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.086849332156532,
+          "dist": 233.63619999999906,
+          "artWalkDistance": 233.63619999999906,
+          "frame": 5,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w01-frame5.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 471.02659776475593,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.162212490051275,
+          "dist": 236.49999999999932,
+          "artWalkDistance": 236.49999999999932,
+          "frame": 6,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w01-frame6.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 475.29984664170905,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.23757564794601,
+          "dist": 239.36379999999926,
+          "artWalkDistance": 239.36379999999926,
+          "frame": 7,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w01-frame7.png"
+        }
+      ],
+      "failures": []
+    },
+    {
+      "wave": 2,
+      "name": "해골 잡졸",
+      "art": "infW2",
+      "artWalk": "infW2Walk",
+      "sprite": "cMarshmallow",
+      "size": 42,
+      "cls": "S",
+      "move": "ground",
+      "boss": false,
+      "elite": false,
+      "frames": 8,
+      "fr": [
+        226,
+        410
+      ],
+      "pixels": 47509,
+      "face": 1,
+      "animT": 6.686864020967248,
+      "dist": 220.00499999999994,
+      "artWalkStride": 200,
+      "artWalkDistance": 220.00499999999994,
+      "ready": true,
+      "expected": {
+        "name": "해골 잡졸",
+        "art": "infW2",
+        "artWalk": "infW2Walk",
+        "cls": "S",
+        "size": 42,
+        "move": "ground",
+        "boss": false,
+        "sprite": "cMarshmallow",
+        "frames": 8,
+        "artWalkStride": 200
+      },
+      "shots": [
+        {
+          "x": 229.7954271961492,
+          "y": 455.11270738389766,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.84028507359883,
+          "dist": 225.83500000000004,
+          "artWalkDistance": 225.83500000000004,
+          "frame": 0,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w02-frame0.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 458.8356475151911,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.9059429683356734,
+          "dist": 228.3300000000001,
+          "artWalkDistance": 228.3300000000001,
+          "frame": 1,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w02-frame1.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 462.56604844835084,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.971732442019884,
+          "dist": 230.8300000000001,
+          "artWalkDistance": 230.8300000000001,
+          "frame": 2,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w02-frame2.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 466.3039101833768,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.037653494651461,
+          "dist": 233.33500000000004,
+          "artWalkDistance": 233.33500000000004,
+          "frame": 3,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w02-frame3.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 470.0193895128038,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.103179810440934,
+          "dist": 235.825,
+          "artWalkDistance": 235.825,
+          "frame": 4,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w02-frame4.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 473.7497904459635,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.168969284125144,
+          "dist": 238.325,
+          "artWalkDistance": 238.325,
+          "frame": 5,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w02-frame5.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 477.4801913791232,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.234758757809354,
+          "dist": 240.825,
+          "artWalkDistance": 240.825,
+          "frame": 6,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w02-frame6.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 481.2105923122829,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.300548231493564,
+          "dist": 243.325,
+          "artWalkDistance": 243.325,
+          "frame": 7,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w02-frame7.png"
+        }
+      ],
+      "failures": []
+    },
+    {
+      "wave": 3,
+      "name": "묘지 오우거",
+      "art": "infW3",
+      "artWalk": "infW3Walk",
+      "sprite": "cEgg",
+      "size": 58,
+      "cls": "L",
+      "move": "ground",
+      "boss": false,
+      "elite": false,
+      "frames": 8,
+      "fr": [
+        222,
+        405
+      ],
+      "pixels": 59945,
+      "face": 1,
+      "animT": 6.780296756665367,
+      "dist": 220.13159999999948,
+      "artWalkStride": 200,
+      "artWalkDistance": 220.13159999999948,
+      "ready": true,
+      "expected": {
+        "name": "묘지 오우거",
+        "art": "infW3",
+        "artWalk": "infW3Walk",
+        "cls": "L",
+        "size": 58,
+        "move": "ground",
+        "boss": false,
+        "sprite": "cEgg",
+        "frames": 8,
+        "artWalkStride": 200
+      },
+      "shots": [
+        {
+          "x": 229.7954271961492,
+          "y": 460.8249957248258,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.031128335612736,
+          "dist": 229.66319999999962,
+          "artWalkDistance": 229.66319999999962,
+          "frame": 0,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w03-frame0.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 465.99264552951325,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.1222651777179955,
+          "dist": 233.12639999999953,
+          "artWalkDistance": 233.12639999999953,
+          "frame": 1,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w03-frame1.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 471.1680545681415,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.213538861928518,
+          "dist": 236.5947999999994,
+          "artWalkDistance": 236.5947999999994,
+          "frame": 2,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w03-frame2.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 476.34346360677023,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.304812546139049,
+          "dist": 240.06319999999963,
+          "artWalkDistance": 240.06319999999963,
+          "frame": 3,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w03-frame3.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 481.5188726453985,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.39608623034957,
+          "dist": 243.53159999999946,
+          "artWalkDistance": 243.53159999999946,
+          "frame": 4,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w03-frame4.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 530.6581011935755,
+          "face": 1,
+          "hidden": false,
+          "animT": 8.26270728298114,
+          "dist": 276.46319999999935,
+          "artWalkDistance": 276.46319999999935,
+          "frame": 5,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w03-frame5.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 535.8257509982627,
+          "face": 1,
+          "hidden": false,
+          "animT": 8.353844125086402,
+          "dist": 279.92639999999926,
+          "artWalkDistance": 279.92639999999926,
+          "frame": 6,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w03-frame6.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 540.9934008029502,
+          "face": 1,
+          "hidden": false,
+          "animT": 8.444980967191665,
+          "dist": 283.38959999999923,
+          "artWalkDistance": 283.38959999999923,
+          "frame": 7,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w03-frame7.png"
+        }
+      ],
+      "failures": []
+    },
+    {
+      "wave": 4,
+      "name": "까마귀 정찰병",
+      "art": "infW4",
+      "artWalk": "infW4Walk",
+      "sprite": "cSwift",
+      "size": 42,
+      "cls": "S",
+      "move": "air",
+      "boss": false,
+      "elite": false,
+      "frames": 4,
+      "fr": [
+        415,
+        328
+      ],
+      "pixels": 46219,
+      "face": 1,
+      "animT": 5.915465239536234,
+      "dist": 220.38479999999996,
+      "artWalkStride": 0,
+      "artWalkDistance": 0,
+      "ready": true,
+      "expected": {
+        "name": "까마귀 정찰병",
+        "art": "infW4",
+        "artWalk": "infW4Walk",
+        "cls": "S",
+        "size": 42,
+        "move": "air",
+        "boss": false,
+        "sprite": "cSwift",
+        "frames": 4,
+        "artWalkStride": 0
+      },
+      "shots": [
+        {
+          "x": 229.7954271961492,
+          "y": 475.33685221896644,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.415565239536226,
+          "dist": 239.38859999999968,
+          "artWalkDistance": 0,
+          "frame": 0,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w04-frame0.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 486.6829412651913,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.61566523953624,
+          "dist": 246.9924000000002,
+          "artWalkDistance": 0,
+          "frame": 1,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w04-frame1.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 498.01201968315985,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.815465239536236,
+          "dist": 254.58480000000006,
+          "artWalkDistance": 0,
+          "frame": 2,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w04-frame2.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 509.35810872938447,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.015565239536249,
+          "dist": 262.1886000000005,
+          "artWalkDistance": 0,
+          "frame": 3,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w04-frame3.png"
+        }
+      ],
+      "failures": []
+    },
+    {
+      "wave": 5,
+      "name": "고블린 창병",
+      "art": "infW5",
+      "artWalk": "infW5Walk",
+      "sprite": "cMoon",
+      "size": 50,
+      "cls": "M",
+      "move": "ground",
+      "boss": false,
+      "elite": false,
+      "frames": 8,
+      "fr": [
+        296,
+        400
+      ],
+      "pixels": 65416,
+      "face": 1,
+      "animT": 6.686808979741268,
+      "dist": 220.0000000000002,
+      "artWalkStride": 192,
+      "artWalkDistance": 220.0000000000002,
+      "ready": true,
+      "expected": {
+        "name": "고블린 창병",
+        "art": "infW5",
+        "artWalk": "infW5Walk",
+        "cls": "M",
+        "size": 50,
+        "move": "ground",
+        "boss": false,
+        "sprite": "cMoon",
+        "frames": 8,
+        "artWalkStride": 192
+      },
+      "shots": [
+        {
+          "x": 229.7954271961492,
+          "y": 476.2491590711809,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.2131247692149545,
+          "dist": 240.00000000000026,
+          "artWalkDistance": 240.00000000000026,
+          "frame": 0,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w05-frame0.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 481.2255139160163,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.300887927109697,
+          "dist": 243.33500000000046,
+          "artWalkDistance": 243.33500000000046,
+          "frame": 1,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w05-frame1.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 486.20186876085126,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.3886510850044305,
+          "dist": 246.67000000000033,
+          "artWalkDistance": 246.67000000000033,
+          "frame": 2,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w05-frame2.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 489.93226969401087,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.454440558688641,
+          "dist": 249.17000000000033,
+          "artWalkDistance": 249.17000000000033,
+          "frame": 3,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w05-frame3.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 494.9086245388462,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.5422037165833835,
+          "dist": 252.50500000000054,
+          "artWalkDistance": 252.50500000000054,
+          "frame": 4,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w05-frame4.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 498.63902547200604,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.607993190267594,
+          "dist": 255.00500000000054,
+          "artWalkDistance": 255.00500000000054,
+          "frame": 5,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w05-frame5.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 503.60791951497475,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.6956247692149615,
+          "dist": 258.3350000000005,
+          "artWalkDistance": 258.3350000000005,
+          "frame": 6,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w05-frame6.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 508.57681355794335,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.783256348162328,
+          "dist": 261.6650000000004,
+          "artWalkDistance": 261.6650000000004,
+          "frame": 7,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w05-frame7.png"
+        }
+      ],
+      "failures": []
+    },
+    {
+      "wave": 6,
+      "name": "썩은 멧돼지",
+      "art": "infW6",
+      "artWalk": "infW6Walk",
+      "sprite": "cClownfish",
+      "size": 58,
+      "cls": "L",
+      "move": "ground",
+      "boss": false,
+      "elite": false,
+      "frames": 8,
+      "fr": [
+        342,
+        360
+      ],
+      "pixels": 73601,
+      "face": 1,
+      "animT": 6.08994717977677,
+      "dist": 220.26479999999964,
+      "artWalkStride": 152,
+      "artWalkDistance": 220.26479999999964,
+      "ready": true,
+      "expected": {
+        "name": "썩은 멧돼지",
+        "art": "infW6",
+        "artWalk": "infW6Walk",
+        "cls": "L",
+        "size": 58,
+        "move": "ground",
+        "boss": false,
+        "sprite": "cClownfish",
+        "frames": 8,
+        "artWalkStride": 152
+      },
+      "shots": [
+        {
+          "x": 229.7954271961492,
+          "y": 448.19654405381925,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.114557706092566,
+          "dist": 221.19999999999987,
+          "artWalkDistance": 221.19999999999987,
+          "frame": 0,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w06-frame0.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 452.3745930989582,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.188241916618882,
+          "dist": 223.99999999999986,
+          "artWalkDistance": 223.99999999999986,
+          "frame": 1,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w06-frame1.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 456.552642144097,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.261926127145197,
+          "dist": 226.79999999999987,
+          "artWalkDistance": 226.79999999999987,
+          "frame": 2,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w06-frame2.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 460.73069118923587,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.335610337671513,
+          "dist": 229.59999999999985,
+          "artWalkDistance": 229.59999999999985,
+          "frame": 3,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w06-frame3.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 466.33763300781214,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.434494548197827,
+          "dist": 233.35759999999976,
+          "artWalkDistance": 233.35759999999976,
+          "frame": 4,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w06-frame4.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 470.5156820529511,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.508178758724142,
+          "dist": 236.15759999999975,
+          "artWalkDistance": 236.15759999999975,
+          "frame": 5,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w06-frame5.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 474.6937310980899,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.581862969250458,
+          "dist": 238.95759999999973,
+          "artWalkDistance": 238.95759999999973,
+          "frame": 6,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w06-frame6.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 480.2756046223951,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.680305074513609,
+          "dist": 242.69839999999948,
+          "artWalkDistance": 242.69839999999948,
+          "frame": 7,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w06-frame7.png"
+        }
+      ],
+      "failures": []
+    },
+    {
+      "wave": 7,
+      "name": "무덤 파는 구울",
+      "art": "infW7",
+      "artWalk": "infW7Walk",
+      "sprite": "cEchidna",
+      "size": 58,
+      "cls": "L",
+      "move": "burrow",
+      "boss": false,
+      "elite": false,
+      "frames": 8,
+      "fr": [
+        248,
+        405
+      ],
+      "pixels": 67164,
+      "face": 1,
+      "animT": 6.377887073010534,
+      "dist": 220.40000000000038,
+      "artWalkStride": 192,
+      "artWalkDistance": 220.40000000000038,
+      "ready": true,
+      "expected": {
+        "name": "무덤 파는 구울",
+        "art": "infW7",
+        "artWalk": "infW7Walk",
+        "cls": "L",
+        "size": 58,
+        "move": "burrow",
+        "boss": false,
+        "sprite": "cEchidna",
+        "frames": 8,
+        "artWalkStride": 192
+      },
+      "shots": [
+        {
+          "x": 229.7954271961492,
+          "y": 447.0028157552089,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.377887073010534,
+          "dist": 220.40000000000038,
+          "artWalkDistance": 220.40000000000038,
+          "frame": 0,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w07-frame0.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 451.73177041015646,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.46128707301053,
+          "dist": 223.56920000000017,
+          "artWalkDistance": 223.56920000000017,
+          "frame": 1,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w07-frame1.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 538.6787616319441,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.994687073010541,
+          "dist": 281.8383999999998,
+          "artWalkDistance": 281.8383999999998,
+          "frame": 2,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w07-frame2.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 544.3433008409281,
+          "face": 1,
+          "hidden": false,
+          "animT": 8.094587073010535,
+          "dist": 285.6345999999996,
+          "artWalkDistance": 285.6345999999996,
+          "frame": 3,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w07-frame3.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 549.0722554958758,
+          "face": 1,
+          "hidden": false,
+          "animT": 8.177987073010529,
+          "dist": 288.80379999999934,
+          "artWalkDistance": 288.80379999999934,
+          "frame": 4,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w07-frame4.png"
+        },
+        {
+          "x": 229.9315650362031,
+          "y": 554.7263839296754,
+          "face": 1,
+          "hidden": false,
+          "animT": 8.277887073010524,
+          "dist": 292.59999999999917,
+          "artWalkDistance": 292.59999999999917,
+          "frame": 5,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w07-frame5.png"
+        },
+        {
+          "x": 230.65064510736863,
+          "y": 559.4003488700987,
+          "face": 1,
+          "hidden": false,
+          "animT": 8.361287073010518,
+          "dist": 295.76919999999893,
+          "artWalkDistance": 295.76919999999893,
+          "frame": 6,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w07-frame6.png"
+        },
+        {
+          "x": 231.51285142771107,
+          "y": 565.0046233789999,
+          "face": 1,
+          "hidden": false,
+          "animT": 8.461287073010515,
+          "dist": 299.5691999999989,
+          "artWalkDistance": 299.5691999999989,
+          "frame": 7,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w07-frame7.png"
+        }
+      ],
+      "failures": []
+    },
+    {
+      "wave": 8,
+      "name": "시체파리 떼",
+      "art": "infW8",
+      "artWalk": "infW8Walk",
+      "sprite": "cDandelion",
+      "size": 42,
+      "cls": "S",
+      "move": "air",
+      "boss": false,
+      "elite": false,
+      "frames": 4,
+      "fr": [
+        420,
+        288
+      ],
+      "pixels": 50277,
+      "face": 1,
+      "animT": 6.047719278228631,
+      "dist": 221.6699999999994,
+      "artWalkStride": 0,
+      "artWalkDistance": 0,
+      "ready": true,
+      "expected": {
+        "name": "시체파리 떼",
+        "art": "infW8",
+        "artWalk": "infW8Walk",
+        "cls": "S",
+        "size": 42,
+        "move": "air",
+        "boss": false,
+        "sprite": "cDandelion",
+        "frames": 4,
+        "artWalkStride": 0
+      },
+      "shots": [
+        {
+          "x": 229.7954271961492,
+          "y": 471.2802650282108,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.442456120333895,
+          "dist": 236.66999999999933,
+          "artWalkDistance": 0,
+          "frame": 0,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w08-frame0.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 481.2329747178805,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.617982436123361,
+          "dist": 243.33999999999904,
+          "artWalkDistance": 0,
+          "frame": 1,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w08-frame1.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 493.6626706271692,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.8371929624391585,
+          "dist": 251.66999999999933,
+          "artWalkDistance": 0,
+          "frame": 2,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w08-frame2.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 503.6153803168388,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.012719278228625,
+          "dist": 258.33999999999907,
+          "artWalkDistance": 0,
+          "frame": 3,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w08-frame3.png"
+        }
+      ],
+      "failures": []
+    },
+    {
+      "wave": 9,
+      "name": "녹슨 철갑 오크",
+      "art": "infW9",
+      "artWalk": "infW9Walk",
+      "sprite": "cGuava",
+      "size": 58,
+      "cls": "L",
+      "move": "ground",
+      "boss": false,
+      "elite": false,
+      "frames": 8,
+      "fr": [
+        260,
+        405
+      ],
+      "pixels": 63579,
+      "face": 1,
+      "animT": 6.298044297433691,
+      "dist": 220.0032,
+      "artWalkStride": 220,
+      "artWalkDistance": 220.0032,
+      "ready": true,
+      "expected": {
+        "name": "녹슨 철갑 오크",
+        "art": "infW9",
+        "artWalk": "infW9Walk",
+        "cls": "L",
+        "size": 58,
+        "move": "ground",
+        "boss": false,
+        "sprite": "cGuava",
+        "frames": 8,
+        "artWalkStride": 220
+      },
+      "shots": [
+        {
+          "x": 229.7954271961492,
+          "y": 447.60684227430534,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.319139034275793,
+          "dist": 220.80479999999986,
+          "artWalkDistance": 220.80479999999986,
+          "frame": 0,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w09-frame0.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 453.5444468315966,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.423854823749469,
+          "dist": 224.7839999999996,
+          "artWalkDistance": 224.7839999999996,
+          "frame": 1,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w09-frame1.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 459.51786323784614,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.529202192170515,
+          "dist": 228.7871999999993,
+          "artWalkDistance": 228.7871999999993,
+          "frame": 2,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w09-frame2.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 465.48411727430477,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.634423244802098,
+          "dist": 232.78559999999945,
+          "artWalkDistance": 232.78559999999945,
+          "frame": 3,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w09-frame3.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 471.45037131076333,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.7396442974336805,
+          "dist": 236.7839999999996,
+          "artWalkDistance": 236.7839999999996,
+          "frame": 4,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w09-frame4.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 477.4166253472218,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.844865350065263,
+          "dist": 240.78239999999974,
+          "artWalkDistance": 240.78239999999974,
+          "frame": 5,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w09-frame5.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 483.3828793836804,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.950086402696845,
+          "dist": 244.78079999999989,
+          "artWalkDistance": 244.78079999999989,
+          "frame": 6,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w09-frame6.png"
+        },
+        {
+          "x": 229.7954271961492,
+          "y": 489.35629578993,
+          "face": 1,
+          "hidden": false,
+          "animT": 7.055433771117891,
+          "dist": 248.78399999999962,
+          "artWalkDistance": 248.78399999999962,
+          "frame": 7,
+          "observedBy": "CanvasRenderingContext2D.drawImage source identity",
+          "filename": "inf-w09-frame7.png"
+        }
+      ],
+      "failures": []
+    },
+    {
+      "wave": 10,
+      "name": "역병 쥐왕",
+      "art": "infB10",
+      "artWalk": null,
+      "sprite": "cKingSlime",
+      "size": 120,
+      "cls": "L",
+      "move": "ground",
+      "boss": true,
+      "elite": false,
+      "frames": 0,
+      "fr": [
+        390,
+        409
+      ],
+      "pixels": 89640,
+      "face": 1,
+      "animT": 5.858521836381605,
+      "dist": 220.26480000000038,
+      "artWalkStride": 0,
+      "artWalkDistance": 0,
+      "ready": true,
+      "expected": {
+        "name": "역병 쥐왕",
+        "art": "infB10",
+        "artWalk": null,
+        "cls": "L",
+        "size": 120,
+        "move": "ground",
+        "boss": true,
+        "sprite": "cKingSlime",
+        "frames": 0,
+        "artWalkStride": 0
+      },
+      "shots": [
+        {
+          "x": 229.7954271961492,
+          "y": 446.80107567274365,
+          "face": 1,
+          "hidden": false,
+          "animT": 5.858521836381605,
+          "dist": 220.26480000000038,
+          "artWalkDistance": 0,
+          "frame": null,
+          "observedBy": "static sprite",
+          "filename": "inf-w10-static.png"
+        }
+      ],
+      "failures": []
+    },
+    {
+      "wave": 11,
+      "name": "대추야자",
+      "art": null,
+      "artWalk": null,
+      "sprite": "cDatefruit",
+      "size": 36,
+      "cls": "S",
+      "move": "ground",
+      "boss": false,
+      "elite": false,
+      "frames": 0,
+      "fr": [
+        224,
+        274
+      ],
+      "pixels": 36679,
+      "face": 1,
+      "animT": 6.121224727197463,
+      "dist": 220.49819999999974,
+      "artWalkStride": 0,
+      "artWalkDistance": 0,
+      "ready": false,
+      "expected": {
+        "name": "대추야자",
+        "art": null,
+        "artWalk": null,
+        "cls": "S",
+        "size": 36,
+        "move": "ground",
+        "boss": false,
+        "sprite": "cDatefruit",
+        "frames": 0,
+        "artWalkStride": 0
+      },
+      "shots": [
+        {
+          "x": 229.7954271961492,
+          "y": 447.1493459038625,
+          "face": 1,
+          "hidden": false,
+          "animT": 6.121224727197463,
+          "dist": 220.49819999999974,
+          "artWalkDistance": 0,
+          "frame": null,
+          "observedBy": "static sprite",
+          "filename": "inf-w11-static.png"
+        }
+      ],
+      "failures": []
+    }
+  ],
+  "errors": [],
+  "failures": []
+}

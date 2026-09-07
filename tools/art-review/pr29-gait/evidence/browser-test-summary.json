@@ -1,0 +1,44 @@
+{
+  "verifiedAt": "2026-09-07T09:29:51.472Z",
+  "assetStage": "Final torso occlusion cleanup; parent confirmed renderer frozen",
+  "exitCodes": {
+    "loader": 0,
+    "desktop": 0,
+    "phone": 0,
+    "preview": 0
+  },
+  "loaderSelfTestFailureCases": 14,
+  "scope": "Actual loaded/rendered frames; ground anatomy, planting and slip belong to ground-gait-check.cjs",
+  "runs": [
+    {
+      "dir": "../e2e-gait",
+      "viewport": {
+        "width": 1240,
+        "height": 860
+      },
+      "waves": 11,
+      "errors": [],
+      "failures": [],
+      "groundFrames": 56,
+      "flyerFrames": 8,
+      "staticBossWave": 10,
+      "fallbackWave": 11,
+      "screenshots": 77
+    },
+    {
+      "dir": "../e2e-gait-phone",
+      "viewport": {
+        "width": 440,
+        "height": 956
+      },
+      "waves": 11,
+      "errors": [],
+      "failures": [],
+      "groundFrames": 56,
+      "flyerFrames": 8,
+      "staticBossWave": 10,
+      "fallbackWave": 11,
+      "screenshots": 77
+    }
+  ]
+}

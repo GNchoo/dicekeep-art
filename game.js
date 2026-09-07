@@ -2263,7 +2263,7 @@ function buildInfinityWave(w) {
   for (let i = 0; i < M.count; i++) {
     const elite = eliteSlots.has(i);
     add(M.base.id, {
-      name: (elite ? '정예 ' : '') + M.name, hue: M.hue, lane: laneFor(M.base.move, i), art: M.art && M.art.key, artWalk: M.art && M.art.walkKey,
+      name: (elite ? '정예 ' : '') + M.name, hue: M.hue, lane: laneFor(M.base.move, i), art: M.art && M.art.key, artWalk: M.art && M.art.walkKey, artWalkStride: M.art && M.art.walkStride,
       hpMult: P.hpMult * M.hpMult * (elite ? 3 : 1), goldMult: P.goldMult * (elite ? 3 : 1), isElite: elite,
     });
     t += P.gap * (FAST_AIR.has(M.base.id) ? 0.72 : 1);
@@ -2546,6 +2546,8 @@ function spawnEnemy(item) {
     stompPhase: 0,
     art: item.art && A[item.art] && A[item.art].cv ? item.art : null,                     // 인피니티 새 그림 (오른쪽을 본다)
     artWalk: item.artWalk && Array.isArray(A[item.artWalk]) && A[item.artWalk].length ? item.artWalk : null,
+    artWalkStride: Number.isFinite(item.artWalkStride) && item.artWalkStride > 0 ? item.artWalkStride : 0, // 원본 PNG 픽셀 / 보행 한 주기
+    artWalkDistance: 0, // 실제 전진 거리 누적: 레인 순환·넉백·화면 재배치로 프레임이 건너뛰지 않는다
   };
   S.enemies.push(e);
   if (S.mode === 'infinity') enforceFieldCap();
@@ -2640,8 +2642,16 @@ function spawnDeath(e, p) {
 }
 
 // 지금 화면에 그려질 적 프레임 (걷기 시트 > 정지컷 > 구 시트)
+function enemyWalkFrameIndex(e, frames) {
+  if (e.artWalkStride > 0 && frames[0] && frames[0].h > 0 && e.def.size > 0) {
+    // 그리기와 같은 높이 비율을 쓴다. 정예의 확대된 몸·다리도 그에 맞는 긴 보폭으로 이동한다.
+    const stride = e.artWalkStride * e.def.size / frames[0].h;
+    return Math.floor((e.artWalkDistance || 0) / stride * frames.length) % frames.length;
+  }
+  return Math.floor(e.animT * 5) % frames.length;
+}
 function currentEnemyFrame(e) {
-  if (e.artWalk) { const aw = A[e.artWalk]; const fr = aw[Math.floor(e.animT * 5) % aw.length]; if (fr && fr.cv) return fr; }
+  if (e.artWalk) { const aw = A[e.artWalk]; const fr = aw[enemyWalkFrameIndex(e, aw)]; if (fr && fr.cv) return fr; }
   if (e.art) { const a = A[e.art]; if (a && a.cv) return a; }
   const walk = e.def && e.def.walk && A[e.def.walk];
   if (Array.isArray(walk) && walk.length) {
@@ -2893,7 +2903,9 @@ function update(dt) {
     if (e.stunT > 0) { e.stunT -= dt; continue; } // 락다운
     let sp = e.def.speed * (e.spdMult || 1);
     if (e.slowT > 0) { e.slowT -= dt; sp *= (1 - e.slowPct); }
+    const previousDist = e.dist;
     e.dist += sp * dt;
+    if (e.artWalk && e.artWalkStride > 0) e.artWalkDistance += Math.max(0, e.dist - previousDist);
     e.animT += dt * (sp / 38);
     if (e.move === 'burrow') {
       e.burrowT += dt;
@@ -3383,7 +3395,7 @@ function draw() {
     } else {
       const e = ent.o, p = ent.p;
       const airY = e.move === 'air' ? 42 : 0;
-      const bob = Math.sin(e.animT * 6) * (e.move === 'air' ? 5 : 2);
+      const bob = e.artWalk && e.artWalkStride > 0 && e.move !== 'air' ? 0 : Math.sin(e.animT * 6) * (e.move === 'air' ? 5 : 2);
       const drawY = p.y + 4 - airY - bob;
       if (e.slowT > 0) {
         ctx.save();

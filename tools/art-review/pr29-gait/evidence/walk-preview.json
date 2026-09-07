@@ -1,0 +1,45 @@
+{
+  "source": "actual DKA loader canvases, no synthetic replacement limbs",
+  "scale": 3,
+  "sampleDelayMs": 100,
+  "groundCycleSeconds": 0.8,
+  "groundTiming": "normalized review cycle; game frames instead follow actual distance and vary with speed",
+  "groundMotion": "forward travel = source-pixel walkStride × drawHeight / loadedFrameHeight; fixed ground ticks; replay returns to start",
+  "flyerTiming": "4 frames, 5fps, existing sequence",
+  "variants": [
+    {
+      "name": "ground-walk-preview",
+      "waves": [
+        1,
+        2,
+        3,
+        5,
+        6,
+        7,
+        9
+      ],
+      "labeled": true,
+      "width": 1140,
+      "height": 868,
+      "samples": 8
+    },
+    {
+      "name": "walk-preview",
+      "waves": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "labeled": false,
+      "width": 1140,
+      "height": 780,
+      "samples": 8
+    }
+  ]
+}

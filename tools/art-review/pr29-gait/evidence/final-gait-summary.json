@@ -1,0 +1,23 @@
+{
+  "waves": [
+    1,
+    2,
+    3,
+    5,
+    6,
+    7,
+    9
+  ],
+  "frameCount": 56,
+  "limbs": 18,
+  "contactSamples": 72,
+  "minSwingLiftPx": 3.892682926829252,
+  "maxSwingLiftPx": 6.014814814814827,
+  "maxObservedContactXSpanPx": 1.1814467261819317,
+  "maxObservedContactYSpanPx": 0,
+  "errors": [],
+  "browserErrors": [],
+  "sourceTextureSamples": 144,
+  "loadedTextureSamples": 144,
+  "scope": "Actual drawn contact poses on rightward horizontal lane; discrete8pose playback can slide between samples. No preview overrides."
+}

@@ -1,0 +1,32 @@
+{
+  "date": "2026-09-07",
+  "sheetRegression": {
+    "passed": 13,
+    "failed": 0
+  },
+  "rigRegression": {
+    "passed": 4,
+    "failed": 0
+  },
+  "gaitSelfTest": {
+    "rejectedKinematicFixtures": 13,
+    "rejectedTextureFixtures": 2
+  },
+  "loaderSelfTest": {
+    "rejectedFixtures": 14
+  },
+  "rebuild": {
+    "pngCount": 19,
+    "sha256Mismatches": 0
+  },
+  "smoke": {
+    "desktop": "PASS",
+    "phone": "PASS",
+    "newInfinityArtErrors": 0,
+    "pageErrors": 0,
+    "legacy404ConsoleDiagnostics": 178
+  },
+  "syntax": "PASS",
+  "diffWhitespace": "PASS",
+  "notes": "Runtime frame loading is separate from named-foot gait and visual review. Phone is Chromium viewport emulation."
+}

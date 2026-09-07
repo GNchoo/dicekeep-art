@@ -1311,16 +1311,17 @@ window.DKCONTENT = (function () {
   ];
   const INF_MONSTERS = {
     // 1~10: 덩어리감 있는 페인터리 판타지 게임 캐릭터, 고어·신체 훼손·실사 공포 제외 (tools/inf-roster.json · ART-PROMPTS §6). 그림이 INF_ART_READY 에 적힌 뒤에만 이 이름·그림이 쓰인다
-    1: { name: '역병쥐', cls: 'S', move: 'ground', tier: 1 },
-    2: { name: '해골 잡졸', cls: 'S', move: 'ground', tier: 1 },
-    3: { name: '묘지 오우거', cls: 'L', move: 'ground', tier: 1 },
+    // 리깅 시트의 walkStride는 원본 PNG 픽셀 단위 한 주기의 전진 거리. 런타임이 실제 표시 높이로 환산한다.
+    1: { name: '역병쥐', cls: 'S', move: 'ground', tier: 1, walk: '4x2', stabilize: false, walkStride: 112 },
+    2: { name: '해골 잡졸', cls: 'S', move: 'ground', tier: 1, walk: '4x2', stabilize: false, walkStride: 200 },
+    3: { name: '묘지 오우거', cls: 'L', move: 'ground', tier: 1, walk: '4x2', stabilize: false, walkStride: 200 },
     4: { name: '까마귀 정찰병', cls: 'S', move: 'air', tier: 1 },
-    5: { name: '고블린 창병', cls: 'M', move: 'ground', tier: 1 },
+    5: { name: '고블린 창병', cls: 'M', move: 'ground', tier: 1, walk: '4x2', stabilize: false, walkStride: 192 },
     // 6~10 도 폐허의 잡졸로 재설계 (구 얼룩젖소·왕두더지·꿀벌·골목거위·황금 숫양). 프롬프트는 tools/inf-roster.json
-    6: { name: '썩은 멧돼지', cls: 'L', move: 'ground', tier: 1 },
-    7: { name: '무덤 파는 구울', cls: 'L', move: 'burrow', tier: 1 },
+    6: { name: '썩은 멧돼지', cls: 'L', move: 'ground', tier: 1, walk: '4x2', stabilize: false, walkStride: 152 },
+    7: { name: '무덤 파는 구울', cls: 'L', move: 'burrow', tier: 1, walk: '4x2', stabilize: false, walkStride: 192 },
     8: { name: '시체파리 떼', cls: 'S', move: 'air', tier: 1 },
-    9: { name: '녹슨 철갑 오크', cls: 'L', move: 'ground', tier: 1 },
+    9: { name: '녹슨 철갑 오크', cls: 'L', move: 'ground', tier: 1, walk: '4x2', stabilize: false, walkStride: 220 },
     10: { boss: true, name: '역병 쥐왕', second: null, cls: 'L', tier: 1 },
     11: { name: '도토리다람쥐', cls: 'S', move: 'ground', tier: 2 },
     12: { name: '수리부엉이', cls: 'L', move: 'air', tier: 2 },
@@ -1427,8 +1428,9 @@ window.DKCONTENT = (function () {
       return name ? { key: `infB${tag}`, src: `casual/bosses/inf/b${pad3(w)}${k ? '-2' : ''}.png`, name } : null;
     }
     if (!INF_ART_READY.has(w) && !INF_ART_READY.has(String(w))) return null;
-    // 걷기 시트 격자는 m.walk ('2x2' 4프레임 기본 · '3x2' 6프레임), 파일명에 적혀 game.js 가 읽는다. m.hop 이면 위아래 움직임이 의도된 것이라 안정화하지 않는다
-    return { key: `infW${w}`, src: `casual/enemies/inf/w${pad3(w)}.png`, walkKey: `infW${w}Walk`, walkSrc: `casual/enemies/inf/w${pad3(w)}-walk-${m.walk || '2x2'}.png`, name: m.name, stabilize: !m.hop, anchor: m.move === 'air' ? 'center' : 'foot' };
+    // 격자는 m.walk ('2x2' 기본 · '3x2' 6프레임 · '4x2' 8프레임)를 파일명에서 읽는다.
+    // 리깅 시트는 stabilize:false로 원본 좌표·크기를 보존하고 walkStride로 이동 거리에 맞춰 재생한다. 기존 hop도 안정화하지 않는다.
+    return { key: `infW${w}`, src: `casual/enemies/inf/w${pad3(w)}.png`, walkKey: `infW${w}Walk`, walkSrc: `casual/enemies/inf/w${pad3(w)}-walk-${m.walk || '2x2'}.png`, name: m.name, stabilize: m.stabilize !== false && !m.hop, anchor: m.move === 'air' ? 'center' : 'foot', walkStride: m.walkStride || 0 };
   }
   // 로더용: 준비된 새 그림 전부 [{ key, src }, { key(walk), src, sheet: true }]
   function infArtList() {
@@ -1438,7 +1440,7 @@ window.DKCONTENT = (function () {
       if (m.boss) { for (let k = 0; k < 2; k++) { const a = infArt(w, k); if (a) out.push({ key: a.key, src: a.src }); } continue; }
       const a = infArt(w, 0); if (!a) continue;
       out.push({ key: a.key, src: a.src });
-      out.push({ key: a.walkKey, src: a.walkSrc, sheet: true, optional: true, stabilize: a.stabilize, anchor: a.anchor });
+      out.push({ key: a.walkKey, src: a.walkSrc, sheet: true, optional: true, stabilize: a.stabilize, anchor: a.anchor, walkStride: a.walkStride });
     }
     return out;
   }
