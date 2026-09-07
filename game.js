@@ -5002,7 +5002,7 @@ $('lobby-back').addEventListener('click', () => { audio(); lobbyShow('hub'); });
 ['shop', 'stage-select'].forEach((id) => {
   const el = $(id);
   if (!el) return;
-  el.addEventListener('click', (e) => { if (e.target === el) gotoLobby(); });
+  el.addEventListener('click', (e) => { if (e.target === el) gotoLobby(id === 'stage-select' ? 'single' : 'hub'); });   // 배경 클릭도 뒤로 버튼과 같은 갈래로
 });
 // ---- 게임 메뉴 (≡): 싱글은 여는 동안 멈춘다. 멀티는 계속 돈다(일시정지 불가) ----
 function menuOpen() { return !$('menu').classList.contains('hidden'); }
@@ -5575,7 +5575,7 @@ function mpOnWatched(m) {   // 내 필드를 보는 사람 수 — 있으면 1�
 function mpOnQueued(m) { MP.queue = { n: m.n | 0, eta: m.eta == null ? null : +m.eta }; if (S.phase === 'mpRoom') renderMpRoom(); }
 function mpOnMatched() { MP.queue = null; if (S.phase === 'mpRoom') $('mp-room-status').textContent = '상대를 찾았습니다! 방으로 이동 중…'; }
 function mpOnErr(m) {
-  if (S.phase === 'lobby') mpStatus(mpErrText(m), true);
+  if (S.phase === 'lobby') { if (LOBBY_VIEW !== 'multi') toast(mpErrText(m)); mpStatus(mpErrText(m), true); }   // 멀티 갈래가 닫혀 있으면 상태 줄이 안 보인다 → 토스트
   else pushLog(`오류: ${mpErrText(m)}`, 'life');
 }
 function mpOnState(st) {
@@ -5692,7 +5692,7 @@ function drawLoading(pr) {
 (async () => {
   // 키아트는 로딩 첫 프레임부터 깔린다 (CSS 가 직접 받아온다 — 에셋 로딩을 기다리면 로딩 화면이 검은 화면이 된다)
   // 키아트(산 위 주사위 성)는 CSS 배경으로만 쓴다 — SRCS 에 넣으면 loadAssets 가 두 방향을 다 내려받는다. CSS 는 미디어 쿼리에 맞는 한 장만 받는다
-  const KEYART = { l: BASE + 'ui/title-keyart-l.jpg', p: BASE + 'ui/title-keyart-p.jpg', blur: BASE + 'ui/title-keyart-l-blur.jpg' };   // l: 제목 없는 윗부분(CSS 제목을 얹는다) · p: 그림 안의 돌 제목까지 · blur: 가로 양옆 밑바탕
+  const KEYART = { l: BASE + 'ui/title-keyart-l.jpg?v=89', p: BASE + 'ui/title-keyart-p.jpg?v=89', blur: BASE + 'ui/title-keyart-l-blur.jpg?v=89' };   // ?v= 는 index.html 의 preload href 와 같아야 한다 (같은 URL 이어야 미리 받은 걸 쓴다)   // l: 제목 없는 윗부분(CSS 제목을 얹는다) · p: 그림 안의 돌 제목까지 · blur: 가로 양옆 밑바탕
   document.body.style.setProperty('--keyart-bg', `linear-gradient(rgba(5,4,3,.45), rgba(5,4,3,.7)), url('${KEYART.l}')`);
   document.body.style.setProperty('--keyart-title', `linear-gradient(rgba(5,4,3,.10), rgba(5,4,3,.10) 45%, rgba(5,4,3,.82) 100%), url('${KEYART.l}'), url('${KEYART.blur}')`);   // 가로·데스크톱 타이틀: 그림을 높이에 맞춰 통째로 + 양옆은 흐린 밑바탕, 위에 CSS 제목
   document.body.style.setProperty('--keyart-title-p', `linear-gradient(rgba(5,4,3,.04), rgba(5,4,3,.04) 80%, rgba(5,4,3,.55) 100%), url('${KEYART.p}')`);   // 세로 타이틀: 그림의 돌 제목을 그대로, 맨 아래(버튼 자리)만 살짝
@@ -5701,7 +5701,7 @@ function drawLoading(pr) {
   // 키아트가 화면에 뜬 뒤에 에셋 로딩을 시작한다 — 800장 넘는 PNG 요청과 섞이면 폰에서 배경이 한참 검게 남았다. (실패·지연은 4초에서 끊고 진행)
   { const box = $('overlay-box'); if (box) box.classList.add('preload');
     const portrait = window.matchMedia && matchMedia('(max-aspect-ratio: 3/4)').matches;
-    await new Promise((res) => { const im = new Image(); let done = false; const fin = () => { if (!done) { done = true; res(); } }; im.onload = () => { (im.decode ? im.decode().catch(() => {}) : Promise.resolve()).then(fin); }; im.onerror = fin; im.src = portrait ? KEYART.p : KEYART.l; setTimeout(fin, 4000); });
+    await new Promise((res) => { const im = new Image(); let done = false; const fin = () => { if (!done) { done = true; res(); } }; im.onload = () => { (im.decode ? im.decode().catch(() => {}) : Promise.resolve()).then(fin); }; im.onerror = fin; im.src = portrait ? KEYART.p : KEYART.l; setTimeout(fin, window.DKAPP_NATIVE ? 1500 : 4000); });   // 앱은 로컬 파일이라 금방 온다 — 스플래시를 오래 붙들지 않게 짧게
     if (box) box.classList.remove('preload'); }
   try {
     await loadAssets(pr => drawLoading(pr));

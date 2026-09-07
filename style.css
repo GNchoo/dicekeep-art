@@ -724,7 +724,6 @@ body.placing #game { cursor: grabbing; }
 .big-btn.primary { background: var(--btn-gold); border-color: var(--gold); color: #fff0c8; }
 .lobby-inf-btn { width: 100%; margin-top: 10px; flex-shrink: 0; letter-spacing: 0.5px; }
 /* 로비: 인피니티가 맨 위 주 동선, 스테이지·상점은 그 아래 보조 */
-.lobby-sep { width: 100%; height: 1px; margin: 14px 0 2px; background: linear-gradient(90deg, transparent, #4c3d2c, transparent); flex-shrink: 0; }
 .inf-btns .big-btn { font-size: 19px; padding: 16px 18px; min-height: 66px; }
 .inf-btns .big-btn small { font-size: 12px; }
 /* 인피니티 두 갈래: 도전(클리어 있음) / 무한(기록) */
@@ -1265,7 +1264,9 @@ body.ui-art .icon-btn[data-icon] { font-size: 0; background-position: center; ba
   #lobby .inf-btns .big-btn { min-height: 46px; padding: 6px 10px; font-size: 15px; margin-top: 4px; flex: 1 1 140px; }
   #lobby .inf-btns .big-btn small { font-size: 10px; }
   #lobby-inf { font-size: 11px; margin-top: 2px; }
-  #lobby .lobby-btns:not(.inf-btns):not(.mp-btns) .big-btn { min-height: 40px; padding: 6px 10px; font-size: 14px; }
+  #lobby .lobby-btns:not(.inf-btns):not(.mp-btns):not(.hub-btns) .big-btn { min-height: 40px; padding: 6px 10px; font-size: 14px; }
+  #lobby #lobby-box h1 { font-size: 22px; min-height: 34px; line-height: 34px; padding: 0 44px; margin-bottom: 6px; }   /* ←·⚙(34px) 와 같은 줄 — 첫 버튼과 안 겹치게 */
+  #lobby-back, #lobby-settings { top: 6px; width: 34px; min-height: 34px; height: 34px; }
   #lobby #lobby-progress { font-size: 11px; margin: 0; }
   #lobby .gem-chip.big { font-size: 15px; padding: 3px 12px; margin: 2px auto 0; }
   #mp-block .mp-head { font-size: 16px; }
@@ -1294,5 +1295,5 @@ body.ui-art .icon-btn[data-icon] { font-size: 0; background-position: center; ba
 #stage.viewing #spec-pill { top: calc(max(6px, var(--sa-t)) + 104px); }
 @media (min-aspect-ratio: 4/3) and (max-height: 640px) and (max-width: 900px) {
   #lobby .inf-btns .big-btn { flex: 1 1 100%; margin-top: 4px; }   /* 좁은 가로: 인피니티 버튼 두 개를 세로로 */
-  #lobby .lobby-btns:not(.inf-btns):not(.mp-btns) .big-btn { flex: 1 1 100%; }
+  #lobby .lobby-btns:not(.inf-btns):not(.mp-btns):not(.hub-btns) .big-btn { flex: 1 1 100%; }
 }
