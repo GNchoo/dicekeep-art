@@ -55,7 +55,7 @@ async function run(job, model) {
     for (const p of job.refs) fd.append('image[]', new Blob([fs.readFileSync(p)], { type: 'image/png' }), path.basename(p));
     fd.append('model', model); fd.append('prompt', prompt); fd.append('n', String(n)); fd.append('size', size); fd.append('quality', quality);
     if (background !== 'auto') fd.append('background', background);
-    if (job.inputFidelity) fd.append('input_fidelity', job.inputFidelity);
+    if (job.inputFidelity && !/^gpt-image-2/.test(model)) fd.append('input_fidelity', job.inputFidelity);   // gpt-image-2 는 이 인자를 거부한다 (400 invalid_input_fidelity_model)
     data = await call('https://api.openai.com/v1/images/edits', { method: 'POST', headers: H, body: fd }, job.id);
   } else {
     const body = { model, prompt, n, size, quality, output_format: 'png' };

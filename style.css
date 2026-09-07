@@ -242,7 +242,7 @@ body { touch-action: manipulation; }
 /* 세로 폰·태블릿(가로:세로 ≤ 3:4): 제목 글자가 새겨진 세로 키아트를 쓰고 CSS 제목·부제는 숨긴다 (그림의 돌 제목이 제목) */
 @media (max-aspect-ratio: 3/4) {
   #overlay.title { background-image: var(--keyart-title-p, var(--keyart-title, var(--keyart-bg, none))); background-size: cover; background-position: center; }
-  #overlay #overlay-box.title #ov-title, #overlay #overlay-box.title #ov-sub { display: none; }   /* 뒤에 오는 '#overlay-box.title #ov-sub {display:flex}' 보다 우선 */
+  #overlay #overlay-box.title #ov-title { font-size: clamp(38px, 11vw, 64px); letter-spacing: 5px; }   /* 세로도 CSS 금박 제목 (그림에는 글자가 없다 — 가로와 글씨체 통일) */
   #overlay #overlay-box.title { padding-bottom: max(5vh, 22px); }   /* 뒤의 '#overlay-box.title {padding: …}' 보다 우선 */
 }
 #overlay-box.title { background: none; border: 0; box-shadow: none; padding: 0 0 max(6vh, 24px); width: 100%; max-width: none; height: 100%; justify-content: flex-end; align-items: center; overflow: visible; }

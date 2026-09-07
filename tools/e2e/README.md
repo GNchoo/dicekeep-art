@@ -22,5 +22,6 @@ node /home/user/dicekeep-art/tools/e2e/single-smoke.js
 | `hub-shot.js` · `hub-matrix.js` | 로비 허브·싱글·멀티 갈래, 뒤로가기 체인, 배속 버튼 |
 | `boss-shot.js` · `boss-matrix.js` | 보스 웨이브 말풍선, 칩·미니 버튼 한 줄 판정 |
 | `art-visual.js` · `stage-sell-shot.js` · `polish-shot.js` · `entry-shot.js` · `lobby-land.js` | 그림 연출·판매 버튼·굴림 중앙 표시·세로 입구·가로 로비 |
+| `inf-art-check.js [maxWave]` | 인피니티 새 그림(`INF_ART_READY`): 웨이브마다 첫 적을 0.4초 간격 3장 확대 캡처(걷기 프레임·방향·후광), 이름·art 키·크기, 404 목록. 마지막 웨이브는 기존 로스터와 크기 비교용 |
 
 훅(`game.js` 끝): `DK`, `DKstartInf('clear')`, `DKchest()`, `DKsync()`, `DKend()`, `DKlobby()`, `DKlobbyView('hub'|'single'|'multi')`, `DKLANES()`, `DKacquire(face)`, `DKDIE.forceFinal`.

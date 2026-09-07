@@ -124,7 +124,13 @@ node tools/keyart-build.mjs --portrait=gen/keyart/portrait-1.png --landscape=gen
 OPENAI_API_KEY=… node tools/img-gen.mjs tools/jobs/inf-w01-05.json       # 정지컷 (투명 배경) → 고른 것을 casual/enemies/inf/wNNN.png 로
 OPENAI_API_KEY=… node tools/img-gen.mjs tools/jobs/inf-w01-05-walk.json  # 정지컷을 참조로 2×2 걷기 시트
 node tools/sheet-check.mjs gen/inf/w001-walk-1.png --sheet-out=casual/enemies/inf/w001-walk-2x2.png     # 칸 편차 검사 + 저장
+node tools/png-pack.mjs --size=512 casual/enemies/inf/w001.png            # 게임용으로 줄이기: 정지컷 512², 시트 --size=1024 (256색 팔레트, 2MB → 0.1~0.35MB)
 ```
+
+- 프록시 환경(Claude Code 클라우드 등)에서는 Node 내장 fetch 가 `HTTPS_PROXY` 를 안 읽으므로 `NODE_USE_ENV_PROXY=1` 을 함께 준다.
+- 모델은 `gpt-image-*` 중 최신을 고른다(`--model=` 로 고정 가능). `gpt-image-2` 는 `input_fidelity` 를 받지 않아 스크립트가 알아서 뺀다.
+- 시트 검사 경고는 대부분 '캐릭터가 칸을 96% 넘게 채움'이라 곧바로 불량은 아니다 — 칸 경계선을 넘는지(이웃 칸에 조각이 남는지)와 발 위치 편차를 눈으로 보고 고른다. 잡 파일의 여백 지시(칸의 70% 이하)를 넣은 뒤로 경계 접촉이 줄었다.
+- 새 그림은 실루엣이 가늘어 기존 만화 로스터보다 작게 읽히므로 `content.js` `INFINITY.artSize`(S 42 · M 50 · L 58, 캔버스 px)로 등급별 고정 높이를 준다(`game.js spawnEnemy`). 게임 안 확인은 `tools/e2e/inf-art-check.js`.
 
 그 뒤 `content.js` `INF_ART_READY` 에 웨이브 번호를 적으면 그 웨이브가 새 그림·새 이름을 쓴다(ART-PROMPTS §6). `gen/` 은 중간 산출물이라 커밋하지 않는다.
 

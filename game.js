@@ -2462,8 +2462,11 @@ function spawnEnemy(item) {
   if (!def) def = ENEMY_DEFS.mite;
   const lane = (item.lane != null && LANES[item.lane]) ? item.lane : laneFor(move, 0);
   const isBoss = !!item.isBoss;
-  if (item.isElite) { def = Object.assign({}, def, { size: Math.round((size || def.size) * 1.2) }); }
-  if (item.sizeClass && window.DKCONTENT && DKCONTENT.INFINITY.sizeScale) { const k = DKCONTENT.INFINITY.sizeScale[item.sizeClass] || 1; if (k !== 1) def = Object.assign({}, def, { size: Math.round(def.size * k) }); }
+  const INFC = window.DKCONTENT && DKCONTENT.INFINITY;
+  const artOk = !!(item.art && A[item.art] && A[item.art].cv);
+  if (artOk && item.sizeClass && INFC && INFC.artSize && INFC.artSize[item.sizeClass]) def = Object.assign({}, def, { size: INFC.artSize[item.sizeClass] });   // 인피니티 새 그림: 등급별 고정 높이 (content.js artSize)
+  else if (item.sizeClass && INFC && INFC.sizeScale) { const k = INFC.sizeScale[item.sizeClass] || 1; if (k !== 1) def = Object.assign({}, def, { size: Math.round(def.size * k) }); }
+  if (item.isElite) { def = Object.assign({}, def, { size: Math.round(def.size * 1.2) }); }
   const e = {
     type: item.type, def, isElite: !!item.isElite, spdMult: item.spdMult || 1,
     sizeClass: item.sizeClass || null, armor: item.armor || 0, wave: item.wave || S.wave, stunT: 0,
@@ -5692,7 +5695,7 @@ function drawLoading(pr) {
 (async () => {
   // 키아트는 로딩 첫 프레임부터 깔린다 (CSS 가 직접 받아온다 — 에셋 로딩을 기다리면 로딩 화면이 검은 화면이 된다)
   // 키아트(산 위 주사위 성)는 CSS 배경으로만 쓴다 — SRCS 에 넣으면 loadAssets 가 두 방향을 다 내려받는다. CSS 는 미디어 쿼리에 맞는 한 장만 받는다
-  const KEYART = { l: BASE + 'ui/title-keyart-l.jpg?v=89', p: BASE + 'ui/title-keyart-p.jpg?v=89', blur: BASE + 'ui/title-keyart-l-blur.jpg?v=89' };   // ?v= 는 index.html 의 preload href 와 같아야 한다 (같은 URL 이어야 미리 받은 걸 쓴다)   // l: 제목 없는 윗부분(CSS 제목을 얹는다) · p: 그림 안의 돌 제목까지 · blur: 가로 양옆 밑바탕
+  const KEYART = { l: BASE + 'ui/title-keyart-l.jpg?v=90', p: BASE + 'ui/title-keyart-p.jpg?v=90', blur: BASE + 'ui/title-keyart-l-blur.jpg?v=90' };   // ?v= 는 index.html 의 preload href 와 같아야 한다 (같은 URL 이어야 미리 받은 걸 쓴다)   // l·p: 글자 없는 그림(세로·가로 모두 CSS 금박 제목을 얹는다) · blur: 가로 양옆 밑바탕
   document.body.style.setProperty('--keyart-bg', `linear-gradient(rgba(5,4,3,.45), rgba(5,4,3,.7)), url('${KEYART.l}')`);
   document.body.style.setProperty('--keyart-title', `linear-gradient(rgba(5,4,3,.10), rgba(5,4,3,.10) 45%, rgba(5,4,3,.82) 100%), url('${KEYART.l}'), url('${KEYART.blur}')`);   // 가로·데스크톱 타이틀: 그림을 높이에 맞춰 통째로 + 양옆은 흐린 밑바탕, 위에 CSS 제목
   document.body.style.setProperty('--keyart-title-p', `linear-gradient(rgba(5,4,3,.04), rgba(5,4,3,.04) 80%, rgba(5,4,3,.55) 100%), url('${KEYART.p}')`);   // 세로 타이틀: 그림의 돌 제목을 그대로, 맨 아래(버튼 자리)만 살짝

@@ -1400,7 +1400,7 @@ window.DKCONTENT = (function () {
     100: { boss: true, name: '파멸의 군주', second: '공허 용', cls: 'S', tier: 10 },
     101: { name: '종말의 사자', cls: 'M', move: 'ground', tier: 10 },
   };
-  const INF_ART_READY = new Set([]);   // 예: [1, 2, 3, '10', '20-2'] — casual/enemies/inf/w001.png … casual/bosses/inf/b020-2.png
+  const INF_ART_READY = new Set([1, 2, 3, 4, 5]);   // 예: [1, 2, 3, '10', '20-2'] — casual/enemies/inf/w001.png … casual/bosses/inf/b020-2.png
   const pad3 = (n) => String(n).padStart(3, '0');
   // 웨이브 w 의 새 그림 (준비된 것만): 일반 { key, src, walkKey, walkSrc } · 보스 k(0 군주·1 부관) { key, src, name }
   function infArt(w, k) {
@@ -1462,6 +1462,8 @@ window.DKCONTENT = (function () {
     sizeMult: { vib: { S: 1, M: 0.5, L: 0.25 }, exp: { S: 0.5, M: 0.75, L: 1 }, norm: { S: 1, M: 1, L: 1 } },
     sizeName: { S: '소형', M: '중형', L: '대형' },
     sizeScale: { S: 0.9, M: 1, L: 1.15 },
+    // 새 그림(INF_ART_READY, 반실사 다크 판타지)은 base 의 크기와 무관하게 등급별 고정 높이(캔버스 px) — 실루엣이 가늘어 기존 만화 로스터(40~55)보다 작게 읽혀서 위쪽 값으로 맞춘다
+    artSize: { S: 42, M: 50, L: 58 },
     // 원작 1~101R 몬스터 크기 표 그대로 (보스 라운드 포함). 웨이브 w 의 크기 = sizeSeq[(w-1)%101]
     sizeSeq: ('SSLSMLLSLL' + 'SLSLMLMSLL' + 'SLSSMSLLLS' + 'SSSLLLMSMS' + 'LMLLLSMLSL' + 'LSMSLLLSML' + 'MSSMLLSSLS' + 'LSLSSSSLMM' + 'SMLLSSLSLL' + 'SSLLMSLMLSM').split(''),
     sizeOf(w) { return this.sizeSeq[(Math.max(1, w) - 1) % this.sizeSeq.length]; },

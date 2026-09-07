@@ -243,6 +243,8 @@ Hand-painted casual tower defense arena FLOOR ONLY, Kingdom Rush and Random Dice
 > ```
 >
 > 키아트: `node tools/img-gen.mjs tools/jobs/keyart.json` → `node tools/keyart-build.mjs --portrait=gen/keyart/portrait-1.png --landscape=gen/keyart/landscape-1.png`. 키는 환경변수로만, 파일에 쓰지 않는다. 아래 치비 공통 프롬프트·1단계 표는 6~101 웨이브가 아직 옛 설계라 남겨 둔다.
+>
+> **2026-09-07 납품 — 키아트 2장 + 1~5 정지컷·시트 (`gpt-image-2`)**: 세로 `portrait-1`(5눈 주사위, 아래 1/4 안개), 가로 `landscape-2`(달빛, 아래 1/3 안개) → 세로·가로 모두 글자 없는 그림 위에 CSS 금박 제목(`?v=90`). 몬스터는 후보 2장 중 w001-2 · w002-1 · w003-2 · w004-1 · w005-1, 걷기 시트는 여백 지시(칸의 70% 이하)를 넣은 2차 생성에서 w001-2 · w002-1 · w003-2 · w004-2 · w005-1(`sheet-check` 경고 0~2칸, 경계선 침범 없음). `png-pack` 으로 정지컷 512²·시트 1024² 팔레트 PNG(합계 2.1MB). 크기는 `INFINITY.artSize`(S 42·M 50·L 58) 고정. `INF_ART_READY = [1,2,3,4,5]`.
 
 인피니티(도전·함께) 101웨이브의 몬스터를 **10단계 테마 × 10웨이브 + 보스** 로 다시 설계했다. 지금은 기존 적 그림을 겉보기 강함 순으로 재배치해 쓰고 있고(`content.js` `look`), **아래 파일명으로 그림을 넣고 `INF_ART_READY` 에 웨이브 번호를 적으면 그 웨이브만 새 그림·새 이름으로 바뀐다** (부분 납품 가능, 나머지는 기존 그림 폴백).
 
