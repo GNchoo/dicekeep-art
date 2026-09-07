@@ -1,0 +1,16 @@
+{
+  "command": [
+    "node",
+    "tools/build-www.mjs"
+  ],
+  "startedAt": "2026-09-07T16:41:38.205Z",
+  "finishedAt": "2026-09-07T16:41:40.769Z",
+  "verifiedRebuildTarget": "www/",
+  "sourceGameSha256": "1086c3a566aa777a23f511d1c663e5913165530a117ca919a13f3d8638e26b68",
+  "sourceUnchanged": true,
+  "buildToolSha256": "e0de5702e5d5c57c36d448c55032932b55fb074c824deeaa8eb5bc81a49d11ea",
+  "exitCode": 0,
+  "log": "build-www.log",
+  "logSha256": "2f8c0ed7eacbd551aabc42f50843c6edafa77d8cc5596c0e930ab2ce658fc011",
+  "pass": true
+}

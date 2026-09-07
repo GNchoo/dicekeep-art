@@ -1,0 +1,26 @@
+{
+  "entries": [
+    "b050",
+    "b050-2"
+  ],
+  "approved": true,
+  "views": 6,
+  "bakedPoses": 48,
+  "checks": [
+    "Full body and complete weapons visible in every frame; intact stylized armor, no gore.",
+    "Physical right-hand sword appears screen-left in front and screen-right in back.",
+    "Physical leg textures in front swapped to corresponding outward boot orientation.",
+    "Castle golem side cannon now points right with the chest; rear cannons show closed breeches.",
+    "Castle golem rear legs use broader closed heel boots with preserved source aspect, fixed hips and per-frame scale.",
+    "All six view boards inspected; both four-direction moving sheets independently verify phase/contact."
+  ],
+  "corrections": [
+    "boss50-back-golem-correction: wider rear legs and closed cannon breeches",
+    "boss50-side-cannon-correction: forward-facing shoulder cannon"
+  ],
+  "limitations": [
+    "Rigid armored upper body and cape; the eight-cut walk animates supporting limbs and body motion.",
+    "Composite contact proximity cannot prove limb identity; source textures and six view boards were also inspected.",
+    "Held eight-frame raster motion quantizes foot contact by at most one eighth stride."
+  ]
+}

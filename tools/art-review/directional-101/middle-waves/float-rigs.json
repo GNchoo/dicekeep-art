@@ -1,0 +1,328 @@
+{
+  "version": 1,
+  "canonicalCell": 512,
+  "assetVersion": 93,
+  "entries": [
+    {
+      "assetId": "w052",
+      "wave": 52,
+      "role": "normal",
+      "locomotion": "float",
+      "cell": 256,
+      "referenceHeight": 400,
+      "cycleStride": 0,
+      "cycleSeconds": 1.6,
+      "reviewApproved": true,
+      "hover": {
+        "lift": 8,
+        "roll": 1.1
+      },
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/middle-waves/t6-float-01-turnaround-clean.png",
+          "sourceSha256": "fffe7b88a8b5e207eacdf04d8599b3ba3bee57e56b5f0ea6f5ba90cc6205c925",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.3333333333333333,
+              0.46875
+            ],
+            "target": [
+              189.64928909952607,
+              96.96682464454977,
+              146.91943127962085,
+              346.9194312796209
+            ],
+            "layer": 10
+          },
+          "parts": [],
+          "jointReview": "Explicit float locomotion. One common source-pixel scale across all views. Original source body-center anchor [300,455] aligns to canonical pivot [256,460]; tail or bounding-box center does not recenter the character. No walking or wing claim.",
+          "reviewedSourceAnchor": [
+            300,
+            455
+          ]
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/middle-waves/t6-float-01-turnaround-clean.png",
+          "sourceSha256": "fffe7b88a8b5e207eacdf04d8599b3ba3bee57e56b5f0ea6f5ba90cc6205c925",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0.3333333333333333,
+              0,
+              0.3333333333333333,
+              0.46875
+            ],
+            "target": [
+              164.05687203791467,
+              58.104265402843566,
+              179.14691943127963,
+              400
+            ],
+            "layer": 10
+          },
+          "parts": [],
+          "jointReview": "Explicit float locomotion. One common source-pixel scale across all views. Original source body-center anchor [770,455] aligns to canonical pivot [256,460]; tail or bounding-box center does not recenter the character. No walking or wing claim.",
+          "reviewedSourceAnchor": [
+            770,
+            455
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/middle-waves/t6-float-01-turnaround-clean.png",
+          "sourceSha256": "fffe7b88a8b5e207eacdf04d8599b3ba3bee57e56b5f0ea6f5ba90cc6205c925",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0.6666666666666666,
+              0,
+              0.3333333333333333,
+              0.46875
+            ],
+            "target": [
+              162.1611374407583,
+              73.27014218009481,
+              168.72037914691944,
+              384.8341232227488
+            ],
+            "layer": 10
+          },
+          "parts": [],
+          "jointReview": "Explicit float locomotion. One common source-pixel scale across all views. Original source body-center anchor [1220,455] aligns to canonical pivot [256,460]; tail or bounding-box center does not recenter the character. No walking or wing claim.",
+          "reviewedSourceAnchor": [
+            1220,
+            455
+          ]
+        }
+      }
+    },
+    {
+      "assetId": "w059",
+      "wave": 59,
+      "role": "normal",
+      "locomotion": "float",
+      "cell": 256,
+      "referenceHeight": 400,
+      "cycleStride": 0,
+      "cycleSeconds": 1.6,
+      "reviewApproved": true,
+      "hover": {
+        "lift": 8,
+        "roll": 1.1
+      },
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/middle-waves/t6-float-01-turnaround.png",
+          "sourceSha256": "1b3507cf377fedc3911086df1b40ca94f0bdfef692a46376be083275352b9816",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.46875,
+              0.3333333333333333,
+              0.53125
+            ],
+            "target": [
+              49.131313131313135,
+              72.92929292929296,
+              298.98989898989896,
+              378.98989898989896
+            ],
+            "layer": 10
+          },
+          "parts": [],
+          "jointReview": "Explicit float locomotion. One common source-pixel scale across all views. Original source body-center anchor [300,980] aligns to canonical pivot [256,460]; tail or bounding-box center does not recenter the character. No walking or wing claim.",
+          "reviewedSourceAnchor": [
+            300,
+            980
+          ]
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/middle-waves/t6-float-01-turnaround.png",
+          "sourceSha256": "1b3507cf377fedc3911086df1b40ca94f0bdfef692a46376be083275352b9816",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0.3333333333333333,
+              0.46875,
+              0.3333333333333333,
+              0.53125
+            ],
+            "target": [
+              93.57575757575759,
+              68.88888888888891,
+              303.83838383838383,
+              400
+            ],
+            "layer": 10
+          },
+          "parts": [],
+          "jointReview": "Explicit float locomotion. One common source-pixel scale across all views. Original source body-center anchor [768,980] aligns to canonical pivot [256,460]; tail or bounding-box center does not recenter the character. No walking or wing claim.",
+          "reviewedSourceAnchor": [
+            768,
+            980
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/middle-waves/t6-float-01-turnaround.png",
+          "sourceSha256": "1b3507cf377fedc3911086df1b40ca94f0bdfef692a46376be083275352b9816",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0.6666666666666666,
+              0.46875,
+              0.3333333333333333,
+              0.53125
+            ],
+            "target": [
+              99.23232323232324,
+              72.12121212121212,
+              308.6868686868687,
+              395.95959595959596
+            ],
+            "layer": 10
+          },
+          "parts": [],
+          "jointReview": "Explicit float locomotion. One common source-pixel scale across all views. Original source body-center anchor [1230,980] aligns to canonical pivot [256,460]; tail or bounding-box center does not recenter the character. No walking or wing claim.",
+          "reviewedSourceAnchor": [
+            1230,
+            980
+          ]
+        }
+      }
+    },
+    {
+      "assetId": "b060",
+      "wave": 60,
+      "role": "boss",
+      "locomotion": "float",
+      "cell": 512,
+      "referenceHeight": 400,
+      "cycleStride": 0,
+      "cycleSeconds": 1.6,
+      "reviewApproved": true,
+      "hover": {
+        "lift": 8,
+        "roll": 1.1
+      },
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/middle-waves/t6-boss-01-turnaround.png",
+          "sourceSha256": "b9762a95ad8cc5bf4763ffeebe30d3281113519d4338f64c0aea7bbe9cf6b073",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.3333333333333333,
+              0.537109375
+            ],
+            "target": [
+              107.73116089613035,
+              68.96130346232178,
+              267.20977596741346,
+              380.4480651731161
+            ],
+            "layer": 10
+          },
+          "parts": [],
+          "jointReview": "Explicit float locomotion. One common source-pixel scale across all views. Original source body-center anchor [310,520] aligns to canonical pivot [256,460]; tail or bounding-box center does not recenter the character. No walking or wing claim.",
+          "reviewedSourceAnchor": [
+            310,
+            520
+          ]
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/middle-waves/t6-boss-01-turnaround.png",
+          "sourceSha256": "b9762a95ad8cc5bf4763ffeebe30d3281113519d4338f64c0aea7bbe9cf6b073",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0.3333333333333333,
+              0,
+              0.3333333333333333,
+              0.537109375
+            ],
+            "target": [
+              123.20977596741344,
+              60.81466395112011,
+              263.13645621181263,
+              400
+            ],
+            "layer": 10
+          },
+          "parts": [],
+          "jointReview": "Explicit float locomotion. One common source-pixel scale across all views. Original source body-center anchor [779,520] aligns to canonical pivot [256,460]; tail or bounding-box center does not recenter the character. No walking or wing claim.",
+          "reviewedSourceAnchor": [
+            779,
+            520
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/middle-waves/t6-boss-01-turnaround.png",
+          "sourceSha256": "b9762a95ad8cc5bf4763ffeebe30d3281113519d4338f64c0aea7bbe9cf6b073",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0.6666666666666666,
+              0,
+              0.3333333333333333,
+              0.537109375
+            ],
+            "target": [
+              133.80040733197555,
+              70.59063136456211,
+              232.99389002036662,
+              388.5947046843177
+            ],
+            "layer": 10
+          },
+          "parts": [],
+          "jointReview": "Explicit float locomotion. One common source-pixel scale across all views. Original source body-center anchor [1255,520] aligns to canonical pivot [256,460]; tail or bounding-box center does not recenter the character. No walking or wing claim.",
+          "reviewedSourceAnchor": [
+            1255,
+            520
+          ]
+        }
+      }
+    }
+  ]
+}

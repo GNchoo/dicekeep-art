@@ -1,0 +1,1550 @@
+{
+  "mode": "builtin-image_gen",
+  "owner": "art_direction",
+  "waveRange": [
+    61,
+    101
+  ],
+  "requests": [
+    {
+      "call": 1,
+      "id": "t7-biped-01-turnaround",
+      "stage": "turnaround",
+      "assetIds": [
+        "w063",
+        "w065",
+        "w066",
+        "w069"
+      ],
+      "prompt": "prompts/t7-biped-01-turnaround.txt",
+      "promptSha256": "486099b4c4ed51d4b17a31a7d8f0207d09bd1e50db4dff9b575789e20ffd6ff7",
+      "reference": "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/forest-quad-01-turnaround.png",
+      "referenceSha256": "a5e9044520d128f59ac7e142c20f999a91b03bde377bfe612f48549c01279a8b",
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-a1f3169c-dd74-49f7-a69a-39b8a5874aac.png",
+      "source": "sources/t7-biped-01-turnaround.png",
+      "sha256": "31545c8882e89465f39be41efbcb989c54bfd83146aa5f7dea718f2fa3dac61b",
+      "width": 887,
+      "height": 1774,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-design-reference",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/forest-quad-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 2,
+      "id": "t8-biped-01-turnaround",
+      "stage": "turnaround",
+      "assetIds": [
+        "w074",
+        "w075",
+        "w079"
+      ],
+      "prompt": "prompts/t8-biped-01-turnaround.txt",
+      "promptSha256": "fc91d53e19a88c4617b5f0a35a667765ea67a72c02147025e8d5f2cd1dd29775",
+      "reference": "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/forest-quad-01-turnaround.png",
+      "referenceSha256": "a5e9044520d128f59ac7e142c20f999a91b03bde377bfe612f48549c01279a8b",
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-a3e3ee28-c803-49fe-acd6-d88d437db126.png",
+      "source": "sources/t8-biped-01-turnaround.png",
+      "sha256": "22c01d4ac904f68814a2e521b2eb175258ad075fe2b3f10fccfb99e14ce63bf4",
+      "width": 887,
+      "height": 1774,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-design-reference",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/forest-quad-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 3,
+      "id": "t9-biped-01-turnaround",
+      "stage": "turnaround",
+      "assetIds": [
+        "w081",
+        "w083",
+        "w086",
+        "w087"
+      ],
+      "prompt": "prompts/t9-biped-01-turnaround.txt",
+      "promptSha256": "35d0434bc43d96c3b72e35617412bb820bf24e36f86524c8231887c0584a94a1",
+      "reference": "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/forest-quad-01-turnaround.png",
+      "referenceSha256": "a5e9044520d128f59ac7e142c20f999a91b03bde377bfe612f48549c01279a8b",
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-5fadc756-2eaa-4187-8944-7943ae5bb6e2.png",
+      "source": "sources/t9-biped-01-turnaround.png",
+      "sha256": "345ecaec222eef868910ce3b6165e802d5af3fe3500c33d9dfdf5c0a762f30e0",
+      "width": 887,
+      "height": 1774,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-design-reference",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/forest-quad-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 4,
+      "id": "t10-biped-01-turnaround",
+      "stage": "turnaround",
+      "assetIds": [
+        "w093",
+        "w094",
+        "w095",
+        "w097"
+      ],
+      "prompt": "prompts/t10-biped-01-turnaround.txt",
+      "promptSha256": "304ddef042385902bb0a48fa55a1c6d15030e59a6c73f0ea80701bb20024baa7",
+      "reference": "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/forest-quad-01-turnaround.png",
+      "referenceSha256": "a5e9044520d128f59ac7e142c20f999a91b03bde377bfe612f48549c01279a8b",
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-eec97596-f638-4b5c-a6f1-a7a97f4e894a.png",
+      "source": "sources/t10-biped-01-turnaround.png",
+      "sha256": "2bdcfad496f2a225fb0b7a02e542b68dc3dca5ae97920faf459e19c13b4ef8a1",
+      "width": 887,
+      "height": 1774,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-design-reference",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/forest-quad-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 5,
+      "id": "t7-boss-01-turnaround",
+      "stage": "turnaround",
+      "assetIds": [
+        "b070",
+        "b070-2"
+      ],
+      "prompt": "prompts/t7-boss-01-turnaround.txt",
+      "promptSha256": "e19d9d4522b0f7491942950922c0b7aff3b4dc64bad21df4b6d9b5f290c0b31a",
+      "reference": "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/forest-quad-01-turnaround.png",
+      "referenceSha256": "a5e9044520d128f59ac7e142c20f999a91b03bde377bfe612f48549c01279a8b",
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-023d9d6d-e4a6-4bba-8dcc-05b411fd4a04.png",
+      "source": "sources/t7-boss-01-turnaround.png",
+      "sha256": "ccc3c6cff2e75b4a792f73f341ad35fa3d50b8b88700644d02d5fc8908dbe01c",
+      "width": 1024,
+      "height": 1536,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-selected-production-components",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/forest-quad-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 6,
+      "id": "t8-boss-01-turnaround",
+      "stage": "turnaround",
+      "assetIds": [
+        "b080",
+        "b080-2"
+      ],
+      "prompt": "prompts/t8-boss-01-turnaround.txt",
+      "promptSha256": "5c9b25d47790fae61e29c03db632110081e2b9efd2b42a5bb9ebd255961428e6",
+      "reference": "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/forest-quad-01-turnaround.png",
+      "referenceSha256": "a5e9044520d128f59ac7e142c20f999a91b03bde377bfe612f48549c01279a8b",
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-b181b1dd-07d2-4745-a962-47cf79a26f6c.png",
+      "source": "sources/t8-boss-01-turnaround.png",
+      "sha256": "d1beb1dbc4fb71a3c8f652834489d2d6597017e61ea1bf4c6ac5fd99a6a8b3a1",
+      "width": 1024,
+      "height": 1536,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-design-reference",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/forest-quad-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 7,
+      "id": "t9-boss-01-turnaround",
+      "stage": "turnaround",
+      "assetIds": [
+        "b090",
+        "b090-2"
+      ],
+      "prompt": "prompts/t9-boss-01-turnaround.txt",
+      "promptSha256": "b0d8b354075674024c3406ad6412f7076f1ded45413e0814eed7bef6b208d282",
+      "reference": "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/forest-quad-01-turnaround.png",
+      "referenceSha256": "a5e9044520d128f59ac7e142c20f999a91b03bde377bfe612f48549c01279a8b",
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-947a502d-b161-4c74-9d8f-de6fe62f3678.png",
+      "source": "sources/t9-boss-01-turnaround.png",
+      "sha256": "cfd78100e29ddaa4977ab8c11e94dde54aa162bd6214ae03e6c08fb98a812d46",
+      "width": 1024,
+      "height": 1536,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-design-reference",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/forest-quad-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 8,
+      "id": "t10-boss-01-turnaround",
+      "stage": "turnaround",
+      "assetIds": [
+        "b100",
+        "b100-2"
+      ],
+      "prompt": "prompts/t10-boss-01-turnaround.txt",
+      "promptSha256": "dfeff08a915e425edf51e873391d7545aa4b26ab8b52b6c40d2cfdfadbf5e065",
+      "reference": "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/forest-quad-01-turnaround.png",
+      "referenceSha256": "a5e9044520d128f59ac7e142c20f999a91b03bde377bfe612f48549c01279a8b",
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-22aad619-b772-47f5-889b-fe67cab5286c.png",
+      "source": "sources/t10-boss-01-turnaround.png",
+      "sha256": "68cc0ce5232677188b3df8d07c373406dab9f72af782627d5ea15b90cf951dda",
+      "width": 1024,
+      "height": 1536,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-design-reference",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/forest-quad-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 9,
+      "id": "t7-quad-01-turnaround",
+      "stage": "turnaround",
+      "assetIds": [
+        "w067"
+      ],
+      "prompt": "prompts/t7-quad-01-turnaround.txt",
+      "promptSha256": "928c332988bc672f7eb5554319ad0916b092766bba0ea17587163c9de50d8432",
+      "reference": "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/forest-quad-01-turnaround.png",
+      "referenceSha256": "a5e9044520d128f59ac7e142c20f999a91b03bde377bfe612f48549c01279a8b",
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-6a5b0bff-3b10-4b5e-a835-f0375cb68a69.png",
+      "source": "sources/t7-quad-01-turnaround.png",
+      "sha256": "007a181fac474498147c36041267f52e61d55d923c5cb328722ece73fabb578d",
+      "width": 1774,
+      "height": 887,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-design-reference",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/forest-quad-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 10,
+      "id": "t8-quad-01-turnaround",
+      "stage": "turnaround",
+      "assetIds": [
+        "w073",
+        "w078"
+      ],
+      "prompt": "prompts/t8-quad-01-turnaround.txt",
+      "promptSha256": "d242bb29e5593e2bdb98b3edeb124bde6584d332d0d6c211b74990f3566d53a6",
+      "reference": "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/forest-quad-01-turnaround.png",
+      "referenceSha256": "a5e9044520d128f59ac7e142c20f999a91b03bde377bfe612f48549c01279a8b",
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-28ba8432-d304-429d-8fd0-5f7e15d498eb.png",
+      "source": "sources/t8-quad-01-turnaround.png",
+      "sha256": "b3cf277ca4ada97a1030a60717c09f46cc3d725ced602d05e70d49946b55106f",
+      "width": 1024,
+      "height": 1536,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-design-reference",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/forest-quad-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 11,
+      "id": "t9-biped-02-turnaround",
+      "stage": "turnaround",
+      "assetIds": [
+        "w089"
+      ],
+      "prompt": "prompts/t9-biped-02-turnaround.txt",
+      "promptSha256": "5a69f8a2d7d6929e2f3195834bd9de60c2bfc47fabc4f6f3054200391377e447",
+      "reference": "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/forest-quad-01-turnaround.png",
+      "referenceSha256": "a5e9044520d128f59ac7e142c20f999a91b03bde377bfe612f48549c01279a8b",
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-968053ba-73c3-4a14-8460-78c4853d5c01.png",
+      "source": "sources/t9-biped-02-turnaround.png",
+      "sha256": "bb2e65f6f134e72e1ecb9effe097631e1cf1bd9dda0b4f8c6e3b16cd9f4ccf75",
+      "width": 1774,
+      "height": 887,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-design-reference",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/forest-quad-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 12,
+      "id": "t10-biped-02-turnaround",
+      "stage": "turnaround",
+      "assetIds": [
+        "w099",
+        "w101"
+      ],
+      "prompt": "prompts/t10-biped-02-turnaround.txt",
+      "promptSha256": "411dd5697fba6afa7c26a5ff97c38396ded5ef399ac8f848d6d4185332bcaf38",
+      "reference": "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/forest-quad-01-turnaround.png",
+      "referenceSha256": "a5e9044520d128f59ac7e142c20f999a91b03bde377bfe612f48549c01279a8b",
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-3c50a6a3-64ea-4954-a847-0785789311c7.png",
+      "source": "sources/t10-biped-02-turnaround.png",
+      "sha256": "7b1d337892d68b0dc7f98be8a113273fbaadb92acdef324a0b90ab3be35f9258",
+      "width": 1024,
+      "height": 1536,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-design-reference",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/forest-quad-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 13,
+      "id": "t7-insect-wings-01-turnaround",
+      "stage": "turnaround",
+      "assetIds": [
+        "w062"
+      ],
+      "prompt": "prompts/t7-insect-wings-01-turnaround.txt",
+      "promptSha256": "03321784a2d3c4fb2ea70535757bc952a86c855aed493d3524f8c1cef4b67ca0",
+      "reference": "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/forest-quad-01-turnaround.png",
+      "referenceSha256": "a5e9044520d128f59ac7e142c20f999a91b03bde377bfe612f48549c01279a8b",
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-2789eb3c-c92d-477a-88d7-8fbfa35d1452.png",
+      "source": "sources/t7-insect-wings-01-turnaround.png",
+      "sha256": "def2a6ef01a6f614a76f28c4a4a8103537a57cf64bd18b49521cd52ca55ff841",
+      "width": 1774,
+      "height": 887,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-design-reference",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/forest-quad-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 14,
+      "id": "t7-bird-01-turnaround",
+      "stage": "turnaround",
+      "assetIds": [
+        "w064"
+      ],
+      "prompt": "prompts/t7-bird-01-turnaround.txt",
+      "promptSha256": "ad2b038f2a871c543c8df59046f8cf8b2768d99a751cb8fb682a01abc2a07326",
+      "reference": "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/forest-quad-01-turnaround.png",
+      "referenceSha256": "a5e9044520d128f59ac7e142c20f999a91b03bde377bfe612f48549c01279a8b",
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-560379a1-0bf8-4d45-8993-cddf8bd38bf1.png",
+      "source": "sources/t7-bird-01-turnaround.png",
+      "sha256": "7b783a3edefe029c61e5c15b0c7c9567cc664a19cecdc6154e42807afe116b89",
+      "width": 1774,
+      "height": 887,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-design-reference",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/forest-quad-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 15,
+      "id": "t7-book-01-turnaround",
+      "stage": "turnaround",
+      "assetIds": [
+        "w068"
+      ],
+      "prompt": "prompts/t7-book-01-turnaround.txt",
+      "promptSha256": "c45e2068349be3a2a290653d642346aa54c27de19a768956fb93cecae2390820",
+      "reference": "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/forest-quad-01-turnaround.png",
+      "referenceSha256": "a5e9044520d128f59ac7e142c20f999a91b03bde377bfe612f48549c01279a8b",
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-7aed7ec4-43d3-4487-aeec-1e6358ec0af1.png",
+      "source": "sources/t7-book-01-turnaround.png",
+      "sha256": "429be7ae30564b329c3badc349c651bc73339b54259ebb1e85b00840df2a7b10",
+      "width": 1774,
+      "height": 887,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-design-reference",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/forest-quad-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 16,
+      "id": "t8-bat-wings-01-turnaround",
+      "stage": "turnaround",
+      "assetIds": [
+        "w072",
+        "w076"
+      ],
+      "prompt": "prompts/t8-bat-wings-01-turnaround.txt",
+      "promptSha256": "e87ac1ce2f9e0b955ae83075f8fd922bf410465b2656bb5dbafd20b02dcad15d",
+      "reference": "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/forest-quad-01-turnaround.png",
+      "referenceSha256": "a5e9044520d128f59ac7e142c20f999a91b03bde377bfe612f48549c01279a8b",
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-a696f26e-eff9-40df-a05c-58d4e05abab2.png",
+      "source": "sources/t8-bat-wings-01-turnaround.png",
+      "sha256": "ed25c8f196aabd011335e129cbae35f4e896442220da768f5cf8f6eeb6b98f25",
+      "width": 1024,
+      "height": 1536,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-design-reference",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/forest-quad-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 17,
+      "id": "t7-float-01-turnaround",
+      "stage": "turnaround",
+      "assetIds": [
+        "w061"
+      ],
+      "prompt": "prompts/t7-float-01-turnaround.txt",
+      "promptSha256": "728ecf3237db0df054f5102cb5c60b6b48c9fa07b6c03d9434b06a9f5feb0491",
+      "reference": "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/forest-quad-01-turnaround.png",
+      "referenceSha256": "a5e9044520d128f59ac7e142c20f999a91b03bde377bfe612f48549c01279a8b",
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-45e621da-a168-4b3b-ad9c-b0fd24076517.png",
+      "source": "sources/t7-float-01-turnaround.png",
+      "sha256": "8bf85b6baf1cf57f460b8ec4ddf0e36092a2ca909f856954a57860720ac0202c",
+      "width": 1774,
+      "height": 887,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-selected-production-components",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/forest-quad-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 18,
+      "id": "t9-float-01-turnaround",
+      "stage": "turnaround",
+      "assetIds": [
+        "w085"
+      ],
+      "prompt": "prompts/t9-float-01-turnaround.txt",
+      "promptSha256": "e978458dcec170b7c8348102b171c310a0e0c9cefeaf6287feaefb2fa84579f6",
+      "reference": "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/forest-quad-01-turnaround.png",
+      "referenceSha256": "a5e9044520d128f59ac7e142c20f999a91b03bde377bfe612f48549c01279a8b",
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-6dba9bd6-775d-4d47-8f22-fe4e9541328f.png",
+      "source": "sources/t9-float-01-turnaround.png",
+      "sha256": "3dfd60a628ab55b54c42f5ed3fb34f3fa43a0b6ab2d8b546206063cba9fb5471",
+      "width": 1774,
+      "height": 887,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-selected-production-components",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/forest-quad-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 19,
+      "id": "t9-bat-wings-01-turnaround",
+      "stage": "turnaround",
+      "assetIds": [
+        "w088"
+      ],
+      "prompt": "prompts/t9-bat-wings-01-turnaround.txt",
+      "promptSha256": "e0ac18e5774e40ba0d691f3b98ca8cc013c80a07a9ac4a83ae58d316642f130b",
+      "reference": "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/forest-quad-01-turnaround.png",
+      "referenceSha256": "a5e9044520d128f59ac7e142c20f999a91b03bde377bfe612f48549c01279a8b",
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-cc841655-bade-4545-a2b1-e8ea4eccfb0f.png",
+      "source": "sources/t9-bat-wings-01-turnaround.png",
+      "sha256": "4ebf4442d693550ff411039c450d9edbea42641256e3eab7744b60a028035158",
+      "width": 1774,
+      "height": 887,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-design-reference",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/forest-quad-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 20,
+      "id": "t10-bird-01-turnaround",
+      "stage": "turnaround",
+      "assetIds": [
+        "w096"
+      ],
+      "prompt": "prompts/t10-bird-01-turnaround.txt",
+      "promptSha256": "6b6884c09ece80b7ab0c28af150b61c413ae578fc68284ee496f57d8ef2abc5c",
+      "reference": "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/forest-quad-01-turnaround.png",
+      "referenceSha256": "a5e9044520d128f59ac7e142c20f999a91b03bde377bfe612f48549c01279a8b",
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-64ff633f-77c3-4859-a1a8-319ece8ee310.png",
+      "source": "sources/t10-bird-01-turnaround.png",
+      "sha256": "b88efa1b438229de5a578829a3c8567cc60e46854d1accde8858243dd83c7bdf",
+      "width": 1774,
+      "height": 887,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-design-reference",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/forest-quad-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 21,
+      "id": "t8-t9-mixed-01-turnaround",
+      "stage": "turnaround",
+      "assetIds": [
+        "w071",
+        "w077",
+        "w082",
+        "w084"
+      ],
+      "prompt": "prompts/t8-t9-mixed-01-turnaround.txt",
+      "promptSha256": "b4004159a7651e6ed220303f8fa12d07469d387c3eca6fcdca11bf7cfc1265a7",
+      "reference": "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/forest-quad-01-turnaround.png",
+      "referenceSha256": "a5e9044520d128f59ac7e142c20f999a91b03bde377bfe612f48549c01279a8b",
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-38f4a230-809a-4372-a6ba-13cb68b6c857.png",
+      "source": "sources/t8-t9-mixed-01-turnaround.png",
+      "sha256": "9f8710b17528638f5dc76ac92b78ba4cd64cced2326ea94cbdad3488359c912c",
+      "width": 887,
+      "height": 1774,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-design-reference",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/forest-quad-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 22,
+      "id": "t10-mixed-01-turnaround",
+      "stage": "turnaround",
+      "assetIds": [
+        "w091",
+        "w092",
+        "w098"
+      ],
+      "prompt": "prompts/t10-mixed-01-turnaround.txt",
+      "promptSha256": "29e3fcbce4cbbdf0946dd5b75c89bd163fa66017071c87b0cccf537b1020d0d2",
+      "reference": "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/forest-quad-01-turnaround.png",
+      "referenceSha256": "a5e9044520d128f59ac7e142c20f999a91b03bde377bfe612f48549c01279a8b",
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-fb9c4a8b-f854-43a7-ad57-2e4c744f7760.png",
+      "source": "sources/t10-mixed-01-turnaround.png",
+      "sha256": "146b0f78e2aad87cc3d3545a1c8ae543861110cbfa772c5619287df111acd212",
+      "width": 887,
+      "height": 1774,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-selected-production-components",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/forest-quad-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 23,
+      "id": "late-biped-01-side-parts",
+      "stage": "parts",
+      "assetIds": [
+        "w063",
+        "w065",
+        "w066",
+        "w069"
+      ],
+      "prompt": "prompts/late-biped-01-side-parts.txt",
+      "promptSha256": "5ca8728f03e2e98ef12478a331dca6729914e9496d3d821213eeefd98d4ffac7",
+      "references": [
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t7-biped-01-turnaround.png"
+      ],
+      "referencesSha256": [
+        "31545c8882e89465f39be41efbcb989c54bfd83146aa5f7dea718f2fa3dac61b"
+      ],
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-c1690adf-ecda-4b2d-b5a7-e6dfd1dc06c6.png",
+      "source": "sources/late-biped-01-side-parts.png",
+      "sha256": "c20c47648e57f279f054b573122997dd4018ac0ed4e448458b26af3b018fb35d",
+      "width": 887,
+      "height": 1774,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-selected-production-components",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/late-waves/sources/t7-biped-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 24,
+      "id": "late-biped-01-front-back-parts",
+      "stage": "parts",
+      "assetIds": [
+        "w063",
+        "w065",
+        "w066",
+        "w069"
+      ],
+      "prompt": "prompts/late-biped-01-front-back-parts.txt",
+      "promptSha256": "3fc9f27fef90766b154aaea5d3b01a1cc1cde982e5ca0389e3bf833ec480e70c",
+      "references": [
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t7-biped-01-turnaround.png"
+      ],
+      "referencesSha256": [
+        "31545c8882e89465f39be41efbcb989c54bfd83146aa5f7dea718f2fa3dac61b"
+      ],
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-286922f0-cfba-4306-81bc-b6465c68287e.png",
+      "source": "sources/late-biped-01-front-back-parts.png",
+      "sha256": "867f9ea6d77c6fdf37c215e62ae656e39336b31efeb832dc679ac973b5601e83",
+      "width": 1254,
+      "height": 1254,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-selected-production-components",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/late-waves/sources/t7-biped-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 25,
+      "id": "late-quad-01-side-parts",
+      "stage": "parts",
+      "assetIds": [
+        "w067",
+        "w071",
+        "w073",
+        "w078"
+      ],
+      "prompt": "prompts/late-quad-01-side-parts.txt",
+      "promptSha256": "3db8f1a305722a1b92b97ff763471e65e174e649f9777a846b8f12a8d09c8b9d",
+      "references": [
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t7-quad-01-turnaround.png",
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-t9-mixed-01-turnaround.png",
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-quad-01-turnaround.png"
+      ],
+      "referencesSha256": [
+        "007a181fac474498147c36041267f52e61d55d923c5cb328722ece73fabb578d",
+        "9f8710b17528638f5dc76ac92b78ba4cd64cced2326ea94cbdad3488359c912c",
+        "b3cf277ca4ada97a1030a60717c09f46cc3d725ced602d05e70d49946b55106f"
+      ],
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-47a4d008-c221-4c6a-8d5e-41ff20e7c432.png",
+      "source": "sources/late-quad-01-side-parts.png",
+      "sha256": "f32ef1dac3abd2191b0e96aa1e0311aeeda75759d19eb8695e955dc5f0d5d462",
+      "width": 887,
+      "height": 1774,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-selected-production-components",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/late-waves/sources/t7-quad-01-turnaround.png",
+        "tools/art-review/directional-101/late-waves/sources/t8-t9-mixed-01-turnaround.png",
+        "tools/art-review/directional-101/late-waves/sources/t8-quad-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 26,
+      "id": "late-quad-01-front-back-parts",
+      "stage": "parts",
+      "assetIds": [
+        "w067",
+        "w071",
+        "w073",
+        "w078"
+      ],
+      "prompt": "prompts/late-quad-01-front-back-parts.txt",
+      "promptSha256": "8e9c45ea4a6dcad97550e4b175e45ac7f7910b27c74dcb090b456808beea8eaa",
+      "references": [
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t7-quad-01-turnaround.png",
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-t9-mixed-01-turnaround.png",
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-quad-01-turnaround.png"
+      ],
+      "referencesSha256": [
+        "007a181fac474498147c36041267f52e61d55d923c5cb328722ece73fabb578d",
+        "9f8710b17528638f5dc76ac92b78ba4cd64cced2326ea94cbdad3488359c912c",
+        "b3cf277ca4ada97a1030a60717c09f46cc3d725ced602d05e70d49946b55106f"
+      ],
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-c4859a76-8ca2-445c-bb8f-86b1a4b9f7e6.png",
+      "source": "sources/late-quad-01-front-back-parts.png",
+      "sha256": "2906d20e566d90c1920af79fa77d3e070a0802702d6bb369a12390cf77b21c6e",
+      "width": 1254,
+      "height": 1254,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-selected-production-components",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/late-waves/sources/t7-quad-01-turnaround.png",
+        "tools/art-review/directional-101/late-waves/sources/t8-t9-mixed-01-turnaround.png",
+        "tools/art-review/directional-101/late-waves/sources/t8-quad-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 27,
+      "id": "late-biped-02-side-parts",
+      "stage": "parts",
+      "assetIds": [
+        "w074",
+        "w075",
+        "w079",
+        "w081"
+      ],
+      "prompt": "prompts/late-biped-02-side-parts.txt",
+      "promptSha256": "60ca8ad1b6198f27456c5cb6f29c0c42bf6fc712775ee16dbbcbf70165acca86",
+      "references": [
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-biped-01-turnaround.png",
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t9-biped-01-turnaround.png"
+      ],
+      "referencesSha256": [
+        "22c01d4ac904f68814a2e521b2eb175258ad075fe2b3f10fccfb99e14ce63bf4",
+        "345ecaec222eef868910ce3b6165e802d5af3fe3500c33d9dfdf5c0a762f30e0"
+      ],
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-481d4812-e6e9-43ee-9587-f9dafee84450.png",
+      "source": "sources/late-biped-02-side-parts.png",
+      "sha256": "d8aae46bf89b47ca7e12bd87fcb9e708c4f430084e98cfff7db182b2b4e09262",
+      "width": 887,
+      "height": 1774,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-selected-production-components",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/late-waves/sources/t8-biped-01-turnaround.png",
+        "tools/art-review/directional-101/late-waves/sources/t9-biped-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 28,
+      "id": "late-biped-02-front-back-parts",
+      "stage": "parts",
+      "assetIds": [
+        "w074",
+        "w075",
+        "w079",
+        "w081"
+      ],
+      "prompt": "prompts/late-biped-02-front-back-parts.txt",
+      "promptSha256": "353b8eceeb7399839a3f08d1ff73414080340824beed0a99b5154b9ece7c5a7e",
+      "references": [
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-biped-01-turnaround.png",
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t9-biped-01-turnaround.png"
+      ],
+      "referencesSha256": [
+        "22c01d4ac904f68814a2e521b2eb175258ad075fe2b3f10fccfb99e14ce63bf4",
+        "345ecaec222eef868910ce3b6165e802d5af3fe3500c33d9dfdf5c0a762f30e0"
+      ],
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-beab7fa9-3ecb-4a31-8bf4-5a661079459c.png",
+      "source": "sources/late-biped-02-front-back-parts.png",
+      "sha256": "dfe0a0c32735fd8778e2612ee78e58f20251af241b36fa80abfaedcae99f9faf",
+      "width": 1254,
+      "height": 1254,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-selected-production-components",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/late-waves/sources/t8-biped-01-turnaround.png",
+        "tools/art-review/directional-101/late-waves/sources/t9-biped-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 29,
+      "id": "late-biped-03-side-parts",
+      "stage": "parts",
+      "assetIds": [
+        "w083",
+        "w086",
+        "w087",
+        "w089"
+      ],
+      "prompt": "prompts/late-biped-03-side-parts.txt",
+      "promptSha256": "d110aa0c770db0c31e2771933521ca1e1e740742dfc6c68a92e7055a08bdba9a",
+      "references": [
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t9-biped-01-turnaround.png",
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t9-biped-02-turnaround.png"
+      ],
+      "referencesSha256": [
+        "345ecaec222eef868910ce3b6165e802d5af3fe3500c33d9dfdf5c0a762f30e0",
+        "bb2e65f6f134e72e1ecb9effe097631e1cf1bd9dda0b4f8c6e3b16cd9f4ccf75"
+      ],
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-9eab4af8-9bf6-4dd9-b18f-240f43b72459.png",
+      "source": "sources/late-biped-03-side-parts.png",
+      "sha256": "965acba817f0b1df2cafd2727460ad099bccbd608cc4f445dc94095e357b4c51",
+      "width": 887,
+      "height": 1774,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-selected-production-components",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/late-waves/sources/t9-biped-01-turnaround.png",
+        "tools/art-review/directional-101/late-waves/sources/t9-biped-02-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 30,
+      "id": "late-biped-03-front-back-parts",
+      "stage": "parts",
+      "assetIds": [
+        "w083",
+        "w086",
+        "w087",
+        "w089"
+      ],
+      "prompt": "prompts/late-biped-03-front-back-parts.txt",
+      "promptSha256": "53e9b02152baf3773c8ee603e9d1085292cc4a5a2e93cc2a561d584dc873238b",
+      "references": [
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t9-biped-01-turnaround.png",
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t9-biped-02-turnaround.png"
+      ],
+      "referencesSha256": [
+        "345ecaec222eef868910ce3b6165e802d5af3fe3500c33d9dfdf5c0a762f30e0",
+        "bb2e65f6f134e72e1ecb9effe097631e1cf1bd9dda0b4f8c6e3b16cd9f4ccf75"
+      ],
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-1938f2f4-b84f-4993-8912-2c9c4f8b345a.png",
+      "source": "sources/late-biped-03-front-back-parts.png",
+      "sha256": "d2e64e40cc15642d66e8f554d0d83f7c0ae41477cf3ad7c86f79fe194da060dc",
+      "width": 1254,
+      "height": 1254,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-selected-production-components",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/late-waves/sources/t9-biped-01-turnaround.png",
+        "tools/art-review/directional-101/late-waves/sources/t9-biped-02-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 31,
+      "id": "late-biped-04-side-parts",
+      "stage": "parts",
+      "assetIds": [
+        "w093",
+        "w094",
+        "w095",
+        "w097"
+      ],
+      "prompt": "prompts/late-biped-04-side-parts.txt",
+      "promptSha256": "c798a4e49a132d71dcfafb16468875c392c67ee08293c320d8a881f27c7bae15",
+      "references": [
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t10-biped-01-turnaround.png"
+      ],
+      "referencesSha256": [
+        "2bdcfad496f2a225fb0b7a02e542b68dc3dca5ae97920faf459e19c13b4ef8a1"
+      ],
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-4d80ab97-a06c-420d-b582-798908fb1bba.png",
+      "source": "sources/late-biped-04-side-parts.png",
+      "sha256": "61b33daeaede41fdd20f305f1eb4a9bdaa489cd77b673f515d6b69bb58cea159",
+      "width": 887,
+      "height": 1774,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-selected-production-components",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/late-waves/sources/t10-biped-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 32,
+      "id": "late-biped-04-front-back-parts",
+      "stage": "parts",
+      "assetIds": [
+        "w093",
+        "w094",
+        "w095",
+        "w097"
+      ],
+      "prompt": "prompts/late-biped-04-front-back-parts.txt",
+      "promptSha256": "fc42b1927466eb4e89799ef9a6084a382ab2f88de7884e51f96ab4c6323bad3c",
+      "references": [
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t10-biped-01-turnaround.png"
+      ],
+      "referencesSha256": [
+        "2bdcfad496f2a225fb0b7a02e542b68dc3dca5ae97920faf459e19c13b4ef8a1"
+      ],
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-fc6d72ac-d668-458c-878c-80cf767e7676.png",
+      "source": "sources/late-biped-04-front-back-parts.png",
+      "sha256": "67027756fbd26c8e5d01847a6e5a524369878b9459f7a18fa807273ab881bb04",
+      "width": 1254,
+      "height": 1254,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-selected-production-components",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/late-waves/sources/t10-biped-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 33,
+      "id": "late-biped-05-all-parts",
+      "stage": "parts",
+      "assetIds": [
+        "w099",
+        "w101"
+      ],
+      "prompt": "prompts/late-biped-05-all-parts.txt",
+      "promptSha256": "01b33f1ddd910b15fcc09e34693c888f0e29b3147073a64915a94a213f5bd5e5",
+      "references": [
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t10-biped-02-turnaround.png"
+      ],
+      "referencesSha256": [
+        "7b1d337892d68b0dc7f98be8a113273fbaadb92acdef324a0b90ab3be35f9258"
+      ],
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-e8935938-78fb-4626-940f-28c3a4837ac4.png",
+      "source": "sources/late-biped-05-all-parts.png",
+      "sha256": "afbfbed4b000ecd8b454d1a458ad4df67f876e3b0d90935b4a596082d68a09dd",
+      "width": 887,
+      "height": 1774,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-selected-production-components",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/late-waves/sources/t10-biped-02-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 34,
+      "id": "late-boss-biped-02-all-parts",
+      "stage": "parts",
+      "assetIds": [
+        "b100"
+      ],
+      "prompt": "prompts/late-boss-biped-02-all-parts.txt",
+      "promptSha256": "2023f3ab3f103337af25e4227b8143dd0ba3557596befb51bcc40c1cb2ba76af",
+      "references": [
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t10-boss-01-turnaround.png"
+      ],
+      "referencesSha256": [
+        "68cc0ce5232677188b3df8d07c373406dab9f72af782627d5ea15b90cf951dda"
+      ],
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-b38de01e-24a3-4447-8751-4c4390a45264.png",
+      "source": "sources/late-boss-biped-02-all-parts.png",
+      "sha256": "8999b20de57786f6fb67e0706aa49c9f79f6b94e4e04720f0426bc88b9541859",
+      "width": 887,
+      "height": 1774,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-selected-production-components",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/late-waves/sources/t10-boss-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 35,
+      "id": "late-flight-01-side-parts",
+      "stage": "parts",
+      "assetIds": [
+        "w062",
+        "w064",
+        "w068",
+        "w096"
+      ],
+      "prompt": "prompts/late-flight-01-side-parts.txt",
+      "promptSha256": "ef5f749e5fc7aa2c2701345e80a958da8b4cdaa577728afe27d30d774c6f4827",
+      "references": [
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t7-insect-wings-01-turnaround.png",
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t7-bird-01-turnaround.png",
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t7-book-01-turnaround.png",
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t10-bird-01-turnaround.png"
+      ],
+      "referencesSha256": [
+        "def2a6ef01a6f614a76f28c4a4a8103537a57cf64bd18b49521cd52ca55ff841",
+        "7b783a3edefe029c61e5c15b0c7c9567cc664a19cecdc6154e42807afe116b89",
+        "429be7ae30564b329c3badc349c651bc73339b54259ebb1e85b00840df2a7b10",
+        "b88efa1b438229de5a578829a3c8567cc60e46854d1accde8858243dd83c7bdf"
+      ],
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-702f405b-b987-4c6b-ace5-1c3fc44a4daa.png",
+      "source": "sources/late-flight-01-side-parts.png",
+      "sha256": "c81f5b67d9646f4d98b77e0fbb40da4679ca48ad332934f8b092d6673707fff0",
+      "width": 887,
+      "height": 1774,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-selected-production-components",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/late-waves/sources/t7-insect-wings-01-turnaround.png",
+        "tools/art-review/directional-101/late-waves/sources/t7-bird-01-turnaround.png",
+        "tools/art-review/directional-101/late-waves/sources/t7-book-01-turnaround.png",
+        "tools/art-review/directional-101/late-waves/sources/t10-bird-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 36,
+      "id": "late-flight-01-front-back-parts",
+      "stage": "parts",
+      "assetIds": [
+        "w062",
+        "w064",
+        "w068",
+        "w096"
+      ],
+      "prompt": "prompts/late-flight-01-front-back-parts.txt",
+      "promptSha256": "8471ebd7a5acd1755f295b327b9caadf3a94a5d7b00e57fddecbba6b0db50928",
+      "references": [
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t7-insect-wings-01-turnaround.png",
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t7-bird-01-turnaround.png",
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t7-book-01-turnaround.png",
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t10-bird-01-turnaround.png"
+      ],
+      "referencesSha256": [
+        "def2a6ef01a6f614a76f28c4a4a8103537a57cf64bd18b49521cd52ca55ff841",
+        "7b783a3edefe029c61e5c15b0c7c9567cc664a19cecdc6154e42807afe116b89",
+        "429be7ae30564b329c3badc349c651bc73339b54259ebb1e85b00840df2a7b10",
+        "b88efa1b438229de5a578829a3c8567cc60e46854d1accde8858243dd83c7bdf"
+      ],
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-a9da4490-0378-4f0e-bf4a-acd32ddfc70e.png",
+      "source": "sources/late-flight-01-front-back-parts.png",
+      "sha256": "e0a3609441ee4a9ff750d6ecb3895f0e3543a1e6be9568274df3816e2221a823",
+      "width": 1254,
+      "height": 1254,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-selected-production-components",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/late-waves/sources/t7-insect-wings-01-turnaround.png",
+        "tools/art-review/directional-101/late-waves/sources/t7-bird-01-turnaround.png",
+        "tools/art-review/directional-101/late-waves/sources/t7-book-01-turnaround.png",
+        "tools/art-review/directional-101/late-waves/sources/t10-bird-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 37,
+      "id": "late-flight-02-side-parts",
+      "stage": "parts",
+      "assetIds": [
+        "w072",
+        "w076",
+        "w088"
+      ],
+      "prompt": "prompts/late-flight-02-side-parts.txt",
+      "promptSha256": "72f14090c7006fe972c8aee9790c7364003608bcfd82b662a1f42d201c833fd7",
+      "references": [
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-bat-wings-01-turnaround.png",
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t9-bat-wings-01-turnaround.png"
+      ],
+      "referencesSha256": [
+        "ed25c8f196aabd011335e129cbae35f4e896442220da768f5cf8f6eeb6b98f25",
+        "4ebf4442d693550ff411039c450d9edbea42641256e3eab7744b60a028035158"
+      ],
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-6cf9d490-de2a-4f5b-a46d-cc84388bf642.png",
+      "source": "sources/late-flight-02-side-parts.png",
+      "sha256": "a110cfa729fe1338e2d1129a6e07bfad5c5c3e6923572da3a0229cfde4b2a8e7",
+      "width": 1024,
+      "height": 1536,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-selected-production-components",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/late-waves/sources/t8-bat-wings-01-turnaround.png",
+        "tools/art-review/directional-101/late-waves/sources/t9-bat-wings-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 38,
+      "id": "late-flight-02-front-back-parts",
+      "stage": "parts",
+      "assetIds": [
+        "w072",
+        "w076",
+        "w088"
+      ],
+      "prompt": "prompts/late-flight-02-front-back-parts.txt",
+      "promptSha256": "4f95909411566cefc97bd9b4758f8bce47c26e085f35abdf14d27e321eccf2dc",
+      "references": [
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-bat-wings-01-turnaround.png",
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t9-bat-wings-01-turnaround.png"
+      ],
+      "referencesSha256": [
+        "ed25c8f196aabd011335e129cbae35f4e896442220da768f5cf8f6eeb6b98f25",
+        "4ebf4442d693550ff411039c450d9edbea42641256e3eab7744b60a028035158"
+      ],
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-65b87864-d178-4351-8f09-23dcbbe80d0a.png",
+      "source": "sources/late-flight-02-front-back-parts.png",
+      "sha256": "be20dc5268ebe1494b6dff623e24519066470c088f2f5a5a0372d132156d4c7c",
+      "width": 1254,
+      "height": 1254,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-selected-production-components",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/late-waves/sources/t8-bat-wings-01-turnaround.png",
+        "tools/art-review/directional-101/late-waves/sources/t9-bat-wings-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 39,
+      "id": "late-boss-biped-01-side-parts",
+      "stage": "parts",
+      "assetIds": [
+        "b090",
+        "b090-2"
+      ],
+      "prompt": "prompts/late-boss-biped-01-side-parts.txt",
+      "promptSha256": "4ef6ac46e113f84a2b6776ca73311f9f59d156ddf6d115c347114d16d933e8e4",
+      "references": [
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t9-boss-01-turnaround.png"
+      ],
+      "referencesSha256": [
+        "cfd78100e29ddaa4977ab8c11e94dde54aa162bd6214ae03e6c08fb98a812d46"
+      ],
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-8b5c12ab-04e3-44b1-b004-0d3fd8845ce9.png",
+      "source": "sources/late-boss-biped-01-side-parts.png",
+      "sha256": "7fe0d55707d97548b9cf6125e9e7448b5d8a95e6da6b4b730f36c7a88c93f46a",
+      "width": 1024,
+      "height": 1536,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-selected-production-components",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/late-waves/sources/t9-boss-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 40,
+      "id": "late-boss-biped-01-front-back-parts",
+      "stage": "parts",
+      "assetIds": [
+        "b090",
+        "b090-2"
+      ],
+      "prompt": "prompts/late-boss-biped-01-front-back-parts.txt",
+      "promptSha256": "6c02849e3bf65a7b04bfae93ce1f627561b6efd252a3729654d13117c18ce20f",
+      "references": [
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t9-boss-01-turnaround.png"
+      ],
+      "referencesSha256": [
+        "cfd78100e29ddaa4977ab8c11e94dde54aa162bd6214ae03e6c08fb98a812d46"
+      ],
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-72a36d5d-07a5-49c8-9016-e60676183f2b.png",
+      "source": "sources/late-boss-biped-01-front-back-parts.png",
+      "sha256": "26b30dbb30077476b921c62a964d6d801990c338d577064094980ace622689b6",
+      "width": 1536,
+      "height": 1024,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-selected-production-components",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/late-waves/sources/t9-boss-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 41,
+      "id": "late-quad-01-body-correction",
+      "stage": "body-correction",
+      "assetIds": [
+        "w067",
+        "w071",
+        "w073",
+        "w078"
+      ],
+      "prompt": "prompts/late-quad-01-body-correction.txt",
+      "promptSha256": "f2fa7621399fb26d57eb0d410ca8fbe4c104a1e99ba69c04eac10df4478fb6d2",
+      "references": [
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/late-quad-01-side-parts.png",
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t7-quad-01-turnaround.png",
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-t9-mixed-01-turnaround.png",
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-quad-01-turnaround.png"
+      ],
+      "referencesSha256": [
+        "f32ef1dac3abd2191b0e96aa1e0311aeeda75759d19eb8695e955dc5f0d5d462",
+        "007a181fac474498147c36041267f52e61d55d923c5cb328722ece73fabb578d",
+        "9f8710b17528638f5dc76ac92b78ba4cd64cced2326ea94cbdad3488359c912c",
+        "b3cf277ca4ada97a1030a60717c09f46cc3d725ced602d05e70d49946b55106f"
+      ],
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-b95ed844-1e25-404b-b2da-389e1abbbad0.png",
+      "source": "sources/late-quad-01-body-correction.png",
+      "sha256": "daafa78bb1c9856850db992ea1b2cebe2e048cfc39a96f1b99d8b175fc7468d0",
+      "width": 887,
+      "height": 1774,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-selected-production-components",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/late-waves/sources/late-quad-01-side-parts.png",
+        "tools/art-review/directional-101/late-waves/sources/t7-quad-01-turnaround.png",
+        "tools/art-review/directional-101/late-waves/sources/t8-t9-mixed-01-turnaround.png",
+        "tools/art-review/directional-101/late-waves/sources/t8-quad-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 42,
+      "id": "late-bird-bodies-correction",
+      "stage": "body-correction",
+      "assetIds": [
+        "w064",
+        "w096"
+      ],
+      "prompt": "prompts/late-bird-bodies-correction.txt",
+      "promptSha256": "dcbe1d9b5dd3ef883c447dd74d531a45fc9f5350447161931395c9d9999835fc",
+      "references": [
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/late-flight-01-side-parts.png",
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t7-bird-01-turnaround.png",
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t10-bird-01-turnaround.png"
+      ],
+      "referencesSha256": [
+        "c81f5b67d9646f4d98b77e0fbb40da4679ca48ad332934f8b092d6673707fff0",
+        "7b783a3edefe029c61e5c15b0c7c9567cc664a19cecdc6154e42807afe116b89",
+        "b88efa1b438229de5a578829a3c8567cc60e46854d1accde8858243dd83c7bdf"
+      ],
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-45a57d97-c987-4edb-b1a4-1cdd8f0df838.png",
+      "source": "sources/late-bird-bodies-correction.png",
+      "sha256": "f48698a50353e12b64143b12d36428428ac2bb73a3e8b6a0ae799cfaa39f8d23",
+      "width": 1536,
+      "height": 1024,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-selected-production-components",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/late-waves/sources/late-flight-01-side-parts.png",
+        "tools/art-review/directional-101/late-waves/sources/t7-bird-01-turnaround.png",
+        "tools/art-review/directional-101/late-waves/sources/t10-bird-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 43,
+      "id": "late-quad-02-side-parts",
+      "stage": "parts",
+      "assetIds": [
+        "w082",
+        "b080-2"
+      ],
+      "prompt": "prompts/late-quad-02-side-parts.txt",
+      "promptSha256": "7cd55ff80e3b4db978fdbbf78abd97ba8ed0400ce93a0360aa5c81d740f680e2",
+      "references": [
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-t9-mixed-01-turnaround.png",
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-boss-01-turnaround.png"
+      ],
+      "referencesSha256": [
+        "9f8710b17528638f5dc76ac92b78ba4cd64cced2326ea94cbdad3488359c912c",
+        "d1beb1dbc4fb71a3c8f652834489d2d6597017e61ea1bf4c6ac5fd99a6a8b3a1"
+      ],
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-38679839-4a74-484a-bdfa-3dbaf8398fa9.png",
+      "source": "sources/late-quad-02-side-parts.png",
+      "sha256": "29a48f4448ec816978ca167b3eb53beecc27423aa037e9693af326c243bab241",
+      "width": 1024,
+      "height": 1536,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-selected-production-components",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/late-waves/sources/t8-t9-mixed-01-turnaround.png",
+        "tools/art-review/directional-101/late-waves/sources/t8-boss-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 44,
+      "id": "late-quad-02-front-back-parts",
+      "stage": "parts",
+      "assetIds": [
+        "w082",
+        "b080-2"
+      ],
+      "prompt": "prompts/late-quad-02-front-back-parts.txt",
+      "promptSha256": "5762bd8365b69dd2cce07454accf125078030c9f7b9da30f4063defd8bd908f7",
+      "references": [
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-t9-mixed-01-turnaround.png",
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-boss-01-turnaround.png"
+      ],
+      "referencesSha256": [
+        "9f8710b17528638f5dc76ac92b78ba4cd64cced2326ea94cbdad3488359c912c",
+        "d1beb1dbc4fb71a3c8f652834489d2d6597017e61ea1bf4c6ac5fd99a6a8b3a1"
+      ],
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-9b90f072-58ad-4a59-8aee-9178d7478057.png",
+      "source": "sources/late-quad-02-front-back-parts.png",
+      "sha256": "2b8aafe222a1b396527a31ad80ef4114a059284baad1d79a28c8d3f178c14903",
+      "width": 1536,
+      "height": 1024,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-selected-production-components",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/late-waves/sources/t8-t9-mixed-01-turnaround.png",
+        "tools/art-review/directional-101/late-waves/sources/t8-boss-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 45,
+      "id": "late-boss-flight-01-side-parts",
+      "stage": "parts",
+      "assetIds": [
+        "b080",
+        "b100-2"
+      ],
+      "prompt": "prompts/late-boss-flight-01-side-parts.txt",
+      "promptSha256": "a317f427e41c72d1732381d044a1826ac3f5f187552c39429c7b47f38aa95c2a",
+      "references": [
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-boss-01-turnaround.png",
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t10-boss-01-turnaround.png"
+      ],
+      "referencesSha256": [
+        "d1beb1dbc4fb71a3c8f652834489d2d6597017e61ea1bf4c6ac5fd99a6a8b3a1",
+        "68cc0ce5232677188b3df8d07c373406dab9f72af782627d5ea15b90cf951dda"
+      ],
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-725a657b-ae5e-453d-9975-555a1baec521.png",
+      "source": "sources/late-boss-flight-01-side-parts.png",
+      "sha256": "c27cd66d38e07bb5170e4b6bfea16676827888e893f9acc174aa110e4dfde179",
+      "width": 1024,
+      "height": 1536,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-selected-production-components",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/late-waves/sources/t8-boss-01-turnaround.png",
+        "tools/art-review/directional-101/late-waves/sources/t10-boss-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 46,
+      "id": "late-boss-flight-01-front-back-parts",
+      "stage": "parts",
+      "assetIds": [
+        "b080",
+        "b100-2"
+      ],
+      "prompt": "prompts/late-boss-flight-01-front-back-parts.txt",
+      "promptSha256": "8ddb4906e4adb52a37488b0380b5501aad5a69e6ed4bf645f1ff060494263c08",
+      "references": [
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-boss-01-turnaround.png",
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t10-boss-01-turnaround.png"
+      ],
+      "referencesSha256": [
+        "d1beb1dbc4fb71a3c8f652834489d2d6597017e61ea1bf4c6ac5fd99a6a8b3a1",
+        "68cc0ce5232677188b3df8d07c373406dab9f72af782627d5ea15b90cf951dda"
+      ],
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-d2870dd9-e892-468c-8719-d3f08284aeac.png",
+      "source": "sources/late-boss-flight-01-front-back-parts.png",
+      "sha256": "262e5ad3998378a2087447670c009e660682f792deffa5885cd83dddb79b74a0",
+      "width": 1536,
+      "height": 1024,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-selected-production-components",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/late-waves/sources/t8-boss-01-turnaround.png",
+        "tools/art-review/directional-101/late-waves/sources/t10-boss-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 47,
+      "id": "late-slither-01-side-parts",
+      "stage": "parts",
+      "assetIds": [
+        "w077",
+        "w084",
+        "w091",
+        "w098"
+      ],
+      "prompt": "prompts/late-slither-01-side-parts.txt",
+      "promptSha256": "d41049164dfbb3832824e005d70fcc2a4451b873482ec1538bdbc8ff178889d1",
+      "references": [
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-t9-mixed-01-turnaround.png",
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t10-mixed-01-turnaround.png"
+      ],
+      "referencesSha256": [
+        "9f8710b17528638f5dc76ac92b78ba4cd64cced2326ea94cbdad3488359c912c",
+        "146b0f78e2aad87cc3d3545a1c8ae543861110cbfa772c5619287df111acd212"
+      ],
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-113c2dab-cce8-495e-8080-3a9afc6fbac4.png",
+      "source": "sources/late-slither-01-side-parts.png",
+      "sha256": "29b9a3f4e5bba68f6aa4aed19799fcbbc50b55271bc528506722b402e1b18fed",
+      "width": 887,
+      "height": 1774,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-selected-production-components",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/late-waves/sources/t8-t9-mixed-01-turnaround.png",
+        "tools/art-review/directional-101/late-waves/sources/t10-mixed-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 48,
+      "id": "late-slither-01-front-back-parts",
+      "stage": "parts",
+      "assetIds": [
+        "w077",
+        "w084",
+        "w091",
+        "w098"
+      ],
+      "prompt": "prompts/late-slither-01-front-back-parts.txt",
+      "promptSha256": "191651ccdab0ccdf2905b4a5dbbb96fd85f367ab601a2ff28b8ea8c8270cbc75",
+      "references": [
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-t9-mixed-01-turnaround.png",
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t10-mixed-01-turnaround.png"
+      ],
+      "referencesSha256": [
+        "9f8710b17528638f5dc76ac92b78ba4cd64cced2326ea94cbdad3488359c912c",
+        "146b0f78e2aad87cc3d3545a1c8ae543861110cbfa772c5619287df111acd212"
+      ],
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-46950ce5-c09a-4118-8a26-040fe7d502e7.png",
+      "source": "sources/late-slither-01-front-back-parts.png",
+      "sha256": "c76bfb87e4bb6b8d319ce0f6f3e54d5895b1e9f91368782cba5c958e2c09a043",
+      "width": 1254,
+      "height": 1254,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-selected-production-components",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/late-waves/sources/t8-t9-mixed-01-turnaround.png",
+        "tools/art-review/directional-101/late-waves/sources/t10-mixed-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 49,
+      "id": "late-quad-body-fix-v2",
+      "stage": "body-correction",
+      "assetIds": [
+        "w073",
+        "w078",
+        "w067"
+      ],
+      "prompt": "prompts/late-quad-body-fix-v2.txt",
+      "promptSha256": "c50a90ea4deed65a369097e4aa0808093a66d0d7b140655081f8a95127afc2bf",
+      "references": [
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/late-quad-02-side-parts.png",
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-quad-01-turnaround.png",
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t7-quad-01-turnaround.png"
+      ],
+      "referencesSha256": [
+        "29a48f4448ec816978ca167b3eb53beecc27423aa037e9693af326c243bab241",
+        "b3cf277ca4ada97a1030a60717c09f46cc3d725ced602d05e70d49946b55106f",
+        "007a181fac474498147c36041267f52e61d55d923c5cb328722ece73fabb578d"
+      ],
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-e43794bd-a828-49bc-b09f-2350af3020fc.png",
+      "source": "sources/late-quad-body-fix-v2.png",
+      "sha256": "bda6c3e6ef44ac4c3a89b857370610222290c51fa5ca4da7661bea1b1a84f381",
+      "width": 1536,
+      "height": 1024,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-selected-production-components",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/late-waves/sources/late-quad-02-side-parts.png",
+        "tools/art-review/directional-101/late-waves/sources/t8-quad-01-turnaround.png",
+        "tools/art-review/directional-101/late-waves/sources/t7-quad-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    },
+    {
+      "call": 50,
+      "id": "late-biped-02-identity-fix",
+      "stage": "identity-correction",
+      "assetIds": [
+        "w074",
+        "w075",
+        "w079"
+      ],
+      "prompt": "prompts/late-biped-02-identity-fix.txt",
+      "promptSha256": "7f95aa8ad1ca7b5c856ac572d8334b49bb81ffa8bb6a9d913a56020277444fc6",
+      "references": [
+        "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-biped-01-turnaround.png"
+      ],
+      "referencesSha256": [
+        "22c01d4ac904f68814a2e521b2eb175258ad075fe2b3f10fccfb99e14ce63bf4"
+      ],
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-fc818449-e5b1-47a9-9568-82bdfc546ecb.png",
+      "source": "sources/late-biped-02-identity-fix.png",
+      "sha256": "8292c698dc21f5b871b5aac2e962fdffa095d9dc6666b3ea1143dcadcf71c7e1",
+      "width": 887,
+      "height": 1774,
+      "channels": 3,
+      "hasAlpha": false,
+      "reviewStatus": "reviewed-selected-production-components",
+      "cost": null,
+      "portableReferences": [
+        "tools/art-review/directional-101/late-waves/sources/t8-biped-01-turnaround.png"
+      ],
+      "reviewNote": "Approval applies to selected extracted components and final three-view composites, not every unused cell in this atlas."
+    }
+  ],
+  "summary": {
+    "requests": 50,
+    "turnaroundRequests": 22,
+    "otherRequests": 28,
+    "completedIdentities": 45,
+    "cost": "Tool did not report monetary cost; null costs are not zero."
+  }
+}

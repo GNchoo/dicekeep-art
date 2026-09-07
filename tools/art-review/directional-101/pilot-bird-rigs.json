@@ -1,0 +1,502 @@
+{
+  "version": 1,
+  "canonicalCell": 512,
+  "assetVersion": 93,
+  "entries": [
+    {
+      "assetId": "w012",
+      "wave": 12,
+      "role": "normal",
+      "locomotion": "flight",
+      "cell": 256,
+      "referenceHeight": 300,
+      "cycleStride": 0,
+      "cycleSeconds": 0.8,
+      "reviewApproved": true,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/t2-bird-01-side-parts.png",
+          "sourceSha256": "e0f74c26387c74cbce1f9daa274ec10cbd2a1f59aaa963bec1cddf870b9faea0",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            350
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.355,
+              0.5
+            ],
+            "target": [
+              174.89819587628864,
+              142,
+              162.2036082474227,
+              205
+            ],
+            "layer": 0
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.36,
+                0,
+                0.31000000000000005,
+                0.5
+              ],
+              "socket": [
+                77.85773195876288,
+                63.55
+              ],
+              "sourcePivot": [
+                0.09,
+                0.035
+              ],
+              "scale": 0.5271084337349398,
+              "angleDeg": [
+                45,
+                52
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.672,
+                0,
+                0.32799999999999996,
+                0.5
+              ],
+              "socket": [
+                66.5034793814433,
+                63.55
+              ],
+              "sourcePivot": [
+                0.09,
+                0.035
+              ],
+              "scale": 0.5271084337349398,
+              "angleDeg": [
+                45,
+                52
+              ],
+              "phase": 0,
+              "layer": 1,
+              "flipX": true
+            }
+          ]
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/t2-bird-01-front-back-parts.png",
+          "sourceSha256": "eb9f71ec3bd49c3f3dc593e045b8619a80146a0f07ecf1ace127ba68ed0c1f31",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            350
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.325,
+              0.27
+            ],
+            "target": [
+              213.48727735368956,
+              142,
+              85.02544529262086,
+              205
+            ],
+            "layer": 0
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.33,
+                0,
+                0.31825253664036074,
+                0.27
+              ],
+              "socket": [
+                17.85534351145038,
+                63.55
+              ],
+              "sourcePivot": [
+                0.09,
+                0.035
+              ],
+              "scale": 0.5177514792899408,
+              "angleDeg": [
+                45,
+                52
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.649379932356257,
+                0,
+                0.350620067643743,
+                0.27
+              ],
+              "socket": [
+                67.17010178117049,
+                63.55
+              ],
+              "sourcePivot": [
+                0.09,
+                0.035
+              ],
+              "scale": 0.5177514792899408,
+              "angleDeg": [
+                -45,
+                -52
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            }
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/t2-bird-01-front-back-parts.png",
+          "sourceSha256": "eb9f71ec3bd49c3f3dc593e045b8619a80146a0f07ecf1ace127ba68ed0c1f31",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            350
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.523,
+              0.325,
+              0.22099999999999997
+            ],
+            "target": [
+              209.84668508287294,
+              142,
+              92.30662983425414,
+              205
+            ],
+            "layer": 0
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.33,
+                0.523,
+                0.2968320180383314,
+                0.22099999999999997
+              ],
+              "socket": [
+                19.38439226519337,
+                63.55
+              ],
+              "sourcePivot": [
+                0.09,
+                0.035
+              ],
+              "scale": 0.541795665634675,
+              "angleDeg": [
+                45,
+                52
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.6279594137542277,
+                0.523,
+                0.3720405862457723,
+                0.22099999999999997
+              ],
+              "socket": [
+                72.92223756906077,
+                63.55
+              ],
+              "sourcePivot": [
+                0.09,
+                0.035
+              ],
+              "scale": 0.5401234567901234,
+              "angleDeg": [
+                -45,
+                -52
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "assetId": "w016",
+      "wave": 16,
+      "role": "normal",
+      "locomotion": "flight",
+      "cell": 256,
+      "referenceHeight": 300,
+      "cycleStride": 0,
+      "cycleSeconds": 0.8,
+      "reviewApproved": true,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/t2-bird-01-side-parts.png",
+          "sourceSha256": "e0f74c26387c74cbce1f9daa274ec10cbd2a1f59aaa963bec1cddf870b9faea0",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            350
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.5,
+              0.355,
+              0.5
+            ],
+            "target": [
+              164.98224043715845,
+              142,
+              182.03551912568307,
+              205
+            ],
+            "layer": 0
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.36,
+                0.5,
+                0.31000000000000005,
+                0.5
+              ],
+              "socket": [
+                87.37704918032787,
+                63.55
+              ],
+              "sourcePivot": [
+                0.09,
+                0.035
+              ],
+              "scale": 0.5271084337349398,
+              "angleDeg": [
+                45,
+                52
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.672,
+                0.5,
+                0.32799999999999996,
+                0.5
+              ],
+              "socket": [
+                74.63456284153006,
+                63.55
+              ],
+              "sourcePivot": [
+                0.09,
+                0.035
+              ],
+              "scale": 0.5255255255255256,
+              "angleDeg": [
+                45,
+                52
+              ],
+              "phase": 0,
+              "layer": 1,
+              "flipX": true
+            }
+          ]
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/t2-bird-01-front-back-parts.png",
+          "sourceSha256": "eb9f71ec3bd49c3f3dc593e045b8619a80146a0f07ecf1ace127ba68ed0c1f31",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            350
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.27,
+              0.325,
+              0.253
+            ],
+            "target": [
+              211.15625,
+              142,
+              89.6875,
+              205
+            ],
+            "layer": 0
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.33,
+                0.27,
+                0.2979594137542277,
+                0.253
+              ],
+              "socket": [
+                18.834374999999998,
+                63.55
+              ],
+              "sourcePivot": [
+                0.09,
+                0.035
+              ],
+              "scale": 0.4654255319148936,
+              "angleDeg": [
+                45,
+                52
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.629086809470124,
+                0.27,
+                0.37091319052987604,
+                0.253
+              ],
+              "socket": [
+                70.853125,
+                63.55
+              ],
+              "sourcePivot": [
+                0.09,
+                0.035
+              ],
+              "scale": 0.4654255319148936,
+              "angleDeg": [
+                -45,
+                -52
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            }
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/t2-bird-01-front-back-parts.png",
+          "sourceSha256": "eb9f71ec3bd49c3f3dc593e045b8619a80146a0f07ecf1ace127ba68ed0c1f31",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            350
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.744,
+              0.325,
+              0.256
+            ],
+            "target": [
+              207.35593220338984,
+              142,
+              97.28813559322033,
+              205
+            ],
+            "layer": 0
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.33,
+                0.744,
+                0.3035963923337091,
+                0.256
+              ],
+              "socket": [
+                20.430508474576268,
+                63.55
+              ],
+              "sourcePivot": [
+                0.09,
+                0.035
+              ],
+              "scale": 0.4807692307692308,
+              "angleDeg": [
+                45,
+                52
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.6347237880496054,
+                0.744,
+                0.3652762119503946,
+                0.256
+              ],
+              "socket": [
+                76.85762711864406,
+                63.55
+              ],
+              "sourcePivot": [
+                0.09,
+                0.035
+              ],
+              "scale": 0.4794520547945205,
+              "angleDeg": [
+                -45,
+                -52
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "reviewNotes": "Root reviewed all six directional pose boards, raw source identity and isolated wing joints on 2026-09-07. Final gameplay integration is checked separately."
+}

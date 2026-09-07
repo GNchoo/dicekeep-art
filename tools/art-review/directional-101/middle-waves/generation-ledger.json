@@ -1,0 +1,1731 @@
+{
+  "mode": "built-in image_gen",
+  "scope": "31–60 normal/boss/secondary",
+  "requests": [
+    {
+      "id": "t4-biped-01-turnaround",
+      "kind": "turnaround",
+      "assetIds": [
+        "w031",
+        "w033",
+        "w034",
+        "w035"
+      ],
+      "source": "t4-biped-01-turnaround.png",
+      "prompt": "prompts/t4-biped-01-turnaround.txt",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": false,
+      "sha256": "e7bd55ad033dda3139de6fdb748c9fd9ebd0b31d70b3ef9d18fb1c90acd7ffd7",
+      "status": "concept-reviewed; no animation or runtime approval",
+      "notes": "Reviewed full-body three views for all four rows: intact skin/equipment, moderate stylized tone, clear gutters. Background extraction and per-view ROI still required."
+    },
+    {
+      "id": "t4-biped-02-turnaround",
+      "kind": "turnaround",
+      "assetIds": [
+        "w037",
+        "w038",
+        "w039"
+      ],
+      "source": "t4-biped-02-turnaround.png",
+      "prompt": "prompts/t4-biped-02-turnaround.txt",
+      "width": 965,
+      "height": 1629,
+      "hasAlpha": false,
+      "sha256": "66ae6bbf2fb226eb51eeddff065c215f8ca0b880be885ffc54a7f1c426d3e1c9",
+      "status": "rejected-concept",
+      "notes": "REJECTED extra unrequested floating bats in every cell. Main character turnarounds intact; targeted imagegen cleanup required."
+    },
+    {
+      "id": "t4-boss-01-turnaround",
+      "kind": "turnaround",
+      "assetIds": [
+        "b040",
+        "b040-2"
+      ],
+      "source": "t4-boss-01-turnaround.png",
+      "prompt": "prompts/t4-boss-01-turnaround.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "b536629348499c8a079e47f3c82474284676b607d59fa25e1b10f8364cd30b1d",
+      "status": "rejected-concept",
+      "notes": "REJECTED extra unrequested floating bats in every cell. Boss and lieutenant bodies intact; targeted imagegen cleanup required."
+    },
+    {
+      "id": "t4-biped-02-turnaround-clean",
+      "kind": "turnaround",
+      "assetIds": [
+        "w037",
+        "w038",
+        "w039"
+      ],
+      "source": "t4-biped-02-turnaround-clean.png",
+      "prompt": "prompts/t4-biped-02-turnaround-clean.txt",
+      "width": 965,
+      "height": 1630,
+      "hasAlpha": false,
+      "sha256": "f31f01f12cb08e52278ea6e57ddc3b21e34be7257796f3f0a3b00935b6d592bf",
+      "status": "concept-reviewed; no animation or runtime approval",
+      "notes": "Targeted imagegen removed all unrequested bats. Three full-body views and identity retained; no anatomical gore. Manual ROI/background extraction still required."
+    },
+    {
+      "id": "t4-boss-01-turnaround-clean",
+      "kind": "turnaround",
+      "assetIds": [
+        "b040",
+        "b040-2"
+      ],
+      "source": "t4-boss-01-turnaround-clean.png",
+      "prompt": "prompts/t4-boss-01-turnaround-clean.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "d38baec876dc7ca6ba5f3d9b64cc13cceb0d325007a25cf94255a927ff0c830b",
+      "status": "concept-reviewed; no animation or runtime approval",
+      "notes": "Targeted imagegen removed all unrequested bats. King and ogre complete in all three views; only stylized skull armor motif. Manual ROI/background extraction still required."
+    },
+    {
+      "id": "t4-flight-01-turnaround",
+      "kind": "turnaround",
+      "assetIds": [
+        "w032",
+        "w036"
+      ],
+      "source": "t4-flight-01-turnaround.png",
+      "prompt": "prompts/t4-flight-01-turnaround.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "ea2bca1b48a17131072af9337a2f6ab57cd4522d00bfd1b50996907dee37a751",
+      "status": "concept-reviewed; no animation or runtime approval",
+      "notes": "Complete pilot/glider and wyvern rider; coherent front and rear. IMPORTANT: side column faces LEFT, so future part sources must explicitly turn RIGHT. No runtime approval."
+    },
+    {
+      "id": "t5-biped-01-turnaround",
+      "kind": "turnaround",
+      "assetIds": [
+        "w041",
+        "w042",
+        "w045",
+        "w046"
+      ],
+      "source": "t5-biped-01-turnaround.png",
+      "prompt": "prompts/t5-biped-01-turnaround.txt",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": false,
+      "sha256": "4c61f21746cf85514a1d7c5cd6e8a502dbe44517a45af56ba83dfc4938b134ef",
+      "status": "concept-reviewed; no animation or runtime approval",
+      "notes": "Four complete blue-steel human designs, right/front/back identity and equipment readable, no gore or added companions. Actual source row bounds require measurement before parts."
+    },
+    {
+      "id": "t5-biped-02-turnaround",
+      "kind": "turnaround",
+      "assetIds": [
+        "w047",
+        "w049"
+      ],
+      "source": "t5-biped-02-turnaround.png",
+      "prompt": "prompts/t5-biped-02-turnaround.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "2df96331f088cd66038a0c2535e40d7365bc35fa39b38e7e1b43f28be7966963",
+      "status": "concept-reviewed; no animation or runtime approval",
+      "notes": "Crossbow soldier and gnome miner complete with right/front/back equipment continuity. No extra figures; source ROI/background extraction still required."
+    },
+    {
+      "id": "t5-boss-01-turnaround",
+      "kind": "turnaround",
+      "assetIds": [
+        "b050",
+        "b050-2"
+      ],
+      "source": "t5-boss-01-turnaround.png",
+      "prompt": "prompts/t5-boss-01-turnaround.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "afa3eedea35b27d2468b7e2167fd0f2849c99de22c34bff155e1c0e6af7a5dba",
+      "status": "concept-reviewed; no animation or runtime approval",
+      "notes": "Steel castellan and siege golem complete, clear three-view identities. NOTE castellan cape is longer than requested: shorten to ABOVE KNEES in new body parts so rear gait stays visible. Neutral concept only."
+    },
+    {
+      "id": "t5-mounts-01-turnaround",
+      "kind": "turnaround",
+      "assetIds": [
+        "w043",
+        "w044",
+        "w048"
+      ],
+      "source": "t5-mounts-01-turnaround.png",
+      "prompt": "prompts/t5-mounts-01-turnaround.txt",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": false,
+      "sha256": "4d7304dcf498b0a50c9467199b15bbc492b7bd2e080a4e640212841da226138f",
+      "status": "concept-reviewed; no animation or runtime approval",
+      "notes": "Complete lancer/horse, griffin knight and pegasus knight turnarounds. Row1 side faces RIGHT; rows2/3 side face LEFT and must be reoriented RIGHT in generated rig parts. No animation approval."
+    },
+    {
+      "id": "t6-biped-01-turnaround",
+      "kind": "turnaround",
+      "assetIds": [
+        "w051",
+        "w053",
+        "w055",
+        "w057"
+      ],
+      "source": "t6-biped-01-turnaround.png",
+      "prompt": "prompts/t6-biped-01-turnaround.txt",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": false,
+      "sha256": "557c2f4cd7c73503d915115d38715c0a5ed1b39a456d10f8efa077fa82b5e25d",
+      "status": "concept-reviewed; no animation or runtime approval",
+      "notes": "Four complete undead-themed characters with intact surfaces, clean toy-like bones and readable equipment; no wounds or gore. Right/front/back rows coherent. Source ROI and joints pending."
+    },
+    {
+      "id": "t6-misc-01-turnaround",
+      "kind": "turnaround",
+      "assetIds": [
+        "w054",
+        "w056",
+        "w058"
+      ],
+      "source": "t6-misc-01-turnaround.png",
+      "prompt": "prompts/t6-misc-01-turnaround.txt",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": false,
+      "sha256": "b1928f84c768e43221c8c4a118cd9036cbd325ab0a99fb2a17a7c667b7604bfc",
+      "status": "concept-reviewed; no animation or runtime approval",
+      "notes": "Skeletal puppy uses smooth toy-like bones; glove is intact leather with articulated fingers and no flesh; doll is clearly cloth/yarn. Three-view neutral identities present; rig parts and source ROI pending."
+    },
+    {
+      "id": "t6-float-01-turnaround",
+      "kind": "turnaround",
+      "assetIds": [
+        "w052",
+        "w059"
+      ],
+      "source": "t6-float-01-turnaround.png",
+      "prompt": "prompts/t6-float-01-turnaround.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "1b3507cf377fedc3911086df1b40ca94f0bdfef692a46376be083275352b9816",
+      "status": "concept-reviewed; no animation or runtime approval",
+      "notes": "Teal will-o-wisp and violet banshee complete, side/front/rear distinct; intact faces/cloth and no wounds. Floating source texture gradients need foreground QA; no animation approval."
+    },
+    {
+      "id": "t6-boss-01-turnaround",
+      "kind": "turnaround",
+      "assetIds": [
+        "b060",
+        "b060-2"
+      ],
+      "source": "t6-boss-01-turnaround.png",
+      "prompt": "prompts/t6-boss-01-turnaround.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "b9762a95ad8cc5bf4763ffeebe30d3281113519d4338f64c0aea7bbe9cf6b073",
+      "status": "concept-reviewed; no animation or runtime approval",
+      "notes": "Lich and bone dragon complete in three views, clean ivory toy-like bones and regal violet cloth; no gore. Wide dragon wings require independent view crops and generous-gutter parts generation."
+    },
+    {
+      "id": "t4-biped-01a-side-front-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w031",
+        "w033"
+      ],
+      "rows": [
+        {
+          "assetId": "w031",
+          "view": "side"
+        },
+        {
+          "assetId": "w031",
+          "view": "front"
+        },
+        {
+          "assetId": "w033",
+          "view": "side"
+        },
+        {
+          "assetId": "w033",
+          "view": "front"
+        }
+      ],
+      "source": "t4-biped-01a-side-front-parts.png",
+      "prompt": "prompts/t4-biped-01a-side-front-parts.txt",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": false,
+      "sha256": "c9025f670d8724eaccce635219a9a52e003eccd9911cba68534726655bac4661",
+      "status": "rejected-concept",
+      "notes": "REJECTED: body undersides are hollow dark ovals and right-column side boots point left. Exact same parts need targeted painted-cloth closure and side boot direction fix."
+    },
+    {
+      "id": "t4-biped-01a-side-front-parts-clean",
+      "kind": "parts",
+      "assetIds": [
+        "w031",
+        "w033"
+      ],
+      "rows": [
+        {
+          "assetId": "w031",
+          "view": "side"
+        },
+        {
+          "assetId": "w031",
+          "view": "front"
+        },
+        {
+          "assetId": "w033",
+          "view": "side"
+        },
+        {
+          "assetId": "w033",
+          "view": "front"
+        }
+      ],
+      "source": "t4-biped-01a-side-front-parts-clean.png",
+      "prompt": "prompts/t4-biped-01a-side-front-parts-clean.txt",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": false,
+      "sha256": "21590a166e00074e0759362bcbb3009fbb62cc6aefaa0f6bcfa3f73e29d97976",
+      "status": "awaiting-rig-geometry-and-visual-qa",
+      "notes": "Torso closures fixed to painted cloth. Side rows1/3 right-column boot remains mirrored LEFT; reviewed leg.flipX input transform is required. Other parts intact; source ROI/joints pending."
+    },
+    {
+      "id": "t4-biped-01a-back-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w031",
+        "w033"
+      ],
+      "rows": [
+        {
+          "assetId": "w031",
+          "view": "back"
+        },
+        {
+          "assetId": "w033",
+          "view": "back"
+        }
+      ],
+      "source": "t4-biped-01a-back-parts.png",
+      "prompt": "prompts/t4-biped-01a-back-parts.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "d101ff88fefc5d2823ddd3b81e8c86d39cbd26eaf8d20d81c63ad0644f4bce95",
+      "status": "rejected-concept",
+      "notes": "REJECTED: W33 boots introduce fur trim absent from original, both rows boots show toe-like cap rather than clear back heel. Torso back views are usable; targeted boot correction pending."
+    },
+    {
+      "id": "t4-biped-01a-back-parts-clean",
+      "kind": "parts",
+      "assetIds": [
+        "w031",
+        "w033"
+      ],
+      "rows": [
+        {
+          "assetId": "w031",
+          "view": "back"
+        },
+        {
+          "assetId": "w033",
+          "view": "back"
+        }
+      ],
+      "source": "t4-biped-01a-back-parts-clean.png",
+      "prompt": "prompts/t4-biped-01a-back-parts-clean.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "978de260a5dfebafbacbbcd1eba038f991d9f1958c03a5b0e470bcd483ef6489",
+      "status": "awaiting-rig-geometry-and-visual-qa",
+      "notes": "Rear heels now show central back seams and straps; invented fur removed. Back torso identity preserved. Awaiting measured rig."
+    },
+    {
+      "id": "t6-float-01-turnaround-clean",
+      "kind": "turnaround",
+      "assetIds": [
+        "w052",
+        "w059"
+      ],
+      "source": "t6-float-01-turnaround-clean.png",
+      "prompt": "prompts/t6-float-01-turnaround-clean.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "fffe7b88a8b5e207eacdf04d8599b3ba3bee57e56b5f0ea6f5ba90cc6205c925",
+      "status": "concept-reviewed; no animation or runtime approval",
+      "notes": "Detached gold sparks removed from W52 for single silhouette float extraction; teal character and banshee retained. Used only W52; W59 pins original."
+    },
+    {
+      "id": "t4-biped-01b-side-front-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w034",
+        "w035"
+      ],
+      "rows": [
+        {
+          "assetId": "w034",
+          "view": "side"
+        },
+        {
+          "assetId": "w034",
+          "view": "front"
+        },
+        {
+          "assetId": "w035",
+          "view": "side"
+        },
+        {
+          "assetId": "w035",
+          "view": "front"
+        }
+      ],
+      "source": "t4-biped-01b-side-front-parts.png",
+      "prompt": "prompts/t4-biped-01b-side-front-parts.txt",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": false,
+      "sha256": "bc5d7ae111b97df969ac2b6d5e8c26fd49cf1b0097d127a83ebd430eaab5a180",
+      "status": "awaiting-rig-geometry-and-visual-qa",
+      "notes": "W34/W35 side-front parts: both side boot toes right, front boots toward viewer, closed clothed pelvis, no border collisions visually. Awaiting ROI/joint measure."
+    },
+    {
+      "id": "t4-biped-02a-side-front-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w037",
+        "w038"
+      ],
+      "rows": [
+        {
+          "assetId": "w037",
+          "view": "side"
+        },
+        {
+          "assetId": "w037",
+          "view": "front"
+        },
+        {
+          "assetId": "w038",
+          "view": "side"
+        },
+        {
+          "assetId": "w038",
+          "view": "front"
+        }
+      ],
+      "source": "t4-biped-02a-side-front-parts.png",
+      "prompt": "prompts/t4-biped-02a-side-front-parts.txt",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": false,
+      "sha256": "4ddb83ca9104b3e57c8bd9e455abb5c8625b2cee5970c33fd6c646e748f14646",
+      "status": "rejected-concept",
+      "notes": "REJECTED: W38 front row4 torso retains both full legs; targeted removal needed. Other nine parts remain usable. Row1/2 gutter only a few pixels, must measure."
+    },
+    {
+      "id": "t4-biped-01b-back-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w034",
+        "w035"
+      ],
+      "rows": [
+        {
+          "assetId": "w034",
+          "view": "back"
+        },
+        {
+          "assetId": "w035",
+          "view": "back"
+        }
+      ],
+      "source": "t4-biped-01b-back-parts.png",
+      "prompt": "prompts/t4-biped-01b-back-parts.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "0bcfbe1317af882c1b804cf75f73fe1c4436fbf5685ecf619ad79a6456bd8c93",
+      "status": "awaiting-rig-geometry-and-visual-qa",
+      "notes": "Back torso and heel views consistent with original ochre orc and miner. Awaiting ROI and rig review."
+    },
+    {
+      "id": "t5-biped-01a-side-front-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w041",
+        "w042"
+      ],
+      "rows": [
+        {
+          "assetId": "w041",
+          "view": "side"
+        },
+        {
+          "assetId": "w041",
+          "view": "front"
+        },
+        {
+          "assetId": "w042",
+          "view": "side"
+        },
+        {
+          "assetId": "w042",
+          "view": "front"
+        }
+      ],
+      "source": "t5-biped-01a-side-front-parts.png",
+      "prompt": "prompts/t5-biped-01a-side-front-parts.txt",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": false,
+      "sha256": "ddb67a09f7d79641194fec73d7e7841ba26ef74b7aa5fee11783a2fdc529dff7",
+      "status": "rejected-concept",
+      "notes": "REJECTED: W41 shield lower rim is a straight crop at torso level in both views; targeted round finished rim correction pending. Other parts coherent."
+    },
+    {
+      "id": "t4-biped-02a-side-front-parts-clean",
+      "kind": "parts",
+      "assetIds": [
+        "w037",
+        "w038"
+      ],
+      "rows": [
+        {
+          "assetId": "w037",
+          "view": "side"
+        },
+        {
+          "assetId": "w037",
+          "view": "front"
+        },
+        {
+          "assetId": "w038",
+          "view": "side"
+        },
+        {
+          "assetId": "w038",
+          "view": "front"
+        }
+      ],
+      "source": "t4-biped-02a-side-front-parts-clean.png",
+      "prompt": "prompts/t4-biped-02a-side-front-parts-clean.txt",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": false,
+      "sha256": "7c643f17a93baaa783ba77b484fa9b55aa17f43f261b8ae7721bc84286314678",
+      "status": "awaiting-rig-geometry-and-visual-qa",
+      "notes": "Attached W38 front legs removed, full spear/shield and tail retained, solid cloth lower torso. Both side leg toes right; ready for ROI measurements."
+    },
+    {
+      "id": "t4-biped-02a-back-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w037",
+        "w038"
+      ],
+      "rows": [
+        {
+          "assetId": "w037",
+          "view": "back"
+        },
+        {
+          "assetId": "w038",
+          "view": "back"
+        }
+      ],
+      "source": "t4-biped-02a-back-parts.png",
+      "prompt": "prompts/t4-biped-02a-back-parts.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "c72dbd60c0c222e8f01ddaee487006d8298851cd787a9a09848edcab072abee4",
+      "status": "rejected-concept",
+      "notes": "REJECTED: W37 pants became bare red skin; W38 torso wrongly front, helmet repeated on leg roots and claw feet replaced boots. Regenerate exact back anatomy."
+    },
+    {
+      "id": "t5-biped-01b-side-front-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w045",
+        "w046"
+      ],
+      "rows": [
+        {
+          "assetId": "w045",
+          "view": "side"
+        },
+        {
+          "assetId": "w045",
+          "view": "front"
+        },
+        {
+          "assetId": "w046",
+          "view": "side"
+        },
+        {
+          "assetId": "w046",
+          "view": "front"
+        }
+      ],
+      "source": "t5-biped-01b-side-front-parts.png",
+      "prompt": "prompts/t5-biped-01b-side-front-parts.txt",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": false,
+      "sha256": "db5e3790e17fdfe725baf716a2a756f05d6a7e781715ab2abf889d63939e7248",
+      "status": "awaiting-rig-geometry-and-visual-qa",
+      "notes": "W45/W46 parts coherent, shield edges finished, both side toes point right, front legs authored front. Awaiting ROI and joint measurements."
+    },
+    {
+      "id": "t5-biped-01a-side-front-parts-clean",
+      "kind": "parts",
+      "assetIds": [
+        "w041",
+        "w042"
+      ],
+      "rows": [
+        {
+          "assetId": "w041",
+          "view": "side"
+        },
+        {
+          "assetId": "w041",
+          "view": "front"
+        },
+        {
+          "assetId": "w042",
+          "view": "side"
+        },
+        {
+          "assetId": "w042",
+          "view": "front"
+        }
+      ],
+      "source": "t5-biped-01a-side-front-parts-clean.png",
+      "prompt": "prompts/t5-biped-01a-side-front-parts-clean.txt",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": false,
+      "sha256": "32d6b0fdcc415df0ddf01b3189fec299a38f3e3c17d12b15d0e0d88afaa4c09c",
+      "status": "awaiting-rig-geometry-and-visual-qa",
+      "notes": "W41 shields now complete rounded steel rim; original human/engineer bodies and legs retained."
+    },
+    {
+      "id": "t5-biped-01a-back-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w041",
+        "w042"
+      ],
+      "rows": [
+        {
+          "assetId": "w041",
+          "view": "back"
+        },
+        {
+          "assetId": "w042",
+          "view": "back"
+        }
+      ],
+      "source": "t5-biped-01a-back-parts.png",
+      "prompt": "prompts/t5-biped-01a-back-parts.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "a60d20734c978ee2b5376e1c7ceae32bc2da87af69c2ae05fb44b937a7331f93",
+      "status": "awaiting-rig-geometry-and-visual-qa",
+      "notes": "Back helmet/costume and heel views correctly face away; W41 shield rear grip visible; moderate stylized armor. Awaiting measured geometry."
+    },
+    {
+      "id": "t5-biped-01b-back-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w045",
+        "w046"
+      ],
+      "rows": [
+        {
+          "assetId": "w045",
+          "view": "back"
+        },
+        {
+          "assetId": "w046",
+          "view": "back"
+        }
+      ],
+      "source": "t5-biped-01b-back-parts.png",
+      "prompt": "prompts/t5-biped-01b-back-parts.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "6d98d5fc17f9780cd32d32a88484f694c0257e4255b0aebfd0f636bca2d30f85",
+      "status": "awaiting-rig-geometry-and-visual-qa",
+      "notes": "Helmet/hair/costume and heel view correctly away. Knight carries shield outer face partially visible; fantasy armored knee coverings stylized. Awaiting measured geometry."
+    },
+    {
+      "id": "t4-biped-02a-back-parts-clean",
+      "kind": "parts",
+      "assetIds": [
+        "w037",
+        "w038"
+      ],
+      "rows": [
+        {
+          "assetId": "w037",
+          "view": "back"
+        },
+        {
+          "assetId": "w038",
+          "view": "back"
+        }
+      ],
+      "source": "t4-biped-02a-back-parts-clean.png",
+      "prompt": "prompts/t4-biped-02a-back-parts-clean.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "1b04f435f1ab0792b54498511a979369b6001c87682e8d8cb5fab2de08078822",
+      "status": "rejected-concept",
+      "notes": "REJECTED: both torsos regain attached legs and W37 leg components each become a pair of legs. W38 legs single and correct but source body not usable. Switch to independent one-species constrained back atlas."
+    },
+    {
+      "id": "w037-back-single-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w037"
+      ],
+      "rows": [
+        {
+          "assetId": "w037",
+          "view": "back"
+        }
+      ],
+      "source": "w037-back-single-parts.png",
+      "prompt": "prompts/w037-back-single-parts.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "7d0097e9e416ff42daa294a0d5cbc9dac62a23dbc950ce11fed45638d0913fb7",
+      "status": "awaiting-rig-geometry-and-visual-qa",
+      "notes": "Rear hood and quiver preserved; two separate trouser legs and heel-facing boots; torso retains short hip cuffs hidden at sockets, no attached lower legs."
+    },
+    {
+      "id": "w038-back-single-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w038"
+      ],
+      "rows": [
+        {
+          "assetId": "w038",
+          "view": "back"
+        }
+      ],
+      "source": "w038-back-single-parts.png",
+      "prompt": "prompts/w038-back-single-parts.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "521521e557655630c622394c200bf8a56f7930b70c16e3cb797fe8fd08a766b7",
+      "status": "awaiting-rig-geometry-and-visual-qa",
+      "notes": "Rear helmet, shield straps and tail preserved; distinct single orange scaled legs with rear heels, no front face or attached lower legs."
+    },
+    {
+      "id": "t5-biped-02a-side-front-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w047",
+        "w049"
+      ],
+      "rows": [
+        {
+          "assetId": "w047",
+          "view": "side"
+        },
+        {
+          "assetId": "w047",
+          "view": "front"
+        },
+        {
+          "assetId": "w049",
+          "view": "side"
+        },
+        {
+          "assetId": "w049",
+          "view": "front"
+        }
+      ],
+      "source": "t5-biped-02a-side-front-parts.png",
+      "prompt": "prompts/t5-biped-02a-side-front-parts.txt",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": false,
+      "sha256": "a1aa433d87fe5b3f48a99d288db82c4325e3ff4e116ba7ba89efe1f66f4e7e58",
+      "status": "rejected-concept",
+      "notes": "REJECTED row 4 detached pieces each contain paired legs; W47 side/front and W49 side may be salvaged using explicit ROIs. Never use row 4 legs as one limb."
+    },
+    {
+      "id": "t4-biped-02b-side-front-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w039"
+      ],
+      "rows": [
+        {
+          "assetId": "w039",
+          "view": "side"
+        },
+        {
+          "assetId": "w039",
+          "view": "front"
+        }
+      ],
+      "source": "t4-biped-02b-side-front-parts.png",
+      "prompt": "prompts/t4-biped-02b-side-front-parts.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "e63d21e131d3fd4b95ee3a0ed89a6ca2d2de5ff2e4bd84ac6a39895aa563da89",
+      "status": "awaiting-rig-geometry-and-visual-qa",
+      "notes": "Right-facing side and true front captain, separated individual pant legs, complete saber and short coat."
+    },
+    {
+      "id": "t6-biped-01a-side-front-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w051",
+        "w053"
+      ],
+      "rows": [
+        {
+          "assetId": "w051",
+          "view": "side"
+        },
+        {
+          "assetId": "w051",
+          "view": "front"
+        },
+        {
+          "assetId": "w053",
+          "view": "side"
+        },
+        {
+          "assetId": "w053",
+          "view": "front"
+        }
+      ],
+      "source": "t6-biped-01a-side-front-parts.png",
+      "prompt": "prompts/t6-biped-01a-side-front-parts.txt",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": false,
+      "sha256": "c300bd1c2b34d151dc24767d3b05f7fc8b39f4ea4a7383cc1d74f76eefbd1498",
+      "status": "awaiting-rig-geometry-and-visual-qa",
+      "notes": "Intact expressive zombie and smooth ivory skeleton, single limbs and complete boots, no injury; skeleton knee is boot cuff anatomical bend and needs measurement."
+    },
+    {
+      "id": "t6-biped-01b-side-front-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w055",
+        "w057"
+      ],
+      "rows": [
+        {
+          "assetId": "w055",
+          "view": "side"
+        },
+        {
+          "assetId": "w055",
+          "view": "front"
+        },
+        {
+          "assetId": "w057",
+          "view": "side"
+        },
+        {
+          "assetId": "w057",
+          "view": "front"
+        }
+      ],
+      "source": "t6-biped-01b-side-front-parts.png",
+      "prompt": "prompts/t6-biped-01b-side-front-parts.txt",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": false,
+      "sha256": "14ef710e2f8313c7acc7e909e10afecc4e8be8d3c98f8429375d080b79e8794d",
+      "status": "awaiting-rig-geometry-and-visual-qa",
+      "notes": "Hooded intact ghoul and purple armored skeleton knight, single leg parts with one foot each, clear right-side and front directions; closed overlap, no gore."
+    },
+    {
+      "id": "t4-biped-02b-back-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w039"
+      ],
+      "rows": [
+        {
+          "assetId": "w039",
+          "view": "back"
+        }
+      ],
+      "source": "t4-biped-02b-back-parts.png",
+      "prompt": "prompts/t4-biped-02b-back-parts.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "6deb48bfed035f1853d984ed44317e59142187c2a995d27332f3f55fe441e04f",
+      "status": "awaiting-rig-geometry-and-visual-qa",
+      "notes": "Complete short rear coat with back skull embroidery, rear hair and heels, singular pant legs."
+    },
+    {
+      "id": "t6-biped-01a-back-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w051",
+        "w053"
+      ],
+      "rows": [
+        {
+          "assetId": "w051",
+          "view": "back"
+        },
+        {
+          "assetId": "w053",
+          "view": "back"
+        }
+      ],
+      "source": "t6-biped-01a-back-parts.png",
+      "prompt": "prompts/t6-biped-01a-back-parts.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "6c560506633769ef3f660a426b54f653db43d3c06ad5d1d59f0705d95a87021d",
+      "status": "awaiting-rig-geometry-and-visual-qa",
+      "notes": "True rear porter crate and skeleton rear skull, single legs with rear heels. Spear-bearing arm orientation reviewed at assembly."
+    },
+    {
+      "id": "t6-biped-01b-back-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w055",
+        "w057"
+      ],
+      "rows": [
+        {
+          "assetId": "w055",
+          "view": "back"
+        },
+        {
+          "assetId": "w057",
+          "view": "back"
+        }
+      ],
+      "source": "t6-biped-01b-back-parts.png",
+      "prompt": "prompts/t6-biped-01b-back-parts.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "89d3fe2ae5bce4cefae466b9b56fb6653d3f5fb5a6270eac3144321fc529ecdb",
+      "status": "awaiting-rig-geometry-and-visual-qa",
+      "notes": "True rear ghoul hood and knight helmet; knight shield/sword sides require body-only horizontal reflection to preserve physical hand identity."
+    },
+    {
+      "id": "t4-boss-01-side-parts",
+      "kind": "parts",
+      "assetIds": [
+        "b040",
+        "b040-2"
+      ],
+      "rows": [
+        {
+          "assetId": "b040",
+          "view": "side"
+        },
+        {
+          "assetId": "b040-2",
+          "view": "side"
+        }
+      ],
+      "source": "t4-boss-01-side-parts.png",
+      "prompt": "prompts/t4-boss-01-side-parts.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "e2028b26434723b61086b49bff4ad9eec64fcff69d7932bd3eb6c39aee80b8b9",
+      "status": "awaiting-rig-geometry-and-visual-qa",
+      "notes": "Right profile boss torsos and singular legs; both toes point right."
+    },
+    {
+      "id": "t4-boss-01-front-parts",
+      "kind": "parts",
+      "assetIds": [
+        "b040",
+        "b040-2"
+      ],
+      "rows": [
+        {
+          "assetId": "b040",
+          "view": "front"
+        },
+        {
+          "assetId": "b040-2",
+          "view": "front"
+        }
+      ],
+      "source": "t4-boss-01-front-parts.png",
+      "prompt": "prompts/t4-boss-01-front-parts.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "9c422528e4d83c3b172cc3a827494eb070c6996ffcfa3bcb03491933cd8854e0",
+      "status": "awaiting-rig-geometry-and-visual-qa",
+      "notes": "Boss front torsos and single boots; source knee/boot neck to be manually measured."
+    },
+    {
+      "id": "t4-boss-01-back-parts",
+      "kind": "parts",
+      "assetIds": [
+        "b040",
+        "b040-2"
+      ],
+      "rows": [
+        {
+          "assetId": "b040",
+          "view": "back"
+        },
+        {
+          "assetId": "b040-2",
+          "view": "back"
+        }
+      ],
+      "source": "t4-boss-01-back-parts.png",
+      "prompt": "prompts/t4-boss-01-back-parts.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "b78e2f4f8efe6f044b2435c46935a809f3fc20a1569f273b9c8640bbcf7126fc",
+      "status": "rejected-concept",
+      "notes": "REJECTED king row rear boot direction: toes point sideways; king source body may be reflected for staff hand; ogre rear row usable via explicit ROIs."
+    },
+    {
+      "id": "t5-biped-02a-back-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w047",
+        "w049"
+      ],
+      "rows": [
+        {
+          "assetId": "w047",
+          "view": "back"
+        },
+        {
+          "assetId": "w049",
+          "view": "back"
+        }
+      ],
+      "source": "t5-biped-02a-back-parts.png",
+      "prompt": "prompts/t5-biped-02a-back-parts.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "8f9c8ff559ca14271adaf18131bf665c21dd1746420cd7aa92a499a34c8c2bb8",
+      "status": "awaiting-rig-geometry-and-visual-qa",
+      "notes": "Back crossbow soldier and miner with matching tools, rear hair/cap, individual heel boots."
+    },
+    {
+      "id": "w049-front-single-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w049"
+      ],
+      "rows": [
+        {
+          "assetId": "w049",
+          "view": "front"
+        }
+      ],
+      "source": "w049-front-single-parts.png",
+      "prompt": "prompts/w049-front-single-parts.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "639f7eca9e8febba4d857bfe77d8058a4e5cad9428592ebccb5cfb2ad0967d00",
+      "status": "rejected-concept",
+      "notes": "REJECTED pants color: upper single trouser legs are brown instead of existing blue, need targeted blue recolor. Geometry and whole front torso otherwise usable."
+    },
+    {
+      "id": "t6-doll-three-view-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w058"
+      ],
+      "rows": [
+        {
+          "assetId": "w058",
+          "view": "side"
+        },
+        {
+          "assetId": "w058",
+          "view": "front"
+        },
+        {
+          "assetId": "w058",
+          "view": "back"
+        }
+      ],
+      "source": "t6-doll-three-view-parts.png",
+      "prompt": "prompts/t6-doll-three-view-parts.txt",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": false,
+      "sha256": "d62dc725f3566043fe2dcd6784f0d9cf96d9dd1c5695feed637d680dc43c18aa",
+      "status": "awaiting-rig-geometry-and-visual-qa",
+      "notes": "Three clear directions, intact soft cloth doll, exactly two separated striped stockings and single boot per view."
+    },
+    {
+      "id": "t4-boss-01-back-parts-clean",
+      "kind": "parts",
+      "assetIds": [
+        "b040",
+        "b040-2"
+      ],
+      "rows": [
+        {
+          "assetId": "b040",
+          "view": "back"
+        },
+        {
+          "assetId": "b040-2",
+          "view": "back"
+        }
+      ],
+      "source": "t4-boss-01-back-parts-clean.png",
+      "prompt": "prompts/t4-boss-01-back-parts-clean.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "64ba992588f3fe9978588bb4c64e294423f356512d00e4fcf50b0b8f2783b2b5",
+      "status": "awaiting-rig-geometry-and-visual-qa",
+      "notes": "King heel-facing rear boots corrected; only top king row selected. Ogre continues to use original source."
+    },
+    {
+      "id": "t5-boss-01-side-parts",
+      "kind": "parts",
+      "assetIds": [
+        "b050",
+        "b050-2"
+      ],
+      "rows": [
+        {
+          "assetId": "b050",
+          "view": "side"
+        },
+        {
+          "assetId": "b050-2",
+          "view": "side"
+        }
+      ],
+      "source": "t5-boss-01-side-parts.png",
+      "prompt": "prompts/t5-boss-01-side-parts.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "05d5fdbe35aa80fd3efc732b7febb3a5c455156335283482be3996228350ae09",
+      "status": "awaiting-rig-geometry-and-visual-qa",
+      "notes": "Both closed pelvis side bodies and separate single leg parts visually reviewed; awaiting rig."
+    },
+    {
+      "id": "t5-boss-01-front-parts",
+      "kind": "parts",
+      "assetIds": [
+        "b050",
+        "b050-2"
+      ],
+      "rows": [
+        {
+          "assetId": "b050",
+          "view": "front"
+        },
+        {
+          "assetId": "b050-2",
+          "view": "front"
+        }
+      ],
+      "source": "t5-boss-01-front-parts.png",
+      "prompt": "prompts/t5-boss-01-front-parts.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "edbb692cab998ed175138f252e8873c7a9376fa1ef4c9e710ef84fe9a8137d5c",
+      "status": "rejected-concept",
+      "notes": "REJECTED top castellan torso has attached full legs. Its isolated leg parts and bottom golem row may be selected after independent ROI measurement."
+    },
+    {
+      "id": "w049-front-single-parts-clean",
+      "kind": "parts",
+      "assetIds": [
+        "w049"
+      ],
+      "rows": [
+        {
+          "assetId": "w049",
+          "view": "front"
+        }
+      ],
+      "source": "w049-front-single-parts-clean.png",
+      "prompt": "prompts/w049-front-single-parts-clean.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "ce89de861a0f4c5ec0d4f68026413e880daad95fd2f174a65e1147566e0c5264",
+      "status": "awaiting-rig-geometry-and-visual-qa",
+      "notes": "Navy cloth color corrected; separate front single boots and original torso preserved."
+    },
+    {
+      "id": "t5-boss-01-front-parts-clean",
+      "kind": "parts",
+      "assetIds": [
+        "b050",
+        "b050-2"
+      ],
+      "rows": [
+        {
+          "assetId": "b050",
+          "view": "front"
+        },
+        {
+          "assetId": "b050-2",
+          "view": "front"
+        }
+      ],
+      "source": "t5-boss-01-front-parts-clean.png",
+      "prompt": "prompts/t5-boss-01-front-parts-clean.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "1eaf17d28e51a9dd0c9bbe59dd925637b44d7212d98be2e227fe45982a0fd5e1",
+      "status": "awaiting-rig-geometry-and-visual-qa",
+      "notes": "Castellan attached feet removed; use only corrected top body; original golem remains."
+    },
+    {
+      "id": "t5-boss-01-back-parts",
+      "kind": "parts",
+      "assetIds": [
+        "b050",
+        "b050-2"
+      ],
+      "rows": [
+        {
+          "assetId": "b050",
+          "view": "back"
+        },
+        {
+          "assetId": "b050-2",
+          "view": "back"
+        }
+      ],
+      "source": "t5-boss-01-back-parts.png",
+      "prompt": "prompts/t5-boss-01-back-parts.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "0370dc02f628247b390c937d856fe5da8b75a995143091ec6544f37ca0df7b99",
+      "status": "rejected-concept",
+      "notes": "REJECTED castellan duplicated sword and both rows front-facing detached boots. Targeted rear-facing correction needed."
+    },
+    {
+      "id": "t5-boss-01-back-parts-clean",
+      "kind": "parts",
+      "assetIds": [
+        "b050",
+        "b050-2"
+      ],
+      "rows": [
+        {
+          "assetId": "b050",
+          "view": "back"
+        },
+        {
+          "assetId": "b050-2",
+          "view": "back"
+        }
+      ],
+      "source": "t5-boss-01-back-parts-clean.png",
+      "prompt": "prompts/t5-boss-01-back-parts-clean.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "5225b09c3f87aec2491f52b2ef2c7f223dc1f5f5bb5b1e429bad3573f1b3d776",
+      "status": "awaiting-rig-geometry-and-visual-qa",
+      "notes": "One physical-right sword and straight rear heel plates corrected. Two valid separate leg pieces per row."
+    },
+    {
+      "id": "glider-three-view-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w032"
+      ],
+      "rows": [
+        {
+          "assetId": "w032",
+          "view": "side"
+        },
+        {
+          "assetId": "w032",
+          "view": "front"
+        },
+        {
+          "assetId": "w032",
+          "view": "back"
+        }
+      ],
+      "source": "glider-three-view-parts.png",
+      "prompt": "prompts/glider-three-view-parts.txt",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": false,
+      "sha256": "ba2a259114391b379d6421e13ddc614f870a745e652a54fef593366fa4b1b4c1",
+      "status": "awaiting-rig-geometry-and-visual-qa",
+      "notes": "Three views and separate wing panels. FRONT row swaps body to middle column; measure role-specific ROIs."
+    },
+    {
+      "id": "membrane-dragons-side-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w036",
+        "b060-2"
+      ],
+      "rows": [
+        {
+          "assetId": "w036",
+          "view": "side"
+        },
+        {
+          "assetId": "b060-2",
+          "view": "side"
+        }
+      ],
+      "source": "membrane-dragons-side-parts.png",
+      "prompt": "prompts/membrane-dragons-side-parts.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "e6c04f326201f3b054ea2913ca81f80a87924bee050e2dc31b98704055d87e78",
+      "status": "awaiting-rig-geometry-and-visual-qa",
+      "notes": "Closed creature bodies with tucked limbs and two separate membrane wings, clear right-facing profiles."
+    },
+    {
+      "id": "membrane-dragons-front-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w036",
+        "b060-2"
+      ],
+      "rows": [
+        {
+          "assetId": "w036",
+          "view": "front"
+        },
+        {
+          "assetId": "b060-2",
+          "view": "front"
+        }
+      ],
+      "source": "membrane-dragons-front-parts.png",
+      "prompt": "prompts/membrane-dragons-front-parts.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "f77d895ba5740fa6af7c66d73931aae4d15198bbbf155432d90442989833935e",
+      "status": "rejected-concept",
+      "notes": "REJECTED bone dragon body has unrequested lich rider. W36 row and all wings usable."
+    },
+    {
+      "id": "membrane-dragons-back-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w036",
+        "b060-2"
+      ],
+      "rows": [
+        {
+          "assetId": "w036",
+          "view": "back"
+        },
+        {
+          "assetId": "b060-2",
+          "view": "back"
+        }
+      ],
+      "source": "membrane-dragons-back-parts.png",
+      "prompt": "prompts/membrane-dragons-back-parts.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "661f671c02e923a4217a1721147f285019029550cbab17babe5f8ce1a9f02d83",
+      "status": "rejected-concept",
+      "notes": "REJECTED bone dragon body has unrequested lich rider. W36 row and all wings usable."
+    },
+    {
+      "id": "horse-puppy-side-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w043",
+        "w054"
+      ],
+      "rows": [
+        {
+          "assetId": "w043",
+          "view": "side"
+        },
+        {
+          "assetId": "w054",
+          "view": "side"
+        }
+      ],
+      "source": "horse-puppy-side-parts.png",
+      "prompt": "prompts/horse-puppy-side-parts.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "8894590261f22fbc598a8e23a76e036b569349bad35e69bff586c3449ecf1b9a",
+      "status": "rejected-concept",
+      "notes": "REJECTED bone puppy has all four attached legs. Horse closed torso and isolated fore/hind parts usable."
+    },
+    {
+      "id": "membrane-dragons-back-parts-clean",
+      "kind": "parts",
+      "assetIds": [
+        "w036",
+        "b060-2"
+      ],
+      "rows": [
+        {
+          "assetId": "w036",
+          "view": "back"
+        },
+        {
+          "assetId": "b060-2",
+          "view": "back"
+        }
+      ],
+      "source": "membrane-dragons-back-parts-clean.png",
+      "prompt": "prompts/membrane-dragons-back-parts-clean.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "ba2c29bd88c460d16ed427ead4bb64e498049826cc96cd45e32adf116ba90e72",
+      "status": "awaiting-rig-geometry-and-visual-qa",
+      "notes": "Unrequested lich removed. Bone dragon rear neck/skull completes the existing spine; W36 and wings retained."
+    },
+    {
+      "id": "membrane-dragons-front-parts-clean",
+      "kind": "parts",
+      "assetIds": [
+        "w036",
+        "b060-2"
+      ],
+      "rows": [
+        {
+          "assetId": "w036",
+          "view": "front"
+        },
+        {
+          "assetId": "b060-2",
+          "view": "front"
+        }
+      ],
+      "source": "membrane-dragons-front-parts-clean.png",
+      "prompt": "prompts/membrane-dragons-front-parts-clean.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "b467d7fe58fb6a19cc3cad3f9e421bd1ed945b9344e307f65fcbed0d61196011",
+      "status": "awaiting-rig-geometry-and-visual-qa",
+      "notes": "Unrequested lich removed. Solo front-facing bone dragon body and gem retained; no rider."
+    },
+    {
+      "id": "horse-puppy-side-parts-clean",
+      "kind": "parts",
+      "assetIds": [
+        "w043",
+        "w054"
+      ],
+      "rows": [
+        {
+          "assetId": "w043",
+          "view": "side"
+        },
+        {
+          "assetId": "w054",
+          "view": "side"
+        }
+      ],
+      "source": "horse-puppy-side-parts-clean.png",
+      "prompt": "prompts/horse-puppy-side-parts-clean.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "1f434775b90b950ec8f196336c4c68741f026becea4208f383ff1907da3e2ccb",
+      "status": "awaiting-rig-geometry-and-visual-qa",
+      "notes": "Puppy now zero attached legs with rounded shoulder/pelvis. Horse and all isolated limbs unchanged."
+    },
+    {
+      "id": "winged-mounts-side-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w044",
+        "w048"
+      ],
+      "rows": [
+        {
+          "assetId": "w044",
+          "view": "side"
+        },
+        {
+          "assetId": "w048",
+          "view": "side"
+        }
+      ],
+      "source": "winged-mounts-side-parts.png",
+      "prompt": "prompts/winged-mounts-side-parts.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "db3c3c469ef8d239d2ba2fb9b996b53759d02d501ec3b21344e4bd36cae7e564",
+      "status": "awaiting-rig-geometry-and-visual-qa",
+      "notes": "Two distinct knight mounts with tucked legs and detached feather wings. Both face right."
+    },
+    {
+      "id": "horse-puppy-front-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w043",
+        "w054"
+      ],
+      "rows": [
+        {
+          "assetId": "w043",
+          "view": "front"
+        },
+        {
+          "assetId": "w054",
+          "view": "front"
+        }
+      ],
+      "source": "horse-puppy-front-parts.png",
+      "prompt": "prompts/horse-puppy-front-parts.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "b4e54ae1a64e0317a6e46920d49180947156a3d93e0c6d0a379940c9dbcf1a9c",
+      "status": "rejected-concept",
+      "notes": "REJECTED puppy attached forelegs. Horse body and separate leg components may be used."
+    },
+    {
+      "id": "horse-puppy-back-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w043",
+        "w054"
+      ],
+      "rows": [
+        {
+          "assetId": "w043",
+          "view": "back"
+        },
+        {
+          "assetId": "w054",
+          "view": "back"
+        }
+      ],
+      "source": "horse-puppy-back-parts.png",
+      "prompt": "prompts/horse-puppy-back-parts.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "33a05ca7c3ee1ca127099a6312c89dc167face178654377389aa7801f54f1fad",
+      "status": "rejected-concept",
+      "notes": "REJECTED horse body three-quarter/right-facing and puppy has attached foreleg. Strict rear correction needed."
+    },
+    {
+      "id": "horse-puppy-front-parts-clean",
+      "kind": "parts",
+      "assetIds": [
+        "w043",
+        "w054"
+      ],
+      "rows": [
+        {
+          "assetId": "w043",
+          "view": "front"
+        },
+        {
+          "assetId": "w054",
+          "view": "front"
+        }
+      ],
+      "source": "horse-puppy-front-parts-clean.png",
+      "prompt": "prompts/horse-puppy-front-parts-clean.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "6b95471ffcae751ee6b281791ab77462ffcfd3bf214f8d4cb5731c31b304f54f",
+      "status": "awaiting-rig-geometry-and-visual-qa",
+      "notes": "Target correction removed attached puppy forelegs; both bodies are front-facing with detached fore/hind textures."
+    },
+    {
+      "id": "horse-puppy-back-parts-clean",
+      "kind": "parts",
+      "assetIds": [
+        "w043",
+        "w054"
+      ],
+      "rows": [
+        {
+          "assetId": "w043",
+          "view": "back"
+        },
+        {
+          "assetId": "w054",
+          "view": "back"
+        }
+      ],
+      "source": "horse-puppy-back-parts-clean.png",
+      "prompt": "prompts/horse-puppy-back-parts-clean.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "70ae9da037f271434cd81b93d1e9985d3097a37b8e1e81232cfa4085636d985a",
+      "status": "awaiting-rig-geometry-and-visual-qa",
+      "notes": "Target correction gives true rear horse/puppy bodies, rider rear and centered tails; final source pending rig QA."
+    },
+    {
+      "id": "winged-mounts-front-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w044",
+        "w048"
+      ],
+      "rows": [
+        {
+          "assetId": "w044",
+          "view": "front"
+        },
+        {
+          "assetId": "w048",
+          "view": "front"
+        }
+      ],
+      "source": "winged-mounts-front-parts.png",
+      "prompt": "prompts/winged-mounts-front-parts.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "64d842896c261585f709c50733ed07b4effb00fd9bd68473d738e8def7f759c9",
+      "status": "source-and-four-pose-three-view-reviewed",
+      "notes": "Front-facing griffin/pegasus riders and detached wings; source awaiting rig QA.",
+      "reviewConfig": "winged-mounts-rigs.json"
+    },
+    {
+      "id": "winged-mounts-back-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w044",
+        "w048"
+      ],
+      "rows": [
+        {
+          "assetId": "w044",
+          "view": "back"
+        },
+        {
+          "assetId": "w048",
+          "view": "back"
+        }
+      ],
+      "source": "winged-mounts-back-parts.png",
+      "prompt": "prompts/winged-mounts-back-parts.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "099c0f8fc202667007bc860becbde9b4094fcc0b97b674258a83a31f434d210c",
+      "status": "rejected-concept",
+      "notes": "REJECTED rear bodies retain profile heads/three-quarter orientation; wings usable after body-only correction."
+    },
+    {
+      "id": "winged-mounts-side-parts-clean",
+      "kind": "parts",
+      "assetIds": [
+        "w044",
+        "w048"
+      ],
+      "rows": [
+        {
+          "assetId": "w044",
+          "view": "side"
+        },
+        {
+          "assetId": "w048",
+          "view": "side"
+        }
+      ],
+      "source": "winged-mounts-side-parts-clean.png",
+      "prompt": "prompts/winged-mounts-side-parts-clean.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "87ceabecb3648b251d0e351278f2fa053956df58c4a3d0bb2d8435def0193b77",
+      "status": "source-and-four-pose-three-view-reviewed",
+      "notes": "Local W44 helmet identity corrected to match frontal and rear armor; complete side bodies and wings preserved.",
+      "reviewConfig": "winged-mounts-rigs.json"
+    },
+    {
+      "id": "winged-mounts-back-parts-clean",
+      "kind": "parts",
+      "assetIds": [
+        "w044",
+        "w048"
+      ],
+      "rows": [
+        {
+          "assetId": "w044",
+          "view": "back"
+        },
+        {
+          "assetId": "w048",
+          "view": "back"
+        }
+      ],
+      "source": "winged-mounts-back-parts-clean.png",
+      "prompt": "prompts/winged-mounts-back-parts-clean.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "7f1acb7be0790fac226a54fe088692504766d59b4f461f4525eb90c0710c38ae",
+      "status": "source-and-four-pose-three-view-reviewed",
+      "notes": "True rear body correction accepted: centered rumps and tails, rider cape and helmet rear, right-hand lances, no profile face. Detached wings preserved.",
+      "reviewConfig": "winged-mounts-rigs.json"
+    }
+  ]
+}

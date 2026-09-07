@@ -1,0 +1,362 @@
+{
+  "reviewedAssets": [
+    {
+      "assetId": "w063",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 8,
+      "checks": [
+        "Every actual baked pose inspected for physical leg exchange and passing pose",
+        "Front/back source anatomy, tail and equipment side reviewed",
+        "Torso occludes proximal caps; fixed source limb proportions retained",
+        "Shared four-direction moving/contact QA passed"
+      ],
+      "limitations": "Articulated leg cutouts with fixed upper-body artwork; arms, weapons, hair and cloth do not have independent secondary motion. Eight raster poses retain bounded held-frame contact quantization, not continuous zero slip."
+    },
+    {
+      "assetId": "w065",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 8,
+      "checks": [
+        "Every actual baked pose inspected for physical leg exchange and passing pose",
+        "Front/back source anatomy, tail and equipment side reviewed",
+        "Torso occludes proximal caps; fixed source limb proportions retained",
+        "Shared four-direction moving/contact QA passed"
+      ],
+      "limitations": "Articulated leg cutouts with fixed upper-body artwork; arms, weapons, hair and cloth do not have independent secondary motion. Eight raster poses retain bounded held-frame contact quantization, not continuous zero slip."
+    },
+    {
+      "assetId": "w066",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 8,
+      "checks": [
+        "Every actual baked pose inspected for physical leg exchange and passing pose",
+        "Front/back source anatomy, tail and equipment side reviewed",
+        "Torso occludes proximal caps; fixed source limb proportions retained",
+        "Shared four-direction moving/contact QA passed"
+      ],
+      "limitations": "Articulated leg cutouts with fixed upper-body artwork; arms, weapons, hair and cloth do not have independent secondary motion. Eight raster poses retain bounded held-frame contact quantization, not continuous zero slip."
+    },
+    {
+      "assetId": "w069",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 8,
+      "checks": [
+        "Every actual baked pose inspected for physical leg exchange and passing pose",
+        "Front/back source anatomy, tail and equipment side reviewed",
+        "Torso occludes proximal caps; fixed source limb proportions retained",
+        "Shared four-direction moving/contact QA passed"
+      ],
+      "limitations": "Articulated leg cutouts with fixed upper-body artwork; arms, weapons, hair and cloth do not have independent secondary motion. Eight raster poses retain bounded held-frame contact quantization, not continuous zero slip."
+    },
+    {
+      "assetId": "w074",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 8,
+      "checks": [
+        "Every actual baked pose inspected for physical leg exchange and passing pose",
+        "Front/back source anatomy, tail and equipment side reviewed",
+        "Torso occludes proximal caps; fixed source limb proportions retained",
+        "Shared four-direction moving/contact QA passed"
+      ],
+      "limitations": "Articulated leg cutouts with fixed upper-body artwork; arms, weapons, hair and cloth do not have independent secondary motion. Eight raster poses retain bounded held-frame contact quantization, not continuous zero slip."
+    },
+    {
+      "assetId": "w075",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 8,
+      "checks": [
+        "Every actual baked pose inspected for physical leg exchange and passing pose",
+        "Front/back source anatomy, tail and equipment side reviewed",
+        "Torso occludes proximal caps; fixed source limb proportions retained",
+        "Shared four-direction moving/contact QA passed"
+      ],
+      "limitations": "Articulated leg cutouts with fixed upper-body artwork; arms, weapons, hair and cloth do not have independent secondary motion. Eight raster poses retain bounded held-frame contact quantization, not continuous zero slip."
+    },
+    {
+      "assetId": "w079",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 8,
+      "checks": [
+        "Every actual baked pose inspected for physical leg exchange and passing pose",
+        "Front/back source anatomy, tail and equipment side reviewed",
+        "Torso occludes proximal caps; fixed source limb proportions retained",
+        "Shared four-direction moving/contact QA passed"
+      ],
+      "limitations": "Articulated leg cutouts with fixed upper-body artwork; arms, weapons, hair and cloth do not have independent secondary motion. Eight raster poses retain bounded held-frame contact quantization, not continuous zero slip."
+    },
+    {
+      "assetId": "w081",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 8,
+      "checks": [
+        "Every actual baked pose inspected for physical leg exchange and passing pose",
+        "Front/back source anatomy, tail and equipment side reviewed",
+        "Torso occludes proximal caps; fixed source limb proportions retained",
+        "Shared four-direction moving/contact QA passed"
+      ],
+      "limitations": "Articulated leg cutouts with fixed upper-body artwork; arms, weapons, hair and cloth do not have independent secondary motion. Eight raster poses retain bounded held-frame contact quantization, not continuous zero slip."
+    },
+    {
+      "assetId": "w083",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 8,
+      "checks": [
+        "Every actual baked pose inspected for physical leg exchange and passing pose",
+        "Front/back source anatomy, tail and equipment side reviewed",
+        "Torso occludes proximal caps; fixed source limb proportions retained",
+        "Shared four-direction moving/contact QA passed"
+      ],
+      "limitations": "Articulated leg cutouts with fixed upper-body artwork; arms, weapons, hair and cloth do not have independent secondary motion. Eight raster poses retain bounded held-frame contact quantization, not continuous zero slip."
+    },
+    {
+      "assetId": "w086",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 8,
+      "checks": [
+        "Every actual baked pose inspected for physical leg exchange and passing pose",
+        "Front/back source anatomy, tail and equipment side reviewed",
+        "Torso occludes proximal caps; fixed source limb proportions retained",
+        "Shared four-direction moving/contact QA passed"
+      ],
+      "limitations": "Articulated leg cutouts with fixed upper-body artwork; arms, weapons, hair and cloth do not have independent secondary motion. Eight raster poses retain bounded held-frame contact quantization, not continuous zero slip."
+    },
+    {
+      "assetId": "w087",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 8,
+      "checks": [
+        "Every actual baked pose inspected for physical leg exchange and passing pose",
+        "Front/back source anatomy, tail and equipment side reviewed",
+        "Torso occludes proximal caps; fixed source limb proportions retained",
+        "Shared four-direction moving/contact QA passed"
+      ],
+      "limitations": "Articulated leg cutouts with fixed upper-body artwork; arms, weapons, hair and cloth do not have independent secondary motion. Eight raster poses retain bounded held-frame contact quantization, not continuous zero slip."
+    },
+    {
+      "assetId": "w089",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 8,
+      "checks": [
+        "Every actual baked pose inspected for physical leg exchange and passing pose",
+        "Front/back source anatomy, tail and equipment side reviewed",
+        "Torso occludes proximal caps; fixed source limb proportions retained",
+        "Shared four-direction moving/contact QA passed"
+      ],
+      "limitations": "Articulated leg cutouts with fixed upper-body artwork; arms, weapons, hair and cloth do not have independent secondary motion. Eight raster poses retain bounded held-frame contact quantization, not continuous zero slip."
+    },
+    {
+      "assetId": "b090",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 8,
+      "checks": [
+        "Every actual baked pose inspected for physical leg exchange and passing pose",
+        "Front/back source anatomy, tail and equipment side reviewed",
+        "Torso occludes proximal caps; fixed source limb proportions retained",
+        "Shared four-direction moving/contact QA passed"
+      ],
+      "limitations": "Articulated leg cutouts with fixed upper-body artwork; arms, weapons, hair and cloth do not have independent secondary motion. Eight raster poses retain bounded held-frame contact quantization, not continuous zero slip."
+    },
+    {
+      "assetId": "b090-2",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 8,
+      "checks": [
+        "Every actual baked pose inspected for physical leg exchange and passing pose",
+        "Front/back source anatomy, tail and equipment side reviewed",
+        "Torso occludes proximal caps; fixed source limb proportions retained",
+        "Shared four-direction moving/contact QA passed"
+      ],
+      "limitations": "Articulated leg cutouts with fixed upper-body artwork; arms, weapons, hair and cloth do not have independent secondary motion. Eight raster poses retain bounded held-frame contact quantization, not continuous zero slip."
+    },
+    {
+      "assetId": "w093",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 8,
+      "checks": [
+        "Every actual baked pose inspected for physical leg exchange and passing pose",
+        "Front/back source anatomy, tail and equipment side reviewed",
+        "Torso occludes proximal caps; fixed source limb proportions retained",
+        "Shared four-direction moving/contact QA passed"
+      ],
+      "limitations": "Articulated leg cutouts with fixed upper-body artwork; arms, weapons, hair and cloth do not have independent secondary motion. Eight raster poses retain bounded held-frame contact quantization, not continuous zero slip."
+    },
+    {
+      "assetId": "w094",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 8,
+      "checks": [
+        "Every actual baked pose inspected for physical leg exchange and passing pose",
+        "Front/back source anatomy, tail and equipment side reviewed",
+        "Torso occludes proximal caps; fixed source limb proportions retained",
+        "Shared four-direction moving/contact QA passed"
+      ],
+      "limitations": "Articulated leg cutouts with fixed upper-body artwork; arms, weapons, hair and cloth do not have independent secondary motion. Eight raster poses retain bounded held-frame contact quantization, not continuous zero slip."
+    },
+    {
+      "assetId": "w095",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 8,
+      "checks": [
+        "Every actual baked pose inspected for physical leg exchange and passing pose",
+        "Front/back source anatomy, tail and equipment side reviewed",
+        "Torso occludes proximal caps; fixed source limb proportions retained",
+        "Shared four-direction moving/contact QA passed"
+      ],
+      "limitations": "Articulated leg cutouts with fixed upper-body artwork; arms, weapons, hair and cloth do not have independent secondary motion. Eight raster poses retain bounded held-frame contact quantization, not continuous zero slip."
+    },
+    {
+      "assetId": "w097",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 8,
+      "checks": [
+        "Every actual baked pose inspected for physical leg exchange and passing pose",
+        "Front/back source anatomy, tail and equipment side reviewed",
+        "Torso occludes proximal caps; fixed source limb proportions retained",
+        "Shared four-direction moving/contact QA passed"
+      ],
+      "limitations": "Articulated leg cutouts with fixed upper-body artwork; arms, weapons, hair and cloth do not have independent secondary motion. Eight raster poses retain bounded held-frame contact quantization, not continuous zero slip."
+    },
+    {
+      "assetId": "w099",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 8,
+      "checks": [
+        "Every actual baked pose inspected for physical leg exchange and passing pose",
+        "Front/back source anatomy, tail and equipment side reviewed",
+        "Torso occludes proximal caps; fixed source limb proportions retained",
+        "Shared four-direction moving/contact QA passed"
+      ],
+      "limitations": "Articulated leg cutouts with fixed upper-body artwork; arms, weapons, hair and cloth do not have independent secondary motion. Eight raster poses retain bounded held-frame contact quantization, not continuous zero slip."
+    },
+    {
+      "assetId": "b100",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 8,
+      "checks": [
+        "Every actual baked pose inspected for physical leg exchange and passing pose",
+        "Front/back source anatomy, tail and equipment side reviewed",
+        "Torso occludes proximal caps; fixed source limb proportions retained",
+        "Shared four-direction moving/contact QA passed"
+      ],
+      "limitations": "Articulated leg cutouts with fixed upper-body artwork; arms, weapons, hair and cloth do not have independent secondary motion. Eight raster poses retain bounded held-frame contact quantization, not continuous zero slip."
+    },
+    {
+      "assetId": "w101",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 8,
+      "checks": [
+        "Every actual baked pose inspected for physical leg exchange and passing pose",
+        "Front/back source anatomy, tail and equipment side reviewed",
+        "Torso occludes proximal caps; fixed source limb proportions retained",
+        "Shared four-direction moving/contact QA passed"
+      ],
+      "limitations": "Articulated leg cutouts with fixed upper-body artwork; arms, weapons, hair and cloth do not have independent secondary motion. Eight raster poses retain bounded held-frame contact quantization, not continuous zero slip."
+    }
+  ],
+  "movingEvidence": "gen/late-directional-bipeds/directional-moving-qa.json"
+}

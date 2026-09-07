@@ -1,0 +1,302 @@
+{
+  "scope": "Component sources, assembled neutral art, all discrete views and poses reviewed. Root performs final combined game-canvas review before promotion.",
+  "entries": [
+    {
+      "assetId": "w031",
+      "config": "t4-biped-01a-rigs.json",
+      "reviewed": true,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "notes": "Three authored directions, consistent physical leg identity and phase, extended support leg, visible crossing and heel-facing back view. Closed clothed pelvis and occluded thigh roots. Separate source ROIs pass gutter/component checks."
+    },
+    {
+      "assetId": "w033",
+      "config": "t4-biped-01a-rigs.json",
+      "reviewed": true,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "notes": "Three authored directions, consistent physical leg identity and phase, extended support leg, visible crossing and heel-facing back view. Closed clothed pelvis and occluded thigh roots. Separate source ROIs pass gutter/component checks."
+    },
+    {
+      "assetId": "w052",
+      "config": "float-rigs.json",
+      "reviewed": true,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "notes": "Three authored directions, same source-pixel scale, body-center anchor; four gentle hover poses, no walking/wing claim. Clean intact fantasy materials, no gore."
+    },
+    {
+      "assetId": "w059",
+      "config": "float-rigs.json",
+      "reviewed": true,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "notes": "Three authored directions, same source-pixel scale, body-center anchor; four gentle hover poses, no walking/wing claim. Clean intact fantasy materials, no gore."
+    },
+    {
+      "assetId": "b060",
+      "config": "float-rigs.json",
+      "reviewed": true,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "notes": "Three authored directions, same source-pixel scale, body-center anchor; four gentle hover poses, no walking/wing claim. Clean intact fantasy materials, no gore."
+    },
+    {
+      "assetId": "w034",
+      "config": "t4-biped-01b-rigs.json",
+      "reviewed": true,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "notes": "All six boards reviewed for extended supporting knees, distinct crossing, original equipment, heel-facing back, source ROI integrity and moderate clean game character style. Geometry/moving check passed."
+    },
+    {
+      "assetId": "w035",
+      "config": "t4-biped-01b-rigs.json",
+      "reviewed": true,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "notes": "All six boards reviewed for extended supporting knees, distinct crossing, original equipment, heel-facing back, source ROI integrity and moderate clean game character style. Geometry/moving check passed."
+    },
+    {
+      "assetId": "w037",
+      "config": "t4-biped-02a-rigs.json",
+      "reviewed": true,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "notes": "All authored source parts and three 8-pose boards visually reviewed; foot identity alternates, support extends, intact moderate fantasy character tone. Fixed mean-hip source anchor, gutter/component and 256-phase geometry checks, static/moving world-grid review passed. W37/39 enclosed neutral pockets seeded explicitly. W42 side uses one correctly directed leg texture at two independent physical sockets. W51/53/55 boot-neck source joints preserve the complete rigid boot. W57 rear body reflection preserves physical shield/sword hand."
+    },
+    {
+      "assetId": "w038",
+      "config": "t4-biped-02a-rigs.json",
+      "reviewed": true,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "notes": "All authored source parts and three 8-pose boards visually reviewed; foot identity alternates, support extends, intact moderate fantasy character tone. Fixed mean-hip source anchor, gutter/component and 256-phase geometry checks, static/moving world-grid review passed. W37/39 enclosed neutral pockets seeded explicitly. W42 side uses one correctly directed leg texture at two independent physical sockets. W51/53/55 boot-neck source joints preserve the complete rigid boot. W57 rear body reflection preserves physical shield/sword hand."
+    },
+    {
+      "assetId": "w039",
+      "config": "t4-biped-02b-rigs.json",
+      "reviewed": true,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "notes": "All authored source parts and three 8-pose boards visually reviewed; foot identity alternates, support extends, intact moderate fantasy character tone. Fixed mean-hip source anchor, gutter/component and 256-phase geometry checks, static/moving world-grid review passed. W37/39 enclosed neutral pockets seeded explicitly. W42 side uses one correctly directed leg texture at two independent physical sockets. W51/53/55 boot-neck source joints preserve the complete rigid boot. W57 rear body reflection preserves physical shield/sword hand."
+    },
+    {
+      "assetId": "w041",
+      "config": "t5-biped-01a-rigs.json",
+      "reviewed": true,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "notes": "All authored source parts and three 8-pose boards visually reviewed; foot identity alternates, support extends, intact moderate fantasy character tone. Fixed mean-hip source anchor, gutter/component and 256-phase geometry checks, static/moving world-grid review passed. W37/39 enclosed neutral pockets seeded explicitly. W42 side uses one correctly directed leg texture at two independent physical sockets. W51/53/55 boot-neck source joints preserve the complete rigid boot. W57 rear body reflection preserves physical shield/sword hand."
+    },
+    {
+      "assetId": "w042",
+      "config": "t5-biped-01a-rigs.json",
+      "reviewed": true,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "notes": "All authored source parts and three 8-pose boards visually reviewed; foot identity alternates, support extends, intact moderate fantasy character tone. Fixed mean-hip source anchor, gutter/component and 256-phase geometry checks, static/moving world-grid review passed. W37/39 enclosed neutral pockets seeded explicitly. W42 side uses one correctly directed leg texture at two independent physical sockets. W51/53/55 boot-neck source joints preserve the complete rigid boot. W57 rear body reflection preserves physical shield/sword hand."
+    },
+    {
+      "assetId": "w045",
+      "config": "t5-biped-01b-rigs.json",
+      "reviewed": true,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "notes": "All authored source parts and three 8-pose boards visually reviewed; foot identity alternates, support extends, intact moderate fantasy character tone. Fixed mean-hip source anchor, gutter/component and 256-phase geometry checks, static/moving world-grid review passed. W37/39 enclosed neutral pockets seeded explicitly. W42 side uses one correctly directed leg texture at two independent physical sockets. W51/53/55 boot-neck source joints preserve the complete rigid boot. W57 rear body reflection preserves physical shield/sword hand."
+    },
+    {
+      "assetId": "w046",
+      "config": "t5-biped-01b-rigs.json",
+      "reviewed": true,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "notes": "All authored source parts and three 8-pose boards visually reviewed; foot identity alternates, support extends, intact moderate fantasy character tone. Fixed mean-hip source anchor, gutter/component and 256-phase geometry checks, static/moving world-grid review passed. W37/39 enclosed neutral pockets seeded explicitly. W42 side uses one correctly directed leg texture at two independent physical sockets. W51/53/55 boot-neck source joints preserve the complete rigid boot. W57 rear body reflection preserves physical shield/sword hand."
+    },
+    {
+      "assetId": "w051",
+      "config": "t6-biped-01a-rigs.json",
+      "reviewed": true,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "notes": "All authored source parts and three 8-pose boards visually reviewed; foot identity alternates, support extends, intact moderate fantasy character tone. Fixed mean-hip source anchor, gutter/component and 256-phase geometry checks, static/moving world-grid review passed. W37/39 enclosed neutral pockets seeded explicitly. W42 side uses one correctly directed leg texture at two independent physical sockets. W51/53/55 boot-neck source joints preserve the complete rigid boot. W57 rear body reflection preserves physical shield/sword hand."
+    },
+    {
+      "assetId": "w053",
+      "config": "t6-biped-01a-rigs.json",
+      "reviewed": true,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "notes": "All authored source parts and three 8-pose boards visually reviewed; foot identity alternates, support extends, intact moderate fantasy character tone. Fixed mean-hip source anchor, gutter/component and 256-phase geometry checks, static/moving world-grid review passed. W37/39 enclosed neutral pockets seeded explicitly. W42 side uses one correctly directed leg texture at two independent physical sockets. W51/53/55 boot-neck source joints preserve the complete rigid boot. W57 rear body reflection preserves physical shield/sword hand."
+    },
+    {
+      "assetId": "w055",
+      "config": "t6-biped-01b-rigs.json",
+      "reviewed": true,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "notes": "All authored source parts and three 8-pose boards visually reviewed; foot identity alternates, support extends, intact moderate fantasy character tone. Fixed mean-hip source anchor, gutter/component and 256-phase geometry checks, static/moving world-grid review passed. W37/39 enclosed neutral pockets seeded explicitly. W42 side uses one correctly directed leg texture at two independent physical sockets. W51/53/55 boot-neck source joints preserve the complete rigid boot. W57 rear body reflection preserves physical shield/sword hand."
+    },
+    {
+      "assetId": "w057",
+      "config": "t6-biped-01b-rigs.json",
+      "reviewed": true,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "notes": "All authored source parts and three 8-pose boards visually reviewed; foot identity alternates, support extends, intact moderate fantasy character tone. Fixed mean-hip source anchor, gutter/component and 256-phase geometry checks, static/moving world-grid review passed. W37/39 enclosed neutral pockets seeded explicitly. W42 side uses one correctly directed leg texture at two independent physical sockets. W51/53/55 boot-neck source joints preserve the complete rigid boot. W57 rear body reflection preserves physical shield/sword hand."
+    },
+    {
+      "assetId": "b040",
+      "config": "t4-boss-01-rigs.json",
+      "reviewed": true,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "notes": "Source parts, three-view discrete eight-pose boards and four-direction three-cycle moving review inspected. Alternating support and heel-facing rear boots; closed cloth roots hide overlaps. Crossbow enclosed background gaps removed through reviewed seeds; hand highlights preserved. Canonical common pivot and body-local anchors retained; no per-frame fit."
+    },
+    {
+      "assetId": "b040-2",
+      "config": "t4-boss-01-rigs.json",
+      "reviewed": true,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "notes": "Source parts, three-view discrete eight-pose boards and four-direction three-cycle moving review inspected. Alternating support and heel-facing rear boots; closed cloth roots hide overlaps. Crossbow enclosed background gaps removed through reviewed seeds; hand highlights preserved. Canonical common pivot and body-local anchors retained; no per-frame fit."
+    },
+    {
+      "assetId": "w047",
+      "config": "t5-biped-02a-rigs.json",
+      "reviewed": true,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "notes": "Source parts, three-view discrete eight-pose boards and four-direction three-cycle moving review inspected. Alternating support and heel-facing rear boots; closed cloth roots hide overlaps. Crossbow enclosed background gaps removed through reviewed seeds; hand highlights preserved. Canonical common pivot and body-local anchors retained; no per-frame fit."
+    },
+    {
+      "assetId": "w049",
+      "config": "t5-biped-02a-rigs.json",
+      "reviewed": true,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "notes": "Source parts, three-view discrete eight-pose boards and four-direction three-cycle moving review inspected. Alternating support and heel-facing rear boots; closed cloth roots hide overlaps. Crossbow enclosed background gaps removed through reviewed seeds; hand highlights preserved. Canonical common pivot and body-local anchors retained; no per-frame fit."
+    },
+    {
+      "assetId": "w058",
+      "config": "t6-doll-rigs.json",
+      "reviewed": true,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "notes": "Source parts, three-view discrete eight-pose boards and four-direction three-cycle moving review inspected. Alternating support and heel-facing rear boots; closed cloth roots hide overlaps. Crossbow enclosed background gaps removed through reviewed seeds; hand highlights preserved. Canonical common pivot and body-local anchors retained; no per-frame fit."
+    },
+    {
+      "assetId": "w032",
+      "config": "glider-rigs.json",
+      "reviewed": true,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "notes": "Actual three-view four-pose panels and moving board reviewed. Whole tucked pilot and wooden harness retained; canvas panels articulate about common apex through gentle bank. All enclosed strut gaps extracted by reviewed source coordinates, clothing/metal highlights preserved. No walking leg claims."
+    },
+    {
+      "assetId": "w036",
+      "config": "membrane-rigs.json",
+      "reviewed": true,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "notes": "Three actual four-pose wing cycles and moving board inspected. Front wing range corrected to avoid crossing through rider; upstroke phase consistent across all views. Shoulder roots hidden behind complete torso, rider face remains readable. Side reins enclosed background gap removed by reviewed seed. Tucked limbs retained, no walking supports."
+    },
+    {
+      "assetId": "w044",
+      "config": "winged-mounts-rigs.json",
+      "reviewed": true,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "notes": "Actual three-view four-pose panels and four-direction moving board inspected. Corrected W44 helmet identity and true rear orientation before assembly. Both wings retain independently authored feather textures, connect beneath complete shoulder/body silhouette, and reach upstroke together at phase .25 in all views. W48 side reins and folded-leg background pockets removed by reviewed seeds; rear ivory coat highlights preserved. Body and wing size fixed for whole cycle; flight limbs do not claim walking support."
+    },
+    {
+      "assetId": "w048",
+      "config": "winged-mounts-rigs.json",
+      "reviewed": true,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "notes": "Actual three-view four-pose panels and four-direction moving board inspected. Corrected W44 helmet identity and true rear orientation before assembly. Both wings retain independently authored feather textures, connect beneath complete shoulder/body silhouette, and reach upstroke together at phase .25 in all views. W48 side reins and folded-leg background pockets removed by reviewed seeds; rear ivory coat highlights preserved. Body and wing size fixed for whole cycle; flight limbs do not claim walking support."
+    }
+  ]
+}

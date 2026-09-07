@@ -1,0 +1,256 @@
+{
+  "version": 1,
+  "canonicalCell": 512,
+  "assetVersion": 93,
+  "entries": [
+    {
+      "assetId": "b060-2",
+      "wave": 60,
+      "role": "secondary",
+      "locomotion": "flight",
+      "cell": 512,
+      "referenceHeight": 430,
+      "cycleStride": 0,
+      "cycleSeconds": 1.05,
+      "reviewApproved": true,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/middle-waves/membrane-dragons-side-parts.png",
+          "sourceSha256": "e6c04f326201f3b054ea2913ca81f80a87924bee050e2dc31b98704055d87e78",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            430
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.48828125,
+              0.35,
+              0.51171875
+            ],
+            "target": {
+              "height": 270,
+              "top": 110,
+              "centerX": 256
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.36,
+                0.48828125,
+                0.31,
+                0.51171875
+              ],
+              "socketNormalized": [
+                0.62,
+                0.55
+              ],
+              "sourcePivot": [
+                0.95,
+                0.7
+              ],
+              "scale": 0.49,
+              "angleDeg": [
+                0,
+                -35
+              ],
+              "phase": 0,
+              "layer": -2
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.71,
+                0.48828125,
+                0.28,
+                0.51171875
+              ],
+              "socketNormalized": [
+                0.64,
+                0.55
+              ],
+              "sourcePivot": [
+                0.06,
+                0.7
+              ],
+              "scale": 0.52,
+              "angleDeg": [
+                0,
+                -35
+              ],
+              "phase": 0,
+              "layer": 1,
+              "flipX": true
+            }
+          ],
+          "jointReview": "Solo bone dragon, no rider. Source wing root vs wing finger distinguished and manually positioned; phase sign preserves downstroke through front/back direction changes. White bone highlights preserved.",
+          "backgroundSeeds": [
+            [
+              229,
+              792
+            ]
+          ]
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/middle-waves/membrane-dragons-front-parts-clean.png",
+          "sourceSha256": "b467d7fe58fb6a19cc3cad3f9e421bd1ed945b9344e307f65fcbed0d61196011",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            430
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.48828125,
+              0.32,
+              0.51171875
+            ],
+            "target": {
+              "height": 270,
+              "top": 110,
+              "centerX": 256
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.37,
+                0.48828125,
+                0.23,
+                0.51171875
+              ],
+              "socketNormalized": [
+                0.77,
+                0.4
+              ],
+              "sourcePivot": [
+                0.05,
+                0.68
+              ],
+              "scale": 0.62,
+              "angleDeg": [
+                20,
+                40
+              ],
+              "phase": 0,
+              "layer": -2
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.62,
+                0.48828125,
+                0.24,
+                0.51171875
+              ],
+              "socketNormalized": [
+                0.23,
+                0.4
+              ],
+              "sourcePivot": [
+                0.95,
+                0.68
+              ],
+              "scale": 0.64,
+              "angleDeg": [
+                -20,
+                -40
+              ],
+              "phase": 0,
+              "layer": 1
+            }
+          ],
+          "jointReview": "Solo bone dragon, no rider. Source wing root vs wing finger distinguished and manually positioned; phase sign preserves downstroke through front/back direction changes. White bone highlights preserved."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/middle-waves/membrane-dragons-back-parts-clean.png",
+          "sourceSha256": "ba2c29bd88c460d16ed427ead4bb64e498049826cc96cd45e32adf116ba90e72",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            430
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.498046875,
+              0.29,
+              0.501953125
+            ],
+            "target": {
+              "height": 270,
+              "top": 110,
+              "centerX": 256
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.35,
+                0.498046875,
+                0.26,
+                0.501953125
+              ],
+              "socketNormalized": [
+                0.22,
+                0.43
+              ],
+              "sourcePivot": [
+                0.2,
+                0.12
+              ],
+              "scale": 0.56,
+              "angleDeg": [
+                45,
+                -35
+              ],
+              "phase": 0,
+              "layer": -2,
+              "flipX": true
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.64,
+                0.498046875,
+                0.26,
+                0.501953125
+              ],
+              "socketNormalized": [
+                0.78,
+                0.43
+              ],
+              "sourcePivot": [
+                0.17,
+                0.12
+              ],
+              "scale": 0.58,
+              "angleDeg": [
+                -45,
+                35
+              ],
+              "phase": 0,
+              "layer": 1
+            }
+          ],
+          "jointReview": "Solo bone dragon, no rider. Source wing root vs wing finger distinguished and manually positioned; phase sign preserves downstroke through front/back direction changes. White bone highlights preserved."
+        }
+      }
+    }
+  ]
+}

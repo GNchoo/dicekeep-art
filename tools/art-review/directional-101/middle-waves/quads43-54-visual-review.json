@@ -1,0 +1,24 @@
+{
+  "entries": [
+    "w043",
+    "w054"
+  ],
+  "approved": true,
+  "views": 6,
+  "bakedPoses": 48,
+  "independentReview": true,
+  "checks": [
+    "Four physical fore/hind limbs remain attached below the chest and pelvis and alternate support.",
+    "W43 rider stays seated; physical right-hand lance appears left in front and right in back.",
+    "W43 back is rider cape/horse rump/tail, not an erased front.",
+    "W54 back is skull rear/spine/pelvis and tail; front collar ring absent.",
+    "Six fixed-scale boards preserve whole character silhouettes; no neighboring-cell fragments or cropped feet.",
+    "Two actual RGB neutral pockets inside W43 side reins removed by original SHA-pinned seeds."
+  ],
+  "limitations": [
+    "Mounted upper body, cape, lance and skeletal upper body remain rigid cutout parts.",
+    "Small bone/armor joint overlaps are visible at enlargement.",
+    "Visual board approval is distinct from numeric moving-contact QA and real-game playback.",
+    "Held eight-pose raster contact has up to one-eighth-stride quantization."
+  ]
+}

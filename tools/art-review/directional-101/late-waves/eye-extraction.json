@@ -1,0 +1,236 @@
+{
+  "method": "Neutral edge-connected background flood, connected-component isolation, original pixels repacked without rescaling; side parts normalized by horizontal flip.",
+  "records": [
+    {
+      "view": "side",
+      "source": "sources/t10-mixed-01-turnaround.png",
+      "sourceSha256": "146b0f78e2aad87cc3d3545a1c8ae543861110cbfa772c5619287df111acd212",
+      "output": "derived/w092-side-parts.png",
+      "outputSha256": "9eb04d24e034997dbc6a3ff77e44648f067ced28b8f27e1b41cd0d3f9cd629a8",
+      "parts": [
+        {
+          "component": "body",
+          "originalBounds": [
+            54,
+            677,
+            176,
+            413
+          ],
+          "pixels": 37515,
+          "atlasBounds": [
+            112,
+            50,
+            176,
+            413
+          ],
+          "flipX": true
+        },
+        {
+          "component": "wisp1",
+          "originalBounds": [
+            49,
+            727,
+            38,
+            80
+          ],
+          "pixels": 1520,
+          "atlasBounds": [
+            430,
+            20,
+            38,
+            80
+          ],
+          "flipX": true
+        },
+        {
+          "component": "wisp2",
+          "originalBounds": [
+            197,
+            956,
+            35,
+            65
+          ],
+          "pixels": 1209,
+          "atlasBounds": [
+            430,
+            140,
+            35,
+            65
+          ],
+          "flipX": true
+        }
+      ]
+    },
+    {
+      "view": "front",
+      "source": "sources/t10-mixed-01-turnaround.png",
+      "sourceSha256": "146b0f78e2aad87cc3d3545a1c8ae543861110cbfa772c5619287df111acd212",
+      "output": "derived/w092-front-parts.png",
+      "outputSha256": "81e8c13be0210d938edc9082f31b8930ba4cddd3558039ddd3d6fac55239bb45",
+      "parts": [
+        {
+          "component": "body",
+          "originalBounds": [
+            343,
+            677,
+            190,
+            413
+          ],
+          "pixels": 39838,
+          "atlasBounds": [
+            105,
+            50,
+            190,
+            413
+          ],
+          "flipX": false
+        },
+        {
+          "component": "wisp1",
+          "originalBounds": [
+            329,
+            725,
+            41,
+            81
+          ],
+          "pixels": 1674,
+          "atlasBounds": [
+            430,
+            20,
+            41,
+            81
+          ],
+          "flipX": false
+        },
+        {
+          "component": "wisp2",
+          "originalBounds": [
+            328,
+            948,
+            38,
+            72
+          ],
+          "pixels": 1379,
+          "atlasBounds": [
+            430,
+            140,
+            38,
+            72
+          ],
+          "flipX": false
+        },
+        {
+          "component": "wisp3",
+          "originalBounds": [
+            505,
+            956,
+            37,
+            70
+          ],
+          "pixels": 1325,
+          "atlasBounds": [
+            430,
+            260,
+            37,
+            70
+          ],
+          "flipX": false
+        },
+        {
+          "component": "wisp4",
+          "originalBounds": [
+            509,
+            753,
+            35,
+            68
+          ],
+          "pixels": 1225,
+          "atlasBounds": [
+            430,
+            380,
+            35,
+            68
+          ],
+          "flipX": false
+        }
+      ]
+    },
+    {
+      "view": "back",
+      "source": "sources/t10-mixed-01-turnaround.png",
+      "sourceSha256": "146b0f78e2aad87cc3d3545a1c8ae543861110cbfa772c5619287df111acd212",
+      "output": "derived/w092-back-parts.png",
+      "outputSha256": "5e49a292354652dd734eb85d8688495adb98e988da07d2e2d28be2e32ca28cd1",
+      "parts": [
+        {
+          "component": "body",
+          "originalBounds": [
+            641,
+            678,
+            188,
+            412
+          ],
+          "pixels": 38729,
+          "atlasBounds": [
+            106,
+            50,
+            188,
+            412
+          ],
+          "flipX": false
+        },
+        {
+          "component": "wisp1",
+          "originalBounds": [
+            797,
+            743,
+            34,
+            72
+          ],
+          "pixels": 1240,
+          "atlasBounds": [
+            430,
+            20,
+            34,
+            72
+          ],
+          "flipX": false
+        },
+        {
+          "component": "wisp2",
+          "originalBounds": [
+            634,
+            955,
+            36,
+            65
+          ],
+          "pixels": 1219,
+          "atlasBounds": [
+            430,
+            140,
+            36,
+            65
+          ],
+          "flipX": false
+        },
+        {
+          "component": "wisp3",
+          "originalBounds": [
+            801,
+            956,
+            32,
+            67
+          ],
+          "pixels": 1104,
+          "atlasBounds": [
+            430,
+            260,
+            32,
+            67
+          ],
+          "flipX": false
+        }
+      ]
+    }
+  ]
+}

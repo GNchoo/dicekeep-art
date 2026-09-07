@@ -1,0 +1,640 @@
+{
+  "mode": "built-in image_gen",
+  "requests": [
+    {
+      "id": "forest-quad-01-turnaround",
+      "kind": "turnaround",
+      "assetIds": [
+        "w011",
+        "w013",
+        "w014",
+        "w017"
+      ],
+      "prompt": "prompts/forest-quad-01-turnaround.txt",
+      "source": "forest-quad-01-turnaround.png",
+      "width": 1254,
+      "height": 1254,
+      "status": "awaiting-production-qa",
+      "notes": "RGB checkerboard; neutral reference only, not animation-ready",
+      "view": "",
+      "hasAlpha": false,
+      "sha256": "a5e9044520d128f59ac7e142c20f999a91b03bde377bfe612f48549c01279a8b"
+    },
+    {
+      "id": "forest-quad-01a-side-parts",
+      "kind": "parts",
+      "view": "side",
+      "assetIds": [
+        "w011",
+        "w013"
+      ],
+      "prompt": "prompts/forest-quad-01a-side-parts.txt",
+      "source": "forest-quad-01a-side-parts.png",
+      "width": 1254,
+      "height": 1254,
+      "status": "awaiting-production-qa",
+      "hasAlpha": false,
+      "sha256": "c345d47cb4087ab307aab73243a2af430fe4cbb3e524f1d96d6e4cf3387a6d50"
+    },
+    {
+      "id": "forest-quad-01a-front-parts",
+      "kind": "parts",
+      "view": "front",
+      "assetIds": [
+        "w011",
+        "w013"
+      ],
+      "prompt": "prompts/forest-quad-01a-front-parts.txt",
+      "source": "forest-quad-01a-front-parts.png",
+      "width": 1254,
+      "height": 1254,
+      "status": "awaiting-production-qa",
+      "hasAlpha": false,
+      "sha256": "e97d4881c2b6757092db340931944e419a7d8882b02f99425e7f3d6899b2f8bc"
+    },
+    {
+      "id": "forest-quad-01a-back-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w011",
+        "w013"
+      ],
+      "view": "back",
+      "source": "forest-quad-01a-back-parts.png",
+      "prompt": "prompts/forest-quad-01a-back-parts.txt",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": false,
+      "sha256": "dce5dd5be8fda2e5dbd8998a9db4dca2b42d1c2c876dd08d7f3a107b7e2d369c",
+      "status": "awaiting-production-qa"
+    },
+    {
+      "id": "b010-turnaround",
+      "kind": "turnaround",
+      "assetIds": [
+        "b010"
+      ],
+      "view": "",
+      "source": "b010-turnaround.png",
+      "prompt": "prompts/b010-turnaround.txt",
+      "width": 1774,
+      "height": 887,
+      "hasAlpha": false,
+      "sha256": "00b489db4e2ee6cd3e4ad25f7530390416963f7eb2d0ef02e76af9fc3fbd8474",
+      "status": "awaiting-production-qa"
+    },
+    {
+      "id": "b010-side-front-parts",
+      "kind": "parts",
+      "assetIds": [
+        "b010"
+      ],
+      "view": "side,front",
+      "source": "b010-side-front-parts.png",
+      "prompt": "prompts/b010-side-front-parts.txt",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": false,
+      "sha256": "33c854929bdbbb5a15ae36e6eac8f85bf7acbaab5fe04994f45a7463e667b0ba",
+      "status": "awaiting-production-qa"
+    },
+    {
+      "id": "b010-back-parts",
+      "kind": "parts",
+      "assetIds": [
+        "b010"
+      ],
+      "view": "back",
+      "source": "b010-back-parts.png",
+      "prompt": "prompts/b010-back-parts.txt",
+      "width": 1774,
+      "height": 887,
+      "hasAlpha": false,
+      "sha256": "298494fb2538c3948c3073dc1b2f4232568d096e1338146e8454e8e52e14bfa7",
+      "status": "awaiting-production-qa"
+    },
+    {
+      "id": "t2-bird-01-turnaround",
+      "kind": "turnaround",
+      "assetIds": [
+        "w012",
+        "w016"
+      ],
+      "view": "",
+      "source": "t2-bird-01-turnaround.png",
+      "prompt": "prompts/t2-bird-01-turnaround.txt",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": false,
+      "sha256": "9e66cb6f82142dcbc05be08b9300f0504c10a96e61185e75b1edeae8d072181d",
+      "status": "awaiting-production-qa"
+    },
+    {
+      "id": "t2-bird-01-side-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w012",
+        "w016"
+      ],
+      "view": "side",
+      "source": "t2-bird-01-side-parts.png",
+      "prompt": "prompts/t2-bird-01-side-parts.txt",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": false,
+      "sha256": "e0f74c26387c74cbce1f9daa274ec10cbd2a1f59aaa963bec1cddf870b9faea0",
+      "status": "awaiting-production-qa"
+    },
+    {
+      "id": "t2-bird-01-front-back-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w012",
+        "w016"
+      ],
+      "view": "front,back",
+      "source": "t2-bird-01-front-back-parts.png",
+      "prompt": "prompts/t2-bird-01-front-back-parts.txt",
+      "width": 887,
+      "height": 1774,
+      "hasAlpha": false,
+      "sha256": "eb9f71ec3bd49c3f3dc593e045b8619a80146a0f07ecf1ace127ba68ed0c1f31",
+      "status": "awaiting-production-qa"
+    },
+    {
+      "id": "forest-quad-02-side-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w014",
+        "w017",
+        "w018",
+        "w019"
+      ],
+      "view": "side",
+      "source": "forest-quad-02-side-parts.png",
+      "prompt": "prompts/forest-quad-02-side-parts.txt",
+      "width": 887,
+      "height": 1774,
+      "hasAlpha": false,
+      "sha256": "182665076910f9c6a8b86cff834d0db7d30c70e4e26888ee1f976230fb8d0d6a",
+      "status": "awaiting-production-qa"
+    },
+    {
+      "id": "forest-quad-02-front-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w014",
+        "w017",
+        "w018",
+        "w019"
+      ],
+      "view": "front",
+      "source": "forest-quad-02-front-parts.png",
+      "prompt": "prompts/forest-quad-02-front-parts.txt",
+      "width": 887,
+      "height": 1774,
+      "hasAlpha": false,
+      "sha256": "2cde5b291089d96519b44b49bc3e51571978cd9f2c4ce3cdd1e36c11692ff9ca",
+      "status": "awaiting-production-qa"
+    },
+    {
+      "id": "forest-quad-02-front-back-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w014",
+        "w017",
+        "w018",
+        "w019"
+      ],
+      "view": "front-back",
+      "source": "forest-quad-02-front-back-parts.png",
+      "prompt": "prompts/forest-quad-02-front-back-parts.txt",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": false,
+      "sha256": "a3feadf60e0ccb058b0bf4cf7f73e606b50c3b7b1423611354c44ce3dc0a0cdc",
+      "status": "awaiting-production-qa"
+    },
+    {
+      "id": "forest-quad-02-body-repair",
+      "kind": "body-repair",
+      "assetIds": [
+        "w014",
+        "w017",
+        "w018",
+        "w019"
+      ],
+      "view": "side-front",
+      "source": "forest-quad-02-body-repair.png",
+      "prompt": "prompts/forest-quad-02-body-repair.txt",
+      "width": 887,
+      "height": 1774,
+      "hasAlpha": false,
+      "sha256": "b25aaa8b2d80e6c640a001f4165e8489d60cc712c8964ee49a1b627d79c528e0",
+      "status": "awaiting-production-qa"
+    },
+    {
+      "id": "legacy-biped-01-front-back-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w002",
+        "w003",
+        "w005",
+        "w007"
+      ],
+      "view": "front-back",
+      "source": "legacy-biped-01-front-back-parts.png",
+      "prompt": "prompts/legacy-biped-01-front-back-parts.txt",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": false,
+      "sha256": "43bc78cc9ffcd19bd465743ce6adab2896866a604d832674124810bb94b36726",
+      "status": "awaiting-production-qa"
+    },
+    {
+      "id": "legacy-ground-02-front-back-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w001",
+        "w006",
+        "w009"
+      ],
+      "view": "front-back",
+      "source": "legacy-ground-02-front-back-parts.png",
+      "prompt": "prompts/legacy-ground-02-front-back-parts.txt",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": false,
+      "sha256": "c6094194ee6350b7001d11ac9173f1726645b0503aabe8072f07d7d119492024",
+      "status": "awaiting-production-qa"
+    },
+    {
+      "id": "forest-swamp-01-turnaround",
+      "kind": "turnaround",
+      "assetIds": [
+        "w015",
+        "w022",
+        "w023",
+        "w027"
+      ],
+      "view": "",
+      "source": "forest-swamp-01-turnaround.png",
+      "prompt": "prompts/forest-swamp-01-turnaround.txt",
+      "width": 887,
+      "height": 1774,
+      "hasAlpha": false,
+      "sha256": "c0c206f7487f39279586c667781cdf9bb102a9cbc8a0c922369adb94ce7606f5",
+      "status": "awaiting-production-qa"
+    },
+    {
+      "id": "forest-swamp-01-side-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w015",
+        "w022",
+        "w023",
+        "w027"
+      ],
+      "view": "side",
+      "source": "forest-swamp-01-side-parts.png",
+      "prompt": "prompts/forest-swamp-01-side-parts.txt",
+      "width": 887,
+      "height": 1774,
+      "hasAlpha": false,
+      "sha256": "8ceb00c5ec6bedecf771ffc5e5c4c7e424b4832a261cb31dd375fa510c9fc5af",
+      "status": "awaiting-production-qa"
+    },
+    {
+      "id": "forest-swamp-01-front-back-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w015",
+        "w022",
+        "w023",
+        "w027"
+      ],
+      "view": "front-back",
+      "source": "forest-swamp-01-front-back-parts.png",
+      "prompt": "prompts/forest-swamp-01-front-back-parts.txt",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": false,
+      "sha256": "ccdc188105bd7deb6a4467a80938be8e4decaeaf63c0cb167796b2551e55371f",
+      "status": "awaiting-production-qa"
+    },
+    {
+      "id": "legacy-flight-front-back-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w004",
+        "w008"
+      ],
+      "view": "front-back",
+      "source": "legacy-flight-front-back-parts.png",
+      "prompt": "prompts/legacy-flight-front-back-parts.txt",
+      "width": 887,
+      "height": 1774,
+      "hasAlpha": false,
+      "sha256": "34ab5f7c448604b18fa6bbd024bb8f89bd2b08920f2d09305de864bfa88371ed",
+      "status": "awaiting-production-qa"
+    },
+    {
+      "id": "forest-swamp-01-back-correction",
+      "kind": "correction",
+      "assetIds": [
+        "w015",
+        "w022",
+        "w023",
+        "w027"
+      ],
+      "view": "back",
+      "source": "forest-swamp-01-back-correction.png",
+      "prompt": "prompts/forest-swamp-01-back-correction.txt",
+      "width": 887,
+      "height": 1774,
+      "hasAlpha": false,
+      "sha256": "3154a6a007ab8954b62abfcbd782722af65e0a45f12844d5428f36cd8d55354b",
+      "status": "awaiting-production-qa"
+    },
+    {
+      "id": "swamp-reptile-body-correction",
+      "kind": "body-correction",
+      "assetIds": [
+        "w023",
+        "w027"
+      ],
+      "view": "front-back",
+      "source": "swamp-reptile-body-correction.png",
+      "prompt": "prompts/swamp-reptile-body-correction.txt",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": false,
+      "sha256": "5bf74d69177b68c46656a171ebbbcda386e126a37a439f48ff3f11061d9bce78",
+      "status": "awaiting-production-qa"
+    },
+    {
+      "id": "early-boss-01-turnaround",
+      "kind": "turnaround",
+      "assetIds": [
+        "b020",
+        "b020-2"
+      ],
+      "view": "",
+      "source": "early-boss-01-turnaround.png",
+      "prompt": "prompts/early-boss-01-turnaround.txt",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": false,
+      "sha256": "95e93a5ef58d582982d8d96b21cd542506dc88f01b97d4516da19ae0f66a42eb",
+      "status": "awaiting-production-qa"
+    },
+    {
+      "id": "early-boss-01-side-parts",
+      "kind": "parts",
+      "assetIds": [
+        "b020",
+        "b020-2"
+      ],
+      "view": "side",
+      "source": "early-boss-01-side-parts.png",
+      "prompt": "prompts/early-boss-01-side-parts.txt",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": false,
+      "sha256": "f7742ad0a754b02cc7369140643b0287ec5e9252fc8e4f6377a63573b4473423",
+      "status": "awaiting-production-qa"
+    },
+    {
+      "id": "early-boss-01-front-back-parts",
+      "kind": "parts",
+      "assetIds": [
+        "b020",
+        "b020-2"
+      ],
+      "view": "front-back",
+      "source": "early-boss-01-front-back-parts.png",
+      "prompt": "prompts/early-boss-01-front-back-parts.txt",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": false,
+      "sha256": "ffd0c9709bf93d5b2c0eaf3eba19f7c8c1f6d96d50cc01f28e578ed577ea36a2",
+      "status": "awaiting-production-qa"
+    },
+    {
+      "id": "early-equipment-torso-correction",
+      "kind": "body-correction",
+      "assetIds": [
+        "w002",
+        "w005",
+        "w009",
+        "b020"
+      ],
+      "view": "mixed",
+      "source": "early-equipment-torso-correction.png",
+      "prompt": "prompts/early-equipment-torso-correction.txt",
+      "width": 887,
+      "height": 1774,
+      "hasAlpha": false,
+      "sha256": "5cc46b17bf1ce29fadb9053018193bcce5cf87ac0384b15970a9cb9ab63d16b8",
+      "status": "awaiting-production-qa"
+    },
+    {
+      "id": "swamp-special-01-turnaround",
+      "kind": "turnaround",
+      "assetIds": [
+        "w021",
+        "w024",
+        "w029"
+      ],
+      "view": "",
+      "source": "swamp-special-01-turnaround.png",
+      "prompt": "prompts/swamp-special-01-turnaround.txt",
+      "width": 887,
+      "height": 1774,
+      "hasAlpha": false,
+      "sha256": "bf453caff9d56ff678980673004b06d530667c41f426c4d8ad6f608e318f3a07",
+      "status": "awaiting-production-qa"
+    },
+    {
+      "id": "swamp-special-01-side-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w021",
+        "w024",
+        "w029"
+      ],
+      "view": "side",
+      "source": "swamp-special-01-side-parts.png",
+      "prompt": "prompts/swamp-special-01-side-parts.txt",
+      "width": 887,
+      "height": 1774,
+      "hasAlpha": false,
+      "sha256": "4ecadd0b116600d910139b45e7f3c3a0e5d331c333312da2a9146ba6a3d90534",
+      "status": "awaiting-production-qa"
+    },
+    {
+      "id": "swamp-special-01-front-back-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w021",
+        "w024",
+        "w029"
+      ],
+      "view": "front-back",
+      "source": "swamp-special-01-front-back-parts.png",
+      "prompt": "prompts/swamp-special-01-front-back-parts.txt",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": false,
+      "sha256": "85c2c37f1fc9ac5acf83d359c295a34bf8dd83ba7cc2522dc552d65639c5dbf0",
+      "status": "awaiting-production-qa"
+    },
+    {
+      "id": "t3-arthropod-01-turnaround",
+      "kind": "turnaround",
+      "assetIds": [
+        "w025",
+        "w026",
+        "w028"
+      ],
+      "view": "",
+      "source": "t3-arthropod-01-turnaround.png",
+      "prompt": "prompts/t3-arthropod-01-turnaround.txt",
+      "width": 887,
+      "height": 1774,
+      "hasAlpha": false,
+      "sha256": "84da151a26e2a38a777b632351ab9879d1136fc1c5962da1f8099aa0e6625394",
+      "status": "awaiting-production-qa"
+    },
+    {
+      "id": "t3-arthropod-01-side-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w025",
+        "w026",
+        "w028"
+      ],
+      "view": "side",
+      "source": "t3-arthropod-01-side-parts.png",
+      "prompt": "prompts/t3-arthropod-01-side-parts.txt",
+      "width": 887,
+      "height": 1774,
+      "hasAlpha": false,
+      "sha256": "77d6cfae60b00988554cfbef23a2f77fc9b11ea58415066813bfaddde20d5f6b",
+      "status": "awaiting-production-qa"
+    },
+    {
+      "id": "t3-arthropod-01-front-back-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w025",
+        "w026",
+        "w028"
+      ],
+      "view": "front-back",
+      "source": "t3-arthropod-01-front-back-parts.png",
+      "prompt": "prompts/t3-arthropod-01-front-back-parts.txt",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": false,
+      "sha256": "5797b7f87410a9c9f39a54a7535ea70a2dad71b69f71bced9d787302365b4cfc",
+      "status": "awaiting-production-qa"
+    },
+    {
+      "id": "swamp-back-body-correction",
+      "kind": "correction",
+      "assetIds": [
+        "w025",
+        "w026",
+        "w028",
+        "w029"
+      ],
+      "view": "back",
+      "source": "swamp-back-body-correction.png",
+      "prompt": "prompts/swamp-back-body-correction.txt",
+      "width": 887,
+      "height": 1774,
+      "hasAlpha": false,
+      "sha256": "98abfe48f2750e4626cb69c0d95f84e105a7f4e8880bdeffd6c68984c6810e6a",
+      "status": "awaiting-production-qa"
+    },
+    {
+      "id": "early-boss-02-turnaround",
+      "kind": "turnaround",
+      "assetIds": [
+        "b030",
+        "b030-2"
+      ],
+      "view": "",
+      "source": "early-boss-02-turnaround.png",
+      "prompt": "prompts/early-boss-02-turnaround.txt",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": false,
+      "sha256": "3c8859b8d3a50f1e48efbcd5e4983d1ffda9b28d268c10b878460ab929434fbd",
+      "status": "awaiting-production-qa"
+    },
+    {
+      "id": "early-boss-02-side-parts",
+      "kind": "parts",
+      "assetIds": [
+        "b030",
+        "b030-2"
+      ],
+      "view": "side",
+      "source": "early-boss-02-side-parts.png",
+      "prompt": "prompts/early-boss-02-side-parts.txt",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": false,
+      "sha256": "be371212aac5a39d08857ee9fda85f82a264e01f7953d2e7417dc96d60132f61",
+      "status": "awaiting-production-qa"
+    },
+    {
+      "id": "early-boss-02-front-back-parts",
+      "kind": "parts",
+      "assetIds": [
+        "b030",
+        "b030-2"
+      ],
+      "view": "front-back",
+      "source": "early-boss-02-front-back-parts.png",
+      "prompt": "prompts/early-boss-02-front-back-parts.txt",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": false,
+      "sha256": "28cf88ab492b1ce25b6ee44aaf12cb761c1e48301846efb229807827c6a12183",
+      "status": "awaiting-production-qa"
+    },
+    {
+      "id": "boss50-back-golem-correction",
+      "kind": "correction",
+      "assetIds": [
+        "b050-2"
+      ],
+      "view": "back",
+      "source": "boss50-back-golem-correction.png",
+      "prompt": "prompts/boss50-back-golem-correction.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "feec56d394ddaf5eb2055e8ebf9aa86e6e4b10727eb60d112c0a1ebe9bce9fee",
+      "status": "awaiting-production-qa"
+    },
+    {
+      "id": "boss50-side-cannon-correction",
+      "kind": "correction",
+      "assetIds": [
+        "b050-2"
+      ],
+      "view": "side",
+      "source": "boss50-side-cannon-correction.png",
+      "prompt": "prompts/boss50-side-cannon-correction.txt",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "a317a56dd6384cad937129efc9710ced4d28dcdf31a82ff762d4713334d20f4e",
+      "status": "awaiting-production-qa"
+    }
+  ]
+}

@@ -1,0 +1,3536 @@
+{
+  "version": 1,
+  "canonicalCell": 512,
+  "assetVersion": 93,
+  "entries": [
+    {
+      "assetId": "w015",
+      "wave": 15,
+      "role": "normal",
+      "cell": 256,
+      "locomotion": "legged",
+      "referenceHeight": 410,
+      "cycleStride": 140,
+      "gait": {
+        "stanceDuty": 0.5,
+        "lift": 22,
+        "pelvis": "support"
+      },
+      "reviewApproved": true,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/forest-swamp-01-side-parts.png",
+          "sourceSha256": "8ceb00c5ec6bedecf771ffc5e5c4c7e424b4832a261cb31dd375fa510c9fc5af",
+          "background": "checkerboard",
+          "pivot": [
+            316.645,
+            450
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.47,
+              0.27
+            ],
+            "target": {
+              "height": 260,
+              "top": 50,
+              "centerX": 256
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.49,
+                0,
+                0.16,
+                0.27
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.6479591836734694,
+                  0.1
+                ],
+                "knee": [
+                  0.5102040816326531,
+                  0.48
+                ],
+                "ankle": [
+                  0.32142857142857145,
+                  0.82
+                ],
+                "sole": [
+                  0.4945687952600395,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.66,
+                0.82
+              ],
+              "socketRoiNormalized": [
+                0.6000000000000001,
+                0.76,
+                0.12,
+                0.12
+              ],
+              "phase": 0,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 450,
+                "maximumStanceAngle": 168
+              },
+              "layer": -1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.76,
+                0,
+                0.21,
+                0.27
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.32653061224489793,
+                  0.1
+                ],
+                "knee": [
+                  0.4336734693877551,
+                  0.48
+                ],
+                "ankle": [
+                  0.39285714285714285,
+                  0.82
+                ],
+                "sole": [
+                  0.5611474778590682,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.73,
+                0.82
+              ],
+              "socketRoiNormalized": [
+                0.6699999999999999,
+                0.76,
+                0.12,
+                0.12
+              ],
+              "phase": 0.5,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 450,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            }
+          ]
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/forest-swamp-01-front-back-parts.png",
+          "sourceSha256": "ccdc188105bd7deb6a4467a80938be8e4decaeaf63c0cb167796b2551e55371f",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            450
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.24,
+              0.29
+            ],
+            "target": {
+              "height": 270,
+              "top": 40,
+              "centerX": 256
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.24,
+                0,
+                0.12,
+                0.29
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.6098901098901099,
+                  0.1
+                ],
+                "knee": [
+                  0.4725274725274725,
+                  0.49
+                ],
+                "ankle": [
+                  0.36813186813186816,
+                  0.84
+                ],
+                "sole": [
+                  0.29144511402575923,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.31,
+                0.84
+              ],
+              "socketRoiNormalized": [
+                0.25,
+                0.78,
+                0.12,
+                0.12
+              ],
+              "phase": 0.5,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 450,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.38,
+                0,
+                0.135,
+                0.29
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.3489583333333333,
+                  0.1
+                ],
+                "knee": [
+                  0.4791666666666667,
+                  0.49
+                ],
+                "ankle": [
+                  0.5833333333333334,
+                  0.84
+                ],
+                "sole": [
+                  0.7194530532598714,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.69,
+                0.84
+              ],
+              "socketRoiNormalized": [
+                0.6299999999999999,
+                0.78,
+                0.12,
+                0.12
+              ],
+              "phase": 0,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 450,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            }
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/forest-swamp-01-back-correction.png",
+          "sourceSha256": "3154a6a007ab8954b62abfcbd782722af65e0a45f12844d5428f36cd8d55354b",
+          "background": "checkerboard",
+          "pivot": [
+            258.3838526912181,
+            450
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.42,
+              0.27
+            ],
+            "target": {
+              "height": 330,
+              "top": 35,
+              "centerX": 256
+            },
+            "layer": 10,
+            "flipX": true
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.46,
+                0,
+                0.18,
+                0.27
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5121951219512195,
+                  0.1
+                ],
+                "knee": [
+                  0.4695121951219512,
+                  0.48
+                ],
+                "ankle": [
+                  0.43902439024390244,
+                  0.84
+                ],
+                "sole": [
+                  0.4389381621088938,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.39,
+                0.71
+              ],
+              "socketRoiNormalized": [
+                0.33,
+                0.6499999999999999,
+                0.12,
+                0.12
+              ],
+              "phase": 0,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 450,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.73,
+                0,
+                0.19,
+                0.27
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.4939759036144578,
+                  0.48
+                ],
+                "ankle": [
+                  0.4879518072289157,
+                  0.84
+                ],
+                "sole": [
+                  0.49651352663400855,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.63,
+                0.71
+              ],
+              "socketRoiNormalized": [
+                0.5700000000000001,
+                0.6499999999999999,
+                0.12,
+                0.12
+              ],
+              "phase": 0.5,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 450,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            }
+          ]
+        }
+      }
+    },
+    {
+      "assetId": "w022",
+      "wave": 22,
+      "role": "normal",
+      "cell": 256,
+      "locomotion": "legged",
+      "referenceHeight": 300,
+      "cycleStride": 96,
+      "gait": {
+        "stanceDuty": 0.65,
+        "lift": 15,
+        "pelvis": "fixed"
+      },
+      "reviewApproved": true,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/forest-swamp-01-side-parts.png",
+          "sourceSha256": "8ceb00c5ec6bedecf771ffc5e5c4c7e424b4832a261cb31dd375fa510c9fc5af",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            390
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.27,
+              0.47,
+              0.24
+            ],
+            "target": {
+              "height": 180,
+              "top": 155,
+              "centerX": 256
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftFore",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.49,
+                0.27,
+                0.16,
+                0.24
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.46153846153846156,
+                  0.1
+                ],
+                "knee": [
+                  0.32211538461538464,
+                  0.48
+                ],
+                "ankle": [
+                  0.5528846153846154,
+                  0.84
+                ],
+                "sole": [
+                  0.67752849002849,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.72,
+                0.568
+              ],
+              "socketRoiNormalized": [
+                0.6599999999999999,
+                0.508,
+                0.12,
+                0.12
+              ],
+              "phase": 0.75,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 390,
+                "maximumStanceAngle": 168
+              },
+              "layer": -1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightFore",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.49,
+                0.27,
+                0.16,
+                0.24
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.46153846153846156,
+                  0.1
+                ],
+                "knee": [
+                  0.32211538461538464,
+                  0.48
+                ],
+                "ankle": [
+                  0.5528846153846154,
+                  0.84
+                ],
+                "sole": [
+                  0.67752849002849,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.72,
+                0.58
+              ],
+              "socketRoiNormalized": [
+                0.6599999999999999,
+                0.52,
+                0.12,
+                0.12
+              ],
+              "phase": 0.25,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 390,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "leftHind",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.76,
+                0.27,
+                0.21,
+                0.24
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.3120567375886525,
+                  0.1
+                ],
+                "knee": [
+                  0.5283687943262412,
+                  0.48
+                ],
+                "ankle": [
+                  0.5886524822695035,
+                  0.84
+                ],
+                "sole": [
+                  0.7757514353259034,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.28,
+                0.568
+              ],
+              "socketRoiNormalized": [
+                0.22000000000000003,
+                0.508,
+                0.12,
+                0.12
+              ],
+              "phase": 0,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 390,
+                "maximumStanceAngle": 168
+              },
+              "layer": -1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightHind",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.76,
+                0.27,
+                0.21,
+                0.24
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.3120567375886525,
+                  0.1
+                ],
+                "knee": [
+                  0.5283687943262412,
+                  0.48
+                ],
+                "ankle": [
+                  0.5886524822695035,
+                  0.84
+                ],
+                "sole": [
+                  0.7757514353259034,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.28,
+                0.58
+              ],
+              "socketRoiNormalized": [
+                0.22000000000000003,
+                0.52,
+                0.12,
+                0.12
+              ],
+              "phase": 0.5,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 390,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            }
+          ]
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/forest-swamp-01-front-back-parts.png",
+          "sourceSha256": "ccdc188105bd7deb6a4467a80938be8e4decaeaf63c0cb167796b2551e55371f",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            365
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.29,
+              0.24,
+              0.26
+            ],
+            "target": {
+              "height": 190,
+              "top": 135,
+              "centerX": 256
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftFore",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.24,
+                0.29,
+                0.12,
+                0.26
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.411214953271028,
+                  0.1
+                ],
+                "knee": [
+                  0.2570093457943925,
+                  0.5
+                ],
+                "ankle": [
+                  0.5560747663551402,
+                  0.84
+                ],
+                "sole": [
+                  0.5623052959501558,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.72,
+                0.7
+              ],
+              "socketRoiNormalized": [
+                0.6599999999999999,
+                0.6399999999999999,
+                0.12,
+                0.12
+              ],
+              "phase": 0.75,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 365,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightFore",
+              "type": "leg",
+              "flipX": true,
+              "roi": [
+                0.24,
+                0.29,
+                0.12,
+                0.26
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.411214953271028,
+                  0.1
+                ],
+                "knee": [
+                  0.2570093457943925,
+                  0.5
+                ],
+                "ankle": [
+                  0.5560747663551402,
+                  0.84
+                ],
+                "sole": [
+                  0.5623052959501558,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.28,
+                0.7
+              ],
+              "socketRoiNormalized": [
+                0.22000000000000003,
+                0.6399999999999999,
+                0.12,
+                0.12
+              ],
+              "phase": 0.25,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 365,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "leftHind",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.38,
+                0.29,
+                0.135,
+                0.26
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.3357142857142857,
+                  0.1
+                ],
+                "knee": [
+                  0.4785714285714286,
+                  0.5
+                ],
+                "ankle": [
+                  0.575,
+                  0.84
+                ],
+                "sole": [
+                  0.7015643447461629,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.66,
+                0.52
+              ],
+              "socketRoiNormalized": [
+                0.6000000000000001,
+                0.46,
+                0.12,
+                0.12
+              ],
+              "phase": 0,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 325,
+                "maximumStanceAngle": 168
+              },
+              "layer": -1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightHind",
+              "type": "leg",
+              "flipX": true,
+              "roi": [
+                0.38,
+                0.29,
+                0.135,
+                0.26
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.3357142857142857,
+                  0.1
+                ],
+                "knee": [
+                  0.4785714285714286,
+                  0.5
+                ],
+                "ankle": [
+                  0.575,
+                  0.84
+                ],
+                "sole": [
+                  0.7015643447461629,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.33999999999999997,
+                0.52
+              ],
+              "socketRoiNormalized": [
+                0.27999999999999997,
+                0.46,
+                0.12,
+                0.12
+              ],
+              "phase": 0.5,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 325,
+                "maximumStanceAngle": 168
+              },
+              "layer": -1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            }
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/forest-swamp-01-back-correction.png",
+          "sourceSha256": "3154a6a007ab8954b62abfcbd782722af65e0a45f12844d5428f36cd8d55354b",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            365
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.27,
+              0.42,
+              0.2
+            ],
+            "target": {
+              "height": 190,
+              "top": 135,
+              "centerX": 256
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftFore",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.46,
+                0.27,
+                0.18,
+                0.2
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.47391304347826085,
+                  0.1
+                ],
+                "knee": [
+                  0.4782608695652174,
+                  0.52
+                ],
+                "ankle": [
+                  0.49130434782608695,
+                  0.83
+                ],
+                "sole": [
+                  0.49425063938618924,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.3,
+                0.44
+              ],
+              "socketRoiNormalized": [
+                0.24,
+                0.38,
+                0.12,
+                0.12
+              ],
+              "phase": 0.75,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 305,
+                "maximumStanceAngle": 168
+              },
+              "layer": -1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightFore",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.46,
+                0.27,
+                0.18,
+                0.2
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.47391304347826085,
+                  0.1
+                ],
+                "knee": [
+                  0.4782608695652174,
+                  0.52
+                ],
+                "ankle": [
+                  0.49130434782608695,
+                  0.83
+                ],
+                "sole": [
+                  0.49425063938618924,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.7,
+                0.44
+              ],
+              "socketRoiNormalized": [
+                0.6399999999999999,
+                0.38,
+                0.12,
+                0.12
+              ],
+              "phase": 0.25,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 305,
+                "maximumStanceAngle": 168
+              },
+              "layer": -1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "leftHind",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.73,
+                0.27,
+                0.19,
+                0.2
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4661016949152542,
+                  0.1
+                ],
+                "knee": [
+                  0.5084745762711864,
+                  0.52
+                ],
+                "ankle": [
+                  0.5084745762711864,
+                  0.83
+                ],
+                "sole": [
+                  0.5011427531248737,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.32,
+                0.74
+              ],
+              "socketRoiNormalized": [
+                0.26,
+                0.6799999999999999,
+                0.12,
+                0.12
+              ],
+              "phase": 0,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 365,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightHind",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.73,
+                0.27,
+                0.19,
+                0.2
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4661016949152542,
+                  0.1
+                ],
+                "knee": [
+                  0.5084745762711864,
+                  0.52
+                ],
+                "ankle": [
+                  0.5084745762711864,
+                  0.83
+                ],
+                "sole": [
+                  0.5011427531248737,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.6799999999999999,
+                0.74
+              ],
+              "socketRoiNormalized": [
+                0.6199999999999999,
+                0.6799999999999999,
+                0.12,
+                0.12
+              ],
+              "phase": 0.5,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 365,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            }
+          ]
+        }
+      }
+    },
+    {
+      "assetId": "w023",
+      "wave": 23,
+      "role": "normal",
+      "cell": 256,
+      "locomotion": "legged",
+      "referenceHeight": 300,
+      "cycleStride": 110,
+      "gait": {
+        "stanceDuty": 0.65,
+        "lift": 16,
+        "pelvis": "fixed"
+      },
+      "reviewApproved": true,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/forest-swamp-01-side-parts.png",
+          "sourceSha256": "8ceb00c5ec6bedecf771ffc5e5c4c7e424b4832a261cb31dd375fa510c9fc5af",
+          "background": "checkerboard",
+          "pivot": [
+            283.6029197080292,
+            400
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.51,
+              0.47,
+              0.24
+            ],
+            "target": {
+              "height": 145,
+              "top": 195,
+              "centerX": 256
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftFore",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.49,
+                0.51,
+                0.16,
+                0.24
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.2222222222222222,
+                  0.5
+                ],
+                "ankle": [
+                  0.5555555555555556,
+                  0.84
+                ],
+                "sole": [
+                  0.6570118662351673,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.77,
+                0.658
+              ],
+              "socketRoiNormalized": [
+                0.71,
+                0.5980000000000001,
+                0.12,
+                0.12
+              ],
+              "phase": 0.75,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 400,
+                "maximumStanceAngle": 168
+              },
+              "layer": -1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightFore",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.49,
+                0.51,
+                0.16,
+                0.24
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.2222222222222222,
+                  0.5
+                ],
+                "ankle": [
+                  0.5555555555555556,
+                  0.84
+                ],
+                "sole": [
+                  0.6570118662351673,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.77,
+                0.67
+              ],
+              "socketRoiNormalized": [
+                0.71,
+                0.6100000000000001,
+                0.12,
+                0.12
+              ],
+              "phase": 0.25,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 400,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "leftHind",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.76,
+                0.51,
+                0.21,
+                0.24
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.2809917355371901,
+                  0.1
+                ],
+                "knee": [
+                  0.4834710743801653,
+                  0.49
+                ],
+                "ankle": [
+                  0.5826446280991735,
+                  0.84
+                ],
+                "sole": [
+                  0.6947169228392678,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.39,
+                0.698
+              ],
+              "socketRoiNormalized": [
+                0.33,
+                0.6379999999999999,
+                0.12,
+                0.12
+              ],
+              "phase": 0,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 400,
+                "maximumStanceAngle": 168
+              },
+              "layer": -1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightHind",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.76,
+                0.51,
+                0.21,
+                0.24
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.2809917355371901,
+                  0.1
+                ],
+                "knee": [
+                  0.4834710743801653,
+                  0.49
+                ],
+                "ankle": [
+                  0.5826446280991735,
+                  0.84
+                ],
+                "sole": [
+                  0.6947169228392678,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.39,
+                0.71
+              ],
+              "socketRoiNormalized": [
+                0.33,
+                0.6499999999999999,
+                0.12,
+                0.12
+              ],
+              "phase": 0.5,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 400,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            }
+          ]
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/forest-swamp-01-front-back-parts.png",
+          "sourceSha256": "ccdc188105bd7deb6a4467a80938be8e4decaeaf63c0cb167796b2551e55371f",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            390
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.5,
+              0.49
+            ],
+            "target": {
+              "height": 240,
+              "top": 120,
+              "centerX": 256
+            },
+            "layer": 10,
+            "source": "tools/art-review/directional-101/swamp-reptile-body-correction.png",
+            "sourceSha256": "5bf74d69177b68c46656a171ebbbcda386e126a37a439f48ff3f11061d9bce78",
+            "background": "checkerboard"
+          },
+          "parts": [
+            {
+              "id": "leftFore",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.24,
+                0.55,
+                0.12,
+                0.2
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.58,
+                  0.1
+                ],
+                "knee": [
+                  0.24,
+                  0.52
+                ],
+                "ankle": [
+                  0.5333333333333333,
+                  0.84
+                ],
+                "sole": [
+                  0.5325,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.72,
+                0.72
+              ],
+              "socketRoiNormalized": [
+                0.6599999999999999,
+                0.6599999999999999,
+                0.12,
+                0.12
+              ],
+              "phase": 0.75,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 390,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightFore",
+              "type": "leg",
+              "flipX": true,
+              "roi": [
+                0.24,
+                0.55,
+                0.12,
+                0.2
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.58,
+                  0.1
+                ],
+                "knee": [
+                  0.24,
+                  0.52
+                ],
+                "ankle": [
+                  0.5333333333333333,
+                  0.84
+                ],
+                "sole": [
+                  0.5325,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.28,
+                0.72
+              ],
+              "socketRoiNormalized": [
+                0.22000000000000003,
+                0.6599999999999999,
+                0.12,
+                0.12
+              ],
+              "phase": 0.25,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 390,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "leftHind",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.38,
+                0.55,
+                0.135,
+                0.2
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.3333333333333333,
+                  0.1
+                ],
+                "knee": [
+                  0.494949494949495,
+                  0.51
+                ],
+                "ankle": [
+                  0.5353535353535354,
+                  0.84
+                ],
+                "sole": [
+                  0.592860422405877,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.7,
+                0.29
+              ],
+              "socketRoiNormalized": [
+                0.6399999999999999,
+                0.22999999999999998,
+                0.12,
+                0.12
+              ],
+              "phase": 0,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 295,
+                "maximumStanceAngle": 168
+              },
+              "layer": -1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightHind",
+              "type": "leg",
+              "flipX": true,
+              "roi": [
+                0.38,
+                0.55,
+                0.135,
+                0.2
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.3333333333333333,
+                  0.1
+                ],
+                "knee": [
+                  0.494949494949495,
+                  0.51
+                ],
+                "ankle": [
+                  0.5353535353535354,
+                  0.84
+                ],
+                "sole": [
+                  0.592860422405877,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.30000000000000004,
+                0.29
+              ],
+              "socketRoiNormalized": [
+                0.24000000000000005,
+                0.22999999999999998,
+                0.12,
+                0.12
+              ],
+              "phase": 0.5,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 295,
+                "maximumStanceAngle": 168
+              },
+              "layer": -1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            }
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/forest-swamp-01-back-correction.png",
+          "sourceSha256": "3154a6a007ab8954b62abfcbd782722af65e0a45f12844d5428f36cd8d55354b",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            365
+          ],
+          "body": {
+            "roi": [
+              0.5,
+              0,
+              0.5,
+              0.49
+            ],
+            "target": {
+              "height": 240,
+              "top": 120,
+              "centerX": 256
+            },
+            "layer": 10,
+            "source": "tools/art-review/directional-101/swamp-reptile-body-correction.png",
+            "sourceSha256": "5bf74d69177b68c46656a171ebbbcda386e126a37a439f48ff3f11061d9bce78",
+            "background": "checkerboard"
+          },
+          "parts": [
+            {
+              "id": "leftFore",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.46,
+                0.47,
+                0.18,
+                0.235
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4659090909090909,
+                  0.1
+                ],
+                "knee": [
+                  0.48863636363636365,
+                  0.52
+                ],
+                "ankle": [
+                  0.5,
+                  0.84
+                ],
+                "sole": [
+                  0.5032938076416337,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.28,
+                0.25
+              ],
+              "socketRoiNormalized": [
+                0.22000000000000003,
+                0.19,
+                0.12,
+                0.12
+              ],
+              "phase": 0.75,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 265,
+                "maximumStanceAngle": 168
+              },
+              "layer": -1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightFore",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.46,
+                0.47,
+                0.18,
+                0.235
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4659090909090909,
+                  0.1
+                ],
+                "knee": [
+                  0.48863636363636365,
+                  0.52
+                ],
+                "ankle": [
+                  0.5,
+                  0.84
+                ],
+                "sole": [
+                  0.5032938076416337,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.72,
+                0.25
+              ],
+              "socketRoiNormalized": [
+                0.6599999999999999,
+                0.19,
+                0.12,
+                0.12
+              ],
+              "phase": 0.25,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 265,
+                "maximumStanceAngle": 168
+              },
+              "layer": -1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "leftHind",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.73,
+                0.47,
+                0.19,
+                0.235
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.47029702970297027,
+                  0.1
+                ],
+                "knee": [
+                  0.49504950495049505,
+                  0.52
+                ],
+                "ankle": [
+                  0.5,
+                  0.84
+                ],
+                "sole": [
+                  0.49445663129187173,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.3,
+                0.57
+              ],
+              "socketRoiNormalized": [
+                0.24,
+                0.51,
+                0.12,
+                0.12
+              ],
+              "phase": 0,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 365,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightHind",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.73,
+                0.47,
+                0.19,
+                0.235
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.47029702970297027,
+                  0.1
+                ],
+                "knee": [
+                  0.49504950495049505,
+                  0.52
+                ],
+                "ankle": [
+                  0.5,
+                  0.84
+                ],
+                "sole": [
+                  0.49445663129187173,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.7,
+                0.57
+              ],
+              "socketRoiNormalized": [
+                0.6399999999999999,
+                0.51,
+                0.12,
+                0.12
+              ],
+              "phase": 0.5,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 365,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            }
+          ]
+        }
+      }
+    },
+    {
+      "assetId": "w027",
+      "wave": 27,
+      "role": "normal",
+      "cell": 256,
+      "locomotion": "legged",
+      "referenceHeight": 310,
+      "cycleStride": 120,
+      "gait": {
+        "stanceDuty": 0.65,
+        "lift": 18,
+        "pelvis": "fixed"
+      },
+      "reviewApproved": true,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/forest-swamp-01-side-parts.png",
+          "sourceSha256": "8ceb00c5ec6bedecf771ffc5e5c4c7e424b4832a261cb31dd375fa510c9fc5af",
+          "background": "checkerboard",
+          "pivot": [
+            279.0315436241611,
+            405
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.75,
+              0.47,
+              0.25
+            ],
+            "target": {
+              "height": 155,
+              "top": 175,
+              "centerX": 256
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftFore",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.49,
+                0.75,
+                0.16,
+                0.25
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.3761904761904762,
+                  0.52
+                ],
+                "ankle": [
+                  0.5571428571428572,
+                  0.84
+                ],
+                "sole": [
+                  0.6112005365526493,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.77,
+                0.588
+              ],
+              "socketRoiNormalized": [
+                0.71,
+                0.528,
+                0.12,
+                0.12
+              ],
+              "phase": 0.75,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 405,
+                "maximumStanceAngle": 168
+              },
+              "layer": -1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightFore",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.49,
+                0.75,
+                0.16,
+                0.25
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.3761904761904762,
+                  0.52
+                ],
+                "ankle": [
+                  0.5571428571428572,
+                  0.84
+                ],
+                "sole": [
+                  0.6112005365526493,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.77,
+                0.6
+              ],
+              "socketRoiNormalized": [
+                0.71,
+                0.54,
+                0.12,
+                0.12
+              ],
+              "phase": 0.25,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 405,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "leftHind",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.76,
+                0.75,
+                0.21,
+                0.25
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.27238805970149255,
+                  0.1
+                ],
+                "knee": [
+                  0.44776119402985076,
+                  0.52
+                ],
+                "ankle": [
+                  0.5335820895522388,
+                  0.84
+                ],
+                "sole": [
+                  0.6553218754711292,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.35,
+                0.588
+              ],
+              "socketRoiNormalized": [
+                0.29,
+                0.528,
+                0.12,
+                0.12
+              ],
+              "phase": 0,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 405,
+                "maximumStanceAngle": 168
+              },
+              "layer": -1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightHind",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.76,
+                0.75,
+                0.21,
+                0.25
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.27238805970149255,
+                  0.1
+                ],
+                "knee": [
+                  0.44776119402985076,
+                  0.52
+                ],
+                "ankle": [
+                  0.5335820895522388,
+                  0.84
+                ],
+                "sole": [
+                  0.6553218754711292,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.35,
+                0.6
+              ],
+              "socketRoiNormalized": [
+                0.29,
+                0.54,
+                0.12,
+                0.12
+              ],
+              "phase": 0.5,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 405,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            }
+          ]
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/forest-swamp-01-front-back-parts.png",
+          "sourceSha256": "ccdc188105bd7deb6a4467a80938be8e4decaeaf63c0cb167796b2551e55371f",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            390
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.5,
+              0.5,
+              0.5
+            ],
+            "target": {
+              "height": 220,
+              "top": 145,
+              "centerX": 256
+            },
+            "layer": 10,
+            "source": "tools/art-review/directional-101/swamp-reptile-body-correction.png",
+            "sourceSha256": "5bf74d69177b68c46656a171ebbbcda386e126a37a439f48ff3f11061d9bce78",
+            "background": "checkerboard"
+          },
+          "parts": [
+            {
+              "id": "leftFore",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.24,
+                0.75,
+                0.12,
+                0.25
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.46153846153846156,
+                  0.1
+                ],
+                "knee": [
+                  0.31868131868131866,
+                  0.53
+                ],
+                "ankle": [
+                  0.521978021978022,
+                  0.84
+                ],
+                "sole": [
+                  0.49693976909166787,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.72,
+                0.72
+              ],
+              "socketRoiNormalized": [
+                0.6599999999999999,
+                0.6599999999999999,
+                0.12,
+                0.12
+              ],
+              "phase": 0.75,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 390,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightFore",
+              "type": "leg",
+              "flipX": true,
+              "roi": [
+                0.24,
+                0.75,
+                0.12,
+                0.25
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.46153846153846156,
+                  0.1
+                ],
+                "knee": [
+                  0.31868131868131866,
+                  0.53
+                ],
+                "ankle": [
+                  0.521978021978022,
+                  0.84
+                ],
+                "sole": [
+                  0.49693976909166787,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.28,
+                0.72
+              ],
+              "socketRoiNormalized": [
+                0.22000000000000003,
+                0.6599999999999999,
+                0.12,
+                0.12
+              ],
+              "phase": 0.25,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 390,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "leftHind",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.38,
+                0.75,
+                0.135,
+                0.25
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.3515625,
+                  0.1
+                ],
+                "knee": [
+                  0.46484375,
+                  0.52
+                ],
+                "ankle": [
+                  0.53125,
+                  0.84
+                ],
+                "sole": [
+                  0.6425365691489362,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.68,
+                0.4
+              ],
+              "socketRoiNormalized": [
+                0.6200000000000001,
+                0.34,
+                0.12,
+                0.12
+              ],
+              "phase": 0,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 300,
+                "maximumStanceAngle": 168
+              },
+              "layer": -1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightHind",
+              "type": "leg",
+              "flipX": true,
+              "roi": [
+                0.38,
+                0.75,
+                0.135,
+                0.25
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.3515625,
+                  0.1
+                ],
+                "knee": [
+                  0.46484375,
+                  0.52
+                ],
+                "ankle": [
+                  0.53125,
+                  0.84
+                ],
+                "sole": [
+                  0.6425365691489362,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.31999999999999995,
+                0.4
+              ],
+              "socketRoiNormalized": [
+                0.25999999999999995,
+                0.34,
+                0.12,
+                0.12
+              ],
+              "phase": 0.5,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 300,
+                "maximumStanceAngle": 168
+              },
+              "layer": -1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            }
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/forest-swamp-01-back-correction.png",
+          "sourceSha256": "3154a6a007ab8954b62abfcbd782722af65e0a45f12844d5428f36cd8d55354b",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            365
+          ],
+          "body": {
+            "roi": [
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ],
+            "target": {
+              "height": 250,
+              "top": 115,
+              "centerX": 256
+            },
+            "layer": 10,
+            "source": "tools/art-review/directional-101/swamp-reptile-body-correction.png",
+            "sourceSha256": "5bf74d69177b68c46656a171ebbbcda386e126a37a439f48ff3f11061d9bce78",
+            "background": "checkerboard"
+          },
+          "parts": [
+            {
+              "id": "leftFore",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.46,
+                0.705,
+                0.18,
+                0.295
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4911504424778761,
+                  0.1
+                ],
+                "knee": [
+                  0.49557522123893805,
+                  0.54
+                ],
+                "ankle": [
+                  0.5088495575221239,
+                  0.84
+                ],
+                "sole": [
+                  0.4995178125709099,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.28,
+                0.3
+              ],
+              "socketRoiNormalized": [
+                0.22000000000000003,
+                0.24,
+                0.12,
+                0.12
+              ],
+              "phase": 0.75,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 270,
+                "maximumStanceAngle": 168
+              },
+              "layer": -1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightFore",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.46,
+                0.705,
+                0.18,
+                0.295
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4911504424778761,
+                  0.1
+                ],
+                "knee": [
+                  0.49557522123893805,
+                  0.54
+                ],
+                "ankle": [
+                  0.5088495575221239,
+                  0.84
+                ],
+                "sole": [
+                  0.4995178125709099,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.72,
+                0.3
+              ],
+              "socketRoiNormalized": [
+                0.6599999999999999,
+                0.24,
+                0.12,
+                0.12
+              ],
+              "phase": 0.25,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 270,
+                "maximumStanceAngle": 168
+              },
+              "layer": -1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "leftHind",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.73,
+                0.705,
+                0.19,
+                0.295
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.4921875,
+                  0.54
+                ],
+                "ankle": [
+                  0.5,
+                  0.84
+                ],
+                "sole": [
+                  0.49306203358208955,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.32,
+                0.59
+              ],
+              "socketRoiNormalized": [
+                0.26,
+                0.53,
+                0.12,
+                0.12
+              ],
+              "phase": 0,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 365,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightHind",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.73,
+                0.705,
+                0.19,
+                0.295
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.4921875,
+                  0.54
+                ],
+                "ankle": [
+                  0.5,
+                  0.84
+                ],
+                "sole": [
+                  0.49306203358208955,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.6799999999999999,
+                0.59
+              ],
+              "socketRoiNormalized": [
+                0.6199999999999999,
+                0.53,
+                0.12,
+                0.12
+              ],
+              "phase": 0.5,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 365,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            }
+          ]
+        }
+      }
+    },
+    {
+      "assetId": "b020",
+      "wave": 20,
+      "role": "boss",
+      "cell": 512,
+      "locomotion": "legged",
+      "referenceHeight": 450,
+      "cycleStride": 160,
+      "gait": {
+        "stanceDuty": 0.5,
+        "lift": 25,
+        "pelvis": "support"
+      },
+      "reviewApproved": true,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/early-boss-01-side-parts.png",
+          "sourceSha256": "f7742ad0a754b02cc7369140643b0287ec5e9252fc8e4f6377a63573b4473423",
+          "background": "checkerboard",
+          "pivot": [
+            262.5895582329317,
+            470
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.69,
+              1,
+              0.31
+            ],
+            "target": {
+              "height": 320,
+              "top": 24,
+              "centerX": 256
+            },
+            "layer": 10,
+            "source": "tools/art-review/directional-101/early-equipment-torso-correction.png",
+            "sourceSha256": "5cc46b17bf1ce29fadb9053018193bcce5cf87ac0384b15970a9cb9ab63d16b8",
+            "background": "checkerboard",
+            "backgroundSeeds": [
+              [
+                385,
+                1550
+              ],
+              [
+                409,
+                1329
+              ]
+            ]
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.47,
+                0,
+                0.2,
+                0.51
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4479768786127168,
+                  0.1
+                ],
+                "knee": [
+                  0.5375722543352601,
+                  0.47
+                ],
+                "ankle": [
+                  0.3872832369942196,
+                  0.86
+                ],
+                "sole": [
+                  0.5694067688287341,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.5,
+                0.75
+              ],
+              "socketRoiNormalized": [
+                0.44,
+                0.69,
+                0.12,
+                0.12
+              ],
+              "phase": 0,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 470,
+                "maximumStanceAngle": 168
+              },
+              "layer": -1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.745,
+                0,
+                0.205,
+                0.51
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.43315508021390375,
+                  0.1
+                ],
+                "knee": [
+                  0.4786096256684492,
+                  0.48
+                ],
+                "ankle": [
+                  0.3983957219251337,
+                  0.86
+                ],
+                "sole": [
+                  0.56253552495737,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.57,
+                0.75
+              ],
+              "socketRoiNormalized": [
+                0.51,
+                0.69,
+                0.12,
+                0.12
+              ],
+              "phase": 0.5,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 470,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            }
+          ]
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/early-boss-01-front-back-parts.png",
+          "sourceSha256": "ffd0c9709bf93d5b2c0eaf3eba19f7c8c1f6d96d50cc01f28e578ed577ea36a2",
+          "background": "checkerboard",
+          "pivot": [
+            257.0557823129252,
+            470
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.27,
+              0.49
+            ],
+            "target": {
+              "height": 320,
+              "top": 24,
+              "centerX": 256
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.275,
+                0,
+                0.095,
+                0.49
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.6397849462365591,
+                  0.1
+                ],
+                "knee": [
+                  0.6612903225806451,
+                  0.48
+                ],
+                "ankle": [
+                  0.5645161290322581,
+                  0.86
+                ],
+                "sole": [
+                  0.4811223873384076,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.39,
+                0.79
+              ],
+              "socketRoiNormalized": [
+                0.33,
+                0.73,
+                0.12,
+                0.12
+              ],
+              "phase": 0.5,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 470,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.4,
+                0,
+                0.1,
+                0.49
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.3709677419354839,
+                  0.1
+                ],
+                "knee": [
+                  0.34946236559139787,
+                  0.48
+                ],
+                "ankle": [
+                  0.43548387096774194,
+                  0.86
+                ],
+                "sole": [
+                  0.523426703070752,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.62,
+                0.79
+              ],
+              "socketRoiNormalized": [
+                0.56,
+                0.73,
+                0.12,
+                0.12
+              ],
+              "phase": 0,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 470,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            }
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/early-boss-01-front-back-parts.png",
+          "sourceSha256": "ffd0c9709bf93d5b2c0eaf3eba19f7c8c1f6d96d50cc01f28e578ed577ea36a2",
+          "background": "checkerboard",
+          "pivot": [
+            258.02374429223744,
+            470
+          ],
+          "body": {
+            "roi": [
+              0.505,
+              0,
+              0.229,
+              0.49
+            ],
+            "target": {
+              "height": 320,
+              "top": 24,
+              "centerX": 256
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.735,
+                0,
+                0.1,
+                0.49
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.6632653061224489,
+                  0.1
+                ],
+                "knee": [
+                  0.6122448979591837,
+                  0.48
+                ],
+                "ankle": [
+                  0.5408163265306123,
+                  0.86
+                ],
+                "sole": [
+                  0.5176507496202365,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.4,
+                0.79
+              ],
+              "socketRoiNormalized": [
+                0.34,
+                0.73,
+                0.12,
+                0.12
+              ],
+              "phase": 0,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 470,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.875,
+                0,
+                0.115,
+                0.49
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.30526315789473685,
+                  0.1
+                ],
+                "knee": [
+                  0.3894736842105263,
+                  0.48
+                ],
+                "ankle": [
+                  0.45789473684210524,
+                  0.86
+                ],
+                "sole": [
+                  0.46110295659467393,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.62,
+                0.79
+              ],
+              "socketRoiNormalized": [
+                0.56,
+                0.73,
+                0.12,
+                0.12
+              ],
+              "phase": 0.5,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 470,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            }
+          ]
+        }
+      }
+    },
+    {
+      "assetId": "b020-2",
+      "wave": 20,
+      "role": "secondary",
+      "cell": 512,
+      "locomotion": "legged",
+      "referenceHeight": 450,
+      "cycleStride": 130,
+      "gait": {
+        "stanceDuty": 0.65,
+        "lift": 22,
+        "pelvis": "fixed"
+      },
+      "reviewApproved": true,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/early-boss-01-side-parts.png",
+          "sourceSha256": "f7742ad0a754b02cc7369140643b0287ec5e9252fc8e4f6377a63573b4473423",
+          "background": "checkerboard",
+          "pivot": [
+            260.247582205029,
+            465
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.51,
+              0.44,
+              0.49
+            ],
+            "target": {
+              "height": 300,
+              "top": 30,
+              "centerX": 256
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftFore",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.47,
+                0.51,
+                0.2,
+                0.49
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4672897196261682,
+                  0.1
+                ],
+                "knee": [
+                  0.397196261682243,
+                  0.52
+                ],
+                "ankle": [
+                  0.45794392523364486,
+                  0.89
+                ],
+                "sole": [
+                  0.6191912791786068,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.77,
+                0.838
+              ],
+              "socketRoiNormalized": [
+                0.71,
+                0.778,
+                0.12,
+                0.12
+              ],
+              "phase": 0.75,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 465,
+                "maximumStanceAngle": 168
+              },
+              "layer": -1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightFore",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.47,
+                0.51,
+                0.2,
+                0.49
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4672897196261682,
+                  0.1
+                ],
+                "knee": [
+                  0.397196261682243,
+                  0.52
+                ],
+                "ankle": [
+                  0.45794392523364486,
+                  0.89
+                ],
+                "sole": [
+                  0.6191912791786068,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.77,
+                0.85
+              ],
+              "socketRoiNormalized": [
+                0.71,
+                0.79,
+                0.12,
+                0.12
+              ],
+              "phase": 0.25,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 465,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "leftHind",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.71,
+                0.51,
+                0.235,
+                0.49
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.43125,
+                  0.1
+                ],
+                "knee": [
+                  0.459375,
+                  0.52
+                ],
+                "ankle": [
+                  0.5375,
+                  0.89
+                ],
+                "sole": [
+                  0.6772700068399453,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.27,
+                0.818
+              ],
+              "socketRoiNormalized": [
+                0.21000000000000002,
+                0.758,
+                0.12,
+                0.12
+              ],
+              "phase": 0,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 465,
+                "maximumStanceAngle": 168
+              },
+              "layer": -1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightHind",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.71,
+                0.51,
+                0.235,
+                0.49
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.43125,
+                  0.1
+                ],
+                "knee": [
+                  0.459375,
+                  0.52
+                ],
+                "ankle": [
+                  0.5375,
+                  0.89
+                ],
+                "sole": [
+                  0.6772700068399453,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.27,
+                0.83
+              ],
+              "socketRoiNormalized": [
+                0.21000000000000002,
+                0.77,
+                0.12,
+                0.12
+              ],
+              "phase": 0.5,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 465,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            }
+          ],
+          "backgroundSeeds": [
+            [
+              323,
+              956
+            ],
+            [
+              157,
+              991
+            ]
+          ]
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/early-boss-01-front-back-parts.png",
+          "sourceSha256": "ffd0c9709bf93d5b2c0eaf3eba19f7c8c1f6d96d50cc01f28e578ed577ea36a2",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            465
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.49,
+              0.27,
+              0.51
+            ],
+            "target": {
+              "height": 300,
+              "top": 30,
+              "centerX": 256
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftFore",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.275,
+                0.49,
+                0.105,
+                0.51
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4888888888888889,
+                  0.1
+                ],
+                "knee": [
+                  0.4166666666666667,
+                  0.54
+                ],
+                "ankle": [
+                  0.4166666666666667,
+                  0.89
+                ],
+                "sole": [
+                  0.5031195625155357,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.6,
+                0.84
+              ],
+              "socketRoiNormalized": [
+                0.54,
+                0.78,
+                0.12,
+                0.12
+              ],
+              "phase": 0.75,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 465,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightFore",
+              "type": "leg",
+              "flipX": true,
+              "roi": [
+                0.275,
+                0.49,
+                0.105,
+                0.51
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4888888888888889,
+                  0.1
+                ],
+                "knee": [
+                  0.4166666666666667,
+                  0.54
+                ],
+                "ankle": [
+                  0.4166666666666667,
+                  0.89
+                ],
+                "sole": [
+                  0.5031195625155357,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.4,
+                0.84
+              ],
+              "socketRoiNormalized": [
+                0.34,
+                0.78,
+                0.12,
+                0.12
+              ],
+              "phase": 0.25,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 465,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "leftHind",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.4,
+                0.49,
+                0.1,
+                0.51
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4696969696969697,
+                  0.1
+                ],
+                "knee": [
+                  0.45454545454545453,
+                  0.54
+                ],
+                "ankle": [
+                  0.5,
+                  0.89
+                ],
+                "sole": [
+                  0.33758639021796916,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.68,
+                0.72
+              ],
+              "socketRoiNormalized": [
+                0.6200000000000001,
+                0.6599999999999999,
+                0.12,
+                0.12
+              ],
+              "phase": 0,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 420,
+                "maximumStanceAngle": 168
+              },
+              "layer": -1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightHind",
+              "type": "leg",
+              "flipX": true,
+              "roi": [
+                0.4,
+                0.49,
+                0.1,
+                0.51
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4696969696969697,
+                  0.1
+                ],
+                "knee": [
+                  0.45454545454545453,
+                  0.54
+                ],
+                "ankle": [
+                  0.5,
+                  0.89
+                ],
+                "sole": [
+                  0.33758639021796916,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.31999999999999995,
+                0.72
+              ],
+              "socketRoiNormalized": [
+                0.25999999999999995,
+                0.6599999999999999,
+                0.12,
+                0.12
+              ],
+              "phase": 0.5,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 420,
+                "maximumStanceAngle": 168
+              },
+              "layer": -1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            }
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/early-boss-01-front-back-parts.png",
+          "sourceSha256": "ffd0c9709bf93d5b2c0eaf3eba19f7c8c1f6d96d50cc01f28e578ed577ea36a2",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            465
+          ],
+          "body": {
+            "roi": [
+              0.505,
+              0.49,
+              0.239,
+              0.51
+            ],
+            "target": {
+              "height": 300,
+              "top": 30,
+              "centerX": 256
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftFore",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.745,
+                0.49,
+                0.09,
+                0.51
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5174418604651163,
+                  0.1
+                ],
+                "knee": [
+                  0.6569767441860465,
+                  0.54
+                ],
+                "ankle": [
+                  0.6744186046511628,
+                  0.89
+                ],
+                "sole": [
+                  0.5910696738570961,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.4,
+                0.6
+              ],
+              "socketRoiNormalized": [
+                0.34,
+                0.54,
+                0.12,
+                0.12
+              ],
+              "phase": 0.75,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 420,
+                "maximumStanceAngle": 168
+              },
+              "layer": -1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightFore",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.745,
+                0.49,
+                0.09,
+                0.51
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5174418604651163,
+                  0.1
+                ],
+                "knee": [
+                  0.6569767441860465,
+                  0.54
+                ],
+                "ankle": [
+                  0.6744186046511628,
+                  0.89
+                ],
+                "sole": [
+                  0.5910696738570961,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.6,
+                0.6
+              ],
+              "socketRoiNormalized": [
+                0.54,
+                0.54,
+                0.12,
+                0.12
+              ],
+              "phase": 0.25,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 420,
+                "maximumStanceAngle": 168
+              },
+              "layer": -1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "leftHind",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.875,
+                0.49,
+                0.115,
+                0.51
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4878048780487805,
+                  0.1
+                ],
+                "knee": [
+                  0.3353658536585366,
+                  0.54
+                ],
+                "ankle": [
+                  0.3170731707317073,
+                  0.89
+                ],
+                "sole": [
+                  0.4062185043338037,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.32,
+                0.82
+              ],
+              "socketRoiNormalized": [
+                0.26,
+                0.76,
+                0.12,
+                0.12
+              ],
+              "phase": 0,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 465,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightHind",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.875,
+                0.49,
+                0.115,
+                0.51
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4878048780487805,
+                  0.1
+                ],
+                "knee": [
+                  0.3353658536585366,
+                  0.54
+                ],
+                "ankle": [
+                  0.3170731707317073,
+                  0.89
+                ],
+                "sole": [
+                  0.4062185043338037,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.6799999999999999,
+                0.82
+              ],
+              "socketRoiNormalized": [
+                0.6199999999999999,
+                0.76,
+                0.12,
+                0.12
+              ],
+              "phase": 0.5,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 465,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "notes": "All 18 directional pose boards reviewed; W15 rear body explicitly mirrored for equipment handedness, shortened projected amphibian/reptile ground depths and reviewed enclosed-background seeds. Four-direction moving review and geometry/image QA passed before readiness. Runtime/gameplay integration remains a separate check."
+}

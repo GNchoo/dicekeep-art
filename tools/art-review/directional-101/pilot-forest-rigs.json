@@ -1,0 +1,1426 @@
+{
+  "version": 1,
+  "canonicalCell": 512,
+  "assetVersion": 93,
+  "notes": "Pilot coordinates measured from the actual three supplied part atlases; reviewApproved false pending assembled anatomy, perspective and occlusion review. Front/back joint tests use unprojected sagittal coordinates.",
+  "entries": [
+    {
+      "assetId": "w011",
+      "wave": 11,
+      "role": "normal",
+      "locomotion": "legged",
+      "cell": 256,
+      "referenceHeight": 350,
+      "cycleStride": 120,
+      "reviewApproved": true,
+      "gait": {
+        "stanceDuty": 0.65,
+        "lift": 16,
+        "pelvis": "fixed"
+      },
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/forest-quad-01a-side-parts.png",
+          "sourceSha256": "c345d47cb4087ab307aab73243a2af430fe4cbb3e524f1d96d6e4cf3387a6d50",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            395
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.65,
+              0.5
+            ],
+            "target": [
+              66.44247787610618,
+              65,
+              379.11504424778764,
+              240
+            ],
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftFore",
+              "type": "leg",
+              "roi": [
+                0.66,
+                0,
+                0.14,
+                0.5
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.48,
+                  0.1
+                ],
+                "knee": [
+                  0.44,
+                  0.57
+                ],
+                "ankle": [
+                  0.54,
+                  0.88
+                ],
+                "sole": [
+                  0.688,
+                  0.998
+                ]
+              },
+              "socket": [
+                276.96283185840707,
+                168.39999999999998
+              ],
+              "socketRoi": [
+                261.96283185840707,
+                148.39999999999998,
+                30,
+                40
+              ],
+              "legScale": 0.5809470153372259,
+              "standingReach": 139.5948889530566,
+              "phase": 0.75,
+              "layer": -1,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09,
+              "upperLayer": -1.1,
+              "calibration": {
+                "neutralSoleY": 395,
+                "maximumStanceAngle": 166,
+                "method": "single scale fitting ground and maximum-stride reach; no per-frame scaling"
+              }
+            },
+            {
+              "id": "rightFore",
+              "type": "leg",
+              "roi": [
+                0.66,
+                0,
+                0.14,
+                0.5
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.48,
+                  0.1
+                ],
+                "knee": [
+                  0.44,
+                  0.57
+                ],
+                "ankle": [
+                  0.54,
+                  0.88
+                ],
+                "sole": [
+                  0.688,
+                  0.998
+                ]
+              },
+              "socket": [
+                272.96283185840707,
+                170.39999999999998
+              ],
+              "socketRoi": [
+                257.96283185840707,
+                150.39999999999998,
+                30,
+                40
+              ],
+              "legScale": 0.5742139249051993,
+              "standingReach": 137.8499249524409,
+              "phase": 0.25,
+              "layer": 1,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09,
+              "upperLayer": -1.1,
+              "calibration": {
+                "neutralSoleY": 395,
+                "maximumStanceAngle": 166,
+                "method": "single scale fitting ground and maximum-stride reach; no per-frame scaling"
+              }
+            },
+            {
+              "id": "leftHind",
+              "type": "leg",
+              "roi": [
+                0.82,
+                0,
+                0.18,
+                0.5
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.46,
+                  0.13
+                ],
+                "knee": [
+                  0.23,
+                  0.64
+                ],
+                "ankle": [
+                  0.43,
+                  0.89
+                ],
+                "sole": [
+                  0.61,
+                  0.998
+                ]
+              },
+              "socket": [
+                163.2283185840708,
+                166
+              ],
+              "socketRoi": [
+                148.2283185840708,
+                146,
+                30,
+                40
+              ],
+              "legScale": 0.6134128460397704,
+              "standingReach": 143.59543508933308,
+              "phase": 0,
+              "layer": -1,
+              "bend": -1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09,
+              "upperLayer": -1.1,
+              "calibration": {
+                "neutralSoleY": 395,
+                "maximumStanceAngle": 166,
+                "method": "single scale fitting ground and maximum-stride reach; no per-frame scaling"
+              }
+            },
+            {
+              "id": "rightHind",
+              "type": "leg",
+              "roi": [
+                0.82,
+                0,
+                0.18,
+                0.5
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.46,
+                  0.13
+                ],
+                "knee": [
+                  0.23,
+                  0.64
+                ],
+                "ankle": [
+                  0.43,
+                  0.89
+                ],
+                "sole": [
+                  0.61,
+                  0.998
+                ]
+              },
+              "socket": [
+                159.2283185840708,
+                168
+              ],
+              "socketRoi": [
+                144.2283185840708,
+                148,
+                30,
+                40
+              ],
+              "legScale": 0.6063886938871905,
+              "standingReach": 141.82908648653648,
+              "phase": 0.5,
+              "layer": 1,
+              "bend": -1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09,
+              "upperLayer": -1.1,
+              "calibration": {
+                "neutralSoleY": 395,
+                "maximumStanceAngle": 166,
+                "method": "single scale fitting ground and maximum-stride reach; no per-frame scaling"
+              }
+            }
+          ]
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/forest-quad-01a-front-parts.png",
+          "sourceSha256": "e97d4881c2b6757092db340931944e419a7d8882b02f99425e7f3d6899b2f8bc",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            380
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.5,
+              0.5
+            ],
+            "target": [
+              184.88888888888889,
+              65,
+              142.22222222222223,
+              240
+            ],
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftFore",
+              "type": "leg",
+              "roi": [
+                0.52,
+                0,
+                0.17,
+                0.5
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.5,
+                  0.58
+                ],
+                "ankle": [
+                  0.5,
+                  0.87
+                ],
+                "sole": [
+                  0.5,
+                  0.998
+                ]
+              },
+              "socket": [
+                102.4,
+                189.60000000000002
+              ],
+              "socketRoi": [
+                87.4,
+                169.60000000000002,
+                30,
+                40
+              ],
+              "legScale": 0.5203002524112795,
+              "standingReach": 123.6889110673821,
+              "phase": 0.75,
+              "layer": 1,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09,
+              "upperLayer": -1.1,
+              "calibration": {
+                "neutralSoleY": 400,
+                "maximumStanceAngle": 166,
+                "method": "single scale fitting ground and maximum-stride reach; no per-frame scaling"
+              }
+            },
+            {
+              "id": "rightFore",
+              "type": "leg",
+              "roi": [
+                0.52,
+                0,
+                0.17,
+                0.5
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.5,
+                  0.58
+                ],
+                "ankle": [
+                  0.5,
+                  0.87
+                ],
+                "sole": [
+                  0.5,
+                  0.998
+                ]
+              },
+              "socket": [
+                42.666666666666664,
+                189.60000000000002
+              ],
+              "socketRoi": [
+                27.666666666666664,
+                169.60000000000002,
+                30,
+                40
+              ],
+              "legScale": 0.5203002524112795,
+              "standingReach": 123.6889110673821,
+              "phase": 0.25,
+              "layer": 1,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09,
+              "upperLayer": -1.1,
+              "calibration": {
+                "neutralSoleY": 400,
+                "maximumStanceAngle": 166,
+                "method": "single scale fitting ground and maximum-stride reach; no per-frame scaling"
+              }
+            },
+            {
+              "id": "leftHind",
+              "type": "leg",
+              "roi": [
+                0.76,
+                0,
+                0.19,
+                0.5
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.5,
+                  0.58
+                ],
+                "ankle": [
+                  0.5,
+                  0.87
+                ],
+                "sole": [
+                  0.5,
+                  0.998
+                ]
+              },
+              "socket": [
+                102.4,
+                148.8
+              ],
+              "socketRoi": [
+                87.4,
+                128.8,
+                30,
+                40
+              ],
+              "legScale": 0.5166016467552004,
+              "standingReach": 124.37874644106034,
+              "phase": 0,
+              "layer": -1,
+              "bend": -1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09,
+              "upperLayer": -1.1,
+              "calibration": {
+                "neutralSoleY": 360,
+                "maximumStanceAngle": 166,
+                "method": "single scale fitting ground and maximum-stride reach; no per-frame scaling"
+              }
+            },
+            {
+              "id": "rightHind",
+              "type": "leg",
+              "roi": [
+                0.76,
+                0,
+                0.19,
+                0.5
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.5,
+                  0.58
+                ],
+                "ankle": [
+                  0.5,
+                  0.87
+                ],
+                "sole": [
+                  0.5,
+                  0.998
+                ]
+              },
+              "socket": [
+                42.666666666666664,
+                148.8
+              ],
+              "socketRoi": [
+                27.666666666666664,
+                128.8,
+                30,
+                40
+              ],
+              "legScale": 0.5166016467552004,
+              "standingReach": 124.37874644106034,
+              "phase": 0.5,
+              "layer": -1,
+              "bend": -1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09,
+              "upperLayer": -1.1,
+              "calibration": {
+                "neutralSoleY": 360,
+                "maximumStanceAngle": 166,
+                "method": "single scale fitting ground and maximum-stride reach; no per-frame scaling"
+              }
+            }
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/forest-quad-01a-back-parts.png",
+          "sourceSha256": "dce5dd5be8fda2e5dbd8998a9db4dca2b42d1c2c876dd08d7f3a107b7e2d369c",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            380
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.5,
+              0.42
+            ],
+            "target": [
+              148.88782816229116,
+              65,
+              214.22434367541766,
+              240
+            ],
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftFore",
+              "type": "leg",
+              "roi": [
+                0.52,
+                0,
+                0.17,
+                0.42
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.5,
+                  0.58
+                ],
+                "ankle": [
+                  0.5,
+                  0.87
+                ],
+                "sole": [
+                  0.5,
+                  0.998
+                ]
+              },
+              "socket": [
+                64.26730310262529,
+                120
+              ],
+              "socketRoi": [
+                49.26730310262529,
+                100,
+                30,
+                40
+              ],
+              "legScale": 0.6381980211501894,
+              "standingReach": 149.18616644051716,
+              "phase": 0.75,
+              "layer": -1,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09,
+              "upperLayer": -1.1,
+              "calibration": {
+                "neutralSoleY": 360,
+                "maximumStanceAngle": 166,
+                "method": "single scale fitting ground and maximum-stride reach; no per-frame scaling"
+              }
+            },
+            {
+              "id": "rightFore",
+              "type": "leg",
+              "roi": [
+                0.52,
+                0,
+                0.17,
+                0.42
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.5,
+                  0.58
+                ],
+                "ankle": [
+                  0.5,
+                  0.87
+                ],
+                "sole": [
+                  0.5,
+                  0.998
+                ]
+              },
+              "socket": [
+                154.2415274463007,
+                120
+              ],
+              "socketRoi": [
+                139.2415274463007,
+                100,
+                30,
+                40
+              ],
+              "legScale": 0.6381980211501894,
+              "standingReach": 149.18616644051716,
+              "phase": 0.25,
+              "layer": -1,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09,
+              "upperLayer": -1.1,
+              "calibration": {
+                "neutralSoleY": 360,
+                "maximumStanceAngle": 166,
+                "method": "single scale fitting ground and maximum-stride reach; no per-frame scaling"
+              }
+            },
+            {
+              "id": "leftHind",
+              "type": "leg",
+              "roi": [
+                0.76,
+                0,
+                0.19,
+                0.42
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.5,
+                  0.58
+                ],
+                "ankle": [
+                  0.5,
+                  0.87
+                ],
+                "sole": [
+                  0.5,
+                  0.998
+                ]
+              },
+              "socket": [
+                64.26730310262529,
+                170.39999999999998
+              ],
+              "socketRoi": [
+                49.26730310262529,
+                150.39999999999998,
+                30,
+                40
+              ],
+              "legScale": 0.5948912510652009,
+              "standingReach": 140.23325435636937,
+              "phase": 0,
+              "layer": 1,
+              "bend": -1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09,
+              "upperLayer": -1.1,
+              "calibration": {
+                "neutralSoleY": 400,
+                "maximumStanceAngle": 166,
+                "method": "single scale fitting ground and maximum-stride reach; no per-frame scaling"
+              }
+            },
+            {
+              "id": "rightHind",
+              "type": "leg",
+              "roi": [
+                0.76,
+                0,
+                0.19,
+                0.42
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.5,
+                  0.58
+                ],
+                "ankle": [
+                  0.5,
+                  0.87
+                ],
+                "sole": [
+                  0.5,
+                  0.998
+                ]
+              },
+              "socket": [
+                154.2415274463007,
+                170.39999999999998
+              ],
+              "socketRoi": [
+                139.2415274463007,
+                150.39999999999998,
+                30,
+                40
+              ],
+              "legScale": 0.5948912510652009,
+              "standingReach": 140.23325435636937,
+              "phase": 0.5,
+              "layer": 1,
+              "bend": -1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09,
+              "upperLayer": -1.1,
+              "calibration": {
+                "neutralSoleY": 400,
+                "maximumStanceAngle": 166,
+                "method": "single scale fitting ground and maximum-stride reach; no per-frame scaling"
+              }
+            }
+          ]
+        }
+      },
+      "reviewNote": "Root approved corrected physical limb orientation, body/socket proportions and assembled motion; game-canvas corner/residency QA remains separate.",
+      "physicalLimbConvention": "right-facing side: right near, left far; front: left screen-right; back: left screen-left"
+    },
+    {
+      "assetId": "w013",
+      "wave": 13,
+      "role": "normal",
+      "locomotion": "legged",
+      "cell": 256,
+      "referenceHeight": 350,
+      "cycleStride": 120,
+      "reviewApproved": true,
+      "gait": {
+        "stanceDuty": 0.65,
+        "lift": 16,
+        "pelvis": "fixed"
+      },
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/forest-quad-01a-side-parts.png",
+          "sourceSha256": "c345d47cb4087ab307aab73243a2af430fe4cbb3e524f1d96d6e4cf3387a6d50",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            395
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.5,
+              0.65,
+              0.5
+            ],
+            "target": [
+              69.56223175965664,
+              65,
+              372.8755364806867,
+              240
+            ],
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftFore",
+              "type": "leg",
+              "roi": [
+                0.66,
+                0.5,
+                0.14,
+                0.5
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.38,
+                  0.1
+                ],
+                "knee": [
+                  0.4,
+                  0.58
+                ],
+                "ankle": [
+                  0.51,
+                  0.88
+                ],
+                "sole": [
+                  0.696,
+                  0.998
+                ]
+              },
+              "socket": [
+                272.4703862660944,
+                168.39999999999998
+              ],
+              "socketRoi": [
+                257.4703862660944,
+                148.39999999999998,
+                30,
+                40
+              ],
+              "legScale": 0.5716268045772066,
+              "standingReach": 139.61066008152403,
+              "phase": 0.75,
+              "layer": -1,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09,
+              "upperLayer": -1.1,
+              "calibration": {
+                "neutralSoleY": 395,
+                "maximumStanceAngle": 166,
+                "method": "single scale fitting ground and maximum-stride reach; no per-frame scaling"
+              }
+            },
+            {
+              "id": "rightFore",
+              "type": "leg",
+              "roi": [
+                0.66,
+                0.5,
+                0.14,
+                0.5
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.38,
+                  0.1
+                ],
+                "knee": [
+                  0.4,
+                  0.58
+                ],
+                "ankle": [
+                  0.51,
+                  0.88
+                ],
+                "sole": [
+                  0.696,
+                  0.998
+                ]
+              },
+              "socket": [
+                268.4703862660944,
+                170.39999999999998
+              ],
+              "socketRoi": [
+                253.4703862660944,
+                150.39999999999998,
+                30,
+                40
+              ],
+              "legScale": 0.5650016864383077,
+              "standingReach": 137.8655151260912,
+              "phase": 0.25,
+              "layer": 1,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09,
+              "upperLayer": -1.1,
+              "calibration": {
+                "neutralSoleY": 395,
+                "maximumStanceAngle": 166,
+                "method": "single scale fitting ground and maximum-stride reach; no per-frame scaling"
+              }
+            },
+            {
+              "id": "leftHind",
+              "type": "leg",
+              "roi": [
+                0.82,
+                0.5,
+                0.18,
+                0.5
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.47,
+                  0.12
+                ],
+                "knee": [
+                  0.25,
+                  0.66
+                ],
+                "ankle": [
+                  0.52,
+                  0.89
+                ],
+                "sole": [
+                  0.642,
+                  0.998
+                ]
+              },
+              "socket": [
+                160.6077253218884,
+                166
+              ],
+              "socketRoi": [
+                145.6077253218884,
+                146,
+                30,
+                40
+              ],
+              "legScale": 0.5958657142199492,
+              "standingReach": 144.0504158879161,
+              "phase": 0,
+              "layer": -1,
+              "bend": -1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09,
+              "upperLayer": -1.1,
+              "calibration": {
+                "neutralSoleY": 395,
+                "maximumStanceAngle": 166,
+                "method": "single scale fitting ground and maximum-stride reach; no per-frame scaling"
+              }
+            },
+            {
+              "id": "rightHind",
+              "type": "leg",
+              "roi": [
+                0.82,
+                0.5,
+                0.18,
+                0.5
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.47,
+                  0.12
+                ],
+                "knee": [
+                  0.25,
+                  0.66
+                ],
+                "ankle": [
+                  0.52,
+                  0.89
+                ],
+                "sole": [
+                  0.642,
+                  0.998
+                ]
+              },
+              "socket": [
+                156.6077253218884,
+                168
+              ],
+              "socketRoi": [
+                141.6077253218884,
+                148,
+                30,
+                40
+              ],
+              "legScale": 0.589041177186833,
+              "standingReach": 142.27890138778483,
+              "phase": 0.5,
+              "layer": 1,
+              "bend": -1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09,
+              "upperLayer": -1.1,
+              "calibration": {
+                "neutralSoleY": 395,
+                "maximumStanceAngle": 166,
+                "method": "single scale fitting ground and maximum-stride reach; no per-frame scaling"
+              }
+            }
+          ]
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/forest-quad-01a-front-parts.png",
+          "sourceSha256": "e97d4881c2b6757092db340931944e419a7d8882b02f99425e7f3d6899b2f8bc",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            380
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.5,
+              0.5,
+              0.5
+            ],
+            "target": [
+              168.8395061728395,
+              65,
+              174.320987654321,
+              240
+            ],
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftFore",
+              "type": "leg",
+              "roi": [
+                0.52,
+                0.5,
+                0.17,
+                0.5
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.5,
+                  0.58
+                ],
+                "ankle": [
+                  0.5,
+                  0.87
+                ],
+                "sole": [
+                  0.5,
+                  0.998
+                ]
+              },
+              "socket": [
+                125.5111111111111,
+                189.60000000000002
+              ],
+              "socketRoi": [
+                110.5111111111111,
+                169.60000000000002,
+                30,
+                40
+              ],
+              "legScale": 0.4764547255226886,
+              "standingReach": 123.68891106738208,
+              "phase": 0.75,
+              "layer": 1,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09,
+              "upperLayer": -1.1,
+              "calibration": {
+                "neutralSoleY": 400,
+                "maximumStanceAngle": 166,
+                "method": "single scale fitting ground and maximum-stride reach; no per-frame scaling"
+              }
+            },
+            {
+              "id": "rightFore",
+              "type": "leg",
+              "roi": [
+                0.52,
+                0.5,
+                0.17,
+                0.5
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.5,
+                  0.58
+                ],
+                "ankle": [
+                  0.5,
+                  0.87
+                ],
+                "sole": [
+                  0.5,
+                  0.998
+                ]
+              },
+              "socket": [
+                52.2962962962963,
+                189.60000000000002
+              ],
+              "socketRoi": [
+                37.2962962962963,
+                169.60000000000002,
+                30,
+                40
+              ],
+              "legScale": 0.4764547255226886,
+              "standingReach": 123.68891106738208,
+              "phase": 0.25,
+              "layer": 1,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09,
+              "upperLayer": -1.1,
+              "calibration": {
+                "neutralSoleY": 400,
+                "maximumStanceAngle": 166,
+                "method": "single scale fitting ground and maximum-stride reach; no per-frame scaling"
+              }
+            },
+            {
+              "id": "leftHind",
+              "type": "leg",
+              "roi": [
+                0.76,
+                0.5,
+                0.19,
+                0.5
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.5,
+                  0.58
+                ],
+                "ankle": [
+                  0.5,
+                  0.87
+                ],
+                "sole": [
+                  0.5,
+                  0.998
+                ]
+              },
+              "socket": [
+                125.5111111111111,
+                148.8
+              ],
+              "socketRoi": [
+                110.5111111111111,
+                128.8,
+                30,
+                40
+              ],
+              "legScale": 0.4722397324909034,
+              "standingReach": 124.37874644106031,
+              "phase": 0,
+              "layer": -1,
+              "bend": -1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09,
+              "upperLayer": -1.1,
+              "calibration": {
+                "neutralSoleY": 360,
+                "maximumStanceAngle": 166,
+                "method": "single scale fitting ground and maximum-stride reach; no per-frame scaling"
+              }
+            },
+            {
+              "id": "rightHind",
+              "type": "leg",
+              "roi": [
+                0.76,
+                0.5,
+                0.19,
+                0.5
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.5,
+                  0.58
+                ],
+                "ankle": [
+                  0.5,
+                  0.87
+                ],
+                "sole": [
+                  0.5,
+                  0.998
+                ]
+              },
+              "socket": [
+                52.2962962962963,
+                148.8
+              ],
+              "socketRoi": [
+                37.2962962962963,
+                128.8,
+                30,
+                40
+              ],
+              "legScale": 0.4722397324909034,
+              "standingReach": 124.37874644106031,
+              "phase": 0.5,
+              "layer": -1,
+              "bend": -1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09,
+              "upperLayer": -1.1,
+              "calibration": {
+                "neutralSoleY": 360,
+                "maximumStanceAngle": 166,
+                "method": "single scale fitting ground and maximum-stride reach; no per-frame scaling"
+              }
+            }
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/forest-quad-01a-back-parts.png",
+          "sourceSha256": "dce5dd5be8fda2e5dbd8998a9db4dca2b42d1c2c876dd08d7f3a107b7e2d369c",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            380
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.42,
+              0.5,
+              0.58
+            ],
+            "target": [
+              199.96411092985318,
+              40,
+              112.07177814029363,
+              300
+            ],
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftFore",
+              "type": "leg",
+              "roi": [
+                0.52,
+                0.42,
+                0.17,
+                0.58
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.5,
+                  0.58
+                ],
+                "ankle": [
+                  0.5,
+                  0.87
+                ],
+                "sole": [
+                  0.5,
+                  0.998
+                ]
+              },
+              "socket": [
+                33.62153344208809,
+                150
+              ],
+              "socketRoi": [
+                18.621533442088086,
+                130,
+                30,
+                40
+              ],
+              "legScale": 0.49804622072808713,
+              "standingReach": 144.8825329962411,
+              "phase": 0.75,
+              "layer": -1,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09,
+              "upperLayer": -1.1,
+              "calibration": {
+                "neutralSoleY": 360,
+                "maximumStanceAngle": 166,
+                "method": "single scale fitting ground and maximum-stride reach; no per-frame scaling"
+              }
+            },
+            {
+              "id": "rightFore",
+              "type": "leg",
+              "roi": [
+                0.52,
+                0.42,
+                0.17,
+                0.58
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.5,
+                  0.58
+                ],
+                "ankle": [
+                  0.5,
+                  0.87
+                ],
+                "sole": [
+                  0.5,
+                  0.998
+                ]
+              },
+              "socket": [
+                80.69168026101141,
+                150
+              ],
+              "socketRoi": [
+                65.69168026101141,
+                130,
+                30,
+                40
+              ],
+              "legScale": 0.49804622072808713,
+              "standingReach": 144.8825329962411,
+              "phase": 0.25,
+              "layer": -1,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09,
+              "upperLayer": -1.1,
+              "calibration": {
+                "neutralSoleY": 360,
+                "maximumStanceAngle": 166,
+                "method": "single scale fitting ground and maximum-stride reach; no per-frame scaling"
+              }
+            },
+            {
+              "id": "leftHind",
+              "type": "leg",
+              "roi": [
+                0.76,
+                0.42,
+                0.19,
+                0.58
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.5,
+                  0.58
+                ],
+                "ankle": [
+                  0.5,
+                  0.87
+                ],
+                "sole": [
+                  0.5,
+                  0.998
+                ]
+              },
+              "socket": [
+                33.62153344208809,
+                213
+              ],
+              "socketRoi": [
+                18.621533442088086,
+                193,
+                30,
+                40
+              ],
+              "legScale": 0.42942248897259677,
+              "standingReach": 125.06853464319154,
+              "phase": 0,
+              "layer": 1,
+              "bend": -1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09,
+              "upperLayer": -1.1,
+              "calibration": {
+                "neutralSoleY": 400,
+                "maximumStanceAngle": 166,
+                "method": "single scale fitting ground and maximum-stride reach; no per-frame scaling"
+              }
+            },
+            {
+              "id": "rightHind",
+              "type": "leg",
+              "roi": [
+                0.76,
+                0.42,
+                0.19,
+                0.58
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.5,
+                  0.58
+                ],
+                "ankle": [
+                  0.5,
+                  0.87
+                ],
+                "sole": [
+                  0.5,
+                  0.998
+                ]
+              },
+              "socket": [
+                80.69168026101141,
+                213
+              ],
+              "socketRoi": [
+                65.69168026101141,
+                193,
+                30,
+                40
+              ],
+              "legScale": 0.42942248897259677,
+              "standingReach": 125.06853464319154,
+              "phase": 0.5,
+              "layer": 1,
+              "bend": -1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09,
+              "upperLayer": -1.1,
+              "calibration": {
+                "neutralSoleY": 400,
+                "maximumStanceAngle": 166,
+                "method": "single scale fitting ground and maximum-stride reach; no per-frame scaling"
+              }
+            }
+          ]
+        }
+      },
+      "reviewNote": "Root approved corrected physical limb orientation, body/socket proportions and assembled motion; game-canvas corner/residency QA remains separate.",
+      "physicalLimbConvention": "right-facing side: right near, left far; front: left screen-right; back: left screen-left"
+    }
+  ]
+}

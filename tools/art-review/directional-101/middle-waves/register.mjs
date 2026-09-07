@@ -1,0 +1,18 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import sharp from 'sharp';
+import {fileURLToPath} from 'node:url';
+const dir=path.dirname(fileURLToPath(import.meta.url)),[source,id,notes='']=process.argv.slice(2);
+const jobs=JSON.parse(fs.readFileSync(path.join(dir,'jobs.json'),'utf8'));
+if(fs.existsSync(path.join(dir,'parts-jobs.json')))jobs.push(...JSON.parse(fs.readFileSync(path.join(dir,'parts-jobs.json'),'utf8')));
+const job=jobs.find(j=>j.id===id.replace(/-clean$/, ''));
+if(!job)throw Error('unknown assigned generation');
+const target=path.join(dir,id+'.png');
+if(fs.existsSync(target)&&crypto.createHash('sha256').update(fs.readFileSync(target)).digest('hex')!==crypto.createHash('sha256').update(fs.readFileSync(source)).digest('hex'))throw Error('existing output differs; register a versioned id first');
+fs.copyFileSync(source,target);
+const bytes=fs.readFileSync(target),meta=await sharp(bytes).metadata(),file=path.join(dir,'generation-ledger.json');
+const ledger=fs.existsSync(file)?JSON.parse(fs.readFileSync(file,'utf8')):{mode:'built-in image_gen',scope:'31–60 normal/boss/secondary',requests:[]};
+const row={id,kind:job.kind,assetIds:job.assetIds,rows:job.rows,source:id+'.png',prompt:'prompts/'+id+'.txt',width:meta.width,height:meta.height,hasAlpha:meta.hasAlpha,sha256:crypto.createHash('sha256').update(bytes).digest('hex'),status:notes.startsWith('REJECTED')?'rejected-concept':job.kind==='parts'?'awaiting-rig-geometry-and-visual-qa':'concept-reviewed; no animation or runtime approval',notes};
+const old=ledger.requests.findIndex(r=>r.id===id);if(old<0)ledger.requests.push(row);else ledger.requests[old]=row;
+fs.writeFileSync(file,JSON.stringify(ledger,null,2)+'\n');console.log(JSON.stringify(row));

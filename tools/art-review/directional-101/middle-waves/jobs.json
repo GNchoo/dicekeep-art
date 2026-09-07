@@ -1,0 +1,605 @@
+[
+  {
+    "id": "t4-biped-01-turnaround",
+    "kind": "turnaround",
+    "assetIds": [
+      "w031",
+      "w033",
+      "w034",
+      "w035"
+    ],
+    "prompt": "Use case: stylized-concept. Asset: full-body character turnaround atlas, not a walking animation or separated parts. Create ONE tall portrait image with exactly 4 equal-height horizontal rows and three columns. Exactly THREE evenly spaced columns: LEFT pure RIGHT-facing side profile; MIDDLE true FRONT facing viewer, feet toward screen bottom; RIGHT true BACK facing away, back of head/costume, heels visible, no eyes or face. Same individual, equipment, proportions and color across each row. Full intact neutral standing body with softly extended knees, no crouch; flying creatures floating with wings half-open and feet tucked. Each figure entirely inside its own cell with generous empty gutters, no contact between neighbors. Slightly elevated15-degree game camera throughout. No text, labels, gridlines, pedestal, cast shadow, scenery or floor. GENUINE TRANSPARENT ALPHA background; do not paint checkerboard.\nHand-painted fantasy tower-defense game illustration: chunky readable character proportions, expressive friendly-determined faces, crisp dark contours, broad color areas, soft painterly shading, clean intact clothing and surfaces. Moderately stylized game characters, not realistic horror. Smooth toy-like ivory skeleton bones. NO gore, blood, wounds, rot, exposed tissue, grotesque anatomy or photorealism.\nROW 1 ONLY: Small olive-green goblin scout with brown hood, leather vest, short dagger and rolled map, sturdy boots.\nROW 2 ONLY: Round green goblin guard, brown leather armor, broad round wooden shield and compact iron mace, sturdy boots.\nROW 3 ONLY: Broad olive orc warrior with small tusks, ochre tunic, iron shoulder armor, compact axe and thick boots.\nROW 4 ONLY: Tall gray-green troll miner, leather apron, bronze digging helmet and compact pickaxe, complete gloves and heavy boots.\nNo additional characters or inset pieces. All twelve/nine/six figures as applicable remain whole and cleanly separated.",
+    "entries": [
+      {
+        "assetId": "w031",
+        "wave": 31,
+        "role": "normal",
+        "name": "고블린 정찰병",
+        "tier": 4,
+        "cls": "S",
+        "gait": "biped",
+        "locomotion": "legged",
+        "family": "biped",
+        "description": "Small olive-green goblin scout with brown hood, leather vest, short dagger and rolled map, sturdy boots.",
+        "existingSide": false,
+        "frames": 8
+      },
+      {
+        "assetId": "w033",
+        "wave": 33,
+        "role": "normal",
+        "name": "방패 고블린",
+        "tier": 4,
+        "cls": "S",
+        "gait": "biped",
+        "locomotion": "legged",
+        "family": "biped",
+        "description": "Round green goblin guard, brown leather armor, broad round wooden shield and compact iron mace, sturdy boots.",
+        "existingSide": false,
+        "frames": 8
+      },
+      {
+        "assetId": "w034",
+        "wave": 34,
+        "role": "normal",
+        "name": "오크 전사",
+        "tier": 4,
+        "cls": "L",
+        "gait": "biped",
+        "locomotion": "legged",
+        "family": "biped",
+        "description": "Broad olive orc warrior with small tusks, ochre tunic, iron shoulder armor, compact axe and thick boots.",
+        "existingSide": false,
+        "frames": 8
+      },
+      {
+        "assetId": "w035",
+        "wave": 35,
+        "role": "normal",
+        "name": "트롤 굴착병",
+        "tier": 4,
+        "cls": "L",
+        "gait": "biped",
+        "locomotion": "legged",
+        "family": "biped",
+        "description": "Tall gray-green troll miner, leather apron, bronze digging helmet and compact pickaxe, complete gloves and heavy boots.",
+        "existingSide": false,
+        "frames": 8
+      }
+    ]
+  },
+  {
+    "id": "t4-biped-02-turnaround",
+    "kind": "turnaround",
+    "assetIds": [
+      "w037",
+      "w038",
+      "w039"
+    ],
+    "prompt": "Use case: stylized-concept. Asset: full-body character turnaround atlas, not a walking animation or separated parts. Create ONE tall portrait image with exactly 3 equal-height horizontal rows and three columns. Exactly THREE evenly spaced columns: LEFT pure RIGHT-facing side profile; MIDDLE true FRONT facing viewer, feet toward screen bottom; RIGHT true BACK facing away, back of head/costume, heels visible, no eyes or face. Same individual, equipment, proportions and color across each row. Full intact neutral standing body with softly extended knees, no crouch; flying creatures floating with wings half-open and feet tucked. Each figure entirely inside its own cell with generous empty gutters, no contact between neighbors. Slightly elevated15-degree game camera throughout. No text, labels, gridlines, pedestal, cast shadow, scenery or floor. GENUINE TRANSPARENT ALPHA background; do not paint checkerboard.\nHand-painted fantasy tower-defense game illustration: chunky readable character proportions, expressive friendly-determined faces, crisp dark contours, broad color areas, soft painterly shading, clean intact clothing and surfaces. Moderately stylized game characters, not realistic horror. Smooth toy-like ivory skeleton bones. NO gore, blood, wounds, rot, exposed tissue, grotesque anatomy or photorealism.\nROW 1 ONLY: Lean rust-red hobgoblin archer with brown hood, compact bow/quiver, layered ochre leather armor and tall boots.\nROW 2 ONLY: Small warm-brown kobold with rounded muzzle, leather cap, copper buckler and short spear, expressive face.\nROW 3 ONLY: Stocky human bandit captain, dark beard, ochre coat, leather belt, curved compact saber and heavy boots.\nNo additional characters or inset pieces. All twelve/nine/six figures as applicable remain whole and cleanly separated.",
+    "entries": [
+      {
+        "assetId": "w037",
+        "wave": 37,
+        "role": "normal",
+        "name": "홉고블린 궁수",
+        "tier": 4,
+        "cls": "M",
+        "gait": "biped",
+        "locomotion": "legged",
+        "family": "biped",
+        "description": "Lean rust-red hobgoblin archer with brown hood, compact bow/quiver, layered ochre leather armor and tall boots.",
+        "existingSide": false,
+        "frames": 8
+      },
+      {
+        "assetId": "w038",
+        "wave": 38,
+        "role": "normal",
+        "name": "코볼트",
+        "tier": 4,
+        "cls": "S",
+        "gait": "biped",
+        "locomotion": "legged",
+        "family": "biped",
+        "description": "Small warm-brown kobold with rounded muzzle, leather cap, copper buckler and short spear, expressive face.",
+        "existingSide": false,
+        "frames": 8
+      },
+      {
+        "assetId": "w039",
+        "wave": 39,
+        "role": "normal",
+        "name": "산적 두목",
+        "tier": 4,
+        "cls": "M",
+        "gait": "biped",
+        "locomotion": "legged",
+        "family": "biped",
+        "description": "Stocky human bandit captain, dark beard, ochre coat, leather belt, curved compact saber and heavy boots.",
+        "existingSide": false,
+        "frames": 8
+      }
+    ]
+  },
+  {
+    "id": "t4-flight-01-turnaround",
+    "kind": "turnaround",
+    "assetIds": [
+      "w032",
+      "w036"
+    ],
+    "prompt": "Use case: stylized-concept. Asset: full-body character turnaround atlas, not a walking animation or separated parts. Create ONE landscape image with exactly 2 equal-height horizontal rows and three columns. Exactly THREE evenly spaced columns: LEFT pure RIGHT-facing side profile; MIDDLE true FRONT facing viewer, feet toward screen bottom; RIGHT true BACK facing away, back of head/costume, heels visible, no eyes or face. Same individual, equipment, proportions and color across each row. Full intact complete bodies in a neutral pose; ground species stand with softly extended knees, airborne species hover exactly as described. Each figure entirely inside its own cell with generous empty gutters, no contact between neighbors. Slightly elevated15-degree game camera throughout. No text, labels, gridlines, pedestal, cast shadow, scenery or floor. GENUINE TRANSPARENT ALPHA background; do not paint checkerboard.\nHand-painted fantasy tower-defense game illustration: chunky readable character proportions, expressive friendly-determined faces, crisp dark contours, broad color areas, soft painterly shading, clean intact clothing and surfaces. Moderately stylized game characters, not realistic horror. Smooth toy-like ivory skeleton bones. NO gore, blood, wounds, rot, exposed tissue, grotesque anatomy or photorealism.\nROW 1 ONLY: Small green goblin pilot in goggles, hanging beneath compact ochre cloth glider wings and wooden struts. The specified winged mount/glider/creature is airborne with half-open wings and tucked feet; there are no other winged companions.\nROW 2 ONLY: Small armored goblin riding a blue-gray wyvern, ochre saddle, broad membranous wings and one tail. The specified winged mount/glider/creature is airborne with half-open wings and tucked feet; there are no other winged companions.\nNo additional characters or inset pieces. Exactly the specified three views per character, no unrequested pets or companions.",
+    "entries": [
+      {
+        "assetId": "w032",
+        "wave": 32,
+        "role": "normal",
+        "name": "고블린 글라이더",
+        "tier": 4,
+        "cls": "S",
+        "gait": "fly",
+        "locomotion": "flight",
+        "family": "glider",
+        "description": "Small green goblin pilot in goggles, hanging beneath compact ochre cloth glider wings and wooden struts.",
+        "existingSide": false,
+        "frames": 4
+      },
+      {
+        "assetId": "w036",
+        "wave": 36,
+        "role": "normal",
+        "name": "와이번 기수",
+        "tier": 4,
+        "cls": "L",
+        "gait": "fly",
+        "locomotion": "flight",
+        "family": "flying-mount",
+        "description": "Small armored goblin riding a blue-gray wyvern, ochre saddle, broad membranous wings and one tail.",
+        "existingSide": false,
+        "frames": 4
+      }
+    ]
+  },
+  {
+    "id": "t4-boss-01-turnaround",
+    "kind": "turnaround",
+    "assetIds": [
+      "b040",
+      "b040-2"
+    ],
+    "prompt": "Use case: stylized-concept. Asset: full-body character turnaround atlas, not a walking animation or separated parts. Create ONE landscape image with exactly 2 equal-height horizontal rows and three columns. Exactly THREE evenly spaced columns: LEFT pure RIGHT-facing side profile; MIDDLE true FRONT facing viewer, feet toward screen bottom; RIGHT true BACK facing away, back of head/costume, heels visible, no eyes or face. Same individual, equipment, proportions and color across each row. Full intact neutral standing body with softly extended knees, no crouch; flying creatures floating with wings half-open and feet tucked. Each figure entirely inside its own cell with generous empty gutters, no contact between neighbors. Slightly elevated15-degree game camera throughout. No text, labels, gridlines, pedestal, cast shadow, scenery or floor. GENUINE TRANSPARENT ALPHA background; do not paint checkerboard.\nHand-painted fantasy tower-defense game illustration: chunky readable character proportions, expressive friendly-determined faces, crisp dark contours, broad color areas, soft painterly shading, clean intact clothing and surfaces. Moderately stylized game characters, not realistic horror. Smooth toy-like ivory skeleton bones. NO gore, blood, wounds, rot, exposed tissue, grotesque anatomy or photorealism.\nROW 1 ONLY: Proud green goblin king with bronze crown, ochre cape ending above knees, steel shoulder plates, compact scepter and sturdy boots.\nROW 2 ONLY: Huge gray-green ogre champion in ochre leather armor, bronze bracers, compact stone hammer and strong booted legs.\nNo additional characters or inset pieces. All twelve/nine/six figures as applicable remain whole and cleanly separated.",
+    "entries": [
+      {
+        "assetId": "b040",
+        "wave": 40,
+        "role": "boss",
+        "name": "고블린 왕",
+        "tier": 4,
+        "cls": "S",
+        "gait": "biped",
+        "locomotion": "legged",
+        "family": "biped",
+        "description": "Proud green goblin king with bronze crown, ochre cape ending above knees, steel shoulder plates, compact scepter and sturdy boots.",
+        "existingSide": false,
+        "frames": 8
+      },
+      {
+        "assetId": "b040-2",
+        "wave": 40,
+        "role": "secondary",
+        "name": "오우거 장사",
+        "tier": 4,
+        "cls": "S",
+        "gait": "biped",
+        "locomotion": "legged",
+        "family": "biped",
+        "description": "Huge gray-green ogre champion in ochre leather armor, bronze bracers, compact stone hammer and strong booted legs.",
+        "existingSide": false,
+        "frames": 8
+      }
+    ]
+  },
+  {
+    "id": "t5-biped-01-turnaround",
+    "kind": "turnaround",
+    "assetIds": [
+      "w041",
+      "w042",
+      "w045",
+      "w046"
+    ],
+    "prompt": "Use case: stylized-concept. Asset: full-body character turnaround atlas, not a walking animation or separated parts. Create ONE tall portrait image with exactly 4 equal-height horizontal rows and three columns. Exactly THREE evenly spaced columns: LEFT pure RIGHT-facing side profile; MIDDLE true FRONT facing viewer, feet toward screen bottom; RIGHT true BACK facing away, back of head/costume, heels visible, no eyes or face. Same individual, equipment, proportions and color across each row. Full intact neutral standing body with softly extended knees, no crouch. Each figure entirely inside its own cell with generous empty gutters, no contact between neighbors. Slightly elevated15-degree game camera throughout. No text, labels, gridlines, pedestal, cast shadow, scenery or floor. GENUINE TRANSPARENT ALPHA background; do not paint checkerboard.\nHand-painted fantasy tower-defense game illustration: chunky readable character proportions, expressive friendly-determined faces, crisp dark contours, broad color areas, soft painterly shading, clean intact clothing and surfaces. Moderately stylized game characters, not realistic horror. Smooth toy-like ivory skeleton bones. NO gore, blood, wounds, rot, exposed tissue, grotesque anatomy or photorealism.\nROW 1 ONLY: Human shield soldier in blue-steel helmet and pale-blue tabard, tall rectangular steel shield, compact spear, armored boots.\nROW 2 ONLY: Human military engineer with steel helmet, leather apron, blue tool belt, compact hammer and satchel, sturdy boots.\nROW 3 ONLY: Massive armored knight in complete blue-steel plate, narrow gold visor, broad shield and compact sword, heavy greaves.\nROW 4 ONLY: Young adult squire in pale-blue padded tunic, steel cap, small buckler and wooden practice sword, sturdy boots.\nNo additional characters or inset pieces. Exactly the specified three views per character, no unrequested pets or companions.",
+    "entries": [
+      {
+        "assetId": "w041",
+        "wave": 41,
+        "role": "normal",
+        "name": "방패병",
+        "tier": 5,
+        "cls": "L",
+        "gait": "biped",
+        "locomotion": "legged",
+        "family": "biped",
+        "description": "Human shield soldier in blue-steel helmet and pale-blue tabard, tall rectangular steel shield, compact spear, armored boots.",
+        "existingSide": false,
+        "frames": 8
+      },
+      {
+        "assetId": "w042",
+        "wave": 42,
+        "role": "normal",
+        "name": "공병",
+        "tier": 5,
+        "cls": "M",
+        "gait": "biped",
+        "locomotion": "legged",
+        "family": "biped",
+        "description": "Human military engineer with steel helmet, leather apron, blue tool belt, compact hammer and satchel, sturdy boots.",
+        "existingSide": false,
+        "frames": 8
+      },
+      {
+        "assetId": "w045",
+        "wave": 45,
+        "role": "normal",
+        "name": "중장기사",
+        "tier": 5,
+        "cls": "L",
+        "gait": "biped",
+        "locomotion": "legged",
+        "family": "biped",
+        "description": "Massive armored knight in complete blue-steel plate, narrow gold visor, broad shield and compact sword, heavy greaves.",
+        "existingSide": false,
+        "frames": 8
+      },
+      {
+        "assetId": "w046",
+        "wave": 46,
+        "role": "normal",
+        "name": "종자",
+        "tier": 5,
+        "cls": "S",
+        "gait": "biped",
+        "locomotion": "legged",
+        "family": "biped",
+        "description": "Young adult squire in pale-blue padded tunic, steel cap, small buckler and wooden practice sword, sturdy boots.",
+        "existingSide": false,
+        "frames": 8
+      }
+    ]
+  },
+  {
+    "id": "t5-biped-02-turnaround",
+    "kind": "turnaround",
+    "assetIds": [
+      "w047",
+      "w049"
+    ],
+    "prompt": "Use case: stylized-concept. Asset: full-body character turnaround atlas, not a walking animation or separated parts. Create ONE landscape image with exactly 2 equal-height horizontal rows and three columns. Exactly THREE evenly spaced columns: LEFT pure RIGHT-facing side profile; MIDDLE true FRONT facing viewer, feet toward screen bottom; RIGHT true BACK facing away, back of head/costume, heels visible, no eyes or face. Same individual, equipment, proportions and color across each row. Full intact neutral standing body with softly extended knees, no crouch. Each figure entirely inside its own cell with generous empty gutters, no contact between neighbors. Slightly elevated15-degree game camera throughout. No text, labels, gridlines, pedestal, cast shadow, scenery or floor. GENUINE TRANSPARENT ALPHA background; do not paint checkerboard.\nHand-painted fantasy tower-defense game illustration: chunky readable character proportions, expressive friendly-determined faces, crisp dark contours, broad color areas, soft painterly shading, clean intact clothing and surfaces. Moderately stylized game characters, not realistic horror. Smooth toy-like ivory skeleton bones. NO gore, blood, wounds, rot, exposed tissue, grotesque anatomy or photorealism.\nROW 1 ONLY: Human crossbow soldier with blue-steel helmet and leather coat, compact crossbow held across chest, sturdy boots.\nROW 2 ONLY: Compact bearded gnome miner, blue cap, steel goggles, leather tool harness, short drill and chunky boots.\nNo additional characters or inset pieces. Exactly the specified three views per character, no unrequested pets or companions.",
+    "entries": [
+      {
+        "assetId": "w047",
+        "wave": 47,
+        "role": "normal",
+        "name": "석궁병",
+        "tier": 5,
+        "cls": "M",
+        "gait": "biped",
+        "locomotion": "legged",
+        "family": "biped",
+        "description": "Human crossbow soldier with blue-steel helmet and leather coat, compact crossbow held across chest, sturdy boots.",
+        "existingSide": false,
+        "frames": 8
+      },
+      {
+        "assetId": "w049",
+        "wave": 49,
+        "role": "normal",
+        "name": "굴착 노움",
+        "tier": 5,
+        "cls": "S",
+        "gait": "biped",
+        "locomotion": "legged",
+        "family": "biped",
+        "description": "Compact bearded gnome miner, blue cap, steel goggles, leather tool harness, short drill and chunky boots.",
+        "existingSide": false,
+        "frames": 8
+      }
+    ]
+  },
+  {
+    "id": "t5-mounts-01-turnaround",
+    "kind": "turnaround",
+    "assetIds": [
+      "w043",
+      "w044",
+      "w048"
+    ],
+    "prompt": "Use case: stylized-concept. Asset: full-body character turnaround atlas, not a walking animation or separated parts. Create ONE tall portrait image with exactly 3 equal-height horizontal rows and three columns. Exactly THREE evenly spaced columns: LEFT pure RIGHT-facing side profile; MIDDLE true FRONT facing viewer, feet toward screen bottom; RIGHT true BACK facing away, back of head/costume, heels visible, no eyes or face. Same individual, equipment, proportions and color across each row. Full intact complete bodies in a neutral pose; ground species stand with softly extended knees, airborne species hover exactly as described. Each figure entirely inside its own cell with generous empty gutters, no contact between neighbors. Slightly elevated15-degree game camera throughout. No text, labels, gridlines, pedestal, cast shadow, scenery or floor. GENUINE TRANSPARENT ALPHA background; do not paint checkerboard.\nHand-painted fantasy tower-defense game illustration: chunky readable character proportions, expressive friendly-determined faces, crisp dark contours, broad color areas, soft painterly shading, clean intact clothing and surfaces. Moderately stylized game characters, not realistic horror. Smooth toy-like ivory skeleton bones. NO gore, blood, wounds, rot, exposed tissue, grotesque anatomy or photorealism.\nROW 1 ONLY: Human lancer riding a chestnut horse with blue-steel barding and pale-blue cloth, upright compact lance.\nROW 2 ONLY: Armored knight riding a golden eagle-headed griffin, pale-blue saddle cloth, broad feathered wings and tucked paws. The specified winged mount/glider/creature is airborne with half-open wings and tucked feet; there are no other winged companions.\nROW 3 ONLY: Armored knight riding a white pegasus with pale-blue barding, broad cream feathered wings and tucked legs. The specified winged mount/glider/creature is airborne with half-open wings and tucked feet; there are no other winged companions.\nNo additional characters or inset pieces. Exactly the specified three views per character, no unrequested pets or companions.",
+    "entries": [
+      {
+        "assetId": "w043",
+        "wave": 43,
+        "role": "normal",
+        "name": "창기병",
+        "tier": 5,
+        "cls": "L",
+        "gait": "quad",
+        "locomotion": "legged",
+        "family": "mounted-quad",
+        "description": "Human lancer riding a chestnut horse with blue-steel barding and pale-blue cloth, upright compact lance.",
+        "existingSide": false,
+        "frames": 8
+      },
+      {
+        "assetId": "w044",
+        "wave": 44,
+        "role": "normal",
+        "name": "그리폰 기사",
+        "tier": 5,
+        "cls": "L",
+        "gait": "fly",
+        "locomotion": "flight",
+        "family": "flying-mount",
+        "description": "Armored knight riding a golden eagle-headed griffin, pale-blue saddle cloth, broad feathered wings and tucked paws.",
+        "existingSide": false,
+        "frames": 4
+      },
+      {
+        "assetId": "w048",
+        "wave": 48,
+        "role": "normal",
+        "name": "페가수스 기사",
+        "tier": 5,
+        "cls": "L",
+        "gait": "fly",
+        "locomotion": "flight",
+        "family": "flying-mount",
+        "description": "Armored knight riding a white pegasus with pale-blue barding, broad cream feathered wings and tucked legs.",
+        "existingSide": false,
+        "frames": 4
+      }
+    ]
+  },
+  {
+    "id": "t5-boss-01-turnaround",
+    "kind": "turnaround",
+    "assetIds": [
+      "b050",
+      "b050-2"
+    ],
+    "prompt": "Use case: stylized-concept. Asset: full-body character turnaround atlas, not a walking animation or separated parts. Create ONE landscape image with exactly 2 equal-height horizontal rows and three columns. Exactly THREE evenly spaced columns: LEFT pure RIGHT-facing side profile; MIDDLE true FRONT facing viewer, feet toward screen bottom; RIGHT true BACK facing away, back of head/costume, heels visible, no eyes or face. Same individual, equipment, proportions and color across each row. Full intact neutral standing body with softly extended knees, no crouch. Each figure entirely inside its own cell with generous empty gutters, no contact between neighbors. Slightly elevated15-degree game camera throughout. No text, labels, gridlines, pedestal, cast shadow, scenery or floor. GENUINE TRANSPARENT ALPHA background; do not paint checkerboard.\nHand-painted fantasy tower-defense game illustration: chunky readable character proportions, expressive friendly-determined faces, crisp dark contours, broad color areas, soft painterly shading, clean intact clothing and surfaces. Moderately stylized game characters, not realistic horror. Smooth toy-like ivory skeleton bones. NO gore, blood, wounds, rot, exposed tissue, grotesque anatomy or photorealism.\nROW 1 ONLY: Towering steel castellan in complete silver-blue plate and pale-blue cape above knees, golden visor, compact sword and heavy boots.\nROW 2 ONLY: Huge siege golem built of blue-gray fortress stones, bronze cannon shoulders and glowing amber furnace face, two massive articulated stone legs.\nNo additional characters or inset pieces. Exactly the specified three views per character, no unrequested pets or companions.",
+    "entries": [
+      {
+        "assetId": "b050",
+        "wave": 50,
+        "role": "boss",
+        "name": "강철 성주",
+        "tier": 5,
+        "cls": "L",
+        "gait": "biped",
+        "locomotion": "legged",
+        "family": "biped",
+        "description": "Towering steel castellan in complete silver-blue plate and pale-blue cape above knees, golden visor, compact sword and heavy boots.",
+        "existingSide": false,
+        "frames": 8
+      },
+      {
+        "assetId": "b050-2",
+        "wave": 50,
+        "role": "secondary",
+        "name": "공성 골렘",
+        "tier": 5,
+        "cls": "L",
+        "gait": "biped",
+        "locomotion": "legged",
+        "family": "biped",
+        "description": "Huge siege golem built of blue-gray fortress stones, bronze cannon shoulders and glowing amber furnace face, two massive articulated stone legs.",
+        "existingSide": false,
+        "frames": 8
+      }
+    ]
+  },
+  {
+    "id": "t6-biped-01-turnaround",
+    "kind": "turnaround",
+    "assetIds": [
+      "w051",
+      "w053",
+      "w055",
+      "w057"
+    ],
+    "prompt": "Use case: stylized-concept. Asset: full-body character turnaround atlas, not a walking animation or separated parts. Create ONE tall portrait image with exactly 4 equal-height horizontal rows and three columns. Exactly THREE evenly spaced columns: LEFT pure RIGHT-facing side profile; MIDDLE true FRONT facing viewer, feet toward screen bottom; RIGHT true BACK facing away, back of head/costume, heels visible, no eyes or face. Same individual, equipment, proportions and color across each row. Full intact neutral standing body with softly extended knees, no crouch. Each figure entirely inside its own cell with generous empty gutters, no contact between neighbors. Slightly elevated15-degree game camera throughout. No text, labels, gridlines, pedestal, cast shadow, scenery or floor. GENUINE TRANSPARENT ALPHA background; do not paint checkerboard.\nHand-painted fantasy tower-defense game illustration: chunky readable character proportions, expressive friendly-determined faces, crisp dark contours, broad color areas, soft painterly shading, clean intact clothing and surfaces. Moderately stylized game characters, not realistic horror. Smooth toy-like ivory skeleton bones. NO gore, blood, wounds, rot, exposed tissue, grotesque anatomy or photorealism.\nROW 1 ONLY: Intact gray-green zombie porter with sleepy expressive face, patched burgundy work coat, complete gloves and boots; no injury.\nROW 2 ONLY: Clean ivory skeleton soldier with rounded skull, burgundy tabard, iron cap, compact spear and chunky iron boots.\nROW 3 ONLY: Broad intact gray-green ghoul with expressive grumpy face, violet hooded tunic, complete gloves and boots.\nROW 4 ONLY: Clean ivory skeleton knight in full purple-steel armor, rounded skull visor, small shield and compact sword, boots.\nNo additional characters or inset pieces. Exactly the specified three views per character, no unrequested pets or companions.",
+    "entries": [
+      {
+        "assetId": "w051",
+        "wave": 51,
+        "role": "normal",
+        "name": "좀비",
+        "tier": 6,
+        "cls": "L",
+        "gait": "biped",
+        "locomotion": "legged",
+        "family": "biped",
+        "description": "Intact gray-green zombie porter with sleepy expressive face, patched burgundy work coat, complete gloves and boots; no injury.",
+        "existingSide": false,
+        "frames": 8
+      },
+      {
+        "assetId": "w053",
+        "wave": 53,
+        "role": "normal",
+        "name": "해골 병사",
+        "tier": 6,
+        "cls": "M",
+        "gait": "biped",
+        "locomotion": "legged",
+        "family": "biped",
+        "description": "Clean ivory skeleton soldier with rounded skull, burgundy tabard, iron cap, compact spear and chunky iron boots.",
+        "existingSide": false,
+        "frames": 8
+      },
+      {
+        "assetId": "w055",
+        "wave": 55,
+        "role": "normal",
+        "name": "구울",
+        "tier": 6,
+        "cls": "L",
+        "gait": "biped",
+        "locomotion": "legged",
+        "family": "biped",
+        "description": "Broad intact gray-green ghoul with expressive grumpy face, violet hooded tunic, complete gloves and boots.",
+        "existingSide": false,
+        "frames": 8
+      },
+      {
+        "assetId": "w057",
+        "wave": 57,
+        "role": "normal",
+        "name": "해골 기사",
+        "tier": 6,
+        "cls": "L",
+        "gait": "biped",
+        "locomotion": "legged",
+        "family": "biped",
+        "description": "Clean ivory skeleton knight in full purple-steel armor, rounded skull visor, small shield and compact sword, boots.",
+        "existingSide": false,
+        "frames": 8
+      }
+    ]
+  },
+  {
+    "id": "t6-misc-01-turnaround",
+    "kind": "turnaround",
+    "assetIds": [
+      "w054",
+      "w056",
+      "w058"
+    ],
+    "prompt": "Use case: stylized-concept. Asset: full-body character turnaround atlas, not a walking animation or separated parts. Create ONE tall portrait image with exactly 3 equal-height horizontal rows and three columns. Exactly THREE evenly spaced columns: LEFT pure RIGHT-facing side profile; MIDDLE true FRONT facing viewer, feet toward screen bottom; RIGHT true BACK facing away, back of head/costume, heels visible, no eyes or face. Same individual, equipment, proportions and color across each row. Full intact neutral standing body with softly extended knees, no crouch. Each figure entirely inside its own cell with generous empty gutters, no contact between neighbors. Slightly elevated15-degree game camera throughout. No text, labels, gridlines, pedestal, cast shadow, scenery or floor. GENUINE TRANSPARENT ALPHA background; do not paint checkerboard.\nHand-painted fantasy tower-defense game illustration: chunky readable character proportions, expressive friendly-determined faces, crisp dark contours, broad color areas, soft painterly shading, clean intact clothing and surfaces. Moderately stylized game characters, not realistic horror. Smooth toy-like ivory skeleton bones. NO gore, blood, wounds, rot, exposed tissue, grotesque anatomy or photorealism.\nROW 1 ONLY: Small playful skeletal puppy made of smooth ivory toy-like bones, purple collar, rounded skull and four sturdy paws.\nROW 2 ONLY: Animated oversized violet leather wizard glove walking on five articulated glove fingers, brass cuff and amber rune. No human flesh.\nROW 3 ONLY: Small enchanted stitched cloth doll with round button eyes, burgundy dress/coat, striped stockings and soft boots.\nNo additional characters or inset pieces. Exactly the specified three views per character, no unrequested pets or companions.",
+    "entries": [
+      {
+        "assetId": "w054",
+        "wave": 54,
+        "role": "normal",
+        "name": "뼈다귀 강아지",
+        "tier": 6,
+        "cls": "S",
+        "gait": "quad",
+        "locomotion": "legged",
+        "family": "quad",
+        "description": "Small playful skeletal puppy made of smooth ivory toy-like bones, purple collar, rounded skull and four sturdy paws.",
+        "existingSide": false,
+        "frames": 8
+      },
+      {
+        "assetId": "w056",
+        "wave": 56,
+        "role": "normal",
+        "name": "무덤손",
+        "tier": 6,
+        "cls": "L",
+        "gait": "quad",
+        "locomotion": "legged",
+        "family": "glove",
+        "description": "Animated oversized violet leather wizard glove walking on five articulated glove fingers, brass cuff and amber rune. No human flesh.",
+        "existingSide": false,
+        "frames": 8
+      },
+      {
+        "assetId": "w058",
+        "wave": 58,
+        "role": "normal",
+        "name": "저주 인형",
+        "tier": 6,
+        "cls": "S",
+        "gait": "biped",
+        "locomotion": "legged",
+        "family": "biped",
+        "description": "Small enchanted stitched cloth doll with round button eyes, burgundy dress/coat, striped stockings and soft boots.",
+        "existingSide": false,
+        "frames": 8
+      }
+    ]
+  },
+  {
+    "id": "t6-float-01-turnaround",
+    "kind": "turnaround",
+    "assetIds": [
+      "w052",
+      "w059"
+    ],
+    "prompt": "Use case: stylized-concept. Asset: full-body character turnaround atlas, not a walking animation or separated parts. Create ONE landscape image with exactly 2 equal-height horizontal rows and three columns. Exactly THREE evenly spaced columns: LEFT pure RIGHT-facing side profile; MIDDLE true FRONT facing viewer, feet toward screen bottom; RIGHT true BACK facing away, back of head/costume, heels visible, no eyes or face. Same individual, equipment, proportions and color across each row. Full intact complete bodies in a neutral pose; ground species stand with softly extended knees, airborne species hover exactly as described. Each figure entirely inside its own cell with generous empty gutters, no contact between neighbors. Slightly elevated15-degree game camera throughout. No text, labels, gridlines, pedestal, cast shadow, scenery or floor. GENUINE TRANSPARENT ALPHA background; do not paint checkerboard.\nHand-painted fantasy tower-defense game illustration: chunky readable character proportions, expressive friendly-determined faces, crisp dark contours, broad color areas, soft painterly shading, clean intact clothing and surfaces. Moderately stylized game characters, not realistic horror. Smooth toy-like ivory skeleton bones. NO gore, blood, wounds, rot, exposed tissue, grotesque anatomy or photorealism.\nROW 1 ONLY: Small teal will-o-wisp spirit, bright amber eyes inside one rounded flame body with swirling gold ember wisps. Hovering neutral pose, no planted feet or added flying creatures.\nROW 2 ONLY: Floating banshee spirit with intact pale face, flowing violet gown and hood, smooth ghostly hands, trailing intact cloth. Hovering neutral pose, no planted feet or added flying creatures.\nNo additional characters or inset pieces. Exactly the specified three views per character, no unrequested pets or companions.",
+    "entries": [
+      {
+        "assetId": "w052",
+        "wave": 52,
+        "role": "normal",
+        "name": "도깨비불",
+        "tier": 6,
+        "cls": "S",
+        "gait": "float",
+        "locomotion": "float",
+        "family": "float",
+        "description": "Small teal will-o-wisp spirit, bright amber eyes inside one rounded flame body with swirling gold ember wisps.",
+        "existingSide": false,
+        "frames": 4
+      },
+      {
+        "assetId": "w059",
+        "wave": 59,
+        "role": "normal",
+        "name": "밴시",
+        "tier": 6,
+        "cls": "M",
+        "gait": "float",
+        "locomotion": "float",
+        "family": "float",
+        "description": "Floating banshee spirit with intact pale face, flowing violet gown and hood, smooth ghostly hands, trailing intact cloth.",
+        "existingSide": false,
+        "frames": 4
+      }
+    ]
+  },
+  {
+    "id": "t6-boss-01-turnaround",
+    "kind": "turnaround",
+    "assetIds": [
+      "b060",
+      "b060-2"
+    ],
+    "prompt": "Use case: stylized-concept. Asset: full-body character turnaround atlas, not a walking animation or separated parts. Create ONE landscape image with exactly 2 equal-height horizontal rows and three columns. Exactly THREE evenly spaced columns: LEFT pure RIGHT-facing side profile; MIDDLE true FRONT facing viewer, feet toward screen bottom; RIGHT true BACK facing away, back of head/costume, heels visible, no eyes or face. Same individual, equipment, proportions and color across each row. Full intact complete bodies in a neutral pose; ground species stand with softly extended knees, airborne species hover exactly as described. Each figure entirely inside its own cell with generous empty gutters, no contact between neighbors. Slightly elevated15-degree game camera throughout. No text, labels, gridlines, pedestal, cast shadow, scenery or floor. GENUINE TRANSPARENT ALPHA background; do not paint checkerboard.\nHand-painted fantasy tower-defense game illustration: chunky readable character proportions, expressive friendly-determined faces, crisp dark contours, broad color areas, soft painterly shading, clean intact clothing and surfaces. Moderately stylized game characters, not realistic horror. Smooth toy-like ivory skeleton bones. NO gore, blood, wounds, rot, exposed tissue, grotesque anatomy or photorealism.\nROW 1 ONLY: Floating lich sorcerer with clean rounded ivory skull, violet regal robes, gold crown and compact emerald crystal staff, trailing intact cloth. Hovering neutral pose, no planted feet or added flying creatures.\nROW 2 ONLY: Flying bone dragon made from smooth clean ivory toy-like bones with violet wing membranes, gold core charm and one tail. The specified winged mount/glider/creature is airborne with half-open wings and tucked feet; there are no other winged companions.\nNo additional characters or inset pieces. Exactly the specified three views per character, no unrequested pets or companions.",
+    "entries": [
+      {
+        "assetId": "b060",
+        "wave": 60,
+        "role": "boss",
+        "name": "리치",
+        "tier": 6,
+        "cls": "L",
+        "gait": "float",
+        "locomotion": "float",
+        "family": "float",
+        "description": "Floating lich sorcerer with clean rounded ivory skull, violet regal robes, gold crown and compact emerald crystal staff, trailing intact cloth.",
+        "existingSide": false,
+        "frames": 4
+      },
+      {
+        "assetId": "b060-2",
+        "wave": 60,
+        "role": "secondary",
+        "name": "뼈 용",
+        "tier": 6,
+        "cls": "L",
+        "gait": "fly",
+        "locomotion": "flight",
+        "family": "fly",
+        "description": "Flying bone dragon made from smooth clean ivory toy-like bones with violet wing membranes, gold core charm and one tail.",
+        "existingSide": false,
+        "frames": 4
+      }
+    ]
+  }
+]

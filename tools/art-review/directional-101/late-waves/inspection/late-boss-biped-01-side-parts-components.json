@@ -1,0 +1,67 @@
+{
+  "width": 1024,
+  "height": 1536,
+  "source": "C:\\Users\\PC\\Documents\\Codex\\2026-09-07\\gnchoo-dicekeep-art-pr-29-6\\work\\dicekeep-art\\tools\\art-review\\directional-101\\late-waves\\sources\\late-boss-biped-01-side-parts.png",
+  "components": [
+    {
+      "n": 84429,
+      "bounds": [
+        43,
+        21,
+        228,
+        566
+      ],
+      "id": 0
+    },
+    {
+      "n": 39451,
+      "bounds": [
+        448,
+        214,
+        132,
+        445
+      ],
+      "id": 1
+    },
+    {
+      "n": 39528,
+      "bounds": [
+        781,
+        215,
+        133,
+        444
+      ],
+      "id": 2
+    },
+    {
+      "n": 88205,
+      "bounds": [
+        65,
+        705,
+        222,
+        558
+      ],
+      "id": 3
+    },
+    {
+      "n": 46136,
+      "bounds": [
+        445,
+        852,
+        134,
+        494
+      ],
+      "id": 4
+    },
+    {
+      "n": 45080,
+      "bounds": [
+        764,
+        852,
+        129,
+        496
+      ],
+      "id": 5
+    }
+  ]
+}

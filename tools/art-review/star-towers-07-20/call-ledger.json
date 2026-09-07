@@ -1,0 +1,127 @@
+{
+  "actualCalls": 5,
+  "selectedAtlases": 4,
+  "runtimeTowers": 14,
+  "cost": null,
+  "costNote": "Builtin tool did not provide token or monetary cost.",
+  "calls": [
+    {
+      "call": 1,
+      "key": "starlight-initial",
+      "mode": "builtin-image_gen",
+      "stars": [
+        7,
+        8,
+        9,
+        10
+      ],
+      "status": "superseded_geometry",
+      "archivedOriginal": "sources/starlight-initial.png",
+      "sha256": "d021ddd258f9790821490c9ecfd44f089a7591604fc0090ec897968ef6d5cb91",
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-614354ab-6318-4cac-96be-7fef19dc8637.png",
+      "promptRecord": "prompts.json#requests/0",
+      "references": [
+        {
+          "file": "casual/towers/t4-a.png",
+          "sha256": "f33c96c90fb765d08ec342e1b0b705ecaad34ea475e9b41f9dac55f119b01e64",
+          "role": "style/material/camera only; unique architecture requested"
+        },
+        {
+          "file": "casual/towers/t6-a.png",
+          "sha256": "61b91ddcbaf0a292f204892b05fbfc12ec0ea6491ebf73febe93129c43f94ac5",
+          "role": "style/material/camera only; unique architecture requested"
+        }
+      ]
+    },
+    {
+      "call": 2,
+      "key": "starlight-final",
+      "mode": "builtin-image_gen",
+      "stars": [
+        7,
+        8,
+        9,
+        10
+      ],
+      "status": "selected",
+      "archivedOriginal": "sources/starlight.png",
+      "sha256": "b743a8a13699e1a8580d6d45f6702906a7a5554b87ec7066987768300c73cccd",
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-ec2e96fb-7f79-4a0d-b7eb-4dec3c610a33.png",
+      "promptRecord": "prompts.json#requests/1",
+      "references": [
+        {
+          "file": "tools/art-review/star-towers-07-20/sources/starlight-initial.png",
+          "sha256": "d021ddd258f9790821490c9ecfd44f089a7591604fc0090ec897968ef6d5cb91",
+          "role": "style/material/camera only; unique architecture requested"
+        }
+      ]
+    },
+    {
+      "call": 3,
+      "key": "nebula",
+      "mode": "builtin-image_gen",
+      "stars": [
+        11,
+        12,
+        13,
+        14
+      ],
+      "status": "selected",
+      "archivedOriginal": "sources/nebula.png",
+      "sha256": "452a021dee62993cab3453f6b505d9fdb2f4a2bae549e0a990e074042282c7fe",
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-71c490ac-de6c-4a7b-9492-97d66ba558be.png",
+      "promptRecord": "prompts.json#requests/2",
+      "references": [
+        {
+          "file": "tools/art-review/star-towers-07-20/sources/starlight-initial.png",
+          "sha256": "d021ddd258f9790821490c9ecfd44f089a7591604fc0090ec897968ef6d5cb91",
+          "role": "style/material/camera only; unique architecture requested"
+        }
+      ]
+    },
+    {
+      "call": 4,
+      "key": "heaven",
+      "mode": "builtin-image_gen",
+      "stars": [
+        15,
+        16,
+        17,
+        18
+      ],
+      "status": "selected",
+      "archivedOriginal": "sources/heaven.png",
+      "sha256": "fb2882dc2d2724ffb4c665d2816040ab33fff9304a0b4103c87667d9e2769f05",
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-cda716ca-edae-433f-89d7-5ff82a9cbde4.png",
+      "promptRecord": "prompts.json#requests/3",
+      "references": [
+        {
+          "file": "tools/art-review/star-towers-07-20/sources/starlight-initial.png",
+          "sha256": "d021ddd258f9790821490c9ecfd44f089a7591604fc0090ec897968ef6d5cb91",
+          "role": "style/material/camera only; unique architecture requested"
+        }
+      ]
+    },
+    {
+      "call": 5,
+      "key": "dimension",
+      "mode": "builtin-image_gen",
+      "stars": [
+        19,
+        20
+      ],
+      "status": "selected",
+      "archivedOriginal": "sources/dimension.png",
+      "sha256": "6ec6151431653ca579f2700059f21e562904a1f55d1fffa41661aa4587ff2464",
+      "originalGeneratedPath": "C:\\Users\\PC\\.codex\\generated_images\\01a07aea-5930-7dc0-99e5-ca46164aa55a\\exec-25e9c67e-7040-43c9-8b98-0e9650d849e0.png",
+      "promptRecord": "prompts.json#requests/4",
+      "references": [
+        {
+          "file": "tools/art-review/star-towers-07-20/sources/nebula.png",
+          "sha256": "452a021dee62993cab3453f6b505d9fdb2f4a2bae549e0a990e074042282c7fe",
+          "role": "style/material/camera only; unique architecture requested"
+        }
+      ]
+    }
+  ]
+}

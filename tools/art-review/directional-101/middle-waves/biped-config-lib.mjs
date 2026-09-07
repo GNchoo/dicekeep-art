@@ -1,0 +1,9 @@
+import fs from 'node:fs';import{createHash}from'node:crypto';
+export const dir='tools/art-review/directional-101/middle-waves';
+export function measuredView(atlas,row,{name,sockets,kneeY=.5,ankleY=.8,hipY=.1,height=300,top=35,centerX=256,flipX=[],bend=1,sourceJoints=[]}){
+ const source=dir+'/'+atlas+'.png',m=JSON.parse(fs.readFileSync(dir+'/measurements/'+atlas+'.json')),body=m.find(p=>p.row===row&&p.col===0),parts=[0,1].map(i=>{
+  const p=m.find(p=>p.row===row&&p.col===i+1),s=sockets[i],ys=[hipY,kneeY,ankleY,.995],joints=sourceJoints[i]??Object.fromEntries(['hip','knee','ankle','sole'].map((n,j)=>[n,[p.bands.find(b=>b.y===ys[j])?.center,ys[j]]]));if(Object.values(joints).some(p=>!Number.isFinite(p[0])))throw Error('missing measured joint band');
+  return{id:i?'rightLeg':'leftLeg',type:'leg',roi:p.roi,sourceJoints:joints,...(flipX.includes(i)?{flipX:true}:{}),socketNormalized:s,socketRoiNormalized:[s[0]-.06,s[1]-.06,.12,.12],calibrate:{groundY:460,maximumStanceAngle:168},phase:i*.5,layer:i?1:-2,upperLayer:-3,bend,proximalFeather:.18,proximalEdgeFeather:.09};
+ });const anchoredCenterX=centerX-(sockets.reduce((sum,s)=>sum+s[0],0)/sockets.length-.5)*body.width/body.height*height;return{source,sourceSha256:createHash('sha256').update(fs.readFileSync(source)).digest('hex'),background:'checkerboard',pivot:[256,460],body:{roi:body.roi,target:{height,top,centerX:anchoredCenterX},layer:10},parts,jointReview:'Source '+atlas+' row '+row+' '+name+'. Reviewed hip cuff/knee/ankle y '+[hipY,kneeY,ankleY].join('/')+'; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained. Body translated once so mean hip socket aligns to canonical pivot X.'};
+}
+export const newBiped=(wave)=>({assetId:'w'+String(wave).padStart(3,'0'),wave,role:'normal',locomotion:'legged',cell:256,referenceHeight:425,cycleStride:160,reviewApproved:false,gait:{stanceDuty:.5,lift:25,pelvis:'support'},views:{}});

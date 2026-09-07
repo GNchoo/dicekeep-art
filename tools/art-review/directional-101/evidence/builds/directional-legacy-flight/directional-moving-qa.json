@@ -1,0 +1,154 @@
+{
+  "manifestSha256": "fdbef79ec491ff9e2aabc4c7f1448ef98ec6544834319a7f127e2b61ccafc68f",
+  "cycles": 3,
+  "samplesPerCycle": 256,
+  "coordinateSystem": "output PNG pixels = canonical pixels * view.scale; review is not a game-speed or anatomy approval",
+  "entries": [
+    {
+      "assetId": "w004",
+      "locomotion": "flight",
+      "phaseDriver": "time",
+      "reviewTravelCanonical": 131.20000000000002,
+      "frameDelayMs": 200,
+      "gif": "review/w004-moving.gif",
+      "gifSha256": "3fe72f84915658f0565b5e516f0bf94886621ce33f41706cc4f99ca7eac29b18",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 12,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 4,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "LEFT",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 4,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "UP / BACK",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        }
+      ]
+    },
+    {
+      "assetId": "w008",
+      "locomotion": "flight",
+      "phaseDriver": "time",
+      "reviewTravelCanonical": 115.2,
+      "frameDelayMs": 200,
+      "gif": "review/w008-moving.gif",
+      "gifSha256": "4465bbcbcb368371b57bbb0343f56d4f6cca5219caa0f5e484881cb8e6ac89e8",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 12,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 4,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "LEFT",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 4,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "UP / BACK",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "passed": true
+}

@@ -1,0 +1,88 @@
+TAP version 13
+# Subtest: default mask matches runtime flood fill and preserves enclosed gray/white/partial alpha
+ok 1 - default mask matches runtime flood fill and preserves enclosed gray/white/partial alpha
+  ---
+  duration_ms: 2.7564
+  type: 'test'
+  ...
+# Subtest: explicit checkerboard extraction removes white and gray background but keeps interior highlights
+ok 2 - explicit checkerboard extraction removes white and gray background but keeps interior highlights
+  ---
+  duration_ms: 0.4156
+  type: 'test'
+  ...
+# Subtest: reject invalid grids and missing frames; retain fractional cell boundaries for 5-row sources
+ok 3 - reject invalid grids and missing frames; retain fractional cell boundaries for 5-row sources
+  ---
+  duration_ms: 0.7447
+  type: 'test'
+  ...
+# Subtest: sheet-check rejects one missing frame before overwriting either deliverable
+ok 4 - sheet-check rejects one missing frame before overwriting either deliverable
+  ---
+  duration_ms: 135.5813
+  type: 'test'
+  ...
+# Subtest: sheet-check rejects explicit invalid grid before creating outputs
+ok 5 - sheet-check rejects explicit invalid grid before creating outputs
+  ---
+  duration_ms: 355.7334
+  type: 'test'
+  ...
+# Subtest: static walk is rejected by check and split without overwriting old assets
+ok 6 - static walk is rejected by check and split without overwriting old assets
+  ---
+  duration_ms: 303.8499
+  type: 'test'
+  ...
+# Subtest: valid animated row splits into four nonempty transparent frames and a still
+ok 7 - valid animated row splits into four nonempty transparent frames and a still
+  ---
+  duration_ms: 203.1745
+  type: 'test'
+  ...
+# Subtest: sheet-layout refuses a row boundary through artwork before overwriting outputs
+ok 8 - sheet-layout refuses a row boundary through artwork before overwriting outputs
+  ---
+  duration_ms: 133.4309
+  type: 'test'
+  ...
+# Subtest: sheet-layout refuses a missing column gutter before publishing any partially processed rows
+ok 9 - sheet-layout refuses a missing column gutter before publishing any partially processed rows
+  ---
+  duration_ms: 130.134
+  type: 'test'
+  ...
+# Subtest: sheet-layout skips a rejected source row and preserves explicit selected-row order
+ok 10 - sheet-layout skips a rejected source row and preserves explicit selected-row order
+  ---
+  duration_ms: 145.9027
+  type: 'test'
+  ...
+# Subtest: reviewed seeds remove only the selected enclosed background component and preserve separate highlights
+ok 11 - reviewed seeds remove only the selected enclosed background component and preserve separate highlights
+  ---
+  duration_ms: 0.444
+  type: 'test'
+  ...
+# Subtest: background seeds reject invalid coordinates, artwork colors, wrong mode and stale source metadata
+ok 12 - background seeds reject invalid coordinates, artwork colors, wrong mode and stale source metadata
+  ---
+  duration_ms: 129.3714
+  type: 'test'
+  ...
+# Subtest: single-frame still extraction does not report a failed static walk cycle
+ok 13 - single-frame still extraction does not report a failed static walk cycle
+  ---
+  duration_ms: 147.59
+  type: 'test'
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1694.9242

@@ -1,0 +1,122 @@
+{
+  "version": 1,
+  "scope": "Middle-wave assets authored and visually reviewed by pipeline_review; integration/promotion is performed separately by root.",
+  "reviewRecord": "tools/art-review/directional-101/middle-waves/reviewed-entries.json",
+  "generationLedger": "tools/art-review/directional-101/middle-waves/generation-ledger.json",
+  "generationRequests": 69,
+  "checks": {
+    "requireReadyPassed": true,
+    "decodedImages": 324,
+    "decodedPng": 243,
+    "decodedGif": 81,
+    "inlineFallbacks": 81,
+    "sourceViews": 81
+  },
+  "outputs": [
+    {
+      "output": "gen/middle-directional",
+      "entries": [
+        "w031",
+        "w033",
+        "w052",
+        "w059",
+        "b060",
+        "w034",
+        "w035",
+        "w037",
+        "w038",
+        "w039",
+        "w041",
+        "w042",
+        "w045",
+        "w046",
+        "w051",
+        "w053",
+        "w055",
+        "w057"
+      ],
+      "config": "tools/art-review/directional-101/middle-waves/production-rigs.json",
+      "configSha256": "768626e90ea429fcb0ed6059d91828dde45006c4a69c231f94f0572ba2d57a5d",
+      "manifestSha256": "868fa9e73fb63d581bc70d7383cd8d61a03bbba448f77b14f2eb2db5d5a0700c",
+      "qaSha256": "ea6426e388c50e9e68f51d5613087229792da7ecd48f867a8b243a42b8df7de9",
+      "movingQaSha256": "c5abf47e228fd7e6fc97b967b28f7c169ce8bd0fc222ef9a2926c92ecdf6b2a1",
+      "ready": 18,
+      "validatedCommand": "node tools/check-directional-art.mjs gen/middle-directional --require-ready",
+      "movingCommand": "node tools/preview-directional-motion.mjs gen/middle-directional"
+    },
+    {
+      "output": "gen/middle-ground-next",
+      "entries": [
+        "b040",
+        "b040-2",
+        "w047",
+        "w049",
+        "w058"
+      ],
+      "config": "tools/art-review/directional-101/middle-waves/ground-next-rigs.json",
+      "configSha256": "4ae6753e70dcb024f239992e8657d51e8590ada1014272eaf3539bfe9b28e8fa",
+      "manifestSha256": "14cd6d77491dda3f5a2d1baf20ecf8e453410ca088168c3a125ce425ba60b598",
+      "qaSha256": "0117f46de9a31be3e5ebe023cfbf3eca25627cfcca956a641da9c509bc0b093a",
+      "movingQaSha256": "4afb4f5a7bf92302b8992f2d1a29c8788d598b7d331f9ebcf9b293305e2fd7a0",
+      "ready": 5,
+      "validatedCommand": "node tools/check-directional-art.mjs gen/middle-ground-next --require-ready",
+      "movingCommand": "node tools/preview-directional-motion.mjs gen/middle-ground-next"
+    },
+    {
+      "output": "gen/middle-glider",
+      "entries": [
+        "w032"
+      ],
+      "config": "tools/art-review/directional-101/middle-waves/glider-rigs.json",
+      "configSha256": "2dad98bc0cb4b2f34c8bd0ab5d24c19871b503cb0781bc904ff079e1597d7607",
+      "manifestSha256": "be776050b1d73d871017026493b656c3bc54d9864427208d34fbe9f914c799d9",
+      "qaSha256": "452931b74d7c155e59fc1c873076637c9adc30ee12a70929bb26e82d8aadce4b",
+      "movingQaSha256": "0d7c5b9b1c12f4e59cc8556485af4718e75d4e412fa048927c4e116534e61ee2",
+      "ready": 1,
+      "validatedCommand": "node tools/check-directional-art.mjs gen/middle-glider --require-ready",
+      "movingCommand": "node tools/preview-directional-motion.mjs gen/middle-glider"
+    },
+    {
+      "output": "gen/middle-membrane",
+      "entries": [
+        "w036"
+      ],
+      "config": "tools/art-review/directional-101/middle-waves/membrane-rigs.json",
+      "configSha256": "6e2fce20e29897854f5e9fb5a4917a4cc8054d2261063e4127c83dc455ebfd1e",
+      "manifestSha256": "f1a63334ce76843c13f0b5311971b0370621bd3a17710153f1e8431286a235a3",
+      "qaSha256": "390eac5e916995eb2aa9ac5d1774688bde4b713d1d698bd5491fab438154f88a",
+      "movingQaSha256": "85df56f9c96b2754a8c0798d806c2d99adb45fb6ed05b306d4d4552f405a26fd",
+      "ready": 1,
+      "validatedCommand": "node tools/check-directional-art.mjs gen/middle-membrane --require-ready",
+      "movingCommand": "node tools/preview-directional-motion.mjs gen/middle-membrane"
+    },
+    {
+      "output": "gen/middle-winged-mounts",
+      "entries": [
+        "w044",
+        "w048"
+      ],
+      "config": "tools/art-review/directional-101/middle-waves/winged-mounts-rigs.json",
+      "configSha256": "9791daf6e5edc1ab2b1bda063384dcfb90808c51035c950fbd13b7bc5042dada",
+      "manifestSha256": "30ee924227e0c2a44655641fef7e26750bde0f158e678a8ed77f37dadce374b0",
+      "qaSha256": "25e3a36bb005029ef6844a14de55e629ded5c5de9d37a3df56e677600cf9c57f",
+      "movingQaSha256": "23f7144682bc81431a6d4006b170d18499eb2e0b46c26caff676672751daec29",
+      "ready": 2,
+      "validatedCommand": "node tools/check-directional-art.mjs gen/middle-winged-mounts --require-ready",
+      "movingCommand": "node tools/preview-directional-motion.mjs gen/middle-winged-mounts"
+    }
+  ],
+  "delegatedEntries": {
+    "b050": "root",
+    "b050-2": "root",
+    "w043": "root",
+    "w054": "root",
+    "b060-2": "art_direction",
+    "w056": "test_harness"
+  },
+  "limitations": [
+    "Static texture and body poses with authored independent limb or wing articulation; no claim of unique hand-drawn full-body repaint per frame.",
+    "Moving-review travel speed is a QA presentation speed; actual game speed and multiplayer checks are integration responsibilities.",
+    "The initial prepare-*.mjs scripts are construction aids; final reviewed *-rigs.json files and their hashes are authoritative."
+  ]
+}

@@ -1,0 +1,307 @@
+{
+  "version": 1,
+  "canonicalCell": 512,
+  "assetVersion": 93,
+  "entries": [
+    {
+      "assetId": "w032",
+      "wave": 32,
+      "role": "normal",
+      "locomotion": "flight",
+      "cell": 256,
+      "referenceHeight": 330,
+      "cycleStride": 0,
+      "cycleSeconds": 1.2,
+      "reviewApproved": true,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/middle-waves/glider-three-view-parts.png",
+          "sourceSha256": "ba2a259114391b379d6421e13ddc614f870a745e652a54fef593366fa4b1b4c1",
+          "background": "checkerboard",
+          "backgroundSeeds": [
+            [
+              137,
+              229
+            ],
+            [
+              228,
+              163
+            ],
+            [
+              612,
+              290
+            ]
+          ],
+          "pivot": [
+            256,
+            400
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.325,
+              0.3450520833333333
+            ],
+            "target": {
+              "height": 230,
+              "top": 160,
+              "centerX": 286
+            },
+            "layer": 0
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.34,
+                0,
+                0.32,
+                0.3450520833333333
+              ],
+              "socketNormalized": [
+                0.85,
+                0.05
+              ],
+              "sourcePivot": [
+                0.94,
+                0.045
+              ],
+              "scale": 0.64,
+              "angleDeg": [
+                35,
+                12
+              ],
+              "phase": 0,
+              "layer": 1
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.69,
+                0,
+                0.3,
+                0.3450520833333333
+              ],
+              "socketNormalized": [
+                0.85,
+                0.05
+              ],
+              "sourcePivot": [
+                0.055,
+                0.055
+              ],
+              "scale": 0.64,
+              "angleDeg": [
+                35,
+                12
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            }
+          ],
+          "jointReview": "Glider apex spar is the common root; canvas panels rotate slightly as the pilot banks. Tucked pilot feet are retained and are not walking supports. Original row 1 body appears in middle column; role-specific measured ROI used."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/middle-waves/glider-three-view-parts.png",
+          "sourceSha256": "ba2a259114391b379d6421e13ddc614f870a745e652a54fef593366fa4b1b4c1",
+          "background": "checkerboard",
+          "backgroundSeeds": [
+            [
+              440,
+              746
+            ],
+            [
+              568,
+              746
+            ],
+            [
+              428,
+              752
+            ],
+            [
+              580,
+              753
+            ]
+          ],
+          "pivot": [
+            256,
+            400
+          ],
+          "body": {
+            "roi": [
+              0.34,
+              0.3450520833333333,
+              0.32,
+              0.3059895833333333
+            ],
+            "target": {
+              "height": 230,
+              "top": 160,
+              "centerX": 256
+            },
+            "layer": 0
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0,
+                0.3450520833333333,
+                0.325,
+                0.3059895833333333
+              ],
+              "socketNormalized": [
+                0.5,
+                0.055
+              ],
+              "sourcePivot": [
+                0.94,
+                0.045
+              ],
+              "scale": 0.64,
+              "angleDeg": [
+                35,
+                12
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.69,
+                0.3450520833333333,
+                0.3,
+                0.3059895833333333
+              ],
+              "socketNormalized": [
+                0.5,
+                0.055
+              ],
+              "sourcePivot": [
+                0.055,
+                0.055
+              ],
+              "scale": 0.64,
+              "angleDeg": [
+                -35,
+                -12
+              ],
+              "phase": 0,
+              "layer": -1
+            }
+          ],
+          "jointReview": "Glider apex spar is the common root; canvas panels rotate slightly as the pilot banks. Tucked pilot feet are retained and are not walking supports. Original row 1 body appears in middle column; role-specific measured ROI used."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/middle-waves/glider-three-view-parts.png",
+          "sourceSha256": "ba2a259114391b379d6421e13ddc614f870a745e652a54fef593366fa4b1b4c1",
+          "background": "checkerboard",
+          "backgroundSeeds": [
+            [
+              130,
+              1120
+            ],
+            [
+              190,
+              1120
+            ],
+            [
+              90,
+              1220
+            ],
+            [
+              231,
+              1220
+            ],
+            [
+              605,
+              1213
+            ],
+            [
+              589,
+              1279
+            ]
+          ],
+          "pivot": [
+            256,
+            400
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.6510416666666666,
+              0.325,
+              0.3489583333333333
+            ],
+            "target": {
+              "height": 230,
+              "top": 160,
+              "centerX": 256
+            },
+            "layer": 0
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.34,
+                0.6510416666666666,
+                0.32,
+                0.3489583333333333
+              ],
+              "socketNormalized": [
+                0.5,
+                0.055
+              ],
+              "sourcePivot": [
+                0.94,
+                0.045
+              ],
+              "scale": 0.64,
+              "angleDeg": [
+                35,
+                12
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.69,
+                0.6510416666666666,
+                0.3,
+                0.3489583333333333
+              ],
+              "socketNormalized": [
+                0.5,
+                0.055
+              ],
+              "sourcePivot": [
+                0.055,
+                0.055
+              ],
+              "scale": 0.64,
+              "angleDeg": [
+                -35,
+                -12
+              ],
+              "phase": 0,
+              "layer": -1
+            }
+          ],
+          "jointReview": "Glider apex spar is the common root; canvas panels rotate slightly as the pilot banks. Tucked pilot feet are retained and are not walking supports. Original row 1 body appears in middle column; role-specific measured ROI used."
+        }
+      }
+    }
+  ]
+}

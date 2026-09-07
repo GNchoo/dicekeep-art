@@ -1,0 +1,2118 @@
+{
+  "version": 1,
+  "config": "tools/art-review/directional-101/middle-waves/winged-mounts-rigs.json",
+  "configSha256": "9791daf6e5edc1ab2b1bda063384dcfb90808c51035c950fbd13b7bc5042dada",
+  "canonicalCell": 512,
+  "scope": "Geometry/image integrity checks; human anatomy/art approval remains separate.",
+  "entries": [
+    {
+      "assetId": "w044",
+      "reviewApproved": true,
+      "identities": {
+        "checked": false,
+        "reason": "no walking limb identities"
+      },
+      "views": {
+        "side": {
+          "geometry": {
+            "passed": true,
+            "samples": 256,
+            "jointCoordinateSystem": "unprojected sagittal plane; never inferred from front/back PNG angles",
+            "sourceStride": 0,
+            "supportAngleRange": null,
+            "checks": [],
+            "errors": []
+          },
+          "provenance": {
+            "source": "tools/art-review/directional-101/middle-waves/winged-mounts-side-parts-clean.png",
+            "sourceSha256": "87ceabecb3648b251d0e351278f2fa053956df58c4a3d0bb2d8435def0193b77",
+            "sourceSize": [
+              1536,
+              1024
+            ],
+            "body": {
+              "source": "tools/art-review/directional-101/middle-waves/winged-mounts-side-parts-clean.png",
+              "sourceSha256": "87ceabecb3648b251d0e351278f2fa053956df58c4a3d0bb2d8435def0193b77",
+              "sourceSize": [
+                1536,
+                1024
+              ],
+              "roi": [
+                0,
+                0,
+                0.34,
+                0.4736328125
+              ],
+              "sourceBounds": [
+                11,
+                12,
+                476,
+                440
+              ],
+              "componentCount": 1,
+              "componentAreas": [
+                89388
+              ],
+              "flipX": false
+            },
+            "parts": [
+              {
+                "id": "leftWing",
+                "roi": [
+                  0.39,
+                  0,
+                  0.27,
+                  0.4736328125
+                ],
+                "sourceBounds": [
+                  625,
+                  121,
+                  340,
+                  326
+                ],
+                "flipX": true,
+                "sourceJoints": null
+              },
+              {
+                "id": "rightWing",
+                "roi": [
+                  0.67,
+                  0,
+                  0.29,
+                  0.4736328125
+                ],
+                "sourceBounds": [
+                  1047,
+                  119,
+                  383,
+                  323
+                ],
+                "flipX": true,
+                "sourceJoints": null
+              }
+            ]
+          },
+          "rasterDiagnostics": [],
+          "frameStats": [
+            {
+              "index": 0,
+              "width": 256,
+              "height": 256,
+              "pixels": 10886,
+              "bounds": [
+                45,
+                45,
+                159,
+                140
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 1,
+              "width": 256,
+              "height": 256,
+              "pixels": 11177,
+              "bounds": [
+                52,
+                45,
+                152,
+                140
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 2,
+              "width": 256,
+              "height": 256,
+              "pixels": 10886,
+              "bounds": [
+                45,
+                45,
+                159,
+                140
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 3,
+              "width": 256,
+              "height": 256,
+              "pixels": 11649,
+              "bounds": [
+                52,
+                45,
+                152,
+                166
+              ],
+              "edgePixels": 0
+            }
+          ],
+          "stillStats": {
+            "width": 256,
+            "height": 256,
+            "pixels": 10886,
+            "bounds": [
+              45,
+              45,
+              159,
+              140
+            ],
+            "edgePixels": 0
+          },
+          "fallbackStats": {
+            "width": 64,
+            "height": 64,
+            "pixels": 742,
+            "bounds": [
+              11,
+              11,
+              40,
+              36
+            ],
+            "edgePixels": 0
+          },
+          "uniqueFrames": 3,
+          "frameHashes": [
+            "f0d3141d2ed5fac3e22bb939d79c3935f83212d0622a4a1a3af5f251ffc3ddd6",
+            "a2d0df3e42f4581e1a92393555521a3891989027ec22b944aa23041620db68d0",
+            "f0d3141d2ed5fac3e22bb939d79c3935f83212d0622a4a1a3af5f251ffc3ddd6",
+            "110da93ad2111b7a24f7a9bdae65cb0fddbca42f29c7c381bf6c367975c13abe"
+          ],
+          "projection": {
+            "forward": [
+              1,
+              0
+            ],
+            "height": [
+              0,
+              1
+            ]
+          },
+          "frames": [
+            {
+              "phase": 0,
+              "rootAdvance": 0,
+              "body": {
+                "x": 104.54545454545453,
+                "y": 90,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    304.4654545454546,
+                    277.6
+                  ],
+                  "angle": 0.9250245035569946,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    315.0672727272728,
+                    277.6
+                  ],
+                  "angle": 0.7853981633974483,
+                  "layer": 1
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.25,
+              "rootAdvance": 0,
+              "body": {
+                "x": 104.54545454545453,
+                "y": 90,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    304.4654545454546,
+                    277.6
+                  ],
+                  "angle": 1.6231562043547263,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    315.0672727272728,
+                    277.6
+                  ],
+                  "angle": 1.4835298641951802,
+                  "layer": 1
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.5,
+              "rootAdvance": 0,
+              "body": {
+                "x": 104.54545454545453,
+                "y": 90,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    304.4654545454546,
+                    277.6
+                  ],
+                  "angle": 0.9250245035569948,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    315.0672727272728,
+                    277.6
+                  ],
+                  "angle": 0.7853981633974485,
+                  "layer": 1
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.75,
+              "rootAdvance": 0,
+              "body": {
+                "x": 104.54545454545453,
+                "y": 90,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    304.4654545454546,
+                    277.6
+                  ],
+                  "angle": 0.22689280275926285,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    315.0672727272728,
+                    277.6
+                  ],
+                  "angle": 0.08726646259971647,
+                  "layer": 1
+                }
+              ],
+              "segments": []
+            }
+          ],
+          "motionFrames": null
+        },
+        "front": {
+          "geometry": {
+            "passed": true,
+            "samples": 256,
+            "jointCoordinateSystem": "unprojected sagittal plane; never inferred from front/back PNG angles",
+            "sourceStride": 0,
+            "supportAngleRange": null,
+            "checks": [],
+            "errors": []
+          },
+          "provenance": {
+            "source": "tools/art-review/directional-101/middle-waves/winged-mounts-front-parts.png",
+            "sourceSha256": "64d842896c261585f709c50733ed07b4effb00fd9bd68473d738e8def7f759c9",
+            "sourceSize": [
+              1536,
+              1024
+            ],
+            "body": {
+              "source": "tools/art-review/directional-101/middle-waves/winged-mounts-front-parts.png",
+              "sourceSha256": "64d842896c261585f709c50733ed07b4effb00fd9bd68473d738e8def7f759c9",
+              "sourceSize": [
+                1536,
+                1024
+              ],
+              "roi": [
+                0,
+                0,
+                0.3,
+                0.48828125
+              ],
+              "sourceBounds": [
+                191,
+                19,
+                219,
+                465
+              ],
+              "componentCount": 1,
+              "componentAreas": [
+                54917
+              ],
+              "flipX": false
+            },
+            "parts": [
+              {
+                "id": "leftWing",
+                "roi": [
+                  0.65,
+                  0,
+                  0.3,
+                  0.48828125
+                ],
+                "sourceBounds": [
+                  1073,
+                  142,
+                  313,
+                  333
+                ],
+                "flipX": false,
+                "sourceJoints": null
+              },
+              {
+                "id": "rightWing",
+                "roi": [
+                  0.31,
+                  0,
+                  0.25,
+                  0.48828125
+                ],
+                "sourceBounds": [
+                  506,
+                  140,
+                  303,
+                  336
+                ],
+                "flipX": false,
+                "sourceJoints": null
+              }
+            ]
+          },
+          "rasterDiagnostics": [],
+          "frameStats": [
+            {
+              "index": 0,
+              "width": 256,
+              "height": 256,
+              "pixels": 11003,
+              "bounds": [
+                22,
+                45,
+                213,
+                140
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 1,
+              "width": 256,
+              "height": 256,
+              "pixels": 11151,
+              "bounds": [
+                34,
+                45,
+                187,
+                140
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 2,
+              "width": 256,
+              "height": 256,
+              "pixels": 11003,
+              "bounds": [
+                22,
+                45,
+                213,
+                140
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 3,
+              "width": 256,
+              "height": 256,
+              "pixels": 9972,
+              "bounds": [
+                47,
+                45,
+                163,
+                145
+              ],
+              "edgePixels": 0
+            }
+          ],
+          "stillStats": {
+            "width": 256,
+            "height": 256,
+            "pixels": 11003,
+            "bounds": [
+              22,
+              45,
+              213,
+              140
+            ],
+            "edgePixels": 0
+          },
+          "fallbackStats": {
+            "width": 64,
+            "height": 64,
+            "pixels": 760,
+            "bounds": [
+              5,
+              11,
+              54,
+              36
+            ],
+            "edgePixels": 0
+          },
+          "uniqueFrames": 3,
+          "frameHashes": [
+            "dadbb1fbd685f4aa54444eab167c613e1fd566f88c683cf6d5e5e2b6726b007f",
+            "66f221c4c0a81c9047061d4451d0d95cf0b0cd7d3accff92280101ae76665354",
+            "dadbb1fbd685f4aa54444eab167c613e1fd566f88c683cf6d5e5e2b6726b007f",
+            "c592a4d80ef0d3bf1319d26cd338f20beb80187395b747853d23e560c94ec07c"
+          ],
+          "projection": {
+            "forward": [
+              0,
+              1
+            ],
+            "height": [
+              0,
+              1
+            ]
+          },
+          "frames": [
+            {
+              "phase": 0,
+              "rootAdvance": 0,
+              "body": {
+                "x": 190.06451612903226,
+                "y": 90,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    288.9677419354839,
+                    244
+                  ],
+                  "angle": -0.7853981633974483,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    223.03225806451613,
+                    244
+                  ],
+                  "angle": 0.7853981633974483,
+                  "layer": -1
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.25,
+              "rootAdvance": 0,
+              "body": {
+                "x": 190.06451612903226,
+                "y": 90,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    288.9677419354839,
+                    244
+                  ],
+                  "angle": -1.4835298641951802,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    223.03225806451613,
+                    244
+                  ],
+                  "angle": 1.4835298641951802,
+                  "layer": -1
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.5,
+              "rootAdvance": 0,
+              "body": {
+                "x": 190.06451612903226,
+                "y": 90,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    288.9677419354839,
+                    244
+                  ],
+                  "angle": -0.7853981633974485,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    223.03225806451613,
+                    244
+                  ],
+                  "angle": 0.7853981633974485,
+                  "layer": -1
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.75,
+              "rootAdvance": 0,
+              "body": {
+                "x": 190.06451612903226,
+                "y": 90,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    288.9677419354839,
+                    244
+                  ],
+                  "angle": -0.08726646259971647,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    223.03225806451613,
+                    244
+                  ],
+                  "angle": 0.08726646259971647,
+                  "layer": -1
+                }
+              ],
+              "segments": []
+            }
+          ],
+          "motionFrames": null
+        },
+        "back": {
+          "geometry": {
+            "passed": true,
+            "samples": 256,
+            "jointCoordinateSystem": "unprojected sagittal plane; never inferred from front/back PNG angles",
+            "sourceStride": 0,
+            "supportAngleRange": null,
+            "checks": [],
+            "errors": []
+          },
+          "provenance": {
+            "source": "tools/art-review/directional-101/middle-waves/winged-mounts-back-parts-clean.png",
+            "sourceSha256": "7f1acb7be0790fac226a54fe088692504766d59b4f461f4525eb90c0710c38ae",
+            "sourceSize": [
+              1536,
+              1024
+            ],
+            "body": {
+              "source": "tools/art-review/directional-101/middle-waves/winged-mounts-back-parts-clean.png",
+              "sourceSha256": "7f1acb7be0790fac226a54fe088692504766d59b4f461f4525eb90c0710c38ae",
+              "sourceSize": [
+                1536,
+                1024
+              ],
+              "roi": [
+                0,
+                0,
+                0.3,
+                0.48828125
+              ],
+              "sourceBounds": [
+                208,
+                21,
+                171,
+                454
+              ],
+              "componentCount": 1,
+              "componentAreas": [
+                44402
+              ],
+              "flipX": false
+            },
+            "parts": [
+              {
+                "id": "leftWing",
+                "roi": [
+                  0.31,
+                  0,
+                  0.25,
+                  0.48828125
+                ],
+                "sourceBounds": [
+                  496,
+                  140,
+                  321,
+                  310
+                ],
+                "flipX": false,
+                "sourceJoints": null
+              },
+              {
+                "id": "rightWing",
+                "roi": [
+                  0.65,
+                  0,
+                  0.3,
+                  0.48828125
+                ],
+                "sourceBounds": [
+                  1027,
+                  142,
+                  316,
+                  308
+                ],
+                "flipX": false,
+                "sourceJoints": null
+              }
+            ]
+          },
+          "rasterDiagnostics": [],
+          "frameStats": [
+            {
+              "index": 0,
+              "width": 256,
+              "height": 256,
+              "pixels": 8910,
+              "bounds": [
+                39,
+                45,
+                177,
+                140
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 1,
+              "width": 256,
+              "height": 256,
+              "pixels": 9837,
+              "bounds": [
+                45,
+                45,
+                166,
+                140
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 2,
+              "width": 256,
+              "height": 256,
+              "pixels": 8910,
+              "bounds": [
+                39,
+                45,
+                177,
+                140
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 3,
+              "width": 256,
+              "height": 256,
+              "pixels": 7263,
+              "bounds": [
+                63,
+                45,
+                129,
+                140
+              ],
+              "edgePixels": 0
+            }
+          ],
+          "stillStats": {
+            "width": 256,
+            "height": 256,
+            "pixels": 8910,
+            "bounds": [
+              39,
+              45,
+              177,
+              140
+            ],
+            "edgePixels": 0
+          },
+          "fallbackStats": {
+            "width": 64,
+            "height": 64,
+            "pixels": 624,
+            "bounds": [
+              10,
+              11,
+              44,
+              36
+            ],
+            "edgePixels": 0
+          },
+          "uniqueFrames": 3,
+          "frameHashes": [
+            "a15e343293998eb0eab955d0049a3ceff35c9b86ea2ad8cf9d492c443ea4eb44",
+            "3724a5b6c93dae45ea8a42ac57bbe10ac8b9578f5492940887db2491294d59dc",
+            "a15e343293998eb0eab955d0049a3ceff35c9b86ea2ad8cf9d492c443ea4eb44",
+            "e36b2583c5a146975f382d522813eff5726102a285106ccf7f8c97c6ce773e53"
+          ],
+          "projection": {
+            "forward": [
+              0,
+              -1
+            ],
+            "height": [
+              0,
+              1
+            ]
+          },
+          "frames": [
+            {
+              "phase": 0,
+              "rootAdvance": 0,
+              "body": {
+                "x": 203.26872246696036,
+                "y": 90,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    229.63436123348018,
+                    232.8
+                  ],
+                  "angle": 0.7853981633974483,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    282.36563876651985,
+                    232.8
+                  ],
+                  "angle": -0.7853981633974483,
+                  "layer": -1
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.25,
+              "rootAdvance": 0,
+              "body": {
+                "x": 203.26872246696036,
+                "y": 90,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    229.63436123348018,
+                    232.8
+                  ],
+                  "angle": 1.4835298641951802,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    282.36563876651985,
+                    232.8
+                  ],
+                  "angle": -1.4835298641951802,
+                  "layer": -1
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.5,
+              "rootAdvance": 0,
+              "body": {
+                "x": 203.26872246696036,
+                "y": 90,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    229.63436123348018,
+                    232.8
+                  ],
+                  "angle": 0.7853981633974485,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    282.36563876651985,
+                    232.8
+                  ],
+                  "angle": -0.7853981633974485,
+                  "layer": -1
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.75,
+              "rootAdvance": 0,
+              "body": {
+                "x": 203.26872246696036,
+                "y": 90,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    229.63436123348018,
+                    232.8
+                  ],
+                  "angle": 0.08726646259971647,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    282.36563876651985,
+                    232.8
+                  ],
+                  "angle": -0.08726646259971647,
+                  "layer": -1
+                }
+              ],
+              "segments": []
+            }
+          ],
+          "motionFrames": null
+        }
+      },
+      "errors": [],
+      "ready": true
+    },
+    {
+      "assetId": "w048",
+      "reviewApproved": true,
+      "identities": {
+        "checked": false,
+        "reason": "no walking limb identities"
+      },
+      "views": {
+        "side": {
+          "geometry": {
+            "passed": true,
+            "samples": 256,
+            "jointCoordinateSystem": "unprojected sagittal plane; never inferred from front/back PNG angles",
+            "sourceStride": 0,
+            "supportAngleRange": null,
+            "checks": [],
+            "errors": []
+          },
+          "provenance": {
+            "source": "tools/art-review/directional-101/middle-waves/winged-mounts-side-parts-clean.png",
+            "sourceSha256": "87ceabecb3648b251d0e351278f2fa053956df58c4a3d0bb2d8435def0193b77",
+            "sourceSize": [
+              1536,
+              1024
+            ],
+            "body": {
+              "source": "tools/art-review/directional-101/middle-waves/winged-mounts-side-parts-clean.png",
+              "sourceSha256": "87ceabecb3648b251d0e351278f2fa053956df58c4a3d0bb2d8435def0193b77",
+              "sourceSize": [
+                1536,
+                1024
+              ],
+              "roi": [
+                0,
+                0.4736328125,
+                0.34,
+                0.5263671875
+              ],
+              "sourceBounds": [
+                21,
+                506,
+                471,
+                472
+              ],
+              "componentCount": 1,
+              "componentAreas": [
+                88619
+              ],
+              "flipX": false
+            },
+            "parts": [
+              {
+                "id": "leftWing",
+                "roi": [
+                  0.39,
+                  0.4736328125,
+                  0.27,
+                  0.5263671875
+                ],
+                "sourceBounds": [
+                  628,
+                  623,
+                  371,
+                  325
+                ],
+                "flipX": true,
+                "sourceJoints": null
+              },
+              {
+                "id": "rightWing",
+                "roi": [
+                  0.67,
+                  0.4736328125,
+                  0.29,
+                  0.5263671875
+                ],
+                "sourceBounds": [
+                  1066,
+                  623,
+                  388,
+                  319
+                ],
+                "flipX": true,
+                "sourceJoints": null
+              }
+            ]
+          },
+          "rasterDiagnostics": [],
+          "frameStats": [
+            {
+              "index": 0,
+              "width": 256,
+              "height": 256,
+              "pixels": 9586,
+              "bounds": [
+                43,
+                45,
+                155,
+                140
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 1,
+              "width": 256,
+              "height": 256,
+              "pixels": 10121,
+              "bounds": [
+                58,
+                45,
+                140,
+                140
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 2,
+              "width": 256,
+              "height": 256,
+              "pixels": 9586,
+              "bounds": [
+                43,
+                45,
+                155,
+                140
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 3,
+              "width": 256,
+              "height": 256,
+              "pixels": 10930,
+              "bounds": [
+                53,
+                45,
+                145,
+                165
+              ],
+              "edgePixels": 0
+            }
+          ],
+          "stillStats": {
+            "width": 256,
+            "height": 256,
+            "pixels": 9586,
+            "bounds": [
+              43,
+              45,
+              155,
+              140
+            ],
+            "edgePixels": 0
+          },
+          "fallbackStats": {
+            "width": 64,
+            "height": 64,
+            "pixels": 667,
+            "bounds": [
+              11,
+              11,
+              39,
+              36
+            ],
+            "edgePixels": 0
+          },
+          "uniqueFrames": 3,
+          "frameHashes": [
+            "ff08c48814504dd4d14c7d9b8f8a3d0181d4c3670641f01802513a0d7ad407a5",
+            "2422dcf3cb8ff1e347ec4b94fd87b89e55aa114fc689040bf11922013ecd7871",
+            "ff08c48814504dd4d14c7d9b8f8a3d0181d4c3670641f01802513a0d7ad407a5",
+            "242eeb0d18d5de504c68da5324d770b68cb9b1353ccc8586db0ce8f519ffac5b"
+          ],
+          "projection": {
+            "forward": [
+              1,
+              0
+            ],
+            "height": [
+              0,
+              1
+            ]
+          },
+          "frames": [
+            {
+              "phase": 0,
+              "rootAdvance": 0,
+              "body": {
+                "x": 116.29661016949152,
+                "y": 90,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    300.70508474576275,
+                    277.6
+                  ],
+                  "angle": 0.9250245035569946,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    310.48432203389837,
+                    277.6
+                  ],
+                  "angle": 0.7853981633974483,
+                  "layer": 1
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.25,
+              "rootAdvance": 0,
+              "body": {
+                "x": 116.29661016949152,
+                "y": 90,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    300.70508474576275,
+                    277.6
+                  ],
+                  "angle": 1.6231562043547263,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    310.48432203389837,
+                    277.6
+                  ],
+                  "angle": 1.4835298641951802,
+                  "layer": 1
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.5,
+              "rootAdvance": 0,
+              "body": {
+                "x": 116.29661016949152,
+                "y": 90,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    300.70508474576275,
+                    277.6
+                  ],
+                  "angle": 0.9250245035569948,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    310.48432203389837,
+                    277.6
+                  ],
+                  "angle": 0.7853981633974485,
+                  "layer": 1
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.75,
+              "rootAdvance": 0,
+              "body": {
+                "x": 116.29661016949152,
+                "y": 90,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    300.70508474576275,
+                    277.6
+                  ],
+                  "angle": 0.22689280275926285,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    310.48432203389837,
+                    277.6
+                  ],
+                  "angle": 0.08726646259971647,
+                  "layer": 1
+                }
+              ],
+              "segments": []
+            }
+          ],
+          "motionFrames": null
+        },
+        "front": {
+          "geometry": {
+            "passed": true,
+            "samples": 256,
+            "jointCoordinateSystem": "unprojected sagittal plane; never inferred from front/back PNG angles",
+            "sourceStride": 0,
+            "supportAngleRange": null,
+            "checks": [],
+            "errors": []
+          },
+          "provenance": {
+            "source": "tools/art-review/directional-101/middle-waves/winged-mounts-front-parts.png",
+            "sourceSha256": "64d842896c261585f709c50733ed07b4effb00fd9bd68473d738e8def7f759c9",
+            "sourceSize": [
+              1536,
+              1024
+            ],
+            "body": {
+              "source": "tools/art-review/directional-101/middle-waves/winged-mounts-front-parts.png",
+              "sourceSha256": "64d842896c261585f709c50733ed07b4effb00fd9bd68473d738e8def7f759c9",
+              "sourceSize": [
+                1536,
+                1024
+              ],
+              "roi": [
+                0,
+                0.48828125,
+                0.3,
+                0.51171875
+              ],
+              "sourceBounds": [
+                210,
+                511,
+                182,
+                459
+              ],
+              "componentCount": 1,
+              "componentAreas": [
+                44892
+              ],
+              "flipX": false
+            },
+            "parts": [
+              {
+                "id": "leftWing",
+                "roi": [
+                  0.65,
+                  0.48828125,
+                  0.3,
+                  0.51171875
+                ],
+                "sourceBounds": [
+                  1055,
+                  611,
+                  320,
+                  343
+                ],
+                "flipX": false,
+                "sourceJoints": null
+              },
+              {
+                "id": "rightWing",
+                "roi": [
+                  0.31,
+                  0.48828125,
+                  0.25,
+                  0.51171875
+                ],
+                "sourceBounds": [
+                  492,
+                  611,
+                  323,
+                  343
+                ],
+                "flipX": false,
+                "sourceJoints": null
+              }
+            ]
+          },
+          "rasterDiagnostics": [],
+          "frameStats": [
+            {
+              "index": 0,
+              "width": 256,
+              "height": 256,
+              "pixels": 10381,
+              "bounds": [
+                22,
+                45,
+                211,
+                140
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 1,
+              "width": 256,
+              "height": 256,
+              "pixels": 10653,
+              "bounds": [
+                35,
+                45,
+                186,
+                140
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 2,
+              "width": 256,
+              "height": 256,
+              "pixels": 10381,
+              "bounds": [
+                22,
+                45,
+                211,
+                140
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 3,
+              "width": 256,
+              "height": 256,
+              "pixels": 9606,
+              "bounds": [
+                46,
+                45,
+                163,
+                147
+              ],
+              "edgePixels": 0
+            }
+          ],
+          "stillStats": {
+            "width": 256,
+            "height": 256,
+            "pixels": 10381,
+            "bounds": [
+              22,
+              45,
+              211,
+              140
+            ],
+            "edgePixels": 0
+          },
+          "fallbackStats": {
+            "width": 64,
+            "height": 64,
+            "pixels": 724,
+            "bounds": [
+              5,
+              11,
+              53,
+              36
+            ],
+            "edgePixels": 0
+          },
+          "uniqueFrames": 3,
+          "frameHashes": [
+            "4a14d6774cec9ac929c48f40394e32ea0a0b7885d175c78fd3558190a934a436",
+            "6b4727654e1a3bb1a37d35e1ce4459409dcbe378eb72486ad0bada47a749d236",
+            "4a14d6774cec9ac929c48f40394e32ea0a0b7885d175c78fd3558190a934a436",
+            "bb0d2f1a7be0743be7705be14bc23f52265a1a899284b51d0c7fa0396970c8b3"
+          ],
+          "projection": {
+            "forward": [
+              0,
+              1
+            ],
+            "height": [
+              0,
+              1
+            ]
+          },
+          "frames": [
+            {
+              "phase": 0,
+              "rootAdvance": 0,
+              "body": {
+                "x": 200.48801742919392,
+                "y": 90,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    283.75599128540307,
+                    244
+                  ],
+                  "angle": -0.7853981633974483,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    228.24400871459696,
+                    244
+                  ],
+                  "angle": 0.7853981633974483,
+                  "layer": -1
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.25,
+              "rootAdvance": 0,
+              "body": {
+                "x": 200.48801742919392,
+                "y": 90,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    283.75599128540307,
+                    244
+                  ],
+                  "angle": -1.4835298641951802,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    228.24400871459696,
+                    244
+                  ],
+                  "angle": 1.4835298641951802,
+                  "layer": -1
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.5,
+              "rootAdvance": 0,
+              "body": {
+                "x": 200.48801742919392,
+                "y": 90,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    283.75599128540307,
+                    244
+                  ],
+                  "angle": -0.7853981633974485,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    228.24400871459696,
+                    244
+                  ],
+                  "angle": 0.7853981633974485,
+                  "layer": -1
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.75,
+              "rootAdvance": 0,
+              "body": {
+                "x": 200.48801742919392,
+                "y": 90,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    283.75599128540307,
+                    244
+                  ],
+                  "angle": -0.08726646259971647,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    228.24400871459696,
+                    244
+                  ],
+                  "angle": 0.08726646259971647,
+                  "layer": -1
+                }
+              ],
+              "segments": []
+            }
+          ],
+          "motionFrames": null
+        },
+        "back": {
+          "geometry": {
+            "passed": true,
+            "samples": 256,
+            "jointCoordinateSystem": "unprojected sagittal plane; never inferred from front/back PNG angles",
+            "sourceStride": 0,
+            "supportAngleRange": null,
+            "checks": [],
+            "errors": []
+          },
+          "provenance": {
+            "source": "tools/art-review/directional-101/middle-waves/winged-mounts-back-parts-clean.png",
+            "sourceSha256": "7f1acb7be0790fac226a54fe088692504766d59b4f461f4525eb90c0710c38ae",
+            "sourceSize": [
+              1536,
+              1024
+            ],
+            "body": {
+              "source": "tools/art-review/directional-101/middle-waves/winged-mounts-back-parts-clean.png",
+              "sourceSha256": "7f1acb7be0790fac226a54fe088692504766d59b4f461f4525eb90c0710c38ae",
+              "sourceSize": [
+                1536,
+                1024
+              ],
+              "roi": [
+                0,
+                0.48828125,
+                0.3,
+                0.51171875
+              ],
+              "sourceBounds": [
+                210,
+                507,
+                166,
+                445
+              ],
+              "componentCount": 1,
+              "componentAreas": [
+                44004
+              ],
+              "flipX": false
+            },
+            "parts": [
+              {
+                "id": "leftWing",
+                "roi": [
+                  0.31,
+                  0.48828125,
+                  0.25,
+                  0.51171875
+                ],
+                "sourceBounds": [
+                  495,
+                  613,
+                  300,
+                  346
+                ],
+                "flipX": false,
+                "sourceJoints": null
+              },
+              {
+                "id": "rightWing",
+                "roi": [
+                  0.65,
+                  0.48828125,
+                  0.3,
+                  0.51171875
+                ],
+                "sourceBounds": [
+                  1046,
+                  626,
+                  288,
+                  339
+                ],
+                "flipX": false,
+                "sourceJoints": null
+              }
+            ]
+          },
+          "rasterDiagnostics": [],
+          "frameStats": [
+            {
+              "index": 0,
+              "width": 256,
+              "height": 256,
+              "pixels": 9516,
+              "bounds": [
+                33,
+                45,
+                188,
+                140
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 1,
+              "width": 256,
+              "height": 256,
+              "pixels": 10270,
+              "bounds": [
+                37,
+                45,
+                180,
+                140
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 2,
+              "width": 256,
+              "height": 256,
+              "pixels": 9516,
+              "bounds": [
+                33,
+                45,
+                188,
+                140
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 3,
+              "width": 256,
+              "height": 256,
+              "pixels": 7695,
+              "bounds": [
+                65,
+                45,
+                124,
+                144
+              ],
+              "edgePixels": 0
+            }
+          ],
+          "stillStats": {
+            "width": 256,
+            "height": 256,
+            "pixels": 9516,
+            "bounds": [
+              33,
+              45,
+              188,
+              140
+            ],
+            "edgePixels": 0
+          },
+          "fallbackStats": {
+            "width": 64,
+            "height": 64,
+            "pixels": 663,
+            "bounds": [
+              8,
+              11,
+              47,
+              36
+            ],
+            "edgePixels": 0
+          },
+          "uniqueFrames": 3,
+          "frameHashes": [
+            "75bbf692e49f21a438f430b5ee7592f331bacc2aa763bd3e331a1c8d43ae8860",
+            "bb7e448033689d1db8fd3e56e3a5db7b00216260fd4748eebd8b17120f832439",
+            "75bbf692e49f21a438f430b5ee7592f331bacc2aa763bd3e331a1c8d43ae8860",
+            "f694baf34aef8137f9268be91a7bff5a4b9f4500e845ccfd64b69221acc35976"
+          ],
+          "projection": {
+            "forward": [
+              0,
+              -1
+            ],
+            "height": [
+              0,
+              1
+            ]
+          },
+          "frames": [
+            {
+              "phase": 0,
+              "rootAdvance": 0,
+              "body": {
+                "x": 203.77528089887642,
+                "y": 90,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    229.8876404494382,
+                    232.8
+                  ],
+                  "angle": 0.7853981633974483,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    282.1123595505618,
+                    232.8
+                  ],
+                  "angle": -0.7853981633974483,
+                  "layer": -1
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.25,
+              "rootAdvance": 0,
+              "body": {
+                "x": 203.77528089887642,
+                "y": 90,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    229.8876404494382,
+                    232.8
+                  ],
+                  "angle": 1.4835298641951802,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    282.1123595505618,
+                    232.8
+                  ],
+                  "angle": -1.4835298641951802,
+                  "layer": -1
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.5,
+              "rootAdvance": 0,
+              "body": {
+                "x": 203.77528089887642,
+                "y": 90,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    229.8876404494382,
+                    232.8
+                  ],
+                  "angle": 0.7853981633974485,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    282.1123595505618,
+                    232.8
+                  ],
+                  "angle": -0.7853981633974485,
+                  "layer": -1
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.75,
+              "rootAdvance": 0,
+              "body": {
+                "x": 203.77528089887642,
+                "y": 90,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    229.8876404494382,
+                    232.8
+                  ],
+                  "angle": 0.08726646259971647,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    282.1123595505618,
+                    232.8
+                  ],
+                  "angle": -0.08726646259971647,
+                  "layer": -1
+                }
+              ],
+              "segments": []
+            }
+          ],
+          "motionFrames": null
+        }
+      },
+      "errors": [],
+      "ready": true
+    }
+  ],
+  "files": [
+    {
+      "file": "casual/enemies/inf/directional/w044-side-walk-2x2.png",
+      "bytes": 107095,
+      "sha256": "9caf98d08b68de33750a5ab82ff48f205633d1a1c682396f7fd91fdc6565ee73",
+      "image": {
+        "format": "png",
+        "width": 512,
+        "height": 512,
+        "pages": 1
+      }
+    },
+    {
+      "file": "casual/enemies/inf/directional/w044-side.png",
+      "bytes": 41199,
+      "sha256": "f0d3141d2ed5fac3e22bb939d79c3935f83212d0622a4a1a3af5f251ffc3ddd6",
+      "image": {
+        "format": "png",
+        "width": 256,
+        "height": 256,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w044-side.png",
+      "bytes": 372745,
+      "sha256": "37d4a0b135e8ca0b2400fc23710501535453cdacf042d26796b161a64c8ec72d",
+      "image": {
+        "format": "png",
+        "width": 1024,
+        "height": 1024,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w044-side.gif",
+      "bytes": 24943,
+      "sha256": "9d752bd76cbcf1ed404a3cb3a26aca8e3202fe8db76e21b07bd36c8dbc3a0719",
+      "image": {
+        "format": "gif",
+        "width": 256,
+        "height": 256,
+        "pages": 4
+      }
+    },
+    {
+      "file": "casual/enemies/inf/directional/w044-front-walk-2x2.png",
+      "bytes": 124602,
+      "sha256": "385f9671948934517368c71ccbad96778e501061e6c8c7ac2f0a70edca09874f",
+      "image": {
+        "format": "png",
+        "width": 512,
+        "height": 512,
+        "pages": 1
+      }
+    },
+    {
+      "file": "casual/enemies/inf/directional/w044-front.png",
+      "bytes": 40839,
+      "sha256": "dadbb1fbd685f4aa54444eab167c613e1fd566f88c683cf6d5e5e2b6726b007f",
+      "image": {
+        "format": "png",
+        "width": 256,
+        "height": 256,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w044-front.png",
+      "bytes": 444213,
+      "sha256": "55f0385a7fab3ca001e37ababf939202a09fb13a86540f971040d9d127e1d375",
+      "image": {
+        "format": "png",
+        "width": 1024,
+        "height": 1024,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w044-front.gif",
+      "bytes": 35642,
+      "sha256": "cc0f0d3cf51a05a00fc12a04aa3e6e238802dcda9bb61e9a55f589b2a8d129d6",
+      "image": {
+        "format": "gif",
+        "width": 256,
+        "height": 256,
+        "pages": 4
+      }
+    },
+    {
+      "file": "casual/enemies/inf/directional/w044-back-walk-2x2.png",
+      "bytes": 101270,
+      "sha256": "3489f00a46df7fa524024b084408a40be34797e19a97c680960d264912292a78",
+      "image": {
+        "format": "png",
+        "width": 512,
+        "height": 512,
+        "pages": 1
+      }
+    },
+    {
+      "file": "casual/enemies/inf/directional/w044-back.png",
+      "bytes": 33280,
+      "sha256": "a15e343293998eb0eab955d0049a3ceff35c9b86ea2ad8cf9d492c443ea4eb44",
+      "image": {
+        "format": "png",
+        "width": 256,
+        "height": 256,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w044-back.png",
+      "bytes": 356887,
+      "sha256": "ed6f4f7d186be35431b5f8df88f6518b85cfbf5e9a3ea1e2dddfef950aee9a1a",
+      "image": {
+        "format": "png",
+        "width": 1024,
+        "height": 1024,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w044-back.gif",
+      "bytes": 30407,
+      "sha256": "e76bd63bc2011f60518b5bf31fba3def0ca282277885be2017e0cd2659e3ebe2",
+      "image": {
+        "format": "gif",
+        "width": 256,
+        "height": 256,
+        "pages": 4
+      }
+    },
+    {
+      "file": "casual/enemies/inf/directional/w048-side-walk-2x2.png",
+      "bytes": 103272,
+      "sha256": "c624a0f906c7828bf53bc70bf32e816f1cb541543490d196fff1c0631f252728",
+      "image": {
+        "format": "png",
+        "width": 512,
+        "height": 512,
+        "pages": 1
+      }
+    },
+    {
+      "file": "casual/enemies/inf/directional/w048-side.png",
+      "bytes": 37122,
+      "sha256": "ff08c48814504dd4d14c7d9b8f8a3d0181d4c3670641f01802513a0d7ad407a5",
+      "image": {
+        "format": "png",
+        "width": 256,
+        "height": 256,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w048-side.png",
+      "bytes": 353551,
+      "sha256": "fcdff34902d359ea843c2916990470864ff2a9e55b3145d54fa742b8357b863a",
+      "image": {
+        "format": "png",
+        "width": 1024,
+        "height": 1024,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w048-side.gif",
+      "bytes": 25812,
+      "sha256": "3a590ca144e3c74ad20ff9557c5aa5a094be3f26856e4e8d66b425059d62c02c",
+      "image": {
+        "format": "gif",
+        "width": 256,
+        "height": 256,
+        "pages": 4
+      }
+    },
+    {
+      "file": "casual/enemies/inf/directional/w048-front-walk-2x2.png",
+      "bytes": 121173,
+      "sha256": "cc96c8928281983bf048a081d31ccb091cd72cb9005d2a577b6af2a5acb62497",
+      "image": {
+        "format": "png",
+        "width": 512,
+        "height": 512,
+        "pages": 1
+      }
+    },
+    {
+      "file": "casual/enemies/inf/directional/w048-front.png",
+      "bytes": 38247,
+      "sha256": "4a14d6774cec9ac929c48f40394e32ea0a0b7885d175c78fd3558190a934a436",
+      "image": {
+        "format": "png",
+        "width": 256,
+        "height": 256,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w048-front.png",
+      "bytes": 426347,
+      "sha256": "645150102267bc12e03cc105d2f58eaa448750b5b02c7ebd4112a7be4053b277",
+      "image": {
+        "format": "png",
+        "width": 1024,
+        "height": 1024,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w048-front.gif",
+      "bytes": 37414,
+      "sha256": "96f32dee4f8c0d1da870ecf9def93490243537ba4ed3942e3d5708bb2d537438",
+      "image": {
+        "format": "gif",
+        "width": 256,
+        "height": 256,
+        "pages": 4
+      }
+    },
+    {
+      "file": "casual/enemies/inf/directional/w048-back-walk-2x2.png",
+      "bytes": 102422,
+      "sha256": "cdf11348e1ded16d549f019ae862901d4ce2a93f88247cd7b056e4d283049663",
+      "image": {
+        "format": "png",
+        "width": 512,
+        "height": 512,
+        "pages": 1
+      }
+    },
+    {
+      "file": "casual/enemies/inf/directional/w048-back.png",
+      "bytes": 34136,
+      "sha256": "75bbf692e49f21a438f430b5ee7592f331bacc2aa763bd3e331a1c8d43ae8860",
+      "image": {
+        "format": "png",
+        "width": 256,
+        "height": 256,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w048-back.png",
+      "bytes": 357306,
+      "sha256": "061cbef951611a5d0c6ac8a8e6ea9c51c10faa132bd3a79c4d0658048804c0d4",
+      "image": {
+        "format": "png",
+        "width": 1024,
+        "height": 1024,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w048-back.gif",
+      "bytes": 32524,
+      "sha256": "5a5a1c5816b2a297c730a142c5b69823e499996103f95b8766657933ecd749d3",
+      "image": {
+        "format": "gif",
+        "width": 256,
+        "height": 256,
+        "pages": 4
+      }
+    }
+  ],
+  "errors": []
+}

@@ -693,15 +693,15 @@ LANES = [buildLane('ground', DEFAULT_PATH, '흙길')];
 function posAt(d, laneIdx) {
   const lane = LANES[laneIdx || 0] || LANES[0];
   const segs = lane.segs;
-  if (d <= 0) { const s = segs[0]; return { x: s.ax, y: s.ay, dx: (s.bx - s.ax) / s.len }; }
+  if (d <= 0) { const s = segs[0]; return { x: s.ax, y: s.ay, dx: (s.bx - s.ax) / s.len, dy: (s.by - s.ay) / s.len }; }
   for (const s of segs) {
     if (d <= s.acc + s.len) {
       const t = (d - s.acc) / s.len;
-      return { x: s.ax + (s.bx - s.ax) * t, y: s.ay + (s.by - s.ay) * t, dx: (s.bx - s.ax) / s.len };
+      return { x: s.ax + (s.bx - s.ax) * t, y: s.ay + (s.by - s.ay) * t, dx: (s.bx - s.ax) / s.len, dy: (s.by - s.ay) / s.len };
     }
   }
   const s = segs[segs.length - 1];
-  return { x: s.bx, y: s.by, dx: (s.bx - s.ax) / s.len };
+  return { x: s.bx, y: s.by, dx: (s.bx - s.ax) / s.len, dy: (s.by - s.ay) / s.len };
 }
 const epos = e => posAt(e.dist, e.lane);
 const laneLen = e => (LANES[e.lane || 0] || LANES[0]).len;
@@ -722,6 +722,44 @@ const BASE = (() => {
   if (location.pathname.indexOf('/dicekeep') === 0) return '/dicekeep/';
   return '/dicekeep/';
 })();
+const DIR_ART = window.DKDirectionalArt;
+const directionalArt = DIR_ART ? DIR_ART.create({ base: BASE, budget: 96 * 1024 * 1024, concurrency: 2 }) : null;
+let directionalDemandAt = -Infinity;
+function directionalFutureIds(wave) {
+  const out = [], inf = window.DKCONTENT && DKCONTENT.INFINITY;
+  if (!inf) return out;
+  for (let w = Math.max(1, wave); w < Math.max(1, wave) + 3; w++) {
+    const n = (w - 1) % 101 + 1, m = inf.monsters[n];
+    if (!m) continue;
+    const stem = (m.boss ? 'b' : 'w') + String(n).padStart(3, '0');
+    out.push(stem); if (m.boss && m.second) out.push(stem + '-2');
+  }
+  return out;
+}
+function directionalPhase(e) {
+  if (e.view && Number.isFinite(e.viewPhase)) return e.viewPhase;
+  const entry = directionalArt && directionalArt.entry(e.artAssetId);
+  const stride = entry && entry.cycleStride * e.drawHeight / entry.referenceHeight;
+  if (stride > 0) return DIR_ART.phase(e.artWalkDistance || 0, stride);
+  return entry ? DIR_ART.phase(e.animT || 0, entry.cycleSeconds || entry.views.side.frames / 5) : ((e.animT || 0) * 5 % 8) / 8;
+}
+function refreshDirectionalDemand(force) {
+  if (!directionalArt) return;
+  const now = performance.now();
+  if (!force && now - directionalDemandAt < 120) return;
+  directionalDemandAt = now;
+  const playing = S.mode === 'infinity' && (S.phase === 'playing' || S.phase === 'spectate');
+  const actors = playing ? S.enemies.concat(VIEW.pid ? VIEW.enemies : []) : [];
+  const active = actors.filter(e => !e.dead && e.artAssetId && directionalArt.entry(e.artAssetId)).map(e => {
+    const p = posAt(e.dist, e.lane || 0);
+    e.artDirection = DIR_ART.direction(p.dx, p.dy, e.artDirection);
+    return { id: e.artAssetId, view: e.artDirection };
+  });
+  const future = playing && S.phase === 'playing' ? directionalFutureIds(S.wave || 1) : [];
+  if (playing && VIEW.pid && VIEW.sum) future.push(...directionalFutureIds(VIEW.sum.w || 1));
+  const retained = playing ? S.corpses.map(c => c.fr && c.fr.cacheKey).filter(Boolean) : [];
+  directionalArt.demand(active, future, retained);
+}
 const SRCS = {
   map: BASE + 'map/battlefield.jpg',
   gold: BASE + 'ui/gold.png', heart: BASE + 'ui/heart.png',
@@ -746,7 +784,7 @@ const SRCS = {
   crystal: BASE + 'props/crystal.png',
   chest: BASE + 'ui/chest.png',
 };
-for (let g = 7; g <= 20; g++) SRCS['tStar' + g] = BASE + `casual/towers/star-${String(g).padStart(2, '0')}.png`; // 없으면 6눈 스킨으로 폴백
+for (let g = 7; g <= 20; g++) SRCS['tStar' + g] = BASE + `casual/towers/star-${String(g).padStart(2, '0')}.png?v=93`; // 없으면 6눈 스킨으로 폴백
 for (const k of ['d1', 'd4', 'd8', 'd12', 'd20']) SRCS['poly' + k] = BASE + `dice/poly-${k}.png`;                 // 없으면 코드 다각형
 // 인피니티 아레나 조각 (casual/tiles/arena/): 질감 3(floor·road·board) + 오브젝트 6. 없으면 코드가 그린다.
 for (const n of ['floor', 'road', 'board', 'pad', 'start', 'end', 'prop-1', 'prop-2', 'prop-3']) SRCS['tl_arena_' + n] = BASE + `casual/tiles/arena/${n}.${n === 'floor' ? 'jpg' : 'png'}`;
@@ -1231,6 +1269,19 @@ function paintTowerBody(t, sp) {
   }
   ctx.drawImage(sp.cv, -cx, -by);
   ctx.restore();
+}
+function towerVisualEmitter(t) {
+  const xy = window.DKCONTENT && DKCONTENT.STAR_TOWER_EMITTERS && DKCONTENT.STAR_TOWER_EMITTERS[t.face];
+  const sp = xy && towerSpr(t.face, t.skin);
+  if (!xy || !sp || !sp.dedicated) return { x: t.x, y: t.y - 64 };
+  const recoil = (t.kick || 0) ** 2;
+  return { x: t.x + (xy[0] * sp.w - sp.cx) * (1 + recoil * 0.07),
+    y: t.y + 6 + (xy[1] * sp.h - sp.baseY) * (1 - recoil * 0.09) };
+}
+function projectileDrawPosition(p) {
+  const u = Math.max(0, Math.min(1, (p.visualAge || 0) / 0.1)), weight = (1 - u) ** 2;
+  return { x: p.x + (p.launchOffset ? p.launchOffset[0] * weight : 0),
+    y: p.y + (p.launchOffset ? p.launchOffset[1] * weight : 0) };
 }
 
 // ==================== 사운드 (WebAudio 신디사이저) ====================
@@ -2253,7 +2304,12 @@ function buildInfinityWave(w) {
       const boss = INF.bossFor ? INF.bossFor(INF.bossOrdinal(w), k) : C.bosses[(INF.bossOrdinal(w) - 1 + k * 37) % C.bosses.length]; // 겉보기 약한 보스부터 (순번 기준)
       const bbase = C.bossBases.find((b) => b.id === boss.base) || C.bossBases[0];
       const bart = INF.art ? INF.art((w - 1) % 101 + 1, k) : null;   // 새 보스 그림이 준비됐으면 설계된 군주·부관으로
-      add(bbase.id, { name: M.prefix + (bart ? bart.name : boss.name), hue: bart ? 0 : boss.hue, hpMult: P.hpMult * P.bossHp, isBoss: true, bossCount: P.bosses, lane: laneFor(bbase.move, k), art: bart && bart.key });
+      const dart = INF.directionalArt ? INF.directionalArt(w, k) : null;
+      // W111/212/... retain the existing second combat boss and use the same
+      // reviewed slot10 character at the secondary drawing scale.
+      const sharedFirstBoss = k === 1 && (w - 1) % 101 + 1 === 10 && directionalArt && directionalArt.entry('b010');
+      const directionalName = dart ? dart.name : sharedFirstBoss ? INF.monsters[10].name + ' 부관' : null;
+      add(bbase.id, { name: M.prefix + (directionalName || (bart ? bart.name : boss.name)), hue: bart || directionalName ? 0 : boss.hue, hpMult: P.hpMult * P.bossHp, isBoss: true, bossCount: P.bosses, bossRole: k, lane: laneFor(bbase.move, k), art: bart && bart.key });
       t += 1.5;
     }
     return q;
@@ -2332,6 +2388,7 @@ function startWave() {
   S.waveActive = true;
   S.waveT = 0;
   S.autoT = 0;
+  refreshDirectionalDemand(true);
   announceWave(S.wave);
   SFX.wave();
   coachHit('wave');
@@ -2401,6 +2458,7 @@ function startInfinity(kind, net) {
     setSpeed(1);
     S.autoT = Math.max(1, (net.t0 - (window.DKNET ? DKNET.serverNow() : Date.now())) / 1000);
   }
+  refreshDirectionalDemand(true);
   stageEl.classList.toggle('mp', !!net);
   // 첫 런은 코치가 먼저 돈다. 코치가 끝나면 도움말을 한 번 연다.
   // 이미 코치를 본 사람인데 도움말을 아직 안 봤다면 도움말만 연다. (멀티는 시계가 흐르므로 생략)
@@ -2525,7 +2583,8 @@ function spawnEnemy(item) {
   const lane = (item.lane != null && LANES[item.lane]) ? item.lane : laneFor(move, 0);
   const isBoss = !!item.isBoss;
   const INFC = window.DKCONTENT && DKCONTENT.INFINITY;
-  const artOk = !!(item.art && A[item.art] && A[item.art].cv);
+  // Collision size is determined by the existing roster contract, never by a network/cache result.
+  const artOk = !!item.art;
   if (artOk && item.sizeClass && INFC && INFC.artSize && INFC.artSize[item.sizeClass]) {   // 인피니티 새 그림: 등급별 고정 높이 (content.js artSize · 보스는 artSizeBoss)
     const tbl = isBoss && INFC.artSizeBoss && INFC.artSizeBoss[item.sizeClass] ? INFC.artSizeBoss : INFC.artSize;
     def = Object.assign({}, def, { size: tbl[item.sizeClass] });
@@ -2541,14 +2600,21 @@ function spawnEnemy(item) {
     animT: Math.random(), face: 1, dead: false,
     move, sprite, hue, name: name || def.name,
     hidden: false, burrowT: Math.random() * 2,
-    isBoss, bossCount: item.bossCount || 1, lane, flashT: 0,
+    isBoss, bossCount: item.bossCount || 1, bossRole: item.bossRole || 0, lane, flashT: 0,
     entranceT: isBoss ? 0 : -1, // 보스 등장 연출 (>=0 이면 진행 중)
     stompPhase: 0,
-    art: item.art && A[item.art] && A[item.art].cv ? item.art : null,                     // 인피니티 새 그림 (오른쪽을 본다)
-    artWalk: item.artWalk && Array.isArray(A[item.artWalk]) && A[item.artWalk].length ? item.artWalk : null,
+    art: item.art || null,
+    artWalk: item.artWalk || null,
     artWalkStride: Number.isFinite(item.artWalkStride) && item.artWalkStride > 0 ? item.artWalkStride : 0, // 원본 PNG 픽셀 / 보행 한 주기
     artWalkDistance: 0, // 실제 전진 거리 누적: 레인 순환·넉백·화면 재배치로 프레임이 건너뛰지 않는다
   };
+  if (S.mode === 'infinity' && DIR_ART) {
+    e.appearanceCode = DIR_ART.appearance(e.wave, e.bossRole === 1, e.isElite);
+    const appearance = DIR_ART.decodeAppearance(e.appearanceCode);
+    e.artAssetId = appearance && appearance.assetId;
+    const table = e.isBoss ? INFC.artSizeBoss : INFC.artSize;
+    e.drawHeight = (table[e.sizeClass] || def.size) * (e.bossRole === 1 ? 0.7 : 1) * (e.isElite ? 1.2 : 1);
+  }
   S.enemies.push(e);
   if (S.mode === 'infinity') enforceFieldCap();
   const p = epos(e);
@@ -2620,17 +2686,28 @@ function damageEnemy(e, dmg, src) {
 // 그림을 좌우로 뒤집어야 하는가. 걷기 시트는 전부 오른쪽 향(ART-PROMPTS §2)이고, 정지컷은 그림마다 달라
 // content.js 의 base 에 faceLeft(정지컷이 왼쪽을 봄) 를 적어 둔다. 시트를 쓰는 동안은 faceLeft 를 무시한다
 function enemyFlip(e) {
+  if (e.directionalFrame) return e.renderView === 'side' && e.face < 0;
   const movingLeft = e.face < 0;
   const usingSheet = !!(e.def && e.def.walk && A[e.def.walk]);
   const nativeLeft = !e.art && !e.artWalk && !usingSheet && !!(e.def && e.def.faceLeft);   // 인피니티 새 그림은 전부 오른쪽 향
   return movingLeft !== nativeLeft;
 }
 // 사망 연출: 스프라이트가 떠오르며 희미해지고 발밑에 먼지가 퍼진다
+function enemyAirHeight(e, p, fr) {
+  if (e.move !== 'air') return 0;
+  const lane = LANES[e.lane || 0] || LANES[0];
+  if (!fr || !fr.directional || (lane.loopAt != null && e.dist < lane.loopAt)) return 42;
+  // On the upper road a tall flyer needs room for its head. Reduce only its
+  // display altitude, using the fixed authored frame pivot plus 5px bob/8px margin.
+  // Entry motion, path distance, targeting and the ground shadow stay unchanged.
+  const headroom = p.y + 4 - fr.pivot[1] * e.drawHeight / fr.referenceHeight - 13;
+  return Math.min(42, Math.max(0, headroom));
+}
 function spawnDeath(e, p) {
-  const airY = e.move === 'air' ? 42 : 0;
   const fr = currentEnemyFrame(e);
+  const airY = enemyAirHeight(e, p, fr);
   if (fr) {
-    S.corpses.push({ fr, x: p.x, y: p.y + 4 - airY, h: e.def.size, hue: e.hue, t: 0, dur: e.isBoss ? 0.7 : 0.42, boss: e.isBoss, flip: enemyFlip(e) });
+    S.corpses.push({ fr, x: p.x, y: p.y + 4 - airY, h: fr.directional ? e.drawHeight : e.def.size, hue: e.hue, t: 0, dur: e.isBoss ? 0.7 : 0.42, boss: e.isBoss, flip: enemyFlip(e) });
   }
   const n = e.isBoss ? 18 : 7;
   for (let i = 0; i < n; i++) {
@@ -2651,7 +2728,15 @@ function enemyWalkFrameIndex(e, frames) {
   return Math.floor(e.animT * 5) % frames.length;
 }
 function currentEnemyFrame(e) {
-  if (e.artWalk) { const aw = A[e.artWalk]; const fr = aw[enemyWalkFrameIndex(e, aw)]; if (fr && fr.cv) return fr; }
+  e.directionalFrame = false;
+  if (directionalArt && e.artAssetId && directionalArt.entry(e.artAssetId)) {
+    const p = epos(e);
+    e.artDirection = DIR_ART.direction(p.dx, p.dy, e.artDirection);
+    const fr = directionalArt.frame(e.artAssetId, e.artDirection, directionalPhase(e));
+    if (fr && fr.cv && fr.cv.width) { e.directionalFrame = true; e.renderView = fr.view; return fr; }
+    return null; // An approved identity may never turn into unrelated legacy art.
+  }
+  if (e.artWalk) { const aw = A[e.artWalk]; if (Array.isArray(aw) && aw.length) { const fr = aw[enemyWalkFrameIndex(e, aw)]; if (fr && fr.cv) return fr; } }
   if (e.art) { const a = A[e.art]; if (a && a.cv) return a; }
   const walk = e.def && e.def.walk && A[e.def.walk];
   if (Array.isArray(walk) && walk.length) {
@@ -2732,6 +2817,7 @@ function towerFire(t, dt) {
   t.kick = 1;
   const dmg = towerDmg(t);
   const from = { x: t.x, y: t.y - 64 };
+  const visualFrom = towerVisualEmitter(t);
 
   if (t.def.laser) {
     const tp = epos(best);
@@ -2771,6 +2857,7 @@ function towerFire(t, dt) {
   } else {
     S.projs.push({
       kind: t.def.proj, x: from.x, y: from.y, tgt: best,
+      launchOffset: [visualFrom.x - from.x, visualFrom.y - from.y], visualAge: 0,
       spd: t.def.pspd, dmg, splash: towerSplash(t),
       star: t.def.star || 0, color: t.def.star ? starColor(t.def) : null, trail: [],
       slow: t.def.slow ? { pct: towerSlowPct(t), dur: 1.8 } : null,
@@ -2781,8 +2868,8 @@ function towerFire(t, dt) {
     }
     if (t.def.star) { // ★ 타워: 밴드색 발사 섬광 + 링 — 성이 높을수록 크다
       const sc = starColor(t.def), k = t.def.star - 6;
-      S.fxs.push({ kind: 'muzzleFlash', x: from.x, y: from.y, t: 0, dur: 0.13, size: 34 + k * 3 });
-      S.fxs.push({ kind: 'ring', x: from.x, y: from.y, t: 0, dur: 0.26, size: 34 + k * 4, color: sc });
+      S.fxs.push({ kind: 'muzzleFlash', x: visualFrom.x, y: visualFrom.y, t: 0, dur: 0.13, size: 34 + k * 3 });
+      S.fxs.push({ kind: 'ring', x: visualFrom.x, y: visualFrom.y, t: 0, dur: 0.26, size: 34 + k * 4, color: sc });
     }
     (SFX['t' + t.face] || SFX.t6)();
   }
@@ -2800,7 +2887,8 @@ function updateVisuals(dt) {
     p.rot = Math.atan2(dy, dx);
     p.spin += dt * 13;
     const step = p.spd * dt;
-    if (p.trail) { p.trail.push({ x: p.x, y: p.y }); if (p.trail.length > 3) p.trail.shift(); }
+    if (p.trail) { p.trail.push(projectileDrawPosition(p)); if (p.trail.length > 3) p.trail.shift(); }
+    p.visualAge = (p.visualAge || 0) + dt;
     if (d <= step + 8) { projHit(p); p.gone = true; }
     else { p.x += dx / d * step; p.y += dy / d * step; }
   }
@@ -2905,7 +2993,7 @@ function update(dt) {
     if (e.slowT > 0) { e.slowT -= dt; sp *= (1 - e.slowPct); }
     const previousDist = e.dist;
     e.dist += sp * dt;
-    if (e.artWalk && e.artWalkStride > 0) e.artWalkDistance += Math.max(0, e.dist - previousDist);
+    if (e.appearanceCode || (e.artWalk && e.artWalkStride > 0)) e.artWalkDistance += Math.max(0, e.dist - previousDist);
     e.animT += dt * (sp / 38);
     if (e.move === 'burrow') {
       e.burrowT += dt;
@@ -3109,8 +3197,20 @@ function drawMergeHalo(t, sp, hovered) {
 
 // 피격 플래시용 흰 실루엣 (프레임 캔버스별로 캐시)
 const flashCache = new WeakMap();
-function flashCanvas(fr) {
+let directionalFlash = null;
+function flashCanvas(fr, drawW, drawH) {
   if (!fr || !fr.cv) return null;
+  if (fr.directional) {
+    // One small presentation scratch surface, not a second copy of every cached animation frame.
+    if (!directionalFlash) directionalFlash = document.createElement('canvas');
+    directionalFlash.width = Math.max(1, Math.min(512, Math.ceil(drawW || fr.w)));
+    directionalFlash.height = Math.max(1, Math.min(512, Math.ceil(drawH || fr.h)));
+    const c = directionalFlash.getContext('2d');
+    c.drawImage(fr.cv, 0, 0, directionalFlash.width, directionalFlash.height);
+    c.globalCompositeOperation = 'source-in'; c.fillStyle = '#fff'; c.fillRect(0, 0, directionalFlash.width, directionalFlash.height);
+    c.globalCompositeOperation = 'source-over';
+    return directionalFlash;
+  }
   let cv = flashCache.get(fr.cv);
   if (cv) return cv;
   try {
@@ -3124,6 +3224,14 @@ function flashCanvas(fr) {
     flashCache.set(fr.cv, cv);
     return cv;
   } catch (e) { return null; }
+}
+function enemyFramePlacement(fr, height) {
+  if (fr.directional) {
+    const scale = height / fr.referenceHeight;
+    return { w: fr.w * scale, h: fr.h * scale, x: -fr.pivot[0] * scale, y: -fr.pivot[1] * scale };
+  }
+  const w = height * fr.w / fr.h;
+  return { w, h: height, x: -w / 2, y: -height };
 }
 
 // 코드 생성 레인(하늘길·땅굴)과 추가 포탈을 배경 위에 그린다
@@ -3383,19 +3491,21 @@ function draw() {
       const pr = c.t / c.dur;
       const fr = c.fr;
       const h = c.h * (1 + pr * (c.boss ? 0.35 : 0.2));
-      const w = h * (fr.w / fr.h);
+      const place = enemyFramePlacement(fr, h);
       ctx.save();
       ctx.globalAlpha = (1 - pr) * 0.85;
       if (c.hue) ctx.filter = `hue-rotate(${c.hue}deg)`;
       ctx.translate(c.x, c.y - pr * 26);
       if (c.flip) ctx.scale(-1, 1);            // 죽을 때 보던 방향 그대로
-      ctx.drawImage(fr.cv, -w / 2, -h, w, h);
+      if (fr.cv.width) ctx.drawImage(fr.cv, place.x, place.y, place.w, place.h);
       ctx.filter = 'none';
       ctx.restore();
     } else {
       const e = ent.o, p = ent.p;
-      const airY = e.move === 'air' ? 42 : 0;
-      const bob = e.artWalk && e.artWalkStride > 0 && e.move !== 'air' ? 0 : Math.sin(e.animT * 6) * (e.move === 'air' ? 5 : 2);
+      const fr = currentEnemyFrame(e);
+      const airY = enemyAirHeight(e, p, fr);
+      const authored = directionalArt && directionalArt.entry(e.artAssetId);
+      const bob = (authored || (e.artWalk && e.artWalkStride > 0)) && e.move !== 'air' ? 0 : Math.sin(e.animT * 6) * (e.move === 'air' ? 5 : 2);
       const drawY = p.y + 4 - airY - bob;
       if (e.slowT > 0) {
         ctx.save();
@@ -3405,7 +3515,6 @@ function draw() {
         ctx.fillStyle = 'rgba(120,190,255,0.3)'; ctx.fill();
         ctx.restore();
       }
-      const fr = currentEnemyFrame(e);
       // 보스: 등장 스케일업(오버슈트) + 쿵쿵 스쿼시
       let sx = 1, sy = 1;
       if (e.isBoss) {
@@ -3414,7 +3523,7 @@ function draw() {
           const o = 1.7;
           const ease = 1 + (o + 1) * Math.pow(q - 1, 3) + o * Math.pow(q - 1, 2);
           sx = sy = 0.15 + 0.85 * Math.max(0, ease);
-        } else if (e.move !== 'air') {
+        } else if (e.move !== 'air' && !(fr && fr.directional)) {
           const st = Math.abs(Math.sin(e.animT * Math.PI * 2 / 1));
           sy = 1 - 0.07 * st; sx = 1 + 0.06 * st;
         }
@@ -3426,13 +3535,13 @@ function draw() {
       ctx.scale(sx * (enemyFlip(e) ? -1 : 1), sy);
       if (e.hue) ctx.filter = `hue-rotate(${e.hue}deg)`;
       if (fr && fr.cv) {
-        const h = e.def.size;
-        const w = h * (fr.w / fr.h);
-        ctx.drawImage(fr.cv, -w / 2, -h, w, h);
+        const h = fr.directional ? e.drawHeight : e.def.size;
+        const place = enemyFramePlacement(fr, h);
+        ctx.drawImage(fr.cv, place.x, place.y, place.w, place.h);
         if (e.flashT > 0) {
           // 피격 플래시: 흰 실루엣을 겹친다
-          const fl = flashCanvas(fr, w, h);
-          if (fl) { ctx.filter = 'none'; ctx.globalAlpha = Math.min(1, e.flashT / 0.13) * 0.85; ctx.drawImage(fl, -w / 2, -h, w, h); }
+          const fl = flashCanvas(fr, place.w, place.h);
+          if (fl) { ctx.filter = 'none'; ctx.globalAlpha = Math.min(1, e.flashT / 0.13) * 0.85; ctx.drawImage(fl, place.x, place.y, place.w, place.h); }
         }
       }
       ctx.filter = 'none';
@@ -3520,7 +3629,8 @@ function draw() {
       ctx.restore();
     }
     ctx.save();
-    ctx.translate(p.x, p.y);
+    const drawPoint = projectileDrawPosition(p);
+    ctx.translate(drawPoint.x, drawPoint.y);
     if (p.kind === 'dieBomb' || p.kind === 'die6') {
       const sp = A.dieBomb || A.dice[5];
       const w = 26 + (p.star ? (p.star - 6) * 1.1 : 0);   // ★ 가 높을수록 큰 탄
@@ -5265,13 +5375,16 @@ function mpBaseIdx(e) {
   return k != null ? k : MP.baseIdx[e.type];   // 보스 그림이 일반 base 인 경우도 있다
 }
 function mpEnemyStream() {
-  const parts = [];
+  const parts = [], rows = [];
   for (const e of S.enemies) {
     if (e.dead || parts.length >= 200) continue;
     const i = mpBaseIdx(e);
     if (i == null) continue;
+    rows.push({ i, d: e.dist, h: Math.max(0, Math.min(9, Math.round(e.hp / Math.max(1, e.max) * 9))), a: e.appearanceCode || 0,
+      p: directionalArt && directionalArt.entry(e.artAssetId) ? directionalPhase(e) : null });
     parts.push(`${i},${Math.max(0, Math.round(e.dist))},${Math.max(0, Math.min(9, Math.round(e.hp / Math.max(1, e.max) * 9)))}`);
   }
+  if (DIR_ART) return DIR_ART.enemyStream(rows);
   let out = parts.join(';');
   while (out.length > 3000) { parts.pop(); out = parts.join(';'); }
   return out;
@@ -5349,23 +5462,50 @@ function mpViewBuild(sum) {
   for (const e of VIEW.enemies) prev.set(e.key, e);
   const enemies = [];
   if (typeof sum.en === 'string' && sum.en) {
-    const parts = sum.en.split(';');
+    const parts = DIR_ART ? DIR_ART.parseEnemyStream(sum.en) : sum.en.split(';').map(row => { const f = row.split(',').map(Number); return { i: f[0], d: f[1], h: f[2], a: 0, p: null }; });
     for (let n = 0; n < parts.length && n < 200; n++) {
-      const f = parts[n].split(',');
-      if (f.length < 3) continue;
-      const i = f[0] | 0, d = f[1] | 0, h = Math.max(0, Math.min(9, f[2] | 0));
-      const isBoss = i >= 1000, base = isBoss ? C.bossBases[i - 1000] : C.bases[i];
+      const row = parts[n], i = row.i, d = row.d, h = row.h;
+      const baseBoss = i >= 1000, base = baseBoss ? C.bossBases[i - 1000] : C.bases[i];
       if (!base) continue;
-      const key = i + ':' + n, old = prev.get(key);
+      const appearance = row.appearance, isBoss = appearance ? appearance.role !== 'normal' : baseBoss;
+      const key = i + ':' + (row.a || 0) + ':' + n, old = prev.get(key);
       const e = old || { type: base.id, def: base, sprite: base.sprite, move: base.move, name: base.name, lane: laneFor(base.move, 0), animT: Math.random(), face: 1, dead: false, hidden: false, hue: 0, slowT: 0, stunT: 0, flashT: 0, isElite: false, isBoss, entranceT: -1, stompPhase: 0, key, view: true };
+      if (appearance) {
+        const inf = C.INFINITY, mon = inf.monsters[appearance.wave], cls = inf.monsterFor(appearance.wave).cls;
+        const legacy = inf.art(appearance.wave, appearance.role === 'secondary' ? 1 : 0);
+        const table = isBoss ? inf.artSizeBoss : inf.artSize;
+        const logicalSize = legacy ? table[cls] : Math.round(base.size * (inf.sizeScale[cls] || 1));
+        e.def = Object.assign({}, base, { size: Math.round(logicalSize * (appearance.elite ? 1.2 : 1)) });
+        e.appearanceCode = row.a; e.artAssetId = appearance.assetId; e.isElite = appearance.elite; e.isBoss = isBoss;
+        e.bossRole = appearance.role === 'secondary' ? 1 : 0; e.wave = appearance.wave; e.sizeClass = cls;
+        e.drawHeight = table[cls] * (e.bossRole ? 0.7 : 1) * (e.isElite ? 1.2 : 1);
+        e.name = (e.isElite ? '정예 ' : '') + (e.bossRole ? mon.second || mon.name + ' 부관' : mon.name);
+        e.art = legacy && legacy.key; e.artWalk = legacy && legacy.walkKey; e.artWalkStride = legacy && legacy.walkStride || 0;
+        e.artWalkDistance ||= 0;
+        e.spdMult = inf.wave(appearance.wave, true).speedMult;
+      }
+      const stamp = performance.now(), elapsed = old && old.sourceAt != null ? (stamp - old.sourceAt) / 1000 : 0;
+      if (elapsed > 0.05 && elapsed < 5 && old.sourceLength === ll) {
+        let delta = d - old.sourceDist;
+        const loopStart = (LANES[0] && LANES[0].loopAt || 0) * (ll / Math.max(1, len));
+        if (delta < -ll / 2) delta += ll - loopStart;
+        const maxSpeed = base.speed * (e.spdMult || 1) * Math.max(1, sum.sp || 1) * k * 1.5;
+        e.viewSpeed = Math.max(0, Math.min(maxSpeed, delta * k / elapsed));
+      } else e.viewSpeed = null;
       e.dist = d * k; e.max = base.hp; e.hp = base.hp * h / 9;
-      if (isBoss) e.def = base;
+      e.sourceDist = d; e.sourceLength = ll; e.sourceAt = stamp; e.viewSourceScale = k;
+      const entry = directionalArt && directionalArt.entry(e.artAssetId);
+      const stride = entry && entry.cycleStride * e.drawHeight / entry.referenceHeight;
+      if (!Number.isFinite(e.viewPhase)) e.viewPhase = row.p != null ? row.p : stride > 0 ? DIR_ART.phase(e.dist, stride) : 0;
+      else if (row.p != null) e.viewPhaseCorrection = DIR_ART.phaseError(row.p, e.viewPhase);
+      if (isBoss && !appearance) e.def = base;
       enemies.push(e);
     }
   }
   VIEW.enemies = enemies;
   const alive = new Set(enemies);   // 요약이 바뀌어 사라진 적을 노리던 투사체는 버린다
   VIEW.projs = VIEW.projs.filter(p => alive.has(p.tgt));
+  refreshDirectionalDemand(true);
   mpViewBar();
 }
 // 요약 사이(1초)에는 상대 배속으로 전진시켜 흔들리지 않게 한다
@@ -5373,12 +5513,22 @@ function mpViewAdvance(dt) {
   const sp = VIEW.sum ? Math.max(1, Math.min(3, VIEW.sum.sp | 0)) : 1;
   for (const e of VIEW.enemies) {
     const ln = LANES[e.lane || 0] || LANES[0]; if (!ln) continue;
-    const spd = (e.def && e.def.speed) || 40;
-    e.dist += spd * dt * sp;
+    const spd = Number.isFinite(e.viewSpeed) ? e.viewSpeed : ((e.def && e.def.speed) || 40) * (e.spdMult || 1) * sp * (e.viewSourceScale || 1);
+    const advance = Math.max(0, spd * dt);
+    e.dist += advance;
+    e.artWalkDistance = (e.artWalkDistance || 0) + advance;
+    const entry = directionalArt && directionalArt.entry(e.artAssetId), stride = entry && entry.cycleStride * e.drawHeight / entry.referenceHeight;
+    if (entry) {
+      const correction = (e.viewPhaseCorrection || 0) * (1 - Math.exp(-dt / 0.15));
+      const phaseAdvance = stride > 0 ? advance / stride : DIR_ART.timePhaseAdvance(advance, e.viewSourceScale || 1, entry.cycleSeconds || entry.views.side.frames / 5);
+      e.viewPhase = DIR_ART.phase((e.viewPhase || 0) + phaseAdvance + correction, 1);
+      e.viewPhaseCorrection = (e.viewPhaseCorrection || 0) - correction;
+    }
     if (e.dist >= ln.len) { if (ln.loopAt != null) e.dist = ln.loopAt + (e.dist - ln.len); else e.dist = ln.len; }
     e.animT += dt * sp;
     const p = posAt(e.dist, e.lane || 0);
     if (Math.abs(p.dx) > 0.3) e.face = Math.sign(p.dx);
+    if (DIR_ART) e.artDirection = DIR_ART.direction(p.dx, p.dy, e.artDirection);
   }
   // 상대 타워의 공격 연출: 피해·처치·소리 없는 시각 전용 시뮬 (COSMETIC) — 실제 전투는 상대 기기에서 돈다
   withView(() => {
@@ -5746,6 +5896,7 @@ function frame(ts) {
     updateSlot(dt * S.speed);   // 뽑기 슬롯은 배속을 따라간다 (x3 에서 보상 큐가 굳지 않게)
   }
   if (S.net) mpTick();
+  refreshDirectionalDemand(false);
   if (VIEW.pid) { mpViewAdvance(dt); withView(draw); }   // 상대 필드 보기: 내 시뮬은 위에서 돌았고, 그리기만 상대 것으로
   else draw();
   drawSlot();
@@ -5778,6 +5929,19 @@ function drawLoading(pr) {
   document.body.style.setProperty('--keyart-title-p', `linear-gradient(rgba(5,4,3,.04), rgba(5,4,3,.04) 80%, rgba(5,4,3,.55) 100%), url('${KEYART.p}')`);   // 세로 타이틀: 그림의 돌 제목을 그대로, 맨 아래(버튼 자리)만 살짝
   drawLoading(0);
   $('ov-btn').disabled = true;
+  // Approved identities have an inline same-character still before any gameplay or room resume.
+  // This is a boot gate only: network art never holds a later spawn or simulation tick.
+  try {
+    if (!directionalArt || !window.INF_DIRECTIONAL_ART) throw new Error('directional art bootstrap unavailable');
+    await directionalArt.init();
+  }
+  catch (error) {
+    console.error('[directional art] boot fallback', error);
+    $('ov-load-txt').textContent = '캐릭터 그림을 준비하지 못했습니다. 다시 불러와 주세요.';
+    $('ov-btn').disabled = false; $('ov-btn').textContent = '다시 불러오기';
+    $('ov-btn').onclick = () => location.reload();
+    return;
+  }
   // 키아트가 화면에 뜬 뒤에 에셋 로딩을 시작한다 — 800장 넘는 PNG 요청과 섞이면 폰에서 배경이 한참 검게 남았다. (실패·지연은 4초에서 끊고 진행)
   { const box = $('overlay-box'); if (box) box.classList.add('preload');
     const portrait = window.matchMedia && matchMedia('(max-aspect-ratio: 3/4)').matches;
@@ -5825,6 +5989,8 @@ function drawLoading(pr) {
   window.DKupgrade = upgradeFace;
   window.DKchest = buyChest; // 인피니티 갓챠 훅
   window.DKtowerSpr = towerSpr;
+  window.DKART = directionalArt;
+  window.DKappearance = DIR_ART;
   window.DKTD = TOWER_DEFS;                        // 테스트 훅
   window.DKdamage = damageEnemy; window.DKenhance = enhanceTower; window.DKqueue = () => S.inf && S.inf.queue; window.DKhelp = openInfHelp; // 메운디 시스템 테스트 훅
   window.DKlog = pushLog; window.DKlogs = () => LOG.nodes.map(n => n.textContent); window.DKchatOpen = chatOpen; // 로그·채팅 훅

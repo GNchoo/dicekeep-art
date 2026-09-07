@@ -1,0 +1,67 @@
+{
+  "width": 1536,
+  "height": 1024,
+  "source": "C:\\Users\\PC\\Documents\\Codex\\2026-09-07\\gnchoo-dicekeep-art-pr-29-6\\work\\dicekeep-art\\tools\\art-review\\directional-101\\late-waves\\sources\\late-bird-bodies-correction.png",
+  "components": [
+    {
+      "n": 57956,
+      "bounds": [
+        1097,
+        33,
+        230,
+        445
+      ],
+      "id": 0
+    },
+    {
+      "n": 61741,
+      "bounds": [
+        649,
+        34,
+        242,
+        444
+      ],
+      "id": 1
+    },
+    {
+      "n": 54934,
+      "bounds": [
+        245,
+        41,
+        225,
+        418
+      ],
+      "id": 2
+    },
+    {
+      "n": 62319,
+      "bounds": [
+        213,
+        530,
+        265,
+        409
+      ],
+      "id": 3
+    },
+    {
+      "n": 68284,
+      "bounds": [
+        645,
+        530,
+        247,
+        429
+      ],
+      "id": 4
+    },
+    {
+      "n": 65262,
+      "bounds": [
+        1090,
+        531,
+        238,
+        430
+      ],
+      "id": 5
+    }
+  ]
+}

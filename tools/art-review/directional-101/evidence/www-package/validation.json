@@ -1,0 +1,5173 @@
+{
+  "scope": "Final copy-mode www packaging and actual desktop/phone boot. Production code unmodified. No native-device Capacitor claim.",
+  "command": "node tools/build-www.mjs",
+  "checkerSha256": "dc21a2333067466c6b465b6234f24dc13fc54dcc780ba95cee1c0bc30d85555b",
+  "buildToolSha256": "e0de5702e5d5c57c36d448c55032932b55fb074c824deeaa8eb5bc81a49d11ea",
+  "pass": true,
+  "errors": [],
+  "files": [
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w001-side.png",
+      "bytes": 32654,
+      "sha256": "3f6f5538d258ec6546fff326d5e976571639764a9e93e0cffc5679588a938aa0",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w001-side-walk-4x2.png",
+      "bytes": 138641,
+      "sha256": "8fe4b1b781f6c119d5055ee78af266251ff9cad5f286e36ee53f82ca2b9e961f",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w001-front.png",
+      "bytes": 14144,
+      "sha256": "ef7f6d2297753b779cb2e5bb31bd4db97a60ef8158688b618a8952460f015844",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w001-front-walk-4x2.png",
+      "bytes": 52567,
+      "sha256": "03cbbe51cb1bf8c36f82d422aad884f14b057e4ad2c980d2f0080d0647a0e923",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w001-back.png",
+      "bytes": 13053,
+      "sha256": "9df016b1d8cd60247c488de2fa16e4f545ed8b6ef76eab2160fe3893bd0c5be2",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w001-back-walk-4x2.png",
+      "bytes": 46701,
+      "sha256": "80b7fd7b9e529b9f907326baf29f53d72e2f930ddd1737b33e20320691d58321",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w002-side.png",
+      "bytes": 38639,
+      "sha256": "580704a918ddfb1b691adffcb422aa2e2305a44ae139e6ae28f64ad323e39b4f",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w002-side-walk-4x2.png",
+      "bytes": 279046,
+      "sha256": "8ef25bde8ad80a837dcba502fff78b5b1d0c8b3e1f9fe13bdea7a974a8e99254",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w002-front.png",
+      "bytes": 44709,
+      "sha256": "8658f6553aa5cfd8ac74a99efbf2c52933c13d72ad8024c56485dbac42003769",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w002-front-walk-4x2.png",
+      "bytes": 290702,
+      "sha256": "86bbe310179eceb3a30db5eac5d94f04ef2ec90133c3e0854c078d3600fb9db4",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w002-back.png",
+      "bytes": 43600,
+      "sha256": "ffe0206488b4511d0ffcccda5237e460e86424cea88cc341114e07a7d24be024",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w002-back-walk-4x2.png",
+      "bytes": 280050,
+      "sha256": "9a07d09b300655f3852e953f544ee7e784ebb4df69cac9ca493c5b300d9b69fc",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w003-side.png",
+      "bytes": 43341,
+      "sha256": "c732d01042f6ed3fef2d8c0cfc9597979ffd9d6bc74fd912742eb24aada57039",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w003-side-walk-4x2.png",
+      "bytes": 303806,
+      "sha256": "852101c1587b1433bb551b2a99f57432635b66281c984509ca2bf40eba79471d",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w003-front.png",
+      "bytes": 59375,
+      "sha256": "0721962ae41be0227a868c722ba6628f7ed766ca5b927be2a182f87e8705d13e",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w003-front-walk-4x2.png",
+      "bytes": 373089,
+      "sha256": "0b5dcccd59617d38dfbc94cec4b3a2ad8641397d996a2e5eae526b84b00764de",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w003-back.png",
+      "bytes": 55192,
+      "sha256": "d4cc6368ce09427490d22ae1f9f166c72064aedffdcd314cd838fac7a6c8e143",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w003-back-walk-4x2.png",
+      "bytes": 340308,
+      "sha256": "6bf741540a3d708ac7374ac720554535d16bbf13b1af3f4681304533e3046e8e",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w004-side.png",
+      "bytes": 35504,
+      "sha256": "9a5f567ba8d320b315098c341b9a29823d477ca25d1f0c24747582c527ce9836",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w004-side-walk-2x2.png",
+      "bytes": 140022,
+      "sha256": "298e1e10e8d2f9bbe7fdaf428beba5ab2bfa4067cf0b8ff3554bd32ee574c7c8",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w004-front.png",
+      "bytes": 31097,
+      "sha256": "1f3cc2b45c13411146917d0c051e92f85c3638d1a9f3f40e01d9ccdc481b1e02",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w004-front-walk-2x2.png",
+      "bytes": 101182,
+      "sha256": "0036804dcadbe7b523c2d2dd80b8b5b1a7f12398ab68fcd5f51577c149c9be69",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w004-back.png",
+      "bytes": 29778,
+      "sha256": "e813df26d4f6007098ec2b675b602fa52aafd256137af1beac5d273ecb324985",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w004-back-walk-2x2.png",
+      "bytes": 98674,
+      "sha256": "39d3e4d866a9dc1c6e5c67dc49dd7b7cd709b3b6a4411d1dfd26498c88ce6efe",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w005-side.png",
+      "bytes": 52683,
+      "sha256": "0e294a5ad8a438de41a162b3fa8cb88b13a3bd7e719c9bda4dac64ebaabea84d",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w005-side-walk-4x2.png",
+      "bytes": 370694,
+      "sha256": "6ce7ca5b5e0b14e1a0a39e85ec56c387315ff8290049f7c6a09c87364e1cff0b",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w005-front.png",
+      "bytes": 66065,
+      "sha256": "3446368f6272f98570b8b17023f1e3a092356cbc34849988bd28e6f78f372759",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w005-front-walk-4x2.png",
+      "bytes": 431330,
+      "sha256": "61d32517290baf7dcc3d78985f1ab789bf07664cb882195d77044744b7244396",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w005-back.png",
+      "bytes": 61657,
+      "sha256": "3272462fe7b7c4adcc33091c62587be7a8abdfc418835350700e6a4968d60b67",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w005-back-walk-4x2.png",
+      "bytes": 393080,
+      "sha256": "c84a0ca5f2b9a8e375a7f5d724cca567634d263625fb43cea34be907d1248425",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w006-side.png",
+      "bytes": 49957,
+      "sha256": "3e8adfc9e4f104221e59c1563264dcd19d1aa0ae7e44e5d0bdc7fce8a6a4132c",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w006-side-walk-4x2.png",
+      "bytes": 255408,
+      "sha256": "d6a6ebab93b63ae9482381a6caf2377492b2c11e5eb8cf63b9bf92fd57cb1ab8",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w006-front.png",
+      "bytes": 26832,
+      "sha256": "466fe357cd783ac73cc0f8bdeabbacd19c1a64f7d26ec82aca95b1ca6cf61648",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w006-front-walk-4x2.png",
+      "bytes": 110335,
+      "sha256": "951ae86e32445f80434c739d9b886f934dddb4196ae39d949f99cb037293420a",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w006-back.png",
+      "bytes": 23247,
+      "sha256": "564c04a5247d4b3bc0d19a94174a7a19edb45534bda2ee60acf0feda5eda38e4",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w006-back-walk-4x2.png",
+      "bytes": 97318,
+      "sha256": "0c0c73cb89baed7aefb0c6b5e51a5688c72e1c984e6314b840f2f65f2bbe80c6",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w007-side.png",
+      "bytes": 45711,
+      "sha256": "ddb30ebd9bff1e628d5f200ef94e59cfbdcd9e378955af7bc1aa30eab738d0ef",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w007-side-walk-4x2.png",
+      "bytes": 314217,
+      "sha256": "7b21518ee168902d091c4fac44fcf725a2a76d8f6cdf8fd06499d445260f5a4f",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w007-front.png",
+      "bytes": 53398,
+      "sha256": "c254d384701173f9ef2c42e91c72f3387d1e8f01b1d623ef3ced65ec22dcc0ad",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w007-front-walk-4x2.png",
+      "bytes": 346847,
+      "sha256": "9345db1d2a605d75e1ad4555b4ffc20c66f0dbed4397c70dac2bb57be2eab005",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w007-back.png",
+      "bytes": 49647,
+      "sha256": "2f6ae36673fed078ab0c5723890d1249c6c8d413160bdc2d1eefc6453f8981e1",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w007-back-walk-4x2.png",
+      "bytes": 321398,
+      "sha256": "ebcd94d6c537306a123cef5e3e5296a94f612065f6934099247a1257b1693ff8",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w008-side.png",
+      "bytes": 45878,
+      "sha256": "a44146434fe860803fb7c273f0b1b8c4cc3df12ee66ce9bdcb6a7259c92a5eb8",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w008-side-walk-2x2.png",
+      "bytes": 182494,
+      "sha256": "14498b667c50fd872efc0a378902e06d3a7bf1f57b445cca0e45e098ae41a250",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w008-front.png",
+      "bytes": 39641,
+      "sha256": "e2ee15b494e168e2f7b6d2ab7249845b6464941090c133f1d5ae99875e37115a",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w008-front-walk-2x2.png",
+      "bytes": 122108,
+      "sha256": "c6af1310751e855533e394f79bd7091c4f0bff2f2b878b82d8f1b54bc16c8c03",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w008-back.png",
+      "bytes": 37281,
+      "sha256": "e96bef104d3b4f6bea25022771efdddc22f904d600f3e320fc8534ac94f8d949",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w008-back-walk-2x2.png",
+      "bytes": 116381,
+      "sha256": "ab7918623b0ff37eae5cff00fcda996f9261ab5bf2c64ecf7dfbf5c91b68905f",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w009-side.png",
+      "bytes": 46455,
+      "sha256": "48c8466dfc29ad26440f987e826cc7106e409ebf8ec879935db78e338af1ccff",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w009-side-walk-4x2.png",
+      "bytes": 330533,
+      "sha256": "f21e8a319a1c9b8107af173dc895d6a4f57a4f7230721c569c2f8008c951dc54",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w009-front.png",
+      "bytes": 46873,
+      "sha256": "5d56f5fffa38195d07e9850361803d95b5f904e9a1a8609b75473f2c0b9f9dfa",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w009-front-walk-4x2.png",
+      "bytes": 304550,
+      "sha256": "5cff63a7a44fc95f9975d6dc6cc73277dfdd999fe90917a5391dc2b1193edd36",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w009-back.png",
+      "bytes": 55488,
+      "sha256": "220c3b1f668d9ea2c5237d38d53e02dd7b74c407ac51bb122188d66405d34662",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w009-back-walk-4x2.png",
+      "bytes": 348726,
+      "sha256": "b28d871192e7db61930577fbc7c2cd1dc0e0bae151e4b0a78d6b8164596ecc7c",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b010-side.png",
+      "bytes": 148694,
+      "sha256": "515c44e88e580c62913e973055f84c4950029616db3477fda5044c518e91080a",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b010-side-walk-4x2.png",
+      "bytes": 795992,
+      "sha256": "e73eeb18cb1b83ba2d0e7ab031a24467886b17f3ab9ff170ffbafea5abbda5ee",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b010-front.png",
+      "bytes": 164121,
+      "sha256": "6da55183e30c9df4cc82eb7c95c3b5bfeb16ba024cbd319c5a1420334b42a936",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b010-front-walk-4x2.png",
+      "bytes": 929054,
+      "sha256": "ccc2d31493aac909b847278b779e593b66bfc7d3f0bb1f9809a8c659727272ae",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b010-back.png",
+      "bytes": 164326,
+      "sha256": "ff06e2e8778e5a98f1547f687d8a3695a7fc196e735eda3da7249e7c0aa60170",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b010-back-walk-4x2.png",
+      "bytes": 802731,
+      "sha256": "72a8d64910c7150238bce049202a782dc4c1165ad2a9187c7cd5a3ea0658e942",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w011-side.png",
+      "bytes": 51952,
+      "sha256": "5781ebed6a2932eee9ba24031a49483af7fa4abc7d76564061623a434afe4a9f",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w011-side-walk-4x2.png",
+      "bytes": 189800,
+      "sha256": "d364c2d0bdff76a8403fb7264a02a4ddddab4d68d73c24260b1de3ffbd14aa5c",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w011-front.png",
+      "bytes": 31587,
+      "sha256": "c0180e7267ce9237d14bdef69c7a26ee864da1901726f4197dcafb11acae7dbb",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w011-front-walk-4x2.png",
+      "bytes": 122592,
+      "sha256": "da5c5e53209c7a9e26ec4ad5178f2b8955dce1338ca822e6fa47d11e03814014",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w011-back.png",
+      "bytes": 38131,
+      "sha256": "cb202c10d6422b26604369970d21079e93d5c5abdd34691832a32600e47cf30b",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w011-back-walk-4x2.png",
+      "bytes": 146788,
+      "sha256": "3ba212368a773cb5c3d581f4bd1ec588d910998558d7e34ca167637aac3ad78f",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w012-side.png",
+      "bytes": 31061,
+      "sha256": "ca7a5ed94cb1e746f207f42d17e314103b72a62d401285576792a8745f1e4aaf",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w012-side-walk-2x2.png",
+      "bytes": 95334,
+      "sha256": "16594f0f595818f753c9927e85b61aab74510ca787165a81616333e12e71dcc8",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w012-front.png",
+      "bytes": 35760,
+      "sha256": "9f4f488210fa8b5c68d80dff2de66ee4888acfc51dd364c8debf05384a703a9a",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w012-front-walk-2x2.png",
+      "bytes": 114837,
+      "sha256": "d47da57f6a58c7dbd23de563086186e50f57da5613a7a0bbb4f056477e95b38c",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w012-back.png",
+      "bytes": 34906,
+      "sha256": "7353fb015ab53c1019900883c8b43c3e60f4ef6eb86449fb5602080cdf067f87",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w012-back-walk-2x2.png",
+      "bytes": 112678,
+      "sha256": "c5bb6bf9b1dcd771960942d7fc4d45a2dc6af75ed1b3fd7097fdc2810ce3fb7f",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w013-side.png",
+      "bytes": 44075,
+      "sha256": "d89b4bb56591012f6d1c6c6d15e476da526bac3f02f60c13e8300407966f069b",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w013-side-walk-4x2.png",
+      "bytes": 188297,
+      "sha256": "25a4ed840d3b78da90225b8006ba102a9c9f73c943fbab496d99f218a7400e03",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w013-front.png",
+      "bytes": 33928,
+      "sha256": "b927f740f8981f7f40fb28177ccf419fe5e4cd0880d1c476d6348fe9ffdd1b3d",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w013-front-walk-4x2.png",
+      "bytes": 122621,
+      "sha256": "30016a8b276daa8b6c2304e024d7ec255b637a3467e1480b8177181dcc7ac6a3",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w013-back.png",
+      "bytes": 27653,
+      "sha256": "8a5a409f3f1e2b37d5e51d6836382b88fecbd58b1f244a40396b32fa7bbdee60",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w013-back-walk-4x2.png",
+      "bytes": 104982,
+      "sha256": "d45415b0922a6e6cbc51f1f623e3bb1f2cc81e3934057df081f195841b76aa7a",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w014-side.png",
+      "bytes": 46770,
+      "sha256": "ce6282d6eb7a0c846a40d7b9425b526d9f573706aeca7e1d9d0abe09e4c0eedf",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w014-side-walk-4x2.png",
+      "bytes": 184557,
+      "sha256": "bf6a74962fb87da8ca010d22e40c0f08f6f939f79949c00c76c9d47fa87122cd",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w014-front.png",
+      "bytes": 32987,
+      "sha256": "1db362d550608657268862d1bafd94af2f02b67c80f1917449165b975a93d5cd",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w014-front-walk-4x2.png",
+      "bytes": 108455,
+      "sha256": "b28e0bfe10d8f2f6688f63710ec66c6d0389dd74cec8dad1ce1d43139ed67f41",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w014-back.png",
+      "bytes": 31427,
+      "sha256": "19bfc2b0f3a935b575dc245fa9db69f44a8307b4d2cc404aa965bcc6527749e6",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w014-back-walk-4x2.png",
+      "bytes": 108382,
+      "sha256": "31b6a3e09093c3359a785da7bcb2a29e887da92ae8df2d388681dc5d10c4ab99",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w015-side.png",
+      "bytes": 48972,
+      "sha256": "f9a37732eb2273fb76d57c46b85c5c479e3eb9ca0ec5770fed5219c3a0dea3d2",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w015-side-walk-4x2.png",
+      "bytes": 321056,
+      "sha256": "9aa89d95e5a4f865ffb8459153f9983083ca954744bf59afd3c8e769da6b6a0d",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w015-front.png",
+      "bytes": 50954,
+      "sha256": "63df267fdc4a43d4ad6d4e5c7af222a61da8e4b3c85f0682185318c6bc84ce95",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w015-front-walk-4x2.png",
+      "bytes": 321629,
+      "sha256": "6fcc1be487c898ac894f4cc21dcd06fcee30120de3db906b1bda61aed22ae47b",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w015-back.png",
+      "bytes": 50994,
+      "sha256": "da063fcea06bb89437fe18ce665ef7c9194e504b33d03b3a0840ebd322537a1f",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w015-back-walk-4x2.png",
+      "bytes": 318054,
+      "sha256": "f77f7af70ef315d4cbdcff7018e3350b05e22bbf45610369853ca91894b5e4df",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w016-side.png",
+      "bytes": 32950,
+      "sha256": "9c3d6b4283535a2dd3212ecbb43937f633cafccfaebe3cc06519381ef67747b7",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w016-side-walk-2x2.png",
+      "bytes": 101818,
+      "sha256": "db11d14c301dac97db613d74ec0721531a1e7e7ebb3bcdb240d999fc8592155c",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w016-front.png",
+      "bytes": 35019,
+      "sha256": "b37690f75de0de669114e107d5854f97c8f7f02c287147e187a8402d1e5162ad",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w016-front-walk-2x2.png",
+      "bytes": 113469,
+      "sha256": "a4601b37abeb0593882fdcafbd891ee6ccf3ae48720c9a12c4222ae62a7e5cf2",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w016-back.png",
+      "bytes": 35435,
+      "sha256": "169594deaa2478604f149f39a2c44edfbf834dfa1d7fcbaed9e0a4dde19f12f1",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w016-back-walk-2x2.png",
+      "bytes": 113720,
+      "sha256": "74b757d6b0b25dd92b4156bdc03d7ba5cc3b4318530a39513d75e872a04074f1",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w017-side.png",
+      "bytes": 53227,
+      "sha256": "4d1a293ba0bcfc90c843c3a4639e2b4e513251b05bd53fca7bafc424e26ebca1",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w017-side-walk-4x2.png",
+      "bytes": 244394,
+      "sha256": "82081fe006cda0969925f425483c61401afdf2b3b0d733f7092e213b1924b614",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w017-front.png",
+      "bytes": 35777,
+      "sha256": "9bb11a0663316eb9a0741c1a8088fbdc5afea6d02d95bdd20f017a3d9e447a35",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w017-front-walk-4x2.png",
+      "bytes": 133196,
+      "sha256": "812e43a59c9288181843deffcfd294f8800bb89a89e612b588ab8a618d6bff6b",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w017-back.png",
+      "bytes": 32279,
+      "sha256": "93e5d08428dea1a5770cb3aeec4ab9ebb8f2a3faf594e46d2183fa22d0e29d7d",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w017-back-walk-4x2.png",
+      "bytes": 127534,
+      "sha256": "9ed6915bf0bbda319996a7dd701c4c1d2c5588736d8ea2f811b40e779ef02e92",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w018-side.png",
+      "bytes": 51584,
+      "sha256": "2e7a6d2a9528f21febb6fedc3f90e47f377cee7f68c8ea01753f2dc858ceb743",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w018-side-walk-4x2.png",
+      "bytes": 173322,
+      "sha256": "c311b52c553e983f7ea70537f223d19ae0f793f23d94b870c6de6269bde00fbc",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w018-front.png",
+      "bytes": 35942,
+      "sha256": "6895f1e90d574a247acb8a222b0dad8954f3c62cdc7109052164b730b808fa4c",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w018-front-walk-4x2.png",
+      "bytes": 118251,
+      "sha256": "e2d6e50b9a45dfb6272dbca5fb030ab85bd7cc4a364319db430900a2bcb87a21",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w018-back.png",
+      "bytes": 37274,
+      "sha256": "37ac4452f606becd86227e6eb70a34b809d09e3ea3a76a1b68dab7ece76b1d56",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w018-back-walk-4x2.png",
+      "bytes": 123170,
+      "sha256": "44f48486cb63329d935b0751c4b755b4c9b14cd3535266928bf9f8f2ada2277c",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w019-side.png",
+      "bytes": 53609,
+      "sha256": "66ada2c1a2c11e658ca83f2d2f75b19d7aa051e35a17245e35b874e41d1981db",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w019-side-walk-4x2.png",
+      "bytes": 230640,
+      "sha256": "cfedd00a04adc3904210bee674401607a3f00c3813e37019138237f1aee8a732",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w019-front.png",
+      "bytes": 40265,
+      "sha256": "db1630106be92f68799031482602abe353f8bca49f287ded98867e2d3edac08c",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w019-front-walk-4x2.png",
+      "bytes": 147696,
+      "sha256": "7278c364e761309ee6f675b01bc557a7b5570d189bfc09eecb1251f7d3cd9736",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w019-back.png",
+      "bytes": 35872,
+      "sha256": "d40c2dd82198b713c8c5788fc4c4469f83a916992d39ba9c377dfa5eeae2e162",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w019-back-walk-4x2.png",
+      "bytes": 141148,
+      "sha256": "af47723f5145faa7634b5f9a4bdfe888ae6a745800b77474c3fd84eff4d025dd",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b020-side.png",
+      "bytes": 157681,
+      "sha256": "d11b69fa46d513bef908c2f75a5ecf7bc0941da8ca2296ec96916102624aeb5b",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b020-side-walk-4x2.png",
+      "bytes": 1037508,
+      "sha256": "79cc1f3c8950421bc68091ab335884430704400fb3b29a368395aa5a6e6b7a7e",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b020-front.png",
+      "bytes": 185717,
+      "sha256": "8c4983bbf27c0939eaa1659deed1727dabfe1ce65c2120598261c987211b643f",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b020-front-walk-4x2.png",
+      "bytes": 1196553,
+      "sha256": "b5eb9d2ecebc0bbabebe17752da3ad1c4cf3526de1df991e6701291d83033c3f",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b020-back.png",
+      "bytes": 176066,
+      "sha256": "9d56347107a08702d95ea79a8886e274746a818a6c09e9a899f3453fc0bc44ea",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b020-back-walk-4x2.png",
+      "bytes": 1127835,
+      "sha256": "42675b571371b279474318446fe72672ab2852f31250b920cd77c9e9295d435d",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b020-2-side.png",
+      "bytes": 149026,
+      "sha256": "eff9911219ab0d50846153cac31936e8d90c442e8d95178bcf95c83ad7dd1aea",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b020-2-side-walk-4x2.png",
+      "bytes": 682057,
+      "sha256": "cfb3246aa8e5006f042181f3f7cab5218db3a4aee052fc33586b01fd11a4be67",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b020-2-front.png",
+      "bytes": 140810,
+      "sha256": "e873f14083a76d26b6149eb4142b0aabd4a12b4ec6feada339deb93bf09b86d3",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b020-2-front-walk-4x2.png",
+      "bytes": 548906,
+      "sha256": "75efe73c837bd9ccc44b3171da725050a9bf539cdc66447784a9d37f180256f2",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b020-2-back.png",
+      "bytes": 130880,
+      "sha256": "4549058f9f58254bb94b2f9f54cc2925dbd76d698e36c7efd80b79c8ed091161",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b020-2-back-walk-4x2.png",
+      "bytes": 523226,
+      "sha256": "ad5213313c13a4dc7192895fca17879049e9162604dbbb2af8b23c711e1f289f",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w021-side.png",
+      "bytes": 14403,
+      "sha256": "eaf21157d86635b2089ced3cfe8690e69d75c09efd11be0c58fbcc5970e8e9c2",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w021-side-walk-4x2.png",
+      "bytes": 77854,
+      "sha256": "47046ecae640e873d0106cbcb9682ac35fd2b3cc8f0ce8cf7ca658372ab63d2a",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w021-front.png",
+      "bytes": 12608,
+      "sha256": "5385ebfda364377449a8df99aa79f81ee18c3a99074c19f443c84e087b4c8225",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w021-front-walk-4x2.png",
+      "bytes": 79914,
+      "sha256": "18fe53dd95763050d834a1dc2e9beed1667e3892156f08e14044068f3063a38a",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w021-back.png",
+      "bytes": 13233,
+      "sha256": "a0f8452c53b9b7f4d5bb77f4110acd34a4c897f6ad3a3473b4a213d079a495e8",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w021-back-walk-4x2.png",
+      "bytes": 83552,
+      "sha256": "661a40f2fe128b7b171a65333cca4d10f445c9125edf0d6426cfa6a30ad8efd6",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w022-side.png",
+      "bytes": 41753,
+      "sha256": "857da7b8fa89036d2ff508d77395b27744e94f408e0b4697c403b7248837ab03",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w022-side-walk-4x2.png",
+      "bytes": 139954,
+      "sha256": "fb977afc22f439eb7c9372dcec95c3d24f3d03cf9eedc5d434f46ada950df69b",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w022-front.png",
+      "bytes": 35099,
+      "sha256": "e82d1e522a1746be3a3f60b5161455c59908ef8738549760574e54239d36e336",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w022-front-walk-4x2.png",
+      "bytes": 95953,
+      "sha256": "ab52bc759645047846e7c379955162966b3974c4016a3c93c0fe2d07c7402168",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w022-back.png",
+      "bytes": 29815,
+      "sha256": "696833e857902b419bcfd06846de232510de2876e30a7bd775f341363ad0e9b6",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w022-back-walk-4x2.png",
+      "bytes": 80339,
+      "sha256": "986845d5b41d4d74bc73eecadbb004fc8531c4227bd049481e841fdbc3c249b6",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w023-side.png",
+      "bytes": 34001,
+      "sha256": "c675b3e303b25e83c7e655288698c8aebf9ccb156a10595a4e7d9a3e588f1d37",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w023-side-walk-4x2.png",
+      "bytes": 162140,
+      "sha256": "456583207b54e2bd997390221d207b35f9288910b0f0c01a51f39bda8ca6ed3a",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w023-front.png",
+      "bytes": 25656,
+      "sha256": "f753bb80ea71d6d6627e0931e5446191ea29af9c9f269e07cfc63f0e15c6b455",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w023-front-walk-4x2.png",
+      "bytes": 80643,
+      "sha256": "2ab55bc8b5ba94c80edc164fa6956aa7c9fc8b41913302b7b734f88039177f58",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w023-back.png",
+      "bytes": 19487,
+      "sha256": "e6908ecd4615fd863d5903c573aa7dcb57e348849d10da5740e4bd8020518f38",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w023-back-walk-4x2.png",
+      "bytes": 80273,
+      "sha256": "5f62af7d39fc4183f34c6e4cf13425ca346c5e58e5760890981d4a2b6ee839ba",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w024-side.png",
+      "bytes": 34320,
+      "sha256": "e0c2dc59749f9b8897aab4f0951fa1ee962272f37a04c78019f11eb5b947d8cf",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w024-side-walk-2x2.png",
+      "bytes": 104790,
+      "sha256": "c5ca854b5285633f932eb664ff365a100e16a488457997197de5d65ead5d6a4f",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w024-front.png",
+      "bytes": 29622,
+      "sha256": "56a6880275ad7b481e6d98792b865b8efe3e719b3fe786d6ac241bbbc93e5e73",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w024-front-walk-2x2.png",
+      "bytes": 87733,
+      "sha256": "4505e942ddbe486c7952550f4247c0214471566e1f5c5d814bbd94a6a3c3d718",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w024-back.png",
+      "bytes": 28901,
+      "sha256": "4dcf3287c39cf7c80c3a330bd18685f0caadf241feb3f52d75e9c61f384c1d30",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w024-back-walk-2x2.png",
+      "bytes": 86575,
+      "sha256": "0429a3c422075486fc92b819bcb48ee17baa940fc86d3476b07f2ef5aef24a6c",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w025-side.png",
+      "bytes": 36993,
+      "sha256": "fa2409e9cac42bd7871817f4e9fb7f9a3c11d0e51cda2c608db221fc679e83cb",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w025-side-walk-4x2.png",
+      "bytes": 163616,
+      "sha256": "8f7ff6b6c05b2e4673a36c7060544b5e98c5e0955a6131b0771db01016105c73",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w025-front.png",
+      "bytes": 30744,
+      "sha256": "2e9b6f27e4649fad2c7ed919e907aaa03c9830f64da83d6ad08e8c99db56fa9f",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w025-front-walk-4x2.png",
+      "bytes": 136238,
+      "sha256": "dc2f632516ab68be3e6ae0204f776d682c3396c9ffcbeda76f893ac6cfcface8",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w025-back.png",
+      "bytes": 29397,
+      "sha256": "322a4b6a1d883fae3bc3d1820c2198fcaae976f68e2ccf63b473d5eab72a1006",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w025-back-walk-4x2.png",
+      "bytes": 158635,
+      "sha256": "1b0afbcfb5ca4885c80ee045943bd7f55b85153ceeb017830996f80791ec1fa7",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w026-side.png",
+      "bytes": 43644,
+      "sha256": "84588b1256ac3e167eb3a6812354a2f29a3ab4ef3cbe161c58917d6e1b5f80c7",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w026-side-walk-4x2.png",
+      "bytes": 203698,
+      "sha256": "9b9aa2d84c0d751040450b09987b21101596eb0e240b04f76622c112dc8122ed",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w026-front.png",
+      "bytes": 33093,
+      "sha256": "92e6cc5cb24e787180afd8229cf2ed5db7859c17dee0ac2ca3db96a7fcaa013e",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w026-front-walk-4x2.png",
+      "bytes": 128692,
+      "sha256": "34016bd54be02b969589bfc74288f7d060990fd31f63fe19a9e6a8bb240b48a7",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w026-back.png",
+      "bytes": 50271,
+      "sha256": "ddc60320c78de91ef8cc1e7d8da0310d43e1fcbcf8c6f6eb3da8cfeac49f3d36",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w026-back-walk-4x2.png",
+      "bytes": 248112,
+      "sha256": "e0686d7be10c616aa64c7746a4cb879a4778d95419623f98666f714920493df7",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w027-side.png",
+      "bytes": 45647,
+      "sha256": "3c26264e9de78119e36ccb91d34964a1f1c334297bf5a6793a5f6a379379de70",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w027-side-walk-4x2.png",
+      "bytes": 217552,
+      "sha256": "2b040d2c2cbcc1575ff164a54d387d590d41c4e352bf944273f7f7c88fc48c3a",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w027-front.png",
+      "bytes": 25445,
+      "sha256": "29adb1133723125d7f83be39d7544c68d006edcd03abf823c1798692782288e1",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w027-front-walk-4x2.png",
+      "bytes": 76750,
+      "sha256": "cdf0ef55ed4583d5a079c16f66d11a4d62042d2775f8b3eff3afb3a1da90975c",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w027-back.png",
+      "bytes": 20415,
+      "sha256": "fe744c3a0f39c86fe808fc78d1e6b1efe42a66d7782f0b69ca0e26be8ce0953d",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w027-back-walk-4x2.png",
+      "bytes": 73664,
+      "sha256": "b6f247817afcef83574ec9709e62020df3af5df658f9c0ca9344ce7e5c2b5dce",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w028-side.png",
+      "bytes": 38450,
+      "sha256": "3b2bea92a5236cd73dda2088aa4f584ef89766a471d26b907a2c9eb2fa729bfd",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w028-side-walk-4x2.png",
+      "bytes": 177368,
+      "sha256": "47e73c821289e62971e54796511972b9c987485abdec557a1441f1cd38a3a958",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w028-front.png",
+      "bytes": 27669,
+      "sha256": "f95ac0120dbf564c7e77a966cb814d95ae67880ff9ea18d4f378c37f2d73e9e1",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w028-front-walk-4x2.png",
+      "bytes": 123347,
+      "sha256": "77e0005013309432144d7970164dfad4ab7eae2145275fb1bf5194024ed0915c",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w028-back.png",
+      "bytes": 30215,
+      "sha256": "4dc2c070acef3a450ac5829b5c9a64151d98b418d86f0457694d1788875e3274",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w028-back-walk-4x2.png",
+      "bytes": 168382,
+      "sha256": "70c87932a1d2fb104306a569d5920bcfcb5a5e902c3a25870e4b25462d6750f5",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w029-side.png",
+      "bytes": 10797,
+      "sha256": "3bb307c310a57bd5c2f8bbdf8e61e275e8a868f65ea60a920a8d3ce14860a990",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w029-side-walk-4x2.png",
+      "bytes": 59901,
+      "sha256": "a2974bff44d9d06126ef93addb1d7e058aa086aebcd7e994550c6da5fc8936cc",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w029-front.png",
+      "bytes": 10005,
+      "sha256": "30cd8fac7d241ce47d2b2ba7b1331db5d526f0f8e67517a7870e25f36633475f",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w029-front-walk-4x2.png",
+      "bytes": 65080,
+      "sha256": "85eecbd98d94564d5e2033828b4193ff82d10ea218139c88097a771d02dfe5e1",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w029-back.png",
+      "bytes": 11393,
+      "sha256": "4db7186287811f53d14de8d5a2868e27dc069af2d55c16e12af30e2437e59926",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w029-back-walk-4x2.png",
+      "bytes": 72511,
+      "sha256": "05fe6819ade12873a7cc1be5aca577816b8837f0e09b183a96ca4da6f9791b95",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b030-side.png",
+      "bytes": 152465,
+      "sha256": "88be401326c1ce04a22279cc74cbee6dfcdb595fc5800ff880ecd022db70822d",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b030-side-walk-4x2.png",
+      "bytes": 979355,
+      "sha256": "c12d0bffce2813dbec6fea81af9f5b1df86fbbd54c39e0527ed61fa3b4248797",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b030-front.png",
+      "bytes": 164475,
+      "sha256": "cbe254574f389fbfe4d9c4370ea16f73ef5e50bfecb2b425d7c5eb082e4c1daa",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b030-front-walk-4x2.png",
+      "bytes": 1023706,
+      "sha256": "80e6b4699fae533714f0fdbb97063daf6fbc0753750fe6d4100d3e84feebf93e",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b030-back.png",
+      "bytes": 160073,
+      "sha256": "0f05d5639af93954e02e77d04102fa675e1bf6a535c354ba7c28b73dc5850375",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b030-back-walk-4x2.png",
+      "bytes": 996694,
+      "sha256": "b70f6abb086fb8bbd0daf2b4f47733020d83349b9dc3cdf0359815cbdd2a8ab2",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b030-2-side.png",
+      "bytes": 110989,
+      "sha256": "60ab791f280920b0ce08a1e5b3545799151fb061593d04fa1cbb6dca3e07bac2",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b030-2-side-walk-2x2.png",
+      "bytes": 293045,
+      "sha256": "a1a813d49b7fa82f591597de27ba7e2f3f284aedb55ce890023280bd599bffde",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b030-2-front.png",
+      "bytes": 168505,
+      "sha256": "227a2abdfa906458bf51b22e765b1a493c8bb5b8a619122585ff5e4a459ec7db",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b030-2-front-walk-2x2.png",
+      "bytes": 499248,
+      "sha256": "844f90f01cbdee98ee34219cdb310d99f3ea96efcc785af6034661b3798bb6eb",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b030-2-back.png",
+      "bytes": 146345,
+      "sha256": "8fe37f8b052726fbb358f45ee9c7d110a2dfba822e858a4ee62d93d504705887",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b030-2-back-walk-2x2.png",
+      "bytes": 424734,
+      "sha256": "729feb9327c70bca10edbfd11205ab1db4e2e5c57b61844feb87405e7ecc0352",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w031-side.png",
+      "bytes": 47610,
+      "sha256": "9217196ea390f29676f5fe66710b31916fb92da5edc8a6a34da421712f5baedc",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w031-side-walk-4x2.png",
+      "bytes": 297395,
+      "sha256": "eeff7d63c0c562f6ecf9453b148fa742069a4179ad1aa42383d466451bcd120b",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w031-front.png",
+      "bytes": 53370,
+      "sha256": "283d7e0243dafc3d5510bff11d9b57e1506d997220a28f319076bda88bcdb5b3",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w031-front-walk-4x2.png",
+      "bytes": 332868,
+      "sha256": "c8b901a04b0da28e02cb8dcc68b20015939aa166b123467385f9f93e34b14759",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w031-back.png",
+      "bytes": 52946,
+      "sha256": "1ca88a2041e8b3c925562ff6c5b7f434fcb96025c49702099144fa168590dbed",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w031-back-walk-4x2.png",
+      "bytes": 335319,
+      "sha256": "295ac756444ef043857e3583b8c562b745537a2226e59101fb8e67d27fe9489e",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w032-side.png",
+      "bytes": 26911,
+      "sha256": "710626ce40da690333abd3e9ce920d082ca28acba1b6264eb474219c9be157ac",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w032-side-walk-2x2.png",
+      "bytes": 83592,
+      "sha256": "6adc1a67a2f210e7d0fddbb54d86a6b86106a7d9bd64ef9cf452fccbeaceb806",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w032-front.png",
+      "bytes": 38500,
+      "sha256": "7b691f4dd42345b61719213368f9d99f2639d92f9640f7335b219dc1b13c1732",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w032-front-walk-2x2.png",
+      "bytes": 123476,
+      "sha256": "5d6ded54b8d326bce0deabf7f77475c1bdeb66fcc32e545004fffce99fcf0eef",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w032-back.png",
+      "bytes": 36364,
+      "sha256": "0abcf501e9b23613704c7ffaa46627b0dbcfe168cce7a73626b409d742e02aac",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w032-back-walk-2x2.png",
+      "bytes": 112317,
+      "sha256": "8f2fb38bce0c94065cb5d0714f21366ddd75d46cb9f4130639f5f397eceb3d28",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w033-side.png",
+      "bytes": 59988,
+      "sha256": "0f80a0f538f6746c82665daf3c7b1ecc7646cebf08c40fc3670031b5cc1db4a2",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w033-side-walk-4x2.png",
+      "bytes": 362856,
+      "sha256": "cc3cddcf92a96208c0f14f7e18ee9570badfa60189d065160dab3b4366eed5c2",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w033-front.png",
+      "bytes": 74837,
+      "sha256": "efea6196b27e1112c5cbc6be0438464113b4b7adc10004ad88cde33d5fc27203",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w033-front-walk-4x2.png",
+      "bytes": 446408,
+      "sha256": "ff5d1e566b7f4ba92f03d4093548cb77c222ccaa7647a21f7fa2b89a085a7eb9",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w033-back.png",
+      "bytes": 72788,
+      "sha256": "fdf4627a58cddd7490a9958f563623ec5051398cc42023e4fcdebc46f342e26e",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w033-back-walk-4x2.png",
+      "bytes": 446522,
+      "sha256": "ad06eae18f8d98814e3e27c70d6d71fe3834cda820951aac8385deba9930bdde",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w034-side.png",
+      "bytes": 54517,
+      "sha256": "8f0f961d124cdd4c2db3114b7aaf113ad86aec6c2d349dd662595531d3bbbf1e",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w034-side-walk-4x2.png",
+      "bytes": 332174,
+      "sha256": "41c54078043521e8e1a03c43de0925f073d923369d14532e057f381cb261a241",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w034-front.png",
+      "bytes": 61006,
+      "sha256": "be52f81f144074aeb974e490f92a8ec40818ae081a423d547753bac90a99b7d6",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w034-front-walk-4x2.png",
+      "bytes": 379032,
+      "sha256": "95820ad993165611692b4da35d24a80dca5cc2b096c2814323a2bd6c573d4e87",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w034-back.png",
+      "bytes": 62956,
+      "sha256": "92b2cf821dd6d2bd98b34277ebad7538300b1fb396d65014cd7ff883d6e274e9",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w034-back-walk-4x2.png",
+      "bytes": 395916,
+      "sha256": "0327e0a3457521891bbbff71019719c544631457fba8feeac1040604378499ca",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w035-side.png",
+      "bytes": 51246,
+      "sha256": "2c37361b93a9bc48f981e8efca9763139045e4c77c85146160e2b065c3d740d9",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w035-side-walk-4x2.png",
+      "bytes": 317047,
+      "sha256": "e53e2f5ce16571cd78347adf2e5c5bbe870091c18562267de545baf1978f1589",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w035-front.png",
+      "bytes": 59963,
+      "sha256": "9ea14ddae97df8c746d97d464de7f5e9895dc8704430a17059caa2871a22ba89",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w035-front-walk-4x2.png",
+      "bytes": 326366,
+      "sha256": "18821348d0ef0a08bc850425a620e803da9a966a703446780dd50ac071e55169",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w035-back.png",
+      "bytes": 64085,
+      "sha256": "59e203f1f705812a83d4207de48a9c1af4d12f01caab1baeae4ad2b2e7261d08",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w035-back-walk-4x2.png",
+      "bytes": 402860,
+      "sha256": "414eeabdeeff7b35d992ccb514a1e0628cba70f97472732fdc6c57789ac3b795",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w036-side.png",
+      "bytes": 41516,
+      "sha256": "2764b2a62ec849ef7559de437770ccee2e72934741753babe459e40a36d507e5",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w036-side-walk-2x2.png",
+      "bytes": 113779,
+      "sha256": "93baaaed07978ec1b6cb12f789c6b943366022c5500db058e1fa38caf900cae8",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w036-front.png",
+      "bytes": 33815,
+      "sha256": "b940f27013a41e938400038435c1cb6d744d489e069a60faccd6f032d192ebb4",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w036-front-walk-2x2.png",
+      "bytes": 105950,
+      "sha256": "8a1cd3379cbadf7601235d5710b143c68d600e3c06dbf96b77cb24f80edecea8",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w036-back.png",
+      "bytes": 32759,
+      "sha256": "600fc683a40b9d92816dacb1241a64ea3f166bef7f2912e13e515f3a8f0773f2",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w036-back-walk-2x2.png",
+      "bytes": 103170,
+      "sha256": "b28be6f8b89e0289dcd9b8bcfb02ac6769e2b5492cf528c340556dc745ca04e3",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w037-side.png",
+      "bytes": 43309,
+      "sha256": "4b2f4f89ba11896d63c107ee3f1e4549830c7f831d806865bd0676a9d3a19b1c",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w037-side-walk-4x2.png",
+      "bytes": 267935,
+      "sha256": "61459ec9575cfdd7bb869598ae70153fbf07d53bae4d89b3deed6fb63bfae53a",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w037-front.png",
+      "bytes": 49088,
+      "sha256": "6fd31d8266b42dfe0388e4753e70fd8b7368c5a67df329e77b0d144782ecde86",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w037-front-walk-4x2.png",
+      "bytes": 301754,
+      "sha256": "1925514cafb773000bb2c4f3730ca0f24d76699fd415a8f0e3cc8783208eb416",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w037-back.png",
+      "bytes": 43121,
+      "sha256": "17e31d91f0ca9872c427876d1ebf1328e228856bd5cc1df3abd4bf2bb2287fd5",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w037-back-walk-4x2.png",
+      "bytes": 265821,
+      "sha256": "c5bd2b2e6750c4b2db1c7620ea7f80c11e35c8e3ce64105175d80bf848b19712",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w038-side.png",
+      "bytes": 44832,
+      "sha256": "21055b8c3962377ead2c290d1bbfd188e20efed983c091030876cb660c8e43bd",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w038-side-walk-4x2.png",
+      "bytes": 266382,
+      "sha256": "e76c5f614a579b1806686069365ffdc1b8f8dad40ab80d1d147596cc8ef5663c",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w038-front.png",
+      "bytes": 51814,
+      "sha256": "cf6dab3f83fd197ce8dfbdb471e3dd33822daf7995456ea370a41fbc1cceafa7",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w038-front-walk-4x2.png",
+      "bytes": 333208,
+      "sha256": "05a1ba551594e33f9cfd23436a20ac23b983f08fcd8bf912391b2d39261664b7",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w038-back.png",
+      "bytes": 46521,
+      "sha256": "7e3e556f21c69b2ca7902e6f8201c404371addce48a052987859706a57f33475",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w038-back-walk-4x2.png",
+      "bytes": 300178,
+      "sha256": "8251830c014aaf2684543138c017949f23c05dc60cdd37cd851572438967cc07",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w039-side.png",
+      "bytes": 43027,
+      "sha256": "7d7c98e16c149f0417199dd90b6cf448aa1f8f21f32600c3f1befd8849973d12",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w039-side-walk-4x2.png",
+      "bytes": 258150,
+      "sha256": "31fc7f83e8f40f5410d3851896a1b9011f5f4cf4de8593b874f50e8e872da8ea",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w039-front.png",
+      "bytes": 57817,
+      "sha256": "590ee850125024c1c72495e6849b28feea7871462d0e863b8c173bdf33f55d57",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w039-front-walk-4x2.png",
+      "bytes": 310682,
+      "sha256": "0561cd501eb75f6be73dff48033aa166150c0f680d76298abbb36e3dba1f54df",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w039-back.png",
+      "bytes": 49874,
+      "sha256": "b80454f327deb9a2d433590a4c3bac373f8c215143d07dba3f85a2f51808fc6d",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w039-back-walk-4x2.png",
+      "bytes": 294490,
+      "sha256": "93dd5f95c12ea93a320487581a4fa9e1dc7e310f6ce2e68c298237142079c05d",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b040-side.png",
+      "bytes": 165084,
+      "sha256": "5c9b99cf2efea6b2b71e3527effbbb08541ea05d96895ccf8d91f79986633bf5",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b040-side-walk-4x2.png",
+      "bytes": 1054185,
+      "sha256": "ee0162be7f773e9b5036111ed80efa568fb36e01cdfb17a3fe072c1e877c48d8",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b040-front.png",
+      "bytes": 193022,
+      "sha256": "dc9d62ad82dcb4ce73cda08f275eb0d4f8ffc10472ea8f46890c828478df5d7a",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b040-front-walk-4x2.png",
+      "bytes": 1263536,
+      "sha256": "8221a23613a1eca2ed254c214ef6347137026dc3b4fba5714fa14fdabb34fe0a",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b040-back.png",
+      "bytes": 185503,
+      "sha256": "5f622cd3a610e2c52bba57c3f62887b8bd79cc50d55f754417bc490f12365e78",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b040-back-walk-4x2.png",
+      "bytes": 1194414,
+      "sha256": "975653ff5c1b559d11465d6a8ef28a0d358d7a927f772a44efc2a7be9f1932e6",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b040-2-side.png",
+      "bytes": 204922,
+      "sha256": "054a91e11aa53301518c3723cf01ffcde4cb098c82a21c643b43876ff90306ce",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b040-2-side-walk-4x2.png",
+      "bytes": 1272046,
+      "sha256": "50d669f633e668d4cd5e4e5780d39552a669c3c0aabd6ed5ed21d6c9d415ea36",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b040-2-front.png",
+      "bytes": 252427,
+      "sha256": "6ee509f33e335e43ab603682fb247573fad060106b7f01853294683a39e8b158",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b040-2-front-walk-4x2.png",
+      "bytes": 1646104,
+      "sha256": "6c7ea33142bd1ad17f54e3bfa64f98895548397c89c7f4adf37fdc782c7cd78a",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b040-2-back.png",
+      "bytes": 245657,
+      "sha256": "3bdf30bc735eacd09fc563ce1c8c2b8712c93f98ba111408b8dc4d5deecbb0c1",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b040-2-back-walk-4x2.png",
+      "bytes": 1596392,
+      "sha256": "9a2c3954121530ddc48fc94f5dfeb187a78dd63d98617099e2ce6a6faa7bcf63",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w041-side.png",
+      "bytes": 52578,
+      "sha256": "0a4b00ffea4f0590f8e03d5dd99dc3f07ecdc8babfff8c57aa176af6ea40d83a",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w041-side-walk-4x2.png",
+      "bytes": 316881,
+      "sha256": "047ca63d12227dba4befcebdd63c86eceeb19fbe181301cff9db2b3140e40088",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w041-front.png",
+      "bytes": 58025,
+      "sha256": "5e2b5dc8aba3bcccab14237d8d246a5ab05869971d4919eeeb4e1033853a2fd2",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w041-front-walk-4x2.png",
+      "bytes": 309720,
+      "sha256": "649567de8deb9b07535c1af20d8b1b07ea5c47be6e1b5b6d3b71d32a6bb7f674",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w041-back.png",
+      "bytes": 58133,
+      "sha256": "9782a3e317daeeeb5e0e57f9435cb0e8fc2bde2c3c062904c50631bc79cd7b86",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w041-back-walk-4x2.png",
+      "bytes": 353886,
+      "sha256": "a5b710cb26f7b5b5fd3b66ea4302edb6535749c1e9cb74e1368f37d9516c0d07",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w042-side.png",
+      "bytes": 49032,
+      "sha256": "ed40717b38129432d931277e9779dde5d189556b964be4fead10daa21213fd65",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w042-side-walk-4x2.png",
+      "bytes": 286444,
+      "sha256": "c953e05c137c068c34ccbea16dc3a7b709baee828a6cb6c6758f1fa2e1450eda",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w042-front.png",
+      "bytes": 55234,
+      "sha256": "8416cccaa643deca02d6eaa2e2b06069da1babc156aca6ddef330170d4ef11bb",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w042-front-walk-4x2.png",
+      "bytes": 345861,
+      "sha256": "4698b767bfe03ff485655baf23b8ae8a1bb8807f5c07ab46241e4f7a31c0b334",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w042-back.png",
+      "bytes": 54366,
+      "sha256": "73dfbbe676c52c9a630d24f608b0e85bd4bc57b8756fbd488058c2afa2f61eee",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w042-back-walk-4x2.png",
+      "bytes": 338065,
+      "sha256": "db2761dbe987fec017b7bfbc2b7bf72429c89ef39e7693af68815e4c28fbd924",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w043-side.png",
+      "bytes": 55456,
+      "sha256": "a68dbf6f71f2aedbe68c2e1a0e3316c4b4ed0ecdd8142428ce2bc71d02e7f0cd",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w043-side-walk-4x2.png",
+      "bytes": 265838,
+      "sha256": "48c726d62093b3d761d079970c258cb70e0b3b5e304ea2cfd863d457d27523e3",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w043-front.png",
+      "bytes": 35600,
+      "sha256": "081dad364d4710879ec5420978302ab0f29ab40dfbb363c9c8a02a85ed93ed8f",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w043-front-walk-4x2.png",
+      "bytes": 183942,
+      "sha256": "807f5ff73879f04d7954c065ca802a9f0688903eb6bbbb6000af0a7b75a4188f",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w043-back.png",
+      "bytes": 36084,
+      "sha256": "98ae1e816dbc9b32da4810739ac6dd0640c5a039e49c28f98f25d5384ca3677b",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w043-back-walk-4x2.png",
+      "bytes": 159501,
+      "sha256": "16ba28a8e02398fbfe96bb60e6a78863d9f90ba95bb9fd8775fa96c56c1f1294",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w044-side.png",
+      "bytes": 41199,
+      "sha256": "f0d3141d2ed5fac3e22bb939d79c3935f83212d0622a4a1a3af5f251ffc3ddd6",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w044-side-walk-2x2.png",
+      "bytes": 107095,
+      "sha256": "9caf98d08b68de33750a5ab82ff48f205633d1a1c682396f7fd91fdc6565ee73",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w044-front.png",
+      "bytes": 40839,
+      "sha256": "dadbb1fbd685f4aa54444eab167c613e1fd566f88c683cf6d5e5e2b6726b007f",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w044-front-walk-2x2.png",
+      "bytes": 124602,
+      "sha256": "385f9671948934517368c71ccbad96778e501061e6c8c7ac2f0a70edca09874f",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w044-back.png",
+      "bytes": 33280,
+      "sha256": "a15e343293998eb0eab955d0049a3ceff35c9b86ea2ad8cf9d492c443ea4eb44",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w044-back-walk-2x2.png",
+      "bytes": 101270,
+      "sha256": "3489f00a46df7fa524024b084408a40be34797e19a97c680960d264912292a78",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w045-side.png",
+      "bytes": 52123,
+      "sha256": "36ed373429949ba88e5a4a149d630584a7e640adf15479bbbb5d2c5dc5605186",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w045-side-walk-4x2.png",
+      "bytes": 317883,
+      "sha256": "156fcca44aeb5585573b511ae6a2c840dd8a9dc92c37f5578c7a85c75f9f0065",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w045-front.png",
+      "bytes": 60579,
+      "sha256": "8b8f4b45de958e783a21484145d19c2ab34c8a6f45af3de4155653c6c5a60fe9",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w045-front-walk-4x2.png",
+      "bytes": 374547,
+      "sha256": "4dcf12564fc62e927df6cb6ff5e36001328f929cb33e852f73d3fbaf2adf70af",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w045-back.png",
+      "bytes": 62247,
+      "sha256": "f21092a7392179696df54169f6204400057c59f3a9dac31afec43efebabf4871",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w045-back-walk-4x2.png",
+      "bytes": 387572,
+      "sha256": "aad788acd054b0a5137cd8f62d418821d8ea86c4184ab30681f9075ff7218527",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w046-side.png",
+      "bytes": 42301,
+      "sha256": "2293f9de2796fb4b47d0f8c1ec0223a4d7ed152e5fe2587126c040eecf02e3cf",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w046-side-walk-4x2.png",
+      "bytes": 274913,
+      "sha256": "177cfad7c5e13548dbf3b28818f17d9c5f85399116a2a0f4508d2d20d9783a05",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w046-front.png",
+      "bytes": 46880,
+      "sha256": "5adc585be35dd34fe4bd21246c2cae5b83ddda2507b65b401696095bce29c25e",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w046-front-walk-4x2.png",
+      "bytes": 312121,
+      "sha256": "b468cd0146319e2c5f4c215ee06a7cd5a1bc5297fa7d21de14a852fb88bd0549",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w046-back.png",
+      "bytes": 60210,
+      "sha256": "7b3f48bf1fad1d99c7043e3e7e4fd4eeae2b40fcc0e3c098da725a3dda413fc9",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w046-back-walk-4x2.png",
+      "bytes": 382710,
+      "sha256": "02204dd04da67d4db4bedf8c8dbd7e22189f7cbcfc48a261ac1bb183ba0857e6",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w047-side.png",
+      "bytes": 52859,
+      "sha256": "91df542b58874af145d9b6368de348e9eee9bb6f5b873e29cdaa16f9f3e09c84",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w047-side-walk-4x2.png",
+      "bytes": 314115,
+      "sha256": "a07426451e29bea44f00631b0b3edd5632ab27ceb472ffe6bd0546c561bf9d31",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w047-front.png",
+      "bytes": 56478,
+      "sha256": "f6d3465af861095c368eb4a9de83b97391046c24ba6aac44e973be1138dc05dd",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w047-front-walk-4x2.png",
+      "bytes": 361176,
+      "sha256": "6f4022a23057e56d8c866d9e0d624c0c05a3f14ed2cb4a7570c978a68668413d",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w047-back.png",
+      "bytes": 46652,
+      "sha256": "b51f434abc0c86a5588c8f68528764f68cc42b0a474f62e24b486ab64a66e243",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w047-back-walk-4x2.png",
+      "bytes": 295366,
+      "sha256": "9e036e448c397d83a88766c9d225b42149527afe3015d783489c5b0cdc324621",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w048-side.png",
+      "bytes": 37122,
+      "sha256": "ff08c48814504dd4d14c7d9b8f8a3d0181d4c3670641f01802513a0d7ad407a5",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w048-side-walk-2x2.png",
+      "bytes": 103272,
+      "sha256": "c624a0f906c7828bf53bc70bf32e816f1cb541543490d196fff1c0631f252728",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w048-front.png",
+      "bytes": 38247,
+      "sha256": "4a14d6774cec9ac929c48f40394e32ea0a0b7885d175c78fd3558190a934a436",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w048-front-walk-2x2.png",
+      "bytes": 121173,
+      "sha256": "cc96c8928281983bf048a081d31ccb091cd72cb9005d2a577b6af2a5acb62497",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w048-back.png",
+      "bytes": 34136,
+      "sha256": "75bbf692e49f21a438f430b5ee7592f331bacc2aa763bd3e331a1c8d43ae8860",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w048-back-walk-2x2.png",
+      "bytes": 102422,
+      "sha256": "cdf11348e1ded16d549f019ae862901d4ce2a93f88247cd7b056e4d283049663",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w049-side.png",
+      "bytes": 58940,
+      "sha256": "8d96546e81a19d606822a17ee17c928886fe7999d76d713cb41b3d8becd58ab4",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w049-side-walk-4x2.png",
+      "bytes": 348446,
+      "sha256": "2e60854b5e6a6743a6b6bf9ed3326531832942feb21dd86660585c7435a9f7dc",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w049-back.png",
+      "bytes": 56093,
+      "sha256": "669c45b23091fd1b88a847778eae3a2128b7491304d13831132005132814109e",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w049-back-walk-4x2.png",
+      "bytes": 354185,
+      "sha256": "552f37a17607006b40aca69a8272158027e6fbe486dd54690eace89364bf3b86",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w049-front.png",
+      "bytes": 56565,
+      "sha256": "fc67fb23060c3d22d4efd9ea1468447626cdc7faafa98622515bf88c2f6a1ff7",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w049-front-walk-4x2.png",
+      "bytes": 359498,
+      "sha256": "14b4e81813be933691ed8727af80b283da3fd54a853686c3391845d7ae5e488a",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b050-side.png",
+      "bytes": 155413,
+      "sha256": "eb09aabdec60429502df64505147af9ecdd85c390e5271525c7dac2c1e945451",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b050-side-walk-4x2.png",
+      "bytes": 902270,
+      "sha256": "ef5cf3963ba04af01e7d53522802423ddeb11086533241ea4091a643c60f7275",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b050-front.png",
+      "bytes": 208559,
+      "sha256": "b501909dfb07659ca908f394a31e62ac4b60dfa1750f3e84541d536a52575a04",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b050-front-walk-4x2.png",
+      "bytes": 1254949,
+      "sha256": "f97c13d48bd4da2ed0d8b838d4a354acf584c0e71e362c66513d82dcd21d5e9d",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b050-back.png",
+      "bytes": 193657,
+      "sha256": "d2bee4ac631960e97462bad5db51694508b775b6098f681f05bf519005b43ac6",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b050-back-walk-4x2.png",
+      "bytes": 1126923,
+      "sha256": "388f6e847818b034f12dc4ec40a9df5963730e3d4ab258d387ac13efb8e26e01",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b050-2-side.png",
+      "bytes": 202178,
+      "sha256": "189810a444508017df047aa6a905e8bb5d53a4000beaad3f7887b4ef73c443d3",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b050-2-side-walk-4x2.png",
+      "bytes": 1215571,
+      "sha256": "7aede233a08de20cfb1f3a12ea04059930b3a549700a3c93cd94c06e216aedd1",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b050-2-front.png",
+      "bytes": 310996,
+      "sha256": "70e55415aaa0c7c01db7cf261a9ca595984da0fda12eafefc4f6317425492613",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b050-2-front-walk-4x2.png",
+      "bytes": 2053497,
+      "sha256": "695381bc2e2d646b68ffcc91e4396324c3ede6dbc5ae4ac770bf2c4d5ef0f30f",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b050-2-back.png",
+      "bytes": 279690,
+      "sha256": "674cf9ba742b1ae90cc73fb859be1909ac9510c5e38296588f56b1f329512f92",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b050-2-back-walk-4x2.png",
+      "bytes": 1804225,
+      "sha256": "950633b63523abd79eb3436e21b1a79ac9dfc3e2b87adda7a3c16404119604de",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w051-side.png",
+      "bytes": 55604,
+      "sha256": "c0ab137607bcbe6e1a4cfb47162edd0e3028db53a40150c0ec14151d422634dc",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w051-side-walk-4x2.png",
+      "bytes": 342641,
+      "sha256": "5901dae654e2874fc9b43c5734f9025a3d9ba24636951be6ed34a25dbf79cc75",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w051-front.png",
+      "bytes": 58264,
+      "sha256": "76ce2c2430a9a635b1a4acf202b1548bf642f502dcca408bf8985ea0a6cbd0ec",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w051-front-walk-4x2.png",
+      "bytes": 355505,
+      "sha256": "7215ad786f249538fa4a87441c7a98112af6b61e6a1b44c54d4469346f9c218a",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w051-back.png",
+      "bytes": 55523,
+      "sha256": "cbb93453fb11ac7c419028e3d5c4162c955c3a64df2099048d0f289e0310ff0f",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w051-back-walk-4x2.png",
+      "bytes": 341017,
+      "sha256": "b7761e519bb94bf89b9438cddb3762bb17cf884d72fec7404ba42e2dc97218cc",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w052-side.png",
+      "bytes": 22004,
+      "sha256": "782254cd09f7c54ad26543cbc2b8615c623f6f808a171431fd95ff66285fc2f4",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w052-side-walk-2x2.png",
+      "bytes": 85873,
+      "sha256": "00dbc313fddcdaed19ccd7139d54abb8c860df138b1b5d18cd799665b4609702",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w052-front.png",
+      "bytes": 30989,
+      "sha256": "0544a29dce608df44a0c594c6c5693d3a68b294dcde2cdc9ee16059b0e274f57",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w052-front-walk-2x2.png",
+      "bytes": 121196,
+      "sha256": "1cde5c0106afeb44476bc12523914708900a003937708df0d23910ffac32db1e",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w052-back.png",
+      "bytes": 28416,
+      "sha256": "cff5c03d92b8502467a633aeb3d9b9011dfb01115d005989c4ea83203fac4b52",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w052-back-walk-2x2.png",
+      "bytes": 110237,
+      "sha256": "8fb5816445814e83a8e81eab798de50f1daf9b5e86b953f9a4460722e9705e42",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w053-side.png",
+      "bytes": 42590,
+      "sha256": "49477a87596ed9e8f2066f3bac557f1d4ac066b587a7c77840f147aa9b6785f1",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w053-side-walk-4x2.png",
+      "bytes": 265240,
+      "sha256": "4d9693355ede2ac6470ffeacc7ff5b0f85755c739fdc62fcc49e7b0aece008d8",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w053-front.png",
+      "bytes": 47839,
+      "sha256": "abb4f3168e5e634507747a037397763fdd9f011d174a37d777103152cd877b41",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w053-front-walk-4x2.png",
+      "bytes": 307725,
+      "sha256": "0ca8674d3ae04fead0947daa40e52c41ed5de6d325b71679d3274c5de8606acf",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w053-back.png",
+      "bytes": 45184,
+      "sha256": "11bd9d89fd3c2b2d98ab14659ea0718ab8faf3704f8f1ceb9287653328325472",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w053-back-walk-4x2.png",
+      "bytes": 287270,
+      "sha256": "ed50c822a84f2b75331844599aa04ef3e17f2dd328424a36c4d22db52f643472",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w054-side.png",
+      "bytes": 34383,
+      "sha256": "6cb317fa39f60c2a5f00e3b38b115d0f9c06e887257982192b85432485c51e71",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w054-side-walk-4x2.png",
+      "bytes": 170458,
+      "sha256": "4fceb6fda0bcbdca43374cb56dd0549efb0f35462561ea0ee6337ff162c0abc1",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w054-front.png",
+      "bytes": 35825,
+      "sha256": "1189af4d3ebfc7490d72a2f04bbd485e700f8726ad84294964b95638e4b164ee",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w054-front-walk-4x2.png",
+      "bytes": 161761,
+      "sha256": "aa5cf8323b6ea7b1d5bad14ce05a12bed922c8ea7e430f9e9ce20db9847f03d2",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w054-back.png",
+      "bytes": 35039,
+      "sha256": "ed142574b8f81e844fdfaa5791c335e0b526a9410cfa99b832c477caa0e4db73",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w054-back-walk-4x2.png",
+      "bytes": 137631,
+      "sha256": "3fae58fb0a83eaa4544a849ef85dcc0b239f30760f58011d098ea6d81d078ab6",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w055-side.png",
+      "bytes": 54019,
+      "sha256": "95482127d00273f5f308a40e15e61dffcbb604c6a9d0704f0f5a43ce8b42e49b",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w055-side-walk-4x2.png",
+      "bytes": 326758,
+      "sha256": "e4ffc41f4541f027c1c131e9209715f27d451ac0ad4263a121e42c2f1a1e7884",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w055-front.png",
+      "bytes": 60417,
+      "sha256": "7f70a7a82282f128a58fc8122eea6a246b9faa2dc7a5592c366d021e147bbfb0",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w055-front-walk-4x2.png",
+      "bytes": 335433,
+      "sha256": "d4e0a1a5649eb6c70f5fa28e61f822c21d307c77c21de9264dd8ebe601c5049e",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w055-back.png",
+      "bytes": 60722,
+      "sha256": "d950b4aa07590cab2f12f2766fd8b79b03fd97ed5ea0308808c6351c23534930",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w055-back-walk-4x2.png",
+      "bytes": 386102,
+      "sha256": "83958633dcc7b7a66f5ef4a0ad64cb7ccfe4ed4262a51cf0ed582910ed361fce",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w056-side.png",
+      "bytes": 68369,
+      "sha256": "84f76c32966ad060dc8434208d851c9f0e3eb8f623b641780069d36d2be47adb",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w056-side-walk-4x2.png",
+      "bytes": 262083,
+      "sha256": "4ae9e2d191a2c46c652150968db69c1342c8cf998be779a15654e5d5d72ce11b",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w056-front.png",
+      "bytes": 75089,
+      "sha256": "4a9808d2bd12048888bec6b3bab4e6d37a5f0cd09779faac342903f18d183b72",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w056-front-walk-4x2.png",
+      "bytes": 302136,
+      "sha256": "1e9255b05a0c8fe5e83352182410ca6491449a4280a00bc10dbdf55ade7f8937",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w056-back.png",
+      "bytes": 69075,
+      "sha256": "b8a04d7c2e48005da1508a291afc52ce084041e4d90f07e80e000512f359b65f",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w056-back-walk-4x2.png",
+      "bytes": 278617,
+      "sha256": "d05d26d092d1fac648b0785c380cfba00468a56c35a3d16fc854549cba78bcfc",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w057-side.png",
+      "bytes": 53906,
+      "sha256": "e4fb8d13fb441678134ff4989f76b1e2de75845212e17a950c9db885ba4c4022",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w057-side-walk-4x2.png",
+      "bytes": 332508,
+      "sha256": "ee8eee1f48d72a4382ec8fb78590fe85a9386c6d090556bee3116ecc178c6c86",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w057-front.png",
+      "bytes": 53344,
+      "sha256": "09fe84e79afb145434bfb07e68afbff8f0bd6a44d3f2e4c3d3e32feb79ad9406",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w057-front-walk-4x2.png",
+      "bytes": 357486,
+      "sha256": "1b31182eae409592a5646c0a3a8f46e0f456aecdbc057fa5559fa34f0cf7e1bd",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w057-back.png",
+      "bytes": 62750,
+      "sha256": "ee4ba2acffe3aa14d2a27415dfff87c26435e0fe1253e8bedf32e4c6c6f4375f",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w057-back-walk-4x2.png",
+      "bytes": 405550,
+      "sha256": "a21be769cc9c1602e23da7f46b114c36467ef125d7e5dc7a3bfff10f343e9a68",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w058-side.png",
+      "bytes": 38730,
+      "sha256": "e645d407b9b5777d19305242df10352525ef325dde1b680be32263cfc755e790",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w058-side-walk-4x2.png",
+      "bytes": 217266,
+      "sha256": "db51db4d762daf591166520b32fdb0e9c61099c409375c0da56068ab942f7cd9",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w058-front.png",
+      "bytes": 43254,
+      "sha256": "ebe1bbee4e771f25e04436decf7fe821f28cb1a77c5c8e3852c3c56469384650",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w058-front-walk-4x2.png",
+      "bytes": 249389,
+      "sha256": "d6f093be11a137e188fbd116a460b2945e859daefc9b8b0510b015a0598b781e",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w058-back.png",
+      "bytes": 42326,
+      "sha256": "d770cddb17daf5275cf2d3e52b9011b2dc1bf13da46aea431954c8b4a0a68eb8",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w058-back-walk-4x2.png",
+      "bytes": 243520,
+      "sha256": "c64e81b92eca6c745f945d78408616487e854d81673a9c18f505f491bae1a751",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w059-side.png",
+      "bytes": 44133,
+      "sha256": "5815bc6f341ba32fdfeb2d0f384f67c1497ded1b1abfb7e9002cc3e8c088bd43",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w059-side-walk-2x2.png",
+      "bytes": 174029,
+      "sha256": "5b15cd5062b626ad8f23f1426d1c3118f5e909be2fd1adcc8f02a324994ae6b8",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w059-front.png",
+      "bytes": 54629,
+      "sha256": "c2bab9d2a9efd0ba18ad05f322d61fde48086cdf0237829cf8c95e21315e74c2",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w059-front-walk-2x2.png",
+      "bytes": 214420,
+      "sha256": "aa8bc10e60341850d270f0bc0e9387ef31a7dc71fc28bf283fcc8ece6fbfb651",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w059-back.png",
+      "bytes": 51751,
+      "sha256": "702d6e724ac692b8e1d4c267aa8f2a137614a0b6ac6c7d861780fc335b336fb3",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w059-back-walk-2x2.png",
+      "bytes": 203290,
+      "sha256": "280a798a130d1ba9fc5b90bf79e064550001a9fc19263768a26cd9d70dfe0498",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b060-side.png",
+      "bytes": 128812,
+      "sha256": "10369f1d8327dda11ba0cc10f0fb1954d240971ef777f80fb9f8a232d3acc908",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b060-side-walk-2x2.png",
+      "bytes": 508620,
+      "sha256": "1d8d33d6b37f3ddebb256041ecf78bc39020fefd2d24b2c2fa2afd20d5e24b69",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b060-front.png",
+      "bytes": 170710,
+      "sha256": "78b2e9d2073d2ee3129da6693be59d7ff8d3fb1abb49e5e9a2a9aa9dfaaaaf31",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b060-front-walk-2x2.png",
+      "bytes": 675598,
+      "sha256": "0f10916f43334be4d5e89e54a9ba58b10b19a9dbadf528bde9bcfb39e71876ff",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b060-back.png",
+      "bytes": 144046,
+      "sha256": "68c86bdc681452581855fc7ddc27cba18af5fa228166f149a413af30bd3559ae",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b060-back-walk-2x2.png",
+      "bytes": 568089,
+      "sha256": "6c902e671e5d1843cb6c019ae39ec18726b5b70e29481a45f7b8a4dbd64e3b97",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b060-2-side.png",
+      "bytes": 121963,
+      "sha256": "7aaa23ef7cff59f7798f1e3694ad4cceec648ddb2d737ed40b63b737116373a2",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b060-2-side-walk-2x2.png",
+      "bytes": 323827,
+      "sha256": "e902ccbffe125406afa320a5920d2a12580c9b8b06d715764b320ad1da4e652a",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b060-2-front.png",
+      "bytes": 173118,
+      "sha256": "7dd685fbdf435be2c9cf43b508bd85b9680fa48058ab831366faaeffefbae9ae",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b060-2-front-walk-2x2.png",
+      "bytes": 567440,
+      "sha256": "49a2e425394cc9981e4b6fde3024a98ef5503b616d00fe3756f6d2e6df946edf",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b060-2-back.png",
+      "bytes": 157140,
+      "sha256": "b5246d434a79047e20c14c732273f831b37fe8a1564175baf2519be84f5d231b",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b060-2-back-walk-2x2.png",
+      "bytes": 516614,
+      "sha256": "c17c298c4ab5342d03cdfdeb668e6525db45dd11ff71cb6dd3d28a93a6f20d60",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w061-side.png",
+      "bytes": 28584,
+      "sha256": "afeb5870c3ab2c08c4567133215490d6e1f8cef9cbc7efa5f3dc4cf2a52f6dc3",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w061-side-walk-2x2.png",
+      "bytes": 113106,
+      "sha256": "0619e52f3fdb576d460d63b5e2f499911ba0f9c6a5a70e33920fdb419ffa6a8d",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w061-front.png",
+      "bytes": 39479,
+      "sha256": "d57868c230b147f076da961d9061277a6ee37b8dd20fca4b958e4aa3cd9f9a3f",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w061-front-walk-2x2.png",
+      "bytes": 156662,
+      "sha256": "e07876e7eea7370874640812398971ba52da9a4455a4117209af69483924b94e",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w061-back.png",
+      "bytes": 36461,
+      "sha256": "886ea94b086258c11813233f8d9972adcb02b79d6546b54dd091b29fdee59c2a",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w061-back-walk-2x2.png",
+      "bytes": 143752,
+      "sha256": "b52ce09bfc00aa5ef9706524adae89005a6e75ae8e9a1c2cef096344479113d2",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w062-side.png",
+      "bytes": 22935,
+      "sha256": "02a5dab843e954583c7ae03c8d758882a924add1930a79c342d4374254ede10b",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w062-side-walk-2x2.png",
+      "bytes": 69335,
+      "sha256": "1233c3c3ec4df20db9039a33739cee64d27c86b3466abebca239fa75d1399b2f",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w062-front.png",
+      "bytes": 38728,
+      "sha256": "cf647511fd1be4618a3d18113128bd139c2b2fbad87ed9146ec56e25c9d5b5d8",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w062-front-walk-2x2.png",
+      "bytes": 123745,
+      "sha256": "b4db01417c0b2d4acc941445d30f8bdd5dc53d30da9251b940c7e568fef83fe0",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w062-back.png",
+      "bytes": 37825,
+      "sha256": "5cb2a3f47e0bfb9e8fd0e35e05dcd89fbe2ac43033043daf6445186b3ff10cfe",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w062-back-walk-2x2.png",
+      "bytes": 122711,
+      "sha256": "c1462accd7ee0b64d49b163957dc12b98fe023e887fd1f11467d0ea2a843c7be",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w063-side.png",
+      "bytes": 22940,
+      "sha256": "e2d14f57c64b03bd67723afe1d0de629e26845293320e6aad9550544441d58cd",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w063-side-walk-4x2.png",
+      "bytes": 159688,
+      "sha256": "4cd4f78bcc6b18f18dd5f8653ba9ed3fb24fdd63764fa4205e8c6c5cecaf4caf",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w063-front.png",
+      "bytes": 43517,
+      "sha256": "d6130f01d9ea69b557d0eefa6386a9f898555b38690949448ecaad7e04f59619",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w063-front-walk-4x2.png",
+      "bytes": 290553,
+      "sha256": "cad1ffd27b6cd1a65601c7d8f063e452ea2e989ea11756a2c464a0d93a9ff05e",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w063-back.png",
+      "bytes": 42836,
+      "sha256": "e2514b0bce7329644a47f162bd1b613281f32476fe2e37e7730ab64a85c9f4da",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w063-back-walk-4x2.png",
+      "bytes": 281475,
+      "sha256": "be46a26f6bcb86ea93469d48d0d432e3ed3e09d8e3e959779d53ce5b276bfc5a",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w064-side.png",
+      "bytes": 25570,
+      "sha256": "1db979372ed4f66752e5d5395fbe9244b8d1c5386000d6a7157c636b2e50684b",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w064-side-walk-2x2.png",
+      "bytes": 86482,
+      "sha256": "6f9283c741dc21f57f7050d2fa8433f3524c56e1f79436d8f748aaacbbd011e1",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w064-front.png",
+      "bytes": 31435,
+      "sha256": "44f8efffdfa274ad3599d57774f65baa1590c83fc592c0fcd4374f65b084a84e",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w064-front-walk-2x2.png",
+      "bytes": 100023,
+      "sha256": "43b969bcc907b004727f5a9e12bd9b3de8230eba8ef737160f0f2b08fca339f7",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w064-back.png",
+      "bytes": 30745,
+      "sha256": "179b08771e761615848dc10e277f666f6c94d6689234719e0862c4ebd7b11af9",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w064-back-walk-2x2.png",
+      "bytes": 97458,
+      "sha256": "0589bc351c1d09bcfbd8d219a95c77944c7075e2ada2ff7f40eca3b88c53354e",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w065-side.png",
+      "bytes": 26581,
+      "sha256": "09d8c67a630071729b87087de8b109d8717457abd159da374df8c139d04c6b07",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w065-side-walk-4x2.png",
+      "bytes": 179300,
+      "sha256": "0d70ec272fb3a13987a6e61a2550edc6b5c6bf08a59eb9574914d2a13f39c9c1",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w065-front.png",
+      "bytes": 47805,
+      "sha256": "cab3ed5ee38b42aedddccb0e8e20f915ac521ab4e45473bb745f275bc5f79104",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w065-front-walk-4x2.png",
+      "bytes": 319495,
+      "sha256": "ba905f5aa93a5e8d72f435ada8c9874416668556777079330e0f813b1a410418",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w065-back.png",
+      "bytes": 43813,
+      "sha256": "cff6f4912f9801fde70f5d007bbfab52a1f796152b1a5cf538a72e9d8a68fac3",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w065-back-walk-4x2.png",
+      "bytes": 283017,
+      "sha256": "9557a9202cbfd8c7459102a9d6b37c0bba2703d6c253ac25a486aad409452137",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w066-side.png",
+      "bytes": 18994,
+      "sha256": "78cabb5c38bd0eb4ef964f67f50adc7acc20554055e9a41f27c3e5550b129ab8",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w066-side-walk-4x2.png",
+      "bytes": 134884,
+      "sha256": "a378bfd798692da07bc3f2c9482be30fd851efe7fb455d53064976cbd48318c5",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w066-front.png",
+      "bytes": 33110,
+      "sha256": "07517e68de0bb78117b5a4c5ba9adbf5115c1e378e2bb18b8bb3ff43a98617cf",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w066-front-walk-4x2.png",
+      "bytes": 220572,
+      "sha256": "890ab8a2a9ab4f8f37b1530c17b8243636c72cb75d6876b5d831ff4ef1d3ba3d",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w066-back.png",
+      "bytes": 31350,
+      "sha256": "fa37c1d848cf0a110b29b1d79e9429b0795f2438b7eadd04fdba36c913839493",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w066-back-walk-4x2.png",
+      "bytes": 207776,
+      "sha256": "1a9fd5f4a675d68d1a86f711a50875e7b3aa20337b13e81832b873902f936b1a",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w067-side.png",
+      "bytes": 41649,
+      "sha256": "ef9d1628f8ecf8a5717e92e8cb7e36babf1dca71dc7f709ba08c151309855535",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w067-side-walk-4x2.png",
+      "bytes": 251443,
+      "sha256": "2cd78096be4e009e96cbf63245b7b3a097b0d59a2e7a3f4e3b2e86f26dd0b0f1",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w067-front.png",
+      "bytes": 34792,
+      "sha256": "6207a6da814483f9837618a0b2702071fd664ab7f73f6b184d25db65a4666ba0",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w067-front-walk-4x2.png",
+      "bytes": 140951,
+      "sha256": "c11c5de0587c64617251a8cea9e3486340902e245128b1a4e296c2779dd6fe32",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w067-back.png",
+      "bytes": 31971,
+      "sha256": "2a244e9ed1cf9baca7db6586890dd09a31dc9046ccf53911a8657a14e7d76c00",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w067-back-walk-4x2.png",
+      "bytes": 139838,
+      "sha256": "4b82b2b8fb432c5b10b23faaed258d845ae8069d4ce35efa57dacf3cf9da29d3",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w068-side.png",
+      "bytes": 25453,
+      "sha256": "ee184d2b42d1e472b5d48aaa4a48aa498655d9aad3ee661688e27c224c928c71",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w068-side-walk-2x2.png",
+      "bytes": 87045,
+      "sha256": "2e8bffaece68ca26d6abd4c1927532ed152f72cc65590750510e7dfadc71baeb",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w068-front.png",
+      "bytes": 42596,
+      "sha256": "2e5c9817e0052bcfca11a7b24922fa7571b9c55a6d831ff841f42711c69f0864",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w068-front-walk-2x2.png",
+      "bytes": 136320,
+      "sha256": "b9eb401119aa1a171d529df9d6a7d4ef3aa5066e624ba2f24afdfa9c7a39b5c7",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w068-back.png",
+      "bytes": 43529,
+      "sha256": "96bb7d7a38a6df039a9abf366fa0d6ac14e1d39090cd6940ac076761a28fb6a6",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w068-back-walk-2x2.png",
+      "bytes": 141620,
+      "sha256": "8d0b32c6d8800bc6fee737a25b03c9673dcaa08f455e64c02aad96e9794af193",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w069-side.png",
+      "bytes": 23747,
+      "sha256": "5e1440c220a73a5e9e6eb637ad9b23bb21154b2987cb420e2d6d4604b775df8f",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w069-side-walk-4x2.png",
+      "bytes": 160954,
+      "sha256": "2b0404ff17e3554598ca82d037814ca23dded89dacb3dab0c3735c6d8469e7f5",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w069-front.png",
+      "bytes": 46154,
+      "sha256": "b979fe44053beef6f304bb95621a6c7fa118f63f27ecb7964f72df2a816f766b",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w069-front-walk-4x2.png",
+      "bytes": 293893,
+      "sha256": "badda88fbbc13d4ca2e088318b87fb04c02365616ee54ae3b4852c64f676224e",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w069-back.png",
+      "bytes": 42039,
+      "sha256": "ff76c0ec316ead757b112413cd0af77b6a5b2d20da2e54af78b22d5fb888e6ed",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w069-back-walk-4x2.png",
+      "bytes": 267457,
+      "sha256": "97d209cee8ab1594eec86b3931440be6df34833e49b4599afdeea5efc2442898",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b070-side.png",
+      "bytes": 88159,
+      "sha256": "d9295f058eef6f898dfb9abb3fd0561a75473bd08545493ebcde307624e5d7c5",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b070-side-walk-2x2.png",
+      "bytes": 351056,
+      "sha256": "4e3f171ed2029ba0b9a223bf1d332d573e79d1ad069d0b1fce3d05968801f993",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b070-front.png",
+      "bytes": 108248,
+      "sha256": "bc67b6266fad112b7026e3dd9b718a03e69ccfc74f5fb3217df9877063011ed9",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b070-front-walk-2x2.png",
+      "bytes": 430361,
+      "sha256": "fb54d854f25b49b9606a4c100c044cd7680b245f5f94e999db193b6a95acd3bd",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b070-back.png",
+      "bytes": 102438,
+      "sha256": "66632248e22463a899bf331d565349f322cc65d22f74964f7df5a604d598100d",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b070-back-walk-2x2.png",
+      "bytes": 408836,
+      "sha256": "2a7508ec48c24bb1f4db8d882b29b8f78fbc06b293ddf8e5ddcc1b3b1c72063b",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b070-2-side.png",
+      "bytes": 87767,
+      "sha256": "931394b9c2162f8a1091b4060f7016be79645fc85bc809eee5f798c4fbb3902a",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b070-2-side-walk-2x2.png",
+      "bytes": 348849,
+      "sha256": "5e003e5582d94a9a80f3e0d925df8cf061410d604c04367cbba6cfe84306c2dd",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b070-2-front.png",
+      "bytes": 142509,
+      "sha256": "86d84e910ef31696efb4d169ff010974c1bc2dbed0462781d66891a9cc2fe987",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b070-2-front-walk-2x2.png",
+      "bytes": 567134,
+      "sha256": "83b803316a0f02f748f048f7767772440c94ab45b8631d78493b564de844da5b",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b070-2-back.png",
+      "bytes": 122144,
+      "sha256": "cc88ac49a51b11021c661c1c9c47b71df2ba514c5ed2c2086064bcd30814e8c6",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b070-2-back-walk-2x2.png",
+      "bytes": 486257,
+      "sha256": "8fb9eae9a5b155c0a31f8b7c5a8cb40964ce87607c390d3e4ffcac1c9fa30963",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w071-side.png",
+      "bytes": 49835,
+      "sha256": "8263dc1aab3533706c47b22210e1128578d02f858b816a6bf637f27bf41e4f0c",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w071-side-walk-4x2.png",
+      "bytes": 293834,
+      "sha256": "0c530e0308d56e5b11ae49a2489ccfb1a0d747d2087c56f9b262f5f2e9e0ddbb",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w071-front.png",
+      "bytes": 38680,
+      "sha256": "b919ed6b1e56df7cef78f0de895a5e5214621eb4874a2bb850fd42c1f9ed911d",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w071-front-walk-4x2.png",
+      "bytes": 142700,
+      "sha256": "c050a56901469fcecf71d6f1187845fc28b785b949bc7661964dfb4d3bdc3d84",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w071-back.png",
+      "bytes": 32920,
+      "sha256": "e0e01d6d160c307de47a07b03ba22f0d945e55f4decb98a43e1612ba37bb6a63",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w071-back-walk-4x2.png",
+      "bytes": 144846,
+      "sha256": "01ea96b17beb0d8a1c2c4f7353c14dfc19267b00ac2194ca0056ad53b31c565c",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w072-side.png",
+      "bytes": 20248,
+      "sha256": "78e2d2060aa4db9a50d9382a4f86d4a16f69504fc9e6682b4331f67fb5b3e957",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w072-side-walk-2x2.png",
+      "bytes": 69897,
+      "sha256": "6abc2998b97cacb023cca1e3e6d56f6daa25042a1b504f7f8b1bc718654e1e26",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w072-front.png",
+      "bytes": 35778,
+      "sha256": "7ab30453e02f2c884aece93d4ef576f0d660d8ae11f50e0d2be79caed5b2f3f6",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w072-front-walk-2x2.png",
+      "bytes": 116407,
+      "sha256": "b0a0ba8fd706c02038985187c64b32ca8be773ab2587f5d939d5cc0099d86fe2",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w072-back.png",
+      "bytes": 35111,
+      "sha256": "39cca763f510c3d7a397a24a171dffcc6729b4228268e2fbdce126f628fb8015",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w072-back-walk-2x2.png",
+      "bytes": 116336,
+      "sha256": "94c2fb78ebaf180c3f434e54b654910e6c9e7d6c19507803908d2d802463fa1f",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w073-side.png",
+      "bytes": 63841,
+      "sha256": "b81960e5981598288a252e1b46ac158d6a03b04524189677fa4eaa688988d7db",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w073-side-walk-4x2.png",
+      "bytes": 351465,
+      "sha256": "1663781d44c325ad63b827f2a1148040372421ddbf3c9f22dc1ae8646468c4c9",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w073-front.png",
+      "bytes": 46246,
+      "sha256": "4f6bf1e0e2daa7b5611b754e111cced9748dd90f41a76165c67b68175025ef13",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w073-front-walk-4x2.png",
+      "bytes": 170726,
+      "sha256": "6a992287af2ac37cfaa910a2f9801f17b82c2d225a45c7b3582bbf0006e1e88a",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w073-back.png",
+      "bytes": 43508,
+      "sha256": "726ccb35a227436a1e94fe6dea848833555eb64cf3055c5b228e275fd5551a48",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w073-back-walk-4x2.png",
+      "bytes": 157623,
+      "sha256": "9b4fbe9b3e3ec3bdb7afe3d1889c9694e6f73d24979ed5c92cdddc75602a2135",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w074-side.png",
+      "bytes": 32114,
+      "sha256": "c15ab57744f945ee78353f9edf23a09af5b1a05ca31cebe4806784084f1aad6f",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w074-side-walk-4x2.png",
+      "bytes": 207109,
+      "sha256": "c19e984b64aff772f1e464065f30719afc575a269761b4447ed40ee1e3037705",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w074-front.png",
+      "bytes": 36517,
+      "sha256": "2c13a50edb10f3973a56ff04e52bb784833334573764b44b2240101496c413d4",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w074-front-walk-4x2.png",
+      "bytes": 228752,
+      "sha256": "5cb0f25c0da6c2004bb03fac444432425b998bd7fc7812d4499d705b96d20e0a",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w074-back.png",
+      "bytes": 35942,
+      "sha256": "1dde5b88bb088f297771b12b4805210c855c28b88a4d9ab76c53865d9a69d341",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w074-back-walk-4x2.png",
+      "bytes": 220483,
+      "sha256": "a7957393cc47e62e7d266cb8071977ac66ffeeb7596125f76b9adf688bf311d4",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w075-side.png",
+      "bytes": 39816,
+      "sha256": "b80785b986e9e7e100a08c8c0dcea35d623c7f3c4bad736583ded3251b85f7fe",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w075-side-walk-4x2.png",
+      "bytes": 253041,
+      "sha256": "2a340370ecc743e5b446f6835a8c2bf4b51bd484c6c1ddadad848a8dd82316ea",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w075-front.png",
+      "bytes": 28793,
+      "sha256": "7a64c067c84e023f53aef5988440e9e88d52fec60705e9ebbe1abf2577ac808f",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w075-front-walk-4x2.png",
+      "bytes": 183371,
+      "sha256": "32e188bdfcee9b03581f0bb7bcc61ec9c1ccf0b418ac46afbf7cd11ec283bd85",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w075-back.png",
+      "bytes": 27911,
+      "sha256": "7a960bb566e3340dfe594009b02be6a4428195e363eacfe519b3fd7e5799e607",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w075-back-walk-4x2.png",
+      "bytes": 181649,
+      "sha256": "c4d9f39ed1fe619d5e20a0bba8c164970ce5a724e9353185f0dd6462421ba5f2",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w076-side.png",
+      "bytes": 27860,
+      "sha256": "1612914a149acf7d4cff64b1bb727753dac338e5b0709b70a33c0a74dd155b47",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w076-side-walk-2x2.png",
+      "bytes": 89117,
+      "sha256": "b6228a1391108030f8556277c7d20b8aed19ab3611211727855a4053aa455fea",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w076-front.png",
+      "bytes": 37482,
+      "sha256": "00691f4377a1a382e498cb9f9085a97fa64c04dec8eb73c7f47bbc34cc8af481",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w076-front-walk-2x2.png",
+      "bytes": 124006,
+      "sha256": "34b9fbd497a6c0c3a4ff346436d9df68e4c3109c4f3a56bec31928b319e76850",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w076-back.png",
+      "bytes": 36923,
+      "sha256": "c7bc450d0cca42fb012ebc16e64c297e1478db1f191c0475bfca95fbfb73b41c",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w076-back-walk-2x2.png",
+      "bytes": 122866,
+      "sha256": "772efcf8979f7233f852ea49f52144af60ce65662d9d95d02d51f2dc82b148b8",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w077-side.png",
+      "bytes": 25377,
+      "sha256": "3852e51e618acc1513d837ab61047be2e05d2a03be0ee099b8c7bb07171f08f3",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w077-side-walk-4x2.png",
+      "bytes": 110403,
+      "sha256": "5dd933e7e493c4bf3c2e2a13e64c7897a97253ef5aa6ffdcd6e7082f9944d93e",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w077-front.png",
+      "bytes": 21127,
+      "sha256": "0252bfea0db8799ea985327797468af6b8864ae4e6acc2e4dd3a1f45a10c6fb3",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w077-front-walk-4x2.png",
+      "bytes": 85973,
+      "sha256": "57b9d33a41298f06f1fbd57f82d1d07d90d5eecd1dcc4c4d685f0001317ecbfa",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w077-back.png",
+      "bytes": 19941,
+      "sha256": "296dc49bf8eb8fb8a8dd7c12e89209263fc02223011a032139adceb39ecd259d",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w077-back-walk-4x2.png",
+      "bytes": 80926,
+      "sha256": "144a85e6ef6784be762b30ef1685698ec40e9739d9934cd220bfd56d800a9d7d",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w078-side.png",
+      "bytes": 66541,
+      "sha256": "4de1d40c2839ada3982502d1e523929227cc64bbe0701fab04aba9297e1da40f",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w078-side-walk-4x2.png",
+      "bytes": 356346,
+      "sha256": "3d763a4040231dfcffc413e6fb26b6d26ba6e0668a2b437a0ea65d1a9e43a858",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w078-front.png",
+      "bytes": 58105,
+      "sha256": "d7d6a87e8e7402d58f410bc0a4a272490592a9cf4d7698055ce3ad470cffd5ee",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w078-front-walk-4x2.png",
+      "bytes": 197606,
+      "sha256": "a9bba7e6887072c52f043a183c30b5e5f786c9f75eb14d786a625629e2c72c6e",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w078-back.png",
+      "bytes": 52426,
+      "sha256": "dd053318ca25f664389e58c3bb9e659b155c188ca0e20cedd5114fa1a950b172",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w078-back-walk-4x2.png",
+      "bytes": 177245,
+      "sha256": "ac6a81bfb93eed395f271ee31d086599d58545f5749f8d0616091ad7a92ec65a",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w079-side.png",
+      "bytes": 31806,
+      "sha256": "611e953049db857fc3c59e6eb2f465f481cb2cca778da6831ffdbd0536383604",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w079-side-walk-4x2.png",
+      "bytes": 203991,
+      "sha256": "05eaa1abb690ca2f943b95ce98b0c3b73ef74a06677a7a0d00be9e3ae49fefc7",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w079-front.png",
+      "bytes": 35363,
+      "sha256": "9c854a3e953c29c9935c1a2f0faa75c393fd912e9897c23af8b302e689a90ba6",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w079-front-walk-4x2.png",
+      "bytes": 226327,
+      "sha256": "fd03ceac7126acbd5f38cbfb0758e0f5472543aff080195d85f58d88dab1bfaf",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w079-back.png",
+      "bytes": 33073,
+      "sha256": "7aafb0f6e8b87b25f57c6707603b330e6f71114d2a0c780b3e5b46f17370e668",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w079-back-walk-4x2.png",
+      "bytes": 210835,
+      "sha256": "c65575a65774d0563af8aaffe35b05cde5e1af55e64e7f86c05b57c3107ae211",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b080-side.png",
+      "bytes": 113985,
+      "sha256": "dcf17300f6a8354f3f9a436a4e2edd84956d3ab26b34900f40eebd37d28d1b45",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b080-side-walk-2x2.png",
+      "bytes": 386230,
+      "sha256": "2465ef040f2bd3f29156618e79f2a334f5b0a41c65cb16827b17bb1268b320a9",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b080-front.png",
+      "bytes": 128255,
+      "sha256": "3c78a05d855ea53b1a0664dc1d38e6cf028b899773a6748673934195aaea0de6",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b080-front-walk-2x2.png",
+      "bytes": 413949,
+      "sha256": "a275f4534a78ebcc3433d73c8d160b1a3e3f2c1026c34c73d1221c8b36b29d01",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b080-back.png",
+      "bytes": 118895,
+      "sha256": "0b29104a4da884f1a3570b028fac682d1c69ed0db49f3d7dd4f0e1838b207d5d",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b080-back-walk-2x2.png",
+      "bytes": 385067,
+      "sha256": "f69492517a406ec81208fafdaaa9159e9834bfac417c2187f84de16ad3b19baf",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b080-2-side.png",
+      "bytes": 172009,
+      "sha256": "e3735dc643172bf18743e05e6cabdb1b50e37f4d3798a114b3a12db608dd94c4",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b080-2-side-walk-4x2.png",
+      "bytes": 832552,
+      "sha256": "db6b964b531aeb7fcd75f5eafb72116916336c7b779d6c686d722609eaef4f4f",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b080-2-front.png",
+      "bytes": 192400,
+      "sha256": "642750b3f0e09078651a0b77b6a1ce4b05fe0c41142c0b40a30df3b9c54dcb59",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b080-2-front-walk-4x2.png",
+      "bytes": 625427,
+      "sha256": "bf3b2f4a6e8cd9746bd3f27b202e80157f67e2a260cd0a9beef12b2a7867fda7",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b080-2-back.png",
+      "bytes": 156119,
+      "sha256": "da66168e5c2bdfc4a558ca5d4646d8c2fe0b2f8d69144ed5a39742961c064e74",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b080-2-back-walk-4x2.png",
+      "bytes": 600440,
+      "sha256": "347e9d5fb953ed5acdf29e2d44aa03c7339b38602c778165b78c35c7fcbe0517",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w081-side.png",
+      "bytes": 21007,
+      "sha256": "cb07de34ed52696846dab6affad1ba487b852127c17f58ce9d7c8d8719718c1d",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w081-side-walk-4x2.png",
+      "bytes": 141414,
+      "sha256": "00f407f152edcff88dd2328fe5bc4cb7314afcbd9250477e0738c5cee13344f5",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w081-front.png",
+      "bytes": 30438,
+      "sha256": "78e8782f81ed06c4463b26608e4d073123827c7bc6106be60e4285b025e04715",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w081-front-walk-4x2.png",
+      "bytes": 199756,
+      "sha256": "26d90913d383c3fff89387bcc3b89abd03c44bbaf744ff7d35ace12414c41e1a",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w081-back.png",
+      "bytes": 29333,
+      "sha256": "6368586fe51f7fef3007e04e1ee4809dea488f321071febc67a1233b34603e87",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w081-back-walk-4x2.png",
+      "bytes": 191561,
+      "sha256": "b0dc718e2e5fafbf878381f9bfea55446c80200ab9adff99daa2bb208f3671b6",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w082-side.png",
+      "bytes": 42123,
+      "sha256": "d547360bde3c6d7072eb260dbf27c388153c3f42641e27afff91b58613907ef3",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w082-side-walk-4x2.png",
+      "bytes": 246013,
+      "sha256": "d969c9e59f2cdb6cb2c9434ec9561af5193df9913cd335fd71a02de6ba858364",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w082-front.png",
+      "bytes": 33219,
+      "sha256": "a4f6f37ff5bbb5f1eb2b24de92bfe16eb7d64ec47b8559e6ae5dc4ec0cbd181b",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w082-front-walk-4x2.png",
+      "bytes": 116703,
+      "sha256": "3bf49db7fd4c145ec86de76d5c203a825b736de1c24b8cebde8e1a479479b1fd",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w082-back.png",
+      "bytes": 28564,
+      "sha256": "e8845c23e8a6a4a5d6afefc02efee2f8975c31cc66282011e86f2d03a1ea7488",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w082-back-walk-4x2.png",
+      "bytes": 115992,
+      "sha256": "2630abcf989e823df1718708ded6e728742da26c0b2c04d203b7ec55e0763322",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w083-side.png",
+      "bytes": 34188,
+      "sha256": "1a39846250e7702966bfb6233095e04f377f6bf6e6009f074da7ddf9e67b60a1",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w083-side-walk-4x2.png",
+      "bytes": 215017,
+      "sha256": "907f1f3b0282e5edfb6b42eae43758ac208a18f60fdbb8377eb332a11f99a202",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w083-front.png",
+      "bytes": 47838,
+      "sha256": "20a3667c7da527b7fbee738e1cdfe117ab53953338be9c1cda3f62fcb4ec4708",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w083-front-walk-4x2.png",
+      "bytes": 289941,
+      "sha256": "12b76584514a30445738c743c15700a52c86097ea55c006e5f8912ef8bf0505c",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w083-back.png",
+      "bytes": 43461,
+      "sha256": "b40bf2ac8a2d355699b4c39b3abd0cb0fd184e27aa76109819178b0ee482c5ae",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w083-back-walk-4x2.png",
+      "bytes": 263794,
+      "sha256": "4401ea0b90499fbfb918946b7180f335b00f72673755cd7fb3d52391e4a751de",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w084-side.png",
+      "bytes": 23625,
+      "sha256": "b42f0a8705bd1e5c6cd17a633b7e5c0f967e25fca350575ee97cf41063709d90",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w084-side-walk-4x2.png",
+      "bytes": 100813,
+      "sha256": "a91cffb8b1e96f288e3ddc0f10abb7f74a28b8d6ea241ffd72fa4d5b55b4c71e",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w084-front.png",
+      "bytes": 22190,
+      "sha256": "f58fdaebb17142acef7e92e6f26dd5f0211fd724f6a31a6a8452c3f4ff37e508",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w084-front-walk-4x2.png",
+      "bytes": 91535,
+      "sha256": "08f1f29986c58ff3c5ef3ec644ce60dae8d043b434b87b6731189d7484e4e0ce",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w084-back.png",
+      "bytes": 20042,
+      "sha256": "8639e238ab9c0feba6ea05180e65eb35b69bfbbc6579d496f4ea37b9d68b829b",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w084-back-walk-4x2.png",
+      "bytes": 83921,
+      "sha256": "19c78541a47b85fdcc6838a4d5dc749996252c4d288a5b229238b7a26a348442",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w085-side.png",
+      "bytes": 27499,
+      "sha256": "064c66352de570ce204a76a3c318ba4cef8617d0883413ac021be55a7fc852b8",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w085-side-walk-2x2.png",
+      "bytes": 107351,
+      "sha256": "9c0446c2fa403e8a259fc7770e1a510d62fb3a65fc652dfedb161e68b3880006",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w085-front.png",
+      "bytes": 22106,
+      "sha256": "074cf36e1772f0581f576c51b2430e71f8fed4755c34adc34806ae77811b2da8",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w085-front-walk-2x2.png",
+      "bytes": 87158,
+      "sha256": "79fb443051dacebc384ca0b955b8051b88bcb45007095c7d76ffba8543c4b60e",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w085-back.png",
+      "bytes": 24146,
+      "sha256": "3de991d9a9c9d7af00532d18c872f43919e80c90cde1630edad6521098ab26d9",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w085-back-walk-2x2.png",
+      "bytes": 94412,
+      "sha256": "997e1f8d15123700f73e3aeed1713dc0ed0a84cc77017d1c238b431fdd4d6033",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w086-side.png",
+      "bytes": 26193,
+      "sha256": "5e07cbdcec0aa8cad9afdbf5e7cd3c22cc16de80e4007ca88c7c2e097922776c",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w086-side-walk-4x2.png",
+      "bytes": 168569,
+      "sha256": "a8e5ce26f20513780fd2030e46d511de81186c3dcce6859c0966cf18b0d3ac81",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w086-front.png",
+      "bytes": 32801,
+      "sha256": "450793908b0c77bb226a85064ddd24e6b50d6366629fbcbe094bf098f939d059",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w086-front-walk-4x2.png",
+      "bytes": 214532,
+      "sha256": "57e37cc7c1455cf67d3a5af9dfcd3454757d6dcb08119589141dece0fc5764c5",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w086-back.png",
+      "bytes": 31802,
+      "sha256": "0d1e7a5c869d0b9b071a0b3116c47b1faf71e65bcb8d743d3d88db22c5069172",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w086-back-walk-4x2.png",
+      "bytes": 205861,
+      "sha256": "bb73641d1fa987be9c8049e3a8548179036bef816335dbcd0fa437623362ec11",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w087-side.png",
+      "bytes": 22985,
+      "sha256": "ffa98f45bba85cf80fcb0541f72990f39221647e774fc91a619457056f9946cb",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w087-side-walk-4x2.png",
+      "bytes": 155200,
+      "sha256": "10f90ea947e1411f8a4ce33b8f1b7c2703af49c4ef3ea670b0ee2a09315fdeb1",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w087-front.png",
+      "bytes": 42615,
+      "sha256": "f1b7f067e930bc0e14653794558cef133492b0dcb2a8f2852593e4169f411043",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w087-front-walk-4x2.png",
+      "bytes": 274959,
+      "sha256": "3ed542209d91f6c2ec4fa8d87ba2c0d55e3e8a10e87e2c5e83ab52a9d2c4d401",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w087-back.png",
+      "bytes": 37916,
+      "sha256": "8282210596e0fc7319ae4405394fc8f859b3cfd7758b63abd38eb90f2a5f5b8a",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w087-back-walk-4x2.png",
+      "bytes": 243584,
+      "sha256": "992764319135588caf6614bec151cf4df3408b899ed23bf93158704394c9e895",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w088-side.png",
+      "bytes": 27248,
+      "sha256": "2f1e85cc4d783511e440e6fea335ab0aa41e0dd30372073f0796c0c583c507da",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w088-side-walk-2x2.png",
+      "bytes": 81091,
+      "sha256": "a6563bd30769cfdd36d6f59f9dccc78aa866a7b813d54f05730f8b68af47478e",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w088-front.png",
+      "bytes": 34147,
+      "sha256": "85e39488e7102a3d5caf0fb426126bde68dc9f12fe27c494bbf497b90679aebe",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w088-front-walk-2x2.png",
+      "bytes": 106556,
+      "sha256": "f024829f18a6c094ff7bff5bf1a2fe64ecf07918c5d6dcc7c13119b634b14ad5",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w088-back.png",
+      "bytes": 33554,
+      "sha256": "e0f622705b97c3386e6232569cda9209cbb09f17f6d2bcd16f8886097ba516cf",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w088-back-walk-2x2.png",
+      "bytes": 105254,
+      "sha256": "cf97f9de49f5aad09b0feda13d4794aef124c592d71259ff1b410bc4b5f75d76",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w089-side.png",
+      "bytes": 19475,
+      "sha256": "9e2765e98b471c6cf46b0aae190834212282c502497df451eac7ba424259129d",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w089-side-walk-4x2.png",
+      "bytes": 126676,
+      "sha256": "4e6f7b9198a47d23e56c5bb3d75e87d978baa712693b2043bd36700a83bcb24b",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w089-front.png",
+      "bytes": 27226,
+      "sha256": "009b51119a58202b7720f9fc623d490c119dcd801896a837042e9afd7ec6d698",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w089-front-walk-4x2.png",
+      "bytes": 186811,
+      "sha256": "49e31d18e7669847b2ebd55792464591f80727534984b2a27c77b0a544c5ccc0",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w089-back.png",
+      "bytes": 26449,
+      "sha256": "2f0926c77af3069360f161525b826c367807d090562d10c8bf3baf6485320d5f",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w089-back-walk-4x2.png",
+      "bytes": 176316,
+      "sha256": "0a077156cdcabbce6e13ecb9954c19004f069f7d6833c76f06092cd66298cd95",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b090-side.png",
+      "bytes": 91806,
+      "sha256": "cbc3f4f6d1edd40371a28b7a243cf935f75ffab23ce9b4c9ab48afaf7b0b485c",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b090-side-walk-4x2.png",
+      "bytes": 633446,
+      "sha256": "5d0268d04c6ec8ea7ade11641bccdba0ae995264dd552dc073583fc45d0b6a84",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b090-front.png",
+      "bytes": 152159,
+      "sha256": "cb89261fc3dfd250dde4ad675fcd135a1fe30109cf552860cf973ebecd55a29d",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b090-front-walk-4x2.png",
+      "bytes": 995691,
+      "sha256": "e244870c1c9c941de7b25623b6cc5c7ccaa0a38b17047cf56272c05b2315a43d",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b090-back.png",
+      "bytes": 148818,
+      "sha256": "066f056cb6eeb32b3206d1972df470c79008846bd7314899de8ced4a20d551ab",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b090-back-walk-4x2.png",
+      "bytes": 959256,
+      "sha256": "9ad18196943fa28e32a6aa3a552ce5f37fa03edea175c8aa821a9e949366908c",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b090-2-side.png",
+      "bytes": 89638,
+      "sha256": "443d9fe2f01b5ace2e9e3fb549b166f4a467a15585b64fe2713a93a9896164aa",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b090-2-side-walk-4x2.png",
+      "bytes": 619722,
+      "sha256": "54d87bc04ba1d430b53ad34c5a72612a90e2acabe96959cc5faa9f42309bb277",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b090-2-front.png",
+      "bytes": 173113,
+      "sha256": "6a9823650c30354fc1a97defa0842dcad2c3317b781067492d8a943b01560fb0",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b090-2-front-walk-4x2.png",
+      "bytes": 1140381,
+      "sha256": "e3cfc4f982fdd837d330c9e693203242264dedfcb62a30d87e13e80a497b6236",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b090-2-back.png",
+      "bytes": 158106,
+      "sha256": "fa632379a169b6d35c50258c949ae2a4ebea4aaa729ee12c0b2e528d0fa12bd8",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b090-2-back-walk-4x2.png",
+      "bytes": 1033004,
+      "sha256": "4f5db8a932ff039f863bffec563a0e67974b4a4b9375335bbad5aea90b67eba1",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w091-side.png",
+      "bytes": 19268,
+      "sha256": "593c1507d8892af09cb29641eb1dbc880358a77f404b4229b8d656953bc31a06",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w091-side-walk-4x2.png",
+      "bytes": 86898,
+      "sha256": "af5a8a43f17f54e090e644cbc92fb363dc7599e4dbab0a35e107ca318ec9952f",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w091-front.png",
+      "bytes": 18431,
+      "sha256": "b9644677f2e4e175d7b9a9fd931b508d7a54916c619fe817e91f7e5103af7ff0",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w091-front-walk-4x2.png",
+      "bytes": 79577,
+      "sha256": "5853f9a36604ea102d4844dc5f8e778261d12936a617210f55bcff63c91a2c30",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w091-back.png",
+      "bytes": 15115,
+      "sha256": "dfac664cad266caa85af901233882608a7302903d78c190d8431a26ba9bcc1b9",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w091-back-walk-4x2.png",
+      "bytes": 66869,
+      "sha256": "42886e54fd3630b43e2d43d46867436cab00adecd74bb8acb535ac5f7b039858",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w092-side.png",
+      "bytes": 21613,
+      "sha256": "9342409a98499e28739e3847384603dc4fbde930236b71c91ce32a04c1e9412d",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w092-side-walk-2x2.png",
+      "bytes": 84356,
+      "sha256": "5d7231730e3ae373d7b5c196c7e91f8caae9cd2e3566257861a00f1f014984d0",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w092-front.png",
+      "bytes": 25527,
+      "sha256": "41a08b59bc9a785b7b8abfdfeae787cdc6e803ebb5534bf921acc508d7eb3f44",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w092-front-walk-2x2.png",
+      "bytes": 99491,
+      "sha256": "069feba2ca0b0168d5f89a65a77e36abf26593803c64e400506d359b48ee151e",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w092-back.png",
+      "bytes": 22695,
+      "sha256": "cbfe22583b1e44aa21cb8b27cf421c396241dbf08e0f10d6a2a2d19d1fd8c2af",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w092-back-walk-2x2.png",
+      "bytes": 88521,
+      "sha256": "d4205ce544d4263d703a1e5ab975c5a881e2584fc5bbdb1ad5be5c940aebb90f",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w093-side.png",
+      "bytes": 24139,
+      "sha256": "f7ab8f803dafc9e78483715a155e990c441d4282020c04b95acdebe7f1e856a9",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w093-side-walk-4x2.png",
+      "bytes": 167517,
+      "sha256": "646de9d8a6c4af36f5d1abdb0876c32ef7694e6b3d5326a14aeb6a92c95e5eaa",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w093-front.png",
+      "bytes": 35992,
+      "sha256": "4144a64dfa15bb7d9b9eea7a31c0a98b30d8866d5ee07a661de421be20d83e28",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w093-front-walk-4x2.png",
+      "bytes": 237195,
+      "sha256": "a21338801e4d2847f653cc4841ff3f005a9c48e4f2eb910f8ad26d935cdd7ac8",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w093-back.png",
+      "bytes": 32743,
+      "sha256": "1e333c8089b879d10083d23418a52550024700ab79fd3bc4ce8f32b544ae7f7e",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w093-back-walk-4x2.png",
+      "bytes": 212199,
+      "sha256": "ad12f7466c61745ff28d016ff9e4f079918de2617f5823f471012c4efe61da65",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w094-side.png",
+      "bytes": 23658,
+      "sha256": "0a09125ce60d60fda9b6c663345d9f885b5c8bd4dada6095b38fcac140fc08d8",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w094-side-walk-4x2.png",
+      "bytes": 171685,
+      "sha256": "e5cc4251bbc36e0de68833685f2c9b179b31de972b02d2e8e7e7653e1e0b07b0",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w094-front.png",
+      "bytes": 32276,
+      "sha256": "26e48fea3e88e3fcd20c00d49874c1f2c82217184500a7ad76f5da912fb524ba",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w094-front-walk-4x2.png",
+      "bytes": 216979,
+      "sha256": "66eb720cdb94e30839b25397a996f16015cbfc2726a7dac382d42a59283dcf31",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w094-back.png",
+      "bytes": 31566,
+      "sha256": "02d1931ccf6daccbe857eed1bb94ec0fdc8fed28c7c889665c22d02f6321bca5",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w094-back-walk-4x2.png",
+      "bytes": 202946,
+      "sha256": "1993db7a8d3365c7ef4d734b67a9068fcdf623a117b91fce8f7eecfdf05837df",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w095-side.png",
+      "bytes": 21424,
+      "sha256": "5a8ba9f58b111ab9ccbcaadbed07550ac2dfc6761e4b040ac55ca71c4b868025",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w095-side-walk-4x2.png",
+      "bytes": 151717,
+      "sha256": "b8f1e839af03b3a0770291eea1aa77887d4ada2224b877fa0cbeb283fe412a2d",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w095-front.png",
+      "bytes": 27650,
+      "sha256": "c146589ede24280d960eeb2ee38067e7c6828a46df09d2222034df5d47a9036a",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w095-front-walk-4x2.png",
+      "bytes": 171766,
+      "sha256": "3def7d4d0f93268ba9a618f2a4ae661fa3fbed3bae5a97ba730e8e1e92d82e89",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w095-back.png",
+      "bytes": 25605,
+      "sha256": "aebd359cc38b1ef90da7f23f18286348e4d274b541f621b3380862e83e9c853c",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w095-back-walk-4x2.png",
+      "bytes": 167567,
+      "sha256": "ae88ee8625209efc35fe1f4b58c91defb3883d96969d56ef1b3b31e1b85d9b53",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w096-side.png",
+      "bytes": 23426,
+      "sha256": "d83ca4cf818567f7c597f5fe607613fc6240ce93835fe6e5c2a5b951ac924bcb",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w096-side-walk-2x2.png",
+      "bytes": 78917,
+      "sha256": "dfaa24447e8a308e9a3b0d0f0948a5addb019604b8091954505d9856c8b65f77",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w096-front.png",
+      "bytes": 30024,
+      "sha256": "c9b1fa98aaaf06cb76c8f7cb54fb648aa0c457de7364130f3b2c38e84efc657d",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w096-front-walk-2x2.png",
+      "bytes": 93248,
+      "sha256": "12c3ccc872ff55785308ba1c577f4c1f60984ee114a7cabe75e6a94a68d4fd1b",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w096-back.png",
+      "bytes": 28427,
+      "sha256": "fd23764577216b5597692cccf64240555774022c91dded10a632039e375bf1df",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w096-back-walk-2x2.png",
+      "bytes": 88369,
+      "sha256": "76b3380e69d40c91905470e9380fa4011cd133771aee37b3e43eec0c5ec42868",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w097-side.png",
+      "bytes": 23849,
+      "sha256": "2a214d29ddf93916cfdc14ad25d046bbaddd24c003630c84d0994185870541fd",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w097-side-walk-4x2.png",
+      "bytes": 143279,
+      "sha256": "0bb8c2aef6e2c094d7f2aca5a37cb5bf28d741fea8fb40720a6f8e054e76150a",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w097-front.png",
+      "bytes": 42631,
+      "sha256": "0b6a246fda185976dc87e623ce9b8567eb67bb839f3d4929275dbb4f633664e1",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w097-front-walk-4x2.png",
+      "bytes": 286639,
+      "sha256": "93a8c2036f4353ccc4e1e281261de5d80bb915f42ab782e2de16d546ed49b9ef",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w097-back.png",
+      "bytes": 36685,
+      "sha256": "1577627f590b6dc9722d8246f0963fec7862ef8c38e244c50e93e757434fc820",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w097-back-walk-4x2.png",
+      "bytes": 244046,
+      "sha256": "1507ae0056591a196c70ee86a3196759d0e7b67c2f8ca48cb7a7f67e1ef800fd",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w098-side.png",
+      "bytes": 21231,
+      "sha256": "ed5235d45bfa519a73e1e54c2707668428ed5e40896175c00c84f92685bf4d6f",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w098-side-walk-4x2.png",
+      "bytes": 94984,
+      "sha256": "f2e76b6c833bc0e18b8bb50841ba9df483ced7ad5c2d592fea0502560f3af336",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w098-front.png",
+      "bytes": 18533,
+      "sha256": "c93ff3e7b0134a52412390e48ec8ab13cbce854dae373d456c64b6354023fa93",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w098-front-walk-4x2.png",
+      "bytes": 81950,
+      "sha256": "e1ad41b5f50f03f300a6d5276b8040f9915602235f23619a315f4af6c31413a5",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w098-back.png",
+      "bytes": 17307,
+      "sha256": "1ce016a0211629d4b4083cde1f35e4092fff9338566fc59e1c17fcac0631b8f3",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w098-back-walk-4x2.png",
+      "bytes": 77393,
+      "sha256": "d6fa568b7a88a5709460eaa09bccfd6ecdc0823d7f695842dfd73c9416c9a38e",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w099-side.png",
+      "bytes": 25469,
+      "sha256": "a0a32273cd64bef82dd1b1f2c573cde31aa6dcdd39df3f516c83ea7fe4305e0e",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w099-side-walk-4x2.png",
+      "bytes": 176739,
+      "sha256": "9984f8f9d90e6e04595c1e1750a9782f66faa8ccc72147a0d450d074c51c004c",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w099-front.png",
+      "bytes": 44334,
+      "sha256": "73811c68a7571bd395233dba7f209058375d6d4da313c4b6310e1a9bf8eeea4c",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w099-front-walk-4x2.png",
+      "bytes": 293241,
+      "sha256": "83510a5f225629981f17c91ccdda5983966c42a0ea723df5c558ee619c00543f",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w099-back.png",
+      "bytes": 41679,
+      "sha256": "e2f67c5738ae663d28c430d88bc61c71c8644aacdf776ac0f454e55c573fb7de",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w099-back-walk-4x2.png",
+      "bytes": 258942,
+      "sha256": "310ead37e1f1f31acd56094c2579fc4bc05b8eafcb908b9d9bd0bd1567bdd340",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b100-side.png",
+      "bytes": 107048,
+      "sha256": "a23c8c237f8562f15491bf103f19d0ebf11d6dc742be075ad989e186753c641e",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b100-side-walk-4x2.png",
+      "bytes": 696212,
+      "sha256": "7dc21ffb273dc73003986779dfcf3442e2b5e4da7e6ef326894bd5c41c778155",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b100-front.png",
+      "bytes": 128939,
+      "sha256": "01312292571cfacc69d6142adf6b72a3d248a49c9a35e826d90065f30a3ab9cc",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b100-front-walk-4x2.png",
+      "bytes": 832467,
+      "sha256": "bed7f5c063f3d2f50072bcf3fb3ef62c2beaa461d2b4f52e54143b5f2f564a35",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b100-back.png",
+      "bytes": 118187,
+      "sha256": "9488feee0b5fe4d2174657f7ef6ebddfd4b105eea74166fb40e2a48d16b9c983",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b100-back-walk-4x2.png",
+      "bytes": 745553,
+      "sha256": "a6cab99c9499ada0fd0894bf3dd0d53377b090f54cffaf48f4fde0ed1c884b90",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b100-2-side.png",
+      "bytes": 120390,
+      "sha256": "13ea0d9ab608ed65889e82c46d6e3068f3528fafbb3da1f423c9fe2e28361b63",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b100-2-side-walk-2x2.png",
+      "bytes": 403852,
+      "sha256": "c70329cef32e5b160b40ce03bfb6403760762fd0eb5906fc5c49428ecb8cdb7d",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b100-2-front.png",
+      "bytes": 129462,
+      "sha256": "6164d3b5ddf6c34dbbb5f78a654448b4ec248a4f4c5b507b93f30b1b4be2254b",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b100-2-front-walk-2x2.png",
+      "bytes": 418008,
+      "sha256": "4e42ec098bb8a3cc10fd36948fbaef79e77455c8c0f2e9cde664f4b4cd0fa664",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b100-2-back.png",
+      "bytes": 120076,
+      "sha256": "d5fd9d8f0669c40f596b2f37d411269a09542681a530222ee651ad6dfea239b1",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/bosses/inf/directional/b100-2-back-walk-2x2.png",
+      "bytes": 386638,
+      "sha256": "f66f2f2b4e16edc696846b5a8d3857092920c0ec54fc17189a227b4e1a8fd944",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w101-side.png",
+      "bytes": 28555,
+      "sha256": "f3e2c06d7cf927c79a78a2024891eed74d94a410ec41451a6935a8df0dfcd040",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w101-side-walk-4x2.png",
+      "bytes": 186026,
+      "sha256": "9c7445484062b991a5976422e280ba22c9c7f82ee218768b97560dd940d53b37",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w101-front.png",
+      "bytes": 35691,
+      "sha256": "d6a4892eb6ba22c18024c1ccba614a12c6c12107c1c8420477117047f054c19f",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w101-front-walk-4x2.png",
+      "bytes": 229508,
+      "sha256": "43c8e70f3a70560743f8b2d2b8a4ebc9b3c71b90a6707de44396ccde79ce8701",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w101-back.png",
+      "bytes": 34516,
+      "sha256": "b38f5def4ba1e0fc446f0be96ab227ddc3ddda16e2fb4a4e64546555750d803d",
+      "matchesSource": true
+    },
+    {
+      "kind": "directional",
+      "path": "casual/enemies/inf/directional/w101-back-walk-4x2.png",
+      "bytes": 219457,
+      "sha256": "2da4e9b2c9c24f9f1f7c5256f8029329d0214ba74d40d83152f7fc4c9e44f3f4",
+      "matchesSource": true
+    },
+    {
+      "kind": "tower",
+      "path": "casual/towers/star-07.png",
+      "bytes": 147634,
+      "sha256": "47cf680c7f00c219c3b06ece46c431625b1e487e62c91fbfd744c279064241e2",
+      "matchesSource": true
+    },
+    {
+      "kind": "tower",
+      "path": "casual/towers/star-08.png",
+      "bytes": 146989,
+      "sha256": "5b22585b64b0b9ea6c55dc25a27e270be987b96a702ed1c88a48f7546fa4f8a9",
+      "matchesSource": true
+    },
+    {
+      "kind": "tower",
+      "path": "casual/towers/star-09.png",
+      "bytes": 139119,
+      "sha256": "e5876ab52a38311682543c0fbf66bd5b96b311de4732251628c95ad293a4585b",
+      "matchesSource": true
+    },
+    {
+      "kind": "tower",
+      "path": "casual/towers/star-10.png",
+      "bytes": 202330,
+      "sha256": "1d0a286686a63f94d68212c3ca3989bd5e8ef35a55f5b00c114d7b4097bfe1c0",
+      "matchesSource": true
+    },
+    {
+      "kind": "tower",
+      "path": "casual/towers/star-11.png",
+      "bytes": 165450,
+      "sha256": "5fca3561009e04e74ff1e34d117be68d64af9d29ed2bb7bd7c2c32fdd6127744",
+      "matchesSource": true
+    },
+    {
+      "kind": "tower",
+      "path": "casual/towers/star-12.png",
+      "bytes": 138603,
+      "sha256": "59785ebd3db6d310d545ae435bbb646a4de05d88acbc10f6125d56651be26c7f",
+      "matchesSource": true
+    },
+    {
+      "kind": "tower",
+      "path": "casual/towers/star-13.png",
+      "bytes": 161401,
+      "sha256": "e0602939df5cef82a05a51d56a56fbfeb05fcc81d1aa54915e789ea66239271a",
+      "matchesSource": true
+    },
+    {
+      "kind": "tower",
+      "path": "casual/towers/star-14.png",
+      "bytes": 169439,
+      "sha256": "824a9f0c5e3f322e4c5bd8d9b50b3490f3b4004783910ea37edc4310a16e2202",
+      "matchesSource": true
+    },
+    {
+      "kind": "tower",
+      "path": "casual/towers/star-15.png",
+      "bytes": 129862,
+      "sha256": "79c283b8885df53c4afc8f10b456450c80e0da8c448b20ae4098e76027169ba7",
+      "matchesSource": true
+    },
+    {
+      "kind": "tower",
+      "path": "casual/towers/star-16.png",
+      "bytes": 193232,
+      "sha256": "da875f97b3752ee2dac3d32d89e4c25183d9a030a8766977237215f64b2d8ad2",
+      "matchesSource": true
+    },
+    {
+      "kind": "tower",
+      "path": "casual/towers/star-17.png",
+      "bytes": 176382,
+      "sha256": "1e14eaf8c66aa850b094e2c8f659ff3bbf2452ab1f58d38242f6dba16da4a17e",
+      "matchesSource": true
+    },
+    {
+      "kind": "tower",
+      "path": "casual/towers/star-18.png",
+      "bytes": 180503,
+      "sha256": "8b27b899a8a873c29520dd773630b98c18f91315337839ee0701243ae2572c7c",
+      "matchesSource": true
+    },
+    {
+      "kind": "tower",
+      "path": "casual/towers/star-19.png",
+      "bytes": 127409,
+      "sha256": "392091145920dca5961ad20a44c79bee5a388cdacfc86c454c33660b6d955ad1",
+      "matchesSource": true
+    },
+    {
+      "kind": "tower",
+      "path": "casual/towers/star-20.png",
+      "bytes": 153927,
+      "sha256": "171f406c10b9b2620a281fa95258407b15cb7fe295b66f144d9a4f67419f246b",
+      "matchesSource": true
+    },
+    {
+      "kind": "script",
+      "path": "game.js",
+      "bytes": 318568,
+      "sha256": "1086c3a566aa777a23f511d1c663e5913165530a117ca919a13f3d8638e26b68",
+      "matchesSource": true
+    },
+    {
+      "kind": "script",
+      "path": "content.js",
+      "bytes": 169458,
+      "sha256": "9f1af8845ced25fedffc02674fc988f09ad796cfb43f14ead1e0cd39f890796f",
+      "matchesSource": true
+    },
+    {
+      "kind": "script",
+      "path": "directional-art.js",
+      "bytes": 1311432,
+      "sha256": "65cbcd5077b2b0bf354c7bb005603bd02ac99c5463d6fc7f2d1d58a6628c3ae1",
+      "matchesSource": true
+    },
+    {
+      "kind": "script",
+      "path": "infinity-art.js",
+      "bytes": 15204,
+      "sha256": "028b6978a22d8b5666c701a28417916463cf572305ce18377b6b685c1a9d218f",
+      "matchesSource": true
+    },
+    {
+      "kind": "script",
+      "path": "net.js",
+      "bytes": 31249,
+      "sha256": "89d6c74438ac2033676bdc0ab87d9a491d1c5d56ba703a17a0e1f26850e9acf1",
+      "matchesSource": true
+    },
+    {
+      "kind": "script",
+      "path": "music.js",
+      "bytes": 19376,
+      "sha256": "730b52721e7c9c45aa582ca99f271f6edd82ef9280cec8b5a85f62d990024aad",
+      "matchesSource": true
+    },
+    {
+      "kind": "script",
+      "path": "style.css",
+      "bytes": 79350,
+      "sha256": "21dc38e7ab9c613f9eeda2b8027126e110200604ff14465f1affb3e6e776aecb",
+      "matchesSource": true
+    }
+  ],
+  "browser": [
+    {
+      "device": "desktop",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "url": "http://localhost:8137/www/index.html?net=off&unlock=all&packageQA=1788799304032",
+      "durationMs": 16757,
+      "title": {
+        "phase": "title",
+        "approvedEntries": 110,
+        "initialized": true,
+        "invalidReady": [],
+        "fallbackReady": 330,
+        "residentBytes": 5406720,
+        "maxRunning": 2,
+        "startButtonVisible": true
+      },
+      "play": {
+        "phase": "playing",
+        "wave": 1,
+        "enemies": 3,
+        "net": null,
+        "appearanceIds": [
+          "w001"
+        ],
+        "directionalEnemies": 3,
+        "renderViews": [
+          "side"
+        ],
+        "residentBytes": 26640384,
+        "peakTrackedBytes": 30834688,
+        "maxRunning": 2,
+        "budget": 100663296,
+        "packageBase": "/www/index.html"
+      },
+      "network": [
+        {
+          "url": "http://localhost:8137/www/content.js?v=93",
+          "status": 200,
+          "sha256": "9f1af8845ced25fedffc02674fc988f09ad796cfb43f14ead1e0cd39f890796f"
+        },
+        {
+          "url": "http://localhost:8137/www/infinity-art.js?v=93",
+          "status": 200,
+          "sha256": "028b6978a22d8b5666c701a28417916463cf572305ce18377b6b685c1a9d218f"
+        },
+        {
+          "url": "http://localhost:8137/www/directional-art.js?v=93",
+          "status": 200,
+          "sha256": "65cbcd5077b2b0bf354c7bb005603bd02ac99c5463d6fc7f2d1d58a6628c3ae1"
+        },
+        {
+          "url": "http://localhost:8137/www/game.js?v=93",
+          "status": 200,
+          "sha256": "1086c3a566aa777a23f511d1c663e5913165530a117ca919a13f3d8638e26b68"
+        },
+        {
+          "url": "http://localhost:8137/www/casual/towers/star-07.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/towers/star-08.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/towers/star-09.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/towers/star-10.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/towers/star-11.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/towers/star-12.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/towers/star-13.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/towers/star-14.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/towers/star-15.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/towers/star-16.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/towers/star-17.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/towers/star-18.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/towers/star-19.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/towers/star-20.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/enemies/inf/directional/w001-back.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/enemies/inf/directional/w001-front.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/enemies/inf/directional/w001-side.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/enemies/inf/directional/w002-back.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/enemies/inf/directional/w002-side.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/enemies/inf/directional/w002-front.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/enemies/inf/directional/w003-back.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/enemies/inf/directional/w003-front.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/enemies/inf/directional/w003-side.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/enemies/inf/directional/w001-back-walk-4x2.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/enemies/inf/directional/w001-front-walk-4x2.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/enemies/inf/directional/w001-side-walk-4x2.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/enemies/inf/directional/w002-back-walk-4x2.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/enemies/inf/directional/w002-front-walk-4x2.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/enemies/inf/directional/w002-side-walk-4x2.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/enemies/inf/directional/w003-back-walk-4x2.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/enemies/inf/directional/w003-front-walk-4x2.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/enemies/inf/directional/w003-side-walk-4x2.png?v=93",
+          "status": 200
+        }
+      ],
+      "errors": [],
+      "pass": true
+    },
+    {
+      "device": "phone",
+      "viewport": {
+        "width": 440,
+        "height": 956
+      },
+      "url": "http://localhost:8137/www/index.html?net=off&unlock=all&packageQA=1788799321034",
+      "durationMs": 14608,
+      "title": {
+        "phase": "title",
+        "approvedEntries": 110,
+        "initialized": true,
+        "invalidReady": [],
+        "fallbackReady": 330,
+        "residentBytes": 5406720,
+        "maxRunning": 2,
+        "startButtonVisible": true
+      },
+      "play": {
+        "phase": "playing",
+        "wave": 1,
+        "enemies": 3,
+        "net": null,
+        "appearanceIds": [
+          "w001"
+        ],
+        "directionalEnemies": 3,
+        "renderViews": [
+          "front"
+        ],
+        "residentBytes": 26640384,
+        "peakTrackedBytes": 30834688,
+        "maxRunning": 2,
+        "budget": 100663296,
+        "packageBase": "/www/index.html"
+      },
+      "network": [
+        {
+          "url": "http://localhost:8137/www/infinity-art.js?v=93",
+          "status": 200,
+          "sha256": "028b6978a22d8b5666c701a28417916463cf572305ce18377b6b685c1a9d218f"
+        },
+        {
+          "url": "http://localhost:8137/www/content.js?v=93",
+          "status": 200,
+          "sha256": "9f1af8845ced25fedffc02674fc988f09ad796cfb43f14ead1e0cd39f890796f"
+        },
+        {
+          "url": "http://localhost:8137/www/directional-art.js?v=93",
+          "status": 200,
+          "sha256": "65cbcd5077b2b0bf354c7bb005603bd02ac99c5463d6fc7f2d1d58a6628c3ae1"
+        },
+        {
+          "url": "http://localhost:8137/www/game.js?v=93",
+          "status": 200,
+          "sha256": "1086c3a566aa777a23f511d1c663e5913165530a117ca919a13f3d8638e26b68"
+        },
+        {
+          "url": "http://localhost:8137/www/casual/towers/star-07.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/towers/star-08.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/towers/star-09.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/towers/star-10.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/towers/star-11.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/towers/star-12.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/towers/star-13.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/towers/star-14.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/towers/star-16.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/towers/star-15.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/towers/star-17.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/towers/star-18.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/towers/star-19.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/towers/star-20.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/enemies/inf/directional/w001-back.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/enemies/inf/directional/w001-front.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/enemies/inf/directional/w001-side.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/enemies/inf/directional/w002-back.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/enemies/inf/directional/w002-front.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/enemies/inf/directional/w002-side.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/enemies/inf/directional/w003-back.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/enemies/inf/directional/w003-front.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/enemies/inf/directional/w003-side.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/enemies/inf/directional/w001-back-walk-4x2.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/enemies/inf/directional/w001-front-walk-4x2.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/enemies/inf/directional/w001-side-walk-4x2.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/enemies/inf/directional/w002-back-walk-4x2.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/enemies/inf/directional/w002-front-walk-4x2.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/enemies/inf/directional/w002-side-walk-4x2.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/enemies/inf/directional/w003-back-walk-4x2.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/enemies/inf/directional/w003-front-walk-4x2.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/www/casual/enemies/inf/directional/w003-side-walk-4x2.png?v=93",
+          "status": 200
+        }
+      ],
+      "errors": [],
+      "pass": true
+    }
+  ],
+  "package": {
+    "entries": 110,
+    "views": 330,
+    "directionalPngs": 660,
+    "towerPngs": 14,
+    "byteMatches": 681,
+    "indexSourceSha256": "ceaf40fdc9d7bdd25ad9c2a24a8aaffdc3804c9f917be56a1463275ea2dc4121",
+    "indexPackageSha256": "b485e9a8cd873297b6665c37339ba93ef881da11f316bf6714aea4ae0b83ee9a",
+    "indexAppBridgeInjected": true,
+    "buildManifestSha256": "da2a9fe6e309bb54382bb262f829f2fb0544fc045777cdf222197531a3f1807f",
+    "listedFiles": 1502,
+    "listedBytes": 258119388,
+    "manifestItselfBytes": 116631,
+    "directionalPngBytes": 120192051,
+    "towerPngBytes": 2232280
+  }
+}

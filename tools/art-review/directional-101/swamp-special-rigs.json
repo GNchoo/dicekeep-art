@@ -1,0 +1,994 @@
+{
+  "version": 1,
+  "canonicalCell": 512,
+  "assetVersion": 93,
+  "entries": [
+    {
+      "assetId": "w021",
+      "wave": 21,
+      "role": "normal",
+      "locomotion": "slither",
+      "cell": 256,
+      "referenceHeight": 320,
+      "cycleStride": 140,
+      "cycleSeconds": 0.8,
+      "reviewApproved": true,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/swamp-special-01-side-parts.png",
+          "sourceSha256": "4ecadd0b116600d910139b45e7f3c3a0e5d331c333312da2a9146ba6a3d90534",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            430
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.36,
+              0.33
+            ],
+            "target": [
+              314.10087719298247,
+              285,
+              101.79824561403508,
+              110
+            ],
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "segment1",
+              "type": "segment",
+              "roi": [
+                0.38,
+                0,
+                0.27,
+                0.33
+              ],
+              "sourceJoints": {
+                "start": [
+                  0.5,
+                  0.3
+                ],
+                "end": [
+                  0.5,
+                  0.7
+                ]
+              },
+              "socket": [
+                10.179824561403509,
+                93.5
+              ],
+              "scale": 0.36684782608695654,
+              "angleDeg": [
+                180,
+                12
+              ],
+              "phase": 0,
+              "layer": 3
+            },
+            {
+              "id": "segment2",
+              "type": "segment",
+              "roi": [
+                0.38,
+                0,
+                0.27,
+                0.33
+              ],
+              "sourceJoints": {
+                "start": [
+                  0.5,
+                  0.3
+                ],
+                "end": [
+                  0.5,
+                  0.7
+                ]
+              },
+              "socket": [
+                10.179824561403509,
+                93.5
+              ],
+              "scale": 0.36684782608695654,
+              "angleDeg": [
+                180,
+                12
+              ],
+              "phase": 0.3333333333333333,
+              "layer": 2
+            },
+            {
+              "id": "segment3",
+              "type": "segment",
+              "roi": [
+                0.68,
+                0,
+                0.31999999999999995,
+                0.33
+              ],
+              "sourceJoints": {
+                "start": [
+                  0.5,
+                  0.2
+                ],
+                "end": [
+                  0.5,
+                  0.85
+                ]
+              },
+              "socket": [
+                10.179824561403509,
+                93.5
+              ],
+              "scale": 0.3418803418803419,
+              "angleDeg": [
+                180,
+                12
+              ],
+              "phase": 0.6666666666666666,
+              "layer": 1
+            }
+          ]
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/swamp-special-01-front-back-parts.png",
+          "sourceSha256": "85c2c37f1fc9ac5acf83d359c295a34bf8dd83ba7cc2522dc552d65639c5dbf0",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            430
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.2,
+              0.33
+            ],
+            "target": [
+              225.46938775510205,
+              295,
+              61.06122448979592,
+              110
+            ],
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "segment1",
+              "type": "segment",
+              "roi": [
+                0.22,
+                0,
+                0.13999999999999999,
+                0.33
+              ],
+              "sourceJoints": {
+                "start": [
+                  0.5,
+                  0.3
+                ],
+                "end": [
+                  0.5,
+                  0.7
+                ]
+              },
+              "socket": [
+                30.53061224489796,
+                55
+              ],
+              "scale": 0.5465587044534413,
+              "angleDeg": [
+                -90,
+                12
+              ],
+              "phase": 0,
+              "layer": 3
+            },
+            {
+              "id": "segment2",
+              "type": "segment",
+              "roi": [
+                0.22,
+                0,
+                0.13999999999999999,
+                0.33
+              ],
+              "sourceJoints": {
+                "start": [
+                  0.5,
+                  0.3
+                ],
+                "end": [
+                  0.5,
+                  0.7
+                ]
+              },
+              "socket": [
+                30.53061224489796,
+                55
+              ],
+              "scale": 0.5465587044534413,
+              "angleDeg": [
+                -90,
+                12
+              ],
+              "phase": 0.3333333333333333,
+              "layer": 2
+            },
+            {
+              "id": "segment3",
+              "type": "segment",
+              "roi": [
+                0.36,
+                0,
+                0.13,
+                0.33
+              ],
+              "sourceJoints": {
+                "start": [
+                  0.5,
+                  0.2
+                ],
+                "end": [
+                  0.5,
+                  0.85
+                ]
+              },
+              "socket": [
+                30.53061224489796,
+                55
+              ],
+              "scale": 0.5555555555555556,
+              "angleDeg": [
+                -90,
+                12
+              ],
+              "phase": 0.6666666666666666,
+              "layer": 1
+            }
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/swamp-special-01-front-back-parts.png",
+          "sourceSha256": "85c2c37f1fc9ac5acf83d359c295a34bf8dd83ba7cc2522dc552d65639c5dbf0",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            430
+          ],
+          "body": {
+            "roi": [
+              0.5,
+              0,
+              0.18999999999999995,
+              0.33
+            ],
+            "target": [
+              227.80672268907563,
+              120,
+              56.38655462184874,
+              110
+            ],
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "segment1",
+              "type": "segment",
+              "roi": [
+                0.7,
+                0,
+                0.12,
+                0.33
+              ],
+              "sourceJoints": {
+                "start": [
+                  0.5,
+                  0.3
+                ],
+                "end": [
+                  0.5,
+                  0.7
+                ]
+              },
+              "socket": [
+                28.19327731092437,
+                96.8
+              ],
+              "scale": 0.5973451327433629,
+              "angleDeg": [
+                90,
+                12
+              ],
+              "phase": 0,
+              "layer": 3
+            },
+            {
+              "id": "segment2",
+              "type": "segment",
+              "roi": [
+                0.7,
+                0,
+                0.12,
+                0.33
+              ],
+              "sourceJoints": {
+                "start": [
+                  0.5,
+                  0.3
+                ],
+                "end": [
+                  0.5,
+                  0.7
+                ]
+              },
+              "socket": [
+                28.19327731092437,
+                96.8
+              ],
+              "scale": 0.5973451327433629,
+              "angleDeg": [
+                90,
+                12
+              ],
+              "phase": 0.3333333333333333,
+              "layer": 2
+            },
+            {
+              "id": "segment3",
+              "type": "segment",
+              "roi": [
+                0.83,
+                0,
+                0.17000000000000004,
+                0.33
+              ],
+              "sourceJoints": {
+                "start": [
+                  0.5,
+                  0.2
+                ],
+                "end": [
+                  0.5,
+                  0.85
+                ]
+              },
+              "socket": [
+                28.19327731092437,
+                96.8
+              ],
+              "scale": 0.5454545454545454,
+              "angleDeg": [
+                90,
+                12
+              ],
+              "phase": 0.6666666666666666,
+              "layer": 1
+            }
+          ]
+        }
+      },
+      "reviewNotes": "Reviewed all three view boards and every baked pose; articulated segments remain connected, dorsal snake body behind raised head, mosquito wings attach behind thorax, no repeated face on back."
+    },
+    {
+      "assetId": "w024",
+      "wave": 24,
+      "role": "normal",
+      "locomotion": "flight",
+      "cell": 256,
+      "referenceHeight": 320,
+      "cycleStride": 0,
+      "cycleSeconds": 0.8,
+      "reviewApproved": true,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/swamp-special-01-side-parts.png",
+          "sourceSha256": "4ecadd0b116600d910139b45e7f3c3a0e5d331c333312da2a9146ba6a3d90534",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            430
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.33,
+              0.36,
+              0.33
+            ],
+            "target": [
+              150.67248908296943,
+              195,
+              210.65502183406113,
+              180
+            ],
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.38,
+                0.33,
+                0.27,
+                0.33
+              ],
+              "socket": [
+                115.86026200873363,
+                77.4
+              ],
+              "sourcePivot": [
+                0.94,
+                0.96
+              ],
+              "scale": 0.708502024291498,
+              "angleDeg": [
+                -25,
+                45
+              ],
+              "phase": 0,
+              "layer": 0
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.68,
+                0.33,
+                0.31999999999999995,
+                0.33
+              ],
+              "socket": [
+                143.24541484716158,
+                77.4
+              ],
+              "sourcePivot": [
+                0.06,
+                0.96
+              ],
+              "scale": 0.708502024291498,
+              "angleDeg": [
+                25,
+                -45
+              ],
+              "phase": 0,
+              "layer": 0
+            }
+          ]
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/swamp-special-01-front-back-parts.png",
+          "sourceSha256": "85c2c37f1fc9ac5acf83d359c295a34bf8dd83ba7cc2522dc552d65639c5dbf0",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            430
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.33,
+              0.2,
+              0.31
+            ],
+            "target": [
+              187.158940397351,
+              180,
+              137.68211920529802,
+              220
+            ],
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.22,
+                0.33,
+                0.13999999999999999,
+                0.31
+              ],
+              "socket": [
+                46.811920529801334,
+                94.6
+              ],
+              "sourcePivot": [
+                0.94,
+                0.96
+              ],
+              "scale": 0.7383966244725738,
+              "angleDeg": [
+                -25,
+                45
+              ],
+              "phase": 0,
+              "layer": 0
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.36,
+                0.33,
+                0.13,
+                0.31
+              ],
+              "socket": [
+                90.8701986754967,
+                94.6
+              ],
+              "sourcePivot": [
+                0.06,
+                0.96
+              ],
+              "scale": 0.7352941176470589,
+              "angleDeg": [
+                25,
+                -45
+              ],
+              "phase": 0,
+              "layer": 0
+            }
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/swamp-special-01-front-back-parts.png",
+          "sourceSha256": "85c2c37f1fc9ac5acf83d359c295a34bf8dd83ba7cc2522dc552d65639c5dbf0",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            430
+          ],
+          "body": {
+            "roi": [
+              0.5,
+              0.33,
+              0.18999999999999995,
+              0.31
+            ],
+            "target": [
+              189.56435643564356,
+              180,
+              132.87128712871288,
+              220
+            ],
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.7,
+                0.33,
+                0.12,
+                0.31
+              ],
+              "socket": [
+                45.17623762376238,
+                94.6
+              ],
+              "sourcePivot": [
+                0.94,
+                0.96
+              ],
+              "scale": 0.7291666666666666,
+              "angleDeg": [
+                -25,
+                45
+              ],
+              "phase": 0,
+              "layer": 0
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.83,
+                0.33,
+                0.17000000000000004,
+                0.31
+              ],
+              "socket": [
+                87.6950495049505,
+                94.6
+              ],
+              "sourcePivot": [
+                0.06,
+                0.96
+              ],
+              "scale": 0.7231404958677686,
+              "angleDeg": [
+                25,
+                -45
+              ],
+              "phase": 0,
+              "layer": 0
+            }
+          ]
+        }
+      },
+      "reviewNotes": "Reviewed all three view boards and every baked pose; articulated segments remain connected, dorsal snake body behind raised head, mosquito wings attach behind thorax, no repeated face on back."
+    },
+    {
+      "assetId": "w029",
+      "wave": 29,
+      "role": "normal",
+      "locomotion": "slither",
+      "cell": 256,
+      "referenceHeight": 320,
+      "cycleStride": 140,
+      "cycleSeconds": 0.8,
+      "reviewApproved": true,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/swamp-special-01-side-parts.png",
+          "sourceSha256": "4ecadd0b116600d910139b45e7f3c3a0e5d331c333312da2a9146ba6a3d90534",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            430
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.66,
+              0.36,
+              0.33999999999999997
+            ],
+            "target": [
+              325.53903345724905,
+              285,
+              78.92193308550186,
+              110
+            ],
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "segment1",
+              "type": "segment",
+              "roi": [
+                0.38,
+                0.66,
+                0.27,
+                0.33999999999999997
+              ],
+              "sourceJoints": {
+                "start": [
+                  0.5,
+                  0.3
+                ],
+                "end": [
+                  0.5,
+                  0.7
+                ]
+              },
+              "socket": [
+                7.892193308550187,
+                93.5
+              ],
+              "scale": 0.33088235294117646,
+              "angleDeg": [
+                180,
+                12
+              ],
+              "phase": 0,
+              "layer": 3
+            },
+            {
+              "id": "segment2",
+              "type": "segment",
+              "roi": [
+                0.38,
+                0.66,
+                0.27,
+                0.33999999999999997
+              ],
+              "sourceJoints": {
+                "start": [
+                  0.5,
+                  0.3
+                ],
+                "end": [
+                  0.5,
+                  0.7
+                ]
+              },
+              "socket": [
+                7.892193308550187,
+                93.5
+              ],
+              "scale": 0.33088235294117646,
+              "angleDeg": [
+                180,
+                12
+              ],
+              "phase": 0.3333333333333333,
+              "layer": 2
+            },
+            {
+              "id": "segment3",
+              "type": "segment",
+              "roi": [
+                0.68,
+                0.66,
+                0.31999999999999995,
+                0.33999999999999997
+              ],
+              "sourceJoints": {
+                "start": [
+                  0.5,
+                  0.2
+                ],
+                "end": [
+                  0.5,
+                  0.85
+                ]
+              },
+              "socket": [
+                7.892193308550187,
+                93.5
+              ],
+              "scale": 0.31413612565445026,
+              "angleDeg": [
+                180,
+                12
+              ],
+              "phase": 0.6666666666666666,
+              "layer": 1
+            }
+          ]
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/swamp-special-01-front-back-parts.png",
+          "sourceSha256": "85c2c37f1fc9ac5acf83d359c295a34bf8dd83ba7cc2522dc552d65639c5dbf0",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            430
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.64,
+              0.2,
+              0.36
+            ],
+            "target": [
+              233.1768707482993,
+              295,
+              45.64625850340136,
+              110
+            ],
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "segment1",
+              "type": "segment",
+              "roi": [
+                0.7,
+                0.64,
+                0.12,
+                0.36
+              ],
+              "sourceJoints": {
+                "start": [
+                  0.5,
+                  0.3
+                ],
+                "end": [
+                  0.5,
+                  0.7
+                ]
+              },
+              "socket": [
+                22.82312925170068,
+                55
+              ],
+              "scale": 0.47202797202797203,
+              "angleDeg": [
+                -90,
+                12
+              ],
+              "phase": 0,
+              "layer": 3
+            },
+            {
+              "id": "segment2",
+              "type": "segment",
+              "roi": [
+                0.7,
+                0.64,
+                0.12,
+                0.36
+              ],
+              "sourceJoints": {
+                "start": [
+                  0.5,
+                  0.3
+                ],
+                "end": [
+                  0.5,
+                  0.7
+                ]
+              },
+              "socket": [
+                22.82312925170068,
+                55
+              ],
+              "scale": 0.47202797202797203,
+              "angleDeg": [
+                -90,
+                12
+              ],
+              "phase": 0.3333333333333333,
+              "layer": 2
+            },
+            {
+              "id": "segment3",
+              "type": "segment",
+              "roi": [
+                0.36,
+                0.64,
+                0.13,
+                0.36
+              ],
+              "sourceJoints": {
+                "start": [
+                  0.5,
+                  0.2
+                ],
+                "end": [
+                  0.5,
+                  0.85
+                ]
+              },
+              "socket": [
+                22.82312925170068,
+                55
+              ],
+              "scale": 0.4316546762589928,
+              "angleDeg": [
+                -90,
+                12
+              ],
+              "phase": 0.6666666666666666,
+              "layer": 1
+            }
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/swamp-special-01-front-back-parts.png",
+          "sourceSha256": "85c2c37f1fc9ac5acf83d359c295a34bf8dd83ba7cc2522dc552d65639c5dbf0",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            430
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.75,
+              1,
+              0.25
+            ],
+            "target": [
+              229.015625,
+              120,
+              53.96875,
+              110
+            ],
+            "layer": 10,
+            "source": "tools/art-review/directional-101/swamp-back-body-correction.png",
+            "sourceSha256": "98abfe48f2750e4626cb69c0d95f84e105a7f4e8880bdeffd6c68984c6810e6a",
+            "background": "checkerboard"
+          },
+          "parts": [
+            {
+              "id": "segment1",
+              "type": "segment",
+              "roi": [
+                0.7,
+                0.64,
+                0.12,
+                0.36
+              ],
+              "sourceJoints": {
+                "start": [
+                  0.5,
+                  0.3
+                ],
+                "end": [
+                  0.5,
+                  0.7
+                ]
+              },
+              "socket": [
+                26.984375,
+                96.8
+              ],
+              "scale": 0.47202797202797203,
+              "angleDeg": [
+                90,
+                12
+              ],
+              "phase": 0,
+              "layer": 3
+            },
+            {
+              "id": "segment2",
+              "type": "segment",
+              "roi": [
+                0.7,
+                0.64,
+                0.12,
+                0.36
+              ],
+              "sourceJoints": {
+                "start": [
+                  0.5,
+                  0.3
+                ],
+                "end": [
+                  0.5,
+                  0.7
+                ]
+              },
+              "socket": [
+                26.984375,
+                96.8
+              ],
+              "scale": 0.47202797202797203,
+              "angleDeg": [
+                90,
+                12
+              ],
+              "phase": 0.3333333333333333,
+              "layer": 2
+            },
+            {
+              "id": "segment3",
+              "type": "segment",
+              "roi": [
+                0.83,
+                0.64,
+                0.17000000000000004,
+                0.36
+              ],
+              "sourceJoints": {
+                "start": [
+                  0.5,
+                  0.2
+                ],
+                "end": [
+                  0.5,
+                  0.85
+                ]
+              },
+              "socket": [
+                26.984375,
+                96.8
+              ],
+              "scale": 0.4316546762589928,
+              "angleDeg": [
+                90,
+                12
+              ],
+              "phase": 0.6666666666666666,
+              "layer": 1
+            }
+          ]
+        }
+      },
+      "reviewNotes": "Reviewed all three view boards and every baked pose; articulated segments remain connected, dorsal snake body behind raised head, mosquito wings attach behind thorax, no repeated face on back."
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "scope": "5 explicit float identities; body hover is intentional, not a ground-walk claim.",
+  "reviewedAssets": [
+    {
+      "assetId": "w061",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 4,
+      "checks": [
+        "all actual baked frames inspected",
+        "correct face-front/back anatomy",
+        "no clipped artwork or checker pockets",
+        "four-direction moving preview generated"
+      ],
+      "limitations": "Whole-body hover; internal robe/flame pixels do not animate."
+    },
+    {
+      "assetId": "b070",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 4,
+      "checks": [
+        "all actual baked frames inspected",
+        "correct face-front/back anatomy",
+        "no clipped artwork or checker pockets",
+        "four-direction moving preview generated"
+      ],
+      "limitations": "Whole-body hover; internal robe/flame pixels do not animate."
+    },
+    {
+      "assetId": "b070-2",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 4,
+      "checks": [
+        "all actual baked frames inspected",
+        "correct face-front/back anatomy",
+        "no clipped artwork or checker pockets",
+        "four-direction moving preview generated"
+      ],
+      "limitations": "Whole-body hover; internal robe/flame pixels do not animate."
+    },
+    {
+      "assetId": "w085",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 4,
+      "checks": [
+        "all actual baked frames inspected",
+        "correct face-front/back anatomy",
+        "no clipped artwork or checker pockets",
+        "four-direction moving preview generated"
+      ],
+      "limitations": "Whole-body hover; internal robe/flame pixels do not animate."
+    },
+    {
+      "assetId": "w092",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 4,
+      "checks": [
+        "all actual baked frames inspected",
+        "correct face-front/back anatomy",
+        "no clipped artwork or checker pockets",
+        "four-direction moving preview generated"
+      ],
+      "limitations": "Hover plus independently swaying flame wisps."
+    }
+  ]
+}

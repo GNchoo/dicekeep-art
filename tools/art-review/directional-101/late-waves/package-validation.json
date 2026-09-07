@@ -1,0 +1,12 @@
+{
+  "scope": "Late-wave 61–101 original and derived provenance, exact catalog coverage and visual review declarations. Shared output/check/moving QA remains separate.",
+  "sources": 50,
+  "prompts": 50,
+  "references": 79,
+  "derived": 18,
+  "entries": 45,
+  "views": 135,
+  "rigConfigSha256": "29bdc87538282a2dbc4bf7920338c482383730f0590a46a50b601c4992df4155",
+  "errors": [],
+  "passed": true
+}

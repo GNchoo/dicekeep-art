@@ -1,0 +1,390 @@
+{
+  "version": 1,
+  "canonicalCell": 512,
+  "assetVersion": 93,
+  "entries": [
+    {
+      "assetId": "w058",
+      "wave": 58,
+      "role": "normal",
+      "locomotion": "legged",
+      "cell": 256,
+      "referenceHeight": 425,
+      "cycleStride": 160,
+      "reviewApproved": true,
+      "gait": {
+        "stanceDuty": 0.5,
+        "lift": 25,
+        "pelvis": "support"
+      },
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/middle-waves/t6-doll-three-view-parts.png",
+          "sourceSha256": "d62dc725f3566043fe2dcd6784f0d9cf96d9dd1c5695feed637d680dc43c18aa",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.42,
+              0.3580729166666667
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 248.0408163265306
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.46,
+                0,
+                0.22,
+                0.3580729166666667
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.46111111111111114,
+                  0.1
+                ],
+                "knee": [
+                  0.45,
+                  0.4
+                ],
+                "ankle": [
+                  0.39444444444444443,
+                  0.65
+                ],
+                "sole": [
+                  0.6388888888888888,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.46,
+                0.87
+              ],
+              "socketRoiNormalized": [
+                0.4,
+                0.81,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.74,
+                0,
+                0.23,
+                0.3580729166666667
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4425287356321839,
+                  0.1
+                ],
+                "knee": [
+                  0.4367816091954023,
+                  0.4
+                ],
+                "ankle": [
+                  0.40229885057471265,
+                  0.65
+                ],
+                "sole": [
+                  0.6379310344827587,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.64,
+                0.87
+              ],
+              "socketRoiNormalized": [
+                0.5800000000000001,
+                0.81,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t6-doll-three-view-parts row 0 side. Reviewed hip cuff/knee/ankle y 0.1/0.4/0.65; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained. Body translated once so mean hip socket aligns to canonical pivot X."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/middle-waves/t6-doll-three-view-parts.png",
+          "sourceSha256": "d62dc725f3566043fe2dcd6784f0d9cf96d9dd1c5695feed637d680dc43c18aa",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.3580729166666667,
+              0.42,
+              0.2864583333333333
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 256.832
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.46,
+                0.3580729166666667,
+                0.22,
+                0.2864583333333333
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5205479452054794,
+                  0.1
+                ],
+                "knee": [
+                  0.5205479452054794,
+                  0.4
+                ],
+                "ankle": [
+                  0.5205479452054794,
+                  0.65
+                ],
+                "sole": [
+                  0.5136986301369864,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.61,
+                0.87
+              ],
+              "socketRoiNormalized": [
+                0.55,
+                0.81,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.74,
+                0.3580729166666667,
+                0.23,
+                0.2864583333333333
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.49324324324324326,
+                  0.1
+                ],
+                "knee": [
+                  0.49324324324324326,
+                  0.4
+                ],
+                "ankle": [
+                  0.47297297297297297,
+                  0.65
+                ],
+                "sole": [
+                  0.47297297297297297,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.38,
+                0.87
+              ],
+              "socketRoiNormalized": [
+                0.32,
+                0.81,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t6-doll-three-view-parts row 1 front. Reviewed hip cuff/knee/ankle y 0.1/0.4/0.65; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained. Body translated once so mean hip socket aligns to canonical pivot X."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/middle-waves/t6-doll-three-view-parts.png",
+          "sourceSha256": "d62dc725f3566043fe2dcd6784f0d9cf96d9dd1c5695feed637d680dc43c18aa",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.64453125,
+              0.42,
+              0.35546875
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 256.81853785900785
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.46,
+                0.64453125,
+                0.22,
+                0.35546875
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5138888888888888,
+                  0.1
+                ],
+                "knee": [
+                  0.5138888888888888,
+                  0.4
+                ],
+                "ankle": [
+                  0.5138888888888888,
+                  0.65
+                ],
+                "sole": [
+                  0.5138888888888888,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.37,
+                0.87
+              ],
+              "socketRoiNormalized": [
+                0.31,
+                0.81,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.74,
+                0.64453125,
+                0.23,
+                0.35546875
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4861111111111111,
+                  0.1
+                ],
+                "knee": [
+                  0.4861111111111111,
+                  0.4
+                ],
+                "ankle": [
+                  0.4722222222222222,
+                  0.65
+                ],
+                "sole": [
+                  0.4861111111111111,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.62,
+                0.87
+              ],
+              "socketRoiNormalized": [
+                0.56,
+                0.81,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t6-doll-three-view-parts row 2 back. Reviewed hip cuff/knee/ankle y 0.1/0.4/0.65; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained. Body translated once so mean hip socket aligns to canonical pivot X."
+        }
+      }
+    }
+  ]
+}

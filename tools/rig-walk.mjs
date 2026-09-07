@@ -9,14 +9,6 @@ import browserTools from './e2e/browser.cjs';
 import { loadRaw, analyzeCell, foregroundMask, positiveInteger, readBackgroundSeeds } from './lib/sheet.mjs';
 
 const repo = fileURLToPath(new URL('../', import.meta.url));
-const args = process.argv.slice(2);
-const opt = (key, fallback) => args.find(a => a.startsWith(`--${key}=`))?.slice(key.length + 3) ?? fallback;
-const configPath = path.resolve(repo, opt('config', 'tools/art-review/pr29-gait/rig-config.json'));
-const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
-const out = path.resolve(repo, opt('out', 'gen/pr29-gait'));
-const cell = positiveInteger(config.cell ?? 512, 'cell'), count = positiveInteger(config.frames ?? 8, 'frames');
-if (count !== 8 || !Array.isArray(config.waves) || !config.waves.length) throw new Error('rig requires eight frames and at least one configured wave');
-if (new Set(config.waves.map(w => w.wave)).size !== config.waves.length) throw new Error('wave numbers must be unique');
 const finite = (n, name) => { if (!Number.isFinite(n)) throw new Error(`${name} must be finite`); return n; };
 const distance = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
 const normalizedPoint = (p, label) => {
@@ -24,7 +16,8 @@ const normalizedPoint = (p, label) => {
   return p;
 };
 
-async function extractPart(raw, region, name) {
+export async function extractPart(raw, region, name, { componentCount = 1 } = {}) {
+  if (![1, 3].includes(componentCount)) throw new Error(`${name}: componentCount must be 1 or the explicitly reviewed 3-body swarm`);
   if (!Array.isArray(region) || region.length !== 4 || region.some(n => !Number.isFinite(n) || n < 0 || n > 1) || region[2] <= 0 || region[3] <= 0 || region[0] + region[2] > 1.000001 || region[1] + region[3] > 1.000001) throw new Error(`invalid normalized region: ${name}`);
   const x0 = Math.floor(region[0] * raw.W), y0 = Math.floor(region[1] * raw.H), x1 = Math.floor((region[0] + region[2]) * raw.W), y1 = Math.floor((region[1] + region[3]) * raw.H);
   const foreground = foregroundMask(raw);
@@ -47,7 +40,7 @@ async function extractPart(raw, region, name) {
     }
     if (area >= Math.max(20, s.n * .02)) significant.push(area);
   }
-  if (significant.length > 1) throw new Error(`${name}: region contains ${significant.length} substantial disconnected pieces (${significant.join(', ')} pixels); isolate one puppet part`);
+  if (significant.length !== componentCount || (componentCount === 3 && significant.some(area => area < s.n * .05))) throw new Error(`${name}: region contains ${significant.length} substantial disconnected pieces (${significant.join(', ')} pixels); expected ${componentCount}${componentCount === 3 ? ' with each body at least 5% of foreground' : ' isolated puppet part'}`);
   const rgba = Buffer.alloc(s.w * s.h * 4), { mask } = s;
   for (let y = 0; y < s.h; y++) for (let x = 0; x < s.w; x++) {
     const ox = s.x0 + x, oy = s.y0 + y;
@@ -56,10 +49,10 @@ async function extractPart(raw, region, name) {
   let sum = 0, n = 0;
   for (let y = Math.max(0, s.h - Math.ceil(s.h * .035)); y < s.h; y++) for (let x = 0; x < s.w; x++) if (rgba[(y * s.w + x) * 4 + 3] > 150) { sum += x + .5; n++; }
   const png = await sharp(rgba, { raw: { width: s.w, height: s.h, channels: 4 } }).png().toBuffer();
-  return { name, regionNormalized: region, width: s.w, height: s.h, sourceBounds: [s.x0, s.y0, s.w, s.h], sole: [n ? sum / n : s.w / 2, s.h], image: `data:image/png;base64,${png.toString('base64')}` };
+  return { name, regionNormalized: region, width: s.w, height: s.h, sourceBounds: [s.x0, s.y0, s.w, s.h], componentAreas: significant, sole: [n ? sum / n : s.w / 2, s.h], image: `data:image/png;base64,${png.toString('base64')}` };
 }
 
-function solveLeg(hip, ankle, l1, l2, bend, label) {
+export function solveLeg(hip, ankle, l1, l2, bend, label) {
   const d = distance(hip, ankle), min = Math.abs(l1 - l2), max = l1 + l2;
   if (d < min + .001 || d > max - .001) throw new Error(`${label}: unreachable ankle (distance ${d.toFixed(2)}, allowed ${(min + .001).toFixed(2)}..${(max - .001).toFixed(2)}); adjust hip, legScale, amplitude or lift`);
   const ux = (ankle[0] - hip[0]) / d, uy = (ankle[1] - hip[1]) / d;
@@ -67,7 +60,9 @@ function solveLeg(hip, ankle, l1, l2, bend, label) {
   return [hip[0] + along * ux - bend * across * uy, hip[1] + along * uy + bend * across * ux];
 }
 
-async function prepareWave(wave) {
+export async function prepareWave(wave, { cell = 512, count = 8 } = {}) {
+  positiveInteger(cell, 'cell');
+  if (count !== 8) throw new Error('legacy ground rig requires eight frames');
   positiveInteger(wave.wave, 'wave');
   if (!['biped', 'quad'].includes(wave.type)) throw new Error(`W${wave.wave}: type must be biped or quad`);
   const file = path.resolve(repo, wave.source);
@@ -147,7 +142,26 @@ async function prepareWave(wave) {
     // A shared smooth curve avoids both source-length jumps and a velocity cusp
     // at support exchange. Endpoints and midstance use the target knee geometry;
     // all intermediate support angles are independently checked below.
-    const bodyY = pelvis ? pelvis.centerBodyY + (neutral ? 0 : pelvis.contactDrop * Math.cos(2 * Math.PI * (phase + limbs[0].phase)) ** 4) : bodyTop + (neutral ? 0 : bodyBob * Math.sin(phase * Math.PI * 4));
+    let bodyY = pelvis ? pelvis.centerBodyY + (neutral ? 0 : pelvis.contactDrop * Math.cos(2 * Math.PI * (phase + limbs[0].phase)) ** 4) : bodyTop + (neutral ? 0 : bodyBob * Math.sin(phase * Math.PI * 4));
+    // Optional wider gait: project the preferred pelvis curve into the feasible
+    // support envelope. The authored limb lengths and sockets never change.
+    // Old configs omit this flag and retain their exact previous pixels/poses.
+    if (pelvis && !neutral && wave.supportCurve === 'constraint-envelope') {
+      let low = -Infinity, high = Infinity;
+      for (const limb of limbs) {
+        const p = (phase + limb.phase) % 1;
+        if (p >= contactRatio) continue;
+        const dx = A - 2 * A * p / contactRatio;
+        const ankleY = groundY - (limb.sole[1] - limb.ankle[1]) * limb.scale;
+        const reachAt = degrees => Math.sqrt(limb.l1 ** 2 + limb.l2 ** 2 - 2 * limb.l1 * limb.l2 * Math.cos(degrees * Math.PI / 180));
+        const minReach = reachAt(161), maxReach = reachAt(174);
+        if (Math.abs(dx) >= minReach) throw new Error(`W${wave.wave}: stride exceeds support envelope`);
+        low = Math.max(low, ankleY - limb.root[1] * bodyHeight - Math.sqrt(maxReach ** 2 - dx ** 2));
+        high = Math.min(high, ankleY - limb.root[1] * bodyHeight - Math.sqrt(minReach ** 2 - dx ** 2));
+      }
+      if (low > high) throw new Error(`W${wave.wave}: support envelopes do not intersect`);
+      bodyY = Math.min(high, Math.max(low, bodyY));
+    }
     return { index, phase, rootAdvancePx: phase * cycleStridePx, bodyAnchor: [bodyX + bodyWidth / 2, bodyY], limbs: limbs.map(limb => {
       const p = (phase + limb.phase) % 1, contact = neutral || p < contactRatio, u = (p - contactRatio) / (1 - contactRatio);
       const hip = [bodyX + limb.root[0] * bodyWidth, bodyY + limb.root[1] * bodyHeight];
@@ -174,10 +188,14 @@ async function prepareWave(wave) {
   const frames = Array.from({ length: count }, (_, index) => poseAt(index / count, index));
   const neutralFrame = poseAt(0, 'neutral', true);
   const kinematics = { mode: supportPelvis ? 'support-leg-pelvis' : 'fixed-body', supportKneeAngle, contactRatio, ankleCentered, swingEasing: smoothSwing ? 'cosine' : 'linear', amplitude: A, lift, pelvis, supportAngleRange: supportAngles.length ? [Math.min(...supportAngles), Math.max(...supportAngles)] : null, preflightSamples };
+  if (wave.supportCurve) {
+    if (wave.supportCurve !== 'constraint-envelope') throw new Error('unsupported supportCurve');
+    kinematics.supportCurve = wave.supportCurve;
+  }
   return { wave: wave.wave, type: wave.type, source: wave.source, sourceSha256, sourceSize: [raw.W, raw.H], parts, limbs, frames, neutralFrame, cell, body: { x: bodyX, y: frames[0].bodyAnchor[1], configuredY: bodyTop, width: bodyWidth, height: bodyHeight, scale: bodyScale }, bodyLayer, kinematics, amplitude: A, lift, groundY, cycleStridePx };
 }
 
-async function rasterize(page, rig) {
+export async function rasterize(page, rig) {
   return page.evaluate(async rig => {
     const images = {};
     await Promise.all(Object.entries(rig.parts).map(async ([key, part]) => { const im = new Image(); im.src = part.image; await im.decode(); images[key] = im; }));
@@ -304,13 +322,23 @@ async function rasterize(page, rig) {
   }, rig);
 }
 
-async function writeGif(frames, width, height, file) {
+async function writeGif(frames, width, height, file, delay = 100) {
+  const count = frames.length;
   const raw = await sharp({ create: { width, height: height * count, channels: 4, background: '#253438' } }).composite(frames.map((input, i) => ({ input: Buffer.from(input, 'base64'), left: 0, top: i * height }))).raw().toBuffer();
-  await sharp(raw, { raw: { width, height: height * count, channels: 4, pageHeight: height } }).gif({ delay: Array(count).fill(config.frameDelayMs ?? 100), loop: 0, effort: 7 }).toFile(file);
+  await sharp(raw, { raw: { width, height: height * count, channels: 4, pageHeight: height } }).gif({ delay: Array(count).fill(delay), loop: 0, effort: 7 }).toFile(file);
 }
 
+async function main() {
+const args = process.argv.slice(2);
+const opt = (key, fallback) => args.find(a => a.startsWith(`--${key}=`))?.slice(key.length + 3) ?? fallback;
+const configPath = path.resolve(repo, opt('config', 'tools/art-review/pr29-gait/rig-config.json'));
+const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+const out = path.resolve(repo, opt('out', 'gen/pr29-gait'));
+const cell = positiveInteger(config.cell ?? 512, 'cell'), count = positiveInteger(config.frames ?? 8, 'frames');
+if (count !== 8 || !Array.isArray(config.waves) || !config.waves.length) throw new Error('rig requires eight frames and at least one configured wave');
+if (new Set(config.waves.map(w => w.wave)).size !== config.waves.length) throw new Error('wave numbers must be unique');
 const prepared = [];
-for (const wave of config.waves) prepared.push(await prepareWave(wave));
+for (const wave of config.waves) prepared.push(await prepareWave(wave, { cell, count }));
 const manifest = { version: 1, frames: count, cols: 4, rows: 2, cell, waves: [] };
 const browser = await browserTools.launchBrowser();
 try {
@@ -321,8 +349,8 @@ try {
     fs.mkdirSync(assets, { recursive: true });
     await sharp({ create: { width: cell * 4, height: cell * 2, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 0 } } }).composite(rendered.textured.map((b64, i) => ({ input: Buffer.from(b64, 'base64'), left: i % 4 * cell, top: Math.floor(i / 4) * cell }))).png().toFile(path.join(assets, `${id}-walk-4x2.png`));
     fs.writeFileSync(path.join(assets, `${id}.png`), Buffer.from(rendered.textured[0], 'base64'));
-    await writeGif(rendered.preview, cell, cell, path.join(out, `${id}-preview.gif`));
-    await writeGif(rendered.debug, cell * 2, cell, path.join(out, `${id}-debug.gif`));
+    await writeGif(rendered.preview, cell, cell, path.join(out, `${id}-preview.gif`), config.frameDelayMs ?? 100);
+    await writeGif(rendered.debug, cell * 2, cell, path.join(out, `${id}-debug.gif`), config.frameDelayMs ?? 100);
     fs.writeFileSync(path.join(out, `${id}-debug.png`), Buffer.from(rendered.debug[0], 'base64'));
     fs.writeFileSync(path.join(out, `${id}-neutral.png`), Buffer.from(rendered.neutral, 'base64'));
     manifest.waves.push({
@@ -344,3 +372,6 @@ try {
 } finally { await browser.close(); }
 fs.writeFileSync(path.join(out, 'rig-manifest.json'), JSON.stringify(manifest, null, 2) + '\n');
 console.log(`Rig output: ${out}`);
+}
+
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) await main();

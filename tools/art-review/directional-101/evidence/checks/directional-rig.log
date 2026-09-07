@@ -1,0 +1,164 @@
+TAP version 13
+# Subtest: reviewed alpha sources preserve white and translucent foreground without color flooding
+ok 1 - reviewed alpha sources preserve white and translucent foreground without color flooding
+  ---
+  duration_ms: 14.5229
+  type: 'test'
+  ...
+# Subtest: reviewed body reflection preserves source provenance and explicitly authored sockets
+ok 2 - reviewed body reflection preserves source provenance and explicitly authored sockets
+  ---
+  duration_ms: 429.1358
+  type: 'test'
+  ...
+browser C:\Program Files\Google\Chrome\Application\chrome.exe
+# Subtest: explicit swarm preserves exactly three substantial bodies, rejecting extra or undersized pieces
+ok 3 - explicit swarm preserves exactly three substantial bodies, rejecting extra or undersized pieces
+  ---
+  duration_ms: 43.3032
+  type: 'test'
+  ...
+# Subtest: legacy flyer adapter matches the actual game loader pixels and preserves frame cadence/scale
+ok 4 - legacy flyer adapter matches the actual game loader pixels and preserves frame cadence/scale
+  ---
+  duration_ms: 1712.4035
+  type: 'test'
+  ...
+# Subtest: legacy default configuration reproduces the committed seven landmark trajectories exactly
+ok 5 - legacy default configuration reproduces the committed seven landmark trajectories exactly
+  ---
+  duration_ms: 758.8473
+  type: 'test'
+  ...
+# Subtest: unmodified 1.5x amplitude rejects old support curves and short quadruped reaches
+ok 6 - unmodified 1.5x amplitude rejects old support curves and short quadruped reaches
+  ---
+  duration_ms: 669.3361
+  type: 'test'
+  ...
+# Subtest: widened optional profile retains bones, exact 1.5x stride and 160..175 support
+ok 7 - widened optional profile retains bones, exact 1.5x stride and 160..175 support
+  ---
+  duration_ms: 685.9062
+  type: 'test'
+  ...
+# Subtest: legacy moving landmarks preserve physical IDs and original sole coordinates without rerigging
+ok 8 - legacy moving landmarks preserve physical IDs and original sole coordinates without rerigging
+  ---
+  duration_ms: 701.941
+  type: 'test'
+  ...
+# Subtest: front/back project distinct directions while preserving actual contact positions
+ok 9 - front/back project distinct directions while preserving actual contact positions
+  ---
+  duration_ms: 341.0135
+  type: 'test'
+  ...
+# Subtest: static whole-body legged fixture fails even with valid count and alpha
+ok 10 - static whole-body legged fixture fails even with valid count and alpha
+  ---
+  duration_ms: 109.1389
+  type: 'test'
+  ...
+# Subtest: contact corruption rejects world slip and modified bones independently
+ok 11 - contact corruption rejects world slip and modified bones independently
+  ---
+  duration_ms: 129.6612
+  type: 'test'
+  ...
+# Subtest: source hash, cropped ROI, stretched body, stale socket, fake direction scaling reject before raster
+ok 12 - source hash, cropped ROI, stretched body, stale socket, fake direction scaling reject before raster
+  ---
+  duration_ms: 345.9304
+  type: 'test'
+  ...
+# Subtest: stable boss and subordinate identities cannot silently mix roles
+ok 13 - stable boss and subordinate identities cannot silently mix roles
+  ---
+  duration_ms: 0.4181
+  type: 'test'
+  ...
+# Subtest: flight moves both wings relative to torso; frozen-wing negative fixture rejects
+ok 14 - flight moves both wings relative to torso; frozen-wing negative fixture rejects
+  ---
+  duration_ms: 1.0706
+  type: 'test'
+  ...
+# Subtest: slither has connected segment chain and traveling bends, not rigid bob
+ok 15 - slither has connected segment chain and traveling bends, not rigid bob
+  ---
+  duration_ms: 1.4273
+  type: 'test'
+  ...
+# Subtest: float hover is explicitly floating and does not claim any planted limb
+ok 16 - float hover is explicitly floating and does not claim any planted limb
+  ---
+  duration_ms: 0.168
+  type: 'test'
+  ...
+# Subtest: templates transform atlas rows without inheriting art approval or losing physical limb IDs
+ok 17 - templates transform atlas rows without inheriting art approval or losing physical limb IDs
+  ---
+  duration_ms: 1.0302
+  type: 'test'
+  ...
+# Subtest: physical leg phase and front/back left-right orientation are preserved between views
+ok 18 - physical leg phase and front/back left-right orientation are preserved between views
+  ---
+  duration_ms: 266.7555
+  type: 'test'
+  ...
+# Subtest: legacy wide reference heights preserve world scale and exact 1.5x stride across all seven sizes
+ok 19 - legacy wide reference heights preserve world scale and exact 1.5x stride across all seven sizes
+  ---
+  duration_ms: 1.2258
+  type: 'test'
+  ...
+# Subtest: reviewed leg reflection mirrors texture and original joints together without changing link lengths
+ok 20 - reviewed leg reflection mirrors texture and original joints together without changing link lengths
+  ---
+  duration_ms: 257.226
+  type: 'test'
+  ...
+browser C:\Program Files\Google\Chrome\Application\chrome.exe
+# Subtest: declared five-finger hand gait preserves all digits with at most two swinging
+ok 21 - declared five-finger hand gait preserves all digits with at most two swinging
+  ---
+  duration_ms: 408.2348
+  type: 'test'
+  ...
+# Subtest: six/eight arthropod legs splay in screen space while preserving fixed sockets, bones and world contacts
+ok 22 - six/eight arthropod legs splay in screen space while preserving fixed sockets, bones and world contacts
+  ---
+  duration_ms: 2785.1073
+  type: 'test'
+  ...
+browser C:\Program Files\Google\Chrome\Application\chrome.exe
+# Subtest: end-on projected hind shin cannot leave the reviewed W18 horizontal hairline
+ok 23 - end-on projected hind shin cannot leave the reviewed W18 horizontal hairline
+  ---
+  duration_ms: 1650.0797
+  type: 'test'
+  ...
+# Subtest: neutral and 64px fallback checks reject empty and edge-clipped decoded alpha
+ok 24 - neutral and 64px fallback checks reject empty and edge-clipped decoded alpha
+  ---
+  duration_ms: 25.1838
+  type: 'test'
+  ...
+browser C:\Program Files\Google\Chrome\Application\chrome.exe
+# Subtest: flight/slither/float render actual distinct PNG poses; mirror acts about the fixed wing socket
+ok 25 - flight/slither/float render actual distinct PNG poses; mirror acts about the fixed wing socket
+  ---
+  duration_ms: 1404.9375
+  type: 'test'
+  ...
+1..25
+# tests 25
+# suites 0
+# pass 25
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 12751.6397

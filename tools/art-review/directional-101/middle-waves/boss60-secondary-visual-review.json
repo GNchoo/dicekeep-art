@@ -1,0 +1,30 @@
+{
+  "assetId": "b060-2",
+  "reviewApproved": true,
+  "viewsReviewed": [
+    "side",
+    "front",
+    "back"
+  ],
+  "framesPerView": 4,
+  "sourceRows": "Second row (row=1), body col0 and two independent wing columns1/2 in all three SHA-pinned existing sources.",
+  "checks": [
+    "Solo skeletal dragon retained; erroneous front/back rider source excluded",
+    "Front pendant and face present only in front/side, plain vertebrae and tail present in back",
+    "Wing source roots distinguished from elongated finger tips; physical left/right preserved through reflection",
+    "Front/back downstroke and upstroke phase signs consistent",
+    "Actual twelve baked poses inspected for attachment, alpha residue, cropping and preserved pale bone highlights",
+    "Shared four-direction three-cycle phase-sequence moving QA passed"
+  ],
+  "backgroundSeeds": {
+    "side": [
+      [
+        229,
+        792
+      ]
+    ],
+    "reason": "Reviewed small enclosed neutral background gap at the leg/pelvis loop; other pale bone highlights retained."
+  },
+  "limitations": "Four articulated wing poses with fixed torso, limbs and tail. Neutral wing pose is repeated at phases0 and0.5. This is a flight cycle, with no walking/contact claim.",
+  "output": "gen/middle-boss60-secondary"
+}

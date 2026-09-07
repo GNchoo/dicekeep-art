@@ -1,0 +1,17 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import sharp from 'sharp';
+const [source,id,kind,ids,view=''] = process.argv.slice(2);
+if (!source || !/^[a-z0-9-]+$/.test(id)) throw new Error('source and safe generation id required');
+const dir = path.dirname(new URL(import.meta.url).pathname.replace(/^\/(?:([A-Za-z]):)/, '$1:'));
+const target = path.join(dir, id+'.png');
+if (path.resolve(source) !== path.resolve(target)) fs.copyFileSync(source,target);
+const bytes = fs.readFileSync(target), meta = await sharp(bytes).metadata();
+const file = path.join(dir,'generation-ledger.json');
+const ledger = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file,'utf8')) : {mode:'built-in image_gen',requests:[]};
+const row={id,kind,assetIds:ids.split(','),view,source:id+'.png',prompt:'prompts/'+id+'.txt',width:meta.width,height:meta.height,hasAlpha:meta.hasAlpha,sha256:crypto.createHash('sha256').update(bytes).digest('hex'),status:'awaiting-production-qa'};
+const existing=ledger.requests.findIndex(x=>x.id===id);
+if(existing<0)ledger.requests.push(row);else ledger.requests[existing]={...ledger.requests[existing],...row};
+fs.writeFileSync(file,JSON.stringify(ledger,null,2)+'\n');
+console.log(JSON.stringify({id,source:target,width:meta.width,height:meta.height,hasAlpha:meta.hasAlpha,requestCount:ledger.requests.length}));

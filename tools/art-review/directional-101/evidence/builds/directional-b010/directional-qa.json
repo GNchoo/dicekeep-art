@@ -1,0 +1,3329 @@
+{
+  "version": 1,
+  "config": "tools/art-review/directional-101/pilot-b010-rigs.json",
+  "configSha256": "a97669feda2dad1c7cec3ca7580d8f18ce06487bad1ee39c476f05c4ec474e62",
+  "canonicalCell": 512,
+  "scope": "Geometry/image integrity checks; human anatomy/art approval remains separate.",
+  "entries": [
+    {
+      "assetId": "b010",
+      "reviewApproved": true,
+      "identities": {
+        "checked": true,
+        "signatures": [
+          {
+            "view": "side",
+            "limbs": [
+              [
+                "leftLeg",
+                0
+              ],
+              [
+                "rightLeg",
+                0.5
+              ]
+            ]
+          },
+          {
+            "view": "front",
+            "limbs": [
+              [
+                "leftLeg",
+                0
+              ],
+              [
+                "rightLeg",
+                0.5
+              ]
+            ]
+          },
+          {
+            "view": "back",
+            "limbs": [
+              [
+                "leftLeg",
+                0
+              ],
+              [
+                "rightLeg",
+                0.5
+              ]
+            ]
+          }
+        ],
+        "convention": "physical animal left/right; front left appears screen-right, back left screen-left, right-facing side sees right near limbs"
+      },
+      "views": {
+        "side": {
+          "geometry": {
+            "passed": true,
+            "samples": 256,
+            "jointCoordinateSystem": "unprojected sagittal plane; never inferred from front/back PNG angles",
+            "sourceStride": 160,
+            "supportAngleRange": [
+              160.99999999999977,
+              161.00000000000014
+            ],
+            "checks": [
+              {
+                "id": "leftLeg",
+                "contacts": 128,
+                "swings": 128,
+                "maximumSwingLift": 25,
+                "projectedContactSlip": 0
+              },
+              {
+                "id": "rightLeg",
+                "contacts": 128,
+                "swings": 128,
+                "maximumSwingLift": 25,
+                "projectedContactSlip": 0
+              }
+            ],
+            "errors": []
+          },
+          "provenance": {
+            "source": "tools/art-review/directional-101/b010-side-front-parts.png",
+            "sourceSha256": "33c854929bdbbb5a15ae36e6eac8f85bf7acbaab5fe04994f45a7463e667b0ba",
+            "sourceSize": [
+              1024,
+              1536
+            ],
+            "body": {
+              "roi": [
+                0,
+                0,
+                0.55,
+                0.48
+              ],
+              "sourceBounds": [
+                24,
+                40,
+                499,
+                671
+              ]
+            },
+            "parts": [
+              {
+                "id": "leftLeg",
+                "roi": [
+                  0.565,
+                  0,
+                  0.205,
+                  0.48
+                ],
+                "sourceBounds": [
+                  589,
+                  240,
+                  190,
+                  450
+                ]
+              },
+              {
+                "id": "rightLeg",
+                "roi": [
+                  0.79,
+                  0,
+                  0.21,
+                  0.48
+                ],
+                "sourceBounds": [
+                  825,
+                  240,
+                  178,
+                  447
+                ]
+              }
+            ]
+          },
+          "frameStats": [
+            {
+              "index": 0,
+              "width": 512,
+              "height": 512,
+              "pixels": 49771,
+              "bounds": [
+                144,
+                36,
+                224,
+                424
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 1,
+              "width": 512,
+              "height": 512,
+              "pixels": 48171,
+              "bounds": [
+                144,
+                33,
+                224,
+                427
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 2,
+              "width": 512,
+              "height": 512,
+              "pixels": 50871,
+              "bounds": [
+                144,
+                32,
+                226,
+                428
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 3,
+              "width": 512,
+              "height": 512,
+              "pixels": 53714,
+              "bounds": [
+                144,
+                33,
+                254,
+                427
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 4,
+              "width": 512,
+              "height": 512,
+              "pixels": 54364,
+              "bounds": [
+                144,
+                36,
+                266,
+                424
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 5,
+              "width": 512,
+              "height": 512,
+              "pixels": 54182,
+              "bounds": [
+                144,
+                33,
+                246,
+                427
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 6,
+              "width": 512,
+              "height": 512,
+              "pixels": 52450,
+              "bounds": [
+                144,
+                32,
+                226,
+                428
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 7,
+              "width": 512,
+              "height": 512,
+              "pixels": 50120,
+              "bounds": [
+                144,
+                33,
+                224,
+                427
+              ],
+              "edgePixels": 0
+            }
+          ],
+          "stillStats": {
+            "width": 512,
+            "height": 512,
+            "pixels": 52044,
+            "bounds": [
+              144,
+              35,
+              226,
+              425
+            ],
+            "edgePixels": 0
+          },
+          "fallbackStats": {
+            "width": 64,
+            "height": 64,
+            "pixels": 889,
+            "bounds": [
+              18,
+              4,
+              28,
+              54
+            ],
+            "edgePixels": 0
+          },
+          "uniqueFrames": 8,
+          "frameHashes": [
+            "92a9af2a0fdc323aea35225332b7006d7f3e6727d616b6db7d5ed061308eda56",
+            "3e172e50647b5980def2896d35efac88fe8072602a6376f495922260f2cbb8e7",
+            "089178b26f60c9b0e870db4c3bc41ef9563e8f3daec5cd0c0d97c2ec2f8c0303",
+            "f86c2a5d2088ec1feef660da631d0b039a6c4a9c6ba4dd01dd056e7d81dd35a8",
+            "476e261f12c33e84e22c6dd022f0fbfcb0f1e6abb47b65d66fd827e97d222bcc",
+            "d6b6443f42ac1f525975df61a08a8f1795b8adafe4853acfd7af9c5b323a774a",
+            "8f4dda9449f237daad7c4fe7b9f4b378e0c25e67c61afd1f04c9c610c7aa32e8",
+            "ae9f6d775a7ac2484fea6deeaf4c3f6760cc2d90cf7e9f0987e2dc911e89dc98"
+          ],
+          "projection": {
+            "forward": [
+              1,
+              0
+            ],
+            "height": [
+              0,
+              1
+            ]
+          },
+          "frames": [
+            {
+              "phase": 0,
+              "rootAdvance": 0,
+              "body": {
+                "x": 144.45007451564828,
+                "y": 36.4946500938274,
+                "roll": 0
+              },
+              "legs": [
+                {
+                  "id": "leftLeg",
+                  "contact": true,
+                  "phase": 0,
+                  "lift": 0,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      12.102731900650069,
+                      129.0822955978763
+                    ],
+                    "ankle": [
+                      40,
+                      190.70613707259568
+                    ],
+                    "sole": [
+                      40,
+                      225.5053499061726
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      267.1549925484352,
+                      234.4946500938274
+                    ],
+                    "knee": [
+                      279.25772444908523,
+                      363.5769456917037
+                    ],
+                    "ankle": [
+                      307.1549925484352,
+                      425.2007871664231
+                    ],
+                    "sole": [
+                      343.7024720086471,
+                      460
+                    ]
+                  },
+                  "kneeAngle": 161.00000000000003,
+                  "layer": -2
+                },
+                {
+                  "id": "rightLeg",
+                  "contact": false,
+                  "phase": 0.5,
+                  "lift": 0,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -40.787614087641586,
+                      123.04131541976267
+                    ],
+                    "ankle": [
+                      -40,
+                      190.52609594428728
+                    ],
+                    "sole": [
+                      -40,
+                      225.5053499061726
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      305.08196721311475,
+                      234.4946500938274
+                    ],
+                    "knee": [
+                      264.29435312547315,
+                      357.5359655135901
+                    ],
+                    "ankle": [
+                      265.08196721311475,
+                      425.0207460381147
+                    ],
+                    "sole": [
+                      290.21625232688586,
+                      460
+                    ]
+                  },
+                  "kneeAngle": 160.99121730702333,
+                  "layer": 1
+                }
+              ],
+              "appendages": [],
+              "segments": []
+            },
+            {
+              "phase": 0.125,
+              "rootAdvance": 20,
+              "body": {
+                "x": 144.45007451564828,
+                "y": 33.37398118450619,
+                "roll": 0
+              },
+              "legs": [
+                {
+                  "id": "leftLeg",
+                  "contact": true,
+                  "phase": 0.125,
+                  "lift": 0,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -1.3537826095645293,
+                      129.64136079555234
+                    ],
+                    "ankle": [
+                      20,
+                      193.8268059819169
+                    ],
+                    "sole": [
+                      20,
+                      228.6260188154938
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      267.1549925484352,
+                      231.3739811845062
+                    ],
+                    "knee": [
+                      265.80120993887067,
+                      361.01534198005857
+                    ],
+                    "ankle": [
+                      287.1549925484352,
+                      425.2007871664231
+                    ],
+                    "sole": [
+                      323.7024720086471,
+                      460
+                    ]
+                  },
+                  "kneeAngle": 161.00000000000003,
+                  "layer": -2
+                },
+                {
+                  "id": "rightLeg",
+                  "contact": false,
+                  "phase": 0.625,
+                  "lift": 17.677669529663685,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -58.55237027178672,
+                      115.64780455652192
+                    ],
+                    "ankle": [
+                      -28.284271247461902,
+                      175.9690953239448
+                    ],
+                    "sole": [
+                      -28.284271247461902,
+                      210.94834928583012
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      305.08196721311475,
+                      231.3739811845062
+                    ],
+                    "knee": [
+                      246.52959694132804,
+                      347.0217857410281
+                    ],
+                    "ankle": [
+                      276.79769596565285,
+                      407.34307650845096
+                    ],
+                    "sole": [
+                      301.93198107942396,
+                      442.3223304703363
+                    ]
+                  },
+                  "kneeAngle": 126.50030673627298,
+                  "layer": 1
+                }
+              ],
+              "appendages": [],
+              "segments": []
+            },
+            {
+              "phase": 0.25,
+              "rootAdvance": 40,
+              "body": {
+                "x": 144.45007451564828,
+                "y": 32.34486419472677,
+                "roll": 0
+              },
+              "legs": [
+                {
+                  "id": "leftLeg",
+                  "contact": true,
+                  "phase": 0.25,
+                  "lift": 0,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -14.653014040181562,
+                      128.8177174763424
+                    ],
+                    "ankle": [
+                      0,
+                      194.85592297169632
+                    ],
+                    "sole": [
+                      0,
+                      229.65513580527323
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      267.1549925484352,
+                      230.34486419472677
+                    ],
+                    "knee": [
+                      252.50197850825361,
+                      359.1625816710692
+                    ],
+                    "ankle": [
+                      267.1549925484352,
+                      425.2007871664231
+                    ],
+                    "sole": [
+                      303.7024720086471,
+                      460
+                    ]
+                  },
+                  "kneeAngle": 161.00000000000003,
+                  "layer": -2
+                },
+                {
+                  "id": "rightLeg",
+                  "contact": false,
+                  "phase": 0.75,
+                  "lift": 25,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -46.67629447284194,
+                      120.93022077823413
+                    ],
+                    "ankle": [
+                      -7.105427357601002e-15,
+                      169.6758818433879
+                    ],
+                    "sole": [
+                      -7.105427357601002e-15,
+                      204.65513580527323
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      305.08196721311475,
+                      230.34486419472677
+                    ],
+                    "knee": [
+                      258.4056727402728,
+                      351.2750849729609
+                    ],
+                    "ankle": [
+                      305.08196721311475,
+                      400.0207460381147
+                    ],
+                    "sole": [
+                      330.21625232688586,
+                      435
+                    ]
+                  },
+                  "kneeAngle": 115.13690344488137,
+                  "layer": 1
+                }
+              ],
+              "appendages": [],
+              "segments": []
+            },
+            {
+              "phase": 0.375,
+              "rootAdvance": 60,
+              "body": {
+                "x": 144.45007451564828,
+                "y": 33.37398118450619,
+                "roll": 0
+              },
+              "legs": [
+                {
+                  "id": "leftLeg",
+                  "contact": true,
+                  "phase": 0.375,
+                  "lift": 0,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -27.79746787440582,
+                      126.63339186821109
+                    ],
+                    "ankle": [
+                      -20,
+                      193.8268059819169
+                    ],
+                    "sole": [
+                      -20,
+                      228.6260188154938
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      267.1549925484352,
+                      231.3739811845062
+                    ],
+                    "knee": [
+                      239.35752467402938,
+                      358.0073730527173
+                    ],
+                    "ankle": [
+                      247.1549925484352,
+                      425.2007871664231
+                    ],
+                    "sole": [
+                      283.7024720086471,
+                      460
+                    ]
+                  },
+                  "kneeAngle": 161.00000000000003,
+                  "layer": -2
+                },
+                {
+                  "id": "rightLeg",
+                  "contact": false,
+                  "phase": 0.875,
+                  "lift": 17.67766952966369,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -19.362264953825395,
+                      128.17135974563806
+                    ],
+                    "ankle": [
+                      28.284271247461902,
+                      175.9690953239448
+                    ],
+                    "sole": [
+                      28.284271247461902,
+                      210.94834928583012
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      305.08196721311475,
+                      231.3739811845062
+                    ],
+                    "knee": [
+                      285.71970225928936,
+                      359.5453409301442
+                    ],
+                    "ankle": [
+                      333.36623846057665,
+                      407.34307650845096
+                    ],
+                    "sole": [
+                      358.50052357434777,
+                      442.3223304703363
+                    ]
+                  },
+                  "kneeAngle": 126.50030673627298,
+                  "layer": 1
+                }
+              ],
+              "appendages": [],
+              "segments": []
+            },
+            {
+              "phase": 0.5,
+              "rootAdvance": 80,
+              "body": {
+                "x": 144.45007451564828,
+                "y": 36.492358103716725,
+                "roll": 0
+              },
+              "legs": [
+                {
+                  "id": "leftLeg",
+                  "contact": false,
+                  "phase": 0.5,
+                  "lift": 0,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -40.77795496786465,
+                      123.06857253139543
+                    ],
+                    "ankle": [
+                      -40,
+                      190.70842906270636
+                    ],
+                    "sole": [
+                      -40,
+                      225.50764189628327
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      267.1549925484352,
+                      234.49235810371673
+                    ],
+                    "knee": [
+                      226.37703758057054,
+                      357.5609306351122
+                    ],
+                    "ankle": [
+                      227.1549925484352,
+                      425.2007871664231
+                    ],
+                    "sole": [
+                      263.7024720086471,
+                      460
+                    ]
+                  },
+                  "kneeAngle": 161.0087732125416,
+                  "layer": -2
+                },
+                {
+                  "id": "rightLeg",
+                  "contact": true,
+                  "phase": 0,
+                  "lift": 0,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      12.145329359981888,
+                      129.05535919877744
+                    ],
+                    "ankle": [
+                      40,
+                      190.52838793439795
+                    ],
+                    "sole": [
+                      40,
+                      225.50764189628327
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      305.08196721311475,
+                      234.49235810371673
+                    ],
+                    "knee": [
+                      317.2272965730966,
+                      363.54771730249416
+                    ],
+                    "ankle": [
+                      345.08196721311475,
+                      425.0207460381147
+                    ],
+                    "sole": [
+                      370.21625232688586,
+                      460
+                    ]
+                  },
+                  "kneeAngle": 160.99999999999991,
+                  "layer": 1
+                }
+              ],
+              "appendages": [],
+              "segments": []
+            },
+            {
+              "phase": 0.625,
+              "rootAdvance": 100,
+              "body": {
+                "x": 144.45007451564828,
+                "y": 33.36882477503906,
+                "roll": 0
+              },
+              "legs": [
+                {
+                  "id": "leftLeg",
+                  "contact": false,
+                  "phase": 0.625,
+                  "lift": 17.677669529663685,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -58.56599181820059,
+                      115.66650231863585
+                    ],
+                    "ankle": [
+                      -28.284271247461902,
+                      176.15429286172034
+                    ],
+                    "sole": [
+                      -28.284271247461902,
+                      210.95350569529725
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      267.1549925484352,
+                      231.36882477503906
+                    ],
+                    "knee": [
+                      208.5890007302346,
+                      347.03532709367494
+                    ],
+                    "ankle": [
+                      238.8707213009733,
+                      407.52311763675937
+                    ],
+                    "sole": [
+                      275.4182007611852,
+                      442.3223304703363
+                    ]
+                  },
+                  "kneeAngle": 126.55160546722574,
+                  "layer": -2
+                },
+                {
+                  "id": "rightLeg",
+                  "contact": true,
+                  "phase": 0.125,
+                  "lift": 0,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -1.3209632467292778,
+                      129.61886367071997
+                    ],
+                    "ankle": [
+                      20,
+                      193.65192126307562
+                    ],
+                    "sole": [
+                      20,
+                      228.63117522496094
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      305.08196721311475,
+                      231.36882477503906
+                    ],
+                    "knee": [
+                      303.7610039663855,
+                      360.98768844575903
+                    ],
+                    "ankle": [
+                      325.08196721311475,
+                      425.0207460381147
+                    ],
+                    "sole": [
+                      350.21625232688586,
+                      460
+                    ]
+                  },
+                  "kneeAngle": 160.99999999999997,
+                  "layer": 1
+                }
+              ],
+              "appendages": [],
+              "segments": []
+            },
+            {
+              "phase": 0.75,
+              "rootAdvance": 120,
+              "body": {
+                "x": 144.45007451564828,
+                "y": 32.33878331716704,
+                "roll": 0
+              },
+              "legs": [
+                {
+                  "id": "leftLeg",
+                  "contact": false,
+                  "phase": 0.75,
+                  "lift": 25,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -46.715591220471005,
+                      120.93952494200721
+                    ],
+                    "ankle": [
+                      -7.105427357601002e-15,
+                      169.86200384925604
+                    ],
+                    "sole": [
+                      -7.105427357601002e-15,
+                      204.66121668283296
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      267.1549925484352,
+                      230.33878331716704
+                    ],
+                    "knee": [
+                      220.4394013279642,
+                      351.27830825917425
+                    ],
+                    "ankle": [
+                      267.1549925484352,
+                      400.2007871664231
+                    ],
+                    "sole": [
+                      303.7024720086471,
+                      435
+                    ]
+                  },
+                  "kneeAngle": 115.2017223344724,
+                  "layer": -2
+                },
+                {
+                  "id": "rightLeg",
+                  "contact": true,
+                  "phase": 0.25,
+                  "lift": 0,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -14.629934403034309,
+                      128.7973593772435
+                    ],
+                    "ankle": [
+                      0,
+                      194.68196272094764
+                    ],
+                    "sole": [
+                      0,
+                      229.66121668283296
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      305.08196721311475,
+                      230.33878331716704
+                    ],
+                    "knee": [
+                      290.4520328100804,
+                      359.1361426944105
+                    ],
+                    "ankle": [
+                      305.08196721311475,
+                      425.0207460381147
+                    ],
+                    "sole": [
+                      330.21625232688586,
+                      460
+                    ]
+                  },
+                  "kneeAngle": 160.99999999999997,
+                  "layer": 1
+                }
+              ],
+              "appendages": [],
+              "segments": []
+            },
+            {
+              "phase": 0.875,
+              "rootAdvance": 140,
+              "body": {
+                "x": 144.45007451564828,
+                "y": 33.36882477503906,
+                "roll": 0
+              },
+              "legs": [
+                {
+                  "id": "leftLeg",
+                  "contact": false,
+                  "phase": 0.875,
+                  "lift": 17.67766952966369,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -19.41157569458655,
+                      128.18699577308874
+                    ],
+                    "ankle": [
+                      28.284271247461902,
+                      176.15429286172034
+                    ],
+                    "sole": [
+                      28.284271247461902,
+                      210.95350569529725
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      267.1549925484352,
+                      231.36882477503906
+                    ],
+                    "knee": [
+                      247.74341685384863,
+                      359.5558205481278
+                    ],
+                    "ankle": [
+                      295.4392637958971,
+                      407.52311763675937
+                    ],
+                    "sole": [
+                      331.986743256109,
+                      442.3223304703363
+                    ]
+                  },
+                  "kneeAngle": 126.55160546722574,
+                  "layer": -2
+                },
+                {
+                  "id": "rightLeg",
+                  "contact": true,
+                  "phase": 0.375,
+                  "lift": 0,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -27.784094720672446,
+                      126.61294895760307
+                    ],
+                    "ankle": [
+                      -20,
+                      193.65192126307562
+                    ],
+                    "sole": [
+                      -20,
+                      228.63117522496094
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      305.08196721311475,
+                      231.36882477503906
+                    ],
+                    "knee": [
+                      277.2978724924423,
+                      357.9817737326421
+                    ],
+                    "ankle": [
+                      285.08196721311475,
+                      425.0207460381147
+                    ],
+                    "sole": [
+                      310.21625232688586,
+                      460
+                    ]
+                  },
+                  "kneeAngle": 160.99999999999997,
+                  "layer": 1
+                }
+              ],
+              "appendages": [],
+              "segments": []
+            }
+          ]
+        },
+        "front": {
+          "geometry": {
+            "passed": true,
+            "samples": 256,
+            "jointCoordinateSystem": "unprojected sagittal plane; never inferred from front/back PNG angles",
+            "sourceStride": 160,
+            "supportAngleRange": [
+              160.99999999999977,
+              161.00000000000017
+            ],
+            "checks": [
+              {
+                "id": "leftLeg",
+                "contacts": 128,
+                "swings": 128,
+                "maximumSwingLift": 25,
+                "projectedContactSlip": 5.684341886080802e-14
+              },
+              {
+                "id": "rightLeg",
+                "contacts": 128,
+                "swings": 128,
+                "maximumSwingLift": 25,
+                "projectedContactSlip": 0
+              }
+            ],
+            "errors": []
+          },
+          "provenance": {
+            "source": "tools/art-review/directional-101/b010-side-front-parts.png",
+            "sourceSha256": "33c854929bdbbb5a15ae36e6eac8f85bf7acbaab5fe04994f45a7463e667b0ba",
+            "sourceSize": [
+              1024,
+              1536
+            ],
+            "body": {
+              "roi": [
+                0,
+                0.48,
+                0.57,
+                0.52
+              ],
+              "sourceBounds": [
+                76,
+                748,
+                491,
+                672
+              ]
+            },
+            "parts": [
+              {
+                "id": "leftLeg",
+                "roi": [
+                  0.585,
+                  0.48,
+                  0.18,
+                  0.52
+                ],
+                "sourceBounds": [
+                  603,
+                  965,
+                  155,
+                  477
+                ]
+              },
+              {
+                "id": "rightLeg",
+                "roi": [
+                  0.79,
+                  0.48,
+                  0.21,
+                  0.52
+                ],
+                "sourceBounds": [
+                  828,
+                  965,
+                  154,
+                  477
+                ]
+              }
+            ]
+          },
+          "frameStats": [
+            {
+              "index": 0,
+              "width": 512,
+              "height": 512,
+              "pixels": 59562,
+              "bounds": [
+                146,
+                36,
+                220,
+                464
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 1,
+              "width": 512,
+              "height": 512,
+              "pixels": 58522,
+              "bounds": [
+                146,
+                33,
+                220,
+                447
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 2,
+              "width": 512,
+              "height": 512,
+              "pixels": 58458,
+              "bounds": [
+                146,
+                32,
+                220,
+                428
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 3,
+              "width": 512,
+              "height": 512,
+              "pixels": 58947,
+              "bounds": [
+                146,
+                33,
+                220,
+                438
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 4,
+              "width": 512,
+              "height": 512,
+              "pixels": 59544,
+              "bounds": [
+                146,
+                36,
+                220,
+                464
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 5,
+              "width": 512,
+              "height": 512,
+              "pixels": 58504,
+              "bounds": [
+                146,
+                33,
+                220,
+                447
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 6,
+              "width": 512,
+              "height": 512,
+              "pixels": 58470,
+              "bounds": [
+                146,
+                32,
+                220,
+                428
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 7,
+              "width": 512,
+              "height": 512,
+              "pixels": 58953,
+              "bounds": [
+                146,
+                33,
+                220,
+                438
+              ],
+              "edgePixels": 0
+            }
+          ],
+          "stillStats": {
+            "width": 512,
+            "height": 512,
+            "pixels": 58999,
+            "bounds": [
+              146,
+              35,
+              220,
+              425
+            ],
+            "edgePixels": 0
+          },
+          "fallbackStats": {
+            "width": 64,
+            "height": 64,
+            "pixels": 986,
+            "bounds": [
+              18,
+              4,
+              28,
+              54
+            ],
+            "edgePixels": 0
+          },
+          "uniqueFrames": 8,
+          "frameHashes": [
+            "84ff7a8281923db4b2c2f46938d44ce8f0e4e314394e6a46f1e34af2aefbde6d",
+            "f958fea83e637a77be36a0074a92869e061079b592a66e8262e03fa1bba046e1",
+            "2581f8ac7dc0fc8d7a872efdc35d9dd138a88bba27af4674b7338abe3335740a",
+            "b64ecae92e5ab0f9e1320f87c1bc6ce7895264d60a99b39ee7e202ac79b8ec71",
+            "4d978d1d5d712669e925c0d919970dd8fb5e0db623e970de3bd6e57602dc7ecb",
+            "c08c0e455b3c48dcb857cfd44c34757abc5bf0ab59d306e5597298ee7ad5858c",
+            "6983ca93d73148e918b33b5dba783f1fc81635b5d68381304c9ff6938834387b",
+            "db0c34eeecf26af466f5585ede6217ce3aad1c102f911c6bfcfec78736cec293"
+          ],
+          "projection": {
+            "forward": [
+              0,
+              1
+            ],
+            "height": [
+              0,
+              1
+            ]
+          },
+          "frames": [
+            {
+              "phase": 0,
+              "rootAdvance": 0,
+              "body": {
+                "x": 146.40178571428572,
+                "y": 36.509244497060735,
+                "roll": 0
+              },
+              "legs": [
+                {
+                  "id": "leftLeg",
+                  "contact": true,
+                  "phase": 0,
+                  "lift": 0,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      11.646556661957785,
+                      127.46571029374027
+                    ],
+                    "ankle": [
+                      40,
+                      190.49428871463917
+                    ],
+                    "sole": [
+                      40,
+                      222.4907555029393
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      288.87946428571433,
+                      237.50924449706073
+                    ],
+                    "knee": [
+                      288.87946428571433,
+                      376.6215114527588
+                    ],
+                    "ankle": [
+                      288.87946428571433,
+                      468.00353321169996
+                    ],
+                    "sole": [
+                      290.54301224451905,
+                      500.00000000000006
+                    ]
+                  },
+                  "kneeAngle": 160.99999999999986,
+                  "layer": 1
+                },
+                {
+                  "id": "rightLeg",
+                  "contact": false,
+                  "phase": 0.5,
+                  "lift": 0,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -40.607032914389066,
+                      121.38452472874144
+                    ],
+                    "ankle": [
+                      -40,
+                      190.49426920787477
+                    ],
+                    "sole": [
+                      -40,
+                      222.49075550293927
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      223.12053571428572,
+                      237.50924449706073
+                    ],
+                    "knee": [
+                      223.12053571428572,
+                      318.2867363114131
+                    ],
+                    "ankle": [
+                      223.12053571428572,
+                      388.0035137049355
+                    ],
+                    "sole": [
+                      224.77335211325928,
+                      420
+                    ]
+                  },
+                  "kneeAngle": 161.00000134961613,
+                  "layer": -2
+                }
+              ],
+              "appendages": [],
+              "segments": []
+            },
+            {
+              "phase": 0.125,
+              "rootAdvance": 20,
+              "body": {
+                "x": 146.40178571428572,
+                "y": 33.38516106459113,
+                "roll": 0
+              },
+              "legs": [
+                {
+                  "id": "leftLeg",
+                  "contact": true,
+                  "phase": 0.125,
+                  "lift": 0,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -1.6543169163867812,
+                      127.98598680444698
+                    ],
+                    "ankle": [
+                      20,
+                      193.61837214710877
+                    ],
+                    "sole": [
+                      20,
+                      225.6148389354089
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      288.87946428571433,
+                      234.38516106459113
+                    ],
+                    "knee": [
+                      288.87946428571433,
+                      360.7168309526513
+                    ],
+                    "ankle": [
+                      288.87946428571433,
+                      448.0035332116999
+                    ],
+                    "sole": [
+                      290.54301224451905,
+                      480
+                    ]
+                  },
+                  "kneeAngle": 161.00000000000003,
+                  "layer": 1
+                },
+                {
+                  "id": "rightLeg",
+                  "contact": false,
+                  "phase": 0.625,
+                  "lift": 17.677669529663685,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -58.56247714159203,
+                      113.81375240617118
+                    ],
+                    "ankle": [
+                      -28.284271247461902,
+                      175.94068311068068
+                    ],
+                    "sole": [
+                      -28.284271247461902,
+                      207.93716940574518
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      223.12053571428572,
+                      234.38516106459113
+                    ],
+                    "knee": [
+                      223.12053571428572,
+                      289.63643632917024
+                    ],
+                    "ankle": [
+                      223.12053571428572,
+                      382.0415729278099
+                    ],
+                    "sole": [
+                      224.77335211325928,
+                      414.0380592228744
+                    ]
+                  },
+                  "kneeAngle": 126.78929878898765,
+                  "layer": -2
+                }
+              ],
+              "appendages": [],
+              "segments": []
+            },
+            {
+              "phase": 0.25,
+              "rootAdvance": 40,
+              "body": {
+                "x": 146.40178571428572,
+                "y": 32.35494207141883,
+                "roll": 0
+              },
+              "legs": [
+                {
+                  "id": "leftLeg",
+                  "contact": true,
+                  "phase": 0.25,
+                  "lift": 0,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -14.796027382389683,
+                      127.13861394740582
+                    ],
+                    "ankle": [
+                      0,
+                      194.64859114028107
+                    ],
+                    "sole": [
+                      0,
+                      226.6450579285812
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      288.87946428571433,
+                      233.35494207141883
+                    ],
+                    "knee": [
+                      288.87946428571433,
+                      345.697528636435
+                    ],
+                    "ankle": [
+                      288.87946428571433,
+                      428.0035332116999
+                    ],
+                    "sole": [
+                      290.54301224451905,
+                      460
+                    ]
+                  },
+                  "kneeAngle": 161.00000000000003,
+                  "layer": 1
+                },
+                {
+                  "id": "rightLeg",
+                  "contact": false,
+                  "phase": 0.75,
+                  "lift": 25,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -47.05843811580376,
+                      119.03208545528298
+                    ],
+                    "ankle": [
+                      -7.105427357601002e-15,
+                      169.64857163351667
+                    ],
+                    "sole": [
+                      -7.105427357601002e-15,
+                      201.64505792858117
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      223.12053571428572,
+                      233.35494207141883
+                    ],
+                    "knee": [
+                      223.12053571428572,
+                      305.3285894108981
+                    ],
+                    "ankle": [
+                      223.12053571428572,
+                      403.0035137049355
+                    ],
+                    "sole": [
+                      224.77335211325928,
+                      435
+                    ]
+                  },
+                  "kneeAngle": 115.51522502754135,
+                  "layer": -2
+                }
+              ],
+              "appendages": [],
+              "segments": []
+            },
+            {
+              "phase": 0.375,
+              "rootAdvance": 60,
+              "body": {
+                "x": 146.40178571428572,
+                "y": 33.38516106459113,
+                "roll": 0
+              },
+              "legs": [
+                {
+                  "id": "leftLeg",
+                  "contact": true,
+                  "phase": 0.375,
+                  "lift": 0,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -27.781115616055445,
+                      124.94542487780527
+                    ],
+                    "ankle": [
+                      -20,
+                      193.61837214710877
+                    ],
+                    "sole": [
+                      -20,
+                      225.6148389354089
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      288.87946428571433,
+                      234.38516106459113
+                    ],
+                    "knee": [
+                      288.87946428571433,
+                      331.54947032634095
+                    ],
+                    "ankle": [
+                      288.87946428571433,
+                      408.0035332116999
+                    ],
+                    "sole": [
+                      290.54301224451905,
+                      440
+                    ]
+                  },
+                  "kneeAngle": 161.00000000000003,
+                  "layer": 1
+                },
+                {
+                  "id": "rightLeg",
+                  "contact": false,
+                  "phase": 0.875,
+                  "lift": 17.67766952966369,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -19.940205990196965,
+                      126.43386473093844
+                    ],
+                    "ankle": [
+                      28.284271247461902,
+                      175.94068311068068
+                    ],
+                    "sole": [
+                      28.284271247461902,
+                      207.93716940574518
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      223.12053571428572,
+                      234.38516106459113
+                    ],
+                    "knee": [
+                      223.12053571428572,
+                      340.87881980533257
+                    ],
+                    "ankle": [
+                      223.12053571428572,
+                      438.61011542273366
+                    ],
+                    "sole": [
+                      224.77335211325928,
+                      470.6066017177982
+                    ]
+                  },
+                  "kneeAngle": 126.78929878898765,
+                  "layer": -2
+                }
+              ],
+              "appendages": [],
+              "segments": []
+            },
+            {
+              "phase": 0.5,
+              "rootAdvance": 80,
+              "body": {
+                "x": 146.40178571428572,
+                "y": 36.509244853185464,
+                "roll": 0
+              },
+              "legs": [
+                {
+                  "id": "leftLeg",
+                  "contact": false,
+                  "phase": 0.5,
+                  "lift": 0,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -40.607041774688824,
+                      121.38458609344349
+                    ],
+                    "ankle": [
+                      -40,
+                      190.49428835851444
+                    ],
+                    "sole": [
+                      -40,
+                      222.49075514681454
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      288.87946428571433,
+                      237.50924485318546
+                    ],
+                    "knee": [
+                      288.87946428571433,
+                      318.28678917194014
+                    ],
+                    "ankle": [
+                      288.87946428571433,
+                      388.0035332116999
+                    ],
+                    "sole": [
+                      290.54301224451905,
+                      420
+                    ]
+                  },
+                  "kneeAngle": 160.99999865038356,
+                  "layer": 1
+                },
+                {
+                  "id": "rightLeg",
+                  "contact": true,
+                  "phase": 0,
+                  "lift": 0,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      11.646543258859822,
+                      127.46565025861761
+                    ],
+                    "ankle": [
+                      40,
+                      190.49426885175004
+                    ],
+                    "sole": [
+                      40,
+                      222.49075514681454
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      223.12053571428572,
+                      237.50924485318546
+                    ],
+                    "knee": [
+                      223.12053571428572,
+                      376.6214383706629
+                    ],
+                    "ankle": [
+                      223.12053571428572,
+                      468.0035137049355
+                    ],
+                    "sole": [
+                      224.77335211325928,
+                      500
+                    ]
+                  },
+                  "kneeAngle": 160.99999999999997,
+                  "layer": -2
+                }
+              ],
+              "appendages": [],
+              "segments": []
+            },
+            {
+              "phase": 0.625,
+              "rootAdvance": 100,
+              "body": {
+                "x": 146.40178571428572,
+                "y": 33.38516110022289,
+                "roll": 0
+              },
+              "legs": [
+                {
+                  "id": "leftLeg",
+                  "contact": false,
+                  "phase": 0.625,
+                  "lift": 17.677669529663685,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -58.5624794018038,
+                      113.81381985102348
+                    ],
+                    "ankle": [
+                      -28.284271247461902,
+                      175.94070258181333
+                    ],
+                    "sole": [
+                      -28.284271247461902,
+                      207.93716937011345
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      288.87946428571433,
+                      234.3851611002229
+                    ],
+                    "knee": [
+                      288.87946428571433,
+                      289.6365015494426
+                    ],
+                    "ankle": [
+                      288.87946428571433,
+                      382.04159243457434
+                    ],
+                    "sole": [
+                      290.54301224451905,
+                      414.03805922287444
+                    ]
+                  },
+                  "kneeAngle": 126.78929259428892,
+                  "layer": 1
+                },
+                {
+                  "id": "rightLeg",
+                  "contact": true,
+                  "phase": 0.125,
+                  "lift": 0,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -1.654325375676212,
+                      127.98592568436624
+                    ],
+                    "ankle": [
+                      20,
+                      193.6183526047126
+                    ],
+                    "sole": [
+                      20,
+                      225.6148388997771
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      223.12053571428572,
+                      234.3851611002229
+                    ],
+                    "knee": [
+                      223.12053571428572,
+                      360.71676140891293
+                    ],
+                    "ankle": [
+                      223.12053571428572,
+                      448.0035137049355
+                    ],
+                    "sole": [
+                      224.77335211325928,
+                      480
+                    ]
+                  },
+                  "kneeAngle": 160.99999999999997,
+                  "layer": -2
+                }
+              ],
+              "appendages": [],
+              "segments": []
+            },
+            {
+              "phase": 0.75,
+              "rootAdvance": 120,
+              "body": {
+                "x": 146.40178571428572,
+                "y": 32.354942003618305,
+                "roll": 0
+              },
+              "legs": [
+                {
+                  "id": "leftLeg",
+                  "contact": false,
+                  "phase": 0.75,
+                  "lift": 25,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -47.05842943262339,
+                      119.03215448820005
+                    ],
+                    "ankle": [
+                      -7.105427357601002e-15,
+                      169.6485912080816
+                    ],
+                    "sole": [
+                      -7.105427357601002e-15,
+                      201.6450579963817
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      288.87946428571433,
+                      233.3549420036183
+                    ],
+                    "knee": [
+                      288.87946428571433,
+                      305.32866705919497
+                    ],
+                    "ankle": [
+                      288.87946428571433,
+                      403.0035332116999
+                    ],
+                    "sole": [
+                      290.54301224451905,
+                      435
+                    ]
+                  },
+                  "kneeAngle": 115.51521735711697,
+                  "layer": 1
+                },
+                {
+                  "id": "rightLeg",
+                  "contact": true,
+                  "phase": 0.25,
+                  "lift": 0,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -14.796030828406204,
+                      127.13855212899655
+                    ],
+                    "ankle": [
+                      0,
+                      194.6485717013172
+                    ],
+                    "sole": [
+                      0,
+                      226.6450579963817
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      223.12053571428572,
+                      233.3549420036183
+                    ],
+                    "knee": [
+                      223.12053571428572,
+                      345.69746330420867
+                    ],
+                    "ankle": [
+                      223.12053571428572,
+                      428.0035137049355
+                    ],
+                    "sole": [
+                      224.77335211325928,
+                      460
+                    ]
+                  },
+                  "kneeAngle": 160.99999999999997,
+                  "layer": -2
+                }
+              ],
+              "appendages": [],
+              "segments": []
+            },
+            {
+              "phase": 0.875,
+              "rootAdvance": 140,
+              "body": {
+                "x": 146.40178571428572,
+                "y": 33.38516110022289,
+                "roll": 0
+              },
+              "legs": [
+                {
+                  "id": "leftLeg",
+                  "contact": false,
+                  "phase": 0.875,
+                  "lift": 17.67766952966369,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -19.940191383393174,
+                      126.43392879429783
+                    ],
+                    "ankle": [
+                      28.284271247461902,
+                      175.94070258181333
+                    ],
+                    "sole": [
+                      28.284271247461902,
+                      207.93716937011345
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      288.87946428571433,
+                      234.3851611002229
+                    ],
+                    "knee": [
+                      288.87946428571433,
+                      340.87889851112755
+                    ],
+                    "ankle": [
+                      288.87946428571433,
+                      438.61013492949814
+                    ],
+                    "sole": [
+                      290.54301224451905,
+                      470.60660171779824
+                    ]
+                  },
+                  "kneeAngle": 126.78929259428892,
+                  "layer": 1
+                },
+                {
+                  "id": "rightLeg",
+                  "contact": true,
+                  "phase": 0.375,
+                  "lift": 0,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -27.781113980955496,
+                      124.94536274592139
+                    ],
+                    "ankle": [
+                      -20,
+                      193.6183526047126
+                    ],
+                    "sole": [
+                      -20,
+                      225.6148388997771
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      223.12053571428572,
+                      234.3851611002229
+                    ],
+                    "knee": [
+                      223.12053571428572,
+                      331.54940986518875
+                    ],
+                    "ankle": [
+                      223.12053571428572,
+                      408.0035137049355
+                    ],
+                    "sole": [
+                      224.77335211325928,
+                      440
+                    ]
+                  },
+                  "kneeAngle": 160.99999999999997,
+                  "layer": -2
+                }
+              ],
+              "appendages": [],
+              "segments": []
+            }
+          ]
+        },
+        "back": {
+          "geometry": {
+            "passed": true,
+            "samples": 256,
+            "jointCoordinateSystem": "unprojected sagittal plane; never inferred from front/back PNG angles",
+            "sourceStride": 160,
+            "supportAngleRange": [
+              160.99999999999983,
+              161.00000000000023
+            ],
+            "checks": [
+              {
+                "id": "leftLeg",
+                "contacts": 128,
+                "swings": 128,
+                "maximumSwingLift": 25,
+                "projectedContactSlip": 5.684341886080802e-14
+              },
+              {
+                "id": "rightLeg",
+                "contacts": 128,
+                "swings": 128,
+                "maximumSwingLift": 25,
+                "projectedContactSlip": 5.684341886080802e-14
+              }
+            ],
+            "errors": []
+          },
+          "provenance": {
+            "source": "tools/art-review/directional-101/b010-back-parts.png",
+            "sourceSha256": "298494fb2538c3948c3073dc1b2f4232568d096e1338146e8454e8e52e14bfa7",
+            "sourceSize": [
+              1774,
+              887
+            ],
+            "body": {
+              "roi": [
+                0,
+                0,
+                0.47,
+                1
+              ],
+              "sourceBounds": [
+                78,
+                40,
+                694,
+                770
+              ]
+            },
+            "parts": [
+              {
+                "id": "leftLeg",
+                "roi": [
+                  0.51,
+                  0,
+                  0.19,
+                  1
+                ],
+                "sourceBounds": [
+                  958,
+                  168,
+                  228,
+                  619
+                ]
+              },
+              {
+                "id": "rightLeg",
+                "roi": [
+                  0.72,
+                  0,
+                  0.19,
+                  1
+                ],
+                "sourceBounds": [
+                  1323,
+                  168,
+                  227,
+                  619
+                ]
+              }
+            ]
+          },
+          "frameStats": [
+            {
+              "index": 0,
+              "width": 512,
+              "height": 512,
+              "pixels": 60942,
+              "bounds": [
+                120,
+                36,
+                272,
+                464
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 1,
+              "width": 512,
+              "height": 512,
+              "pixels": 61463,
+              "bounds": [
+                120,
+                33,
+                272,
+                438
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 2,
+              "width": 512,
+              "height": 512,
+              "pixels": 60954,
+              "bounds": [
+                120,
+                32,
+                272,
+                428
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 3,
+              "width": 512,
+              "height": 512,
+              "pixels": 60531,
+              "bounds": [
+                120,
+                33,
+                272,
+                447
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 4,
+              "width": 512,
+              "height": 512,
+              "pixels": 60936,
+              "bounds": [
+                120,
+                36,
+                272,
+                464
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 5,
+              "width": 512,
+              "height": 512,
+              "pixels": 61406,
+              "bounds": [
+                120,
+                33,
+                272,
+                438
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 6,
+              "width": 512,
+              "height": 512,
+              "pixels": 60877,
+              "bounds": [
+                120,
+                32,
+                272,
+                428
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 7,
+              "width": 512,
+              "height": 512,
+              "pixels": 60556,
+              "bounds": [
+                120,
+                33,
+                272,
+                447
+              ],
+              "edgePixels": 0
+            }
+          ],
+          "stillStats": {
+            "width": 512,
+            "height": 512,
+            "pixels": 61459,
+            "bounds": [
+              120,
+              35,
+              272,
+              425
+            ],
+            "edgePixels": 0
+          },
+          "fallbackStats": {
+            "width": 64,
+            "height": 64,
+            "pixels": 1040,
+            "bounds": [
+              15,
+              4,
+              34,
+              54
+            ],
+            "edgePixels": 0
+          },
+          "uniqueFrames": 8,
+          "frameHashes": [
+            "86b7ae3c85cb9f38ec3d0dba50287d096d9168cee9a028217615302fe8fa6bea",
+            "9e436d908257fb0e19915aff67d00df81481cca718b21a0287d8db9cccf8d6fb",
+            "ef3d3b5d6027ee1e5cb584b79f3f98bbc650cafbc6f6982c978a44b7c91b55b0",
+            "d69e90071583ca2002f95f57b6681bb134e1e3efa3a13240631bfb376eb5aaee",
+            "0b426965baed12f0baccdef7ded9b096efd5e9f71b717b8c18ea67ae7834a283",
+            "61cbea978cc976c68be4f782e8c1b20ab9c8bfc975b09e40d76f9cd335d0340c",
+            "aae332ac0924b89324d5df9c506255ebc206cd4423dde50b099b91adf057873e",
+            "bbb6b349c83c3a641e5e2ffa846da45ec0403ddbd00de8d38502503a4ba09514"
+          ],
+          "projection": {
+            "forward": [
+              0,
+              -1
+            ],
+            "height": [
+              0,
+              1
+            ]
+          },
+          "frames": [
+            {
+              "phase": 0,
+              "rootAdvance": 0,
+              "body": {
+                "x": 120.80519480519482,
+                "y": 36.546549399695664,
+                "roll": 0
+              },
+              "legs": [
+                {
+                  "id": "leftLeg",
+                  "contact": true,
+                  "phase": 0,
+                  "lift": 0,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      11.256448179841057,
+                      130.82175029366988
+                    ],
+                    "ankle": [
+                      40,
+                      195.63072961907932
+                    ],
+                    "sole": [
+                      40,
+                      228.45345060030434
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      228.96103896103898,
+                      231.54654939969566
+                    ],
+                    "knee": [
+                      228.96103896103898,
+                      351.11185151352447
+                    ],
+                    "ankle": [
+                      228.96103896103898,
+                      387.177279018775
+                    ],
+                    "sole": [
+                      230.89540545763847,
+                      420
+                    ]
+                  },
+                  "kneeAngle": 160.99999999999997,
+                  "layer": 1
+                },
+                {
+                  "id": "rightLeg",
+                  "contact": false,
+                  "phase": 0.5,
+                  "lift": 0,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -40.99758959414193,
+                      124.7406158819847
+                    ],
+                    "ankle": [
+                      -40,
+                      195.63071212523278
+                    ],
+                    "sole": [
+                      -40,
+                      228.45345060030434
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      293.8545454545455,
+                      231.54654939969566
+                    ],
+                    "knee": [
+                      293.8545454545455,
+                      397.2847548758223
+                    ],
+                    "ankle": [
+                      293.8545454545455,
+                      467.17726152492844
+                    ],
+                    "sole": [
+                      295.7804289140198,
+                      500
+                    ]
+                  },
+                  "kneeAngle": 161.00000117856356,
+                  "layer": -2
+                }
+              ],
+              "appendages": [],
+              "segments": []
+            },
+            {
+              "phase": 0.125,
+              "rootAdvance": 20,
+              "body": {
+                "x": 120.80519480519482,
+                "y": 33.50321837850589,
+                "roll": 0
+              },
+              "legs": [
+                {
+                  "id": "leftLeg",
+                  "contact": true,
+                  "phase": 0.125,
+                  "lift": 0,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -2.038397165138859,
+                      131.2893099704691
+                    ],
+                    "ankle": [
+                      20,
+                      198.6740606402691
+                    ],
+                    "sole": [
+                      20,
+                      231.4967816214941
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      228.96103896103898,
+                      228.5032183785059
+                    ],
+                    "knee": [
+                      228.96103896103898,
+                      361.83092551411386
+                    ],
+                    "ankle": [
+                      228.96103896103898,
+                      407.177279018775
+                    ],
+                    "sole": [
+                      230.89540545763847,
+                      440
+                    ]
+                  },
+                  "kneeAngle": 161.0000000000001,
+                  "layer": 1
+                },
+                {
+                  "id": "rightLeg",
+                  "contact": false,
+                  "phase": 0.625,
+                  "lift": 17.677669529663685,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -59.207421342932605,
+                      117.19857021767369
+                    ],
+                    "ankle": [
+                      -28.284271247461902,
+                      180.99637361675886
+                    ],
+                    "sole": [
+                      -28.284271247461902,
+                      213.8191120918304
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      293.8545454545455,
+                      228.5032183785059
+                    ],
+                    "knee": [
+                      293.8545454545455,
+                      404.9092099391122
+                    ],
+                    "ankle": [
+                      293.8545454545455,
+                      437.7838632427266
+                    ],
+                    "sole": [
+                      295.7804289140198,
+                      470.6066017177982
+                    ]
+                  },
+                  "kneeAngle": 127.33787324337572,
+                  "layer": -2
+                }
+              ],
+              "appendages": [],
+              "segments": []
+            },
+            {
+              "phase": 0.25,
+              "rootAdvance": 40,
+              "body": {
+                "x": 120.80519480519482,
+                "y": 32.4990819834118,
+                "roll": 0
+              },
+              "legs": [
+                {
+                  "id": "leftLeg",
+                  "contact": true,
+                  "phase": 0.25,
+                  "lift": 0,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -15.178236214083913,
+                      130.42491756161564
+                    ],
+                    "ankle": [
+                      0,
+                      199.67819703536318
+                    ],
+                    "sole": [
+                      0,
+                      232.50091801658823
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      228.96103896103898,
+                      227.4990819834118
+                    ],
+                    "knee": [
+                      228.96103896103898,
+                      373.10223575911135
+                    ],
+                    "ankle": [
+                      228.96103896103898,
+                      427.177279018775
+                    ],
+                    "sole": [
+                      230.89540545763847,
+                      460
+                    ]
+                  },
+                  "kneeAngle": 160.99999999999997,
+                  "layer": 1
+                },
+                {
+                  "id": "rightLeg",
+                  "contact": false,
+                  "phase": 0.75,
+                  "lift": 25,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -47.78251799295701,
+                      122.30230814420177
+                    ],
+                    "ankle": [
+                      -7.105427357601002e-15,
+                      174.67817954151664
+                    ],
+                    "sole": [
+                      -7.105427357601002e-15,
+                      207.50091801658817
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      293.8545454545455,
+                      227.4990819834118
+                    ],
+                    "knee": [
+                      293.8545454545455,
+                      397.5839081205706
+                    ],
+                    "ankle": [
+                      293.8545454545455,
+                      402.17726152492844
+                    ],
+                    "sole": [
+                      295.7804289140198,
+                      435
+                    ]
+                  },
+                  "kneeAngle": 116.28561232505163,
+                  "layer": -2
+                }
+              ],
+              "appendages": [],
+              "segments": []
+            },
+            {
+              "phase": 0.375,
+              "rootAdvance": 60,
+              "body": {
+                "x": 120.80519480519482,
+                "y": 33.50321837850589,
+                "roll": 0
+              },
+              "legs": [
+                {
+                  "id": "leftLeg",
+                  "contact": true,
+                  "phase": 0.375,
+                  "lift": 0,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -28.165419443593677,
+                      128.24877045450063
+                    ],
+                    "ankle": [
+                      -20,
+                      198.6740606402691
+                    ],
+                    "sole": [
+                      -20,
+                      231.4967816214941
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      228.96103896103898,
+                      228.5032183785059
+                    ],
+                    "knee": [
+                      228.96103896103898,
+                      384.9174082766002
+                    ],
+                    "ankle": [
+                      228.96103896103898,
+                      447.177279018775
+                    ],
+                    "sole": [
+                      230.89540545763847,
+                      480
+                    ]
+                  },
+                  "kneeAngle": 161.0000000000001,
+                  "layer": 1
+                },
+                {
+                  "id": "rightLeg",
+                  "contact": false,
+                  "phase": 0.875,
+                  "lift": 17.67766952966369,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -20.62860538888295,
+                      129.67453197469536
+                    ],
+                    "ankle": [
+                      28.284271247461902,
+                      180.99637361675886
+                    ],
+                    "sole": [
+                      28.284271247461902,
+                      213.8191120918304
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      293.8545454545455,
+                      228.5032183785059
+                    ],
+                    "knee": [
+                      293.8545454545455,
+                      378.8063557420842
+                    ],
+                    "ankle": [
+                      293.8545454545455,
+                      381.2153207478028
+                    ],
+                    "sole": [
+                      295.7804289140198,
+                      414.0380592228744
+                    ]
+                  },
+                  "kneeAngle": 127.33787324337572,
+                  "layer": -2
+                }
+              ],
+              "appendages": [],
+              "segments": []
+            },
+            {
+              "phase": 0.5,
+              "rootAdvance": 80,
+              "body": {
+                "x": 120.80519480519482,
+                "y": 36.54654971836874,
+                "roll": 0
+              },
+              "legs": [
+                {
+                  "id": "leftLeg",
+                  "contact": false,
+                  "phase": 0.5,
+                  "lift": 0,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -40.997597306863,
+                      124.74067095614431
+                    ],
+                    "ankle": [
+                      -40,
+                      195.63072930040624
+                    ],
+                    "sole": [
+                      -40,
+                      228.45345028163126
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      228.96103896103898,
+                      231.54654971836874
+                    ],
+                    "knee": [
+                      228.96103896103898,
+                      397.284817981376
+                    ],
+                    "ankle": [
+                      228.96103896103898,
+                      467.177279018775
+                    ],
+                    "sole": [
+                      230.89540545763847,
+                      500
+                    ]
+                  },
+                  "kneeAngle": 160.999998821436,
+                  "layer": 1
+                },
+                {
+                  "id": "rightLeg",
+                  "contact": true,
+                  "phase": 0,
+                  "lift": 0,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      11.256436380966045,
+                      130.8216963777332
+                    ],
+                    "ankle": [
+                      40,
+                      195.6307118065597
+                    ],
+                    "sole": [
+                      40,
+                      228.45345028163126
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      293.8545454545455,
+                      231.54654971836874
+                    ],
+                    "knee": [
+                      293.8545454545455,
+                      351.1118097151359
+                    ],
+                    "ankle": [
+                      293.8545454545455,
+                      387.17726152492844
+                    ],
+                    "sole": [
+                      295.7804289140198,
+                      420
+                    ]
+                  },
+                  "kneeAngle": 161.00000000000003,
+                  "layer": -2
+                }
+              ],
+              "appendages": [],
+              "segments": []
+            },
+            {
+              "phase": 0.625,
+              "rootAdvance": 100,
+              "body": {
+                "x": 120.80519480519482,
+                "y": 33.50321842432302,
+                "roll": 0
+              },
+              "legs": [
+                {
+                  "id": "leftLeg",
+                  "contact": false,
+                  "phase": 0.625,
+                  "lift": 17.677669529663685,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -59.20742323884882,
+                      117.19863057621701
+                    ],
+                    "ankle": [
+                      -28.284271247461902,
+                      180.99639106478827
+                    ],
+                    "sole": [
+                      -28.284271247461902,
+                      213.8191120460133
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      228.96103896103898,
+                      228.50321842432302
+                    ],
+                    "knee": [
+                      228.96103896103898,
+                      404.9092722393888
+                    ],
+                    "ankle": [
+                      228.96103896103898,
+                      437.78388073657317
+                    ],
+                    "sole": [
+                      230.89540545763847,
+                      470.6066017177982
+                    ]
+                  },
+                  "kneeAngle": 127.33786787668662,
+                  "layer": 1
+                },
+                {
+                  "id": "rightLeg",
+                  "contact": true,
+                  "phase": 0.125,
+                  "lift": 0,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -2.038404639063664,
+                      131.28925511889383
+                    ],
+                    "ankle": [
+                      20,
+                      198.67404310060542
+                    ],
+                    "sole": [
+                      20,
+                      231.49678157567695
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      293.8545454545455,
+                      228.50321842432302
+                    ],
+                    "knee": [
+                      293.8545454545455,
+                      361.8308781822805
+                    ],
+                    "ankle": [
+                      293.8545454545455,
+                      407.17726152492844
+                    ],
+                    "sole": [
+                      295.7804289140198,
+                      440
+                    ]
+                  },
+                  "kneeAngle": 161.00000000000003,
+                  "layer": -2
+                }
+              ],
+              "appendages": [],
+              "segments": []
+            },
+            {
+              "phase": 0.75,
+              "rootAdvance": 120,
+              "body": {
+                "x": 120.80519480519482,
+                "y": 32.499081941025935,
+                "roll": 0
+              },
+              "legs": [
+                {
+                  "id": "leftLeg",
+                  "contact": false,
+                  "phase": 0.75,
+                  "lift": 25,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -47.78251037390088,
+                      122.30236987848119
+                    ],
+                    "ankle": [
+                      -7.105427357601002e-15,
+                      174.67819707774905
+                    ],
+                    "sole": [
+                      -7.105427357601002e-15,
+                      207.5009180589741
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      228.96103896103898,
+                      227.49908194102593
+                    ],
+                    "knee": [
+                      228.96103896103898,
+                      397.58396219340796
+                    ],
+                    "ankle": [
+                      228.96103896103898,
+                      402.177279018775
+                    ],
+                    "sole": [
+                      230.89540545763847,
+                      435
+                    ]
+                  },
+                  "kneeAngle": 116.28560570002027,
+                  "layer": 1
+                },
+                {
+                  "id": "rightLeg",
+                  "contact": true,
+                  "phase": 0.25,
+                  "lift": 0,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -15.1782393039205,
+                      130.4248621037395
+                    ],
+                    "ankle": [
+                      0,
+                      199.6781795839025
+                    ],
+                    "sole": [
+                      0,
+                      232.50091805897404
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      293.8545454545455,
+                      227.49908194102593
+                    ],
+                    "knee": [
+                      293.8545454545455,
+                      373.1021833486859
+                    ],
+                    "ankle": [
+                      293.8545454545455,
+                      427.17726152492844
+                    ],
+                    "sole": [
+                      295.7804289140198,
+                      460
+                    ]
+                  },
+                  "kneeAngle": 161.00000000000003,
+                  "layer": -2
+                }
+              ],
+              "appendages": [],
+              "segments": []
+            },
+            {
+              "phase": 0.875,
+              "rootAdvance": 140,
+              "body": {
+                "x": 120.80519480519482,
+                "y": 33.50321842432302,
+                "roll": 0
+              },
+              "legs": [
+                {
+                  "id": "leftLeg",
+                  "contact": false,
+                  "phase": 0.875,
+                  "lift": 17.67766952966369,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -20.628592593467534,
+                      129.6745894272949
+                    ],
+                    "ankle": [
+                      28.284271247461902,
+                      180.99639106478827
+                    ],
+                    "sole": [
+                      28.284271247461902,
+                      213.8191120460133
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      228.96103896103898,
+                      228.50321842432302
+                    ],
+                    "knee": [
+                      228.96103896103898,
+                      378.8064004450855
+                    ],
+                    "ankle": [
+                      228.96103896103898,
+                      381.2153382416494
+                    ],
+                    "sole": [
+                      230.89540545763847,
+                      414.0380592228744
+                    ]
+                  },
+                  "kneeAngle": 127.33786787668662,
+                  "layer": 1
+                },
+                {
+                  "id": "rightLeg",
+                  "contact": true,
+                  "phase": 0.375,
+                  "lift": 0,
+                  "sagittal": {
+                    "hip": [
+                      0,
+                      0
+                    ],
+                    "knee": [
+                      -28.16541809151483,
+                      128.2487147182252
+                    ],
+                    "ankle": [
+                      -20,
+                      198.67404310060542
+                    ],
+                    "sole": [
+                      -20,
+                      231.49678157567695
+                    ]
+                  },
+                  "screen": {
+                    "hip": [
+                      293.8545454545455,
+                      228.50321842432302
+                    ],
+                    "knee": [
+                      293.8545454545455,
+                      384.91735123406306
+                    ],
+                    "ankle": [
+                      293.8545454545455,
+                      447.17726152492844
+                    ],
+                    "sole": [
+                      295.7804289140198,
+                      480
+                    ]
+                  },
+                  "kneeAngle": 161.00000000000003,
+                  "layer": -2
+                }
+              ],
+              "appendages": [],
+              "segments": []
+            }
+          ]
+        }
+      },
+      "errors": [],
+      "ready": true
+    }
+  ],
+  "files": [
+    {
+      "file": "casual/bosses/inf/directional/b010-side-walk-4x2.png",
+      "bytes": 795992,
+      "sha256": "e73eeb18cb1b83ba2d0e7ab031a24467886b17f3ab9ff170ffbafea5abbda5ee",
+      "image": {
+        "format": "png",
+        "width": 2048,
+        "height": 1024,
+        "pages": 1
+      }
+    },
+    {
+      "file": "casual/bosses/inf/directional/b010-side.png",
+      "bytes": 148694,
+      "sha256": "515c44e88e580c62913e973055f84c4950029616db3477fda5044c518e91080a",
+      "image": {
+        "format": "png",
+        "width": 512,
+        "height": 512,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/b010-side.png",
+      "bytes": 793010,
+      "sha256": "c28f7f06ef9859e97b617d98487bc1f6e18e0b251a5be97b0d1ee3df644d775a",
+      "image": {
+        "format": "png",
+        "width": 2048,
+        "height": 1024,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/b010-side.gif",
+      "bytes": 385852,
+      "sha256": "8a0516d96931aaf63ea71a6e6370e0827e7f9fab34d68c9f3b5a26d3280f4e46",
+      "image": {
+        "format": "gif",
+        "width": 512,
+        "height": 512,
+        "pages": 8
+      }
+    },
+    {
+      "file": "casual/bosses/inf/directional/b010-front-walk-4x2.png",
+      "bytes": 929054,
+      "sha256": "ccc2d31493aac909b847278b779e593b66bfc7d3f0bb1f9809a8c659727272ae",
+      "image": {
+        "format": "png",
+        "width": 2048,
+        "height": 1024,
+        "pages": 1
+      }
+    },
+    {
+      "file": "casual/bosses/inf/directional/b010-front.png",
+      "bytes": 164121,
+      "sha256": "6da55183e30c9df4cc82eb7c95c3b5bfeb16ba024cbd319c5a1420334b42a936",
+      "image": {
+        "format": "png",
+        "width": 512,
+        "height": 512,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/b010-front.png",
+      "bytes": 925432,
+      "sha256": "9e1a31f5034b63fb0d83c94c8ccb889bffd6466d21047c6ff2670ea99034c3f8",
+      "image": {
+        "format": "png",
+        "width": 2048,
+        "height": 1024,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/b010-front.gif",
+      "bytes": 446678,
+      "sha256": "0ca5781bcf983609e44b3b8e128961743d952cac15bf144a36cef9e9256dcd67",
+      "image": {
+        "format": "gif",
+        "width": 512,
+        "height": 512,
+        "pages": 8
+      }
+    },
+    {
+      "file": "casual/bosses/inf/directional/b010-back-walk-4x2.png",
+      "bytes": 802731,
+      "sha256": "72a8d64910c7150238bce049202a782dc4c1165ad2a9187c7cd5a3ea0658e942",
+      "image": {
+        "format": "png",
+        "width": 2048,
+        "height": 1024,
+        "pages": 1
+      }
+    },
+    {
+      "file": "casual/bosses/inf/directional/b010-back.png",
+      "bytes": 164326,
+      "sha256": "ff06e2e8778e5a98f1547f687d8a3695a7fc196e735eda3da7249e7c0aa60170",
+      "image": {
+        "format": "png",
+        "width": 512,
+        "height": 512,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/b010-back.png",
+      "bytes": 791081,
+      "sha256": "dc9e451bd6ef4005329ed45053a2f917be940bda0fce33c89e5d35206c000f3f",
+      "image": {
+        "format": "png",
+        "width": 2048,
+        "height": 1024,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/b010-back.gif",
+      "bytes": 415690,
+      "sha256": "517ffef567585bab2313c79674b27d757bd37a1aeec0a651f92d4dd72b47c969",
+      "image": {
+        "format": "gif",
+        "width": 512,
+        "height": 512,
+        "pages": 8
+      }
+    }
+  ],
+  "errors": []
+}

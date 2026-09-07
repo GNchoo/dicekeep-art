@@ -1,0 +1,122 @@
+{
+  "manifestSha256": "815c59137372bfe96cbb67d444b8597f0f2af4b348068f0706297e33e6aa60a0",
+  "cycles": 3,
+  "samplesPerCycle": 256,
+  "coordinateSystem": "output PNG pixels = canonical pixels * view.scale; review is not a game-speed or anatomy approval",
+  "entries": [
+    {
+      "assetId": "b010",
+      "locomotion": "legged",
+      "phaseDriver": "distance",
+      "reviewTravelCanonical": 160,
+      "frameDelayMs": 150,
+      "gif": "review/b010-moving.gif",
+      "gifSha256": "f17e83f5b52ece8c0d7b918e1122672bc96aa785b1717ccb1f3abc6a655dbcbc",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 0.5,
+      "motionFrames": 24,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 19.375,
+          "oneFrameQuantizationLimitPx": 20,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 19.375,
+          "oneFrameQuantizationLimitPx": 20,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 19.375,
+          "oneFrameQuantizationLimitPx": 20,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 19.375,
+          "oneFrameQuantizationLimitPx": 20,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 5.684341886080802e-14,
+          "heldRasterContactExcursionPx": 19.375,
+          "oneFrameQuantizationLimitPx": 20,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 19.375,
+          "oneFrameQuantizationLimitPx": 20,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 19.375,
+          "oneFrameQuantizationLimitPx": 20,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 19.375,
+          "oneFrameQuantizationLimitPx": 20,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "passed": true
+}

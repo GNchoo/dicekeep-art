@@ -1,0 +1,157 @@
+{
+  "reviewedAssets": [
+    {
+      "assetId": "w062",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 4,
+      "checks": [
+        "actual baked frame silhouettes and directional anatomy inspected",
+        "independent wings rotate at source shoulder roots",
+        "front/back wing layering and face/tail direction reviewed",
+        "reviewed enclosed background pockets removed with source-pinned seeds"
+      ],
+      "limitations": "Four-frame articulated wing cycle; body/wing feathers do not independently deform. Shared neutral wing pose repeats at phases 0 and 0.5."
+    },
+    {
+      "assetId": "w064",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 4,
+      "checks": [
+        "actual baked frame silhouettes and directional anatomy inspected",
+        "independent wings rotate at source shoulder roots",
+        "front/back wing layering and face/tail direction reviewed",
+        "reviewed enclosed background pockets removed with source-pinned seeds"
+      ],
+      "limitations": "Four-frame articulated wing cycle; body/wing feathers do not independently deform. Shared neutral wing pose repeats at phases 0 and 0.5."
+    },
+    {
+      "assetId": "w068",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 4,
+      "checks": [
+        "actual baked frame silhouettes and directional anatomy inspected",
+        "independent wings rotate at source shoulder roots",
+        "front/back wing layering and face/tail direction reviewed",
+        "reviewed enclosed background pockets removed with source-pinned seeds"
+      ],
+      "limitations": "Four-frame articulated wing cycle; body/wing feathers do not independently deform. Shared neutral wing pose repeats at phases 0 and 0.5."
+    },
+    {
+      "assetId": "w072",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 4,
+      "checks": [
+        "actual baked frame silhouettes and directional anatomy inspected",
+        "independent wings rotate at source shoulder roots",
+        "front/back wing layering and face/tail direction reviewed",
+        "reviewed enclosed background pockets removed with source-pinned seeds"
+      ],
+      "limitations": "Four-frame articulated wing cycle; body/wing feathers do not independently deform. Shared neutral wing pose repeats at phases 0 and 0.5."
+    },
+    {
+      "assetId": "w076",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 4,
+      "checks": [
+        "actual baked frame silhouettes and directional anatomy inspected",
+        "independent wings rotate at source shoulder roots",
+        "front/back wing layering and face/tail direction reviewed",
+        "reviewed enclosed background pockets removed with source-pinned seeds"
+      ],
+      "limitations": "Four-frame articulated wing cycle; body/wing feathers do not independently deform. Shared neutral wing pose repeats at phases 0 and 0.5."
+    },
+    {
+      "assetId": "b080",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 4,
+      "checks": [
+        "actual baked frame silhouettes and directional anatomy inspected",
+        "independent wings rotate at source shoulder roots",
+        "front/back wing layering and face/tail direction reviewed",
+        "reviewed enclosed background pockets removed with source-pinned seeds"
+      ],
+      "limitations": "Four-frame articulated wing cycle; body/wing feathers do not independently deform. Shared neutral wing pose repeats at phases 0 and 0.5."
+    },
+    {
+      "assetId": "w088",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 4,
+      "checks": [
+        "actual baked frame silhouettes and directional anatomy inspected",
+        "independent wings rotate at source shoulder roots",
+        "front/back wing layering and face/tail direction reviewed",
+        "reviewed enclosed background pockets removed with source-pinned seeds"
+      ],
+      "limitations": "Four-frame articulated wing cycle; body/wing feathers do not independently deform. Shared neutral wing pose repeats at phases 0 and 0.5."
+    },
+    {
+      "assetId": "w096",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 4,
+      "checks": [
+        "actual baked frame silhouettes and directional anatomy inspected",
+        "independent wings rotate at source shoulder roots",
+        "front/back wing layering and face/tail direction reviewed",
+        "reviewed enclosed background pockets removed with source-pinned seeds"
+      ],
+      "limitations": "Four-frame articulated wing cycle; body/wing feathers do not independently deform. Shared neutral wing pose repeats at phases 0 and 0.5."
+    },
+    {
+      "assetId": "b100-2",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 4,
+      "checks": [
+        "actual baked frame silhouettes and directional anatomy inspected",
+        "independent wings rotate at source shoulder roots",
+        "front/back wing layering and face/tail direction reviewed",
+        "reviewed enclosed background pockets removed with source-pinned seeds"
+      ],
+      "limitations": "Four-frame articulated wing cycle; body/wing feathers do not independently deform. Shared neutral wing pose repeats at phases 0 and 0.5."
+    }
+  ]
+}

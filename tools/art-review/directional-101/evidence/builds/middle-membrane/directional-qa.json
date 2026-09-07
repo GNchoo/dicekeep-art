@@ -1,0 +1,1065 @@
+{
+  "version": 1,
+  "config": "tools/art-review/directional-101/middle-waves/membrane-rigs.json",
+  "configSha256": "6e2fce20e29897854f5e9fb5a4917a4cc8054d2261063e4127c83dc455ebfd1e",
+  "canonicalCell": 512,
+  "scope": "Geometry/image integrity checks; human anatomy/art approval remains separate.",
+  "entries": [
+    {
+      "assetId": "w036",
+      "reviewApproved": true,
+      "identities": {
+        "checked": false,
+        "reason": "no walking limb identities"
+      },
+      "views": {
+        "side": {
+          "geometry": {
+            "passed": true,
+            "samples": 256,
+            "jointCoordinateSystem": "unprojected sagittal plane; never inferred from front/back PNG angles",
+            "sourceStride": 0,
+            "supportAngleRange": null,
+            "checks": [],
+            "errors": []
+          },
+          "provenance": {
+            "source": "tools/art-review/directional-101/middle-waves/membrane-dragons-side-parts.png",
+            "sourceSha256": "e6c04f326201f3b054ea2913ca81f80a87924bee050e2dc31b98704055d87e78",
+            "sourceSize": [
+              1536,
+              1024
+            ],
+            "body": {
+              "source": "tools/art-review/directional-101/middle-waves/membrane-dragons-side-parts.png",
+              "sourceSha256": "e6c04f326201f3b054ea2913ca81f80a87924bee050e2dc31b98704055d87e78",
+              "sourceSize": [
+                1536,
+                1024
+              ],
+              "roi": [
+                0,
+                0,
+                0.35,
+                0.48828125
+              ],
+              "sourceBounds": [
+                22,
+                75,
+                493,
+                348
+              ],
+              "componentCount": 1,
+              "componentAreas": [
+                68674
+              ],
+              "flipX": false
+            },
+            "parts": [
+              {
+                "id": "leftWing",
+                "roi": [
+                  0.36,
+                  0,
+                  0.31,
+                  0.48828125
+                ],
+                "sourceBounds": [
+                  625,
+                  143,
+                  375,
+                  248
+                ],
+                "flipX": false,
+                "sourceJoints": null
+              },
+              {
+                "id": "rightWing",
+                "roi": [
+                  0.71,
+                  0,
+                  0.28,
+                  0.48828125
+                ],
+                "sourceBounds": [
+                  1143,
+                  148,
+                  332,
+                  243
+                ],
+                "flipX": true,
+                "sourceJoints": null
+              }
+            ]
+          },
+          "rasterDiagnostics": [],
+          "frameStats": [
+            {
+              "index": 0,
+              "width": 256,
+              "height": 256,
+              "pixels": 11444,
+              "bounds": [
+                30,
+                80,
+                182,
+                118
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 1,
+              "width": 256,
+              "height": 256,
+              "pixels": 11684,
+              "bounds": [
+                44,
+                55,
+                168,
+                143
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 2,
+              "width": 256,
+              "height": 256,
+              "pixels": 11444,
+              "bounds": [
+                30,
+                80,
+                182,
+                118
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 3,
+              "width": 256,
+              "height": 256,
+              "pixels": 11120,
+              "bounds": [
+                35,
+                80,
+                177,
+                118
+              ],
+              "edgePixels": 0
+            }
+          ],
+          "stillStats": {
+            "width": 256,
+            "height": 256,
+            "pixels": 11444,
+            "bounds": [
+              30,
+              80,
+              182,
+              118
+            ],
+            "edgePixels": 0
+          },
+          "fallbackStats": {
+            "width": 64,
+            "height": 64,
+            "pixels": 788,
+            "bounds": [
+              7,
+              20,
+              46,
+              30
+            ],
+            "edgePixels": 0
+          },
+          "uniqueFrames": 3,
+          "frameHashes": [
+            "2764b2a62ec849ef7559de437770ccee2e72934741753babe459e40a36d507e5",
+            "51d454c5c3275187abe73660a295bfac7a53064a75a9d6207199963974c4c3e7",
+            "2764b2a62ec849ef7559de437770ccee2e72934741753babe459e40a36d507e5",
+            "a83a9411206536fdc9c6ac0884435e9a2792ff8267efacc63547f6ab52bc3b91"
+          ],
+          "projection": {
+            "forward": [
+              1,
+              0
+            ],
+            "height": [
+              0,
+              1
+            ]
+          },
+          "frames": [
+            {
+              "phase": 0,
+              "rootAdvance": 0,
+              "body": {
+                "x": 89.54166666666666,
+                "y": 160,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    289.29166666666663,
+                    296.29999999999995
+                  ],
+                  "angle": 0.3490658503988659,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    294.28541666666666,
+                    296.29999999999995
+                  ],
+                  "angle": 0.3490658503988659,
+                  "layer": 1
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.25,
+              "rootAdvance": 0,
+              "body": {
+                "x": 89.54166666666666,
+                "y": 160,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    289.29166666666663,
+                    296.29999999999995
+                  ],
+                  "angle": 0.9599310885968813,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    294.28541666666666,
+                    296.29999999999995
+                  ],
+                  "angle": 0.9599310885968813,
+                  "layer": 1
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.5,
+              "rootAdvance": 0,
+              "body": {
+                "x": 89.54166666666666,
+                "y": 160,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    289.29166666666663,
+                    296.29999999999995
+                  ],
+                  "angle": 0.349065850398866,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    294.28541666666666,
+                    296.29999999999995
+                  ],
+                  "angle": 0.349065850398866,
+                  "layer": 1
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.75,
+              "rootAdvance": 0,
+              "body": {
+                "x": 89.54166666666666,
+                "y": 160,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    289.29166666666663,
+                    296.29999999999995
+                  ],
+                  "angle": -0.2617993877991494,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    294.28541666666666,
+                    296.29999999999995
+                  ],
+                  "angle": -0.2617993877991494,
+                  "layer": 1
+                }
+              ],
+              "segments": []
+            }
+          ],
+          "motionFrames": null
+        },
+        "front": {
+          "geometry": {
+            "passed": true,
+            "samples": 256,
+            "jointCoordinateSystem": "unprojected sagittal plane; never inferred from front/back PNG angles",
+            "sourceStride": 0,
+            "supportAngleRange": null,
+            "checks": [],
+            "errors": []
+          },
+          "provenance": {
+            "source": "tools/art-review/directional-101/middle-waves/membrane-dragons-front-parts.png",
+            "sourceSha256": "f77d895ba5740fa6af7c66d73931aae4d15198bbbf155432d90442989833935e",
+            "sourceSize": [
+              1536,
+              1024
+            ],
+            "body": {
+              "source": "tools/art-review/directional-101/middle-waves/membrane-dragons-front-parts.png",
+              "sourceSha256": "f77d895ba5740fa6af7c66d73931aae4d15198bbbf155432d90442989833935e",
+              "sourceSize": [
+                1536,
+                1024
+              ],
+              "roi": [
+                0,
+                0,
+                0.32,
+                0.48828125
+              ],
+              "sourceBounds": [
+                188,
+                33,
+                212,
+                445
+              ],
+              "componentCount": 1,
+              "componentAreas": [
+                56088
+              ],
+              "flipX": false
+            },
+            "parts": [
+              {
+                "id": "leftWing",
+                "roi": [
+                  0.37,
+                  0,
+                  0.23,
+                  0.48828125
+                ],
+                "sourceBounds": [
+                  596,
+                  122,
+                  297,
+                  316
+                ],
+                "flipX": false,
+                "sourceJoints": null
+              },
+              {
+                "id": "rightWing",
+                "roi": [
+                  0.62,
+                  0,
+                  0.24,
+                  0.48828125
+                ],
+                "sourceBounds": [
+                  971,
+                  124,
+                  290,
+                  318
+                ],
+                "flipX": false,
+                "sourceJoints": null
+              }
+            ]
+          },
+          "rasterDiagnostics": [],
+          "frameStats": [
+            {
+              "index": 0,
+              "width": 256,
+              "height": 256,
+              "pixels": 9193,
+              "bounds": [
+                52,
+                80,
+                154,
+                118
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 1,
+              "width": 256,
+              "height": 256,
+              "pixels": 9147,
+              "bounds": [
+                44,
+                80,
+                169,
+                118
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 2,
+              "width": 256,
+              "height": 256,
+              "pixels": 9193,
+              "bounds": [
+                52,
+                80,
+                154,
+                118
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 3,
+              "width": 256,
+              "height": 256,
+              "pixels": 9101,
+              "bounds": [
+                59,
+                80,
+                139,
+                119
+              ],
+              "edgePixels": 0
+            }
+          ],
+          "stillStats": {
+            "width": 256,
+            "height": 256,
+            "pixels": 9193,
+            "bounds": [
+              52,
+              80,
+              154,
+              118
+            ],
+            "edgePixels": 0
+          },
+          "fallbackStats": {
+            "width": 64,
+            "height": 64,
+            "pixels": 633,
+            "bounds": [
+              13,
+              20,
+              39,
+              30
+            ],
+            "edgePixels": 0
+          },
+          "uniqueFrames": 3,
+          "frameHashes": [
+            "b940f27013a41e938400038435c1cb6d744d489e069a60faccd6f032d192ebb4",
+            "8e1c3d245ce631292a2a1f9552b6726be71b68cb3e00710fed2b9f483ee00163",
+            "b940f27013a41e938400038435c1cb6d744d489e069a60faccd6f032d192ebb4",
+            "d1b6b5195e01d615dca8e47f851aee2f2b1141e1caf2e835def2b73bf7e176b5"
+          ],
+          "projection": {
+            "forward": [
+              0,
+              1
+            ],
+            "height": [
+              0,
+              1
+            ]
+          },
+          "frames": [
+            {
+              "phase": 0,
+              "rootAdvance": 0,
+              "body": {
+                "x": 200.02247191011236,
+                "y": 160,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    287.34741573033705,
+                    277.5
+                  ],
+                  "angle": 0.4363323129985824,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    224.65258426966292,
+                    277.5
+                  ],
+                  "angle": -0.4363323129985824,
+                  "layer": -1
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.25,
+              "rootAdvance": 0,
+              "body": {
+                "x": 200.02247191011236,
+                "y": 160,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    287.34741573033705,
+                    277.5
+                  ],
+                  "angle": -0.08726646259971647,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    224.65258426966292,
+                    277.5
+                  ],
+                  "angle": 0.08726646259971647,
+                  "layer": -1
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.5,
+              "rootAdvance": 0,
+              "body": {
+                "x": 200.02247191011236,
+                "y": 160,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    287.34741573033705,
+                    277.5
+                  ],
+                  "angle": 0.43633231299858233,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    224.65258426966292,
+                    277.5
+                  ],
+                  "angle": -0.43633231299858233,
+                  "layer": -1
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.75,
+              "rootAdvance": 0,
+              "body": {
+                "x": 200.02247191011236,
+                "y": 160,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    287.34741573033705,
+                    277.5
+                  ],
+                  "angle": 0.9599310885968813,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    224.65258426966292,
+                    277.5
+                  ],
+                  "angle": -0.9599310885968813,
+                  "layer": -1
+                }
+              ],
+              "segments": []
+            }
+          ],
+          "motionFrames": null
+        },
+        "back": {
+          "geometry": {
+            "passed": true,
+            "samples": 256,
+            "jointCoordinateSystem": "unprojected sagittal plane; never inferred from front/back PNG angles",
+            "sourceStride": 0,
+            "supportAngleRange": null,
+            "checks": [],
+            "errors": []
+          },
+          "provenance": {
+            "source": "tools/art-review/directional-101/middle-waves/membrane-dragons-back-parts.png",
+            "sourceSha256": "661f671c02e923a4217a1721147f285019029550cbab17babe5f8ce1a9f02d83",
+            "sourceSize": [
+              1536,
+              1024
+            ],
+            "body": {
+              "source": "tools/art-review/directional-101/middle-waves/membrane-dragons-back-parts.png",
+              "sourceSha256": "661f671c02e923a4217a1721147f285019029550cbab17babe5f8ce1a9f02d83",
+              "sourceSize": [
+                1536,
+                1024
+              ],
+              "roi": [
+                0,
+                0,
+                0.29,
+                0.498046875
+              ],
+              "sourceBounds": [
+                176,
+                37,
+                226,
+                463
+              ],
+              "componentCount": 1,
+              "componentAreas": [
+                60357
+              ],
+              "flipX": false
+            },
+            "parts": [
+              {
+                "id": "leftWing",
+                "roi": [
+                  0.35,
+                  0,
+                  0.26,
+                  0.498046875
+                ],
+                "sourceBounds": [
+                  555,
+                  110,
+                  361,
+                  365
+                ],
+                "flipX": true,
+                "sourceJoints": null
+              },
+              {
+                "id": "rightWing",
+                "roi": [
+                  0.64,
+                  0,
+                  0.26,
+                  0.498046875
+                ],
+                "sourceBounds": [
+                  994,
+                  116,
+                  334,
+                  357
+                ],
+                "flipX": false,
+                "sourceJoints": null
+              }
+            ]
+          },
+          "rasterDiagnostics": [],
+          "frameStats": [
+            {
+              "index": 0,
+              "width": 256,
+              "height": 256,
+              "pixels": 9123,
+              "bounds": [
+                20,
+                80,
+                212,
+                118
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 1,
+              "width": 256,
+              "height": 256,
+              "pixels": 9093,
+              "bounds": [
+                45,
+                73,
+                165,
+                125
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 2,
+              "width": 256,
+              "height": 256,
+              "pixels": 9123,
+              "bounds": [
+                20,
+                80,
+                212,
+                118
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 3,
+              "width": 256,
+              "height": 256,
+              "pixels": 8832,
+              "bounds": [
+                33,
+                80,
+                186,
+                126
+              ],
+              "edgePixels": 0
+            }
+          ],
+          "stillStats": {
+            "width": 256,
+            "height": 256,
+            "pixels": 9123,
+            "bounds": [
+              20,
+              80,
+              212,
+              118
+            ],
+            "edgePixels": 0
+          },
+          "fallbackStats": {
+            "width": 64,
+            "height": 64,
+            "pixels": 637,
+            "bounds": [
+              5,
+              20,
+              53,
+              30
+            ],
+            "edgePixels": 0
+          },
+          "uniqueFrames": 3,
+          "frameHashes": [
+            "600fc683a40b9d92816dacb1241a64ea3f166bef7f2912e13e515f3a8f0773f2",
+            "ee4ff4df76d4df026cdface7ffc107988f032784ab87c5fb3873209307e6b947",
+            "600fc683a40b9d92816dacb1241a64ea3f166bef7f2912e13e515f3a8f0773f2",
+            "b2ee220d265d3198a55e4ec76bc561b46fa99a6dfb3b663ca0520523bf431e75"
+          ],
+          "projection": {
+            "forward": [
+              0,
+              -1
+            ],
+            "height": [
+              0,
+              1
+            ]
+          },
+          "frames": [
+            {
+              "phase": 0,
+              "rootAdvance": 0,
+              "body": {
+                "x": 198.64578833693304,
+                "y": 160,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    223.8816414686825,
+                    277.5
+                  ],
+                  "angle": 0.9599310885968813,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    288.1183585313175,
+                    277.5
+                  ],
+                  "angle": -0.9599310885968813,
+                  "layer": -1
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.25,
+              "rootAdvance": 0,
+              "body": {
+                "x": 198.64578833693304,
+                "y": 160,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    223.8816414686825,
+                    277.5
+                  ],
+                  "angle": 1.6231562043547263,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    288.1183585313175,
+                    277.5
+                  ],
+                  "angle": -1.6231562043547263,
+                  "layer": -1
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.5,
+              "rootAdvance": 0,
+              "body": {
+                "x": 198.64578833693304,
+                "y": 160,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    223.8816414686825,
+                    277.5
+                  ],
+                  "angle": 0.9599310885968813,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    288.1183585313175,
+                    277.5
+                  ],
+                  "angle": -0.9599310885968813,
+                  "layer": -1
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.75,
+              "rootAdvance": 0,
+              "body": {
+                "x": 198.64578833693304,
+                "y": 160,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    223.8816414686825,
+                    277.5
+                  ],
+                  "angle": 0.29670597283903605,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    288.1183585313175,
+                    277.5
+                  ],
+                  "angle": -0.29670597283903605,
+                  "layer": -1
+                }
+              ],
+              "segments": []
+            }
+          ],
+          "motionFrames": null
+        }
+      },
+      "errors": [],
+      "ready": true
+    }
+  ],
+  "files": [
+    {
+      "file": "casual/enemies/inf/directional/w036-side-walk-2x2.png",
+      "bytes": 113779,
+      "sha256": "93baaaed07978ec1b6cb12f789c6b943366022c5500db058e1fa38caf900cae8",
+      "image": {
+        "format": "png",
+        "width": 512,
+        "height": 512,
+        "pages": 1
+      }
+    },
+    {
+      "file": "casual/enemies/inf/directional/w036-side.png",
+      "bytes": 41516,
+      "sha256": "2764b2a62ec849ef7559de437770ccee2e72934741753babe459e40a36d507e5",
+      "image": {
+        "format": "png",
+        "width": 256,
+        "height": 256,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w036-side.png",
+      "bytes": 387992,
+      "sha256": "16ee326fc8e8db9454f5d58761ee9e1390ed35f4aaea609b2ab39dd02c144298",
+      "image": {
+        "format": "png",
+        "width": 1024,
+        "height": 1024,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w036-side.gif",
+      "bytes": 30340,
+      "sha256": "57df08ec58543612121b1f132010fd47337ccc3e7940e2ebba090569520255b5",
+      "image": {
+        "format": "gif",
+        "width": 256,
+        "height": 256,
+        "pages": 4
+      }
+    },
+    {
+      "file": "casual/enemies/inf/directional/w036-front-walk-2x2.png",
+      "bytes": 105950,
+      "sha256": "8a1cd3379cbadf7601235d5710b143c68d600e3c06dbf96b77cb24f80edecea8",
+      "image": {
+        "format": "png",
+        "width": 512,
+        "height": 512,
+        "pages": 1
+      }
+    },
+    {
+      "file": "casual/enemies/inf/directional/w036-front.png",
+      "bytes": 33815,
+      "sha256": "b940f27013a41e938400038435c1cb6d744d489e069a60faccd6f032d192ebb4",
+      "image": {
+        "format": "png",
+        "width": 256,
+        "height": 256,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w036-front.png",
+      "bytes": 371509,
+      "sha256": "c17ea117fe94fb5ea955db32124c0519baf2d74082933bb301a81c3a0bfc8e2e",
+      "image": {
+        "format": "png",
+        "width": 1024,
+        "height": 1024,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w036-front.gif",
+      "bytes": 33449,
+      "sha256": "5374457295502ab620bf2f75b7e7161beb12f44a28deb8b45c2059a444bdc89f",
+      "image": {
+        "format": "gif",
+        "width": 256,
+        "height": 256,
+        "pages": 4
+      }
+    },
+    {
+      "file": "casual/enemies/inf/directional/w036-back-walk-2x2.png",
+      "bytes": 103170,
+      "sha256": "b28be6f8b89e0289dcd9b8bcfb02ac6769e2b5492cf528c340556dc745ca04e3",
+      "image": {
+        "format": "png",
+        "width": 512,
+        "height": 512,
+        "pages": 1
+      }
+    },
+    {
+      "file": "casual/enemies/inf/directional/w036-back.png",
+      "bytes": 32759,
+      "sha256": "600fc683a40b9d92816dacb1241a64ea3f166bef7f2912e13e515f3a8f0773f2",
+      "image": {
+        "format": "png",
+        "width": 256,
+        "height": 256,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w036-back.png",
+      "bytes": 356459,
+      "sha256": "da3cd9fb84173d51a5a4bbd7526878812d65438f5bd83b85e4e6a12c8d86ce2f",
+      "image": {
+        "format": "png",
+        "width": 1024,
+        "height": 1024,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w036-back.gif",
+      "bytes": 31843,
+      "sha256": "0f7f6154ca8630214a193505da8c78ac03e978c1ba8d05da29c743bd78a7211b",
+      "image": {
+        "format": "gif",
+        "width": 256,
+        "height": 256,
+        "pages": 4
+      }
+    }
+  ],
+  "errors": []
+}

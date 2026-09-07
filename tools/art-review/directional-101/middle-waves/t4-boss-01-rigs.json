@@ -1,0 +1,780 @@
+{
+  "version": 1,
+  "canonicalCell": 512,
+  "assetVersion": 93,
+  "entries": [
+    {
+      "assetId": "b040",
+      "wave": 40,
+      "role": "boss",
+      "locomotion": "legged",
+      "cell": 512,
+      "referenceHeight": 425,
+      "cycleStride": 160,
+      "reviewApproved": true,
+      "gait": {
+        "stanceDuty": 0.5,
+        "lift": 25,
+        "pelvis": "support"
+      },
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/middle-waves/t4-boss-01-side-parts.png",
+          "sourceSha256": "e2028b26434723b61086b49bff4ad9eec64fcff69d7932bd3eb6c39aee80b8b9",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.43,
+              0.48828125
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 244.58851674641147
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.44,
+                0,
+                0.23,
+                0.48828125
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5077519379844961,
+                  0.1
+                ],
+                "knee": [
+                  0.38372093023255816,
+                  0.55
+                ],
+                "ankle": [
+                  0.3643410852713178,
+                  0.75
+                ],
+                "sole": [
+                  0.6162790697674418,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.48,
+                0.84
+              ],
+              "socketRoiNormalized": [
+                0.42,
+                0.78,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.74,
+                0,
+                0.24,
+                0.48828125
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.46923076923076923,
+                  0.1
+                ],
+                "knee": [
+                  0.36923076923076925,
+                  0.55
+                ],
+                "ankle": [
+                  0.35384615384615387,
+                  0.75
+                ],
+                "sole": [
+                  0.6307692307692307,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.62,
+                0.84
+              ],
+              "socketRoiNormalized": [
+                0.56,
+                0.78,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t4-boss-01-side-parts row 0 side. Reviewed hip cuff/knee/ankle y 0.1/0.55/0.75; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained. Body translated once so mean hip socket aligns to canonical pivot X."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/middle-waves/t4-boss-01-front-parts.png",
+          "sourceSha256": "9c422528e4d83c3b172cc3a827494eb070c6996ffcfa3bcb03491933cd8854e0",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.43,
+              0.48828125
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 254.80892448512586
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.44,
+                0,
+                0.23,
+                0.48828125
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.6298701298701299,
+                  0.1
+                ],
+                "knee": [
+                  0.4642857142857143,
+                  0.55
+                ],
+                "ankle": [
+                  0.4448051948051948,
+                  0.75
+                ],
+                "sole": [
+                  0.2824675324675325,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.62,
+                0.84
+              ],
+              "socketRoiNormalized": [
+                0.56,
+                0.78,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.74,
+                0,
+                0.24,
+                0.48828125
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.3651315789473684,
+                  0.1
+                ],
+                "knee": [
+                  0.5164473684210527,
+                  0.55
+                ],
+                "ankle": [
+                  0.5394736842105263,
+                  0.75
+                ],
+                "sole": [
+                  0.7105263157894737,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.39,
+                0.84
+              ],
+              "socketRoiNormalized": [
+                0.33,
+                0.78,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t4-boss-01-front-parts row 0 front. Reviewed hip cuff/knee/ankle y 0.1/0.55/0.75; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained. Body translated once so mean hip socket aligns to canonical pivot X."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/middle-waves/t4-boss-01-back-parts-clean.png",
+          "sourceSha256": "64ba992588f3fe9978588bb4c64e294423f356512d00e4fcf50b0b8f2783b2b5",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.43,
+              0.48828125
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 267.3142857142857
+            },
+            "layer": 10,
+            "flipX": true
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.44,
+                0,
+                0.23,
+                0.48828125
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.5,
+                  0.5
+                ],
+                "ankle": [
+                  0.5116279069767442,
+                  0.75
+                ],
+                "sole": [
+                  0.47674418604651164,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.35,
+                0.77
+              ],
+              "socketRoiNormalized": [
+                0.29,
+                0.71,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.74,
+                0,
+                0.24,
+                0.48828125
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.49411764705882355,
+                  0.1
+                ],
+                "knee": [
+                  0.5117647058823529,
+                  0.5
+                ],
+                "ankle": [
+                  0.49411764705882355,
+                  0.75
+                ],
+                "sole": [
+                  0.5,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.56,
+                0.77
+              ],
+              "socketRoiNormalized": [
+                0.5,
+                0.71,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t4-boss-01-back-parts-clean row 0 back. Reviewed hip cuff/knee/ankle y 0.1/0.5/0.75; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained. Body translated once so mean hip socket aligns to canonical pivot X. Body reflected to preserve staff physical right hand; socket coordinates refer to reflected torso."
+        }
+      }
+    },
+    {
+      "assetId": "b040-2",
+      "wave": 40,
+      "role": "secondary",
+      "locomotion": "legged",
+      "cell": 512,
+      "referenceHeight": 425,
+      "cycleStride": 160,
+      "reviewApproved": true,
+      "gait": {
+        "stanceDuty": 0.5,
+        "lift": 25,
+        "pelvis": "support"
+      },
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/middle-waves/t4-boss-01-side-parts.png",
+          "sourceSha256": "e2028b26434723b61086b49bff4ad9eec64fcff69d7932bd3eb6c39aee80b8b9",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.48828125,
+              0.43,
+              0.51171875
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 248.42682926829266
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.44,
+                0.48828125,
+                0.23,
+                0.51171875
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5151515151515151,
+                  0.1
+                ],
+                "knee": [
+                  0.4166666666666667,
+                  0.45
+                ],
+                "ankle": [
+                  0.3787878787878788,
+                  0.75
+                ],
+                "sole": [
+                  0.6590909090909091,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.45,
+                0.81
+              ],
+              "socketRoiNormalized": [
+                0.39,
+                0.75,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.74,
+                0.48828125,
+                0.24,
+                0.51171875
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4925373134328358,
+                  0.1
+                ],
+                "knee": [
+                  0.4141791044776119,
+                  0.45
+                ],
+                "ankle": [
+                  0.373134328358209,
+                  0.75
+                ],
+                "sole": [
+                  0.6455223880597015,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.61,
+                0.81
+              ],
+              "socketRoiNormalized": [
+                0.55,
+                0.75,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t4-boss-01-side-parts row 1 side. Reviewed hip cuff/knee/ankle y 0.1/0.45/0.75; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained. Body translated once so mean hip socket aligns to canonical pivot X."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/middle-waves/t4-boss-01-front-parts.png",
+          "sourceSha256": "9c422528e4d83c3b172cc3a827494eb070c6996ffcfa3bcb03491933cd8854e0",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.48828125,
+              0.43,
+              0.51171875
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 257.5678733031674
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.44,
+                0.48828125,
+                0.23,
+                0.51171875
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.6292517006802721,
+                  0.1
+                ],
+                "knee": [
+                  0.5884353741496599,
+                  0.4
+                ],
+                "ankle": [
+                  0.5476190476190477,
+                  0.75
+                ],
+                "sole": [
+                  0.32653061224489793,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.6,
+                0.8
+              ],
+              "socketRoiNormalized": [
+                0.54,
+                0.74,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.74,
+                0.48828125,
+                0.24,
+                0.51171875
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.3581081081081081,
+                  0.1
+                ],
+                "knee": [
+                  0.39864864864864863,
+                  0.4
+                ],
+                "ankle": [
+                  0.43243243243243246,
+                  0.75
+                ],
+                "sole": [
+                  0.6655405405405406,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.39,
+                0.8
+              ],
+              "socketRoiNormalized": [
+                0.33,
+                0.74,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t4-boss-01-front-parts row 1 front. Reviewed hip cuff/knee/ankle y 0.1/0.4/0.75; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained. Body translated once so mean hip socket aligns to canonical pivot X.",
+          "backgroundSeeds": [
+            [
+              511,
+              909
+            ]
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/middle-waves/t4-boss-01-back-parts.png",
+          "sourceSha256": "b78e2f4f8efe6f044b2435c46935a809f3fc20a1569f273b9c8640bbcf7126fc",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.48828125,
+              0.43,
+              0.51171875
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 268.6534653465347
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.44,
+                0.48828125,
+                0.23,
+                0.51171875
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.6027397260273972,
+                  0.1
+                ],
+                "knee": [
+                  0.541095890410959,
+                  0.45
+                ],
+                "ankle": [
+                  0.5205479452054794,
+                  0.75
+                ],
+                "sole": [
+                  0.5,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.34,
+                0.81
+              ],
+              "socketRoiNormalized": [
+                0.28,
+                0.75,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.74,
+                0.48828125,
+                0.24,
+                0.51171875
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4090909090909091,
+                  0.1
+                ],
+                "knee": [
+                  0.45454545454545453,
+                  0.45
+                ],
+                "ankle": [
+                  0.4755244755244755,
+                  0.75
+                ],
+                "sole": [
+                  0.486013986013986,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.58,
+                0.81
+              ],
+              "socketRoiNormalized": [
+                0.52,
+                0.75,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t4-boss-01-back-parts row 1 back. Reviewed hip cuff/knee/ankle y 0.1/0.45/0.75; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained. Body translated once so mean hip socket aligns to canonical pivot X."
+        }
+      }
+    }
+  ]
+}

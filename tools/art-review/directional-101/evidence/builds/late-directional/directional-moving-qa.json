@@ -1,0 +1,4970 @@
+{
+  "manifestSha256": "baccb5c3897f71a7270bfba0e01a29aea267dbb0e5fa73a22df3d4c24cb452df",
+  "cycles": 3,
+  "samplesPerCycle": 256,
+  "coordinateSystem": "output PNG pixels = canonical pixels * view.scale; review is not a game-speed or anatomy approval",
+  "entries": [
+    {
+      "assetId": "w061",
+      "locomotion": "float",
+      "phaseDriver": "time",
+      "reviewTravelCanonical": 120,
+      "frameDelayMs": 400,
+      "gif": "review/w061-moving.gif",
+      "gifSha256": "bd1d15f98769b27ca21e517eaa182b4bebf770aa9b7f57ee914c236bf2bf5afe",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 12,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "profile": "float",
+          "frameCount": 4,
+          "uniqueRasterFrames": 4,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "LEFT",
+          "profile": "float",
+          "frameCount": 4,
+          "uniqueRasterFrames": 4,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "profile": "float",
+          "frameCount": 4,
+          "uniqueRasterFrames": 4,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "UP / BACK",
+          "profile": "float",
+          "frameCount": 4,
+          "uniqueRasterFrames": 4,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        }
+      ]
+    },
+    {
+      "assetId": "w062",
+      "locomotion": "flight",
+      "phaseDriver": "time",
+      "reviewTravelCanonical": 120,
+      "frameDelayMs": 200,
+      "gif": "review/w062-moving.gif",
+      "gifSha256": "22e642d07988cc00e7337179a3ad67fe2b213fdbe25f3fef1ba71861bef9a672",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 12,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "LEFT",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "UP / BACK",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        }
+      ]
+    },
+    {
+      "assetId": "w063",
+      "locomotion": "legged",
+      "phaseDriver": "distance",
+      "reviewTravelCanonical": 160,
+      "frameDelayMs": 150,
+      "gif": "review/w063-moving.gif",
+      "gifSha256": "290d992592a3c3cf3d35b8354b025878f221bc0fcb5d14f321ec8d9b00b3122e",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 24,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        }
+      ]
+    },
+    {
+      "assetId": "w064",
+      "locomotion": "flight",
+      "phaseDriver": "time",
+      "reviewTravelCanonical": 120,
+      "frameDelayMs": 200,
+      "gif": "review/w064-moving.gif",
+      "gifSha256": "4bc2fc2c144ea216f88fcef11226bf14f1695c7bdb395369bef2e7f1055f5af3",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 12,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "LEFT",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "UP / BACK",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        }
+      ]
+    },
+    {
+      "assetId": "w065",
+      "locomotion": "legged",
+      "phaseDriver": "distance",
+      "reviewTravelCanonical": 160,
+      "frameDelayMs": 150,
+      "gif": "review/w065-moving.gif",
+      "gifSha256": "7064b56da5381c0c356ea298f766cfe375693564fc2fc9b93e8ffc327c0f59a2",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 24,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 2.842170943040401e-14,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 2.842170943040401e-14,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 2.842170943040401e-14,
+          "heldRasterContactExcursionPx": 9.687500000000028,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        }
+      ]
+    },
+    {
+      "assetId": "w066",
+      "locomotion": "legged",
+      "phaseDriver": "distance",
+      "reviewTravelCanonical": 160,
+      "frameDelayMs": 150,
+      "gif": "review/w066-moving.gif",
+      "gifSha256": "d6b50788817143bb52bce2a29bc3423893a62b8f3896d49e9f385a7aed3d62fc",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 24,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        }
+      ]
+    },
+    {
+      "assetId": "w067",
+      "locomotion": "legged",
+      "phaseDriver": "distance",
+      "reviewTravelCanonical": 120,
+      "frameDelayMs": 150,
+      "gif": "review/w067-moving.gif",
+      "gifSha256": "cc3d694655ce1841c8247c7c07555dee57c336994db0b097d53113d60d817395",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 24,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "limb": "leftFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 7.265625,
+          "oneFrameQuantizationLimitPx": 7.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "rightFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 7.265625,
+          "oneFrameQuantizationLimitPx": 7.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "leftHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 7.265625,
+          "oneFrameQuantizationLimitPx": 7.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "rightHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 7.265625,
+          "oneFrameQuantizationLimitPx": 7.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "leftFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 7.265625,
+          "oneFrameQuantizationLimitPx": 7.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "rightFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 7.265625,
+          "oneFrameQuantizationLimitPx": 7.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "leftHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 7.265625,
+          "oneFrameQuantizationLimitPx": 7.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "rightHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 7.265625,
+          "oneFrameQuantizationLimitPx": 7.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "leftFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 7.265625,
+          "oneFrameQuantizationLimitPx": 7.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "rightFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 7.265625,
+          "oneFrameQuantizationLimitPx": 7.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "leftHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 7.265625,
+          "oneFrameQuantizationLimitPx": 7.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "rightHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 7.265625,
+          "oneFrameQuantizationLimitPx": 7.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "leftFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 7.265625,
+          "oneFrameQuantizationLimitPx": 7.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "rightFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 7.265625,
+          "oneFrameQuantizationLimitPx": 7.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "leftHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 7.265625,
+          "oneFrameQuantizationLimitPx": 7.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "rightHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 7.265625,
+          "oneFrameQuantizationLimitPx": 7.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        }
+      ]
+    },
+    {
+      "assetId": "w068",
+      "locomotion": "flight",
+      "phaseDriver": "time",
+      "reviewTravelCanonical": 120,
+      "frameDelayMs": 200,
+      "gif": "review/w068-moving.gif",
+      "gifSha256": "723cd91733148ac8e311a3c5a5957910da3c25a7b79adee5984a7493e2c75d89",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 12,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "LEFT",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "UP / BACK",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        }
+      ]
+    },
+    {
+      "assetId": "w069",
+      "locomotion": "legged",
+      "phaseDriver": "distance",
+      "reviewTravelCanonical": 160,
+      "frameDelayMs": 150,
+      "gif": "review/w069-moving.gif",
+      "gifSha256": "ef4a3d1080672cba2758c9b3e0ffbd3263118f6a7de3f24ac3aa643b38c2a077",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 24,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        }
+      ]
+    },
+    {
+      "assetId": "b070",
+      "locomotion": "float",
+      "phaseDriver": "time",
+      "reviewTravelCanonical": 120,
+      "frameDelayMs": 400,
+      "gif": "review/b070-moving.gif",
+      "gifSha256": "787d0895dac0460663f2dea38ab1d345185c65f2b277e09d5749e035fde57230",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 0.5,
+      "motionFrames": 12,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "profile": "float",
+          "frameCount": 4,
+          "uniqueRasterFrames": 4,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "LEFT",
+          "profile": "float",
+          "frameCount": 4,
+          "uniqueRasterFrames": 4,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "profile": "float",
+          "frameCount": 4,
+          "uniqueRasterFrames": 4,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "UP / BACK",
+          "profile": "float",
+          "frameCount": 4,
+          "uniqueRasterFrames": 4,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        }
+      ]
+    },
+    {
+      "assetId": "b070-2",
+      "locomotion": "float",
+      "phaseDriver": "time",
+      "reviewTravelCanonical": 120,
+      "frameDelayMs": 400,
+      "gif": "review/b070-2-moving.gif",
+      "gifSha256": "9febf6ad32b9b2deb75eb538583b420a12ea46424bcde7252461f879633f1b54",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 0.5,
+      "motionFrames": 12,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "profile": "float",
+          "frameCount": 4,
+          "uniqueRasterFrames": 4,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "LEFT",
+          "profile": "float",
+          "frameCount": 4,
+          "uniqueRasterFrames": 4,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "profile": "float",
+          "frameCount": 4,
+          "uniqueRasterFrames": 4,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "UP / BACK",
+          "profile": "float",
+          "frameCount": 4,
+          "uniqueRasterFrames": 4,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        }
+      ]
+    },
+    {
+      "assetId": "w071",
+      "locomotion": "legged",
+      "phaseDriver": "distance",
+      "reviewTravelCanonical": 140,
+      "frameDelayMs": 150,
+      "gif": "review/w071-moving.gif",
+      "gifSha256": "958c13c28e9e08c921f5c18dc0ac94e34cc947d9789e99e80156d1b74e98b4c1",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 24,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "limb": "leftFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "rightFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "leftHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 2.842170943040401e-14,
+          "heldRasterContactExcursionPx": 8.476562500000028,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "rightHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "leftFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "rightFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "leftHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 2.842170943040401e-14,
+          "heldRasterContactExcursionPx": 8.476562500000028,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "rightHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "leftFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "rightFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "leftHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "rightHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "leftFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "rightFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "leftHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "rightHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        }
+      ]
+    },
+    {
+      "assetId": "w072",
+      "locomotion": "flight",
+      "phaseDriver": "time",
+      "reviewTravelCanonical": 120,
+      "frameDelayMs": 200,
+      "gif": "review/w072-moving.gif",
+      "gifSha256": "8458dced3feb3c7062062e8e82364253d5c85ba9d00d53bc9b2de9cc6312db5e",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 12,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "LEFT",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "UP / BACK",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        }
+      ]
+    },
+    {
+      "assetId": "w073",
+      "locomotion": "legged",
+      "phaseDriver": "distance",
+      "reviewTravelCanonical": 140,
+      "frameDelayMs": 150,
+      "gif": "review/w073-moving.gif",
+      "gifSha256": "03404a6c715df1cee87e450cb21681220dc8c3ee641da677cd03a072b76abf30",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 24,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "limb": "leftFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "rightFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "leftHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "rightHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 2.842170943040401e-14,
+          "heldRasterContactExcursionPx": 8.476562500000028,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "leftFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "rightFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "leftHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "rightHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 2.842170943040401e-14,
+          "heldRasterContactExcursionPx": 8.476562500000028,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "leftFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "rightFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "leftHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "rightHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "leftFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "rightFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "leftHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "rightHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        }
+      ]
+    },
+    {
+      "assetId": "w074",
+      "locomotion": "legged",
+      "phaseDriver": "distance",
+      "reviewTravelCanonical": 160,
+      "frameDelayMs": 150,
+      "gif": "review/w074-moving.gif",
+      "gifSha256": "aacc3ba08d74979d6c1c80258f20362463e1d7fc25eac4863aeac36f8805eeaf",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 24,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        }
+      ]
+    },
+    {
+      "assetId": "w075",
+      "locomotion": "legged",
+      "phaseDriver": "distance",
+      "reviewTravelCanonical": 160,
+      "frameDelayMs": 150,
+      "gif": "review/w075-moving.gif",
+      "gifSha256": "06f288bfa476546f19d2ef4f2908bb4868d06d572434505e5819a88e7e15bc0e",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 24,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        }
+      ]
+    },
+    {
+      "assetId": "w076",
+      "locomotion": "flight",
+      "phaseDriver": "time",
+      "reviewTravelCanonical": 120,
+      "frameDelayMs": 200,
+      "gif": "review/w076-moving.gif",
+      "gifSha256": "47471c8be89bd431c3d2175d3e42354c14f417c7f399ef1a62f9dc6094ef6a9f",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 12,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "LEFT",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "UP / BACK",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        }
+      ]
+    },
+    {
+      "assetId": "w077",
+      "locomotion": "slither",
+      "phaseDriver": "distance",
+      "reviewTravelCanonical": 140,
+      "frameDelayMs": 150,
+      "gif": "review/w077-moving.gif",
+      "gifSha256": "a6a4d517094b9741fc812607d7f8541ff8ce340cc80aa5ee1c64994b4ff96d0b",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 24,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "profile": "slither",
+          "frameCount": 8,
+          "uniqueRasterFrames": 8,
+          "recordedPhases": [
+            0,
+            0.125,
+            0.25,
+            0.375,
+            0.5,
+            0.625,
+            0.75,
+            0.875
+          ],
+          "phaseDriver": "distance/cycleStride",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "LEFT",
+          "profile": "slither",
+          "frameCount": 8,
+          "uniqueRasterFrames": 8,
+          "recordedPhases": [
+            0,
+            0.125,
+            0.25,
+            0.375,
+            0.5,
+            0.625,
+            0.75,
+            0.875
+          ],
+          "phaseDriver": "distance/cycleStride",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "profile": "slither",
+          "frameCount": 8,
+          "uniqueRasterFrames": 8,
+          "recordedPhases": [
+            0,
+            0.125,
+            0.25,
+            0.375,
+            0.5,
+            0.625,
+            0.75,
+            0.875
+          ],
+          "phaseDriver": "distance/cycleStride",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "UP / BACK",
+          "profile": "slither",
+          "frameCount": 8,
+          "uniqueRasterFrames": 8,
+          "recordedPhases": [
+            0,
+            0.125,
+            0.25,
+            0.375,
+            0.5,
+            0.625,
+            0.75,
+            0.875
+          ],
+          "phaseDriver": "distance/cycleStride",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        }
+      ]
+    },
+    {
+      "assetId": "w078",
+      "locomotion": "legged",
+      "phaseDriver": "distance",
+      "reviewTravelCanonical": 140,
+      "frameDelayMs": 150,
+      "gif": "review/w078-moving.gif",
+      "gifSha256": "975536691ec83651dcd4c92300677f0f2ff40c9eeec580e674327ed7d03406fb",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 24,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "limb": "leftFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "rightFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "leftHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.476562500000028,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "rightHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "leftFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "rightFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "leftHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.476562500000028,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "rightHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "leftFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "rightFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "leftHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "rightHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "leftFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "rightFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "leftHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "rightHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        }
+      ]
+    },
+    {
+      "assetId": "w079",
+      "locomotion": "legged",
+      "phaseDriver": "distance",
+      "reviewTravelCanonical": 160,
+      "frameDelayMs": 150,
+      "gif": "review/w079-moving.gif",
+      "gifSha256": "8d23e76312c9996d44e621703be92a5d716a668019d4fa735cc486230cf2a0a2",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 24,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        }
+      ]
+    },
+    {
+      "assetId": "b080",
+      "locomotion": "flight",
+      "phaseDriver": "time",
+      "reviewTravelCanonical": 120,
+      "frameDelayMs": 200,
+      "gif": "review/b080-moving.gif",
+      "gifSha256": "cc8e8cdcb8ac656e25c48476beb188a8b691853faeb2db02f6c2d1728d997147",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 0.5,
+      "motionFrames": 12,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "LEFT",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "UP / BACK",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        }
+      ]
+    },
+    {
+      "assetId": "b080-2",
+      "locomotion": "legged",
+      "phaseDriver": "distance",
+      "reviewTravelCanonical": 160,
+      "frameDelayMs": 150,
+      "gif": "review/b080-2-moving.gif",
+      "gifSha256": "2cd7881148748e3f14426215f4acb8df65d1bf07632ce7657b559af32d2d29fc",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 0.5,
+      "motionFrames": 24,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "limb": "leftFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 19.375,
+          "oneFrameQuantizationLimitPx": 20,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "rightFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 19.375000000000057,
+          "oneFrameQuantizationLimitPx": 20,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "leftHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 19.375,
+          "oneFrameQuantizationLimitPx": 20,
+          "textureProximityHits": 21,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "rightHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 19.375,
+          "oneFrameQuantizationLimitPx": 20,
+          "textureProximityHits": 21,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "leftFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 19.375,
+          "oneFrameQuantizationLimitPx": 20,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "rightFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 19.375000000000057,
+          "oneFrameQuantizationLimitPx": 20,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "leftHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 19.375,
+          "oneFrameQuantizationLimitPx": 20,
+          "textureProximityHits": 21,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "rightHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 19.375,
+          "oneFrameQuantizationLimitPx": 20,
+          "textureProximityHits": 21,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "leftFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 19.375,
+          "oneFrameQuantizationLimitPx": 20,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "rightFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 19.375,
+          "oneFrameQuantizationLimitPx": 20,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "leftHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 19.375,
+          "oneFrameQuantizationLimitPx": 20,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "rightHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 19.375,
+          "oneFrameQuantizationLimitPx": 20,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "leftFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 19.375,
+          "oneFrameQuantizationLimitPx": 20,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "rightFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 19.375,
+          "oneFrameQuantizationLimitPx": 20,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "leftHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 19.375,
+          "oneFrameQuantizationLimitPx": 20,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "rightHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 19.375,
+          "oneFrameQuantizationLimitPx": 20,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        }
+      ]
+    },
+    {
+      "assetId": "w081",
+      "locomotion": "legged",
+      "phaseDriver": "distance",
+      "reviewTravelCanonical": 160,
+      "frameDelayMs": 150,
+      "gif": "review/w081-moving.gif",
+      "gifSha256": "555bdd4ce61217004bba3121918678e7aef2292c74ae233c243d931f17f101d5",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 24,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        }
+      ]
+    },
+    {
+      "assetId": "w082",
+      "locomotion": "legged",
+      "phaseDriver": "distance",
+      "reviewTravelCanonical": 140,
+      "frameDelayMs": 150,
+      "gif": "review/w082-moving.gif",
+      "gifSha256": "764db845f85917036956eeabb7c1a8f1d3433c697993d505a40ca865142d5a5a",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 24,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "limb": "leftFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "rightFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "leftHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "rightHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "leftFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "rightFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "leftHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "rightHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "leftFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "rightFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "leftHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "rightHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "leftFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "rightFore",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "leftHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "rightHind",
+          "contactCaptures": 18,
+          "contactContinuousSamples": 576,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 8.4765625,
+          "oneFrameQuantizationLimitPx": 8.75,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        }
+      ]
+    },
+    {
+      "assetId": "w083",
+      "locomotion": "legged",
+      "phaseDriver": "distance",
+      "reviewTravelCanonical": 160,
+      "frameDelayMs": 150,
+      "gif": "review/w083-moving.gif",
+      "gifSha256": "3b5e3685c584b7de7968c688170ecd90c8674529bd763cdebeb2f21291653014",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 24,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        }
+      ]
+    },
+    {
+      "assetId": "w084",
+      "locomotion": "slither",
+      "phaseDriver": "distance",
+      "reviewTravelCanonical": 140,
+      "frameDelayMs": 150,
+      "gif": "review/w084-moving.gif",
+      "gifSha256": "7bc618fb4a682cc38d9795d11f7130357e13b5b026acb08d06931d20ffb75a68",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 24,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "profile": "slither",
+          "frameCount": 8,
+          "uniqueRasterFrames": 8,
+          "recordedPhases": [
+            0,
+            0.125,
+            0.25,
+            0.375,
+            0.5,
+            0.625,
+            0.75,
+            0.875
+          ],
+          "phaseDriver": "distance/cycleStride",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "LEFT",
+          "profile": "slither",
+          "frameCount": 8,
+          "uniqueRasterFrames": 8,
+          "recordedPhases": [
+            0,
+            0.125,
+            0.25,
+            0.375,
+            0.5,
+            0.625,
+            0.75,
+            0.875
+          ],
+          "phaseDriver": "distance/cycleStride",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "profile": "slither",
+          "frameCount": 8,
+          "uniqueRasterFrames": 8,
+          "recordedPhases": [
+            0,
+            0.125,
+            0.25,
+            0.375,
+            0.5,
+            0.625,
+            0.75,
+            0.875
+          ],
+          "phaseDriver": "distance/cycleStride",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "UP / BACK",
+          "profile": "slither",
+          "frameCount": 8,
+          "uniqueRasterFrames": 8,
+          "recordedPhases": [
+            0,
+            0.125,
+            0.25,
+            0.375,
+            0.5,
+            0.625,
+            0.75,
+            0.875
+          ],
+          "phaseDriver": "distance/cycleStride",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        }
+      ]
+    },
+    {
+      "assetId": "w085",
+      "locomotion": "float",
+      "phaseDriver": "time",
+      "reviewTravelCanonical": 120,
+      "frameDelayMs": 400,
+      "gif": "review/w085-moving.gif",
+      "gifSha256": "d5af28fe8137e1c04381e03b7fa4879ee8ab830395bf15d23fa934dd62056604",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 12,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "profile": "float",
+          "frameCount": 4,
+          "uniqueRasterFrames": 4,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "LEFT",
+          "profile": "float",
+          "frameCount": 4,
+          "uniqueRasterFrames": 4,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "profile": "float",
+          "frameCount": 4,
+          "uniqueRasterFrames": 4,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "UP / BACK",
+          "profile": "float",
+          "frameCount": 4,
+          "uniqueRasterFrames": 4,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        }
+      ]
+    },
+    {
+      "assetId": "w086",
+      "locomotion": "legged",
+      "phaseDriver": "distance",
+      "reviewTravelCanonical": 160,
+      "frameDelayMs": 150,
+      "gif": "review/w086-moving.gif",
+      "gifSha256": "35cba7cbb3e0a3c161d26bbd6509084d3dfb492f72638aaacecf46a6c5d008ac",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 24,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        }
+      ]
+    },
+    {
+      "assetId": "w087",
+      "locomotion": "legged",
+      "phaseDriver": "distance",
+      "reviewTravelCanonical": 160,
+      "frameDelayMs": 150,
+      "gif": "review/w087-moving.gif",
+      "gifSha256": "e8e18550e7214ef5d613c581a24d3f1b2d195996b1b56f2e41b30e6b58272665",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 24,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        }
+      ]
+    },
+    {
+      "assetId": "w088",
+      "locomotion": "flight",
+      "phaseDriver": "time",
+      "reviewTravelCanonical": 120,
+      "frameDelayMs": 200,
+      "gif": "review/w088-moving.gif",
+      "gifSha256": "fc9d48d4edc6d7ca358972046f5f222483b63f3882d0d822e783acbf15df9dcc",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 12,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "LEFT",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "UP / BACK",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        }
+      ]
+    },
+    {
+      "assetId": "w089",
+      "locomotion": "legged",
+      "phaseDriver": "distance",
+      "reviewTravelCanonical": 160,
+      "frameDelayMs": 150,
+      "gif": "review/w089-moving.gif",
+      "gifSha256": "a109ca61b09154e2cd409a365cd069e0ace8f21660810ffddfb217450fdc39ed",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 24,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 2.842170943040401e-14,
+          "heldRasterContactExcursionPx": 9.687500000000028,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 2.842170943040401e-14,
+          "heldRasterContactExcursionPx": 9.687500000000028,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        }
+      ]
+    },
+    {
+      "assetId": "b090",
+      "locomotion": "legged",
+      "phaseDriver": "distance",
+      "reviewTravelCanonical": 180,
+      "frameDelayMs": 150,
+      "gif": "review/b090-moving.gif",
+      "gifSha256": "e7b5c38279a1ee7de49e80c27582852e7975e57d977d7c0d4dcbd71e7b095c31",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 0.5,
+      "motionFrames": 24,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 5.684341886080802e-14,
+          "heldRasterContactExcursionPx": 21.796875000000057,
+          "oneFrameQuantizationLimitPx": 22.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 21.796875,
+          "oneFrameQuantizationLimitPx": 22.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 5.684341886080802e-14,
+          "heldRasterContactExcursionPx": 21.796875000000057,
+          "oneFrameQuantizationLimitPx": 22.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 21.796875,
+          "oneFrameQuantizationLimitPx": 22.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 21.796875,
+          "oneFrameQuantizationLimitPx": 22.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 21.796875,
+          "oneFrameQuantizationLimitPx": 22.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 21.796875,
+          "oneFrameQuantizationLimitPx": 22.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 21.796875,
+          "oneFrameQuantizationLimitPx": 22.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        }
+      ]
+    },
+    {
+      "assetId": "b090-2",
+      "locomotion": "legged",
+      "phaseDriver": "distance",
+      "reviewTravelCanonical": 180,
+      "frameDelayMs": 150,
+      "gif": "review/b090-2-moving.gif",
+      "gifSha256": "e9e93651faa4eee20deb950b63530901996136c78fa082e1bbb811eb010f605d",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 0.5,
+      "motionFrames": 24,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 21.796875,
+          "oneFrameQuantizationLimitPx": 22.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 5.684341886080802e-14,
+          "heldRasterContactExcursionPx": 21.796875,
+          "oneFrameQuantizationLimitPx": 22.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 21.796875,
+          "oneFrameQuantizationLimitPx": 22.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 5.684341886080802e-14,
+          "heldRasterContactExcursionPx": 21.796875,
+          "oneFrameQuantizationLimitPx": 22.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 21.796875,
+          "oneFrameQuantizationLimitPx": 22.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 21.796875,
+          "oneFrameQuantizationLimitPx": 22.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 21.796875,
+          "oneFrameQuantizationLimitPx": 22.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 21.796875,
+          "oneFrameQuantizationLimitPx": 22.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        }
+      ]
+    },
+    {
+      "assetId": "w091",
+      "locomotion": "slither",
+      "phaseDriver": "distance",
+      "reviewTravelCanonical": 140,
+      "frameDelayMs": 150,
+      "gif": "review/w091-moving.gif",
+      "gifSha256": "3198f7a860ccbc4d9ec0931d8b77a7ee93ff03483679a72016d91be06009aec7",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 24,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "profile": "slither",
+          "frameCount": 8,
+          "uniqueRasterFrames": 8,
+          "recordedPhases": [
+            0,
+            0.125,
+            0.25,
+            0.375,
+            0.5,
+            0.625,
+            0.75,
+            0.875
+          ],
+          "phaseDriver": "distance/cycleStride",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "LEFT",
+          "profile": "slither",
+          "frameCount": 8,
+          "uniqueRasterFrames": 8,
+          "recordedPhases": [
+            0,
+            0.125,
+            0.25,
+            0.375,
+            0.5,
+            0.625,
+            0.75,
+            0.875
+          ],
+          "phaseDriver": "distance/cycleStride",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "profile": "slither",
+          "frameCount": 8,
+          "uniqueRasterFrames": 8,
+          "recordedPhases": [
+            0,
+            0.125,
+            0.25,
+            0.375,
+            0.5,
+            0.625,
+            0.75,
+            0.875
+          ],
+          "phaseDriver": "distance/cycleStride",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "UP / BACK",
+          "profile": "slither",
+          "frameCount": 8,
+          "uniqueRasterFrames": 8,
+          "recordedPhases": [
+            0,
+            0.125,
+            0.25,
+            0.375,
+            0.5,
+            0.625,
+            0.75,
+            0.875
+          ],
+          "phaseDriver": "distance/cycleStride",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        }
+      ]
+    },
+    {
+      "assetId": "w092",
+      "locomotion": "float",
+      "phaseDriver": "time",
+      "reviewTravelCanonical": 120,
+      "frameDelayMs": 400,
+      "gif": "review/w092-moving.gif",
+      "gifSha256": "cfa950de2166757202849efa450d752fb3b411c29ee968d7ad9594fed2499525",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 12,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "profile": "float",
+          "frameCount": 4,
+          "uniqueRasterFrames": 4,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "LEFT",
+          "profile": "float",
+          "frameCount": 4,
+          "uniqueRasterFrames": 4,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "profile": "float",
+          "frameCount": 4,
+          "uniqueRasterFrames": 4,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "UP / BACK",
+          "profile": "float",
+          "frameCount": 4,
+          "uniqueRasterFrames": 4,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        }
+      ]
+    },
+    {
+      "assetId": "w093",
+      "locomotion": "legged",
+      "phaseDriver": "distance",
+      "reviewTravelCanonical": 160,
+      "frameDelayMs": 150,
+      "gif": "review/w093-moving.gif",
+      "gifSha256": "b499641689f4e095279ce8678a280d733b5b7ffdfaee854fc24415d8d0971aa0",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 24,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 5.684341886080802e-14,
+          "heldRasterContactExcursionPx": 9.687500000000057,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 5.684341886080802e-14,
+          "heldRasterContactExcursionPx": 9.687500000000057,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        }
+      ]
+    },
+    {
+      "assetId": "w094",
+      "locomotion": "legged",
+      "phaseDriver": "distance",
+      "reviewTravelCanonical": 160,
+      "frameDelayMs": 150,
+      "gif": "review/w094-moving.gif",
+      "gifSha256": "23b7151321d121800045437b8eb4e0e51123b172cbb5c787da67b21f84b50e4d",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 24,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        }
+      ]
+    },
+    {
+      "assetId": "w095",
+      "locomotion": "legged",
+      "phaseDriver": "distance",
+      "reviewTravelCanonical": 160,
+      "frameDelayMs": 150,
+      "gif": "review/w095-moving.gif",
+      "gifSha256": "4978a783d80fe91e8a12e0341ddb65aef19d9c2457c8d8d182cd41bf6e66b78c",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 24,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        }
+      ]
+    },
+    {
+      "assetId": "w096",
+      "locomotion": "flight",
+      "phaseDriver": "time",
+      "reviewTravelCanonical": 120,
+      "frameDelayMs": 200,
+      "gif": "review/w096-moving.gif",
+      "gifSha256": "6e26871e168990dde975e92688271ccb0b388a0ae91e16c570e4d784d4310c23",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 12,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "LEFT",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "UP / BACK",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        }
+      ]
+    },
+    {
+      "assetId": "w097",
+      "locomotion": "legged",
+      "phaseDriver": "distance",
+      "reviewTravelCanonical": 160,
+      "frameDelayMs": 150,
+      "gif": "review/w097-moving.gif",
+      "gifSha256": "fa5cbc62bb15db5e7dd55262324e4ec1eeb78c7fef8b168a07cbe12e35845662",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 24,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 5.684341886080802e-14,
+          "heldRasterContactExcursionPx": 9.687500000000057,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 5.684341886080802e-14,
+          "heldRasterContactExcursionPx": 9.687500000000057,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        }
+      ]
+    },
+    {
+      "assetId": "w098",
+      "locomotion": "slither",
+      "phaseDriver": "distance",
+      "reviewTravelCanonical": 140,
+      "frameDelayMs": 150,
+      "gif": "review/w098-moving.gif",
+      "gifSha256": "2d06aaccc95d5d652fe7517b6c6274f5d35445cd0b28381ad45de75a563e908c",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 24,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "profile": "slither",
+          "frameCount": 8,
+          "uniqueRasterFrames": 8,
+          "recordedPhases": [
+            0,
+            0.125,
+            0.25,
+            0.375,
+            0.5,
+            0.625,
+            0.75,
+            0.875
+          ],
+          "phaseDriver": "distance/cycleStride",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "LEFT",
+          "profile": "slither",
+          "frameCount": 8,
+          "uniqueRasterFrames": 8,
+          "recordedPhases": [
+            0,
+            0.125,
+            0.25,
+            0.375,
+            0.5,
+            0.625,
+            0.75,
+            0.875
+          ],
+          "phaseDriver": "distance/cycleStride",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "profile": "slither",
+          "frameCount": 8,
+          "uniqueRasterFrames": 8,
+          "recordedPhases": [
+            0,
+            0.125,
+            0.25,
+            0.375,
+            0.5,
+            0.625,
+            0.75,
+            0.875
+          ],
+          "phaseDriver": "distance/cycleStride",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "UP / BACK",
+          "profile": "slither",
+          "frameCount": 8,
+          "uniqueRasterFrames": 8,
+          "recordedPhases": [
+            0,
+            0.125,
+            0.25,
+            0.375,
+            0.5,
+            0.625,
+            0.75,
+            0.875
+          ],
+          "phaseDriver": "distance/cycleStride",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        }
+      ]
+    },
+    {
+      "assetId": "w099",
+      "locomotion": "legged",
+      "phaseDriver": "distance",
+      "reviewTravelCanonical": 160,
+      "frameDelayMs": 150,
+      "gif": "review/w099-moving.gif",
+      "gifSha256": "2208ae353cda0b440a7486779a32dd471d03d200cb5891334c9873abc6026e9f",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 24,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        }
+      ]
+    },
+    {
+      "assetId": "b100",
+      "locomotion": "legged",
+      "phaseDriver": "distance",
+      "reviewTravelCanonical": 180,
+      "frameDelayMs": 150,
+      "gif": "review/b100-moving.gif",
+      "gifSha256": "906ac97f551fbb8a6f154754ddb8f2b0a51f26462584c419c925a23f11937ac5",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 0.5,
+      "motionFrames": 24,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 21.796875,
+          "oneFrameQuantizationLimitPx": 22.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 21.796875,
+          "oneFrameQuantizationLimitPx": 22.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 21.796875,
+          "oneFrameQuantizationLimitPx": 22.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 21.796875,
+          "oneFrameQuantizationLimitPx": 22.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 21.796875,
+          "oneFrameQuantizationLimitPx": 22.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 21.796875,
+          "oneFrameQuantizationLimitPx": 22.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 5.684341886080802e-14,
+          "heldRasterContactExcursionPx": 21.796875000000057,
+          "oneFrameQuantizationLimitPx": 22.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 21.796875,
+          "oneFrameQuantizationLimitPx": 22.5,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        }
+      ]
+    },
+    {
+      "assetId": "b100-2",
+      "locomotion": "flight",
+      "phaseDriver": "time",
+      "reviewTravelCanonical": 120,
+      "frameDelayMs": 200,
+      "gif": "review/b100-2-moving.gif",
+      "gifSha256": "00b145e2f06377120314ad2d3973a7c88494e046d6f023e7275042eee7d9fee0",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 0.5,
+      "motionFrames": 12,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "LEFT",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "UP / BACK",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        }
+      ]
+    },
+    {
+      "assetId": "w101",
+      "locomotion": "legged",
+      "phaseDriver": "distance",
+      "reviewTravelCanonical": 160,
+      "frameDelayMs": 150,
+      "gif": "review/w101-moving.gif",
+      "gifSha256": "3bb1eb6d3534b906887207c6f86092dd7cddd7cde93aad9d73f30e83df3354e6",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 24,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "RIGHT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "LEFT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "leftLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        },
+        {
+          "direction": "UP / BACK",
+          "limb": "rightLeg",
+          "contactCaptures": 12,
+          "contactContinuousSamples": 384,
+          "capturedPoseContactResidualPx": 0,
+          "heldRasterContactExcursionPx": 9.6875,
+          "oneFrameQuantizationLimitPx": 10,
+          "textureProximityHits": 24,
+          "textureSamples": 24,
+          "textureCaveat": "A composite proximity hit is not physical limb identity or occlusion verification."
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "passed": true
+}

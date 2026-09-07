@@ -1,0 +1,5 @@
+Use case: precise-object-edit. Edit this exact FOUR ROW by THREE COMPONENTS atlas; preserve dimensions, layout, every face, costume, weapon and all empty gutters.
+Make exactly two corrections:
+1. In ALL FOUR LEFT-column torso pieces, remove the hollow black oval opening at the bottom. The torso must end in CLOSED, SOLID PAINTED CLOTHING: a natural shorts/pelvis shape with intact dark-green cloth covered by the leather tunic hem, ready to overlap attached thighs. No circular tube rim, no hollow opening, no black oval, no socket hole, no wound. Do not attach any legs or boots to the body. Keep torso size and outer proportions unchanged.
+2. ROW1 RIGHT-most detached leg and ROW3 RIGHT-most detached leg must face RIGHT in pure side profile, matching the leg directly to their left. Toe protrudes toward the RIGHT edge, heel on the LEFT. Mirror/reorient only these two complete leg pieces, keeping exact size and clothing. All front-facing legs in ROW2 and ROW4 remain unchanged.
+Everything else stays unchanged. Clean hand-painted fantasy game art with intact clothing, no gore or exposed tissue. Genuine transparent background; no added characters, labels or effects.

@@ -1,0 +1,1033 @@
+[
+  {
+    "id": "late-biped-01-side-parts",
+    "stage": "parts",
+    "family": "biped",
+    "assetIds": [
+      "w063",
+      "w065",
+      "w066",
+      "w069"
+    ],
+    "rows": [
+      {
+        "assetId": "w063",
+        "view": "side"
+      },
+      {
+        "assetId": "w065",
+        "view": "side"
+      },
+      {
+        "assetId": "w066",
+        "view": "side"
+      },
+      {
+        "assetId": "w069",
+        "view": "side"
+      }
+    ],
+    "layout": "side",
+    "references": [
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t7-biped-01-turnaround.png"
+    ],
+    "referencesSha256": [
+      "31545c8882e89465f39be41efbcb989c54bfd83146aa5f7dea718f2fa3dac61b"
+    ],
+    "promptFile": "prompts/late-biped-01-side-parts.txt",
+    "prompt": "Create ONE TALL PORTRAIT 1:2 rigging PARTS atlas, highest resolution. Exactly 4 equal horizontal ROWS and THREE separated COLUMNS. Component1 x0–48%, component2 x52–74%, component3 x78–99%.\nMatch the referenced identities exactly: chunky readable hand-painted fantasy GAME characters, calm expressive faces, soft painterly shading and clean dark outlines. No photorealism, pixel art, gore, wounds, blood, rotten flesh, huge horror teeth or grotesque anatomy. Components are clean animation cutouts, not severed anatomy. No text, labels, grid lines, floors, ground shadows, scenery, extra components or drawn checkerboard. True transparent background if possible. Keep every component fully isolated with wide blank gutters; no item crosses any cell boundary. Same 15-degree elevated game camera in all views. Do not generate assembled characters or animation frames.\nTHREE COMPONENTS per view: (1) complete head, arms, torso and held equipment with BOTH LEGS REMOVED precisely at the hips; no attached thigh/boot stumps. Shorten ALL coats, capes, skirts and tabards so the hem ends ABOVE THE KNEES, including in BACK view. Preserve an intact closed painted pelvis with natural rounded sockets, never an empty hole. (2) one complete physical LEFT leg from rounded upper-thigh overlap root through knee and ankle to the entire boot/hoof/foot. (3) one complete physical RIGHT leg, same natural length and width. Each leg is ONE connected piece in a nearly straight neutral standing posture, not bent into a squat. Full leg length must plausibly match the torso. Keep the root rounded and textured for smooth overlap.\nREFERENCE 1: row 1 = w063; row 2 = w065; row 3 = w066; row 4 = w069.\nROW 1: w063: Small earth elemental built from rounded ochre clay stones, green moss seams, amber eyes, two blocky arms and legs. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nROW 2: w065: Heavy rounded gray rock golem with moss-green seams, amber rune face, huge stone fists and sturdy stone feet. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nROW 3: w066: Upright pale-blue crystal spirit with expressive amber eye lights, layered turquoise facets, two arms and two crystal legs. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nROW 4: w069: Broad amethyst crystal golem with turquoise core, gold runes, two articulated stone arms and sturdy crystal legs. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nKeep torso and limb scale coherent. The purpose is individually movable components; no assembled full characters anywhere."
+  },
+  {
+    "id": "late-biped-01-front-back-parts",
+    "stage": "parts",
+    "family": "biped",
+    "assetIds": [
+      "w063",
+      "w065",
+      "w066",
+      "w069"
+    ],
+    "rows": [
+      {
+        "assetId": "w063",
+        "view": "front-back"
+      },
+      {
+        "assetId": "w065",
+        "view": "front-back"
+      },
+      {
+        "assetId": "w066",
+        "view": "front-back"
+      },
+      {
+        "assetId": "w069",
+        "view": "front-back"
+      }
+    ],
+    "layout": "front-back",
+    "references": [
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t7-biped-01-turnaround.png"
+    ],
+    "referencesSha256": [
+      "31545c8882e89465f39be41efbcb989c54bfd83146aa5f7dea718f2fa3dac61b"
+    ],
+    "promptFile": "prompts/late-biped-01-front-back-parts.txt",
+    "prompt": "Create ONE SQUARE rigging PARTS atlas, highest resolution. Exactly 4 equal horizontal ROWS and SIX EQUAL separated COLUMNS. Each row is ONE creature: columns1/2/3 its FRONT component1/2/3; columns4/5/6 its BACK component1/2/3. Exactly 24 isolated components total. Equal-width columns with wide blank gutters.\nMatch the referenced identities exactly: chunky readable hand-painted fantasy GAME characters, calm expressive faces, soft painterly shading and clean dark outlines. No photorealism, pixel art, gore, wounds, blood, rotten flesh, huge horror teeth or grotesque anatomy. Components are clean animation cutouts, not severed anatomy. No text, labels, grid lines, floors, ground shadows, scenery, extra components or drawn checkerboard. True transparent background if possible. Keep every component fully isolated with wide blank gutters; no item crosses any cell boundary. Same 15-degree elevated game camera in all views. Do not generate assembled characters or animation frames.\nTHREE COMPONENTS per view: (1) complete head, arms, torso and held equipment with BOTH LEGS REMOVED precisely at the hips; no attached thigh/boot stumps. Shorten ALL coats, capes, skirts and tabards so the hem ends ABOVE THE KNEES, including in BACK view. Preserve an intact closed painted pelvis with natural rounded sockets, never an empty hole. (2) one complete physical LEFT leg from rounded upper-thigh overlap root through knee and ankle to the entire boot/hoof/foot. (3) one complete physical RIGHT leg, same natural length and width. Each leg is ONE connected piece in a nearly straight neutral standing posture, not bent into a squat. Full leg length must plausibly match the torso. Keep the root rounded and textured for smooth overlap.\nREFERENCE 1: row 1 = w063; row 2 = w065; row 3 = w066; row 4 = w069.\nROW 1: w063: Small earth elemental built from rounded ochre clay stones, green moss seams, amber eyes, two blocky arms and legs. Columns1–3: TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left. Columns4–6: TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nROW 2: w065: Heavy rounded gray rock golem with moss-green seams, amber rune face, huge stone fists and sturdy stone feet. Columns1–3: TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left. Columns4–6: TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nROW 3: w066: Upright pale-blue crystal spirit with expressive amber eye lights, layered turquoise facets, two arms and two crystal legs. Columns1–3: TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left. Columns4–6: TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nROW 4: w069: Broad amethyst crystal golem with turquoise core, gold runes, two articulated stone arms and sturdy crystal legs. Columns1–3: TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left. Columns4–6: TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nKeep torso and limb scale coherent. The purpose is individually movable components; no assembled full characters anywhere."
+  },
+  {
+    "id": "late-biped-02-side-parts",
+    "stage": "parts",
+    "family": "biped",
+    "assetIds": [
+      "w074",
+      "w075",
+      "w079",
+      "w081"
+    ],
+    "rows": [
+      {
+        "assetId": "w074",
+        "view": "side"
+      },
+      {
+        "assetId": "w075",
+        "view": "side"
+      },
+      {
+        "assetId": "w079",
+        "view": "side"
+      },
+      {
+        "assetId": "w081",
+        "view": "side"
+      }
+    ],
+    "layout": "side",
+    "references": [
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-biped-01-turnaround.png",
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t9-biped-01-turnaround.png"
+    ],
+    "referencesSha256": [
+      "22c01d4ac904f68814a2e521b2eb175258ad075fe2b3f10fccfb99e14ce63bf4",
+      "345ecaec222eef868910ce3b6165e802d5af3fe3500c33d9dfdf5c0a762f30e0"
+    ],
+    "promptFile": "prompts/late-biped-02-side-parts.txt",
+    "prompt": "Create ONE TALL PORTRAIT 1:2 rigging PARTS atlas, highest resolution. Exactly 4 equal horizontal ROWS and THREE separated COLUMNS. Component1 x0–48%, component2 x52–74%, component3 x78–99%.\nMatch the referenced identities exactly: chunky readable hand-painted fantasy GAME characters, calm expressive faces, soft painterly shading and clean dark outlines. No photorealism, pixel art, gore, wounds, blood, rotten flesh, huge horror teeth or grotesque anatomy. Components are clean animation cutouts, not severed anatomy. No text, labels, grid lines, floors, ground shadows, scenery, extra components or drawn checkerboard. True transparent background if possible. Keep every component fully isolated with wide blank gutters; no item crosses any cell boundary. Same 15-degree elevated game camera in all views. Do not generate assembled characters or animation frames.\nTHREE COMPONENTS per view: (1) complete head, arms, torso and held equipment with BOTH LEGS REMOVED precisely at the hips; no attached thigh/boot stumps. Shorten ALL coats, capes, skirts and tabards so the hem ends ABOVE THE KNEES, including in BACK view. Preserve an intact closed painted pelvis with natural rounded sockets, never an empty hole. (2) one complete physical LEFT leg from rounded upper-thigh overlap root through knee and ankle to the entire boot/hoof/foot. (3) one complete physical RIGHT leg, same natural length and width. Each leg is ONE connected piece in a nearly straight neutral standing posture, not bent into a squat. Full leg length must plausibly match the torso. Keep the root rounded and textured for smooth overlap.\nREFERENCE 1: row 1 = w074; row 2 = w075; row 3 = w079.\nREFERENCE 2: row 1 = w081; row 2 = w083; row 3 = w086; row 4 = w087.\nROW 1: w074: Upright emerald lizard warrior, cream throat, bronze scale armor, compact spear and shield, two sturdy legs and tail. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nROW 2: w075: Cockatrice with golden rooster head, emerald scaled biped legs, bronze crest and long feathered tail; two walking legs. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nROW 3: w079: Upright crimson dragon warrior in bronze plate, compact broad sword and shield, sturdy armored legs and one tail. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nROW 4: w081: Small red imp, rounded black horns, black leather vest, playful determined face, two sturdy hoof feet and one tail. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nKeep torso and limb scale coherent. The purpose is individually movable components; no assembled full characters anywhere."
+  },
+  {
+    "id": "late-biped-02-front-back-parts",
+    "stage": "parts",
+    "family": "biped",
+    "assetIds": [
+      "w074",
+      "w075",
+      "w079",
+      "w081"
+    ],
+    "rows": [
+      {
+        "assetId": "w074",
+        "view": "front-back"
+      },
+      {
+        "assetId": "w075",
+        "view": "front-back"
+      },
+      {
+        "assetId": "w079",
+        "view": "front-back"
+      },
+      {
+        "assetId": "w081",
+        "view": "front-back"
+      }
+    ],
+    "layout": "front-back",
+    "references": [
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-biped-01-turnaround.png",
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t9-biped-01-turnaround.png"
+    ],
+    "referencesSha256": [
+      "22c01d4ac904f68814a2e521b2eb175258ad075fe2b3f10fccfb99e14ce63bf4",
+      "345ecaec222eef868910ce3b6165e802d5af3fe3500c33d9dfdf5c0a762f30e0"
+    ],
+    "promptFile": "prompts/late-biped-02-front-back-parts.txt",
+    "prompt": "Create ONE SQUARE rigging PARTS atlas, highest resolution. Exactly 4 equal horizontal ROWS and SIX EQUAL separated COLUMNS. Each row is ONE creature: columns1/2/3 its FRONT component1/2/3; columns4/5/6 its BACK component1/2/3. Exactly 24 isolated components total. Equal-width columns with wide blank gutters.\nMatch the referenced identities exactly: chunky readable hand-painted fantasy GAME characters, calm expressive faces, soft painterly shading and clean dark outlines. No photorealism, pixel art, gore, wounds, blood, rotten flesh, huge horror teeth or grotesque anatomy. Components are clean animation cutouts, not severed anatomy. No text, labels, grid lines, floors, ground shadows, scenery, extra components or drawn checkerboard. True transparent background if possible. Keep every component fully isolated with wide blank gutters; no item crosses any cell boundary. Same 15-degree elevated game camera in all views. Do not generate assembled characters or animation frames.\nTHREE COMPONENTS per view: (1) complete head, arms, torso and held equipment with BOTH LEGS REMOVED precisely at the hips; no attached thigh/boot stumps. Shorten ALL coats, capes, skirts and tabards so the hem ends ABOVE THE KNEES, including in BACK view. Preserve an intact closed painted pelvis with natural rounded sockets, never an empty hole. (2) one complete physical LEFT leg from rounded upper-thigh overlap root through knee and ankle to the entire boot/hoof/foot. (3) one complete physical RIGHT leg, same natural length and width. Each leg is ONE connected piece in a nearly straight neutral standing posture, not bent into a squat. Full leg length must plausibly match the torso. Keep the root rounded and textured for smooth overlap.\nREFERENCE 1: row 1 = w074; row 2 = w075; row 3 = w079.\nREFERENCE 2: row 1 = w081; row 2 = w083; row 3 = w086; row 4 = w087.\nROW 1: w074: Upright emerald lizard warrior, cream throat, bronze scale armor, compact spear and shield, two sturdy legs and tail. Columns1–3: TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left. Columns4–6: TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nROW 2: w075: Cockatrice with golden rooster head, emerald scaled biped legs, bronze crest and long feathered tail; two walking legs. Columns1–3: TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left. Columns4–6: TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nROW 3: w079: Upright crimson dragon warrior in bronze plate, compact broad sword and shield, sturdy armored legs and one tail. Columns1–3: TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left. Columns4–6: TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nROW 4: w081: Small red imp, rounded black horns, black leather vest, playful determined face, two sturdy hoof feet and one tail. Columns1–3: TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left. Columns4–6: TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nKeep torso and limb scale coherent. The purpose is individually movable components; no assembled full characters anywhere."
+  },
+  {
+    "id": "late-biped-03-side-parts",
+    "stage": "parts",
+    "family": "biped",
+    "assetIds": [
+      "w083",
+      "w086",
+      "w087",
+      "w089"
+    ],
+    "rows": [
+      {
+        "assetId": "w083",
+        "view": "side"
+      },
+      {
+        "assetId": "w086",
+        "view": "side"
+      },
+      {
+        "assetId": "w087",
+        "view": "side"
+      },
+      {
+        "assetId": "w089",
+        "view": "side"
+      }
+    ],
+    "layout": "side",
+    "references": [
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t9-biped-01-turnaround.png",
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t9-biped-02-turnaround.png"
+    ],
+    "referencesSha256": [
+      "345ecaec222eef868910ce3b6165e802d5af3fe3500c33d9dfdf5c0a762f30e0",
+      "bb2e65f6f134e72e1ecb9effe097631e1cf1bd9dda0b4f8c6e3b16cd9f4ccf75"
+    ],
+    "promptFile": "prompts/late-biped-03-side-parts.txt",
+    "prompt": "Create ONE TALL PORTRAIT 1:2 rigging PARTS atlas, highest resolution. Exactly 4 equal horizontal ROWS and THREE separated COLUMNS. Component1 x0–48%, component2 x52–74%, component3 x78–99%.\nMatch the referenced identities exactly: chunky readable hand-painted fantasy GAME characters, calm expressive faces, soft painterly shading and clean dark outlines. No photorealism, pixel art, gore, wounds, blood, rotten flesh, huge horror teeth or grotesque anatomy. Components are clean animation cutouts, not severed anatomy. No text, labels, grid lines, floors, ground shadows, scenery, extra components or drawn checkerboard. True transparent background if possible. Keep every component fully isolated with wide blank gutters; no item crosses any cell boundary. Same 15-degree elevated game camera in all views. Do not generate assembled characters or animation frames.\nTHREE COMPONENTS per view: (1) complete head, arms, torso and held equipment with BOTH LEGS REMOVED precisely at the hips; no attached thigh/boot stumps. Shorten ALL coats, capes, skirts and tabards so the hem ends ABOVE THE KNEES, including in BACK view. Preserve an intact closed painted pelvis with natural rounded sockets, never an empty hole. (2) one complete physical LEFT leg from rounded upper-thigh overlap root through knee and ankle to the entire boot/hoof/foot. (3) one complete physical RIGHT leg, same natural length and width. Each leg is ONE connected piece in a nearly straight neutral standing posture, not bent into a squat. Full leg length must plausibly match the torso. Keep the root rounded and textured for smooth overlap.\nREFERENCE 1: row 1 = w081; row 2 = w083; row 3 = w086; row 4 = w087.\nREFERENCE 2: row 1 = w089.\nROW 1: w083: Heavy red-brown hell ogre, rounded black horns, dark iron bracers, compact hammer and sturdy boots. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nROW 2: w086: Small crimson imp shaman, rounded black horns, dark hood, brass charms, compact rune staff and sturdy hoof feet. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nROW 3: w087: Upright flame demon with intact charcoal armor, orange decorative rune seams, rounded horned helm and heavy boots. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nROW 4: w089: Tall infernal knight in complete black iron plate with wine-red cloth and orange rune accents, compact sword and boots. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nKeep torso and limb scale coherent. The purpose is individually movable components; no assembled full characters anywhere."
+  },
+  {
+    "id": "late-biped-03-front-back-parts",
+    "stage": "parts",
+    "family": "biped",
+    "assetIds": [
+      "w083",
+      "w086",
+      "w087",
+      "w089"
+    ],
+    "rows": [
+      {
+        "assetId": "w083",
+        "view": "front-back"
+      },
+      {
+        "assetId": "w086",
+        "view": "front-back"
+      },
+      {
+        "assetId": "w087",
+        "view": "front-back"
+      },
+      {
+        "assetId": "w089",
+        "view": "front-back"
+      }
+    ],
+    "layout": "front-back",
+    "references": [
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t9-biped-01-turnaround.png",
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t9-biped-02-turnaround.png"
+    ],
+    "referencesSha256": [
+      "345ecaec222eef868910ce3b6165e802d5af3fe3500c33d9dfdf5c0a762f30e0",
+      "bb2e65f6f134e72e1ecb9effe097631e1cf1bd9dda0b4f8c6e3b16cd9f4ccf75"
+    ],
+    "promptFile": "prompts/late-biped-03-front-back-parts.txt",
+    "prompt": "Create ONE SQUARE rigging PARTS atlas, highest resolution. Exactly 4 equal horizontal ROWS and SIX EQUAL separated COLUMNS. Each row is ONE creature: columns1/2/3 its FRONT component1/2/3; columns4/5/6 its BACK component1/2/3. Exactly 24 isolated components total. Equal-width columns with wide blank gutters.\nMatch the referenced identities exactly: chunky readable hand-painted fantasy GAME characters, calm expressive faces, soft painterly shading and clean dark outlines. No photorealism, pixel art, gore, wounds, blood, rotten flesh, huge horror teeth or grotesque anatomy. Components are clean animation cutouts, not severed anatomy. No text, labels, grid lines, floors, ground shadows, scenery, extra components or drawn checkerboard. True transparent background if possible. Keep every component fully isolated with wide blank gutters; no item crosses any cell boundary. Same 15-degree elevated game camera in all views. Do not generate assembled characters or animation frames.\nTHREE COMPONENTS per view: (1) complete head, arms, torso and held equipment with BOTH LEGS REMOVED precisely at the hips; no attached thigh/boot stumps. Shorten ALL coats, capes, skirts and tabards so the hem ends ABOVE THE KNEES, including in BACK view. Preserve an intact closed painted pelvis with natural rounded sockets, never an empty hole. (2) one complete physical LEFT leg from rounded upper-thigh overlap root through knee and ankle to the entire boot/hoof/foot. (3) one complete physical RIGHT leg, same natural length and width. Each leg is ONE connected piece in a nearly straight neutral standing posture, not bent into a squat. Full leg length must plausibly match the torso. Keep the root rounded and textured for smooth overlap.\nREFERENCE 1: row 1 = w081; row 2 = w083; row 3 = w086; row 4 = w087.\nREFERENCE 2: row 1 = w089.\nROW 1: w083: Heavy red-brown hell ogre, rounded black horns, dark iron bracers, compact hammer and sturdy boots. Columns1–3: TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left. Columns4–6: TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nROW 2: w086: Small crimson imp shaman, rounded black horns, dark hood, brass charms, compact rune staff and sturdy hoof feet. Columns1–3: TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left. Columns4–6: TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nROW 3: w087: Upright flame demon with intact charcoal armor, orange decorative rune seams, rounded horned helm and heavy boots. Columns1–3: TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left. Columns4–6: TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nROW 4: w089: Tall infernal knight in complete black iron plate with wine-red cloth and orange rune accents, compact sword and boots. Columns1–3: TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left. Columns4–6: TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nKeep torso and limb scale coherent. The purpose is individually movable components; no assembled full characters anywhere."
+  },
+  {
+    "id": "late-biped-04-side-parts",
+    "stage": "parts",
+    "family": "biped",
+    "assetIds": [
+      "w093",
+      "w094",
+      "w095",
+      "w097"
+    ],
+    "rows": [
+      {
+        "assetId": "w093",
+        "view": "side"
+      },
+      {
+        "assetId": "w094",
+        "view": "side"
+      },
+      {
+        "assetId": "w095",
+        "view": "side"
+      },
+      {
+        "assetId": "w097",
+        "view": "side"
+      }
+    ],
+    "layout": "side",
+    "references": [
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t10-biped-01-turnaround.png"
+    ],
+    "referencesSha256": [
+      "2bdcfad496f2a225fb0b7a02e542b68dc3dca5ae97920faf459e19c13b4ef8a1"
+    ],
+    "promptFile": "prompts/late-biped-04-side-parts.txt",
+    "prompt": "Create ONE TALL PORTRAIT 1:2 rigging PARTS atlas, highest resolution. Exactly 4 equal horizontal ROWS and THREE separated COLUMNS. Component1 x0–48%, component2 x52–74%, component3 x78–99%.\nMatch the referenced identities exactly: chunky readable hand-painted fantasy GAME characters, calm expressive faces, soft painterly shading and clean dark outlines. No photorealism, pixel art, gore, wounds, blood, rotten flesh, huge horror teeth or grotesque anatomy. Components are clean animation cutouts, not severed anatomy. No text, labels, grid lines, floors, ground shadows, scenery, extra components or drawn checkerboard. True transparent background if possible. Keep every component fully isolated with wide blank gutters; no item crosses any cell boundary. Same 15-degree elevated game camera in all views. Do not generate assembled characters or animation frames.\nTHREE COMPONENTS per view: (1) complete head, arms, torso and held equipment with BOTH LEGS REMOVED precisely at the hips; no attached thigh/boot stumps. Shorten ALL coats, capes, skirts and tabards so the hem ends ABOVE THE KNEES, including in BACK view. Preserve an intact closed painted pelvis with natural rounded sockets, never an empty hole. (2) one complete physical LEFT leg from rounded upper-thigh overlap root through knee and ankle to the entire boot/hoof/foot. (3) one complete physical RIGHT leg, same natural length and width. Each leg is ONE connected piece in a nearly straight neutral standing posture, not bent into a squat. Full leg length must plausibly match the torso. Keep the root rounded and textured for smooth overlap.\nREFERENCE 1: row 1 = w093; row 2 = w094; row 3 = w095; row 4 = w097.\nROW 1: w093: Huge upright midnight-blue abyss giant, intact skin, violet rune armor, large bracers and solid boots. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nROW 2: w094: Broad doom knight in complete obsidian armor, violet cloth, star-like visor, compact black blade and heavy boots. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nROW 3: w095: Lean shadow assassin in midnight-blue hood and violet scarf, mask with gold eye slit, two short daggers and quiet boots. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nROW 4: w097: Heavy void golem with floating but connected obsidian blocks, contained violet core, rounded fists and two block feet. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nKeep torso and limb scale coherent. The purpose is individually movable components; no assembled full characters anywhere."
+  },
+  {
+    "id": "late-biped-04-front-back-parts",
+    "stage": "parts",
+    "family": "biped",
+    "assetIds": [
+      "w093",
+      "w094",
+      "w095",
+      "w097"
+    ],
+    "rows": [
+      {
+        "assetId": "w093",
+        "view": "front-back"
+      },
+      {
+        "assetId": "w094",
+        "view": "front-back"
+      },
+      {
+        "assetId": "w095",
+        "view": "front-back"
+      },
+      {
+        "assetId": "w097",
+        "view": "front-back"
+      }
+    ],
+    "layout": "front-back",
+    "references": [
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t10-biped-01-turnaround.png"
+    ],
+    "referencesSha256": [
+      "2bdcfad496f2a225fb0b7a02e542b68dc3dca5ae97920faf459e19c13b4ef8a1"
+    ],
+    "promptFile": "prompts/late-biped-04-front-back-parts.txt",
+    "prompt": "Create ONE SQUARE rigging PARTS atlas, highest resolution. Exactly 4 equal horizontal ROWS and SIX EQUAL separated COLUMNS. Each row is ONE creature: columns1/2/3 its FRONT component1/2/3; columns4/5/6 its BACK component1/2/3. Exactly 24 isolated components total. Equal-width columns with wide blank gutters.\nMatch the referenced identities exactly: chunky readable hand-painted fantasy GAME characters, calm expressive faces, soft painterly shading and clean dark outlines. No photorealism, pixel art, gore, wounds, blood, rotten flesh, huge horror teeth or grotesque anatomy. Components are clean animation cutouts, not severed anatomy. No text, labels, grid lines, floors, ground shadows, scenery, extra components or drawn checkerboard. True transparent background if possible. Keep every component fully isolated with wide blank gutters; no item crosses any cell boundary. Same 15-degree elevated game camera in all views. Do not generate assembled characters or animation frames.\nTHREE COMPONENTS per view: (1) complete head, arms, torso and held equipment with BOTH LEGS REMOVED precisely at the hips; no attached thigh/boot stumps. Shorten ALL coats, capes, skirts and tabards so the hem ends ABOVE THE KNEES, including in BACK view. Preserve an intact closed painted pelvis with natural rounded sockets, never an empty hole. (2) one complete physical LEFT leg from rounded upper-thigh overlap root through knee and ankle to the entire boot/hoof/foot. (3) one complete physical RIGHT leg, same natural length and width. Each leg is ONE connected piece in a nearly straight neutral standing posture, not bent into a squat. Full leg length must plausibly match the torso. Keep the root rounded and textured for smooth overlap.\nREFERENCE 1: row 1 = w093; row 2 = w094; row 3 = w095; row 4 = w097.\nROW 1: w093: Huge upright midnight-blue abyss giant, intact skin, violet rune armor, large bracers and solid boots. Columns1–3: TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left. Columns4–6: TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nROW 2: w094: Broad doom knight in complete obsidian armor, violet cloth, star-like visor, compact black blade and heavy boots. Columns1–3: TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left. Columns4–6: TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nROW 3: w095: Lean shadow assassin in midnight-blue hood and violet scarf, mask with gold eye slit, two short daggers and quiet boots. Columns1–3: TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left. Columns4–6: TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nROW 4: w097: Heavy void golem with floating but connected obsidian blocks, contained violet core, rounded fists and two block feet. Columns1–3: TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left. Columns4–6: TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nKeep torso and limb scale coherent. The purpose is individually movable components; no assembled full characters anywhere."
+  },
+  {
+    "id": "late-biped-05-all-parts",
+    "stage": "parts",
+    "family": "biped",
+    "assetIds": [
+      "w099",
+      "w101"
+    ],
+    "rows": [
+      {
+        "assetId": "w099",
+        "view": "side"
+      },
+      {
+        "assetId": "w099",
+        "view": "front"
+      },
+      {
+        "assetId": "w099",
+        "view": "back"
+      },
+      {
+        "assetId": "w101",
+        "view": "side"
+      },
+      {
+        "assetId": "w101",
+        "view": "front"
+      },
+      {
+        "assetId": "w101",
+        "view": "back"
+      }
+    ],
+    "layout": "all",
+    "references": [
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t10-biped-02-turnaround.png"
+    ],
+    "referencesSha256": [
+      "7b1d337892d68b0dc7f98be8a113273fbaadb92acdef324a0b90ab3be35f9258"
+    ],
+    "promptFile": "prompts/late-biped-05-all-parts.txt",
+    "prompt": "Create ONE TALL PORTRAIT 1:2 rigging PARTS atlas, highest resolution. Exactly 6 equal horizontal ROWS and THREE separated COLUMNS. In each row, component1 at x0–48%, component2 x52–74%, component3 x78–99%.\nMatch the referenced identities exactly: chunky readable hand-painted fantasy GAME characters, calm expressive faces, soft painterly shading and clean dark outlines. No photorealism, pixel art, gore, wounds, blood, rotten flesh, huge horror teeth or grotesque anatomy. Components are clean animation cutouts, not severed anatomy. No text, labels, grid lines, floors, ground shadows, scenery, extra components or drawn checkerboard. True transparent background if possible. Keep every component fully isolated with wide blank gutters; no item crosses any cell boundary. Same 15-degree elevated game camera in all views. Do not generate assembled characters or animation frames.\nTHREE COMPONENTS per view: (1) complete head, arms, torso and held equipment with BOTH LEGS REMOVED precisely at the hips; no attached thigh/boot stumps. Shorten ALL coats, capes, skirts and tabards so the hem ends ABOVE THE KNEES, including in BACK view. Preserve an intact closed painted pelvis with natural rounded sockets, never an empty hole. (2) one complete physical LEFT leg from rounded upper-thigh overlap root through knee and ankle to the entire boot/hoof/foot. (3) one complete physical RIGHT leg, same natural length and width. Each leg is ONE connected piece in a nearly straight neutral standing posture, not bent into a squat. Full leg length must plausibly match the torso. Keep the root rounded and textured for smooth overlap.\nREFERENCE 1: row 1 = w099; row 2 = w101.\nROW 1: w099: Huge obsidian colossus, complete black glass armor with broad purple facets, gold runes, massive fists and pillar legs. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nROW 2: w099: Huge obsidian colossus, complete black glass armor with broad purple facets, gold runes, massive fists and pillar legs. TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left.\nROW 3: w099: Huge obsidian colossus, complete black glass armor with broad purple facets, gold runes, massive fists and pillar legs. TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nROW 4: w101: Upright last herald wearing midnight-blue cloak and violet armor, expressive masked face, small star staff and solid boots. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nROW 5: w101: Upright last herald wearing midnight-blue cloak and violet armor, expressive masked face, small star staff and solid boots. TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left.\nROW 6: w101: Upright last herald wearing midnight-blue cloak and violet armor, expressive masked face, small star staff and solid boots. TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nKeep torso and limb scale coherent. The purpose is individually movable components; no assembled full characters anywhere."
+  },
+  {
+    "id": "late-boss-biped-01-side-parts",
+    "stage": "parts",
+    "family": "biped",
+    "assetIds": [
+      "b090",
+      "b090-2"
+    ],
+    "rows": [
+      {
+        "assetId": "b090",
+        "view": "side"
+      },
+      {
+        "assetId": "b090-2",
+        "view": "side"
+      }
+    ],
+    "layout": "side",
+    "references": [
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t9-boss-01-turnaround.png"
+    ],
+    "referencesSha256": [
+      "cfd78100e29ddaa4977ab8c11e94dde54aa162bd6214ae03e6c08fb98a812d46"
+    ],
+    "promptFile": "prompts/late-boss-biped-01-side-parts.txt",
+    "prompt": "Create ONE TALL PORTRAIT 2:3 rigging PARTS atlas, highest resolution. Exactly 2 equal horizontal ROWS and THREE separated COLUMNS. Component1 x0–48%, component2 x52–74%, component3 x78–99%.\nMatch the referenced identities exactly: chunky readable hand-painted fantasy GAME characters, calm expressive faces, soft painterly shading and clean dark outlines. No photorealism, pixel art, gore, wounds, blood, rotten flesh, huge horror teeth or grotesque anatomy. Components are clean animation cutouts, not severed anatomy. No text, labels, grid lines, floors, ground shadows, scenery, extra components or drawn checkerboard. True transparent background if possible. Keep every component fully isolated with wide blank gutters; no item crosses any cell boundary. Same 15-degree elevated game camera in all views. Do not generate assembled characters or animation frames.\nTHREE COMPONENTS per view: (1) complete head, arms, torso and held equipment with BOTH LEGS REMOVED precisely at the hips; no attached thigh/boot stumps. Shorten ALL coats, capes, skirts and tabards so the hem ends ABOVE THE KNEES, including in BACK view. Preserve an intact closed painted pelvis with natural rounded sockets, never an empty hole. (2) one complete physical LEFT leg from rounded upper-thigh overlap root through knee and ankle to the entire boot/hoof/foot. (3) one complete physical RIGHT leg, same natural length and width. Each leg is ONE connected piece in a nearly straight neutral standing posture, not bent into a squat. Full leg length must plausibly match the torso. Keep the root rounded and textured for smooth overlap.\nREFERENCE 1: row 1 = b090; row 2 = b090-2.\nROW 1: b090: Imposing upright crimson demon king in complete black-gold armor, rounded crown horns, burgundy cape above knees, solid armored legs. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nROW 2: b090-2: Huge upright charcoal pit demon, broad red shoulders, rounded black horns, heavy bronze bracers and sturdy hoof feet. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nKeep torso and limb scale coherent. The purpose is individually movable components; no assembled full characters anywhere."
+  },
+  {
+    "id": "late-boss-biped-01-front-back-parts",
+    "stage": "parts",
+    "family": "biped",
+    "assetIds": [
+      "b090",
+      "b090-2"
+    ],
+    "rows": [
+      {
+        "assetId": "b090",
+        "view": "front-back"
+      },
+      {
+        "assetId": "b090-2",
+        "view": "front-back"
+      }
+    ],
+    "layout": "front-back",
+    "references": [
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t9-boss-01-turnaround.png"
+    ],
+    "referencesSha256": [
+      "cfd78100e29ddaa4977ab8c11e94dde54aa162bd6214ae03e6c08fb98a812d46"
+    ],
+    "promptFile": "prompts/late-boss-biped-01-front-back-parts.txt",
+    "prompt": "Create ONE LANDSCAPE 3:2 rigging PARTS atlas, highest resolution. Exactly 2 equal horizontal ROWS and SIX EQUAL separated COLUMNS. Each row is ONE creature: columns1/2/3 its FRONT component1/2/3; columns4/5/6 its BACK component1/2/3. Exactly 12 isolated components total. Equal-width columns with wide blank gutters.\nMatch the referenced identities exactly: chunky readable hand-painted fantasy GAME characters, calm expressive faces, soft painterly shading and clean dark outlines. No photorealism, pixel art, gore, wounds, blood, rotten flesh, huge horror teeth or grotesque anatomy. Components are clean animation cutouts, not severed anatomy. No text, labels, grid lines, floors, ground shadows, scenery, extra components or drawn checkerboard. True transparent background if possible. Keep every component fully isolated with wide blank gutters; no item crosses any cell boundary. Same 15-degree elevated game camera in all views. Do not generate assembled characters or animation frames.\nTHREE COMPONENTS per view: (1) complete head, arms, torso and held equipment with BOTH LEGS REMOVED precisely at the hips; no attached thigh/boot stumps. Shorten ALL coats, capes, skirts and tabards so the hem ends ABOVE THE KNEES, including in BACK view. Preserve an intact closed painted pelvis with natural rounded sockets, never an empty hole. (2) one complete physical LEFT leg from rounded upper-thigh overlap root through knee and ankle to the entire boot/hoof/foot. (3) one complete physical RIGHT leg, same natural length and width. Each leg is ONE connected piece in a nearly straight neutral standing posture, not bent into a squat. Full leg length must plausibly match the torso. Keep the root rounded and textured for smooth overlap.\nREFERENCE 1: row 1 = b090; row 2 = b090-2.\nROW 1: b090: Imposing upright crimson demon king in complete black-gold armor, rounded crown horns, burgundy cape above knees, solid armored legs. Columns1–3: TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left. Columns4–6: TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nROW 2: b090-2: Huge upright charcoal pit demon, broad red shoulders, rounded black horns, heavy bronze bracers and sturdy hoof feet. Columns1–3: TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left. Columns4–6: TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nKeep torso and limb scale coherent. The purpose is individually movable components; no assembled full characters anywhere."
+  },
+  {
+    "id": "late-boss-biped-02-all-parts",
+    "stage": "parts",
+    "family": "biped",
+    "assetIds": [
+      "b100"
+    ],
+    "rows": [
+      {
+        "assetId": "b100",
+        "view": "side"
+      },
+      {
+        "assetId": "b100",
+        "view": "front"
+      },
+      {
+        "assetId": "b100",
+        "view": "back"
+      }
+    ],
+    "layout": "all",
+    "references": [
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t10-boss-01-turnaround.png"
+    ],
+    "referencesSha256": [
+      "68cc0ce5232677188b3df8d07c373406dab9f72af782627d5ea15b90cf951dda"
+    ],
+    "promptFile": "prompts/late-boss-biped-02-all-parts.txt",
+    "prompt": "Create ONE TALL PORTRAIT 1:2 rigging PARTS atlas, highest resolution. Exactly 3 equal horizontal ROWS and THREE separated COLUMNS. In each row, component1 at x0–48%, component2 x52–74%, component3 x78–99%.\nMatch the referenced identities exactly: chunky readable hand-painted fantasy GAME characters, calm expressive faces, soft painterly shading and clean dark outlines. No photorealism, pixel art, gore, wounds, blood, rotten flesh, huge horror teeth or grotesque anatomy. Components are clean animation cutouts, not severed anatomy. No text, labels, grid lines, floors, ground shadows, scenery, extra components or drawn checkerboard. True transparent background if possible. Keep every component fully isolated with wide blank gutters; no item crosses any cell boundary. Same 15-degree elevated game camera in all views. Do not generate assembled characters or animation frames.\nTHREE COMPONENTS per view: (1) complete head, arms, torso and held equipment with BOTH LEGS REMOVED precisely at the hips; no attached thigh/boot stumps. Shorten ALL coats, capes, skirts and tabards so the hem ends ABOVE THE KNEES, including in BACK view. Preserve an intact closed painted pelvis with natural rounded sockets, never an empty hole. (2) one complete physical LEFT leg from rounded upper-thigh overlap root through knee and ankle to the entire boot/hoof/foot. (3) one complete physical RIGHT leg, same natural length and width. Each leg is ONE connected piece in a nearly straight neutral standing posture, not bent into a squat. Full leg length must plausibly match the torso. Keep the root rounded and textured for smooth overlap.\nREFERENCE 1: row 1 = b100; row 2 = b100-2.\nROW 1: b100: Doom sovereign in complete obsidian-violet armor with gold crown, star visor, midnight cape above knees, compact scepter and solid boots. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nROW 2: b100: Doom sovereign in complete obsidian-violet armor with gold crown, star visor, midnight cape above knees, compact scepter and solid boots. TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left.\nROW 3: b100: Doom sovereign in complete obsidian-violet armor with gold crown, star visor, midnight cape above knees, compact scepter and solid boots. TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nKeep torso and limb scale coherent. The purpose is individually movable components; no assembled full characters anywhere."
+  },
+  {
+    "id": "late-quad-01-side-parts",
+    "stage": "parts",
+    "family": "quad",
+    "assetIds": [
+      "w067",
+      "w071",
+      "w073",
+      "w078"
+    ],
+    "rows": [
+      {
+        "assetId": "w067",
+        "view": "side"
+      },
+      {
+        "assetId": "w071",
+        "view": "side"
+      },
+      {
+        "assetId": "w073",
+        "view": "side"
+      },
+      {
+        "assetId": "w078",
+        "view": "side"
+      }
+    ],
+    "layout": "side",
+    "references": [
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t7-quad-01-turnaround.png",
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-t9-mixed-01-turnaround.png",
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-quad-01-turnaround.png"
+    ],
+    "referencesSha256": [
+      "007a181fac474498147c36041267f52e61d55d923c5cb328722ece73fabb578d",
+      "9f8710b17528638f5dc76ac92b78ba4cd64cced2326ea94cbdad3488359c912c",
+      "b3cf277ca4ada97a1030a60717c09f46cc3d725ced602d05e70d49946b55106f"
+    ],
+    "promptFile": "prompts/late-quad-01-side-parts.txt",
+    "prompt": "Create ONE TALL PORTRAIT 1:2 rigging PARTS atlas, highest resolution. Exactly 4 equal horizontal ROWS and THREE separated COLUMNS. Component1 x0–48%, component2 x52–74%, component3 x78–99%.\nMatch the referenced identities exactly: chunky readable hand-painted fantasy GAME characters, calm expressive faces, soft painterly shading and clean dark outlines. No photorealism, pixel art, gore, wounds, blood, rotten flesh, huge horror teeth or grotesque anatomy. Components are clean animation cutouts, not severed anatomy. No text, labels, grid lines, floors, ground shadows, scenery, extra components or drawn checkerboard. True transparent background if possible. Keep every component fully isolated with wide blank gutters; no item crosses any cell boundary. Same 15-degree elevated game camera in all views. Do not generate assembled characters or animation frames.\nTHREE COMPONENTS per view: (1) head, neck, complete HORIZONTAL QUADRUPED torso from shoulders through full rump, costume and exactly one tail, with ALL FOUR LEGS REMOVED at their anatomical roots. Keep the full furry/scaled flank, visible shoulder and wide pelvis; never a human upright bust or front-only chest. Closed natural painted underside, no holes/stumps. (2) one complete FORELEG with a rounded shoulder root, elbow, ankle and full paw/hoof, in nearly straight neutral stance. (3) one complete HINDLEG with a wide rounded haunch root, natural forward knee then hock, ankle and full paw/hoof. Do not mistake hock for knee or make a second foreleg. All parts share anatomical character scale and overlap texture. Front/back limbs must face directly front/back, not side.\nREFERENCE 1: row 1 = w067.\nREFERENCE 2: row 1 = w071; row 2 = w077; row 3 = w082; row 4 = w084.\nREFERENCE 3: row 1 = w073; row 2 = w078.\nROW 1: w067: Small midnight-blue wizard cat with amber eyes, violet scarf, brass moon charm and one intact tail, four paws. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nROW 2: w071: Sturdy red-brown drake, cream belly, small bronze horns, four strong legs, folded decorative winglets and one plated tail. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nROW 3: w073: Woolly brown mammoth with cream fur highlights, two rounded ivory tusks, bronze harness and four pillar legs. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nROW 4: w078: Huge stocky blue-gray behemoth with bronze plated shoulders, small ivory horns, four massive paws and short tail. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nKeep torso and limb scale coherent. The purpose is individually movable components; no assembled full characters anywhere."
+  },
+  {
+    "id": "late-quad-01-front-back-parts",
+    "stage": "parts",
+    "family": "quad",
+    "assetIds": [
+      "w067",
+      "w071",
+      "w073",
+      "w078"
+    ],
+    "rows": [
+      {
+        "assetId": "w067",
+        "view": "front-back"
+      },
+      {
+        "assetId": "w071",
+        "view": "front-back"
+      },
+      {
+        "assetId": "w073",
+        "view": "front-back"
+      },
+      {
+        "assetId": "w078",
+        "view": "front-back"
+      }
+    ],
+    "layout": "front-back",
+    "references": [
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t7-quad-01-turnaround.png",
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-t9-mixed-01-turnaround.png",
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-quad-01-turnaround.png"
+    ],
+    "referencesSha256": [
+      "007a181fac474498147c36041267f52e61d55d923c5cb328722ece73fabb578d",
+      "9f8710b17528638f5dc76ac92b78ba4cd64cced2326ea94cbdad3488359c912c",
+      "b3cf277ca4ada97a1030a60717c09f46cc3d725ced602d05e70d49946b55106f"
+    ],
+    "promptFile": "prompts/late-quad-01-front-back-parts.txt",
+    "prompt": "Create ONE SQUARE rigging PARTS atlas, highest resolution. Exactly 4 equal horizontal ROWS and SIX EQUAL separated COLUMNS. Each row is ONE creature: columns1/2/3 its FRONT component1/2/3; columns4/5/6 its BACK component1/2/3. Exactly 24 isolated components total. Equal-width columns with wide blank gutters.\nMatch the referenced identities exactly: chunky readable hand-painted fantasy GAME characters, calm expressive faces, soft painterly shading and clean dark outlines. No photorealism, pixel art, gore, wounds, blood, rotten flesh, huge horror teeth or grotesque anatomy. Components are clean animation cutouts, not severed anatomy. No text, labels, grid lines, floors, ground shadows, scenery, extra components or drawn checkerboard. True transparent background if possible. Keep every component fully isolated with wide blank gutters; no item crosses any cell boundary. Same 15-degree elevated game camera in all views. Do not generate assembled characters or animation frames.\nTHREE COMPONENTS per view: (1) head, neck, complete HORIZONTAL QUADRUPED torso from shoulders through full rump, costume and exactly one tail, with ALL FOUR LEGS REMOVED at their anatomical roots. Keep the full furry/scaled flank, visible shoulder and wide pelvis; never a human upright bust or front-only chest. Closed natural painted underside, no holes/stumps. (2) one complete FORELEG with a rounded shoulder root, elbow, ankle and full paw/hoof, in nearly straight neutral stance. (3) one complete HINDLEG with a wide rounded haunch root, natural forward knee then hock, ankle and full paw/hoof. Do not mistake hock for knee or make a second foreleg. All parts share anatomical character scale and overlap texture. Front/back limbs must face directly front/back, not side.\nREFERENCE 1: row 1 = w067.\nREFERENCE 2: row 1 = w071; row 2 = w077; row 3 = w082; row 4 = w084.\nREFERENCE 3: row 1 = w073; row 2 = w078.\nROW 1: w067: Small midnight-blue wizard cat with amber eyes, violet scarf, brass moon charm and one intact tail, four paws. Columns1–3: TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left. Columns4–6: TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nROW 2: w071: Sturdy red-brown drake, cream belly, small bronze horns, four strong legs, folded decorative winglets and one plated tail. Columns1–3: TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left. Columns4–6: TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nROW 3: w073: Woolly brown mammoth with cream fur highlights, two rounded ivory tusks, bronze harness and four pillar legs. Columns1–3: TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left. Columns4–6: TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nROW 4: w078: Huge stocky blue-gray behemoth with bronze plated shoulders, small ivory horns, four massive paws and short tail. Columns1–3: TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left. Columns4–6: TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nKeep torso and limb scale coherent. The purpose is individually movable components; no assembled full characters anywhere."
+  },
+  {
+    "id": "late-quad-02-side-parts",
+    "stage": "parts",
+    "family": "quad",
+    "assetIds": [
+      "w082",
+      "b080-2"
+    ],
+    "rows": [
+      {
+        "assetId": "w082",
+        "view": "side"
+      },
+      {
+        "assetId": "b080-2",
+        "view": "side"
+      }
+    ],
+    "layout": "side",
+    "references": [
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-t9-mixed-01-turnaround.png",
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-boss-01-turnaround.png"
+    ],
+    "referencesSha256": [
+      "9f8710b17528638f5dc76ac92b78ba4cd64cced2326ea94cbdad3488359c912c",
+      "d1beb1dbc4fb71a3c8f652834489d2d6597017e61ea1bf4c6ac5fd99a6a8b3a1"
+    ],
+    "promptFile": "prompts/late-quad-02-side-parts.txt",
+    "prompt": "Create ONE TALL PORTRAIT 2:3 rigging PARTS atlas, highest resolution. Exactly 2 equal horizontal ROWS and THREE separated COLUMNS. Component1 x0–48%, component2 x52–74%, component3 x78–99%.\nMatch the referenced identities exactly: chunky readable hand-painted fantasy GAME characters, calm expressive faces, soft painterly shading and clean dark outlines. No photorealism, pixel art, gore, wounds, blood, rotten flesh, huge horror teeth or grotesque anatomy. Components are clean animation cutouts, not severed anatomy. No text, labels, grid lines, floors, ground shadows, scenery, extra components or drawn checkerboard. True transparent background if possible. Keep every component fully isolated with wide blank gutters; no item crosses any cell boundary. Same 15-degree elevated game camera in all views. Do not generate assembled characters or animation frames.\nTHREE COMPONENTS per view: (1) head, neck, complete HORIZONTAL QUADRUPED torso from shoulders through full rump, costume and exactly one tail, with ALL FOUR LEGS REMOVED at their anatomical roots. Keep the full furry/scaled flank, visible shoulder and wide pelvis; never a human upright bust or front-only chest. Closed natural painted underside, no holes/stumps. (2) one complete FORELEG with a rounded shoulder root, elbow, ankle and full paw/hoof, in nearly straight neutral stance. (3) one complete HINDLEG with a wide rounded haunch root, natural forward knee then hock, ankle and full paw/hoof. Do not mistake hock for knee or make a second foreleg. All parts share anatomical character scale and overlap texture. Front/back limbs must face directly front/back, not side.\nREFERENCE 1: row 1 = w071; row 2 = w077; row 3 = w082; row 4 = w084.\nREFERENCE 2: row 1 = b080; row 2 = b080-2.\nROW 1: w082: Charcoal hellhound with wine-red mane, ember eyes, brass collar, four strong paws and intact full tail. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nROW 2: b080-2: Emerald hydra with exactly three expressive heads, bronze collar rings, one large quadruped body, four legs and one tail. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nKeep torso and limb scale coherent. The purpose is individually movable components; no assembled full characters anywhere.\nCRITICAL: The body object is EXACTLY ONE integrated head-neck-trunk-rump-tail, NEVER a separate head and torso. There are ZERO legs, feet, paws or stumps attached to the torso. All four walking legs are removed. Each view has only THREE objects (integrated body, foreleg, hindleg); do not output a fourth head portrait. Closed intact furry/scaled torso underside, no sitting animal. Hydra has exactly three heads connected to one body."
+  },
+  {
+    "id": "late-quad-02-front-back-parts",
+    "stage": "parts",
+    "family": "quad",
+    "assetIds": [
+      "w082",
+      "b080-2"
+    ],
+    "rows": [
+      {
+        "assetId": "w082",
+        "view": "front-back"
+      },
+      {
+        "assetId": "b080-2",
+        "view": "front-back"
+      }
+    ],
+    "layout": "front-back",
+    "references": [
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-t9-mixed-01-turnaround.png",
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-boss-01-turnaround.png"
+    ],
+    "referencesSha256": [
+      "9f8710b17528638f5dc76ac92b78ba4cd64cced2326ea94cbdad3488359c912c",
+      "d1beb1dbc4fb71a3c8f652834489d2d6597017e61ea1bf4c6ac5fd99a6a8b3a1"
+    ],
+    "promptFile": "prompts/late-quad-02-front-back-parts.txt",
+    "prompt": "Create ONE LANDSCAPE 3:2 rigging PARTS atlas, highest resolution. Exactly 2 equal horizontal ROWS and SIX EQUAL separated COLUMNS. Each row is ONE creature: columns1/2/3 its FRONT component1/2/3; columns4/5/6 its BACK component1/2/3. Exactly 12 isolated components total. Equal-width columns with wide blank gutters.\nMatch the referenced identities exactly: chunky readable hand-painted fantasy GAME characters, calm expressive faces, soft painterly shading and clean dark outlines. No photorealism, pixel art, gore, wounds, blood, rotten flesh, huge horror teeth or grotesque anatomy. Components are clean animation cutouts, not severed anatomy. No text, labels, grid lines, floors, ground shadows, scenery, extra components or drawn checkerboard. True transparent background if possible. Keep every component fully isolated with wide blank gutters; no item crosses any cell boundary. Same 15-degree elevated game camera in all views. Do not generate assembled characters or animation frames.\nTHREE COMPONENTS per view: (1) head, neck, complete HORIZONTAL QUADRUPED torso from shoulders through full rump, costume and exactly one tail, with ALL FOUR LEGS REMOVED at their anatomical roots. Keep the full furry/scaled flank, visible shoulder and wide pelvis; never a human upright bust or front-only chest. Closed natural painted underside, no holes/stumps. (2) one complete FORELEG with a rounded shoulder root, elbow, ankle and full paw/hoof, in nearly straight neutral stance. (3) one complete HINDLEG with a wide rounded haunch root, natural forward knee then hock, ankle and full paw/hoof. Do not mistake hock for knee or make a second foreleg. All parts share anatomical character scale and overlap texture. Front/back limbs must face directly front/back, not side.\nREFERENCE 1: row 1 = w071; row 2 = w077; row 3 = w082; row 4 = w084.\nREFERENCE 2: row 1 = b080; row 2 = b080-2.\nROW 1: w082: Charcoal hellhound with wine-red mane, ember eyes, brass collar, four strong paws and intact full tail. Columns1–3: TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left. Columns4–6: TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nROW 2: b080-2: Emerald hydra with exactly three expressive heads, bronze collar rings, one large quadruped body, four legs and one tail. Columns1–3: TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left. Columns4–6: TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nKeep torso and limb scale coherent. The purpose is individually movable components; no assembled full characters anywhere.\nCRITICAL: The body object is EXACTLY ONE integrated head-neck-trunk-rump-tail, NEVER a separate head and torso. There are ZERO legs, feet, paws or stumps attached to the torso. All four walking legs are removed. Each view has only THREE objects (integrated body, foreleg, hindleg); do not output a fourth head portrait. Closed intact furry/scaled torso underside, no sitting animal. Hydra has exactly three heads connected to one body."
+  },
+  {
+    "id": "late-flight-01-side-parts",
+    "stage": "parts",
+    "family": "flight",
+    "assetIds": [
+      "w062",
+      "w064",
+      "w068",
+      "w096"
+    ],
+    "rows": [
+      {
+        "assetId": "w062",
+        "view": "side"
+      },
+      {
+        "assetId": "w064",
+        "view": "side"
+      },
+      {
+        "assetId": "w068",
+        "view": "side"
+      },
+      {
+        "assetId": "w096",
+        "view": "side"
+      }
+    ],
+    "layout": "side",
+    "references": [
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t7-insect-wings-01-turnaround.png",
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t7-bird-01-turnaround.png",
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t7-book-01-turnaround.png",
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t10-bird-01-turnaround.png"
+    ],
+    "referencesSha256": [
+      "def2a6ef01a6f614a76f28c4a4a8103537a57cf64bd18b49521cd52ca55ff841",
+      "7b783a3edefe029c61e5c15b0c7c9567cc664a19cecdc6154e42807afe116b89",
+      "429be7ae30564b329c3badc349c651bc73339b54259ebb1e85b00840df2a7b10",
+      "b88efa1b438229de5a578829a3c8567cc60e46854d1accde8858243dd83c7bdf"
+    ],
+    "promptFile": "prompts/late-flight-01-side-parts.txt",
+    "prompt": "Create ONE TALL PORTRAIT 1:2 rigging PARTS atlas, highest resolution. Exactly 4 equal horizontal ROWS and THREE separated COLUMNS. Component1 x0–48%, component2 x52–74%, component3 x78–99%.\nMatch the referenced identities exactly: chunky readable hand-painted fantasy GAME characters, calm expressive faces, soft painterly shading and clean dark outlines. No photorealism, pixel art, gore, wounds, blood, rotten flesh, huge horror teeth or grotesque anatomy. Components are clean animation cutouts, not severed anatomy. No text, labels, grid lines, floors, ground shadows, scenery, extra components or drawn checkerboard. True transparent background if possible. Keep every component fully isolated with wide blank gutters; no item crosses any cell boundary. Same 15-degree elevated game camera in all views. Do not generate assembled characters or animation frames.\nTHREE COMPONENTS per view: (1) full head, compact torso, collar/costume, tucked feet and tail with BOTH WINGS COMPLETELY REMOVED at shoulder roots. No closed wing feathers remain on body. No standing legs. (2) one complete physical LEFT wing with rounded shoulder root, broad fully visible membrane/feather/page fan, unfolded in a relaxed DOWNWARD diagonal from its root toward its outer tip. (3) one complete physical RIGHT wing of matching length and detail, also fully unfolded. Each wing must be ONE connected painted object, including all feather/page lobes. Fairy wings combine both lobes of that side into one connected wing root. Book has blank page fans, no writing. Wings must be generous enough to plausibly carry body, rooted at shoulders/spine. No extra feet, loose feathers or isolated wing fragment.\nREFERENCE 1: row 1 = w062.\nREFERENCE 2: row 1 = w064.\nREFERENCE 3: row 1 = w068.\nREFERENCE 4: row 1 = w096.\nROW 1: w062: Tiny frost fairy with silver hair, pale-cyan tunic, crystal-blue insect wings and small ice wand. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nROW 2: w064: Thunderbird with deep-blue feathers, golden crest, amber eyes and broad electric-blue wings with small lightning accents. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nROW 3: w068: Living violet spellbook with brass corners, expressive eyes on cover, page fans as two flapping wings, small bookmark tail. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nROW 4: w096: Large midnight-violet doom raven with silver feather edges, star-like eyes, gold collar and broad feathered wings. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nKeep torso and limb scale coherent. The purpose is individually movable components; no assembled full characters anywhere."
+  },
+  {
+    "id": "late-flight-01-front-back-parts",
+    "stage": "parts",
+    "family": "flight",
+    "assetIds": [
+      "w062",
+      "w064",
+      "w068",
+      "w096"
+    ],
+    "rows": [
+      {
+        "assetId": "w062",
+        "view": "front-back"
+      },
+      {
+        "assetId": "w064",
+        "view": "front-back"
+      },
+      {
+        "assetId": "w068",
+        "view": "front-back"
+      },
+      {
+        "assetId": "w096",
+        "view": "front-back"
+      }
+    ],
+    "layout": "front-back",
+    "references": [
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t7-insect-wings-01-turnaround.png",
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t7-bird-01-turnaround.png",
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t7-book-01-turnaround.png",
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t10-bird-01-turnaround.png"
+    ],
+    "referencesSha256": [
+      "def2a6ef01a6f614a76f28c4a4a8103537a57cf64bd18b49521cd52ca55ff841",
+      "7b783a3edefe029c61e5c15b0c7c9567cc664a19cecdc6154e42807afe116b89",
+      "429be7ae30564b329c3badc349c651bc73339b54259ebb1e85b00840df2a7b10",
+      "b88efa1b438229de5a578829a3c8567cc60e46854d1accde8858243dd83c7bdf"
+    ],
+    "promptFile": "prompts/late-flight-01-front-back-parts.txt",
+    "prompt": "Create ONE SQUARE rigging PARTS atlas, highest resolution. Exactly 4 equal horizontal ROWS and SIX EQUAL separated COLUMNS. Each row is ONE creature: columns1/2/3 its FRONT component1/2/3; columns4/5/6 its BACK component1/2/3. Exactly 24 isolated components total. Equal-width columns with wide blank gutters.\nMatch the referenced identities exactly: chunky readable hand-painted fantasy GAME characters, calm expressive faces, soft painterly shading and clean dark outlines. No photorealism, pixel art, gore, wounds, blood, rotten flesh, huge horror teeth or grotesque anatomy. Components are clean animation cutouts, not severed anatomy. No text, labels, grid lines, floors, ground shadows, scenery, extra components or drawn checkerboard. True transparent background if possible. Keep every component fully isolated with wide blank gutters; no item crosses any cell boundary. Same 15-degree elevated game camera in all views. Do not generate assembled characters or animation frames.\nTHREE COMPONENTS per view: (1) full head, compact torso, collar/costume, tucked feet and tail with BOTH WINGS COMPLETELY REMOVED at shoulder roots. No closed wing feathers remain on body. No standing legs. (2) one complete physical LEFT wing with rounded shoulder root, broad fully visible membrane/feather/page fan, unfolded in a relaxed DOWNWARD diagonal from its root toward its outer tip. (3) one complete physical RIGHT wing of matching length and detail, also fully unfolded. Each wing must be ONE connected painted object, including all feather/page lobes. Fairy wings combine both lobes of that side into one connected wing root. Book has blank page fans, no writing. Wings must be generous enough to plausibly carry body, rooted at shoulders/spine. No extra feet, loose feathers or isolated wing fragment.\nREFERENCE 1: row 1 = w062.\nREFERENCE 2: row 1 = w064.\nREFERENCE 3: row 1 = w068.\nREFERENCE 4: row 1 = w096.\nROW 1: w062: Tiny frost fairy with silver hair, pale-cyan tunic, crystal-blue insect wings and small ice wand. Columns1–3: TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left. Columns4–6: TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nROW 2: w064: Thunderbird with deep-blue feathers, golden crest, amber eyes and broad electric-blue wings with small lightning accents. Columns1–3: TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left. Columns4–6: TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nROW 3: w068: Living violet spellbook with brass corners, expressive eyes on cover, page fans as two flapping wings, small bookmark tail. Columns1–3: TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left. Columns4–6: TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nROW 4: w096: Large midnight-violet doom raven with silver feather edges, star-like eyes, gold collar and broad feathered wings. Columns1–3: TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left. Columns4–6: TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nKeep torso and limb scale coherent. The purpose is individually movable components; no assembled full characters anywhere."
+  },
+  {
+    "id": "late-flight-02-side-parts",
+    "stage": "parts",
+    "family": "flight",
+    "assetIds": [
+      "w072",
+      "w076",
+      "w088"
+    ],
+    "rows": [
+      {
+        "assetId": "w072",
+        "view": "side"
+      },
+      {
+        "assetId": "w076",
+        "view": "side"
+      },
+      {
+        "assetId": "w088",
+        "view": "side"
+      }
+    ],
+    "layout": "side",
+    "references": [
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-bat-wings-01-turnaround.png",
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t9-bat-wings-01-turnaround.png"
+    ],
+    "referencesSha256": [
+      "ed25c8f196aabd011335e129cbae35f4e896442220da768f5cf8f6eeb6b98f25",
+      "4ebf4442d693550ff411039c450d9edbea42641256e3eab7744b60a028035158"
+    ],
+    "promptFile": "prompts/late-flight-02-side-parts.txt",
+    "prompt": "Create ONE TALL PORTRAIT 1:2 rigging PARTS atlas, highest resolution. Exactly 3 equal horizontal ROWS and THREE separated COLUMNS. Component1 x0–48%, component2 x52–74%, component3 x78–99%.\nMatch the referenced identities exactly: chunky readable hand-painted fantasy GAME characters, calm expressive faces, soft painterly shading and clean dark outlines. No photorealism, pixel art, gore, wounds, blood, rotten flesh, huge horror teeth or grotesque anatomy. Components are clean animation cutouts, not severed anatomy. No text, labels, grid lines, floors, ground shadows, scenery, extra components or drawn checkerboard. True transparent background if possible. Keep every component fully isolated with wide blank gutters; no item crosses any cell boundary. Same 15-degree elevated game camera in all views. Do not generate assembled characters or animation frames.\nTHREE COMPONENTS per view: (1) full head, compact torso, collar/costume, tucked feet and tail with BOTH WINGS COMPLETELY REMOVED at shoulder roots. No closed wing feathers remain on body. No standing legs. (2) one complete physical LEFT wing with rounded shoulder root, broad fully visible membrane/feather/page fan, unfolded in a relaxed DOWNWARD diagonal from its root toward its outer tip. (3) one complete physical RIGHT wing of matching length and detail, also fully unfolded. Each wing must be ONE connected painted object, including all feather/page lobes. Fairy wings combine both lobes of that side into one connected wing root. Book has blank page fans, no writing. Wings must be generous enough to plausibly carry body, rooted at shoulders/spine. No extra feet, loose feathers or isolated wing fragment.\nREFERENCE 1: row 1 = w072; row 2 = w076.\nREFERENCE 2: row 1 = w088.\nROW 1: w072: Small ruby dragon hatchling with cream belly, round curious eyes, broad red membranous wings and one tail. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nROW 2: w076: Lean bronze-red wyvern with horned expressive head, two broad membranous wings, tucked legs and long tail. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nROW 3: w088: Small slate gargoyle, expressive round face, broad stone wings, bronze collar, compact tucked feet and one tail. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nKeep torso and limb scale coherent. The purpose is individually movable components; no assembled full characters anywhere."
+  },
+  {
+    "id": "late-flight-02-front-back-parts",
+    "stage": "parts",
+    "family": "flight",
+    "assetIds": [
+      "w072",
+      "w076",
+      "w088"
+    ],
+    "rows": [
+      {
+        "assetId": "w072",
+        "view": "front-back"
+      },
+      {
+        "assetId": "w076",
+        "view": "front-back"
+      },
+      {
+        "assetId": "w088",
+        "view": "front-back"
+      }
+    ],
+    "layout": "front-back",
+    "references": [
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-bat-wings-01-turnaround.png",
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t9-bat-wings-01-turnaround.png"
+    ],
+    "referencesSha256": [
+      "ed25c8f196aabd011335e129cbae35f4e896442220da768f5cf8f6eeb6b98f25",
+      "4ebf4442d693550ff411039c450d9edbea42641256e3eab7744b60a028035158"
+    ],
+    "promptFile": "prompts/late-flight-02-front-back-parts.txt",
+    "prompt": "Create ONE SQUARE rigging PARTS atlas, highest resolution. Exactly 3 equal horizontal ROWS and SIX EQUAL separated COLUMNS. Each row is ONE creature: columns1/2/3 its FRONT component1/2/3; columns4/5/6 its BACK component1/2/3. Exactly 18 isolated components total. Equal-width columns with wide blank gutters.\nMatch the referenced identities exactly: chunky readable hand-painted fantasy GAME characters, calm expressive faces, soft painterly shading and clean dark outlines. No photorealism, pixel art, gore, wounds, blood, rotten flesh, huge horror teeth or grotesque anatomy. Components are clean animation cutouts, not severed anatomy. No text, labels, grid lines, floors, ground shadows, scenery, extra components or drawn checkerboard. True transparent background if possible. Keep every component fully isolated with wide blank gutters; no item crosses any cell boundary. Same 15-degree elevated game camera in all views. Do not generate assembled characters or animation frames.\nTHREE COMPONENTS per view: (1) full head, compact torso, collar/costume, tucked feet and tail with BOTH WINGS COMPLETELY REMOVED at shoulder roots. No closed wing feathers remain on body. No standing legs. (2) one complete physical LEFT wing with rounded shoulder root, broad fully visible membrane/feather/page fan, unfolded in a relaxed DOWNWARD diagonal from its root toward its outer tip. (3) one complete physical RIGHT wing of matching length and detail, also fully unfolded. Each wing must be ONE connected painted object, including all feather/page lobes. Fairy wings combine both lobes of that side into one connected wing root. Book has blank page fans, no writing. Wings must be generous enough to plausibly carry body, rooted at shoulders/spine. No extra feet, loose feathers or isolated wing fragment.\nREFERENCE 1: row 1 = w072; row 2 = w076.\nREFERENCE 2: row 1 = w088.\nROW 1: w072: Small ruby dragon hatchling with cream belly, round curious eyes, broad red membranous wings and one tail. Columns1–3: TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left. Columns4–6: TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nROW 2: w076: Lean bronze-red wyvern with horned expressive head, two broad membranous wings, tucked legs and long tail. Columns1–3: TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left. Columns4–6: TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nROW 3: w088: Small slate gargoyle, expressive round face, broad stone wings, bronze collar, compact tucked feet and one tail. Columns1–3: TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left. Columns4–6: TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nKeep torso and limb scale coherent. The purpose is individually movable components; no assembled full characters anywhere."
+  },
+  {
+    "id": "late-boss-flight-01-side-parts",
+    "stage": "parts",
+    "family": "flight",
+    "assetIds": [
+      "b080",
+      "b100-2"
+    ],
+    "rows": [
+      {
+        "assetId": "b080",
+        "view": "side"
+      },
+      {
+        "assetId": "b100-2",
+        "view": "side"
+      }
+    ],
+    "layout": "side",
+    "references": [
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-boss-01-turnaround.png",
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t10-boss-01-turnaround.png"
+    ],
+    "referencesSha256": [
+      "d1beb1dbc4fb71a3c8f652834489d2d6597017e61ea1bf4c6ac5fd99a6a8b3a1",
+      "68cc0ce5232677188b3df8d07c373406dab9f72af782627d5ea15b90cf951dda"
+    ],
+    "promptFile": "prompts/late-boss-flight-01-side-parts.txt",
+    "prompt": "Create ONE TALL PORTRAIT 2:3 rigging PARTS atlas, highest resolution. Exactly 2 equal horizontal ROWS and THREE separated COLUMNS. Component1 x0–48%, component2 x52–74%, component3 x78–99%.\nMatch the referenced identities exactly: chunky readable hand-painted fantasy GAME characters, calm expressive faces, soft painterly shading and clean dark outlines. No photorealism, pixel art, gore, wounds, blood, rotten flesh, huge horror teeth or grotesque anatomy. Components are clean animation cutouts, not severed anatomy. No text, labels, grid lines, floors, ground shadows, scenery, extra components or drawn checkerboard. True transparent background if possible. Keep every component fully isolated with wide blank gutters; no item crosses any cell boundary. Same 15-degree elevated game camera in all views. Do not generate assembled characters or animation frames.\nTHREE COMPONENTS per view: (1) full head, compact torso, collar/costume, tucked feet and tail with BOTH WINGS COMPLETELY REMOVED at shoulder roots. No closed wing feathers remain on body. No standing legs. (2) one complete physical LEFT wing with rounded shoulder root, broad fully visible membrane/feather/page fan, unfolded in a relaxed DOWNWARD diagonal from its root toward its outer tip. (3) one complete physical RIGHT wing of matching length and detail, also fully unfolded. Each wing must be ONE connected painted object, including all feather/page lobes. Fairy wings combine both lobes of that side into one connected wing root. Book has blank page fans, no writing. Wings must be generous enough to plausibly carry body, rooted at shoulders/spine. No extra feet, loose feathers or isolated wing fragment.\nREFERENCE 1: row 1 = b080; row 2 = b080-2.\nREFERENCE 2: row 1 = b100; row 2 = b100-2.\nROW 1: b080: Majestic ruby fire dragon, cream armored belly, bronze horns, broad red wings, small controlled ember breath glow and full tail. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nROW 2: b100-2: Majestic flying midnight-blue void dragon with violet star-patterned wings, gold-edged horns, silver eyes and one intact tail. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nKeep torso and limb scale coherent. The purpose is individually movable components; no assembled full characters anywhere."
+  },
+  {
+    "id": "late-boss-flight-01-front-back-parts",
+    "stage": "parts",
+    "family": "flight",
+    "assetIds": [
+      "b080",
+      "b100-2"
+    ],
+    "rows": [
+      {
+        "assetId": "b080",
+        "view": "front-back"
+      },
+      {
+        "assetId": "b100-2",
+        "view": "front-back"
+      }
+    ],
+    "layout": "front-back",
+    "references": [
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-boss-01-turnaround.png",
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t10-boss-01-turnaround.png"
+    ],
+    "referencesSha256": [
+      "d1beb1dbc4fb71a3c8f652834489d2d6597017e61ea1bf4c6ac5fd99a6a8b3a1",
+      "68cc0ce5232677188b3df8d07c373406dab9f72af782627d5ea15b90cf951dda"
+    ],
+    "promptFile": "prompts/late-boss-flight-01-front-back-parts.txt",
+    "prompt": "Create ONE LANDSCAPE 3:2 rigging PARTS atlas, highest resolution. Exactly 2 equal horizontal ROWS and SIX EQUAL separated COLUMNS. Each row is ONE creature: columns1/2/3 its FRONT component1/2/3; columns4/5/6 its BACK component1/2/3. Exactly 12 isolated components total. Equal-width columns with wide blank gutters.\nMatch the referenced identities exactly: chunky readable hand-painted fantasy GAME characters, calm expressive faces, soft painterly shading and clean dark outlines. No photorealism, pixel art, gore, wounds, blood, rotten flesh, huge horror teeth or grotesque anatomy. Components are clean animation cutouts, not severed anatomy. No text, labels, grid lines, floors, ground shadows, scenery, extra components or drawn checkerboard. True transparent background if possible. Keep every component fully isolated with wide blank gutters; no item crosses any cell boundary. Same 15-degree elevated game camera in all views. Do not generate assembled characters or animation frames.\nTHREE COMPONENTS per view: (1) full head, compact torso, collar/costume, tucked feet and tail with BOTH WINGS COMPLETELY REMOVED at shoulder roots. No closed wing feathers remain on body. No standing legs. (2) one complete physical LEFT wing with rounded shoulder root, broad fully visible membrane/feather/page fan, unfolded in a relaxed DOWNWARD diagonal from its root toward its outer tip. (3) one complete physical RIGHT wing of matching length and detail, also fully unfolded. Each wing must be ONE connected painted object, including all feather/page lobes. Fairy wings combine both lobes of that side into one connected wing root. Book has blank page fans, no writing. Wings must be generous enough to plausibly carry body, rooted at shoulders/spine. No extra feet, loose feathers or isolated wing fragment.\nREFERENCE 1: row 1 = b080; row 2 = b080-2.\nREFERENCE 2: row 1 = b100; row 2 = b100-2.\nROW 1: b080: Majestic ruby fire dragon, cream armored belly, bronze horns, broad red wings, small controlled ember breath glow and full tail. Columns1–3: TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left. Columns4–6: TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nROW 2: b100-2: Majestic flying midnight-blue void dragon with violet star-patterned wings, gold-edged horns, silver eyes and one intact tail. Columns1–3: TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left. Columns4–6: TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nKeep torso and limb scale coherent. The purpose is individually movable components; no assembled full characters anywhere."
+  },
+  {
+    "id": "late-slither-01-side-parts",
+    "stage": "parts",
+    "family": "slither",
+    "assetIds": [
+      "w077",
+      "w084",
+      "w091",
+      "w098"
+    ],
+    "rows": [
+      {
+        "assetId": "w077",
+        "view": "side"
+      },
+      {
+        "assetId": "w084",
+        "view": "side"
+      },
+      {
+        "assetId": "w091",
+        "view": "side"
+      },
+      {
+        "assetId": "w098",
+        "view": "side"
+      }
+    ],
+    "layout": "side",
+    "references": [
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-t9-mixed-01-turnaround.png",
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t10-mixed-01-turnaround.png"
+    ],
+    "referencesSha256": [
+      "9f8710b17528638f5dc76ac92b78ba4cd64cced2326ea94cbdad3488359c912c",
+      "146b0f78e2aad87cc3d3545a1c8ae543861110cbfa772c5619287df111acd212"
+    ],
+    "promptFile": "prompts/late-slither-01-side-parts.txt",
+    "prompt": "Create ONE TALL PORTRAIT 1:2 rigging PARTS atlas, highest resolution. Exactly 4 equal horizontal ROWS and THREE separated COLUMNS. Component1 x0–48%, component2 x52–74%, component3 x78–99%.\nMatch the referenced identities exactly: chunky readable hand-painted fantasy GAME characters, calm expressive faces, soft painterly shading and clean dark outlines. No photorealism, pixel art, gore, wounds, blood, rotten flesh, huge horror teeth or grotesque anatomy. Components are clean animation cutouts, not severed anatomy. No text, labels, grid lines, floors, ground shadows, scenery, extra components or drawn checkerboard. True transparent background if possible. Keep every component fully isolated with wide blank gutters; no item crosses any cell boundary. Same 15-degree elevated game camera in all views. Do not generate assembled characters or animation frames.\nTHREE COMPONENTS per view: (1) creature head and SHORT neck only (for the purple tentacle: magical basal curl with eye charm), remove the long trunk so it can be articulated; preserve exact identity. (2) ONE short straight body band/segment with intact painted overlap caps at BOTH ENDS, no head and no tip; vertically arranged top-to-bottom, length about 1.5 times width, may be reused twice in a chain. (3) ONE elongated tapering tail/tentacle tip, uncurled and nearly straight top-to-bottom, a smooth rounded connection root at TOP and finished narrow tip at BOTTOM. Keep all three components same trunk thickness and costume colors; no detached armor fragments. FRONT components show the front/underside marks; BACK shows dorsal/back markings, no eyes. These are intact magical/armored surfaces, no wounds or open cut flesh.\nREFERENCE 1: row 1 = w071; row 2 = w077; row 3 = w082; row 4 = w084.\nREFERENCE 2: row 1 = w091; row 2 = w092; row 3 = w098.\nROW 1: w077: Ochre sand worm with bronze segmented armor rings, rounded digging muzzle, amber eyes, smooth flowing body. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nROW 2: w084: Large crimson burrowing worm with black armor bands, rounded amber crystal mouth plate and small eye lights. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nROW 3: w091: A single stylized purple abyss tentacle creature emerging from a smooth magical curl, rounded suction cups and small gold eye charm. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nROW 4: w098: Long violet void worm with dark segmented shell, small star eyes and smooth gold-edged armor bands. PURE RIGHT-facing SIDE PROFILE. Face, body and toes point to the RIGHT edge. No left-facing body and no 3/4 view. The physical left limb is far, right limb is near.\nKeep torso and limb scale coherent. The purpose is individually movable components; no assembled full characters anywhere."
+  },
+  {
+    "id": "late-slither-01-front-back-parts",
+    "stage": "parts",
+    "family": "slither",
+    "assetIds": [
+      "w077",
+      "w084",
+      "w091",
+      "w098"
+    ],
+    "rows": [
+      {
+        "assetId": "w077",
+        "view": "front-back"
+      },
+      {
+        "assetId": "w084",
+        "view": "front-back"
+      },
+      {
+        "assetId": "w091",
+        "view": "front-back"
+      },
+      {
+        "assetId": "w098",
+        "view": "front-back"
+      }
+    ],
+    "layout": "front-back",
+    "references": [
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-t9-mixed-01-turnaround.png",
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t10-mixed-01-turnaround.png"
+    ],
+    "referencesSha256": [
+      "9f8710b17528638f5dc76ac92b78ba4cd64cced2326ea94cbdad3488359c912c",
+      "146b0f78e2aad87cc3d3545a1c8ae543861110cbfa772c5619287df111acd212"
+    ],
+    "promptFile": "prompts/late-slither-01-front-back-parts.txt",
+    "prompt": "Create ONE SQUARE rigging PARTS atlas, highest resolution. Exactly 4 equal horizontal ROWS and SIX EQUAL separated COLUMNS. Each row is ONE creature: columns1/2/3 its FRONT component1/2/3; columns4/5/6 its BACK component1/2/3. Exactly 24 isolated components total. Equal-width columns with wide blank gutters.\nMatch the referenced identities exactly: chunky readable hand-painted fantasy GAME characters, calm expressive faces, soft painterly shading and clean dark outlines. No photorealism, pixel art, gore, wounds, blood, rotten flesh, huge horror teeth or grotesque anatomy. Components are clean animation cutouts, not severed anatomy. No text, labels, grid lines, floors, ground shadows, scenery, extra components or drawn checkerboard. True transparent background if possible. Keep every component fully isolated with wide blank gutters; no item crosses any cell boundary. Same 15-degree elevated game camera in all views. Do not generate assembled characters or animation frames.\nTHREE COMPONENTS per view: (1) creature head and SHORT neck only (for the purple tentacle: magical basal curl with eye charm), remove the long trunk so it can be articulated; preserve exact identity. (2) ONE short straight body band/segment with intact painted overlap caps at BOTH ENDS, no head and no tip; vertically arranged top-to-bottom, length about 1.5 times width, may be reused twice in a chain. (3) ONE elongated tapering tail/tentacle tip, uncurled and nearly straight top-to-bottom, a smooth rounded connection root at TOP and finished narrow tip at BOTTOM. Keep all three components same trunk thickness and costume colors; no detached armor fragments. FRONT components show the front/underside marks; BACK shows dorsal/back markings, no eyes. These are intact magical/armored surfaces, no wounds or open cut flesh.\nREFERENCE 1: row 1 = w071; row 2 = w077; row 3 = w082; row 4 = w084.\nREFERENCE 2: row 1 = w091; row 2 = w092; row 3 = w098.\nROW 1: w077: Ochre sand worm with bronze segmented armor rings, rounded digging muzzle, amber eyes, smooth flowing body. Columns1–3: TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left. Columns4–6: TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nROW 2: w084: Large crimson burrowing worm with black armor bands, rounded amber crystal mouth plate and small eye lights. Columns1–3: TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left. Columns4–6: TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nROW 3: w091: A single stylized purple abyss tentacle creature emerging from a smooth magical curl, rounded suction cups and small gold eye charm. Columns1–3: TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left. Columns4–6: TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nROW 4: w098: Long violet void worm with dark segmented shell, small star eyes and smooth gold-edged armor bands. Columns1–3: TRUE FRONT facing viewer. Centered bilateral symmetric body, face/ears equal size, no visible side flank. Toes point toward viewer. Physical left limb attaches screen-right; right limb screen-left. Columns4–6: TRUE BACK facing directly away. Centered spine, back of head, no eyes or face, no side flank. Heels face viewer, toes point away. Physical left limb attaches screen-left; right limb screen-right.\nKeep torso and limb scale coherent. The purpose is individually movable components; no assembled full characters anywhere."
+  },
+  {
+    "id": "late-quad-01-body-correction",
+    "family": "quad",
+    "assetIds": [
+      "w067",
+      "w071",
+      "w073",
+      "w078"
+    ],
+    "references": [
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/late-quad-01-side-parts.png",
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t7-quad-01-turnaround.png",
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-t9-mixed-01-turnaround.png",
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-quad-01-turnaround.png"
+    ],
+    "prompt": "Create ONE TALL PORTRAIT 1:2 animation BODY-ONLY atlas, exactly FOUR ROWS and THREE COLUMNS, 12 objects total. Column1 RIGHT-facing pure SIDE; column2 TRUE FRONT; column3 TRUE BACK. Every object is ONE SINGLE INTEGRATED HEAD + NECK + FULL TORSO + TAIL, with ZERO LEGS, ZERO FEET, ZERO PAWS or hooves attached anywhere. Keep the head connected to its own torso, never separate head portraits. Do not include loose limbs anywhere in this sheet. Important: the old parts sheet has wrongly attached legs on mammoth/behemoth bodies; this request specifically removes ALL of them while preserving their full chest and haunch. Side bodies extend horizontally from shoulder to rump, intact rounded painted underside. FRONT torso is centered, bilateral symmetric, foreshortened horizontal trunk going back behind head; BACK shows centered rump/spine/tail, back of head, no face. No sitting paws, no stumps, no upright human bust. Smooth closed fur/scales where the animation legs will overlap; no holes, cut flesh or red cross-sections. Full tails and tusks fit entirely within each cell. Rows: wizard cat, drake, mammoth, behemoth in that order.\nROW 1: Small midnight-blue wizard cat with amber eyes, violet scarf, brass moon charm and one intact tail, four paws.\nROW 2: Sturdy red-brown drake, cream belly, small bronze horns, four strong legs, folded decorative winglets and one plated tail.\nROW 3: Woolly brown mammoth with cream fur highlights, two rounded ivory tusks, bronze harness and four pillar legs.\nROW 4: Huge stocky blue-gray behemoth with bronze plated shoulders, small ivory horns, four massive paws and short tail.\nMatch the supplied exact character identity, colors, collars and hand-painted friendly fantasy game style. Highest supported resolution. Generous blank gutters, all objects completely inside cells. True transparent background, no drawn checkerboard, labels, text, floor, scenery, detached pieces, blood, wounds or grotesque realism.",
+    "stage": "body-correction",
+    "layout": "body-turnaround",
+    "referencesSha256": [
+      "f32ef1dac3abd2191b0e96aa1e0311aeeda75759d19eb8695e955dc5f0d5d462",
+      "007a181fac474498147c36041267f52e61d55d923c5cb328722ece73fabb578d",
+      "9f8710b17528638f5dc76ac92b78ba4cd64cced2326ea94cbdad3488359c912c",
+      "b3cf277ca4ada97a1030a60717c09f46cc3d725ced602d05e70d49946b55106f"
+    ],
+    "rows": [
+      {
+        "assetId": "w067",
+        "view": "all"
+      },
+      {
+        "assetId": "w071",
+        "view": "all"
+      },
+      {
+        "assetId": "w073",
+        "view": "all"
+      },
+      {
+        "assetId": "w078",
+        "view": "all"
+      }
+    ],
+    "promptFile": "prompts/late-quad-01-body-correction.txt"
+  },
+  {
+    "id": "late-bird-bodies-correction",
+    "family": "flight",
+    "assetIds": [
+      "w064",
+      "w096"
+    ],
+    "references": [
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/late-flight-01-side-parts.png",
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t7-bird-01-turnaround.png",
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t10-bird-01-turnaround.png"
+    ],
+    "prompt": "Create ONE LANDSCAPE 3:2 BODY-ONLY animation atlas, exactly TWO ROWS and THREE COLUMNS, SIX objects total. Columns: RIGHT-facing pure SIDE, TRUE FRONT, TRUE BACK. Row1 blue/gold thunderbird. Row2 midnight-violet/silver raven. Each object consists ONLY of head, neck, small smooth pear-shaped feathered torso, collar and short tail, with no wings attached at all. Remove the long folded flight feathers from both sides of the bird. No folded wings, no wing tips, no long side feather fans on this body. The torso has short small contour feathers only, as a clean wingless oval chest and back, not a wing-shaped outline. Tuck both feet completely up against the belly, no standing legs below. Wings are already generated separately and must NOT appear anywhere on this sheet. Keep intact feather-covered shoulder surfaces for wing overlap, no holes, no cuts. Direct front/back camera, centered symmetry and no face on back.\nROW 1: Thunderbird with deep-blue feathers, golden crest, amber eyes and broad electric-blue wings with small lightning accents.\nROW 2: Large midnight-violet doom raven with silver feather edges, star-like eyes, gold collar and broad feathered wings.\nMatch the supplied exact character identity, colors, collars and hand-painted friendly fantasy game style. Highest supported resolution. Generous blank gutters, all objects completely inside cells. True transparent background, no drawn checkerboard, labels, text, floor, scenery, detached pieces, blood, wounds or grotesque realism.",
+    "stage": "body-correction",
+    "layout": "body-turnaround",
+    "referencesSha256": [
+      "c81f5b67d9646f4d98b77e0fbb40da4679ca48ad332934f8b092d6673707fff0",
+      "7b783a3edefe029c61e5c15b0c7c9567cc664a19cecdc6154e42807afe116b89",
+      "b88efa1b438229de5a578829a3c8567cc60e46854d1accde8858243dd83c7bdf"
+    ],
+    "rows": [
+      {
+        "assetId": "w064",
+        "view": "all"
+      },
+      {
+        "assetId": "w096",
+        "view": "all"
+      }
+    ],
+    "promptFile": "prompts/late-bird-bodies-correction.txt"
+  },
+  {
+    "id": "late-quad-body-fix-v2",
+    "family": "quad",
+    "stage": "body-correction",
+    "layout": "custom-eight-bodies",
+    "assetIds": [
+      "w073",
+      "w078",
+      "w067"
+    ],
+    "rows": [
+      {
+        "assetId": "w073",
+        "view": "side/front/back; w067 front"
+      },
+      {
+        "assetId": "w078",
+        "view": "side/front/back; w067 back"
+      }
+    ],
+    "references": [
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/late-quad-02-side-parts.png",
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-quad-01-turnaround.png",
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t7-quad-01-turnaround.png"
+    ],
+    "referencesSha256": [
+      "29a48f4448ec816978ca167b3eb53beecc27423aa037e9693af326c243bab241",
+      "b3cf277ca4ada97a1030a60717c09f46cc3d725ced602d05e70d49946b55106f",
+      "007a181fac474498147c36041267f52e61d55d923c5cb328722ece73fabb578d"
+    ],
+    "prompt": "Create ONE LANDSCAPE 3:2 animation BODY-ONLY atlas, exactly TWO ROWS x FOUR COLUMNS, eight separated objects. Every object is one connected HEAD + FULL TORSO + TAIL, ZERO LEGS or FEET. This is a precise removal edit for rigging. The first reference demonstrates desired legless horizontal animal torso construction; use other references for exact mammoth/behemoth/cat identities.\nROW1 columns1/2/3: the woolly brown MAMMOTH side/front/back. Column4: midnight-blue wizard CAT front.\nROW2 columns1/2/3: huge blue-gray BEHEMOTH side/front/back. Column4: midnight-blue wizard CAT back.\nMammoth: the complete long horizontal barrel torso from broad shoulder hump to rounded rump, head at far right, two ivory tusks, dangling trunk, bronze harness, warm brown shaggy fur. Side main torso is at least 1.6 times as long as its thickness. Behemoth: complete broad horizontal barrel torso shoulder to rump, small ivory horns, bronze shoulder armor, short tail; side main torso is at least 1.7 times as long as thickness. Remove all original walking limbs cleanly at the fur silhouette, close the underside in matching intact fur. Keep all flank fur and full back width; no long vertical leg stumps, no narrow standing pillar, no feet, no paw shapes along the underside.\nFor each FRONT, show direct head-on centered head with a short foreshortened chest and full trunk receding behind it. The BOTTOM is a single soft horizontal arc across the chest, never two lobes resembling sitting forepaws. For each BACK, show broad rounded rump, spine/tail, rear of head only; no face. Cat retains purple scarf, brass moon charm and single tail; small oval chest/rump below large round head, NO sitting paws. Closed fur all around, never cut flesh or holes. Every main body fits complete in its cell with blank gutters. Do not include any detached arms, legs, heads, wings, feet or additional pieces anywhere.\nPainted approachable fantasy game style, intact bodies, no gore, blood, grotesque realism, labels, text, floor or shadows. Highest resolution supported. Pure transparent background without any drawn checkerboard.",
+    "promptFile": "prompts/late-quad-body-fix-v2.txt"
+  },
+  {
+    "id": "late-biped-02-identity-fix",
+    "family": "biped",
+    "stage": "identity-correction",
+    "layout": "custom-11-parts",
+    "assetIds": [
+      "w074",
+      "w075",
+      "w079"
+    ],
+    "rows": [
+      {
+        "assetId": "w074",
+        "view": "all"
+      },
+      {
+        "assetId": "w075",
+        "view": "all"
+      },
+      {
+        "assetId": "w079",
+        "view": "all"
+      },
+      {
+        "assetId": "w075",
+        "view": "side-legs"
+      }
+    ],
+    "references": [
+      "C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/tools/art-review/directional-101/late-waves/sources/t8-biped-01-turnaround.png"
+    ],
+    "referencesSha256": [
+      "22c01d4ac904f68814a2e521b2eb175258ad075fe2b3f10fccfb99e14ce63bf4"
+    ],
+    "prompt": "Create ONE TALL PORTRAIT 1:2 atlas, exactly FOUR ROWS x THREE COLUMNS. Eleven isolated rig parts, last cell blank. Match the three characters of the reference exactly, without mixing equipment between rows.\nROWS1–3 columns are RIGHT-facing pure SIDE, TRUE FRONT, TRUE BACK of the same legless character body. The body retains integrated head, torso, shoulders/arms/wings, hip garment, full tail and held weapons, but remove both walking legs below hip overlap; no standing feet or attached shins. Close the garment/fur underside, no holes or exposed cuts. Each remains one connected illustrated piece, no detached weapons. BACK is actually seen from behind, no face, reverse physical handedness correctly.\nROW1 green lizard spearman: bronze scale armor, small horns, spear in physical RIGHT hand and round bronze shield in LEFT hand. Thus FRONT spear appears on screen LEFT and shield RIGHT; BACK spear screen RIGHT and shield LEFT. Keep one green tail with pale underside curving behind hips. In the right-facing SIDE the nearer visible right hand holds the spear, the left-hand shield may overlap farther away. Tail must remain attached in every view.\nROW2 golden cockatrice: exactly a bird, rooster comb/beak, golden neck feathers, green body feathers, bronze breastplate and decorative shoulder plates, folded feather WINGS and long green rooster tail. NO human hands, no spear, no shield, no boots. FRONT looks straight at camera with centered beak and balanced eyes, BACK shows rear of head and full tail. SIDE tail curves behind body; both walking legs removed from the body.\nROW3 red dragonkin swordsman: bronze armor, red scaled head, sword held in physical RIGHT hand, broad shield in LEFT hand. FRONT sword screen LEFT and shield RIGHT; BACK sword screen RIGHT and shield LEFT, show both clearly and full red plated tail between/behind hips. No missing sword or shield in back. SIDE full connected tail extends behind, held sword points down-forward. Both walking legs removed.\nROW4: two SEPARATE complete cockatrice SIDE legs only, in columns1 and2, column3 empty. Each leg is feathered green upper thigh -> digitigrade green scaly shank -> three bird toes pointing RIGHT, matching bare legs in the reference, no armor/boots. Long relaxed leg with slight natural joint bend and closed feathered overlap root. Distinct near/far legs, not connected to a body.\nAll objects wholly inside cells, generous clear gutters, highest supported resolution, transparent background without drawn checkerboard. Approachable hand-painted game-character style, no photorealism, gore, red cuts, labels, typography, scenery or floor.",
+    "promptFile": "prompts/late-biped-02-identity-fix.txt"
+  }
+]

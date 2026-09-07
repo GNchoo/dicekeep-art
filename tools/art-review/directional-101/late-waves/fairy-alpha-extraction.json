@@ -1,0 +1,219 @@
+{
+  "method": "Original RGB preserved, visually reviewed interior hair polygons protect neutral hair from edge background flood.",
+  "records": [
+    {
+      "view": "side",
+      "id": "late-flight-01-side-parts",
+      "crop": [
+        0,
+        0,
+        280,
+        440
+      ],
+      "polygons": [
+        [
+          [
+            82,
+            134
+          ],
+          [
+            91,
+            126
+          ],
+          [
+            107,
+            125
+          ],
+          [
+            123,
+            132
+          ],
+          [
+            131,
+            145
+          ],
+          [
+            125,
+            166
+          ],
+          [
+            114,
+            180
+          ],
+          [
+            99,
+            183
+          ],
+          [
+            82,
+            176
+          ],
+          [
+            76,
+            160
+          ],
+          [
+            78,
+            145
+          ]
+        ],
+        [
+          [
+            157,
+            184
+          ],
+          [
+            182,
+            183
+          ],
+          [
+            193,
+            193
+          ],
+          [
+            178,
+            211
+          ],
+          [
+            162,
+            223
+          ],
+          [
+            151,
+            227
+          ]
+        ],
+        [
+          [
+            99,
+            158
+          ],
+          [
+            135,
+            148
+          ],
+          [
+            162,
+            149
+          ],
+          [
+            186,
+            157
+          ],
+          [
+            204,
+            168
+          ],
+          [
+            213,
+            183
+          ],
+          [
+            214,
+            196
+          ],
+          [
+            207,
+            208
+          ],
+          [
+            192,
+            201
+          ],
+          [
+            182,
+            188
+          ],
+          [
+            169,
+            187
+          ],
+          [
+            157,
+            213
+          ],
+          [
+            141,
+            224
+          ],
+          [
+            115,
+            223
+          ],
+          [
+            102,
+            207
+          ]
+        ]
+      ],
+      "source": "sources/late-flight-01-side-parts.png",
+      "sourceSha256": "c81f5b67d9646f4d98b77e0fbb40da4679ca48ad332934f8b092d6673707fff0",
+      "output": "derived/w062-side-alpha.png",
+      "outputSha256": "4394819453759cbfbdbec393fbf13e7b64ac971ec82bd758b0201c83719e36f1",
+      "restoredNeutralPixels": 5272
+    },
+    {
+      "view": "front",
+      "id": "late-flight-01-front-back-parts",
+      "crop": [
+        0,
+        0,
+        220,
+        313
+      ],
+      "polygons": [
+        [
+          [
+            103,
+            87
+          ],
+          [
+            105,
+            78
+          ],
+          [
+            117,
+            72
+          ],
+          [
+            124,
+            70
+          ],
+          [
+            138,
+            73
+          ],
+          [
+            149,
+            77
+          ],
+          [
+            158,
+            87
+          ],
+          [
+            156,
+            95
+          ],
+          [
+            142,
+            91
+          ],
+          [
+            128,
+            89
+          ],
+          [
+            113,
+            92
+          ]
+        ]
+      ],
+      "source": "sources/late-flight-01-front-back-parts.png",
+      "sourceSha256": "e0a3609441ee4a9ff750d6ecb3895f0e3543a1e6be9568274df3816e2221a823",
+      "output": "derived/w062-front-alpha.png",
+      "outputSha256": "c2beecaef6be4e3e118945e50f49f6c1da4d9b2ada9691606cdc2ebc96623e15",
+      "restoredNeutralPixels": 553
+    }
+  ]
+}
