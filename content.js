@@ -1414,7 +1414,7 @@ window.DKCONTENT = (function () {
     100: { boss: true, name: '파멸의 군주', second: '공허 용', cls: 'S', tier: 10 },
     101: { name: '종말의 사자', cls: 'M', move: 'ground', tier: 10 },
   };
-  const INF_ART_READY = new Set([1, 2, 3, 4, 5]);   // 예: [1, 2, 3, '10', '20-2'] — casual/enemies/inf/w001.png … casual/bosses/inf/b020-2.png
+  const INF_ART_READY = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);   // 예: [1, 2, 3, '10', '20-2'] — casual/enemies/inf/w001.png … casual/bosses/inf/b020-2.png
   const pad3 = (n) => String(n).padStart(3, '0');
   // 웨이브 w 의 새 그림 (준비된 것만): 일반 { key, src, walkKey, walkSrc } · 보스 k(0 군주·1 부관) { key, src, name }
   function infArt(w, k) {
@@ -1428,7 +1428,7 @@ window.DKCONTENT = (function () {
     }
     if (!INF_ART_READY.has(w) && !INF_ART_READY.has(String(w))) return null;
     // 걷기 시트 격자는 m.walk ('2x2' 4프레임 기본 · '3x2' 6프레임), 파일명에 적혀 game.js 가 읽는다. m.hop 이면 위아래 움직임이 의도된 것이라 안정화하지 않는다
-    return { key: `infW${w}`, src: `casual/enemies/inf/w${pad3(w)}.png`, walkKey: `infW${w}Walk`, walkSrc: `casual/enemies/inf/w${pad3(w)}-walk-${m.walk || '2x2'}.png`, name: m.name, stabilize: !m.hop };
+    return { key: `infW${w}`, src: `casual/enemies/inf/w${pad3(w)}.png`, walkKey: `infW${w}Walk`, walkSrc: `casual/enemies/inf/w${pad3(w)}-walk-${m.walk || '2x2'}.png`, name: m.name, stabilize: !m.hop, anchor: m.move === 'air' ? 'center' : 'foot' };
   }
   // 로더용: 준비된 새 그림 전부 [{ key, src }, { key(walk), src, sheet: true }]
   function infArtList() {
@@ -1438,7 +1438,7 @@ window.DKCONTENT = (function () {
       if (m.boss) { for (let k = 0; k < 2; k++) { const a = infArt(w, k); if (a) out.push({ key: a.key, src: a.src }); } continue; }
       const a = infArt(w, 0); if (!a) continue;
       out.push({ key: a.key, src: a.src });
-      out.push({ key: a.walkKey, src: a.walkSrc, sheet: true, optional: true, stabilize: a.stabilize });
+      out.push({ key: a.walkKey, src: a.walkSrc, sheet: true, optional: true, stabilize: a.stabilize, anchor: a.anchor });
     }
     return out;
   }
@@ -1479,6 +1479,7 @@ window.DKCONTENT = (function () {
     sizeScale: { S: 0.9, M: 1, L: 1.15 },
     // 새 그림(INF_ART_READY, 반실사 다크 판타지)은 base 의 크기와 무관하게 등급별 고정 높이(캔버스 px) — 실루엣이 가늘어 기존 만화 로스터(40~55)보다 작게 읽혀서 위쪽 값으로 맞춘다
     artSize: { S: 42, M: 50, L: 58 },
+    artSizeBoss: { S: 96, M: 108, L: 120 },   // 새 보스 정지컷(casual/bosses/inf/bNNN.png, 뼈 더미 같은 받침까지 한 장) — 구 보스 86~92px 보다 크게
     // 원작 1~101R 몬스터 크기 표 그대로 (보스 라운드 포함). 웨이브 w 의 크기 = sizeSeq[(w-1)%101]
     sizeSeq: ('SSLSMLLSLL' + 'SLSLMLMSLL' + 'SLSSMSLLLS' + 'SSSLLLMSMS' + 'LMLLLSMLSL' + 'LSMSLLLSML' + 'MSSMLLSSLS' + 'LSLSSSSLMM' + 'SMLLSSLSLL' + 'SSLLMSLMLSM').split(''),
     sizeOf(w) { return this.sizeSeq[(Math.max(1, w) - 1) % this.sizeSeq.length]; },

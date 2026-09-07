@@ -885,7 +885,7 @@ function processSheet(img, opt) {
     if (opt && opt.stabilize) for (const [cx, cy] of cells) dropEdgeFragments(id, cv.width, cx, cy, fw, fh);
     g.putImageData(id, 0, 0);
     const stats = cells.map(([cx, cy]) => cellStats(id, cv.width, cx, cy, fw, fh));
-    if (opt && opt.stabilize && stats.every(s => s.n > 0)) return stabilizeCells(cv, cells, stats, fw, fh);
+    if (opt && opt.stabilize && stats.every(s => s.n > 0)) return stabilizeCells(cv, cells, stats, fw, fh, opt.anchor);
     let u = null;
     for (const s of stats) {
       const local = { x: s.x0 - s.cx, y: s.y0 - s.cy, w: s.x1 - s.x0, h: s.y1 - s.y0 };
@@ -943,24 +943,26 @@ function dropEdgeFragments(id, W, cx, cy, fw, fh) {
 // 칸 하나의 실루엣 통계 (시트 좌표, x1·y1 배타): 바운딩박스 · 픽셀 수 n · 무게중심 mx. α>28 을 실루엣으로 본다 (bbox 와 같은 기준).
 function cellStats(id, W, cx, cy, fw, fh) {
   const d = id.data;
-  let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity, n = 0, sx = 0;
+  let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity, n = 0, sx = 0, sy = 0;
   const X0 = Math.floor(cx), Y0 = Math.floor(cy), X1 = Math.floor(cx + fw), Y1 = Math.floor(cy + fh);
   for (let y = Y0; y < Y1; y++) for (let x = X0; x < X1; x++) {
     if (d[(y * W + x) * 4 + 3] <= 28) continue;
-    n++; sx += x;
+    n++; sx += x; sy += y;
     if (x < x0) x0 = x; if (x + 1 > x1) x1 = x + 1; if (y < y0) y0 = y; if (y + 1 > y1) y1 = y + 1;
   }
-  if (!n) return { cx, cy, x0: X0, y0: Y0, x1: X1, y1: Y1, n: 0, mx: cx + fw / 2 };
-  return { cx, cy, x0, y0, x1, y1, n, mx: sx / n };
+  if (!n) return { cx, cy, x0: X0, y0: Y0, x1: X1, y1: Y1, n: 0, mx: cx + fw / 2, my: cy + fh / 2 };
+  return { cx, cy, x0, y0, x1, y1, n, mx: sx / n, my: sy / n };
 }
 
-function stabilizeCells(cv, cells, stats, fw, fh) {
+// anchor 'foot'(기본) = 발끝을 바닥선에 · 'center' = 무게중심 y 를 맞춤 (날것: 날개가 내려간 칸은 맨 아래가 날개 끝이라 발 기준이면 몸이 튄다)
+function stabilizeCells(cv, cells, stats, fw, fh, anchor) {
   const median = (a) => { const s = a.slice().sort((p, q) => p - q); return s[Math.floor((s.length - 1) / 2)]; };
   const area = median(stats.map(s => s.n));
   const sc = stats.map(s => Math.min(1.15, Math.max(0.87, Math.sqrt(area / s.n))));   // 실루엣 넓이 기준 크기 보정 (±15% 안)
-  const local = stats.map((s, i) => ({ x0: (s.x0 - s.cx) * sc[i], y0: (s.y0 - s.cy) * sc[i], x1: (s.x1 - s.cx) * sc[i], y1: (s.y1 - s.cy) * sc[i], mx: (s.mx - s.cx) * sc[i] }));
-  const foot = median(local.map(l => l.y1)), axis = median(local.map(l => l.mx));
-  const dx = local.map(l => axis - l.mx), dy = local.map(l => foot - l.y1);
+  const local = stats.map((s, i) => ({ x0: (s.x0 - s.cx) * sc[i], y0: (s.y0 - s.cy) * sc[i], x1: (s.x1 - s.cx) * sc[i], y1: (s.y1 - s.cy) * sc[i], mx: (s.mx - s.cx) * sc[i], my: (s.my - s.cy) * sc[i] }));
+  const ay = (l) => (anchor === 'center' ? l.my : l.y1);
+  const foot = median(local.map(ay)), axis = median(local.map(l => l.mx));
+  const dx = local.map(l => axis - l.mx), dy = local.map(l => foot - ay(l));
   let ux0 = Infinity, uy0 = Infinity, ux1 = -Infinity, uy1 = -Infinity;
   local.forEach((l, i) => { ux0 = Math.min(ux0, l.x0 + dx[i]); uy0 = Math.min(uy0, l.y0 + dy[i]); ux1 = Math.max(ux1, l.x1 + dx[i]); uy1 = Math.max(uy1, l.y1 + dy[i]); });
   const bw = Math.ceil(ux1 - ux0), bh = Math.ceil(uy1 - uy0);
@@ -990,7 +992,7 @@ async function loadAssets(onProgress) {
   if (window.DKCONTENT) {
     for (const b of DKCONTENT.bases) if (b.walk) sheets.push(b.walk);
     for (const b of DKCONTENT.bossBases) if (b.walk) sheets.push(b.walk);
-    if (DKCONTENT.INFINITY && DKCONTENT.INFINITY.artList) for (const a of DKCONTENT.INFINITY.artList()) if (a.sheet) { sheets.push(a.key); sheetOpt[a.key] = { stabilize: a.stabilize !== false }; }
+    if (DKCONTENT.INFINITY && DKCONTENT.INFINITY.artList) for (const a of DKCONTENT.INFINITY.artList()) if (a.sheet) { sheets.push(a.key); sheetOpt[a.key] = { stabilize: a.stabilize !== false, anchor: a.anchor || 'foot' }; }
   }
   // 격자는 파일명 -walk-<열>x<행> 에서 (없으면 2x2). 안정화는 인피니티 새 시트만 (content.js infArtList 의 stabilize)
   for (const k of sheets) { const m = /-walk-(\d+)x(\d+)\.png/i.exec(SRCS[k] || ''); sheetOpt[k] = Object.assign({ cols: m ? +m[1] : 2, rows: m ? +m[2] : 2 }, sheetOpt[k] || {}); }
@@ -2524,7 +2526,10 @@ function spawnEnemy(item) {
   const isBoss = !!item.isBoss;
   const INFC = window.DKCONTENT && DKCONTENT.INFINITY;
   const artOk = !!(item.art && A[item.art] && A[item.art].cv);
-  if (artOk && item.sizeClass && INFC && INFC.artSize && INFC.artSize[item.sizeClass]) def = Object.assign({}, def, { size: INFC.artSize[item.sizeClass] });   // 인피니티 새 그림: 등급별 고정 높이 (content.js artSize)
+  if (artOk && item.sizeClass && INFC && INFC.artSize && INFC.artSize[item.sizeClass]) {   // 인피니티 새 그림: 등급별 고정 높이 (content.js artSize · 보스는 artSizeBoss)
+    const tbl = isBoss && INFC.artSizeBoss && INFC.artSizeBoss[item.sizeClass] ? INFC.artSizeBoss : INFC.artSize;
+    def = Object.assign({}, def, { size: tbl[item.sizeClass] });
+  }
   else if (item.sizeClass && INFC && INFC.sizeScale) { const k = INFC.sizeScale[item.sizeClass] || 1; if (k !== 1) def = Object.assign({}, def, { size: Math.round(def.size * k) }); }
   if (item.isElite) { def = Object.assign({}, def, { size: Math.round(def.size * 1.2) }); }
   const e = {

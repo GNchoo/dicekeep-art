@@ -77,15 +77,16 @@ export const cellStats = (raw, cx, cy, fw, fh) => analyzeCell(raw, cx, cy, fw, f
 const median = (a) => { const s = a.slice().sort((p, q) => p - q); return s[Math.floor((s.length - 1) / 2)]; };
 
 // 안정화 계획. local = 칸 원점 기준 좌표. sc 배율 · dx/dy 이동(배율 적용 뒤) · 합집합 상자(ux0,uy0,bw,bh).
-export function stabilizePlan(stats, cells, { minS = 0.87, maxS = 1.15 } = {}) {
+// anchor: 'foot' = 발끝(실루엣 맨 아래)을 바닥선에 (걷는 것) · 'center' = 무게중심 y 를 맞춤 (날것 — 날개가 내려간 칸은 맨 아래가 발이 아니라 날개 끝이라 발 기준이면 몸이 튄다)
+export function stabilizePlan(stats, cells, { minS = 0.87, maxS = 1.15, anchor = 'foot' } = {}) {
   const area = median(stats.map((s) => s.n));
   const sc = stats.map((s) => (s.n ? Math.min(maxS, Math.max(minS, Math.sqrt(area / s.n))) : 1));
   const local = stats.map((s, i) => {
     const [cx, cy] = cells[i], k = sc[i];
-    return { x0: (s.x0 - cx) * k, y0: (s.y0 - cy) * k, x1: (s.x1 - cx) * k, y1: (s.y1 - cy) * k, mx: (s.mx - cx) * k };
+    return { x0: (s.x0 - cx) * k, y0: (s.y0 - cy) * k, x1: (s.x1 - cx) * k, y1: (s.y1 - cy) * k, mx: (s.mx - cx) * k, my: (s.my - cy) * k };
   });
-  const foot = median(local.map((l) => l.y1)), axis = median(local.map((l) => l.mx));
-  const dx = local.map((l) => axis - l.mx), dy = local.map((l) => foot - l.y1);
+  const foot = median(local.map((l) => (anchor === 'center' ? l.my : l.y1))), axis = median(local.map((l) => l.mx));
+  const dx = local.map((l) => axis - l.mx), dy = local.map((l) => foot - (anchor === 'center' ? l.my : l.y1));
   let ux0 = Infinity, uy0 = Infinity, ux1 = -Infinity, uy1 = -Infinity;
   local.forEach((l, i) => { ux0 = Math.min(ux0, l.x0 + dx[i]); uy0 = Math.min(uy0, l.y0 + dy[i]); ux1 = Math.max(ux1, l.x1 + dx[i]); uy1 = Math.max(uy1, l.y1 + dy[i]); });
   return { sc, dx, dy, local, ux0, uy0, bw: Math.ceil(ux1 - ux0), bh: Math.ceil(uy1 - uy0), foot, axis, area };
@@ -94,7 +95,7 @@ export function stabilizePlan(stats, cells, { minS = 0.87, maxS = 1.15 } = {}) {
 // 편차 보고 (안정화 전). 비율은 칸 높이 기준 (높이는 가장 큰 칸 기준).
 export function driftReport(stats, cells, plan, fh) {
   const span = (a) => Math.max(...a) - Math.min(...a);
-  return { before: { h: span(stats.map((s) => s.h)) / Math.max(...stats.map((s) => s.h)), foot: span(stats.map((s, i) => s.y1 - cells[i][1])) / fh, cx: span(stats.map((s, i) => s.mx - cells[i][0])) / fh } };
+  return { before: { h: span(stats.map((s) => s.h)) / Math.max(...stats.map((s) => s.h)), foot: span(stats.map((s, i) => s.y1 - cells[i][1])) / fh, cy: span(stats.map((s, i) => s.my - cells[i][1])) / fh, cx: span(stats.map((s, i) => s.mx - cells[i][0])) / fh } };
 }
 
 // 자세 비교: 안정화 좌표계에 실루엣을 size×size 로 내려 그려 칸끼리 IoU 를 잰다.
@@ -111,7 +112,7 @@ export function poseMasks(stats, cells, plan, size = 96) {
   });
 }
 export function iou(a, b) { let i = 0, u = 0; for (let k = 0; k < a.length; k++) { if (a[k] & b[k]) i++; if (a[k] | b[k]) u++; } return u ? i / u : 1; }
-// 4칸 기준 판정: static = 전부 거의 같음(걷지 않음), twoPose = 1≈3·2≈4 두 자세만 번갈아(진짜 보행 주기 아님)
+// 판정: static = 전부 거의 같음(걷지 않음, 재생성). twoPose = 1≈3·2≈4 — 참고용: 옆에서 본 정상 보행 주기(접지·통과·접지·통과)도 실루엣은 이렇게 나오므로 눈으로 확인한다
 export function poseFlags(masks) {
   const n = masks.length, m = [];
   for (let a = 0; a < n; a++) { m.push([]); for (let b = 0; b < n; b++) m[a].push(a === b ? 1 : iou(masks[a], masks[b])); }

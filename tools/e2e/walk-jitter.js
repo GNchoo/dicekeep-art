@@ -17,7 +17,10 @@ const { chromium } = require('playwright-core');
         return { w: f.w, h: f.h, foot: y1 + 1, top: y0, mx: sx / n, height: y1 - y0 + 1, n };
       });
       const span = (a) => Math.max(...a) - Math.min(...a);
-      out.push({ key: k, dims: `${fr[0].w}×${fr[0].h}`, foot: span(fr.map((f) => f.foot)), mx: span(fr.map((f) => f.mx)), height: span(fr.map((f) => f.height)), area: span(fr.map((f) => f.n)) / Math.max(...fr.map((f) => f.n)), fh: fr[0].h });
+      // 날것(move 'air')은 무게중심 y 기준으로 맞추므로 발 대신 무게중심 y 편차를 본다
+      const w = +(/^infW(\d+)Walk$/.exec(k)[1]), mon = DKCONTENT.INFINITY.monsters[w], air = !!(mon && mon.move === 'air');
+      const my = (f) => { const g = f.cv.getContext('2d'), d = g.getImageData(0, 0, f.w, f.h).data; let n = 0, s = 0; for (let y = 0; y < f.h; y++) for (let x = 0; x < f.w; x++) if (d[(y * f.w + x) * 4 + 3] > 28) { n++; s += y; } return s / n; };
+      out.push({ key: k, air, dims: `${fr[0].w}×${fr[0].h}`, foot: air ? span(DKA[k].map(my)) : span(fr.map((f) => f.foot)), mx: span(fr.map((f) => f.mx)), height: span(fr.map((f) => f.height)), area: span(fr.map((f) => f.n)) / Math.max(...fr.map((f) => f.n)), fh: fr[0].h });
     }
     return out;
   });
@@ -25,7 +28,7 @@ const { chromium } = require('playwright-core');
   for (const r of rows) {
     const bad = r.foot / r.fh > 0.02 || r.mx / r.fh > 0.02;
     if (bad) fail++;
-    console.log(`${r.key} ${r.dims}: 발 y 편차 ${r.foot}px · 중심 x 편차 ${r.mx.toFixed(1)}px · 높이 편차 ${r.height}px · 넓이 편차 ${(r.area * 100).toFixed(0)}%${bad ? '  ← 흔들림' : '  · 안정'}`);
+    console.log(`${r.key} ${r.dims}: ${r.air ? '무게중심 y' : '발 y'} 편차 ${r.foot.toFixed(1)}px · 중심 x 편차 ${r.mx.toFixed(1)}px · 높이 편차 ${r.height}px · 넓이 편차 ${(r.area * 100).toFixed(0)}%${bad ? '  ← 흔들림' : '  · 안정'}`);
   }
   await b.close();
   process.exit(fail ? 1 : 0);

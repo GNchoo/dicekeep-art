@@ -249,6 +249,9 @@ Hand-painted casual tower defense arena FLOOR ONLY, Kingdom Rush and Random Dice
 > - **안정화**: 그래도 칸마다 크기(높이 10~30%)·발 위치(5~15%)·가로 위치가 어긋나 재생하면 '커졌다 작아졌다·앞뒤로 미끄러짐' 으로 보인다. `sheet-check`·`sheet-split` 이 실루엣 넓이로 크기를 ±15% 안에서 맞추고 발끝을 공통 바닥선에, 무게중심 x 를 공통 축에 맞춰 다시 굽는다. 이웃 칸에서 넘어온 창끝 같은 경계 조각(실루엣 3% 미만)은 지운다. `game.js processSheet` 도 같은 규칙으로 인피니티 시트를 맞춘다(이미 넣은 1~5 도 흔들리지 않음). 확인 `tools/e2e/walk-jitter.js`. 자세 판정 `static`·`twoPose` 가 뜨면 그 시트(행)만 다시 뽑는다.
 > - **한 장에 여러 마리(`--mode=multi`)**: 세로 1024×1536 에 5행 × 4열, 칸 256×307 — 게임은 42~58px(3배 DPR 174px)로 그리므로 충분. 한 행이 나쁘면 그 장을 다시 뽑는다. L 등급이 많은 단계·보스·세부가 중요한 것은 `--mode=single`(2x2 1024², 6프레임은 3x2 1536×1024). 정지컷은 시트 1칸(접지)에서 자르므로 정지컷 잡은 따로 없다. `n` 기본 1.
 > - **단계 팔레트**(10웨이브마다 색이 조금씩 바뀐다, 전부 악당 톤·밝은 색 금지): 아래 표의 팔레트 열 = `content.js INF_PALETTE`. 생성기가 프롬프트 끝에 "Palette of this tier: …, overall dark and desaturated, no bright/pastel/neon" 을 붙인다.
+> - **날것·보스**: 날것은 발끝 대신 무게중심 y 로 맞춘다(`--anchor=center`, `sheet-split`·게임 로더는 `move: 'air'` 로 자동). 보스는 정지컷 1장 `casual/bosses/inf/bNNN.png`(부관 `-2`), 크기 `INFINITY.artSizeBoss`(S 96 · M 108 · L 120).
+>
+> **2026-09-07 납품 2차 — 1~5 걷기 시트 재생성 + 6~10 (`gpt-image-2`, 7장, 이미지 출력 11,908 토큰)**: 1~5 는 정지컷을 참조로 시트만 다시 뽑아 접지→통과→접지→통과 주기가 나왔고(자세 IoU 1≈3·2≈4 는 정상), 6~9 는 세로 한 장(4행×4열, 칸 256×384)에서 `sheet-split` 로 나눴다(편차 높이 0~14% · 발 0~1%). 10 보스 역병 쥐왕 정지컷. 생성물 배경은 알파 투명(RGB 에 갈색이 깔려 있지만 게임·도구는 알파를 쓴다). `INF_ART_READY = [1..10]`.
 >
 > 키아트: `node tools/img-gen.mjs tools/jobs/keyart.json` → `node tools/keyart-build.mjs --portrait=gen/keyart/portrait-1.png --landscape=gen/keyart/landscape-1.png`. 키는 환경변수로만, 파일에 쓰지 않는다.
 >
