@@ -16,10 +16,10 @@
 | 이전 세션 | `session_01KkMPfUn6ufQ7ZjP4LkD4tu` — https://claude.ai/code/session_01KkMPfUn6ufQ7ZjP4LkD4tu | 제목 "주사위 디펜스 게임 개발 준비". 2026-09-01 03:54Z ~ 10:09Z, 사용자 컴퓨터의 원격 제어(bridge) 세션, main `8324ea5` 기준. 컴퓨터는 2026-09-01 이후 연결 불가. 이 세션 id 가 붙은 커밋은 없음 |
 | 이 복구 세션 | `session_018SMyU9qspEeyGVwUHuNaor` — "메인 개발 대화 복구" | 2026-09-07. 이 문서를 만든 세션 |
 | PR (28개) | https://github.com/GNchoo/dicekeep-art/pulls — #1 ~ #28 | 전부 GNchoo 가 열었음. #1~#3 은 Cursor 에이전트 브랜치(`cursor/setup-dev-environment-7a26`, `cursor/dicekeep-align-and-meta-7a26`, `cursor/dicekeep-lobby-stages-shop-7a26`), #4~#28 은 잃어버린 세션의 브랜치 `claude/next-tasks-planning-vun4oo`. 열린 PR: #1, #3, #28. 이슈 0개. PR 본문이 사실상 작업 일지(변경·근거·검증·남은 일) |
-| 진행 중 PR | PR #28 https://github.com/GNchoo/dicekeep-art/pull/28 | draft·open, head `6fc1c25`, 커밋 14, 변경 파일 135, 2026-09-06 17:38Z 생성·2026-09-07 04:49Z 갱신. 잃어버린 세션 13커밋 + 자식 세션 1커밋 |
+| PR #28 (병합됨) | PR #28 https://github.com/GNchoo/dicekeep-art/pull/28 | 2026-09-07 06:41Z main 에 병합(`c1d50fe`, 복구 세션에서 검증 후 병합). head `6fc1c25`, 커밋 14, 변경 파일 135, 2026-09-06 17:38Z 생성. 잃어버린 세션 13커밋 + 자식 세션 1커밋 |
 | 병합 기록 | GitHub merge 커밋 | #4 ~ #27 은 추경남이 2026-09-02 ~ 09-07(KST) 직접 main 에 병합. #2 는 cursor[bot] 병합 |
 | 커밋 (브랜치) | `git log --format=full --grep=session_01CPtyjXTAGa9quHxiVhte98 origin/claude/next-tasks-planning-vun4oo` | 84개(잃어버린 세션) + `6fc1c25`(자식 세션, 트레일러는 `session_01UHYuvb8XCJqrZ8tjcNw1hV`). 커밋 본문에 변경 이유·검증 결과·캐시버스트 번호가 있음 |
-| 커밋 (main) | `git log origin/main` (122개) | main HEAD `8c0e91b` 2026-09-06 17:16Z "Add GROK-BRIEF §G launch UI pack: icons, splash, HUD frames, VFX"(GNchoo). 아트 납품 커밋 `95644fc`, `2bc0c76`, `37323f2`, `8c0e91b` 은 사용자가 main 에 직접 올림 |
+| 커밋 (main) | `git log origin/main` (137개) | main HEAD `c1d50fe` 2026-09-07 06:41Z (PR #28 병합 커밋). 그 직전 `8c0e91b` 2026-09-06 17:16Z "Add GROK-BRIEF §G launch UI pack: icons, splash, HUD frames, VFX"(GNchoo). 아트 납품 커밋 `95644fc`, `2bc0c76`, `37323f2`, `8c0e91b` 은 사용자가 main 에 직접 올림 |
 | 문서 (브랜치 최신) | `git show origin/claude/next-tasks-planning-vun4oo:<file>` | `GAME-SPEC.md`(단일 소스, §1~§9), `README.md`, `ART-PROMPTS.md`(§0·§6·§7), `GROK-BRIEF.md`(§E·§F·§G), `GROK-HANDOFF.md`(초기 브리프 보관), `ART-PIPELINE.md`, `ASSET-MANIFEST.md`(2026-08-31 기준, 이후 표 미갱신), `MUSIC-PROMPTS.md`, `STORE.md`, `net/README.md`, `tools/e2e/README.md`. main 과 다른 파일: `GAME-SPEC.md`(5줄), `README.md`(+20줄 AI 그림 생성 절), `ART-PROMPTS.md`(+24/−9), `tools/e2e/README.md`(브랜치에만 존재) |
 | 프리뷰 URL (브랜치) | https://claude-next-tasks-planning-vun4oo-dicekeep.cgn3731.workers.dev | 브랜치 최신 배포. 커밋별: https://4b289a93-dicekeep.cgn3731.workers.dev (`6fc1c25`, 2026-09-07 04:48Z 배포 성공) |
 | 운영 URL | https://dicekeep.cgn3731.workers.dev (main) · 멀티 서버 `wss://dicekeep-net.cgn3731.workers.dev` · `/privacy.html` | `README.md`·`STORE.md` 기재 |
@@ -249,9 +249,9 @@
 
 | 항목 | 상태 |
 |---|---|
-| main | `8c0e91b` 2026-09-06 17:16Z (GNchoo, §G 출시 UI 팩 납품). 122 커밋. PR #27 까지 병합됨 |
-| 작업 브랜치 | `claude/next-tasks-planning-vun4oo` @ `6fc1c25`, main 보다 14 ahead / 0 behind |
-| PR #28 | https://github.com/GNchoo/dicekeep-art/pull/28 — **open, draft, mergeable_state clean**, head `6fc1c25`, 커밋 14, 변경 파일 135, 2026-09-06 17:38Z 생성, 2026-09-07 04:49Z 갱신 |
+| main | `c1d50fe` 2026-09-07 06:41Z (PR #28 병합 커밋, 추경남 계정으로 복구 세션이 병합). 137 커밋. PR #28 까지 병합됨. 직전 `8c0e91b` 2026-09-06 17:16Z (GNchoo, §G 출시 UI 팩 납품) |
+| 작업 브랜치 | `claude/next-tasks-planning-vun4oo` @ `6fc1c25` — main 에 전부 병합됨(0 ahead). 새 작업은 main 에서 새 브랜치를 파는 것을 권장 |
+| PR #28 | https://github.com/GNchoo/dicekeep-art/pull/28 — **2026-09-07 06:41Z main 에 병합됨(`c1d50fe`)**, head `6fc1c25`, 커밋 14, 변경 파일 135, 2026-09-06 17:38Z 생성. 병합 전 복구 세션에서 `tools/e2e/inf-art-check.js`(웨이브 1~6) 로 새 그림 5종 적용을 확인 — 404 는 main 에도 없던 미납품 아트(별 타워 14·다면체 주사위 5·타일셋 66·BGM 4)뿐, 페이지 오류 0 |
 | PR #28 내용 | 출시 그림 적용(`e486572`) + 9-slice 되돌림(`da71e77`); 관전 뷰 연출·손패 판매·≡ 메뉴(`e11233b`); 굴림 중앙 표시·보류 배지(`61dd742`); 버튼 통일·아이콘 정리·세로 입구 12시(`5b78a2d`); 타이틀 키아트 전면·돌+금 버튼(`af066ba`); 보스 말풍선·금박 제목(`595a122`); 산 위 주사위 성 키아트·배너 제거(`f480777`); 검증 반영(`39d8fad`); 로비 허브·프리로드 순서(`ebfc56c`); 검증 반영(`2a5f137`); AI 그림 파이프라인(`b42cd8a`); e2e 이관(`d9373a2`); 키아트·몬스터 1~5 생성 적용(`6fc1c25`) |
 | 프리뷰 | 브랜치 https://claude-next-tasks-planning-vun4oo-dicekeep.cgn3731.workers.dev · 커밋 https://4b289a93-dicekeep.cgn3731.workers.dev · Cloudflare 배포 성공 `6fc1c255` 2026-09-07 04:48Z |
 | 다른 열린 PR | #1(Cursor 환경 설정, `e636a71`, main 대비 1 ahead) · #3(Phase 2, base 가 Phase 1 브랜치; 커밋은 main 에 포함된 것으로 보임) |
@@ -274,7 +274,7 @@
 ## 5. 남은 작업 / 다음 작업
 
 ### 5.1 바로 다음 (PR #28 마무리) — 출처: PR #28, 자식 세션 요약, 커밋 노트
-1. PR #28 리뷰 → draft 해제 → main 병합. 병합 뒤 배포 순서(#26·#27 관례): main 머지 → `dicekeep-net`(변경 없음이면 생략) → 정적 사이트. 키아트 `?v=90`·코드 `?v=89`(`editor.html` 은 v77) 반영 확인, 강력 새로고침.
+1. ~~PR #28 리뷰 → draft 해제 → main 병합~~ → 2026-09-07 06:41Z 완료(`c1d50fe`). `net/` 변경이 없어 `dicekeep-net` 재배포는 불필요. 남은 것: 운영 https://dicekeep.cgn3731.workers.dev 에서 키아트 `?v=90`·코드 `?v=89`(`editor.html` 은 v77) 반영 확인, 강력 새로고침.
 2. `tools/e2e` 회귀 19종 재실행(README 절차) — 특히 `inf-art-check.js`(웨이브 1~6), `title-vp*.js`, `load-order*.js`, `hub-matrix.js`, `devices-test.js --only=iphoneSE,galaxyS26,foldOpen`.
 3. Fold 펼침 가로 레터박스 4건은 허용된 채 남아 있음(PR #28) — 그대로 둘지 결정.
 
@@ -333,7 +333,7 @@
 ## 6. 다시 이어서 작업하는 방법
 
 1. **자식 세션 재개(권장)**: https://claude.ai/code/session_01UHYuvb8XCJqrZ8tjcNw1hV — IDLE, 브랜치 `claude/next-tasks-planning-vun4oo` 에서 `6fc1c25` 까지 작업한 상태, 컨텍스트 ~306k 사용. 부모 세션 맥락 일부를 갖고 있을 수 있으나 PR #28 9차 이전 논의는 이 문서와 PR 본문에 의존해야 한다. 컨텍스트가 크므로 새 세션에서 이 문서 + `GAME-SPEC.md` 를 읽고 시작하는 것도 가능.
-2. **브랜치·PR**: `git fetch origin && git checkout claude/next-tasks-planning-vun4oo` (`6fc1c25`, main 대비 14 ahead/0 behind). PR #28 https://github.com/GNchoo/dicekeep-art/pull/28 (draft). 새 작업은 이 브랜치에 이어 올리거나, #28 병합 뒤 새 브랜치.
+2. **브랜치·PR**: `claude/next-tasks-planning-vun4oo`(`6fc1c25`) 는 PR #28 https://github.com/GNchoo/dicekeep-art/pull/28 로 main 에 병합 완료(`c1d50fe`). 새 작업은 `git fetch origin && git checkout -b <새 브랜치> origin/main` 으로 main 에서 시작.
 3. **읽는 순서**: `GAME-SPEC.md`(§1~§9) → `content.js` → `game.js` → `ART-PROMPTS.md` → `net/README.md` → `tools/e2e/README.md`. 이 문서 §3 의 "되돌린 시도" 를 먼저 훑을 것.
 4. **로컬 실행**:
    - 게임: `python3 serve.py` → http://localhost:8137 (에디터 `/editor.html`). `file://` 금지.
