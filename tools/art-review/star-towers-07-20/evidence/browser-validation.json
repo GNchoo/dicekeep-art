@@ -1,0 +1,1082 @@
+{
+  "pass": true,
+  "devices": 2,
+  "towersPerDevice": 14,
+  "actualRenderObservations": 28,
+  "actualFiringChecks": 28,
+  "scope": "Real game loading, actual drawImage observation, actual towerFire projectile creation and visual-only 0.1s launch offset. No gameplay code is changed by this harness.",
+  "results": [
+    {
+      "device": "desktop",
+      "viewport": {
+        "width": 1440,
+        "height": 1080
+      },
+      "gameSha256": "1086c3a566aa777a23f511d1c663e5913165530a117ca919a13f3d8638e26b68",
+      "loaded": [
+        {
+          "face": 7,
+          "sourceLoaded": true,
+          "dedicated": true,
+          "width": 46,
+          "height": 96,
+          "hash": 669649472,
+          "emitterMatches": true
+        },
+        {
+          "face": 8,
+          "sourceLoaded": true,
+          "dedicated": true,
+          "width": 45,
+          "height": 96,
+          "hash": 1954003071,
+          "emitterMatches": true
+        },
+        {
+          "face": 9,
+          "sourceLoaded": true,
+          "dedicated": true,
+          "width": 44,
+          "height": 96,
+          "hash": 3306842537,
+          "emitterMatches": true
+        },
+        {
+          "face": 10,
+          "sourceLoaded": true,
+          "dedicated": true,
+          "width": 67,
+          "height": 96,
+          "hash": 476458869,
+          "emitterMatches": true
+        },
+        {
+          "face": 11,
+          "sourceLoaded": true,
+          "dedicated": true,
+          "width": 49,
+          "height": 96,
+          "hash": 3187878160,
+          "emitterMatches": true
+        },
+        {
+          "face": 12,
+          "sourceLoaded": true,
+          "dedicated": true,
+          "width": 46,
+          "height": 96,
+          "hash": 923152686,
+          "emitterMatches": true
+        },
+        {
+          "face": 13,
+          "sourceLoaded": true,
+          "dedicated": true,
+          "width": 53,
+          "height": 96,
+          "hash": 4102274240,
+          "emitterMatches": true
+        },
+        {
+          "face": 14,
+          "sourceLoaded": true,
+          "dedicated": true,
+          "width": 53,
+          "height": 96,
+          "hash": 627237978,
+          "emitterMatches": true
+        },
+        {
+          "face": 15,
+          "sourceLoaded": true,
+          "dedicated": true,
+          "width": 45,
+          "height": 96,
+          "hash": 124053281,
+          "emitterMatches": true
+        },
+        {
+          "face": 16,
+          "sourceLoaded": true,
+          "dedicated": true,
+          "width": 63,
+          "height": 96,
+          "hash": 2611057401,
+          "emitterMatches": true
+        },
+        {
+          "face": 17,
+          "sourceLoaded": true,
+          "dedicated": true,
+          "width": 56,
+          "height": 96,
+          "hash": 2921687309,
+          "emitterMatches": true
+        },
+        {
+          "face": 18,
+          "sourceLoaded": true,
+          "dedicated": true,
+          "width": 65,
+          "height": 96,
+          "hash": 1440615111,
+          "emitterMatches": true
+        },
+        {
+          "face": 19,
+          "sourceLoaded": true,
+          "dedicated": true,
+          "width": 42,
+          "height": 96,
+          "hash": 249102892,
+          "emitterMatches": true
+        },
+        {
+          "face": 20,
+          "sourceLoaded": true,
+          "dedicated": true,
+          "width": 50,
+          "height": 96,
+          "hash": 3736518580,
+          "emitterMatches": true
+        }
+      ],
+      "drawn": {
+        "7": {
+          "args": [
+            -23,
+            -91
+          ],
+          "transform": {
+            "a": 1.001471757888794,
+            "d": 0.9981077313423157,
+            "e": 208,
+            "f": 210
+          }
+        },
+        "8": {
+          "args": [
+            -22.5,
+            -91
+          ],
+          "transform": {
+            "a": 1,
+            "d": 1,
+            "e": 296,
+            "f": 210
+          }
+        },
+        "9": {
+          "args": [
+            -22,
+            -91
+          ],
+          "transform": {
+            "a": 1.0000070333480835,
+            "d": 0.9999909996986389,
+            "e": 208,
+            "f": 210
+          }
+        },
+        "10": {
+          "args": [
+            -33.5,
+            -91
+          ],
+          "transform": {
+            "a": 1,
+            "d": 1,
+            "e": 472,
+            "f": 210
+          }
+        },
+        "11": {
+          "args": [
+            -24.5,
+            -91
+          ],
+          "transform": {
+            "a": 1,
+            "d": 1,
+            "e": 560,
+            "f": 210
+          }
+        },
+        "12": {
+          "args": [
+            -23,
+            -91
+          ],
+          "transform": {
+            "a": 1,
+            "d": 1,
+            "e": 208,
+            "f": 282
+          }
+        },
+        "13": {
+          "args": [
+            -26.5,
+            -91
+          ],
+          "transform": {
+            "a": 1,
+            "d": 1,
+            "e": 296,
+            "f": 282
+          }
+        },
+        "14": {
+          "args": [
+            -26.5,
+            -91
+          ],
+          "transform": {
+            "a": 1,
+            "d": 1,
+            "e": 384,
+            "f": 282
+          }
+        },
+        "15": {
+          "args": [
+            -22.5,
+            -91
+          ],
+          "transform": {
+            "a": 1,
+            "d": 1,
+            "e": 472,
+            "f": 282
+          }
+        },
+        "16": {
+          "args": [
+            -31.5,
+            -91
+          ],
+          "transform": {
+            "a": 1,
+            "d": 1,
+            "e": 208,
+            "f": 210
+          }
+        },
+        "17": {
+          "args": [
+            -28,
+            -91
+          ],
+          "transform": {
+            "a": 1,
+            "d": 1,
+            "e": 208,
+            "f": 354
+          }
+        },
+        "18": {
+          "args": [
+            -32.5,
+            -91
+          ],
+          "transform": {
+            "a": 1,
+            "d": 1,
+            "e": 296,
+            "f": 354
+          }
+        },
+        "19": {
+          "args": [
+            -21,
+            -91
+          ],
+          "transform": {
+            "a": 1,
+            "d": 1,
+            "e": 384,
+            "f": 354
+          }
+        },
+        "20": {
+          "args": [
+            -25,
+            -91
+          ],
+          "transform": {
+            "a": 1.0000070333480835,
+            "d": 0.9999909996986389,
+            "e": 208,
+            "f": 210
+          }
+        }
+      },
+      "fired": [
+        {
+          "face": 7,
+          "logicalSpawnUnchanged": true,
+          "visualSpawnError": 0,
+          "flashError": 0,
+          "visualOffsetFullyDecayed": true,
+          "visualFunctionDidNotMovePhysics": true,
+          "visualEmitter": {
+            "x": 206.8194583,
+            "y": 159.30991328
+          }
+        },
+        {
+          "face": 8,
+          "logicalSpawnUnchanged": true,
+          "visualSpawnError": 0,
+          "flashError": 0,
+          "visualOffsetFullyDecayed": true,
+          "visualFunctionDidNotMovePhysics": true,
+          "visualEmitter": {
+            "x": 295.3493009,
+            "y": 152.08288256
+          }
+        },
+        {
+          "face": 9,
+          "logicalSpawnUnchanged": true,
+          "visualSpawnError": 0,
+          "flashError": 0,
+          "visualOffsetFullyDecayed": true,
+          "visualFunctionDidNotMovePhysics": true,
+          "visualEmitter": {
+            "x": 399.60518387999997,
+            "y": 155.40937664
+          }
+        },
+        {
+          "face": 10,
+          "logicalSpawnUnchanged": true,
+          "visualSpawnError": 0,
+          "flashError": 0,
+          "visualOffsetFullyDecayed": true,
+          "visualFunctionDidNotMovePhysics": true,
+          "visualEmitter": {
+            "x": 472.08982757,
+            "y": 144.35545376
+          }
+        },
+        {
+          "face": 11,
+          "logicalSpawnUnchanged": true,
+          "visualSpawnError": 0,
+          "flashError": 0,
+          "visualOffsetFullyDecayed": true,
+          "visualFunctionDidNotMovePhysics": true,
+          "visualEmitter": {
+            "x": 559.65951958,
+            "y": 149.31924896
+          }
+        },
+        {
+          "face": 12,
+          "logicalSpawnUnchanged": true,
+          "visualSpawnError": 0,
+          "flashError": 0,
+          "visualOffsetFullyDecayed": true,
+          "visualFunctionDidNotMovePhysics": true,
+          "visualEmitter": {
+            "x": 207.54254932,
+            "y": 222.76330976
+          }
+        },
+        {
+          "face": 13,
+          "logicalSpawnUnchanged": true,
+          "visualSpawnError": 0,
+          "flashError": 0,
+          "visualOffsetFullyDecayed": true,
+          "visualFunctionDidNotMovePhysics": true,
+          "visualEmitter": {
+            "x": 295.91221292,
+            "y": 219.0853664
+          }
+        },
+        {
+          "face": 14,
+          "logicalSpawnUnchanged": true,
+          "visualSpawnError": 0,
+          "flashError": 0,
+          "visualOffsetFullyDecayed": true,
+          "visualFunctionDidNotMovePhysics": true,
+          "visualEmitter": {
+            "x": 383.65208415,
+            "y": 229.43560448
+          }
+        },
+        {
+          "face": 15,
+          "logicalSpawnUnchanged": true,
+          "visualSpawnError": 0,
+          "flashError": 0,
+          "visualOffsetFullyDecayed": true,
+          "visualFunctionDidNotMovePhysics": true,
+          "visualEmitter": {
+            "x": 472.17194365,
+            "y": 228.94516544
+          }
+        },
+        {
+          "face": 16,
+          "logicalSpawnUnchanged": true,
+          "visualSpawnError": 0,
+          "flashError": 0,
+          "visualOffsetFullyDecayed": true,
+          "visualFunctionDidNotMovePhysics": true,
+          "visualEmitter": {
+            "x": 555.87289016,
+            "y": 233.36794016
+          }
+        },
+        {
+          "face": 17,
+          "logicalSpawnUnchanged": true,
+          "visualSpawnError": 0,
+          "flashError": 0,
+          "visualOffsetFullyDecayed": true,
+          "visualFunctionDidNotMovePhysics": true,
+          "visualEmitter": {
+            "x": 208.26203016,
+            "y": 294.22674464
+          }
+        },
+        {
+          "face": 18,
+          "logicalSpawnUnchanged": true,
+          "visualSpawnError": 0,
+          "flashError": 0,
+          "visualOffsetFullyDecayed": true,
+          "visualFunctionDidNotMovePhysics": true,
+          "visualEmitter": {
+            "x": 295.3989489,
+            "y": 290.94480416
+          }
+        },
+        {
+          "face": 19,
+          "logicalSpawnUnchanged": true,
+          "visualSpawnError": 0,
+          "flashError": 0,
+          "visualOffsetFullyDecayed": true,
+          "visualFunctionDidNotMovePhysics": true,
+          "visualEmitter": {
+            "x": 383.503413,
+            "y": 294.17389184
+          }
+        },
+        {
+          "face": 20,
+          "logicalSpawnUnchanged": true,
+          "visualSpawnError": 0,
+          "flashError": 0,
+          "visualOffsetFullyDecayed": true,
+          "visualFunctionDidNotMovePhysics": true,
+          "visualEmitter": {
+            "x": 471.877271,
+            "y": 292.5049664
+          }
+        }
+      ],
+      "requests": [
+        {
+          "url": "http://localhost:8137/casual/towers/star-07.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/casual/towers/star-08.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/casual/towers/star-09.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/casual/towers/star-11.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/casual/towers/star-10.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/casual/towers/star-12.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/casual/towers/star-13.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/casual/towers/star-14.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/casual/towers/star-15.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/casual/towers/star-16.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/casual/towers/star-17.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/casual/towers/star-18.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/casual/towers/star-19.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/casual/towers/star-20.png?v=93",
+          "status": 200
+        }
+      ],
+      "errors": [],
+      "pass": true
+    },
+    {
+      "device": "phone",
+      "viewport": {
+        "width": 440,
+        "height": 956
+      },
+      "gameSha256": "1086c3a566aa777a23f511d1c663e5913165530a117ca919a13f3d8638e26b68",
+      "loaded": [
+        {
+          "face": 7,
+          "sourceLoaded": true,
+          "dedicated": true,
+          "width": 46,
+          "height": 96,
+          "hash": 669649472,
+          "emitterMatches": true
+        },
+        {
+          "face": 8,
+          "sourceLoaded": true,
+          "dedicated": true,
+          "width": 45,
+          "height": 96,
+          "hash": 1954003071,
+          "emitterMatches": true
+        },
+        {
+          "face": 9,
+          "sourceLoaded": true,
+          "dedicated": true,
+          "width": 44,
+          "height": 96,
+          "hash": 3306842537,
+          "emitterMatches": true
+        },
+        {
+          "face": 10,
+          "sourceLoaded": true,
+          "dedicated": true,
+          "width": 67,
+          "height": 96,
+          "hash": 476458869,
+          "emitterMatches": true
+        },
+        {
+          "face": 11,
+          "sourceLoaded": true,
+          "dedicated": true,
+          "width": 49,
+          "height": 96,
+          "hash": 3187878160,
+          "emitterMatches": true
+        },
+        {
+          "face": 12,
+          "sourceLoaded": true,
+          "dedicated": true,
+          "width": 46,
+          "height": 96,
+          "hash": 923152686,
+          "emitterMatches": true
+        },
+        {
+          "face": 13,
+          "sourceLoaded": true,
+          "dedicated": true,
+          "width": 53,
+          "height": 96,
+          "hash": 4102274240,
+          "emitterMatches": true
+        },
+        {
+          "face": 14,
+          "sourceLoaded": true,
+          "dedicated": true,
+          "width": 53,
+          "height": 96,
+          "hash": 627237978,
+          "emitterMatches": true
+        },
+        {
+          "face": 15,
+          "sourceLoaded": true,
+          "dedicated": true,
+          "width": 45,
+          "height": 96,
+          "hash": 124053281,
+          "emitterMatches": true
+        },
+        {
+          "face": 16,
+          "sourceLoaded": true,
+          "dedicated": true,
+          "width": 63,
+          "height": 96,
+          "hash": 2611057401,
+          "emitterMatches": true
+        },
+        {
+          "face": 17,
+          "sourceLoaded": true,
+          "dedicated": true,
+          "width": 56,
+          "height": 96,
+          "hash": 2921687309,
+          "emitterMatches": true
+        },
+        {
+          "face": 18,
+          "sourceLoaded": true,
+          "dedicated": true,
+          "width": 65,
+          "height": 96,
+          "hash": 1440615111,
+          "emitterMatches": true
+        },
+        {
+          "face": 19,
+          "sourceLoaded": true,
+          "dedicated": true,
+          "width": 42,
+          "height": 96,
+          "hash": 249102892,
+          "emitterMatches": true
+        },
+        {
+          "face": 20,
+          "sourceLoaded": true,
+          "dedicated": true,
+          "width": 50,
+          "height": 96,
+          "hash": 3736518580,
+          "emitterMatches": true
+        }
+      ],
+      "drawn": {
+        "7": {
+          "args": [
+            -23,
+            -91
+          ],
+          "transform": {
+            "a": 1.0095829963684082,
+            "d": 0.9876790046691895,
+            "e": 210,
+            "f": 390
+          }
+        },
+        "8": {
+          "args": [
+            -22.5,
+            -91
+          ],
+          "transform": {
+            "a": 1,
+            "d": 1,
+            "e": 360,
+            "f": 390
+          }
+        },
+        "9": {
+          "args": [
+            -22,
+            -91
+          ],
+          "transform": {
+            "a": 1.007393717765808,
+            "d": 0.9904937744140625,
+            "e": 210,
+            "f": 390
+          }
+        },
+        "10": {
+          "args": [
+            -33.5,
+            -91
+          ],
+          "transform": {
+            "a": 1,
+            "d": 1,
+            "e": 210,
+            "f": 508
+          }
+        },
+        "11": {
+          "args": [
+            -24.5,
+            -91
+          ],
+          "transform": {
+            "a": 1,
+            "d": 1,
+            "e": 360,
+            "f": 508
+          }
+        },
+        "12": {
+          "args": [
+            -23,
+            -91
+          ],
+          "transform": {
+            "a": 1,
+            "d": 1,
+            "e": 510,
+            "f": 508
+          }
+        },
+        "13": {
+          "args": [
+            -26.5,
+            -91
+          ],
+          "transform": {
+            "a": 1,
+            "d": 1,
+            "e": 210,
+            "f": 626
+          }
+        },
+        "14": {
+          "args": [
+            -26.5,
+            -91
+          ],
+          "transform": {
+            "a": 1,
+            "d": 1,
+            "e": 360,
+            "f": 626
+          }
+        },
+        "15": {
+          "args": [
+            -22.5,
+            -91
+          ],
+          "transform": {
+            "a": 1,
+            "d": 1,
+            "e": 510,
+            "f": 626
+          }
+        },
+        "16": {
+          "args": [
+            -31.5,
+            -91
+          ],
+          "transform": {
+            "a": 1.0054880380630493,
+            "d": 0.9929440021514893,
+            "e": 210,
+            "f": 390
+          }
+        },
+        "17": {
+          "args": [
+            -28,
+            -91
+          ],
+          "transform": {
+            "a": 1,
+            "d": 1,
+            "e": 360,
+            "f": 744
+          }
+        },
+        "18": {
+          "args": [
+            -32.5,
+            -91
+          ],
+          "transform": {
+            "a": 1,
+            "d": 1,
+            "e": 510,
+            "f": 744
+          }
+        },
+        "19": {
+          "args": [
+            -21,
+            -91
+          ],
+          "transform": {
+            "a": 1,
+            "d": 1,
+            "e": 210,
+            "f": 862
+          }
+        },
+        "20": {
+          "args": [
+            -25,
+            -91
+          ],
+          "transform": {
+            "a": 1.0095829963684082,
+            "d": 0.9876790046691895,
+            "e": 210,
+            "f": 390
+          }
+        }
+      },
+      "fired": [
+        {
+          "face": 7,
+          "logicalSpawnUnchanged": true,
+          "visualSpawnError": 0,
+          "flashError": 0,
+          "visualOffsetFullyDecayed": true,
+          "visualFunctionDidNotMovePhysics": true,
+          "visualEmitter": {
+            "x": 208.8194583,
+            "y": 339.30991328
+          }
+        },
+        {
+          "face": 8,
+          "logicalSpawnUnchanged": true,
+          "visualSpawnError": 0,
+          "flashError": 0,
+          "visualOffsetFullyDecayed": true,
+          "visualFunctionDidNotMovePhysics": true,
+          "visualEmitter": {
+            "x": 359.3493009,
+            "y": 332.08288256
+          }
+        },
+        {
+          "face": 9,
+          "logicalSpawnUnchanged": true,
+          "visualSpawnError": 0,
+          "flashError": 0,
+          "visualOffsetFullyDecayed": true,
+          "visualFunctionDidNotMovePhysics": true,
+          "visualEmitter": {
+            "x": 525.60518388,
+            "y": 335.40937664
+          }
+        },
+        {
+          "face": 10,
+          "logicalSpawnUnchanged": true,
+          "visualSpawnError": 0,
+          "flashError": 0,
+          "visualOffsetFullyDecayed": true,
+          "visualFunctionDidNotMovePhysics": true,
+          "visualEmitter": {
+            "x": 210.08982757,
+            "y": 442.35545376
+          }
+        },
+        {
+          "face": 11,
+          "logicalSpawnUnchanged": true,
+          "visualSpawnError": 0,
+          "flashError": 0,
+          "visualOffsetFullyDecayed": true,
+          "visualFunctionDidNotMovePhysics": true,
+          "visualEmitter": {
+            "x": 359.65951958,
+            "y": 447.31924896
+          }
+        },
+        {
+          "face": 12,
+          "logicalSpawnUnchanged": true,
+          "visualSpawnError": 0,
+          "flashError": 0,
+          "visualOffsetFullyDecayed": true,
+          "visualFunctionDidNotMovePhysics": true,
+          "visualEmitter": {
+            "x": 509.54254932,
+            "y": 448.76330975999997
+          }
+        },
+        {
+          "face": 13,
+          "logicalSpawnUnchanged": true,
+          "visualSpawnError": 0,
+          "flashError": 0,
+          "visualOffsetFullyDecayed": true,
+          "visualFunctionDidNotMovePhysics": true,
+          "visualEmitter": {
+            "x": 209.91221292,
+            "y": 563.0853664
+          }
+        },
+        {
+          "face": 14,
+          "logicalSpawnUnchanged": true,
+          "visualSpawnError": 0,
+          "flashError": 0,
+          "visualOffsetFullyDecayed": true,
+          "visualFunctionDidNotMovePhysics": true,
+          "visualEmitter": {
+            "x": 359.65208415,
+            "y": 573.43560448
+          }
+        },
+        {
+          "face": 15,
+          "logicalSpawnUnchanged": true,
+          "visualSpawnError": 0,
+          "flashError": 0,
+          "visualOffsetFullyDecayed": true,
+          "visualFunctionDidNotMovePhysics": true,
+          "visualEmitter": {
+            "x": 510.17194365,
+            "y": 572.94516544
+          }
+        },
+        {
+          "face": 16,
+          "logicalSpawnUnchanged": true,
+          "visualSpawnError": 0,
+          "flashError": 0,
+          "visualOffsetFullyDecayed": true,
+          "visualFunctionDidNotMovePhysics": true,
+          "visualEmitter": {
+            "x": 205.87289016,
+            "y": 695.36794016
+          }
+        },
+        {
+          "face": 17,
+          "logicalSpawnUnchanged": true,
+          "visualSpawnError": 0,
+          "flashError": 0,
+          "visualOffsetFullyDecayed": true,
+          "visualFunctionDidNotMovePhysics": true,
+          "visualEmitter": {
+            "x": 360.26203016,
+            "y": 684.22674464
+          }
+        },
+        {
+          "face": 18,
+          "logicalSpawnUnchanged": true,
+          "visualSpawnError": 0,
+          "flashError": 0,
+          "visualOffsetFullyDecayed": true,
+          "visualFunctionDidNotMovePhysics": true,
+          "visualEmitter": {
+            "x": 509.3989489,
+            "y": 680.94480416
+          }
+        },
+        {
+          "face": 19,
+          "logicalSpawnUnchanged": true,
+          "visualSpawnError": 0,
+          "flashError": 0,
+          "visualOffsetFullyDecayed": true,
+          "visualFunctionDidNotMovePhysics": true,
+          "visualEmitter": {
+            "x": 209.503413,
+            "y": 802.17389184
+          }
+        },
+        {
+          "face": 20,
+          "logicalSpawnUnchanged": true,
+          "visualSpawnError": 0,
+          "flashError": 0,
+          "visualOffsetFullyDecayed": true,
+          "visualFunctionDidNotMovePhysics": true,
+          "visualEmitter": {
+            "x": 359.877271,
+            "y": 800.5049664000001
+          }
+        }
+      ],
+      "requests": [
+        {
+          "url": "http://localhost:8137/casual/towers/star-07.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/casual/towers/star-08.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/casual/towers/star-09.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/casual/towers/star-10.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/casual/towers/star-11.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/casual/towers/star-12.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/casual/towers/star-13.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/casual/towers/star-14.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/casual/towers/star-15.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/casual/towers/star-16.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/casual/towers/star-17.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/casual/towers/star-18.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/casual/towers/star-20.png?v=93",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/casual/towers/star-19.png?v=93",
+          "status": 200
+        }
+      ],
+      "errors": [],
+      "pass": true
+    }
+  ]
+}

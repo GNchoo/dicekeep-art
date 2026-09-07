@@ -1,0 +1,196 @@
+{
+  "version": 1,
+  "canonicalCell": 512,
+  "assetVersion": 93,
+  "entries": [
+    {
+      "assetId": "w001",
+      "wave": 1,
+      "role": "normal",
+      "locomotion": "legged",
+      "cell": 256,
+      "referenceHeight": 192,
+      "cycleStride": 129.23076923076923,
+      "reviewApproved": false,
+      "views": {
+        "side": {
+          "pivot": [
+            256,
+            315
+          ],
+          "legacyRig": {
+            "config": "tools/art-review/pr29-gait/rig-config.json",
+            "wave": 1,
+            "strideMultiplier": 1.5,
+            "overrides": {
+              "bodyTop": 128
+            }
+          }
+        }
+      },
+      "referenceHeightEvidence": "tools/art-review/pr29-gait/evidence/walk-jitter.json"
+    },
+    {
+      "assetId": "w002",
+      "wave": 2,
+      "role": "normal",
+      "locomotion": "legged",
+      "cell": 256,
+      "referenceHeight": 446,
+      "cycleStride": 237.81600000000003,
+      "reviewApproved": false,
+      "views": {
+        "side": {
+          "pivot": [
+            256,
+            460
+          ],
+          "legacyRig": {
+            "config": "tools/art-review/pr29-gait/rig-config.json",
+            "wave": 2,
+            "strideMultiplier": 1.5,
+            "overrides": {
+              "supportCurve": "constraint-envelope"
+            }
+          }
+        }
+      },
+      "referenceHeightEvidence": "tools/art-review/pr29-gait/evidence/walk-jitter.json"
+    },
+    {
+      "assetId": "w003",
+      "wave": 3,
+      "role": "normal",
+      "locomotion": "legged",
+      "cell": 256,
+      "referenceHeight": 449,
+      "cycleStride": 241.27200000000002,
+      "reviewApproved": false,
+      "views": {
+        "side": {
+          "pivot": [
+            256,
+            460
+          ],
+          "legacyRig": {
+            "config": "tools/art-review/pr29-gait/rig-config.json",
+            "wave": 3,
+            "strideMultiplier": 1.5,
+            "overrides": {
+              "supportCurve": "constraint-envelope"
+            }
+          }
+        }
+      },
+      "referenceHeightEvidence": "tools/art-review/pr29-gait/evidence/walk-jitter.json"
+    },
+    {
+      "assetId": "w005",
+      "wave": 5,
+      "role": "normal",
+      "locomotion": "legged",
+      "cell": 256,
+      "referenceHeight": 440,
+      "cycleStride": 241.64999999999998,
+      "reviewApproved": false,
+      "views": {
+        "side": {
+          "pivot": [
+            256,
+            460
+          ],
+          "legacyRig": {
+            "config": "tools/art-review/pr29-gait/rig-config.json",
+            "wave": 5,
+            "strideMultiplier": 1.5,
+            "overrides": {
+              "supportCurve": "constraint-envelope"
+            }
+          }
+        }
+      },
+      "referenceHeightEvidence": "tools/art-review/pr29-gait/evidence/walk-jitter.json"
+    },
+    {
+      "assetId": "w006",
+      "wave": 6,
+      "role": "normal",
+      "locomotion": "legged",
+      "cell": 256,
+      "referenceHeight": 295,
+      "cycleStride": 156.9230769230769,
+      "reviewApproved": false,
+      "views": {
+        "side": {
+          "pivot": [
+            256,
+            350
+          ],
+          "legacyRig": {
+            "config": "tools/art-review/pr29-gait/rig-config.json",
+            "wave": 6,
+            "strideMultiplier": 1.5,
+            "overrides": {
+              "bodyTop": 57
+            }
+          }
+        }
+      },
+      "referenceHeightEvidence": "tools/art-review/pr29-gait/evidence/walk-jitter.json"
+    },
+    {
+      "assetId": "w007",
+      "wave": 7,
+      "role": "normal",
+      "locomotion": "legged",
+      "cell": 256,
+      "referenceHeight": 445,
+      "cycleStride": 238.87199999999999,
+      "reviewApproved": false,
+      "views": {
+        "side": {
+          "pivot": [
+            256,
+            460
+          ],
+          "legacyRig": {
+            "config": "tools/art-review/pr29-gait/rig-config.json",
+            "wave": 7,
+            "strideMultiplier": 1.5,
+            "overrides": {
+              "supportCurve": "constraint-envelope"
+            }
+          }
+        }
+      },
+      "referenceHeightEvidence": "tools/art-review/pr29-gait/evidence/walk-jitter.json"
+    },
+    {
+      "assetId": "w009",
+      "wave": 9,
+      "role": "normal",
+      "locomotion": "legged",
+      "cell": 256,
+      "referenceHeight": 424,
+      "cycleStride": 219.156,
+      "reviewApproved": false,
+      "views": {
+        "side": {
+          "pivot": [
+            256,
+            460
+          ],
+          "legacyRig": {
+            "config": "tools/art-review/pr29-gait/rig-config.json",
+            "wave": 9,
+            "strideMultiplier": 1.5,
+            "overrides": {
+              "supportCurve": "constraint-envelope"
+            }
+          }
+        }
+      },
+      "referenceHeightEvidence": "tools/art-review/pr29-gait/evidence/walk-jitter.json"
+    }
+  ]
+}

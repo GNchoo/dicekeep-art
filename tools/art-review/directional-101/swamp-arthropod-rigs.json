@@ -1,0 +1,3814 @@
+{
+  "version": 1,
+  "canonicalCell": 512,
+  "assetVersion": 93,
+  "entries": [
+    {
+      "assetId": "w025",
+      "wave": 25,
+      "role": "normal",
+      "locomotion": "legged",
+      "anatomy": "arthropod",
+      "cell": 256,
+      "referenceHeight": 350,
+      "cycleStride": 80,
+      "reviewApproved": true,
+      "gait": {
+        "stanceDuty": 0.65,
+        "lift": 13,
+        "pelvis": "fixed"
+      },
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/t3-arthropod-01-front-back-parts.png",
+          "sourceSha256": "5797b7f87410a9c9f39a54a7535ea70a2dad71b69f71bced9d787302365b4cfc",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            430
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.44,
+              0.333
+            ],
+            "target": [
+              133.63157894736844,
+              165,
+              244.73684210526315,
+              180
+            ],
+            "layer": 10,
+            "source": "tools/art-review/directional-101/t3-arthropod-01-side-parts.png",
+            "sourceSha256": "77d6cfae60b00988554cfbef23a2f77fc9b11ea58415066813bfaddde20d5f6b",
+            "background": "checkerboard"
+          },
+          "parts": [
+            {
+              "id": "leftLeg1",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0,
+                0.15,
+                0.333
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                210.4736842105263,
+                142.20000000000002
+              ],
+              "socketRoi": [
+                197.4736842105263,
+                129.20000000000002,
+                26,
+                26
+              ],
+              "heightAxis": [
+                0.5,
+                0.8660254037844386
+              ],
+              "calibrate": {
+                "groundY": 425,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0,
+              "layer": -1,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "rightLeg1",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0,
+                0.15,
+                0.333
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                210.4736842105263,
+                142.20000000000002
+              ],
+              "socketRoi": [
+                197.4736842105263,
+                129.20000000000002,
+                26,
+                26
+              ],
+              "heightAxis": [
+                0.5,
+                0.8660254037844386
+              ],
+              "calibrate": {
+                "groundY": 430,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.5,
+              "layer": 2,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "leftLeg2",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0,
+                0.15,
+                0.333
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                193.3421052631579,
+                135.9
+              ],
+              "socketRoi": [
+                180.3421052631579,
+                122.9,
+                26,
+                26
+              ],
+              "heightAxis": [
+                0.16666666666666669,
+                0.9860132971832694
+              ],
+              "calibrate": {
+                "groundY": 425,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.25,
+              "layer": -1,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "rightLeg2",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0,
+                0.15,
+                0.333
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                193.3421052631579,
+                135.9
+              ],
+              "socketRoi": [
+                180.3421052631579,
+                122.9,
+                26,
+                26
+              ],
+              "heightAxis": [
+                0.16666666666666669,
+                0.9860132971832694
+              ],
+              "calibrate": {
+                "groundY": 430,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.75,
+              "layer": 2,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "leftLeg3",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0,
+                0.15,
+                0.333
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                176.21052631578945,
+                129.6
+              ],
+              "socketRoi": [
+                163.21052631578945,
+                116.6,
+                26,
+                26
+              ],
+              "heightAxis": [
+                -0.16666666666666663,
+                0.9860132971832694
+              ],
+              "calibrate": {
+                "groundY": 425,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.5,
+              "layer": -1,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "rightLeg3",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0,
+                0.15,
+                0.333
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                176.21052631578945,
+                129.6
+              ],
+              "socketRoi": [
+                163.21052631578945,
+                116.6,
+                26,
+                26
+              ],
+              "heightAxis": [
+                -0.16666666666666663,
+                0.9860132971832694
+              ],
+              "calibrate": {
+                "groundY": 430,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0,
+              "layer": 2,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "leftLeg4",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0,
+                0.15,
+                0.333
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                159.078947368421,
+                123.30000000000001
+              ],
+              "socketRoi": [
+                146.078947368421,
+                110.30000000000001,
+                26,
+                26
+              ],
+              "heightAxis": [
+                -0.5,
+                0.8660254037844386
+              ],
+              "calibrate": {
+                "groundY": 425,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.75,
+              "layer": -1,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "rightLeg4",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0,
+                0.15,
+                0.333
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                159.078947368421,
+                123.30000000000001
+              ],
+              "socketRoi": [
+                146.078947368421,
+                110.30000000000001,
+                26,
+                26
+              ],
+              "heightAxis": [
+                -0.5,
+                0.8660254037844386
+              ],
+              "calibrate": {
+                "groundY": 430,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.25,
+              "layer": 2,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            }
+          ]
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/t3-arthropod-01-front-back-parts.png",
+          "sourceSha256": "5797b7f87410a9c9f39a54a7535ea70a2dad71b69f71bced9d787302365b4cfc",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            430
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.225,
+              0.333
+            ],
+            "target": [
+              180.56709956709955,
+              165,
+              150.86580086580088,
+              205
+            ],
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftLeg1",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0,
+                0.14999999999999997,
+                0.333
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                101.0800865800866,
+                174.25
+              ],
+              "socketRoi": [
+                88.0800865800866,
+                161.25,
+                26,
+                26
+              ],
+              "heightAxis": [
+                0.43,
+                0.9028288874421332
+              ],
+              "calibrate": {
+                "groundY": 435,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0,
+              "layer": 3,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "rightLeg1",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0,
+                0.14999999999999997,
+                0.333
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": true,
+              "socket": [
+                49.78571428571429,
+                174.25
+              ],
+              "socketRoi": [
+                36.78571428571429,
+                161.25,
+                26,
+                26
+              ],
+              "heightAxis": [
+                -0.43,
+                0.9028288874421332
+              ],
+              "calibrate": {
+                "groundY": 435,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.5,
+              "layer": 3,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "leftLeg2",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0,
+                0.14999999999999997,
+                0.333
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                101.0800865800866,
+                160.58333333333334
+              ],
+              "socketRoi": [
+                88.0800865800866,
+                147.58333333333334,
+                26,
+                26
+              ],
+              "heightAxis": [
+                0.49,
+                0.8717224328879004
+              ],
+              "calibrate": {
+                "groundY": 427,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.25,
+              "layer": 2,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "rightLeg2",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0,
+                0.14999999999999997,
+                0.333
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": true,
+              "socket": [
+                49.78571428571429,
+                160.58333333333334
+              ],
+              "socketRoi": [
+                36.78571428571429,
+                147.58333333333334,
+                26,
+                26
+              ],
+              "heightAxis": [
+                -0.49,
+                0.8717224328879004
+              ],
+              "calibrate": {
+                "groundY": 427,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.75,
+              "layer": 2,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "leftLeg3",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0,
+                0.14999999999999997,
+                0.333
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                101.0800865800866,
+                146.91666666666666
+              ],
+              "socketRoi": [
+                88.0800865800866,
+                133.91666666666666,
+                26,
+                26
+              ],
+              "heightAxis": [
+                0.55,
+                0.8351646544245033
+              ],
+              "calibrate": {
+                "groundY": 419,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "rightLeg3",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0,
+                0.14999999999999997,
+                0.333
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": true,
+              "socket": [
+                49.78571428571429,
+                146.91666666666666
+              ],
+              "socketRoi": [
+                36.78571428571429,
+                133.91666666666666,
+                26,
+                26
+              ],
+              "heightAxis": [
+                -0.55,
+                0.8351646544245033
+              ],
+              "calibrate": {
+                "groundY": 419,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0,
+              "layer": 1,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "leftLeg4",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0,
+                0.14999999999999997,
+                0.333
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                101.0800865800866,
+                133.24999999999997
+              ],
+              "socketRoi": [
+                88.0800865800866,
+                120.24999999999997,
+                26,
+                26
+              ],
+              "heightAxis": [
+                0.61,
+                0.7924014134263012
+              ],
+              "calibrate": {
+                "groundY": 411,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.75,
+              "layer": 0,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "rightLeg4",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0,
+                0.14999999999999997,
+                0.333
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": true,
+              "socket": [
+                49.78571428571429,
+                133.24999999999997
+              ],
+              "socketRoi": [
+                36.78571428571429,
+                120.24999999999997,
+                26,
+                26
+              ],
+              "heightAxis": [
+                -0.61,
+                0.7924014134263012
+              ],
+              "calibrate": {
+                "groundY": 411,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.25,
+              "layer": 0,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            }
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/t3-arthropod-01-front-back-parts.png",
+          "sourceSha256": "5797b7f87410a9c9f39a54a7535ea70a2dad71b69f71bced9d787302365b4cfc",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            430
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              0.255
+            ],
+            "target": [
+              183.66516516516515,
+              165,
+              144.66966966966967,
+              205
+            ],
+            "layer": 10,
+            "source": "tools/art-review/directional-101/swamp-back-body-correction.png",
+            "sourceSha256": "98abfe48f2750e4626cb69c0d95f84e105a7f4e8880bdeffd6c68984c6810e6a",
+            "background": "checkerboard"
+          },
+          "parts": [
+            {
+              "id": "leftLeg1",
+              "type": "leg",
+              "roi": [
+                0.84,
+                0,
+                0.16000000000000003,
+                0.333
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": true,
+              "socket": [
+                47.740990990990994,
+                47.15
+              ],
+              "socketRoi": [
+                34.740990990990994,
+                34.15,
+                26,
+                26
+              ],
+              "heightAxis": [
+                -0.43,
+                0.9028288874421332
+              ],
+              "calibrate": {
+                "groundY": 405,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0,
+              "layer": 0,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "rightLeg1",
+              "type": "leg",
+              "roi": [
+                0.84,
+                0,
+                0.16000000000000003,
+                0.333
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                96.9286786786787,
+                47.15
+              ],
+              "socketRoi": [
+                83.9286786786787,
+                34.15,
+                26,
+                26
+              ],
+              "heightAxis": [
+                0.43,
+                0.9028288874421332
+              ],
+              "calibrate": {
+                "groundY": 405,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.5,
+              "layer": 0,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "leftLeg2",
+              "type": "leg",
+              "roi": [
+                0.84,
+                0,
+                0.16000000000000003,
+                0.333
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": true,
+              "socket": [
+                47.740990990990994,
+                71.06666666666666
+              ],
+              "socketRoi": [
+                34.740990990990994,
+                58.06666666666666,
+                26,
+                26
+              ],
+              "heightAxis": [
+                -0.49,
+                0.8717224328879004
+              ],
+              "calibrate": {
+                "groundY": 415,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.25,
+              "layer": 1,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "rightLeg2",
+              "type": "leg",
+              "roi": [
+                0.84,
+                0,
+                0.16000000000000003,
+                0.333
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                96.9286786786787,
+                71.06666666666666
+              ],
+              "socketRoi": [
+                83.9286786786787,
+                58.06666666666666,
+                26,
+                26
+              ],
+              "heightAxis": [
+                0.49,
+                0.8717224328879004
+              ],
+              "calibrate": {
+                "groundY": 415,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.75,
+              "layer": 1,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "leftLeg3",
+              "type": "leg",
+              "roi": [
+                0.84,
+                0,
+                0.16000000000000003,
+                0.333
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": true,
+              "socket": [
+                47.740990990990994,
+                94.98333333333333
+              ],
+              "socketRoi": [
+                34.740990990990994,
+                81.98333333333333,
+                26,
+                26
+              ],
+              "heightAxis": [
+                -0.55,
+                0.8351646544245033
+              ],
+              "calibrate": {
+                "groundY": 425,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.5,
+              "layer": 2,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "rightLeg3",
+              "type": "leg",
+              "roi": [
+                0.84,
+                0,
+                0.16000000000000003,
+                0.333
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                96.9286786786787,
+                94.98333333333333
+              ],
+              "socketRoi": [
+                83.9286786786787,
+                81.98333333333333,
+                26,
+                26
+              ],
+              "heightAxis": [
+                0.55,
+                0.8351646544245033
+              ],
+              "calibrate": {
+                "groundY": 425,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0,
+              "layer": 2,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "leftLeg4",
+              "type": "leg",
+              "roi": [
+                0.84,
+                0,
+                0.16000000000000003,
+                0.333
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": true,
+              "socket": [
+                47.740990990990994,
+                118.89999999999999
+              ],
+              "socketRoi": [
+                34.740990990990994,
+                105.89999999999999,
+                26,
+                26
+              ],
+              "heightAxis": [
+                -0.61,
+                0.7924014134263012
+              ],
+              "calibrate": {
+                "groundY": 435,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.75,
+              "layer": 3,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "rightLeg4",
+              "type": "leg",
+              "roi": [
+                0.84,
+                0,
+                0.16000000000000003,
+                0.333
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                96.9286786786787,
+                118.89999999999999
+              ],
+              "socketRoi": [
+                83.9286786786787,
+                105.89999999999999,
+                26,
+                26
+              ],
+              "heightAxis": [
+                0.61,
+                0.7924014134263012
+              ],
+              "calibrate": {
+                "groundY": 435,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.25,
+              "layer": 3,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            }
+          ]
+        }
+      },
+      "reviewNotes": "Reviewed every pose in all3views; actual rear anatomy corrected, cylindrical downward-axis leg pieces reused across side/front, fixed6/8legs with source-pinned splayed axes and alternating stance, no detached rear side roots."
+    },
+    {
+      "assetId": "w026",
+      "wave": 26,
+      "role": "normal",
+      "locomotion": "legged",
+      "anatomy": "arthropod",
+      "cell": 256,
+      "referenceHeight": 350,
+      "cycleStride": 80,
+      "reviewApproved": true,
+      "gait": {
+        "stanceDuty": 0.65,
+        "lift": 13,
+        "pelvis": "fixed"
+      },
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/t3-arthropod-01-front-back-parts.png",
+          "sourceSha256": "5797b7f87410a9c9f39a54a7535ea70a2dad71b69f71bced9d787302365b4cfc",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            430
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.333,
+              0.44,
+              0.332
+            ],
+            "target": [
+              134.01413881748073,
+              100,
+              243.97172236503857,
+              285
+            ],
+            "layer": 10,
+            "source": "tools/art-review/directional-101/t3-arthropod-01-side-parts.png",
+            "sourceSha256": "77d6cfae60b00988554cfbef23a2f77fc9b11ea58415066813bfaddde20d5f6b",
+            "background": "checkerboard"
+          },
+          "parts": [
+            {
+              "id": "leftLeg1",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0.333,
+                0.15,
+                0.332
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                158.5816195372751,
+                179.55
+              ],
+              "socketRoi": [
+                145.5816195372751,
+                166.55,
+                26,
+                26
+              ],
+              "heightAxis": [
+                0.5,
+                0.8660254037844386
+              ],
+              "calibrate": {
+                "groundY": 425,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0,
+              "layer": -1,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "rightLeg1",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0.333,
+                0.15,
+                0.332
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                158.5816195372751,
+                179.55
+              ],
+              "socketRoi": [
+                145.5816195372751,
+                166.55,
+                26,
+                26
+              ],
+              "heightAxis": [
+                0.5,
+                0.8660254037844386
+              ],
+              "calibrate": {
+                "groundY": 430,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.5,
+              "layer": 2,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "leftLeg2",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0.333,
+                0.15,
+                0.332
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                129.30501285347046,
+                169.575
+              ],
+              "socketRoi": [
+                116.30501285347046,
+                156.575,
+                26,
+                26
+              ],
+              "heightAxis": [
+                0.16666666666666669,
+                0.9860132971832694
+              ],
+              "calibrate": {
+                "groundY": 425,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.25,
+              "layer": -1,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "rightLeg2",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0.333,
+                0.15,
+                0.332
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                129.30501285347046,
+                169.575
+              ],
+              "socketRoi": [
+                116.30501285347046,
+                156.575,
+                26,
+                26
+              ],
+              "heightAxis": [
+                0.16666666666666669,
+                0.9860132971832694
+              ],
+              "calibrate": {
+                "groundY": 430,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.75,
+              "layer": 2,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "leftLeg3",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0.333,
+                0.15,
+                0.332
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                100.02840616966583,
+                159.60000000000002
+              ],
+              "socketRoi": [
+                87.02840616966583,
+                146.60000000000002,
+                26,
+                26
+              ],
+              "heightAxis": [
+                -0.16666666666666663,
+                0.9860132971832694
+              ],
+              "calibrate": {
+                "groundY": 425,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.5,
+              "layer": -1,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "rightLeg3",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0.333,
+                0.15,
+                0.332
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                100.02840616966583,
+                159.60000000000002
+              ],
+              "socketRoi": [
+                87.02840616966583,
+                146.60000000000002,
+                26,
+                26
+              ],
+              "heightAxis": [
+                -0.16666666666666663,
+                0.9860132971832694
+              ],
+              "calibrate": {
+                "groundY": 430,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0,
+              "layer": 2,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "leftLeg4",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0.333,
+                0.15,
+                0.332
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                70.7517994858612,
+                149.625
+              ],
+              "socketRoi": [
+                57.7517994858612,
+                136.625,
+                26,
+                26
+              ],
+              "heightAxis": [
+                -0.5,
+                0.8660254037844386
+              ],
+              "calibrate": {
+                "groundY": 425,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.75,
+              "layer": -1,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "rightLeg4",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0.333,
+                0.15,
+                0.332
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                70.7517994858612,
+                149.625
+              ],
+              "socketRoi": [
+                57.7517994858612,
+                136.625,
+                26,
+                26
+              ],
+              "heightAxis": [
+                -0.5,
+                0.8660254037844386
+              ],
+              "calibrate": {
+                "groundY": 430,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.25,
+              "layer": 2,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            }
+          ]
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/t3-arthropod-01-front-back-parts.png",
+          "sourceSha256": "5797b7f87410a9c9f39a54a7535ea70a2dad71b69f71bced9d787302365b4cfc",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            430
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.333,
+              0.225,
+              0.332
+            ],
+            "target": [
+              165.17134831460675,
+              100,
+              181.6573033707865,
+              290
+            ],
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftLeg1",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0.333,
+                0.14999999999999997,
+                0.332
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                121.71039325842696,
+                246.5
+              ],
+              "socketRoi": [
+                108.71039325842696,
+                233.5,
+                26,
+                26
+              ],
+              "heightAxis": [
+                0.43,
+                0.9028288874421332
+              ],
+              "calibrate": {
+                "groundY": 435,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0,
+              "layer": 3,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "rightLeg1",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0.333,
+                0.14999999999999997,
+                0.332
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": true,
+              "socket": [
+                59.946910112359554,
+                246.5
+              ],
+              "socketRoi": [
+                46.946910112359554,
+                233.5,
+                26,
+                26
+              ],
+              "heightAxis": [
+                -0.43,
+                0.9028288874421332
+              ],
+              "calibrate": {
+                "groundY": 435,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.5,
+              "layer": 3,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "leftLeg2",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0.333,
+                0.14999999999999997,
+                0.332
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                121.71039325842696,
+                227.16666666666666
+              ],
+              "socketRoi": [
+                108.71039325842696,
+                214.16666666666666,
+                26,
+                26
+              ],
+              "heightAxis": [
+                0.49,
+                0.8717224328879004
+              ],
+              "calibrate": {
+                "groundY": 427,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.25,
+              "layer": 2,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "rightLeg2",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0.333,
+                0.14999999999999997,
+                0.332
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": true,
+              "socket": [
+                59.946910112359554,
+                227.16666666666666
+              ],
+              "socketRoi": [
+                46.946910112359554,
+                214.16666666666666,
+                26,
+                26
+              ],
+              "heightAxis": [
+                -0.49,
+                0.8717224328879004
+              ],
+              "calibrate": {
+                "groundY": 427,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.75,
+              "layer": 2,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "leftLeg3",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0.333,
+                0.14999999999999997,
+                0.332
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                121.71039325842696,
+                207.83333333333334
+              ],
+              "socketRoi": [
+                108.71039325842696,
+                194.83333333333334,
+                26,
+                26
+              ],
+              "heightAxis": [
+                0.55,
+                0.8351646544245033
+              ],
+              "calibrate": {
+                "groundY": 419,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "rightLeg3",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0.333,
+                0.14999999999999997,
+                0.332
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": true,
+              "socket": [
+                59.946910112359554,
+                207.83333333333334
+              ],
+              "socketRoi": [
+                46.946910112359554,
+                194.83333333333334,
+                26,
+                26
+              ],
+              "heightAxis": [
+                -0.55,
+                0.8351646544245033
+              ],
+              "calibrate": {
+                "groundY": 419,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0,
+              "layer": 1,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "leftLeg4",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0.333,
+                0.14999999999999997,
+                0.332
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                121.71039325842696,
+                188.49999999999997
+              ],
+              "socketRoi": [
+                108.71039325842696,
+                175.49999999999997,
+                26,
+                26
+              ],
+              "heightAxis": [
+                0.61,
+                0.7924014134263012
+              ],
+              "calibrate": {
+                "groundY": 411,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.75,
+              "layer": 0,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "rightLeg4",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0.333,
+                0.14999999999999997,
+                0.332
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": true,
+              "socket": [
+                59.946910112359554,
+                188.49999999999997
+              ],
+              "socketRoi": [
+                46.946910112359554,
+                175.49999999999997,
+                26,
+                26
+              ],
+              "heightAxis": [
+                -0.61,
+                0.7924014134263012
+              ],
+              "calibrate": {
+                "groundY": 411,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.25,
+              "layer": 0,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            }
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/t3-arthropod-01-front-back-parts.png",
+          "sourceSha256": "5797b7f87410a9c9f39a54a7535ea70a2dad71b69f71bced9d787302365b4cfc",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            430
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.255,
+              1,
+              0.25
+            ],
+            "target": [
+              175.10526315789474,
+              100,
+              161.78947368421052,
+              290
+            ],
+            "layer": 10,
+            "source": "tools/art-review/directional-101/swamp-back-body-correction.png",
+            "sourceSha256": "98abfe48f2750e4626cb69c0d95f84e105a7f4e8880bdeffd6c68984c6810e6a",
+            "background": "checkerboard"
+          },
+          "parts": [
+            {
+              "id": "leftLeg1",
+              "type": "leg",
+              "roi": [
+                0.84,
+                0.333,
+                0.16000000000000003,
+                0.332
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": true,
+              "socket": [
+                53.39052631578947,
+                66.7
+              ],
+              "socketRoi": [
+                40.39052631578947,
+                53.7,
+                26,
+                26
+              ],
+              "heightAxis": [
+                -0.43,
+                0.9028288874421332
+              ],
+              "calibrate": {
+                "groundY": 405,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0,
+              "layer": 0,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "rightLeg1",
+              "type": "leg",
+              "roi": [
+                0.84,
+                0.333,
+                0.16000000000000003,
+                0.332
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                108.39894736842105,
+                66.7
+              ],
+              "socketRoi": [
+                95.39894736842105,
+                53.7,
+                26,
+                26
+              ],
+              "heightAxis": [
+                0.43,
+                0.9028288874421332
+              ],
+              "calibrate": {
+                "groundY": 405,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.5,
+              "layer": 0,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "leftLeg2",
+              "type": "leg",
+              "roi": [
+                0.84,
+                0.333,
+                0.16000000000000003,
+                0.332
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": true,
+              "socket": [
+                53.39052631578947,
+                100.53333333333333
+              ],
+              "socketRoi": [
+                40.39052631578947,
+                87.53333333333333,
+                26,
+                26
+              ],
+              "heightAxis": [
+                -0.49,
+                0.8717224328879004
+              ],
+              "calibrate": {
+                "groundY": 415,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.25,
+              "layer": 1,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "rightLeg2",
+              "type": "leg",
+              "roi": [
+                0.84,
+                0.333,
+                0.16000000000000003,
+                0.332
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                108.39894736842105,
+                100.53333333333333
+              ],
+              "socketRoi": [
+                95.39894736842105,
+                87.53333333333333,
+                26,
+                26
+              ],
+              "heightAxis": [
+                0.49,
+                0.8717224328879004
+              ],
+              "calibrate": {
+                "groundY": 415,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.75,
+              "layer": 1,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "leftLeg3",
+              "type": "leg",
+              "roi": [
+                0.84,
+                0.333,
+                0.16000000000000003,
+                0.332
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": true,
+              "socket": [
+                53.39052631578947,
+                134.36666666666667
+              ],
+              "socketRoi": [
+                40.39052631578947,
+                121.36666666666667,
+                26,
+                26
+              ],
+              "heightAxis": [
+                -0.55,
+                0.8351646544245033
+              ],
+              "calibrate": {
+                "groundY": 425,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.5,
+              "layer": 2,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "rightLeg3",
+              "type": "leg",
+              "roi": [
+                0.84,
+                0.333,
+                0.16000000000000003,
+                0.332
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                108.39894736842105,
+                134.36666666666667
+              ],
+              "socketRoi": [
+                95.39894736842105,
+                121.36666666666667,
+                26,
+                26
+              ],
+              "heightAxis": [
+                0.55,
+                0.8351646544245033
+              ],
+              "calibrate": {
+                "groundY": 425,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0,
+              "layer": 2,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "leftLeg4",
+              "type": "leg",
+              "roi": [
+                0.84,
+                0.333,
+                0.16000000000000003,
+                0.332
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": true,
+              "socket": [
+                53.39052631578947,
+                168.2
+              ],
+              "socketRoi": [
+                40.39052631578947,
+                155.2,
+                26,
+                26
+              ],
+              "heightAxis": [
+                -0.61,
+                0.7924014134263012
+              ],
+              "calibrate": {
+                "groundY": 435,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.75,
+              "layer": 3,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "rightLeg4",
+              "type": "leg",
+              "roi": [
+                0.84,
+                0.333,
+                0.16000000000000003,
+                0.332
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                108.39894736842105,
+                168.2
+              ],
+              "socketRoi": [
+                95.39894736842105,
+                155.2,
+                26,
+                26
+              ],
+              "heightAxis": [
+                0.61,
+                0.7924014134263012
+              ],
+              "calibrate": {
+                "groundY": 435,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.25,
+              "layer": 3,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            }
+          ]
+        }
+      },
+      "reviewNotes": "Reviewed every pose in all3views; actual rear anatomy corrected, cylindrical downward-axis leg pieces reused across side/front, fixed6/8legs with source-pinned splayed axes and alternating stance, no detached rear side roots."
+    },
+    {
+      "assetId": "w028",
+      "wave": 28,
+      "role": "normal",
+      "locomotion": "legged",
+      "anatomy": "arthropod",
+      "cell": 256,
+      "referenceHeight": 350,
+      "cycleStride": 80,
+      "reviewApproved": true,
+      "gait": {
+        "stanceDuty": 0.65,
+        "lift": 13,
+        "pelvis": "fixed"
+      },
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/t3-arthropod-01-front-back-parts.png",
+          "sourceSha256": "5797b7f87410a9c9f39a54a7535ea70a2dad71b69f71bced9d787302365b4cfc",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            430
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.665,
+              0.44,
+              0.33499999999999996
+            ],
+            "target": [
+              117.5677966101695,
+              165,
+              276.864406779661,
+              180
+            ],
+            "layer": 10,
+            "source": "tools/art-review/directional-101/t3-arthropod-01-side-parts.png",
+            "sourceSha256": "77d6cfae60b00988554cfbef23a2f77fc9b11ea58415066813bfaddde20d5f6b",
+            "background": "checkerboard"
+          },
+          "parts": [
+            {
+              "id": "leftLeg1",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0.665,
+                0.15,
+                0.33499999999999996
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                193.80508474576268,
+                142.20000000000002
+              ],
+              "socketRoi": [
+                180.80508474576268,
+                129.20000000000002,
+                26,
+                26
+              ],
+              "heightAxis": [
+                0.5,
+                0.8660254037844386
+              ],
+              "calibrate": {
+                "groundY": 425,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0,
+              "layer": -1,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "rightLeg1",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0.665,
+                0.15,
+                0.33499999999999996
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                193.80508474576268,
+                142.20000000000002
+              ],
+              "socketRoi": [
+                180.80508474576268,
+                129.20000000000002,
+                26,
+                26
+              ],
+              "heightAxis": [
+                0.5,
+                0.8660254037844386
+              ],
+              "calibrate": {
+                "groundY": 430,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.5,
+              "layer": 2,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "leftLeg2",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0.665,
+                0.15,
+                0.33499999999999996
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                160.58135593220337,
+                135.9
+              ],
+              "socketRoi": [
+                147.58135593220337,
+                122.9,
+                26,
+                26
+              ],
+              "heightAxis": [
+                0,
+                1
+              ],
+              "calibrate": {
+                "groundY": 425,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.3333333333333333,
+              "layer": -1,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "rightLeg2",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0.665,
+                0.15,
+                0.33499999999999996
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                160.58135593220337,
+                135.9
+              ],
+              "socketRoi": [
+                147.58135593220337,
+                122.9,
+                26,
+                26
+              ],
+              "heightAxis": [
+                0,
+                1
+              ],
+              "calibrate": {
+                "groundY": 430,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.8333333333333333,
+              "layer": 2,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "leftLeg3",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0.665,
+                0.15,
+                0.33499999999999996
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                127.35762711864406,
+                129.6
+              ],
+              "socketRoi": [
+                114.35762711864406,
+                116.6,
+                26,
+                26
+              ],
+              "heightAxis": [
+                -0.5,
+                0.8660254037844386
+              ],
+              "calibrate": {
+                "groundY": 425,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.6666666666666666,
+              "layer": -1,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "rightLeg3",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0.665,
+                0.15,
+                0.33499999999999996
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                127.35762711864406,
+                129.6
+              ],
+              "socketRoi": [
+                114.35762711864406,
+                116.6,
+                26,
+                26
+              ],
+              "heightAxis": [
+                -0.5,
+                0.8660254037844386
+              ],
+              "calibrate": {
+                "groundY": 430,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.16666666666666652,
+              "layer": 2,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            }
+          ]
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/t3-arthropod-01-front-back-parts.png",
+          "sourceSha256": "5797b7f87410a9c9f39a54a7535ea70a2dad71b69f71bced9d787302365b4cfc",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            430
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.665,
+              0.225,
+              0.33499999999999996
+            ],
+            "target": [
+              187.533203125,
+              165,
+              136.93359375,
+              205
+            ],
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftLeg1",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0.665,
+                0.14999999999999997,
+                0.33499999999999996
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                91.74550781250001,
+                174.25
+              ],
+              "socketRoi": [
+                78.74550781250001,
+                161.25,
+                26,
+                26
+              ],
+              "heightAxis": [
+                0.43,
+                0.9028288874421332
+              ],
+              "calibrate": {
+                "groundY": 435,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0,
+              "layer": 3,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "rightLeg1",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0.665,
+                0.14999999999999997,
+                0.33499999999999996
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": true,
+              "socket": [
+                45.1880859375,
+                174.25
+              ],
+              "socketRoi": [
+                32.1880859375,
+                161.25,
+                26,
+                26
+              ],
+              "heightAxis": [
+                -0.43,
+                0.9028288874421332
+              ],
+              "calibrate": {
+                "groundY": 435,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.5,
+              "layer": 3,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "leftLeg2",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0.665,
+                0.14999999999999997,
+                0.33499999999999996
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                91.74550781250001,
+                153.75
+              ],
+              "socketRoi": [
+                78.74550781250001,
+                140.75,
+                26,
+                26
+              ],
+              "heightAxis": [
+                0.49,
+                0.8717224328879004
+              ],
+              "calibrate": {
+                "groundY": 423,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.3333333333333333,
+              "layer": 2,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "rightLeg2",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0.665,
+                0.14999999999999997,
+                0.33499999999999996
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": true,
+              "socket": [
+                45.1880859375,
+                153.75
+              ],
+              "socketRoi": [
+                32.1880859375,
+                140.75,
+                26,
+                26
+              ],
+              "heightAxis": [
+                -0.49,
+                0.8717224328879004
+              ],
+              "calibrate": {
+                "groundY": 423,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.8333333333333333,
+              "layer": 2,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "leftLeg3",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0.665,
+                0.14999999999999997,
+                0.33499999999999996
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                91.74550781250001,
+                133.24999999999997
+              ],
+              "socketRoi": [
+                78.74550781250001,
+                120.24999999999997,
+                26,
+                26
+              ],
+              "heightAxis": [
+                0.55,
+                0.8351646544245033
+              ],
+              "calibrate": {
+                "groundY": 411,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.6666666666666666,
+              "layer": 1,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "rightLeg3",
+              "type": "leg",
+              "roi": [
+                0.34,
+                0.665,
+                0.14999999999999997,
+                0.33499999999999996
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": true,
+              "socket": [
+                45.1880859375,
+                133.24999999999997
+              ],
+              "socketRoi": [
+                32.1880859375,
+                120.24999999999997,
+                26,
+                26
+              ],
+              "heightAxis": [
+                -0.55,
+                0.8351646544245033
+              ],
+              "calibrate": {
+                "groundY": 411,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.16666666666666652,
+              "layer": 1,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            }
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/t3-arthropod-01-front-back-parts.png",
+          "sourceSha256": "5797b7f87410a9c9f39a54a7535ea70a2dad71b69f71bced9d787302365b4cfc",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            430
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.505,
+              1,
+              0.25
+            ],
+            "target": [
+              192.79624664879356,
+              165,
+              126.40750670241287,
+              205
+            ],
+            "layer": 10,
+            "source": "tools/art-review/directional-101/swamp-back-body-correction.png",
+            "sourceSha256": "98abfe48f2750e4626cb69c0d95f84e105a7f4e8880bdeffd6c68984c6810e6a",
+            "background": "checkerboard"
+          },
+          "parts": [
+            {
+              "id": "leftLeg1",
+              "type": "leg",
+              "roi": [
+                0.84,
+                0.665,
+                0.16000000000000003,
+                0.33499999999999996
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": true,
+              "socket": [
+                41.71447721179625,
+                47.15
+              ],
+              "socketRoi": [
+                28.71447721179625,
+                34.15,
+                26,
+                26
+              ],
+              "heightAxis": [
+                -0.43,
+                0.9028288874421332
+              ],
+              "calibrate": {
+                "groundY": 405,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0,
+              "layer": 0,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "rightLeg1",
+              "type": "leg",
+              "roi": [
+                0.84,
+                0.665,
+                0.16000000000000003,
+                0.33499999999999996
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                84.69302949061662,
+                47.15
+              ],
+              "socketRoi": [
+                71.69302949061662,
+                34.15,
+                26,
+                26
+              ],
+              "heightAxis": [
+                0.43,
+                0.9028288874421332
+              ],
+              "calibrate": {
+                "groundY": 405,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.5,
+              "layer": 0,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "leftLeg2",
+              "type": "leg",
+              "roi": [
+                0.84,
+                0.665,
+                0.16000000000000003,
+                0.33499999999999996
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": true,
+              "socket": [
+                41.71447721179625,
+                83.025
+              ],
+              "socketRoi": [
+                28.71447721179625,
+                70.025,
+                26,
+                26
+              ],
+              "heightAxis": [
+                -0.49,
+                0.8717224328879004
+              ],
+              "calibrate": {
+                "groundY": 420,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.3333333333333333,
+              "layer": 1,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "rightLeg2",
+              "type": "leg",
+              "roi": [
+                0.84,
+                0.665,
+                0.16000000000000003,
+                0.33499999999999996
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                84.69302949061662,
+                83.025
+              ],
+              "socketRoi": [
+                71.69302949061662,
+                70.025,
+                26,
+                26
+              ],
+              "heightAxis": [
+                0.49,
+                0.8717224328879004
+              ],
+              "calibrate": {
+                "groundY": 420,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.8333333333333333,
+              "layer": 1,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "leftLeg3",
+              "type": "leg",
+              "roi": [
+                0.84,
+                0.665,
+                0.16000000000000003,
+                0.33499999999999996
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": true,
+              "socket": [
+                41.71447721179625,
+                118.89999999999999
+              ],
+              "socketRoi": [
+                28.71447721179625,
+                105.89999999999999,
+                26,
+                26
+              ],
+              "heightAxis": [
+                -0.55,
+                0.8351646544245033
+              ],
+              "calibrate": {
+                "groundY": 435,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.6666666666666666,
+              "layer": 2,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            },
+            {
+              "id": "rightLeg3",
+              "type": "leg",
+              "roi": [
+                0.84,
+                0.665,
+                0.16000000000000003,
+                0.33499999999999996
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.15,
+                  0.08
+                ],
+                "knee": [
+                  0.62,
+                  0.41
+                ],
+                "ankle": [
+                  0.9,
+                  0.82
+                ],
+                "sole": [
+                  0.93,
+                  0.998
+                ]
+              },
+              "flipX": false,
+              "socket": [
+                84.69302949061662,
+                118.89999999999999
+              ],
+              "socketRoi": [
+                71.69302949061662,
+                105.89999999999999,
+                26,
+                26
+              ],
+              "heightAxis": [
+                0.55,
+                0.8351646544245033
+              ],
+              "calibrate": {
+                "groundY": 435,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.16666666666666652,
+              "layer": 2,
+              "upperLayer": -5,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.08,
+              "bend": 1
+            }
+          ]
+        }
+      },
+      "reviewNotes": "Reviewed every pose in all3views; actual rear anatomy corrected, cylindrical downward-axis leg pieces reused across side/front, fixed6/8legs with source-pinned splayed axes and alternating stance, no detached rear side roots."
+    }
+  ]
+}

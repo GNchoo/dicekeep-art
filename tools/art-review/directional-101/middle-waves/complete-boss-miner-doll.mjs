@@ -1,0 +1,17 @@
+import fs from 'node:fs';
+import {dir, measuredView, newBiped} from './biped-config-lib.mjs';
+const read=n=>JSON.parse(fs.readFileSync(dir+'/'+n,'utf8'));
+const save=(n,c)=>fs.writeFileSync(dir+'/'+n,JSON.stringify(c,null,2)+'\n');
+const boss=read('t4-boss-01-rigs.json');
+const king=boss.entries.find(e=>e.assetId==='b040');
+king.views.back=measuredView('t4-boss-01-back-parts-clean',0,{name:'back',sockets:[[.35,.77],[.56,.77]],kneeY:.5,ankleY:.75});
+king.views.back.body.flipX=true;
+king.views.back.jointReview+=' Body reflected to preserve staff physical right hand; socket coordinates refer to reflected torso.';
+save('t4-boss-01-rigs.json',boss);
+const miners=read('t5-biped-02a-rigs.json');
+miners.entries[0].views.back=measuredView('t5-biped-02a-back-parts',0,{name:'back',sockets:[[.26,.88],[.47,.88]],kneeY:.5,ankleY:.8});
+miners.entries[1].views.back=measuredView('t5-biped-02a-back-parts',1,{name:'back',sockets:[[.27,.89],[.53,.89]],kneeY:.5,ankleY:.8});
+save('t5-biped-02a-rigs.json',miners);
+const doll=newBiped(58);
+for(const [i,name] of ['side','front','back'].entries())doll.views[name]=measuredView('t6-doll-three-view-parts',i,{name,sockets:i===0?[[.46,.87],[.64,.87]]:i===1?[[.61,.87],[.38,.87]]:[[.37,.87],[.62,.87]],kneeY:.4,ankleY:.65});
+save('t6-doll-rigs.json',{version:1,canonicalCell:512,assetVersion:93,entries:[doll]});

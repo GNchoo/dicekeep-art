@@ -1,0 +1,4 @@
+// Collect only explicitly reviewed source-pinned configs. Never grants approval.
+import fs from'node:fs';const d='tools/art-review/directional-101/middle-waves',reviews=JSON.parse(fs.readFileSync(d+'/reviewed-entries.json')),entries=[];
+for(const file of [...new Set(reviews.entries.filter(r=>r.reviewed).map(r=>r.config))]){const c=JSON.parse(fs.readFileSync(d+'/'+file));for(const e of c.entries){const r=reviews.entries.find(r=>r.assetId===e.assetId&&r.config===file&&r.reviewed);if(!r)continue;if(e.reviewApproved!==true||Object.keys(e.views).length!==3)throw Error('review record does not match approved complete config '+e.assetId);entries.push(e);}}
+if(new Set(entries.map(e=>e.assetId)).size!==entries.length)throw Error('duplicate entry');const all={version:1,canonicalCell:512,assetVersion:93,entries};fs.writeFileSync(d+'/production-rigs.json',JSON.stringify(all,null,2)+'\n');console.log(entries.map(e=>e.assetId).join(','));

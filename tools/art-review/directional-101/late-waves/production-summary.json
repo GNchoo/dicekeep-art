@@ -1,0 +1,41 @@
+{
+  "scope": "Prepared late-wave 61–101 artwork, deterministic composition and output review. Live game integration is performed separately by the root task.",
+  "entries": 45,
+  "ordinary": 37,
+  "bosses": 4,
+  "secondaryBosses": 4,
+  "views": 135,
+  "bakedPoses": 912,
+  "runtimePng": 270,
+  "reviewPng": 135,
+  "reviewGif": 135,
+  "checkedFileFormats": {
+    "png": 405,
+    "gif": 135
+  },
+  "inlineFallbacks": 135,
+  "sourceChecks": 162,
+  "sourceOriginals": 50,
+  "derivedSources": 18,
+  "generationRequests": 50,
+  "reportedMonetaryCost": null,
+  "ready": 45,
+  "manifestSha256": "baccb5c3897f71a7270bfba0e01a29aea267dbb0e5fa73a22df3d4c24cb452df",
+  "qaSha256": "21094724df142af970b6de49ca63f49500de6f4455806f5e30e28e3000d89b08",
+  "movingQaSha256": "53f735396a9a94cb9b34fa10ba3112554ea4d0dcc1205fb4ec8a4d30baba2ec8",
+  "packageValidation": true,
+  "outputValidation": true,
+  "movingValidation": {
+    "passed": true,
+    "entries": 45,
+    "cycles": 3,
+    "errors": []
+  },
+  "limitations": [
+    "Articulated painted cutouts retain enlarged joint/band texture seams.",
+    "Cloth, weapons, fur and necks are generally fixed upper-body artwork.",
+    "Eight raster poses have bounded held-frame contact excursion; sampled contact is separately reported.",
+    "Flight/float preview travel is a declared review distance, not a measured game speed."
+  ],
+  "finalCorrection": "W91 back base replaced by original plain rear component, with per-piece SHA and extraction rectangle retained."
+}

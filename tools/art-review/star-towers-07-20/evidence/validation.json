@@ -1,0 +1,299 @@
+{
+  "pass": true,
+  "assetsPassed": 14,
+  "assetsTotal": 14,
+  "sourceHashesVerified": 4,
+  "uniqueRuntimeHashes": 14,
+  "rebuildCheck": true,
+  "reviewedBackgroundSeeds": 17,
+  "manualVisualReview": {
+    "pipFaces": "All 14 have five pips in four-corners-plus-center arrangement.",
+    "silhouette": "Reviewed at 70×96 maximum display and 4× enlargement; all 14 architectural identities are distinct.",
+    "alpha": "Reviewed on dark and light backgrounds; enclosed portal, orbital-ring, cathedral-buttress, and floating-citadel gaps are transparent.",
+    "style": "Approachable painted fantasy masonry and crystals; no gore, text, or placeholder sprites."
+  },
+  "runtimeIntegration": "This validator reproduces static fit only; browser-validation.json separately records real game render and launch observations when browser-check.cjs is run.",
+  "assets": [
+    {
+      "star": 7,
+      "checks": {
+        "size": true,
+        "alpha": true,
+        "clearBorder": true,
+        "foot": true,
+        "hash": true,
+        "fit": true,
+        "emitter": true,
+        "rebuild": true
+      },
+      "foregroundBox": [
+        106,
+        16,
+        279,
+        376
+      ],
+      "transparentPixels": 105386
+    },
+    {
+      "star": 8,
+      "checks": {
+        "size": true,
+        "alpha": true,
+        "clearBorder": true,
+        "foot": true,
+        "hash": true,
+        "fit": true,
+        "emitter": true,
+        "rebuild": true
+      },
+      "foregroundBox": [
+        109,
+        16,
+        276,
+        376
+      ],
+      "transparentPixels": 105550
+    },
+    {
+      "star": 9,
+      "checks": {
+        "size": true,
+        "alpha": true,
+        "clearBorder": true,
+        "foot": true,
+        "hash": true,
+        "fit": true,
+        "emitter": true,
+        "rebuild": true
+      },
+      "foregroundBox": [
+        110,
+        16,
+        275,
+        376
+      ],
+      "transparentPixels": 107841
+    },
+    {
+      "star": 10,
+      "checks": {
+        "size": true,
+        "alpha": true,
+        "clearBorder": true,
+        "foot": true,
+        "hash": true,
+        "fit": true,
+        "emitter": true,
+        "rebuild": true
+      },
+      "foregroundBox": [
+        66,
+        16,
+        318,
+        376
+      ],
+      "transparentPixels": 88848
+    },
+    {
+      "star": 11,
+      "checks": {
+        "size": true,
+        "alpha": true,
+        "clearBorder": true,
+        "foot": true,
+        "hash": true,
+        "fit": true,
+        "emitter": true,
+        "rebuild": true
+      },
+      "foregroundBox": [
+        100,
+        16,
+        284,
+        376
+      ],
+      "transparentPixels": 100157
+    },
+    {
+      "star": 12,
+      "checks": {
+        "size": true,
+        "alpha": true,
+        "clearBorder": true,
+        "foot": true,
+        "hash": true,
+        "fit": true,
+        "emitter": true,
+        "rebuild": true
+      },
+      "foregroundBox": [
+        107,
+        16,
+        278,
+        376
+      ],
+      "transparentPixels": 108251
+    },
+    {
+      "star": 13,
+      "checks": {
+        "size": true,
+        "alpha": true,
+        "clearBorder": true,
+        "foot": true,
+        "hash": true,
+        "fit": true,
+        "emitter": true,
+        "rebuild": true
+      },
+      "foregroundBox": [
+        93,
+        16,
+        292,
+        376
+      ],
+      "transparentPixels": 100788
+    },
+    {
+      "star": 14,
+      "checks": {
+        "size": true,
+        "alpha": true,
+        "clearBorder": true,
+        "foot": true,
+        "hash": true,
+        "fit": true,
+        "emitter": true,
+        "rebuild": true
+      },
+      "foregroundBox": [
+        94,
+        16,
+        291,
+        376
+      ],
+      "transparentPixels": 98704
+    },
+    {
+      "star": 15,
+      "checks": {
+        "size": true,
+        "alpha": true,
+        "clearBorder": true,
+        "foot": true,
+        "hash": true,
+        "fit": true,
+        "emitter": true,
+        "rebuild": true
+      },
+      "foregroundBox": [
+        108,
+        16,
+        277,
+        376
+      ],
+      "transparentPixels": 110730
+    },
+    {
+      "star": 16,
+      "checks": {
+        "size": true,
+        "alpha": true,
+        "clearBorder": true,
+        "foot": true,
+        "hash": true,
+        "fit": true,
+        "emitter": true,
+        "rebuild": true
+      },
+      "foregroundBox": [
+        73,
+        16,
+        311,
+        376
+      ],
+      "transparentPixels": 91504
+    },
+    {
+      "star": 17,
+      "checks": {
+        "size": true,
+        "alpha": true,
+        "clearBorder": true,
+        "foot": true,
+        "hash": true,
+        "fit": true,
+        "emitter": true,
+        "rebuild": true
+      },
+      "foregroundBox": [
+        87,
+        16,
+        298,
+        376
+      ],
+      "transparentPixels": 96898
+    },
+    {
+      "star": 18,
+      "checks": {
+        "size": true,
+        "alpha": true,
+        "clearBorder": true,
+        "foot": true,
+        "hash": true,
+        "fit": true,
+        "emitter": true,
+        "rebuild": true
+      },
+      "foregroundBox": [
+        70,
+        16,
+        314,
+        376
+      ],
+      "transparentPixels": 95884
+    },
+    {
+      "star": 19,
+      "checks": {
+        "size": true,
+        "alpha": true,
+        "clearBorder": true,
+        "foot": true,
+        "hash": true,
+        "fit": true,
+        "emitter": true,
+        "rebuild": true
+      },
+      "foregroundBox": [
+        113,
+        16,
+        272,
+        376
+      ],
+      "transparentPixels": 111440
+    },
+    {
+      "star": 20,
+      "checks": {
+        "size": true,
+        "alpha": true,
+        "clearBorder": true,
+        "foot": true,
+        "hash": true,
+        "fit": true,
+        "emitter": true,
+        "rebuild": true
+      },
+      "foregroundBox": [
+        98,
+        16,
+        287,
+        376
+      ],
+      "transparentPixels": 104005
+    }
+  ],
+  "failures": []
+}

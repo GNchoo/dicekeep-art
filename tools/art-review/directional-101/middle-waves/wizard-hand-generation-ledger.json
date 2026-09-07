@@ -1,0 +1,45 @@
+{
+  "mode": "built-in image_gen",
+  "scope": "W56 five-finger wizard glove; supplemental ledger, not duplicated in the shared middle-wave ledger",
+  "requests": [
+    {
+      "call": 1,
+      "id": "wizard-hand-three-view-parts",
+      "kind": "parts",
+      "assetIds": [
+        "w056"
+      ],
+      "source": "wizard-hand-three-view-parts.png",
+      "sha256": "9c09e97a0b79ced0eb80858ba224044c7213fb46c9f31f5aff2b7bcc14aa092c",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": false,
+      "prompt": "prompts/wizard-hand-three-view-parts.txt",
+      "promptSha256": "e99f97e350e729841d814111a1554fe71c7efc01cc5d84250c83d3b62e556470",
+      "reference": "t6-misc-01-turnaround.png",
+      "referenceSha256": "b1928f84c768e43221c8c4a118cd9036cbd325ab0a99fb2a17a7c667b7604bfc",
+      "originalGeneratedPath": "C:/Users/PC/.codex/generated_images/01a07ae4-f8ce-7411-8737-f8def3bcbd3a/exec-58bf1853-47e2-4b08-8e77-b40c4e530e67.png",
+      "status": "source and assembled gait reviewed; ready",
+      "notes": "Three matching views; exactly five isolated digits per row, brass-cuffed violet leather with front amber rune/back lacing. No flesh/gore. Top row is a right-facing three-quarter side compatible with the approved reference."
+    },
+    {
+      "call": 2,
+      "id": "wizard-hand-palm-repair",
+      "kind": "body-repair",
+      "assetIds": [
+        "w056"
+      ],
+      "source": "wizard-hand-palm-repair.png",
+      "sha256": "b9190cb5ec3e1f7badde5ac8055650781c9e4cf9f63fa8b6f033a26ead505af0",
+      "width": 1024,
+      "height": 1536,
+      "prompt": "prompts/wizard-hand-palm-repair.txt",
+      "promptSha256": "6bc6f39412249094e348897b8a2ec6378204f19f07ac59de0369b7738bc194fb",
+      "reference": "wizard-hand-three-view-parts.png",
+      "referenceSha256": "9c09e97a0b79ced0eb80858ba224044c7213fb46c9f31f5aff2b7bcc14aa092c",
+      "originalGeneratedPath": "C:/Users/PC/.codex/generated_images/01a07ae4-f8ce-7411-8737-f8def3bcbd3a/exec-dd2219ae-f1ac-4cd0-9b7a-2163d0a143a7.png",
+      "status": "source and assembled gait reviewed; ready",
+      "notes": "Three palm/cuff body replacements close the exposed central socket holes; all fifteen original digit pieces are preserved from call1."
+    }
+  ]
+}

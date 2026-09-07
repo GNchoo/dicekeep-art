@@ -1,0 +1,1065 @@
+{
+  "version": 1,
+  "config": "tools/art-review/directional-101/middle-waves/glider-rigs.json",
+  "configSha256": "2dad98bc0cb4b2f34c8bd0ab5d24c19871b503cb0781bc904ff079e1597d7607",
+  "canonicalCell": 512,
+  "scope": "Geometry/image integrity checks; human anatomy/art approval remains separate.",
+  "entries": [
+    {
+      "assetId": "w032",
+      "reviewApproved": true,
+      "identities": {
+        "checked": false,
+        "reason": "no walking limb identities"
+      },
+      "views": {
+        "side": {
+          "geometry": {
+            "passed": true,
+            "samples": 256,
+            "jointCoordinateSystem": "unprojected sagittal plane; never inferred from front/back PNG angles",
+            "sourceStride": 0,
+            "supportAngleRange": null,
+            "checks": [],
+            "errors": []
+          },
+          "provenance": {
+            "source": "tools/art-review/directional-101/middle-waves/glider-three-view-parts.png",
+            "sourceSha256": "ba2a259114391b379d6421e13ddc614f870a745e652a54fef593366fa4b1b4c1",
+            "sourceSize": [
+              1024,
+              1536
+            ],
+            "body": {
+              "source": "tools/art-review/directional-101/middle-waves/glider-three-view-parts.png",
+              "sourceSha256": "ba2a259114391b379d6421e13ddc614f870a745e652a54fef593366fa4b1b4c1",
+              "sourceSize": [
+                1024,
+                1536
+              ],
+              "roi": [
+                0,
+                0,
+                0.325,
+                0.3450520833333333
+              ],
+              "sourceBounds": [
+                56,
+                109,
+                226,
+                345
+              ],
+              "componentCount": 1,
+              "componentAreas": [
+                31880
+              ],
+              "flipX": false
+            },
+            "parts": [
+              {
+                "id": "leftWing",
+                "roi": [
+                  0.34,
+                  0,
+                  0.32,
+                  0.3450520833333333
+                ],
+                "sourceBounds": [
+                  362,
+                  206,
+                  297,
+                  244
+                ],
+                "flipX": false,
+                "sourceJoints": null
+              },
+              {
+                "id": "rightWing",
+                "roi": [
+                  0.69,
+                  0,
+                  0.3,
+                  0.3450520833333333
+                ],
+                "sourceBounds": [
+                  727,
+                  166,
+                  285,
+                  278
+                ],
+                "flipX": true,
+                "sourceJoints": null
+              }
+            ]
+          },
+          "rasterDiagnostics": [],
+          "frameStats": [
+            {
+              "index": 0,
+              "width": 256,
+              "height": 256,
+              "pixels": 6772,
+              "bounds": [
+                68,
+                70,
+                113,
+                125
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 1,
+              "width": 256,
+              "height": 256,
+              "pixels": 7185,
+              "bounds": [
+                71,
+                50,
+                110,
+                145
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 2,
+              "width": 256,
+              "height": 256,
+              "pixels": 6772,
+              "bounds": [
+                68,
+                70,
+                113,
+                125
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 3,
+              "width": 256,
+              "height": 256,
+              "pixels": 6436,
+              "bounds": [
+                69,
+                80,
+                112,
+                115
+              ],
+              "edgePixels": 0
+            }
+          ],
+          "stillStats": {
+            "width": 256,
+            "height": 256,
+            "pixels": 6772,
+            "bounds": [
+              68,
+              70,
+              113,
+              125
+            ],
+            "edgePixels": 0
+          },
+          "fallbackStats": {
+            "width": 64,
+            "height": 64,
+            "pixels": 484,
+            "bounds": [
+              17,
+              17,
+              28,
+              32
+            ],
+            "edgePixels": 0
+          },
+          "uniqueFrames": 3,
+          "frameHashes": [
+            "710626ce40da690333abd3e9ce920d082ca28acba1b6264eb474219c9be157ac",
+            "1d53aa53e78f5f80e6458773500e255b6355650045271deb9f7c6e5cb0cf4855",
+            "710626ce40da690333abd3e9ce920d082ca28acba1b6264eb474219c9be157ac",
+            "4f13d4ea2e7c90b6925929492434918f567196270f5bc7b3026a37ad6538ec40"
+          ],
+          "projection": {
+            "forward": [
+              1,
+              0
+            ],
+            "height": [
+              0,
+              1
+            ]
+          },
+          "frames": [
+            {
+              "phase": 0,
+              "rootAdvance": 0,
+              "body": {
+                "x": 210.66666666666669,
+                "y": 160,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    338.73333333333335,
+                    171.5
+                  ],
+                  "angle": 0.6108652381980153,
+                  "layer": 1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    338.73333333333335,
+                    171.5
+                  ],
+                  "angle": 0.6108652381980153,
+                  "layer": -1
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.25,
+              "rootAdvance": 0,
+              "body": {
+                "x": 210.66666666666669,
+                "y": 160,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    338.73333333333335,
+                    171.5
+                  ],
+                  "angle": 0.8203047484373349,
+                  "layer": 1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    338.73333333333335,
+                    171.5
+                  ],
+                  "angle": 0.8203047484373349,
+                  "layer": -1
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.5,
+              "rootAdvance": 0,
+              "body": {
+                "x": 210.66666666666669,
+                "y": 160,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    338.73333333333335,
+                    171.5
+                  ],
+                  "angle": 0.6108652381980153,
+                  "layer": 1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    338.73333333333335,
+                    171.5
+                  ],
+                  "angle": 0.6108652381980153,
+                  "layer": -1
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.75,
+              "rootAdvance": 0,
+              "body": {
+                "x": 210.66666666666669,
+                "y": 160,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    338.73333333333335,
+                    171.5
+                  ],
+                  "angle": 0.40142572795869574,
+                  "layer": 1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    338.73333333333335,
+                    171.5
+                  ],
+                  "angle": 0.40142572795869574,
+                  "layer": -1
+                }
+              ],
+              "segments": []
+            }
+          ],
+          "motionFrames": null
+        },
+        "front": {
+          "geometry": {
+            "passed": true,
+            "samples": 256,
+            "jointCoordinateSystem": "unprojected sagittal plane; never inferred from front/back PNG angles",
+            "sourceStride": 0,
+            "supportAngleRange": null,
+            "checks": [],
+            "errors": []
+          },
+          "provenance": {
+            "source": "tools/art-review/directional-101/middle-waves/glider-three-view-parts.png",
+            "sourceSha256": "ba2a259114391b379d6421e13ddc614f870a745e652a54fef593366fa4b1b4c1",
+            "sourceSize": [
+              1024,
+              1536
+            ],
+            "body": {
+              "source": "tools/art-review/directional-101/middle-waves/glider-three-view-parts.png",
+              "sourceSha256": "ba2a259114391b379d6421e13ddc614f870a745e652a54fef593366fa4b1b4c1",
+              "sourceSize": [
+                1024,
+                1536
+              ],
+              "roi": [
+                0.34,
+                0.3450520833333333,
+                0.32,
+                0.3059895833333333
+              ],
+              "sourceBounds": [
+                350,
+                649,
+                309,
+                313
+              ],
+              "componentCount": 1,
+              "componentAreas": [
+                39130
+              ],
+              "flipX": false
+            },
+            "parts": [
+              {
+                "id": "leftWing",
+                "roi": [
+                  0,
+                  0.3450520833333333,
+                  0.325,
+                  0.3059895833333333
+                ],
+                "sourceBounds": [
+                  16,
+                  601,
+                  243,
+                  305
+                ],
+                "flipX": false,
+                "sourceJoints": null
+              },
+              {
+                "id": "rightWing",
+                "roi": [
+                  0.69,
+                  0.3450520833333333,
+                  0.3,
+                  0.3059895833333333
+                ],
+                "sourceBounds": [
+                  752,
+                  601,
+                  243,
+                  308
+                ],
+                "flipX": false,
+                "sourceJoints": null
+              }
+            ]
+          },
+          "rasterDiagnostics": [],
+          "frameStats": [
+            {
+              "index": 0,
+              "width": 256,
+              "height": 256,
+              "pixels": 10247,
+              "bounds": [
+                25,
+                80,
+                206,
+                115
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 1,
+              "width": 256,
+              "height": 256,
+              "pixels": 11275,
+              "bounds": [
+                23,
+                79,
+                209,
+                116
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 2,
+              "width": 256,
+              "height": 256,
+              "pixels": 10247,
+              "bounds": [
+                25,
+                80,
+                206,
+                115
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 3,
+              "width": 256,
+              "height": 256,
+              "pixels": 9831,
+              "bounds": [
+                31,
+                80,
+                194,
+                115
+              ],
+              "edgePixels": 0
+            }
+          ],
+          "stillStats": {
+            "width": 256,
+            "height": 256,
+            "pixels": 10247,
+            "bounds": [
+              25,
+              80,
+              206,
+              115
+            ],
+            "edgePixels": 0
+          },
+          "fallbackStats": {
+            "width": 64,
+            "height": 64,
+            "pixels": 713,
+            "bounds": [
+              6,
+              20,
+              52,
+              29
+            ],
+            "edgePixels": 0
+          },
+          "uniqueFrames": 3,
+          "frameHashes": [
+            "7b691f4dd42345b61719213368f9d99f2639d92f9640f7335b219dc1b13c1732",
+            "63b6c903617283cab1a2946979e56a0da98adb68934d004d0a93b324915aba93",
+            "7b691f4dd42345b61719213368f9d99f2639d92f9640f7335b219dc1b13c1732",
+            "c429f0badda703e2f0db2212af75907282ac1ecaa1a81a4e303cb6e1299ff7fb"
+          ],
+          "projection": {
+            "forward": [
+              0,
+              1
+            ],
+            "height": [
+              0,
+              1
+            ]
+          },
+          "frames": [
+            {
+              "phase": 0,
+              "rootAdvance": 0,
+              "body": {
+                "x": 142.46964856230034,
+                "y": 160,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    256,
+                    172.65
+                  ],
+                  "angle": 0.6108652381980153,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    256,
+                    172.65
+                  ],
+                  "angle": -0.6108652381980153,
+                  "layer": -1
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.25,
+              "rootAdvance": 0,
+              "body": {
+                "x": 142.46964856230034,
+                "y": 160,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    256,
+                    172.65
+                  ],
+                  "angle": 0.8203047484373349,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    256,
+                    172.65
+                  ],
+                  "angle": -0.8203047484373349,
+                  "layer": -1
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.5,
+              "rootAdvance": 0,
+              "body": {
+                "x": 142.46964856230034,
+                "y": 160,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    256,
+                    172.65
+                  ],
+                  "angle": 0.6108652381980153,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    256,
+                    172.65
+                  ],
+                  "angle": -0.6108652381980153,
+                  "layer": -1
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.75,
+              "rootAdvance": 0,
+              "body": {
+                "x": 142.46964856230034,
+                "y": 160,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    256,
+                    172.65
+                  ],
+                  "angle": 0.40142572795869574,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    256,
+                    172.65
+                  ],
+                  "angle": -0.40142572795869574,
+                  "layer": -1
+                }
+              ],
+              "segments": []
+            }
+          ],
+          "motionFrames": null
+        },
+        "back": {
+          "geometry": {
+            "passed": true,
+            "samples": 256,
+            "jointCoordinateSystem": "unprojected sagittal plane; never inferred from front/back PNG angles",
+            "sourceStride": 0,
+            "supportAngleRange": null,
+            "checks": [],
+            "errors": []
+          },
+          "provenance": {
+            "source": "tools/art-review/directional-101/middle-waves/glider-three-view-parts.png",
+            "sourceSha256": "ba2a259114391b379d6421e13ddc614f870a745e652a54fef593366fa4b1b4c1",
+            "sourceSize": [
+              1024,
+              1536
+            ],
+            "body": {
+              "source": "tools/art-review/directional-101/middle-waves/glider-three-view-parts.png",
+              "sourceSha256": "ba2a259114391b379d6421e13ddc614f870a745e652a54fef593366fa4b1b4c1",
+              "sourceSize": [
+                1024,
+                1536
+              ],
+              "roi": [
+                0,
+                0.6510416666666666,
+                0.325,
+                0.3489583333333333
+              ],
+              "sourceBounds": [
+                19,
+                1054,
+                283,
+                323
+              ],
+              "componentCount": 1,
+              "componentAreas": [
+                36099
+              ],
+              "flipX": false
+            },
+            "parts": [
+              {
+                "id": "leftWing",
+                "roi": [
+                  0.34,
+                  0.6510416666666666,
+                  0.32,
+                  0.3489583333333333
+                ],
+                "sourceBounds": [
+                  374,
+                  1116,
+                  280,
+                  251
+                ],
+                "flipX": false,
+                "sourceJoints": null
+              },
+              {
+                "id": "rightWing",
+                "roi": [
+                  0.69,
+                  0.6510416666666666,
+                  0.3,
+                  0.3489583333333333
+                ],
+                "sourceBounds": [
+                  756,
+                  1106,
+                  252,
+                  261
+                ],
+                "flipX": false,
+                "sourceJoints": null
+              }
+            ]
+          },
+          "rasterDiagnostics": [],
+          "frameStats": [
+            {
+              "index": 0,
+              "width": 256,
+              "height": 256,
+              "pixels": 9600,
+              "bounds": [
+                30,
+                77,
+                193,
+                118
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 1,
+              "width": 256,
+              "height": 256,
+              "pixels": 9916,
+              "bounds": [
+                34,
+                58,
+                187,
+                137
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 2,
+              "width": 256,
+              "height": 256,
+              "pixels": 9600,
+              "bounds": [
+                30,
+                77,
+                193,
+                118
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 3,
+              "width": 256,
+              "height": 256,
+              "pixels": 8844,
+              "bounds": [
+                31,
+                80,
+                189,
+                115
+              ],
+              "edgePixels": 0
+            }
+          ],
+          "stillStats": {
+            "width": 256,
+            "height": 256,
+            "pixels": 9600,
+            "bounds": [
+              30,
+              77,
+              193,
+              118
+            ],
+            "edgePixels": 0
+          },
+          "fallbackStats": {
+            "width": 64,
+            "height": 64,
+            "pixels": 674,
+            "bounds": [
+              7,
+              19,
+              49,
+              30
+            ],
+            "edgePixels": 0
+          },
+          "uniqueFrames": 3,
+          "frameHashes": [
+            "0abcf501e9b23613704c7ffaa46627b0dbcfe168cce7a73626b409d742e02aac",
+            "0fc0b3448c317d8733517eaaea80287a35ffcd76397c4aaf188d1eb96a8f1193",
+            "0abcf501e9b23613704c7ffaa46627b0dbcfe168cce7a73626b409d742e02aac",
+            "aab0d99934554992dd8ef300c32bf479e72922bff89340f8bd7f519c3427fd9b"
+          ],
+          "projection": {
+            "forward": [
+              0,
+              -1
+            ],
+            "height": [
+              0,
+              1
+            ]
+          },
+          "frames": [
+            {
+              "phase": 0,
+              "rootAdvance": 0,
+              "body": {
+                "x": 155.24148606811144,
+                "y": 160,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    256,
+                    172.65
+                  ],
+                  "angle": 0.6108652381980153,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    256,
+                    172.65
+                  ],
+                  "angle": -0.6108652381980153,
+                  "layer": -1
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.25,
+              "rootAdvance": 0,
+              "body": {
+                "x": 155.24148606811144,
+                "y": 160,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    256,
+                    172.65
+                  ],
+                  "angle": 0.8203047484373349,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    256,
+                    172.65
+                  ],
+                  "angle": -0.8203047484373349,
+                  "layer": -1
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.5,
+              "rootAdvance": 0,
+              "body": {
+                "x": 155.24148606811144,
+                "y": 160,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    256,
+                    172.65
+                  ],
+                  "angle": 0.6108652381980153,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    256,
+                    172.65
+                  ],
+                  "angle": -0.6108652381980153,
+                  "layer": -1
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.75,
+              "rootAdvance": 0,
+              "body": {
+                "x": 155.24148606811144,
+                "y": 160,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    256,
+                    172.65
+                  ],
+                  "angle": 0.40142572795869574,
+                  "layer": -1
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    256,
+                    172.65
+                  ],
+                  "angle": -0.40142572795869574,
+                  "layer": -1
+                }
+              ],
+              "segments": []
+            }
+          ],
+          "motionFrames": null
+        }
+      },
+      "errors": [],
+      "ready": true
+    }
+  ],
+  "files": [
+    {
+      "file": "casual/enemies/inf/directional/w032-side-walk-2x2.png",
+      "bytes": 83592,
+      "sha256": "6adc1a67a2f210e7d0fddbb54d86a6b86106a7d9bd64ef9cf452fccbeaceb806",
+      "image": {
+        "format": "png",
+        "width": 512,
+        "height": 512,
+        "pages": 1
+      }
+    },
+    {
+      "file": "casual/enemies/inf/directional/w032-side.png",
+      "bytes": 26911,
+      "sha256": "710626ce40da690333abd3e9ce920d082ca28acba1b6264eb474219c9be157ac",
+      "image": {
+        "format": "png",
+        "width": 256,
+        "height": 256,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w032-side.png",
+      "bytes": 296278,
+      "sha256": "8545fc69c1328bcd04b46147f2d77bc57b5906c34c4698da0e3517e5e3f28f46",
+      "image": {
+        "format": "png",
+        "width": 1024,
+        "height": 1024,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w032-side.gif",
+      "bytes": 24402,
+      "sha256": "340205ba350d52525a01e6ffec842af0933e2e3b8e6214d0f9cd3a2791f548ef",
+      "image": {
+        "format": "gif",
+        "width": 256,
+        "height": 256,
+        "pages": 4
+      }
+    },
+    {
+      "file": "casual/enemies/inf/directional/w032-front-walk-2x2.png",
+      "bytes": 123476,
+      "sha256": "5d6ded54b8d326bce0deabf7f77475c1bdeb66fcc32e545004fffce99fcf0eef",
+      "image": {
+        "format": "png",
+        "width": 512,
+        "height": 512,
+        "pages": 1
+      }
+    },
+    {
+      "file": "casual/enemies/inf/directional/w032-front.png",
+      "bytes": 38500,
+      "sha256": "7b691f4dd42345b61719213368f9d99f2639d92f9640f7335b219dc1b13c1732",
+      "image": {
+        "format": "png",
+        "width": 256,
+        "height": 256,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w032-front.png",
+      "bytes": 414989,
+      "sha256": "2086b2feabd367ae1e557ec528da02e521735cc1a5ed940539e3fcec5785e29d",
+      "image": {
+        "format": "png",
+        "width": 1024,
+        "height": 1024,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w032-front.gif",
+      "bytes": 38619,
+      "sha256": "1b005b04a44f8f4cc9d1478508f529c7d0a770c3347e99c886f5bc9be468747c",
+      "image": {
+        "format": "gif",
+        "width": 256,
+        "height": 256,
+        "pages": 4
+      }
+    },
+    {
+      "file": "casual/enemies/inf/directional/w032-back-walk-2x2.png",
+      "bytes": 112317,
+      "sha256": "8f2fb38bce0c94065cb5d0714f21366ddd75d46cb9f4130639f5f397eceb3d28",
+      "image": {
+        "format": "png",
+        "width": 512,
+        "height": 512,
+        "pages": 1
+      }
+    },
+    {
+      "file": "casual/enemies/inf/directional/w032-back.png",
+      "bytes": 36364,
+      "sha256": "0abcf501e9b23613704c7ffaa46627b0dbcfe168cce7a73626b409d742e02aac",
+      "image": {
+        "format": "png",
+        "width": 256,
+        "height": 256,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w032-back.png",
+      "bytes": 381525,
+      "sha256": "667f6228375d27f0f634a900622e083cc660e9cf1f8cb3e823262fdbb2f21386",
+      "image": {
+        "format": "png",
+        "width": 1024,
+        "height": 1024,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w032-back.gif",
+      "bytes": 33331,
+      "sha256": "3ec09cba03e6cd68a27b4051baee3c21c26c4cddd649093829baab56006ab6fb",
+      "image": {
+        "format": "gif",
+        "width": 256,
+        "height": 256,
+        "pages": 4
+      }
+    }
+  ],
+  "errors": []
+}

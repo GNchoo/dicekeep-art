@@ -1,0 +1,371 @@
+{
+  "passed": true,
+  "recordedAt": "2026-09-07T16:46:24.389Z",
+  "scope": "Completed actual-browser checks for the final110 roster. Source hashes identify the frozen release; edge tests precede the presentation-only altitude fix. Whole-browser memory and200 simultaneous animated sprites are not claimed.",
+  "sources": [
+    {
+      "path": "game.js",
+      "bytes": 318568,
+      "sha256": "1086c3a566aa777a23f511d1c663e5913165530a117ca919a13f3d8638e26b68"
+    },
+    {
+      "path": "content.js",
+      "bytes": 169458,
+      "sha256": "9f1af8845ced25fedffc02674fc988f09ad796cfb43f14ead1e0cd39f890796f"
+    },
+    {
+      "path": "index.html",
+      "bytes": 20217,
+      "sha256": "ceaf40fdc9d7bdd25ad9c2a24a8aaffdc3804c9f917be56a1463275ea2dc4121"
+    },
+    {
+      "path": "infinity-art.js",
+      "bytes": 15204,
+      "sha256": "028b6978a22d8b5666c701a28417916463cf572305ce18377b6b685c1a9d218f"
+    },
+    {
+      "path": "directional-art.js",
+      "bytes": 1311432,
+      "sha256": "65cbcd5077b2b0bf354c7bb005603bd02ac99c5463d6fc7f2d1d58a6628c3ae1"
+    },
+    {
+      "path": "tools/e2e/directional-real-art.cjs",
+      "bytes": 8967,
+      "sha256": "aacb937d099432c05490932e67c2fecfaf953543a27430c4609971e7a12deaa1"
+    },
+    {
+      "path": "tools/e2e/directional-edge-cases.cjs",
+      "bytes": 6145,
+      "sha256": "b130a85a2ab8f8537bf2cb732c4586be3b46032f00bc0e95a2529587d50e5639"
+    },
+    {
+      "path": "tools/e2e/directional-runtime-contracts.cjs",
+      "bytes": 10600,
+      "sha256": "e41562ff3ba2fda4a05cb5cce6a0147d6ff7a583a5ba29799e9154bacb94cb9a"
+    },
+    {
+      "path": "tools/e2e/directional-review-regressions.cjs",
+      "bytes": 9169,
+      "sha256": "263694d405cc5e977df4fe4142c92cbe474a8543ac8d045bd9364fa063ca71ea"
+    },
+    {
+      "path": "tools/e2e/directional-cache-pressure.cjs",
+      "bytes": 22310,
+      "sha256": "14f46f11b2e2365786bd7b59b6d8a7514257b02fa8469f16af9d83545e640e19"
+    }
+  ],
+  "artAudit": {
+    "path": "tools/art-review/directional-101/release-builds.json",
+    "bytes": 381812,
+    "sha256": "0d20aa46e98e044003991595736f122057369f26eb5e7051c3384e35772b2c2f"
+  },
+  "reports": {
+    "desktop": {
+      "waves": 101,
+      "identities": 110,
+      "directions": 440,
+      "observedPoses": 3072,
+      "minVisibleFraction": 1,
+      "peakTrackedBytes": 92962816,
+      "maxRunning": 2,
+      "errors": 0,
+      "edges": {
+        "actors": 10,
+        "corners": 40,
+        "minSlowRatio": 0.4866969674774217,
+        "maxSlowRatio": 0.5115900546385459
+      }
+    },
+    "phone": {
+      "waves": 101,
+      "identities": 110,
+      "directions": 440,
+      "observedPoses": 3072,
+      "minVisibleFraction": 1,
+      "peakTrackedBytes": 92962816,
+      "maxRunning": 2,
+      "errors": 0,
+      "edges": {
+        "actors": 10,
+        "corners": 40,
+        "minSlowRatio": 0.48874091614786763,
+        "maxSlowRatio": 0.5056978225247342
+      }
+    },
+    "pressure": {
+      "population": {
+        "count": 200,
+        "uniqueIds": 110,
+        "counts": {
+          "b010": 2,
+          "b020": 2,
+          "b020-2": 2,
+          "b030": 2,
+          "b030-2": 2,
+          "b040": 2,
+          "b040-2": 2,
+          "b050": 2,
+          "b050-2": 2,
+          "b060": 2,
+          "b060-2": 2,
+          "b070": 2,
+          "b070-2": 2,
+          "b080": 2,
+          "b080-2": 2,
+          "b090": 2,
+          "b090-2": 2,
+          "b100": 2,
+          "b100-2": 2,
+          "w001": 2,
+          "w002": 2,
+          "w003": 2,
+          "w004": 2,
+          "w005": 2,
+          "w006": 2,
+          "w007": 2,
+          "w008": 2,
+          "w009": 2,
+          "w011": 2,
+          "w012": 2,
+          "w013": 2,
+          "w014": 2,
+          "w015": 2,
+          "w016": 2,
+          "w017": 2,
+          "w018": 2,
+          "w019": 2,
+          "w021": 2,
+          "w022": 2,
+          "w023": 2,
+          "w024": 2,
+          "w025": 2,
+          "w026": 2,
+          "w027": 2,
+          "w028": 2,
+          "w029": 2,
+          "w031": 2,
+          "w032": 2,
+          "w033": 2,
+          "w034": 2,
+          "w035": 2,
+          "w036": 2,
+          "w037": 2,
+          "w038": 2,
+          "w039": 2,
+          "w041": 2,
+          "w042": 2,
+          "w043": 2,
+          "w044": 2,
+          "w045": 2,
+          "w046": 2,
+          "w047": 2,
+          "w048": 2,
+          "w049": 2,
+          "w051": 2,
+          "w052": 2,
+          "w053": 2,
+          "w054": 2,
+          "w055": 2,
+          "w056": 2,
+          "w057": 2,
+          "w058": 2,
+          "w059": 2,
+          "w061": 2,
+          "w062": 2,
+          "w063": 2,
+          "w064": 2,
+          "w065": 2,
+          "w066": 2,
+          "w067": 2,
+          "w068": 2,
+          "w069": 2,
+          "w071": 2,
+          "w072": 2,
+          "w073": 2,
+          "w074": 2,
+          "w075": 2,
+          "w076": 2,
+          "w077": 2,
+          "w078": 2,
+          "w079": 1,
+          "w081": 1,
+          "w082": 1,
+          "w083": 1,
+          "w084": 1,
+          "w085": 1,
+          "w086": 1,
+          "w087": 1,
+          "w088": 1,
+          "w089": 1,
+          "w091": 1,
+          "w092": 1,
+          "w093": 1,
+          "w094": 1,
+          "w095": 1,
+          "w096": 1,
+          "w097": 1,
+          "w098": 1,
+          "w099": 1,
+          "w101": 1
+        },
+        "fieldCap": 200,
+        "mode": "infinity",
+        "phase": "playing"
+      },
+      "renderTotals": {
+        "sheetDraws": 809,
+        "stillDraws": 177815,
+        "inlineFallbackDraws": 69776,
+        "animatedIdentityDirections": 15,
+        "observedIdentityDirections": 440
+      },
+      "visibleDraws": 248400,
+      "clippedDraws": 0,
+      "peakTrackedBytes": 100564992,
+      "afterRemovalBytes": 5406720,
+      "limitations": [
+        "200 entities share up to 110 art identities; this is not 200 unique species.",
+        "The decoded sheets for every simultaneous identity/direction cannot all fit in 96MiB. Same-character, same-direction stills or mandatory 64px inline stills are allowed to stop animating under pressure.",
+        "Decoded canvas memory plus input/output reservations are checked. This is not a measurement of browser/GPU process memory.",
+        "Finite phase, frame selection, natural movement and rendered identity are regression checks, not independent anatomy or foot-contact quality judgments.",
+        "Starting positions are arranged on real straight segments after the lane loop entrance. Transformed nontransparent source bounds must intersect the actual game canvas; other enemies or DOM overlays may still obscure individuals in screenshots."
+      ]
+    },
+    "towers": {
+      "actualRenderObservations": 28,
+      "actualFiringChecks": 28,
+      "evidence": {
+        "path": "tools/art-review/star-towers-07-20/evidence/browser-validation.json",
+        "bytes": 26056,
+        "sha256": "ccb84e4f89da853444111daee7325a6906f6fd37c75d2bfefa9fe02f2e072c53"
+      }
+    },
+    "appPackageEvidence": {
+      "path": "tools/art-review/directional-101/evidence/www-package/validation.json",
+      "bytes": 178273,
+      "sha256": "0b8caa2270eafd2b21f73420b9503ba6f318251c200208122b7ee76d3fab7e55"
+    }
+  },
+  "files": [
+    {
+      "path": "tools/art-review/directional-101/evidence/runtime/directional-real-art-desktop.json",
+      "bytes": 1794099,
+      "sha256": "921fd6d39a366f07616bf1f914f9807583ef85156cb3b7200c00562b57091986",
+      "generatedPath": "gen/e2e/directional-real/directional-real-art-desktop.json"
+    },
+    {
+      "path": "tools/art-review/directional-101/evidence/runtime/desktop-w001-down.png",
+      "bytes": 1160883,
+      "sha256": "55054614bfd64ff0fbbfca9206a14d000143c5d610200da68822090461e4e5a7",
+      "generatedPath": "gen/e2e/directional-real/desktop-w001-down.png"
+    },
+    {
+      "path": "tools/art-review/directional-101/evidence/runtime/desktop-b100-down.png",
+      "bytes": 1098022,
+      "sha256": "f736d80f22ef6cf883bfdb137e969db2df0011f5e267dd4fc6a8bd43cddbe2d5",
+      "generatedPath": "gen/e2e/directional-real/desktop-b100-down.png"
+    },
+    {
+      "path": "tools/art-review/directional-101/evidence/runtime/desktop-b100-2-down.png",
+      "bytes": 1167917,
+      "sha256": "b506714637f50848f9d957ca69796d679524688a46b0773c4c8e3a52cb463205",
+      "generatedPath": "gen/e2e/directional-real/desktop-b100-2-down.png"
+    },
+    {
+      "path": "tools/art-review/directional-101/evidence/runtime/desktop-w101-down.png",
+      "bytes": 1164516,
+      "sha256": "f41120d869a28efc4e20a74b3e251e6ac1d4db65d2d6a572af013ad4e9336cc1",
+      "generatedPath": "gen/e2e/directional-real/desktop-w101-down.png"
+    },
+    {
+      "path": "tools/art-review/directional-101/evidence/runtime/directional-edge-cases-desktop.json",
+      "bytes": 113694,
+      "sha256": "fafe676cb2bc0ca293d2aa79fc21916f93807cd12b7958387e8007ada07bdcae",
+      "generatedPath": "gen/e2e/directional-edges/directional-edge-cases-desktop.json"
+    },
+    {
+      "path": "tools/art-review/directional-101/evidence/runtime/directional-real-art-phone.json",
+      "bytes": 1792994,
+      "sha256": "c29b0a6294500cbfc87c910e2053523c0e0db913f6a8d769f7f6169c6797fc87",
+      "generatedPath": "gen/e2e/directional-real/directional-real-art-phone.json"
+    },
+    {
+      "path": "tools/art-review/directional-101/evidence/runtime/phone-w001-down.png",
+      "bytes": 535342,
+      "sha256": "00d255dbecb0a100710b24db93e74dff755474cd5fa21d09c661613a3886baa9",
+      "generatedPath": "gen/e2e/directional-real/phone-w001-down.png"
+    },
+    {
+      "path": "tools/art-review/directional-101/evidence/runtime/phone-b100-down.png",
+      "bytes": 521941,
+      "sha256": "d800b237e1850ba415321e98042800dcaa1691a4b517803df0cef3b6ce59fea0",
+      "generatedPath": "gen/e2e/directional-real/phone-b100-down.png"
+    },
+    {
+      "path": "tools/art-review/directional-101/evidence/runtime/phone-b100-2-down.png",
+      "bytes": 533643,
+      "sha256": "56eeef727c164b7e26d90fcd7d5848e185445ba136a97ae2047d663fd4553696",
+      "generatedPath": "gen/e2e/directional-real/phone-b100-2-down.png"
+    },
+    {
+      "path": "tools/art-review/directional-101/evidence/runtime/phone-w101-down.png",
+      "bytes": 537317,
+      "sha256": "40e05fa39bef96592f9207a581719b3675576bc87b32256e164defe1f4e48c4e",
+      "generatedPath": "gen/e2e/directional-real/phone-w101-down.png"
+    },
+    {
+      "path": "tools/art-review/directional-101/evidence/runtime/directional-edge-cases-phone.json",
+      "bytes": 111550,
+      "sha256": "b9101bee89bb565fbd66a759289b86e0bf7c6d8ab0dd6df4acf849e59bf13fa2",
+      "generatedPath": "gen/e2e/directional-edges/directional-edge-cases-phone.json"
+    },
+    {
+      "path": "tools/art-review/directional-101/evidence/runtime/actual-runtime-contracts.json",
+      "bytes": 210663,
+      "sha256": "1919d49c39990e71311403056d1d91afa01ea65f64287387d0fe11f326338b82",
+      "generatedPath": "gen/e2e/directional-runtime/actual-runtime-contracts.json"
+    },
+    {
+      "path": "tools/art-review/directional-101/evidence/runtime/directional-review-regressions.json",
+      "bytes": 27152,
+      "sha256": "f943f9273260eaa8428dca000b35c5016b8878224510f8ed8764e6d67492d910",
+      "generatedPath": "gen/e2e/directional-review/directional-review-regressions.json"
+    },
+    {
+      "path": "tools/art-review/directional-101/evidence/runtime/directional-cache-pressure.json",
+      "bytes": 825663,
+      "sha256": "7c8ac6ea2b28a1e1db8da3ab171bab1337b6a62b0d590c4642cd6e9f66c1c2f0",
+      "generatedPath": "gen/e2e/directional-pressure/directional-cache-pressure.json"
+    },
+    {
+      "path": "tools/art-review/directional-101/evidence/runtime/actual-spectator-duo.png",
+      "bytes": 539066,
+      "sha256": "6d74a67cfc9f1677325fd4ff8004a419c65c697c83fed68d14acb7cba05d0e3c",
+      "generatedPath": "gen/e2e/directional-runtime/actual-spectator-duo.png"
+    },
+    {
+      "path": "tools/art-review/directional-101/evidence/runtime/200-enemies-round-0.png",
+      "bytes": 1358196,
+      "sha256": "98c48b97097d8f2ae2167406548702b5635ba740fb1dcce4d16797fe07ad2cb5",
+      "generatedPath": "gen/e2e/directional-pressure/200-enemies-round-0.png"
+    },
+    {
+      "path": "tools/art-review/directional-101/evidence/runtime/200-enemies-round-7.png",
+      "bytes": 1343245,
+      "sha256": "4bbc394c2aa2f0d43e4e48d235d22bfea1a3f096142f24fac3ee28ff941b9110",
+      "generatedPath": "gen/e2e/directional-pressure/200-enemies-round-7.png"
+    },
+    {
+      "path": "tools/art-review/directional-101/evidence/runtime/gallery-monsters.png",
+      "bytes": 328870,
+      "sha256": "7c4aea4e3a6f2d88387e61ce6c1af44ec353393c7275461a50435148252bb753",
+      "generatedPath": "gen/e2e/gallery-monsters.png"
+    },
+    {
+      "path": "tools/art-review/directional-101/evidence/runtime/gallery-towers.png",
+      "bytes": 575966,
+      "sha256": "9091cb9fbb80755912cd921849dbd7dcfa01a14df79a73a32840a575a74c526d",
+      "generatedPath": "gen/e2e/gallery-towers.png"
+    }
+  ]
+}

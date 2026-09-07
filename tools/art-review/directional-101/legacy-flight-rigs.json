@@ -1,0 +1,573 @@
+{
+  "version": 1,
+  "canonicalCell": 512,
+  "assetVersion": 93,
+  "entries": [
+    {
+      "assetId": "w004",
+      "wave": 4,
+      "role": "normal",
+      "locomotion": "flight",
+      "cell": 256,
+      "referenceHeight": 328,
+      "cycleStride": 0,
+      "cycleSeconds": 0.8,
+      "reviewApproved": true,
+      "views": {
+        "side": {
+          "pivot": [
+            255.5,
+            420
+          ],
+          "legacySheet": {
+            "reviewedExisting": true,
+            "source": "casual/enemies/inf/w004-walk-2x2.png",
+            "sourceSha256": "84059d7f1eb217c144b03ca3fdc15a4fc569b7e7bfb429b873e47ce504fff2e7",
+            "cols": 2,
+            "rows": 2,
+            "frames": 4,
+            "anchor": "center",
+            "stillFrame": 0
+          }
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/legacy-flight-front-back-parts.png",
+          "sourceSha256": "34ab5f7c448604b18fa6bbd024bb8f89bd2b08920f2d09305de864bfa88371ed",
+          "background": "checkerboard",
+          "pivot": [
+            255.5,
+            420
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.36,
+              0.275
+            ],
+            "target": [
+              202.20567375886526,
+              185,
+              107.58865248226951,
+              205
+            ],
+            "layer": 0
+          },
+          "parts": [
+            {
+              "id": "ravenLeftWing",
+              "type": "wing",
+              "roi": [
+                0.38,
+                0,
+                0.27,
+                0.275
+              ],
+              "socket": [
+                19.365957446808512,
+                51.25
+              ],
+              "sourcePivot": [
+                0.88,
+                0.76
+              ],
+              "scale": 0.7341269841269841,
+              "angleDeg": [
+                -25,
+                45
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "ravenRightWing",
+              "type": "wing",
+              "roi": [
+                0.69,
+                0,
+                0.31000000000000005,
+                0.275
+              ],
+              "socket": [
+                88.22269503546099,
+                51.25
+              ],
+              "sourcePivot": [
+                0.12,
+                0.76
+              ],
+              "scale": 0.7312252964426877,
+              "angleDeg": [
+                25,
+                -45
+              ],
+              "phase": 0,
+              "layer": -1
+            }
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/legacy-flight-front-back-parts.png",
+          "sourceSha256": "34ab5f7c448604b18fa6bbd024bb8f89bd2b08920f2d09305de864bfa88371ed",
+          "background": "checkerboard",
+          "pivot": [
+            255.5,
+            420
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.525,
+              0.36,
+              0.235
+            ],
+            "target": [
+              204.21052631578948,
+              185,
+              103.57894736842105,
+              205
+            ],
+            "layer": 0
+          },
+          "parts": [
+            {
+              "id": "ravenLeftWing",
+              "type": "wing",
+              "roi": [
+                0.38,
+                0.525,
+                0.27,
+                0.235
+              ],
+              "socket": [
+                18.64421052631579,
+                51.25
+              ],
+              "sourcePivot": [
+                0.88,
+                0.76
+              ],
+              "scale": 0.7312252964426877,
+              "angleDeg": [
+                -25,
+                45
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "ravenRightWing",
+              "type": "wing",
+              "roi": [
+                0.69,
+                0.525,
+                0.31000000000000005,
+                0.235
+              ],
+              "socket": [
+                84.93473684210527,
+                51.25
+              ],
+              "sourcePivot": [
+                0.12,
+                0.76
+              ],
+              "scale": 0.7312252964426877,
+              "angleDeg": [
+                25,
+                -45
+              ],
+              "phase": 0,
+              "layer": -1
+            }
+          ]
+        }
+      },
+      "reviewNotes": "Reviewed3views; preserved oldside pixels; front/back2wing pairs perbird, exact3fly formation and6movingwings; corrected angles prevent crossingabovehead."
+    },
+    {
+      "assetId": "w008",
+      "wave": 8,
+      "role": "normal",
+      "locomotion": "flight",
+      "cell": 256,
+      "referenceHeight": 288,
+      "cycleStride": 0,
+      "cycleSeconds": 0.8,
+      "reviewApproved": true,
+      "views": {
+        "side": {
+          "pivot": [
+            256,
+            400
+          ],
+          "legacySheet": {
+            "reviewedExisting": true,
+            "source": "casual/enemies/inf/w008-walk-2x2.png",
+            "sourceSha256": "3efc2859ae34016163cefae3d5ad9aa6f24f7f673350c56624600f5402206d41",
+            "cols": 2,
+            "rows": 2,
+            "frames": 4,
+            "anchor": "center",
+            "stillFrame": 0
+          }
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/legacy-flight-front-back-parts.png",
+          "sourceSha256": "34ab5f7c448604b18fa6bbd024bb8f89bd2b08920f2d09305de864bfa88371ed",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            400
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.275,
+              0.42,
+              0.25
+            ],
+            "target": [
+              115.35567010309279,
+              200,
+              281.2886597938144,
+              170
+            ],
+            "layer": 0,
+            "componentCount": 3
+          },
+          "parts": [
+            {
+              "id": "leaderLeftWing",
+              "type": "wing",
+              "roi": [
+                0.43,
+                0.275,
+                0.23000000000000004,
+                0.25
+              ],
+              "socket": [
+                98.45103092783503,
+                42.5
+              ],
+              "sourcePivot": [
+                0.94,
+                0.96
+              ],
+              "scale": 0.725,
+              "angleDeg": [
+                -25,
+                45
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "leaderRightWing",
+              "type": "wing",
+              "roi": [
+                0.7,
+                0.275,
+                0.30000000000000004,
+                0.25
+              ],
+              "socket": [
+                188.46340206185567,
+                42.5
+              ],
+              "sourcePivot": [
+                0.06,
+                0.96
+              ],
+              "scale": 0.725,
+              "angleDeg": [
+                25,
+                -45
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "followerLowLeftWing",
+              "type": "wing",
+              "roi": [
+                0.43,
+                0.275,
+                0.23000000000000004,
+                0.25
+              ],
+              "socket": [
+                21.09664948453608,
+                118.99999999999999
+              ],
+              "sourcePivot": [
+                0.94,
+                0.96
+              ],
+              "scale": 0.29,
+              "angleDeg": [
+                -25,
+                45
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "followerLowRightWing",
+              "type": "wing",
+              "roi": [
+                0.7,
+                0.275,
+                0.30000000000000004,
+                0.25
+              ],
+              "socket": [
+                53.44484536082474,
+                118.99999999999999
+              ],
+              "sourcePivot": [
+                0.06,
+                0.96
+              ],
+              "scale": 0.29,
+              "angleDeg": [
+                25,
+                -45
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "followerHighLeftWing",
+              "type": "wing",
+              "roi": [
+                0.43,
+                0.275,
+                0.23000000000000004,
+                0.25
+              ],
+              "socket": [
+                229.25025773195873,
+                23.8
+              ],
+              "sourcePivot": [
+                0.94,
+                0.96
+              ],
+              "scale": 0.29,
+              "angleDeg": [
+                -25,
+                45
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "followerHighRightWing",
+              "type": "wing",
+              "roi": [
+                0.7,
+                0.275,
+                0.30000000000000004,
+                0.25
+              ],
+              "socket": [
+                265.81778350515464,
+                23.8
+              ],
+              "sourcePivot": [
+                0.06,
+                0.96
+              ],
+              "scale": 0.29,
+              "angleDeg": [
+                25,
+                -45
+              ],
+              "phase": 0,
+              "layer": -1
+            }
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/legacy-flight-front-back-parts.png",
+          "sourceSha256": "34ab5f7c448604b18fa6bbd024bb8f89bd2b08920f2d09305de864bfa88371ed",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            400
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.76,
+              0.42,
+              0.24
+            ],
+            "target": [
+              116.38860103626942,
+              200,
+              279.22279792746116,
+              170
+            ],
+            "layer": 0,
+            "componentCount": 3
+          },
+          "parts": [
+            {
+              "id": "leaderLeftWing",
+              "type": "wing",
+              "roi": [
+                0.43,
+                0.76,
+                0.23000000000000004,
+                0.24
+              ],
+              "socket": [
+                97.7279792746114,
+                42.5
+              ],
+              "sourcePivot": [
+                0.94,
+                0.96
+              ],
+              "scale": 0.7213930348258707,
+              "angleDeg": [
+                -25,
+                45
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "leaderRightWing",
+              "type": "wing",
+              "roi": [
+                0.7,
+                0.76,
+                0.30000000000000004,
+                0.24
+              ],
+              "socket": [
+                187.079274611399,
+                42.5
+              ],
+              "sourcePivot": [
+                0.06,
+                0.96
+              ],
+              "scale": 0.7213930348258707,
+              "angleDeg": [
+                25,
+                -45
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "followerLowLeftWing",
+              "type": "wing",
+              "roi": [
+                0.43,
+                0.76,
+                0.23000000000000004,
+                0.24
+              ],
+              "socket": [
+                20.941709844559586,
+                118.99999999999999
+              ],
+              "sourcePivot": [
+                0.94,
+                0.96
+              ],
+              "scale": 0.2885572139303483,
+              "angleDeg": [
+                -25,
+                45
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "followerLowRightWing",
+              "type": "wing",
+              "roi": [
+                0.7,
+                0.76,
+                0.30000000000000004,
+                0.24
+              ],
+              "socket": [
+                53.05233160621762,
+                118.99999999999999
+              ],
+              "sourcePivot": [
+                0.06,
+                0.96
+              ],
+              "scale": 0.2885572139303483,
+              "angleDeg": [
+                25,
+                -45
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "followerHighLeftWing",
+              "type": "wing",
+              "roi": [
+                0.43,
+                0.76,
+                0.23000000000000004,
+                0.24
+              ],
+              "socket": [
+                227.56658031088082,
+                23.8
+              ],
+              "sourcePivot": [
+                0.94,
+                0.96
+              ],
+              "scale": 0.2885572139303483,
+              "angleDeg": [
+                -25,
+                45
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "followerHighRightWing",
+              "type": "wing",
+              "roi": [
+                0.7,
+                0.76,
+                0.30000000000000004,
+                0.24
+              ],
+              "socket": [
+                263.8655440414508,
+                23.8
+              ],
+              "sourcePivot": [
+                0.06,
+                0.96
+              ],
+              "scale": 0.2885572139303483,
+              "angleDeg": [
+                25,
+                -45
+              ],
+              "phase": 0,
+              "layer": -1
+            }
+          ]
+        }
+      },
+      "reviewNotes": "Reviewed3views; preserved oldside pixels; front/back2wing pairs perbird, exact3fly formation and6movingwings; corrected angles prevent crossingabovehead."
+    }
+  ]
+}

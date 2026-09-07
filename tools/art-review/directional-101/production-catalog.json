@@ -1,0 +1,2070 @@
+{
+  "version": 93,
+  "entries": [
+    {
+      "assetId": "w001",
+      "wave": 1,
+      "role": "normal",
+      "name": "역병쥐",
+      "tier": 1,
+      "cls": "S",
+      "gait": "quad",
+      "locomotion": "legged",
+      "family": "quad",
+      "description": "A small adventurous rat with intact charcoal fur, a rounded compact body, alert expressive eyes, a leather collar and exactly one simple curved tail. Four sturdy little paws, a curious determined face and a clean game-character silhouette.",
+      "existingSide": true,
+      "frames": 8
+    },
+    {
+      "assetId": "w002",
+      "wave": 2,
+      "role": "normal",
+      "name": "해골 잡졸",
+      "tier": 1,
+      "cls": "S",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "A small skeleton footman with clean simplified ivory bones and a rounded expressive skull, wearing an iron kettle helmet, an olive tabard and sturdy boots, carrying a compact spear. Chunky toy-like joints and a determined but approachable face.",
+      "existingSide": true,
+      "frames": 8
+    },
+    {
+      "assetId": "w003",
+      "wave": 3,
+      "role": "normal",
+      "name": "묘지 오우거",
+      "tier": 1,
+      "cls": "L",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "A broad, chunky grave ogre with intact olive skin, a simple brown hood, a leather vest and a solid wooden club. Rounded shoulders, sturdy boots, a grumpy expressive face and a heavy but balanced game-character build.",
+      "existingSide": true,
+      "frames": 8
+    },
+    {
+      "assetId": "w004",
+      "wave": 4,
+      "role": "normal",
+      "name": "까마귀 정찰병",
+      "tier": 1,
+      "cls": "S",
+      "gait": "fly",
+      "locomotion": "flight",
+      "family": "bird",
+      "description": "A compact raven scout in flight with intact charcoal feathers, a rounded body, a clear expressive eye and a tiny leather harness carrying a small warm lantern. Broad simplified wings and a clean readable silhouette.",
+      "existingSide": true,
+      "frames": 4
+    },
+    {
+      "assetId": "w005",
+      "wave": 5,
+      "role": "normal",
+      "name": "고블린 창병",
+      "tier": 1,
+      "cls": "M",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "A wiry goblin spearman with smooth muted green skin, large expressive ears, simple leather armor, a compact iron spear and a small round wooden shield. A mischievous determined grin, sturdy boots and clearly separated limbs.",
+      "existingSide": true,
+      "frames": 8
+    },
+    {
+      "assetId": "w006",
+      "wave": 6,
+      "role": "normal",
+      "name": "썩은 멧돼지",
+      "tier": 1,
+      "cls": "L",
+      "gait": "quad",
+      "locomotion": "legged",
+      "family": "quad",
+      "description": "A stocky wild boar with intact brown fur, a rounded sturdy body, both ears intact and small worn metal caps on its tusks. Four stout legs, an expressive determined face and a heavy low-running silhouette.",
+      "existingSide": true,
+      "frames": 8
+    },
+    {
+      "assetId": "w007",
+      "wave": 7,
+      "role": "normal",
+      "name": "무덤 파는 구울",
+      "tier": 1,
+      "cls": "L",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "A stooped grave-digging ghoul with a smooth gray-green face, simple hood and work tunic, complete gloves and sturdy boots, carrying a compact shovel. Broad rounded shapes, a tired grumpy expression and a clean intact game-character body.",
+      "existingSide": true,
+      "frames": 8
+    },
+    {
+      "assetId": "w008",
+      "wave": 8,
+      "role": "normal",
+      "name": "시체파리 떼",
+      "tier": 1,
+      "cls": "S",
+      "gait": "fly",
+      "locomotion": "flight",
+      "family": "insect-swarm",
+      "description": "A small organized group of rounded dark teal fantasy flies with simple expressive eyes and translucent cartoon wings, clustered around one small carved skull-shaped amulet. Keep the group compact and its fly count, body positions and amulet identical across frames; only the wings beat.",
+      "existingSide": true,
+      "frames": 4
+    },
+    {
+      "assetId": "w009",
+      "wave": 9,
+      "role": "normal",
+      "name": "녹슨 철갑 오크",
+      "tier": 1,
+      "cls": "L",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "A broad orc guard with an intact expressive face, small rounded tusks and complete rust-colored plate armor with a sturdy helmet. Carrying a compact axe and shield, with chunky boots and a massive balanced silhouette.",
+      "existingSide": true,
+      "frames": 8
+    },
+    {
+      "assetId": "b010",
+      "wave": 10,
+      "role": "boss",
+      "name": "역병 쥐왕",
+      "tier": 1,
+      "cls": "L",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Large upright charcoal rat monarch, bronze crown/bracers/belt, cream fur collar, burgundy cape ending above knees, two sturdy furry legs and one curved tail.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w011",
+      "wave": 11,
+      "role": "normal",
+      "name": "도토리다람쥐",
+      "tier": 2,
+      "cls": "S",
+      "gait": "quad",
+      "locomotion": "legged",
+      "family": "quad",
+      "description": "Adventurous chestnut squirrel, cream belly, bushy curled tail, green neckerchief and acorn charm. Four sturdy paws.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w012",
+      "wave": 12,
+      "role": "normal",
+      "name": "수리부엉이",
+      "tier": 2,
+      "cls": "L",
+      "gait": "fly",
+      "locomotion": "flight",
+      "family": "bird",
+      "description": "Large tawny eagle owl with cream facial disk, expressive amber eyes, forest-green leather scout harness, broad feathered wings.",
+      "existingSide": false,
+      "frames": 4
+    },
+    {
+      "assetId": "w013",
+      "wave": 13,
+      "role": "normal",
+      "name": "아기여우",
+      "tier": 2,
+      "cls": "S",
+      "gait": "quad",
+      "locomotion": "legged",
+      "family": "quad",
+      "description": "Small russet fox cub with cream muzzle/chest/tail tip, dark paws, green collar and brass leaf tag.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w014",
+      "wave": 14,
+      "role": "normal",
+      "name": "오소리",
+      "tier": 2,
+      "cls": "L",
+      "gait": "quad",
+      "locomotion": "legged",
+      "family": "quad",
+      "description": "Stocky charcoal badger with cream face stripes, moss-green work harness, powerful shoulders and four digging paws.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w015",
+      "wave": 15,
+      "role": "normal",
+      "name": "도적너구리",
+      "tier": 2,
+      "cls": "M",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Upright raccoon bandit, gray fur and black eye mask, forest-green hood, compact dagger and small loot satchel, sturdy boots.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w016",
+      "wave": 16,
+      "role": "normal",
+      "name": "검독수리",
+      "tier": 2,
+      "cls": "L",
+      "gait": "fly",
+      "locomotion": "flight",
+      "family": "bird",
+      "description": "Golden-brown eagle, cream neck feathers, sharp amber eyes, forest-green harness, broad golden feathered wings.",
+      "existingSide": false,
+      "frames": 4
+    },
+    {
+      "assetId": "w017",
+      "wave": 17,
+      "role": "normal",
+      "name": "회색늑대",
+      "tier": 2,
+      "cls": "M",
+      "gait": "quad",
+      "locomotion": "legged",
+      "family": "quad",
+      "description": "Sturdy silver-gray wolf with cream muzzle/chest, dark saddle, green leather collar, one full natural tail.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w018",
+      "wave": 18,
+      "role": "normal",
+      "name": "가시고슴도치",
+      "tier": 2,
+      "cls": "S",
+      "gait": "quad",
+      "locomotion": "legged",
+      "family": "quad",
+      "description": "Round cinnamon hedgehog, cream face and paws, dark brown rounded quills, small green leaf cape and acorn clasp.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w019",
+      "wave": 19,
+      "role": "normal",
+      "name": "불곰",
+      "tier": 2,
+      "cls": "L",
+      "gait": "quad",
+      "locomotion": "legged",
+      "family": "quad",
+      "description": "Heavy warm-brown bear, cream muzzle, moss-green shoulder harness with bronze buckle, four strong paws.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "b020",
+      "wave": 20,
+      "role": "boss",
+      "name": "고목 정령",
+      "tier": 2,
+      "cls": "L",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Ancient walking oak tree guardian with healthy dark bark, moss-green crown, amber knot eyes, broad branch arms and two strong root legs.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "b020-2",
+      "wave": 20,
+      "role": "secondary",
+      "name": "거대 수사슴",
+      "tier": 2,
+      "cls": "L",
+      "gait": "quad",
+      "locomotion": "legged",
+      "family": "quad",
+      "description": "Majestic silver-brown stag, broad branching antlers with green leaves and brass charms, forest-green harness, four powerful hooved legs.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w021",
+      "wave": 21,
+      "role": "normal",
+      "name": "늪지렁이",
+      "tier": 3,
+      "cls": "S",
+      "gait": "slither",
+      "locomotion": "slither",
+      "family": "slither",
+      "description": "Friendly determined segmented olive marsh worm with amber bead eyes and smooth copper bands, rounded burrowing nose.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w022",
+      "wave": 22,
+      "role": "normal",
+      "name": "왕두꺼비",
+      "tier": 3,
+      "cls": "L",
+      "gait": "quad",
+      "locomotion": "legged",
+      "family": "toad",
+      "description": "Stout moss-green royal toad with golden eyes, cream belly, blue-green waist sash, four squat webbed limbs.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w023",
+      "wave": 23,
+      "role": "normal",
+      "name": "도롱뇽",
+      "tier": 3,
+      "cls": "S",
+      "gait": "quad",
+      "locomotion": "legged",
+      "family": "reptile",
+      "description": "Small teal salamander with gold spots, smooth intact skin, expressive eyes, four clear feet and long tail.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w024",
+      "wave": 24,
+      "role": "normal",
+      "name": "왕모기",
+      "tier": 3,
+      "cls": "S",
+      "gait": "fly",
+      "locomotion": "flight",
+      "family": "insect-wings",
+      "description": "Large stylized mosquito scout, teal segmented body, amber goggles, short harmless brass proboscis, translucent wings.",
+      "existingSide": false,
+      "frames": 4
+    },
+    {
+      "assetId": "w025",
+      "wave": 25,
+      "role": "normal",
+      "name": "동굴거미",
+      "tier": 3,
+      "cls": "M",
+      "gait": "quad",
+      "locomotion": "legged",
+      "family": "arthropod",
+      "description": "Round violet cave spider with exactly eight articulated legs, two large amber eyes and small silver web emblem.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w026",
+      "wave": 26,
+      "role": "normal",
+      "name": "독전갈",
+      "tier": 3,
+      "cls": "S",
+      "gait": "quad",
+      "locomotion": "legged",
+      "family": "arthropod",
+      "description": "Amber-purple scorpion with eight walking legs, two broad pincers and one curled tail with rounded crystal tip.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w027",
+      "wave": 27,
+      "role": "normal",
+      "name": "늪악어",
+      "tier": 3,
+      "cls": "L",
+      "gait": "quad",
+      "locomotion": "legged",
+      "family": "reptile",
+      "description": "Heavy olive swamp crocodile, cream belly, broad friendly-snarly snout, teal harness, four short legs and full plated tail.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w028",
+      "wave": 28,
+      "role": "normal",
+      "name": "개미귀신",
+      "tier": 3,
+      "cls": "L",
+      "gait": "quad",
+      "locomotion": "legged",
+      "family": "arthropod",
+      "description": "Chunky ochre antlion beetle with exactly six articulated walking legs, dark shovel mandibles, teal plated carapace.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w029",
+      "wave": 29,
+      "role": "normal",
+      "name": "아나콘다",
+      "tier": 3,
+      "cls": "L",
+      "gait": "slither",
+      "locomotion": "slither",
+      "family": "slither",
+      "description": "Long emerald anaconda with cream underside and ochre banding, broad expressive head, one smoothly tapering tail.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "b030",
+      "wave": 30,
+      "role": "boss",
+      "name": "두꺼비 마녀",
+      "tier": 3,
+      "cls": "S",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Upright moss-green toad witch in teal robe and pointed reed hat, amber eyes, compact wooden staff, two webbed walking feet.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "b030-2",
+      "wave": 30,
+      "role": "secondary",
+      "name": "박쥐 군주",
+      "tier": 3,
+      "cls": "S",
+      "gait": "fly",
+      "locomotion": "flight",
+      "family": "fly",
+      "description": "Large violet bat lord with expressive amber eyes, silver collar, broad dark membranous wings and small tucked feet.",
+      "existingSide": false,
+      "frames": 4
+    },
+    {
+      "assetId": "w031",
+      "wave": 31,
+      "role": "normal",
+      "name": "고블린 정찰병",
+      "tier": 4,
+      "cls": "S",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Small olive-green goblin scout with brown hood, leather vest, short dagger and rolled map, sturdy boots.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w032",
+      "wave": 32,
+      "role": "normal",
+      "name": "고블린 글라이더",
+      "tier": 4,
+      "cls": "S",
+      "gait": "fly",
+      "locomotion": "flight",
+      "family": "glider",
+      "description": "Small green goblin pilot in goggles, hanging beneath compact ochre cloth glider wings and wooden struts.",
+      "existingSide": false,
+      "frames": 4
+    },
+    {
+      "assetId": "w033",
+      "wave": 33,
+      "role": "normal",
+      "name": "방패 고블린",
+      "tier": 4,
+      "cls": "S",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Round green goblin guard, brown leather armor, broad round wooden shield and compact iron mace, sturdy boots.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w034",
+      "wave": 34,
+      "role": "normal",
+      "name": "오크 전사",
+      "tier": 4,
+      "cls": "L",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Broad olive orc warrior with small tusks, ochre tunic, iron shoulder armor, compact axe and thick boots.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w035",
+      "wave": 35,
+      "role": "normal",
+      "name": "트롤 굴착병",
+      "tier": 4,
+      "cls": "L",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Tall gray-green troll miner, leather apron, bronze digging helmet and compact pickaxe, complete gloves and heavy boots.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w036",
+      "wave": 36,
+      "role": "normal",
+      "name": "와이번 기수",
+      "tier": 4,
+      "cls": "L",
+      "gait": "fly",
+      "locomotion": "flight",
+      "family": "flying-mount",
+      "description": "Small armored goblin riding a blue-gray wyvern, ochre saddle, broad membranous wings and one tail.",
+      "existingSide": false,
+      "frames": 4
+    },
+    {
+      "assetId": "w037",
+      "wave": 37,
+      "role": "normal",
+      "name": "홉고블린 궁수",
+      "tier": 4,
+      "cls": "M",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Lean rust-red hobgoblin archer with brown hood, compact bow/quiver, layered ochre leather armor and tall boots.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w038",
+      "wave": 38,
+      "role": "normal",
+      "name": "코볼트",
+      "tier": 4,
+      "cls": "S",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Small warm-brown kobold with rounded muzzle, leather cap, copper buckler and short spear, expressive face.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w039",
+      "wave": 39,
+      "role": "normal",
+      "name": "산적 두목",
+      "tier": 4,
+      "cls": "M",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Stocky human bandit captain, dark beard, ochre coat, leather belt, curved compact saber and heavy boots.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "b040",
+      "wave": 40,
+      "role": "boss",
+      "name": "고블린 왕",
+      "tier": 4,
+      "cls": "S",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Proud green goblin king with bronze crown, ochre cape ending above knees, steel shoulder plates, compact scepter and sturdy boots.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "b040-2",
+      "wave": 40,
+      "role": "secondary",
+      "name": "오우거 장사",
+      "tier": 4,
+      "cls": "S",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Huge gray-green ogre champion in ochre leather armor, bronze bracers, compact stone hammer and strong booted legs.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w041",
+      "wave": 41,
+      "role": "normal",
+      "name": "방패병",
+      "tier": 5,
+      "cls": "L",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Human shield soldier in blue-steel helmet and pale-blue tabard, tall rectangular steel shield, compact spear, armored boots.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w042",
+      "wave": 42,
+      "role": "normal",
+      "name": "공병",
+      "tier": 5,
+      "cls": "M",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Human military engineer with steel helmet, leather apron, blue tool belt, compact hammer and satchel, sturdy boots.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w043",
+      "wave": 43,
+      "role": "normal",
+      "name": "창기병",
+      "tier": 5,
+      "cls": "L",
+      "gait": "quad",
+      "locomotion": "legged",
+      "family": "mounted-quad",
+      "description": "Human lancer riding a chestnut horse with blue-steel barding and pale-blue cloth, upright compact lance.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w044",
+      "wave": 44,
+      "role": "normal",
+      "name": "그리폰 기사",
+      "tier": 5,
+      "cls": "L",
+      "gait": "fly",
+      "locomotion": "flight",
+      "family": "flying-mount",
+      "description": "Armored knight riding a golden eagle-headed griffin, pale-blue saddle cloth, broad feathered wings and tucked paws.",
+      "existingSide": false,
+      "frames": 4
+    },
+    {
+      "assetId": "w045",
+      "wave": 45,
+      "role": "normal",
+      "name": "중장기사",
+      "tier": 5,
+      "cls": "L",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Massive armored knight in complete blue-steel plate, narrow gold visor, broad shield and compact sword, heavy greaves.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w046",
+      "wave": 46,
+      "role": "normal",
+      "name": "종자",
+      "tier": 5,
+      "cls": "S",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Young adult squire in pale-blue padded tunic, steel cap, small buckler and wooden practice sword, sturdy boots.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w047",
+      "wave": 47,
+      "role": "normal",
+      "name": "석궁병",
+      "tier": 5,
+      "cls": "M",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Human crossbow soldier with blue-steel helmet and leather coat, compact crossbow held across chest, sturdy boots.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w048",
+      "wave": 48,
+      "role": "normal",
+      "name": "페가수스 기사",
+      "tier": 5,
+      "cls": "L",
+      "gait": "fly",
+      "locomotion": "flight",
+      "family": "flying-mount",
+      "description": "Armored knight riding a white pegasus with pale-blue barding, broad cream feathered wings and tucked legs.",
+      "existingSide": false,
+      "frames": 4
+    },
+    {
+      "assetId": "w049",
+      "wave": 49,
+      "role": "normal",
+      "name": "굴착 노움",
+      "tier": 5,
+      "cls": "S",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Compact bearded gnome miner, blue cap, steel goggles, leather tool harness, short drill and chunky boots.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "b050",
+      "wave": 50,
+      "role": "boss",
+      "name": "강철 성주",
+      "tier": 5,
+      "cls": "L",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Towering steel castellan in complete silver-blue plate and pale-blue cape above knees, golden visor, compact sword and heavy boots.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "b050-2",
+      "wave": 50,
+      "role": "secondary",
+      "name": "공성 골렘",
+      "tier": 5,
+      "cls": "L",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Huge siege golem built of blue-gray fortress stones, bronze cannon shoulders and glowing amber furnace face, two massive articulated stone legs.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w051",
+      "wave": 51,
+      "role": "normal",
+      "name": "좀비",
+      "tier": 6,
+      "cls": "L",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Intact gray-green zombie porter with sleepy expressive face, patched burgundy work coat, complete gloves and boots; no injury.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w052",
+      "wave": 52,
+      "role": "normal",
+      "name": "도깨비불",
+      "tier": 6,
+      "cls": "S",
+      "gait": "float",
+      "locomotion": "float",
+      "family": "float",
+      "description": "Small teal will-o-wisp spirit, bright amber eyes inside one rounded flame body with swirling gold ember wisps.",
+      "existingSide": false,
+      "frames": 4
+    },
+    {
+      "assetId": "w053",
+      "wave": 53,
+      "role": "normal",
+      "name": "해골 병사",
+      "tier": 6,
+      "cls": "M",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Clean ivory skeleton soldier with rounded skull, burgundy tabard, iron cap, compact spear and chunky iron boots.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w054",
+      "wave": 54,
+      "role": "normal",
+      "name": "뼈다귀 강아지",
+      "tier": 6,
+      "cls": "S",
+      "gait": "quad",
+      "locomotion": "legged",
+      "family": "quad",
+      "description": "Small playful skeletal puppy made of smooth ivory toy-like bones, purple collar, rounded skull and four sturdy paws.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w055",
+      "wave": 55,
+      "role": "normal",
+      "name": "구울",
+      "tier": 6,
+      "cls": "L",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Broad intact gray-green ghoul with expressive grumpy face, violet hooded tunic, complete gloves and boots.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w056",
+      "wave": 56,
+      "role": "normal",
+      "name": "무덤손",
+      "tier": 6,
+      "cls": "L",
+      "gait": "quad",
+      "locomotion": "legged",
+      "family": "glove",
+      "description": "Animated oversized violet leather wizard glove walking on five articulated glove fingers, brass cuff and amber rune. No human flesh.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w057",
+      "wave": 57,
+      "role": "normal",
+      "name": "해골 기사",
+      "tier": 6,
+      "cls": "L",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Clean ivory skeleton knight in full purple-steel armor, rounded skull visor, small shield and compact sword, boots.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w058",
+      "wave": 58,
+      "role": "normal",
+      "name": "저주 인형",
+      "tier": 6,
+      "cls": "S",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Small enchanted stitched cloth doll with round button eyes, burgundy dress/coat, striped stockings and soft boots.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w059",
+      "wave": 59,
+      "role": "normal",
+      "name": "밴시",
+      "tier": 6,
+      "cls": "M",
+      "gait": "float",
+      "locomotion": "float",
+      "family": "float",
+      "description": "Floating banshee spirit with intact pale face, flowing violet gown and hood, smooth ghostly hands, trailing intact cloth.",
+      "existingSide": false,
+      "frames": 4
+    },
+    {
+      "assetId": "b060",
+      "wave": 60,
+      "role": "boss",
+      "name": "리치",
+      "tier": 6,
+      "cls": "L",
+      "gait": "float",
+      "locomotion": "float",
+      "family": "float",
+      "description": "Floating lich sorcerer with clean rounded ivory skull, violet regal robes, gold crown and compact emerald crystal staff, trailing intact cloth.",
+      "existingSide": false,
+      "frames": 4
+    },
+    {
+      "assetId": "b060-2",
+      "wave": 60,
+      "role": "secondary",
+      "name": "뼈 용",
+      "tier": 6,
+      "cls": "L",
+      "gait": "fly",
+      "locomotion": "flight",
+      "family": "fly",
+      "description": "Flying bone dragon made from smooth clean ivory toy-like bones with violet wing membranes, gold core charm and one tail.",
+      "existingSide": false,
+      "frames": 4
+    },
+    {
+      "assetId": "w061",
+      "wave": 61,
+      "role": "normal",
+      "name": "불 정령",
+      "tier": 7,
+      "cls": "M",
+      "gait": "float",
+      "locomotion": "float",
+      "family": "float",
+      "description": "Friendly fierce fire elemental with charcoal stone core, bright amber eyes and contained orange flame mantle.",
+      "existingSide": false,
+      "frames": 4
+    },
+    {
+      "assetId": "w062",
+      "wave": 62,
+      "role": "normal",
+      "name": "서리 요정",
+      "tier": 7,
+      "cls": "S",
+      "gait": "fly",
+      "locomotion": "flight",
+      "family": "insect-wings",
+      "description": "Tiny frost fairy with silver hair, pale-cyan tunic, crystal-blue insect wings and small ice wand.",
+      "existingSide": false,
+      "frames": 4
+    },
+    {
+      "assetId": "w063",
+      "wave": 63,
+      "role": "normal",
+      "name": "흙 정령",
+      "tier": 7,
+      "cls": "S",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Small earth elemental built from rounded ochre clay stones, green moss seams, amber eyes, two blocky arms and legs.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w064",
+      "wave": 64,
+      "role": "normal",
+      "name": "천둥새",
+      "tier": 7,
+      "cls": "M",
+      "gait": "fly",
+      "locomotion": "flight",
+      "family": "bird",
+      "description": "Thunderbird with deep-blue feathers, golden crest, amber eyes and broad electric-blue wings with small lightning accents.",
+      "existingSide": false,
+      "frames": 4
+    },
+    {
+      "assetId": "w065",
+      "wave": 65,
+      "role": "normal",
+      "name": "바위 골렘",
+      "tier": 7,
+      "cls": "L",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Heavy rounded gray rock golem with moss-green seams, amber rune face, huge stone fists and sturdy stone feet.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w066",
+      "wave": 66,
+      "role": "normal",
+      "name": "수정 정령",
+      "tier": 7,
+      "cls": "L",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Upright pale-blue crystal spirit with expressive amber eye lights, layered turquoise facets, two arms and two crystal legs.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w067",
+      "wave": 67,
+      "role": "normal",
+      "name": "마법 고양이",
+      "tier": 7,
+      "cls": "S",
+      "gait": "quad",
+      "locomotion": "legged",
+      "family": "quad",
+      "description": "Small midnight-blue wizard cat with amber eyes, violet scarf, brass moon charm and one intact tail, four paws.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w068",
+      "wave": 68,
+      "role": "normal",
+      "name": "살아있는 마도서",
+      "tier": 7,
+      "cls": "S",
+      "gait": "fly",
+      "locomotion": "flight",
+      "family": "book",
+      "description": "Living violet spellbook with brass corners, expressive eyes on cover, page fans as two flapping wings, small bookmark tail.",
+      "existingSide": false,
+      "frames": 4
+    },
+    {
+      "assetId": "w069",
+      "wave": 69,
+      "role": "normal",
+      "name": "수정 골렘",
+      "tier": 7,
+      "cls": "L",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Broad amethyst crystal golem with turquoise core, gold runes, two articulated stone arms and sturdy crystal legs.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "b070",
+      "wave": 70,
+      "role": "boss",
+      "name": "대마법사",
+      "tier": 7,
+      "cls": "S",
+      "gait": "float",
+      "locomotion": "float",
+      "family": "float",
+      "description": "Wise archmage with silver beard, deep-blue robes, gold star hat and crystal staff, floating cloth panels and contained arcane glow.",
+      "existingSide": false,
+      "frames": 4
+    },
+    {
+      "assetId": "b070-2",
+      "wave": 70,
+      "role": "secondary",
+      "name": "폭풍 정령",
+      "tier": 7,
+      "cls": "S",
+      "gait": "float",
+      "locomotion": "float",
+      "family": "float",
+      "description": "Large storm elemental made of blue-gray swirling cloud bands, golden rune core, amber eyes and flowing cyan wind ribbons.",
+      "existingSide": false,
+      "frames": 4
+    },
+    {
+      "assetId": "w071",
+      "wave": 71,
+      "role": "normal",
+      "name": "드레이크",
+      "tier": 8,
+      "cls": "L",
+      "gait": "quad",
+      "locomotion": "legged",
+      "family": "reptile",
+      "description": "Sturdy red-brown drake, cream belly, small bronze horns, four strong legs, folded decorative winglets and one plated tail.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w072",
+      "wave": 72,
+      "role": "normal",
+      "name": "새끼용",
+      "tier": 8,
+      "cls": "S",
+      "gait": "fly",
+      "locomotion": "flight",
+      "family": "bat-wings",
+      "description": "Small ruby dragon hatchling with cream belly, round curious eyes, broad red membranous wings and one tail.",
+      "existingSide": false,
+      "frames": 4
+    },
+    {
+      "assetId": "w073",
+      "wave": 73,
+      "role": "normal",
+      "name": "매머드",
+      "tier": 8,
+      "cls": "L",
+      "gait": "quad",
+      "locomotion": "legged",
+      "family": "quad",
+      "description": "Woolly brown mammoth with cream fur highlights, two rounded ivory tusks, bronze harness and four pillar legs.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w074",
+      "wave": 74,
+      "role": "normal",
+      "name": "도마뱀 인간",
+      "tier": 8,
+      "cls": "S",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Upright emerald lizard warrior, cream throat, bronze scale armor, compact spear and shield, two sturdy legs and tail.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w075",
+      "wave": 75,
+      "role": "normal",
+      "name": "코카트리스",
+      "tier": 8,
+      "cls": "S",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Cockatrice with golden rooster head, emerald scaled biped legs, bronze crest and long feathered tail; two walking legs.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w076",
+      "wave": 76,
+      "role": "normal",
+      "name": "와이번",
+      "tier": 8,
+      "cls": "S",
+      "gait": "fly",
+      "locomotion": "flight",
+      "family": "bat-wings",
+      "description": "Lean bronze-red wyvern with horned expressive head, two broad membranous wings, tucked legs and long tail.",
+      "existingSide": false,
+      "frames": 4
+    },
+    {
+      "assetId": "w077",
+      "wave": 77,
+      "role": "normal",
+      "name": "모래 벌레",
+      "tier": 8,
+      "cls": "S",
+      "gait": "slither",
+      "locomotion": "slither",
+      "family": "slither",
+      "description": "Ochre sand worm with bronze segmented armor rings, rounded digging muzzle, amber eyes, smooth flowing body.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w078",
+      "wave": 78,
+      "role": "normal",
+      "name": "베히모스",
+      "tier": 8,
+      "cls": "L",
+      "gait": "quad",
+      "locomotion": "legged",
+      "family": "quad",
+      "description": "Huge stocky blue-gray behemoth with bronze plated shoulders, small ivory horns, four massive paws and short tail.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w079",
+      "wave": 79,
+      "role": "normal",
+      "name": "용 전사",
+      "tier": 8,
+      "cls": "M",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Upright crimson dragon warrior in bronze plate, compact broad sword and shield, sturdy armored legs and one tail.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "b080",
+      "wave": 80,
+      "role": "boss",
+      "name": "화룡",
+      "tier": 8,
+      "cls": "M",
+      "gait": "fly",
+      "locomotion": "flight",
+      "family": "fly",
+      "description": "Majestic ruby fire dragon, cream armored belly, bronze horns, broad red wings, small controlled ember breath glow and full tail.",
+      "existingSide": false,
+      "frames": 4
+    },
+    {
+      "assetId": "b080-2",
+      "wave": 80,
+      "role": "secondary",
+      "name": "히드라",
+      "tier": 8,
+      "cls": "M",
+      "gait": "quad",
+      "locomotion": "legged",
+      "family": "quad",
+      "description": "Emerald hydra with exactly three expressive heads, bronze collar rings, one large quadruped body, four legs and one tail.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w081",
+      "wave": 81,
+      "role": "normal",
+      "name": "임프",
+      "tier": 9,
+      "cls": "S",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Small red imp, rounded black horns, black leather vest, playful determined face, two sturdy hoof feet and one tail.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w082",
+      "wave": 82,
+      "role": "normal",
+      "name": "헬하운드",
+      "tier": 9,
+      "cls": "M",
+      "gait": "quad",
+      "locomotion": "legged",
+      "family": "quad",
+      "description": "Charcoal hellhound with wine-red mane, ember eyes, brass collar, four strong paws and intact full tail.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w083",
+      "wave": 83,
+      "role": "normal",
+      "name": "지옥 오우거",
+      "tier": 9,
+      "cls": "L",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Heavy red-brown hell ogre, rounded black horns, dark iron bracers, compact hammer and sturdy boots.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w084",
+      "wave": 84,
+      "role": "normal",
+      "name": "지옥 벌레",
+      "tier": 9,
+      "cls": "L",
+      "gait": "slither",
+      "locomotion": "slither",
+      "family": "slither",
+      "description": "Large crimson burrowing worm with black armor bands, rounded amber crystal mouth plate and small eye lights.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w085",
+      "wave": 85,
+      "role": "normal",
+      "name": "그림자 악귀",
+      "tier": 9,
+      "cls": "S",
+      "gait": "float",
+      "locomotion": "float",
+      "family": "float",
+      "description": "Floating navy shadow spirit with clear amber eyes, layered wine-red scarf and flowing intact smoke-like cloak.",
+      "existingSide": false,
+      "frames": 4
+    },
+    {
+      "assetId": "w086",
+      "wave": 86,
+      "role": "normal",
+      "name": "임프 주술사",
+      "tier": 9,
+      "cls": "S",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Small crimson imp shaman, rounded black horns, dark hood, brass charms, compact rune staff and sturdy hoof feet.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w087",
+      "wave": 87,
+      "role": "normal",
+      "name": "화염 악마",
+      "tier": 9,
+      "cls": "L",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Upright flame demon with intact charcoal armor, orange decorative rune seams, rounded horned helm and heavy boots.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w088",
+      "wave": 88,
+      "role": "normal",
+      "name": "가고일",
+      "tier": 9,
+      "cls": "S",
+      "gait": "fly",
+      "locomotion": "flight",
+      "family": "bat-wings",
+      "description": "Small slate gargoyle, expressive round face, broad stone wings, bronze collar, compact tucked feet and one tail.",
+      "existingSide": false,
+      "frames": 4
+    },
+    {
+      "assetId": "w089",
+      "wave": 89,
+      "role": "normal",
+      "name": "지옥 기사",
+      "tier": 9,
+      "cls": "L",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Tall infernal knight in complete black iron plate with wine-red cloth and orange rune accents, compact sword and boots.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "b090",
+      "wave": 90,
+      "role": "boss",
+      "name": "마왕",
+      "tier": 9,
+      "cls": "L",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Imposing upright crimson demon king in complete black-gold armor, rounded crown horns, burgundy cape above knees, solid armored legs.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "b090-2",
+      "wave": 90,
+      "role": "secondary",
+      "name": "구덩이 악마",
+      "tier": 9,
+      "cls": "L",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Huge upright charcoal pit demon, broad red shoulders, rounded black horns, heavy bronze bracers and sturdy hoof feet.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w091",
+      "wave": 91,
+      "role": "normal",
+      "name": "심연 촉수",
+      "tier": 10,
+      "cls": "S",
+      "gait": "slither",
+      "locomotion": "slither",
+      "family": "slither",
+      "description": "A single stylized purple abyss tentacle creature emerging from a smooth magical curl, rounded suction cups and small gold eye charm.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w092",
+      "wave": 92,
+      "role": "normal",
+      "name": "공허의 눈",
+      "tier": 10,
+      "cls": "S",
+      "gait": "float",
+      "locomotion": "float",
+      "family": "float",
+      "description": "Floating violet crystal eye sentinel, geometric gold iris, smooth dark shell and orbiting small intact violet wisps.",
+      "existingSide": false,
+      "frames": 4
+    },
+    {
+      "assetId": "w093",
+      "wave": 93,
+      "role": "normal",
+      "name": "심연 거인",
+      "tier": 10,
+      "cls": "L",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Huge upright midnight-blue abyss giant, intact skin, violet rune armor, large bracers and solid boots.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w094",
+      "wave": 94,
+      "role": "normal",
+      "name": "파멸 기사",
+      "tier": 10,
+      "cls": "L",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Broad doom knight in complete obsidian armor, violet cloth, star-like visor, compact black blade and heavy boots.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w095",
+      "wave": 95,
+      "role": "normal",
+      "name": "그림자 암살자",
+      "tier": 10,
+      "cls": "M",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Lean shadow assassin in midnight-blue hood and violet scarf, mask with gold eye slit, two short daggers and quiet boots.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w096",
+      "wave": 96,
+      "role": "normal",
+      "name": "파멸 까마귀",
+      "tier": 10,
+      "cls": "S",
+      "gait": "fly",
+      "locomotion": "flight",
+      "family": "bird",
+      "description": "Large midnight-violet doom raven with silver feather edges, star-like eyes, gold collar and broad feathered wings.",
+      "existingSide": false,
+      "frames": 4
+    },
+    {
+      "assetId": "w097",
+      "wave": 97,
+      "role": "normal",
+      "name": "공허 골렘",
+      "tier": 10,
+      "cls": "L",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Heavy void golem with floating but connected obsidian blocks, contained violet core, rounded fists and two block feet.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w098",
+      "wave": 98,
+      "role": "normal",
+      "name": "공허 벌레",
+      "tier": 10,
+      "cls": "M",
+      "gait": "slither",
+      "locomotion": "slither",
+      "family": "slither",
+      "description": "Long violet void worm with dark segmented shell, small star eyes and smooth gold-edged armor bands.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "w099",
+      "wave": 99,
+      "role": "normal",
+      "name": "흑요석 거상",
+      "tier": 10,
+      "cls": "L",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Huge obsidian colossus, complete black glass armor with broad purple facets, gold runes, massive fists and pillar legs.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "b100",
+      "wave": 100,
+      "role": "boss",
+      "name": "파멸의 군주",
+      "tier": 10,
+      "cls": "S",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Doom sovereign in complete obsidian-violet armor with gold crown, star visor, midnight cape above knees, compact scepter and solid boots.",
+      "existingSide": false,
+      "frames": 8
+    },
+    {
+      "assetId": "b100-2",
+      "wave": 100,
+      "role": "secondary",
+      "name": "공허 용",
+      "tier": 10,
+      "cls": "S",
+      "gait": "fly",
+      "locomotion": "flight",
+      "family": "fly",
+      "description": "Majestic flying midnight-blue void dragon with violet star-patterned wings, gold-edged horns, silver eyes and one intact tail.",
+      "existingSide": false,
+      "frames": 4
+    },
+    {
+      "assetId": "w101",
+      "wave": 101,
+      "role": "normal",
+      "name": "종말의 사자",
+      "tier": 10,
+      "cls": "M",
+      "gait": "biped",
+      "locomotion": "legged",
+      "family": "biped",
+      "description": "Upright last herald wearing midnight-blue cloak and violet armor, expressive masked face, small star staff and solid boots.",
+      "existingSide": false,
+      "frames": 8
+    }
+  ],
+  "groups": [
+    {
+      "id": "t1-quad-01",
+      "assetIds": [
+        "w001",
+        "w006"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t1-biped-01",
+      "assetIds": [
+        "w002",
+        "w003",
+        "w005",
+        "w007"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t1-biped-02",
+      "assetIds": [
+        "w009"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t1-bird-01",
+      "assetIds": [
+        "w004"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t1-insect-swarm-01",
+      "assetIds": [
+        "w008"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t1-boss-01",
+      "assetIds": [
+        "b010"
+      ],
+      "maxRows": 2,
+      "status": "pending"
+    },
+    {
+      "id": "t2-quad-01",
+      "assetIds": [
+        "w011",
+        "w013",
+        "w014",
+        "w017"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t2-quad-02",
+      "assetIds": [
+        "w018",
+        "w019"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t2-bird-01",
+      "assetIds": [
+        "w012",
+        "w016"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t2-biped-01",
+      "assetIds": [
+        "w015"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t2-boss-01",
+      "assetIds": [
+        "b020",
+        "b020-2"
+      ],
+      "maxRows": 2,
+      "status": "pending"
+    },
+    {
+      "id": "t3-slither-01",
+      "assetIds": [
+        "w021",
+        "w029"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t3-toad-01",
+      "assetIds": [
+        "w022"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t3-reptile-01",
+      "assetIds": [
+        "w023",
+        "w027"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t3-insect-wings-01",
+      "assetIds": [
+        "w024"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t3-arthropod-01",
+      "assetIds": [
+        "w025",
+        "w026",
+        "w028"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t3-boss-01",
+      "assetIds": [
+        "b030",
+        "b030-2"
+      ],
+      "maxRows": 2,
+      "status": "pending"
+    },
+    {
+      "id": "t4-biped-01",
+      "assetIds": [
+        "w031",
+        "w033",
+        "w034",
+        "w035"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t4-biped-02",
+      "assetIds": [
+        "w037",
+        "w038",
+        "w039"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t4-glider-01",
+      "assetIds": [
+        "w032"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t4-flying-mount-01",
+      "assetIds": [
+        "w036"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t4-boss-01",
+      "assetIds": [
+        "b040",
+        "b040-2"
+      ],
+      "maxRows": 2,
+      "status": "pending"
+    },
+    {
+      "id": "t5-biped-01",
+      "assetIds": [
+        "w041",
+        "w042",
+        "w045",
+        "w046"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t5-biped-02",
+      "assetIds": [
+        "w047",
+        "w049"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t5-mounted-quad-01",
+      "assetIds": [
+        "w043"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t5-flying-mount-01",
+      "assetIds": [
+        "w044",
+        "w048"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t5-boss-01",
+      "assetIds": [
+        "b050",
+        "b050-2"
+      ],
+      "maxRows": 2,
+      "status": "pending"
+    },
+    {
+      "id": "t6-biped-01",
+      "assetIds": [
+        "w051",
+        "w053",
+        "w055",
+        "w057"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t6-biped-02",
+      "assetIds": [
+        "w058"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t6-float-01",
+      "assetIds": [
+        "w052",
+        "w059"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t6-quad-01",
+      "assetIds": [
+        "w054"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t6-glove-01",
+      "assetIds": [
+        "w056"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t6-boss-01",
+      "assetIds": [
+        "b060",
+        "b060-2"
+      ],
+      "maxRows": 2,
+      "status": "pending"
+    },
+    {
+      "id": "t7-float-01",
+      "assetIds": [
+        "w061"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t7-insect-wings-01",
+      "assetIds": [
+        "w062"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t7-biped-01",
+      "assetIds": [
+        "w063",
+        "w065",
+        "w066",
+        "w069"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t7-bird-01",
+      "assetIds": [
+        "w064"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t7-quad-01",
+      "assetIds": [
+        "w067"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t7-book-01",
+      "assetIds": [
+        "w068"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t7-boss-01",
+      "assetIds": [
+        "b070",
+        "b070-2"
+      ],
+      "maxRows": 2,
+      "status": "pending"
+    },
+    {
+      "id": "t8-reptile-01",
+      "assetIds": [
+        "w071"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t8-bat-wings-01",
+      "assetIds": [
+        "w072",
+        "w076"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t8-quad-01",
+      "assetIds": [
+        "w073",
+        "w078"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t8-biped-01",
+      "assetIds": [
+        "w074",
+        "w075",
+        "w079"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t8-slither-01",
+      "assetIds": [
+        "w077"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t8-boss-01",
+      "assetIds": [
+        "b080",
+        "b080-2"
+      ],
+      "maxRows": 2,
+      "status": "pending"
+    },
+    {
+      "id": "t9-biped-01",
+      "assetIds": [
+        "w081",
+        "w083",
+        "w086",
+        "w087"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t9-biped-02",
+      "assetIds": [
+        "w089"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t9-quad-01",
+      "assetIds": [
+        "w082"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t9-slither-01",
+      "assetIds": [
+        "w084"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t9-float-01",
+      "assetIds": [
+        "w085"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t9-bat-wings-01",
+      "assetIds": [
+        "w088"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t9-boss-01",
+      "assetIds": [
+        "b090",
+        "b090-2"
+      ],
+      "maxRows": 2,
+      "status": "pending"
+    },
+    {
+      "id": "t10-slither-01",
+      "assetIds": [
+        "w091",
+        "w098"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t10-float-01",
+      "assetIds": [
+        "w092"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t10-biped-01",
+      "assetIds": [
+        "w093",
+        "w094",
+        "w095",
+        "w097"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t10-biped-02",
+      "assetIds": [
+        "w099",
+        "w101"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t10-bird-01",
+      "assetIds": [
+        "w096"
+      ],
+      "maxRows": 4,
+      "status": "pending"
+    },
+    {
+      "id": "t10-boss-01",
+      "assetIds": [
+        "b100",
+        "b100-2"
+      ],
+      "maxRows": 2,
+      "status": "pending"
+    }
+  ]
+}

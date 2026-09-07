@@ -1,0 +1,113 @@
+{
+  "reviewedAssets": [
+    {
+      "assetId": "w067",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 8,
+      "checks": [
+        "All actual baked poses inspected for four physical leg identities and fore/hind footfall ordering",
+        "Side near shoulder/haunch overlaps torso with feathering; far side limbs remain behind",
+        "Front/back proximal caps remain occluded by torso; source proportions retained",
+        "Full horizontal trunk, front/back head-rump-tail anatomy reviewed",
+        "Shared four-direction moving/contact QA passed"
+      ],
+      "limitations": "Painted articulated cutouts retain some joint texture seams at enlarged review scale. Upper-body fur/scales, tails and necks are fixed drawings; eight poses retain bounded held-frame contact quantization."
+    },
+    {
+      "assetId": "w071",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 8,
+      "checks": [
+        "All actual baked poses inspected for four physical leg identities and fore/hind footfall ordering",
+        "Side near shoulder/haunch overlaps torso with feathering; far side limbs remain behind",
+        "Front/back proximal caps remain occluded by torso; source proportions retained",
+        "Full horizontal trunk, front/back head-rump-tail anatomy reviewed",
+        "Shared four-direction moving/contact QA passed"
+      ],
+      "limitations": "Painted articulated cutouts retain some joint texture seams at enlarged review scale. Upper-body fur/scales, tails and necks are fixed drawings; eight poses retain bounded held-frame contact quantization."
+    },
+    {
+      "assetId": "w073",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 8,
+      "checks": [
+        "All actual baked poses inspected for four physical leg identities and fore/hind footfall ordering",
+        "Side near shoulder/haunch overlaps torso with feathering; far side limbs remain behind",
+        "Front/back proximal caps remain occluded by torso; source proportions retained",
+        "Full horizontal trunk, front/back head-rump-tail anatomy reviewed",
+        "Shared four-direction moving/contact QA passed"
+      ],
+      "limitations": "Painted articulated cutouts retain some joint texture seams at enlarged review scale. Upper-body fur/scales, tails and necks are fixed drawings; eight poses retain bounded held-frame contact quantization."
+    },
+    {
+      "assetId": "w078",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 8,
+      "checks": [
+        "All actual baked poses inspected for four physical leg identities and fore/hind footfall ordering",
+        "Side near shoulder/haunch overlaps torso with feathering; far side limbs remain behind",
+        "Front/back proximal caps remain occluded by torso; source proportions retained",
+        "Full horizontal trunk, front/back head-rump-tail anatomy reviewed",
+        "Shared four-direction moving/contact QA passed"
+      ],
+      "limitations": "Painted articulated cutouts retain some joint texture seams at enlarged review scale. Upper-body fur/scales, tails and necks are fixed drawings; eight poses retain bounded held-frame contact quantization."
+    },
+    {
+      "assetId": "w082",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 8,
+      "checks": [
+        "All actual baked poses inspected for four physical leg identities and fore/hind footfall ordering",
+        "Side near shoulder/haunch overlaps torso with feathering; far side limbs remain behind",
+        "Front/back proximal caps remain occluded by torso; source proportions retained",
+        "Full horizontal trunk, front/back head-rump-tail anatomy reviewed",
+        "Shared four-direction moving/contact QA passed"
+      ],
+      "limitations": "Painted articulated cutouts retain some joint texture seams at enlarged review scale. Upper-body fur/scales, tails and necks are fixed drawings; eight poses retain bounded held-frame contact quantization."
+    },
+    {
+      "assetId": "b080-2",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 8,
+      "checks": [
+        "All actual baked poses inspected for four physical leg identities and fore/hind footfall ordering",
+        "Side near shoulder/haunch overlaps torso with feathering; far side limbs remain behind",
+        "Front/back proximal caps remain occluded by torso; source proportions retained",
+        "Full horizontal trunk, front/back head-rump-tail anatomy reviewed",
+        "Shared four-direction moving/contact QA passed"
+      ],
+      "limitations": "Painted articulated cutouts retain some joint texture seams at enlarged review scale. Upper-body fur/scales, tails and necks are fixed drawings; eight poses retain bounded held-frame contact quantization."
+    }
+  ],
+  "movingEvidence": "gen/late-directional-quads/directional-moving-qa.json"
+}

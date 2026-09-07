@@ -1,0 +1,5841 @@
+{
+  "version": 1,
+  "canonicalCell": 512,
+  "assetVersion": 93,
+  "entries": [
+    {
+      "assetId": "w031",
+      "wave": 31,
+      "role": "normal",
+      "locomotion": "legged",
+      "cell": 256,
+      "referenceHeight": 425,
+      "cycleStride": 160,
+      "reviewApproved": true,
+      "gait": {
+        "stanceDuty": 0.5,
+        "lift": 25,
+        "pelvis": "support"
+      },
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/middle-waves/t4-biped-01a-side-front-parts-clean.png",
+          "sourceSha256": "21590a166e00074e0759362bcbb3009fbb62cc6aefaa0f6bcfa3f73e29d97976",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.46,
+              0.2734375
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 258.2899408284024
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.48,
+                0,
+                0.22,
+                0.2734375
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.555,
+                  0.1
+                ],
+                "knee": [
+                  0.45,
+                  0.5
+                ],
+                "ankle": [
+                  0.375,
+                  0.8
+                ],
+                "sole": [
+                  0.6,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.42,
+                0.8
+              ],
+              "socketRoiNormalized": [
+                0.36,
+                0.74,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.74,
+                0,
+                0.26,
+                0.2734375
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.399,
+                  0.1
+                ],
+                "knee": [
+                  0.548,
+                  0.5
+                ],
+                "ankle": [
+                  0.632,
+                  0.8
+                ],
+                "sole": [
+                  0.421,
+                  0.995
+                ]
+              },
+              "flipX": true,
+              "socketNormalized": [
+                0.56,
+                0.8
+              ],
+              "socketRoiNormalized": [
+                0.5,
+                0.74,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Original source joint centers individually measured at hip cuff, knee center and boot ankle. Side rightLeg artwork faces left and uses reviewed flipX, preserving physical identity. Partial pilot awaits back view and visual approval."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/middle-waves/t4-biped-01a-side-front-parts-clean.png",
+          "sourceSha256": "21590a166e00074e0759362bcbb3009fbb62cc6aefaa0f6bcfa3f73e29d97976",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.2734375,
+              0.46,
+              0.25390625
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 266.3108504398827
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.48,
+                0.2734375,
+                0.22,
+                0.25390625
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.51,
+                  0.1
+                ],
+                "knee": [
+                  0.454,
+                  0.5
+                ],
+                "ankle": [
+                  0.403,
+                  0.85
+                ],
+                "sole": [
+                  0.429,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.57,
+                0.83
+              ],
+              "socketRoiNormalized": [
+                0.51,
+                0.77,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.74,
+                0.2734375,
+                0.26,
+                0.25390625
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.48,
+                  0.1
+                ],
+                "knee": [
+                  0.526,
+                  0.5
+                ],
+                "ankle": [
+                  0.571,
+                  0.85
+                ],
+                "sole": [
+                  0.556,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.35,
+                0.83
+              ],
+              "socketRoiNormalized": [
+                0.29,
+                0.77,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Original source joint centers individually measured at hip cuff, knee center and boot ankle. Side rightLeg artwork faces left and uses reviewed flipX, preserving physical identity. Partial pilot awaits back view and visual approval."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/middle-waves/t4-biped-01a-back-parts-clean.png",
+          "sourceSha256": "978de260a5dfebafbacbbcd1eba038f991d9f1958c03a5b0e470bcd483ef6489",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.44,
+              0.5
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 259.84350132625997
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.48,
+                0,
+                0.19,
+                0.5
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4954954954954955,
+                  0.1
+                ],
+                "knee": [
+                  0.4954954954954955,
+                  0.51
+                ],
+                "ankle": [
+                  0.45045045045045046,
+                  0.82
+                ],
+                "sole": [
+                  0.509009009009009,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.36,
+                0.83
+              ],
+              "socketRoiNormalized": [
+                0.3,
+                0.77,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.77,
+                0,
+                0.2,
+                0.5
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.504424778761062,
+                  0.51
+                ],
+                "ankle": [
+                  0.5442477876106194,
+                  0.82
+                ],
+                "sole": [
+                  0.504424778761062,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.61,
+                0.83
+              ],
+              "socketRoiNormalized": [
+                0.55,
+                0.77,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Back artwork reviewed for heel rear seam and consistent plain leather cuff; x centers measured on each individual cuff/knee/ankle/sole row. Physical left is screen-left. No reused front-facing boots."
+        }
+      }
+    },
+    {
+      "assetId": "w033",
+      "wave": 33,
+      "role": "normal",
+      "locomotion": "legged",
+      "cell": 256,
+      "referenceHeight": 425,
+      "cycleStride": 160,
+      "reviewApproved": true,
+      "gait": {
+        "stanceDuty": 0.5,
+        "lift": 25,
+        "pelvis": "support"
+      },
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/middle-waves/t4-biped-01a-side-front-parts-clean.png",
+          "sourceSha256": "21590a166e00074e0759362bcbb3009fbb62cc6aefaa0f6bcfa3f73e29d97976",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.52734375,
+              0.46,
+              0.234375
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 259.19322033898305
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.48,
+                0.52734375,
+                0.22,
+                0.234375
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.549,
+                  0.1
+                ],
+                "knee": [
+                  0.491,
+                  0.5
+                ],
+                "ankle": [
+                  0.416,
+                  0.8
+                ],
+                "sole": [
+                  0.566,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.42,
+                0.8
+              ],
+              "socketRoiNormalized": [
+                0.36,
+                0.74,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.74,
+                0.52734375,
+                0.26,
+                0.234375
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.483,
+                  0.1
+                ],
+                "knee": [
+                  0.534,
+                  0.5
+                ],
+                "ankle": [
+                  0.591,
+                  0.8
+                ],
+                "sole": [
+                  0.401,
+                  0.995
+                ]
+              },
+              "flipX": true,
+              "socketNormalized": [
+                0.56,
+                0.8
+              ],
+              "socketRoiNormalized": [
+                0.5,
+                0.74,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Original source joint centers individually measured at hip cuff, knee center and boot ankle. Side rightLeg artwork faces left and uses reviewed flipX, preserving physical identity. Partial pilot awaits back view and visual approval."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/middle-waves/t4-biped-01a-side-front-parts-clean.png",
+          "sourceSha256": "21590a166e00074e0759362bcbb3009fbb62cc6aefaa0f6bcfa3f73e29d97976",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.76171875,
+              0.46,
+              0.23828125
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 260.86986301369865
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.48,
+                0.76171875,
+                0.22,
+                0.23828125
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.554,
+                  0.1
+                ],
+                "knee": [
+                  0.473,
+                  0.5
+                ],
+                "ankle": [
+                  0.392,
+                  0.8
+                ],
+                "sole": [
+                  0.577,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.62,
+                0.78
+              ],
+              "socketRoiNormalized": [
+                0.56,
+                0.72,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.74,
+                0.76171875,
+                0.26,
+                0.23828125
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.463,
+                  0.1
+                ],
+                "knee": [
+                  0.532,
+                  0.5
+                ],
+                "ankle": [
+                  0.606,
+                  0.8
+                ],
+                "sole": [
+                  0.367,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.35,
+                0.78
+              ],
+              "socketRoiNormalized": [
+                0.29,
+                0.72,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Original source joint centers individually measured at hip cuff, knee center and boot ankle. Side rightLeg artwork faces left and uses reviewed flipX, preserving physical identity. Partial pilot awaits back view and visual approval."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/middle-waves/t4-biped-01a-back-parts-clean.png",
+          "sourceSha256": "978de260a5dfebafbacbbcd1eba038f991d9f1958c03a5b0e470bcd483ef6489",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.5,
+              0.44,
+              0.5
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 261.70996978851963
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.48,
+                0.5,
+                0.19,
+                0.5
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4957983193277311,
+                  0.1
+                ],
+                "knee": [
+                  0.5042016806722689,
+                  0.51
+                ],
+                "ankle": [
+                  0.4789915966386555,
+                  0.82
+                ],
+                "sole": [
+                  0.5252100840336135,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.39,
+                0.81
+              ],
+              "socketRoiNormalized": [
+                0.33,
+                0.75,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.77,
+                0.5,
+                0.2,
+                0.5
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4956521739130435,
+                  0.1
+                ],
+                "knee": [
+                  0.5,
+                  0.51
+                ],
+                "ankle": [
+                  0.5304347826086957,
+                  0.82
+                ],
+                "sole": [
+                  0.508695652173913,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.58,
+                0.81
+              ],
+              "socketRoiNormalized": [
+                0.52,
+                0.75,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Back artwork reviewed for heel rear seam and consistent plain leather cuff; x centers measured on each individual cuff/knee/ankle/sole row. Physical left is screen-left. No reused front-facing boots."
+        }
+      }
+    },
+    {
+      "assetId": "w034",
+      "wave": 34,
+      "role": "normal",
+      "locomotion": "legged",
+      "cell": 256,
+      "referenceHeight": 425,
+      "cycleStride": 160,
+      "reviewApproved": true,
+      "gait": {
+        "stanceDuty": 0.5,
+        "lift": 25,
+        "pelvis": "support"
+      },
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/middle-waves/t4-biped-01b-side-front-parts.png",
+          "sourceSha256": "bc5d7ae111b97df969ac2b6d5e8c26fd49cf1b0097d127a83ebd430eaab5a180",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.44,
+              0.2506510416666667
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 272.4299065420561
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.45,
+                0,
+                0.23,
+                0.2506510416666667
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.521978021978022,
+                  0.1
+                ],
+                "knee": [
+                  0.4945054945054945,
+                  0.4
+                ],
+                "ankle": [
+                  0.37362637362637363,
+                  0.8
+                ],
+                "sole": [
+                  0.6098901098901099,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.36,
+                0.82
+              ],
+              "socketRoiNormalized": [
+                0.3,
+                0.76,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.73,
+                0,
+                0.24,
+                0.2506510416666667
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.40594059405940597,
+                  0.1
+                ],
+                "knee": [
+                  0.43564356435643564,
+                  0.4
+                ],
+                "ankle": [
+                  0.37623762376237624,
+                  0.8
+                ],
+                "sole": [
+                  0.6386138613861386,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.52,
+                0.82
+              ],
+              "socketRoiNormalized": [
+                0.46,
+                0.76,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source knee at visible pants knee fold, W34 y.40, W35 y.45; ankle before rounded toe, each x independently measured. Both side toes authored right without mirroring."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/middle-waves/t4-biped-01b-side-front-parts.png",
+          "sourceSha256": "bc5d7ae111b97df969ac2b6d5e8c26fd49cf1b0097d127a83ebd430eaab5a180",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.2506510416666667,
+              0.44,
+              0.2506510416666667
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 251.80983606557376
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.45,
+                0.2506510416666667,
+                0.23,
+                0.2506510416666667
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5416666666666666,
+                  0.1
+                ],
+                "knee": [
+                  0.4739583333333333,
+                  0.4
+                ],
+                "ankle": [
+                  0.40625,
+                  0.85
+                ],
+                "sole": [
+                  0.34375,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.66,
+                0.84
+              ],
+              "socketRoiNormalized": [
+                0.6000000000000001,
+                0.78,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.73,
+                0.2506510416666667,
+                0.24,
+                0.2506510416666667
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4627659574468085,
+                  0.1
+                ],
+                "knee": [
+                  0.5159574468085106,
+                  0.4
+                ],
+                "ankle": [
+                  0.574468085106383,
+                  0.85
+                ],
+                "sole": [
+                  0.6382978723404256,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.37,
+                0.84
+              ],
+              "socketRoiNormalized": [
+                0.31,
+                0.78,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source knee at visible pants knee fold, W34 y.40, W35 y.45; ankle before rounded toe, each x independently measured. Both side toes authored right without mirroring."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/middle-waves/t4-biped-01b-back-parts.png",
+          "sourceSha256": "0bcfbe1317af882c1b804cf75f73fe1c4436fbf5685ecf619ad79a6456bd8c93",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.43,
+              0.48828125
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 271.9213759213759
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.45,
+                0,
+                0.21,
+                0.48828125
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5362903225806451,
+                  0.1
+                ],
+                "knee": [
+                  0.5282258064516129,
+                  0.45
+                ],
+                "ankle": [
+                  0.5,
+                  0.8
+                ],
+                "sole": [
+                  0.4838709677419355,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.34,
+                0.82
+              ],
+              "socketRoiNormalized": [
+                0.28,
+                0.76,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.74,
+                0,
+                0.22,
+                0.48828125
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.45901639344262296,
+                  0.1
+                ],
+                "knee": [
+                  0.4672131147540984,
+                  0.45
+                ],
+                "ankle": [
+                  0.48770491803278687,
+                  0.8
+                ],
+                "sole": [
+                  0.4959016393442623,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.56,
+                0.82
+              ],
+              "socketRoiNormalized": [
+                0.5,
+                0.76,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t4-biped-01b-back-parts row 0 back. Reviewed hip cuff/knee/ankle y 0.1/0.45/0.8; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained."
+        }
+      }
+    },
+    {
+      "assetId": "w035",
+      "wave": 35,
+      "role": "normal",
+      "locomotion": "legged",
+      "cell": 256,
+      "referenceHeight": 425,
+      "cycleStride": 160,
+      "reviewApproved": true,
+      "gait": {
+        "stanceDuty": 0.5,
+        "lift": 25,
+        "pelvis": "support"
+      },
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/middle-waves/t4-biped-01b-side-front-parts.png",
+          "sourceSha256": "bc5d7ae111b97df969ac2b6d5e8c26fd49cf1b0097d127a83ebd430eaab5a180",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.5013020833333334,
+              0.44,
+              0.24739583333333334
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 268.92792792792795
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.45,
+                0.5013020833333334,
+                0.23,
+                0.24739583333333334
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.504950495049505,
+                  0.1
+                ],
+                "knee": [
+                  0.4801980198019802,
+                  0.45
+                ],
+                "ankle": [
+                  0.38613861386138615,
+                  0.8
+                ],
+                "sole": [
+                  0.5841584158415841,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.38,
+                0.8
+              ],
+              "socketRoiNormalized": [
+                0.32,
+                0.74,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.73,
+                0.5013020833333334,
+                0.24,
+                0.24739583333333334
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4330357142857143,
+                  0.1
+                ],
+                "knee": [
+                  0.45089285714285715,
+                  0.45
+                ],
+                "ankle": [
+                  0.4375,
+                  0.8
+                ],
+                "sole": [
+                  0.6607142857142857,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.52,
+                0.8
+              ],
+              "socketRoiNormalized": [
+                0.46,
+                0.74,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source knee at visible pants knee fold, W34 y.40, W35 y.45; ankle before rounded toe, each x independently measured. Both side toes authored right without mirroring."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/middle-waves/t4-biped-01b-side-front-parts.png",
+          "sourceSha256": "bc5d7ae111b97df969ac2b6d5e8c26fd49cf1b0097d127a83ebd430eaab5a180",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.7486979166666666,
+              0.44,
+              0.2513020833333333
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 254.64688427299703
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.45,
+                0.7486979166666666,
+                0.23,
+                0.2513020833333333
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5467289719626168,
+                  0.1
+                ],
+                "knee": [
+                  0.48130841121495327,
+                  0.45
+                ],
+                "ankle": [
+                  0.4158878504672897,
+                  0.85
+                ],
+                "sole": [
+                  0.34579439252336447,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.65,
+                0.82
+              ],
+              "socketRoiNormalized": [
+                0.5900000000000001,
+                0.76,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.73,
+                0.7486979166666666,
+                0.24,
+                0.2513020833333333
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4696969696969697,
+                  0.1
+                ],
+                "knee": [
+                  0.5202020202020202,
+                  0.45
+                ],
+                "ankle": [
+                  0.5454545454545454,
+                  0.85
+                ],
+                "sole": [
+                  0.6161616161616161,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.36,
+                0.82
+              ],
+              "socketRoiNormalized": [
+                0.3,
+                0.76,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source knee at visible pants knee fold, W34 y.40, W35 y.45; ankle before rounded toe, each x independently measured. Both side toes authored right without mirroring."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/middle-waves/t4-biped-01b-back-parts.png",
+          "sourceSha256": "0bcfbe1317af882c1b804cf75f73fe1c4436fbf5685ecf619ad79a6456bd8c93",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.48828125,
+              0.43,
+              0.51171875
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 272.31386861313865
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.45,
+                0.48828125,
+                0.21,
+                0.51171875
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.6012658227848101,
+                  0.1
+                ],
+                "knee": [
+                  0.5537974683544303,
+                  0.45
+                ],
+                "ankle": [
+                  0.49683544303797467,
+                  0.8
+                ],
+                "sole": [
+                  0.49050632911392406,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.34,
+                0.82
+              ],
+              "socketRoiNormalized": [
+                0.28,
+                0.76,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.74,
+                0.48828125,
+                0.22,
+                0.51171875
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.40728476821192056,
+                  0.1
+                ],
+                "knee": [
+                  0.44370860927152317,
+                  0.45
+                ],
+                "ankle": [
+                  0.4900662251655629,
+                  0.8
+                ],
+                "sole": [
+                  0.5033112582781457,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.56,
+                0.82
+              ],
+              "socketRoiNormalized": [
+                0.5,
+                0.76,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t4-biped-01b-back-parts row 1 back. Reviewed hip cuff/knee/ankle y 0.1/0.45/0.8; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained."
+        }
+      }
+    },
+    {
+      "assetId": "w037",
+      "wave": 37,
+      "role": "normal",
+      "locomotion": "legged",
+      "cell": 256,
+      "referenceHeight": 425,
+      "cycleStride": 160,
+      "reviewApproved": false,
+      "gait": {
+        "stanceDuty": 0.5,
+        "lift": 25,
+        "pelvis": "support"
+      },
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/middle-waves/t4-biped-02a-side-front-parts-clean.png",
+          "sourceSha256": "7c643f17a93baaa783ba77b484fa9b55aa17f43f261b8ae7721bc84286314678",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.42,
+              0.2734375
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 254.76558603491273
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.47,
+                0,
+                0.23,
+                0.2734375
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.42,
+                  0.1
+                ],
+                "knee": [
+                  0.4,
+                  0.4
+                ],
+                "ankle": [
+                  0.33,
+                  0.8
+                ],
+                "sole": [
+                  0.605,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.43,
+                0.8
+              ],
+              "socketRoiNormalized": [
+                0.37,
+                0.74,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.75,
+                0,
+                0.22,
+                0.2734375
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.375,
+                  0.1
+                ],
+                "knee": [
+                  0.35185185185185186,
+                  0.4
+                ],
+                "ankle": [
+                  0.33796296296296297,
+                  0.8
+                ],
+                "sole": [
+                  0.6203703703703703,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.58,
+                0.8
+              ],
+              "socketRoiNormalized": [
+                0.52,
+                0.74,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t4-biped-02a-side-front-parts-clean row 0 side. Reviewed hip cuff/knee/ankle y 0.1/0.4/0.8; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained. Original source background seeds [132,332] and [334,350] remove the two enclosed white/checker areas between bowstring and curved wooden bow, preserving painted bow/string/arm.",
+          "backgroundSeeds": [
+            [
+              132,
+              332
+            ],
+            [
+              334,
+              350
+            ]
+          ]
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/middle-waves/t4-biped-02a-side-front-parts-clean.png",
+          "sourceSha256": "7c643f17a93baaa783ba77b484fa9b55aa17f43f261b8ae7721bc84286314678",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.2734375,
+              0.42,
+              0.24739583333333334
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 276.02173913043475
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.47,
+                0.2734375,
+                0.23,
+                0.24739583333333334
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5180722891566265,
+                  0.1
+                ],
+                "knee": [
+                  0.46987951807228917,
+                  0.4
+                ],
+                "ankle": [
+                  0.4397590361445783,
+                  0.85
+                ],
+                "sole": [
+                  0.37349397590361444,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.55,
+                0.81
+              ],
+              "socketRoiNormalized": [
+                0.49000000000000005,
+                0.75,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.75,
+                0.2734375,
+                0.22,
+                0.24739583333333334
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.5,
+                  0.4
+                ],
+                "ankle": [
+                  0.49382716049382713,
+                  0.85
+                ],
+                "sole": [
+                  0.5123456790123457,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.29,
+                0.81
+              ],
+              "socketRoiNormalized": [
+                0.22999999999999998,
+                0.75,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t4-biped-02a-side-front-parts-clean row 1 front. Reviewed hip cuff/knee/ankle y 0.1/0.4/0.85; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained. Background cleanup seeds [140,685] in arm/torso gap, [350,710] inside bowstring cavity.",
+          "backgroundSeeds": [
+            [
+              140,
+              685
+            ],
+            [
+              271,
+              666
+            ],
+            [
+              350,
+              710
+            ],
+            [
+              282,
+              732
+            ]
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/middle-waves/w037-back-single-parts.png",
+          "sourceSha256": "7d0097e9e416ff42daa294a0d5cbc9dac62a23dbc950ce11fed45638d0913fb7",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.43,
+              1
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 276.574294205052
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.46,
+                0,
+                0.22,
+                1
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5285714285714286,
+                  0.1
+                ],
+                "knee": [
+                  0.45714285714285713,
+                  0.55
+                ],
+                "ankle": [
+                  0.41714285714285715,
+                  0.85
+                ],
+                "sole": [
+                  0.39714285714285713,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.29,
+                0.84
+              ],
+              "socketRoiNormalized": [
+                0.22999999999999998,
+                0.78,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.75,
+                0,
+                0.23,
+                1
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4678362573099415,
+                  0.1
+                ],
+                "knee": [
+                  0.543859649122807,
+                  0.55
+                ],
+                "ankle": [
+                  0.5818713450292398,
+                  0.85
+                ],
+                "sole": [
+                  0.5906432748538012,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.54,
+                0.84
+              ],
+              "socketRoiNormalized": [
+                0.48000000000000004,
+                0.78,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source w037-back-single-parts row 0 back. Reviewed hip cuff/knee/ankle y 0.1/0.55/0.85; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained.",
+          "backgroundSeeds": [
+            [
+              193,
+              600
+            ],
+            [
+              450,
+              610
+            ],
+            [
+              553,
+              632
+            ],
+            [
+              465,
+              645
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "assetId": "w038",
+      "wave": 38,
+      "role": "normal",
+      "locomotion": "legged",
+      "cell": 256,
+      "referenceHeight": 425,
+      "cycleStride": 160,
+      "reviewApproved": false,
+      "gait": {
+        "stanceDuty": 0.5,
+        "lift": 25,
+        "pelvis": "support"
+      },
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/middle-waves/t4-biped-02a-side-front-parts-clean.png",
+          "sourceSha256": "7c643f17a93baaa783ba77b484fa9b55aa17f43f261b8ae7721bc84286314678",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.5208333333333334,
+              0.42,
+              0.22135416666666666
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 240.3516129032258
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.47,
+                0.5208333333333334,
+                0.23,
+                0.22135416666666666
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.39805825242718446,
+                  0.1
+                ],
+                "knee": [
+                  0.42718446601941745,
+                  0.45
+                ],
+                "ankle": [
+                  0.3058252427184466,
+                  0.8
+                ],
+                "sole": [
+                  0.6990291262135923,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.51,
+                0.78
+              ],
+              "socketRoiNormalized": [
+                0.45,
+                0.72,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.75,
+                0.5208333333333334,
+                0.22,
+                0.22135416666666666
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.39603960396039606,
+                  0.1
+                ],
+                "knee": [
+                  0.4405940594059406,
+                  0.45
+                ],
+                "ankle": [
+                  0.3069306930693069,
+                  0.8
+                ],
+                "sole": [
+                  0.6188118811881188,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.63,
+                0.78
+              ],
+              "socketRoiNormalized": [
+                0.5700000000000001,
+                0.72,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t4-biped-02a-side-front-parts-clean row 2 side. Reviewed hip cuff/knee/ankle y 0.1/0.45/0.8; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/middle-waves/t4-biped-02a-side-front-parts-clean.png",
+          "sourceSha256": "7c643f17a93baaa783ba77b484fa9b55aa17f43f261b8ae7721bc84286314678",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.7421875,
+              0.42,
+              0.2578125
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 272.8080808080808
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.47,
+                0.7421875,
+                0.23,
+                0.2578125
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5117647058823529,
+                  0.1
+                ],
+                "knee": [
+                  0.47058823529411764,
+                  0.45
+                ],
+                "ankle": [
+                  0.45294117647058824,
+                  0.85
+                ],
+                "sole": [
+                  0.4823529411764706,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.53,
+                0.77
+              ],
+              "socketRoiNormalized": [
+                0.47000000000000003,
+                0.71,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.75,
+                0.7421875,
+                0.22,
+                0.2578125
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4817073170731707,
+                  0.1
+                ],
+                "knee": [
+                  0.5182926829268293,
+                  0.45
+                ],
+                "ankle": [
+                  0.5060975609756098,
+                  0.85
+                ],
+                "sole": [
+                  0.47560975609756095,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.34,
+                0.77
+              ],
+              "socketRoiNormalized": [
+                0.28,
+                0.71,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t4-biped-02a-side-front-parts-clean row 3 front. Reviewed hip cuff/knee/ankle y 0.1/0.45/0.85; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/middle-waves/w038-back-single-parts.png",
+          "sourceSha256": "521521e557655630c622394c200bf8a56f7930b70c16e3cb797fe8fd08a766b7",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.43,
+              1
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 258.2369668246445
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.46,
+                0,
+                0.22,
+                1
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5080645161290323,
+                  0.1
+                ],
+                "knee": [
+                  0.48655913978494625,
+                  0.55
+                ],
+                "ankle": [
+                  0.4838709677419355,
+                  0.8
+                ],
+                "sole": [
+                  0.42473118279569894,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.39,
+                0.7
+              ],
+              "socketRoiNormalized": [
+                0.33,
+                0.6399999999999999,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.75,
+                0,
+                0.23,
+                1
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4891891891891892,
+                  0.1
+                ],
+                "knee": [
+                  0.5027027027027027,
+                  0.55
+                ],
+                "ankle": [
+                  0.4972972972972973,
+                  0.8
+                ],
+                "sole": [
+                  0.5567567567567567,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.59,
+                0.7
+              ],
+              "socketRoiNormalized": [
+                0.53,
+                0.6399999999999999,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source w038-back-single-parts row 0 back. Reviewed hip cuff/knee/ankle y 0.1/0.55/0.8; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained."
+        }
+      }
+    },
+    {
+      "assetId": "w039",
+      "wave": 39,
+      "role": "normal",
+      "locomotion": "legged",
+      "cell": 256,
+      "referenceHeight": 425,
+      "cycleStride": 160,
+      "reviewApproved": false,
+      "gait": {
+        "stanceDuty": 0.5,
+        "lift": 25,
+        "pelvis": "support"
+      },
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/middle-waves/t4-biped-02b-side-front-parts.png",
+          "sourceSha256": "e63d21e131d3fd4b95ee3a0ed89a6ca2d2de5ff2e4bd84ac6a39895aa563da89",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.43,
+              0.48828125
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 295.6521739130435
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.46,
+                0,
+                0.22,
+                0.48828125
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5416666666666666,
+                  0.1
+                ],
+                "knee": [
+                  0.3888888888888889,
+                  0.5
+                ],
+                "ankle": [
+                  0.3611111111111111,
+                  0.8
+                ],
+                "sole": [
+                  0.6064814814814815,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.23,
+                0.84
+              ],
+              "socketRoiNormalized": [
+                0.17,
+                0.78,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.75,
+                0,
+                0.23,
+                0.48828125
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4778761061946903,
+                  0.1
+                ],
+                "knee": [
+                  0.3893805309734513,
+                  0.5
+                ],
+                "ankle": [
+                  0.3407079646017699,
+                  0.8
+                ],
+                "sole": [
+                  0.6150442477876106,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.43,
+                0.84
+              ],
+              "socketRoiNormalized": [
+                0.37,
+                0.78,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t4-biped-02b-side-front-parts row 0 side. Reviewed hip cuff/knee/ankle y 0.1/0.5/0.8; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained. Body translated once so mean hip socket aligns to canonical pivot X."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/middle-waves/t4-biped-02b-side-front-parts.png",
+          "sourceSha256": "e63d21e131d3fd4b95ee3a0ed89a6ca2d2de5ff2e4bd84ac6a39895aa563da89",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.48828125,
+              0.43,
+              0.51171875
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 226.2578125
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.46,
+                0.48828125,
+                0.22,
+                0.51171875
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5397727272727273,
+                  0.1
+                ],
+                "knee": [
+                  0.48863636363636365,
+                  0.5
+                ],
+                "ankle": [
+                  0.48863636363636365,
+                  0.85
+                ],
+                "sole": [
+                  0.4375,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.69,
+                0.82
+              ],
+              "socketRoiNormalized": [
+                0.6299999999999999,
+                0.76,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.75,
+                0.48828125,
+                0.23,
+                0.51171875
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.45348837209302323,
+                  0.1
+                ],
+                "knee": [
+                  0.5,
+                  0.5
+                ],
+                "ankle": [
+                  0.4883720930232558,
+                  0.85
+                ],
+                "sole": [
+                  0.5232558139534884,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.49,
+                0.82
+              ],
+              "socketRoiNormalized": [
+                0.43,
+                0.76,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t4-biped-02b-side-front-parts row 1 front. Reviewed hip cuff/knee/ankle y 0.1/0.5/0.85; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained. Body translated once so mean hip socket aligns to canonical pivot X."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/middle-waves/t4-biped-02b-back-parts.png",
+          "sourceSha256": "6deb48bfed035f1853d984ed44317e59142187c2a995d27332f3f55fe441e04f",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.43,
+              1
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 294.86813186813185
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.44,
+                0,
+                0.22,
+                1
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4818181818181818,
+                  0.1
+                ],
+                "knee": [
+                  0.5045454545454545,
+                  0.55
+                ],
+                "ankle": [
+                  0.4954545454545455,
+                  0.85
+                ],
+                "sole": [
+                  0.4772727272727273,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.26,
+                0.81
+              ],
+              "socketRoiNormalized": [
+                0.2,
+                0.75,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.75,
+                0,
+                0.22,
+                1
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5138888888888888,
+                  0.1
+                ],
+                "knee": [
+                  0.5,
+                  0.55
+                ],
+                "ankle": [
+                  0.48148148148148145,
+                  0.85
+                ],
+                "sole": [
+                  0.4861111111111111,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.47,
+                0.81
+              ],
+              "socketRoiNormalized": [
+                0.41,
+                0.75,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t4-biped-02b-back-parts row 0 back. Reviewed hip cuff/knee/ankle y 0.1/0.55/0.85; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained. Body translated once so mean hip socket aligns to canonical pivot X."
+        }
+      }
+    },
+    {
+      "assetId": "w041",
+      "wave": 41,
+      "role": "normal",
+      "locomotion": "legged",
+      "cell": 256,
+      "referenceHeight": 425,
+      "cycleStride": 160,
+      "reviewApproved": false,
+      "gait": {
+        "stanceDuty": 0.5,
+        "lift": 25,
+        "pelvis": "support"
+      },
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/middle-waves/t5-biped-01a-side-front-parts-clean.png",
+          "sourceSha256": "32d6b0fdcc415df0ddf01b3189fec299a38f3e3c17d12b15d0e0d88afaa4c09c",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.43,
+              0.25390625
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 275.96363636363634
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.46,
+                0,
+                0.24,
+                0.25390625
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.44642857142857145,
+                  0.1
+                ],
+                "knee": [
+                  0.47619047619047616,
+                  0.4
+                ],
+                "ankle": [
+                  0.39880952380952384,
+                  0.8
+                ],
+                "sole": [
+                  0.6607142857142857,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.32,
+                0.8
+              ],
+              "socketRoiNormalized": [
+                0.26,
+                0.74,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.75,
+                0,
+                0.23,
+                0.25390625
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4425287356321839,
+                  0.1
+                ],
+                "knee": [
+                  0.47701149425287354,
+                  0.4
+                ],
+                "ankle": [
+                  0.42528735632183906,
+                  0.8
+                ],
+                "sole": [
+                  0.6781609195402298,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.5,
+                0.8
+              ],
+              "socketRoiNormalized": [
+                0.44,
+                0.74,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t5-biped-01a-side-front-parts-clean row 0 side. Reviewed hip cuff/knee/ankle y 0.1/0.4/0.8; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/middle-waves/t5-biped-01a-side-front-parts-clean.png",
+          "sourceSha256": "32d6b0fdcc415df0ddf01b3189fec299a38f3e3c17d12b15d0e0d88afaa4c09c",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.25390625,
+              0.43,
+              0.24739583333333334
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 275.02208201892745
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.46,
+                0.25390625,
+                0.24,
+                0.24739583333333334
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5064935064935064,
+                  0.1
+                ],
+                "knee": [
+                  0.487012987012987,
+                  0.4
+                ],
+                "ankle": [
+                  0.474025974025974,
+                  0.85
+                ],
+                "sole": [
+                  0.37012987012987014,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.53,
+                0.82
+              ],
+              "socketRoiNormalized": [
+                0.47000000000000003,
+                0.76,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.75,
+                0.25390625,
+                0.23,
+                0.24739583333333334
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4805194805194805,
+                  0.1
+                ],
+                "knee": [
+                  0.4935064935064935,
+                  0.4
+                ],
+                "ankle": [
+                  0.5194805194805194,
+                  0.85
+                ],
+                "sole": [
+                  0.6038961038961039,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.32,
+                0.82
+              ],
+              "socketRoiNormalized": [
+                0.26,
+                0.76,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t5-biped-01a-side-front-parts-clean row 1 front. Reviewed hip cuff/knee/ankle y 0.1/0.4/0.85; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/middle-waves/t5-biped-01a-back-parts.png",
+          "sourceSha256": "a60d20734c978ee2b5376e1c7ceae32bc2da87af69c2ae05fb44b937a7331f93",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.42,
+              0.48828125
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 250.5956416464891
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.45,
+                0,
+                0.22,
+                0.48828125
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.48936170212765956,
+                  0.1
+                ],
+                "knee": [
+                  0.5,
+                  0.4
+                ],
+                "ankle": [
+                  0.43617021276595747,
+                  0.85
+                ],
+                "sole": [
+                  0.4627659574468085,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.42,
+                0.8
+              ],
+              "socketRoiNormalized": [
+                0.36,
+                0.74,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.75,
+                0,
+                0.22,
+                0.48828125
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.4891304347826087,
+                  0.4
+                ],
+                "ankle": [
+                  0.5543478260869565,
+                  0.85
+                ],
+                "sole": [
+                  0.532608695652174,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.62,
+                0.8
+              ],
+              "socketRoiNormalized": [
+                0.56,
+                0.74,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t5-biped-01a-back-parts row 0 back. Reviewed hip cuff/knee/ankle y 0.1/0.4/0.85; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained."
+        }
+      }
+    },
+    {
+      "assetId": "w042",
+      "wave": 42,
+      "role": "normal",
+      "locomotion": "legged",
+      "cell": 256,
+      "referenceHeight": 425,
+      "cycleStride": 160,
+      "reviewApproved": false,
+      "gait": {
+        "stanceDuty": 0.5,
+        "lift": 25,
+        "pelvis": "support"
+      },
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/middle-waves/t5-biped-01a-side-front-parts.png",
+          "sourceSha256": "ddb67a09f7d79641194fec73d7e7841ba26ef74b7aa5fee11783a2fdc529dff7",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.5013020833333334,
+              0.43,
+              0.22786458333333334
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 247.1341059602649
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.46,
+                0.5013020833333334,
+                0.24,
+                0.22786458333333334
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.47093023255813954,
+                  0.1
+                ],
+                "knee": [
+                  0.4127906976744186,
+                  0.4
+                ],
+                "ankle": [
+                  0.45348837209302323,
+                  0.8
+                ],
+                "sole": [
+                  0.622093023255814,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.45,
+                0.78
+              ],
+              "socketRoiNormalized": [
+                0.39,
+                0.72,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.46,
+                0.5013020833333334,
+                0.24,
+                0.22786458333333334
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.47093023255813954,
+                  0.1
+                ],
+                "knee": [
+                  0.4127906976744186,
+                  0.4
+                ],
+                "ankle": [
+                  0.45348837209302323,
+                  0.8
+                ],
+                "sole": [
+                  0.622093023255814,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.62,
+                0.78
+              ],
+              "socketRoiNormalized": [
+                0.56,
+                0.72,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Original W42 source profile left component is a complete right-facing boot and pants. The other source leg is front-facing in both atlas versions; reuse the correct symmetrical profile texture for both independently articulated physical legs, retaining separate sockets, layers, and opposite phases. No invented extra limb or reflected viewpoint."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/middle-waves/t5-biped-01a-side-front-parts-clean.png",
+          "sourceSha256": "32d6b0fdcc415df0ddf01b3189fec299a38f3e3c17d12b15d0e0d88afaa4c09c",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.7291666666666666,
+              0.43,
+              0.2708333333333333
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 241.57615894039733
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.46,
+                0.7291666666666666,
+                0.24,
+                0.2708333333333333
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.6168831168831169,
+                  0.1
+                ],
+                "knee": [
+                  0.564935064935065,
+                  0.4
+                ],
+                "ankle": [
+                  0.4805194805194805,
+                  0.85
+                ],
+                "sole": [
+                  0.3116883116883117,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.68,
+                0.84
+              ],
+              "socketRoiNormalized": [
+                0.6200000000000001,
+                0.78,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.75,
+                0.7291666666666666,
+                0.23,
+                0.2708333333333333
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.38513513513513514,
+                  0.1
+                ],
+                "knee": [
+                  0.43243243243243246,
+                  0.4
+                ],
+                "ankle": [
+                  0.5202702702702703,
+                  0.85
+                ],
+                "sole": [
+                  0.6554054054054054,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.43,
+                0.84
+              ],
+              "socketRoiNormalized": [
+                0.37,
+                0.78,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t5-biped-01a-side-front-parts-clean row 3 front. Reviewed hip cuff/knee/ankle y 0.1/0.4/0.85; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/middle-waves/t5-biped-01a-back-parts.png",
+          "sourceSha256": "a60d20734c978ee2b5376e1c7ceae32bc2da87af69c2ae05fb44b937a7331f93",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.48828125,
+              0.42,
+              0.51171875
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 268.2822164948454
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.45,
+                0.48828125,
+                0.22,
+                0.51171875
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5483870967741935,
+                  0.1
+                ],
+                "knee": [
+                  0.5053763440860215,
+                  0.4
+                ],
+                "ankle": [
+                  0.42473118279569894,
+                  0.85
+                ],
+                "sole": [
+                  0.478494623655914,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.34,
+                0.8
+              ],
+              "socketRoiNormalized": [
+                0.28,
+                0.74,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.75,
+                0.48828125,
+                0.22,
+                0.51171875
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4308510638297872,
+                  0.1
+                ],
+                "knee": [
+                  0.4787234042553192,
+                  0.4
+                ],
+                "ankle": [
+                  0.5638297872340425,
+                  0.85
+                ],
+                "sole": [
+                  0.5053191489361702,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.57,
+                0.8
+              ],
+              "socketRoiNormalized": [
+                0.51,
+                0.74,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t5-biped-01a-back-parts row 1 back. Reviewed hip cuff/knee/ankle y 0.1/0.4/0.85; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained."
+        }
+      }
+    },
+    {
+      "assetId": "w045",
+      "wave": 45,
+      "role": "normal",
+      "locomotion": "legged",
+      "cell": 256,
+      "referenceHeight": 425,
+      "cycleStride": 160,
+      "reviewApproved": false,
+      "gait": {
+        "stanceDuty": 0.5,
+        "lift": 25,
+        "pelvis": "support"
+      },
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/middle-waves/t5-biped-01b-side-front-parts.png",
+          "sourceSha256": "db5e3790e17fdfe725baf716a2a756f05d6a7e781715ab2abf889d63939e7248",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.43,
+              0.25390625
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 280.11174785100286
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.46,
+                0,
+                0.24,
+                0.25390625
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4479166666666667,
+                  0.1
+                ],
+                "knee": [
+                  0.4322916666666667,
+                  0.45
+                ],
+                "ankle": [
+                  0.3697916666666667,
+                  0.8
+                ],
+                "sole": [
+                  0.6510416666666666,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.3,
+                0.8
+              ],
+              "socketRoiNormalized": [
+                0.24,
+                0.74,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.75,
+                0,
+                0.23,
+                0.25390625
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.43333333333333335,
+                  0.1
+                ],
+                "knee": [
+                  0.4444444444444444,
+                  0.45
+                ],
+                "ankle": [
+                  0.40555555555555556,
+                  0.8
+                ],
+                "sole": [
+                  0.6611111111111111,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.48,
+                0.8
+              ],
+              "socketRoiNormalized": [
+                0.42,
+                0.74,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t5-biped-01b-side-front-parts row 0 side. Reviewed hip cuff/knee/ankle y 0.1/0.45/0.8; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/middle-waves/t5-biped-01b-side-front-parts.png",
+          "sourceSha256": "db5e3790e17fdfe725baf716a2a756f05d6a7e781715ab2abf889d63939e7248",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.25390625,
+              0.43,
+              0.24739583333333334
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 272.7550432276657
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.46,
+                0.25390625,
+                0.24,
+                0.24739583333333334
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5529411764705883,
+                  0.1
+                ],
+                "knee": [
+                  0.48823529411764705,
+                  0.45
+                ],
+                "ankle": [
+                  0.4176470588235294,
+                  0.85
+                ],
+                "sole": [
+                  0.3411764705882353,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.55,
+                0.8
+              ],
+              "socketRoiNormalized": [
+                0.49000000000000005,
+                0.74,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.75,
+                0.25390625,
+                0.23,
+                0.24739583333333334
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.5,
+                  0.45
+                ],
+                "ankle": [
+                  0.5253164556962026,
+                  0.85
+                ],
+                "sole": [
+                  0.5822784810126582,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.33,
+                0.8
+              ],
+              "socketRoiNormalized": [
+                0.27,
+                0.74,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t5-biped-01b-side-front-parts row 1 front. Reviewed hip cuff/knee/ankle y 0.1/0.45/0.85; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/middle-waves/t5-biped-01b-back-parts.png",
+          "sourceSha256": "6d98d5fc17f9780cd32d32a88484f694c0257e4255b0aebfd0f636bca2d30f85",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.43,
+              0.498046875
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 271.2142857142857
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.47,
+                0,
+                0.21,
+                0.498046875
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5053763440860215,
+                  0.1
+                ],
+                "knee": [
+                  0.4946236559139785,
+                  0.45
+                ],
+                "ankle": [
+                  0.40860215053763443,
+                  0.85
+                ],
+                "sole": [
+                  0.3763440860215054,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.36,
+                0.8
+              ],
+              "socketRoiNormalized": [
+                0.3,
+                0.74,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.75,
+                0,
+                0.23,
+                0.498046875
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4639175257731959,
+                  0.1
+                ],
+                "knee": [
+                  0.4742268041237113,
+                  0.45
+                ],
+                "ankle": [
+                  0.5463917525773195,
+                  0.85
+                ],
+                "sole": [
+                  0.5618556701030928,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.55,
+                0.8
+              ],
+              "socketRoiNormalized": [
+                0.49000000000000005,
+                0.74,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t5-biped-01b-back-parts row 0 back. Reviewed hip cuff/knee/ankle y 0.1/0.45/0.85; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained."
+        }
+      }
+    },
+    {
+      "assetId": "w046",
+      "wave": 46,
+      "role": "normal",
+      "locomotion": "legged",
+      "cell": 256,
+      "referenceHeight": 425,
+      "cycleStride": 160,
+      "reviewApproved": false,
+      "gait": {
+        "stanceDuty": 0.5,
+        "lift": 25,
+        "pelvis": "support"
+      },
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/middle-waves/t5-biped-01b-side-front-parts.png",
+          "sourceSha256": "db5e3790e17fdfe725baf716a2a756f05d6a7e781715ab2abf889d63939e7248",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.5013020833333334,
+              0.43,
+              0.234375
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 261.27963525835867
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.46,
+                0.5013020833333334,
+                0.24,
+                0.234375
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5581395348837209,
+                  0.1
+                ],
+                "knee": [
+                  0.4941860465116279,
+                  0.4
+                ],
+                "ankle": [
+                  0.4011627906976744,
+                  0.8
+                ],
+                "sole": [
+                  0.6627906976744186,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.38,
+                0.72
+              ],
+              "socketRoiNormalized": [
+                0.32,
+                0.6599999999999999,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.75,
+                0.5013020833333334,
+                0.23,
+                0.234375
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.3673469387755102,
+                  0.1
+                ],
+                "knee": [
+                  0.3826530612244898,
+                  0.4
+                ],
+                "ankle": [
+                  0.42346938775510207,
+                  0.8
+                ],
+                "sole": [
+                  0.6173469387755102,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.56,
+                0.72
+              ],
+              "socketRoiNormalized": [
+                0.5,
+                0.6599999999999999,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t5-biped-01b-side-front-parts row 2 side. Reviewed hip cuff/knee/ankle y 0.1/0.4/0.8; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/middle-waves/t5-biped-01b-side-front-parts.png",
+          "sourceSha256": "db5e3790e17fdfe725baf716a2a756f05d6a7e781715ab2abf889d63939e7248",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.7356770833333334,
+              0.43,
+              0.2643229166666667
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 266.10204081632656
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.46,
+                0.7356770833333334,
+                0.24,
+                0.2643229166666667
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5617283950617284,
+                  0.1
+                ],
+                "knee": [
+                  0.5246913580246914,
+                  0.4
+                ],
+                "ankle": [
+                  0.43209876543209874,
+                  0.85
+                ],
+                "sole": [
+                  0.3333333333333333,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.58,
+                0.72
+              ],
+              "socketRoiNormalized": [
+                0.52,
+                0.6599999999999999,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.75,
+                0.7356770833333334,
+                0.23,
+                0.2643229166666667
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4107142857142857,
+                  0.1
+                ],
+                "knee": [
+                  0.48214285714285715,
+                  0.4
+                ],
+                "ankle": [
+                  0.5654761904761905,
+                  0.85
+                ],
+                "sole": [
+                  0.6607142857142857,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.32,
+                0.72
+              ],
+              "socketRoiNormalized": [
+                0.26,
+                0.6599999999999999,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t5-biped-01b-side-front-parts row 3 front. Reviewed hip cuff/knee/ankle y 0.1/0.4/0.85; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/middle-waves/t5-biped-01b-back-parts.png",
+          "sourceSha256": "6d98d5fc17f9780cd32d32a88484f694c0257e4255b0aebfd0f636bca2d30f85",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.498046875,
+              0.43,
+              0.501953125
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 271.04076086956525
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.47,
+                0.498046875,
+                0.21,
+                0.501953125
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5572916666666666,
+                  0.1
+                ],
+                "knee": [
+                  0.5104166666666666,
+                  0.4
+                ],
+                "ankle": [
+                  0.4375,
+                  0.85
+                ],
+                "sole": [
+                  0.4375,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.34,
+                0.76
+              ],
+              "socketRoiNormalized": [
+                0.28,
+                0.7,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.75,
+                0.498046875,
+                0.23,
+                0.501953125
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.42783505154639173,
+                  0.1
+                ],
+                "knee": [
+                  0.4742268041237113,
+                  0.4
+                ],
+                "ankle": [
+                  0.5412371134020618,
+                  0.85
+                ],
+                "sole": [
+                  0.5360824742268041,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.57,
+                0.76
+              ],
+              "socketRoiNormalized": [
+                0.51,
+                0.7,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t5-biped-01b-back-parts row 1 back. Reviewed hip cuff/knee/ankle y 0.1/0.4/0.85; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained."
+        }
+      }
+    },
+    {
+      "assetId": "w051",
+      "wave": 51,
+      "role": "normal",
+      "locomotion": "legged",
+      "cell": 256,
+      "referenceHeight": 425,
+      "cycleStride": 160,
+      "reviewApproved": false,
+      "gait": {
+        "stanceDuty": 0.5,
+        "lift": 25,
+        "pelvis": "support"
+      },
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/middle-waves/t6-biped-01a-side-front-parts.png",
+          "sourceSha256": "c300bd1c2b34d151dc24767d3b05f7fc8b39f4ea4a7383cc1d74f76eefbd1498",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.43,
+              0.25390625
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 221.78006329113924
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.46,
+                0,
+                0.22,
+                0.25390625
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.375,
+                  0.1
+                ],
+                "knee": [
+                  0.3605769230769231,
+                  0.5
+                ],
+                "ankle": [
+                  0.3,
+                  0.7
+                ],
+                "sole": [
+                  0.5432692307692307,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.56,
+                0.81
+              ],
+              "socketRoiNormalized": [
+                0.5,
+                0.75,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.75,
+                0,
+                0.23,
+                0.25390625
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.38461538461538464,
+                  0.1
+                ],
+                "knee": [
+                  0.3557692307692308,
+                  0.5
+                ],
+                "ankle": [
+                  0.3,
+                  0.7
+                ],
+                "sole": [
+                  0.5432692307692307,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.71,
+                0.81
+              ],
+              "socketRoiNormalized": [
+                0.6499999999999999,
+                0.75,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t6-biped-01a-side-front-parts row 0 side. Reviewed hip cuff/knee/ankle y 0.1/0.5/0.8; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained. Body translated once so mean hip socket aligns to canonical pivot X. Boot neck selected at x.30/y.70, above full toe hump, so flat foot retains full boot rather than rotating a toe sliver."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/middle-waves/t6-biped-01a-side-front-parts.png",
+          "sourceSha256": "c300bd1c2b34d151dc24767d3b05f7fc8b39f4ea4a7383cc1d74f76eefbd1498",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.25390625,
+              0.43,
+              0.234375
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 258.57284768211923
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.46,
+                0.25390625,
+                0.22,
+                0.234375
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4930555555555556,
+                  0.1
+                ],
+                "knee": [
+                  0.5,
+                  0.5
+                ],
+                "ankle": [
+                  0.4791666666666667,
+                  0.85
+                ],
+                "sole": [
+                  0.4652777777777778,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.61,
+                0.81
+              ],
+              "socketRoiNormalized": [
+                0.55,
+                0.75,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.75,
+                0.25390625,
+                0.23,
+                0.234375
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4931506849315068,
+                  0.1
+                ],
+                "knee": [
+                  0.5068493150684932,
+                  0.5
+                ],
+                "ankle": [
+                  0.5,
+                  0.85
+                ],
+                "sole": [
+                  0.4863013698630137,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.37,
+                0.81
+              ],
+              "socketRoiNormalized": [
+                0.31,
+                0.75,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t6-biped-01a-side-front-parts row 1 front. Reviewed hip cuff/knee/ankle y 0.1/0.5/0.85; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained. Body translated once so mean hip socket aligns to canonical pivot X."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/middle-waves/t6-biped-01a-back-parts.png",
+          "sourceSha256": "6c560506633769ef3f660a426b54f653db43d3c06ad5d1d59f0705d95a87021d",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.43,
+              0.48828125
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 258.5968992248062
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.44,
+                0,
+                0.22,
+                0.48828125
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5042372881355932,
+                  0.1
+                ],
+                "knee": [
+                  0.4872881355932203,
+                  0.5
+                ],
+                "ankle": [
+                  0.4703389830508475,
+                  0.85
+                ],
+                "sole": [
+                  0.4788135593220339,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.35,
+                0.81
+              ],
+              "socketRoiNormalized": [
+                0.29,
+                0.75,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.75,
+                0,
+                0.22,
+                0.48828125
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4955357142857143,
+                  0.1
+                ],
+                "knee": [
+                  0.5133928571428571,
+                  0.5
+                ],
+                "ankle": [
+                  0.5178571428571429,
+                  0.85
+                ],
+                "sole": [
+                  0.5223214285714286,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.63,
+                0.81
+              ],
+              "socketRoiNormalized": [
+                0.5700000000000001,
+                0.75,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t6-biped-01a-back-parts row 0 back. Reviewed hip cuff/knee/ankle y 0.1/0.5/0.85; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained. Body translated once so mean hip socket aligns to canonical pivot X."
+        }
+      }
+    },
+    {
+      "assetId": "w053",
+      "wave": 53,
+      "role": "normal",
+      "locomotion": "legged",
+      "cell": 256,
+      "referenceHeight": 425,
+      "cycleStride": 160,
+      "reviewApproved": false,
+      "gait": {
+        "stanceDuty": 0.5,
+        "lift": 25,
+        "pelvis": "support"
+      },
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/middle-waves/t6-biped-01a-side-front-parts.png",
+          "sourceSha256": "c300bd1c2b34d151dc24767d3b05f7fc8b39f4ea4a7383cc1d74f76eefbd1498",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.48828125,
+              0.43,
+              0.234375
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 279.04545454545456
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.46,
+                0.48828125,
+                0.22,
+                0.234375
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.43125,
+                  0.1
+                ],
+                "knee": [
+                  0.35,
+                  0.5
+                ],
+                "ankle": [
+                  0.45,
+                  0.8
+                ],
+                "sole": [
+                  0.6375,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.29,
+                0.82
+              ],
+              "socketRoiNormalized": [
+                0.22999999999999998,
+                0.76,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.75,
+                0.48828125,
+                0.23,
+                0.234375
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.3987341772151899,
+                  0.1
+                ],
+                "knee": [
+                  0.33544303797468356,
+                  0.5
+                ],
+                "ankle": [
+                  0.4430379746835443,
+                  0.8
+                ],
+                "sole": [
+                  0.6392405063291139,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.45,
+                0.82
+              ],
+              "socketRoiNormalized": [
+                0.39,
+                0.76,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t6-biped-01a-side-front-parts row 2 side. Reviewed hip cuff/knee/ankle y 0.1/0.5/0.8; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained. Body translated once so mean hip socket aligns to canonical pivot X."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/middle-waves/t6-biped-01a-side-front-parts.png",
+          "sourceSha256": "c300bd1c2b34d151dc24767d3b05f7fc8b39f4ea4a7383cc1d74f76eefbd1498",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.72265625,
+              0.43,
+              0.27734375
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 266.4761904761905
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.46,
+                0.72265625,
+                0.22,
+                0.27734375
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.48360655737704916,
+                  0.1
+                ],
+                "knee": [
+                  0.4918032786885246,
+                  0.5
+                ],
+                "ankle": [
+                  0.5,
+                  0.85
+                ],
+                "sole": [
+                  0.4918032786885246,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.56,
+                0.8
+              ],
+              "socketRoiNormalized": [
+                0.5,
+                0.74,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.75,
+                0.72265625,
+                0.23,
+                0.27734375
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4918032786885246,
+                  0.1
+                ],
+                "knee": [
+                  0.5,
+                  0.5
+                ],
+                "ankle": [
+                  0.48360655737704916,
+                  0.85
+                ],
+                "sole": [
+                  0.4918032786885246,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.34,
+                0.8
+              ],
+              "socketRoiNormalized": [
+                0.28,
+                0.74,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t6-biped-01a-side-front-parts row 3 front. Reviewed hip cuff/knee/ankle y 0.1/0.5/0.85; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained. Body translated once so mean hip socket aligns to canonical pivot X."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/middle-waves/t6-biped-01a-back-parts.png",
+          "sourceSha256": "6c560506633769ef3f660a426b54f653db43d3c06ad5d1d59f0705d95a87021d",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.48828125,
+              0.43,
+              0.51171875
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 251.87596899224806
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.44,
+                0.48828125,
+                0.22,
+                0.51171875
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.44505494505494503,
+                  0.6
+                ],
+                "ankle": [
+                  0.43956043956043955,
+                  0.85
+                ],
+                "sole": [
+                  0.4340659340659341,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.41,
+                0.79
+              ],
+              "socketRoiNormalized": [
+                0.35,
+                0.73,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.75,
+                0.48828125,
+                0.22,
+                0.51171875
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.5340909090909091,
+                  0.6
+                ],
+                "ankle": [
+                  0.5454545454545454,
+                  0.85
+                ],
+                "sole": [
+                  0.5511363636363636,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.63,
+                0.79
+              ],
+              "socketRoiNormalized": [
+                0.5700000000000001,
+                0.73,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t6-biped-01a-back-parts row 1 back. Reviewed hip cuff/knee/ankle y 0.1/0.6/0.85; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained. Body translated once so mean hip socket aligns to canonical pivot X."
+        }
+      }
+    },
+    {
+      "assetId": "w055",
+      "wave": 55,
+      "role": "normal",
+      "locomotion": "legged",
+      "cell": 256,
+      "referenceHeight": 425,
+      "cycleStride": 160,
+      "reviewApproved": false,
+      "gait": {
+        "stanceDuty": 0.5,
+        "lift": 25,
+        "pelvis": "support"
+      },
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/middle-waves/t6-biped-01b-side-front-parts.png",
+          "sourceSha256": "14ef710e2f8313c7acc7e909e10afecc4e8be8d3c98f8429375d080b79e8794d",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.43,
+              0.24739583333333334
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 262.07142857142856
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.46,
+                0,
+                0.22,
+                0.24739583333333334
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5376344086021505,
+                  0.1
+                ],
+                "knee": [
+                  0.46774193548387094,
+                  0.45
+                ],
+                "ankle": [
+                  0.46774193548387094,
+                  0.8
+                ],
+                "sole": [
+                  0.6075268817204301,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.38,
+                0.82
+              ],
+              "socketRoiNormalized": [
+                0.32,
+                0.76,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.75,
+                0,
+                0.23,
+                0.24739583333333334
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.400990099009901,
+                  0.1
+                ],
+                "knee": [
+                  0.40594059405940597,
+                  0.45
+                ],
+                "ankle": [
+                  0.4752475247524752,
+                  0.8
+                ],
+                "sole": [
+                  0.594059405940594,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.57,
+                0.82
+              ],
+              "socketRoiNormalized": [
+                0.51,
+                0.76,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t6-biped-01b-side-front-parts row 0 side. Reviewed hip cuff/knee/ankle y 0.1/0.45/0.8; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained. Body translated once so mean hip socket aligns to canonical pivot X."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/middle-waves/t6-biped-01b-side-front-parts.png",
+          "sourceSha256": "14ef710e2f8313c7acc7e909e10afecc4e8be8d3c98f8429375d080b79e8794d",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.24739583333333334,
+              0.43,
+              0.22786458333333334
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 268.04411764705884
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.46,
+                0.24739583333333334,
+                0.22,
+                0.22786458333333334
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5402298850574713,
+                  0.1
+                ],
+                "knee": [
+                  0.5057471264367817,
+                  0.45
+                ],
+                "ankle": [
+                  0.4885057471264368,
+                  0.85
+                ],
+                "sole": [
+                  0.4885057471264368,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.57,
+                0.82
+              ],
+              "socketRoiNormalized": [
+                0.51,
+                0.76,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.75,
+                0.24739583333333334,
+                0.23,
+                0.22786458333333334
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5058823529411764,
+                  0.1
+                ],
+                "knee": [
+                  0.5,
+                  0.45
+                ],
+                "ankle": [
+                  0.5,
+                  0.85
+                ],
+                "sole": [
+                  0.5176470588235295,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.34,
+                0.82
+              ],
+              "socketRoiNormalized": [
+                0.28,
+                0.76,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t6-biped-01b-side-front-parts row 1 front. Reviewed hip cuff/knee/ankle y 0.1/0.45/0.85; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained. Body translated once so mean hip socket aligns to canonical pivot X."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/middle-waves/t6-biped-01b-back-parts.png",
+          "sourceSha256": "89d3fe2ae5bce4cefae466b9b56fb6653d3f5fb5a6270eac3144321fc529ecdb",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.43,
+              0.48828125
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 233.97164948453607
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.44,
+                0,
+                0.22,
+                0.48828125
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5754716981132075,
+                  0.1
+                ],
+                "knee": [
+                  0.5047169811320755,
+                  0.45
+                ],
+                "ankle": [
+                  0.4716981132075472,
+                  0.85
+                ],
+                "sole": [
+                  0.46226415094339623,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.46,
+                0.81
+              ],
+              "socketRoiNormalized": [
+                0.4,
+                0.75,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.75,
+                0,
+                0.22,
+                0.48828125
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4142857142857143,
+                  0.1
+                ],
+                "knee": [
+                  0.48095238095238096,
+                  0.45
+                ],
+                "ankle": [
+                  0.5095238095238095,
+                  0.85
+                ],
+                "sole": [
+                  0.5238095238095238,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.68,
+                0.81
+              ],
+              "socketRoiNormalized": [
+                0.6200000000000001,
+                0.75,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t6-biped-01b-back-parts row 0 back. Reviewed hip cuff/knee/ankle y 0.1/0.45/0.85; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained. Body translated once so mean hip socket aligns to canonical pivot X."
+        }
+      }
+    },
+    {
+      "assetId": "w057",
+      "wave": 57,
+      "role": "normal",
+      "locomotion": "legged",
+      "cell": 256,
+      "referenceHeight": 425,
+      "cycleStride": 160,
+      "reviewApproved": false,
+      "gait": {
+        "stanceDuty": 0.5,
+        "lift": 25,
+        "pelvis": "support"
+      },
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/middle-waves/t6-biped-01b-side-front-parts.png",
+          "sourceSha256": "14ef710e2f8313c7acc7e909e10afecc4e8be8d3c98f8429375d080b79e8794d",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.4752604166666667,
+              0.43,
+              0.234375
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 259.74271844660194
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.46,
+                0.4752604166666667,
+                0.22,
+                0.234375
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4945652173913043,
+                  0.1
+                ],
+                "knee": [
+                  0.5,
+                  0.4
+                ],
+                "ankle": [
+                  0.3695652173913043,
+                  0.8
+                ],
+                "sole": [
+                  0.6467391304347826,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.4,
+                0.81
+              ],
+              "socketRoiNormalized": [
+                0.34,
+                0.75,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.75,
+                0.4752604166666667,
+                0.23,
+                0.234375
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.35555555555555557,
+                  0.1
+                ],
+                "knee": [
+                  0.37777777777777777,
+                  0.4
+                ],
+                "ankle": [
+                  0.4,
+                  0.8
+                ],
+                "sole": [
+                  0.65,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.57,
+                0.81
+              ],
+              "socketRoiNormalized": [
+                0.51,
+                0.75,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t6-biped-01b-side-front-parts row 2 side. Reviewed hip cuff/knee/ankle y 0.1/0.4/0.8; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained. Body translated once so mean hip socket aligns to canonical pivot X."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/middle-waves/t6-biped-01b-side-front-parts.png",
+          "sourceSha256": "14ef710e2f8313c7acc7e909e10afecc4e8be8d3c98f8429375d080b79e8794d",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.7096354166666666,
+              0.43,
+              0.2903645833333333
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 266.6599423631124
+            },
+            "layer": 10,
+            "anchorReview": "Fixed source translation aligns mean hip X to pivot; weapon bbox does not shift the ground root. No per-frame scaling or translation."
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.46,
+                0.7096354166666666,
+                0.22,
+                0.2903645833333333
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5684931506849316,
+                  0.1
+                ],
+                "knee": [
+                  0.5136986301369864,
+                  0.4
+                ],
+                "ankle": [
+                  0.4726027397260274,
+                  0.85
+                ],
+                "sole": [
+                  0.4178082191780822,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.56,
+                0.7
+              ],
+              "socketRoiNormalized": [
+                0.5,
+                0.6399999999999999,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.75,
+                0.7096354166666666,
+                0.23,
+                0.2903645833333333
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4420289855072464,
+                  0.1
+                ],
+                "knee": [
+                  0.4782608695652174,
+                  0.4
+                ],
+                "ankle": [
+                  0.5144927536231884,
+                  0.85
+                ],
+                "sole": [
+                  0.5507246376811594,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.35,
+                0.7
+              ],
+              "socketRoiNormalized": [
+                0.29,
+                0.6399999999999999,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t6-biped-01b-side-front-parts row 3 front. Reviewed hip cuff/knee/ankle y 0.1/0.4/0.85; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained. Body translated once so mean hip socket aligns to canonical pivot X."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/middle-waves/t6-biped-01b-back-parts.png",
+          "sourceSha256": "89d3fe2ae5bce4cefae466b9b56fb6653d3f5fb5a6270eac3144321fc529ecdb",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.48828125,
+              0.43,
+              0.51171875
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 272.356783919598
+            },
+            "layer": 10,
+            "flipX": true
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.44,
+                0.48828125,
+                0.22,
+                0.51171875
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5416666666666666,
+                  0.1
+                ],
+                "knee": [
+                  0.4947916666666667,
+                  0.4
+                ],
+                "ankle": [
+                  0.4583333333333333,
+                  0.85
+                ],
+                "sole": [
+                  0.4166666666666667,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.35,
+                0.75
+              ],
+              "socketRoiNormalized": [
+                0.29,
+                0.69,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.75,
+                0.48828125,
+                0.22,
+                0.51171875
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.45161290322580644,
+                  0.1
+                ],
+                "knee": [
+                  0.4946236559139785,
+                  0.4
+                ],
+                "ankle": [
+                  0.521505376344086,
+                  0.85
+                ],
+                "sole": [
+                  0.553763440860215,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.55,
+                0.75
+              ],
+              "socketRoiNormalized": [
+                0.49000000000000005,
+                0.69,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Source t6-biped-01b-back-parts row 1 back. Reviewed hip cuff/knee/ankle y 0.1/0.4/0.85; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained. Body translated once so mean hip socket aligns to canonical pivot X. Body-only reflection corrects shield to physical left and sword to right, rear helmet retained; sockets specified in reflected body space."
+        }
+      }
+    }
+  ]
+}

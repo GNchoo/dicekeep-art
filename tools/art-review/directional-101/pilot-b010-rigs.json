@@ -1,0 +1,390 @@
+{
+  "version": 1,
+  "canonicalCell": 512,
+  "assetVersion": 93,
+  "entries": [
+    {
+      "assetId": "b010",
+      "wave": 10,
+      "role": "boss",
+      "locomotion": "legged",
+      "cell": 512,
+      "referenceHeight": 450,
+      "cycleStride": 160,
+      "reviewApproved": true,
+      "gait": {
+        "stanceDuty": 0.5,
+        "lift": 25,
+        "pelvis": "support"
+      },
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/b010-side-front-parts.png",
+          "sourceSha256": "33c854929bdbbb5a15ae36e6eac8f85bf7acbaab5fe04994f45a7463e667b0ba",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.55,
+              0.48
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 256
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.565,
+                0,
+                0.205,
+                0.48
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4974,
+                  0.1
+                ],
+                "knee": [
+                  0.3684,
+                  0.6
+                ],
+                "ankle": [
+                  0.2842,
+                  0.86
+                ],
+                "sole": [
+                  0.62,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.55,
+                0.66
+              ],
+              "socketRoiNormalized": [
+                0.49000000000000005,
+                0.6000000000000001,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.79,
+                0,
+                0.21,
+                0.48
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.3736,
+                  0.1
+                ],
+                "knee": [
+                  0.4157,
+                  0.6
+                ],
+                "ankle": [
+                  0.3764,
+                  0.86
+                ],
+                "sole": [
+                  0.62,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.72,
+                0.66
+              ],
+              "socketRoiNormalized": [
+                0.6599999999999999,
+                0.6000000000000001,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Hip/knee/ankle x centers measured independently from each isolated source leg at the reviewed anatomical y rows. Corrected off-center knee pivots that created triangular overlap gaps."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/b010-side-front-parts.png",
+          "sourceSha256": "33c854929bdbbb5a15ae36e6eac8f85bf7acbaab5fe04994f45a7463e667b0ba",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.48,
+              0.57,
+              0.52
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 256
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.585,
+                0.48,
+                0.18,
+                0.52
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.48,
+                  0.6
+                ],
+                "ankle": [
+                  0.48,
+                  0.87
+                ],
+                "sole": [
+                  0.5,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.65,
+                0.67
+              ],
+              "socketRoiNormalized": [
+                0.5900000000000001,
+                0.6100000000000001,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.79,
+                0.48,
+                0.21,
+                0.52
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.48,
+                  0.6
+                ],
+                "ankle": [
+                  0.48,
+                  0.87
+                ],
+                "sole": [
+                  0.5,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.35,
+                0.67
+              ],
+              "socketRoiNormalized": [
+                0.29,
+                0.6100000000000001,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/b010-back-parts.png",
+          "sourceSha256": "298494fb2538c3948c3073dc1b2f4232568d096e1338146e8454e8e52e14bfa7",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.47,
+              1
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 256
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.51,
+                0,
+                0.19,
+                1
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.48,
+                  0.6
+                ],
+                "ankle": [
+                  0.48,
+                  0.87
+                ],
+                "sole": [
+                  0.5,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.4,
+                0.65
+              ],
+              "socketRoiNormalized": [
+                0.34,
+                0.5900000000000001,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.72,
+                0,
+                0.19,
+                1
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.48,
+                  0.6
+                ],
+                "ankle": [
+                  0.48,
+                  0.87
+                ],
+                "sole": [
+                  0.5,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.64,
+                0.65
+              ],
+              "socketRoiNormalized": [
+                0.5800000000000001,
+                0.5900000000000001,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ]
+        }
+      },
+      "physicalLimbConvention": "right-facing side: right near, left far; front: left screen-right; back: left screen-left",
+      "reviewNote": "Root approved corrected physical limb orientation, body/socket proportions and assembled motion; game-canvas corner/residency QA remains separate."
+    }
+  ]
+}

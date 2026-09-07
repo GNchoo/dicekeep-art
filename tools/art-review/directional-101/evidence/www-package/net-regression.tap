@@ -1,0 +1,560 @@
+TAP version 13
+# Subtest: node --check net.js
+ok 1 - node --check net.js
+  ---
+  duration_ms: 361.5783
+  type: 'test'
+  ...
+# Subtest: CFG: 버전은 스크립트 ?v=, 주소는 location 없으면 null
+ok 2 - CFG: 버전은 스크립트 ?v=, 주소는 location 없으면 null
+  ---
+  duration_ms: 9.4849
+  type: 'test'
+  ...
+# Subtest: _resolveUrl: 호스트·쿼리·저장값 규칙
+ok 3 - _resolveUrl: 호스트·쿼리·저장값 규칙
+  ---
+  duration_ms: 1.9517
+  type: 'test'
+  ...
+# Subtest: resolveUrl 부작용: ?net=ws… 저장 · ?net=clear 삭제
+ok 4 - resolveUrl 부작용: ?net=ws… 저장 · ?net=clear 삭제
+  ---
+  duration_ms: 7.2599
+  type: 'test'
+  ...
+# Subtest: sanitizeName: 제어문자·<> 제거, 공백 압축, 12자 절단, 빈 이름
+ok 5 - sanitizeName: 제어문자·<> 제거, 공백 압축, 12자 절단, 빈 이름
+  ---
+  duration_ms: 1.7532
+  type: 'test'
+  ...
+# Subtest: create: hello 형식 → welcome → 미러·세션·이벤트
+ok 6 - create: hello 형식 → welcome → 미러·세션·이벤트
+  ---
+  duration_ms: 8.9991
+  type: 'test'
+  ...
+# Subtest: 서버 이름 확정(중복 접미)이 me.name 에 반영된다
+ok 7 - 서버 이름 확정(중복 접미)이 me.name 에 반영된다
+  ---
+  duration_ms: 3.3753
+  type: 'test'
+  ...
+# Subtest: 거절: err 후 닫힘 → promise reject(code) → offline (세션은 지움)
+ok 8 - 거절: err 후 닫힘 → promise reject(code) → offline (세션은 지움)
+  ---
+  duration_ms: 20.2438
+  type: 'test'
+  ...
+# Subtest: welcome 5초 타임아웃 → timeout 거절
+ok 9 - welcome 5초 타임아웃 → timeout 거절
+  ---
+  duration_ms: 3.4512
+  type: 'test'
+  ...
+# Subtest: room 미러: room/player/start/end 병합, 상태 전이, welcome 후 err 는 이벤트
+ok 10 - room 미러: room/player/start/end 병합, 상태 전이, welcome 후 err 는 이벤트
+  ---
+  duration_ms: 11.5036
+  type: 'test'
+  ...
+# Subtest: 송신: sum 범위 클램프·tw 15개·sp/ll/en, watch, done/dead/clear/chat/log, OPEN 아니면 false, 4000B 초과 폐기
+ok 11 - 송신: sum 범위 클램프·tw 15개·sp/ll/en, watch, done/dead/clear/chat/log, OPEN 아니면 false, 4000B 초과 폐기
+  ---
+  duration_ms: 8.9671
+  type: 'test'
+  ...
+# Subtest: 시각 동기: rtt 최소 표본 채택, 500ms 튀면 초기화·재측정, playing 30초 주기
+ok 12 - 시각 동기: rtt 최소 표본 채택, 500ms 튀면 초기화·재측정, playing 30초 주기
+  ---
+  duration_ms: 10.8914
+  type: 'test'
+  ...
+# Subtest: 재접속: 비의도 닫힘 → 백오프 → 같은 pid/key 로 join → welcome(resumed)
+ok 13 - 재접속: 비의도 닫힘 → 백오프 → 같은 pid/key 로 join → welcome(resumed)
+  ---
+  duration_ms: 12.458
+  type: 'test'
+  ...
+# Subtest: 재접속 포기: 4001 · 4404 · ended 방 · 대기실 끊김은 재접속
+ok 14 - 재접속 포기: 4001 · 4404 · ended 방 · 대기실 끊김은 재접속
+  ---
+  duration_ms: 9.707
+  type: 'test'
+  ...
+# Subtest: leave: leave 전송 → 4000 닫기 → offline · dk_mp 삭제 · 미러 비움
+ok 15 - leave: leave 전송 → 4000 닫기 → offline · dk_mp 삭제 · 미러 비움
+  ---
+  duration_ms: 2.2767
+  type: 'test'
+  ...
+# Subtest: resume: dk_mp 없으면 null, 있으면 같은 좌석으로 join, 방이 없으면 세션 삭제
+ok 16 - resume: dk_mp 없으면 null, 있으면 같은 좌석으로 join, 방이 없으면 세션 삭제
+  ---
+  duration_ms: 7.3337
+  type: 'test'
+  ...
+# Subtest: 빠른 매칭: /ws/quick → welcome(대기열) → queued → matched → 대기열 소켓 버리고 방으로 join
+ok 17 - 빠른 매칭: /ws/quick → welcome(대기열) → queued → matched → 대기열 소켓 버리고 방으로 join
+  ---
+  duration_ms: 7.0245
+  type: 'test'
+  ...
+# [net] custom Error: boom
+#     at file:///C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/net/test/client.test.js:655:32
+#     at Object.emit (net.js:62:88)
+#     at TestContext.<anonymous> (file:///C:/Users/PC/Documents/Codex/2026-09-07/gnchoo-dicekeep-art-pr-29-6/work/dicekeep-art/net/test/client.test.js:660:5)
+#     at Test.runInAsyncScope (node:async_hooks:214:14)
+#     at Test.run (node:internal/test_runner/test:1047:25)
+#     at Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+#     at Test.postRun (node:internal/test_runner/test:1173:19)
+#     at Test.run (node:internal/test_runner/test:1101:12)
+#     at async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+# Subtest: 빠른 매칭: 서버가 matched 뒤 바로 닫아도 방으로 간다 · 매칭 전 닫힘은 offline · 취소 = leave
+ok 18 - 빠른 매칭: 서버가 matched 뒤 바로 닫아도 방으로 간다 · 매칭 전 닫힘은 offline · 취소 = leave
+  ---
+  duration_ms: 10.5443
+  type: 'test'
+  ...
+# Subtest: on/off/emit: 해제 함수, 핸들러 예외 격리
+ok 19 - on/off/emit: 해제 함수, 핸들러 예외 격리
+  ---
+  duration_ms: 3.2506
+  type: 'test'
+  ...
+# Subtest: 알파벳: 31자, 헷갈리는 글자 없음
+ok 20 - 알파벳: 31자, 헷갈리는 글자 없음
+  ---
+  duration_ms: 1.4421
+  type: 'test'
+  ...
+# Subtest: gen(): 6자리, 전부 알파벳 안
+ok 21 - gen(): 6자리, 전부 알파벳 안
+  ---
+  duration_ms: 29.6823
+  type: 'test'
+  ...
+# Subtest: gen(bytes): 주입한 바이트를 순서대로 쓰고 248 이상은 건너뛴다
+ok 22 - gen(bytes): 주입한 바이트를 순서대로 쓰고 248 이상은 건너뛴다
+  ---
+  duration_ms: 0.4527
+  type: 'test'
+  ...
+# Subtest: normalize
+ok 23 - normalize
+  ---
+  duration_ms: 0.352
+  type: 'test'
+  ...
+# Subtest: originAllowed: 허용 원점
+ok 24 - originAllowed: 허용 원점
+  ---
+  duration_ms: 2.8042
+  type: 'test'
+  ...
+# Subtest: originAllowed: 거절 원점
+ok 25 - originAllowed: 거절 원점
+  ---
+  duration_ms: 0.4611
+  type: 'test'
+  ...
+# Subtest: routeOf
+ok 26 - routeOf
+  ---
+  duration_ms: 4.7772
+  type: 'test'
+  ...
+# Subtest: appearance retains roster wave, boss role and elite without a resident image
+ok 27 - appearance retains roster wave, boss role and elite without a resident image
+  ---
+  duration_ms: 3.1607
+  type: 'test'
+  ...
+# Subtest: repeated slot10 secondary keeps its combat role within the reviewed nineteen boss assets
+ok 28 - repeated slot10 secondary keeps its combat role within the reviewed nineteen boss assets
+  ---
+  duration_ms: 171.9067
+  type: 'test'
+  ...
+# Subtest: flight spectator cadence follows original movement clock through scale, slow and stop
+ok 29 - flight spectator cadence follows original movement clock through scale, slow and stop
+  ---
+  duration_ms: 4.4137
+  type: 'test'
+  ...
+# Subtest: direction hysteresis and circular phase preserve a walk through corners/wrap
+ok 30 - direction hysteresis and circular phase preserve a walk through corners/wrap
+  ---
+  duration_ms: 1.1815
+  type: 'test'
+  ...
+# Subtest: only flight/float may use zero-stride time animation; negative/invalid cycles fail
+ok 31 - only flight/float may use zero-stride time animation; negative/invalid cycles fail
+  ---
+  duration_ms: 2.5604
+  type: 'test'
+  ...
+# Subtest: protocol 3 preserves optional numeric columns; old clients read unchanged first three
+ok 32 - protocol 3 preserves optional numeric columns; old clients read unchanged first three
+  ---
+  duration_ms: 1.4852
+  type: 'test'
+  ...
+# Subtest: 200 enemies survive phase budget pressure and legal long-distance appearance overflow
+ok 33 - 200 enemies survive phase budget pressure and legal long-distance appearance overflow
+  ---
+  duration_ms: 4.3617
+  type: 'test'
+  ...
+# Subtest: hostile optional fields cannot select URLs or corrupt a valid legacy enemy
+ok 34 - hostile optional fields cannot select URLs or corrupt a valid legacy enemy
+  ---
+  duration_ms: 0.4428
+  type: 'test'
+  ...
+# Subtest: unapproved/malformed entries are never requested
+ok 35 - unapproved/malformed entries are never requested
+  ---
+  duration_ms: 30.3077
+  type: 'test'
+  ...
+# Subtest: cache loads at most two at once, keeps pivots/scale, versions URLs and reuses a request
+ok 36 - cache loads at most two at once, keeps pivots/scale, versions URLs and reuses a request
+  ---
+  duration_ms: 19.8981
+  type: 'test'
+  ...
+# Subtest: dead-frame pins survive demand change, then eviction releases their canvases
+ok 37 - dead-frame pins survive demand change, then eviction releases their canvases
+  ---
+  duration_ms: 3.2376
+  type: 'test'
+  ...
+# Subtest: budget never grows to satisfy pinned sheets; same-character still remains available
+ok 38 - budget never grows to satisfy pinned sheets; same-character still remains available
+  ---
+  duration_ms: 1.5656
+  type: 'test'
+  ...
+# Subtest: bad grid fails without publishing partial frames and retry is bounded
+ok 39 - bad grid fails without publishing partial frames and retry is bounded
+  ---
+  duration_ms: 2.7185
+  type: 'test'
+  ...
+# Subtest: successful reloads do not exhaust future transient-failure recovery
+ok 40 - successful reloads do not exhaust future transient-failure recovery
+  ---
+  duration_ms: 5.8542
+  type: 'test'
+  ...
+# Subtest: in-flight old generation cannot resurrect resources after clear
+ok 41 - in-flight old generation cannot resurrect resources after clear
+  ---
+  duration_ms: 1.4025
+  type: 'test'
+  ...
+# Subtest: unchanged server relays extended enemy data only to watchers and preserves rank 7/20
+ok 42 - unchanged server relays extended enemy data only to watchers and preserves rank 7/20
+  ---
+  duration_ms: 4.6704
+  type: 'test'
+  ...
+# Subtest: boot decodes permanent 64px inline fallbacks before lazy network art and budgets them
+ok 43 - boot decodes permanent 64px inline fallbacks before lazy network art and budgets them
+  ---
+  duration_ms: 1.6665
+  type: 'test'
+  ...
+# Subtest: approved identity keeps the requested-view inline still when all network images fail
+ok 44 - approved identity keeps the requested-view inline still when all network images fail
+  ---
+  duration_ms: 4.9018
+  type: 'test'
+  ...
+# Subtest: bad approved metadata, broken inline decode and impossible fallback budgets block boot
+ok 45 - bad approved metadata, broken inline decode and impossible fallback budgets block boot
+  ---
+  duration_ms: 1.5811
+  type: 'test'
+  ...
+# Subtest: U11 hello → queued{n:1, eta:null} · 2명째 → 둘에게 queued{n:2, eta:10초} · 알람은 오래 기다린 사람 + 10s
+ok 46 - U11 hello → queued{n:1, eta:null} · 2명째 → 둘에게 queued{n:2, eta:10초} · 알람은 오래 기다린 사람 + 10s
+  ---
+  duration_ms: 13.1118
+  type: 'test'
+  ...
+# Subtest: U11 4명이면 즉시 · 5명째는 남아서 기다린다 · 8명이면 두 방
+ok 47 - U11 4명이면 즉시 · 5명째는 남아서 기다린다 · 8명이면 두 방
+  ---
+  duration_ms: 2.4449
+  type: 'test'
+  ...
+# Subtest: U11 ver 가 다르면 따로: n·eta 도 따로, 묶임도 따로
+ok 48 - U11 ver 가 다르면 따로: n·eta 도 따로, 묶임도 따로
+  ---
+  duration_ms: 2.2357
+  type: 'test'
+  ...
+# Subtest: U11 취소: 소켓 닫힘 = 대기열 제거 → 남은 사람 queued 갱신 · 같은 pid 재접속은 좌석 교체(옛 소켓 4001, since 유지)
+ok 49 - U11 취소: 소켓 닫힘 = 대기열 제거 → 남은 사람 queued 갱신 · 같은 pid 재접속은 좌석 교체(옛 소켓 4001, since 유지)
+  ---
+  duration_ms: 2.2611
+  type: 'test'
+  ...
+# Subtest: U11 거절: v2 → version 4426 · op join → bad-request 4400 · hello 없이 5초 → 4400 · 대기열 200 초과 → rate 4429
+ok 50 - U11 거절: v2 → version 4426 · op join → bad-request 4400 · hello 없이 5초 → 4400 · 대기열 200 초과 → rate 4429
+  ---
+  duration_ms: 175.1593
+  type: 'test'
+  ...
+# Subtest: U11 quota: 시간당 120 슬라이딩 창 · 복원
+ok 51 - U11 quota: 시간당 120 슬라이딩 창 · 복원
+  ---
+  duration_ms: 1.7087
+  type: 'test'
+  ...
+# Subtest: 상수
+ok 52 - 상수
+  ---
+  duration_ms: 2.6989
+  type: 'test'
+  ...
+# Subtest: 유효 표본
+ok 53 - 유효 표본
+  ---
+  duration_ms: 3.7775
+  type: 'test'
+  ...
+# Subtest: 무효 표본
+ok 54 - 무효 표본
+  ---
+  duration_ms: 0.5705
+  type: 'test'
+  ...
+# Subtest: sum 경계
+ok 55 - sum 경계
+  ---
+  duration_ms: 6.0769
+  type: 'test'
+  ...
+# Subtest: 문자열 정규화: 제어문자 제거 · 120자 절단 · NFC
+ok 56 - 문자열 정규화: 제어문자 제거 · 120자 절단 · NFC
+  ---
+  duration_ms: 1.4386
+  type: 'test'
+  ...
+# Subtest: sanitizeName
+ok 57 - sanitizeName
+  ---
+  duration_ms: 0.7386
+  type: 'test'
+  ...
+# Subtest: 크기 한도 4,096 B
+ok 58 - 크기 한도 4,096 B
+  ---
+  duration_ms: 0.4007
+  type: 'test'
+  ...
+# Subtest: 랜덤 JSON 1,000개 퍼즈: 예외 없음
+ok 59 - 랜덤 JSON 1,000개 퍼즈: 예외 없음
+  ---
+  duration_ms: 41.4568
+  type: 'test'
+  ...
+# Subtest: 빈 버킷은 가득 찬 상태로 시작하고 burst 만큼 연속 허용
+ok 60 - 빈 버킷은 가득 찬 상태로 시작하고 burst 만큼 연속 허용
+  ---
+  duration_ms: 1.6977
+  type: 'test'
+  ...
+# Subtest: 시간이 지나면 rate 만큼 보충되고 burst 를 넘지 않는다
+ok 61 - 시간이 지나면 rate 만큼 보충되고 burst 를 넘지 않는다
+  ---
+  duration_ms: 0.3557
+  type: 'test'
+  ...
+# Subtest: 입력 버킷을 바꾸지 않는다
+ok 62 - 입력 버킷을 바꾸지 않는다
+  ---
+  duration_ms: 1.4475
+  type: 'test'
+  ...
+# Subtest: 20/s 버스트 40: 40개 즉시 통과, 41번째 거절, 50ms 뒤 1개
+ok 63 - 20/s 버스트 40: 40개 즉시 통과, 41번째 거절, 50ms 뒤 1개
+  ---
+  duration_ms: 0.4502
+  type: 'test'
+  ...
+# Subtest: BucketMap: 키별 · 상한 초과 시 오래된 키 제거
+ok 64 - BucketMap: 키별 · 상한 초과 시 오래된 키 제거
+  ---
+  duration_ms: 0.289
+  type: 'test'
+  ...
+# Subtest: U4 create → claimed → hello create → lobby (방장)
+ok 65 - U4 create → claimed → hello create → lobby (방장)
+  ---
+  duration_ms: 9.777
+  type: 'test'
+  ...
+# Subtest: U4 claimed 에 join 은 bad-code, 없는 방(state null)도 bad-code + persist false
+ok 66 - U4 claimed 에 join 은 bad-code, 없는 방(state null)도 bad-code + persist false
+  ---
+  duration_ms: 0.8612
+  type: 'test'
+  ...
+# Subtest: U4 join ×3 → room 방송, 5번째 full 4409
+ok 67 - U4 join ×3 → room 방송, 5번째 full 4409
+  ---
+  duration_ms: 1.8781
+  type: 'test'
+  ...
+# Subtest: U4 ver 불일치 4426 · 프로토콜 v2 4426 · key 불일치 4403 · op quick 4400 · playing 에 모르는 pid started 4409
+ok 68 - U4 ver 불일치 4426 · 프로토콜 v2 4426 · key 불일치 4403 · op quick 4400 · playing 에 모르는 pid started 4409
+  ---
+  duration_ms: 2.0391
+  type: 'test'
+  ...
+# Subtest: U4 재접속: 같은 pid 새 소켓 → 옛 sid 4001, welcome resumed
+ok 69 - U4 재접속: 같은 pid 새 소켓 → 옛 sid 4001, welcome resumed
+  ---
+  duration_ms: 0.9271
+  type: 'test'
+  ...
+# Subtest: U4 이름 중복 접미 · 빈 이름 대체
+ok 70 - U4 이름 중복 접미 · 빈 이름 대체
+  ---
+  duration_ms: 0.6278
+  type: 'test'
+  ...
+# Subtest: U4 대기실 이탈: leave → 즉시 제거·4000, 방장 이탈 → 가장 먼저 들어온 사람에게 위임
+ok 71 - U4 대기실 이탈: leave → 즉시 제거·4000, 방장 이탈 → 가장 먼저 들어온 사람에게 위임
+  ---
+  duration_ms: 2.888
+  type: 'test'
+  ...
+# Subtest: U4 claimed 60초 · hello 없는 소켓 5초 → 4400
+ok 72 - U4 claimed 60초 · hello 없는 소켓 5초 → 4400
+  ---
+  duration_ms: 0.4831
+  type: 'test'
+  ...
+# Subtest: U5 start: 접속 1명 not-ready · 방장 아님 not-host · 2명 OK → start{seed,t0,timing,now} + room{playing}
+ok 73 - U5 start: 접속 1명 not-ready · 방장 아님 not-host · 2명 OK → start{seed,t0,timing,now} + room{playing}
+  ---
+  duration_ms: 2.7183
+  type: 'test'
+  ...
+# Subtest: U6 sum: wave/dw/kills 는 max, clearWave 로 클램프 · done 범위 · dead 는 deathWave = w−1
+ok 74 - U6 sum: wave/dw/kills 는 max, clearWave 로 클램프 · done 범위 · dead 는 deathWave = w−1
+  ---
+  duration_ms: 3.8415
+  type: 'test'
+  ...
+# Subtest: U6 clear: w < clearWave 는 anomaly 폐기 · 수락 시 player{cleared, clearAt} · 전원 확정 → end
+ok 75 - U6 clear: w < clearWave 는 anomaly 폐기 · 수락 시 player{cleared, clearAt} · 전원 확정 → end
+  ---
+  duration_ms: 1.6346
+  type: 'test'
+  ...
+# Subtest: U7 ranking: cleared 는 clearAt 오름차순(공동 없음) → 나머지 deathWave desc → kills desc → joinedAt
+ok 76 - U7 ranking: cleared 는 clearAt 오름차순(공동 없음) → 나머지 deathWave desc → kills desc → joinedAt
+  ---
+  duration_ms: 0.7794
+  type: 'test'
+  ...
+# Subtest: U7 alive 0 → all-dead · 탈락 웨이브 순 · 같은 웨이브면 kills
+ok 77 - U7 alive 0 → all-dead · 탈락 웨이브 순 · 같은 웨이브면 kills
+  ---
+  duration_ms: 0.9698
+  type: 'test'
+  ...
+# Subtest: U7 전원 끊김 3분 → empty · GAME_CAP → 남은 alive 는 lost → timeout
+ok 78 - U7 전원 끊김 3분 → empty · GAME_CAP → 남은 alive 는 lost → timeout
+  ---
+  duration_ms: 1.7415
+  type: 'test'
+  ...
+# Subtest: U8 playing 중 close → 180s → left(alive 만) · 유예 안 hello → 상태 불변 · status 확정 후 done/clear 무시
+ok 79 - U8 playing 중 close → 180s → left(alive 만) · 유예 안 hello → 상태 불변 · status 확정 후 done/clear 무시
+  ---
+  duration_ms: 1.1174
+  type: 'test'
+  ...
+# Subtest: U8 하이버네이션 복귀: attachment 로 live 재구성
+ok 80 - U8 하이버네이션 복귀: attachment 로 live 재구성
+  ---
+  duration_ms: 0.7518
+  type: 'test'
+  ...
+# Subtest: U9 persist 집합: sum/done/watch/chat/log/time/close 는 false, 전이는 true · alarm ≥ now
+ok 81 - U9 persist 집합: sum/done/watch/chat/log/time/close 는 false, 전이는 true · alarm ≥ now
+  ---
+  duration_ms: 1.0401
+  type: 'test'
+  ...
+# Subtest: U9 sum 중계: 1.5초 간격 · 본인 제외 · en/ll 은 뗀다 · 보는 사람에게는 en/ll 포함 1초 간격
+ok 82 - U9 sum 중계: 1.5초 간격 · 본인 제외 · en/ll 은 뗀다 · 보는 사람에게는 en/ll 포함 1초 간격
+  ---
+  duration_ms: 1.9258
+  type: 'test'
+  ...
+# Subtest: U9 채팅·로그 속도 제한 (1/s 버스트 5 · 2/s 버스트 4)
+ok 83 - U9 채팅·로그 속도 제한 (1/s 버스트 5 · 2/s 버스트 4)
+  ---
+  duration_ms: 0.9041
+  type: 'test'
+  ...
+# Subtest: U9 snapshot 필드 · 상태 문서가 JSON 왕복에 안전
+ok 84 - U9 snapshot 필드 · 상태 문서가 JSON 왕복에 안전
+  ---
+  duration_ms: 1.5307
+  type: 'test'
+  ...
+# Subtest: U10 예약 방: lobby · 방장 없음 · 예약 좌석 idle/offline · 알람 = reserveUntil · 예약 밖 pid 는 full
+ok 85 - U10 예약 방: lobby · 방장 없음 · 예약 좌석 idle/offline · 알람 = reserveUntil · 예약 밖 pid 는 full
+  ---
+  duration_ms: 1.886
+  type: 'test'
+  ...
+# Subtest: U10 예약 전원 접속 즉시 자동 시작 (방장 없이) · 알람은 GAME_CAP
+ok 86 - U10 예약 전원 접속 즉시 자동 시작 (방장 없이) · 알람은 GAME_CAP
+  ---
+  duration_ms: 1.6266
+  type: 'test'
+  ...
+# Subtest: U10 reserveUntil: 접속 2명 이상이면 미접속 좌석을 빼고 시작 · 1명 이하면 err expired + 4410 + destroy
+ok 87 - U10 reserveUntil: 접속 2명 이상이면 미접속 좌석을 빼고 시작 · 1명 이하면 err expired + 4410 + destroy
+  ---
+  duration_ms: 2.9799
+  type: 'test'
+  ...
+# Subtest: TIMING 표 · wireTiming 세 값
+ok 88 - TIMING 표 · wireTiming 세 값
+  ---
+  duration_ms: 2.4751
+  type: 'test'
+  ...
+# Subtest: content.js 패리티: bossTimeLimit · clearWave
+ok 89 - content.js 패리티: bossTimeLimit · clearWave
+  ---
+  duration_ms: 0.2776
+  type: 'test'
+  ...
+# Subtest: 상수 값
+ok 90 - 상수 값
+  ---
+  duration_ms: 0.3783
+  type: 'test'
+  ...
+1..90
+# tests 90
+# suites 0
+# pass 90
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 721.1834

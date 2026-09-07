@@ -1,0 +1,5379 @@
+{
+  "version": 1,
+  "config": "tools/art-review/directional-101/swamp-special-rigs.json",
+  "configSha256": "f510ccc7232e9431f2c450615ff26638ad875b2911a847a3577eccdd765d0dfe",
+  "canonicalCell": 512,
+  "scope": "Geometry/image integrity checks; human anatomy/art approval remains separate.",
+  "entries": [
+    {
+      "assetId": "w021",
+      "reviewApproved": true,
+      "identities": {
+        "checked": false,
+        "reason": "no walking limb identities"
+      },
+      "views": {
+        "side": {
+          "geometry": {
+            "passed": true,
+            "samples": 256,
+            "jointCoordinateSystem": "unprojected sagittal plane; never inferred from front/back PNG angles",
+            "sourceStride": 140,
+            "supportAngleRange": null,
+            "checks": [],
+            "errors": []
+          },
+          "provenance": {
+            "source": "tools/art-review/directional-101/swamp-special-01-side-parts.png",
+            "sourceSha256": "4ecadd0b116600d910139b45e7f3c3a0e5d331c333312da2a9146ba6a3d90534",
+            "sourceSize": [
+              887,
+              1774
+            ],
+            "body": {
+              "source": "tools/art-review/directional-101/swamp-special-01-side-parts.png",
+              "sourceSha256": "4ecadd0b116600d910139b45e7f3c3a0e5d331c333312da2a9146ba6a3d90534",
+              "sourceSize": [
+                887,
+                1774
+              ],
+              "roi": [
+                0,
+                0,
+                0.36,
+                0.33
+              ],
+              "sourceBounds": [
+                61,
+                172,
+                211,
+                228
+              ],
+              "componentCount": 1,
+              "componentAreas": [
+                33080
+              ],
+              "flipX": false
+            },
+            "parts": [
+              {
+                "id": "segment1",
+                "roi": [
+                  0.38,
+                  0,
+                  0.27,
+                  0.33
+                ],
+                "sourceBounds": [
+                  376,
+                  125,
+                  130,
+                  368
+                ],
+                "flipX": false,
+                "sourceJoints": {
+                  "start": [
+                    0.5,
+                    0.3
+                  ],
+                  "end": [
+                    0.5,
+                    0.7
+                  ]
+                }
+              },
+              {
+                "id": "segment2",
+                "roi": [
+                  0.38,
+                  0,
+                  0.27,
+                  0.33
+                ],
+                "sourceBounds": [
+                  376,
+                  125,
+                  130,
+                  368
+                ],
+                "flipX": false,
+                "sourceJoints": {
+                  "start": [
+                    0.5,
+                    0.3
+                  ],
+                  "end": [
+                    0.5,
+                    0.7
+                  ]
+                }
+              },
+              {
+                "id": "segment3",
+                "roi": [
+                  0.68,
+                  0,
+                  0.31999999999999995,
+                  0.33
+                ],
+                "sourceBounds": [
+                  665,
+                  141,
+                  115,
+                  351
+                ],
+                "flipX": false,
+                "sourceJoints": {
+                  "start": [
+                    0.5,
+                    0.2
+                  ],
+                  "end": [
+                    0.5,
+                    0.85
+                  ]
+                }
+              }
+            ]
+          },
+          "rasterDiagnostics": [],
+          "frameStats": [
+            {
+              "index": 0,
+              "width": 256,
+              "height": 256,
+              "pixels": 4100,
+              "bounds": [
+                61,
+                142,
+                147,
+                60
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 1,
+              "width": 256,
+              "height": 256,
+              "pixels": 4075,
+              "bounds": [
+                61,
+                142,
+                147,
+                60
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 2,
+              "width": 256,
+              "height": 256,
+              "pixels": 4095,
+              "bounds": [
+                61,
+                142,
+                147,
+                60
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 3,
+              "width": 256,
+              "height": 256,
+              "pixels": 4108,
+              "bounds": [
+                61,
+                142,
+                147,
+                62
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 4,
+              "width": 256,
+              "height": 256,
+              "pixels": 4090,
+              "bounds": [
+                61,
+                142,
+                147,
+                65
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 5,
+              "width": 256,
+              "height": 256,
+              "pixels": 4062,
+              "bounds": [
+                61,
+                142,
+                147,
+                65
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 6,
+              "width": 256,
+              "height": 256,
+              "pixels": 4084,
+              "bounds": [
+                61,
+                142,
+                147,
+                66
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 7,
+              "width": 256,
+              "height": 256,
+              "pixels": 4109,
+              "bounds": [
+                61,
+                142,
+                147,
+                64
+              ],
+              "edgePixels": 0
+            }
+          ],
+          "stillStats": {
+            "width": 256,
+            "height": 256,
+            "pixels": 4055,
+            "bounds": [
+              60,
+              142,
+              148,
+              60
+            ],
+            "edgePixels": 0
+          },
+          "fallbackStats": {
+            "width": 64,
+            "height": 64,
+            "pixels": 290,
+            "bounds": [
+              15,
+              35,
+              37,
+              16
+            ],
+            "edgePixels": 0
+          },
+          "uniqueFrames": 8,
+          "frameHashes": [
+            "eeb7ec14cf0e6624d8c9d3659dc6e3aa85ad841c540a4dcbe26b42449abc3db9",
+            "5c15c2b9c3f79eabcd00954be678e7d4d3ddd4cc59e9817407de6528cad7f27c",
+            "977a9aebc7544a2715e5d39b35ce2af643581fc7e8c482f822730e0904f06cb5",
+            "eb6efec9b9dec9121574289180c95661b6fce40d151e577237c4f82dbf1611eb",
+            "0b9bfe63fd28ebf4f76c222be8743c9e745d1ef9455d8259b2fe3bbf256c997e",
+            "b0dd25cd466dde8f66e64c7cce062433cbc48244dd61bc3516b503eee866e9c4",
+            "58a22abdfa4e1fb6d2a644d80146f98319b1fee8d7292a90d91484f291082b50",
+            "c16f408d27f012b15b0d9680b8cb4aa73f962cb85874085f0c086bb810880791"
+          ],
+          "projection": {
+            "forward": [
+              1,
+              0
+            ],
+            "height": [
+              0,
+              1
+            ]
+          },
+          "frames": [
+            {
+              "phase": 0,
+              "rootAdvance": 0,
+              "body": {
+                "x": 314.10087719298247,
+                "y": 285,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    324.280701754386,
+                    378.5
+                  ],
+                  "end": [
+                    270.280701754386,
+                    378.5
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    270.280701754386,
+                    378.5
+                  ],
+                  "end": [
+                    217.16653359216542,
+                    368.7590996085909
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    217.16653359216542,
+                    368.7590996085909
+                  ],
+                  "end": [
+                    140.44606846895795,
+                    382.82928906284855
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.125,
+              "rootAdvance": 17.5,
+              "body": {
+                "x": 314.10087719298247,
+                "y": 285,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    324.280701754386,
+                    378.5
+                  ],
+                  "end": [
+                    270.8717964861746,
+                    370.5320116684808
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    270.8717964861746,
+                    370.5320116684808
+                  ],
+                  "end": [
+                    216.9511136371159,
+                    367.6062705501954
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    216.9511136371159,
+                    367.6062705501954
+                  ],
+                  "end": [
+                    140.54181152706587,
+                    383.2784928257728
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.25,
+              "rootAdvance": 35,
+              "body": {
+                "x": 314.10087719298247,
+                "y": 285,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    324.280701754386,
+                    378.5
+                  ],
+                  "end": [
+                    271.46073131476044,
+                    367.272768695841
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    271.46073131476044,
+                    367.272768695841
+                  ],
+                  "end": [
+                    217.75654896487367,
+                    372.9173057122943
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    217.75654896487367,
+                    372.9173057122943
+                  ],
+                  "end": [
+                    140.18384112614837,
+                    381.0705258471713
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.375,
+              "rootAdvance": 52.5,
+              "body": {
+                "x": 314.10087719298247,
+                "y": 285,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    324.280701754386,
+                    378.5
+                  ],
+                  "end": [
+                    270.8717964861746,
+                    370.5320116684808
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    270.8717964861746,
+                    370.5320116684808
+                  ],
+                  "end": [
+                    217.9730488715246,
+                    381.38201170541896
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    217.9730488715246,
+                    381.38201170541896
+                  ],
+                  "end": [
+                    140.08761808955092,
+                    377.155941201229
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.5,
+              "rootAdvance": 70,
+              "body": {
+                "x": 314.10087719298247,
+                "y": 285,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    324.280701754386,
+                    378.5
+                  ],
+                  "end": [
+                    270.280701754386,
+                    378.5
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    270.280701754386,
+                    378.5
+                  ],
+                  "end": [
+                    217.16653359216542,
+                    388.2409003914092
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    217.16653359216542,
+                    388.2409003914092
+                  ],
+                  "end": [
+                    140.44606846895795,
+                    374.1707109371515
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.625,
+              "rootAdvance": 87.5,
+              "body": {
+                "x": 314.10087719298247,
+                "y": 285,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    324.280701754386,
+                    378.5
+                  ],
+                  "end": [
+                    270.8717964861746,
+                    386.4679883315192
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    270.8717964861746,
+                    386.4679883315192
+                  ],
+                  "end": [
+                    216.9511136371159,
+                    389.39372944980465
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    216.9511136371159,
+                    389.39372944980465
+                  ],
+                  "end": [
+                    140.54181152706587,
+                    373.72150717422727
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.75,
+              "rootAdvance": 105,
+              "body": {
+                "x": 314.10087719298247,
+                "y": 285,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    324.280701754386,
+                    378.5
+                  ],
+                  "end": [
+                    271.46073131476044,
+                    389.727231304159
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    271.46073131476044,
+                    389.727231304159
+                  ],
+                  "end": [
+                    217.75654896487367,
+                    384.0826942877057
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    217.75654896487367,
+                    384.0826942877057
+                  ],
+                  "end": [
+                    140.18384112614837,
+                    375.92947415282873
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.875,
+              "rootAdvance": 122.5,
+              "body": {
+                "x": 314.10087719298247,
+                "y": 285,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    324.280701754386,
+                    378.5
+                  ],
+                  "end": [
+                    270.8717964861746,
+                    386.4679883315192
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    270.8717964861746,
+                    386.4679883315192
+                  ],
+                  "end": [
+                    217.9730488715246,
+                    375.61798829458104
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    217.9730488715246,
+                    375.61798829458104
+                  ],
+                  "end": [
+                    140.08761808955092,
+                    379.844058798771
+                  ],
+                  "layer": 1
+                }
+              ]
+            }
+          ],
+          "motionFrames": null
+        },
+        "front": {
+          "geometry": {
+            "passed": true,
+            "samples": 256,
+            "jointCoordinateSystem": "unprojected sagittal plane; never inferred from front/back PNG angles",
+            "sourceStride": 140,
+            "supportAngleRange": null,
+            "checks": [],
+            "errors": []
+          },
+          "provenance": {
+            "source": "tools/art-review/directional-101/swamp-special-01-front-back-parts.png",
+            "sourceSha256": "85c2c37f1fc9ac5acf83d359c295a34bf8dd83ba7cc2522dc552d65639c5dbf0",
+            "sourceSize": [
+              1254,
+              1254
+            ],
+            "body": {
+              "source": "tools/art-review/directional-101/swamp-special-01-front-back-parts.png",
+              "sourceSha256": "85c2c37f1fc9ac5acf83d359c295a34bf8dd83ba7cc2522dc552d65639c5dbf0",
+              "sourceSize": [
+                1254,
+                1254
+              ],
+              "roi": [
+                0,
+                0,
+                0.2,
+                0.33
+              ],
+              "sourceBounds": [
+                72,
+                114,
+                136,
+                245
+              ],
+              "componentCount": 1,
+              "componentAreas": [
+                27513
+              ],
+              "flipX": false
+            },
+            "parts": [
+              {
+                "id": "segment1",
+                "roi": [
+                  0.22,
+                  0,
+                  0.13999999999999999,
+                  0.33
+                ],
+                "sourceBounds": [
+                  300,
+                  113,
+                  122,
+                  247
+                ],
+                "flipX": false,
+                "sourceJoints": {
+                  "start": [
+                    0.5,
+                    0.3
+                  ],
+                  "end": [
+                    0.5,
+                    0.7
+                  ]
+                }
+              },
+              {
+                "id": "segment2",
+                "roi": [
+                  0.22,
+                  0,
+                  0.13999999999999999,
+                  0.33
+                ],
+                "sourceBounds": [
+                  300,
+                  113,
+                  122,
+                  247
+                ],
+                "flipX": false,
+                "sourceJoints": {
+                  "start": [
+                    0.5,
+                    0.3
+                  ],
+                  "end": [
+                    0.5,
+                    0.7
+                  ]
+                }
+              },
+              {
+                "id": "segment3",
+                "roi": [
+                  0.36,
+                  0,
+                  0.13,
+                  0.33
+                ],
+                "sourceBounds": [
+                  487,
+                  140,
+                  89,
+                  216
+                ],
+                "flipX": false,
+                "sourceJoints": {
+                  "start": [
+                    0.5,
+                    0.2
+                  ],
+                  "end": [
+                    0.5,
+                    0.85
+                  ]
+                }
+              }
+            ]
+          },
+          "rasterDiagnostics": [],
+          "frameStats": [
+            {
+              "index": 0,
+              "width": 256,
+              "height": 256,
+              "pixels": 3527,
+              "bounds": [
+                111,
+                74,
+                39,
+                129
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 1,
+              "width": 256,
+              "height": 256,
+              "pixels": 3538,
+              "bounds": [
+                111,
+                74,
+                39,
+                129
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 2,
+              "width": 256,
+              "height": 256,
+              "pixels": 3558,
+              "bounds": [
+                111,
+                74,
+                40,
+                129
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 3,
+              "width": 256,
+              "height": 256,
+              "pixels": 3563,
+              "bounds": [
+                109,
+                74,
+                40,
+                129
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 4,
+              "width": 256,
+              "height": 256,
+              "pixels": 3530,
+              "bounds": [
+                106,
+                74,
+                39,
+                129
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 5,
+              "width": 256,
+              "height": 256,
+              "pixels": 3537,
+              "bounds": [
+                106,
+                74,
+                39,
+                129
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 6,
+              "width": 256,
+              "height": 256,
+              "pixels": 3555,
+              "bounds": [
+                105,
+                74,
+                40,
+                129
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 7,
+              "width": 256,
+              "height": 256,
+              "pixels": 3559,
+              "bounds": [
+                107,
+                74,
+                39,
+                129
+              ],
+              "edgePixels": 0
+            }
+          ],
+          "stillStats": {
+            "width": 256,
+            "height": 256,
+            "pixels": 3507,
+            "bounds": [
+              111,
+              73,
+              34,
+              130
+            ],
+            "edgePixels": 0
+          },
+          "fallbackStats": {
+            "width": 64,
+            "height": 64,
+            "pixels": 238,
+            "bounds": [
+              27,
+              18,
+              10,
+              33
+            ],
+            "edgePixels": 0
+          },
+          "uniqueFrames": 8,
+          "frameHashes": [
+            "da7bb5c7edfb577ffef86ab041db832617724465ca50054b8375e8d3275b9be7",
+            "c4d5ac9d205566d6ee8eb78f179d50b527afe9f9261959e0795626325dca7d20",
+            "7b14e4c49c44d90d69cfbe400c48b9ee6f19aba88cf94033736f7df60b9772fe",
+            "598759c39ccda29eefd4dbaffa96ddc1f0dd874b1f549dedfb6a771c86e4a37d",
+            "d340a588f935416fc3f1eb57c4b67dc14835466f43867f7ae0ad9ecb2cb16cc0",
+            "2c031be77ac8dbbdbe06a75413173090df4e8fa398e04b753f711d7cf56eb7f7",
+            "62a73ed11b4f875cb93fd84b53dd75760a194db5072a06272e7063395da2e24b",
+            "66e6f435dffae8538829d482b3db950b9df849d6cc91958cf1b1c48f586ac011"
+          ],
+          "projection": {
+            "forward": [
+              0,
+              1
+            ],
+            "height": [
+              0,
+              1
+            ]
+          },
+          "frames": [
+            {
+              "phase": 0,
+              "rootAdvance": 0,
+              "body": {
+                "x": 225.46938775510205,
+                "y": 295,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    256,
+                    350
+                  ],
+                  "end": [
+                    256,
+                    296
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    256,
+                    296
+                  ],
+                  "end": [
+                    265.7409003914092,
+                    242.88583183777945
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    265.7409003914092,
+                    242.88583183777945
+                  ],
+                  "end": [
+                    251.6707109371515,
+                    166.16536671457197
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.125,
+              "rootAdvance": 17.5,
+              "body": {
+                "x": 225.46938775510205,
+                "y": 295,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    256,
+                    350
+                  ],
+                  "end": [
+                    263.96798833151917,
+                    296.59109473178864
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    263.96798833151917,
+                    296.59109473178864
+                  ],
+                  "end": [
+                    266.89372944980454,
+                    242.67041188272995
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    266.89372944980454,
+                    242.67041188272995
+                  ],
+                  "end": [
+                    251.22150717422718,
+                    166.26110977267993
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.25,
+              "rootAdvance": 35,
+              "body": {
+                "x": 225.46938775510205,
+                "y": 295,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    256,
+                    350
+                  ],
+                  "end": [
+                    267.22723130415903,
+                    297.1800295603745
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    267.22723130415903,
+                    297.1800295603745
+                  ],
+                  "end": [
+                    261.58269428770575,
+                    243.47584721048776
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    261.58269428770575,
+                    243.47584721048776
+                  ],
+                  "end": [
+                    253.4294741528288,
+                    165.90313937176245
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.375,
+              "rootAdvance": 52.5,
+              "body": {
+                "x": 225.46938775510205,
+                "y": 295,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    256,
+                    350
+                  ],
+                  "end": [
+                    263.96798833151917,
+                    296.59109473178864
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    263.96798833151917,
+                    296.59109473178864
+                  ],
+                  "end": [
+                    253.11798829458098,
+                    243.69234711713864
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    253.11798829458098,
+                    243.69234711713864
+                  ],
+                  "end": [
+                    257.344058798771,
+                    165.80691633516494
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.5,
+              "rootAdvance": 70,
+              "body": {
+                "x": 225.46938775510205,
+                "y": 295,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    256,
+                    350
+                  ],
+                  "end": [
+                    256,
+                    296
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    256,
+                    296
+                  ],
+                  "end": [
+                    246.25909960859084,
+                    242.88583183777945
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    246.25909960859084,
+                    242.88583183777945
+                  ],
+                  "end": [
+                    260.3292890628485,
+                    166.16536671457197
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.625,
+              "rootAdvance": 87.5,
+              "body": {
+                "x": 225.46938775510205,
+                "y": 295,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    256,
+                    350
+                  ],
+                  "end": [
+                    248.0320116684808,
+                    296.59109473178864
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    248.0320116684808,
+                    296.59109473178864
+                  ],
+                  "end": [
+                    245.10627055019543,
+                    242.67041188272995
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    245.10627055019543,
+                    242.67041188272995
+                  ],
+                  "end": [
+                    260.7784928257728,
+                    166.26110977267993
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.75,
+              "rootAdvance": 105,
+              "body": {
+                "x": 225.46938775510205,
+                "y": 295,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    256,
+                    350
+                  ],
+                  "end": [
+                    244.77276869584102,
+                    297.1800295603745
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    244.77276869584102,
+                    297.1800295603745
+                  ],
+                  "end": [
+                    250.4173057122943,
+                    243.47584721048776
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    250.4173057122943,
+                    243.47584721048776
+                  ],
+                  "end": [
+                    258.57052584717127,
+                    165.90313937176245
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.875,
+              "rootAdvance": 122.5,
+              "body": {
+                "x": 225.46938775510205,
+                "y": 295,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    256,
+                    350
+                  ],
+                  "end": [
+                    248.0320116684808,
+                    296.59109473178864
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    248.0320116684808,
+                    296.59109473178864
+                  ],
+                  "end": [
+                    258.882011705419,
+                    243.69234711713864
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    258.882011705419,
+                    243.69234711713864
+                  ],
+                  "end": [
+                    254.65594120122904,
+                    165.80691633516494
+                  ],
+                  "layer": 1
+                }
+              ]
+            }
+          ],
+          "motionFrames": null
+        },
+        "back": {
+          "geometry": {
+            "passed": true,
+            "samples": 256,
+            "jointCoordinateSystem": "unprojected sagittal plane; never inferred from front/back PNG angles",
+            "sourceStride": 140,
+            "supportAngleRange": null,
+            "checks": [],
+            "errors": []
+          },
+          "provenance": {
+            "source": "tools/art-review/directional-101/swamp-special-01-front-back-parts.png",
+            "sourceSha256": "85c2c37f1fc9ac5acf83d359c295a34bf8dd83ba7cc2522dc552d65639c5dbf0",
+            "sourceSize": [
+              1254,
+              1254
+            ],
+            "body": {
+              "source": "tools/art-review/directional-101/swamp-special-01-front-back-parts.png",
+              "sourceSha256": "85c2c37f1fc9ac5acf83d359c295a34bf8dd83ba7cc2522dc552d65639c5dbf0",
+              "sourceSize": [
+                1254,
+                1254
+              ],
+              "roi": [
+                0.5,
+                0,
+                0.18999999999999995,
+                0.33
+              ],
+              "sourceBounds": [
+                686,
+                122,
+                122,
+                238
+              ],
+              "componentCount": 1,
+              "componentAreas": [
+                23775
+              ],
+              "flipX": false
+            },
+            "parts": [
+              {
+                "id": "segment1",
+                "roi": [
+                  0.7,
+                  0,
+                  0.12,
+                  0.33
+                ],
+                "sourceBounds": [
+                  891,
+                  134,
+                  100,
+                  226
+                ],
+                "flipX": false,
+                "sourceJoints": {
+                  "start": [
+                    0.5,
+                    0.3
+                  ],
+                  "end": [
+                    0.5,
+                    0.7
+                  ]
+                }
+              },
+              {
+                "id": "segment2",
+                "roi": [
+                  0.7,
+                  0,
+                  0.12,
+                  0.33
+                ],
+                "sourceBounds": [
+                  891,
+                  134,
+                  100,
+                  226
+                ],
+                "flipX": false,
+                "sourceJoints": {
+                  "start": [
+                    0.5,
+                    0.3
+                  ],
+                  "end": [
+                    0.5,
+                    0.7
+                  ]
+                }
+              },
+              {
+                "id": "segment3",
+                "roi": [
+                  0.83,
+                  0,
+                  0.17000000000000004,
+                  0.33
+                ],
+                "sourceBounds": [
+                  1087,
+                  137,
+                  82,
+                  220
+                ],
+                "flipX": false,
+                "sourceJoints": {
+                  "start": [
+                    0.5,
+                    0.2
+                  ],
+                  "end": [
+                    0.5,
+                    0.85
+                  ]
+                }
+              }
+            ]
+          },
+          "rasterDiagnostics": [],
+          "frameStats": [
+            {
+              "index": 0,
+              "width": 256,
+              "height": 256,
+              "pixels": 3766,
+              "bounds": [
+                108,
+                60,
+                36,
+                150
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 1,
+              "width": 256,
+              "height": 256,
+              "pixels": 3761,
+              "bounds": [
+                107,
+                60,
+                36,
+                150
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 2,
+              "width": 256,
+              "height": 256,
+              "pixels": 3794,
+              "bounds": [
+                107,
+                60,
+                37,
+                150
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 3,
+              "width": 256,
+              "height": 256,
+              "pixels": 3785,
+              "bounds": [
+                108,
+                60,
+                37,
+                150
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 4,
+              "width": 256,
+              "height": 256,
+              "pixels": 3767,
+              "bounds": [
+                113,
+                60,
+                35,
+                150
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 5,
+              "width": 256,
+              "height": 256,
+              "pixels": 3763,
+              "bounds": [
+                113,
+                60,
+                36,
+                149
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 6,
+              "width": 256,
+              "height": 256,
+              "pixels": 3789,
+              "bounds": [
+                112,
+                60,
+                37,
+                150
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 7,
+              "width": 256,
+              "height": 256,
+              "pixels": 3797,
+              "bounds": [
+                111,
+                60,
+                37,
+                150
+              ],
+              "edgePixels": 0
+            }
+          ],
+          "stillStats": {
+            "width": 256,
+            "height": 256,
+            "pixels": 3739,
+            "bounds": [
+              113,
+              60,
+              30,
+              151
+            ],
+            "edgePixels": 0
+          },
+          "fallbackStats": {
+            "width": 64,
+            "height": 64,
+            "pixels": 261,
+            "bounds": [
+              28,
+              15,
+              8,
+              38
+            ],
+            "edgePixels": 0
+          },
+          "uniqueFrames": 8,
+          "frameHashes": [
+            "92576749262892454e64adf0620a51a023f34701f6413d620a3bf2091903d74e",
+            "7d59e02451cdb9de0525e170b4fec110e03e4b728da8b0a031fac9f687d4136b",
+            "afc2a24d71ec2163ebd472e418c697e34308c82731c4ab2f6e1e7d522389daac",
+            "0ff9da424d1811e89d8c02707ad33e6fbb0791c4ac756273678323b0ed816b17",
+            "dfe6b9d831aa3a2f43edc2fb115a268d739687e9a541599de24e238a33af55c9",
+            "9b13dfc4199c1bb10bd462635adf5dca8a18ef02c0f0487408fd9ff88427f458",
+            "8e6456720520178c9d5c8ad28fdc6452e16a449f1f5fcc8f5ae4f0197ee1ba2f",
+            "0fb2e188466549f396a100b7077ff3fc252c76a852e660cda5cb21746328593c"
+          ],
+          "projection": {
+            "forward": [
+              0,
+              -1
+            ],
+            "height": [
+              0,
+              1
+            ]
+          },
+          "frames": [
+            {
+              "phase": 0,
+              "rootAdvance": 0,
+              "body": {
+                "x": 227.80672268907563,
+                "y": 120,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    256,
+                    216.8
+                  ],
+                  "end": [
+                    256,
+                    270.8
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    256,
+                    270.8
+                  ],
+                  "end": [
+                    246.25909960859084,
+                    323.91416816222056
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    246.25909960859084,
+                    323.91416816222056
+                  ],
+                  "end": [
+                    260.32928906284855,
+                    400.63463328542804
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.125,
+              "rootAdvance": 17.5,
+              "body": {
+                "x": 227.80672268907563,
+                "y": 120,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    256,
+                    216.8
+                  ],
+                  "end": [
+                    248.0320116684808,
+                    270.20890526821137
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    248.0320116684808,
+                    270.20890526821137
+                  ],
+                  "end": [
+                    245.10627055019543,
+                    324.1295881172701
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    245.10627055019543,
+                    324.1295881172701
+                  ],
+                  "end": [
+                    260.7784928257728,
+                    400.5388902273201
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.25,
+              "rootAdvance": 35,
+              "body": {
+                "x": 227.80672268907563,
+                "y": 120,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    256,
+                    216.8
+                  ],
+                  "end": [
+                    244.772768695841,
+                    269.6199704396255
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    244.772768695841,
+                    269.6199704396255
+                  ],
+                  "end": [
+                    250.41730571229428,
+                    323.32415278951225
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    250.41730571229428,
+                    323.32415278951225
+                  ],
+                  "end": [
+                    258.57052584717127,
+                    400.89686062823756
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.375,
+              "rootAdvance": 52.5,
+              "body": {
+                "x": 227.80672268907563,
+                "y": 120,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    256,
+                    216.8
+                  ],
+                  "end": [
+                    248.0320116684808,
+                    270.20890526821137
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    248.0320116684808,
+                    270.20890526821137
+                  ],
+                  "end": [
+                    258.882011705419,
+                    323.1076528828614
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    258.882011705419,
+                    323.1076528828614
+                  ],
+                  "end": [
+                    254.65594120122904,
+                    400.99308366483507
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.5,
+              "rootAdvance": 70,
+              "body": {
+                "x": 227.80672268907563,
+                "y": 120,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    256,
+                    216.8
+                  ],
+                  "end": [
+                    256,
+                    270.8
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    256,
+                    270.8
+                  ],
+                  "end": [
+                    265.7409003914092,
+                    323.91416816222056
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    265.7409003914092,
+                    323.91416816222056
+                  ],
+                  "end": [
+                    251.67071093715154,
+                    400.63463328542804
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.625,
+              "rootAdvance": 87.5,
+              "body": {
+                "x": 227.80672268907563,
+                "y": 120,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    256,
+                    216.8
+                  ],
+                  "end": [
+                    263.9679883315192,
+                    270.20890526821137
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    263.9679883315192,
+                    270.20890526821137
+                  ],
+                  "end": [
+                    266.8937294498046,
+                    324.1295881172701
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    266.8937294498046,
+                    324.1295881172701
+                  ],
+                  "end": [
+                    251.22150717422724,
+                    400.5388902273201
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.75,
+              "rootAdvance": 105,
+              "body": {
+                "x": 227.80672268907563,
+                "y": 120,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    256,
+                    216.8
+                  ],
+                  "end": [
+                    267.22723130415903,
+                    269.6199704396255
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    267.22723130415903,
+                    269.6199704396255
+                  ],
+                  "end": [
+                    261.58269428770575,
+                    323.32415278951225
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    261.58269428770575,
+                    323.32415278951225
+                  ],
+                  "end": [
+                    253.42947415282876,
+                    400.89686062823756
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.875,
+              "rootAdvance": 122.5,
+              "body": {
+                "x": 227.80672268907563,
+                "y": 120,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    256,
+                    216.8
+                  ],
+                  "end": [
+                    263.9679883315192,
+                    270.20890526821137
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    263.9679883315192,
+                    270.20890526821137
+                  ],
+                  "end": [
+                    253.11798829458104,
+                    323.1076528828614
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    253.11798829458104,
+                    323.1076528828614
+                  ],
+                  "end": [
+                    257.3440587987711,
+                    400.99308366483507
+                  ],
+                  "layer": 1
+                }
+              ]
+            }
+          ],
+          "motionFrames": null
+        }
+      },
+      "errors": [],
+      "ready": true
+    },
+    {
+      "assetId": "w024",
+      "reviewApproved": true,
+      "identities": {
+        "checked": false,
+        "reason": "no walking limb identities"
+      },
+      "views": {
+        "side": {
+          "geometry": {
+            "passed": true,
+            "samples": 256,
+            "jointCoordinateSystem": "unprojected sagittal plane; never inferred from front/back PNG angles",
+            "sourceStride": 0,
+            "supportAngleRange": null,
+            "checks": [],
+            "errors": []
+          },
+          "provenance": {
+            "source": "tools/art-review/directional-101/swamp-special-01-side-parts.png",
+            "sourceSha256": "4ecadd0b116600d910139b45e7f3c3a0e5d331c333312da2a9146ba6a3d90534",
+            "sourceSize": [
+              887,
+              1774
+            ],
+            "body": {
+              "source": "tools/art-review/directional-101/swamp-special-01-side-parts.png",
+              "sourceSha256": "4ecadd0b116600d910139b45e7f3c3a0e5d331c333312da2a9146ba6a3d90534",
+              "sourceSize": [
+                887,
+                1774
+              ],
+              "roi": [
+                0,
+                0.33,
+                0.36,
+                0.33
+              ],
+              "sourceBounds": [
+                49,
+                774,
+                268,
+                229
+              ],
+              "componentCount": 1,
+              "componentAreas": [
+                30121
+              ],
+              "flipX": false
+            },
+            "parts": [
+              {
+                "id": "leftWing",
+                "roi": [
+                  0.38,
+                  0.33,
+                  0.27,
+                  0.33
+                ],
+                "sourceBounds": [
+                  354,
+                  716,
+                  206,
+                  247
+                ],
+                "flipX": false,
+                "sourceJoints": null
+              },
+              {
+                "id": "rightWing",
+                "roi": [
+                  0.68,
+                  0.33,
+                  0.31999999999999995,
+                  0.33
+                ],
+                "sourceBounds": [
+                  620,
+                  719,
+                  204,
+                  247
+                ],
+                "flipX": false,
+                "sourceJoints": null
+              }
+            ]
+          },
+          "rasterDiagnostics": [],
+          "frameStats": [
+            {
+              "index": 0,
+              "width": 256,
+              "height": 256,
+              "pixels": 9068,
+              "bounds": [
+                38,
+                83,
+                204,
+                105
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 1,
+              "width": 256,
+              "height": 256,
+              "pixels": 9181,
+              "bounds": [
+                75,
+                36,
+                113,
+                152
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 2,
+              "width": 256,
+              "height": 256,
+              "pixels": 9068,
+              "bounds": [
+                38,
+                83,
+                204,
+                105
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 3,
+              "width": 256,
+              "height": 256,
+              "pixels": 8966,
+              "bounds": [
+                33,
+                97,
+                214,
+                91
+              ],
+              "edgePixels": 0
+            }
+          ],
+          "stillStats": {
+            "width": 256,
+            "height": 256,
+            "pixels": 9068,
+            "bounds": [
+              38,
+              83,
+              204,
+              105
+            ],
+            "edgePixels": 0
+          },
+          "fallbackStats": {
+            "width": 64,
+            "height": 64,
+            "pixels": 651,
+            "bounds": [
+              9,
+              20,
+              52,
+              27
+            ],
+            "edgePixels": 0
+          },
+          "uniqueFrames": 3,
+          "frameHashes": [
+            "e0c2dc59749f9b8897aab4f0951fa1ee962272f37a04c78019f11eb5b947d8cf",
+            "4eb66ab3a984ba209f71716bc9ce861f67d2b3ae27c64aec1103cde926c381f4",
+            "e0c2dc59749f9b8897aab4f0951fa1ee962272f37a04c78019f11eb5b947d8cf",
+            "e228b71837442b751a2a4e917fb3299ea04a80d561b8947f01af3956d2ddc5fb"
+          ],
+          "projection": {
+            "forward": [
+              1,
+              0
+            ],
+            "height": [
+              0,
+              1
+            ]
+          },
+          "frames": [
+            {
+              "phase": 0,
+              "rootAdvance": 0,
+              "body": {
+                "x": 150.67248908296943,
+                "y": 195,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    266.53275109170306,
+                    272.4
+                  ],
+                  "angle": -0.4363323129985824,
+                  "layer": 0
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    293.91790393013105,
+                    272.4
+                  ],
+                  "angle": 0.4363323129985824,
+                  "layer": 0
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.25,
+              "rootAdvance": 0,
+              "body": {
+                "x": 150.67248908296943,
+                "y": 195,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    266.53275109170306,
+                    272.4
+                  ],
+                  "angle": 0.3490658503988659,
+                  "layer": 0
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    293.91790393013105,
+                    272.4
+                  ],
+                  "angle": -0.3490658503988659,
+                  "layer": 0
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.5,
+              "rootAdvance": 0,
+              "body": {
+                "x": 150.67248908296943,
+                "y": 195,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    266.53275109170306,
+                    272.4
+                  ],
+                  "angle": -0.4363323129985822,
+                  "layer": 0
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    293.91790393013105,
+                    272.4
+                  ],
+                  "angle": 0.4363323129985822,
+                  "layer": 0
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.75,
+              "rootAdvance": 0,
+              "body": {
+                "x": 150.67248908296943,
+                "y": 195,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    266.53275109170306,
+                    272.4
+                  ],
+                  "angle": -1.2217304763960306,
+                  "layer": 0
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    293.91790393013105,
+                    272.4
+                  ],
+                  "angle": 1.2217304763960306,
+                  "layer": 0
+                }
+              ],
+              "segments": []
+            }
+          ],
+          "motionFrames": null
+        },
+        "front": {
+          "geometry": {
+            "passed": true,
+            "samples": 256,
+            "jointCoordinateSystem": "unprojected sagittal plane; never inferred from front/back PNG angles",
+            "sourceStride": 0,
+            "supportAngleRange": null,
+            "checks": [],
+            "errors": []
+          },
+          "provenance": {
+            "source": "tools/art-review/directional-101/swamp-special-01-front-back-parts.png",
+            "sourceSha256": "85c2c37f1fc9ac5acf83d359c295a34bf8dd83ba7cc2522dc552d65639c5dbf0",
+            "sourceSize": [
+              1254,
+              1254
+            ],
+            "body": {
+              "source": "tools/art-review/directional-101/swamp-special-01-front-back-parts.png",
+              "sourceSha256": "85c2c37f1fc9ac5acf83d359c295a34bf8dd83ba7cc2522dc552d65639c5dbf0",
+              "sourceSize": [
+                1254,
+                1254
+              ],
+              "roi": [
+                0,
+                0.33,
+                0.2,
+                0.31
+              ],
+              "sourceBounds": [
+                43,
+                441,
+                189,
+                302
+              ],
+              "componentCount": 1,
+              "componentAreas": [
+                29359
+              ],
+              "flipX": false
+            },
+            "parts": [
+              {
+                "id": "leftWing",
+                "roi": [
+                  0.22,
+                  0.33,
+                  0.13999999999999999,
+                  0.31
+                ],
+                "sourceBounds": [
+                  315,
+                  490,
+                  117,
+                  237
+                ],
+                "flipX": false,
+                "sourceJoints": null
+              },
+              {
+                "id": "rightWing",
+                "roi": [
+                  0.36,
+                  0.33,
+                  0.13,
+                  0.31
+                ],
+                "sourceBounds": [
+                  462,
+                  489,
+                  122,
+                  238
+                ],
+                "flipX": false,
+                "sourceJoints": null
+              }
+            ]
+          },
+          "rasterDiagnostics": [],
+          "frameStats": [
+            {
+              "index": 0,
+              "width": 256,
+              "height": 256,
+              "pixels": 7513,
+              "bounds": [
+                48,
+                74,
+                162,
+                126
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 1,
+              "width": 256,
+              "height": 256,
+              "pixels": 6885,
+              "bounds": [
+                93,
+                46,
+                70,
+                154
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 2,
+              "width": 256,
+              "height": 256,
+              "pixels": 7513,
+              "bounds": [
+                48,
+                74,
+                162,
+                126
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 3,
+              "width": 256,
+              "height": 256,
+              "pixels": 7511,
+              "bounds": [
+                26,
+                90,
+                205,
+                110
+              ],
+              "edgePixels": 0
+            }
+          ],
+          "stillStats": {
+            "width": 256,
+            "height": 256,
+            "pixels": 7513,
+            "bounds": [
+              48,
+              74,
+              162,
+              126
+            ],
+            "edgePixels": 0
+          },
+          "fallbackStats": {
+            "width": 64,
+            "height": 64,
+            "pixels": 538,
+            "bounds": [
+              12,
+              18,
+              41,
+              32
+            ],
+            "edgePixels": 0
+          },
+          "uniqueFrames": 3,
+          "frameHashes": [
+            "56a6880275ad7b481e6d98792b865b8efe3e719b3fe786d6ac241bbbc93e5e73",
+            "3295ae74d6b59206b6ca7c342141f0f8f7ce654528479519a7708bc8ffaf99a7",
+            "56a6880275ad7b481e6d98792b865b8efe3e719b3fe786d6ac241bbbc93e5e73",
+            "c7104d7ff235e92b165825c7961904b23d08016efcf922175c76b6aefcca59e3"
+          ],
+          "projection": {
+            "forward": [
+              0,
+              1
+            ],
+            "height": [
+              0,
+              1
+            ]
+          },
+          "frames": [
+            {
+              "phase": 0,
+              "rootAdvance": 0,
+              "body": {
+                "x": 187.158940397351,
+                "y": 180,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    233.97086092715233,
+                    274.6
+                  ],
+                  "angle": -0.4363323129985824,
+                  "layer": 0
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    278.02913907284767,
+                    274.6
+                  ],
+                  "angle": 0.4363323129985824,
+                  "layer": 0
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.25,
+              "rootAdvance": 0,
+              "body": {
+                "x": 187.158940397351,
+                "y": 180,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    233.97086092715233,
+                    274.6
+                  ],
+                  "angle": 0.3490658503988659,
+                  "layer": 0
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    278.02913907284767,
+                    274.6
+                  ],
+                  "angle": -0.3490658503988659,
+                  "layer": 0
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.5,
+              "rootAdvance": 0,
+              "body": {
+                "x": 187.158940397351,
+                "y": 180,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    233.97086092715233,
+                    274.6
+                  ],
+                  "angle": -0.4363323129985822,
+                  "layer": 0
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    278.02913907284767,
+                    274.6
+                  ],
+                  "angle": 0.4363323129985822,
+                  "layer": 0
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.75,
+              "rootAdvance": 0,
+              "body": {
+                "x": 187.158940397351,
+                "y": 180,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    233.97086092715233,
+                    274.6
+                  ],
+                  "angle": -1.2217304763960306,
+                  "layer": 0
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    278.02913907284767,
+                    274.6
+                  ],
+                  "angle": 1.2217304763960306,
+                  "layer": 0
+                }
+              ],
+              "segments": []
+            }
+          ],
+          "motionFrames": null
+        },
+        "back": {
+          "geometry": {
+            "passed": true,
+            "samples": 256,
+            "jointCoordinateSystem": "unprojected sagittal plane; never inferred from front/back PNG angles",
+            "sourceStride": 0,
+            "supportAngleRange": null,
+            "checks": [],
+            "errors": []
+          },
+          "provenance": {
+            "source": "tools/art-review/directional-101/swamp-special-01-front-back-parts.png",
+            "sourceSha256": "85c2c37f1fc9ac5acf83d359c295a34bf8dd83ba7cc2522dc552d65639c5dbf0",
+            "sourceSize": [
+              1254,
+              1254
+            ],
+            "body": {
+              "source": "tools/art-review/directional-101/swamp-special-01-front-back-parts.png",
+              "sourceSha256": "85c2c37f1fc9ac5acf83d359c295a34bf8dd83ba7cc2522dc552d65639c5dbf0",
+              "sourceSize": [
+                1254,
+                1254
+              ],
+              "roi": [
+                0.5,
+                0.33,
+                0.18999999999999995,
+                0.31
+              ],
+              "sourceBounds": [
+                654,
+                448,
+                183,
+                303
+              ],
+              "componentCount": 1,
+              "componentAreas": [
+                27897
+              ],
+              "flipX": false
+            },
+            "parts": [
+              {
+                "id": "leftWing",
+                "roi": [
+                  0.7,
+                  0.33,
+                  0.12,
+                  0.31
+                ],
+                "sourceBounds": [
+                  894,
+                  486,
+                  119,
+                  240
+                ],
+                "flipX": false,
+                "sourceJoints": null
+              },
+              {
+                "id": "rightWing",
+                "roi": [
+                  0.83,
+                  0.33,
+                  0.17000000000000004,
+                  0.31
+                ],
+                "sourceBounds": [
+                  1073,
+                  484,
+                  124,
+                  242
+                ],
+                "flipX": false,
+                "sourceJoints": null
+              }
+            ]
+          },
+          "rasterDiagnostics": [],
+          "frameStats": [
+            {
+              "index": 0,
+              "width": 256,
+              "height": 256,
+              "pixels": 7304,
+              "bounds": [
+                48,
+                74,
+                162,
+                126
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 1,
+              "width": 256,
+              "height": 256,
+              "pixels": 6747,
+              "bounds": [
+                94,
+                46,
+                68,
+                154
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 2,
+              "width": 256,
+              "height": 256,
+              "pixels": 7304,
+              "bounds": [
+                48,
+                74,
+                162,
+                126
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 3,
+              "width": 256,
+              "height": 256,
+              "pixels": 7311,
+              "bounds": [
+                26,
+                90,
+                204,
+                110
+              ],
+              "edgePixels": 0
+            }
+          ],
+          "stillStats": {
+            "width": 256,
+            "height": 256,
+            "pixels": 7304,
+            "bounds": [
+              48,
+              74,
+              162,
+              126
+            ],
+            "edgePixels": 0
+          },
+          "fallbackStats": {
+            "width": 64,
+            "height": 64,
+            "pixels": 521,
+            "bounds": [
+              12,
+              18,
+              41,
+              32
+            ],
+            "edgePixels": 0
+          },
+          "uniqueFrames": 3,
+          "frameHashes": [
+            "4dcf3287c39cf7c80c3a330bd18685f0caadf241feb3f52d75e9c61f384c1d30",
+            "eb04f9b459cf3c9294390e0f7ab05796679bab2ba0b4337dd42198c0013ec722",
+            "4dcf3287c39cf7c80c3a330bd18685f0caadf241feb3f52d75e9c61f384c1d30",
+            "fabcb975fbf44fc220589f9cd08cc739039fc40a5be174e7c4448fd3b3bef9a4"
+          ],
+          "projection": {
+            "forward": [
+              0,
+              -1
+            ],
+            "height": [
+              0,
+              1
+            ]
+          },
+          "frames": [
+            {
+              "phase": 0,
+              "rootAdvance": 0,
+              "body": {
+                "x": 189.56435643564356,
+                "y": 180,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    234.74059405940594,
+                    274.6
+                  ],
+                  "angle": -0.4363323129985824,
+                  "layer": 0
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    277.2594059405941,
+                    274.6
+                  ],
+                  "angle": 0.4363323129985824,
+                  "layer": 0
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.25,
+              "rootAdvance": 0,
+              "body": {
+                "x": 189.56435643564356,
+                "y": 180,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    234.74059405940594,
+                    274.6
+                  ],
+                  "angle": 0.3490658503988659,
+                  "layer": 0
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    277.2594059405941,
+                    274.6
+                  ],
+                  "angle": -0.3490658503988659,
+                  "layer": 0
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.5,
+              "rootAdvance": 0,
+              "body": {
+                "x": 189.56435643564356,
+                "y": 180,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    234.74059405940594,
+                    274.6
+                  ],
+                  "angle": -0.4363323129985822,
+                  "layer": 0
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    277.2594059405941,
+                    274.6
+                  ],
+                  "angle": 0.4363323129985822,
+                  "layer": 0
+                }
+              ],
+              "segments": []
+            },
+            {
+              "phase": 0.75,
+              "rootAdvance": 0,
+              "body": {
+                "x": 189.56435643564356,
+                "y": 180,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [
+                {
+                  "id": "leftWing",
+                  "socket": [
+                    234.74059405940594,
+                    274.6
+                  ],
+                  "angle": -1.2217304763960306,
+                  "layer": 0
+                },
+                {
+                  "id": "rightWing",
+                  "socket": [
+                    277.2594059405941,
+                    274.6
+                  ],
+                  "angle": 1.2217304763960306,
+                  "layer": 0
+                }
+              ],
+              "segments": []
+            }
+          ],
+          "motionFrames": null
+        }
+      },
+      "errors": [],
+      "ready": true
+    },
+    {
+      "assetId": "w029",
+      "reviewApproved": true,
+      "identities": {
+        "checked": false,
+        "reason": "no walking limb identities"
+      },
+      "views": {
+        "side": {
+          "geometry": {
+            "passed": true,
+            "samples": 256,
+            "jointCoordinateSystem": "unprojected sagittal plane; never inferred from front/back PNG angles",
+            "sourceStride": 140,
+            "supportAngleRange": null,
+            "checks": [],
+            "errors": []
+          },
+          "provenance": {
+            "source": "tools/art-review/directional-101/swamp-special-01-side-parts.png",
+            "sourceSha256": "4ecadd0b116600d910139b45e7f3c3a0e5d331c333312da2a9146ba6a3d90534",
+            "sourceSize": [
+              887,
+              1774
+            ],
+            "body": {
+              "source": "tools/art-review/directional-101/swamp-special-01-side-parts.png",
+              "sourceSha256": "4ecadd0b116600d910139b45e7f3c3a0e5d331c333312da2a9146ba6a3d90534",
+              "sourceSize": [
+                887,
+                1774
+              ],
+              "roi": [
+                0,
+                0.66,
+                0.36,
+                0.33999999999999997
+              ],
+              "sourceBounds": [
+                81,
+                1240,
+                193,
+                269
+              ],
+              "componentCount": 1,
+              "componentAreas": [
+                29526
+              ],
+              "flipX": false
+            },
+            "parts": [
+              {
+                "id": "segment1",
+                "roi": [
+                  0.38,
+                  0.66,
+                  0.27,
+                  0.33999999999999997
+                ],
+                "sourceBounds": [
+                  398,
+                  1193,
+                  99,
+                  408
+                ],
+                "flipX": false,
+                "sourceJoints": {
+                  "start": [
+                    0.5,
+                    0.3
+                  ],
+                  "end": [
+                    0.5,
+                    0.7
+                  ]
+                }
+              },
+              {
+                "id": "segment2",
+                "roi": [
+                  0.38,
+                  0.66,
+                  0.27,
+                  0.33999999999999997
+                ],
+                "sourceBounds": [
+                  398,
+                  1193,
+                  99,
+                  408
+                ],
+                "flipX": false,
+                "sourceJoints": {
+                  "start": [
+                    0.5,
+                    0.3
+                  ],
+                  "end": [
+                    0.5,
+                    0.7
+                  ]
+                }
+              },
+              {
+                "id": "segment3",
+                "roi": [
+                  0.68,
+                  0.66,
+                  0.31999999999999995,
+                  0.33999999999999997
+                ],
+                "sourceBounds": [
+                  683,
+                  1208,
+                  73,
+                  382
+                ],
+                "flipX": false,
+                "sourceJoints": {
+                  "start": [
+                    0.5,
+                    0.2
+                  ],
+                  "end": [
+                    0.5,
+                    0.85
+                  ]
+                }
+              }
+            ]
+          },
+          "rasterDiagnostics": [],
+          "frameStats": [
+            {
+              "index": 0,
+              "width": 256,
+              "height": 256,
+              "pixels": 2780,
+              "bounds": [
+                65,
+                142,
+                138,
+                58
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 1,
+              "width": 256,
+              "height": 256,
+              "pixels": 2774,
+              "bounds": [
+                65,
+                142,
+                138,
+                58
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 2,
+              "width": 256,
+              "height": 256,
+              "pixels": 2814,
+              "bounds": [
+                65,
+                142,
+                138,
+                58
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 3,
+              "width": 256,
+              "height": 256,
+              "pixels": 2839,
+              "bounds": [
+                65,
+                142,
+                138,
+                58
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 4,
+              "width": 256,
+              "height": 256,
+              "pixels": 2772,
+              "bounds": [
+                66,
+                142,
+                137,
+                60
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 5,
+              "width": 256,
+              "height": 256,
+              "pixels": 2722,
+              "bounds": [
+                66,
+                142,
+                137,
+                60
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 6,
+              "width": 256,
+              "height": 256,
+              "pixels": 2768,
+              "bounds": [
+                66,
+                142,
+                137,
+                63
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 7,
+              "width": 256,
+              "height": 256,
+              "pixels": 2804,
+              "bounds": [
+                65,
+                142,
+                138,
+                62
+              ],
+              "edgePixels": 0
+            }
+          ],
+          "stillStats": {
+            "width": 256,
+            "height": 256,
+            "pixels": 2708,
+            "bounds": [
+              64,
+              142,
+              139,
+              56
+            ],
+            "edgePixels": 0
+          },
+          "fallbackStats": {
+            "width": 64,
+            "height": 64,
+            "pixels": 203,
+            "bounds": [
+              16,
+              35,
+              35,
+              15
+            ],
+            "edgePixels": 0
+          },
+          "uniqueFrames": 8,
+          "frameHashes": [
+            "1e2ab9bd4e0cb82619f5d2538c0f36fff6808d975f7d8b86cb2d3ad9f107f759",
+            "be71cea70aae5da7390d464ebc731d5e891c31da26588f3763273ee5da74a04a",
+            "8b96823ee6d340c66d973cb6797e51fb2b38d796b6cb769a9fa93dddf98f75c5",
+            "b64e4a2acb5770ce487a721073cb139874a03f02c55a9a97b78f31a5c3044195",
+            "be484b817c6405c3d4d4598c1d313df5ee7688c86d93e712774b1b0eb6c933d8",
+            "d9871ff09b5bb421b928ec61efdbb8e40b2f88230296afd447b554ae07051e1a",
+            "20ccebabc286c82b972947684644c68de12db67a5529344846043e342d89274e",
+            "46b1dfd8a1eb8dc030e5123fa31a6ff3d6bda896d10eb22cec7a5fecbf2e1947"
+          ],
+          "projection": {
+            "forward": [
+              1,
+              0
+            ],
+            "height": [
+              0,
+              1
+            ]
+          },
+          "frames": [
+            {
+              "phase": 0,
+              "rootAdvance": 0,
+              "body": {
+                "x": 325.53903345724905,
+                "y": 285,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    333.43122676579924,
+                    378.5
+                  ],
+                  "end": [
+                    279.43122676579924,
+                    378.5
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    279.43122676579924,
+                    378.5
+                  ],
+                  "end": [
+                    226.3170586035787,
+                    368.7590996085909
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    226.3170586035787,
+                    368.7590996085909
+                  ],
+                  "end": [
+                    149.5965934803712,
+                    382.82928906284855
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.125,
+              "rootAdvance": 17.5,
+              "body": {
+                "x": 325.53903345724905,
+                "y": 285,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    333.43122676579924,
+                    378.5
+                  ],
+                  "end": [
+                    280.0223214975879,
+                    370.5320116684808
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    280.0223214975879,
+                    370.5320116684808
+                  ],
+                  "end": [
+                    226.1016386485292,
+                    367.6062705501954
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    226.1016386485292,
+                    367.6062705501954
+                  ],
+                  "end": [
+                    149.69233653847914,
+                    383.2784928257728
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.25,
+              "rootAdvance": 35,
+              "body": {
+                "x": 325.53903345724905,
+                "y": 285,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    333.43122676579924,
+                    378.5
+                  ],
+                  "end": [
+                    280.61125632617376,
+                    367.272768695841
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    280.61125632617376,
+                    367.272768695841
+                  ],
+                  "end": [
+                    226.907073976287,
+                    372.9173057122943
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    226.907073976287,
+                    372.9173057122943
+                  ],
+                  "end": [
+                    149.3343661375617,
+                    381.0705258471713
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.375,
+              "rootAdvance": 52.5,
+              "body": {
+                "x": 325.53903345724905,
+                "y": 285,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    333.43122676579924,
+                    378.5
+                  ],
+                  "end": [
+                    280.0223214975879,
+                    370.5320116684808
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    280.0223214975879,
+                    370.5320116684808
+                  ],
+                  "end": [
+                    227.12357388293788,
+                    381.38201170541896
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    227.12357388293788,
+                    381.38201170541896
+                  ],
+                  "end": [
+                    149.23814310096418,
+                    377.155941201229
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.5,
+              "rootAdvance": 70,
+              "body": {
+                "x": 325.53903345724905,
+                "y": 285,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    333.43122676579924,
+                    378.5
+                  ],
+                  "end": [
+                    279.43122676579924,
+                    378.5
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    279.43122676579924,
+                    378.5
+                  ],
+                  "end": [
+                    226.3170586035787,
+                    388.2409003914092
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    226.3170586035787,
+                    388.2409003914092
+                  ],
+                  "end": [
+                    149.5965934803712,
+                    374.1707109371515
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.625,
+              "rootAdvance": 87.5,
+              "body": {
+                "x": 325.53903345724905,
+                "y": 285,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    333.43122676579924,
+                    378.5
+                  ],
+                  "end": [
+                    280.0223214975879,
+                    386.4679883315192
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    280.0223214975879,
+                    386.4679883315192
+                  ],
+                  "end": [
+                    226.1016386485292,
+                    389.39372944980465
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    226.1016386485292,
+                    389.39372944980465
+                  ],
+                  "end": [
+                    149.69233653847914,
+                    373.72150717422727
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.75,
+              "rootAdvance": 105,
+              "body": {
+                "x": 325.53903345724905,
+                "y": 285,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    333.43122676579924,
+                    378.5
+                  ],
+                  "end": [
+                    280.61125632617376,
+                    389.727231304159
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    280.61125632617376,
+                    389.727231304159
+                  ],
+                  "end": [
+                    226.907073976287,
+                    384.0826942877057
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    226.907073976287,
+                    384.0826942877057
+                  ],
+                  "end": [
+                    149.3343661375617,
+                    375.92947415282873
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.875,
+              "rootAdvance": 122.5,
+              "body": {
+                "x": 325.53903345724905,
+                "y": 285,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    333.43122676579924,
+                    378.5
+                  ],
+                  "end": [
+                    280.0223214975879,
+                    386.4679883315192
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    280.0223214975879,
+                    386.4679883315192
+                  ],
+                  "end": [
+                    227.12357388293788,
+                    375.61798829458104
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    227.12357388293788,
+                    375.61798829458104
+                  ],
+                  "end": [
+                    149.23814310096418,
+                    379.844058798771
+                  ],
+                  "layer": 1
+                }
+              ]
+            }
+          ],
+          "motionFrames": null
+        },
+        "front": {
+          "geometry": {
+            "passed": true,
+            "samples": 256,
+            "jointCoordinateSystem": "unprojected sagittal plane; never inferred from front/back PNG angles",
+            "sourceStride": 140,
+            "supportAngleRange": null,
+            "checks": [],
+            "errors": []
+          },
+          "provenance": {
+            "source": "tools/art-review/directional-101/swamp-special-01-front-back-parts.png",
+            "sourceSha256": "85c2c37f1fc9ac5acf83d359c295a34bf8dd83ba7cc2522dc552d65639c5dbf0",
+            "sourceSize": [
+              1254,
+              1254
+            ],
+            "body": {
+              "source": "tools/art-review/directional-101/swamp-special-01-front-back-parts.png",
+              "sourceSha256": "85c2c37f1fc9ac5acf83d359c295a34bf8dd83ba7cc2522dc552d65639c5dbf0",
+              "sourceSize": [
+                1254,
+                1254
+              ],
+              "roi": [
+                0,
+                0.64,
+                0.2,
+                0.36
+              ],
+              "sourceBounds": [
+                80,
+                844,
+                122,
+                294
+              ],
+              "componentCount": 1,
+              "componentAreas": [
+                28058
+              ],
+              "flipX": false
+            },
+            "parts": [
+              {
+                "id": "segment1",
+                "roi": [
+                  0.7,
+                  0.64,
+                  0.12,
+                  0.36
+                ],
+                "sourceBounds": [
+                  896,
+                  851,
+                  101,
+                  286
+                ],
+                "flipX": false,
+                "sourceJoints": {
+                  "start": [
+                    0.5,
+                    0.3
+                  ],
+                  "end": [
+                    0.5,
+                    0.7
+                  ]
+                }
+              },
+              {
+                "id": "segment2",
+                "roi": [
+                  0.7,
+                  0.64,
+                  0.12,
+                  0.36
+                ],
+                "sourceBounds": [
+                  896,
+                  851,
+                  101,
+                  286
+                ],
+                "flipX": false,
+                "sourceJoints": {
+                  "start": [
+                    0.5,
+                    0.3
+                  ],
+                  "end": [
+                    0.5,
+                    0.7
+                  ]
+                }
+              },
+              {
+                "id": "segment3",
+                "roi": [
+                  0.36,
+                  0.64,
+                  0.13,
+                  0.36
+                ],
+                "sourceBounds": [
+                  512,
+                  859,
+                  70,
+                  278
+                ],
+                "flipX": false,
+                "sourceJoints": {
+                  "start": [
+                    0.5,
+                    0.2
+                  ],
+                  "end": [
+                    0.5,
+                    0.85
+                  ]
+                }
+              }
+            ]
+          },
+          "rasterDiagnostics": [],
+          "frameStats": [
+            {
+              "index": 0,
+              "width": 256,
+              "height": 256,
+              "pixels": 2643,
+              "bounds": [
+                114,
+                74,
+                32,
+                129
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 1,
+              "width": 256,
+              "height": 256,
+              "pixels": 2651,
+              "bounds": [
+                114,
+                74,
+                32,
+                129
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 2,
+              "width": 256,
+              "height": 256,
+              "pixels": 2714,
+              "bounds": [
+                114,
+                74,
+                33,
+                129
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 3,
+              "width": 256,
+              "height": 256,
+              "pixels": 2704,
+              "bounds": [
+                113,
+                74,
+                33,
+                129
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 4,
+              "width": 256,
+              "height": 256,
+              "pixels": 2645,
+              "bounds": [
+                110,
+                74,
+                32,
+                129
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 5,
+              "width": 256,
+              "height": 256,
+              "pixels": 2645,
+              "bounds": [
+                110,
+                74,
+                31,
+                129
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 6,
+              "width": 256,
+              "height": 256,
+              "pixels": 2706,
+              "bounds": [
+                109,
+                74,
+                33,
+                129
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 7,
+              "width": 256,
+              "height": 256,
+              "pixels": 2710,
+              "bounds": [
+                110,
+                74,
+                33,
+                129
+              ],
+              "edgePixels": 0
+            }
+          ],
+          "stillStats": {
+            "width": 256,
+            "height": 256,
+            "pixels": 2582,
+            "bounds": [
+              116,
+              73,
+              24,
+              130
+            ],
+            "edgePixels": 0
+          },
+          "fallbackStats": {
+            "width": 64,
+            "height": 64,
+            "pixels": 173,
+            "bounds": [
+              29,
+              18,
+              6,
+              33
+            ],
+            "edgePixels": 0
+          },
+          "uniqueFrames": 8,
+          "frameHashes": [
+            "2a65cb1880ba5f6a91b8d3ec89cb872bd6c024253476e238d20bb3c4dfcd49f6",
+            "12bdb49c66b374770b2e9d01e7592035d44a1b792d6f891b517cf9d6dc7248e7",
+            "6a1d7798cdbe13d30b3e20941a16090ea89276ac0d932b353722fcf9d5443c7d",
+            "9e122d4615698f63298b281dbd630b6dc58f352b2734619bfe0ec5f36473a048",
+            "881e25a54eede1c2b1e272bac2db5ab216934225dbd8ce89673c39c7d8e8624a",
+            "29e872008ee5642789e2f9c0e03cfe4f08b72ba0883f5bfbcc0c2a0e92f22920",
+            "ac50d5814b5bb6d02d0fb74f3bab5dba38da9540e509e3beb54108c8544258b0",
+            "dc51abc0e8a3a4d803bde4312e888113bd72b6087231c0ca38771e946d718ad5"
+          ],
+          "projection": {
+            "forward": [
+              0,
+              1
+            ],
+            "height": [
+              0,
+              1
+            ]
+          },
+          "frames": [
+            {
+              "phase": 0,
+              "rootAdvance": 0,
+              "body": {
+                "x": 233.1768707482993,
+                "y": 295,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    256,
+                    350
+                  ],
+                  "end": [
+                    256,
+                    296
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    256,
+                    296
+                  ],
+                  "end": [
+                    265.7409003914092,
+                    242.88583183777945
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    265.7409003914092,
+                    242.88583183777945
+                  ],
+                  "end": [
+                    251.6707109371515,
+                    166.16536671457197
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.125,
+              "rootAdvance": 17.5,
+              "body": {
+                "x": 233.1768707482993,
+                "y": 295,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    256,
+                    350
+                  ],
+                  "end": [
+                    263.96798833151917,
+                    296.59109473178864
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    263.96798833151917,
+                    296.59109473178864
+                  ],
+                  "end": [
+                    266.89372944980454,
+                    242.67041188272995
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    266.89372944980454,
+                    242.67041188272995
+                  ],
+                  "end": [
+                    251.22150717422718,
+                    166.26110977267993
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.25,
+              "rootAdvance": 35,
+              "body": {
+                "x": 233.1768707482993,
+                "y": 295,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    256,
+                    350
+                  ],
+                  "end": [
+                    267.22723130415903,
+                    297.1800295603745
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    267.22723130415903,
+                    297.1800295603745
+                  ],
+                  "end": [
+                    261.58269428770575,
+                    243.47584721048776
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    261.58269428770575,
+                    243.47584721048776
+                  ],
+                  "end": [
+                    253.4294741528288,
+                    165.90313937176245
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.375,
+              "rootAdvance": 52.5,
+              "body": {
+                "x": 233.1768707482993,
+                "y": 295,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    256,
+                    350
+                  ],
+                  "end": [
+                    263.96798833151917,
+                    296.59109473178864
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    263.96798833151917,
+                    296.59109473178864
+                  ],
+                  "end": [
+                    253.11798829458098,
+                    243.69234711713864
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    253.11798829458098,
+                    243.69234711713864
+                  ],
+                  "end": [
+                    257.344058798771,
+                    165.80691633516494
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.5,
+              "rootAdvance": 70,
+              "body": {
+                "x": 233.1768707482993,
+                "y": 295,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    256,
+                    350
+                  ],
+                  "end": [
+                    256,
+                    296
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    256,
+                    296
+                  ],
+                  "end": [
+                    246.25909960859084,
+                    242.88583183777945
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    246.25909960859084,
+                    242.88583183777945
+                  ],
+                  "end": [
+                    260.3292890628485,
+                    166.16536671457197
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.625,
+              "rootAdvance": 87.5,
+              "body": {
+                "x": 233.1768707482993,
+                "y": 295,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    256,
+                    350
+                  ],
+                  "end": [
+                    248.0320116684808,
+                    296.59109473178864
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    248.0320116684808,
+                    296.59109473178864
+                  ],
+                  "end": [
+                    245.10627055019543,
+                    242.67041188272995
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    245.10627055019543,
+                    242.67041188272995
+                  ],
+                  "end": [
+                    260.7784928257728,
+                    166.26110977267993
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.75,
+              "rootAdvance": 105,
+              "body": {
+                "x": 233.1768707482993,
+                "y": 295,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    256,
+                    350
+                  ],
+                  "end": [
+                    244.77276869584102,
+                    297.1800295603745
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    244.77276869584102,
+                    297.1800295603745
+                  ],
+                  "end": [
+                    250.4173057122943,
+                    243.47584721048776
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    250.4173057122943,
+                    243.47584721048776
+                  ],
+                  "end": [
+                    258.57052584717127,
+                    165.90313937176245
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.875,
+              "rootAdvance": 122.5,
+              "body": {
+                "x": 233.1768707482993,
+                "y": 295,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    256,
+                    350
+                  ],
+                  "end": [
+                    248.0320116684808,
+                    296.59109473178864
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    248.0320116684808,
+                    296.59109473178864
+                  ],
+                  "end": [
+                    258.882011705419,
+                    243.69234711713864
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    258.882011705419,
+                    243.69234711713864
+                  ],
+                  "end": [
+                    254.65594120122904,
+                    165.80691633516494
+                  ],
+                  "layer": 1
+                }
+              ]
+            }
+          ],
+          "motionFrames": null
+        },
+        "back": {
+          "geometry": {
+            "passed": true,
+            "samples": 256,
+            "jointCoordinateSystem": "unprojected sagittal plane; never inferred from front/back PNG angles",
+            "sourceStride": 140,
+            "supportAngleRange": null,
+            "checks": [],
+            "errors": []
+          },
+          "provenance": {
+            "source": "tools/art-review/directional-101/swamp-special-01-front-back-parts.png",
+            "sourceSha256": "85c2c37f1fc9ac5acf83d359c295a34bf8dd83ba7cc2522dc552d65639c5dbf0",
+            "sourceSize": [
+              1254,
+              1254
+            ],
+            "body": {
+              "source": "tools/art-review/directional-101/swamp-back-body-correction.png",
+              "sourceSha256": "98abfe48f2750e4626cb69c0d95f84e105a7f4e8880bdeffd6c68984c6810e6a",
+              "sourceSize": [
+                887,
+                1774
+              ],
+              "roi": [
+                0,
+                0.75,
+                1,
+                0.25
+              ],
+              "sourceBounds": [
+                365,
+                1373,
+                157,
+                320
+              ],
+              "componentCount": 1,
+              "componentAreas": [
+                39099
+              ],
+              "flipX": false
+            },
+            "parts": [
+              {
+                "id": "segment1",
+                "roi": [
+                  0.7,
+                  0.64,
+                  0.12,
+                  0.36
+                ],
+                "sourceBounds": [
+                  896,
+                  851,
+                  101,
+                  286
+                ],
+                "flipX": false,
+                "sourceJoints": {
+                  "start": [
+                    0.5,
+                    0.3
+                  ],
+                  "end": [
+                    0.5,
+                    0.7
+                  ]
+                }
+              },
+              {
+                "id": "segment2",
+                "roi": [
+                  0.7,
+                  0.64,
+                  0.12,
+                  0.36
+                ],
+                "sourceBounds": [
+                  896,
+                  851,
+                  101,
+                  286
+                ],
+                "flipX": false,
+                "sourceJoints": {
+                  "start": [
+                    0.5,
+                    0.3
+                  ],
+                  "end": [
+                    0.5,
+                    0.7
+                  ]
+                }
+              },
+              {
+                "id": "segment3",
+                "roi": [
+                  0.83,
+                  0.64,
+                  0.17000000000000004,
+                  0.36
+                ],
+                "sourceBounds": [
+                  1095,
+                  859,
+                  69,
+                  278
+                ],
+                "flipX": false,
+                "sourceJoints": {
+                  "start": [
+                    0.5,
+                    0.2
+                  ],
+                  "end": [
+                    0.5,
+                    0.85
+                  ]
+                }
+              }
+            ]
+          },
+          "rasterDiagnostics": [],
+          "frameStats": [
+            {
+              "index": 0,
+              "width": 256,
+              "height": 256,
+              "pixels": 3192,
+              "bounds": [
+                110,
+                60,
+                32,
+                150
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 1,
+              "width": 256,
+              "height": 256,
+              "pixels": 3178,
+              "bounds": [
+                110,
+                60,
+                32,
+                150
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 2,
+              "width": 256,
+              "height": 256,
+              "pixels": 3226,
+              "bounds": [
+                109,
+                60,
+                33,
+                150
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 3,
+              "width": 256,
+              "height": 256,
+              "pixels": 3243,
+              "bounds": [
+                110,
+                60,
+                33,
+                150
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 4,
+              "width": 256,
+              "height": 256,
+              "pixels": 3197,
+              "bounds": [
+                114,
+                60,
+                32,
+                150
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 5,
+              "width": 256,
+              "height": 256,
+              "pixels": 3187,
+              "bounds": [
+                114,
+                60,
+                32,
+                149
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 6,
+              "width": 256,
+              "height": 256,
+              "pixels": 3231,
+              "bounds": [
+                114,
+                60,
+                33,
+                150
+              ],
+              "edgePixels": 0
+            },
+            {
+              "index": 7,
+              "width": 256,
+              "height": 256,
+              "pixels": 3239,
+              "bounds": [
+                113,
+                60,
+                33,
+                150
+              ],
+              "edgePixels": 0
+            }
+          ],
+          "stillStats": {
+            "width": 256,
+            "height": 256,
+            "pixels": 3136,
+            "bounds": [
+              114,
+              60,
+              28,
+              151
+            ],
+            "edgePixels": 0
+          },
+          "fallbackStats": {
+            "width": 64,
+            "height": 64,
+            "pixels": 211,
+            "bounds": [
+              28,
+              15,
+              8,
+              38
+            ],
+            "edgePixels": 0
+          },
+          "uniqueFrames": 8,
+          "frameHashes": [
+            "d538f9a3fd955848eb8508779c95f29a9964670ab879d862a9a2473de2ec4eec",
+            "996dbcbd10e29ea3adfc6d059f53f5c159386408433849fb21d02b3ee518112b",
+            "dbee3cf24890ee5826a2b437ef7a1dcf99cf17c2bbece8354e9f09f2b805c817",
+            "2a509d5e4e445a245c8ee17cc7be94fea3c1f275d0cad4ad1aeff1491becfa9a",
+            "d907bb6acb3755b18c6a6029ed832fcada152848658c29546a043683c31d4849",
+            "7e83bbb4dcb7ed038433e9e3ba0e12a044960749d96cb90383398a228e21d4a3",
+            "be62df38d7b295d1941aba8b20893563883ee50e208c35ca1ae236b4358264ea",
+            "8f95076135bd2dd50b708c435c7997150506775a6ac0e1cb32f14b7f886fbae2"
+          ],
+          "projection": {
+            "forward": [
+              0,
+              -1
+            ],
+            "height": [
+              0,
+              1
+            ]
+          },
+          "frames": [
+            {
+              "phase": 0,
+              "rootAdvance": 0,
+              "body": {
+                "x": 229.015625,
+                "y": 120,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    256,
+                    216.8
+                  ],
+                  "end": [
+                    256,
+                    270.8
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    256,
+                    270.8
+                  ],
+                  "end": [
+                    246.25909960859084,
+                    323.91416816222056
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    246.25909960859084,
+                    323.91416816222056
+                  ],
+                  "end": [
+                    260.32928906284855,
+                    400.63463328542804
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.125,
+              "rootAdvance": 17.5,
+              "body": {
+                "x": 229.015625,
+                "y": 120,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    256,
+                    216.8
+                  ],
+                  "end": [
+                    248.0320116684808,
+                    270.20890526821137
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    248.0320116684808,
+                    270.20890526821137
+                  ],
+                  "end": [
+                    245.10627055019543,
+                    324.1295881172701
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    245.10627055019543,
+                    324.1295881172701
+                  ],
+                  "end": [
+                    260.7784928257728,
+                    400.5388902273201
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.25,
+              "rootAdvance": 35,
+              "body": {
+                "x": 229.015625,
+                "y": 120,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    256,
+                    216.8
+                  ],
+                  "end": [
+                    244.77276869584102,
+                    269.6199704396255
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    244.77276869584102,
+                    269.6199704396255
+                  ],
+                  "end": [
+                    250.4173057122943,
+                    323.32415278951225
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    250.4173057122943,
+                    323.32415278951225
+                  ],
+                  "end": [
+                    258.57052584717127,
+                    400.89686062823756
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.375,
+              "rootAdvance": 52.5,
+              "body": {
+                "x": 229.015625,
+                "y": 120,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    256,
+                    216.8
+                  ],
+                  "end": [
+                    248.0320116684808,
+                    270.20890526821137
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    248.0320116684808,
+                    270.20890526821137
+                  ],
+                  "end": [
+                    258.882011705419,
+                    323.1076528828614
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    258.882011705419,
+                    323.1076528828614
+                  ],
+                  "end": [
+                    254.65594120122904,
+                    400.99308366483507
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.5,
+              "rootAdvance": 70,
+              "body": {
+                "x": 229.015625,
+                "y": 120,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    256,
+                    216.8
+                  ],
+                  "end": [
+                    256,
+                    270.8
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    256,
+                    270.8
+                  ],
+                  "end": [
+                    265.7409003914092,
+                    323.91416816222056
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    265.7409003914092,
+                    323.91416816222056
+                  ],
+                  "end": [
+                    251.67071093715154,
+                    400.63463328542804
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.625,
+              "rootAdvance": 87.5,
+              "body": {
+                "x": 229.015625,
+                "y": 120,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    256,
+                    216.8
+                  ],
+                  "end": [
+                    263.96798833151917,
+                    270.20890526821137
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    263.96798833151917,
+                    270.20890526821137
+                  ],
+                  "end": [
+                    266.89372944980454,
+                    324.1295881172701
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    266.89372944980454,
+                    324.1295881172701
+                  ],
+                  "end": [
+                    251.22150717422718,
+                    400.5388902273201
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.75,
+              "rootAdvance": 105,
+              "body": {
+                "x": 229.015625,
+                "y": 120,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    256,
+                    216.8
+                  ],
+                  "end": [
+                    267.22723130415903,
+                    269.6199704396255
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    267.22723130415903,
+                    269.6199704396255
+                  ],
+                  "end": [
+                    261.58269428770575,
+                    323.32415278951225
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    261.58269428770575,
+                    323.32415278951225
+                  ],
+                  "end": [
+                    253.42947415282876,
+                    400.89686062823756
+                  ],
+                  "layer": 1
+                }
+              ]
+            },
+            {
+              "phase": 0.875,
+              "rootAdvance": 122.5,
+              "body": {
+                "x": 229.015625,
+                "y": 120,
+                "roll": 0
+              },
+              "legs": [],
+              "appendages": [],
+              "segments": [
+                {
+                  "id": "segment1",
+                  "start": [
+                    256,
+                    216.8
+                  ],
+                  "end": [
+                    263.96798833151917,
+                    270.20890526821137
+                  ],
+                  "layer": 3
+                },
+                {
+                  "id": "segment2",
+                  "start": [
+                    263.96798833151917,
+                    270.20890526821137
+                  ],
+                  "end": [
+                    253.11798829458098,
+                    323.1076528828614
+                  ],
+                  "layer": 2
+                },
+                {
+                  "id": "segment3",
+                  "start": [
+                    253.11798829458098,
+                    323.1076528828614
+                  ],
+                  "end": [
+                    257.344058798771,
+                    400.99308366483507
+                  ],
+                  "layer": 1
+                }
+              ]
+            }
+          ],
+          "motionFrames": null
+        }
+      },
+      "errors": [],
+      "ready": true
+    }
+  ],
+  "files": [
+    {
+      "file": "casual/enemies/inf/directional/w021-side-walk-4x2.png",
+      "bytes": 77854,
+      "sha256": "47046ecae640e873d0106cbcb9682ac35fd2b3cc8f0ce8cf7ca658372ab63d2a",
+      "image": {
+        "format": "png",
+        "width": 1024,
+        "height": 512,
+        "pages": 1
+      }
+    },
+    {
+      "file": "casual/enemies/inf/directional/w021-side.png",
+      "bytes": 14403,
+      "sha256": "eaf21157d86635b2089ced3cfe8690e69d75c09efd11be0c58fbcc5970e8e9c2",
+      "image": {
+        "format": "png",
+        "width": 256,
+        "height": 256,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w021-side.png",
+      "bytes": 288318,
+      "sha256": "0d5eb51fcbd888369f23287b5a3ab1fe82286d04ebc547e39b1e9d5487daaefe",
+      "image": {
+        "format": "png",
+        "width": 2048,
+        "height": 1024,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w021-side.gif",
+      "bytes": 28351,
+      "sha256": "433e557a083177ea4a3b10e6bf73e75c7bc9796a2a4f428cb033fbf37eb30be9",
+      "image": {
+        "format": "gif",
+        "width": 256,
+        "height": 256,
+        "pages": 8
+      }
+    },
+    {
+      "file": "casual/enemies/inf/directional/w021-front-walk-4x2.png",
+      "bytes": 79914,
+      "sha256": "18fe53dd95763050d834a1dc2e9beed1667e3892156f08e14044068f3063a38a",
+      "image": {
+        "format": "png",
+        "width": 1024,
+        "height": 512,
+        "pages": 1
+      }
+    },
+    {
+      "file": "casual/enemies/inf/directional/w021-front.png",
+      "bytes": 12608,
+      "sha256": "5385ebfda364377449a8df99aa79f81ee18c3a99074c19f443c84e087b4c8225",
+      "image": {
+        "format": "png",
+        "width": 256,
+        "height": 256,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w021-front.png",
+      "bytes": 296581,
+      "sha256": "6bd4e7531fe727e915560520cc38cb7de844bda8a21b8b3a74de56cd1f1606a9",
+      "image": {
+        "format": "png",
+        "width": 2048,
+        "height": 1024,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w021-front.gif",
+      "bytes": 29848,
+      "sha256": "5b290e8f78b4a73c963e2774a416a94cc2bc569b3c1dd345c0346fc9d661b90a",
+      "image": {
+        "format": "gif",
+        "width": 256,
+        "height": 256,
+        "pages": 8
+      }
+    },
+    {
+      "file": "casual/enemies/inf/directional/w021-back-walk-4x2.png",
+      "bytes": 83552,
+      "sha256": "661a40f2fe128b7b171a65333cca4d10f445c9125edf0d6426cfa6a30ad8efd6",
+      "image": {
+        "format": "png",
+        "width": 1024,
+        "height": 512,
+        "pages": 1
+      }
+    },
+    {
+      "file": "casual/enemies/inf/directional/w021-back.png",
+      "bytes": 13233,
+      "sha256": "a0f8452c53b9b7f4d5bb77f4110acd34a4c897f6ad3a3473b4a213d079a495e8",
+      "image": {
+        "format": "png",
+        "width": 256,
+        "height": 256,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w021-back.png",
+      "bytes": 313123,
+      "sha256": "e6842b0ecfda674935b895a8a765e08626ed17cc4fcd055013353d5f4257204d",
+      "image": {
+        "format": "png",
+        "width": 2048,
+        "height": 1024,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w021-back.gif",
+      "bytes": 32193,
+      "sha256": "11aaafd8bd1e43aa4150470a4c66104ed9fa37cad3b9109f0e469cf554870df8",
+      "image": {
+        "format": "gif",
+        "width": 256,
+        "height": 256,
+        "pages": 8
+      }
+    },
+    {
+      "file": "casual/enemies/inf/directional/w024-side-walk-2x2.png",
+      "bytes": 104790,
+      "sha256": "c5ca854b5285633f932eb664ff365a100e16a488457997197de5d65ead5d6a4f",
+      "image": {
+        "format": "png",
+        "width": 512,
+        "height": 512,
+        "pages": 1
+      }
+    },
+    {
+      "file": "casual/enemies/inf/directional/w024-side.png",
+      "bytes": 34320,
+      "sha256": "e0c2dc59749f9b8897aab4f0951fa1ee962272f37a04c78019f11eb5b947d8cf",
+      "image": {
+        "format": "png",
+        "width": 256,
+        "height": 256,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w024-side.png",
+      "bytes": 353357,
+      "sha256": "7b70edae5928290289250c35a984fe7540dda89f5047644c8f19ea80f1a0e55e",
+      "image": {
+        "format": "png",
+        "width": 1024,
+        "height": 1024,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w024-side.gif",
+      "bytes": 31781,
+      "sha256": "5d25895022e65252c1641e6db751b6e2f330dc5f1068f581aac6edb56c26fcdb",
+      "image": {
+        "format": "gif",
+        "width": 256,
+        "height": 256,
+        "pages": 4
+      }
+    },
+    {
+      "file": "casual/enemies/inf/directional/w024-front-walk-2x2.png",
+      "bytes": 87733,
+      "sha256": "4505e942ddbe486c7952550f4247c0214471566e1f5c5d814bbd94a6a3c3d718",
+      "image": {
+        "format": "png",
+        "width": 512,
+        "height": 512,
+        "pages": 1
+      }
+    },
+    {
+      "file": "casual/enemies/inf/directional/w024-front.png",
+      "bytes": 29622,
+      "sha256": "56a6880275ad7b481e6d98792b865b8efe3e719b3fe786d6ac241bbbc93e5e73",
+      "image": {
+        "format": "png",
+        "width": 256,
+        "height": 256,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w024-front.png",
+      "bytes": 298436,
+      "sha256": "a3713d02c066b9e94185cdcd25dbc38bc25b388ac3df8c29b231cf37f9e28e98",
+      "image": {
+        "format": "png",
+        "width": 1024,
+        "height": 1024,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w024-front.gif",
+      "bytes": 25464,
+      "sha256": "1b061a2bf214d187278f5105fb828fdedf46f9da1d146cf97efc596db403cd4a",
+      "image": {
+        "format": "gif",
+        "width": 256,
+        "height": 256,
+        "pages": 4
+      }
+    },
+    {
+      "file": "casual/enemies/inf/directional/w024-back-walk-2x2.png",
+      "bytes": 86575,
+      "sha256": "0429a3c422075486fc92b819bcb48ee17baa940fc86d3476b07f2ef5aef24a6c",
+      "image": {
+        "format": "png",
+        "width": 512,
+        "height": 512,
+        "pages": 1
+      }
+    },
+    {
+      "file": "casual/enemies/inf/directional/w024-back.png",
+      "bytes": 28901,
+      "sha256": "4dcf3287c39cf7c80c3a330bd18685f0caadf241feb3f52d75e9c61f384c1d30",
+      "image": {
+        "format": "png",
+        "width": 256,
+        "height": 256,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w024-back.png",
+      "bytes": 294762,
+      "sha256": "14e8f45b76a92589eee200435b775f22b10e8dd8c12f92bbb333eb277ed28956",
+      "image": {
+        "format": "png",
+        "width": 1024,
+        "height": 1024,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w024-back.gif",
+      "bytes": 26216,
+      "sha256": "11dec56585ab9689d5183b013f39132488e5fc759e934506a02a302d08042ab0",
+      "image": {
+        "format": "gif",
+        "width": 256,
+        "height": 256,
+        "pages": 4
+      }
+    },
+    {
+      "file": "casual/enemies/inf/directional/w029-side-walk-4x2.png",
+      "bytes": 59901,
+      "sha256": "a2974bff44d9d06126ef93addb1d7e058aa086aebcd7e994550c6da5fc8936cc",
+      "image": {
+        "format": "png",
+        "width": 1024,
+        "height": 512,
+        "pages": 1
+      }
+    },
+    {
+      "file": "casual/enemies/inf/directional/w029-side.png",
+      "bytes": 10797,
+      "sha256": "3bb307c310a57bd5c2f8bbdf8e61e275e8a868f65ea60a920a8d3ce14860a990",
+      "image": {
+        "format": "png",
+        "width": 256,
+        "height": 256,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w029-side.png",
+      "bytes": 225518,
+      "sha256": "0e931a79605dca4f403c4bbcc57c400cb3b96b54595ac6cb68730691129277e5",
+      "image": {
+        "format": "png",
+        "width": 2048,
+        "height": 1024,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w029-side.gif",
+      "bytes": 21136,
+      "sha256": "b025f9fca3bef3b0c5f5cf455c277db907df3bc9a6fcaa747a3b86631eb77d02",
+      "image": {
+        "format": "gif",
+        "width": 256,
+        "height": 256,
+        "pages": 8
+      }
+    },
+    {
+      "file": "casual/enemies/inf/directional/w029-front-walk-4x2.png",
+      "bytes": 65080,
+      "sha256": "85eecbd98d94564d5e2033828b4193ff82d10ea218139c88097a771d02dfe5e1",
+      "image": {
+        "format": "png",
+        "width": 1024,
+        "height": 512,
+        "pages": 1
+      }
+    },
+    {
+      "file": "casual/enemies/inf/directional/w029-front.png",
+      "bytes": 10005,
+      "sha256": "30cd8fac7d241ce47d2b2ba7b1331db5d526f0f8e67517a7870e25f36633475f",
+      "image": {
+        "format": "png",
+        "width": 256,
+        "height": 256,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w029-front.png",
+      "bytes": 239718,
+      "sha256": "cacd894fafba8f3cb51c9a4d2fd0dd98f3e3dd9186d4b574e6409b4cc9e8141d",
+      "image": {
+        "format": "png",
+        "width": 2048,
+        "height": 1024,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w029-front.gif",
+      "bytes": 25278,
+      "sha256": "a650f245aaa7a0491fc30fc5e23bf06c4bce1c6b06ff53c08e5ffefa57e268fe",
+      "image": {
+        "format": "gif",
+        "width": 256,
+        "height": 256,
+        "pages": 8
+      }
+    },
+    {
+      "file": "casual/enemies/inf/directional/w029-back-walk-4x2.png",
+      "bytes": 72511,
+      "sha256": "05fe6819ade12873a7cc1be5aca577816b8837f0e09b183a96ca4da6f9791b95",
+      "image": {
+        "format": "png",
+        "width": 1024,
+        "height": 512,
+        "pages": 1
+      }
+    },
+    {
+      "file": "casual/enemies/inf/directional/w029-back.png",
+      "bytes": 11393,
+      "sha256": "4db7186287811f53d14de8d5a2868e27dc069af2d55c16e12af30e2437e59926",
+      "image": {
+        "format": "png",
+        "width": 256,
+        "height": 256,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w029-back.png",
+      "bytes": 269191,
+      "sha256": "f9416dc52debbd054c9c0ac51e6577560df333f8b8514a1fee437f6785865080",
+      "image": {
+        "format": "png",
+        "width": 2048,
+        "height": 1024,
+        "pages": 1
+      }
+    },
+    {
+      "file": "review/w029-back.gif",
+      "bytes": 29055,
+      "sha256": "7c76800bbd4abd5cfc3700936ccbaafffce9aeb9f698e0b5274505461da828b0",
+      "image": {
+        "format": "gif",
+        "width": 256,
+        "height": 256,
+        "pages": 8
+      }
+    }
+  ],
+  "errors": []
+}

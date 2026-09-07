@@ -1,0 +1,87 @@
+{
+  "width": 1536,
+  "height": 1024,
+  "source": "C:\\Users\\PC\\Documents\\Codex\\2026-09-07\\gnchoo-dicekeep-art-pr-29-6\\work\\dicekeep-art\\tools\\art-review\\directional-101\\late-waves\\sources\\late-quad-body-fix-v2.png",
+  "components": [
+    {
+      "n": 58833,
+      "bounds": [
+        600,
+        152,
+        220,
+        336
+      ],
+      "id": 0
+    },
+    {
+      "n": 56608,
+      "bounds": [
+        916,
+        153,
+        225,
+        328
+      ],
+      "id": 1
+    },
+    {
+      "n": 103759,
+      "bounds": [
+        75,
+        154,
+        499,
+        331
+      ],
+      "id": 2
+    },
+    {
+      "n": 42310,
+      "bounds": [
+        1235,
+        163,
+        173,
+        315
+      ],
+      "id": 3
+    },
+    {
+      "n": 41644,
+      "bounds": [
+        1245,
+        563,
+        202,
+        322
+      ],
+      "id": 4
+    },
+    {
+      "n": 59623,
+      "bounds": [
+        574,
+        593,
+        267,
+        289
+      ],
+      "id": 5
+    },
+    {
+      "n": 91092,
+      "bounds": [
+        56,
+        597,
+        461,
+        282
+      ],
+      "id": 6
+    },
+    {
+      "n": 56107,
+      "bounds": [
+        897,
+        598,
+        248,
+        285
+      ],
+      "id": 7
+    }
+  ]
+}

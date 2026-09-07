@@ -1,0 +1,258 @@
+{
+  "manifestSha256": "e7afd24e31cf948f38adb69c2a5d249a1094f80fa93e2e9e58b417ef1a57de69",
+  "cycles": 3,
+  "samplesPerCycle": 256,
+  "coordinateSystem": "output PNG pixels = canonical pixels * view.scale; review is not a game-speed or anatomy approval",
+  "entries": [
+    {
+      "assetId": "w021",
+      "locomotion": "slither",
+      "phaseDriver": "distance",
+      "reviewTravelCanonical": 140,
+      "frameDelayMs": 150,
+      "gif": "review/w021-moving.gif",
+      "gifSha256": "aeeafa36a4ea58d7a713a8ac4a2a11b1f6b5ceea06e783343b4181e1390abc27",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 24,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "profile": "slither",
+          "frameCount": 8,
+          "uniqueRasterFrames": 8,
+          "recordedPhases": [
+            0,
+            0.125,
+            0.25,
+            0.375,
+            0.5,
+            0.625,
+            0.75,
+            0.875
+          ],
+          "phaseDriver": "distance/cycleStride",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "LEFT",
+          "profile": "slither",
+          "frameCount": 8,
+          "uniqueRasterFrames": 8,
+          "recordedPhases": [
+            0,
+            0.125,
+            0.25,
+            0.375,
+            0.5,
+            0.625,
+            0.75,
+            0.875
+          ],
+          "phaseDriver": "distance/cycleStride",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "profile": "slither",
+          "frameCount": 8,
+          "uniqueRasterFrames": 8,
+          "recordedPhases": [
+            0,
+            0.125,
+            0.25,
+            0.375,
+            0.5,
+            0.625,
+            0.75,
+            0.875
+          ],
+          "phaseDriver": "distance/cycleStride",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "UP / BACK",
+          "profile": "slither",
+          "frameCount": 8,
+          "uniqueRasterFrames": 8,
+          "recordedPhases": [
+            0,
+            0.125,
+            0.25,
+            0.375,
+            0.5,
+            0.625,
+            0.75,
+            0.875
+          ],
+          "phaseDriver": "distance/cycleStride",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        }
+      ]
+    },
+    {
+      "assetId": "w024",
+      "locomotion": "flight",
+      "phaseDriver": "time",
+      "reviewTravelCanonical": 128,
+      "frameDelayMs": 200,
+      "gif": "review/w024-moving.gif",
+      "gifSha256": "7197863df577f4a22f64841b4afdcb48ae8e45cb9574b0f26277fb20560f23e2",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 12,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "LEFT",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "UP / BACK",
+          "profile": "flight",
+          "frameCount": 4,
+          "uniqueRasterFrames": 3,
+          "recordedPhases": [
+            0,
+            0.25,
+            0.5,
+            0.75
+          ],
+          "phaseDriver": "time/cycleSeconds",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        }
+      ]
+    },
+    {
+      "assetId": "w029",
+      "locomotion": "slither",
+      "phaseDriver": "distance",
+      "reviewTravelCanonical": 140,
+      "frameDelayMs": 150,
+      "gif": "review/w029-moving.gif",
+      "gifSha256": "937d9e0d590490a64b756a36b35370f8767da972f1167aec539ebeb323e36099",
+      "panelPx": 640,
+      "captionAndPanelBoundsChecked": true,
+      "fixedReviewScale": 1,
+      "motionFrames": 24,
+      "resetFrames": 1,
+      "checks": [
+        {
+          "direction": "RIGHT",
+          "profile": "slither",
+          "frameCount": 8,
+          "uniqueRasterFrames": 8,
+          "recordedPhases": [
+            0,
+            0.125,
+            0.25,
+            0.375,
+            0.5,
+            0.625,
+            0.75,
+            0.875
+          ],
+          "phaseDriver": "distance/cycleStride",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "LEFT",
+          "profile": "slither",
+          "frameCount": 8,
+          "uniqueRasterFrames": 8,
+          "recordedPhases": [
+            0,
+            0.125,
+            0.25,
+            0.375,
+            0.5,
+            0.625,
+            0.75,
+            0.875
+          ],
+          "phaseDriver": "distance/cycleStride",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "DOWN / FRONT",
+          "profile": "slither",
+          "frameCount": 8,
+          "uniqueRasterFrames": 8,
+          "recordedPhases": [
+            0,
+            0.125,
+            0.25,
+            0.375,
+            0.5,
+            0.625,
+            0.75,
+            0.875
+          ],
+          "phaseDriver": "distance/cycleStride",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        },
+        {
+          "direction": "UP / BACK",
+          "profile": "slither",
+          "frameCount": 8,
+          "uniqueRasterFrames": 8,
+          "recordedPhases": [
+            0,
+            0.125,
+            0.25,
+            0.375,
+            0.5,
+            0.625,
+            0.75,
+            0.875
+          ],
+          "phaseDriver": "distance/cycleStride",
+          "contactAssessment": "not applicable: no discrete foot support landmarks"
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "passed": true
+}

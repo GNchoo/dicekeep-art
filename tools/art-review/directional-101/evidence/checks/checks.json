@@ -1,0 +1,46 @@
+{
+  "passed": true,
+  "results": [
+    {
+      "name": "directional-rig",
+      "command": [
+        "node",
+        "tools/directional-rig-test.mjs"
+      ],
+      "exit": 0,
+      "log": "tools/art-review/directional-101/evidence/checks/directional-rig.log",
+      "sha256": "a7cfbd3933370f26bf834b3de4c70b371e944a08813d36c5694f4a20b1640708"
+    },
+    {
+      "name": "sheet",
+      "command": [
+        "node",
+        "tools/sheet-test.mjs"
+      ],
+      "exit": 0,
+      "log": "tools/art-review/directional-101/evidence/checks/sheet.log",
+      "sha256": "fef8f52cbdbaab7c1e4792cc3d501ea659d328a074efee05fc3371c574f951f9"
+    },
+    {
+      "name": "rig",
+      "command": [
+        "node",
+        "tools/rig-test.mjs"
+      ],
+      "exit": 0,
+      "log": "tools/art-review/directional-101/evidence/checks/rig.log",
+      "sha256": "25d0d85b6e12a5858d3a4d8646c55b0bb9767d58298a52f08c558c4d9f3f2a3e"
+    },
+    {
+      "name": "audit",
+      "command": [
+        "node",
+        "tools/audit-directional-release.mjs",
+        "--self-test"
+      ],
+      "exit": 0,
+      "log": "tools/art-review/directional-101/evidence/checks/audit.log",
+      "sha256": "64d2d7ef9d18819286a081ba8002a061d6dc12e3343ccde96a7de93d88e95b68"
+    }
+  ]
+}

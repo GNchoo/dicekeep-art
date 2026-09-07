@@ -1,0 +1,317 @@
+{
+  "assetId": "w092",
+  "wave": 92,
+  "role": "normal",
+  "locomotion": "float",
+  "cell": 256,
+  "referenceHeight": 300,
+  "cycleStride": 0,
+  "cycleSeconds": 1.6,
+  "hover": {
+    "lift": 10,
+    "roll": 1.5
+  },
+  "reviewApproved": false,
+  "views": {
+    "side": {
+      "source": "tools/art-review/directional-101/late-waves/derived/w092-side-parts.png",
+      "sourceSha256": "9eb04d24e034997dbc6a3ff77e44648f067ced28b8f27e1b41cd0d3f9cd629a8",
+      "background": "checkerboard",
+      "pivot": [
+        256,
+        390
+      ],
+      "body": {
+        "roi": [
+          0,
+          0,
+          0.78,
+          1
+        ],
+        "target": {
+          "height": 300,
+          "top": 80,
+          "centerX": 256
+        },
+        "layer": 0
+      },
+      "parts": [
+        {
+          "id": "wisp1",
+          "type": "appendage",
+          "roi": [
+            0.8,
+            0.03125,
+            0.2,
+            0.171875
+          ],
+          "socket": [
+            117.67554479418887,
+            65.37530266343826
+          ],
+          "sourcePivot": [
+            0.5,
+            0.5
+          ],
+          "scale": 0.7263922518159807,
+          "angleDeg": [
+            0,
+            12
+          ],
+          "phase": 0,
+          "layer": 1
+        },
+        {
+          "id": "wisp2",
+          "type": "appendage",
+          "roi": [
+            0.8,
+            0.265625,
+            0.2,
+            0.142578125
+          ],
+          "socket": [
+            11.2590799031477,
+            226.27118644067798
+          ],
+          "sourcePivot": [
+            0.5,
+            0.5
+          ],
+          "scale": 0.7263922518159807,
+          "angleDeg": [
+            0,
+            12
+          ],
+          "phase": 0.5,
+          "layer": 1
+        }
+      ]
+    },
+    "front": {
+      "source": "tools/art-review/directional-101/late-waves/derived/w092-front-parts.png",
+      "sourceSha256": "81e8c13be0210d938edc9082f31b8930ba4cddd3558039ddd3d6fac55239bb45",
+      "background": "checkerboard",
+      "pivot": [
+        256,
+        390
+      ],
+      "body": {
+        "roi": [
+          0,
+          0,
+          0.78,
+          1
+        ],
+        "target": {
+          "height": 300,
+          "top": 80,
+          "centerX": 256
+        },
+        "layer": 0
+      },
+      "parts": [
+        {
+          "id": "wisp1",
+          "type": "appendage",
+          "roi": [
+            0.8,
+            0.03125,
+            0.2,
+            0.173828125
+          ],
+          "socket": [
+            4.721549636803874,
+            64.28571428571429
+          ],
+          "sourcePivot": [
+            0.5,
+            0.5
+          ],
+          "scale": 0.7263922518159807,
+          "angleDeg": [
+            0,
+            12
+          ],
+          "phase": 0,
+          "layer": 1
+        },
+        {
+          "id": "wisp2",
+          "type": "appendage",
+          "roi": [
+            0.8,
+            0.265625,
+            0.2,
+            0.15625
+          ],
+          "socket": [
+            2.9055690072639226,
+            223.00242130750604
+          ],
+          "sourcePivot": [
+            0.5,
+            0.5
+          ],
+          "scale": 0.7263922518159807,
+          "angleDeg": [
+            0,
+            12
+          ],
+          "phase": 0.25,
+          "layer": 1
+        },
+        {
+          "id": "wisp3",
+          "type": "appendage",
+          "roi": [
+            0.8,
+            0.5,
+            0.2,
+            0.15234375
+          ],
+          "socket": [
+            131.11380145278451,
+            228.08716707021793
+          ],
+          "sourcePivot": [
+            0.5,
+            0.5
+          ],
+          "scale": 0.7263922518159807,
+          "angleDeg": [
+            0,
+            12
+          ],
+          "phase": 0.5,
+          "layer": 1
+        },
+        {
+          "id": "wisp4",
+          "type": "appendage",
+          "roi": [
+            0.8,
+            0.734375,
+            0.2,
+            0.1484375
+          ],
+          "socket": [
+            133.29297820823246,
+            79.90314769975787
+          ],
+          "sourcePivot": [
+            0.5,
+            0.5
+          ],
+          "scale": 0.7263922518159807,
+          "angleDeg": [
+            0,
+            12
+          ],
+          "phase": 0.75,
+          "layer": 1
+        }
+      ]
+    },
+    "back": {
+      "source": "tools/art-review/directional-101/late-waves/derived/w092-back-parts.png",
+      "sourceSha256": "5e49a292354652dd734eb85d8688495adb98e988da07d2e2d28be2e32ca28cd1",
+      "background": "checkerboard",
+      "pivot": [
+        256,
+        390
+      ],
+      "body": {
+        "roi": [
+          0,
+          0,
+          0.78,
+          1
+        ],
+        "target": {
+          "height": 300,
+          "top": 80,
+          "centerX": 256
+        },
+        "layer": 0
+      },
+      "parts": [
+        {
+          "id": "wisp1",
+          "type": "appendage",
+          "roi": [
+            0.8,
+            0.03125,
+            0.2,
+            0.15625
+          ],
+          "socket": [
+            125.97087378640776,
+            73.54368932038835
+          ],
+          "sourcePivot": [
+            0.5,
+            0.5
+          ],
+          "scale": 0.7281553398058253,
+          "angleDeg": [
+            0,
+            12
+          ],
+          "phase": 0,
+          "layer": 1
+        },
+        {
+          "id": "wisp2",
+          "type": "appendage",
+          "roi": [
+            0.8,
+            0.265625,
+            0.2,
+            0.142578125
+          ],
+          "socket": [
+            8.009708737864077,
+            225.3640776699029
+          ],
+          "sourcePivot": [
+            0.5,
+            0.5
+          ],
+          "scale": 0.7281553398058253,
+          "angleDeg": [
+            0,
+            12
+          ],
+          "phase": 0.3333333333333333,
+          "layer": 1
+        },
+        {
+          "id": "wisp3",
+          "type": "appendage",
+          "roi": [
+            0.8,
+            0.5,
+            0.2,
+            0.146484375
+          ],
+          "socket": [
+            128.15533980582524,
+            226.82038834951456
+          ],
+          "sourcePivot": [
+            0.5,
+            0.5
+          ],
+          "scale": 0.7281553398058253,
+          "angleDeg": [
+            0,
+            12
+          ],
+          "phase": 0.6666666666666666,
+          "layer": 1
+        }
+      ]
+    }
+  }
+}

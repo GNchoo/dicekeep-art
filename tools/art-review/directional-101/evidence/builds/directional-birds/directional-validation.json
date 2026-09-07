@@ -1,0 +1,12 @@
+{
+  "manifestSha256": "4c4f29d7d137d88bc46fb2243722011a6a5677ca430d8bc044b3751d49e5f552",
+  "qaSha256": "32b4001e0a7aa124d8c951a80d658b35b3c2c04b3c6da85882b6adccad3b3d2c",
+  "entries": 2,
+  "files": 24,
+  "decodedImages": 24,
+  "inlineFallbacks": 6,
+  "sources": 6,
+  "ready": 2,
+  "errors": [],
+  "passed": true
+}

@@ -1,0 +1,17 @@
+[
+  {
+    "assetId": "w101",
+    "view": "side",
+    "operation": "horizontal flip only, no rescaling or repainting",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-biped-05-all-parts.png",
+    "sourceSha256": "afbfbed4b000ecd8b454d1a458ad4df67f876e3b0d90935b4a596082d68a09dd",
+    "sourceBounds": [
+      95,
+      905,
+      206,
+      264
+    ],
+    "output": "tools/art-review/directional-101/late-waves/derived/w101-right-body.png",
+    "outputSha256": "39372cdc687b0ead2d853972ec887a95376cae6b5b87ff3b1c88dd4f8b1ac24d"
+  }
+]

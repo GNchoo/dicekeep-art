@@ -1417,6 +1417,14 @@ window.DKCONTENT = (function () {
   };
   const INF_ART_READY = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);   // 예: [1, 2, 3, '10', '20-2'] — casual/enemies/inf/w001.png … casual/bosses/inf/b020-2.png
   const pad3 = (n) => String(n).padStart(3, '0');
+  // Directional art has its own reviewed manifest. The legacy artReady set remains the fallback/size contract.
+  function infDirectionalArt(w, k) {
+    const n = (Math.max(1, w) - 1) % 101 + 1, m = INF_MONSTERS[n];
+    if (!m || (k && (!m.boss || !m.second))) return null;
+    const assetId = `${m.boss ? 'b' : 'w'}${pad3(n)}${k ? '-2' : ''}`;
+    const manifest = window.INF_DIRECTIONAL_ART, entry = manifest && manifest.entries && manifest.entries[assetId];
+    return entry && entry.ready === true ? { assetId, name: k ? m.second : m.name, entry } : null;
+  }
   // 웨이브 w 의 새 그림 (준비된 것만): 일반 { key, src, walkKey, walkSrc } · 보스 k(0 군주·1 부관) { key, src, name }
   function infArt(w, k) {
     const m = INF_MONSTERS[w];
@@ -1496,7 +1504,8 @@ window.DKCONTENT = (function () {
       if (r.boss) return { boss: true, cls: r.cls, hue, prefix, armor: this.armor(w), count: 0, name: '보스' };
       const base = bases.find((b) => b.id === r.id);
       const art = infArt((w - 1) % 101 + 1, 0);   // 새 그림이 준비된 웨이브는 설계된 이름으로 (그림은 game.js 가 spawnEnemy 에서 붙인다)
-      return { boss: false, base, name: prefix + (art ? art.name : base.name), hue, cls: r.cls, move: base.move, tank: r.tank, art,
+      const directional = infDirectionalArt(w, 0);
+      return { boss: false, base, name: prefix + (directional ? directional.name : art ? art.name : base.name), hue, cls: r.cls, move: base.move, tank: r.tank, art,
                count: this.countOf(w, r.cls), armor: this.armor(w) + (r.tank ? 2 + cycle : 0), hpMult: r.tank ? 1.25 : 1 };
     },
     // ---- 방어력: 후반으로 갈수록 타격당 고정 감소, 33의 배수 웨이브는 고방어(버블피시 255) ----
@@ -1540,7 +1549,7 @@ window.DKCONTENT = (function () {
     // ---- 보스 주기는 로스터 기준 (2주기부터 w % 10 과 어긋난다) ----
     isBossWave(w) { const r = this.getRoster()[(Math.max(1, w) - 1) % 101]; return !!(r && r.boss); },
     bossFor,   // (순번, k) → 겉보기 순 보스 (bosses 항목)
-    monsters: INF_MONSTERS, tiers: INF_TIERS, palette: INF_PALETTE, artReady: INF_ART_READY, art: infArt, artList: infArtList,   // 101웨이브 설계 + 새 그림 파이프라인 (ART-PROMPTS.md §6)
+    monsters: INF_MONSTERS, tiers: INF_TIERS, palette: INF_PALETTE, artReady: INF_ART_READY, art: infArt, artList: infArtList, directionalArt: infDirectionalArt,
     tierIndex(w) { return Math.min(10, Math.floor(((Math.max(1, w) - 1) % 101) / 10) + 1); },
     tierOf(w) { return INF_TIERS[this.tierIndex(w)]; },
     paletteOf(w) { return INF_PALETTE[this.tierIndex(w)]; },
@@ -1587,8 +1596,16 @@ window.DKCONTENT = (function () {
     },
   };
 
+  // Visual emitter centers measured in each star PNG's foreground bounding box.
+  // They affect muzzle/travel drawing only; targeting and projectile physics retain their origin.
+  const STAR_TOWER_EMITTERS = {
+    7: [.476015, .367673], 8: [.486486, .284946], 9: [.831461, .323024], 10: [.501253, .196491],
+    11: [.493506, .253311], 12: [.490706, .269841], 13: [.498452, .227740], 14: [.493865, .346218],
+    15: [.503571, .340604], 16: [.438776, .391231], 17: [.504373, .263699], 18: [.491358, .226131],
+    19: [.488950, .263094], 20: [.497706, .243990],
+  };
   return {
-    maps, towerSkins, skinLetters: SKIN_LETTERS, bases, bossBases, species, bosses, stages,
+    maps, towerSkins, STAR_TOWER_EMITTERS, skinLetters: SKIN_LETTERS, bases, bossBases, species, bosses, stages,
     INFINITY, DICE_POWER,
     tiers: TIERS, tierOf, buildLayout, buildArenaLayout, buildArenaLayoutPortrait, layoutArena, makeAvoidFromImage, pathLength, pathAt, pathDist,
     TILE, GW, GH, THEMES, TILE_ASSETS, themeForStage, TEMPLATES_SINGLE, TEMPLATES_DUAL, buildGridLayout, templateForStage,

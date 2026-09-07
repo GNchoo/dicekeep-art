@@ -1,0 +1,256 @@
+{
+  "version": 1,
+  "canonicalCell": 512,
+  "assetVersion": 93,
+  "entries": [
+    {
+      "assetId": "w036",
+      "wave": 36,
+      "role": "normal",
+      "locomotion": "flight",
+      "cell": 256,
+      "referenceHeight": 360,
+      "cycleStride": 0,
+      "cycleSeconds": 0.8,
+      "reviewApproved": true,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/middle-waves/membrane-dragons-side-parts.png",
+          "sourceSha256": "e6c04f326201f3b054ea2913ca81f80a87924bee050e2dc31b98704055d87e78",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            400
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.35,
+              0.48828125
+            ],
+            "target": {
+              "height": 235,
+              "top": 160,
+              "centerX": 256
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.36,
+                0,
+                0.31,
+                0.48828125
+              ],
+              "socketNormalized": [
+                0.6,
+                0.58
+              ],
+              "sourcePivot": [
+                0.95,
+                0.73
+              ],
+              "scale": 0.65,
+              "angleDeg": [
+                20,
+                35
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.71,
+                0,
+                0.28,
+                0.48828125
+              ],
+              "socketNormalized": [
+                0.615,
+                0.58
+              ],
+              "sourcePivot": [
+                0.06,
+                0.74
+              ],
+              "scale": 0.65,
+              "angleDeg": [
+                20,
+                35
+              ],
+              "phase": 0,
+              "layer": 1,
+              "flipX": true
+            }
+          ],
+          "jointReview": "Independent membrane panels anchored at their authored shoulder joints; tucked creature limbs stay intact. Front leftWing is on screen right; back physical left is screen left. Single common canvas scale per part through all phases.",
+          "backgroundSeeds": [
+            [
+              439,
+              267
+            ]
+          ]
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/middle-waves/membrane-dragons-front-parts.png",
+          "sourceSha256": "f77d895ba5740fa6af7c66d73931aae4d15198bbbf155432d90442989833935e",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            400
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.32,
+              0.48828125
+            ],
+            "target": {
+              "height": 235,
+              "top": 160,
+              "centerX": 256
+            },
+            "layer": 0
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.37,
+                0,
+                0.23,
+                0.48828125
+              ],
+              "socketNormalized": [
+                0.78,
+                0.5
+              ],
+              "sourcePivot": [
+                0.07,
+                0.74
+              ],
+              "scale": 0.5,
+              "angleDeg": [
+                25,
+                -30
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.62,
+                0,
+                0.24,
+                0.48828125
+              ],
+              "socketNormalized": [
+                0.22,
+                0.5
+              ],
+              "sourcePivot": [
+                0.93,
+                0.73
+              ],
+              "scale": 0.5,
+              "angleDeg": [
+                -25,
+                30
+              ],
+              "phase": 0,
+              "layer": -1
+            }
+          ],
+          "jointReview": "Independent membrane panels anchored at their authored shoulder joints; tucked creature limbs stay intact. Front leftWing is on screen right; back physical left is screen left. Single common canvas scale per part through all phases."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/middle-waves/membrane-dragons-back-parts.png",
+          "sourceSha256": "661f671c02e923a4217a1721147f285019029550cbab17babe5f8ce1a9f02d83",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            400
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.29,
+              0.498046875
+            ],
+            "target": {
+              "height": 235,
+              "top": 160,
+              "centerX": 256
+            },
+            "layer": 0
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.35,
+                0,
+                0.26,
+                0.498046875
+              ],
+              "socketNormalized": [
+                0.22,
+                0.5
+              ],
+              "sourcePivot": [
+                0.2,
+                0.12
+              ],
+              "scale": 0.43,
+              "angleDeg": [
+                55,
+                38
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.64,
+                0,
+                0.26,
+                0.498046875
+              ],
+              "socketNormalized": [
+                0.78,
+                0.5
+              ],
+              "sourcePivot": [
+                0.2,
+                0.12
+              ],
+              "scale": 0.43,
+              "angleDeg": [
+                -55,
+                -38
+              ],
+              "phase": 0,
+              "layer": -1
+            }
+          ],
+          "jointReview": "Independent membrane panels anchored at their authored shoulder joints; tucked creature limbs stay intact. Front leftWing is on screen right; back physical left is screen left. Single common canvas scale per part through all phases."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "startedAt": "2026-09-07T16:41:02.687Z",
+  "finishedAt": "2026-09-07T16:41:03.545Z",
+  "command": [
+    "node",
+    "--test",
+    "--test-reporter=tap",
+    "test/*.test.js"
+  ],
+  "cwd": "net",
+  "node": "v22.17.0",
+  "exitCode": 0,
+  "counts": {
+    "tests": 90,
+    "suites": 0,
+    "pass": 90,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "sourcePins": [
+    {
+      "path": "game.js",
+      "sha256": "1086c3a566aa777a23f511d1c663e5913165530a117ca919a13f3d8638e26b68"
+    },
+    {
+      "path": "content.js",
+      "sha256": "9f1af8845ced25fedffc02674fc988f09ad796cfb43f14ead1e0cd39f890796f"
+    },
+    {
+      "path": "infinity-art.js",
+      "sha256": "028b6978a22d8b5666c701a28417916463cf572305ce18377b6b685c1a9d218f"
+    },
+    {
+      "path": "directional-art.js",
+      "sha256": "65cbcd5077b2b0bf354c7bb005603bd02ac99c5463d6fc7f2d1d58a6628c3ae1"
+    },
+    {
+      "path": "tools/build-www.mjs",
+      "sha256": "e0de5702e5d5c57c36d448c55032932b55fb074c824deeaa8eb5bc81a49d11ea"
+    },
+    {
+      "path": "net/test/client.test.js",
+      "sha256": "8c5b8d3f75bc4861cb9dcfdc6fee00d6211431f0631a739d47bc42fde5d1616f"
+    },
+    {
+      "path": "net/test/codes.test.js",
+      "sha256": "bd6dcaf742f3dab2cc2e589cadbe88bdad2b74f014d5cbdede2b977fa012e95b"
+    },
+    {
+      "path": "net/test/http.test.js",
+      "sha256": "178dbc7bde48ac36d0b2ab538274772d3f896bf40cbb8400a9a3449767ac2e69"
+    },
+    {
+      "path": "net/test/infinity-art.test.js",
+      "sha256": "411d1154bdd4e7c2c079f5c51f1ec871acfc7efdf564f5b17468f7a2dc0e3d2d"
+    },
+    {
+      "path": "net/test/lobby-core.test.js",
+      "sha256": "ca5882f409d5cf6d1f1e421bd26a5427be7b9dbd7ffac028cb221774accef9f4"
+    },
+    {
+      "path": "net/test/proto.test.js",
+      "sha256": "d55c151057b2e453ac472aad7dee20a4d31ee0f9dfe6e8de662c085839880bab"
+    },
+    {
+      "path": "net/test/ratelimit.test.js",
+      "sha256": "8324149a8d57b6d6267d0cf42d572a52210802d57c601d5dcd44bbbadb4f4caf"
+    },
+    {
+      "path": "net/test/room-core.test.js",
+      "sha256": "b7ee316b3303934a3f862981debf5e9f55f286344a922acb0a2ffe2b611c3098"
+    },
+    {
+      "path": "net/test/timing.test.js",
+      "sha256": "804e5cbf413a13173c39d82cde2fc9abb73e20cdfb76958d6a8edc703d6f54f6"
+    }
+  ],
+  "sourceUnchanged": true,
+  "log": "net-regression.tap",
+  "logSha256": "72e56c42cb1a605805dbb9acc55b141ce3dd76084c81acd1e9fe5ba883de1b52",
+  "pass": true,
+  "error": null
+}

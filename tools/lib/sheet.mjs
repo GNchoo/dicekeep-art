@@ -21,7 +21,8 @@ export function isBgPx(d, i) {
 }
 
 export async function loadRaw(file, { background = 'runtime', backgroundSeeds = [] } = {}) {
-  if (!['runtime', 'checkerboard'].includes(background)) throw new Error('background must be runtime or checkerboard');
+  if (!['runtime', 'checkerboard', 'alpha'].includes(background)) throw new Error('background must be runtime, checkerboard or alpha');
+  if (background === 'alpha' && !(await sharp(file).metadata()).hasAlpha) throw new Error('background=alpha requires an existing alpha channel');
   const { data, info } = await sharp(file).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
   const raw = { data, W: info.width, H: info.height, background, backgroundSeeds };
   validateBackgroundSeeds(raw);
@@ -65,6 +66,13 @@ export function foregroundMask(raw) {
   if (foregroundCache.has(raw)) return foregroundCache.get(raw);
   validateBackgroundSeeds(raw);
   const { data, W, H, backgroundSeeds = [] } = raw;
+  // Reviewed RGBA derivatives already encode the foreground. White hair and
+  // pale edge colors must not be interpreted as a color-key background again.
+  if (raw.background === 'alpha') {
+    const keep = Uint8Array.from({ length: W * H }, (_, p) => data[p * 4 + 3] > 28 ? 1 : 0);
+    foregroundCache.set(raw, keep);
+    return keep;
+  }
   const seen = new Uint8Array(W * H), bg = new Uint8Array(W * H), queue = new Int32Array(W * H);
   let head = 0, tail = 0;
   const push = (p) => {

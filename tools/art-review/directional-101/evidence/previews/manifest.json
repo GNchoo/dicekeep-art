@@ -1,0 +1,2648 @@
+{
+  "complete": true,
+  "partial": false,
+  "manifestSha256": "65cbcd5077b2b0bf354c7bb005603bd02ac99c5463d6fc7f2d1d58a6628c3ae1",
+  "presentation": "Fixed 256px cells; right/front/back; 1.2-second review cycle, not game speed.",
+  "entries": [
+    {
+      "assetId": "w001",
+      "file": "w001-three-views.gif",
+      "sha256": "9d8f6c0102340ee3dab1a9543279fdf641f7477f5af1d23bbb992eced9c74ea8",
+      "bytes": 78332,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w001-side-walk-4x2.png",
+          "sha256": "8fe4b1b781f6c119d5055ee78af266251ff9cad5f286e36ee53f82ca2b9e961f"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w001-front-walk-4x2.png",
+          "sha256": "03cbbe51cb1bf8c36f82d422aad884f14b057e4ad2c980d2f0080d0647a0e923"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w001-back-walk-4x2.png",
+          "sha256": "80b7fd7b9e529b9f907326baf29f53d72e2f930ddd1737b33e20320691d58321"
+        }
+      ]
+    },
+    {
+      "assetId": "w002",
+      "file": "w002-three-views.gif",
+      "sha256": "16c7ceddc9a05759ab5f828075c46e6941fba8f58181029b5bfa583d59668a8f",
+      "bytes": 348667,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w002-side-walk-4x2.png",
+          "sha256": "8ef25bde8ad80a837dcba502fff78b5b1d0c8b3e1f9fe13bdea7a974a8e99254"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w002-front-walk-4x2.png",
+          "sha256": "86bbe310179eceb3a30db5eac5d94f04ef2ec90133c3e0854c078d3600fb9db4"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w002-back-walk-4x2.png",
+          "sha256": "9a07d09b300655f3852e953f544ee7e784ebb4df69cac9ca493c5b300d9b69fc"
+        }
+      ]
+    },
+    {
+      "assetId": "w003",
+      "file": "w003-three-views.gif",
+      "sha256": "60d228e6cfcafd26658459788561dc75f7c050ec9a7b4b999358ebb24402e7ba",
+      "bytes": 447375,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w003-side-walk-4x2.png",
+          "sha256": "852101c1587b1433bb551b2a99f57432635b66281c984509ca2bf40eba79471d"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w003-front-walk-4x2.png",
+          "sha256": "0b5dcccd59617d38dfbc94cec4b3a2ad8641397d996a2e5eae526b84b00764de"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w003-back-walk-4x2.png",
+          "sha256": "6bf741540a3d708ac7374ac720554535d16bbf13b1af3f4681304533e3046e8e"
+        }
+      ]
+    },
+    {
+      "assetId": "w004",
+      "file": "w004-three-views.gif",
+      "sha256": "f716ecfbaa7e572b6c6c21223f317a87e55ed6f2c3a6ae224982b4436c8bf218",
+      "bytes": 130258,
+      "frames": 4,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w004-side-walk-2x2.png",
+          "sha256": "298e1e10e8d2f9bbe7fdaf428beba5ab2bfa4067cf0b8ff3554bd32ee574c7c8"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w004-front-walk-2x2.png",
+          "sha256": "0036804dcadbe7b523c2d2dd80b8b5b1a7f12398ab68fcd5f51577c149c9be69"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w004-back-walk-2x2.png",
+          "sha256": "39d3e4d866a9dc1c6e5c67dc49dd7b7cd709b3b6a4411d1dfd26498c88ce6efe"
+        }
+      ]
+    },
+    {
+      "assetId": "w005",
+      "file": "w005-three-views.gif",
+      "sha256": "ce8bd28c9afbe7118c7fb5f5bd977fdd0afd32de37ffb5284c4f2f383982df61",
+      "bytes": 507499,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w005-side-walk-4x2.png",
+          "sha256": "6ce7ca5b5e0b14e1a0a39e85ec56c387315ff8290049f7c6a09c87364e1cff0b"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w005-front-walk-4x2.png",
+          "sha256": "61d32517290baf7dcc3d78985f1ab789bf07664cb882195d77044744b7244396"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w005-back-walk-4x2.png",
+          "sha256": "c84a0ca5f2b9a8e375a7f5d724cca567634d263625fb43cea34be907d1248425"
+        }
+      ]
+    },
+    {
+      "assetId": "w006",
+      "file": "w006-three-views.gif",
+      "sha256": "aad12bfed2947fbfbc896d84b82dc423b3fbebb4e50b042ee2577cd619431a89",
+      "bytes": 156168,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w006-side-walk-4x2.png",
+          "sha256": "d6a6ebab93b63ae9482381a6caf2377492b2c11e5eb8cf63b9bf92fd57cb1ab8"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w006-front-walk-4x2.png",
+          "sha256": "951ae86e32445f80434c739d9b886f934dddb4196ae39d949f99cb037293420a"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w006-back-walk-4x2.png",
+          "sha256": "0c0c73cb89baed7aefb0c6b5e51a5688c72e1c984e6314b840f2f65f2bbe80c6"
+        }
+      ]
+    },
+    {
+      "assetId": "w007",
+      "file": "w007-three-views.gif",
+      "sha256": "f547a2edb1946a604d9a909a61ba531769c7063a7a7a0b9634162742aa440b07",
+      "bytes": 430249,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w007-side-walk-4x2.png",
+          "sha256": "7b21518ee168902d091c4fac44fcf725a2a76d8f6cdf8fd06499d445260f5a4f"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w007-front-walk-4x2.png",
+          "sha256": "9345db1d2a605d75e1ad4555b4ffc20c66f0dbed4397c70dac2bb57be2eab005"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w007-back-walk-4x2.png",
+          "sha256": "ebcd94d6c537306a123cef5e3e5296a94f612065f6934099247a1257b1693ff8"
+        }
+      ]
+    },
+    {
+      "assetId": "w008",
+      "file": "w008-three-views.gif",
+      "sha256": "eabff80b725d1fdda9eaa93fb27b1d562fd7a4f30353a57f2ef092962c47ad3f",
+      "bytes": 126749,
+      "frames": 4,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w008-side-walk-2x2.png",
+          "sha256": "14498b667c50fd872efc0a378902e06d3a7bf1f57b445cca0e45e098ae41a250"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w008-front-walk-2x2.png",
+          "sha256": "c6af1310751e855533e394f79bd7091c4f0bff2f2b878b82d8f1b54bc16c8c03"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w008-back-walk-2x2.png",
+          "sha256": "ab7918623b0ff37eae5cff00fcda996f9261ab5bf2c64ecf7dfbf5c91b68905f"
+        }
+      ]
+    },
+    {
+      "assetId": "w009",
+      "file": "w009-three-views.gif",
+      "sha256": "4d876560a5f8455701d36cf5fe16df495890ab0a9d7fad6ed1b6107268ebf679",
+      "bytes": 463682,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w009-side-walk-4x2.png",
+          "sha256": "f21e8a319a1c9b8107af173dc895d6a4f57a4f7230721c569c2f8008c951dc54"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w009-front-walk-4x2.png",
+          "sha256": "5cff63a7a44fc95f9975d6dc6cc73277dfdd999fe90917a5391dc2b1193edd36"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w009-back-walk-4x2.png",
+          "sha256": "b28d871192e7db61930577fbc7c2cd1dc0e0bae151e4b0a78d6b8164596ecc7c"
+        }
+      ]
+    },
+    {
+      "assetId": "b010",
+      "file": "b010-three-views.gif",
+      "sha256": "f1ddebecfaab1bcc851affc3cfab111ffba4c5cd14acf23e80705159850d2e32",
+      "bytes": 382900,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/bosses/inf/directional/b010-side-walk-4x2.png",
+          "sha256": "e73eeb18cb1b83ba2d0e7ab031a24467886b17f3ab9ff170ffbafea5abbda5ee"
+        },
+        {
+          "view": "front",
+          "file": "casual/bosses/inf/directional/b010-front-walk-4x2.png",
+          "sha256": "ccc2d31493aac909b847278b779e593b66bfc7d3f0bb1f9809a8c659727272ae"
+        },
+        {
+          "view": "back",
+          "file": "casual/bosses/inf/directional/b010-back-walk-4x2.png",
+          "sha256": "72a8d64910c7150238bce049202a782dc4c1165ad2a9187c7cd5a3ea0658e942"
+        }
+      ]
+    },
+    {
+      "assetId": "w011",
+      "file": "w011-three-views.gif",
+      "sha256": "c43ad12cde5b1f47e8449f79e16044c3277b934cb7ced925d94d3fb7e61c4e88",
+      "bytes": 137072,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w011-side-walk-4x2.png",
+          "sha256": "d364c2d0bdff76a8403fb7264a02a4ddddab4d68d73c24260b1de3ffbd14aa5c"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w011-front-walk-4x2.png",
+          "sha256": "da5c5e53209c7a9e26ec4ad5178f2b8955dce1338ca822e6fa47d11e03814014"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w011-back-walk-4x2.png",
+          "sha256": "3ba212368a773cb5c3d581f4bd1ec588d910998558d7e34ca167637aac3ad78f"
+        }
+      ]
+    },
+    {
+      "assetId": "w012",
+      "file": "w012-three-views.gif",
+      "sha256": "1c7379f26b6e2cb87c697ce0d22089dd7234a064f6b9315051522acd66ca8269",
+      "bytes": 111021,
+      "frames": 4,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w012-side-walk-2x2.png",
+          "sha256": "16594f0f595818f753c9927e85b61aab74510ca787165a81616333e12e71dcc8"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w012-front-walk-2x2.png",
+          "sha256": "d47da57f6a58c7dbd23de563086186e50f57da5613a7a0bbb4f056477e95b38c"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w012-back-walk-2x2.png",
+          "sha256": "c5bb6bf9b1dcd771960942d7fc4d45a2dc6af75ed1b3fd7097fdc2810ce3fb7f"
+        }
+      ]
+    },
+    {
+      "assetId": "w013",
+      "file": "w013-three-views.gif",
+      "sha256": "0df72eca6d7931cf216a40b639b51880d4068c0b0213acb31c68e2a9a18603ae",
+      "bytes": 115752,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w013-side-walk-4x2.png",
+          "sha256": "25a4ed840d3b78da90225b8006ba102a9c9f73c943fbab496d99f218a7400e03"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w013-front-walk-4x2.png",
+          "sha256": "30016a8b276daa8b6c2304e024d7ec255b637a3467e1480b8177181dcc7ac6a3"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w013-back-walk-4x2.png",
+          "sha256": "d45415b0922a6e6cbc51f1f623e3bb1f2cc81e3934057df081f195841b76aa7a"
+        }
+      ]
+    },
+    {
+      "assetId": "w014",
+      "file": "w014-three-views.gif",
+      "sha256": "5f41004937da365992277a583b82afa68b6acc07354299a57354a15f23fa6f5a",
+      "bytes": 122028,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w014-side-walk-4x2.png",
+          "sha256": "bf6a74962fb87da8ca010d22e40c0f08f6f939f79949c00c76c9d47fa87122cd"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w014-front-walk-4x2.png",
+          "sha256": "b28e0bfe10d8f2f6688f63710ec66c6d0389dd74cec8dad1ce1d43139ed67f41"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w014-back-walk-4x2.png",
+          "sha256": "31b6a3e09093c3359a785da7bcb2a29e887da92ae8df2d388681dc5d10c4ab99"
+        }
+      ]
+    },
+    {
+      "assetId": "w015",
+      "file": "w015-three-views.gif",
+      "sha256": "9b18095b311157cc8f9c943b0fb156b0fce6b7827911fe10b4909bcfd1c099a0",
+      "bytes": 410285,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w015-side-walk-4x2.png",
+          "sha256": "9aa89d95e5a4f865ffb8459153f9983083ca954744bf59afd3c8e769da6b6a0d"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w015-front-walk-4x2.png",
+          "sha256": "6fcc1be487c898ac894f4cc21dcd06fcee30120de3db906b1bda61aed22ae47b"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w015-back-walk-4x2.png",
+          "sha256": "f77f7af70ef315d4cbdcff7018e3350b05e22bbf45610369853ca91894b5e4df"
+        }
+      ]
+    },
+    {
+      "assetId": "w016",
+      "file": "w016-three-views.gif",
+      "sha256": "16515cae57de43dd5c5c953bf4617d0c25391fc5b990ce291fbb4bec053af0b0",
+      "bytes": 106910,
+      "frames": 4,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w016-side-walk-2x2.png",
+          "sha256": "db11d14c301dac97db613d74ec0721531a1e7e7ebb3bcdb240d999fc8592155c"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w016-front-walk-2x2.png",
+          "sha256": "a4601b37abeb0593882fdcafbd891ee6ccf3ae48720c9a12c4222ae62a7e5cf2"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w016-back-walk-2x2.png",
+          "sha256": "74b757d6b0b25dd92b4156bdc03d7ba5cc3b4318530a39513d75e872a04074f1"
+        }
+      ]
+    },
+    {
+      "assetId": "w017",
+      "file": "w017-three-views.gif",
+      "sha256": "93d20af4461b3d734384eb990d26716eb1336e705fc0427944df17a02873765b",
+      "bytes": 146790,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w017-side-walk-4x2.png",
+          "sha256": "82081fe006cda0969925f425483c61401afdf2b3b0d733f7092e213b1924b614"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w017-front-walk-4x2.png",
+          "sha256": "812e43a59c9288181843deffcfd294f8800bb89a89e612b588ab8a618d6bff6b"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w017-back-walk-4x2.png",
+          "sha256": "9ed6915bf0bbda319996a7dd701c4c1d2c5588736d8ea2f811b40e779ef02e92"
+        }
+      ]
+    },
+    {
+      "assetId": "w018",
+      "file": "w018-three-views.gif",
+      "sha256": "08979bcb5cd40c860f8b031ea3d6ef3eeacea1ca1898373218543b341d4bc0b9",
+      "bytes": 102324,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w018-side-walk-4x2.png",
+          "sha256": "c311b52c553e983f7ea70537f223d19ae0f793f23d94b870c6de6269bde00fbc"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w018-front-walk-4x2.png",
+          "sha256": "e2d6e50b9a45dfb6272dbca5fb030ab85bd7cc4a364319db430900a2bcb87a21"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w018-back-walk-4x2.png",
+          "sha256": "44f48486cb63329d935b0751c4b755b4c9b14cd3535266928bf9f8f2ada2277c"
+        }
+      ]
+    },
+    {
+      "assetId": "w019",
+      "file": "w019-three-views.gif",
+      "sha256": "e15a0abb671b24e94d60cd73cbcacb04b8c6432150050c2c82e0135bae0db933",
+      "bytes": 159566,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w019-side-walk-4x2.png",
+          "sha256": "cfedd00a04adc3904210bee674401607a3f00c3813e37019138237f1aee8a732"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w019-front-walk-4x2.png",
+          "sha256": "7278c364e761309ee6f675b01bc557a7b5570d189bfc09eecb1251f7d3cd9736"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w019-back-walk-4x2.png",
+          "sha256": "af47723f5145faa7634b5f9a4bdfe888ae6a745800b77474c3fd84eff4d025dd"
+        }
+      ]
+    },
+    {
+      "assetId": "b020",
+      "file": "b020-three-views.gif",
+      "sha256": "459978b62bc9b19b4881313fd3907488ff886450c45c7e9bb4e63a5b812cba79",
+      "bytes": 439731,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/bosses/inf/directional/b020-side-walk-4x2.png",
+          "sha256": "79cc1f3c8950421bc68091ab335884430704400fb3b29a368395aa5a6e6b7a7e"
+        },
+        {
+          "view": "front",
+          "file": "casual/bosses/inf/directional/b020-front-walk-4x2.png",
+          "sha256": "b5eb9d2ecebc0bbabebe17752da3ad1c4cf3526de1df991e6701291d83033c3f"
+        },
+        {
+          "view": "back",
+          "file": "casual/bosses/inf/directional/b020-back-walk-4x2.png",
+          "sha256": "42675b571371b279474318446fe72672ab2852f31250b920cd77c9e9295d435d"
+        }
+      ]
+    },
+    {
+      "assetId": "b020-2",
+      "file": "b020-2-three-views.gif",
+      "sha256": "01071a2cf4508c6e5aea7ba231aae26d48c93a98088a4307d29ac3bfdb76a8c8",
+      "bytes": 154295,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/bosses/inf/directional/b020-2-side-walk-4x2.png",
+          "sha256": "cfb3246aa8e5006f042181f3f7cab5218db3a4aee052fc33586b01fd11a4be67"
+        },
+        {
+          "view": "front",
+          "file": "casual/bosses/inf/directional/b020-2-front-walk-4x2.png",
+          "sha256": "75efe73c837bd9ccc44b3171da725050a9bf539cdc66447784a9d37f180256f2"
+        },
+        {
+          "view": "back",
+          "file": "casual/bosses/inf/directional/b020-2-back-walk-4x2.png",
+          "sha256": "ad5213313c13a4dc7192895fca17879049e9162604dbbb2af8b23c711e1f289f"
+        }
+      ]
+    },
+    {
+      "assetId": "w021",
+      "file": "w021-three-views.gif",
+      "sha256": "348aeada11b532db9eca018dda6f691d347e03d348b3eb5bea9ed35702220ab3",
+      "bytes": 95848,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w021-side-walk-4x2.png",
+          "sha256": "47046ecae640e873d0106cbcb9682ac35fd2b3cc8f0ce8cf7ca658372ab63d2a"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w021-front-walk-4x2.png",
+          "sha256": "18fe53dd95763050d834a1dc2e9beed1667e3892156f08e14044068f3063a38a"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w021-back-walk-4x2.png",
+          "sha256": "661a40f2fe128b7b171a65333cca4d10f445c9125edf0d6426cfa6a30ad8efd6"
+        }
+      ]
+    },
+    {
+      "assetId": "w022",
+      "file": "w022-three-views.gif",
+      "sha256": "20e06ec8ecc9f671afff57873694d42387edf1c54bd8902e992bdd571beb1457",
+      "bytes": 86420,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w022-side-walk-4x2.png",
+          "sha256": "fb977afc22f439eb7c9372dcec95c3d24f3d03cf9eedc5d434f46ada950df69b"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w022-front-walk-4x2.png",
+          "sha256": "ab52bc759645047846e7c379955162966b3974c4016a3c93c0fe2d07c7402168"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w022-back-walk-4x2.png",
+          "sha256": "986845d5b41d4d74bc73eecadbb004fc8531c4227bd049481e841fdbc3c249b6"
+        }
+      ]
+    },
+    {
+      "assetId": "w023",
+      "file": "w023-three-views.gif",
+      "sha256": "0f29245fe60bff279c7095a93cabd8e1137f499c59a0a510c2ebee7c5552c458",
+      "bytes": 104659,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w023-side-walk-4x2.png",
+          "sha256": "456583207b54e2bd997390221d207b35f9288910b0f0c01a51f39bda8ca6ed3a"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w023-front-walk-4x2.png",
+          "sha256": "2ab55bc8b5ba94c80edc164fa6956aa7c9fc8b41913302b7b734f88039177f58"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w023-back-walk-4x2.png",
+          "sha256": "5f62af7d39fc4183f34c6e4cf13425ca346c5e58e5760890981d4a2b6ee839ba"
+        }
+      ]
+    },
+    {
+      "assetId": "w024",
+      "file": "w024-three-views.gif",
+      "sha256": "42968c9d2fa386d7331b8ee53466ae087b7ea90804577b68cd38674722341f96",
+      "bytes": 82242,
+      "frames": 4,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w024-side-walk-2x2.png",
+          "sha256": "c5ca854b5285633f932eb664ff365a100e16a488457997197de5d65ead5d6a4f"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w024-front-walk-2x2.png",
+          "sha256": "4505e942ddbe486c7952550f4247c0214471566e1f5c5d814bbd94a6a3c3d718"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w024-back-walk-2x2.png",
+          "sha256": "0429a3c422075486fc92b819bcb48ee17baa940fc86d3476b07f2ef5aef24a6c"
+        }
+      ]
+    },
+    {
+      "assetId": "w025",
+      "file": "w025-three-views.gif",
+      "sha256": "92fb4cc7660d833c91c3cf0df11445f841b17f5d0e8157225be026d5c55da329",
+      "bytes": 156156,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w025-side-walk-4x2.png",
+          "sha256": "8f7ff6b6c05b2e4673a36c7060544b5e98c5e0955a6131b0771db01016105c73"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w025-front-walk-4x2.png",
+          "sha256": "dc2f632516ab68be3e6ae0204f776d682c3396c9ffcbeda76f893ac6cfcface8"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w025-back-walk-4x2.png",
+          "sha256": "1b0afbcfb5ca4885c80ee045943bd7f55b85153ceeb017830996f80791ec1fa7"
+        }
+      ]
+    },
+    {
+      "assetId": "w026",
+      "file": "w026-three-views.gif",
+      "sha256": "2064d08a33278976fb50b15b25cfbdcc5d6456bc57e9d2a2a60061fc02dd420c",
+      "bytes": 191309,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w026-side-walk-4x2.png",
+          "sha256": "9b9aa2d84c0d751040450b09987b21101596eb0e240b04f76622c112dc8122ed"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w026-front-walk-4x2.png",
+          "sha256": "34016bd54be02b969589bfc74288f7d060990fd31f63fe19a9e6a8bb240b48a7"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w026-back-walk-4x2.png",
+          "sha256": "e0686d7be10c616aa64c7746a4cb879a4778d95419623f98666f714920493df7"
+        }
+      ]
+    },
+    {
+      "assetId": "w027",
+      "file": "w027-three-views.gif",
+      "sha256": "7fc7436222bd807826ee2fa0cfacd624660ca11633e63fd8c18351014eacd9e9",
+      "bytes": 117273,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w027-side-walk-4x2.png",
+          "sha256": "2b040d2c2cbcc1575ff164a54d387d590d41c4e352bf944273f7f7c88fc48c3a"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w027-front-walk-4x2.png",
+          "sha256": "cdf0ef55ed4583d5a079c16f66d11a4d62042d2775f8b3eff3afb3a1da90975c"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w027-back-walk-4x2.png",
+          "sha256": "b6f247817afcef83574ec9709e62020df3af5df658f9c0ca9344ce7e5c2b5dce"
+        }
+      ]
+    },
+    {
+      "assetId": "w028",
+      "file": "w028-three-views.gif",
+      "sha256": "d6d71e3bb546f6424b59e0f5e5b2dff141bf30ceefb8b7222bbd0ec12cb36781",
+      "bytes": 151181,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w028-side-walk-4x2.png",
+          "sha256": "47e73c821289e62971e54796511972b9c987485abdec557a1441f1cd38a3a958"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w028-front-walk-4x2.png",
+          "sha256": "77e0005013309432144d7970164dfad4ab7eae2145275fb1bf5194024ed0915c"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w028-back-walk-4x2.png",
+          "sha256": "70c87932a1d2fb104306a569d5920bcfcb5a5e902c3a25870e4b25462d6750f5"
+        }
+      ]
+    },
+    {
+      "assetId": "w029",
+      "file": "w029-three-views.gif",
+      "sha256": "1befe4ac28f0cd706a4953fb2c305d21e5cb4d4b5bcba90a40f184277d94fd37",
+      "bytes": 80777,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w029-side-walk-4x2.png",
+          "sha256": "a2974bff44d9d06126ef93addb1d7e058aa086aebcd7e994550c6da5fc8936cc"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w029-front-walk-4x2.png",
+          "sha256": "85eecbd98d94564d5e2033828b4193ff82d10ea218139c88097a771d02dfe5e1"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w029-back-walk-4x2.png",
+          "sha256": "05fe6819ade12873a7cc1be5aca577816b8837f0e09b183a96ca4da6f9791b95"
+        }
+      ]
+    },
+    {
+      "assetId": "b030",
+      "file": "b030-three-views.gif",
+      "sha256": "7c4e864d9efd06a6a48012da3b9354520712f25df01eddfdc24a02fe19e69c2c",
+      "bytes": 365025,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/bosses/inf/directional/b030-side-walk-4x2.png",
+          "sha256": "c12d0bffce2813dbec6fea81af9f5b1df86fbbd54c39e0527ed61fa3b4248797"
+        },
+        {
+          "view": "front",
+          "file": "casual/bosses/inf/directional/b030-front-walk-4x2.png",
+          "sha256": "80e6b4699fae533714f0fdbb97063daf6fbc0753750fe6d4100d3e84feebf93e"
+        },
+        {
+          "view": "back",
+          "file": "casual/bosses/inf/directional/b030-back-walk-4x2.png",
+          "sha256": "b70f6abb086fb8bbd0daf2b4f47733020d83349b9dc3cdf0359815cbdd2a8ab2"
+        }
+      ]
+    },
+    {
+      "assetId": "b030-2",
+      "file": "b030-2-three-views.gif",
+      "sha256": "b421a1a222f461c5486633c24442f022b04d8dfea4c3f3249afbd4d2511c151f",
+      "bytes": 105788,
+      "frames": 4,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/bosses/inf/directional/b030-2-side-walk-2x2.png",
+          "sha256": "a1a813d49b7fa82f591597de27ba7e2f3f284aedb55ce890023280bd599bffde"
+        },
+        {
+          "view": "front",
+          "file": "casual/bosses/inf/directional/b030-2-front-walk-2x2.png",
+          "sha256": "844f90f01cbdee98ee34219cdb310d99f3ea96efcc785af6034661b3798bb6eb"
+        },
+        {
+          "view": "back",
+          "file": "casual/bosses/inf/directional/b030-2-back-walk-2x2.png",
+          "sha256": "729feb9327c70bca10edbfd11205ab1db4e2e5c57b61844feb87405e7ecc0352"
+        }
+      ]
+    },
+    {
+      "assetId": "w031",
+      "file": "w031-three-views.gif",
+      "sha256": "a0a741567c156555d9d2ac3f88144f90c0263f2a2e451989617f56b1b2177f2c",
+      "bytes": 403002,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w031-side-walk-4x2.png",
+          "sha256": "eeff7d63c0c562f6ecf9453b148fa742069a4179ad1aa42383d466451bcd120b"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w031-front-walk-4x2.png",
+          "sha256": "c8b901a04b0da28e02cb8dcc68b20015939aa166b123467385f9f93e34b14759"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w031-back-walk-4x2.png",
+          "sha256": "295ac756444ef043857e3583b8c562b745537a2226e59101fb8e67d27fe9489e"
+        }
+      ]
+    },
+    {
+      "assetId": "w032",
+      "file": "w032-three-views.gif",
+      "sha256": "04560b6e6aa4d7e911fff4aa2807352a2c04f039eec0a283ef3476587d0d7c35",
+      "bytes": 95282,
+      "frames": 4,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w032-side-walk-2x2.png",
+          "sha256": "6adc1a67a2f210e7d0fddbb54d86a6b86106a7d9bd64ef9cf452fccbeaceb806"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w032-front-walk-2x2.png",
+          "sha256": "5d6ded54b8d326bce0deabf7f77475c1bdeb66fcc32e545004fffce99fcf0eef"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w032-back-walk-2x2.png",
+          "sha256": "8f2fb38bce0c94065cb5d0714f21366ddd75d46cb9f4130639f5f397eceb3d28"
+        }
+      ]
+    },
+    {
+      "assetId": "w033",
+      "file": "w033-three-views.gif",
+      "sha256": "d6a7ccf5ef6c77b67ad5fcc6c9503d64516b3e54997c76b7af72364db9970245",
+      "bytes": 556391,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w033-side-walk-4x2.png",
+          "sha256": "cc3cddcf92a96208c0f14f7e18ee9570badfa60189d065160dab3b4366eed5c2"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w033-front-walk-4x2.png",
+          "sha256": "ff5d1e566b7f4ba92f03d4093548cb77c222ccaa7647a21f7fa2b89a085a7eb9"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w033-back-walk-4x2.png",
+          "sha256": "ad06eae18f8d98814e3e27c70d6d71fe3834cda820951aac8385deba9930bdde"
+        }
+      ]
+    },
+    {
+      "assetId": "w034",
+      "file": "w034-three-views.gif",
+      "sha256": "a2a0fde2cd21ef00189d30467eacbaad9cc59d3ddb67b3a98a57d16a7cd0a092",
+      "bytes": 458424,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w034-side-walk-4x2.png",
+          "sha256": "41c54078043521e8e1a03c43de0925f073d923369d14532e057f381cb261a241"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w034-front-walk-4x2.png",
+          "sha256": "95820ad993165611692b4da35d24a80dca5cc2b096c2814323a2bd6c573d4e87"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w034-back-walk-4x2.png",
+          "sha256": "0327e0a3457521891bbbff71019719c544631457fba8feeac1040604378499ca"
+        }
+      ]
+    },
+    {
+      "assetId": "w035",
+      "file": "w035-three-views.gif",
+      "sha256": "7822c433780ace9626087c9677375142c685b024eb1b99e1c60b54641e43783b",
+      "bytes": 477253,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w035-side-walk-4x2.png",
+          "sha256": "e53e2f5ce16571cd78347adf2e5c5bbe870091c18562267de545baf1978f1589"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w035-front-walk-4x2.png",
+          "sha256": "18821348d0ef0a08bc850425a620e803da9a966a703446780dd50ac071e55169"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w035-back-walk-4x2.png",
+          "sha256": "414eeabdeeff7b35d992ccb514a1e0628cba70f97472732fdc6c57789ac3b795"
+        }
+      ]
+    },
+    {
+      "assetId": "w036",
+      "file": "w036-three-views.gif",
+      "sha256": "323e5dceb8f0ff53a18d068003b0d2502fad28387f34f6d6ef619e47e427730b",
+      "bytes": 94882,
+      "frames": 4,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w036-side-walk-2x2.png",
+          "sha256": "93baaaed07978ec1b6cb12f789c6b943366022c5500db058e1fa38caf900cae8"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w036-front-walk-2x2.png",
+          "sha256": "8a1cd3379cbadf7601235d5710b143c68d600e3c06dbf96b77cb24f80edecea8"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w036-back-walk-2x2.png",
+          "sha256": "b28be6f8b89e0289dcd9b8bcfb02ac6769e2b5492cf528c340556dc745ca04e3"
+        }
+      ]
+    },
+    {
+      "assetId": "w037",
+      "file": "w037-three-views.gif",
+      "sha256": "6f8157f4063acb020ff7e721eb23fe7118e782b60a8b3ba45ab9c1fd5dbccb20",
+      "bytes": 392686,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w037-side-walk-4x2.png",
+          "sha256": "61459ec9575cfdd7bb869598ae70153fbf07d53bae4d89b3deed6fb63bfae53a"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w037-front-walk-4x2.png",
+          "sha256": "1925514cafb773000bb2c4f3730ca0f24d76699fd415a8f0e3cc8783208eb416"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w037-back-walk-4x2.png",
+          "sha256": "c5bd2b2e6750c4b2db1c7620ea7f80c11e35c8e3ce64105175d80bf848b19712"
+        }
+      ]
+    },
+    {
+      "assetId": "w038",
+      "file": "w038-three-views.gif",
+      "sha256": "3a8e9a06ba69f18384657c5e5452fd7700d2eacc0f0b6c1a99aff618d2913411",
+      "bytes": 402390,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w038-side-walk-4x2.png",
+          "sha256": "e76c5f614a579b1806686069365ffdc1b8f8dad40ab80d1d147596cc8ef5663c"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w038-front-walk-4x2.png",
+          "sha256": "05a1ba551594e33f9cfd23436a20ac23b983f08fcd8bf912391b2d39261664b7"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w038-back-walk-4x2.png",
+          "sha256": "8251830c014aaf2684543138c017949f23c05dc60cdd37cd851572438967cc07"
+        }
+      ]
+    },
+    {
+      "assetId": "w039",
+      "file": "w039-three-views.gif",
+      "sha256": "d6c20c11f61720951ff8c3d11a9a15aa923c4edc9c831a2462d8f59a3970db4c",
+      "bytes": 412788,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w039-side-walk-4x2.png",
+          "sha256": "31fc7f83e8f40f5410d3851896a1b9011f5f4cf4de8593b874f50e8e872da8ea"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w039-front-walk-4x2.png",
+          "sha256": "0561cd501eb75f6be73dff48033aa166150c0f680d76298abbb36e3dba1f54df"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w039-back-walk-4x2.png",
+          "sha256": "93dd5f95c12ea93a320487581a4fa9e1dc7e310f6ce2e68c298237142079c05d"
+        }
+      ]
+    },
+    {
+      "assetId": "b040",
+      "file": "b040-three-views.gif",
+      "sha256": "e02f5b7b93f21cb4b1aadcedd3c819472d40259c591c643eab808ec733d5fc3e",
+      "bytes": 410508,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/bosses/inf/directional/b040-side-walk-4x2.png",
+          "sha256": "ee0162be7f773e9b5036111ed80efa568fb36e01cdfb17a3fe072c1e877c48d8"
+        },
+        {
+          "view": "front",
+          "file": "casual/bosses/inf/directional/b040-front-walk-4x2.png",
+          "sha256": "8221a23613a1eca2ed254c214ef6347137026dc3b4fba5714fa14fdabb34fe0a"
+        },
+        {
+          "view": "back",
+          "file": "casual/bosses/inf/directional/b040-back-walk-4x2.png",
+          "sha256": "975653ff5c1b559d11465d6a8ef28a0d358d7a927f772a44efc2a7be9f1932e6"
+        }
+      ]
+    },
+    {
+      "assetId": "b040-2",
+      "file": "b040-2-three-views.gif",
+      "sha256": "e5d43a967d9187b7cbf72a465b4ad79424eba739958bb73f3eb3fab4ce417832",
+      "bytes": 515267,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/bosses/inf/directional/b040-2-side-walk-4x2.png",
+          "sha256": "50d669f633e668d4cd5e4e5780d39552a669c3c0aabd6ed5ed21d6c9d415ea36"
+        },
+        {
+          "view": "front",
+          "file": "casual/bosses/inf/directional/b040-2-front-walk-4x2.png",
+          "sha256": "6c7ea33142bd1ad17f54e3bfa64f98895548397c89c7f4adf37fdc782c7cd78a"
+        },
+        {
+          "view": "back",
+          "file": "casual/bosses/inf/directional/b040-2-back-walk-4x2.png",
+          "sha256": "9a2c3954121530ddc48fc94f5dfeb187a78dd63d98617099e2ce6a6faa7bcf63"
+        }
+      ]
+    },
+    {
+      "assetId": "w041",
+      "file": "w041-three-views.gif",
+      "sha256": "340821f2203d8668460c5e9769592c1ce070dc77aa5122c2ffee31cefa55219d",
+      "bytes": 439307,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w041-side-walk-4x2.png",
+          "sha256": "047ca63d12227dba4befcebdd63c86eceeb19fbe181301cff9db2b3140e40088"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w041-front-walk-4x2.png",
+          "sha256": "649567de8deb9b07535c1af20d8b1b07ea5c47be6e1b5b6d3b71d32a6bb7f674"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w041-back-walk-4x2.png",
+          "sha256": "a5b710cb26f7b5b5fd3b66ea4302edb6535749c1e9cb74e1368f37d9516c0d07"
+        }
+      ]
+    },
+    {
+      "assetId": "w042",
+      "file": "w042-three-views.gif",
+      "sha256": "8a76923f4c51cd23815e629fa378276fc77b95b14e5a761ffa927429151c5420",
+      "bytes": 424985,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w042-side-walk-4x2.png",
+          "sha256": "c953e05c137c068c34ccbea16dc3a7b709baee828a6cb6c6758f1fa2e1450eda"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w042-front-walk-4x2.png",
+          "sha256": "4698b767bfe03ff485655baf23b8ae8a1bb8807f5c07ab46241e4f7a31c0b334"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w042-back-walk-4x2.png",
+          "sha256": "db2761dbe987fec017b7bfbc2b7bf72429c89ef39e7693af68815e4c28fbd924"
+        }
+      ]
+    },
+    {
+      "assetId": "w043",
+      "file": "w043-three-views.gif",
+      "sha256": "5f576bc373ca752e60fe1a26c0a9153dcb2073baff4c25f444ecc1b3054cb08f",
+      "bytes": 173936,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w043-side-walk-4x2.png",
+          "sha256": "48c726d62093b3d761d079970c258cb70e0b3b5e304ea2cfd863d457d27523e3"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w043-front-walk-4x2.png",
+          "sha256": "807f5ff73879f04d7954c065ca802a9f0688903eb6bbbb6000af0a7b75a4188f"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w043-back-walk-4x2.png",
+          "sha256": "16ba28a8e02398fbfe96bb60e6a78863d9f90ba95bb9fd8775fa96c56c1f1294"
+        }
+      ]
+    },
+    {
+      "assetId": "w044",
+      "file": "w044-three-views.gif",
+      "sha256": "28e99e8f3b59e5aeca99394b3556ec9e40658779685edd2534fb2d117c2c4496",
+      "bytes": 88290,
+      "frames": 4,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w044-side-walk-2x2.png",
+          "sha256": "9caf98d08b68de33750a5ab82ff48f205633d1a1c682396f7fd91fdc6565ee73"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w044-front-walk-2x2.png",
+          "sha256": "385f9671948934517368c71ccbad96778e501061e6c8c7ac2f0a70edca09874f"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w044-back-walk-2x2.png",
+          "sha256": "3489f00a46df7fa524024b084408a40be34797e19a97c680960d264912292a78"
+        }
+      ]
+    },
+    {
+      "assetId": "w045",
+      "file": "w045-three-views.gif",
+      "sha256": "05b249f7784befbc322248917f88bdf854f7b4782fe2657e4e6bd8fe340e7d38",
+      "bytes": 477152,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w045-side-walk-4x2.png",
+          "sha256": "156fcca44aeb5585573b511ae6a2c840dd8a9dc92c37f5578c7a85c75f9f0065"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w045-front-walk-4x2.png",
+          "sha256": "4dcf12564fc62e927df6cb6ff5e36001328f929cb33e852f73d3fbaf2adf70af"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w045-back-walk-4x2.png",
+          "sha256": "aad788acd054b0a5137cd8f62d418821d8ea86c4184ab30681f9075ff7218527"
+        }
+      ]
+    },
+    {
+      "assetId": "w046",
+      "file": "w046-three-views.gif",
+      "sha256": "7b0658fc1f3cbd853f9613190fd51c29de74c4a5adceb8279ff2afbf1da8ed54",
+      "bytes": 386906,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w046-side-walk-4x2.png",
+          "sha256": "177cfad7c5e13548dbf3b28818f17d9c5f85399116a2a0f4508d2d20d9783a05"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w046-front-walk-4x2.png",
+          "sha256": "b468cd0146319e2c5f4c215ee06a7cd5a1bc5297fa7d21de14a852fb88bd0549"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w046-back-walk-4x2.png",
+          "sha256": "02204dd04da67d4db4bedf8c8dbd7e22189f7cbcfc48a261ac1bb183ba0857e6"
+        }
+      ]
+    },
+    {
+      "assetId": "w047",
+      "file": "w047-three-views.gif",
+      "sha256": "6319f28d02f459d0ab3c5b6eb36c2741b6d3f436890760b59467b5a1376b18e0",
+      "bytes": 420065,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w047-side-walk-4x2.png",
+          "sha256": "a07426451e29bea44f00631b0b3edd5632ab27ceb472ffe6bd0546c561bf9d31"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w047-front-walk-4x2.png",
+          "sha256": "6f4022a23057e56d8c866d9e0d624c0c05a3f14ed2cb4a7570c978a68668413d"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w047-back-walk-4x2.png",
+          "sha256": "9e036e448c397d83a88766c9d225b42149527afe3015d783489c5b0cdc324621"
+        }
+      ]
+    },
+    {
+      "assetId": "w048",
+      "file": "w048-three-views.gif",
+      "sha256": "adf7d5fab8b27a36697ff9ab31889abdc9d134bde425cff206a6df5470bde45c",
+      "bytes": 94779,
+      "frames": 4,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w048-side-walk-2x2.png",
+          "sha256": "c624a0f906c7828bf53bc70bf32e816f1cb541543490d196fff1c0631f252728"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w048-front-walk-2x2.png",
+          "sha256": "cc96c8928281983bf048a081d31ccb091cd72cb9005d2a577b6af2a5acb62497"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w048-back-walk-2x2.png",
+          "sha256": "cdf11348e1ded16d549f019ae862901d4ce2a93f88247cd7b056e4d283049663"
+        }
+      ]
+    },
+    {
+      "assetId": "w049",
+      "file": "w049-three-views.gif",
+      "sha256": "d938a25e26a601a6a545fd79fbc89fc0b07ac5ada3e72b438918afc2ca7a38de",
+      "bytes": 431932,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w049-side-walk-4x2.png",
+          "sha256": "2e60854b5e6a6743a6b6bf9ed3326531832942feb21dd86660585c7435a9f7dc"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w049-front-walk-4x2.png",
+          "sha256": "14b4e81813be933691ed8727af80b283da3fd54a853686c3391845d7ae5e488a"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w049-back-walk-4x2.png",
+          "sha256": "552f37a17607006b40aca69a8272158027e6fbe486dd54690eace89364bf3b86"
+        }
+      ]
+    },
+    {
+      "assetId": "b050",
+      "file": "b050-three-views.gif",
+      "sha256": "05ed6cef7a29e62ceecccec9ba0f056ebb4bf521e23a01376265d59468c664cc",
+      "bytes": 406633,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/bosses/inf/directional/b050-side-walk-4x2.png",
+          "sha256": "ef5cf3963ba04af01e7d53522802423ddeb11086533241ea4091a643c60f7275"
+        },
+        {
+          "view": "front",
+          "file": "casual/bosses/inf/directional/b050-front-walk-4x2.png",
+          "sha256": "f97c13d48bd4da2ed0d8b838d4a354acf584c0e71e362c66513d82dcd21d5e9d"
+        },
+        {
+          "view": "back",
+          "file": "casual/bosses/inf/directional/b050-back-walk-4x2.png",
+          "sha256": "388f6e847818b034f12dc4ec40a9df5963730e3d4ab258d387ac13efb8e26e01"
+        }
+      ]
+    },
+    {
+      "assetId": "b050-2",
+      "file": "b050-2-three-views.gif",
+      "sha256": "721b7a7bff557e2517f43a156d86cdefc022ee7065daf490142eff5efe79f491",
+      "bytes": 599801,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/bosses/inf/directional/b050-2-side-walk-4x2.png",
+          "sha256": "7aede233a08de20cfb1f3a12ea04059930b3a549700a3c93cd94c06e216aedd1"
+        },
+        {
+          "view": "front",
+          "file": "casual/bosses/inf/directional/b050-2-front-walk-4x2.png",
+          "sha256": "695381bc2e2d646b68ffcc91e4396324c3ede6dbc5ae4ac770bf2c4d5ef0f30f"
+        },
+        {
+          "view": "back",
+          "file": "casual/bosses/inf/directional/b050-2-back-walk-4x2.png",
+          "sha256": "950633b63523abd79eb3436e21b1a79ac9dfc3e2b87adda7a3c16404119604de"
+        }
+      ]
+    },
+    {
+      "assetId": "w051",
+      "file": "w051-three-views.gif",
+      "sha256": "f674457037af4de29774fc3d0ef84a2c7694549516123daa7001f022a80d329d",
+      "bytes": 467363,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w051-side-walk-4x2.png",
+          "sha256": "5901dae654e2874fc9b43c5734f9025a3d9ba24636951be6ed34a25dbf79cc75"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w051-front-walk-4x2.png",
+          "sha256": "7215ad786f249538fa4a87441c7a98112af6b61e6a1b44c54d4469346f9c218a"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w051-back-walk-4x2.png",
+          "sha256": "b7761e519bb94bf89b9438cddb3762bb17cf884d72fec7404ba42e2dc97218cc"
+        }
+      ]
+    },
+    {
+      "assetId": "w052",
+      "file": "w052-three-views.gif",
+      "sha256": "0a8fbf79ed7d53e6bbb4ff720db59b9222e6b9b869d6c01326644cedb61a8262",
+      "bytes": 108404,
+      "frames": 4,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w052-side-walk-2x2.png",
+          "sha256": "00dbc313fddcdaed19ccd7139d54abb8c860df138b1b5d18cd799665b4609702"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w052-front-walk-2x2.png",
+          "sha256": "1cde5c0106afeb44476bc12523914708900a003937708df0d23910ffac32db1e"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w052-back-walk-2x2.png",
+          "sha256": "8fb5816445814e83a8e81eab798de50f1daf9b5e86b953f9a4460722e9705e42"
+        }
+      ]
+    },
+    {
+      "assetId": "w053",
+      "file": "w053-three-views.gif",
+      "sha256": "302bc06bcd0e67058dc41dfe2ad9b54a500bea5e9765bb2623c0549f885e11c7",
+      "bytes": 364126,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w053-side-walk-4x2.png",
+          "sha256": "4d9693355ede2ac6470ffeacc7ff5b0f85755c739fdc62fcc49e7b0aece008d8"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w053-front-walk-4x2.png",
+          "sha256": "0ca8674d3ae04fead0947daa40e52c41ed5de6d325b71679d3274c5de8606acf"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w053-back-walk-4x2.png",
+          "sha256": "ed50c822a84f2b75331844599aa04ef3e17f2dd328424a36c4d22db52f643472"
+        }
+      ]
+    },
+    {
+      "assetId": "w054",
+      "file": "w054-three-views.gif",
+      "sha256": "943fbf6e32c6776ae2ea18b726e8a4dd969b5c605e63d9c4d9a925591d4b3bbe",
+      "bytes": 144913,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w054-side-walk-4x2.png",
+          "sha256": "4fceb6fda0bcbdca43374cb56dd0549efb0f35462561ea0ee6337ff162c0abc1"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w054-front-walk-4x2.png",
+          "sha256": "aa5cf8323b6ea7b1d5bad14ce05a12bed922c8ea7e430f9e9ce20db9847f03d2"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w054-back-walk-4x2.png",
+          "sha256": "3fae58fb0a83eaa4544a849ef85dcc0b239f30760f58011d098ea6d81d078ab6"
+        }
+      ]
+    },
+    {
+      "assetId": "w055",
+      "file": "w055-three-views.gif",
+      "sha256": "3e54264e7830cb669d6796f19f06e6670c5f5b666cc817b9d7a50a789005b0f7",
+      "bytes": 462342,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w055-side-walk-4x2.png",
+          "sha256": "e4ffc41f4541f027c1c131e9209715f27d451ac0ad4263a121e42c2f1a1e7884"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w055-front-walk-4x2.png",
+          "sha256": "d4e0a1a5649eb6c70f5fa28e61f822c21d307c77c21de9264dd8ebe601c5049e"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w055-back-walk-4x2.png",
+          "sha256": "83958633dcc7b7a66f5ef4a0ad64cb7ccfe4ed4262a51cf0ed582910ed361fce"
+        }
+      ]
+    },
+    {
+      "assetId": "w056",
+      "file": "w056-three-views.gif",
+      "sha256": "0127882830abaf60a8120829727d7a2087f9be6b9c861b34a993eea1da820e65",
+      "bytes": 236555,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w056-side-walk-4x2.png",
+          "sha256": "4ae9e2d191a2c46c652150968db69c1342c8cf998be779a15654e5d5d72ce11b"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w056-front-walk-4x2.png",
+          "sha256": "1e9255b05a0c8fe5e83352182410ca6491449a4280a00bc10dbdf55ade7f8937"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w056-back-walk-4x2.png",
+          "sha256": "d05d26d092d1fac648b0785c380cfba00468a56c35a3d16fc854549cba78bcfc"
+        }
+      ]
+    },
+    {
+      "assetId": "w057",
+      "file": "w057-three-views.gif",
+      "sha256": "d9627b8ecd5dfe2fa1d81d7cca762e67ff306464dff788e9d3553fbab7dec388",
+      "bytes": 457718,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w057-side-walk-4x2.png",
+          "sha256": "ee8eee1f48d72a4382ec8fb78590fe85a9386c6d090556bee3116ecc178c6c86"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w057-front-walk-4x2.png",
+          "sha256": "1b31182eae409592a5646c0a3a8f46e0f456aecdbc057fa5559fa34f0cf7e1bd"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w057-back-walk-4x2.png",
+          "sha256": "a21be769cc9c1602e23da7f46b114c36467ef125d7e5dc7a3bfff10f343e9a68"
+        }
+      ]
+    },
+    {
+      "assetId": "w058",
+      "file": "w058-three-views.gif",
+      "sha256": "817df68aa9d471d6510b5033a8d199e82a7366dc51242ea41628bd26fa92e6c7",
+      "bytes": 330260,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w058-side-walk-4x2.png",
+          "sha256": "db51db4d762daf591166520b32fdb0e9c61099c409375c0da56068ab942f7cd9"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w058-front-walk-4x2.png",
+          "sha256": "d6f093be11a137e188fbd116a460b2945e859daefc9b8b0510b015a0598b781e"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w058-back-walk-4x2.png",
+          "sha256": "c64e81b92eca6c745f945d78408616487e854d81673a9c18f505f491bae1a751"
+        }
+      ]
+    },
+    {
+      "assetId": "w059",
+      "file": "w059-three-views.gif",
+      "sha256": "ae9a5935582f7443642c2692971edb523b43801cc0627afb6afffde3f54275bc",
+      "bytes": 203048,
+      "frames": 4,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w059-side-walk-2x2.png",
+          "sha256": "5b15cd5062b626ad8f23f1426d1c3118f5e909be2fd1adcc8f02a324994ae6b8"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w059-front-walk-2x2.png",
+          "sha256": "aa8bc10e60341850d270f0bc0e9387ef31a7dc71fc28bf283fcc8ece6fbfb651"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w059-back-walk-2x2.png",
+          "sha256": "280a798a130d1ba9fc5b90bf79e064550001a9fc19263768a26cd9d70dfe0498"
+        }
+      ]
+    },
+    {
+      "assetId": "b060",
+      "file": "b060-three-views.gif",
+      "sha256": "f0e18607113e3c01b5f7a4861eb181de509ef5a94abf1de417bdf139ba7a729f",
+      "bytes": 165037,
+      "frames": 4,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/bosses/inf/directional/b060-side-walk-2x2.png",
+          "sha256": "1d8d33d6b37f3ddebb256041ecf78bc39020fefd2d24b2c2fa2afd20d5e24b69"
+        },
+        {
+          "view": "front",
+          "file": "casual/bosses/inf/directional/b060-front-walk-2x2.png",
+          "sha256": "0f10916f43334be4d5e89e54a9ba58b10b19a9dbadf528bde9bcfb39e71876ff"
+        },
+        {
+          "view": "back",
+          "file": "casual/bosses/inf/directional/b060-back-walk-2x2.png",
+          "sha256": "6c902e671e5d1843cb6c019ae39ec18726b5b70e29481a45f7b8a4dbd64e3b97"
+        }
+      ]
+    },
+    {
+      "assetId": "b060-2",
+      "file": "b060-2-three-views.gif",
+      "sha256": "9e1f8cc833ad81b4b2bb0fe0795d18d5c95585908f5af75f0d67e0787e2e5253",
+      "bytes": 128163,
+      "frames": 4,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/bosses/inf/directional/b060-2-side-walk-2x2.png",
+          "sha256": "e902ccbffe125406afa320a5920d2a12580c9b8b06d715764b320ad1da4e652a"
+        },
+        {
+          "view": "front",
+          "file": "casual/bosses/inf/directional/b060-2-front-walk-2x2.png",
+          "sha256": "49a2e425394cc9981e4b6fde3024a98ef5503b616d00fe3756f6d2e6df946edf"
+        },
+        {
+          "view": "back",
+          "file": "casual/bosses/inf/directional/b060-2-back-walk-2x2.png",
+          "sha256": "c17c298c4ab5342d03cdfdeb668e6525db45dd11ff71cb6dd3d28a93a6f20d60"
+        }
+      ]
+    },
+    {
+      "assetId": "w061",
+      "file": "w061-three-views.gif",
+      "sha256": "fa0c53993f86b9f968dc266347933d1cb8293ea445fa4a4fa428569b015e03f6",
+      "bytes": 153130,
+      "frames": 4,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w061-side-walk-2x2.png",
+          "sha256": "0619e52f3fdb576d460d63b5e2f499911ba0f9c6a5a70e33920fdb419ffa6a8d"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w061-front-walk-2x2.png",
+          "sha256": "e07876e7eea7370874640812398971ba52da9a4455a4117209af69483924b94e"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w061-back-walk-2x2.png",
+          "sha256": "b52ce09bfc00aa5ef9706524adae89005a6e75ae8e9a1c2cef096344479113d2"
+        }
+      ]
+    },
+    {
+      "assetId": "w062",
+      "file": "w062-three-views.gif",
+      "sha256": "4608f897cbee641f26255392af311003657c86366a1d0c5dcb187d4754b691a2",
+      "bytes": 102490,
+      "frames": 4,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w062-side-walk-2x2.png",
+          "sha256": "1233c3c3ec4df20db9039a33739cee64d27c86b3466abebca239fa75d1399b2f"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w062-front-walk-2x2.png",
+          "sha256": "b4db01417c0b2d4acc941445d30f8bdd5dc53d30da9251b940c7e568fef83fe0"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w062-back-walk-2x2.png",
+          "sha256": "c1462accd7ee0b64d49b163957dc12b98fe023e887fd1f11467d0ea2a843c7be"
+        }
+      ]
+    },
+    {
+      "assetId": "w063",
+      "file": "w063-three-views.gif",
+      "sha256": "44dacbadff881f5632498f4a77af8a1cc7c515aa4e2853d8fffdf04d329e5cb7",
+      "bytes": 322799,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w063-side-walk-4x2.png",
+          "sha256": "4cd4f78bcc6b18f18dd5f8653ba9ed3fb24fdd63764fa4205e8c6c5cecaf4caf"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w063-front-walk-4x2.png",
+          "sha256": "cad1ffd27b6cd1a65601c7d8f063e452ea2e989ea11756a2c464a0d93a9ff05e"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w063-back-walk-4x2.png",
+          "sha256": "be46a26f6bcb86ea93469d48d0d432e3ed3e09d8e3e959779d53ce5b276bfc5a"
+        }
+      ]
+    },
+    {
+      "assetId": "w064",
+      "file": "w064-three-views.gif",
+      "sha256": "1caa98faf460e627df33aa60f01f619b9bc56d60953acaabaf1a7cd801f60868",
+      "bytes": 90492,
+      "frames": 4,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w064-side-walk-2x2.png",
+          "sha256": "6f9283c741dc21f57f7050d2fa8433f3524c56e1f79436d8f748aaacbbd011e1"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w064-front-walk-2x2.png",
+          "sha256": "43b969bcc907b004727f5a9e12bd9b3de8230eba8ef737160f0f2b08fca339f7"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w064-back-walk-2x2.png",
+          "sha256": "0589bc351c1d09bcfbd8d219a95c77944c7075e2ada2ff7f40eca3b88c53354e"
+        }
+      ]
+    },
+    {
+      "assetId": "w065",
+      "file": "w065-three-views.gif",
+      "sha256": "c82d98a5c10745fbd2397ec0f4785c7a055bbc3341402b23e0ff89f3c5c573fa",
+      "bytes": 354718,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w065-side-walk-4x2.png",
+          "sha256": "0d70ec272fb3a13987a6e61a2550edc6b5c6bf08a59eb9574914d2a13f39c9c1"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w065-front-walk-4x2.png",
+          "sha256": "ba905f5aa93a5e8d72f435ada8c9874416668556777079330e0f813b1a410418"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w065-back-walk-4x2.png",
+          "sha256": "9557a9202cbfd8c7459102a9d6b37c0bba2703d6c253ac25a486aad409452137"
+        }
+      ]
+    },
+    {
+      "assetId": "w066",
+      "file": "w066-three-views.gif",
+      "sha256": "94ded4b2b4031fab08c5be892d14369865df0fc770ab5ce6dc9292b23e267cb7",
+      "bytes": 254438,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w066-side-walk-4x2.png",
+          "sha256": "a378bfd798692da07bc3f2c9482be30fd851efe7fb455d53064976cbd48318c5"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w066-front-walk-4x2.png",
+          "sha256": "890ab8a2a9ab4f8f37b1530c17b8243636c72cb75d6876b5d831ff4ef1d3ba3d"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w066-back-walk-4x2.png",
+          "sha256": "1a9fd5f4a675d68d1a86f711a50875e7b3aa20337b13e81832b873902f936b1a"
+        }
+      ]
+    },
+    {
+      "assetId": "w067",
+      "file": "w067-three-views.gif",
+      "sha256": "f347894ba70988c679d8d72827a7993aeaa196e734427fca54471ebb312fe327",
+      "bytes": 192661,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w067-side-walk-4x2.png",
+          "sha256": "2cd78096be4e009e96cbf63245b7b3a097b0d59a2e7a3f4e3b2e86f26dd0b0f1"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w067-front-walk-4x2.png",
+          "sha256": "c11c5de0587c64617251a8cea9e3486340902e245128b1a4e296c2779dd6fe32"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w067-back-walk-4x2.png",
+          "sha256": "4b82b2b8fb432c5b10b23faaed258d845ae8069d4ce35efa57dacf3cf9da29d3"
+        }
+      ]
+    },
+    {
+      "assetId": "w068",
+      "file": "w068-three-views.gif",
+      "sha256": "65225632c75a36c9980c05ad999673b0f4f16530f3d29272ef3cdfb1b8dc600d",
+      "bytes": 117917,
+      "frames": 4,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w068-side-walk-2x2.png",
+          "sha256": "2e8bffaece68ca26d6abd4c1927532ed152f72cc65590750510e7dfadc71baeb"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w068-front-walk-2x2.png",
+          "sha256": "b9eb401119aa1a171d529df9d6a7d4ef3aa5066e624ba2f24afdfa9c7a39b5c7"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w068-back-walk-2x2.png",
+          "sha256": "8d0b32c6d8800bc6fee737a25b03c9673dcaa08f455e64c02aad96e9794af193"
+        }
+      ]
+    },
+    {
+      "assetId": "w069",
+      "file": "w069-three-views.gif",
+      "sha256": "143a77eda1fed72eecedaf52ef9c4442d8ad117c570ddeb71ec07b0b3262c531",
+      "bytes": 317342,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w069-side-walk-4x2.png",
+          "sha256": "2b0404ff17e3554598ca82d037814ca23dded89dacb3dab0c3735c6d8469e7f5"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w069-front-walk-4x2.png",
+          "sha256": "badda88fbbc13d4ca2e088318b87fb04c02365616ee54ae3b4852c64f676224e"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w069-back-walk-4x2.png",
+          "sha256": "97d209cee8ab1594eec86b3931440be6df34833e49b4599afdeea5efc2442898"
+        }
+      ]
+    },
+    {
+      "assetId": "b070",
+      "file": "b070-three-views.gif",
+      "sha256": "b477cffb0c8fa87a648fd549ad1cfe046a8a1ecd76e0ee87ce86157c77429b5e",
+      "bytes": 119128,
+      "frames": 4,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/bosses/inf/directional/b070-side-walk-2x2.png",
+          "sha256": "4e3f171ed2029ba0b9a223bf1d332d573e79d1ad069d0b1fce3d05968801f993"
+        },
+        {
+          "view": "front",
+          "file": "casual/bosses/inf/directional/b070-front-walk-2x2.png",
+          "sha256": "fb54d854f25b49b9606a4c100c044cd7680b245f5f94e999db193b6a95acd3bd"
+        },
+        {
+          "view": "back",
+          "file": "casual/bosses/inf/directional/b070-back-walk-2x2.png",
+          "sha256": "2a7508ec48c24bb1f4db8d882b29b8f78fbc06b293ddf8e5ddcc1b3b1c72063b"
+        }
+      ]
+    },
+    {
+      "assetId": "b070-2",
+      "file": "b070-2-three-views.gif",
+      "sha256": "26dd87244c4f42dfa3cf7a094b2266d651542034435adc994a00c04ac1ec74f5",
+      "bytes": 135897,
+      "frames": 4,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/bosses/inf/directional/b070-2-side-walk-2x2.png",
+          "sha256": "5e003e5582d94a9a80f3e0d925df8cf061410d604c04367cbba6cfe84306c2dd"
+        },
+        {
+          "view": "front",
+          "file": "casual/bosses/inf/directional/b070-2-front-walk-2x2.png",
+          "sha256": "83b803316a0f02f748f048f7767772440c94ab45b8631d78493b564de844da5b"
+        },
+        {
+          "view": "back",
+          "file": "casual/bosses/inf/directional/b070-2-back-walk-2x2.png",
+          "sha256": "8fb9eae9a5b155c0a31f8b7c5a8cb40964ce87607c390d3e4ffcac1c9fa30963"
+        }
+      ]
+    },
+    {
+      "assetId": "w071",
+      "file": "w071-three-views.gif",
+      "sha256": "e35f782583a803184d147056e65da1a329165ea1f0d532686e02e894ddebc8e8",
+      "bytes": 192059,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w071-side-walk-4x2.png",
+          "sha256": "0c530e0308d56e5b11ae49a2489ccfb1a0d747d2087c56f9b262f5f2e9e0ddbb"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w071-front-walk-4x2.png",
+          "sha256": "c050a56901469fcecf71d6f1187845fc28b785b949bc7661964dfb4d3bdc3d84"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w071-back-walk-4x2.png",
+          "sha256": "01ea96b17beb0d8a1c2c4f7353c14dfc19267b00ac2194ca0056ad53b31c565c"
+        }
+      ]
+    },
+    {
+      "assetId": "w072",
+      "file": "w072-three-views.gif",
+      "sha256": "0bf65a0caffa2d7b82c76d52e66812001e063a47dbd0114f5f4d3efe76227cba",
+      "bytes": 103333,
+      "frames": 4,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w072-side-walk-2x2.png",
+          "sha256": "6abc2998b97cacb023cca1e3e6d56f6daa25042a1b504f7f8b1bc718654e1e26"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w072-front-walk-2x2.png",
+          "sha256": "b0a0ba8fd706c02038985187c64b32ca8be773ab2587f5d939d5cc0099d86fe2"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w072-back-walk-2x2.png",
+          "sha256": "94c2fb78ebaf180c3f434e54b654910e6c9e7d6c19507803908d2d802463fa1f"
+        }
+      ]
+    },
+    {
+      "assetId": "w073",
+      "file": "w073-three-views.gif",
+      "sha256": "25ae689a345c1d347787321d0acfadfcd7394b0c6781b9d62d497e993dea6f5e",
+      "bytes": 231357,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w073-side-walk-4x2.png",
+          "sha256": "1663781d44c325ad63b827f2a1148040372421ddbf3c9f22dc1ae8646468c4c9"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w073-front-walk-4x2.png",
+          "sha256": "6a992287af2ac37cfaa910a2f9801f17b82c2d225a45c7b3582bbf0006e1e88a"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w073-back-walk-4x2.png",
+          "sha256": "9b4fbe9b3e3ec3bdb7afe3d1889c9694e6f73d24979ed5c92cdddc75602a2135"
+        }
+      ]
+    },
+    {
+      "assetId": "w074",
+      "file": "w074-three-views.gif",
+      "sha256": "51efa7093fdae2c860de6d0818adca1efdfe82a9815a867f07512761fb05111d",
+      "bytes": 296839,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w074-side-walk-4x2.png",
+          "sha256": "c19e984b64aff772f1e464065f30719afc575a269761b4447ed40ee1e3037705"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w074-front-walk-4x2.png",
+          "sha256": "5cb0f25c0da6c2004bb03fac444432425b998bd7fc7812d4499d705b96d20e0a"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w074-back-walk-4x2.png",
+          "sha256": "a7957393cc47e62e7d266cb8071977ac66ffeeb7596125f76b9adf688bf311d4"
+        }
+      ]
+    },
+    {
+      "assetId": "w075",
+      "file": "w075-three-views.gif",
+      "sha256": "79b243e6d1c57b57f6dc74573aaac884a556cf240352c88c90da19ce579ad580",
+      "bytes": 262983,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w075-side-walk-4x2.png",
+          "sha256": "2a340370ecc743e5b446f6835a8c2bf4b51bd484c6c1ddadad848a8dd82316ea"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w075-front-walk-4x2.png",
+          "sha256": "32e188bdfcee9b03581f0bb7bcc61ec9c1ccf0b418ac46afbf7cd11ec283bd85"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w075-back-walk-4x2.png",
+          "sha256": "c4d9f39ed1fe619d5e20a0bba8c164970ce5a724e9353185f0dd6462421ba5f2"
+        }
+      ]
+    },
+    {
+      "assetId": "w076",
+      "file": "w076-three-views.gif",
+      "sha256": "3290c4db938ac8f7d9dd1d5cffee4042c7d6bbbcdc4bb232dd0db5f2d44b8f7d",
+      "bytes": 113336,
+      "frames": 4,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w076-side-walk-2x2.png",
+          "sha256": "b6228a1391108030f8556277c7d20b8aed19ab3611211727855a4053aa455fea"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w076-front-walk-2x2.png",
+          "sha256": "34b9fbd497a6c0c3a4ff346436d9df68e4c3109c4f3a56bec31928b319e76850"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w076-back-walk-2x2.png",
+          "sha256": "772efcf8979f7233f852ea49f52144af60ce65662d9d95d02d51f2dc82b148b8"
+        }
+      ]
+    },
+    {
+      "assetId": "w077",
+      "file": "w077-three-views.gif",
+      "sha256": "67da85e3a989dc09242478d1a73cc00373403dcae56b104a01e2f18c753c40f1",
+      "bytes": 95654,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w077-side-walk-4x2.png",
+          "sha256": "5dd933e7e493c4bf3c2e2a13e64c7897a97253ef5aa6ffdcd6e7082f9944d93e"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w077-front-walk-4x2.png",
+          "sha256": "57b9d33a41298f06f1fbd57f82d1d07d90d5eecd1dcc4c4d685f0001317ecbfa"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w077-back-walk-4x2.png",
+          "sha256": "144a85e6ef6784be762b30ef1685698ec40e9739d9934cd220bfd56d800a9d7d"
+        }
+      ]
+    },
+    {
+      "assetId": "w078",
+      "file": "w078-three-views.gif",
+      "sha256": "506618ae43cdbeeac790a582dd12b3a8538cdb683e414dc93046f1c550ee109e",
+      "bytes": 225536,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w078-side-walk-4x2.png",
+          "sha256": "3d763a4040231dfcffc413e6fb26b6d26ba6e0668a2b437a0ea65d1a9e43a858"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w078-front-walk-4x2.png",
+          "sha256": "a9bba7e6887072c52f043a183c30b5e5f786c9f75eb14d786a625629e2c72c6e"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w078-back-walk-4x2.png",
+          "sha256": "ac6a81bfb93eed395f271ee31d086599d58545f5749f8d0616091ad7a92ec65a"
+        }
+      ]
+    },
+    {
+      "assetId": "w079",
+      "file": "w079-three-views.gif",
+      "sha256": "d3dda0176e067957a9f1f3a2758c32093411a0144db41db8dfeba99f97aac3d4",
+      "bytes": 285419,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w079-side-walk-4x2.png",
+          "sha256": "05eaa1abb690ca2f943b95ce98b0c3b73ef74a06677a7a0d00be9e3ae49fefc7"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w079-front-walk-4x2.png",
+          "sha256": "fd03ceac7126acbd5f38cbfb0758e0f5472543aff080195d85f58d88dab1bfaf"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w079-back-walk-4x2.png",
+          "sha256": "c65575a65774d0563af8aaffe35b05cde5e1af55e64e7f86c05b57c3107ae211"
+        }
+      ]
+    },
+    {
+      "assetId": "b080",
+      "file": "b080-three-views.gif",
+      "sha256": "c01d00d362c643de701d084c365d618b3e9f04ac15c73f07a2fcc364af2aced8",
+      "bytes": 114964,
+      "frames": 4,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/bosses/inf/directional/b080-side-walk-2x2.png",
+          "sha256": "2465ef040f2bd3f29156618e79f2a334f5b0a41c65cb16827b17bb1268b320a9"
+        },
+        {
+          "view": "front",
+          "file": "casual/bosses/inf/directional/b080-front-walk-2x2.png",
+          "sha256": "a275f4534a78ebcc3433d73c8d160b1a3e3f2c1026c34c73d1221c8b36b29d01"
+        },
+        {
+          "view": "back",
+          "file": "casual/bosses/inf/directional/b080-back-walk-2x2.png",
+          "sha256": "f69492517a406ec81208fafdaaa9159e9834bfac417c2187f84de16ad3b19baf"
+        }
+      ]
+    },
+    {
+      "assetId": "b080-2",
+      "file": "b080-2-three-views.gif",
+      "sha256": "c1d92f374413750568b8bd57596accad1e2a881493c79052c2d25b1b8d16aee5",
+      "bytes": 190556,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/bosses/inf/directional/b080-2-side-walk-4x2.png",
+          "sha256": "db6b964b531aeb7fcd75f5eafb72116916336c7b779d6c686d722609eaef4f4f"
+        },
+        {
+          "view": "front",
+          "file": "casual/bosses/inf/directional/b080-2-front-walk-4x2.png",
+          "sha256": "bf3b2f4a6e8cd9746bd3f27b202e80157f67e2a260cd0a9beef12b2a7867fda7"
+        },
+        {
+          "view": "back",
+          "file": "casual/bosses/inf/directional/b080-2-back-walk-4x2.png",
+          "sha256": "347e9d5fb953ed5acdf29e2d44aa03c7339b38602c778165b78c35c7fcbe0517"
+        }
+      ]
+    },
+    {
+      "assetId": "w081",
+      "file": "w081-three-views.gif",
+      "sha256": "0ebd89898dbbc4baf9e6a705c12f2f3716804f9d5dd3a778a05d31e25e0dc33f",
+      "bytes": 238174,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w081-side-walk-4x2.png",
+          "sha256": "00f407f152edcff88dd2328fe5bc4cb7314afcbd9250477e0738c5cee13344f5"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w081-front-walk-4x2.png",
+          "sha256": "26d90913d383c3fff89387bcc3b89abd03c44bbaf744ff7d35ace12414c41e1a"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w081-back-walk-4x2.png",
+          "sha256": "b0dc718e2e5fafbf878381f9bfea55446c80200ab9adff99daa2bb208f3671b6"
+        }
+      ]
+    },
+    {
+      "assetId": "w082",
+      "file": "w082-three-views.gif",
+      "sha256": "9e31bf30d39d65783410b7b30c8584c83ca396fc11ef93d6d0c52d28ba48c06b",
+      "bytes": 176044,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w082-side-walk-4x2.png",
+          "sha256": "d969c9e59f2cdb6cb2c9434ec9561af5193df9913cd335fd71a02de6ba858364"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w082-front-walk-4x2.png",
+          "sha256": "3bf49db7fd4c145ec86de76d5c203a825b736de1c24b8cebde8e1a479479b1fd"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w082-back-walk-4x2.png",
+          "sha256": "2630abcf989e823df1718708ded6e728742da26c0b2c04d203b7ec55e0763322"
+        }
+      ]
+    },
+    {
+      "assetId": "w083",
+      "file": "w083-three-views.gif",
+      "sha256": "1f674754e0ce21b35fb91a8de15808027e6b4f205723a38395d756e35eb6b487",
+      "bytes": 353959,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w083-side-walk-4x2.png",
+          "sha256": "907f1f3b0282e5edfb6b42eae43758ac208a18f60fdbb8377eb332a11f99a202"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w083-front-walk-4x2.png",
+          "sha256": "12b76584514a30445738c743c15700a52c86097ea55c006e5f8912ef8bf0505c"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w083-back-walk-4x2.png",
+          "sha256": "4401ea0b90499fbfb918946b7180f335b00f72673755cd7fb3d52391e4a751de"
+        }
+      ]
+    },
+    {
+      "assetId": "w084",
+      "file": "w084-three-views.gif",
+      "sha256": "abe725e39da6106ba35c7014635acdcafdf399f6bf7b646f3a3cd50071912642",
+      "bytes": 94896,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w084-side-walk-4x2.png",
+          "sha256": "a91cffb8b1e96f288e3ddc0f10abb7f74a28b8d6ea241ffd72fa4d5b55b4c71e"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w084-front-walk-4x2.png",
+          "sha256": "08f1f29986c58ff3c5ef3ec644ce60dae8d043b434b87b6731189d7484e4e0ce"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w084-back-walk-4x2.png",
+          "sha256": "19c78541a47b85fdcc6838a4d5dc749996252c4d288a5b229238b7a26a348442"
+        }
+      ]
+    },
+    {
+      "assetId": "w085",
+      "file": "w085-three-views.gif",
+      "sha256": "7d7596e9421cba8b981c4432329e6aa0dbd40be06301a6e55f2e18a7f219ad54",
+      "bytes": 109052,
+      "frames": 4,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w085-side-walk-2x2.png",
+          "sha256": "9c0446c2fa403e8a259fc7770e1a510d62fb3a65fc652dfedb161e68b3880006"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w085-front-walk-2x2.png",
+          "sha256": "79fb443051dacebc384ca0b955b8051b88bcb45007095c7d76ffba8543c4b60e"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w085-back-walk-2x2.png",
+          "sha256": "997e1f8d15123700f73e3aeed1713dc0ed0a84cc77017d1c238b431fdd4d6033"
+        }
+      ]
+    },
+    {
+      "assetId": "w086",
+      "file": "w086-three-views.gif",
+      "sha256": "afd20b8dbfc22c2fa14c6edb08d23795413ed9942bc3c6a3120e95dc09f8e254",
+      "bytes": 271094,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w086-side-walk-4x2.png",
+          "sha256": "a8e5ce26f20513780fd2030e46d511de81186c3dcce6859c0966cf18b0d3ac81"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w086-front-walk-4x2.png",
+          "sha256": "57e37cc7c1455cf67d3a5af9dfcd3454757d6dcb08119589141dece0fc5764c5"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w086-back-walk-4x2.png",
+          "sha256": "bb73641d1fa987be9c8049e3a8548179036bef816335dbcd0fa437623362ec11"
+        }
+      ]
+    },
+    {
+      "assetId": "w087",
+      "file": "w087-three-views.gif",
+      "sha256": "9ec52616d22cf848a81b74008d25d97f0e994228795e6bfaa59ddeb7256fa1dd",
+      "bytes": 314959,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w087-side-walk-4x2.png",
+          "sha256": "10f90ea947e1411f8a4ce33b8f1b7c2703af49c4ef3ea670b0ee2a09315fdeb1"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w087-front-walk-4x2.png",
+          "sha256": "3ed542209d91f6c2ec4fa8d87ba2c0d55e3e8a10e87e2c5e83ab52a9d2c4d401"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w087-back-walk-4x2.png",
+          "sha256": "992764319135588caf6614bec151cf4df3408b899ed23bf93158704394c9e895"
+        }
+      ]
+    },
+    {
+      "assetId": "w088",
+      "file": "w088-three-views.gif",
+      "sha256": "7828529b540152adcd4a723725e82ccfc0e66bd6c8a85db1f87b88da16c06883",
+      "bytes": 107972,
+      "frames": 4,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w088-side-walk-2x2.png",
+          "sha256": "a6563bd30769cfdd36d6f59f9dccc78aa866a7b813d54f05730f8b68af47478e"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w088-front-walk-2x2.png",
+          "sha256": "f024829f18a6c094ff7bff5bf1a2fe64ecf07918c5d6dcc7c13119b634b14ad5"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w088-back-walk-2x2.png",
+          "sha256": "cf97f9de49f5aad09b0feda13d4794aef124c592d71259ff1b410bc4b5f75d76"
+        }
+      ]
+    },
+    {
+      "assetId": "w089",
+      "file": "w089-three-views.gif",
+      "sha256": "0723eb3d4428c0ad9206e15d94e3a1abbe6d5a6ec49ae358a5ab0c86d6e9114a",
+      "bytes": 237741,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w089-side-walk-4x2.png",
+          "sha256": "4e6f7b9198a47d23e56c5bb3d75e87d978baa712693b2043bd36700a83bcb24b"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w089-front-walk-4x2.png",
+          "sha256": "49e31d18e7669847b2ebd55792464591f80727534984b2a27c77b0a544c5ccc0"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w089-back-walk-4x2.png",
+          "sha256": "0a077156cdcabbce6e13ecb9954c19004f069f7d6833c76f06092cd66298cd95"
+        }
+      ]
+    },
+    {
+      "assetId": "b090",
+      "file": "b090-three-views.gif",
+      "sha256": "91885647261664bc4f7fc618131468beca6493d61f483ee9bb0747800008d2a7",
+      "bytes": 333114,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/bosses/inf/directional/b090-side-walk-4x2.png",
+          "sha256": "5d0268d04c6ec8ea7ade11641bccdba0ae995264dd552dc073583fc45d0b6a84"
+        },
+        {
+          "view": "front",
+          "file": "casual/bosses/inf/directional/b090-front-walk-4x2.png",
+          "sha256": "e244870c1c9c941de7b25623b6cc5c7ccaa0a38b17047cf56272c05b2315a43d"
+        },
+        {
+          "view": "back",
+          "file": "casual/bosses/inf/directional/b090-back-walk-4x2.png",
+          "sha256": "9ad18196943fa28e32a6aa3a552ce5f37fa03edea175c8aa821a9e949366908c"
+        }
+      ]
+    },
+    {
+      "assetId": "b090-2",
+      "file": "b090-2-three-views.gif",
+      "sha256": "8ad64cd88c642b519f41d37be5bf399d8a74f84d65896a86c18fe74c1a3e20f8",
+      "bytes": 368886,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/bosses/inf/directional/b090-2-side-walk-4x2.png",
+          "sha256": "54d87bc04ba1d430b53ad34c5a72612a90e2acabe96959cc5faa9f42309bb277"
+        },
+        {
+          "view": "front",
+          "file": "casual/bosses/inf/directional/b090-2-front-walk-4x2.png",
+          "sha256": "e3cfc4f982fdd837d330c9e693203242264dedfcb62a30d87e13e80a497b6236"
+        },
+        {
+          "view": "back",
+          "file": "casual/bosses/inf/directional/b090-2-back-walk-4x2.png",
+          "sha256": "4f5db8a932ff039f863bffec563a0e67974b4a4b9375335bbad5aea90b67eba1"
+        }
+      ]
+    },
+    {
+      "assetId": "w091",
+      "file": "w091-three-views.gif",
+      "sha256": "6803f395c7c7bae849c8744f62aed5aeb609a5439d9af303567e9b43d3320fe3",
+      "bytes": 76208,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w091-side-walk-4x2.png",
+          "sha256": "af5a8a43f17f54e090e644cbc92fb363dc7599e4dbab0a35e107ca318ec9952f"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w091-front-walk-4x2.png",
+          "sha256": "5853f9a36604ea102d4844dc5f8e778261d12936a617210f55bcff63c91a2c30"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w091-back-walk-4x2.png",
+          "sha256": "42886e54fd3630b43e2d43d46867436cab00adecd74bb8acb535ac5f7b039858"
+        }
+      ]
+    },
+    {
+      "assetId": "w092",
+      "file": "w092-three-views.gif",
+      "sha256": "df7e696a0ea81b7a477651bf5bdb44bc9c43e85a43daf9bc5327326116380b37",
+      "bytes": 87819,
+      "frames": 4,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w092-side-walk-2x2.png",
+          "sha256": "5d7231730e3ae373d7b5c196c7e91f8caae9cd2e3566257861a00f1f014984d0"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w092-front-walk-2x2.png",
+          "sha256": "069feba2ca0b0168d5f89a65a77e36abf26593803c64e400506d359b48ee151e"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w092-back-walk-2x2.png",
+          "sha256": "d4205ce544d4263d703a1e5ab975c5a881e2584fc5bbdb1ad5be5c940aebb90f"
+        }
+      ]
+    },
+    {
+      "assetId": "w093",
+      "file": "w093-three-views.gif",
+      "sha256": "a3e1ae94bd0ed628a19b63c4b22ee8f2be7e19469dd490350449bfc8b9732ac2",
+      "bytes": 281433,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w093-side-walk-4x2.png",
+          "sha256": "646de9d8a6c4af36f5d1abdb0876c32ef7694e6b3d5326a14aeb6a92c95e5eaa"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w093-front-walk-4x2.png",
+          "sha256": "a21338801e4d2847f653cc4841ff3f005a9c48e4f2eb910f8ad26d935cdd7ac8"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w093-back-walk-4x2.png",
+          "sha256": "ad12f7466c61745ff28d016ff9e4f079918de2617f5823f471012c4efe61da65"
+        }
+      ]
+    },
+    {
+      "assetId": "w094",
+      "file": "w094-three-views.gif",
+      "sha256": "bdca290edebbca94e6b9751868f2d0f89dddc303f8679f7c0ce60855c36b8930",
+      "bytes": 281567,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w094-side-walk-4x2.png",
+          "sha256": "e5cc4251bbc36e0de68833685f2c9b179b31de972b02d2e8e7e7653e1e0b07b0"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w094-front-walk-4x2.png",
+          "sha256": "66eb720cdb94e30839b25397a996f16015cbfc2726a7dac382d42a59283dcf31"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w094-back-walk-4x2.png",
+          "sha256": "1993db7a8d3365c7ef4d734b67a9068fcdf623a117b91fce8f7eecfdf05837df"
+        }
+      ]
+    },
+    {
+      "assetId": "w095",
+      "file": "w095-three-views.gif",
+      "sha256": "8c09eb60f6cf106406711de7297eac93e5f7f372f2140896f5ab7784c40e9204",
+      "bytes": 223438,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w095-side-walk-4x2.png",
+          "sha256": "b8f1e839af03b3a0770291eea1aa77887d4ada2224b877fa0cbeb283fe412a2d"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w095-front-walk-4x2.png",
+          "sha256": "3def7d4d0f93268ba9a618f2a4ae661fa3fbed3bae5a97ba730e8e1e92d82e89"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w095-back-walk-4x2.png",
+          "sha256": "ae88ee8625209efc35fe1f4b58c91defb3883d96969d56ef1b3b31e1b85d9b53"
+        }
+      ]
+    },
+    {
+      "assetId": "w096",
+      "file": "w096-three-views.gif",
+      "sha256": "12f3316ec7164d45bc20ea20012b2156b21d4a90dbc4ae1b171e7701b5161147",
+      "bytes": 88580,
+      "frames": 4,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w096-side-walk-2x2.png",
+          "sha256": "dfaa24447e8a308e9a3b0d0f0948a5addb019604b8091954505d9856c8b65f77"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w096-front-walk-2x2.png",
+          "sha256": "12c3ccc872ff55785308ba1c577f4c1f60984ee114a7cabe75e6a94a68d4fd1b"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w096-back-walk-2x2.png",
+          "sha256": "76b3380e69d40c91905470e9380fa4011cd133771aee37b3e43eec0c5ec42868"
+        }
+      ]
+    },
+    {
+      "assetId": "w097",
+      "file": "w097-three-views.gif",
+      "sha256": "4053b6b8d0dfaf3e8d055536efbb43ff4024196185ba00aed35681892b8245fd",
+      "bytes": 312279,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w097-side-walk-4x2.png",
+          "sha256": "0bb8c2aef6e2c094d7f2aca5a37cb5bf28d741fea8fb40720a6f8e054e76150a"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w097-front-walk-4x2.png",
+          "sha256": "93a8c2036f4353ccc4e1e281261de5d80bb915f42ab782e2de16d546ed49b9ef"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w097-back-walk-4x2.png",
+          "sha256": "1507ae0056591a196c70ee86a3196759d0e7b67c2f8ca48cb7a7f67e1ef800fd"
+        }
+      ]
+    },
+    {
+      "assetId": "w098",
+      "file": "w098-three-views.gif",
+      "sha256": "c2b31241cb81b893157ca745f2ff4986817ef1882f9cc612fec378666eb30884",
+      "bytes": 91631,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w098-side-walk-4x2.png",
+          "sha256": "f2e76b6c833bc0e18b8bb50841ba9df483ced7ad5c2d592fea0502560f3af336"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w098-front-walk-4x2.png",
+          "sha256": "e1ad41b5f50f03f300a6d5276b8040f9915602235f23619a315f4af6c31413a5"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w098-back-walk-4x2.png",
+          "sha256": "d6fa568b7a88a5709460eaa09bccfd6ecdc0823d7f695842dfd73c9416c9a38e"
+        }
+      ]
+    },
+    {
+      "assetId": "w099",
+      "file": "w099-three-views.gif",
+      "sha256": "461867fe5dede9e13056ca342c10484aee14eec1ee3ea42e7938889984f43af3",
+      "bytes": 346606,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w099-side-walk-4x2.png",
+          "sha256": "9984f8f9d90e6e04595c1e1750a9782f66faa8ccc72147a0d450d074c51c004c"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w099-front-walk-4x2.png",
+          "sha256": "83510a5f225629981f17c91ccdda5983966c42a0ea723df5c558ee619c00543f"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w099-back-walk-4x2.png",
+          "sha256": "310ead37e1f1f31acd56094c2579fc4bc05b8eafcb908b9d9bd0bd1567bdd340"
+        }
+      ]
+    },
+    {
+      "assetId": "b100",
+      "file": "b100-three-views.gif",
+      "sha256": "4cbf2c02d47c67f333b0d5fb879333cd4c3f70a7eb9de9ae069989fd5e8634c1",
+      "bytes": 301747,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/bosses/inf/directional/b100-side-walk-4x2.png",
+          "sha256": "7dc21ffb273dc73003986779dfcf3442e2b5e4da7e6ef326894bd5c41c778155"
+        },
+        {
+          "view": "front",
+          "file": "casual/bosses/inf/directional/b100-front-walk-4x2.png",
+          "sha256": "bed7f5c063f3d2f50072bcf3fb3ef62c2beaa461d2b4f52e54143b5f2f564a35"
+        },
+        {
+          "view": "back",
+          "file": "casual/bosses/inf/directional/b100-back-walk-4x2.png",
+          "sha256": "a6cab99c9499ada0fd0894bf3dd0d53377b090f54cffaf48f4fde0ed1c884b90"
+        }
+      ]
+    },
+    {
+      "assetId": "b100-2",
+      "file": "b100-2-three-views.gif",
+      "sha256": "d1e94da135e28fd0a2cc603379e47b97a44996402027edb8272b4179047c355d",
+      "bytes": 116517,
+      "frames": 4,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/bosses/inf/directional/b100-2-side-walk-2x2.png",
+          "sha256": "c70329cef32e5b160b40ce03bfb6403760762fd0eb5906fc5c49428ecb8cdb7d"
+        },
+        {
+          "view": "front",
+          "file": "casual/bosses/inf/directional/b100-2-front-walk-2x2.png",
+          "sha256": "4e42ec098bb8a3cc10fd36948fbaef79e77455c8c0f2e9cde664f4b4cd0fa664"
+        },
+        {
+          "view": "back",
+          "file": "casual/bosses/inf/directional/b100-2-back-walk-2x2.png",
+          "sha256": "f66f2f2b4e16edc696846b5a8d3857092920c0ec54fc17189a227b4e1a8fd944"
+        }
+      ]
+    },
+    {
+      "assetId": "w101",
+      "file": "w101-three-views.gif",
+      "sha256": "6bdd986dd7e29876b7fa8a64a97e4ee358ec88005639fbb343ad47cd53af345f",
+      "bytes": 291400,
+      "frames": 8,
+      "sources": [
+        {
+          "view": "side",
+          "file": "casual/enemies/inf/directional/w101-side-walk-4x2.png",
+          "sha256": "9c7445484062b991a5976422e280ba22c9c7f82ee218768b97560dd940d53b37"
+        },
+        {
+          "view": "front",
+          "file": "casual/enemies/inf/directional/w101-front-walk-4x2.png",
+          "sha256": "43c8e70f3a70560743f8b2d2b8a4ebc9b3c71b90a6707de44396ccde79ce8701"
+        },
+        {
+          "view": "back",
+          "file": "casual/enemies/inf/directional/w101-back-walk-4x2.png",
+          "sha256": "2da4e9b2c9c24f9f1f7c5256f8029329d0214ba74d40d83152f7fc4c9e44f3f4"
+        }
+      ]
+    }
+  ]
+}

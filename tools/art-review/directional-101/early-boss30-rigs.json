@@ -1,0 +1,675 @@
+{
+  "version": 1,
+  "canonicalCell": 512,
+  "assetVersion": 93,
+  "entries": [
+    {
+      "assetId": "b030",
+      "wave": 30,
+      "role": "boss",
+      "cell": 512,
+      "locomotion": "legged",
+      "referenceHeight": 450,
+      "cycleStride": 145,
+      "gait": {
+        "stanceDuty": 0.5,
+        "lift": 21,
+        "pelvis": "support"
+      },
+      "reviewApproved": true,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/early-boss-02-side-parts.png",
+          "sourceSha256": "be371212aac5a39d08857ee9fda85f82a264e01f7953d2e7417dc96d60132f61",
+          "background": "checkerboard",
+          "pivot": [
+            263.5689774696707,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.445,
+              0.495
+            ],
+            "target": {
+              "height": 340,
+              "top": 24,
+              "centerX": 256
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.47,
+                0,
+                0.18,
+                0.495
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.3758620689655172,
+                  0.12
+                ],
+                "knee": [
+                  0.5,
+                  0.46
+                ],
+                "ankle": [
+                  0.29310344827586204,
+                  0.84
+                ],
+                "sole": [
+                  0.6137786148942335,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.49,
+                0.8
+              ],
+              "socketRoiNormalized": [
+                0.44,
+                0.75,
+                0.1,
+                0.1
+              ],
+              "phase": 0,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "layer": -1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.735,
+                0,
+                0.21,
+                0.495
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.34810126582278483,
+                  0.12
+                ],
+                "knee": [
+                  0.5316455696202531,
+                  0.46
+                ],
+                "ankle": [
+                  0.31645569620253167,
+                  0.84
+                ],
+                "sole": [
+                  0.6118344767610397,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.58,
+                0.8
+              ],
+              "socketRoiNormalized": [
+                0.5299999999999999,
+                0.75,
+                0.1,
+                0.1
+              ],
+              "phase": 0.5,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            }
+          ]
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/early-boss-02-front-back-parts.png",
+          "sourceSha256": "28cf88ab492b1ce25b6ee44aaf12cb761c1e48301846efb229807827c6a12183",
+          "background": "checkerboard",
+          "pivot": [
+            283.7364269141531,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.26,
+              0.49
+            ],
+            "target": {
+              "height": 340,
+              "top": 24,
+              "centerX": 256
+            },
+            "layer": 10,
+            "flipX": true
+          },
+          "parts": [
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.275,
+                0,
+                0.1,
+                0.49
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5459183673469388,
+                  0.12
+                ],
+                "knee": [
+                  0.4846938775510204,
+                  0.46
+                ],
+                "ankle": [
+                  0.41836734693877553,
+                  0.84
+                ],
+                "sole": [
+                  0.44355867346938777,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.52,
+                0.82
+              ],
+              "socketRoiNormalized": [
+                0.47000000000000003,
+                0.7699999999999999,
+                0.1,
+                0.1
+              ],
+              "phase": 0.5,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.41,
+                0,
+                0.105,
+                0.49
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4095744680851064,
+                  0.12
+                ],
+                "knee": [
+                  0.5159574468085106,
+                  0.46
+                ],
+                "ankle": [
+                  0.574468085106383,
+                  0.84
+                ],
+                "sole": [
+                  0.5745828868819838,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.72,
+                0.82
+              ],
+              "socketRoiNormalized": [
+                0.6699999999999999,
+                0.7699999999999999,
+                0.1,
+                0.1
+              ],
+              "phase": 0,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            }
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/early-boss-02-front-back-parts.png",
+          "sourceSha256": "28cf88ab492b1ce25b6ee44aaf12cb761c1e48301846efb229807827c6a12183",
+          "background": "checkerboard",
+          "pivot": [
+            240.55473441108546,
+            460
+          ],
+          "body": {
+            "roi": [
+              0.515,
+              0,
+              0.24,
+              0.49
+            ],
+            "target": {
+              "height": 340,
+              "top": 24,
+              "centerX": 256
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.76,
+                0,
+                0.09,
+                0.49
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5421052631578948,
+                  0.12
+                ],
+                "knee": [
+                  0.45789473684210524,
+                  0.46
+                ],
+                "ankle": [
+                  0.4789473684210526,
+                  0.84
+                ],
+                "sole": [
+                  0.49336492890995265,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.33,
+                0.82
+              ],
+              "socketRoiNormalized": [
+                0.28,
+                0.7699999999999999,
+                0.1,
+                0.1
+              ],
+              "phase": 0,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.88,
+                0,
+                0.115,
+                0.49
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4438202247191011,
+                  0.12
+                ],
+                "knee": [
+                  0.5337078651685393,
+                  0.46
+                ],
+                "ankle": [
+                  0.5112359550561798,
+                  0.84
+                ],
+                "sole": [
+                  0.5006857625151659,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.53,
+                0.82
+              ],
+              "socketRoiNormalized": [
+                0.48000000000000004,
+                0.7699999999999999,
+                0.1,
+                0.1
+              ],
+              "phase": 0.5,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            }
+          ]
+        }
+      }
+    },
+    {
+      "assetId": "b030-2",
+      "wave": 30,
+      "role": "secondary",
+      "cell": 512,
+      "locomotion": "flight",
+      "referenceHeight": 400,
+      "cycleStride": 0,
+      "cycleSeconds": 0.9,
+      "reviewApproved": true,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/early-boss-02-side-parts.png",
+          "sourceSha256": "be371212aac5a39d08857ee9fda85f82a264e01f7953d2e7417dc96d60132f61",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            400
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.5,
+              0.345,
+              0.5
+            ],
+            "target": {
+              "height": 300,
+              "top": 100,
+              "centerX": 256
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.355,
+                0.5,
+                0.29,
+                0.5
+              ],
+              "socketNormalized": [
+                0.42,
+                0.4
+              ],
+              "sourcePivot": [
+                0.14,
+                0.42
+              ],
+              "scale": 0.48,
+              "angleDeg": [
+                20,
+                25
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.67,
+                0.5,
+                0.28,
+                0.5
+              ],
+              "socketNormalized": [
+                0.5,
+                0.38
+              ],
+              "sourcePivot": [
+                0.87,
+                0.42
+              ],
+              "scale": 0.43,
+              "angleDeg": [
+                -6,
+                20
+              ],
+              "phase": 0,
+              "layer": -2,
+              "flipX": false
+            }
+          ],
+          "backgroundSeeds": [
+            [
+              548,
+              1137
+            ],
+            [
+              536,
+              1156
+            ],
+            [
+              781,
+              1140
+            ],
+            [
+              795,
+              1160
+            ]
+          ]
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/early-boss-02-front-back-parts.png",
+          "sourceSha256": "28cf88ab492b1ce25b6ee44aaf12cb761c1e48301846efb229807827c6a12183",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            400
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.5,
+              0.172,
+              0.5
+            ],
+            "target": {
+              "height": 300,
+              "top": 100,
+              "centerX": 256
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.172,
+                0.5,
+                0.168,
+                0.5
+              ],
+              "socketNormalized": [
+                0.78,
+                0.43
+              ],
+              "sourcePivot": [
+                0.1,
+                0.44
+              ],
+              "scale": 0.63,
+              "angleDeg": [
+                -17,
+                -25
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.35,
+                0.5,
+                0.175,
+                0.5
+              ],
+              "socketNormalized": [
+                0.22,
+                0.43
+              ],
+              "sourcePivot": [
+                0.9,
+                0.44
+              ],
+              "scale": 0.63,
+              "angleDeg": [
+                17,
+                25
+              ],
+              "phase": 0,
+              "layer": -2,
+              "flipX": false
+            }
+          ],
+          "backgroundSeeds": [
+            [
+              344,
+              933
+            ],
+            [
+              333,
+              951
+            ],
+            [
+              524,
+              933
+            ]
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/early-boss-02-front-back-parts.png",
+          "sourceSha256": "28cf88ab492b1ce25b6ee44aaf12cb761c1e48301846efb229807827c6a12183",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            400
+          ],
+          "body": {
+            "roi": [
+              0.53,
+              0.5,
+              0.178,
+              0.5
+            ],
+            "target": {
+              "height": 300,
+              "top": 100,
+              "centerX": 256
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.709,
+                0.5,
+                0.131,
+                0.5
+              ],
+              "socketNormalized": [
+                0.78,
+                0.42
+              ],
+              "sourcePivot": [
+                0.1,
+                0.44
+              ],
+              "scale": 0.63,
+              "angleDeg": [
+                -17,
+                -25
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.85,
+                0.5,
+                0.145,
+                0.5
+              ],
+              "socketNormalized": [
+                0.22,
+                0.42
+              ],
+              "sourcePivot": [
+                0.9,
+                0.44
+              ],
+              "scale": 0.63,
+              "angleDeg": [
+                17,
+                25
+              ],
+              "phase": 0,
+              "layer": -2,
+              "flipX": false
+            }
+          ],
+          "backgroundSeeds": [
+            [
+              983,
+              946
+            ],
+            [
+              1136,
+              945
+            ]
+          ]
+        }
+      }
+    }
+  ],
+  "notes": "Source-pinned 3-view boss pair. B030 front body reflected for physical right-hand staff; source body/hat/cloak retained. Bat wing roots fixed at silver shoulder plates, separately reviewed curved-wing mean angles; explicit seeds remove only reviewed enclosed membrane holes. All six pose boards and moving reviews inspected before approval; gameplay remains separate."
+}

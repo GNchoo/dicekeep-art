@@ -1,0 +1,10 @@
+import fs from'node:fs';import path from'node:path';import{fileURLToPath}from'node:url';import{createHash}from'node:crypto';import sharp from'sharp';
+const dir=path.dirname(fileURLToPath(import.meta.url));
+const[id,source]=process.argv.slice(2);if(!/^[a-z0-9-]+$/.test(id||'')||!source)throw new Error('Safe job id and generated source path required');
+const jobs=JSON.parse(fs.readFileSync(path.join(dir,'jobs.json'),'utf8')).jobs,job=jobs.find(j=>j.id===id);if(!job)throw new Error('Unknown job '+id);
+const dest=path.join(dir,'sources',id+'.png');fs.mkdirSync(path.dirname(dest),{recursive:true});
+if(fs.existsSync(dest))throw new Error('Already registered; preserve every generation, never overwrite '+id);
+fs.copyFileSync(source,dest);const bytes=fs.readFileSync(dest),meta=await sharp(bytes).metadata();
+const ledgerFile=path.join(dir,'generation-ledger.json'),ledger=fs.existsSync(ledgerFile)?JSON.parse(fs.readFileSync(ledgerFile,'utf8')):{mode:'builtin-image_gen',owner:'art_direction',waveRange:[61,101],requests:[]};
+const record={call:ledger.requests.length+1,id,stage:job.stage,assetIds:job.assetIds,prompt:job.promptFile,promptSha256:createHash('sha256').update(fs.readFileSync(path.join(dir,job.promptFile))).digest('hex'),reference:job.reference,referenceSha256:job.referenceSha256,originalGeneratedPath:source,source:'sources/'+id+'.png',sha256:createHash('sha256').update(bytes).digest('hex'),width:meta.width,height:meta.height,channels:meta.channels,hasAlpha:meta.hasAlpha,reviewStatus:'awaiting-visual-review',cost:null};
+ledger.requests.push(record);fs.writeFileSync(ledgerFile,JSON.stringify(ledger,null,2)+'\n');console.log(JSON.stringify(record));

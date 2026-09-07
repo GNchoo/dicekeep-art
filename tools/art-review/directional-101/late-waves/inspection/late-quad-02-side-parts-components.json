@@ -1,0 +1,67 @@
+{
+  "width": 1024,
+  "height": 1536,
+  "source": "C:\\Users\\PC\\Documents\\Codex\\2026-09-07\\gnchoo-dicekeep-art-pr-29-6\\work\\dicekeep-art\\tools\\art-review\\directional-101\\late-waves\\sources\\late-quad-02-side-parts.png",
+  "components": [
+    {
+      "n": 101444,
+      "bounds": [
+        28,
+        168,
+        623,
+        425
+      ],
+      "id": 0
+    },
+    {
+      "n": 18607,
+      "bounds": [
+        664,
+        341,
+        90,
+        318
+      ],
+      "id": 1
+    },
+    {
+      "n": 23479,
+      "bounds": [
+        828,
+        348,
+        130,
+        309
+      ],
+      "id": 2
+    },
+    {
+      "n": 113328,
+      "bounds": [
+        43,
+        708,
+        590,
+        583
+      ],
+      "id": 3
+    },
+    {
+      "n": 22183,
+      "bounds": [
+        642,
+        969,
+        106,
+        317
+      ],
+      "id": 4
+    },
+    {
+      "n": 27013,
+      "bounds": [
+        808,
+        976,
+        156,
+        308
+      ],
+      "id": 5
+    }
+  ]
+}

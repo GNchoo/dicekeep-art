@@ -1,0 +1,215 @@
+{
+  "assetId": "w056",
+  "reviewApproved": true,
+  "sourceArtReview": {
+    "reviewed": true,
+    "reviewer": "test_harness agent; parent delegated visual approval",
+    "scope": "24 assembled pose-board images, three neutral stills, and four-direction moving preview captures; gameplay integration is a separate root-owned check",
+    "identity": "Purple leather right-hand wizard glove, brass cuff and tips, front amber rune, rear lacing; exactly five thumb/index/middle/ring/little digits.",
+    "style": "Painted game prop with leather and metal; no exposed flesh, blood, or gore.",
+    "assembly": "Repaired central palm holes; thumb socket moved inward/upward and its proximal feather disabled so the full finger remains connected through the eight poses. Upper finger links are behind the palm.",
+    "limitations": [
+      "Side source is a right-facing three-quarter view, following the approved neutral reference.",
+      "A small shaded leather thumb cuff remains in the source; it is overlapped by the attached finger, not an extra digit.",
+      "Composite texture proximity checks do not certify physical digit identity or occlusion; pose boards were inspected separately."
+    ]
+  },
+  "counts": {
+    "uniqueGeneratedSourcePngs": 2,
+    "imageGenerationCalls": 2,
+    "views": 3,
+    "walkingFrames": 24,
+    "neutralStills": 3,
+    "inlineFallbacks": 3,
+    "runtimePngs": 6,
+    "geometrySamplesPerView": 256,
+    "minimumSupportingDigits": 3,
+    "maximumSupportingDigits": 4,
+    "maximumSwingingDigits": 2,
+    "fourDirectionDigitTraces": 20,
+    "contactPoseCaptures": 336,
+    "contactContinuousSamples": 10752,
+    "textureProximityHits": 480,
+    "textureSamples": 480,
+    "movingGifPages": 25
+  },
+  "units": {
+    "canonicalCell": 512,
+    "outputCell": 256,
+    "scale": 0.5,
+    "referenceHeightCanonicalPx": 400,
+    "cycleStrideCanonicalPx": 110,
+    "cycleStrideOutputPngPx": 55,
+    "maximumCapturedPoseContactResidualOutputPx": 0,
+    "maximumHeldRasterExcursionOutputPx": 6.66015625,
+    "oneFrameQuantizationLimitOutputPx": 6.875,
+    "caveat": "Zero residual applies to captured contact poses. Held sprite frames move continuously until the next frame and do not have all-time zero slip. Output PNG pixels are not game screen pixels."
+  },
+  "geometry": {
+    "side": {
+      "passed": true,
+      "samples": 256,
+      "jointCoordinateSystem": "unprojected finger bend plane; legacy kneeAngle field is the middle finger-joint angle, not a human knee",
+      "sourceStride": 110,
+      "supportAngleRange": [
+        136.11937959248144,
+        166.00000000000009
+      ],
+      "checks": [
+        {
+          "id": "thumb",
+          "contacts": 180,
+          "swings": 76,
+          "maximumSwingLift": 19.997322758191235,
+          "projectedContactSlip": 0
+        },
+        {
+          "id": "index",
+          "contacts": 179,
+          "swings": 77,
+          "maximumSwingLift": 19.997322758191235,
+          "projectedContactSlip": 0
+        },
+        {
+          "id": "middle",
+          "contacts": 179,
+          "swings": 77,
+          "maximumSwingLift": 19.999330678348024,
+          "projectedContactSlip": 0
+        },
+        {
+          "id": "ring",
+          "contacts": 179,
+          "swings": 77,
+          "maximumSwingLift": 20,
+          "projectedContactSlip": 0
+        },
+        {
+          "id": "little",
+          "contacts": 179,
+          "swings": 77,
+          "maximumSwingLift": 19.999330678348024,
+          "projectedContactSlip": 0
+        }
+      ],
+      "errors": []
+    },
+    "front": {
+      "passed": true,
+      "samples": 256,
+      "jointCoordinateSystem": "unprojected finger bend plane; legacy kneeAngle field is the middle finger-joint angle, not a human knee",
+      "sourceStride": 110,
+      "supportAngleRange": [
+        137.4577038301833,
+        166.00000000000003
+      ],
+      "checks": [
+        {
+          "id": "thumb",
+          "contacts": 180,
+          "swings": 76,
+          "maximumSwingLift": 19.997322758191235,
+          "projectedContactSlip": 0
+        },
+        {
+          "id": "index",
+          "contacts": 179,
+          "swings": 77,
+          "maximumSwingLift": 19.997322758191235,
+          "projectedContactSlip": 0
+        },
+        {
+          "id": "middle",
+          "contacts": 179,
+          "swings": 77,
+          "maximumSwingLift": 19.999330678348024,
+          "projectedContactSlip": 0
+        },
+        {
+          "id": "ring",
+          "contacts": 179,
+          "swings": 77,
+          "maximumSwingLift": 20,
+          "projectedContactSlip": 0
+        },
+        {
+          "id": "little",
+          "contacts": 179,
+          "swings": 77,
+          "maximumSwingLift": 19.999330678348024,
+          "projectedContactSlip": 0
+        }
+      ],
+      "errors": []
+    },
+    "back": {
+      "passed": true,
+      "samples": 256,
+      "jointCoordinateSystem": "unprojected finger bend plane; legacy kneeAngle field is the middle finger-joint angle, not a human knee",
+      "sourceStride": 110,
+      "supportAngleRange": [
+        137.38794800643095,
+        166.00000000000023
+      ],
+      "checks": [
+        {
+          "id": "thumb",
+          "contacts": 180,
+          "swings": 76,
+          "maximumSwingLift": 19.997322758191235,
+          "projectedContactSlip": 0
+        },
+        {
+          "id": "index",
+          "contacts": 179,
+          "swings": 77,
+          "maximumSwingLift": 19.997322758191235,
+          "projectedContactSlip": 0
+        },
+        {
+          "id": "middle",
+          "contacts": 179,
+          "swings": 77,
+          "maximumSwingLift": 19.999330678348024,
+          "projectedContactSlip": 0
+        },
+        {
+          "id": "ring",
+          "contacts": 179,
+          "swings": 77,
+          "maximumSwingLift": 20,
+          "projectedContactSlip": 0
+        },
+        {
+          "id": "little",
+          "contacts": 179,
+          "swings": 77,
+          "maximumSwingLift": 19.999330678348024,
+          "projectedContactSlip": 0
+        }
+      ],
+      "errors": []
+    }
+  },
+  "hashes": {
+    "configSha256": "086320664d1f5830c32afa79472393d52a2a5fd558ae7cb122cd6e07dfe8c517",
+    "manifestSha256": "39e621a85cfc120fe4bf4d10f66dfda0507a20c8312651ea2b740333ab82d0b6",
+    "qaSha256": "a659cc91e9333e21d4d863ec95df2405d96575170846d19f99228e59f82c4035",
+    "validationSha256": "3f6be9eca7454d6415ded71f068afc8a5f90f9320b507df101da59335d4cbfff",
+    "movingSha256": "3c319cc51bf9250e743b964e6077b446540606e1a218daf9c7ba80a05386c213"
+  },
+  "validation": {
+    "manifestSha256": "39e621a85cfc120fe4bf4d10f66dfda0507a20c8312651ea2b740333ab82d0b6",
+    "qaSha256": "a659cc91e9333e21d4d863ec95df2405d96575170846d19f99228e59f82c4035",
+    "entries": 1,
+    "files": 12,
+    "decodedImages": 12,
+    "inlineFallbacks": 3,
+    "sources": 6,
+    "ready": 1,
+    "errors": [],
+    "passed": true
+  },
+  "movingPassed": true,
+  "errors": []
+}

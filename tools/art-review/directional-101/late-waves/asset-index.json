@@ -1,0 +1,815 @@
+{
+  "scope": "Review renders from actual neutral output. Reference height 48px ordinary / 64px boss; this is a comparison board, not a live-game screenshot.",
+  "entries": [
+    {
+      "assetId": "w061",
+      "wave": 61,
+      "role": "normal",
+      "name": "불 정령",
+      "description": "Friendly fierce fire elemental with charcoal stone core, bright amber eyes and contained orange flame mantle.",
+      "locomotion": "float",
+      "framesPerView": 4,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-1.png",
+      "individualBoard": "review/w061-all-views.png",
+      "moving": "review/w061-moving.gif"
+    },
+    {
+      "assetId": "w062",
+      "wave": 62,
+      "role": "normal",
+      "name": "서리 요정",
+      "description": "Tiny frost fairy with silver hair, pale-cyan tunic, crystal-blue insect wings and small ice wand.",
+      "locomotion": "flight",
+      "framesPerView": 4,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-1.png",
+      "individualBoard": "review/w062-all-views.png",
+      "moving": "review/w062-moving.gif"
+    },
+    {
+      "assetId": "w063",
+      "wave": 63,
+      "role": "normal",
+      "name": "흙 정령",
+      "description": "Small earth elemental built from rounded ochre clay stones, green moss seams, amber eyes, two blocky arms and legs.",
+      "locomotion": "legged",
+      "framesPerView": 8,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-1.png",
+      "individualBoard": "review/w063-all-views.png",
+      "moving": "review/w063-moving.gif"
+    },
+    {
+      "assetId": "w064",
+      "wave": 64,
+      "role": "normal",
+      "name": "천둥새",
+      "description": "Thunderbird with deep-blue feathers, golden crest, amber eyes and broad electric-blue wings with small lightning accents.",
+      "locomotion": "flight",
+      "framesPerView": 4,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-1.png",
+      "individualBoard": "review/w064-all-views.png",
+      "moving": "review/w064-moving.gif"
+    },
+    {
+      "assetId": "w065",
+      "wave": 65,
+      "role": "normal",
+      "name": "바위 골렘",
+      "description": "Heavy rounded gray rock golem with moss-green seams, amber rune face, huge stone fists and sturdy stone feet.",
+      "locomotion": "legged",
+      "framesPerView": 8,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-1.png",
+      "individualBoard": "review/w065-all-views.png",
+      "moving": "review/w065-moving.gif"
+    },
+    {
+      "assetId": "w066",
+      "wave": 66,
+      "role": "normal",
+      "name": "수정 정령",
+      "description": "Upright pale-blue crystal spirit with expressive amber eye lights, layered turquoise facets, two arms and two crystal legs.",
+      "locomotion": "legged",
+      "framesPerView": 8,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-1.png",
+      "individualBoard": "review/w066-all-views.png",
+      "moving": "review/w066-moving.gif"
+    },
+    {
+      "assetId": "w067",
+      "wave": 67,
+      "role": "normal",
+      "name": "마법 고양이",
+      "description": "Small midnight-blue wizard cat with amber eyes, violet scarf, brass moon charm and one intact tail, four paws.",
+      "locomotion": "legged",
+      "framesPerView": 8,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-1.png",
+      "individualBoard": "review/w067-all-views.png",
+      "moving": "review/w067-moving.gif"
+    },
+    {
+      "assetId": "w068",
+      "wave": 68,
+      "role": "normal",
+      "name": "살아있는 마도서",
+      "description": "Living violet spellbook with brass corners, expressive eyes on cover, page fans as two flapping wings, small bookmark tail.",
+      "locomotion": "flight",
+      "framesPerView": 4,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-1.png",
+      "individualBoard": "review/w068-all-views.png",
+      "moving": "review/w068-moving.gif"
+    },
+    {
+      "assetId": "w069",
+      "wave": 69,
+      "role": "normal",
+      "name": "수정 골렘",
+      "description": "Broad amethyst crystal golem with turquoise core, gold runes, two articulated stone arms and sturdy crystal legs.",
+      "locomotion": "legged",
+      "framesPerView": 8,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-1.png",
+      "individualBoard": "review/w069-all-views.png",
+      "moving": "review/w069-moving.gif"
+    },
+    {
+      "assetId": "b070",
+      "wave": 70,
+      "role": "boss",
+      "name": "대마법사",
+      "description": "Wise archmage with silver beard, deep-blue robes, gold star hat and crystal staff, floating cloth panels and contained arcane glow.",
+      "locomotion": "float",
+      "framesPerView": 4,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-1.png",
+      "individualBoard": "review/b070-all-views.png",
+      "moving": "review/b070-moving.gif"
+    },
+    {
+      "assetId": "b070-2",
+      "wave": 70,
+      "role": "secondary",
+      "name": "폭풍 정령",
+      "description": "Large storm elemental made of blue-gray swirling cloud bands, golden rune core, amber eyes and flowing cyan wind ribbons.",
+      "locomotion": "float",
+      "framesPerView": 4,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-1.png",
+      "individualBoard": "review/b070-2-all-views.png",
+      "moving": "review/b070-2-moving.gif"
+    },
+    {
+      "assetId": "w071",
+      "wave": 71,
+      "role": "normal",
+      "name": "드레이크",
+      "description": "Sturdy red-brown drake, cream belly, small bronze horns, four strong legs, folded decorative winglets and one plated tail.",
+      "locomotion": "legged",
+      "framesPerView": 8,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-1.png",
+      "individualBoard": "review/w071-all-views.png",
+      "moving": "review/w071-moving.gif"
+    },
+    {
+      "assetId": "w072",
+      "wave": 72,
+      "role": "normal",
+      "name": "새끼용",
+      "description": "Small ruby dragon hatchling with cream belly, round curious eyes, broad red membranous wings and one tail.",
+      "locomotion": "flight",
+      "framesPerView": 4,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-1.png",
+      "individualBoard": "review/w072-all-views.png",
+      "moving": "review/w072-moving.gif"
+    },
+    {
+      "assetId": "w073",
+      "wave": 73,
+      "role": "normal",
+      "name": "매머드",
+      "description": "Woolly brown mammoth with cream fur highlights, two rounded ivory tusks, bronze harness and four pillar legs.",
+      "locomotion": "legged",
+      "framesPerView": 8,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-1.png",
+      "individualBoard": "review/w073-all-views.png",
+      "moving": "review/w073-moving.gif"
+    },
+    {
+      "assetId": "w074",
+      "wave": 74,
+      "role": "normal",
+      "name": "도마뱀 인간",
+      "description": "Upright emerald lizard warrior, cream throat, bronze scale armor, compact spear and shield, two sturdy legs and tail.",
+      "locomotion": "legged",
+      "framesPerView": 8,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-1.png",
+      "individualBoard": "review/w074-all-views.png",
+      "moving": "review/w074-moving.gif"
+    },
+    {
+      "assetId": "w075",
+      "wave": 75,
+      "role": "normal",
+      "name": "코카트리스",
+      "description": "Cockatrice with golden rooster head, emerald scaled biped legs, bronze crest and long feathered tail; two walking legs.",
+      "locomotion": "legged",
+      "framesPerView": 8,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-2.png",
+      "individualBoard": "review/w075-all-views.png",
+      "moving": "review/w075-moving.gif"
+    },
+    {
+      "assetId": "w076",
+      "wave": 76,
+      "role": "normal",
+      "name": "와이번",
+      "description": "Lean bronze-red wyvern with horned expressive head, two broad membranous wings, tucked legs and long tail.",
+      "locomotion": "flight",
+      "framesPerView": 4,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-2.png",
+      "individualBoard": "review/w076-all-views.png",
+      "moving": "review/w076-moving.gif"
+    },
+    {
+      "assetId": "w077",
+      "wave": 77,
+      "role": "normal",
+      "name": "모래 벌레",
+      "description": "Ochre sand worm with bronze segmented armor rings, rounded digging muzzle, amber eyes, smooth flowing body.",
+      "locomotion": "slither",
+      "framesPerView": 8,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-2.png",
+      "individualBoard": "review/w077-all-views.png",
+      "moving": "review/w077-moving.gif"
+    },
+    {
+      "assetId": "w078",
+      "wave": 78,
+      "role": "normal",
+      "name": "베히모스",
+      "description": "Huge stocky blue-gray behemoth with bronze plated shoulders, small ivory horns, four massive paws and short tail.",
+      "locomotion": "legged",
+      "framesPerView": 8,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-2.png",
+      "individualBoard": "review/w078-all-views.png",
+      "moving": "review/w078-moving.gif"
+    },
+    {
+      "assetId": "w079",
+      "wave": 79,
+      "role": "normal",
+      "name": "용 전사",
+      "description": "Upright crimson dragon warrior in bronze plate, compact broad sword and shield, sturdy armored legs and one tail.",
+      "locomotion": "legged",
+      "framesPerView": 8,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-2.png",
+      "individualBoard": "review/w079-all-views.png",
+      "moving": "review/w079-moving.gif"
+    },
+    {
+      "assetId": "b080",
+      "wave": 80,
+      "role": "boss",
+      "name": "화룡",
+      "description": "Majestic ruby fire dragon, cream armored belly, bronze horns, broad red wings, small controlled ember breath glow and full tail.",
+      "locomotion": "flight",
+      "framesPerView": 4,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-2.png",
+      "individualBoard": "review/b080-all-views.png",
+      "moving": "review/b080-moving.gif"
+    },
+    {
+      "assetId": "b080-2",
+      "wave": 80,
+      "role": "secondary",
+      "name": "히드라",
+      "description": "Emerald hydra with exactly three expressive heads, bronze collar rings, one large quadruped body, four legs and one tail.",
+      "locomotion": "legged",
+      "framesPerView": 8,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-2.png",
+      "individualBoard": "review/b080-2-all-views.png",
+      "moving": "review/b080-2-moving.gif"
+    },
+    {
+      "assetId": "w081",
+      "wave": 81,
+      "role": "normal",
+      "name": "임프",
+      "description": "Small red imp, rounded black horns, black leather vest, playful determined face, two sturdy hoof feet and one tail.",
+      "locomotion": "legged",
+      "framesPerView": 8,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-2.png",
+      "individualBoard": "review/w081-all-views.png",
+      "moving": "review/w081-moving.gif"
+    },
+    {
+      "assetId": "w082",
+      "wave": 82,
+      "role": "normal",
+      "name": "헬하운드",
+      "description": "Charcoal hellhound with wine-red mane, ember eyes, brass collar, four strong paws and intact full tail.",
+      "locomotion": "legged",
+      "framesPerView": 8,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-2.png",
+      "individualBoard": "review/w082-all-views.png",
+      "moving": "review/w082-moving.gif"
+    },
+    {
+      "assetId": "w083",
+      "wave": 83,
+      "role": "normal",
+      "name": "지옥 오우거",
+      "description": "Heavy red-brown hell ogre, rounded black horns, dark iron bracers, compact hammer and sturdy boots.",
+      "locomotion": "legged",
+      "framesPerView": 8,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-2.png",
+      "individualBoard": "review/w083-all-views.png",
+      "moving": "review/w083-moving.gif"
+    },
+    {
+      "assetId": "w084",
+      "wave": 84,
+      "role": "normal",
+      "name": "지옥 벌레",
+      "description": "Large crimson burrowing worm with black armor bands, rounded amber crystal mouth plate and small eye lights.",
+      "locomotion": "slither",
+      "framesPerView": 8,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-2.png",
+      "individualBoard": "review/w084-all-views.png",
+      "moving": "review/w084-moving.gif"
+    },
+    {
+      "assetId": "w085",
+      "wave": 85,
+      "role": "normal",
+      "name": "그림자 악귀",
+      "description": "Floating navy shadow spirit with clear amber eyes, layered wine-red scarf and flowing intact smoke-like cloak.",
+      "locomotion": "float",
+      "framesPerView": 4,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-2.png",
+      "individualBoard": "review/w085-all-views.png",
+      "moving": "review/w085-moving.gif"
+    },
+    {
+      "assetId": "w086",
+      "wave": 86,
+      "role": "normal",
+      "name": "임프 주술사",
+      "description": "Small crimson imp shaman, rounded black horns, dark hood, brass charms, compact rune staff and sturdy hoof feet.",
+      "locomotion": "legged",
+      "framesPerView": 8,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-2.png",
+      "individualBoard": "review/w086-all-views.png",
+      "moving": "review/w086-moving.gif"
+    },
+    {
+      "assetId": "w087",
+      "wave": 87,
+      "role": "normal",
+      "name": "화염 악마",
+      "description": "Upright flame demon with intact charcoal armor, orange decorative rune seams, rounded horned helm and heavy boots.",
+      "locomotion": "legged",
+      "framesPerView": 8,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-2.png",
+      "individualBoard": "review/w087-all-views.png",
+      "moving": "review/w087-moving.gif"
+    },
+    {
+      "assetId": "w088",
+      "wave": 88,
+      "role": "normal",
+      "name": "가고일",
+      "description": "Small slate gargoyle, expressive round face, broad stone wings, bronze collar, compact tucked feet and one tail.",
+      "locomotion": "flight",
+      "framesPerView": 4,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-2.png",
+      "individualBoard": "review/w088-all-views.png",
+      "moving": "review/w088-moving.gif"
+    },
+    {
+      "assetId": "w089",
+      "wave": 89,
+      "role": "normal",
+      "name": "지옥 기사",
+      "description": "Tall infernal knight in complete black iron plate with wine-red cloth and orange rune accents, compact sword and boots.",
+      "locomotion": "legged",
+      "framesPerView": 8,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-3.png",
+      "individualBoard": "review/w089-all-views.png",
+      "moving": "review/w089-moving.gif"
+    },
+    {
+      "assetId": "b090",
+      "wave": 90,
+      "role": "boss",
+      "name": "마왕",
+      "description": "Imposing upright crimson demon king in complete black-gold armor, rounded crown horns, burgundy cape above knees, solid armored legs.",
+      "locomotion": "legged",
+      "framesPerView": 8,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-3.png",
+      "individualBoard": "review/b090-all-views.png",
+      "moving": "review/b090-moving.gif"
+    },
+    {
+      "assetId": "b090-2",
+      "wave": 90,
+      "role": "secondary",
+      "name": "구덩이 악마",
+      "description": "Huge upright charcoal pit demon, broad red shoulders, rounded black horns, heavy bronze bracers and sturdy hoof feet.",
+      "locomotion": "legged",
+      "framesPerView": 8,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-3.png",
+      "individualBoard": "review/b090-2-all-views.png",
+      "moving": "review/b090-2-moving.gif"
+    },
+    {
+      "assetId": "w091",
+      "wave": 91,
+      "role": "normal",
+      "name": "심연 촉수",
+      "description": "A single stylized purple abyss tentacle creature emerging from a smooth magical curl, rounded suction cups and small gold eye charm.",
+      "locomotion": "slither",
+      "framesPerView": 8,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-3.png",
+      "individualBoard": "review/w091-all-views.png",
+      "moving": "review/w091-moving.gif"
+    },
+    {
+      "assetId": "w092",
+      "wave": 92,
+      "role": "normal",
+      "name": "공허의 눈",
+      "description": "Floating violet crystal eye sentinel, geometric gold iris, smooth dark shell and orbiting small intact violet wisps.",
+      "locomotion": "float",
+      "framesPerView": 4,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-3.png",
+      "individualBoard": "review/w092-all-views.png",
+      "moving": "review/w092-moving.gif"
+    },
+    {
+      "assetId": "w093",
+      "wave": 93,
+      "role": "normal",
+      "name": "심연 거인",
+      "description": "Huge upright midnight-blue abyss giant, intact skin, violet rune armor, large bracers and solid boots.",
+      "locomotion": "legged",
+      "framesPerView": 8,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-3.png",
+      "individualBoard": "review/w093-all-views.png",
+      "moving": "review/w093-moving.gif"
+    },
+    {
+      "assetId": "w094",
+      "wave": 94,
+      "role": "normal",
+      "name": "파멸 기사",
+      "description": "Broad doom knight in complete obsidian armor, violet cloth, star-like visor, compact black blade and heavy boots.",
+      "locomotion": "legged",
+      "framesPerView": 8,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-3.png",
+      "individualBoard": "review/w094-all-views.png",
+      "moving": "review/w094-moving.gif"
+    },
+    {
+      "assetId": "w095",
+      "wave": 95,
+      "role": "normal",
+      "name": "그림자 암살자",
+      "description": "Lean shadow assassin in midnight-blue hood and violet scarf, mask with gold eye slit, two short daggers and quiet boots.",
+      "locomotion": "legged",
+      "framesPerView": 8,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-3.png",
+      "individualBoard": "review/w095-all-views.png",
+      "moving": "review/w095-moving.gif"
+    },
+    {
+      "assetId": "w096",
+      "wave": 96,
+      "role": "normal",
+      "name": "파멸 까마귀",
+      "description": "Large midnight-violet doom raven with silver feather edges, star-like eyes, gold collar and broad feathered wings.",
+      "locomotion": "flight",
+      "framesPerView": 4,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-3.png",
+      "individualBoard": "review/w096-all-views.png",
+      "moving": "review/w096-moving.gif"
+    },
+    {
+      "assetId": "w097",
+      "wave": 97,
+      "role": "normal",
+      "name": "공허 골렘",
+      "description": "Heavy void golem with floating but connected obsidian blocks, contained violet core, rounded fists and two block feet.",
+      "locomotion": "legged",
+      "framesPerView": 8,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-3.png",
+      "individualBoard": "review/w097-all-views.png",
+      "moving": "review/w097-moving.gif"
+    },
+    {
+      "assetId": "w098",
+      "wave": 98,
+      "role": "normal",
+      "name": "공허 벌레",
+      "description": "Long violet void worm with dark segmented shell, small star eyes and smooth gold-edged armor bands.",
+      "locomotion": "slither",
+      "framesPerView": 8,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-3.png",
+      "individualBoard": "review/w098-all-views.png",
+      "moving": "review/w098-moving.gif"
+    },
+    {
+      "assetId": "w099",
+      "wave": 99,
+      "role": "normal",
+      "name": "흑요석 거상",
+      "description": "Huge obsidian colossus, complete black glass armor with broad purple facets, gold runes, massive fists and pillar legs.",
+      "locomotion": "legged",
+      "framesPerView": 8,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-3.png",
+      "individualBoard": "review/w099-all-views.png",
+      "moving": "review/w099-moving.gif"
+    },
+    {
+      "assetId": "b100",
+      "wave": 100,
+      "role": "boss",
+      "name": "파멸의 군주",
+      "description": "Doom sovereign in complete obsidian-violet armor with gold crown, star visor, midnight cape above knees, compact scepter and solid boots.",
+      "locomotion": "legged",
+      "framesPerView": 8,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-3.png",
+      "individualBoard": "review/b100-all-views.png",
+      "moving": "review/b100-moving.gif"
+    },
+    {
+      "assetId": "b100-2",
+      "wave": 100,
+      "role": "secondary",
+      "name": "공허 용",
+      "description": "Majestic flying midnight-blue void dragon with violet star-patterned wings, gold-edged horns, silver eyes and one intact tail.",
+      "locomotion": "flight",
+      "framesPerView": 4,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-3.png",
+      "individualBoard": "review/b100-2-all-views.png",
+      "moving": "review/b100-2-moving.gif"
+    },
+    {
+      "assetId": "w101",
+      "wave": 101,
+      "role": "normal",
+      "name": "종말의 사자",
+      "description": "Upright last herald wearing midnight-blue cloak and violet armor, expressive masked face, small star staff and solid boots.",
+      "locomotion": "legged",
+      "framesPerView": 8,
+      "views": [
+        "side",
+        "front",
+        "back"
+      ],
+      "reviewApproved": true,
+      "reviewBoard": "review/roster-3.png",
+      "individualBoard": "review/w101-all-views.png",
+      "moving": "review/w101-moving.gif"
+    }
+  ]
+}

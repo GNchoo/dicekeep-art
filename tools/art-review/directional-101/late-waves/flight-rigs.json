@@ -1,0 +1,2587 @@
+{
+  "version": 1,
+  "canonicalCell": 512,
+  "assetVersion": 93,
+  "entries": [
+    {
+      "assetId": "w062",
+      "wave": 62,
+      "role": "normal",
+      "locomotion": "flight",
+      "cell": 256,
+      "referenceHeight": 300,
+      "cycleStride": 0,
+      "cycleSeconds": 0.8,
+      "reviewApproved": true,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-flight-01-side-parts.png",
+          "sourceSha256": "c81f5b67d9646f4d98b77e0fbb40da4679ca48ad332934f8b092d6673707fff0",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 210,
+              "top": 135,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/directional-101/late-waves/derived/w062-side-alpha.png",
+            "sourceSha256": "4394819453759cbfbdbec393fbf13e7b64ac971ec82bd758b0201c83719e36f1",
+            "background": "alpha"
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.38444193912063135,
+                0.1133032694475761,
+                0.23365276211950395,
+                0.13768320180383314
+              ],
+              "socketNormalized": [
+                0.43,
+                0.56
+              ],
+              "sourcePivot": [
+                0.935,
+                0.64
+              ],
+              "scale": 0.6695647807215764,
+              "angleDeg": [
+                0,
+                48
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.6899661781285231,
+                0.11386696730552424,
+                0.22914317925591882,
+                0.137119503945885
+              ],
+              "socketNormalized": [
+                0.47,
+                0.56
+              ],
+              "sourcePivot": [
+                0.935,
+                0.64
+              ],
+              "scale": 0.6786645238475703,
+              "angleDeg": [
+                0,
+                48
+              ],
+              "phase": 0,
+              "layer": 1,
+              "flipX": false
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-flight-01-front-back-parts.png",
+          "sourceSha256": "e0a3609441ee4a9ff750d6ecb3895f0e3543a1e6be9568274df3816e2221a823",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 210,
+              "top": 135,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/directional-101/late-waves/derived/w062-front-alpha.png",
+            "sourceSha256": "c2beecaef6be4e3e118945e50f49f6c1da4d9b2ada9691606cdc2ebc96623e15",
+            "background": "alpha"
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.22647527910685805,
+                0.08851674641148326,
+                0.10865231259968101,
+                0.14453748006379585
+              ],
+              "socketNormalized": [
+                0.82,
+                0.56
+              ],
+              "sourcePivot": [
+                0.93,
+                0.54
+              ],
+              "scale": 1.0462060815309686,
+              "angleDeg": [
+                -10,
+                42
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.35645933014354064,
+                0.08851674641148326,
+                0.11104465709728868,
+                0.14533492822966507
+              ],
+              "socketNormalized": [
+                0.18,
+                0.56
+              ],
+              "sourcePivot": [
+                0.07,
+                0.54
+              ],
+              "scale": 1.0296194227908786,
+              "angleDeg": [
+                10,
+                -42
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-flight-01-front-back-parts.png",
+          "sourceSha256": "e0a3609441ee4a9ff750d6ecb3895f0e3543a1e6be9568274df3816e2221a823",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0.5350877192982456,
+              0.05422647527910686,
+              0.11582934609250399,
+              0.19477671451355663
+            ],
+            "target": {
+              "height": 210,
+              "top": 135,
+              "centerX": 256
+            },
+            "layer": 0
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.6913875598086124,
+                0.09090909090909091,
+                0.10307017543859649,
+                0.15490430622009568
+              ],
+              "socketNormalized": [
+                0.18,
+                0.56
+              ],
+              "sourcePivot": [
+                0.93,
+                0.54
+              ],
+              "scale": 1.0498801771151092,
+              "angleDeg": [
+                10,
+                -42
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.8269537480063796,
+                0.09728867623604466,
+                0.10466507177033493,
+                0.14852472089314195
+              ],
+              "socketNormalized": [
+                0.82,
+                0.56
+              ],
+              "sourcePivot": [
+                0.07,
+                0.54
+              ],
+              "scale": 1.0592340000987706,
+              "angleDeg": [
+                -10,
+                42
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        }
+      }
+    },
+    {
+      "assetId": "w064",
+      "wave": 64,
+      "role": "normal",
+      "locomotion": "flight",
+      "cell": 256,
+      "referenceHeight": 300,
+      "cycleStride": 0,
+      "cycleSeconds": 0.8,
+      "reviewApproved": true,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-flight-01-side-parts.png",
+          "sourceSha256": "c81f5b67d9646f4d98b77e0fbb40da4679ca48ad332934f8b092d6673707fff0",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0.15885416666666666,
+              0.0390625,
+              0.14794921875,
+              0.410400390625
+            ],
+            "target": {
+              "height": 210,
+              "top": 135,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/directional-101/late-waves/sources/late-bird-bodies-correction.png",
+            "sourceSha256": "f48698a50353e12b64143b12d36428428ac2bb73a3e8b6a0ae799cfaa39f8d23"
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.36189402480270577,
+                0.27959413754227735,
+                0.26296505073280724,
+                0.20250845546786922
+              ],
+              "socketNormalized": [
+                0.43,
+                0.38
+              ],
+              "sourcePivot": [
+                0.93,
+                0.59
+              ],
+              "scale": 0.5484272761128799,
+              "angleDeg": [
+                0,
+                48
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.6685456595264938,
+                0.2801578354002255,
+                0.2686020293122886,
+                0.20307215332581735
+              ],
+              "socketNormalized": [
+                0.47,
+                0.38
+              ],
+              "sourcePivot": [
+                0.93,
+                0.59
+              ],
+              "scale": 0.5416817682184782,
+              "angleDeg": [
+                0,
+                48
+              ],
+              "phase": 0,
+              "layer": 1,
+              "flipX": false
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-flight-01-front-back-parts.png",
+          "sourceSha256": "e0a3609441ee4a9ff750d6ecb3895f0e3543a1e6be9568274df3816e2221a823",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0.421875,
+              0.0322265625,
+              0.15901692708333334,
+              0.435791015625
+            ],
+            "target": {
+              "height": 210,
+              "top": 135,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/directional-101/late-waves/sources/late-bird-bodies-correction.png",
+            "sourceSha256": "f48698a50353e12b64143b12d36428428ac2bb73a3e8b6a0ae799cfaa39f8d23"
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.22009569377990432,
+                0.3253588516746411,
+                0.11822169059011164,
+                0.16606858054226475
+              ],
+              "socketNormalized": [
+                0.75,
+                0.38
+              ],
+              "sourcePivot": [
+                0.17,
+                0.05
+              ],
+              "scale": 0.716828615537148,
+              "angleDeg": [
+                -45,
+                45
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.36044657097288674,
+                0.3253588516746411,
+                0.11822169059011164,
+                0.16606858054226475
+              ],
+              "socketNormalized": [
+                0.25,
+                0.38
+              ],
+              "sourcePivot": [
+                0.87,
+                0.05
+              ],
+              "scale": 0.7072199818109254,
+              "angleDeg": [
+                45,
+                -45
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-flight-01-front-back-parts.png",
+          "sourceSha256": "e0a3609441ee4a9ff750d6ecb3895f0e3543a1e6be9568274df3816e2221a823",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0.7135416666666666,
+              0.03125,
+              0.15120442708333334,
+              0.436767578125
+            ],
+            "target": {
+              "height": 210,
+              "top": 135,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/directional-101/late-waves/sources/late-bird-bodies-correction.png",
+            "sourceSha256": "f48698a50353e12b64143b12d36428428ac2bb73a3e8b6a0ae799cfaa39f8d23"
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.696969696969697,
+                0.32456140350877194,
+                0.1078548644338118,
+                0.16606858054226475
+              ],
+              "socketNormalized": [
+                0.25,
+                0.38
+              ],
+              "sourcePivot": [
+                0.17,
+                0.05
+              ],
+              "scale": 0.7343534906659348,
+              "angleDeg": [
+                45,
+                -45
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.828548644338118,
+                0.33413078149920256,
+                0.1038676236044657,
+                0.15649920255183414
+              ],
+              "socketNormalized": [
+                0.75,
+                0.38
+              ],
+              "sourcePivot": [
+                0.87,
+                0.05
+              ],
+              "scale": 0.7662613465052197,
+              "angleDeg": [
+                -45,
+                45
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        }
+      }
+    },
+    {
+      "assetId": "w068",
+      "wave": 68,
+      "role": "normal",
+      "locomotion": "flight",
+      "cell": 256,
+      "referenceHeight": 300,
+      "cycleStride": 0,
+      "cycleSeconds": 0.8,
+      "reviewApproved": true,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-flight-01-side-parts.png",
+          "sourceSha256": "c81f5b67d9646f4d98b77e0fbb40da4679ca48ad332934f8b092d6673707fff0",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0.08229988726042842,
+              0.5135287485907554,
+              0.1648816234498309,
+              0.18559751972942504
+            ],
+            "target": {
+              "height": 210,
+              "top": 135,
+              "centerX": 256
+            },
+            "layer": 0
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.3810597519729425,
+                0.5180383314543405,
+                0.2246335963923337,
+                0.1483934611048478
+              ],
+              "socketNormalized": [
+                0.43,
+                0.45
+              ],
+              "sourcePivot": [
+                0.92,
+                0.53
+              ],
+              "scale": 0.7236902907252662,
+              "angleDeg": [
+                0,
+                48
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.6843291995490417,
+                0.5174746335963923,
+                0.22688838782412626,
+                0.15008455467869222
+              ],
+              "socketNormalized": [
+                0.47,
+                0.45
+              ],
+              "sourcePivot": [
+                0.92,
+                0.53
+              ],
+              "scale": 0.7160667042367236,
+              "angleDeg": [
+                0,
+                48
+              ],
+              "phase": 0,
+              "layer": 1,
+              "flipX": false
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-flight-01-front-back-parts.png",
+          "sourceSha256": "e0a3609441ee4a9ff750d6ecb3895f0e3543a1e6be9568274df3816e2221a823",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0.051036682615629984,
+              0.539872408293461,
+              0.10466507177033493,
+              0.18042264752791068
+            ],
+            "target": {
+              "height": 210,
+              "top": 135,
+              "centerX": 256
+            },
+            "layer": 0
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.21690590111642744,
+                0.5534290271132376,
+                0.10625996810207336,
+                0.12779106858054226
+              ],
+              "socketNormalized": [
+                0.82,
+                0.45
+              ],
+              "sourcePivot": [
+                0.93,
+                0.52
+              ],
+              "scale": 1.1228695823521628,
+              "angleDeg": [
+                -10,
+                42
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.35566188197767146,
+                0.5558213716108453,
+                0.11343700159489634,
+                0.1246012759170654
+              ],
+              "socketNormalized": [
+                0.18,
+                0.45
+              ],
+              "sourcePivot": [
+                0.07,
+                0.52
+              ],
+              "scale": 1.0794498717089698,
+              "angleDeg": [
+                10,
+                -42
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-flight-01-front-back-parts.png",
+          "sourceSha256": "e0a3609441ee4a9ff750d6ecb3895f0e3543a1e6be9568274df3816e2221a823",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0.5462519936204147,
+              0.5382775119617225,
+              0.10625996810207336,
+              0.18201754385964913
+            ],
+            "target": {
+              "height": 210,
+              "top": 135,
+              "centerX": 256
+            },
+            "layer": 0
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.7185007974481659,
+                0.5550239234449761,
+                0.08074162679425838,
+                0.12619617224880383
+              ],
+              "socketNormalized": [
+                0.18,
+                0.45
+              ],
+              "sourcePivot": [
+                0.93,
+                0.52
+              ],
+              "scale": 1.3446517635630482,
+              "angleDeg": [
+                10,
+                -42
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.8301435406698564,
+                0.5558213716108453,
+                0.08951355661881978,
+                0.12539872408293462
+              ],
+              "socketNormalized": [
+                0.82,
+                0.45
+              ],
+              "sourcePivot": [
+                0.07,
+                0.52
+              ],
+              "scale": 1.266922051979896,
+              "angleDeg": [
+                -10,
+                42
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        }
+      }
+    },
+    {
+      "assetId": "w072",
+      "wave": 72,
+      "role": "normal",
+      "locomotion": "flight",
+      "cell": 256,
+      "referenceHeight": 300,
+      "cycleStride": 0,
+      "cycleSeconds": 0.8,
+      "reviewApproved": true,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-flight-02-side-parts.png",
+          "sourceSha256": "a110cfa729fe1338e2d1129a6e07bfad5c5c3e6923572da3a0229cfde4b2a8e7",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0.037109375,
+              0.06966145833333333,
+              0.235595703125,
+              0.25341796875
+            ],
+            "target": {
+              "height": 210,
+              "top": 135,
+              "centerX": 256
+            },
+            "layer": 0
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.326171875,
+                0.10677083333333333,
+                0.278564453125,
+                0.21044921875
+              ],
+              "socketNormalized": [
+                0.43,
+                0.43
+              ],
+              "sourcePivot": [
+                0.737,
+                0.065
+              ],
+              "scale": 0.4514488411533061,
+              "angleDeg": [
+                0,
+                48
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.7138671875,
+                0.11197916666666667,
+                0.238525390625,
+                0.20784505208333334
+              ],
+              "socketNormalized": [
+                0.47,
+                0.43
+              ],
+              "sourcePivot": [
+                0.3,
+                0.045
+              ],
+              "scale": 0.47563105933936406,
+              "angleDeg": [
+                0,
+                48
+              ],
+              "phase": 0,
+              "layer": 1,
+              "flipX": true
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-flight-02-front-back-parts.png",
+          "sourceSha256": "be20dc5268ebe1494b6dff623e24519066470c088f2f5a5a0372d132156d4c7c",
+          "background": "checkerboard",
+          "backgroundSeeds": [
+            [
+              100,
+              241
+            ],
+            [
+              190,
+              241
+            ],
+            [
+              741,
+              242
+            ],
+            [
+              827,
+              242
+            ],
+            [
+              98,
+              644
+            ],
+            [
+              194,
+              644
+            ],
+            [
+              732,
+              646
+            ],
+            [
+              822,
+              646
+            ],
+            [
+              92,
+              1052
+            ],
+            [
+              185,
+              1052
+            ],
+            [
+              724,
+              1053
+            ],
+            [
+              817,
+              1053
+            ]
+          ],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0.05263157894736842,
+              0.0733652312599681,
+              0.11981658692185009,
+              0.26415470494417864
+            ],
+            "target": {
+              "height": 210,
+              "top": 135,
+              "centerX": 256
+            },
+            "layer": 0
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.22089314194577353,
+                0.10685805422647528,
+                0.1246012759170654,
+                0.20434609250398725
+              ],
+              "socketNormalized": [
+                0.82,
+                0.43
+              ],
+              "sourcePivot": [
+                0.84,
+                0.43
+              ],
+              "scale": 0.8498466839288494,
+              "angleDeg": [
+                -10,
+                42
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.3803827751196172,
+                0.1076555023923445,
+                0.13098086124401914,
+                0.2027511961722488
+              ],
+              "socketNormalized": [
+                0.18,
+                0.43
+              ],
+              "sourcePivot": [
+                0.12,
+                0.43
+              ],
+              "scale": 0.8153164793775572,
+              "angleDeg": [
+                10,
+                -42
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-flight-02-front-back-parts.png",
+          "sourceSha256": "be20dc5268ebe1494b6dff623e24519066470c088f2f5a5a0372d132156d4c7c",
+          "background": "checkerboard",
+          "backgroundSeeds": [
+            [
+              100,
+              241
+            ],
+            [
+              190,
+              241
+            ],
+            [
+              741,
+              242
+            ],
+            [
+              827,
+              242
+            ],
+            [
+              98,
+              644
+            ],
+            [
+              194,
+              644
+            ],
+            [
+              732,
+              646
+            ],
+            [
+              822,
+              646
+            ],
+            [
+              92,
+              1052
+            ],
+            [
+              185,
+              1052
+            ],
+            [
+              724,
+              1053
+            ],
+            [
+              817,
+              1053
+            ]
+          ],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0.5677830940988836,
+              0.07256778309409888,
+              0.1166267942583732,
+              0.26495215311004783
+            ],
+            "target": {
+              "height": 210,
+              "top": 135,
+              "centerX": 256
+            },
+            "layer": 0
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.7129186602870813,
+                0.1076555023923445,
+                0.1166267942583732,
+                0.20035885167464115
+              ],
+              "socketNormalized": [
+                0.18,
+                0.43
+              ],
+              "sourcePivot": [
+                0.84,
+                0.43
+              ],
+              "scale": 0.8848050379931655,
+              "angleDeg": [
+                10,
+                -42
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.8556618819776715,
+                0.10845295055821372,
+                0.11901913875598086,
+                0.20195374800637958
+              ],
+              "socketNormalized": [
+                0.82,
+                0.43
+              ],
+              "sourcePivot": [
+                0.12,
+                0.43
+              ],
+              "scale": 0.8554502582215134,
+              "angleDeg": [
+                -10,
+                42
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        }
+      }
+    },
+    {
+      "assetId": "w076",
+      "wave": 76,
+      "role": "normal",
+      "locomotion": "flight",
+      "cell": 256,
+      "referenceHeight": 300,
+      "cycleStride": 0,
+      "cycleSeconds": 0.8,
+      "reviewApproved": true,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-flight-02-side-parts.png",
+          "sourceSha256": "a110cfa729fe1338e2d1129a6e07bfad5c5c3e6923572da3a0229cfde4b2a8e7",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0.03515625,
+              0.3697916666666667,
+              0.304931640625,
+              0.29638671875
+            ],
+            "target": {
+              "height": 210,
+              "top": 135,
+              "centerX": 256
+            },
+            "layer": 0
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.388671875,
+                0.396484375,
+                0.238525390625,
+                0.2618815104166667
+              ],
+              "socketNormalized": [
+                0.43,
+                0.47
+              ],
+              "sourcePivot": [
+                0.935,
+                0.52
+              ],
+              "scale": 0.536852668850924,
+              "angleDeg": [
+                0,
+                48
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.728515625,
+                0.3990885416666667,
+                0.227783203125,
+                0.2586263020833333
+              ],
+              "socketNormalized": [
+                0.47,
+                0.47
+              ],
+              "sourcePivot": [
+                0.065,
+                0.52
+              ],
+              "scale": 0.5535831915474534,
+              "angleDeg": [
+                0,
+                48
+              ],
+              "phase": 0,
+              "layer": 1,
+              "flipX": true
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-flight-02-front-back-parts.png",
+          "sourceSha256": "be20dc5268ebe1494b6dff623e24519066470c088f2f5a5a0372d132156d4c7c",
+          "background": "checkerboard",
+          "backgroundSeeds": [
+            [
+              100,
+              241
+            ],
+            [
+              190,
+              241
+            ],
+            [
+              741,
+              242
+            ],
+            [
+              827,
+              242
+            ],
+            [
+              98,
+              644
+            ],
+            [
+              194,
+              644
+            ],
+            [
+              732,
+              646
+            ],
+            [
+              822,
+              646
+            ],
+            [
+              92,
+              1052
+            ],
+            [
+              185,
+              1052
+            ],
+            [
+              724,
+              1053
+            ],
+            [
+              817,
+              1053
+            ]
+          ],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0.051036682615629984,
+              0.36921850079744817,
+              0.11981658692185009,
+              0.3048245614035088
+            ],
+            "target": {
+              "height": 210,
+              "top": 135,
+              "centerX": 256
+            },
+            "layer": 0
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.21850079744816586,
+                0.3803827751196172,
+                0.14374003189792664,
+                0.28169856459330145
+              ],
+              "socketNormalized": [
+                0.82,
+                0.47
+              ],
+              "sourcePivot": [
+                0.93,
+                0.52
+              ],
+              "scale": 0.6696203467569977,
+              "angleDeg": [
+                -10,
+                42
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.379585326953748,
+                0.38197767145135564,
+                0.14772727272727273,
+                0.28249601275917063
+              ],
+              "socketNormalized": [
+                0.18,
+                0.47
+              ],
+              "sourcePivot": [
+                0.07,
+                0.52
+              ],
+              "scale": 0.6601675575304214,
+              "angleDeg": [
+                10,
+                -42
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-flight-02-front-back-parts.png",
+          "sourceSha256": "be20dc5268ebe1494b6dff623e24519066470c088f2f5a5a0372d132156d4c7c",
+          "background": "checkerboard",
+          "backgroundSeeds": [
+            [
+              100,
+              241
+            ],
+            [
+              190,
+              241
+            ],
+            [
+              741,
+              242
+            ],
+            [
+              827,
+              242
+            ],
+            [
+              98,
+              644
+            ],
+            [
+              194,
+              644
+            ],
+            [
+              732,
+              646
+            ],
+            [
+              822,
+              646
+            ],
+            [
+              92,
+              1052
+            ],
+            [
+              185,
+              1052
+            ],
+            [
+              724,
+              1053
+            ],
+            [
+              817,
+              1053
+            ]
+          ],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0.5598086124401914,
+              0.3700159489633174,
+              0.13257575757575757,
+              0.30721690590111644
+            ],
+            "target": {
+              "height": 210,
+              "top": 135,
+              "centerX": 256
+            },
+            "layer": 0
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.7081339712918661,
+                0.3915470494417863,
+                0.12619617224880383,
+                0.27212918660287083
+              ],
+              "socketNormalized": [
+                0.18,
+                0.47
+              ],
+              "sourcePivot": [
+                0.93,
+                0.52
+              ],
+              "scale": 0.722719693013592,
+              "angleDeg": [
+                10,
+                -42
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.8532695374800638,
+                0.39074960127591707,
+                0.12858851674641147,
+                0.27372408293460926
+              ],
+              "socketNormalized": [
+                0.82,
+                0.47
+              ],
+              "sourcePivot": [
+                0.07,
+                0.52
+              ],
+              "scale": 0.7146412463775089,
+              "angleDeg": [
+                -10,
+                42
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        }
+      }
+    },
+    {
+      "assetId": "b080",
+      "wave": 80,
+      "role": "boss",
+      "locomotion": "flight",
+      "cell": 512,
+      "referenceHeight": 300,
+      "cycleStride": 0,
+      "cycleSeconds": 0.8,
+      "reviewApproved": true,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-boss-flight-01-side-parts.png",
+          "sourceSha256": "c27cd66d38e07bb5170e4b6bfea16676827888e893f9acc174aa110e4dfde179",
+          "background": "checkerboard",
+          "backgroundSeeds": [
+            [
+              211,
+              600
+            ],
+            [
+              210,
+              1260
+            ]
+          ],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.34,
+              0.5
+            ],
+            "target": {
+              "height": 255,
+              "top": 110,
+              "centerX": 256
+            },
+            "layer": 0
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.3466796875,
+                0.11848958333333333,
+                0.293212890625,
+                0.34130859375
+              ],
+              "socketNormalized": [
+                0.47,
+                0.49
+              ],
+              "sourcePivot": [
+                0.93,
+                0.45
+              ],
+              "scale": 0.5262629189054749,
+              "angleDeg": [
+                0,
+                48
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.6884765625,
+                0.11848958333333333,
+                0.264892578125,
+                0.3419596354166667
+              ],
+              "socketNormalized": [
+                0.47,
+                0.49
+              ],
+              "sourcePivot": [
+                0.07,
+                0.45
+              ],
+              "scale": 0.5508651736202123,
+              "angleDeg": [
+                0,
+                48
+              ],
+              "phase": 0,
+              "layer": 1,
+              "flipX": true
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-boss-flight-01-front-back-parts.png",
+          "sourceSha256": "262e5ad3998378a2087447670c009e660682f792deffa5885cd83dddb79b74a0",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0.039713541666666664,
+              0.0576171875,
+              0.13037109375,
+              0.387939453125
+            ],
+            "target": {
+              "height": 255,
+              "top": 110,
+              "centerX": 256
+            },
+            "layer": 0
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.220703125,
+                0.12109375,
+                0.13037109375,
+                0.305908203125
+              ],
+              "socketNormalized": [
+                0.94,
+                0.42
+              ],
+              "sourcePivot": [
+                0.27,
+                0.035
+              ],
+              "scale": 0.6304264943195935,
+              "angleDeg": [
+                -45,
+                45
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.388671875,
+                0.12109375,
+                0.13037109375,
+                0.308837890625
+              ],
+              "socketNormalized": [
+                0.38,
+                0.42
+              ],
+              "sourcePivot": [
+                0.73,
+                0.035
+              ],
+              "scale": 0.6255241723001747,
+              "angleDeg": [
+                45,
+                -45
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-boss-flight-01-front-back-parts.png",
+          "sourceSha256": "262e5ad3998378a2087447670c009e660682f792deffa5885cd83dddb79b74a0",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0.59375,
+              0.0595703125,
+              0.12125651041666667,
+              0.401611328125
+            ],
+            "target": {
+              "height": 255,
+              "top": 110,
+              "centerX": 256
+            },
+            "layer": 0
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.7220052083333334,
+                0.1220703125,
+                0.12255859375,
+                0.308837890625
+              ],
+              "socketNormalized": [
+                0.065,
+                0.405
+              ],
+              "sourcePivot": [
+                0.27,
+                0.035
+              ],
+              "scale": 0.6324518936530887,
+              "angleDeg": [
+                45,
+                -45
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.8684895833333334,
+                0.1220703125,
+                0.11930338541666667,
+                0.308837890625
+              ],
+              "socketNormalized": [
+                0.635,
+                0.405
+              ],
+              "sourcePivot": [
+                0.73,
+                0.035
+              ],
+              "scale": 0.6352754501451944,
+              "angleDeg": [
+                -45,
+                45
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        }
+      }
+    },
+    {
+      "assetId": "w088",
+      "wave": 88,
+      "role": "normal",
+      "locomotion": "flight",
+      "cell": 256,
+      "referenceHeight": 300,
+      "cycleStride": 0,
+      "cycleSeconds": 0.8,
+      "reviewApproved": true,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-flight-02-side-parts.png",
+          "sourceSha256": "a110cfa729fe1338e2d1129a6e07bfad5c5c3e6923572da3a0229cfde4b2a8e7",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0.01171875,
+              0.70703125,
+              0.271728515625,
+              0.21630859375
+            ],
+            "target": {
+              "height": 210,
+              "top": 135,
+              "centerX": 256
+            },
+            "layer": 0
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.3720703125,
+                0.73046875,
+                0.242431640625,
+                0.19091796875
+              ],
+              "socketNormalized": [
+                0.43,
+                0.49
+              ],
+              "sourcePivot": [
+                0.93,
+                0.62
+              ],
+              "scale": 0.566306333739781,
+              "angleDeg": [
+                0,
+                48
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.73046875,
+                0.7298177083333334,
+                0.219970703125,
+                0.18961588541666666
+              ],
+              "socketNormalized": [
+                0.47,
+                0.49
+              ],
+              "sourcePivot": [
+                0.07,
+                0.62
+              ],
+              "scale": 0.602029085096546,
+              "angleDeg": [
+                0,
+                48
+              ],
+              "phase": 0,
+              "layer": 1,
+              "flipX": true
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-flight-02-front-back-parts.png",
+          "sourceSha256": "be20dc5268ebe1494b6dff623e24519066470c088f2f5a5a0372d132156d4c7c",
+          "background": "checkerboard",
+          "backgroundSeeds": [
+            [
+              100,
+              241
+            ],
+            [
+              190,
+              241
+            ],
+            [
+              741,
+              242
+            ],
+            [
+              827,
+              242
+            ],
+            [
+              98,
+              644
+            ],
+            [
+              194,
+              644
+            ],
+            [
+              732,
+              646
+            ],
+            [
+              822,
+              646
+            ],
+            [
+              92,
+              1052
+            ],
+            [
+              185,
+              1052
+            ],
+            [
+              724,
+              1053
+            ],
+            [
+              817,
+              1053
+            ]
+          ],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0.044657097288676235,
+              0.7137161084529505,
+              0.13815789473684212,
+              0.24740829346092505
+            ],
+            "target": {
+              "height": 210,
+              "top": 135,
+              "centerX": 256
+            },
+            "layer": 0
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.2025518341307815,
+                0.7543859649122807,
+                0.14374003189792664,
+                0.16925837320574164
+              ],
+              "socketNormalized": [
+                0.82,
+                0.49
+              ],
+              "sourcePivot": [
+                0.94,
+                0.67
+              ],
+              "scale": 0.7547518656254331,
+              "angleDeg": [
+                -10,
+                42
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.37559808612440193,
+                0.75518341307815,
+                0.14214513556618819,
+                0.16925837320574164
+              ],
+              "socketNormalized": [
+                0.18,
+                0.49
+              ],
+              "sourcePivot": [
+                0.06,
+                0.67
+              ],
+              "scale": 0.759740630627645,
+              "angleDeg": [
+                10,
+                -42
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-flight-02-front-back-parts.png",
+          "sourceSha256": "be20dc5268ebe1494b6dff623e24519066470c088f2f5a5a0372d132156d4c7c",
+          "background": "checkerboard",
+          "backgroundSeeds": [
+            [
+              100,
+              241
+            ],
+            [
+              190,
+              241
+            ],
+            [
+              741,
+              242
+            ],
+            [
+              827,
+              242
+            ],
+            [
+              98,
+              644
+            ],
+            [
+              194,
+              644
+            ],
+            [
+              732,
+              646
+            ],
+            [
+              822,
+              646
+            ],
+            [
+              92,
+              1052
+            ],
+            [
+              185,
+              1052
+            ],
+            [
+              724,
+              1053
+            ],
+            [
+              817,
+              1053
+            ]
+          ],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0.55103668261563,
+              0.7185007974481659,
+              0.13018341307814993,
+              0.24421850079744817
+            ],
+            "target": {
+              "height": 210,
+              "top": 135,
+              "centerX": 256
+            },
+            "layer": 0
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.6977671451355661,
+                0.7527910685805422,
+                0.12779106858054226,
+                0.17404306220095694
+              ],
+              "socketNormalized": [
+                0.18,
+                0.49
+              ],
+              "sourcePivot": [
+                0.94,
+                0.67
+              ],
+              "scale": 0.7956815160448817,
+              "angleDeg": [
+                10,
+                -42
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.8444976076555024,
+                0.7535885167464115,
+                0.12779106858054226,
+                0.17324561403508773
+              ],
+              "socketNormalized": [
+                0.82,
+                0.49
+              ],
+              "sourcePivot": [
+                0.06,
+                0.67
+              ],
+              "scale": 0.797477553217901,
+              "angleDeg": [
+                -10,
+                42
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        }
+      }
+    },
+    {
+      "assetId": "w096",
+      "wave": 96,
+      "role": "normal",
+      "locomotion": "flight",
+      "cell": 256,
+      "referenceHeight": 300,
+      "cycleStride": 0,
+      "cycleSeconds": 0.8,
+      "reviewApproved": true,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-flight-01-side-parts.png",
+          "sourceSha256": "c81f5b67d9646f4d98b77e0fbb40da4679ca48ad332934f8b092d6673707fff0",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0.13802083333333334,
+              0.5166015625,
+              0.17399088541666666,
+              0.401611328125
+            ],
+            "target": {
+              "height": 210,
+              "top": 135,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/directional-101/late-waves/sources/late-bird-bodies-correction.png",
+            "sourceSha256": "f48698a50353e12b64143b12d36428428ac2bb73a3e8b6a0ae799cfaa39f8d23"
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.3370913190529876,
+                0.7147688838782412,
+                0.27423900789177,
+                0.21716459977452085
+              ],
+              "socketNormalized": [
+                0.43,
+                0.43
+              ],
+              "sourcePivot": [
+                0.93,
+                0.43
+              ],
+              "scale": 0.5273597590944753,
+              "angleDeg": [
+                0,
+                48
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.6403607666290868,
+                0.7153325817361894,
+                0.27649379932356255,
+                0.21547350620067643
+              ],
+              "socketNormalized": [
+                0.47,
+                0.43
+              ],
+              "sourcePivot": [
+                0.93,
+                0.43
+              ],
+              "scale": 0.5271080206815855,
+              "angleDeg": [
+                0,
+                48
+              ],
+              "phase": 0,
+              "layer": 1,
+              "flipX": false
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-flight-01-front-back-parts.png",
+          "sourceSha256": "e0a3609441ee4a9ff750d6ecb3895f0e3543a1e6be9568274df3816e2221a823",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0.4192708333333333,
+              0.5166015625,
+              0.16227213541666666,
+              0.421142578125
+            ],
+            "target": {
+              "height": 210,
+              "top": 135,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/directional-101/late-waves/sources/late-bird-bodies-correction.png",
+            "sourceSha256": "f48698a50353e12b64143b12d36428428ac2bb73a3e8b6a0ae799cfaa39f8d23"
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.21690590111642744,
+                0.7695374800637959,
+                0.10944976076555024,
+                0.17404306220095694
+              ],
+              "socketNormalized": [
+                0.75,
+                0.43
+              ],
+              "sourcePivot": [
+                0.17,
+                0.05
+              ],
+              "scale": 0.7057326692910899,
+              "angleDeg": [
+                -45,
+                45
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.35566188197767146,
+                0.7719298245614035,
+                0.11024720893141945,
+                0.17165071770334928
+              ],
+              "socketNormalized": [
+                0.25,
+                0.43
+              ],
+              "sourcePivot": [
+                0.87,
+                0.05
+              ],
+              "scale": 0.7039134810378503,
+              "angleDeg": [
+                45,
+                -45
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-flight-01-front-back-parts.png",
+          "sourceSha256": "e0a3609441ee4a9ff750d6ecb3895f0e3543a1e6be9568274df3816e2221a823",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0.708984375,
+              0.517578125,
+              0.15641276041666666,
+              0.422119140625
+            ],
+            "target": {
+              "height": 210,
+              "top": 135,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/directional-101/late-waves/sources/late-bird-bodies-correction.png",
+            "sourceSha256": "f48698a50353e12b64143b12d36428428ac2bb73a3e8b6a0ae799cfaa39f8d23"
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.7033492822966507,
+                0.7703349282296651,
+                0.0950956937799043,
+                0.17643540669856458
+              ],
+              "socketNormalized": [
+                0.25,
+                0.43
+              ],
+              "sourcePivot": [
+                0.17,
+                0.05
+              ],
+              "scale": 0.7186479680245308,
+              "angleDeg": [
+                45,
+                -45
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.8341307814992025,
+                0.7719298245614035,
+                0.0950956937799043,
+                0.17404306220095694
+              ],
+              "socketNormalized": [
+                0.75,
+                0.43
+              ],
+              "sourcePivot": [
+                0.87,
+                0.05
+              ],
+              "scale": 0.7203369273749222,
+              "angleDeg": [
+                -45,
+                45
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        }
+      }
+    },
+    {
+      "assetId": "b100-2",
+      "wave": 100,
+      "role": "secondary",
+      "locomotion": "flight",
+      "cell": 512,
+      "referenceHeight": 300,
+      "cycleStride": 0,
+      "cycleSeconds": 0.8,
+      "reviewApproved": true,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-boss-flight-01-side-parts.png",
+          "sourceSha256": "c27cd66d38e07bb5170e4b6bfea16676827888e893f9acc174aa110e4dfde179",
+          "background": "checkerboard",
+          "backgroundSeeds": [
+            [
+              211,
+              600
+            ],
+            [
+              210,
+              1260
+            ]
+          ],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0.0263671875,
+              0.5319010416666666,
+              0.273681640625,
+              0.38232421875
+            ],
+            "target": {
+              "height": 255,
+              "top": 110,
+              "centerX": 256
+            },
+            "layer": 0
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.3291015625,
+                0.5481770833333334,
+                0.307861328125,
+                0.3400065104166667
+              ],
+              "socketNormalized": [
+                0.5,
+                0.46
+              ],
+              "sourcePivot": [
+                0.95,
+                0.47
+              ],
+              "scale": 0.5179703135059316,
+              "angleDeg": [
+                0,
+                48
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.705078125,
+                0.5475260416666666,
+                0.255126953125,
+                0.34130859375
+              ],
+              "socketNormalized": [
+                0.5,
+                0.46
+              ],
+              "sourcePivot": [
+                0.055,
+                0.47
+              ],
+              "scale": 0.5685115121825843,
+              "angleDeg": [
+                0,
+                48
+              ],
+              "phase": 0,
+              "layer": 1,
+              "flipX": true
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-boss-flight-01-front-back-parts.png",
+          "sourceSha256": "262e5ad3998378a2087447670c009e660682f792deffa5885cd83dddb79b74a0",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0.038411458333333336,
+              0.5244140625,
+              0.12320963541666667,
+              0.389892578125
+            ],
+            "target": {
+              "height": 255,
+              "top": 110,
+              "centerX": 256
+            },
+            "layer": 0
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.21028645833333334,
+                0.576171875,
+                0.13557942708333334,
+                0.319580078125
+              ],
+              "socketNormalized": [
+                0.95,
+                0.425
+              ],
+              "sourcePivot": [
+                0.34,
+                0.035
+              ],
+              "scale": 0.6143456842855798,
+              "angleDeg": [
+                -45,
+                45
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.3828125,
+                0.576171875,
+                0.14599609375,
+                0.321533203125
+              ],
+              "socketNormalized": [
+                0.41,
+                0.425
+              ],
+              "sourcePivot": [
+                0.69,
+                0.035
+              ],
+              "scale": 0.5986841687520047,
+              "angleDeg": [
+                45,
+                -45
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-boss-flight-01-front-back-parts.png",
+          "sourceSha256": "262e5ad3998378a2087447670c009e660682f792deffa5885cd83dddb79b74a0",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0.5930989583333334,
+              0.5244140625,
+              0.10823567708333333,
+              0.401611328125
+            ],
+            "target": {
+              "height": 255,
+              "top": 110,
+              "centerX": 256
+            },
+            "layer": 0
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.71484375,
+                0.576171875,
+                0.12125651041666667,
+                0.321533203125
+              ],
+              "socketNormalized": [
+                0.08,
+                0.415
+              ],
+              "sourcePivot": [
+                0.34,
+                0.035
+              ],
+              "scale": 0.6210880713043148,
+              "angleDeg": [
+                45,
+                -45
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.85546875,
+                0.576171875,
+                0.11930338541666667,
+                0.322509765625
+              ],
+              "socketNormalized": [
+                0.72,
+                0.415
+              ],
+              "sourcePivot": [
+                0.69,
+                0.035
+              ],
+              "scale": 0.6171602960926528,
+              "angleDeg": [
+                -45,
+                45
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        }
+      }
+    }
+  ]
+}

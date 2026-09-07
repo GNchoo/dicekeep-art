@@ -1,0 +1,897 @@
+{
+  "schemaVersion": 1,
+  "sourceRecords": [
+    {
+      "file": "sources/starlight.png",
+      "sha256": "b743a8a13699e1a8580d6d45f6702906a7a5554b87ec7066987768300c73cccd",
+      "width": 1254,
+      "height": 1254,
+      "sourceChannels": 3,
+      "sourceHasRealAlpha": false,
+      "removedBackgroundPixels": 1136632,
+      "backgroundSeeds": [
+        [
+          411,
+          656
+        ]
+      ]
+    },
+    {
+      "file": "sources/nebula.png",
+      "sha256": "452a021dee62993cab3453f6b505d9fdb2f4a2bae549e0a990e074042282c7fe",
+      "width": 1254,
+      "height": 1254,
+      "sourceChannels": 3,
+      "sourceHasRealAlpha": false,
+      "removedBackgroundPixels": 1110245,
+      "backgroundSeeds": [
+        [
+          354,
+          262
+        ],
+        [
+          901,
+          945
+        ],
+        [
+          824,
+          425
+        ],
+        [
+          980,
+          425
+        ],
+        [
+          903,
+          495
+        ]
+      ]
+    },
+    {
+      "file": "sources/heaven.png",
+      "sha256": "fb2882dc2d2724ffb4c665d2816040ab33fff9304a0b4103c87667d9e2769f05",
+      "width": 1254,
+      "height": 1254,
+      "sourceChannels": 3,
+      "sourceHasRealAlpha": false,
+      "removedBackgroundPixels": 1069006,
+      "backgroundSeeds": [
+        [
+          877,
+          686
+        ],
+        [
+          859,
+          686
+        ],
+        [
+          464,
+          979
+        ],
+        [
+          235,
+          980
+        ]
+      ]
+    },
+    {
+      "file": "sources/dimension.png",
+      "sha256": "6ec6151431653ca579f2700059f21e562904a1f55d1fffa41661aa4587ff2464",
+      "width": 1774,
+      "height": 887,
+      "sourceChannels": 3,
+      "sourceHasRealAlpha": false,
+      "removedBackgroundPixels": 1180013,
+      "backgroundSeeds": [
+        [
+          510,
+          420
+        ],
+        [
+          1303,
+          115
+        ],
+        [
+          1244,
+          115
+        ],
+        [
+          1376,
+          241
+        ],
+        [
+          1172,
+          241
+        ],
+        [
+          1361,
+          153
+        ],
+        [
+          1191,
+          155
+        ]
+      ]
+    }
+  ],
+  "renderContract": {
+    "renderMax": [
+      70,
+      96
+    ],
+    "renderFootRelativeToTowerY": 11,
+    "shotYRelativeToTowerY": -64
+  },
+  "towers": [
+    {
+      "star": 7,
+      "name": "쌍결정첨탑",
+      "source": "sources/starlight.png",
+      "sourceCell": {
+        "left": 0,
+        "top": 0,
+        "width": 627,
+        "height": 598
+      },
+      "sourceCrop": {
+        "left": 245,
+        "top": 23,
+        "width": 271,
+        "height": 563
+      },
+      "sourceMuzzle": [
+        374,
+        230
+      ],
+      "runtime": "casual/towers/star-07.png",
+      "sha256": "47cf680c7f00c219c3b06ece46c431625b1e487e62c91fbfd744c279064241e2",
+      "bytes": 147634,
+      "runtimeSize": [
+        384,
+        384
+      ],
+      "runtimeForeground": {
+        "left": 106,
+        "top": 16,
+        "width": 173,
+        "height": 360
+      },
+      "runtimeFootY": 376,
+      "renderFit": {
+        "width": 46.209591474245116,
+        "height": 96
+      },
+      "visualMuzzleRelativeToTower": {
+        "x": -1.108348134991119,
+        "y": -49.703374777975135
+      },
+      "fixedShotOrigin": {
+        "x": 0,
+        "y": -64
+      },
+      "muzzleDistanceToFixedOrigin": 14.339523294983548,
+      "pipCount": 5,
+      "pipLayout": "four corners plus center, single square face",
+      "alphaMode": "neutral-background-border-flood-plus-reviewed-seeds",
+      "emitterNormalized": [
+        0.47601476014760147,
+        0.36767317939609234
+      ]
+    },
+    {
+      "star": 8,
+      "name": "프리즘포대",
+      "source": "sources/starlight.png",
+      "sourceCell": {
+        "left": 627,
+        "top": 0,
+        "width": 627,
+        "height": 598
+      },
+      "sourceCrop": {
+        "left": 754,
+        "top": 32,
+        "width": 259,
+        "height": 558
+      },
+      "sourceMuzzle": [
+        880,
+        191
+      ],
+      "runtime": "casual/towers/star-08.png",
+      "sha256": "5b22585b64b0b9ea6c55dc25a27e270be987b96a702ed1c88a48f7546fa4f8a9",
+      "bytes": 146989,
+      "runtimeSize": [
+        384,
+        384
+      ],
+      "runtimeForeground": {
+        "left": 109,
+        "top": 16,
+        "width": 167,
+        "height": 360
+      },
+      "runtimeFootY": 376,
+      "renderFit": {
+        "width": 44.55913978494624,
+        "height": 96.00000000000001
+      },
+      "visualMuzzleRelativeToTower": {
+        "x": -0.6021505376344086,
+        "y": -57.64516129032259
+      },
+      "fixedShotOrigin": {
+        "x": 0,
+        "y": -64
+      },
+      "muzzleDistanceToFixedOrigin": 6.383303243304978,
+      "pipCount": 5,
+      "pipLayout": "four corners plus center, single square face",
+      "alphaMode": "neutral-background-border-flood-plus-reviewed-seeds",
+      "emitterNormalized": [
+        0.4864864864864865,
+        0.2849462365591398
+      ]
+    },
+    {
+      "star": 9,
+      "name": "천체관측탑",
+      "source": "sources/starlight.png",
+      "sourceCell": {
+        "left": 0,
+        "top": 598,
+        "width": 627,
+        "height": 656
+      },
+      "sourceCrop": {
+        "left": 237,
+        "top": 603,
+        "width": 267,
+        "height": 582
+      },
+      "sourceMuzzle": [
+        459,
+        791
+      ],
+      "runtime": "casual/towers/star-09.png",
+      "sha256": "e5876ab52a38311682543c0fbf66bd5b96b311de4732251628c95ad293a4585b",
+      "bytes": 139119,
+      "runtimeSize": [
+        384,
+        384
+      ],
+      "runtimeForeground": {
+        "left": 110,
+        "top": 16,
+        "width": 165,
+        "height": 360
+      },
+      "runtimeFootY": 376,
+      "renderFit": {
+        "width": 44.04123711340206,
+        "height": 96
+      },
+      "visualMuzzleRelativeToTower": {
+        "x": 14.597938144329897,
+        "y": -53.98969072164948
+      },
+      "fixedShotOrigin": {
+        "x": 0,
+        "y": -64
+      },
+      "muzzleDistanceToFixedOrigin": 17.70045451150654,
+      "pipCount": 5,
+      "pipLayout": "four corners plus center, single square face",
+      "alphaMode": "neutral-background-border-flood-plus-reviewed-seeds",
+      "emitterNormalized": [
+        0.8314606741573034,
+        0.3230240549828179
+      ]
+    },
+    {
+      "star": 10,
+      "name": "별왕관천문성",
+      "source": "sources/starlight.png",
+      "sourceCell": {
+        "left": 627,
+        "top": 598,
+        "width": 627,
+        "height": 656
+      },
+      "sourceCrop": {
+        "left": 680,
+        "top": 621,
+        "width": 399,
+        "height": 570
+      },
+      "sourceMuzzle": [
+        880,
+        733
+      ],
+      "runtime": "casual/towers/star-10.png",
+      "sha256": "1d0a286686a63f94d68212c3ca3989bd5e8ef35a55f5b00c114d7b4097bfe1c0",
+      "bytes": 202330,
+      "runtimeSize": [
+        384,
+        384
+      ],
+      "runtimeForeground": {
+        "left": 66,
+        "top": 16,
+        "width": 252,
+        "height": 360
+      },
+      "runtimeFootY": 376,
+      "renderFit": {
+        "width": 67.2,
+        "height": 96
+      },
+      "visualMuzzleRelativeToTower": {
+        "x": 0.08421052631578947,
+        "y": -66.13684210526316
+      },
+      "fixedShotOrigin": {
+        "x": 0,
+        "y": -64
+      },
+      "muzzleDistanceToFixedOrigin": 2.1385007822228776,
+      "pipCount": 5,
+      "pipLayout": "four corners plus center, single square face",
+      "alphaMode": "neutral-background-border-flood-plus-reviewed-seeds",
+      "emitterNormalized": [
+        0.5012531328320802,
+        0.19649122807017544
+      ]
+    },
+    {
+      "star": 11,
+      "name": "차원문요새",
+      "source": "sources/nebula.png",
+      "sourceCell": {
+        "left": 0,
+        "top": 0,
+        "width": 627,
+        "height": 622
+      },
+      "sourceCrop": {
+        "left": 203,
+        "top": 5,
+        "width": 308,
+        "height": 604
+      },
+      "sourceMuzzle": [
+        355,
+        158
+      ],
+      "runtime": "casual/towers/star-11.png",
+      "sha256": "5fca3561009e04e74ff1e34d117be68d64af9d29ed2bb7bd7c2c32fdd6127744",
+      "bytes": 165450,
+      "runtimeSize": [
+        384,
+        384
+      ],
+      "runtimeForeground": {
+        "left": 100,
+        "top": 16,
+        "width": 184,
+        "height": 360
+      },
+      "runtimeFootY": 376,
+      "renderFit": {
+        "width": 48.95364238410596,
+        "height": 96
+      },
+      "visualMuzzleRelativeToTower": {
+        "x": -0.31788079470198677,
+        "y": -60.68211920529802
+      },
+      "fixedShotOrigin": {
+        "x": 0,
+        "y": -64
+      },
+      "muzzleDistanceToFixedOrigin": 3.33307383168939,
+      "pipCount": 5,
+      "pipLayout": "four corners plus center, single square face",
+      "alphaMode": "neutral-background-border-flood-plus-reviewed-seeds",
+      "emitterNormalized": [
+        0.4935064935064935,
+        0.2533112582781457
+      ]
+    },
+    {
+      "star": 12,
+      "name": "공중성채",
+      "source": "sources/nebula.png",
+      "sourceCell": {
+        "left": 627,
+        "top": 0,
+        "width": 627,
+        "height": 622
+      },
+      "sourceCrop": {
+        "left": 774,
+        "top": 38,
+        "width": 269,
+        "height": 567
+      },
+      "sourceMuzzle": [
+        906,
+        191
+      ],
+      "runtime": "casual/towers/star-12.png",
+      "sha256": "59785ebd3db6d310d545ae435bbb646a4de05d88acbc10f6125d56651be26c7f",
+      "bytes": 138603,
+      "runtimeSize": [
+        384,
+        384
+      ],
+      "runtimeForeground": {
+        "left": 107,
+        "top": 16,
+        "width": 171,
+        "height": 360
+      },
+      "runtimeFootY": 376,
+      "renderFit": {
+        "width": 45.544973544973544,
+        "height": 96
+      },
+      "visualMuzzleRelativeToTower": {
+        "x": -0.42328042328042326,
+        "y": -59.09523809523809
+      },
+      "fixedShotOrigin": {
+        "x": 0,
+        "y": -64
+      },
+      "muzzleDistanceToFixedOrigin": 4.922992551196493,
+      "pipCount": 5,
+      "pipLayout": "four corners plus center, single square face",
+      "alphaMode": "neutral-background-border-flood-plus-reviewed-seeds",
+      "emitterNormalized": [
+        0.49070631970260226,
+        0.2698412698412698
+      ]
+    },
+    {
+      "star": 13,
+      "name": "중력핵요새",
+      "source": "sources/nebula.png",
+      "sourceCell": {
+        "left": 0,
+        "top": 622,
+        "width": 627,
+        "height": 632
+      },
+      "sourceCrop": {
+        "left": 194,
+        "top": 629,
+        "width": 323,
+        "height": 584
+      },
+      "sourceMuzzle": [
+        355,
+        762
+      ],
+      "runtime": "casual/towers/star-13.png",
+      "sha256": "e0602939df5cef82a05a51d56a56fbfeb05fcc81d1aa54915e789ea66239271a",
+      "bytes": 161401,
+      "runtimeSize": [
+        384,
+        384
+      ],
+      "runtimeForeground": {
+        "left": 93,
+        "top": 16,
+        "width": 199,
+        "height": 360
+      },
+      "runtimeFootY": 376,
+      "renderFit": {
+        "width": 53.0958904109589,
+        "height": 96
+      },
+      "visualMuzzleRelativeToTower": {
+        "x": -0.0821917808219178,
+        "y": -63.13698630136986
+      },
+      "fixedShotOrigin": {
+        "x": 0,
+        "y": -64
+      },
+      "muzzleDistanceToFixedOrigin": 0.8669187579340718,
+      "pipCount": 5,
+      "pipLayout": "four corners plus center, single square face",
+      "alphaMode": "neutral-background-border-flood-plus-reviewed-seeds",
+      "emitterNormalized": [
+        0.4984520123839009,
+        0.22773972602739725
+      ]
+    },
+    {
+      "star": 14,
+      "name": "쌍성성채",
+      "source": "sources/nebula.png",
+      "sourceCell": {
+        "left": 627,
+        "top": 622,
+        "width": 627,
+        "height": 632
+      },
+      "sourceCrop": {
+        "left": 738,
+        "top": 624,
+        "width": 326,
+        "height": 595
+      },
+      "sourceMuzzle": [
+        899,
+        830
+      ],
+      "runtime": "casual/towers/star-14.png",
+      "sha256": "824a9f0c5e3f322e4c5bd8d9b50b3490f3b4004783910ea37edc4310a16e2202",
+      "bytes": 169439,
+      "runtimeSize": [
+        384,
+        384
+      ],
+      "runtimeForeground": {
+        "left": 94,
+        "top": 16,
+        "width": 197,
+        "height": 360
+      },
+      "runtimeFootY": 376,
+      "renderFit": {
+        "width": 52.5983193277311,
+        "height": 96
+      },
+      "visualMuzzleRelativeToTower": {
+        "x": -0.3226890756302521,
+        "y": -51.76302521008404
+      },
+      "fixedShotOrigin": {
+        "x": 0,
+        "y": -64
+      },
+      "muzzleDistanceToFixedOrigin": 12.241228706652365,
+      "pipCount": 5,
+      "pipLayout": "four corners plus center, single square face",
+      "alphaMode": "neutral-background-border-flood-plus-reviewed-seeds",
+      "emitterNormalized": [
+        0.4938650306748466,
+        0.346218487394958
+      ]
+    },
+    {
+      "star": 15,
+      "name": "날개신전",
+      "source": "sources/heaven.png",
+      "sourceCell": {
+        "left": 0,
+        "top": 0,
+        "width": 627,
+        "height": 619
+      },
+      "sourceCrop": {
+        "left": 213,
+        "top": 13,
+        "width": 280,
+        "height": 596
+      },
+      "sourceMuzzle": [
+        354,
+        216
+      ],
+      "runtime": "casual/towers/star-15.png",
+      "sha256": "79c283b8885df53c4afc8f10b456450c80e0da8c448b20ae4098e76027169ba7",
+      "bytes": 129862,
+      "runtimeSize": [
+        384,
+        384
+      ],
+      "runtimeForeground": {
+        "left": 108,
+        "top": 16,
+        "width": 169,
+        "height": 360
+      },
+      "runtimeFootY": 376,
+      "renderFit": {
+        "width": 45.100671140939596,
+        "height": 96
+      },
+      "visualMuzzleRelativeToTower": {
+        "x": 0.1610738255033557,
+        "y": -52.30201342281879
+      },
+      "fixedShotOrigin": {
+        "x": 0,
+        "y": -64
+      },
+      "muzzleDistanceToFixedOrigin": 11.699095466623652,
+      "pipCount": 5,
+      "pipLayout": "four corners plus center, single square face",
+      "alphaMode": "neutral-background-border-flood-plus-reviewed-seeds",
+      "emitterNormalized": [
+        0.5035714285714286,
+        0.34060402684563756
+      ]
+    },
+    {
+      "star": 16,
+      "name": "천공전투성",
+      "source": "sources/heaven.png",
+      "sourceCell": {
+        "left": 627,
+        "top": 0,
+        "width": 627,
+        "height": 619
+      },
+      "sourceCrop": {
+        "left": 668,
+        "top": 19,
+        "width": 392,
+        "height": 593
+      },
+      "sourceMuzzle": [
+        840,
+        251
+      ],
+      "runtime": "casual/towers/star-16.png",
+      "sha256": "da875f97b3752ee2dac3d32d89e4c25183d9a030a8766977237215f64b2d8ad2",
+      "bytes": 193232,
+      "runtimeSize": [
+        384,
+        384
+      ],
+      "runtimeForeground": {
+        "left": 73,
+        "top": 16,
+        "width": 238,
+        "height": 360
+      },
+      "runtimeFootY": 376,
+      "renderFit": {
+        "width": 63.46037099494097,
+        "height": 96
+      },
+      "visualMuzzleRelativeToTower": {
+        "x": -3.8853288364249576,
+        "y": -47.44182124789207
+      },
+      "fixedShotOrigin": {
+        "x": 0,
+        "y": -64
+      },
+      "muzzleDistanceToFixedOrigin": 17.007911798745717,
+      "pipCount": 5,
+      "pipLayout": "four corners plus center, single square face",
+      "alphaMode": "neutral-background-border-flood-plus-reviewed-seeds",
+      "emitterNormalized": [
+        0.4387755102040816,
+        0.3912310286677909
+      ]
+    },
+    {
+      "star": 17,
+      "name": "태양대성당",
+      "source": "sources/heaven.png",
+      "sourceCell": {
+        "left": 0,
+        "top": 619,
+        "width": 627,
+        "height": 635
+      },
+      "sourceCrop": {
+        "left": 178,
+        "top": 629,
+        "width": 343,
+        "height": 584
+      },
+      "sourceMuzzle": [
+        351,
+        783
+      ],
+      "runtime": "casual/towers/star-17.png",
+      "sha256": "1e14eaf8c66aa850b094e2c8f659ff3bbf2452ab1f58d38242f6dba16da4a17e",
+      "bytes": 176382,
+      "runtimeSize": [
+        384,
+        384
+      ],
+      "runtimeForeground": {
+        "left": 87,
+        "top": 16,
+        "width": 211,
+        "height": 360
+      },
+      "runtimeFootY": 376,
+      "renderFit": {
+        "width": 56.38356164383561,
+        "height": 96
+      },
+      "visualMuzzleRelativeToTower": {
+        "x": 0.2465753424657534,
+        "y": -59.68493150684931
+      },
+      "fixedShotOrigin": {
+        "x": 0,
+        "y": -64
+      },
+      "muzzleDistanceToFixedOrigin": 4.322107761277346,
+      "pipCount": 5,
+      "pipLayout": "four corners plus center, single square face",
+      "alphaMode": "neutral-background-border-flood-plus-reviewed-seeds",
+      "emitterNormalized": [
+        0.5043731778425656,
+        0.2636986301369863
+      ]
+    },
+    {
+      "star": 18,
+      "name": "다층천상옥좌",
+      "source": "sources/heaven.png",
+      "sourceCell": {
+        "left": 627,
+        "top": 619,
+        "width": 627,
+        "height": 635
+      },
+      "sourceCrop": {
+        "left": 667,
+        "top": 623,
+        "width": 405,
+        "height": 597
+      },
+      "sourceMuzzle": [
+        866,
+        758
+      ],
+      "runtime": "casual/towers/star-18.png",
+      "sha256": "8b27b899a8a873c29520dd773630b98c18f91315337839ee0701243ae2572c7c",
+      "bytes": 180503,
+      "runtimeSize": [
+        384,
+        384
+      ],
+      "runtimeForeground": {
+        "left": 70,
+        "top": 16,
+        "width": 244,
+        "height": 360
+      },
+      "runtimeFootY": 376,
+      "renderFit": {
+        "width": 65.12562814070351,
+        "height": 96
+      },
+      "visualMuzzleRelativeToTower": {
+        "x": -0.5628140703517588,
+        "y": -63.29145728643216
+      },
+      "fixedShotOrigin": {
+        "x": 0,
+        "y": -64
+      },
+      "muzzleDistanceToFixedOrigin": 0.9048715128326169,
+      "pipCount": 5,
+      "pipLayout": "four corners plus center, single square face",
+      "alphaMode": "neutral-background-border-flood-plus-reviewed-seeds",
+      "emitterNormalized": [
+        0.49135802469135803,
+        0.22613065326633167
+      ]
+    },
+    {
+      "star": 19,
+      "name": "균열관문",
+      "source": "sources/dimension.png",
+      "sourceCell": {
+        "left": 0,
+        "top": 0,
+        "width": 887,
+        "height": 887
+      },
+      "sourceCrop": {
+        "left": 331,
+        "top": 35,
+        "width": 362,
+        "height": 821
+      },
+      "sourceMuzzle": [
+        508,
+        251
+      ],
+      "runtime": "casual/towers/star-19.png",
+      "sha256": "392091145920dca5961ad20a44c79bee5a388cdacfc86c454c33660b6d955ad1",
+      "bytes": 127409,
+      "runtimeSize": [
+        384,
+        384
+      ],
+      "runtimeForeground": {
+        "left": 113,
+        "top": 16,
+        "width": 159,
+        "height": 360
+      },
+      "runtimeFootY": 376,
+      "renderFit": {
+        "width": 42.32886723507917,
+        "height": 96
+      },
+      "visualMuzzleRelativeToTower": {
+        "x": -0.46772228989037756,
+        "y": -59.74299634591961
+      },
+      "fixedShotOrigin": {
+        "x": 0,
+        "y": -64
+      },
+      "muzzleDistanceToFixedOrigin": 4.282621189331846,
+      "pipCount": 5,
+      "pipLayout": "four corners plus center, single square face",
+      "alphaMode": "neutral-background-border-flood-plus-reviewed-seeds",
+      "emitterNormalized": [
+        0.4889502762430939,
+        0.2630937880633374
+      ]
+    },
+    {
+      "star": 20,
+      "name": "우주핵군주성",
+      "source": "sources/dimension.png",
+      "sourceCell": {
+        "left": 887,
+        "top": 0,
+        "width": 887,
+        "height": 887
+      },
+      "sourceCrop": {
+        "left": 1059,
+        "top": 26,
+        "width": 436,
+        "height": 832
+      },
+      "sourceMuzzle": [
+        1276,
+        229
+      ],
+      "runtime": "casual/towers/star-20.png",
+      "sha256": "171f406c10b9b2620a281fa95258407b15cb7fe295b66f144d9a4f67419f246b",
+      "bytes": 153927,
+      "runtimeSize": [
+        384,
+        384
+      ],
+      "runtimeForeground": {
+        "left": 98,
+        "top": 16,
+        "width": 189,
+        "height": 360
+      },
+      "runtimeFootY": 376,
+      "renderFit": {
+        "width": 50.307692307692314,
+        "height": 96
+      },
+      "visualMuzzleRelativeToTower": {
+        "x": -0.11538461538461539,
+        "y": -61.57692307692308
+      },
+      "fixedShotOrigin": {
+        "x": 0,
+        "y": -64
+      },
+      "muzzleDistanceToFixedOrigin": 2.4258226201879163,
+      "pipCount": 5,
+      "pipLayout": "four corners plus center, single square face",
+      "alphaMode": "neutral-background-border-flood-plus-reviewed-seeds",
+      "emitterNormalized": [
+        0.49770642201834864,
+        0.2439903846153846
+      ]
+    }
+  ]
+}

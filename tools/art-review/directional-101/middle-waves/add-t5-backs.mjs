@@ -1,0 +1,2 @@
+import fs from'node:fs';import{dir,measuredView}from'./biped-config-lib.mjs';
+for(const base of['t5-biped-01a','t5-biped-01b']){const f=dir+'/'+base+'-rigs.json',c=JSON.parse(fs.readFileSync(f));for(let k=0;k<2;k++)c.entries[k].views.back=measuredView(base+'-back-parts',k,{name:'back',sockets:base.endsWith('01a')?(k?[[.34,.80],[.57,.80]]:[[.42,.80],[.62,.80]]):(k?[[.34,.76],[.57,.76]]:[[.36,.80],[.55,.80]]),kneeY:base.endsWith('01b')&&!k?.45:.4,ankleY:.85});fs.writeFileSync(f,JSON.stringify(c,null,2)+'\n');}

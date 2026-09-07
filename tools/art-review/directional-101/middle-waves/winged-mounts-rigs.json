@@ -1,0 +1,503 @@
+{
+  "version": 1,
+  "canonicalCell": 512,
+  "assetVersion": 93,
+  "entries": [
+    {
+      "assetId": "w044",
+      "wave": 44,
+      "role": "normal",
+      "locomotion": "flight",
+      "cell": 256,
+      "referenceHeight": 360,
+      "cycleStride": 0,
+      "cycleSeconds": 0.85,
+      "reviewApproved": true,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/middle-waves/winged-mounts-side-parts-clean.png",
+          "sourceSha256": "87ceabecb3648b251d0e351278f2fa053956df58c4a3d0bb2d8435def0193b77",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            400
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.34,
+              0.4736328125
+            ],
+            "target": {
+              "height": 280,
+              "top": 90,
+              "centerX": 256
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.39,
+                0,
+                0.27,
+                0.4736328125
+              ],
+              "socketNormalized": [
+                0.66,
+                0.67
+              ],
+              "sourcePivot": [
+                0.14,
+                0.08
+              ],
+              "scale": 0.52,
+              "angleDeg": [
+                53,
+                40
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.67,
+                0,
+                0.29,
+                0.4736328125
+              ],
+              "socketNormalized": [
+                0.6950000000000001,
+                0.67
+              ],
+              "sourcePivot": [
+                0.14,
+                0.08
+              ],
+              "scale": 0.52,
+              "angleDeg": [
+                45,
+                40
+              ],
+              "phase": 0,
+              "layer": 1,
+              "flipX": true
+            }
+          ],
+          "jointReview": "Authored single feathered wings pivot at the proximal shoulder cap; body layer covers the closed socket. Physical left/right wing identity mirrors screen side between front and rear, with synchronous upstroke at phase 0.25. Every body and wing keeps one fixed size across the four poses."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/middle-waves/winged-mounts-front-parts.png",
+          "sourceSha256": "64d842896c261585f709c50733ed07b4effb00fd9bd68473d738e8def7f759c9",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            400
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.3,
+              0.48828125
+            ],
+            "target": {
+              "height": 280,
+              "top": 90,
+              "centerX": 256
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.65,
+                0,
+                0.3,
+                0.48828125
+              ],
+              "socketNormalized": [
+                0.75,
+                0.55
+              ],
+              "sourcePivot": [
+                0.2,
+                0.1
+              ],
+              "scale": 0.48,
+              "angleDeg": [
+                -45,
+                -40
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.31,
+                0,
+                0.25,
+                0.48828125
+              ],
+              "socketNormalized": [
+                0.25,
+                0.55
+              ],
+              "sourcePivot": [
+                0.8,
+                0.1
+              ],
+              "scale": 0.48,
+              "angleDeg": [
+                45,
+                40
+              ],
+              "phase": 0,
+              "layer": -1
+            }
+          ],
+          "jointReview": "Authored single feathered wings pivot at the proximal shoulder cap; body layer covers the closed socket. Physical left/right wing identity mirrors screen side between front and rear, with synchronous upstroke at phase 0.25. Every body and wing keeps one fixed size across the four poses."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/middle-waves/winged-mounts-back-parts-clean.png",
+          "sourceSha256": "7f1acb7be0790fac226a54fe088692504766d59b4f461f4525eb90c0710c38ae",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            400
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              0.3,
+              0.48828125
+            ],
+            "target": {
+              "height": 280,
+              "top": 90,
+              "centerX": 256
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.31,
+                0,
+                0.25,
+                0.48828125
+              ],
+              "socketNormalized": [
+                0.25,
+                0.51
+              ],
+              "sourcePivot": [
+                0.6,
+                0.1
+              ],
+              "scale": 0.48,
+              "angleDeg": [
+                45,
+                40
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.65,
+                0,
+                0.3,
+                0.48828125
+              ],
+              "socketNormalized": [
+                0.75,
+                0.51
+              ],
+              "sourcePivot": [
+                0.4,
+                0.1
+              ],
+              "scale": 0.48,
+              "angleDeg": [
+                -45,
+                -40
+              ],
+              "phase": 0,
+              "layer": -1
+            }
+          ],
+          "jointReview": "Authored single feathered wings pivot at the proximal shoulder cap; body layer covers the closed socket. Physical left/right wing identity mirrors screen side between front and rear, with synchronous upstroke at phase 0.25. Every body and wing keeps one fixed size across the four poses."
+        }
+      }
+    },
+    {
+      "assetId": "w048",
+      "wave": 48,
+      "role": "normal",
+      "locomotion": "flight",
+      "cell": 256,
+      "referenceHeight": 360,
+      "cycleStride": 0,
+      "cycleSeconds": 0.85,
+      "reviewApproved": true,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/middle-waves/winged-mounts-side-parts-clean.png",
+          "sourceSha256": "87ceabecb3648b251d0e351278f2fa053956df58c4a3d0bb2d8435def0193b77",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            400
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.4736328125,
+              0.34,
+              0.5263671875
+            ],
+            "target": {
+              "height": 280,
+              "top": 90,
+              "centerX": 256
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.39,
+                0.4736328125,
+                0.27,
+                0.5263671875
+              ],
+              "socketNormalized": [
+                0.66,
+                0.67
+              ],
+              "sourcePivot": [
+                0.14,
+                0.08
+              ],
+              "scale": 0.52,
+              "angleDeg": [
+                53,
+                40
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.67,
+                0.4736328125,
+                0.29,
+                0.5263671875
+              ],
+              "socketNormalized": [
+                0.6950000000000001,
+                0.67
+              ],
+              "sourcePivot": [
+                0.14,
+                0.08
+              ],
+              "scale": 0.52,
+              "angleDeg": [
+                45,
+                40
+              ],
+              "phase": 0,
+              "layer": 1,
+              "flipX": true
+            }
+          ],
+          "jointReview": "Authored single feathered wings pivot at the proximal shoulder cap; body layer covers the closed socket. Physical left/right wing identity mirrors screen side between front and rear, with synchronous upstroke at phase 0.25. Every body and wing keeps one fixed size across the four poses.",
+          "backgroundSeeds": [
+            [
+              420,
+              739
+            ],
+            [
+              416,
+              884
+            ]
+          ]
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/middle-waves/winged-mounts-front-parts.png",
+          "sourceSha256": "64d842896c261585f709c50733ed07b4effb00fd9bd68473d738e8def7f759c9",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            400
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.48828125,
+              0.3,
+              0.51171875
+            ],
+            "target": {
+              "height": 280,
+              "top": 90,
+              "centerX": 256
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.65,
+                0.48828125,
+                0.3,
+                0.51171875
+              ],
+              "socketNormalized": [
+                0.75,
+                0.55
+              ],
+              "sourcePivot": [
+                0.2,
+                0.1
+              ],
+              "scale": 0.48,
+              "angleDeg": [
+                -45,
+                -40
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.31,
+                0.48828125,
+                0.25,
+                0.51171875
+              ],
+              "socketNormalized": [
+                0.25,
+                0.55
+              ],
+              "sourcePivot": [
+                0.8,
+                0.1
+              ],
+              "scale": 0.48,
+              "angleDeg": [
+                45,
+                40
+              ],
+              "phase": 0,
+              "layer": -1
+            }
+          ],
+          "jointReview": "Authored single feathered wings pivot at the proximal shoulder cap; body layer covers the closed socket. Physical left/right wing identity mirrors screen side between front and rear, with synchronous upstroke at phase 0.25. Every body and wing keeps one fixed size across the four poses."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/middle-waves/winged-mounts-back-parts-clean.png",
+          "sourceSha256": "7f1acb7be0790fac226a54fe088692504766d59b4f461f4525eb90c0710c38ae",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            400
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.48828125,
+              0.3,
+              0.51171875
+            ],
+            "target": {
+              "height": 280,
+              "top": 90,
+              "centerX": 256
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.31,
+                0.48828125,
+                0.25,
+                0.51171875
+              ],
+              "socketNormalized": [
+                0.25,
+                0.51
+              ],
+              "sourcePivot": [
+                0.6,
+                0.1
+              ],
+              "scale": 0.48,
+              "angleDeg": [
+                45,
+                40
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.65,
+                0.48828125,
+                0.3,
+                0.51171875
+              ],
+              "socketNormalized": [
+                0.75,
+                0.51
+              ],
+              "sourcePivot": [
+                0.4,
+                0.1
+              ],
+              "scale": 0.48,
+              "angleDeg": [
+                -45,
+                -40
+              ],
+              "phase": 0,
+              "layer": -1
+            }
+          ],
+          "jointReview": "Authored single feathered wings pivot at the proximal shoulder cap; body layer covers the closed socket. Physical left/right wing identity mirrors screen side between front and rear, with synchronous upstroke at phase 0.25. Every body and wing keeps one fixed size across the four poses."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "reviewedAssets": [
+    {
+      "assetId": "w077",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 8,
+      "checks": [
+        "Every baked pose inspected for connected overlapping body bands and visible traveling bend",
+        "Front/back heads, rear shell, mouth/eye presence and tail direction reviewed",
+        "Three physical chain segments use measured source row centers and three distinct phases",
+        "Shared four-direction phase-sequence QA passed"
+      ],
+      "limitations": "Jointed overlapping painted segments, not continuous skin deformation. Some band seams remain visible at enlarged review size. Tentacle uses a bending upright shaft above its curled base. No planted-foot or zero-slip claim applies."
+    },
+    {
+      "assetId": "w084",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 8,
+      "checks": [
+        "Every baked pose inspected for connected overlapping body bands and visible traveling bend",
+        "Front/back heads, rear shell, mouth/eye presence and tail direction reviewed",
+        "Three physical chain segments use measured source row centers and three distinct phases",
+        "Shared four-direction phase-sequence QA passed"
+      ],
+      "limitations": "Jointed overlapping painted segments, not continuous skin deformation. Some band seams remain visible at enlarged review size. Tentacle uses a bending upright shaft above its curled base. No planted-foot or zero-slip claim applies."
+    },
+    {
+      "assetId": "w091",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 8,
+      "checks": [
+        "Every baked pose inspected for connected overlapping body bands and visible traveling bend",
+        "Front/back heads, rear shell, mouth/eye presence and tail direction reviewed",
+        "Three physical chain segments use measured source row centers and three distinct phases",
+        "Shared four-direction phase-sequence QA passed",
+        "Back curled base uses actual plain rear source; the incorrect repeated front pendant was rejected."
+      ],
+      "limitations": "Jointed overlapping painted segments, not continuous skin deformation. Some band seams remain visible at enlarged review size. Tentacle uses a bending upright shaft above its curled base. No planted-foot or zero-slip claim applies."
+    },
+    {
+      "assetId": "w098",
+      "reviewApproved": true,
+      "viewsReviewed": [
+        "side",
+        "front",
+        "back"
+      ],
+      "framesPerView": 8,
+      "checks": [
+        "Every baked pose inspected for connected overlapping body bands and visible traveling bend",
+        "Front/back heads, rear shell, mouth/eye presence and tail direction reviewed",
+        "Three physical chain segments use measured source row centers and three distinct phases",
+        "Shared four-direction phase-sequence QA passed"
+      ],
+      "limitations": "Jointed overlapping painted segments, not continuous skin deformation. Some band seams remain visible at enlarged review size. Tentacle uses a bending upright shaft above its curled base. No planted-foot or zero-slip claim applies."
+    }
+  ],
+  "movingEvidence": "gen/late-directional-slither/directional-moving-qa.json"
+}
