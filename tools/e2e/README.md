@@ -73,6 +73,8 @@ node /home/user/dicekeep-art/tools/e2e/single-smoke.js
 
 `directional-cache-pressure.cjs`는 110종을 포함한 실제 적 200마리를 생성하고 네 방향의 화면 내부 그리기, 위상 진행, 96 MiB/동시 2개 제한, 제거 뒤 메모리 회수를 검사한다. 실제 시트 프레임과 정지 PNG·인라인 대체 이미지를 구분해 기록한다. 모든 보스를 동시에 배치한 극단 조건이므로 이 결과를 200마리 전부의 동시 걷기 통과로 해석하지 않는다.
 
+`directional-production.cjs`는 `E2E_BASE_URL`을 명시해야 실행된다. 운영 또는 로컬 서버가 실제로 보낸 핵심 파일 5개와 최종 PNG 674개를 동시 요청 4개 이하로 내려받아 저장소 바이트와 비교한다. 한 실행에 약122MB의 PNG를 받는다. HTTP 응답을 로컬 파일로 교체하지 않고 데스크톱·휴대폰에서 W1/70/100/101의 6개 정체성과 네 방향, 7/20성 타워의 실제 표시를 확인한다. 배포가 완료된 후 한 번 실행하며 기본 결과는 `gen/e2e/production/`에 남긴다.
+
 수치 안정화 통과는 올바른 시트 분할이나 적당한 아트 분위기를 보증하지 않는다. 프레임 잘림·옆 칸의 파편·심한 형태 변화·과도한 혐오감·작은 게임 크기에서의 가독성은 별도로 원본 시트와 게임 캡처를 눈으로 확인한다. W10 보스도 새 방향별 걷기 시트 검증 대상이다. 기존 선택적 아트의 404는 새 인피니티 아트 오류와 구별하며, `single-smoke.js`의 콘솔 진단은 기록하되 pageerror와 게임 진행 단언 실패는 종료 1로 처리한다.
 
 `ground-gait-check.cjs`, `walk-preview.cjs`, `walk-jitter.js`는 PR #29 당시의 1~9웨이브 측면 시트 회귀 검사다. 새 세 방향 리그의 분할·관절·접지는 `tools/check-directional-art.mjs`와 `tools/preview-directional-motion.mjs`로 검사한다. 제작 기록과 검수 도구는 [방향별 아트 작업 폴더](../art-review/directional-101/), 이전 측면 검사 기록은 [PR #29 보행 보고서](../art-review/pr29-gait/README.md)를 참고한다.
