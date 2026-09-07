@@ -28,3 +28,4 @@ app.js
 # 스토어 배너·아이콘 원본 시트는 웹에 필요 없다
 store
 ui/icons-sheet.png
+gen/

@@ -1295,13 +1295,14 @@ window.DKCONTENT = (function () {
 
   // ---- 101웨이브 몬스터 설계 (ART-PROMPTS.md §6): 10단계 테마 × 10웨이브 + 보스 ----
   // 그림이 들어온 웨이브만 INF_ART_READY 에 적는다 (보스 부관은 '20-2' 처럼). 적힌 웨이브는 새 그림·새 이름을 쓰고, 나머지는 기존 로스터 그림으로 돈다.
-  const INF_TIERS = ['', '초원의 작은 것들', '숲의 야수', '늪과 동굴', '산적과 고블린', '왕국의 병사와 기사', '언데드', '마법 생물과 정령', '용족과 거대 야수', '악마', '심연과 파멸'];
+  const INF_TIERS = ['', '폐허의 잡졸', '숲의 야수', '늪과 동굴', '산적과 고블린', '왕국의 병사와 기사', '언데드', '마법 생물과 정령', '용족과 거대 야수', '악마', '심연과 파멸'];
   const INF_MONSTERS = {
-    1: { name: '들쥐', cls: 'S', move: 'ground', tier: 1 },
-    2: { name: '청개구리', cls: 'S', move: 'ground', tier: 1 },
-    3: { name: '뭉게양', cls: 'L', move: 'ground', tier: 1 },
-    4: { name: '참새', cls: 'S', move: 'air', tier: 1 },
-    5: { name: '당근토끼', cls: 'M', move: 'ground', tier: 1 },
+    // 1~5: 다크 판타지 반실사로 재설계 (OpenAI 이미지 API, tools/jobs/inf-w01-05*.json · ART-PROMPTS §6). 그림이 INF_ART_READY 에 적힌 뒤에만 이 이름·그림이 쓰인다
+    1: { name: '역병쥐', cls: 'S', move: 'ground', tier: 1 },
+    2: { name: '해골 잡졸', cls: 'S', move: 'ground', tier: 1 },
+    3: { name: '묘지 오우거', cls: 'L', move: 'ground', tier: 1 },
+    4: { name: '까마귀 정찰병', cls: 'S', move: 'air', tier: 1 },
+    5: { name: '고블린 창병', cls: 'M', move: 'ground', tier: 1 },
     6: { name: '얼룩젖소', cls: 'L', move: 'ground', tier: 1 },
     7: { name: '왕두더지', cls: 'L', move: 'burrow', tier: 1 },
     8: { name: '꿀벌', cls: 'S', move: 'air', tier: 1 },

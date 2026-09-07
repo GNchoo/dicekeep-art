@@ -1,0 +1,15 @@
+{
+  "style": "Dark fantasy painted illustration, semi-realistic, moody desaturated palette of mossy greens, cold greys and umber with small warm ember accents, dramatic rim light, weathered medieval stone and iron, gritty painterly texture. No text, no letters, no numbers, no logo, no watermark, no border.",
+  "jobs": [
+    {
+      "id": "keyart-portrait",
+      "size": "1024x1536", "quality": "high", "n": 2, "out": "gen/keyart/portrait",
+      "prompt": "Vertical key art for a dark fantasy tower-defense game. A giant weathered ivory stone die with dark hollow pips rests on top of the crumbling keep of a ruined medieval castle on a lonely mountain peak. Storm clouds, a few crows, faint cold moonlight from above, mossy cliffs and a winding stone path up the mountain, dark pine forest below. Composition: the die and castle fill the upper two thirds, centered; the lower third is a darker misty valley with calm empty space reserved for UI. Cinematic, high detail on the die and castle."
+    },
+    {
+      "id": "keyart-landscape",
+      "size": "1536x1024", "quality": "high", "n": 2, "out": "gen/keyart/landscape",
+      "prompt": "Wide key art for a dark fantasy tower-defense game. A giant weathered ivory stone die with dark hollow pips rests on top of the crumbling keep of a ruined medieval castle on a lonely mountain peak, exactly centered. Storm clouds and crows above, faint cold moonlight, jagged mountain ridges and dark pine forest stretching left and right, a winding stone path up the mountain. The lower quarter is darker mist with calm empty space reserved for UI. Cinematic, high detail on the die and castle."
+    }
+  ]
+}

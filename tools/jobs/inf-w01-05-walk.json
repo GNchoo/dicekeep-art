@@ -1,0 +1,10 @@
+{
+  "style": "Keep exactly the same creature, colors, outfit and painterly dark fantasy style as the reference image. 2x2 sprite sheet: four frames of a walk cycle read left-to-right then top-to-bottom (contact, down, passing, up), the creature moving toward the RIGHT, seen from the same 3/4 side view. Identical size and identical ground pivot in every cell, each frame centered in its quarter with generous margins, nothing crossing the cell borders. Transparent background, no ground shadow, no grid lines, no text, no watermark.",
+  "jobs": [
+    { "id": "w001-walk", "n": 2, "size": "1024x1024", "quality": "medium", "background": "transparent", "inputFidelity": "high", "refs": ["casual/enemies/inf/w001.png"], "out": "gen/inf/w001-walk", "prompt": "The plague rat scurrying: a four-legged trot cycle, chain swinging." },
+    { "id": "w002-walk", "n": 2, "size": "1024x1024", "quality": "medium", "background": "transparent", "inputFidelity": "high", "refs": ["casual/enemies/inf/w002.png"], "out": "gen/inf/w002-walk", "prompt": "The skeleton footman shambling forward, spear shaft held low, bones rattling." },
+    { "id": "w003-walk", "n": 2, "size": "1024x1024", "quality": "medium", "background": "transparent", "inputFidelity": "high", "refs": ["casual/enemies/inf/w003.png"], "out": "gen/inf/w003-walk", "prompt": "The grave ogre lumbering forward with heavy slow steps, club resting on the shoulder." },
+    { "id": "w004-walk", "n": 2, "size": "1024x1024", "quality": "medium", "background": "transparent", "inputFidelity": "high", "refs": ["casual/enemies/inf/w004.png"], "out": "gen/inf/w004-walk", "prompt": "The raven scout flapping: four frames of a wing beat cycle (wings up, mid, down, mid) while gliding toward the right." },
+    { "id": "w005-walk", "n": 2, "size": "1024x1024", "quality": "medium", "background": "transparent", "inputFidelity": "high", "refs": ["casual/enemies/inf/w005.png"], "out": "gen/inf/w005-walk", "prompt": "The goblin spearman marching forward, spear pointed ahead, shield up." }
+  ]
+}

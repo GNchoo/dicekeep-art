@@ -232,6 +232,18 @@ Hand-painted casual tower defense arena FLOOR ONLY, Kingdom Rush and Random Dice
 
 ## §6. 인피니티 101웨이브 몬스터 (새 그림 111장 · 2026-09-06 설계)
 
+> **2026-09-07 방침 변경 — 그림체는 다크 판타지 반실사(산 위 주사위 성 키아트 톤), 생성은 OpenAI 이미지 API**(참조 이미지 편집·투명 배경 지원). 1단계(1~10)는 '초원의 작은 것들' 대신 **폐허의 잡졸**(역병쥐·해골·오우거·까마귀·고블린…)로 재설계한다. 1~5 는 `tools/jobs/inf-w01-05.json`(정지컷) → `tools/jobs/inf-w01-05-walk.json`(정지컷을 참조로 2×2 시트) 로 뽑는다:
+>
+> ```
+> OPENAI_API_KEY=… node tools/img-gen.mjs tools/jobs/inf-w01-05.json          # gen/inf/w001-1.png … (투명 배경, 오른쪽을 봄)
+> #  마음에 드는 후보를 casual/enemies/inf/w001.png 로 복사 (또는 sheet-check --still-out)
+> OPENAI_API_KEY=… node tools/img-gen.mjs tools/jobs/inf-w01-05-walk.json     # 정지컷을 참조로 gen/inf/w001-walk-1.png …
+> node tools/sheet-check.mjs gen/inf/w001-walk-1.png --sheet-out=casual/enemies/inf/w001-walk-2x2.png   # 칸 편차 검사 + 저장
+> #  content.js INF_ART_READY 에 웨이브 번호를 적는다
+> ```
+>
+> 키아트: `node tools/img-gen.mjs tools/jobs/keyart.json` → `node tools/keyart-build.mjs --portrait=gen/keyart/portrait-1.png --landscape=gen/keyart/landscape-1.png`. 키는 환경변수로만, 파일에 쓰지 않는다. 아래 치비 공통 프롬프트·1단계 표는 6~101 웨이브가 아직 옛 설계라 남겨 둔다.
+
 인피니티(도전·함께) 101웨이브의 몬스터를 **10단계 테마 × 10웨이브 + 보스** 로 다시 설계했다. 지금은 기존 적 그림을 겉보기 강함 순으로 재배치해 쓰고 있고(`content.js` `look`), **아래 파일명으로 그림을 넣고 `INF_ART_READY` 에 웨이브 번호를 적으면 그 웨이브만 새 그림·새 이름으로 바뀐다** (부분 납품 가능, 나머지는 기존 그림 폴백).
 
 규칙
@@ -245,7 +257,7 @@ Hand-painted casual tower defense arena FLOOR ONLY, Kingdom Rush and Random Dice
 
 | 단계 | 웨이브 | 테마 | 분위기 |
 |---|---|---|---|
-| 1 | 1~10 | 초원의 작은 것들 | soft rounded shapes, bright pastel colors, cute and harmless looking, no weapons, no armor |
+| 1 | 1~10 | 폐허의 잡졸 (구 '초원의 작은 것들') | 1~5: dark fantasy semi-realistic — mangy, bony, patched leather, rusted iron, sickly greens and greys (tools/jobs/inf-w01-05.json). 6~10 은 미정 |
 | 2 | 11~20 | 숲의 야수 | natural fur and feathers, slightly fierce eyes, a few leaves and twigs stuck on the body, still cute |
 | 3 | 21~30 | 늪과 동굴 | slimy or chitinous skin, murky green and purple tones, glowing eyes, drips of swamp water |
 | 4 | 31~40 | 산적과 고블린 | ragged leather clothes, crude iron weapons, patched cloth, mischievous grin |
@@ -268,15 +280,15 @@ Hand-painted single character illustration for a casual tower-defense game, chib
 Hand-painted 2x2 sprite sheet, four frames of a walk cycle read left-to-right then top-to-bottom (contact, down, passing, up), of the same chibi character moving toward the RIGHT, side 3/4 view. Kingdom Rush and Random Dice casual style, thick clean outlines, identical character size and identical ground pivot in every cell, generous margins, plain light gray background, no text, no watermark. Match the idle design exactly:
 ```
 
-### 단계 1 · 초원의 작은 것들 (웨이브 1~10)
+### 단계 1 · 폐허의 잡졸 (웨이브 1~10)
 
 | 웨이브 | 이름 | 등급 | 이동 | 파일 |
 |---|---|---|---|---|
-| 1 | 들쥐 | S | 지상 | `w001.png` |
-| 2 | 청개구리 | S | 지상 | `w002.png` |
-| 3 | 뭉게양 | L | 지상 | `w003.png` |
-| 4 | 참새 | S | 공중 | `w004.png` |
-| 5 | 당근토끼 | M | 지상 | `w005.png` |
+| 1 | 역병쥐 | S | 지상 | `w001.png` — 프롬프트는 `tools/jobs/inf-w01-05.json` |
+| 2 | 해골 잡졸 | S | 지상 | `w002.png` |
+| 3 | 묘지 오우거 | L | 지상 | `w003.png` |
+| 4 | 까마귀 정찰병 | S | 공중 | `w004.png` |
+| 5 | 고블린 창병 | M | 지상 | `w005.png` |
 | 6 | 얼룩젖소 | L | 지상 | `w006.png` |
 | 7 | 왕두더지 | L | 땅굴 | `w007.png` |
 | 8 | 꿀벌 | S | 공중 | `w008.png` |

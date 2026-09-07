@@ -114,6 +114,20 @@ iOS: `ios/` 도 커밋되어 있고 SPM 이라 CocoaPods 이 필요 없다. Mac 
 
 스타일: Kingdom Rush + Random Dice, 2D 아이소메트릭. 추가 배치 프롬프트는 `ART-PROMPTS.md`.
 
+## AI 그림 생성 (OpenAI 이미지 API)
+
+키아트·인피니티 몬스터는 `tools/img-gen.mjs` 로 뽑는다. 키는 **환경변수로만** 준다(파일·커밋 금지).
+
+```bash
+OPENAI_API_KEY=… node tools/img-gen.mjs tools/jobs/keyart.json            # gen/keyart/portrait-*.png, landscape-*.png (n=2 씩)
+node tools/keyart-build.mjs --portrait=gen/keyart/portrait-1.png --landscape=gen/keyart/landscape-1.png   # ui/title-keyart-p|l|l-blur.jpg
+OPENAI_API_KEY=… node tools/img-gen.mjs tools/jobs/inf-w01-05.json       # 정지컷 (투명 배경) → 고른 것을 casual/enemies/inf/wNNN.png 로
+OPENAI_API_KEY=… node tools/img-gen.mjs tools/jobs/inf-w01-05-walk.json  # 정지컷을 참조로 2×2 걷기 시트
+node tools/sheet-check.mjs gen/inf/w001-walk-1.png --sheet-out=casual/enemies/inf/w001-walk-2x2.png     # 칸 편차 검사 + 저장
+```
+
+그 뒤 `content.js` `INF_ART_READY` 에 웨이브 번호를 적으면 그 웨이브가 새 그림·새 이름을 쓴다(ART-PROMPTS §6). `gen/` 은 중간 산출물이라 커밋하지 않는다.
+
 ## 라이선스
 
 개인 게임 개발에 자유롭게 사용.
