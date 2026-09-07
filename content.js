@@ -1421,16 +1421,17 @@ window.DKCONTENT = (function () {
   function infArt(w, k) {
     const m = INF_MONSTERS[w];
     if (!m) return null;
+    const revision = w >= 1 && w <= 10 ? '?v=92' : ''; // 이번 납품 아트만 새 URL로 로드한다.
     if (m.boss) {
       const tag = k ? `${w}-2` : String(w);
       if (!INF_ART_READY.has(tag) && !INF_ART_READY.has(k ? tag : w)) return null;
       const name = k ? m.second : m.name;
-      return name ? { key: `infB${tag}`, src: `casual/bosses/inf/b${pad3(w)}${k ? '-2' : ''}.png`, name } : null;
+      return name ? { key: `infB${tag}`, src: `casual/bosses/inf/b${pad3(w)}${k ? '-2' : ''}.png${revision}`, name } : null;
     }
     if (!INF_ART_READY.has(w) && !INF_ART_READY.has(String(w))) return null;
     // 격자는 m.walk ('2x2' 기본 · '3x2' 6프레임 · '4x2' 8프레임)를 파일명에서 읽는다.
     // 리깅 시트는 stabilize:false로 원본 좌표·크기를 보존하고 walkStride로 이동 거리에 맞춰 재생한다. 기존 hop도 안정화하지 않는다.
-    return { key: `infW${w}`, src: `casual/enemies/inf/w${pad3(w)}.png`, walkKey: `infW${w}Walk`, walkSrc: `casual/enemies/inf/w${pad3(w)}-walk-${m.walk || '2x2'}.png`, name: m.name, stabilize: m.stabilize !== false && !m.hop, anchor: m.move === 'air' ? 'center' : 'foot', walkStride: m.walkStride || 0 };
+    return { key: `infW${w}`, src: `casual/enemies/inf/w${pad3(w)}.png${revision}`, walkKey: `infW${w}Walk`, walkSrc: `casual/enemies/inf/w${pad3(w)}-walk-${m.walk || '2x2'}.png${revision}`, name: m.name, stabilize: m.stabilize !== false && !m.hop, anchor: m.move === 'air' ? 'center' : 'foot', walkStride: m.walkStride || 0 };
   }
   // 로더용: 준비된 새 그림 전부 [{ key, src }, { key(walk), src, sheet: true }]
   function infArtList() {

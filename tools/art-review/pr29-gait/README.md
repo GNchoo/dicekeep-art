@@ -70,3 +70,11 @@ node tools/e2e/walk-preview.cjs
 [이번 원화·부품 생성 프롬프트](anatomy-prompts.json) · [이전 부품 프롬프트](prompts.json) · [원본](sources/) · [관절·분할 설정](rig-config.json) · [중립 및 프레임별 관절](rig-manifest.json) · [재생성](rebuild.mjs)
 
 `rebuild.mjs`는 중립 합성 PNG와 리그 디버그 GIF도 출력한다. `tools/art-review/pr29/rebuild.mjs`는 같은 진입점으로 연결한다. W4·W8·W10의 원본은 이전 폴더에서 사용하며, 최종 PNG 19개를 커밋 파일과 SHA256으로 비교한다.
+
+## 메인 반영 시 이미지 캐시 갱신
+
+1~10웨이브의 정지컷·보행 시트·보스 URL에 `?v=92`를 추가하고 `content.js` 로드 URL도 `v=92`로 갱신했다. 이미지 파일명은 같아도 이전 캐시와 다른 주소로 요청한다. 아트 픽셀·캐릭터 설정·보폭과 미납품 웨이브의 URL 정책은 유지한다.
+
+실제 Chrome 요청 **19/19**에서 v92·HTTP 200·검증된 PNG의 SHA256 일치를 확인했다. 지상 7종×8프레임, 비행 2종×4프레임과 보스 정지컷의 로드가 정상이며 기존 `walk-jitter.js` 검사도 통과했다. 이는 캐시 주소와 로더 검증이며 새로운 전신 시안의 보행 합격 판정이 아니다.
+
+[v92 브라우저 요청 기록](evidence/cache-v92-browser-assets.json) · [v92 시트 로더 검사](evidence/cache-v92-walk-jitter.json) · [별도 전신 시안 전체](../pr29-fullbody/README.md)
