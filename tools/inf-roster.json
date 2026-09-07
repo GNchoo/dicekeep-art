@@ -1,0 +1,13 @@
+{
+  "_note": "인피니티 101웨이브 몬스터의 영문 묘사(desc)와 보행 방식(gait: biped·quad·fly·slither·float). 이름·등급·이동·단계·팔레트는 content.js INF_MONSTERS / INF_PALETTE 가 원본이고, tools/inf-jobs.mjs 가 둘을 합쳐 잡 파일을 만든다. 색은 적지 않는다 — 단계 팔레트가 프롬프트에 붙는다.",
+  "1": { "name": "역병쥐", "gait": "quad", "desc": "A mangy plague rat the size of a dog, patchy fur with bald sores, glowing eyes, yellow teeth bared, dragging a short rusted chain from a collar. Small, fast, harmless-looking but sick." },
+  "2": { "name": "해골 잡졸", "gait": "biped", "desc": "A small skeleton footman, brittle yellowed bones, a dented iron kettle helm, a torn tabard, holding a broken spear shaft. Hunched, light, clattering." },
+  "3": { "name": "묘지 오우거", "gait": "biped", "desc": "A hulking bloated grave ogre, stitched skin, a sack hood with one eye hole, a heavy wooden club studded with nails resting on the shoulder. Slow and massive." },
+  "4": { "name": "까마귀 정찰병", "gait": "fly", "desc": "A ragged raven scout in flight, a tiny leather harness carrying a small dim lantern, one glowing eye, tattered feathers." },
+  "5": { "name": "고블린 창병", "gait": "biped", "desc": "A goblin spearman, sickly skin, patched leather armor, a crude iron spear and a small round wooden shield, a sneering grin with a broken tooth. Wiry." },
+  "6": { "name": "썩은 멧돼지", "gait": "quad", "desc": "A rotting wild boar, ribs showing through torn hide, rusted iron caps on its tusks, one ear missing, black bile dripping from the jaw. Heavy, charging low." },
+  "7": { "name": "무덤 파는 구울", "gait": "biped", "desc": "A grave-digging ghoul, hunched with long clawed hands caked in soil, a tattered burial shroud, a broken shovel slung on its back, mouth full of grave dirt. Big and stooped." },
+  "8": { "name": "시체파리 떼", "gait": "fly", "desc": "A dense swarm of corpse flies clustered around a floating cracked skull, compound eyes glinting, a few flies trailing behind. Small and buzzing." },
+  "9": { "name": "녹슨 철갑 오크", "gait": "biped", "desc": "An orc brute in rusted, dented plate armor with a chipped tower shield strapped to one arm, dragging a chained cleaver, jaw tusks and a scarred face. Massive." },
+  "10": { "name": "역병 쥐왕", "boss": true, "second": null, "bossDesc": "The Plague Rat King: a gigantic scarred rat wearing a rusted iron crown, a dozen tails knotted together into a swollen mass behind it, glowing eyes, a collar of skulls on a chain, standing atop a mound of bones and refuse." }
+}

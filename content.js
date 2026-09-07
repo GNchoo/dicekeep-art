@@ -1296,6 +1296,19 @@ window.DKCONTENT = (function () {
   // ---- 101웨이브 몬스터 설계 (ART-PROMPTS.md §6): 10단계 테마 × 10웨이브 + 보스 ----
   // 그림이 들어온 웨이브만 INF_ART_READY 에 적는다 (보스 부관은 '20-2' 처럼). 적힌 웨이브는 새 그림·새 이름을 쓰고, 나머지는 기존 로스터 그림으로 돈다.
   const INF_TIERS = ['', '폐허의 잡졸', '숲의 야수', '늪과 동굴', '산적과 고블린', '왕국의 병사와 기사', '언데드', '마법 생물과 정령', '용족과 거대 야수', '악마', '심연과 파멸'];
+  // 단계 팔레트 (10웨이브마다 색이 조금씩 바뀐다 — 전부 악당 톤: 붉은·검은·보라 계열, 밝은 색·파스텔 금지). tools/inf-jobs.mjs 가 프롬프트에 넣는다.
+  const INF_PALETTE = ['',
+    { ko: '핏빛 녹 · 마른 피 · 잿빛 살갗', en: 'rust red, dried blood, ash-grey skin, small ember accents' },
+    { ko: '검은 털 · 먹빛 초록 · 탁한 호박색 눈', en: 'black fur and feathers, ink-dark green, dull amber eyes, dried mud' },
+    { ko: '탁한 청록 · 검보라 · 독의 점광', en: 'murky teal, black-purple, faint toxic glints on wet chitin' },
+    { ko: '와인빛 자주 · 검은 가죽 · 녹슨 쇠', en: 'wine-purple cloth, black leather, rusted iron' },
+    { ko: '검푸른 강철 · 검붉은 휘장 · 바랜 금', en: 'blued black steel, dark red banners, tarnished gold' },
+    { ko: '창백한 뼈 · 검보라 그림자 · 차가운 회청 빛', en: 'pale bone, black-violet shadow, cold grey-blue glow' },
+    { ko: '짙은 보라 · 자수정 · 검은 마력 연기', en: 'deep violet, amethyst, black arcane smoke' },
+    { ko: '검붉은 비늘 · 흑요석 · 꺼져가는 불씨', en: 'dark crimson scales, obsidian, smoldering embers' },
+    { ko: '지옥의 진홍 · 검은 뿔 · 살 틈의 주홍빛', en: 'hellish crimson, black horns, dim orange glow in skin cracks' },
+    { ko: '심연의 검정 · 보라 공허 광채 · 별빛 눈', en: 'abyssal black, violet void glow, star-like eyes' },
+  ];
   const INF_MONSTERS = {
     // 1~5: 다크 판타지 반실사로 재설계 (OpenAI 이미지 API, tools/jobs/inf-w01-05*.json · ART-PROMPTS §6). 그림이 INF_ART_READY 에 적힌 뒤에만 이 이름·그림이 쓰인다
     1: { name: '역병쥐', cls: 'S', move: 'ground', tier: 1 },
@@ -1303,11 +1316,12 @@ window.DKCONTENT = (function () {
     3: { name: '묘지 오우거', cls: 'L', move: 'ground', tier: 1 },
     4: { name: '까마귀 정찰병', cls: 'S', move: 'air', tier: 1 },
     5: { name: '고블린 창병', cls: 'M', move: 'ground', tier: 1 },
-    6: { name: '얼룩젖소', cls: 'L', move: 'ground', tier: 1 },
-    7: { name: '왕두더지', cls: 'L', move: 'burrow', tier: 1 },
-    8: { name: '꿀벌', cls: 'S', move: 'air', tier: 1 },
-    9: { name: '골목거위', cls: 'L', move: 'ground', tier: 1 },
-    10: { boss: true, name: '황금 숫양', second: null, cls: 'L', tier: 1 },
+    // 6~10 도 폐허의 잡졸로 재설계 (구 얼룩젖소·왕두더지·꿀벌·골목거위·황금 숫양). 프롬프트는 tools/inf-roster.json
+    6: { name: '썩은 멧돼지', cls: 'L', move: 'ground', tier: 1 },
+    7: { name: '무덤 파는 구울', cls: 'L', move: 'burrow', tier: 1 },
+    8: { name: '시체파리 떼', cls: 'S', move: 'air', tier: 1 },
+    9: { name: '녹슨 철갑 오크', cls: 'L', move: 'ground', tier: 1 },
+    10: { boss: true, name: '역병 쥐왕', second: null, cls: 'L', tier: 1 },
     11: { name: '도토리다람쥐', cls: 'S', move: 'ground', tier: 2 },
     12: { name: '수리부엉이', cls: 'L', move: 'air', tier: 2 },
     13: { name: '아기여우', cls: 'S', move: 'ground', tier: 2 },
@@ -1413,7 +1427,8 @@ window.DKCONTENT = (function () {
       return name ? { key: `infB${tag}`, src: `casual/bosses/inf/b${pad3(w)}${k ? '-2' : ''}.png`, name } : null;
     }
     if (!INF_ART_READY.has(w) && !INF_ART_READY.has(String(w))) return null;
-    return { key: `infW${w}`, src: `casual/enemies/inf/w${pad3(w)}.png`, walkKey: `infW${w}Walk`, walkSrc: `casual/enemies/inf/w${pad3(w)}-walk-2x2.png`, name: m.name };
+    // 걷기 시트 격자는 m.walk ('2x2' 4프레임 기본 · '3x2' 6프레임), 파일명에 적혀 game.js 가 읽는다. m.hop 이면 위아래 움직임이 의도된 것이라 안정화하지 않는다
+    return { key: `infW${w}`, src: `casual/enemies/inf/w${pad3(w)}.png`, walkKey: `infW${w}Walk`, walkSrc: `casual/enemies/inf/w${pad3(w)}-walk-${m.walk || '2x2'}.png`, name: m.name, stabilize: !m.hop };
   }
   // 로더용: 준비된 새 그림 전부 [{ key, src }, { key(walk), src, sheet: true }]
   function infArtList() {
@@ -1423,7 +1438,7 @@ window.DKCONTENT = (function () {
       if (m.boss) { for (let k = 0; k < 2; k++) { const a = infArt(w, k); if (a) out.push({ key: a.key, src: a.src }); } continue; }
       const a = infArt(w, 0); if (!a) continue;
       out.push({ key: a.key, src: a.src });
-      out.push({ key: a.walkKey, src: a.walkSrc, sheet: true, optional: true });
+      out.push({ key: a.walkKey, src: a.walkSrc, sheet: true, optional: true, stabilize: a.stabilize });
     }
     return out;
   }
@@ -1521,8 +1536,10 @@ window.DKCONTENT = (function () {
     // ---- 보스 주기는 로스터 기준 (2주기부터 w % 10 과 어긋난다) ----
     isBossWave(w) { const r = this.getRoster()[(Math.max(1, w) - 1) % 101]; return !!(r && r.boss); },
     bossFor,   // (순번, k) → 겉보기 순 보스 (bosses 항목)
-    monsters: INF_MONSTERS, tiers: INF_TIERS, artReady: INF_ART_READY, art: infArt, artList: infArtList,   // 101웨이브 설계 + 새 그림 파이프라인 (ART-PROMPTS.md §6)
-    tierOf(w) { return INF_TIERS[Math.min(10, Math.floor(((Math.max(1, w) - 1) % 101) / 10) + 1)]; },
+    monsters: INF_MONSTERS, tiers: INF_TIERS, palette: INF_PALETTE, artReady: INF_ART_READY, art: infArt, artList: infArtList,   // 101웨이브 설계 + 새 그림 파이프라인 (ART-PROMPTS.md §6)
+    tierIndex(w) { return Math.min(10, Math.floor(((Math.max(1, w) - 1) % 101) / 10) + 1); },
+    tierOf(w) { return INF_TIERS[this.tierIndex(w)]; },
+    paletteOf(w) { return INF_PALETTE[this.tierIndex(w)]; },
     bossOrdinal(w) { const c = Math.floor((Math.max(1, w) - 1) / 101), i = (Math.max(1, w) - 1) % 101 + 1; return c * 10 + Math.round(i / this.bossEvery); },
     wave(w, gauntlet) {
       const late = gauntlet && w > this.lateFrom ? Math.pow(this.lateExp, w - this.lateFrom) : 1;

@@ -1,37 +1,55 @@
-// 2×2 걷기 시트 검사 + 정지컷 자르기.
-//   node tools/sheet-check.mjs gen/inf/w001-walk-1.png            네 칸의 캐릭터 바운딩박스(투명·연회색 키잉 기준)와 편차 보고
-//   node tools/sheet-check.mjs <sheet> --sheet-out=casual/enemies/inf/w001-walk-2x2.png [--still-out=casual/enemies/inf/w001.png]
-//   편차: 칸마다 캐릭터 높이·발 위치(바닥 y)가 평균에서 8% 넘게 어긋나면 경고 (게임은 칸 = w/2·h/2 로 자르고 발 위치를 기준으로 그린다)
+// 걷기 시트 검사 · 안정화 · 정지컷 자르기.
+//   node tools/sheet-check.mjs gen/inf/w001-walk-1.png                       칸별 실루엣(높이·발 y·무게중심 x·넓이)과 편차, 자세 판정
+//   node tools/sheet-check.mjs <sheet> --sheet-out=casual/enemies/inf/w001-walk-2x2.png     안정화(발 기준선·중심축·크기 ±15%)해서 다시 굽는다
+//   node tools/sheet-check.mjs <sheet> --sheet-out=… --raw                    안정화 없이 원본 그대로 저장 (예전 방식)
+//   node tools/sheet-check.mjs <sheet> --still-out=casual/enemies/inf/w001.png   1칸(접지 자세)을 1024² 정지컷으로
+//   --grid=3x2   열×행 (기본: 파일명의 -walk-NxM, 없으면 2x2)   --cell=512 출력 칸 크기   --pack 저장하면서 256색 팔레트로   --no-clean 경계 조각 제거 끄기
+// 경고: 안정화 전 편차가 높이 8%·발 8%·중심 8% 를 넘으면 표시 (게임이 알아서 맞추므로 참고용). 자세 판정 static(안 걷음)·twoPose(두 자세 반복)는 재생성 대상.
+// 종료 코드: 자세 판정 실패 1, 나머지 0.
 import fs from 'node:fs';
-import sharp from 'sharp';
+import path from 'node:path';
+import { loadRaw, parseGrid, gridCells, analyzeCell, stabilizePlan, driftReport, poseMasks, poseFlags, repackSheet, stillFromCell, packPng } from './lib/sheet.mjs';
 
-const file = process.argv[2];
-const opt = (k) => { const a = process.argv.find((x) => x.startsWith(`--${k}=`)); return a ? a.slice(k.length + 3) : null; };
-if (!file) { console.error('usage: node tools/sheet-check.mjs <sheet.png> [--sheet-out=…] [--still-out=…]'); process.exit(2); }
-const { data, info } = await sharp(file).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
-const W = info.width, H = info.height, cw = W / 2, ch = H / 2;
-// 배경 판정: 투명(α≤150) 또는 연회색·마젠타 (game.js isKeyPixel 과 같은 규칙)
-const isBg = (i) => { const r = data[i], g = data[i + 1], b = data[i + 2], a = data[i + 3]; if (a <= 150) return true; if (r > 180 && g < 90 && b > 80 && r - g > 80) return true; const mx = Math.max(r, g, b), mn = Math.min(r, g, b), avg = (r + g + b) / 3; return avg > 185 && avg < 250 && mx - mn < 22; };
-const cells = [];
-for (let cy = 0; cy < 2; cy++) for (let cx = 0; cx < 2; cx++) {
-  let minX = W, minY = H, maxX = -1, maxY = -1, n = 0;
-  for (let y = 0; y < ch; y++) for (let x = 0; x < cw; x++) { const i = ((cy * ch + y) * W + (cx * cw + x)) * 4; if (!isBg(i)) { n++; if (x < minX) minX = x; if (x > maxX) maxX = x; if (y < minY) minY = y; if (y > maxY) maxY = y; } }
-  cells.push({ cell: cy * 2 + cx + 1, w: maxX - minX + 1, h: maxY - minY + 1, foot: maxY, cx: (minX + maxX) / 2, fill: +(n / (cw * ch)).toFixed(3) });
-}
-const mean = (k) => cells.reduce((s, c) => s + c[k], 0) / 4;
-const mh = mean('h'), mf = mean('foot');
+const args = process.argv.slice(2);
+const file = args.find((a) => !a.startsWith('--'));
+const opt = (k, d = null) => { const a = args.find((x) => x.startsWith(`--${k}=`)); return a ? a.slice(k.length + 3) : d; };
+const has = (k) => args.includes(`--${k}`);
+if (!file) { console.error('usage: node tools/sheet-check.mjs <sheet.png> [--grid=2x2] [--sheet-out=…] [--still-out=…] [--raw] [--cell=512] [--pack]'); process.exit(2); }
+
+const raw = await loadRaw(file);
+const grid = parseGrid(opt('grid') || path.basename(file));
+const { fw, fh, cells } = gridCells(raw.W, raw.H, grid);
+const stats = cells.map(([cx, cy]) => analyzeCell(raw, cx, cy, fw, fh, { clean: !has('no-clean') }));
+const plan = stabilizePlan(stats, cells);
+const rep = driftReport(stats, cells, plan, fh);
 let warn = 0;
-for (const c of cells) {
-  const dh = Math.abs(c.h - mh) / mh, df = Math.abs(c.foot - mf) / ch;
-  const bad = dh > 0.08 || df > 0.08 || c.fill < 0.04 || c.w > cw * 0.96 || c.h > ch * 0.96;
+stats.forEach((s, i) => {
+  const bad = s.fill < 0.03 || s.w > fw * 0.96 || s.h > fh * 0.96;
   if (bad) warn++;
-  console.log(`칸 ${c.cell}: 폭 ${c.w} 높이 ${c.h} 발 y ${c.foot} 중심 x ${c.cx.toFixed(0)} 채움 ${c.fill}${bad ? '  ← 경고 (높이 편차 ' + (dh * 100).toFixed(1) + '% · 발 편차 ' + (df * 100).toFixed(1) + '%)' : ''}`);
+  console.log(`칸 ${i + 1}: 폭 ${s.w} 높이 ${s.h} 발 y ${s.y1 - cells[i][1]} 중심 x ${(s.mx - cells[i][0]).toFixed(0)} 넓이 ${s.n} 채움 ${s.fill.toFixed(3)} → 배율 ${plan.sc[i].toFixed(3)} 이동 (${plan.dx[i].toFixed(0)}, ${plan.dy[i].toFixed(0)})${s.dropped ? ` 경계 조각 ${s.dropped}px 제거` : ''}${bad ? '  ← 경고 (비었거나 칸 경계에 닿음)' : ''}`);
+});
+const pct = (v) => (v * 100).toFixed(1) + '%';
+console.log(`편차(안정화 전): 높이 ${pct(rep.before.h)} · 발 y ${pct(rep.before.foot)} · 중심 x ${pct(rep.before.cx)}${rep.before.h > 0.08 || rep.before.foot > 0.08 || rep.before.cx > 0.08 ? '  ← 흔들림 (게임·--sheet-out 이 맞춤)' : ''}`);
+const masks = poseMasks(stats, cells, plan);
+const pose = poseFlags(masks);
+const mat = pose.matrix.map((r) => r.map((v) => v.toFixed(2)).join(' ')).join(' | ');
+console.log(`자세 IoU [${mat}] 이웃 최소 ${pose.adjacentMin.toFixed(2)}${pose.flags.length ? '  ← ' + pose.flags.map((f) => f === 'static' ? '거의 안 움직임 (재생성)' : '두 자세만 번갈아 (보행 주기 아님, 재생성)').join(', ') : '  · 보행 주기로 보임'}`);
+console.log(`${raw.W}×${raw.H} · ${grid.cols}x${grid.rows} · 합집합 상자 ${plan.bw}×${plan.bh} · 경고 ${warn}칸`);
+
+const so = opt('sheet-out'), st = opt('still-out'), cell = +opt('cell', 512);
+if (so) {
+  fs.mkdirSync(path.dirname(so), { recursive: true });
+  if (has('raw')) fs.copyFileSync(file, so);
+  else {
+    const img = await repackSheet(raw, stats, cells, plan, { cols: grid.cols, rows: grid.rows, cell });
+    fs.writeFileSync(so, has('pack') ? await packPng(await img.toBuffer()) : await img.toBuffer());
+  }
+  console.log('→', so, has('raw') ? '(원본 그대로)' : `(안정화, 칸 ${cell})`);
 }
-// 테두리가 배경인지 (키잉이 통째로 먹히는지)
-let edgeBg = 0, edgeN = 0;
-for (let x = 0; x < W; x += 4) { edgeN += 2; if (isBg((0 * W + x) * 4)) edgeBg++; if (isBg(((H - 1) * W + x) * 4)) edgeBg++; }
-console.log(`테두리 배경 비율 ${(edgeBg / edgeN * 100).toFixed(0)}% · ${W}×${H} · 경고 ${warn}칸`);
-const so = opt('sheet-out'), st = opt('still-out');
-if (so) { fs.mkdirSync(so.replace(/\/[^/]+$/, ''), { recursive: true }); await sharp(file).png().toFile(so); console.log('→', so); }
-if (st) { fs.mkdirSync(st.replace(/\/[^/]+$/, ''), { recursive: true }); await sharp(file).extract({ left: 0, top: 0, width: Math.floor(cw), height: Math.floor(ch) }).resize({ width: 1024, height: 1024, fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } }).png().toFile(st); console.log('→', st, '(칸 1)'); }
-process.exit(warn ? 1 : 0);
+if (st) {
+  fs.mkdirSync(path.dirname(st), { recursive: true });
+  const img = await stillFromCell(raw, stats[0]);
+  fs.writeFileSync(st, has('pack') ? await packPng(await img.toBuffer(), { width: 512 }) : await img.toBuffer());
+  console.log('→', st, '(칸 1)');
+}
+process.exit(pose.flags.length ? 1 : 0);

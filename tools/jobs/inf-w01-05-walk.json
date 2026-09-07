@@ -1,10 +1,70 @@
 {
-  "style": "Keep exactly the same creature, colors, outfit and painterly dark fantasy style as the reference image. 2x2 sprite sheet: four frames of a walk cycle read left-to-right then top-to-bottom (contact, down, passing, up), the creature moving toward the RIGHT, seen from the same 3/4 side view. Identical size and identical ground pivot in every cell, each frame centered in its quarter. IMPORTANT: the creature must occupy at most 70% of the width and 70% of the height of its quarter, leaving at least 15% empty transparent margin on all four sides of every quarter — nothing may touch or cross the cell borders. Transparent background, no ground shadow, no grid lines, no text, no watermark.",
+  "style": "Dark fantasy painted game sprite, semi-realistic, gritty painterly texture, weathered materials, dramatic rim light, strong readable silhouette.",
   "jobs": [
-    { "id": "w001-walk", "n": 2, "size": "1024x1024", "quality": "medium", "background": "transparent", "inputFidelity": "high", "refs": ["casual/enemies/inf/w001.png"], "out": "gen/inf/w001-walk", "prompt": "The plague rat scurrying: a four-legged trot cycle, chain swinging." },
-    { "id": "w002-walk", "n": 2, "size": "1024x1024", "quality": "medium", "background": "transparent", "inputFidelity": "high", "refs": ["casual/enemies/inf/w002.png"], "out": "gen/inf/w002-walk", "prompt": "The skeleton footman shambling forward, spear shaft held low, bones rattling." },
-    { "id": "w003-walk", "n": 2, "size": "1024x1024", "quality": "medium", "background": "transparent", "inputFidelity": "high", "refs": ["casual/enemies/inf/w003.png"], "out": "gen/inf/w003-walk", "prompt": "The grave ogre lumbering forward with heavy slow steps, club resting on the shoulder." },
-    { "id": "w004-walk", "n": 2, "size": "1024x1024", "quality": "medium", "background": "transparent", "inputFidelity": "high", "refs": ["casual/enemies/inf/w004.png"], "out": "gen/inf/w004-walk", "prompt": "The raven scout flapping: four frames of a wing beat cycle (wings up, mid, down, mid) while gliding toward the right." },
-    { "id": "w005-walk", "n": 2, "size": "1024x1024", "quality": "medium", "background": "transparent", "inputFidelity": "high", "refs": ["casual/enemies/inf/w005.png"], "out": "gen/inf/w005-walk", "prompt": "The goblin spearman marching forward, spear pointed ahead, shield up." }
+    {
+      "id": "w001-walk",
+      "n": 1,
+      "size": "1024x1024",
+      "quality": "medium",
+      "background": "transparent",
+      "out": "gen/inf/w001-walk",
+      "prompt": "Keep exactly the same creature, colors and gear as the reference image. A mangy plague rat the size of a dog, patchy fur with bald sores, glowing eyes, yellow teeth bared, dragging a short rusted chain from a collar. Small, fast, harmless-looking but sick. (small and light). Walk cycle — diagonal trot: frame 1 front-right and back-left legs reach forward while the other pair pushes back; frame 2 all four legs gather under the body; frame 3 front-left and back-right legs reach forward; frame 4 legs gather again. 2x2 sprite sheet: 4 frames of ONE looping walk cycle of the same creature moving toward the RIGHT, 3/4 side view, read left-to-right then top-to-bottom. The head, torso, gear and overall size are IDENTICAL in every frame — only the limbs or wings change. The feet (or lowest point) rest on the same invisible ground line at the same height in every cell, the body is horizontally centered in its cell, and the creature fills about 65% of its cell leaving at least 15% empty margin on every side; nothing touches or crosses the cell borders. Transparent background, no ground shadow, no grid lines, no text, no watermark. Palette of this tier: rust red, dried blood, ash-grey skin, small ember accents. Overall dark and desaturated; NO bright, pastel or neon colors; any glow is small and dim.",
+      "refs": [
+        "casual/enemies/inf/w001.png"
+      ],
+      "inputFidelity": "high"
+    },
+    {
+      "id": "w002-walk",
+      "n": 1,
+      "size": "1024x1024",
+      "quality": "medium",
+      "background": "transparent",
+      "out": "gen/inf/w002-walk",
+      "prompt": "Keep exactly the same creature, colors and gear as the reference image. A small skeleton footman, brittle yellowed bones, a dented iron kettle helm, a torn tabard, holding a broken spear shaft. Hunched, light, clattering. (small and light). Walk cycle — frame 1 CONTACT: right leg forward and left leg back, both feet on the ground, stride at its widest; frame 2 PASSING: the back leg swings forward under the body, body at its highest; frame 3 CONTACT mirrored: left leg forward and right leg back; frame 4 PASSING mirrored: the other leg swings under the body. 2x2 sprite sheet: 4 frames of ONE looping walk cycle of the same creature moving toward the RIGHT, 3/4 side view, read left-to-right then top-to-bottom. The head, torso, gear and overall size are IDENTICAL in every frame — only the limbs or wings change. The feet (or lowest point) rest on the same invisible ground line at the same height in every cell, the body is horizontally centered in its cell, and the creature fills about 65% of its cell leaving at least 15% empty margin on every side; nothing touches or crosses the cell borders. Transparent background, no ground shadow, no grid lines, no text, no watermark. Palette of this tier: rust red, dried blood, ash-grey skin, small ember accents. Overall dark and desaturated; NO bright, pastel or neon colors; any glow is small and dim.",
+      "refs": [
+        "casual/enemies/inf/w002.png"
+      ],
+      "inputFidelity": "high"
+    },
+    {
+      "id": "w003-walk",
+      "n": 1,
+      "size": "1024x1024",
+      "quality": "medium",
+      "background": "transparent",
+      "out": "gen/inf/w003-walk",
+      "prompt": "Keep exactly the same creature, colors and gear as the reference image. A hulking bloated grave ogre, stitched skin, a sack hood with one eye hole, a heavy wooden club studded with nails resting on the shoulder. Slow and massive. (large, heavy and massive). Walk cycle — frame 1 CONTACT: right leg forward and left leg back, both feet on the ground, stride at its widest; frame 2 PASSING: the back leg swings forward under the body, body at its highest; frame 3 CONTACT mirrored: left leg forward and right leg back; frame 4 PASSING mirrored: the other leg swings under the body. 2x2 sprite sheet: 4 frames of ONE looping walk cycle of the same creature moving toward the RIGHT, 3/4 side view, read left-to-right then top-to-bottom. The head, torso, gear and overall size are IDENTICAL in every frame — only the limbs or wings change. The feet (or lowest point) rest on the same invisible ground line at the same height in every cell, the body is horizontally centered in its cell, and the creature fills about 65% of its cell leaving at least 15% empty margin on every side; nothing touches or crosses the cell borders. Transparent background, no ground shadow, no grid lines, no text, no watermark. Palette of this tier: rust red, dried blood, ash-grey skin, small ember accents. Overall dark and desaturated; NO bright, pastel or neon colors; any glow is small and dim.",
+      "refs": [
+        "casual/enemies/inf/w003.png"
+      ],
+      "inputFidelity": "high"
+    },
+    {
+      "id": "w004-walk",
+      "n": 1,
+      "size": "1024x1024",
+      "quality": "medium",
+      "background": "transparent",
+      "out": "gen/inf/w004-walk",
+      "prompt": "Keep exactly the same creature, colors and gear as the reference image. A ragged raven scout in flight, a tiny leather harness carrying a small dim lantern, one glowing eye, tattered feathers. (small and light). Walk cycle — wing beat while gliding: frame 1 wings raised high; frame 2 wings level; frame 3 wings swept down; frame 4 wings level; the body, head and legs stay at the same height and size. 2x2 sprite sheet: 4 frames of ONE looping walk cycle of the same creature moving toward the RIGHT, 3/4 side view, read left-to-right then top-to-bottom. The head, torso, gear and overall size are IDENTICAL in every frame — only the limbs or wings change. The feet (or lowest point) rest on the same invisible ground line at the same height in every cell, the body is horizontally centered in its cell, and the creature fills about 65% of its cell leaving at least 15% empty margin on every side; nothing touches or crosses the cell borders. Transparent background, no ground shadow, no grid lines, no text, no watermark. Palette of this tier: rust red, dried blood, ash-grey skin, small ember accents. Overall dark and desaturated; NO bright, pastel or neon colors; any glow is small and dim.",
+      "refs": [
+        "casual/enemies/inf/w004.png"
+      ],
+      "inputFidelity": "high"
+    },
+    {
+      "id": "w005-walk",
+      "n": 1,
+      "size": "1024x1024",
+      "quality": "medium",
+      "background": "transparent",
+      "out": "gen/inf/w005-walk",
+      "prompt": "Keep exactly the same creature, colors and gear as the reference image. A goblin spearman, sickly skin, patched leather armor, a crude iron spear and a small round wooden shield, a sneering grin with a broken tooth. Wiry. (medium build). Walk cycle — frame 1 CONTACT: right leg forward and left leg back, both feet on the ground, stride at its widest; frame 2 PASSING: the back leg swings forward under the body, body at its highest; frame 3 CONTACT mirrored: left leg forward and right leg back; frame 4 PASSING mirrored: the other leg swings under the body. 2x2 sprite sheet: 4 frames of ONE looping walk cycle of the same creature moving toward the RIGHT, 3/4 side view, read left-to-right then top-to-bottom. The head, torso, gear and overall size are IDENTICAL in every frame — only the limbs or wings change. The feet (or lowest point) rest on the same invisible ground line at the same height in every cell, the body is horizontally centered in its cell, and the creature fills about 65% of its cell leaving at least 15% empty margin on every side; nothing touches or crosses the cell borders. Transparent background, no ground shadow, no grid lines, no text, no watermark. Palette of this tier: rust red, dried blood, ash-grey skin, small ember accents. Overall dark and desaturated; NO bright, pastel or neon colors; any glow is small and dim.",
+      "refs": [
+        "casual/enemies/inf/w005.png"
+      ],
+      "inputFidelity": "high"
+    }
   ]
 }

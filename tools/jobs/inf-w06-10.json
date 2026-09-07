@@ -1,0 +1,31 @@
+{
+  "style": "Dark fantasy painted game sprite, semi-realistic, gritty painterly texture, weathered materials, dramatic rim light, strong readable silhouette.",
+  "jobs": [
+    {
+      "id": "t1-006-009",
+      "n": 1,
+      "size": "1024x1536",
+      "quality": "medium",
+      "background": "transparent",
+      "out": "gen/inf/w006-w009",
+      "rows": [
+        "w006",
+        "w007",
+        "w008",
+        "w009"
+      ],
+      "cols": 4,
+      "prompt": "Sprite sheet with 4 horizontal rows and 4 columns on a transparent background. Each row is a DIFFERENT creature and each row is ONE looping walk cycle of that creature moving toward the RIGHT (3/4 side view), frames read left-to-right. In every row the creature's head, torso, gear and size are identical across its frames — only limbs or wings change; feet rest on the same invisible ground line at the same height in every cell; each creature is horizontally centered in its cell and fills about 65% of the cell with at least 15% empty margin; nothing touches or crosses the cell borders; the rows are evenly spaced and do not overlap. No ground shadow, no grid lines, no text, no watermark. Row 1 (wave 6): A rotting wild boar, ribs showing through torn hide, rusted iron caps on its tusks, one ear missing, black bile dripping from the jaw. Heavy, charging low. (large, heavy and massive); diagonal trot: frame 1 front-right and back-left legs reach forward while the other pair pushes back; frame 2 all four legs gather under the body; frame 3 front-left and back-right legs reach forward; frame 4 legs gather again. Row 2 (wave 7): A grave-digging ghoul, hunched with long clawed hands caked in soil, a tattered burial shroud, a broken shovel slung on its back, mouth full of grave dirt. Big and stooped. (large, heavy and massive); frame 1 CONTACT: right leg forward and left leg back, both feet on the ground, stride at its widest; frame 2 PASSING: the back leg swings forward under the body, body at its highest; frame 3 CONTACT mirrored: left leg forward and right leg back; frame 4 PASSING mirrored: the other leg swings under the body. Row 3 (wave 8): A dense swarm of corpse flies clustered around a floating cracked skull, compound eyes glinting, a few flies trailing behind. Small and buzzing. (small and light); wing beat while gliding: frame 1 wings raised high; frame 2 wings level; frame 3 wings swept down; frame 4 wings level; the body, head and legs stay at the same height and size. Row 4 (wave 9): An orc brute in rusted, dented plate armor with a chipped tower shield strapped to one arm, dragging a chained cleaver, jaw tusks and a scarred face. Massive. (large, heavy and massive); frame 1 CONTACT: right leg forward and left leg back, both feet on the ground, stride at its widest; frame 2 PASSING: the back leg swings forward under the body, body at its highest; frame 3 CONTACT mirrored: left leg forward and right leg back; frame 4 PASSING mirrored: the other leg swings under the body. Palette of this tier: rust red, dried blood, ash-grey skin, small ember accents. Overall dark and desaturated; NO bright, pastel or neon colors; any glow is small and dim.",
+      "split": "node tools/sheet-split.mjs gen/inf/w006-w009-1.png --rows=w006,w007,w008,w009 --cols=4 --pack"
+    },
+    {
+      "id": "b010",
+      "n": 1,
+      "size": "1024x1024",
+      "quality": "medium",
+      "background": "transparent",
+      "out": "gen/inf/b010",
+      "prompt": "BOSS \"역병 쥐왕\": The Plague Rat King: a gigantic scarred rat wearing a rusted iron crown, a dozen tails knotted together into a swollen mass behind it, glowing eyes, a collar of skulls on a chain, standing atop a mound of bones and refuse. (large, heavy and massive, imposing). Full body, 3/4 side view FACING RIGHT, centered, feet at the bottom center, filling about 80% of the frame. Transparent background, no ground shadow, no text, no watermark. Palette of this tier: rust red, dried blood, ash-grey skin, small ember accents. Overall dark and desaturated; NO bright, pastel or neon colors; any glow is small and dim."
+    }
+  ]
+}
