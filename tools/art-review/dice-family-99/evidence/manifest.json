@@ -1,0 +1,80 @@
+{
+  "gameSha256": "a5e43fbf82d8dd01ecc2e5c26d03833769923736dcfd272ae21f6405b57436e4",
+  "additionalImageGenerationCalls": 0,
+  "material": "dice/skins/ivory-worn/cube-surface-v98.png",
+  "materialSha256": "a22dfecfeb6feb7362420bc4568f9684e6c0705e5332fdf503504bd656badff9",
+  "files": [
+    {
+      "file": "all-kinds-board.png",
+      "source": "gen\\e2e\\dice-family-99\\art-preview\\all-kinds-board.png",
+      "sourceSha256": "87845883bb23b989fc83d3fb743639a37f22ae50697a362ca9aa6ab034e3b465",
+      "sha256": "87845883bb23b989fc83d3fb743639a37f22ae50697a362ca9aa6ab034e3b465"
+    },
+    {
+      "file": "d4-all-faces-board.png",
+      "source": "gen\\e2e\\dice-family-99\\art-preview\\d4-all-faces-board.png",
+      "sourceSha256": "679c15dadbffe4420bcb87023b68018c20627d96d78ebc8320d664edf9a16192",
+      "sha256": "679c15dadbffe4420bcb87023b68018c20627d96d78ebc8320d664edf9a16192"
+    },
+    {
+      "file": "visual-review.json",
+      "source": "gen\\e2e\\dice-family-99\\art-preview\\visual-review.json",
+      "sourceSha256": "6c907a24df63eb3df2036ec3c09241e91a99d2c82213812b726e5e3e23c11ca8",
+      "sha256": "6c907a24df63eb3df2036ec3c09241e91a99d2c82213812b726e5e3e23c11ca8"
+    },
+    {
+      "file": "diagnostic-renderer.json",
+      "source": "gen\\e2e\\dice-family-99\\art-preview\\report.json",
+      "sourceSha256": "5f88e413ee63ce02a4444ead7f5dbc11aaa9ff3d49e45b2d5b6cb7247650ba4d",
+      "sha256": "5f88e413ee63ce02a4444ead7f5dbc11aaa9ff3d49e45b2d5b6cb7247650ba4d"
+    },
+    {
+      "file": "all-nine-phone.png",
+      "source": "gen\\e2e\\dice-family-99\\after\\phone\\all-nine-actual-game.png",
+      "sourceSha256": "a7b616cc0b2ae51958aaa79d3090a17113b90d70a1f8d1a658f82dec63efdec8",
+      "sha256": "a7b616cc0b2ae51958aaa79d3090a17113b90d70a1f8d1a658f82dec63efdec8"
+    },
+    {
+      "file": "all-nine-desktop.png",
+      "source": "gen\\e2e\\dice-family-99\\after\\desktop\\all-nine-actual-game.png",
+      "sourceSha256": "ecd6333b8d8332b652ee2cb0defca1f98cfb15b950e375396c8317c7654e5fe8",
+      "sha256": "ecd6333b8d8332b652ee2cb0defca1f98cfb15b950e375396c8317c7654e5fe8"
+    },
+    {
+      "file": "shop-phone.png",
+      "source": "gen\\e2e\\dice-family-99\\after\\phone\\shop-game.png",
+      "sourceSha256": "1147bd9e846c3243fafc8d4e1dedeacbb000c4c76fe2466b4bc30eeeff2f6744",
+      "sha256": "1147bd9e846c3243fafc8d4e1dedeacbb000c4c76fe2466b4bc30eeeff2f6744"
+    },
+    {
+      "file": "browser.json",
+      "source": "gen\\e2e\\dice-family-99\\after\\report.json",
+      "sourceSha256": "b5ec60ea226437b7f94da6ad4a09df449d037bdcd1b900ea4fa7517997df5c23",
+      "sha256": "0891899f65b496f489e7c4785bae4ae6841a41c05628fd7f1d5e095115eb3ca5"
+    },
+    {
+      "file": "material-contract.json",
+      "source": "gen\\e2e\\dice-family-99\\checks\\material-contract.json",
+      "sourceSha256": "9fe7435c538ca3eb50390bbff136826046bc4a4a12f576da420c2057747cfcbc",
+      "sha256": "9fe7435c538ca3eb50390bbff136826046bc4a4a12f576da420c2057747cfcbc"
+    },
+    {
+      "file": "geometry.json",
+      "source": "gen\\e2e\\dice-family-99\\checks\\geometry.json",
+      "sourceSha256": "d9fcf154c235d744884e6c821b121acdedadd7a5b496c23467653d67bb3d84c5",
+      "sha256": "d9fcf154c235d744884e6c821b121acdedadd7a5b496c23467653d67bb3d84c5"
+    },
+    {
+      "file": "rotation.json",
+      "source": "gen\\e2e\\dice-family-99\\checks\\rotation.json",
+      "sourceSha256": "f85c38715edf5531d668c06390d6c47b9fa337fcd5b42e5a5874fae023dae682",
+      "sha256": "f85c38715edf5531d668c06390d6c47b9fa337fcd5b42e5a5874fae023dae682"
+    },
+    {
+      "file": "build.log",
+      "source": "gen\\e2e\\dice-family-99\\checks\\build.log",
+      "sourceSha256": "15e626f78ad062191e6a4f76085086fefabffa631457f2f20e704dfb551ef1a5",
+      "sha256": "15e626f78ad062191e6a4f76085086fefabffa631457f2f20e704dfb551ef1a5"
+    }
+  ]
+}

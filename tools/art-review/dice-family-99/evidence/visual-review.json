@@ -1,0 +1,19 @@
+{
+  "gameSha256": "a5e43fbf82d8dd01ecc2e5c26d03833769923736dcfd272ae21f6405b57436e4",
+  "scope": "Independent visual review of diagnostic actual-renderer images; natural game capture is owned by a separate harness.",
+  "reviewApproved": true,
+  "previousRevision": "revisions/052cdf-before-orb-seam-fix",
+  "previousRevisionFilesPreserved": 44,
+  "otherRendererImagesCompared": 37,
+  "otherRendererImagesChanged": 0,
+  "passedFindings": [
+    "D1 settled pip is centered and front-facing, with no numeral.",
+    "D4 faces 1–4 show the correct standard pip counts/layouts and retain clear space inside the triangular face rim.",
+    "Actual-radius small D4 slot views preserve separate readable pips.",
+    "All nine kinds share warm worn ivory stone; D8 and higher keep upright readable burgundy numerals on the settled face.",
+    "D6 retains the approved rounded stone appearance.",
+    "After the sphere triangle edge correction, the diagonal through D1's red pip is no longer visible in the large settled diagnostic.",
+    "D1's pip boundary remains smooth in the oblique rotation pose and both actual-radius slot diagnostics; its settled position remains centered."
+  ],
+  "requiredFollowUp": []
+}

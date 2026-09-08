@@ -2073,10 +2073,26 @@ function engraveDiceValue(g, value, x, y, fontSize, mark) {
     g.fillRect(x - fontSize * .15, y + fontSize * .43, fontSize * .3, Math.max(1, fontSize * .035));
   }
 }
+function drawDicePip(g, surface, x, y, r, mark) {
+  // A worn stone lip around a recessed, red-pigmented bowl, shared by d1/d4/d6.
+  g.beginPath(); g.arc(x, y + 1.1, r + 1.35, 0, Math.PI * 2);
+  g.fillStyle = 'rgba(255,239,199,.85)'; g.fill();
+  g.beginPath(); g.arc(x, y - .25, r + .6, 0, Math.PI * 2);
+  g.fillStyle = 'rgba(87,55,29,.72)'; g.fill();
+  const bowl = g.createRadialGradient(x, y + r * .58, r * .32, x, y, r);
+  bowl.addColorStop(0, mark || '#912321'); bowl.addColorStop(.56, '#8b1c20');
+  bowl.addColorStop(.8, '#681015'); bowl.addColorStop(.95, '#3e0b0d'); bowl.addColorStop(1, '#280909');
+  g.save(); g.beginPath(); g.arc(x, y, r, 0, Math.PI * 2); g.clip();
+  g.fillStyle = bowl; g.fillRect(x - r, y - r, r * 2, r * 2);
+  g.globalCompositeOperation = 'soft-light'; g.globalAlpha = .2;
+  g.drawImage(surface, 0, 0, g.canvas.width, g.canvas.height);
+  g.restore();
+}
 function buildDiceMaterial(skin) {
   const out = { faces: {}, orb: null, cube: [], cubeSurface: null }, T = DICE_MAT_TEX, dot = (a, b) => a.reduce((n, v, i) => n + v * b[i], 0);
+  out.cubeSurface = diceMaterialTile(skin, T, T, skin.cubeMaterialKey || skin.materialKey);
   for (const [kind, P] of Object.entries(POLY)) out.faces[kind] = P.faces.map((f, i) => {
-    // Use the same final alignment as slotTargetR: the winning numeral is upright.
+    // Use the same final alignment as slotTargetR: the winning marking is upright.
     const inv = m3transpose(alignR(f.n)), u = m3apply(inv, [1, 0, 0]), v = m3apply(inv, [0, 1, 0]);
     const offsets = f.idx.map(vi => P.verts[vi].map((n, j) => n - f.c[j]));
     const scale = T * .455 / Math.max(...offsets.map(o => Math.hypot(...o)));
@@ -2088,32 +2104,26 @@ function buildDiceMaterial(skin) {
     const rim = g.createLinearGradient(0, 0, T, T);
     rim.addColorStop(0, 'rgba(255,243,211,.85)'); rim.addColorStop(.45, 'rgba(238,220,181,.4)'); rim.addColorStop(1, 'rgba(129,93,52,.38)');
     path(.97); g.strokeStyle = rim; g.lineWidth = 2.7; g.stroke();
-    engraveDiceValue(g, i + 1, T / 2, T / 2, T * (f.idx.length === 5 ? .36 : i < 9 ? .32 : .27), skin.mark || '#542b30');
+    if (kind === 'd4') {
+      // All four standard pip layouts fit inside the triangle's incircle,
+      // including the stone lip and the face rim, for every face orientation.
+      for (const [u, v] of CUBE_PIPS[i]) {
+        drawDicePip(g, out.cubeSurface, T * (.5 + u * .1), T * (.5 + v * .1), T * .05, skin.cubeMark);
+      }
+    } else {
+      engraveDiceValue(g, i + 1, T / 2, T / 2, T * (f.idx.length === 5 ? .36 : i < 9 ? .32 : .27), skin.mark || '#542b30');
+    }
     g.restore();
     return { cv, uv };
   });
   out.orb = diceMaterialTile(skin, T * 2, T);
-  engraveDiceValue(out.orb.getContext('2d'), 1, T, T / 2, T * .25, skin.mark || '#542b30');
-  out.cubeSurface = diceMaterialTile(skin, T, T, skin.cubeMaterialKey || skin.materialKey);
+  drawDicePip(out.orb.getContext('2d'), out.cubeSurface, T, T / 2, T * .072, skin.cubeMark);
   out.cube = CUBE_PIPS.map(pips => {
     const cv = document.createElement('canvas'); cv.width = T; cv.height = T;
     const g = cv.getContext('2d'); g.drawImage(out.cubeSurface, 0, 0);
     for (const [u, v] of pips) {
       const x = T * (.5 + u * .245), y = T * (.5 + v * .245), r = T * .096;
-      // A worn stone lip around a recessed, red-pigmented bowl.
-      g.beginPath(); g.arc(x, y + 1.1, r + 1.35, 0, Math.PI * 2);
-      g.fillStyle = 'rgba(255,239,199,.85)'; g.fill();
-      g.beginPath(); g.arc(x, y - .25, r + .6, 0, Math.PI * 2);
-      g.fillStyle = 'rgba(87,55,29,.72)'; g.fill();
-      const bowl = g.createRadialGradient(x, y + r * .58, r * .32, x, y, r);
-      bowl.addColorStop(0, skin.cubeMark || '#912321'); bowl.addColorStop(.56, '#8b1c20');
-      bowl.addColorStop(.8, '#681015'); bowl.addColorStop(.95, '#3e0b0d'); bowl.addColorStop(1, '#280909');
-      g.save(); g.beginPath(); g.arc(x, y, r, 0, Math.PI * 2); g.clip();
-      g.fillStyle = bowl; g.fillRect(x - r, y - r, r * 2, r * 2);
-      // The same mineral grain subtly breaks up the pigment without random stamps.
-      g.globalCompositeOperation = 'soft-light'; g.globalAlpha = .2;
-      g.drawImage(out.cubeSurface, 0, 0);
-      g.restore();
+      drawDicePip(g, out.cubeSurface, x, y, r, skin.cubeMark);
     }
     return cv;
   });
@@ -2165,7 +2175,7 @@ function drawPoly3D(g, cx, cy, size, kind, R, skinId) {
   }
   g.restore();
 }
-// Low-resolution sphere UV mesh, shared by both views of d1. Its material and 1
+// Low-resolution sphere UV mesh, shared by both views of d1. Its material and pip
 // follow SLOT.R as well; lighting stays in world space and has no plastic glint.
 const ORB_MESH = (() => {
   const cols = 24, rows = 12, verts = [], quads = [];
@@ -2184,7 +2194,9 @@ function drawOrb(g, cx, cy, size, R, skinId) {
   g.fillStyle = '#e4d9bc'; g.fillRect(cx - size, cy - size, size * 2, size * 2);
   for (const { idx } of order) for (let j = 1; j < 3; j++) {
     const tri = [idx[0], idx[j], idx[j + 1]];
-    texTri(g, tex, ...ORB_MESH.verts[tri[0]].uv, ...ORB_MESH.verts[tri[1]].uv, ...ORB_MESH.verts[tri[2]].uv, ...tri.map(i => verts[i].xy), .6);
+    // Overlap internal UV triangles so their antialiasing cannot cut through
+    // the red pip; the outer circle above still clips the sphere silhouette.
+    texTri(g, tex, ...ORB_MESH.verts[tri[0]].uv, ...ORB_MESH.verts[tri[1]].uv, ...ORB_MESH.verts[tri[2]].uv, ...tri.map(i => verts[i].xy), 1.6);
   }
   const gr = g.createRadialGradient(cx + size * LIGHT[0], cy + size * LIGHT[1], size * .08, cx, cy, size * 1.05);
   gr.addColorStop(0, 'rgba(28,18,8,.065)'); gr.addColorStop(.55, 'rgba(28,18,8,.13)'); gr.addColorStop(1, 'rgba(28,18,8,.36)');
