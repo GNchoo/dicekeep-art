@@ -1,0 +1,385 @@
+{
+  "scope": "Diagnostic images from actual renderer functions with read-only debug exports. Uses selected settled rotations and one fixed spin pose; this is not a natural-roll E2E test or a gameplay screenshot. Slot canvases use the actual 21 px poly/17 px cube radii and cube slot detail.",
+  "gameSha256": "a5e43fbf82d8dd01ecc2e5c26d03833769923736dcfd272ae21f6405b57436e4",
+  "gameUnchangedDuringRun": true,
+  "files": [
+    {
+      "path": "d1-settled.png",
+      "sha256": "19f8bb84fd4900e70f31fabf1d4b3ddc4ed3e7095fea58fd0f37778de0453884"
+    },
+    {
+      "path": "d1-settled-slot.png",
+      "sha256": "beb9d7e0a7bae78e82ecaa67413d9a420aef6a0e5eff9fdd56b2213bd4127a5f"
+    },
+    {
+      "path": "d1-spin.png",
+      "sha256": "804f05e21977a6fc636043fe076b9910a2e951027c732a440394d10d8b0648be"
+    },
+    {
+      "path": "d1-spin-slot.png",
+      "sha256": "2a5646a4406453f188f941f4c65083a02263d6898ef2837c550189a9eede8ef3"
+    },
+    {
+      "path": "d4-settled.png",
+      "sha256": "72bef60a32633349d2b0680bbf0c9f5f27a0e5e13f3564cfca3ce651040c5ae6"
+    },
+    {
+      "path": "d4-settled-slot.png",
+      "sha256": "fbbf255e3fa099e5ecf49b6e769fdfa20f58e16ac00662013108442c3d1c2da0"
+    },
+    {
+      "path": "d4-spin.png",
+      "sha256": "be68602606d55c3760b046de67bf1d4035e33799de34888fda39d12ff16ff2e5"
+    },
+    {
+      "path": "d4-spin-slot.png",
+      "sha256": "08b1d8ff5442162c2df09eb458b2be9d99a942a76ee0fe32295bedeca9149b59"
+    },
+    {
+      "path": "d6-settled.png",
+      "sha256": "e0b0cdeb290e8226329be5a5dd9122e1caa416980be352eee30f92225c587dce"
+    },
+    {
+      "path": "d6-settled-slot.png",
+      "sha256": "4ffc71688c9a4ef1f75f92f94da5d041f56859584e537ff005cee55335f1c3a0"
+    },
+    {
+      "path": "d6-spin.png",
+      "sha256": "0470303a91f53474b62027bd4b042e80393023ecbe0ddbd823ee3bdd7490881e"
+    },
+    {
+      "path": "d6-spin-slot.png",
+      "sha256": "b945493665739a1ad6e99d7911f27e8e6e8d558d6805b95f44918386c5222a7e"
+    },
+    {
+      "path": "d8-settled.png",
+      "sha256": "bdc8434eb085d921bf0b457ba709f183819de67afb9d728ea5a2ca45445fab4d"
+    },
+    {
+      "path": "d8-settled-slot.png",
+      "sha256": "544c38581543c9bcff43e8420135b95830fe41fa6e5d3a58baa54e52404d770f"
+    },
+    {
+      "path": "d8-spin.png",
+      "sha256": "daba3ec7a104397e50391ce99688d6846b5bf05a6aaa61e65f4b9ceb46f1f60e"
+    },
+    {
+      "path": "d8-spin-slot.png",
+      "sha256": "e57b6120c6de13bdecba2b4ff625a8f456947255cd79a954cb262dd7b01fb59e"
+    },
+    {
+      "path": "d12-settled.png",
+      "sha256": "18dec860224b8686e9469383a77244934526b424f3430e014e911fdc4bd8bbd0"
+    },
+    {
+      "path": "d12-settled-slot.png",
+      "sha256": "c830afb999978efe79222e88a8ace69a72f3e01fe3cda3191b3ff6b6ca444f7e"
+    },
+    {
+      "path": "d12-spin.png",
+      "sha256": "2c3c2a9e24ffd5576eed8dd4cdf016e7effe2e830e5305e354278fbba3a8405b"
+    },
+    {
+      "path": "d12-spin-slot.png",
+      "sha256": "5589d65245309b2de906cbde2a009e65c24537eaf415312bb3d9d6e251239993"
+    },
+    {
+      "path": "d20-settled.png",
+      "sha256": "4b60d392286c25de3924c81cd648bf647283ac78f560143b35db32c15bbb32d0"
+    },
+    {
+      "path": "d20-settled-slot.png",
+      "sha256": "402dd1e27b089028e686c4dd097cb5362e9cda221c5ec1671a86862693b6eb1a"
+    },
+    {
+      "path": "d20-spin.png",
+      "sha256": "cbf227f3ec6a305f026f05f97dfb4f410af8e8b6fe07bb6e322fbd5cd23a9900"
+    },
+    {
+      "path": "d20-spin-slot.png",
+      "sha256": "6aca13b4944c69b05b2381d8c9b2f319bbdc168e162a984bb17023e88f32d50c"
+    },
+    {
+      "path": "epic-settled.png",
+      "sha256": "c331672481c5d76a04b9e545c0950766db3a928b4418d7d9af1e0609aead40eb"
+    },
+    {
+      "path": "epic-settled-slot.png",
+      "sha256": "459e0686068a922a09429ccbf0ee0e16dd386456873b8724532a9fde7cb77cc9"
+    },
+    {
+      "path": "epic-spin.png",
+      "sha256": "c2b396b36098ee97f5d3bb1b462bc5caf99d7132771b2f9884ae71c51d4f2dd5"
+    },
+    {
+      "path": "epic-spin-slot.png",
+      "sha256": "31165ac4ed3dbba75e85721d4e3e1118cb3113e8d73d7809ed42e54eede8b426"
+    },
+    {
+      "path": "myth-settled.png",
+      "sha256": "2f641ceadb6ae50ac4f5c7ac50271e4fd79517de6dbcf6f4ffaff5af057cf174"
+    },
+    {
+      "path": "myth-settled-slot.png",
+      "sha256": "491f7f59e2eaa218e3818a22f41896628e4c00c58c1a801b56f2bf488d976e97"
+    },
+    {
+      "path": "myth-spin.png",
+      "sha256": "6cc3ad7a43443396cdaa4991c60f7a93fa52c1ccffdc3ba05af487a29e19b123"
+    },
+    {
+      "path": "myth-spin-slot.png",
+      "sha256": "a18615040b0ad595623b6040da1d1be4f68da550b0751f481efc7b1dad1da83e"
+    },
+    {
+      "path": "primal-settled.png",
+      "sha256": "4b60d392286c25de3924c81cd648bf647283ac78f560143b35db32c15bbb32d0"
+    },
+    {
+      "path": "primal-settled-slot.png",
+      "sha256": "402dd1e27b089028e686c4dd097cb5362e9cda221c5ec1671a86862693b6eb1a"
+    },
+    {
+      "path": "primal-spin.png",
+      "sha256": "cbf227f3ec6a305f026f05f97dfb4f410af8e8b6fe07bb6e322fbd5cd23a9900"
+    },
+    {
+      "path": "primal-spin-slot.png",
+      "sha256": "6aca13b4944c69b05b2381d8c9b2f319bbdc168e162a984bb17023e88f32d50c"
+    },
+    {
+      "path": "all-kinds-board.png",
+      "sha256": "87845883bb23b989fc83d3fb743639a37f22ae50697a362ca9aa6ab034e3b465"
+    },
+    {
+      "path": "d4-face-1.png",
+      "sha256": "ae26b299bba02b9f2df0b7658fee172bf373b85bd4db41e4cb30b4f76fecddd0"
+    },
+    {
+      "path": "d4-face-2.png",
+      "sha256": "0fed298faec175f0941198f69845363f140357526f6ef18e7c938cd32ddee01f"
+    },
+    {
+      "path": "d4-face-3.png",
+      "sha256": "458f1a4617c0dbf9b65dc504382609021dab82a6e97d29efcefe2b99531002dd"
+    },
+    {
+      "path": "d4-face-4.png",
+      "sha256": "80069a5ed3832468faf1c8e2e6f532568ba42ee9bea6fdcefa4a761b5fb9d50a"
+    },
+    {
+      "path": "d4-all-faces-board.png",
+      "sha256": "679c15dadbffe4420bcb87023b68018c20627d96d78ebc8320d664edf9a16192"
+    }
+  ],
+  "observations": [
+    {
+      "kind": "d1",
+      "final": 1,
+      "marker": "pips",
+      "settledR": [
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "settledNormal": [
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "kind": "d4",
+      "final": 4,
+      "marker": "pips",
+      "settledR": [
+        0.21132486540518725,
+        -0.788675134594813,
+        0.5773502691896258,
+        -0.788675134594813,
+        0.21132486540518725,
+        0.5773502691896258,
+        -0.5773502691896258,
+        -0.5773502691896258,
+        -0.5773502691896257
+      ],
+      "settledNormal": [
+        -5.551115123125783e-17,
+        -5.551115123125783e-17,
+        1.0000000000000002
+      ]
+    },
+    {
+      "kind": "d6",
+      "final": 6,
+      "marker": "pips",
+      "settledR": [
+        1,
+        0,
+        0,
+        0,
+        -1,
+        -1.2246467991473532e-16,
+        0,
+        1.2246467991473532e-16,
+        -1
+      ],
+      "settledNormal": null
+    },
+    {
+      "kind": "d8",
+      "final": 8,
+      "marker": "number",
+      "settledR": [
+        0.2113248654051869,
+        0.7886751345948126,
+        -0.5773502691896257,
+        0.7886751345948126,
+        0.2113248654051869,
+        0.5773502691896257,
+        0.5773502691896257,
+        -0.5773502691896257,
+        -0.5773502691896257
+      ],
+      "settledNormal": [
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "kind": "d12",
+      "final": 12,
+      "marker": "number",
+      "settledR": [
+        -0.5257311121191335,
+        0,
+        0.85065080835204,
+        0,
+        1,
+        0,
+        -0.85065080835204,
+        0,
+        -0.5257311121191335
+      ],
+      "settledNormal": [
+        -1.1102230246251565e-16,
+        0,
+        1
+      ]
+    },
+    {
+      "kind": "d20",
+      "final": 20,
+      "marker": "number",
+      "settledR": [
+        0.21132486540518725,
+        -0.788675134594813,
+        0.5773502691896258,
+        -0.788675134594813,
+        0.21132486540518725,
+        0.5773502691896258,
+        -0.5773502691896258,
+        -0.5773502691896258,
+        -0.5773502691896257
+      ],
+      "settledNormal": [
+        -5.551115123125783e-17,
+        -5.551115123125783e-17,
+        1.0000000000000002
+      ]
+    },
+    {
+      "kind": "epic",
+      "final": 14,
+      "marker": "number",
+      "settledR": [
+        1,
+        0,
+        0,
+        0,
+        0.3568220897730899,
+        0.9341723589627157,
+        0,
+        -0.9341723589627157,
+        0.3568220897730899
+      ],
+      "settledNormal": [
+        0,
+        5.551115123125783e-17,
+        0.9999999999999998
+      ]
+    },
+    {
+      "kind": "myth",
+      "final": 18,
+      "marker": "number",
+      "settledR": [
+        0.12732200375003508,
+        0.33333333333333326,
+        0.9341723589627156,
+        0.33333333333333326,
+        0.8726779962499647,
+        -0.35682208977308993,
+        -0.9341723589627156,
+        0.35682208977308993,
+        6.123233995736766e-17
+      ],
+      "settledNormal": [
+        -4.163336342344337e-17,
+        0,
+        0.9999999999999998
+      ]
+    },
+    {
+      "kind": "primal",
+      "final": 20,
+      "marker": "number",
+      "settledR": [
+        0.21132486540518725,
+        -0.788675134594813,
+        0.5773502691896258,
+        -0.788675134594813,
+        0.21132486540518725,
+        0.5773502691896258,
+        -0.5773502691896258,
+        -0.5773502691896258,
+        -0.5773502691896257
+      ],
+      "settledNormal": [
+        -5.551115123125783e-17,
+        -5.551115123125783e-17,
+        1.0000000000000002
+      ]
+    }
+  ],
+  "skin": {
+    "id": "ivory-worn",
+    "materialKey": "diceMaterialIvoryWorn",
+    "material": "dice/skins/ivory-worn/cube-surface-v98.png",
+    "version": 98,
+    "mark": "#542b30",
+    "cubeMaterialKey": "diceMaterialIvoryWorn",
+    "cubeMaterial": "dice/skins/ivory-worn/cube-surface-v98.png",
+    "cubeMaterialVersion": 98,
+    "cubeMark": "#912321"
+  },
+  "materialDimensions": {
+    "cube": [
+      192,
+      192
+    ],
+    "orb": [
+      384,
+      192
+    ]
+  },
+  "errors": [],
+  "pass": true
+}

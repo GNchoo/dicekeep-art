@@ -1605,15 +1605,15 @@ window.DKCONTENT = (function () {
     19: [.488950, .263094], 20: [.497706, .243990],
   };
   // Appearance only: kind/shape, odds and rewards remain in INFINITY.chest.
-  // One ivory material family; the cube can use a richer worn surface variant.
+  // Every shape shares the approved worn ivory surface; markings follow its die type.
   // Skin selection, ownership and shop UI are future extensions.
   const DICE_SKINS = {
     defaultId: 'ivory-worn',
     skins: {
       'ivory-worn': {
-        materialKey: 'diceMaterialIvoryWorn', material: 'dice/skins/ivory-worn/material.png', version: 96,
+        materialKey: 'diceMaterialIvoryWorn', material: 'dice/skins/ivory-worn/cube-surface-v98.png', version: 98,
         mark: '#542b30',
-        cubeMaterialKey: 'diceCubeIvoryWorn', cubeMaterial: 'dice/skins/ivory-worn/cube-surface-v98.png', cubeMaterialVersion: 98,
+        cubeMaterialKey: 'diceMaterialIvoryWorn', cubeMaterial: 'dice/skins/ivory-worn/cube-surface-v98.png', cubeMaterialVersion: 98,
         cubeMark: '#912321',
       },
     },

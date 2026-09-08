@@ -1,0 +1,5369 @@
+{
+  "label": "after",
+  "baseUrl": "http://localhost:8137/",
+  "expectedGameSha256": "a5e43fbf82d8dd01ecc2e5c26d03833769923736dcfd272ae21f6405b57436e4",
+  "scope": "Actual HTTP game and canvas observation; nine real kind rolls with existing forceFinal hooks only for requested face coverage. No outcome/odds changes or response substitution. D1/D4 marking policy is checked separately after the candidate is ready. No D20 all-outcome sweep or historical PNG equality.",
+  "pages": [
+    {
+      "viewport": {
+        "name": "phone",
+        "width": 440,
+        "height": 956
+      },
+      "gameSha256": "a5e43fbf82d8dd01ecc2e5c26d03833769923736dcfd272ae21f6405b57436e4",
+      "assets": [
+        {
+          "url": "http://localhost:8137/dice/skins/ivory-worn/cube-surface-v98.png?v=98",
+          "status": 200,
+          "sha256": "a22dfecfeb6feb7362420bc4568f9684e6c0705e5332fdf503504bd656badff9",
+          "bytes": 471322
+        }
+      ],
+      "pageerrors": [],
+      "material": {
+        "registry": {
+          "materialKey": "diceMaterialIvoryWorn",
+          "material": "dice/skins/ivory-worn/cube-surface-v98.png",
+          "version": 98,
+          "mark": "#542b30",
+          "cubeMaterialKey": "diceMaterialIvoryWorn",
+          "cubeMaterial": "dice/skins/ivory-worn/cube-surface-v98.png",
+          "cubeMaterialVersion": 98,
+          "cubeMark": "#912321"
+        },
+        "images": [
+          {
+            "key": "diceMaterialIvoryWorn",
+            "src": "http://localhost:8137/dice/skins/ivory-worn/cube-surface-v98.png?v=98",
+            "width": 512,
+            "height": 512,
+            "decoded": true
+          }
+        ]
+      },
+      "kinds": [
+        {
+          "kind": "d1",
+          "forcedFinal": 1,
+          "spin": {
+            "kind": "d1",
+            "R": [
+              -0.6952661305562213,
+              0.7182280997074719,
+              -0.027448214731988385,
+              0.6767783019595035,
+              0.6670453089751062,
+              0.31148304250972714,
+              0.24202507658957728,
+              0.19798725354148206,
+              -0.949855204616425
+            ],
+            "phase": 0,
+            "t": 0.26659999999999856,
+            "t2": 0,
+            "final": 1,
+            "paint": {
+              "imageDraws": 288,
+              "first": {
+                "id": 1,
+                "width": 384,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  -0.07142464816570282,
+                  -0.008540099486708641,
+                  0.3367937207221985,
+                  0.028153175488114357,
+                  8.516472816467285,
+                  55.4709358215332
+                ]
+              },
+              "last": {
+                "id": 1,
+                "width": 384,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.22931991517543793,
+                  -0.23552347719669342,
+                  0.2508440613746643,
+                  0.23221717774868011,
+                  -74.69290161132812,
+                  98.13259887695312
+                ]
+              }
+            },
+            "pixels": {
+              "1": "af088c3e"
+            },
+            "files": {
+              "slot": "d1-spin-slot.png",
+              "center": "d1-spin-center.png",
+              "raw": "d1-spin-raw.png",
+              "rawSha256": "5b8af6b297b4cca4f4f1d449bf704857fd6b27137bb2a7c40d7c8eb1c834b34c",
+              "full": "d1-spin-game.png"
+            }
+          },
+          "settled": {
+            "kind": "d1",
+            "R": [
+              0.9999999999999998,
+              -1.6653345369377348e-16,
+              0,
+              8.326672684688674e-17,
+              1,
+              1.1102230246251565e-16,
+              5.551115123125783e-17,
+              0,
+              0.9999999999999999
+            ],
+            "phase": 1,
+            "t": 1.0332000000000006,
+            "t2": 0.3167000000000007,
+            "final": 1,
+            "paint": {
+              "imageDraws": 288,
+              "first": {
+                "id": 1,
+                "width": 384,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0,
+                  0,
+                  0.33969998359680176,
+                  0.04472235217690468,
+                  37,
+                  19
+                ]
+              },
+              "last": {
+                "id": 1,
+                "width": 384,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.328125,
+                  0,
+                  0,
+                  0.33969998359680176,
+                  -26,
+                  7.388800144195557
+                ]
+              }
+            },
+            "pixels": {
+              "1": "af088c3e"
+            },
+            "value": 1,
+            "z": 1,
+            "files": {
+              "slot": "d1-settled-slot.png",
+              "center": "d1-settled-center.png",
+              "raw": "d1-settled-raw.png",
+              "rawSha256": "5e54140bb3c36abedfb1d83130baf4f658a43025bae1050878837f18a63ce869",
+              "full": "d1-settled-game.png"
+            },
+            "textures": [
+              {
+                "id": 1,
+                "width": 384,
+                "height": 192,
+                "labels": [],
+                "file": "d1-settled-source-1.png",
+                "sha256": "0feb0bfc79c65c2be1ba9448ae59f6a30483591dc640633cdfe69dc8df2dfaa7"
+              }
+            ],
+            "marking": {
+              "policy": "red-pips",
+              "textLabels": 0,
+              "source": "d1-settled-source-1.png",
+              "count": 1,
+              "expected": 1,
+              "positionError": 0.022693438376443935,
+              "roundBounds": true,
+              "dots": [
+                {
+                  "pixels": 605,
+                  "center": [
+                    192.00413223140495,
+                    96.02231404958678
+                  ],
+                  "bounds": [
+                    178,
+                    82,
+                    28,
+                    28
+                  ]
+                }
+              ],
+              "pass": true
+            }
+          },
+          "held": 1,
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "sharedTextures": 1,
+            "sourcePixelsStable": true,
+            "projectionChanges": true
+          }
+        },
+        {
+          "kind": "d4",
+          "forcedFinal": 4,
+          "spin": {
+            "kind": "d4",
+            "R": [
+              0.6740992369465741,
+              0.5223466199299803,
+              -0.5222492004740372,
+              -0.3207654765631779,
+              0.8439079446624664,
+              0.4300335916887989,
+              0.6653568424486545,
+              -0.12236580234402078,
+              0.7364284640231256
+            ],
+            "phase": 0,
+            "t": 0.26660000000000217,
+            "t2": 0,
+            "final": 3,
+            "paint": {
+              "imageDraws": 1,
+              "first": {
+                "id": 3,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.21699683368206024,
+                  -0.0715811476111412,
+                  0.062454961240291595,
+                  0.19887858629226685,
+                  8.822245597839355,
+                  21.4869327545166
+                ]
+              },
+              "last": {
+                "id": 3,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.21699683368206024,
+                  -0.0715811476111412,
+                  0.062454961240291595,
+                  0.19887858629226685,
+                  8.822245597839355,
+                  21.4869327545166
+                ]
+              }
+            },
+            "pixels": {
+              "3": "9afe6380"
+            },
+            "files": {
+              "slot": "d4-spin-slot.png",
+              "center": "d4-spin-center.png",
+              "raw": "d4-spin-raw.png",
+              "rawSha256": "31c29354c6abc5ccc30749cd5a1d04c67d270348f08833dca8b7021e8ee42448",
+              "full": "d4-spin-game.png"
+            }
+          },
+          "settled": {
+            "kind": "d4",
+            "R": [
+              0.21132486540518666,
+              -0.7886751345948123,
+              0.5773502691896262,
+              -0.7886751345948126,
+              0.2113248654051868,
+              0.5773502691896253,
+              -0.5773502691896255,
+              -0.5773502691896258,
+              -0.5773502691896255
+            ],
+            "phase": 1,
+            "t": 1.0000000000000029,
+            "t2": 0.3,
+            "final": 4,
+            "paint": {
+              "imageDraws": 1,
+              "first": {
+                "id": 4,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.23445184528827667,
+                  9.173879670743856e-17,
+                  2.7521638350487077e-16,
+                  0.23445184528827667,
+                  14.492622375488281,
+                  17.49262237548828
+                ]
+              },
+              "last": {
+                "id": 4,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.23445184528827667,
+                  9.173879670743856e-17,
+                  2.7521638350487077e-16,
+                  0.23445184528827667,
+                  14.492622375488281,
+                  17.49262237548828
+                ]
+              }
+            },
+            "pixels": {
+              "4": "99a36816"
+            },
+            "value": 4,
+            "z": 0.9999999999999998,
+            "files": {
+              "slot": "d4-settled-slot.png",
+              "center": "d4-settled-center.png",
+              "raw": "d4-settled-raw.png",
+              "rawSha256": "f82550e7bc6ee730587f9caf5828c67a18bea34ad6e13420495cdf27573cbaf5",
+              "full": "d4-settled-game.png"
+            },
+            "textures": [
+              {
+                "id": 4,
+                "width": 192,
+                "height": 192,
+                "labels": [],
+                "file": "d4-settled-source-4.png",
+                "sha256": "d3bc16a201601b735ec02af227219f24e7c152070158f4bf0f89139effd7be80"
+              }
+            ],
+            "marking": {
+              "policy": "red-pips",
+              "textLabels": 0,
+              "source": "d4-settled-source-4.png",
+              "count": 4,
+              "expected": 4,
+              "positionError": 0.05508883673019238,
+              "roundBounds": true,
+              "dots": [
+                {
+                  "pixels": 285,
+                  "center": [
+                    76.79122807017544,
+                    76.74561403508773
+                  ],
+                  "bounds": [
+                    67,
+                    67,
+                    19,
+                    19
+                  ]
+                },
+                {
+                  "pixels": 286,
+                  "center": [
+                    115.21678321678321,
+                    76.81468531468532
+                  ],
+                  "bounds": [
+                    106,
+                    67,
+                    19,
+                    19
+                  ]
+                },
+                {
+                  "pixels": 287,
+                  "center": [
+                    76.78222996515679,
+                    115.21080139372822
+                  ],
+                  "bounds": [
+                    67,
+                    106,
+                    19,
+                    19
+                  ]
+                },
+                {
+                  "pixels": 286,
+                  "center": [
+                    115.23776223776224,
+                    115.23776223776224
+                  ],
+                  "bounds": [
+                    106,
+                    106,
+                    19,
+                    19
+                  ]
+                }
+              ],
+              "pass": true
+            }
+          },
+          "held": 4,
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "sharedTextures": 1,
+            "sourcePixelsStable": true,
+            "projectionChanges": true
+          }
+        },
+        {
+          "kind": "d6",
+          "forcedFinal": 6,
+          "spin": {
+            "kind": "d6",
+            "R": [
+              -0.44397013226587856,
+              -0.019934484573156303,
+              -0.8958198133445257,
+              -0.6017770780064824,
+              0.7473684747115791,
+              0.2816109220063526,
+              0.6638937189353417,
+              0.6641106679854575,
+              -0.343805396447047
+            ],
+            "phase": 0,
+            "t": 0.2664000000000051,
+            "t2": 0,
+            "final": 4,
+            "paint": {
+              "imageDraws": 71,
+              "first": {
+                "id": 6,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.10753806680440903,
+                  -0.10608521103858948,
+                  -0.057663992047309875,
+                  0.06689523160457611,
+                  16.54380989074707,
+                  20.433509826660156
+                ]
+              },
+              "last": {
+                "id": 6,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  -0.08866820484399796,
+                  -0.28210824728012085,
+                  0.18993805348873138,
+                  -0.10988632589578629,
+                  26.319049835205078,
+                  106.27156066894531
+                ]
+              }
+            },
+            "pixels": {
+              "6": "bfbb069f",
+              "7": "9db9fe1e",
+              "8": "af23242e",
+              "9": "e05a9e72"
+            },
+            "files": {
+              "slot": "d6-spin-slot.png",
+              "center": "d6-spin-center.png",
+              "raw": "d6-spin-raw.png",
+              "rawSha256": "bd1045b935db4ec8a2716035515c8183bd28ca498f39f8cd5f10b10830cbd888",
+              "full": "d6-spin-game.png"
+            }
+          },
+          "settled": {
+            "kind": "d6",
+            "R": [
+              1,
+              3.3306690738754696e-16,
+              0,
+              3.7470027081099033e-16,
+              -0.9999999999999999,
+              -5.134781488891349e-16,
+              -5.551115123125783e-17,
+              5.967448757360216e-16,
+              -1
+            ],
+            "phase": 1,
+            "t": 0.8998000000000026,
+            "t2": 0.33329999999999926,
+            "final": 6,
+            "paint": {
+              "imageDraws": 62,
+              "first": {
+                "id": 6,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.19290123879909515,
+                  -0.0455378033220768,
+                  -0.017383260652422905,
+                  0.024741554632782936,
+                  18.781864166259766,
+                  66.04734802246094
+                ]
+              },
+              "last": {
+                "id": 7,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  -0.19675925374031067,
+                  -9.172971095559027e-17,
+                  0,
+                  -0.19675925374031067,
+                  55.88888931274414,
+                  58.88888931274414
+                ]
+              }
+            },
+            "pixels": {
+              "6": "bfbb069f",
+              "7": "9db9fe1e"
+            },
+            "value": 6,
+            "z": 1,
+            "files": {
+              "slot": "d6-settled-slot.png",
+              "center": "d6-settled-center.png",
+              "raw": "d6-settled-raw.png",
+              "rawSha256": "60d17f81ed757977157aa1eca5ec9545808e8ed48eb872bc1a762aab307f5b9e",
+              "full": "d6-settled-game.png"
+            },
+            "textures": [
+              {
+                "id": 6,
+                "width": 192,
+                "height": 192,
+                "labels": [],
+                "file": "d6-settled-source-6.png",
+                "sha256": "ea0c9ef7d8ffa686d5e8b556199766ee76be16301b2964c2961b46dca008b2e9"
+              },
+              {
+                "id": 7,
+                "width": 192,
+                "height": 192,
+                "labels": [],
+                "file": "d6-settled-source-7.png",
+                "sha256": "2b82788d2c229ce49513304155ae418e1442be17691bea01cf9dd97fb30ada22"
+              }
+            ],
+            "marking": {
+              "policy": "red-pips",
+              "textLabels": 0,
+              "source": "d6-settled-source-7.png",
+              "count": 6,
+              "expected": 6,
+              "positionError": 0.033315801809003585,
+              "roundBounds": true,
+              "dots": [
+                {
+                  "pixels": 1052,
+                  "center": [
+                    48.965779467680605,
+                    48.94961977186312
+                  ],
+                  "bounds": [
+                    31,
+                    31,
+                    36,
+                    36
+                  ]
+                },
+                {
+                  "pixels": 1056,
+                  "center": [
+                    143.0464015151515,
+                    48.93844696969697
+                  ],
+                  "bounds": [
+                    125,
+                    31,
+                    36,
+                    36
+                  ]
+                },
+                {
+                  "pixels": 1053,
+                  "center": [
+                    48.9292497625831,
+                    96.01282051282051
+                  ],
+                  "bounds": [
+                    31,
+                    78,
+                    36,
+                    36
+                  ]
+                },
+                {
+                  "pixels": 1055,
+                  "center": [
+                    143.0649289099526,
+                    96.0042654028436
+                  ],
+                  "bounds": [
+                    125,
+                    78,
+                    36,
+                    36
+                  ]
+                },
+                {
+                  "pixels": 1052,
+                  "center": [
+                    48.94201520912547,
+                    143.02471482889734
+                  ],
+                  "bounds": [
+                    31,
+                    125,
+                    36,
+                    36
+                  ]
+                },
+                {
+                  "pixels": 1054,
+                  "center": [
+                    143.02277039848198,
+                    143.03320683111954
+                  ],
+                  "bounds": [
+                    125,
+                    125,
+                    36,
+                    36
+                  ]
+                }
+              ],
+              "pass": true
+            }
+          },
+          "held": 6,
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "sharedTextures": 4,
+            "sourcePixelsStable": true,
+            "projectionChanges": true
+          }
+        },
+        {
+          "kind": "d8",
+          "forcedFinal": 8,
+          "spin": {
+            "kind": "d8",
+            "R": [
+              0.8767804058524074,
+              0.20798357859317518,
+              -0.43358845804387436,
+              -0.28463204586206897,
+              0.9511839893790588,
+              -0.11930472252728189,
+              0.38760897613659717,
+              0.22801721291278687,
+              0.893178275728773
+            ],
+            "phase": 0,
+            "t": 0.26660000000000217,
+            "t2": 0,
+            "final": 1,
+            "paint": {
+              "imageDraws": 4,
+              "first": {
+                "id": 13,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.06827075779438019,
+                  -0.09583426266908646,
+                  -0.05748479440808296,
+                  0.14047671854496002,
+                  25.299875259399414,
+                  26.59815216064453
+                ]
+              },
+              "last": {
+                "id": 15,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.18631932139396667,
+                  -0.07136436551809311,
+                  0.04906565696001053,
+                  0.177802175283432,
+                  18.945051193237305,
+                  29.998456954956055
+                ]
+              }
+            },
+            "pixels": {
+              "13": "fb24cec7",
+              "15": "bd5f312f",
+              "16": "ce522e55",
+              "20": "e42b6b3a"
+            },
+            "files": {
+              "slot": "d8-spin-slot.png",
+              "center": "d8-spin-center.png",
+              "raw": "d8-spin-raw.png",
+              "rawSha256": "6a696b69a57fce8e3d0e371d019a3447a64e345e10548dd930d0fbbbe676b1b2",
+              "full": "d8-spin-game.png"
+            }
+          },
+          "settled": {
+            "kind": "d8",
+            "R": [
+              0.21132486540518697,
+              0.7886751345948132,
+              -0.5773502691896255,
+              0.7886751345948129,
+              0.21132486540518697,
+              0.5773502691896257,
+              0.5773502691896257,
+              -0.5773502691896257,
+              -0.577350269189626
+            ],
+            "phase": 1,
+            "t": 1.0166000000000015,
+            "t2": 0.3,
+            "final": 8,
+            "paint": {
+              "imageDraws": 4,
+              "first": {
+                "id": 20,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.13128642737865448,
+                  0.07701295614242554,
+                  0.07701295614242554,
+                  0.13128642737865448,
+                  8.893321990966797,
+                  28.113195419311523
+                ]
+              },
+              "last": {
+                "id": 18,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.20829938352108002,
+                  0,
+                  8.600511819091089e-17,
+                  0.20829938352108002,
+                  17.003259658813477,
+                  20.003259658813477
+                ]
+              }
+            },
+            "pixels": {
+              "17": "d96ff370",
+              "18": "9039952a",
+              "19": "98f02d71",
+              "20": "e42b6b3a"
+            },
+            "value": 8,
+            "z": 1,
+            "files": {
+              "slot": "d8-settled-slot.png",
+              "center": "d8-settled-center.png",
+              "raw": "d8-settled-raw.png",
+              "rawSha256": "42e811a70d7abb461e4e2fe618d1fa99d23231f02ffc61438153f1a35ad92336",
+              "full": "d8-settled-game.png"
+            },
+            "textures": [
+              {
+                "id": 20,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "4"
+                ],
+                "file": "d8-settled-source-20.png",
+                "sha256": "fc73a665084959a29ef057a643b4160f2dc84d0152eb9d04b975715a3afda868"
+              },
+              {
+                "id": 17,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "5"
+                ],
+                "file": "d8-settled-source-17.png",
+                "sha256": "0446042cf7b60ece5b7a7183327d74cd51eeaf976c1ae235dde6ff03303d7b95"
+              },
+              {
+                "id": 19,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "7"
+                ],
+                "file": "d8-settled-source-19.png",
+                "sha256": "b32d4441fa5f135279e7f0c7da688b387dca42e468ec67d24c718794f9ac8213"
+              },
+              {
+                "id": 18,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "8"
+                ],
+                "file": "d8-settled-source-18.png",
+                "sha256": "b5b5a1886b75fe1be251d9c870342376a07d2a742b082cbef88f1adca6a34e6a"
+              }
+            ],
+            "marking": {
+              "policy": "numbers",
+              "labels": [
+                "4",
+                "5",
+                "7",
+                "8"
+              ],
+              "winningNumber": 8,
+              "pass": true
+            }
+          },
+          "held": 8,
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "sharedTextures": 4,
+            "sourcePixelsStable": true,
+            "projectionChanges": true
+          }
+        },
+        {
+          "kind": "d12",
+          "forcedFinal": 12,
+          "spin": {
+            "kind": "d12",
+            "R": [
+              0.9352212363410244,
+              -0.04361972197827647,
+              -0.351366701540291,
+              -0.23700063491625628,
+              0.660144548268071,
+              -0.7127691592943931,
+              0.2630436050278688,
+              0.7498709857345346,
+              0.6070432987913303
+            ],
+            "phase": 0,
+            "t": 0.26669999999999705,
+            "t2": 0,
+            "final": 10,
+            "paint": {
+              "imageDraws": 18,
+              "first": {
+                "id": 27,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.020427074283361435,
+                  -0.10708577185869217,
+                  -0.013230712153017521,
+                  0.08554870635271072,
+                  19.933305740356445,
+                  34.99917221069336
+                ]
+              },
+              "last": {
+                "id": 26,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.1460193395614624,
+                  -0.033126793801784515,
+                  0.02058110572397709,
+                  0.14485424757003784,
+                  15.36754322052002,
+                  21.387420654296875
+                ]
+              }
+            },
+            "pixels": {
+              "22": "149c1428",
+              "23": "8900dc5c",
+              "24": "66bcbfdb",
+              "25": "7a40724d",
+              "26": "f380df7e",
+              "27": "9579e074"
+            },
+            "files": {
+              "slot": "d12-spin-slot.png",
+              "center": "d12-spin-center.png",
+              "raw": "d12-spin-raw.png",
+              "rawSha256": "59f7bc8007c1ddd000f6ef66cf71fb881f9f9dd0b1fe33d6c432fdcac5c859c2",
+              "full": "d12-spin-game.png"
+            }
+          },
+          "settled": {
+            "kind": "d12",
+            "R": [
+              -0.5257311121191336,
+              -2.7755575615628914e-17,
+              0.8506508083520399,
+              0,
+              1,
+              -5.551115123125783e-17,
+              -0.8506508083520401,
+              -1.6653345369377348e-16,
+              -0.5257311121191337
+            ],
+            "phase": 1,
+            "t": 1.0001999999999966,
+            "t2": 0.3001000000000059,
+            "final": 12,
+            "paint": {
+              "imageDraws": 18,
+              "first": {
+                "id": 22,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.0035904329270124435,
+                  0.059717047959566116,
+                  -0.14025725424289703,
+                  0.03746297210454941,
+                  55.14902877807617,
+                  44.969181060791016
+                ]
+              },
+              "last": {
+                "id": 29,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.15852567553520203,
+                  0,
+                  0,
+                  0.15852567553520203,
+                  21.78153419494629,
+                  24.78153419494629
+                ]
+              }
+            },
+            "pixels": {
+              "22": "149c1428",
+              "27": "9579e074",
+              "28": "6e0d0855",
+              "29": "e4045203",
+              "30": "578613d9",
+              "32": "e36ed184"
+            },
+            "value": 12,
+            "z": 1.0000000000000002,
+            "files": {
+              "slot": "d12-settled-slot.png",
+              "center": "d12-settled-center.png",
+              "raw": "d12-settled-raw.png",
+              "rawSha256": "5c91f67e30594ff0f355f65d733b0a5b7bef26a79c59c0f2d9bb8f6b6c02230a",
+              "full": "d12-settled-game.png"
+            },
+            "textures": [
+              {
+                "id": 22,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "8"
+                ],
+                "file": "d12-settled-source-22.png",
+                "sha256": "7ca2effe6dc4e97cb7856d8ee997e2e5d6a7807a52f19bf782bd117e81b30d31"
+              },
+              {
+                "id": 28,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "4"
+                ],
+                "file": "d12-settled-source-28.png",
+                "sha256": "db7328f7189f5213b22ae765c9dfb9bd9a4909bd1b84e4f16f552f1debaa03d5"
+              },
+              {
+                "id": 27,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "6"
+                ],
+                "file": "d12-settled-source-27.png",
+                "sha256": "2439b153caeea5d87da397919762b371b7d298881b08aba60fd888892b2fec5b"
+              },
+              {
+                "id": 30,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "10"
+                ],
+                "file": "d12-settled-source-30.png",
+                "sha256": "0b565fa89d3d67a37422557c0f1d98a240dd3e59577c0b9d043f597b284947d1"
+              },
+              {
+                "id": 32,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "11"
+                ],
+                "file": "d12-settled-source-32.png",
+                "sha256": "df3d6776895f9daa668de7cda457ad7736334dfe3aaefbe8921bee2360af6e28"
+              },
+              {
+                "id": 29,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "12"
+                ],
+                "file": "d12-settled-source-29.png",
+                "sha256": "958ed1dfaa20b97c24eca8126ae65584f6f26d2d29e2586a2860f7dff91bb56d"
+              }
+            ],
+            "marking": {
+              "policy": "numbers",
+              "labels": [
+                "8",
+                "4",
+                "6",
+                "10",
+                "11",
+                "12"
+              ],
+              "winningNumber": 12,
+              "pass": true
+            }
+          },
+          "held": 12,
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "sharedTextures": 6,
+            "sourcePixelsStable": true,
+            "projectionChanges": true
+          }
+        },
+        {
+          "kind": "d20",
+          "forcedFinal": 20,
+          "spin": {
+            "kind": "d20",
+            "R": [
+              0.8148200521459149,
+              -0.33451738718968316,
+              -0.47346214240287066,
+              -0.018303560181159865,
+              0.8014643436580186,
+              -0.5977623988923328,
+              0.5794249410455363,
+              0.49573483185328965,
+              0.6469263591644474
+            ],
+            "phase": 0,
+            "t": 0.25,
+            "t2": 0,
+            "final": 7,
+            "paint": {
+              "imageDraws": 10,
+              "first": {
+                "id": 41,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.12164077162742615,
+                  0.003498343750834465,
+                  0.08071243017911911,
+                  0.030686095356941223,
+                  15.153497695922852,
+                  49.98728942871094
+                ]
+              },
+              "last": {
+                "id": 40,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.15671448409557343,
+                  0.02512003295123577,
+                  -0.026191549375653267,
+                  0.15492607653141022,
+                  24.539670944213867,
+                  21.57948875427246
+                ]
+              }
+            },
+            "pixels": {
+              "33": "7f8f51ee",
+              "34": "68ea2f35",
+              "36": "58d5df33",
+              "38": "38681ca8",
+              "39": "2bb541c5",
+              "40": "41ee97d1",
+              "41": "c2c46bb0",
+              "42": "52695e4a",
+              "47": "dcce5c4a",
+              "49": "f47bc05b"
+            },
+            "files": {
+              "slot": "d20-spin-slot.png",
+              "center": "d20-spin-center.png",
+              "raw": "d20-spin-raw.png",
+              "rawSha256": "7e67736bb4dd135e71216f7299f4c28533ef557d360afd55793de5c3a6e0fd77",
+              "full": "d20-spin-game.png"
+            }
+          },
+          "settled": {
+            "kind": "d20",
+            "R": [
+              0.21132486540518947,
+              -0.7886751345948148,
+              0.5773502691896223,
+              -0.7886751345948108,
+              0.2113248654051849,
+              0.5773502691896295,
+              -0.5773502691896277,
+              -0.5773502691896243,
+              -0.5773502691896255
+            ],
+            "phase": 1,
+            "t": 1.0165999999999982,
+            "t2": 0.3,
+            "final": 20,
+            "paint": {
+              "imageDraws": 10,
+              "first": {
+                "id": 45,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  -0.13494639098644257,
+                  -0.04572409763932228,
+                  0.050840504467487335,
+                  -0.02630864642560482,
+                  49.220638275146484,
+                  31.40003204345703
+                ]
+              },
+              "last": {
+                "id": 46,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.15852567553520203,
+                  6.880409455272871e-16,
+                  -6.651062579309561e-16,
+                  0.15852567553520203,
+                  21.78153419494629,
+                  24.78153419494629
+                ]
+              }
+            },
+            "pixels": {
+              "35": "386a9e2",
+              "37": "6a27dea6",
+              "43": "f6f9ea57",
+              "44": "1e549bde",
+              "45": "861524bf",
+              "46": "a226b985",
+              "48": "ff918561",
+              "50": "a109aea5",
+              "51": "a7f27756",
+              "52": "b112cebc"
+            },
+            "value": 20,
+            "z": 1.0000000000000002,
+            "files": {
+              "slot": "d20-settled-slot.png",
+              "center": "d20-settled-center.png",
+              "raw": "d20-settled-raw.png",
+              "rawSha256": "4175be06b58f12b5202220f79c459fd19121a6f488cd1f1eea648ca24317e3b9",
+              "full": "d20-settled-game.png"
+            },
+            "textures": [
+              {
+                "id": 45,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "15"
+                ],
+                "file": "d20-settled-source-45.png",
+                "sha256": "25398830f259345c34e467f768ccda5d88e2ea153b621fd511f85bfe7faaf335"
+              },
+              {
+                "id": 50,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "14"
+                ],
+                "file": "d20-settled-source-50.png",
+                "sha256": "0151e8af2f37f59e8b30d19f5128b31e0b2c28aaf91b9f7714449b7e18e0b77e"
+              },
+              {
+                "id": 43,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "12"
+                ],
+                "file": "d20-settled-source-43.png",
+                "sha256": "4d366ed5f962f39b454ca013e7c3006e47aaea7353b12ba49d73025a2a81bafb"
+              },
+              {
+                "id": 52,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "17"
+                ],
+                "file": "d20-settled-source-52.png",
+                "sha256": "d1443c45f979f54af4b2dfd906589f6011278c7b605fd068dc1db00a125ff2bf"
+              },
+              {
+                "id": 37,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "11"
+                ],
+                "file": "d20-settled-source-37.png",
+                "sha256": "708a650507b2848d47cf67c10cfa924913a7fb56e35b32b2a1601e61d5be11f1"
+              },
+              {
+                "id": 35,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "18"
+                ],
+                "file": "d20-settled-source-35.png",
+                "sha256": "f82bf695f6d614e59e83850e46b071d82de16eb84eb8e6288ba0eca10eecf808"
+              },
+              {
+                "id": 48,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "16"
+                ],
+                "file": "d20-settled-source-48.png",
+                "sha256": "69e795226105eb1a9978d9188765dc46d8fe75398d0b11d1e047ea779d6d0e08"
+              },
+              {
+                "id": 44,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "13"
+                ],
+                "file": "d20-settled-source-44.png",
+                "sha256": "b94a98b3b1174d81fe92fc91bc8db3a8236675ccd7bda76e8b9693c4267cfda9"
+              },
+              {
+                "id": 51,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "19"
+                ],
+                "file": "d20-settled-source-51.png",
+                "sha256": "2d7786263c8b7c637b39e0263aa7968bf44c852969c523ade91daa3190f634e6"
+              },
+              {
+                "id": 46,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "20"
+                ],
+                "file": "d20-settled-source-46.png",
+                "sha256": "1937aaa5f97e854299b02fb4f6daa80d923911d29a2884e42d8394366429e0a2"
+              }
+            ],
+            "marking": {
+              "policy": "numbers",
+              "labels": [
+                "15",
+                "14",
+                "12",
+                "17",
+                "11",
+                "18",
+                "16",
+                "13",
+                "19",
+                "20"
+              ],
+              "winningNumber": 20,
+              "pass": true
+            }
+          },
+          "held": 20,
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "sharedTextures": 10,
+            "sourcePixelsStable": true,
+            "projectionChanges": true
+          }
+        },
+        {
+          "kind": "epic",
+          "forcedFinal": 14,
+          "spin": {
+            "kind": "epic",
+            "R": [
+              0.9590282758848676,
+              -0.006907354125775277,
+              0.28322615435774856,
+              0.15400802760337462,
+              0.8518042115556742,
+              -0.5007106076465068,
+              -0.23779464562310115,
+              0.5238147321668196,
+              0.817968112384576
+            ],
+            "phase": 0,
+            "t": 0.25,
+            "t2": 0,
+            "final": 19,
+            "paint": {
+              "imageDraws": 10,
+              "first": {
+                "id": 49,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.08506624400615692,
+                  0.0941302478313446,
+                  0.05979612469673157,
+                  0.05429614707827568,
+                  35.16825866699219,
+                  11.129836082458496
+                ]
+              },
+              "last": {
+                "id": 39,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.1443610042333603,
+                  0.0023474395275115967,
+                  0.0055840653367340565,
+                  0.15407241880893707,
+                  15.675100326538086,
+                  23.958171844482422
+                ]
+              }
+            },
+            "pixels": {
+              "33": "7f8f51ee",
+              "34": "68ea2f35",
+              "35": "386a9e2",
+              "39": "2bb541c5",
+              "40": "41ee97d1",
+              "41": "c2c46bb0",
+              "42": "52695e4a",
+              "49": "f47bc05b",
+              "51": "a7f27756",
+              "52": "b112cebc"
+            },
+            "files": {
+              "slot": "epic-spin-slot.png",
+              "center": "epic-spin-center.png",
+              "raw": "epic-spin-raw.png",
+              "rawSha256": "d65f8360dbcf264edfbe13dce6b8cad00db93ecf9f024f56253da17e9aed5292",
+              "full": "epic-spin-game.png"
+            }
+          },
+          "settled": {
+            "kind": "epic",
+            "R": [
+              0.9999999999999999,
+              0,
+              -1.5612511283791264e-16,
+              5.551115123125783e-17,
+              0.35682208977309005,
+              0.9341723589627157,
+              5.551115123125783e-17,
+              -0.9341723589627156,
+              0.35682208977309005
+            ],
+            "phase": 1,
+            "t": 0.9999999999999996,
+            "t2": 0.3,
+            "final": 14,
+            "paint": {
+              "imageDraws": 10,
+              "first": {
+                "id": 51,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.011862566694617271,
+                  0.10801113396883011,
+                  -0.04347437992691994,
+                  0.09940309822559357,
+                  24.123624801635742,
+                  17.909128189086914
+                ]
+              },
+              "last": {
+                "id": 50,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.15852567553520203,
+                  4.586939835371928e-17,
+                  0,
+                  0.15852567553520203,
+                  21.78153419494629,
+                  24.78153419494629
+                ]
+              }
+            },
+            "pixels": {
+              "33": "7f8f51ee",
+              "34": "68ea2f35",
+              "45": "861524bf",
+              "46": "a226b985",
+              "47": "dcce5c4a",
+              "48": "ff918561",
+              "49": "f47bc05b",
+              "50": "a109aea5",
+              "51": "a7f27756",
+              "52": "b112cebc"
+            },
+            "value": 14,
+            "z": 0.9999999999999998,
+            "files": {
+              "slot": "epic-settled-slot.png",
+              "center": "epic-settled-center.png",
+              "raw": "epic-settled-raw.png",
+              "rawSha256": "25079a10d961ad5d6c3330420d3408b75c95fd7a610d505bed2a79c142d42389",
+              "full": "epic-settled-game.png"
+            },
+            "textures": [
+              {
+                "id": 51,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "19"
+                ],
+                "file": "epic-settled-source-51.png",
+                "sha256": "2d7786263c8b7c637b39e0263aa7968bf44c852969c523ade91daa3190f634e6"
+              },
+              {
+                "id": 45,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "15"
+                ],
+                "file": "epic-settled-source-45.png",
+                "sha256": "25398830f259345c34e467f768ccda5d88e2ea153b621fd511f85bfe7faaf335"
+              },
+              {
+                "id": 46,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "20"
+                ],
+                "file": "epic-settled-source-46.png",
+                "sha256": "1937aaa5f97e854299b02fb4f6daa80d923911d29a2884e42d8394366429e0a2"
+              },
+              {
+                "id": 47,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "10"
+                ],
+                "file": "epic-settled-source-47.png",
+                "sha256": "6f89530aa4453722d2db9eb7f6913e9506c45787c651a34e0108bf953cea831e"
+              },
+              {
+                "id": 34,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "3"
+                ],
+                "file": "epic-settled-source-34.png",
+                "sha256": "18caa461a393db9ecd5a74eb8053f95e725a02fac17eb34d92f03103fcbff6ed"
+              },
+              {
+                "id": 33,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "4"
+                ],
+                "file": "epic-settled-source-33.png",
+                "sha256": "68aa22603269378b04a74c2056c5d79813e11f66d8adcaa1f5e801841299d1fd"
+              },
+              {
+                "id": 48,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "16"
+                ],
+                "file": "epic-settled-source-48.png",
+                "sha256": "69e795226105eb1a9978d9188765dc46d8fe75398d0b11d1e047ea779d6d0e08"
+              },
+              {
+                "id": 49,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "9"
+                ],
+                "file": "epic-settled-source-49.png",
+                "sha256": "c63eb567ccc366f6b7c554d8c97ca1e3486877804a39fe554591efd5a6984b0d"
+              },
+              {
+                "id": 52,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "17"
+                ],
+                "file": "epic-settled-source-52.png",
+                "sha256": "d1443c45f979f54af4b2dfd906589f6011278c7b605fd068dc1db00a125ff2bf"
+              },
+              {
+                "id": 50,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "14"
+                ],
+                "file": "epic-settled-source-50.png",
+                "sha256": "0151e8af2f37f59e8b30d19f5128b31e0b2c28aaf91b9f7714449b7e18e0b77e"
+              }
+            ],
+            "marking": {
+              "policy": "numbers",
+              "labels": [
+                "19",
+                "15",
+                "20",
+                "10",
+                "3",
+                "4",
+                "16",
+                "9",
+                "17",
+                "14"
+              ],
+              "winningNumber": 14,
+              "pass": true
+            }
+          },
+          "held": 14,
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "sharedTextures": 9,
+            "sourcePixelsStable": true,
+            "projectionChanges": true
+          }
+        },
+        {
+          "kind": "myth",
+          "forcedFinal": 18,
+          "spin": {
+            "kind": "myth",
+            "R": [
+              0.9568211304273235,
+              0.1738515336752759,
+              0.23295701021118226,
+              0.03128197854710071,
+              0.7351878643698456,
+              -0.6771412274418716,
+              -0.28898920773267156,
+              0.6551903908956999,
+              0.698004863515995
+            ],
+            "phase": 0,
+            "t": 0.2665999999999986,
+            "t2": 0,
+            "final": 20,
+            "paint": {
+              "imageDraws": 10,
+              "first": {
+                "id": 51,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.036193471401929855,
+                  -0.12796007096767426,
+                  -0.021399281919002533,
+                  0.049894388765096664,
+                  19.568458557128906,
+                  38.99418640136719
+                ]
+              },
+              "last": {
+                "id": 39,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.14593344926834106,
+                  -0.03435751423239708,
+                  0.03103511594235897,
+                  0.15308037400245667,
+                  14.415940284729004,
+                  25.266359329223633
+                ]
+              }
+            },
+            "pixels": {
+              "33": "7f8f51ee",
+              "34": "68ea2f35",
+              "35": "386a9e2",
+              "37": "6a27dea6",
+              "39": "2bb541c5",
+              "40": "41ee97d1",
+              "41": "c2c46bb0",
+              "42": "52695e4a",
+              "51": "a7f27756",
+              "52": "b112cebc"
+            },
+            "files": {
+              "slot": "myth-spin-slot.png",
+              "center": "myth-spin-center.png",
+              "raw": "myth-spin-raw.png",
+              "rawSha256": "48fde43a841531fc683e0b6f88af0fff5bdde7ec11e9af61f68e24b2a103afb5",
+              "full": "myth-spin-game.png"
+            }
+          },
+          "settled": {
+            "kind": "myth",
+            "R": [
+              0.12732200375003516,
+              0.3333333333333334,
+              0.9341723589627158,
+              0.33333333333333337,
+              0.872677996249965,
+              -0.35682208977309005,
+              -0.9341723589627157,
+              0.3568220897730902,
+              1.1102230246251565e-16
+            ],
+            "phase": 1,
+            "t": 1.0165999999999982,
+            "t2": 0.3000000000000001,
+            "final": 18,
+            "paint": {
+              "imageDraws": 10,
+              "first": {
+                "id": 46,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.04951982945203781,
+                  -0.12181326746940613,
+                  0.0660586953163147,
+                  -0.043859850615262985,
+                  12.18164348602295,
+                  47.562191009521484
+                ]
+              },
+              "last": {
+                "id": 35,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.15852567553520203,
+                  0,
+                  4.586939835371928e-17,
+                  0.15852567553520203,
+                  21.78153419494629,
+                  24.78153419494629
+                ]
+              }
+            },
+            "pixels": {
+              "33": "7f8f51ee",
+              "35": "386a9e2",
+              "37": "6a27dea6",
+              "39": "2bb541c5",
+              "41": "c2c46bb0",
+              "42": "52695e4a",
+              "44": "1e549bde",
+              "46": "a226b985",
+              "51": "a7f27756",
+              "52": "b112cebc"
+            },
+            "value": 18,
+            "z": 1,
+            "files": {
+              "slot": "myth-settled-slot.png",
+              "center": "myth-settled-center.png",
+              "raw": "myth-settled-raw.png",
+              "rawSha256": "e277b1e086fa9d5266414c47ec22b966bc6676b7043053325bd8ec2c4dcf9717",
+              "full": "myth-settled-game.png"
+            },
+            "textures": [
+              {
+                "id": 46,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "20"
+                ],
+                "file": "myth-settled-source-46.png",
+                "sha256": "1937aaa5f97e854299b02fb4f6daa80d923911d29a2884e42d8394366429e0a2"
+              },
+              {
+                "id": 44,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "13"
+                ],
+                "file": "myth-settled-source-44.png",
+                "sha256": "b94a98b3b1174d81fe92fc91bc8db3a8236675ccd7bda76e8b9693c4267cfda9"
+              },
+              {
+                "id": 52,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "17"
+                ],
+                "file": "myth-settled-source-52.png",
+                "sha256": "d1443c45f979f54af4b2dfd906589f6011278c7b605fd068dc1db00a125ff2bf"
+              },
+              {
+                "id": 33,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "4"
+                ],
+                "file": "myth-settled-source-33.png",
+                "sha256": "68aa22603269378b04a74c2056c5d79813e11f66d8adcaa1f5e801841299d1fd"
+              },
+              {
+                "id": 41,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "7"
+                ],
+                "file": "myth-settled-source-41.png",
+                "sha256": "f83ab4e688b7f0cc89e2a36b69b479a0c1ac00180e401a753c2451469478463e"
+              },
+              {
+                "id": 42,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "2"
+                ],
+                "file": "myth-settled-source-42.png",
+                "sha256": "4e8b25572492eb1f3eae9fa31ba627404918b89ab63409f5730a02fb77c0ef35"
+              },
+              {
+                "id": 51,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "19"
+                ],
+                "file": "myth-settled-source-51.png",
+                "sha256": "2d7786263c8b7c637b39e0263aa7968bf44c852969c523ade91daa3190f634e6"
+              },
+              {
+                "id": 37,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "11"
+                ],
+                "file": "myth-settled-source-37.png",
+                "sha256": "708a650507b2848d47cf67c10cfa924913a7fb56e35b32b2a1601e61d5be11f1"
+              },
+              {
+                "id": 39,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "5"
+                ],
+                "file": "myth-settled-source-39.png",
+                "sha256": "ff9001df923b9e9e1dc89523fc7b8c3f13bc1b4314594242fb0f6ff71b4fe93e"
+              },
+              {
+                "id": 35,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "18"
+                ],
+                "file": "myth-settled-source-35.png",
+                "sha256": "f82bf695f6d614e59e83850e46b071d82de16eb84eb8e6288ba0eca10eecf808"
+              }
+            ],
+            "marking": {
+              "policy": "numbers",
+              "labels": [
+                "20",
+                "13",
+                "17",
+                "4",
+                "7",
+                "2",
+                "19",
+                "11",
+                "5",
+                "18"
+              ],
+              "winningNumber": 18,
+              "pass": true
+            }
+          },
+          "held": 18,
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "sharedTextures": 10,
+            "sourcePixelsStable": true,
+            "projectionChanges": true
+          }
+        },
+        {
+          "kind": "primal",
+          "forcedFinal": 20,
+          "spin": {
+            "kind": "primal",
+            "R": [
+              0.6113085632482008,
+              -0.19184393277147524,
+              0.7677875656444263,
+              0.7299483250682895,
+              -0.23812558085535013,
+              -0.6406806150277228,
+              0.30574054887996016,
+              0.9520987938239792,
+              -0.005532049304275449
+            ],
+            "phase": 0,
+            "t": 0.25,
+            "t2": 0,
+            "final": 20,
+            "paint": {
+              "imageDraws": 10,
+              "first": {
+                "id": 35,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.1014057919383049,
+                  -0.08633430302143097,
+                  -0.04066810384392738,
+                  0.029215721413493156,
+                  20.444499969482422,
+                  29.595640182495117
+                ]
+              },
+              "last": {
+                "id": 41,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.09623625874519348,
+                  0.11487263441085815,
+                  -0.09977398067712784,
+                  0.10501918941736221,
+                  29.379785537719727,
+                  15.973743438720703
+                ]
+              }
+            },
+            "pixels": {
+              "34": "68ea2f35",
+              "35": "386a9e2",
+              "36": "58d5df33",
+              "37": "6a27dea6",
+              "38": "38681ca8",
+              "39": "2bb541c5",
+              "40": "41ee97d1",
+              "41": "c2c46bb0",
+              "42": "52695e4a",
+              "43": "f6f9ea57"
+            },
+            "files": {
+              "slot": "primal-spin-slot.png",
+              "center": "primal-spin-center.png",
+              "raw": "primal-spin-raw.png",
+              "rawSha256": "19e4e31e0597b9912f9f7c064114d160cb1ec233193fd56a395bad385f117801",
+              "full": "primal-spin-game.png"
+            }
+          },
+          "settled": {
+            "kind": "primal",
+            "R": [
+              0.21132486540518713,
+              -0.7886751345948128,
+              0.5773502691896262,
+              -0.7886751345948129,
+              0.2113248654051873,
+              0.577350269189626,
+              -0.5773502691896258,
+              -0.577350269189626,
+              -0.5773502691896256
+            ],
+            "phase": 1,
+            "t": 0.9999999999999996,
+            "t2": 0.30000000000000004,
+            "final": 20,
+            "paint": {
+              "imageDraws": 10,
+              "first": {
+                "id": 43,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  -0.061153020709753036,
+                  0.0698278397321701,
+                  -0.11657687276601791,
+                  0.03704507276415825,
+                  46.168487548828125,
+                  15.754377365112305
+                ]
+              },
+              "last": {
+                "id": 46,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.15852567553520203,
+                  0,
+                  2.293469917685964e-17,
+                  0.15852567553520203,
+                  21.78153419494629,
+                  24.78153419494629
+                ]
+              }
+            },
+            "pixels": {
+              "35": "386a9e2",
+              "37": "6a27dea6",
+              "43": "f6f9ea57",
+              "44": "1e549bde",
+              "45": "861524bf",
+              "46": "a226b985",
+              "48": "ff918561",
+              "50": "a109aea5",
+              "51": "a7f27756",
+              "52": "b112cebc"
+            },
+            "value": 20,
+            "z": 1.0000000000000002,
+            "files": {
+              "slot": "primal-settled-slot.png",
+              "center": "primal-settled-center.png",
+              "raw": "primal-settled-raw.png",
+              "rawSha256": "e212844f23651637983354d26f3fc927efa943809cb009fb4af78ccc41c8f879",
+              "full": "primal-settled-game.png"
+            },
+            "textures": [
+              {
+                "id": 43,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "12"
+                ],
+                "file": "primal-settled-source-43.png",
+                "sha256": "4d366ed5f962f39b454ca013e7c3006e47aaea7353b12ba49d73025a2a81bafb"
+              },
+              {
+                "id": 37,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "11"
+                ],
+                "file": "primal-settled-source-37.png",
+                "sha256": "708a650507b2848d47cf67c10cfa924913a7fb56e35b32b2a1601e61d5be11f1"
+              },
+              {
+                "id": 35,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "18"
+                ],
+                "file": "primal-settled-source-35.png",
+                "sha256": "f82bf695f6d614e59e83850e46b071d82de16eb84eb8e6288ba0eca10eecf808"
+              },
+              {
+                "id": 45,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "15"
+                ],
+                "file": "primal-settled-source-45.png",
+                "sha256": "25398830f259345c34e467f768ccda5d88e2ea153b621fd511f85bfe7faaf335"
+              },
+              {
+                "id": 50,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "14"
+                ],
+                "file": "primal-settled-source-50.png",
+                "sha256": "0151e8af2f37f59e8b30d19f5128b31e0b2c28aaf91b9f7714449b7e18e0b77e"
+              },
+              {
+                "id": 52,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "17"
+                ],
+                "file": "primal-settled-source-52.png",
+                "sha256": "d1443c45f979f54af4b2dfd906589f6011278c7b605fd068dc1db00a125ff2bf"
+              },
+              {
+                "id": 44,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "13"
+                ],
+                "file": "primal-settled-source-44.png",
+                "sha256": "b94a98b3b1174d81fe92fc91bc8db3a8236675ccd7bda76e8b9693c4267cfda9"
+              },
+              {
+                "id": 48,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "16"
+                ],
+                "file": "primal-settled-source-48.png",
+                "sha256": "69e795226105eb1a9978d9188765dc46d8fe75398d0b11d1e047ea779d6d0e08"
+              },
+              {
+                "id": 51,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "19"
+                ],
+                "file": "primal-settled-source-51.png",
+                "sha256": "2d7786263c8b7c637b39e0263aa7968bf44c852969c523ade91daa3190f634e6"
+              },
+              {
+                "id": 46,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "20"
+                ],
+                "file": "primal-settled-source-46.png",
+                "sha256": "1937aaa5f97e854299b02fb4f6daa80d923911d29a2884e42d8394366429e0a2"
+              }
+            ],
+            "marking": {
+              "policy": "numbers",
+              "labels": [
+                "12",
+                "11",
+                "18",
+                "15",
+                "14",
+                "17",
+                "13",
+                "16",
+                "19",
+                "20"
+              ],
+              "winningNumber": 20,
+              "pass": true
+            }
+          },
+          "held": 20,
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "sharedTextures": 10,
+            "sourcePixelsStable": true,
+            "projectionChanges": true
+          }
+        }
+      ],
+      "ui": [
+        {
+          "kind": "d1",
+          "held": 1,
+          "iconSha256": "f09d6dc9c5720bcb9698bf0c229bdb642d90030e136f5996cc3d512538dc7ffb",
+          "width": 96,
+          "height": 96,
+          "ghostMatches": true,
+          "infoMatches": true,
+          "note": "Held state stores the result number, so HUD/tower icons retain the established result-to-tower mapping rather than the roll kind."
+        },
+        {
+          "kind": "d4",
+          "held": 4,
+          "iconSha256": "c98df57df941252b212ae06a8d981d48ca6dd3048ab54a11e12cd3b4ad811aca",
+          "width": 96,
+          "height": 96,
+          "ghostMatches": true,
+          "infoMatches": true,
+          "note": "Held state stores the result number, so HUD/tower icons retain the established result-to-tower mapping rather than the roll kind."
+        },
+        {
+          "kind": "d6",
+          "held": 6,
+          "iconSha256": "1d9c6853ac1528ffa3f65301ce9e5229b3fa21c5b088b7519f3163285b7e5232",
+          "width": 96,
+          "height": 96,
+          "ghostMatches": true,
+          "infoMatches": true,
+          "note": "Held state stores the result number, so HUD/tower icons retain the established result-to-tower mapping rather than the roll kind."
+        },
+        {
+          "kind": "d8",
+          "held": 8,
+          "iconSha256": "10c10809f43ebbb290dc80aeeda9b883d625c69e2c48ac74ba424ed033de8499",
+          "width": 96,
+          "height": 96,
+          "ghostMatches": true,
+          "infoMatches": true,
+          "note": "Held state stores the result number, so HUD/tower icons retain the established result-to-tower mapping rather than the roll kind."
+        },
+        {
+          "kind": "d12",
+          "held": 12,
+          "iconSha256": "56e8436297f93c843387e4bad33a8dd1301bb5ab1241597620c38cd4cfb24978",
+          "width": 96,
+          "height": 96,
+          "ghostMatches": true,
+          "infoMatches": true,
+          "note": "Held state stores the result number, so HUD/tower icons retain the established result-to-tower mapping rather than the roll kind."
+        },
+        {
+          "kind": "d20",
+          "held": 20,
+          "iconSha256": "c44973294375cda350cbd64a895e101dbb784acd88e82257bc70a9ef5ce718b6",
+          "width": 96,
+          "height": 96,
+          "ghostMatches": true,
+          "infoMatches": true,
+          "note": "Held state stores the result number, so HUD/tower icons retain the established result-to-tower mapping rather than the roll kind."
+        },
+        {
+          "kind": "epic",
+          "held": 14,
+          "iconSha256": "d4fa80cd01cb97e08920017a52b32acf15004162cf82d09e3d0e9dc7ff76acad",
+          "width": 96,
+          "height": 96,
+          "ghostMatches": true,
+          "infoMatches": true,
+          "note": "Held state stores the result number, so HUD/tower icons retain the established result-to-tower mapping rather than the roll kind."
+        },
+        {
+          "kind": "myth",
+          "held": 18,
+          "iconSha256": "ed67907bdae88c74b3ec280970a34df61ff999c087b459c942e040e5213c4d14",
+          "width": 96,
+          "height": 96,
+          "ghostMatches": true,
+          "infoMatches": true,
+          "note": "Held state stores the result number, so HUD/tower icons retain the established result-to-tower mapping rather than the roll kind."
+        },
+        {
+          "kind": "primal",
+          "held": 20,
+          "iconSha256": "c44973294375cda350cbd64a895e101dbb784acd88e82257bc70a9ef5ce718b6",
+          "width": 96,
+          "height": 96,
+          "ghostMatches": true,
+          "infoMatches": true,
+          "note": "Held state stores the result number, so HUD/tower icons retain the established result-to-tower mapping rather than the roll kind."
+        }
+      ],
+      "d4Results": [
+        {
+          "final": 1,
+          "R": [
+            0.21132486540518716,
+            -0.7886751345948128,
+            -0.5773502691896257,
+            -0.7886751345948129,
+            0.21132486540518702,
+            -0.5773502691896254,
+            0.5773502691896257,
+            0.5773502691896257,
+            -0.5773502691896258
+          ],
+          "value": 1,
+          "z": 1.0000000000000002,
+          "files": {
+            "slot": "d4-result-1-slot.png",
+            "center": "d4-result-1-center.png",
+            "raw": "d4-result-1-raw.png",
+            "rawSha256": "d0631756103ba9b6bbfb81682b4f71a4dec86bb0790b560dd098a9d4411a35e6",
+            "full": "d4-result-1-game.png"
+          },
+          "textures": [
+            {
+              "id": 5,
+              "width": 192,
+              "height": 192,
+              "labels": [],
+              "file": "d4-result-1-source-5.png",
+              "sha256": "b5472858f7cc7d635e239a65f609343e83dc4f18c0a299539b9200a9539e6d1c"
+            }
+          ],
+          "marking": {
+            "policy": "red-pips",
+            "textLabels": 0,
+            "source": "d4-result-1-source-5.png",
+            "count": 1,
+            "expected": 1,
+            "positionError": 0.034343497455661696,
+            "roundBounds": true,
+            "dots": [
+              {
+                "pixels": 277,
+                "center": [
+                  95.99819494584838,
+                  96.03429602888086
+                ],
+                "bounds": [
+                  87,
+                  87,
+                  18,
+                  19
+                ]
+              }
+            ],
+            "pass": true
+          }
+        },
+        {
+          "final": 2,
+          "R": [
+            0.7886751345948129,
+            0.21132486540518713,
+            -0.5773502691896258,
+            0.21132486540518708,
+            0.788675134594813,
+            0.5773502691896258,
+            0.5773502691896257,
+            -0.5773502691896258,
+            0.5773502691896258
+          ],
+          "value": 2,
+          "z": 1.0000000000000002,
+          "files": {
+            "slot": "d4-result-2-slot.png",
+            "center": "d4-result-2-center.png",
+            "raw": "d4-result-2-raw.png",
+            "rawSha256": "96c95a3d31b94517738927fa70be935e0240d94938903247aef24580cdc7537e",
+            "full": "d4-result-2-game.png"
+          },
+          "textures": [
+            {
+              "id": 3,
+              "width": 192,
+              "height": 192,
+              "labels": [],
+              "file": "d4-result-2-source-3.png",
+              "sha256": "f225ab4d23fcc928e49504915199f2ec4426cb571afb7aa3a24fd6416873bed4"
+            }
+          ],
+          "marking": {
+            "policy": "red-pips",
+            "textLabels": 0,
+            "source": "d4-result-2-source-3.png",
+            "count": 2,
+            "expected": 2,
+            "positionError": 0.05508883673019238,
+            "roundBounds": true,
+            "dots": [
+              {
+                "pixels": 285,
+                "center": [
+                  76.79122807017544,
+                  76.74561403508773
+                ],
+                "bounds": [
+                  67,
+                  67,
+                  19,
+                  19
+                ]
+              },
+              {
+                "pixels": 286,
+                "center": [
+                  115.23776223776224,
+                  115.23776223776224
+                ],
+                "bounds": [
+                  106,
+                  106,
+                  19,
+                  19
+                ]
+              }
+            ],
+            "pass": true
+          }
+        },
+        {
+          "final": 3,
+          "R": [
+            0.7886751345948125,
+            0.21132486540518736,
+            0.577350269189626,
+            0.2113248654051873,
+            0.7886751345948126,
+            -0.5773502691896257,
+            -0.5773502691896261,
+            0.577350269189626,
+            0.5773502691896255
+          ],
+          "value": 3,
+          "z": 1.0000000000000002,
+          "files": {
+            "slot": "d4-result-3-slot.png",
+            "center": "d4-result-3-center.png",
+            "raw": "d4-result-3-raw.png",
+            "rawSha256": "3cbbb38774c57c96dd41c0a62d7de322f7ed103723f2c56cf6ade25e05401c8a",
+            "full": "d4-result-3-game.png"
+          },
+          "textures": [
+            {
+              "id": 2,
+              "width": 192,
+              "height": 192,
+              "labels": [],
+              "file": "d4-result-3-source-2.png",
+              "sha256": "2946be93bbebcc7746e85358affe5a20a560fdacd777c5bafb02c690440cacd2"
+            }
+          ],
+          "marking": {
+            "policy": "red-pips",
+            "textLabels": 0,
+            "source": "d4-result-3-source-2.png",
+            "count": 3,
+            "expected": 3,
+            "positionError": 0.05508883673019238,
+            "roundBounds": true,
+            "dots": [
+              {
+                "pixels": 285,
+                "center": [
+                  76.79122807017544,
+                  76.74561403508773
+                ],
+                "bounds": [
+                  67,
+                  67,
+                  19,
+                  19
+                ]
+              },
+              {
+                "pixels": 277,
+                "center": [
+                  95.99819494584838,
+                  96.03429602888086
+                ],
+                "bounds": [
+                  87,
+                  87,
+                  18,
+                  19
+                ]
+              },
+              {
+                "pixels": 286,
+                "center": [
+                  115.23776223776224,
+                  115.23776223776224
+                ],
+                "bounds": [
+                  106,
+                  106,
+                  19,
+                  19
+                ]
+              }
+            ],
+            "pass": true
+          }
+        },
+        {
+          "final": 4,
+          "R": [
+            0.21132486540518708,
+            -0.7886751345948128,
+            0.5773502691896258,
+            -0.7886751345948126,
+            0.2113248654051873,
+            0.5773502691896257,
+            -0.5773502691896258,
+            -0.5773502691896255,
+            -0.5773502691896257
+          ],
+          "value": 4,
+          "z": 1,
+          "files": {
+            "slot": "d4-result-4-slot.png",
+            "center": "d4-result-4-center.png",
+            "raw": "d4-result-4-raw.png",
+            "rawSha256": "f82550e7bc6ee730587f9caf5828c67a18bea34ad6e13420495cdf27573cbaf5",
+            "full": "d4-result-4-game.png"
+          },
+          "textures": [
+            {
+              "id": 4,
+              "width": 192,
+              "height": 192,
+              "labels": [],
+              "file": "d4-result-4-source-4.png",
+              "sha256": "d3bc16a201601b735ec02af227219f24e7c152070158f4bf0f89139effd7be80"
+            }
+          ],
+          "marking": {
+            "policy": "red-pips",
+            "textLabels": 0,
+            "source": "d4-result-4-source-4.png",
+            "count": 4,
+            "expected": 4,
+            "positionError": 0.05508883673019238,
+            "roundBounds": true,
+            "dots": [
+              {
+                "pixels": 285,
+                "center": [
+                  76.79122807017544,
+                  76.74561403508773
+                ],
+                "bounds": [
+                  67,
+                  67,
+                  19,
+                  19
+                ]
+              },
+              {
+                "pixels": 286,
+                "center": [
+                  115.21678321678321,
+                  76.81468531468532
+                ],
+                "bounds": [
+                  106,
+                  67,
+                  19,
+                  19
+                ]
+              },
+              {
+                "pixels": 287,
+                "center": [
+                  76.78222996515679,
+                  115.21080139372822
+                ],
+                "bounds": [
+                  67,
+                  106,
+                  19,
+                  19
+                ]
+              },
+              {
+                "pixels": 286,
+                "center": [
+                  115.23776223776224,
+                  115.23776223776224
+                ],
+                "bounds": [
+                  106,
+                  106,
+                  19,
+                  19
+                ]
+              }
+            ],
+            "pass": true
+          }
+        }
+      ],
+      "shop": [
+        {
+          "width": 96,
+          "height": 96,
+          "sha256": "f09d6dc9c5720bcb9698bf0c229bdb642d90030e136f5996cc3d512538dc7ffb"
+        },
+        {
+          "width": 96,
+          "height": 96,
+          "sha256": "566e06c14d96df9d4f0cd1eda4061c6e98e4237db560260ced6652be09b6453b"
+        },
+        {
+          "width": 96,
+          "height": 96,
+          "sha256": "c7e91d0384b117a76338c66e3d3ec87eccfe0da0b19786fb6e16ad72ea579842"
+        },
+        {
+          "width": 96,
+          "height": 96,
+          "sha256": "c98df57df941252b212ae06a8d981d48ca6dd3048ab54a11e12cd3b4ad811aca"
+        },
+        {
+          "width": 96,
+          "height": 96,
+          "sha256": "a8f95c13ad80a45c7d82c4e0249dd3e4dc43577706af073c8e607e5399ddcde0"
+        },
+        {
+          "width": 96,
+          "height": 96,
+          "sha256": "1d9c6853ac1528ffa3f65301ce9e5229b3fa21c5b088b7519f3163285b7e5232"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1240,
+        "height": 860
+      },
+      "gameSha256": "a5e43fbf82d8dd01ecc2e5c26d03833769923736dcfd272ae21f6405b57436e4",
+      "assets": [
+        {
+          "url": "http://localhost:8137/dice/skins/ivory-worn/cube-surface-v98.png?v=98",
+          "status": 200,
+          "sha256": "a22dfecfeb6feb7362420bc4568f9684e6c0705e5332fdf503504bd656badff9",
+          "bytes": 471322
+        }
+      ],
+      "pageerrors": [],
+      "material": {
+        "registry": {
+          "materialKey": "diceMaterialIvoryWorn",
+          "material": "dice/skins/ivory-worn/cube-surface-v98.png",
+          "version": 98,
+          "mark": "#542b30",
+          "cubeMaterialKey": "diceMaterialIvoryWorn",
+          "cubeMaterial": "dice/skins/ivory-worn/cube-surface-v98.png",
+          "cubeMaterialVersion": 98,
+          "cubeMark": "#912321"
+        },
+        "images": [
+          {
+            "key": "diceMaterialIvoryWorn",
+            "src": "http://localhost:8137/dice/skins/ivory-worn/cube-surface-v98.png?v=98",
+            "width": 512,
+            "height": 512,
+            "decoded": true
+          }
+        ]
+      },
+      "kinds": [
+        {
+          "kind": "d1",
+          "forcedFinal": 1,
+          "spin": {
+            "kind": "d1",
+            "R": [
+              0.9668069581918756,
+              -0.12711026100220876,
+              -0.22164676207813894,
+              -0.10791425166145885,
+              0.5831694870051083,
+              -0.8051508328968842,
+              0.23160056105312027,
+              0.8023442721015395,
+              0.5500953091471792
+            ],
+            "phase": 0,
+            "t": 0.2832000000000044,
+            "t2": 0,
+            "final": 1,
+            "paint": {
+              "imageDraws": 288,
+              "first": {
+                "id": 1,
+                "width": 384,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  -0.2902093827724457,
+                  -0.06184335798025131,
+                  0.026239125058054924,
+                  0.0018278073985129595,
+                  36.292938232421875,
+                  57.59620666503906
+                ]
+              },
+              "last": {
+                "id": 1,
+                "width": 384,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.16755245625972748,
+                  0.03570527955889702,
+                  -0.036334890872240067,
+                  0.340634822845459,
+                  6.0303802490234375,
+                  -23.716243743896484
+                ]
+              }
+            },
+            "pixels": {
+              "1": "af088c3e"
+            },
+            "files": {
+              "slot": "d1-spin-slot.png",
+              "center": "d1-spin-center.png",
+              "raw": "d1-spin-raw.png",
+              "rawSha256": "caf77ffafcf0a509c6582bef93f2a04c5c63cbbde32f06b42812dfab98fc175e",
+              "full": "d1-spin-game.png"
+            }
+          },
+          "settled": {
+            "kind": "d1",
+            "R": [
+              1,
+              0,
+              1.5265566588595902e-16,
+              5.551115123125783e-17,
+              0.9999999999999999,
+              -4.163336342344337e-17,
+              -4.163336342344337e-17,
+              9.71445146547012e-17,
+              0.9999999999999998
+            ],
+            "phase": 1,
+            "t": 1.033100000000006,
+            "t2": 0.31659999999999855,
+            "final": 1,
+            "paint": {
+              "imageDraws": 288,
+              "first": {
+                "id": 1,
+                "width": 384,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0,
+                  0,
+                  0.33969998359680176,
+                  0.04472235217690468,
+                  37,
+                  19
+                ]
+              },
+              "last": {
+                "id": 1,
+                "width": 384,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.33969998359680176,
+                  0,
+                  -0.011574996635317802,
+                  0.33969998359680176,
+                  -27.1112003326416,
+                  7.388800144195557
+                ]
+              }
+            },
+            "pixels": {
+              "1": "af088c3e"
+            },
+            "value": 1,
+            "z": 1,
+            "files": {
+              "slot": "d1-settled-slot.png",
+              "center": "d1-settled-center.png",
+              "raw": "d1-settled-raw.png",
+              "rawSha256": "220dfc7120497c1042704768756df18bb061ece7a921e4599164fa8b76648931",
+              "full": "d1-settled-game.png"
+            },
+            "textures": [
+              {
+                "id": 1,
+                "width": 384,
+                "height": 192,
+                "labels": [],
+                "file": "d1-settled-source-1.png",
+                "sha256": "0feb0bfc79c65c2be1ba9448ae59f6a30483591dc640633cdfe69dc8df2dfaa7"
+              }
+            ],
+            "marking": {
+              "policy": "red-pips",
+              "textLabels": 0,
+              "source": "d1-settled-source-1.png",
+              "count": 1,
+              "expected": 1,
+              "positionError": 0.022693438376443935,
+              "roundBounds": true,
+              "dots": [
+                {
+                  "pixels": 605,
+                  "center": [
+                    192.00413223140495,
+                    96.02231404958678
+                  ],
+                  "bounds": [
+                    178,
+                    82,
+                    28,
+                    28
+                  ]
+                }
+              ],
+              "pass": true
+            }
+          },
+          "held": 1,
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "sharedTextures": 1,
+            "sourcePixelsStable": true,
+            "projectionChanges": true
+          }
+        },
+        {
+          "kind": "d4",
+          "forcedFinal": 4,
+          "spin": {
+            "kind": "d4",
+            "R": [
+              0.6502869136936935,
+              0.5321433951880454,
+              0.5421718702002811,
+              0.5812756589631627,
+              0.11096869982421143,
+              -0.8061045564666317,
+              -0.4891273230720932,
+              0.8393505552610683,
+              -0.23716050937553745
+            ],
+            "phase": 0,
+            "t": 0.2501000000000058,
+            "t2": 0,
+            "final": 2,
+            "paint": {
+              "imageDraws": 2,
+              "first": {
+                "id": 2,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  -0.13183830678462982,
+                  0.10597090423107147,
+                  -0.1688978523015976,
+                  0.011736713349819183,
+                  68.34042358398438,
+                  31.550262451171875
+                ]
+              },
+              "last": {
+                "id": 3,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.21746601164340973,
+                  0.0003087810764554888,
+                  0.049420520663261414,
+                  0.15092530846595764,
+                  12.958057403564453,
+                  17.62204360961914
+                ]
+              }
+            },
+            "pixels": {
+              "2": "57cad0fe",
+              "3": "f88bd0bb"
+            },
+            "files": {
+              "slot": "d4-spin-slot.png",
+              "center": "d4-spin-center.png",
+              "raw": "d4-spin-raw.png",
+              "rawSha256": "7305c191641b9a88d1c09c7b3da410c7b4e98eb19ced44a5d3b53df6011a1945",
+              "full": "d4-spin-game.png"
+            }
+          },
+          "settled": {
+            "kind": "d4",
+            "R": [
+              0.21132486540518675,
+              -0.7886751345948132,
+              0.5773502691896254,
+              -0.788675134594814,
+              0.21132486540518589,
+              0.5773502691896242,
+              -0.577350269189624,
+              -0.5773502691896257,
+              -0.5773502691896273
+            ],
+            "phase": 1,
+            "t": 1.0168000000000175,
+            "t2": 0.31650000000000006,
+            "final": 4,
+            "paint": {
+              "imageDraws": 1,
+              "first": {
+                "id": 4,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.23445184528827667,
+                  -4.586939835371928e-17,
+                  4.586939835371928e-17,
+                  0.23445184528827667,
+                  14.492622375488281,
+                  17.49262237548828
+                ]
+              },
+              "last": {
+                "id": 4,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.23445184528827667,
+                  -4.586939835371928e-17,
+                  4.586939835371928e-17,
+                  0.23445184528827667,
+                  14.492622375488281,
+                  17.49262237548828
+                ]
+              }
+            },
+            "pixels": {
+              "4": "99a36816"
+            },
+            "value": 4,
+            "z": 0.9999999999999999,
+            "files": {
+              "slot": "d4-settled-slot.png",
+              "center": "d4-settled-center.png",
+              "raw": "d4-settled-raw.png",
+              "rawSha256": "f82550e7bc6ee730587f9caf5828c67a18bea34ad6e13420495cdf27573cbaf5",
+              "full": "d4-settled-game.png"
+            },
+            "textures": [
+              {
+                "id": 4,
+                "width": 192,
+                "height": 192,
+                "labels": [],
+                "file": "d4-settled-source-4.png",
+                "sha256": "d3bc16a201601b735ec02af227219f24e7c152070158f4bf0f89139effd7be80"
+              }
+            ],
+            "marking": {
+              "policy": "red-pips",
+              "textLabels": 0,
+              "source": "d4-settled-source-4.png",
+              "count": 4,
+              "expected": 4,
+              "positionError": 0.05508883673019238,
+              "roundBounds": true,
+              "dots": [
+                {
+                  "pixels": 285,
+                  "center": [
+                    76.79122807017544,
+                    76.74561403508773
+                  ],
+                  "bounds": [
+                    67,
+                    67,
+                    19,
+                    19
+                  ]
+                },
+                {
+                  "pixels": 286,
+                  "center": [
+                    115.21678321678321,
+                    76.81468531468532
+                  ],
+                  "bounds": [
+                    106,
+                    67,
+                    19,
+                    19
+                  ]
+                },
+                {
+                  "pixels": 287,
+                  "center": [
+                    76.78222996515679,
+                    115.21080139372822
+                  ],
+                  "bounds": [
+                    67,
+                    106,
+                    19,
+                    19
+                  ]
+                },
+                {
+                  "pixels": 286,
+                  "center": [
+                    115.23776223776224,
+                    115.23776223776224
+                  ],
+                  "bounds": [
+                    106,
+                    106,
+                    19,
+                    19
+                  ]
+                }
+              ],
+              "pass": true
+            }
+          },
+          "held": 4,
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "sharedTextures": 2,
+            "sourcePixelsStable": true,
+            "projectionChanges": true
+          }
+        },
+        {
+          "kind": "d6",
+          "forcedFinal": 6,
+          "spin": {
+            "kind": "d6",
+            "R": [
+              0.9892900457626034,
+              -0.0005202747963413552,
+              -0.1459621001121951,
+              -0.08711431020251617,
+              0.8002621580781777,
+              -0.5932887790157484,
+              0.1171166184320823,
+              0.5996500710099132,
+              0.7916460636072411
+            ],
+            "phase": 0,
+            "t": 0.2668000000000029,
+            "t2": 0,
+            "final": 3,
+            "paint": {
+              "imageDraws": 71,
+              "first": {
+                "id": 6,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.1618342399597168,
+                  0.1400044858455658,
+                  0.03825978562235832,
+                  0.035184357315301895,
+                  15.865565299987793,
+                  51.4767951965332
+                ]
+              },
+              "last": {
+                "id": 6,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.20235173404216766,
+                  -0.07142841815948486,
+                  0.026865921914577484,
+                  0.2865435481071472,
+                  14.811460494995117,
+                  49.67442321777344
+                ]
+              }
+            },
+            "pixels": {
+              "6": "bfbb069f",
+              "7": "af23242e",
+              "8": "4c3b04b3",
+              "11": "e05a9e72"
+            },
+            "files": {
+              "slot": "d6-spin-slot.png",
+              "center": "d6-spin-center.png",
+              "raw": "d6-spin-raw.png",
+              "rawSha256": "3ae0fc40f81d4f7f73542038c6e05e2503fb49815af6a527efe059af509c8e20",
+              "full": "d6-spin-game.png"
+            }
+          },
+          "settled": {
+            "kind": "d6",
+            "R": [
+              0.9999999999999998,
+              -4.996003610813204e-16,
+              -3.3306690738754696e-16,
+              -4.85722573273506e-16,
+              -1,
+              1.2836953722228372e-16,
+              -2.7755575615628914e-16,
+              -2.5673907444456745e-16,
+              -0.9999999999999999
+            ],
+            "phase": 1,
+            "t": 0.8501000000000059,
+            "t2": 0.30000000000000004,
+            "final": 6,
+            "paint": {
+              "imageDraws": 62,
+              "first": {
+                "id": 6,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.19290123879909515,
+                  0.0455378033220768,
+                  0.017383260652422905,
+                  0.024741554632782936,
+                  15.4442777633667,
+                  9.202272415161133
+                ]
+              },
+              "last": {
+                "id": 10,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  -0.19675925374031067,
+                  9.172971095559027e-17,
+                  -7.338376479400528e-17,
+                  -0.19675925374031067,
+                  55.88888931274414,
+                  58.88888931274414
+                ]
+              }
+            },
+            "pixels": {
+              "6": "bfbb069f",
+              "10": "9db9fe1e"
+            },
+            "value": 6,
+            "z": 0.9999999999999999,
+            "files": {
+              "slot": "d6-settled-slot.png",
+              "center": "d6-settled-center.png",
+              "raw": "d6-settled-raw.png",
+              "rawSha256": "8cdea5bec72f08b672b51bff5a485ccf9b8844d9670d0b3abcb6d618d0fbb2f0",
+              "full": "d6-settled-game.png"
+            },
+            "textures": [
+              {
+                "id": 6,
+                "width": 192,
+                "height": 192,
+                "labels": [],
+                "file": "d6-settled-source-6.png",
+                "sha256": "ea0c9ef7d8ffa686d5e8b556199766ee76be16301b2964c2961b46dca008b2e9"
+              },
+              {
+                "id": 10,
+                "width": 192,
+                "height": 192,
+                "labels": [],
+                "file": "d6-settled-source-10.png",
+                "sha256": "2b82788d2c229ce49513304155ae418e1442be17691bea01cf9dd97fb30ada22"
+              }
+            ],
+            "marking": {
+              "policy": "red-pips",
+              "textLabels": 0,
+              "source": "d6-settled-source-10.png",
+              "count": 6,
+              "expected": 6,
+              "positionError": 0.033315801809003585,
+              "roundBounds": true,
+              "dots": [
+                {
+                  "pixels": 1052,
+                  "center": [
+                    48.965779467680605,
+                    48.94961977186312
+                  ],
+                  "bounds": [
+                    31,
+                    31,
+                    36,
+                    36
+                  ]
+                },
+                {
+                  "pixels": 1056,
+                  "center": [
+                    143.0464015151515,
+                    48.93844696969697
+                  ],
+                  "bounds": [
+                    125,
+                    31,
+                    36,
+                    36
+                  ]
+                },
+                {
+                  "pixels": 1053,
+                  "center": [
+                    48.9292497625831,
+                    96.01282051282051
+                  ],
+                  "bounds": [
+                    31,
+                    78,
+                    36,
+                    36
+                  ]
+                },
+                {
+                  "pixels": 1055,
+                  "center": [
+                    143.0649289099526,
+                    96.0042654028436
+                  ],
+                  "bounds": [
+                    125,
+                    78,
+                    36,
+                    36
+                  ]
+                },
+                {
+                  "pixels": 1052,
+                  "center": [
+                    48.94201520912547,
+                    143.02471482889734
+                  ],
+                  "bounds": [
+                    31,
+                    125,
+                    36,
+                    36
+                  ]
+                },
+                {
+                  "pixels": 1054,
+                  "center": [
+                    143.02277039848198,
+                    143.03320683111954
+                  ],
+                  "bounds": [
+                    125,
+                    125,
+                    36,
+                    36
+                  ]
+                }
+              ],
+              "pass": true
+            }
+          },
+          "held": 6,
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "sharedTextures": 3,
+            "sourcePixelsStable": true,
+            "projectionChanges": true
+          }
+        },
+        {
+          "kind": "d8",
+          "forcedFinal": 8,
+          "spin": {
+            "kind": "d8",
+            "R": [
+              0.9440128184936625,
+              -0.005127269233341419,
+              -0.32986892795451406,
+              -0.16118863001926498,
+              0.8652424555257087,
+              -0.4747354196901202,
+              0.28785069753635145,
+              0.5013274421633539,
+              0.8159735116177395
+            ],
+            "phase": 0,
+            "t": 0.25000000000001454,
+            "t2": 0,
+            "final": 1,
+            "paint": {
+              "imageDraws": 3,
+              "first": {
+                "id": 19,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.19095905125141144,
+                  0.06705980002880096,
+                  -0.0011414306936785579,
+                  0.06208214536309242,
+                  23.101388931274414,
+                  14.027447700500488
+                ]
+              },
+              "last": {
+                "id": 14,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.19138546288013458,
+                  -0.004897082224488258,
+                  -0.00044992833863943815,
+                  0.20646458864212036,
+                  22.922107696533203,
+                  19.218509674072266
+                ]
+              }
+            },
+            "pixels": {
+              "14": "bd5f312f",
+              "15": "ce522e55",
+              "19": "e42b6b3a"
+            },
+            "files": {
+              "slot": "d8-spin-slot.png",
+              "center": "d8-spin-center.png",
+              "raw": "d8-spin-raw.png",
+              "rawSha256": "508fe93dfe0e94ed5685c1bb7574960e0c1a72842e8e44db52c19480d7c27c7c",
+              "full": "d8-spin-game.png"
+            }
+          },
+          "settled": {
+            "kind": "d8",
+            "R": [
+              0.21132486540518733,
+              0.788675134594813,
+              -0.5773502691896254,
+              0.7886751345948128,
+              0.2113248654051868,
+              0.5773502691896262,
+              0.577350269189626,
+              -0.5773502691896258,
+              -0.5773502691896257
+            ],
+            "phase": 1,
+            "t": 1.0001000000000055,
+            "t2": 0.3000999999999913,
+            "final": 8,
+            "paint": {
+              "imageDraws": 4,
+              "first": {
+                "id": 17,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  -0.19071033596992493,
+                  0.06564321368932724,
+                  -0.06564321368932724,
+                  -0.03668443113565445,
+                  58.64149856567383,
+                  26.141576766967773
+                ]
+              },
+              "last": {
+                "id": 18,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.20829938352108002,
+                  -4.586939835371928e-17,
+                  1.2614084795426985e-16,
+                  0.20829938352108002,
+                  17.003259658813477,
+                  20.003259658813477
+                ]
+              }
+            },
+            "pixels": {
+              "16": "d96ff370",
+              "17": "98f02d71",
+              "18": "9039952a",
+              "19": "e42b6b3a"
+            },
+            "value": 8,
+            "z": 1,
+            "files": {
+              "slot": "d8-settled-slot.png",
+              "center": "d8-settled-center.png",
+              "raw": "d8-settled-raw.png",
+              "rawSha256": "042b1e53dc2a3cc4448c5c2c2370eb7c22bf5e0c398bc06b60600e4e258e86cd",
+              "full": "d8-settled-game.png"
+            },
+            "textures": [
+              {
+                "id": 17,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "7"
+                ],
+                "file": "d8-settled-source-17.png",
+                "sha256": "b32d4441fa5f135279e7f0c7da688b387dca42e468ec67d24c718794f9ac8213"
+              },
+              {
+                "id": 16,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "5"
+                ],
+                "file": "d8-settled-source-16.png",
+                "sha256": "0446042cf7b60ece5b7a7183327d74cd51eeaf976c1ae235dde6ff03303d7b95"
+              },
+              {
+                "id": 19,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "4"
+                ],
+                "file": "d8-settled-source-19.png",
+                "sha256": "fc73a665084959a29ef057a643b4160f2dc84d0152eb9d04b975715a3afda868"
+              },
+              {
+                "id": 18,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "8"
+                ],
+                "file": "d8-settled-source-18.png",
+                "sha256": "b5b5a1886b75fe1be251d9c870342376a07d2a742b082cbef88f1adca6a34e6a"
+              }
+            ],
+            "marking": {
+              "policy": "numbers",
+              "labels": [
+                "7",
+                "5",
+                "4",
+                "8"
+              ],
+              "winningNumber": 8,
+              "pass": true
+            }
+          },
+          "held": 8,
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "sharedTextures": 3,
+            "sourcePixelsStable": true,
+            "projectionChanges": true
+          }
+        },
+        {
+          "kind": "d12",
+          "forcedFinal": 12,
+          "spin": {
+            "kind": "d12",
+            "R": [
+              0.9759675550413358,
+              0.03724300348050423,
+              0.21470978132909602,
+              0.13275087018240062,
+              0.6797506628518559,
+              -0.7213294967061018,
+              -0.1728135931356458,
+              0.7324970955875619,
+              0.6584705513410101
+            ],
+            "phase": 0,
+            "t": 0.2500999999999913,
+            "t2": 0,
+            "final": 7,
+            "paint": {
+              "imageDraws": 18,
+              "first": {
+                "id": 31,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.13562951982021332,
+                  0.01956843212246895,
+                  0.02781401015818119,
+                  0.019000310450792313,
+                  24.57974624633789,
+                  16.991506576538086
+                ]
+              },
+              "last": {
+                "id": 23,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.15709860622882843,
+                  0.0238772165030241,
+                  -0.013695142231881618,
+                  0.15029257535934448,
+                  27.005996704101562,
+                  15.851471900939941
+                ]
+              }
+            },
+            "pixels": {
+              "21": "9579e074",
+              "23": "f380df7e",
+              "25": "66bcbfdb",
+              "26": "149c1428",
+              "28": "7a40724d",
+              "31": "8900dc5c"
+            },
+            "files": {
+              "slot": "d12-spin-slot.png",
+              "center": "d12-spin-center.png",
+              "raw": "d12-spin-raw.png",
+              "rawSha256": "e071641c1a41581912b8d383d8d7b4ab73f4261b79cf47553b35ab291b2879e9",
+              "full": "d12-spin-game.png"
+            }
+          },
+          "settled": {
+            "kind": "d12",
+            "R": [
+              -0.5257311121191336,
+              -5.551115123125783e-17,
+              0.85065080835204,
+              -1.1102230246251565e-16,
+              1,
+              0,
+              -0.8506508083520401,
+              -9.71445146547012e-17,
+              -0.5257311121191337
+            ],
+            "phase": 1,
+            "t": 1.0001999999999969,
+            "t2": 0.3,
+            "final": 12,
+            "paint": {
+              "imageDraws": 18,
+              "first": {
+                "id": 24,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  -0.07917051762342453,
+                  -0.012838147580623627,
+                  -0.07225019484758377,
+                  -0.13067862391471863,
+                  38.728599548339844,
+                  62.354190826416016
+                ]
+              },
+              "last": {
+                "id": 22,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.15852567553520203,
+                  0,
+                  0,
+                  0.15852567553520203,
+                  21.78153419494629,
+                  24.78153419494629
+                ]
+              }
+            },
+            "pixels": {
+              "21": "9579e074",
+              "22": "e4045203",
+              "24": "6e0d0855",
+              "26": "149c1428",
+              "29": "578613d9",
+              "32": "e36ed184"
+            },
+            "value": 12,
+            "z": 1.0000000000000002,
+            "files": {
+              "slot": "d12-settled-slot.png",
+              "center": "d12-settled-center.png",
+              "raw": "d12-settled-raw.png",
+              "rawSha256": "b2f331fdd45006c97e43ac89a7ad3aceb8dcf1cba5a5d936a2ef2e4d8d8019db",
+              "full": "d12-settled-game.png"
+            },
+            "textures": [
+              {
+                "id": 24,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "4"
+                ],
+                "file": "d12-settled-source-24.png",
+                "sha256": "db7328f7189f5213b22ae765c9dfb9bd9a4909bd1b84e4f16f552f1debaa03d5"
+              },
+              {
+                "id": 26,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "8"
+                ],
+                "file": "d12-settled-source-26.png",
+                "sha256": "7ca2effe6dc4e97cb7856d8ee997e2e5d6a7807a52f19bf782bd117e81b30d31"
+              },
+              {
+                "id": 21,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "6"
+                ],
+                "file": "d12-settled-source-21.png",
+                "sha256": "2439b153caeea5d87da397919762b371b7d298881b08aba60fd888892b2fec5b"
+              },
+              {
+                "id": 29,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "10"
+                ],
+                "file": "d12-settled-source-29.png",
+                "sha256": "0b565fa89d3d67a37422557c0f1d98a240dd3e59577c0b9d043f597b284947d1"
+              },
+              {
+                "id": 32,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "11"
+                ],
+                "file": "d12-settled-source-32.png",
+                "sha256": "df3d6776895f9daa668de7cda457ad7736334dfe3aaefbe8921bee2360af6e28"
+              },
+              {
+                "id": 22,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "12"
+                ],
+                "file": "d12-settled-source-22.png",
+                "sha256": "958ed1dfaa20b97c24eca8126ae65584f6f26d2d29e2586a2860f7dff91bb56d"
+              }
+            ],
+            "marking": {
+              "policy": "numbers",
+              "labels": [
+                "4",
+                "8",
+                "6",
+                "10",
+                "11",
+                "12"
+              ],
+              "winningNumber": 12,
+              "pass": true
+            }
+          },
+          "held": 12,
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "sharedTextures": 6,
+            "sourcePixelsStable": true,
+            "projectionChanges": true
+          }
+        },
+        {
+          "kind": "d20",
+          "forcedFinal": 20,
+          "spin": {
+            "kind": "d20",
+            "R": [
+              0.5699665703687492,
+              0.5286109247485622,
+              -0.6290537329183854,
+              -0.2010811821447942,
+              0.8320379657419503,
+              0.5169905045078187,
+              0.7966834169538972,
+              -0.1681764365197062,
+              0.580527535393624
+            ],
+            "phase": 0,
+            "t": 0.2666000000000058,
+            "t2": 0,
+            "final": 15,
+            "paint": {
+              "imageDraws": 10,
+              "first": {
+                "id": 47,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.009720038622617722,
+                  -0.15022434294223785,
+                  -0.007786338217556477,
+                  0.0058672381564974785,
+                  53.51603698730469,
+                  51.34944152832031
+                ]
+              },
+              "last": {
+                "id": 40,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.1439642459154129,
+                  -0.04300212115049362,
+                  0.027864105999469757,
+                  0.14167673885822296,
+                  14.545441627502441,
+                  21.686019897460938
+                ]
+              }
+            },
+            "pixels": {
+              "34": "52695e4a",
+              "35": "a109aea5",
+              "36": "7f8f51ee",
+              "37": "58d5df33",
+              "38": "dcce5c4a",
+              "39": "41ee97d1",
+              "40": "f47bc05b",
+              "41": "68ea2f35",
+              "47": "38681ca8",
+              "50": "861524bf"
+            },
+            "files": {
+              "slot": "d20-spin-slot.png",
+              "center": "d20-spin-center.png",
+              "raw": "d20-spin-raw.png",
+              "rawSha256": "944ed4a34e03ac638f07f0a6343d39eff84caf83067e67623f8b0ec16622da03",
+              "full": "d20-spin-game.png"
+            }
+          },
+          "settled": {
+            "kind": "d20",
+            "R": [
+              0.21132486540518705,
+              -0.7886751345948124,
+              0.5773502691896258,
+              -0.7886751345948128,
+              0.21132486540518713,
+              0.5773502691896255,
+              -0.5773502691896256,
+              -0.5773502691896258,
+              -0.5773502691896253
+            ],
+            "phase": 1,
+            "t": 1.0331999999999966,
+            "t2": 0.3165999999999913,
+            "final": 20,
+            "paint": {
+              "imageDraws": 10,
+              "first": {
+                "id": 49,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  -0.061153020709753036,
+                  0.0698278397321701,
+                  -0.11657687276601791,
+                  0.03704507276415825,
+                  46.168487548828125,
+                  15.754377365112305
+                ]
+              },
+              "last": {
+                "id": 52,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.15852567553520203,
+                  4.586939835371928e-17,
+                  0,
+                  0.15852567553520203,
+                  21.78153419494629,
+                  24.78153419494629
+                ]
+              }
+            },
+            "pixels": {
+              "33": "b112cebc",
+              "35": "a109aea5",
+              "43": "386a9e2",
+              "45": "a7f27756",
+              "46": "6a27dea6",
+              "48": "1e549bde",
+              "49": "f6f9ea57",
+              "50": "861524bf",
+              "51": "ff918561",
+              "52": "a226b985"
+            },
+            "value": 20,
+            "z": 0.9999999999999998,
+            "files": {
+              "slot": "d20-settled-slot.png",
+              "center": "d20-settled-center.png",
+              "raw": "d20-settled-raw.png",
+              "rawSha256": "f7b9e97c43ac8ae2bff81b7dc0d7a4fc0b70a070cddbcaa4e7e6b6c1b9f3c16e",
+              "full": "d20-settled-game.png"
+            },
+            "textures": [
+              {
+                "id": 49,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "12"
+                ],
+                "file": "d20-settled-source-49.png",
+                "sha256": "4d366ed5f962f39b454ca013e7c3006e47aaea7353b12ba49d73025a2a81bafb"
+              },
+              {
+                "id": 46,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "11"
+                ],
+                "file": "d20-settled-source-46.png",
+                "sha256": "708a650507b2848d47cf67c10cfa924913a7fb56e35b32b2a1601e61d5be11f1"
+              },
+              {
+                "id": 43,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "18"
+                ],
+                "file": "d20-settled-source-43.png",
+                "sha256": "f82bf695f6d614e59e83850e46b071d82de16eb84eb8e6288ba0eca10eecf808"
+              },
+              {
+                "id": 50,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "15"
+                ],
+                "file": "d20-settled-source-50.png",
+                "sha256": "25398830f259345c34e467f768ccda5d88e2ea153b621fd511f85bfe7faaf335"
+              },
+              {
+                "id": 35,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "14"
+                ],
+                "file": "d20-settled-source-35.png",
+                "sha256": "0151e8af2f37f59e8b30d19f5128b31e0b2c28aaf91b9f7714449b7e18e0b77e"
+              },
+              {
+                "id": 33,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "17"
+                ],
+                "file": "d20-settled-source-33.png",
+                "sha256": "d1443c45f979f54af4b2dfd906589f6011278c7b605fd068dc1db00a125ff2bf"
+              },
+              {
+                "id": 48,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "13"
+                ],
+                "file": "d20-settled-source-48.png",
+                "sha256": "b94a98b3b1174d81fe92fc91bc8db3a8236675ccd7bda76e8b9693c4267cfda9"
+              },
+              {
+                "id": 51,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "16"
+                ],
+                "file": "d20-settled-source-51.png",
+                "sha256": "69e795226105eb1a9978d9188765dc46d8fe75398d0b11d1e047ea779d6d0e08"
+              },
+              {
+                "id": 45,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "19"
+                ],
+                "file": "d20-settled-source-45.png",
+                "sha256": "2d7786263c8b7c637b39e0263aa7968bf44c852969c523ade91daa3190f634e6"
+              },
+              {
+                "id": 52,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "20"
+                ],
+                "file": "d20-settled-source-52.png",
+                "sha256": "1937aaa5f97e854299b02fb4f6daa80d923911d29a2884e42d8394366429e0a2"
+              }
+            ],
+            "marking": {
+              "policy": "numbers",
+              "labels": [
+                "12",
+                "11",
+                "18",
+                "15",
+                "14",
+                "17",
+                "13",
+                "16",
+                "19",
+                "20"
+              ],
+              "winningNumber": 20,
+              "pass": true
+            }
+          },
+          "held": 20,
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "sharedTextures": 9,
+            "sourcePixelsStable": true,
+            "projectionChanges": true
+          }
+        },
+        {
+          "kind": "epic",
+          "forcedFinal": 14,
+          "spin": {
+            "kind": "epic",
+            "R": [
+              0.8320434874455892,
+              0.4523549795210769,
+              0.3210585733193675,
+              0.545950565127487,
+              -0.565346066535977,
+              -0.6183217653368485,
+              -0.09819172794262923,
+              0.689752707537118,
+              -0.7173559695220051
+            ],
+            "phase": 0,
+            "t": 0.25,
+            "t2": 0,
+            "final": 18,
+            "paint": {
+              "imageDraws": 10,
+              "first": {
+                "id": 42,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.13352864980697632,
+                  -0.002470614854246378,
+                  0.04842805489897728,
+                  -0.007147765252739191,
+                  18.96335792541504,
+                  21.162151336669922
+                ]
+              },
+              "last": {
+                "id": 44,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.12836851179599762,
+                  0.08541581779718399,
+                  -0.07136853784322739,
+                  0.12275385111570358,
+                  36.94176483154297,
+                  11.58630657196045
+                ]
+              }
+            },
+            "pixels": {
+              "34": "52695e4a",
+              "37": "58d5df33",
+              "42": "2bb541c5",
+              "43": "386a9e2",
+              "44": "c2c46bb0",
+              "46": "6a27dea6",
+              "47": "38681ca8",
+              "48": "1e549bde",
+              "49": "f6f9ea57",
+              "52": "a226b985"
+            },
+            "files": {
+              "slot": "epic-spin-slot.png",
+              "center": "epic-spin-center.png",
+              "raw": "epic-spin-raw.png",
+              "rawSha256": "bcb6025cc710249673de872acf5f5db605f4c9c31bd485517fd0ef54016e1b63",
+              "full": "epic-spin-game.png"
+            }
+          },
+          "settled": {
+            "kind": "epic",
+            "R": [
+              0.9999999999999999,
+              4.85722573273506e-17,
+              -2.3592239273284576e-16,
+              4.371503159461554e-16,
+              0.3568220897730899,
+              0.9341723589627158,
+              9.020562075079397e-17,
+              -0.9341723589627159,
+              0.35682208977309016
+            ],
+            "phase": 1,
+            "t": 1,
+            "t2": 0.3,
+            "final": 14,
+            "paint": {
+              "imageDraws": 10,
+              "first": {
+                "id": 50,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.02213318645954132,
+                  -0.03299230337142944,
+                  0.11638493835926056,
+                  0.09194726496934891,
+                  33.54497528076172,
+                  21.65045166015625
+                ]
+              },
+              "last": {
+                "id": 35,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.15852567553520203,
+                  4.586939835371928e-17,
+                  -9.173879670743856e-17,
+                  0.15852567553520203,
+                  21.78153419494629,
+                  24.78153419494629
+                ]
+              }
+            },
+            "pixels": {
+              "33": "b112cebc",
+              "35": "a109aea5",
+              "36": "7f8f51ee",
+              "38": "dcce5c4a",
+              "40": "f47bc05b",
+              "41": "68ea2f35",
+              "45": "a7f27756",
+              "50": "861524bf",
+              "51": "ff918561",
+              "52": "a226b985"
+            },
+            "value": 14,
+            "z": 1.0000000000000002,
+            "files": {
+              "slot": "epic-settled-slot.png",
+              "center": "epic-settled-center.png",
+              "raw": "epic-settled-raw.png",
+              "rawSha256": "74763e7f393584bb67044c069b10a4d3ed5b066e2bb04b9e5d07c3d4b1099ead",
+              "full": "epic-settled-game.png"
+            },
+            "textures": [
+              {
+                "id": 50,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "15"
+                ],
+                "file": "epic-settled-source-50.png",
+                "sha256": "25398830f259345c34e467f768ccda5d88e2ea153b621fd511f85bfe7faaf335"
+              },
+              {
+                "id": 45,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "19"
+                ],
+                "file": "epic-settled-source-45.png",
+                "sha256": "2d7786263c8b7c637b39e0263aa7968bf44c852969c523ade91daa3190f634e6"
+              },
+              {
+                "id": 52,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "20"
+                ],
+                "file": "epic-settled-source-52.png",
+                "sha256": "1937aaa5f97e854299b02fb4f6daa80d923911d29a2884e42d8394366429e0a2"
+              },
+              {
+                "id": 36,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "4"
+                ],
+                "file": "epic-settled-source-36.png",
+                "sha256": "68aa22603269378b04a74c2056c5d79813e11f66d8adcaa1f5e801841299d1fd"
+              },
+              {
+                "id": 41,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "3"
+                ],
+                "file": "epic-settled-source-41.png",
+                "sha256": "18caa461a393db9ecd5a74eb8053f95e725a02fac17eb34d92f03103fcbff6ed"
+              },
+              {
+                "id": 38,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "10"
+                ],
+                "file": "epic-settled-source-38.png",
+                "sha256": "6f89530aa4453722d2db9eb7f6913e9506c45787c651a34e0108bf953cea831e"
+              },
+              {
+                "id": 51,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "16"
+                ],
+                "file": "epic-settled-source-51.png",
+                "sha256": "69e795226105eb1a9978d9188765dc46d8fe75398d0b11d1e047ea779d6d0e08"
+              },
+              {
+                "id": 40,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "9"
+                ],
+                "file": "epic-settled-source-40.png",
+                "sha256": "c63eb567ccc366f6b7c554d8c97ca1e3486877804a39fe554591efd5a6984b0d"
+              },
+              {
+                "id": 33,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "17"
+                ],
+                "file": "epic-settled-source-33.png",
+                "sha256": "d1443c45f979f54af4b2dfd906589f6011278c7b605fd068dc1db00a125ff2bf"
+              },
+              {
+                "id": 35,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "14"
+                ],
+                "file": "epic-settled-source-35.png",
+                "sha256": "0151e8af2f37f59e8b30d19f5128b31e0b2c28aaf91b9f7714449b7e18e0b77e"
+              }
+            ],
+            "marking": {
+              "policy": "numbers",
+              "labels": [
+                "15",
+                "19",
+                "20",
+                "4",
+                "3",
+                "10",
+                "16",
+                "9",
+                "17",
+                "14"
+              ],
+              "winningNumber": 14,
+              "pass": true
+            }
+          },
+          "held": 14,
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "sharedTextures": 10,
+            "sourcePixelsStable": true,
+            "projectionChanges": true
+          }
+        },
+        {
+          "kind": "myth",
+          "forcedFinal": 18,
+          "spin": {
+            "kind": "myth",
+            "R": [
+              0.8936061296902899,
+              0.4293300365901338,
+              0.13093435248801336,
+              0.3841021882736027,
+              -0.5805081956714405,
+              -0.7179663945629478,
+              -0.23223607373397182,
+              0.6918713424039205,
+              -0.6836522885333057
+            ],
+            "phase": 0,
+            "t": 0.2666000000000058,
+            "t2": 0,
+            "final": 20,
+            "paint": {
+              "imageDraws": 10,
+              "first": {
+                "id": 37,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  -0.01824641041457653,
+                  0.13562847673892975,
+                  0.015656938776373863,
+                  -0.05799000337719917,
+                  53.795135498046875,
+                  31.470409393310547
+                ]
+              },
+              "last": {
+                "id": 46,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.09281520545482635,
+                  -0.12434671819210052,
+                  0.1121889054775238,
+                  0.09487547725439072,
+                  11.270227432250977,
+                  36.71720886230469
+                ]
+              }
+            },
+            "pixels": {
+              "34": "52695e4a",
+              "37": "58d5df33",
+              "42": "2bb541c5",
+              "43": "386a9e2",
+              "44": "c2c46bb0",
+              "46": "6a27dea6",
+              "47": "38681ca8",
+              "48": "1e549bde",
+              "49": "f6f9ea57",
+              "52": "a226b985"
+            },
+            "files": {
+              "slot": "myth-spin-slot.png",
+              "center": "myth-spin-center.png",
+              "raw": "myth-spin-raw.png",
+              "rawSha256": "ef52b199815e7a9995e6d8a19349617c058e3713696ee100af85aa158286b54c",
+              "full": "myth-spin-game.png"
+            }
+          },
+          "settled": {
+            "kind": "myth",
+            "R": [
+              0.12732200375003527,
+              0.33333333333333337,
+              0.9341723589627158,
+              0.3333333333333332,
+              0.8726779962499651,
+              -0.3568220897730901,
+              -0.9341723589627158,
+              0.35682208977308993,
+              5.551115123125783e-17
+            ],
+            "phase": 1,
+            "t": 0.9999999999999997,
+            "t2": 0.3,
+            "final": 18,
+            "paint": {
+              "imageDraws": 10,
+              "first": {
+                "id": 34,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.01508900336921215,
+                  0.03950352221727371,
+                  -0.11198198795318604,
+                  0.09617666155099869,
+                  57.2762336730957,
+                  38.69955062866211
+                ]
+              },
+              "last": {
+                "id": 43,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.15852567553520203,
+                  -2.293469917685964e-17,
+                  4.586939835371928e-17,
+                  0.15852567553520203,
+                  21.78153419494629,
+                  24.78153419494629
+                ]
+              }
+            },
+            "pixels": {
+              "33": "b112cebc",
+              "34": "52695e4a",
+              "36": "7f8f51ee",
+              "42": "2bb541c5",
+              "43": "386a9e2",
+              "44": "c2c46bb0",
+              "45": "a7f27756",
+              "46": "6a27dea6",
+              "48": "1e549bde",
+              "52": "a226b985"
+            },
+            "value": 18,
+            "z": 1,
+            "files": {
+              "slot": "myth-settled-slot.png",
+              "center": "myth-settled-center.png",
+              "raw": "myth-settled-raw.png",
+              "rawSha256": "02ced2b6f449059823716ef265751248d8c83c09ef932bdf7362ec3f873e30c4",
+              "full": "myth-settled-game.png"
+            },
+            "textures": [
+              {
+                "id": 34,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "2"
+                ],
+                "file": "myth-settled-source-34.png",
+                "sha256": "4e8b25572492eb1f3eae9fa31ba627404918b89ab63409f5730a02fb77c0ef35"
+              },
+              {
+                "id": 44,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "7"
+                ],
+                "file": "myth-settled-source-44.png",
+                "sha256": "f83ab4e688b7f0cc89e2a36b69b479a0c1ac00180e401a753c2451469478463e"
+              },
+              {
+                "id": 48,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "13"
+                ],
+                "file": "myth-settled-source-48.png",
+                "sha256": "b94a98b3b1174d81fe92fc91bc8db3a8236675ccd7bda76e8b9693c4267cfda9"
+              },
+              {
+                "id": 52,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "20"
+                ],
+                "file": "myth-settled-source-52.png",
+                "sha256": "1937aaa5f97e854299b02fb4f6daa80d923911d29a2884e42d8394366429e0a2"
+              },
+              {
+                "id": 36,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "4"
+                ],
+                "file": "myth-settled-source-36.png",
+                "sha256": "68aa22603269378b04a74c2056c5d79813e11f66d8adcaa1f5e801841299d1fd"
+              },
+              {
+                "id": 33,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "17"
+                ],
+                "file": "myth-settled-source-33.png",
+                "sha256": "d1443c45f979f54af4b2dfd906589f6011278c7b605fd068dc1db00a125ff2bf"
+              },
+              {
+                "id": 45,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "19"
+                ],
+                "file": "myth-settled-source-45.png",
+                "sha256": "2d7786263c8b7c637b39e0263aa7968bf44c852969c523ade91daa3190f634e6"
+              },
+              {
+                "id": 42,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "5"
+                ],
+                "file": "myth-settled-source-42.png",
+                "sha256": "ff9001df923b9e9e1dc89523fc7b8c3f13bc1b4314594242fb0f6ff71b4fe93e"
+              },
+              {
+                "id": 46,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "11"
+                ],
+                "file": "myth-settled-source-46.png",
+                "sha256": "708a650507b2848d47cf67c10cfa924913a7fb56e35b32b2a1601e61d5be11f1"
+              },
+              {
+                "id": 43,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "18"
+                ],
+                "file": "myth-settled-source-43.png",
+                "sha256": "f82bf695f6d614e59e83850e46b071d82de16eb84eb8e6288ba0eca10eecf808"
+              }
+            ],
+            "marking": {
+              "policy": "numbers",
+              "labels": [
+                "2",
+                "7",
+                "13",
+                "20",
+                "4",
+                "17",
+                "19",
+                "5",
+                "11",
+                "18"
+              ],
+              "winningNumber": 18,
+              "pass": true
+            }
+          },
+          "held": 18,
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "sharedTextures": 9,
+            "sourcePixelsStable": true,
+            "projectionChanges": true
+          }
+        },
+        {
+          "kind": "primal",
+          "forcedFinal": 20,
+          "spin": {
+            "kind": "primal",
+            "R": [
+              0.20673108861764858,
+              0.8984275107279059,
+              -0.38741484866512327,
+              0.24799769406507297,
+              0.3349194771720077,
+              0.909024800293829,
+              0.9464456670815122,
+              -0.28400167566070367,
+              -0.1535696828301214
+            ],
+            "phase": 0,
+            "t": 0.25010000000000576,
+            "t2": 0,
+            "final": 20,
+            "paint": {
+              "imageDraws": 10,
+              "first": {
+                "id": 41,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.04843851178884506,
+                  -0.002922771731391549,
+                  0.13077466189861298,
+                  0.04513123631477356,
+                  14.934102058410645,
+                  48.767730712890625
+                ]
+              },
+              "last": {
+                "id": 38,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.10940512269735336,
+                  -0.11185789108276367,
+                  0.11279401928186417,
+                  0.10992803424596786,
+                  13.418660163879395,
+                  39.13429260253906
+                ]
+              }
+            },
+            "pixels": {
+              "35": "a109aea5",
+              "37": "58d5df33",
+              "38": "dcce5c4a",
+              "39": "41ee97d1",
+              "40": "f47bc05b",
+              "41": "68ea2f35",
+              "47": "38681ca8",
+              "49": "f6f9ea57",
+              "50": "861524bf",
+              "51": "ff918561"
+            },
+            "files": {
+              "slot": "primal-spin-slot.png",
+              "center": "primal-spin-center.png",
+              "raw": "primal-spin-raw.png",
+              "rawSha256": "7b3dd9de80604dc2c8b94d6a6647446702db23a4f811cd562dd57d49bdb11b22",
+              "full": "primal-spin-game.png"
+            }
+          },
+          "settled": {
+            "kind": "primal",
+            "R": [
+              0.21132486540518733,
+              -0.7886751345948126,
+              0.5773502691896258,
+              -0.7886751345948129,
+              0.2113248654051875,
+              0.5773502691896263,
+              -0.5773502691896258,
+              -0.577350269189626,
+              -0.5773502691896257
+            ],
+            "phase": 1,
+            "t": 1.0169000000000084,
+            "t2": 0.3166999999999971,
+            "final": 20,
+            "paint": {
+              "imageDraws": 10,
+              "first": {
+                "id": 49,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  -0.061153020709753036,
+                  0.0698278397321701,
+                  -0.11657687276601791,
+                  0.03704507276415825,
+                  46.168487548828125,
+                  15.754377365112305
+                ]
+              },
+              "last": {
+                "id": 52,
+                "width": 192,
+                "height": 192,
+                "args": [
+                  0,
+                  0
+                ],
+                "matrix": [
+                  0.15852567553520203,
+                  4.586939835371928e-17,
+                  0,
+                  0.15852567553520203,
+                  21.78153419494629,
+                  24.78153419494629
+                ]
+              }
+            },
+            "pixels": {
+              "33": "b112cebc",
+              "35": "a109aea5",
+              "43": "386a9e2",
+              "45": "a7f27756",
+              "46": "6a27dea6",
+              "48": "1e549bde",
+              "49": "f6f9ea57",
+              "50": "861524bf",
+              "51": "ff918561",
+              "52": "a226b985"
+            },
+            "value": 20,
+            "z": 1.0000000000000004,
+            "files": {
+              "slot": "primal-settled-slot.png",
+              "center": "primal-settled-center.png",
+              "raw": "primal-settled-raw.png",
+              "rawSha256": "6594c5f23d6f8d345f506a86a16c0ae2d7fd4237b2cb7ae167aab534aafc56dd",
+              "full": "primal-settled-game.png"
+            },
+            "textures": [
+              {
+                "id": 49,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "12"
+                ],
+                "file": "primal-settled-source-49.png",
+                "sha256": "4d366ed5f962f39b454ca013e7c3006e47aaea7353b12ba49d73025a2a81bafb"
+              },
+              {
+                "id": 43,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "18"
+                ],
+                "file": "primal-settled-source-43.png",
+                "sha256": "f82bf695f6d614e59e83850e46b071d82de16eb84eb8e6288ba0eca10eecf808"
+              },
+              {
+                "id": 46,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "11"
+                ],
+                "file": "primal-settled-source-46.png",
+                "sha256": "708a650507b2848d47cf67c10cfa924913a7fb56e35b32b2a1601e61d5be11f1"
+              },
+              {
+                "id": 50,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "15"
+                ],
+                "file": "primal-settled-source-50.png",
+                "sha256": "25398830f259345c34e467f768ccda5d88e2ea153b621fd511f85bfe7faaf335"
+              },
+              {
+                "id": 35,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "14"
+                ],
+                "file": "primal-settled-source-35.png",
+                "sha256": "0151e8af2f37f59e8b30d19f5128b31e0b2c28aaf91b9f7714449b7e18e0b77e"
+              },
+              {
+                "id": 33,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "17"
+                ],
+                "file": "primal-settled-source-33.png",
+                "sha256": "d1443c45f979f54af4b2dfd906589f6011278c7b605fd068dc1db00a125ff2bf"
+              },
+              {
+                "id": 48,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "13"
+                ],
+                "file": "primal-settled-source-48.png",
+                "sha256": "b94a98b3b1174d81fe92fc91bc8db3a8236675ccd7bda76e8b9693c4267cfda9"
+              },
+              {
+                "id": 51,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "16"
+                ],
+                "file": "primal-settled-source-51.png",
+                "sha256": "69e795226105eb1a9978d9188765dc46d8fe75398d0b11d1e047ea779d6d0e08"
+              },
+              {
+                "id": 45,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "19"
+                ],
+                "file": "primal-settled-source-45.png",
+                "sha256": "2d7786263c8b7c637b39e0263aa7968bf44c852969c523ade91daa3190f634e6"
+              },
+              {
+                "id": 52,
+                "width": 192,
+                "height": 192,
+                "labels": [
+                  "20"
+                ],
+                "file": "primal-settled-source-52.png",
+                "sha256": "1937aaa5f97e854299b02fb4f6daa80d923911d29a2884e42d8394366429e0a2"
+              }
+            ],
+            "marking": {
+              "policy": "numbers",
+              "labels": [
+                "12",
+                "18",
+                "11",
+                "15",
+                "14",
+                "17",
+                "13",
+                "16",
+                "19",
+                "20"
+              ],
+              "winningNumber": 20,
+              "pass": true
+            }
+          },
+          "held": 20,
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "sharedTextures": 10,
+            "sourcePixelsStable": true,
+            "projectionChanges": true
+          }
+        }
+      ],
+      "ui": [
+        {
+          "kind": "d1",
+          "held": 1,
+          "iconSha256": "f09d6dc9c5720bcb9698bf0c229bdb642d90030e136f5996cc3d512538dc7ffb",
+          "width": 96,
+          "height": 96,
+          "ghostMatches": true,
+          "infoMatches": true,
+          "note": "Held state stores the result number, so HUD/tower icons retain the established result-to-tower mapping rather than the roll kind."
+        },
+        {
+          "kind": "d4",
+          "held": 4,
+          "iconSha256": "c98df57df941252b212ae06a8d981d48ca6dd3048ab54a11e12cd3b4ad811aca",
+          "width": 96,
+          "height": 96,
+          "ghostMatches": true,
+          "infoMatches": true,
+          "note": "Held state stores the result number, so HUD/tower icons retain the established result-to-tower mapping rather than the roll kind."
+        },
+        {
+          "kind": "d6",
+          "held": 6,
+          "iconSha256": "1d9c6853ac1528ffa3f65301ce9e5229b3fa21c5b088b7519f3163285b7e5232",
+          "width": 96,
+          "height": 96,
+          "ghostMatches": true,
+          "infoMatches": true,
+          "note": "Held state stores the result number, so HUD/tower icons retain the established result-to-tower mapping rather than the roll kind."
+        },
+        {
+          "kind": "d8",
+          "held": 8,
+          "iconSha256": "10c10809f43ebbb290dc80aeeda9b883d625c69e2c48ac74ba424ed033de8499",
+          "width": 96,
+          "height": 96,
+          "ghostMatches": true,
+          "infoMatches": true,
+          "note": "Held state stores the result number, so HUD/tower icons retain the established result-to-tower mapping rather than the roll kind."
+        },
+        {
+          "kind": "d12",
+          "held": 12,
+          "iconSha256": "56e8436297f93c843387e4bad33a8dd1301bb5ab1241597620c38cd4cfb24978",
+          "width": 96,
+          "height": 96,
+          "ghostMatches": true,
+          "infoMatches": true,
+          "note": "Held state stores the result number, so HUD/tower icons retain the established result-to-tower mapping rather than the roll kind."
+        },
+        {
+          "kind": "d20",
+          "held": 20,
+          "iconSha256": "c44973294375cda350cbd64a895e101dbb784acd88e82257bc70a9ef5ce718b6",
+          "width": 96,
+          "height": 96,
+          "ghostMatches": true,
+          "infoMatches": true,
+          "note": "Held state stores the result number, so HUD/tower icons retain the established result-to-tower mapping rather than the roll kind."
+        },
+        {
+          "kind": "epic",
+          "held": 14,
+          "iconSha256": "d4fa80cd01cb97e08920017a52b32acf15004162cf82d09e3d0e9dc7ff76acad",
+          "width": 96,
+          "height": 96,
+          "ghostMatches": true,
+          "infoMatches": true,
+          "note": "Held state stores the result number, so HUD/tower icons retain the established result-to-tower mapping rather than the roll kind."
+        },
+        {
+          "kind": "myth",
+          "held": 18,
+          "iconSha256": "ed67907bdae88c74b3ec280970a34df61ff999c087b459c942e040e5213c4d14",
+          "width": 96,
+          "height": 96,
+          "ghostMatches": true,
+          "infoMatches": true,
+          "note": "Held state stores the result number, so HUD/tower icons retain the established result-to-tower mapping rather than the roll kind."
+        },
+        {
+          "kind": "primal",
+          "held": 20,
+          "iconSha256": "c44973294375cda350cbd64a895e101dbb784acd88e82257bc70a9ef5ce718b6",
+          "width": 96,
+          "height": 96,
+          "ghostMatches": true,
+          "infoMatches": true,
+          "note": "Held state stores the result number, so HUD/tower icons retain the established result-to-tower mapping rather than the roll kind."
+        }
+      ],
+      "d4Results": [
+        {
+          "final": 1,
+          "R": [
+            0.21132486540518725,
+            -0.7886751345948126,
+            -0.5773502691896258,
+            -0.7886751345948129,
+            0.21132486540518727,
+            -0.577350269189626,
+            0.5773502691896256,
+            0.577350269189626,
+            -0.5773502691896257
+          ],
+          "value": 1,
+          "z": 1,
+          "files": {
+            "slot": "d4-result-1-slot.png",
+            "center": "d4-result-1-center.png",
+            "raw": "d4-result-1-raw.png",
+            "rawSha256": "d0631756103ba9b6bbfb81682b4f71a4dec86bb0790b560dd098a9d4411a35e6",
+            "full": "d4-result-1-game.png"
+          },
+          "textures": [
+            {
+              "id": 2,
+              "width": 192,
+              "height": 192,
+              "labels": [],
+              "file": "d4-result-1-source-2.png",
+              "sha256": "b5472858f7cc7d635e239a65f609343e83dc4f18c0a299539b9200a9539e6d1c"
+            }
+          ],
+          "marking": {
+            "policy": "red-pips",
+            "textLabels": 0,
+            "source": "d4-result-1-source-2.png",
+            "count": 1,
+            "expected": 1,
+            "positionError": 0.034343497455661696,
+            "roundBounds": true,
+            "dots": [
+              {
+                "pixels": 277,
+                "center": [
+                  95.99819494584838,
+                  96.03429602888086
+                ],
+                "bounds": [
+                  87,
+                  87,
+                  18,
+                  19
+                ]
+              }
+            ],
+            "pass": true
+          }
+        },
+        {
+          "final": 2,
+          "R": [
+            0.7886751345948126,
+            0.21132486540518713,
+            -0.5773502691896256,
+            0.21132486540518708,
+            0.7886751345948126,
+            0.5773502691896257,
+            0.5773502691896257,
+            -0.5773502691896257,
+            0.5773502691896256
+          ],
+          "value": 2,
+          "z": 1,
+          "files": {
+            "slot": "d4-result-2-slot.png",
+            "center": "d4-result-2-center.png",
+            "raw": "d4-result-2-raw.png",
+            "rawSha256": "96c95a3d31b94517738927fa70be935e0240d94938903247aef24580cdc7537e",
+            "full": "d4-result-2-game.png"
+          },
+          "textures": [
+            {
+              "id": 5,
+              "width": 192,
+              "height": 192,
+              "labels": [],
+              "file": "d4-result-2-source-5.png",
+              "sha256": "f225ab4d23fcc928e49504915199f2ec4426cb571afb7aa3a24fd6416873bed4"
+            }
+          ],
+          "marking": {
+            "policy": "red-pips",
+            "textLabels": 0,
+            "source": "d4-result-2-source-5.png",
+            "count": 2,
+            "expected": 2,
+            "positionError": 0.05508883673019238,
+            "roundBounds": true,
+            "dots": [
+              {
+                "pixels": 285,
+                "center": [
+                  76.79122807017544,
+                  76.74561403508773
+                ],
+                "bounds": [
+                  67,
+                  67,
+                  19,
+                  19
+                ]
+              },
+              {
+                "pixels": 286,
+                "center": [
+                  115.23776223776224,
+                  115.23776223776224
+                ],
+                "bounds": [
+                  106,
+                  106,
+                  19,
+                  19
+                ]
+              }
+            ],
+            "pass": true
+          }
+        },
+        {
+          "final": 3,
+          "R": [
+            0.7886751345948131,
+            0.21132486540518713,
+            0.5773502691896254,
+            0.21132486540518758,
+            0.7886751345948121,
+            -0.5773502691896266,
+            -0.5773502691896255,
+            0.5773502691896266,
+            0.5773502691896251
+          ],
+          "value": 3,
+          "z": 1,
+          "files": {
+            "slot": "d4-result-3-slot.png",
+            "center": "d4-result-3-center.png",
+            "raw": "d4-result-3-raw.png",
+            "rawSha256": "3cbbb38774c57c96dd41c0a62d7de322f7ed103723f2c56cf6ade25e05401c8a",
+            "full": "d4-result-3-game.png"
+          },
+          "textures": [
+            {
+              "id": 3,
+              "width": 192,
+              "height": 192,
+              "labels": [],
+              "file": "d4-result-3-source-3.png",
+              "sha256": "2946be93bbebcc7746e85358affe5a20a560fdacd777c5bafb02c690440cacd2"
+            }
+          ],
+          "marking": {
+            "policy": "red-pips",
+            "textLabels": 0,
+            "source": "d4-result-3-source-3.png",
+            "count": 3,
+            "expected": 3,
+            "positionError": 0.05508883673019238,
+            "roundBounds": true,
+            "dots": [
+              {
+                "pixels": 285,
+                "center": [
+                  76.79122807017544,
+                  76.74561403508773
+                ],
+                "bounds": [
+                  67,
+                  67,
+                  19,
+                  19
+                ]
+              },
+              {
+                "pixels": 277,
+                "center": [
+                  95.99819494584838,
+                  96.03429602888086
+                ],
+                "bounds": [
+                  87,
+                  87,
+                  18,
+                  19
+                ]
+              },
+              {
+                "pixels": 286,
+                "center": [
+                  115.23776223776224,
+                  115.23776223776224
+                ],
+                "bounds": [
+                  106,
+                  106,
+                  19,
+                  19
+                ]
+              }
+            ],
+            "pass": true
+          }
+        },
+        {
+          "final": 4,
+          "R": [
+            0.2113248654051881,
+            -0.7886751345948124,
+            0.5773502691896258,
+            -0.7886751345948126,
+            0.21132486540518666,
+            0.5773502691896263,
+            -0.5773502691896255,
+            -0.5773502691896267,
+            -0.577350269189625
+          ],
+          "value": 4,
+          "z": 1,
+          "files": {
+            "slot": "d4-result-4-slot.png",
+            "center": "d4-result-4-center.png",
+            "raw": "d4-result-4-raw.png",
+            "rawSha256": "f82550e7bc6ee730587f9caf5828c67a18bea34ad6e13420495cdf27573cbaf5",
+            "full": "d4-result-4-game.png"
+          },
+          "textures": [
+            {
+              "id": 4,
+              "width": 192,
+              "height": 192,
+              "labels": [],
+              "file": "d4-result-4-source-4.png",
+              "sha256": "d3bc16a201601b735ec02af227219f24e7c152070158f4bf0f89139effd7be80"
+            }
+          ],
+          "marking": {
+            "policy": "red-pips",
+            "textLabels": 0,
+            "source": "d4-result-4-source-4.png",
+            "count": 4,
+            "expected": 4,
+            "positionError": 0.05508883673019238,
+            "roundBounds": true,
+            "dots": [
+              {
+                "pixels": 285,
+                "center": [
+                  76.79122807017544,
+                  76.74561403508773
+                ],
+                "bounds": [
+                  67,
+                  67,
+                  19,
+                  19
+                ]
+              },
+              {
+                "pixels": 286,
+                "center": [
+                  115.21678321678321,
+                  76.81468531468532
+                ],
+                "bounds": [
+                  106,
+                  67,
+                  19,
+                  19
+                ]
+              },
+              {
+                "pixels": 287,
+                "center": [
+                  76.78222996515679,
+                  115.21080139372822
+                ],
+                "bounds": [
+                  67,
+                  106,
+                  19,
+                  19
+                ]
+              },
+              {
+                "pixels": 286,
+                "center": [
+                  115.23776223776224,
+                  115.23776223776224
+                ],
+                "bounds": [
+                  106,
+                  106,
+                  19,
+                  19
+                ]
+              }
+            ],
+            "pass": true
+          }
+        }
+      ],
+      "shop": [
+        {
+          "width": 96,
+          "height": 96,
+          "sha256": "f09d6dc9c5720bcb9698bf0c229bdb642d90030e136f5996cc3d512538dc7ffb"
+        },
+        {
+          "width": 96,
+          "height": 96,
+          "sha256": "566e06c14d96df9d4f0cd1eda4061c6e98e4237db560260ced6652be09b6453b"
+        },
+        {
+          "width": 96,
+          "height": 96,
+          "sha256": "c7e91d0384b117a76338c66e3d3ec87eccfe0da0b19786fb6e16ad72ea579842"
+        },
+        {
+          "width": 96,
+          "height": 96,
+          "sha256": "c98df57df941252b212ae06a8d981d48ca6dd3048ab54a11e12cd3b4ad811aca"
+        },
+        {
+          "width": 96,
+          "height": 96,
+          "sha256": "a8f95c13ad80a45c7d82c4e0249dd3e4dc43577706af073c8e607e5399ddcde0"
+        },
+        {
+          "width": 96,
+          "height": 96,
+          "sha256": "1d9c6853ac1528ffa3f65301ce9e5229b3fa21c5b088b7519f3163285b7e5232"
+        }
+      ],
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "pass": true,
+  "rawEvidence": {
+    "path": "gen\\e2e\\dice-family-99\\after\\report.json",
+    "sha256": "b5ec60ea226437b7f94da6ad4a09df449d037bdcd1b900ea4fa7517997df5c23",
+    "note": "Per-frame triangle paint arrays condensed to counts and first/last draws; poses, source hashes, UV assertions, markings and UI checks retained."
+  }
+}
