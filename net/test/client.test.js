@@ -108,7 +108,7 @@ test('node --check net.js', () => {
 
 test('CFG: 버전은 스크립트 ?v=, 주소는 location 없으면 null', () => {
   const { N } = makeEnv();
-  assert.equal(N.CFG.protocol, 3);
+  assert.equal(N.CFG.protocol, 4);
   assert.equal(N.CFG.ver, '78');
   assert.equal(N.CFG.url, null);
   assert.equal(N.CFG.sumInterval, 2000);
@@ -181,7 +181,7 @@ test('create: hello 형식 → welcome → 미러·세션·이벤트', async () 
   const { ws, hello, room } = await connected(env);
   assert.equal(ws.url, 'ws://test/ws/new');
   assert.equal(hello.t, 'hello');
-  assert.equal(hello.v, 3);
+  assert.equal(hello.v, 4);
   assert.equal(hello.ver, '78');
   assert.equal(hello.op, 'create');
   assert.match(hello.pid, /^[a-z0-9]{8}$/);
@@ -198,7 +198,7 @@ test('create: hello 형식 → welcome → 미러·세션·이벤트', async () 
   assert.equal(N.inRoom(), true);
   assert.equal(N.inGame(), false);
   assert.equal(N.members().length, 2);
-  same(JSON.parse(sandbox.sessionStorage.getItem('dk_mp')), { code: CODE, pid: hello.pid, key: hello.key, name: '민수' });
+  same(JSON.parse(sandbox.sessionStorage.getItem('dk_mp')), { code: CODE, pid: hello.pid, key: hello.key, name: '민수', mode: 'clear' });
   const kinds = events.map((e) => e.t);
   same(kinds.filter((k) => k !== 'net:offset'), ['net:state', 'net:state', 'welcome', 'room'], '순서: connecting → lobby → welcome → room');
   const roomEv = events.find((e) => e.t === 'room').d;
@@ -318,7 +318,7 @@ test('room 미러: room/player/start/end 병합, 상태 전이, welcome 후 err 
   assert.equal(N.members().find((p) => p.pid === OTHER).clearAt, 7000000, 'clearAt 미러');
 });
 
-test('송신: sum 범위 클램프·tw 15개·sp/ll/en, watch, done/dead/clear/chat/log, OPEN 아니면 false, 4000B 초과 폐기', async () => {
+test('송신: sum 범위 클램프·tw 15개·sp/ll/en, watch, done/dead/clear/chat/log, OPEN 아니면 false, 6000B 초과 폐기', async () => {
   const env = makeEnv();
   const { N } = env;
   assert.equal(N.sum({}), false, '접속 전');
@@ -338,8 +338,11 @@ test('송신: sum 범위 클램프·tw 15개·sp/ll/en, watch, done/dead/clear/c
   const s2 = ws.last('sum');
   assert.equal(s2.b, 0.457); assert.equal(s2.o, 'l'); assert.equal(s2.hid, 0); same(s2.tw, []);
   assert.equal(s2.sp, 1, 'sp 기본 1'); assert.equal(s2.ll, undefined); assert.equal(s2.en, undefined, 'll/en 은 줬을 때만');
-  N.sum({ en: 'x'.repeat(10) + '1;'.repeat(2000) });
-  assert.ok(ws.last('sum').en.length <= 3000, 'en 3000자 절단');
+  N.sum({ en: 'x'.repeat(10) + '1;'.repeat(3000) });
+  assert.equal(ws.last('sum').en.length, 5120, 'en 5120자 절단');
+  const worstEnemies = Array(200).fill('10000,100000,9,2938,255').join(';');
+  assert.equal(N.sum({ en: worstEnemies, tw: Array.from({ length: 15 }, (_, i) => [i, 20, 3]), ll: 100000 }), true);
+  assert.equal(ws.last('sum').en, worstEnemies, '200개 외형·위상 전원 송신');
   assert.equal(N.watch(OTHER), true); same(ws.last('watch'), { t: 'watch', pid: OTHER });
   assert.equal(N.watch('BAD PID'), true); same(ws.last('watch'), { t: 'watch', pid: null }, '형식이 틀리면 null');
   N.watch(null); same(ws.last('watch'), { t: 'watch', pid: null });
@@ -354,8 +357,8 @@ test('송신: sum 범위 클램프·tw 15개·sp/ll/en, watch, done/dead/clear/c
   N.chat(' 안녕 ' + 'x'.repeat(200)); assert.equal(ws.last('chat').text.length, 120);
   N.log('강화', 'up'); same(ws.last('log'), { t: 'log', text: '강화', kind: 'up' });
   N.log('뭔가', 'nope'); assert.equal(ws.last('log').kind, 'sys');
-  assert.equal(N.send('chat', { text: 'x'.repeat(2100) }).valueOf(), true, '2,100B 는 v3 한도(4,000B) 안');
-  assert.equal(N.send('chat', { text: 'x'.repeat(4100) }), false, '4000B 초과');
+  assert.equal(N.send('chat', { text: 'x'.repeat(2100) }).valueOf(), true, '2,100B 는 송신 프레임 한도 안');
+  assert.equal(N.send('chat', { text: 'x'.repeat(6100) }), false, '6000B 초과');
   assert.equal(N.send('', {}), false);
   assert.equal(N.send('custom', { t: 'evil', a: 1 }).valueOf(), true);
   same(ws.last('custom'), { t: 'custom', a: 1 }, 't 는 인자가 이긴다');
@@ -580,7 +583,7 @@ test('빠른 매칭: /ws/quick → welcome(대기열) → queued → matched →
   assert.equal(q.url, 'ws://test/ws/quick');
   q._open();
   const hello = q.json()[0];
-  assert.equal(hello.op, 'quick'); assert.equal(hello.v, 3);
+  assert.equal(hello.op, 'quick'); assert.equal(hello.v, 4);
   q._recv({ t: 'queued', at: 100, n: 1, eta: null });   // 대기열은 welcome 없이 queued 가 첫 프레임
   assert.equal(await p, null, '대기열 진입은 방이 없으니 null');
   same(events.filter((e) => e.t === 'queued').map((e) => e.d.n), [1], '첫 queued 도 이벤트로');
@@ -659,4 +662,60 @@ test('on/off/emit: 해제 함수, 핸들러 예외 격리', () => {
   un();
   N.emit('custom', 2);
   same(seen, [1]);
+});
+
+
+async function connectedExtreme(env) {
+ const {N}=env;N.CFG.url='ws://test';const pending=N.create('extreme player','extreme');
+ const ws=env.lastSock();ws._open();const hello=ws.last('hello');
+ ws._recv(welcomeMsg(hello.pid,{room:{mode:'extreme'}}));await pending;
+ return {ws,hello};
+}
+
+test('v4 client: explicit mode; high wave reports; endless clear is never sent',async()=>{
+ const e=makeEnv(),{ws,hello}=await connectedExtreme(e),N=e.N;
+ assert.equal(hello.v,4);assert.equal(hello.mode,'extreme');assert.equal(N.room.mode,'extreme');
+ ws._recv({t:'start',mode:'extreme',seed:7,t0:1,timing:{prep:2000,bossLimit:5000,clearWave:0},at:2});
+ assert.equal(N.room.game.mode,'extreme');assert.equal(N.room.game.timing.clearWave,0);
+ N.sum({w:500,dw:499});assert.equal(ws.last('sum').w,500);assert.equal(ws.last('sum').dw,499);
+ N.done(1000001);assert.equal(ws.last('done').w,1000000);
+ N.dead(765432,99,'lives');assert.equal(ws.last('dead').w,765432);
+ const before=ws.json().length;assert.equal(N.clear(101,99),false);assert.equal(ws.json().length,before);
+ const session=JSON.parse(e.sandbox.sessionStorage.getItem('dk_mp'));assert.equal(session.mode,'extreme');
+ N.leave();
+});
+
+test('v4 client: reload and transport reconnect preserve extreme mode',async()=>{
+ const e=makeEnv(),{ws}=await connectedExtreme(e);
+ const saved=e.sandbox.sessionStorage.getItem('dk_mp');
+ ws._close(1006);e.advance(1000);const retry=e.lastSock();retry._open();
+ assert.equal(retry.last('hello').mode,'extreme');
+ retry._recv(welcomeMsg(retry.last('hello').pid,{resumed:true,room:{mode:'extreme'}}));await flush();
+ const other=makeEnv();other.N.CFG.url='ws://test';other.sandbox.sessionStorage.setItem('dk_mp',saved);
+ const pending=other.N.resume(),resumed=other.lastSock();resumed._open();
+ assert.equal(resumed.last('hello').mode,'extreme');
+ resumed._recv(welcomeMsg(resumed.last('hello').pid,{resumed:true,room:{mode:'extreme'}}));await pending;
+ assert.equal(other.N.room.mode,'extreme');e.N.leave();other.N.leave();
+});
+
+test('v4 client: quick matching forwards mode to reserved room',async()=>{
+ const e=makeEnv(),N=e.N;N.CFG.url='ws://test';const pending=N.quick('x','extreme');
+ const q=e.lastSock();q._open();assert.equal(q.last('hello').mode,'extreme');
+ q._recv({t:'queued',mode:'extreme',n:1,eta:null,at:1});await pending;
+ q._recv({t:'matched',mode:'extreme',code:CODE,at:2});
+ const room=e.lastSock();room._open();assert.equal(room.last('hello').op,'join');assert.equal(room.last('hello').mode,'extreme');
+ room._recv(welcomeMsg(room.last('hello').pid,{room:{mode:'extreme',kind:'quick'}}));await flush();
+ assert.equal(N.room.mode,'extreme');N.leave();
+});
+
+test('v4 client: invalid requested mode and mismatching server mode fail closed',async()=>{
+ const e=makeEnv(),N=e.N;N.CFG.url='ws://test';
+ for(const mode of ['endless','extra',null,1])await assert.rejects(N.create('x',mode),x=>x.code==='mode');
+ assert.equal(e.sockets.length,0);
+ const pending=N.join(CODE,'x','extreme'),rejected=assert.rejects(pending,x=>x.code==='mode');
+ const ws=e.lastSock();ws._open();ws._recv(welcomeMsg(ws.last('hello').pid));await rejected;
+ assert.equal(N.state,'offline');assert.equal(e.sandbox.sessionStorage.getItem('dk_mp'),null);
+ const {ws:active}=await connectedExtreme(e);
+ active._recv({t:'start',mode:'clear',seed:1,t0:0,timing:{clearWave:101},at:3});
+ assert.equal(N.state,'offline');assert.equal(e.events.filter(x=>x.t==='start').length,0);
 });

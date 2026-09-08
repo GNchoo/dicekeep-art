@@ -1,6 +1,6 @@
 // ==================== dicekeep-net Worker 엔트리 ====================
 // 서버는 방·시드·중계·매칭만 맡는다(시뮬레이션과 웨이브 진행은 각 클라이언트). 여기서는 Origin 검사 · IP 속도 제한 · 코드 검사 · 라우팅만.
-//   GET /health              → { ok:true, protocol:3 }
+//   GET /health              → { ok:true, protocol:4 }
 //   GET /ws/new   (Upgrade)  → Lobby /quota(시간당 120) → 코드 생성 → Room DO /claim (409 면 새 코드, ≤5회) → 업그레이드를 DO 로 전달 (X-DK-Op: create)
 //   GET /ws/room/:code       → 코드 정규식 검사(불일치 404, DO 호출 없음) → DO 로 전달 (X-DK-Op: join)
 //   GET /ws/quick (Upgrade)  → Lobby DO(단일 객체 'quick') 로 전달. hello op 'quick' → queued… → matched{code} 뒤 /ws/room/:code 로 join

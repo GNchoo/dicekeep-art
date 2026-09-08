@@ -9,7 +9,10 @@
     "cap:sync": "npm run build:www && npx cap sync",
     "android": "npx cap open android",
     "serve:www": "http-server www -p 8140 -c-1",
-    "test:net": "cd net && npm test"
+    "test:net": "cd net && npm test",
+    "test:progression": "node tools/progression-test.cjs",
+    "test:commerce": "cd commerce && npm test",
+    "test:game-modes": "node tools/e2e/game-modes.cjs"
   },
   "dependencies": {
     "@capacitor-community/safe-area": "^7.0.0",

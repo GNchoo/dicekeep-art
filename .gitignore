@@ -2,6 +2,10 @@
 node_modules/
 .wrangler/
 .DS_Store
+.env*
+.dev.vars*
+!.env.example
+!.dev.vars.example
 
 # 앱 빌드 산출물 (tools/build-www.mjs 가 만든다)
 www/

@@ -725,21 +725,31 @@ const BASE = (() => {
 const DIR_ART = window.DKDirectionalArt;
 const directionalArt = DIR_ART ? DIR_ART.create({ base: BASE, budget: 96 * 1024 * 1024, concurrency: 2 }) : null;
 let directionalDemandAt = -Infinity;
+function resolvedDirectionalId(appearance) {
+  if (!appearance) return null;
+  if (directionalArt && directionalArt.entry(appearance.assetId)) return appearance.assetId;
+  return DIR_ART.legacyAssetId(appearance);
+}
+function applyDirectionalAppearance(e, appearance) {
+  e.artAssetId = resolvedDirectionalId(appearance);
+  e.artRequestedId = appearance && appearance.assetId;
+  e.evolutionTier = e.artAssetId === e.artRequestedId && appearance ? appearance.evolutionTier || 0 : 0;
+  if (directionalArt && directionalArt.entry(e.artAssetId)) e.hue = 0;
+}
 function directionalFutureIds(wave) {
   const out = [], inf = window.DKCONTENT && DKCONTENT.INFINITY;
   if (!inf) return out;
-  for (let w = Math.max(1, wave); w < Math.max(1, wave) + 3; w++) {
-    const n = (w - 1) % 101 + 1, m = inf.monsters[n];
-    if (!m) continue;
-    const stem = (m.boss ? 'b' : 'w') + String(n).padStart(3, '0');
-    out.push(stem); if (m.boss && m.second) out.push(stem + '-2');
+  for (let w = Math.max(1, wave); w < Math.max(1, wave) + 2; w++) {
+    out.push(resolvedDirectionalId(DIR_ART.decodeAppearance(DIR_ART.appearance(w, false, false))));
+    if (inf.isBossWave(w) && inf.wave(w, false).bosses > 1) out.push(resolvedDirectionalId(DIR_ART.decodeAppearance(DIR_ART.appearance(w, true, false))));
   }
-  return out;
+  return [...new Set(out.filter(Boolean))];
 }
 function directionalDrawHeight(e, baseHeight) {
   // A long-bodied rat should not be as tall as a humanoid in the same combat class.
   // Share this presentation scale with spectators; drawHeight also sets the visual stride.
-  const characterScale = e.artAssetId === 'w001' ? 0.5 : 1;
+  const entry = directionalArt && directionalArt.entry(e.artAssetId);
+  const characterScale = e.artAssetId === 'w001' || (entry && entry.legacyAssetId === 'w001') ? 0.5 : 1;
   return baseHeight * characterScale * (e.bossRole === 1 ? 0.7 : 1) * (e.isElite ? 1.2 : 1);
 }
 function directionalPhase(e) {
@@ -791,18 +801,42 @@ const SRCS = {
 for (let g = 7; g <= 20; g++) SRCS['tStar' + g] = BASE + `casual/towers/star-${String(g).padStart(2, '0')}.png?v=93`; // 없으면 6눈 스킨으로 폴백
 const DICE_SKINS = window.DKCONTENT.DICE_SKINS;
 for (const skin of Object.values(DICE_SKINS.skins)) {
+  if (skin.lazy) continue; // Paid previews/packs load only on explicit selection.
   SRCS[skin.materialKey] = BASE + skin.material + '?v=' + skin.version;
   if (skin.cubeMaterialKey) SRCS[skin.cubeMaterialKey] = BASE + skin.cubeMaterial + '?v=' + skin.cubeMaterialVersion;
 }
-// 인피니티 아레나 조각 (casual/tiles/arena/): 질감 3(floor·road·board) + 오브젝트 6. 없으면 코드가 그린다.
-for (const n of ['floor', 'road', 'board', 'pad', 'start', 'end', 'prop-1', 'prop-2', 'prop-3']) SRCS['tl_arena_' + n] = BASE + `casual/tiles/arena/${n}.${n === 'floor' ? 'jpg' : 'png'}`;
+// 실제 납품된 타일만 요청한다. 없는 타일은 기존 코드 그림/직선 도로 질감으로 대체한다.
+// BEGIN TILE_ASSET_FILES — node tools/tile-assets.cjs --write
+const TILE_ASSET_FILES = Object.freeze([
+  'arena/board.png',
+  'arena/end.png',
+  'arena/floor.jpg',
+  'arena/pad.png',
+  'arena/prop-1.png',
+  'arena/prop-2.png',
+  'arena/prop-3.png',
+  'arena/road.png',
+  'arena/start.png',
+  'plains/end.png',
+  'plains/floor.jpg',
+  'plains/pad.png',
+  'plains/prop-1.png',
+  'plains/prop-2.png',
+  'plains/prop-3.png',
+  'plains/prop-4.png',
+  'plains/prop-5.png',
+  'plains/prop-6.png',
+  'plains/road-straight.png',
+  'plains/start.png',
+  'plains/water.png',
+]);
+// END TILE_ASSET_FILES
+for (const file of TILE_ASSET_FILES) {
+  const [theme, name] = file.split('/');
+  SRCS[`tl_${theme}_${name.replace(/\.(png|jpg)$/, '')}`] = BASE + `casual/tiles/${file}`;
+}
 if (window.DKCONTENT) {
   for (const m of DKCONTENT.maps) if (m.src) SRCS[m.key] = BASE + m.src;
-  // 테마 타일: casual/tiles/<theme>/<name>.png (floor 만 jpg). 없으면 코드가 그린다.
-  for (const th of DKCONTENT.THEMES) {
-    for (const n of DKCONTENT.TILE_ASSETS) SRCS[`tl_${th.id}_${n}`] = BASE + `casual/tiles/${th.id}/${n}.${n === 'floor' ? 'jpg' : 'png'}`;
-    SRCS[`tl_${th.id}_road-straight`] = BASE + `casual/tiles/${th.id}/road-straight.png`; // road.png 가 없을 때 직선 타일에서 질감을 잘라 쓴다 (임시 호환)
-  }
   for (const f of Object.keys(DKCONTENT.towerSkins)) {
     for (const s of DKCONTENT.towerSkins[f]) SRCS[s.key] = BASE + s.src;
   }
@@ -1256,6 +1290,8 @@ function starPoly(c, x, y, r) {                     // 작은 4갈래 별 조각
 }
 
 function towerSpr(face, skin) {
+  const cosmetic = window.DKCOSMETICS && DKCOSMETICS.pack(DKCOSMETICS.current());
+  if (cosmetic && cosmetic.scaledTowers && cosmetic.scaledTowers[face - 1]) return cosmetic.scaledTowers[face - 1];
   if (face > 6 && !towerSprites[face]) return buildStarSprite(face, skin); // 전용 PNG 가 없으면 코드로 구운 성 타워
   const pack = towerSprites[face] || [];
   if (!pack.length) return compositeFallback(face);
@@ -1398,6 +1434,9 @@ const S = {
 
 // ==================== 저장 / 진행도 (localStorage) ====================
 const SAVE_KEY = 'DKSAVE';
+const PROGRESSION = window.DKPROGRESSION;
+const COMMERCE = window.DKCOMMERCE;
+const progressionProfile = () => (COMMERCE && COMMERCE.profile()) || SAVE.progression;
 const TOWER_COST = { 1: 0, 2: 0, 3: 0, 4: 30, 5: 55, 6: 90 }; // 젬으로 해금 (1~3 기본)
 const SKIN_COST = 20; // 스킨 1종 해금 비용(젬)
 
@@ -1405,7 +1444,7 @@ function defaultSave() {
   const skins = {}, equip = {};
   for (let f = 1; f <= 6; f++) { skins[f] = ['a']; equip[f] = 'a'; }
   return { cleared: [], gems: 40, unlockedTowers: [1, 2, 3], unlockedSkins: skins, equippedSkin: equip, infBest: 0, infRuns: [], infMilestones: [], infClears: 0,
-           name: '', mp: { games: 0, wins: 0, best: 0 }, audio: { music: 0.6, sfx: 0.8, muted: false } };   // name: 멀티 닉네임 · mp: 함께하기 전적 · audio: 음량
+           progression: PROGRESSION.defaultProfile(), accountGemRuns: [], name: '', mp: { games: 0, wins: 0, best: 0 }, audio: { music: 0.6, sfx: 0.8, muted: false } };
 }
 let SAVE = defaultSave();
 function loadSave() {
@@ -1416,17 +1455,19 @@ function loadSave() {
     const d = defaultSave();
     SAVE = {
       cleared: Array.isArray(s.cleared) ? s.cleared : d.cleared,
-      gems: typeof s.gems === 'number' ? s.gems : d.gems,
+      gems: Number.isFinite(s.gems) ? Math.max(0, Math.min(1e9, Math.floor(s.gems))) : d.gems,
       unlockedTowers: Array.isArray(s.unlockedTowers) && s.unlockedTowers.length ? s.unlockedTowers : d.unlockedTowers,
       unlockedSkins: Object.assign(d.unlockedSkins, s.unlockedSkins || {}),
       equippedSkin: Object.assign(d.equippedSkin, s.equippedSkin || {}),
-      infBest: typeof s.infBest === 'number' ? s.infBest : 0,
+      infBest: Number.isSafeInteger(s.infBest) && s.infBest >= 0 ? s.infBest : 0,
       infRuns: Array.isArray(s.infRuns) ? s.infRuns.slice(0, 5) : [],
       infMilestones: Array.isArray(s.infMilestones) ? s.infMilestones : [],
-      infClears: typeof s.infClears === 'number' ? s.infClears : 0,
+      infClears: Number.isSafeInteger(s.infClears) && s.infClears >= 0 ? s.infClears : 0,
       name: typeof s.name === 'string' ? s.name.slice(0, 12) : '',
       mp: Object.assign(d.mp, (s.mp && typeof s.mp === 'object') ? s.mp : {}),
       audio: Object.assign(d.audio, (s.audio && typeof s.audio === 'object') ? s.audio : {}),
+      progression: PROGRESSION.sanitize(s.progression, s),
+      accountGemRuns: Array.isArray(s.accountGemRuns) ? s.accountGemRuns.filter(x => typeof x === 'string' && x.length <= 256).slice(-64) : [],
     };
     const cl = (v, dv) => (typeof v === 'number' && isFinite(v) ? Math.max(0, Math.min(1, v)) : dv);
     SAVE.audio = { music: cl(SAVE.audio.music, 0.6), sfx: cl(SAVE.audio.sfx, 0.8), muted: !!SAVE.audio.muted };
@@ -1661,10 +1702,13 @@ function makeCubeRenderMesh(subdivisions) {
 }
 const CUBE_RENDER_MESH = makeCubeRenderMesh(6);
 const CUBE_SLOT_MESH = makeCubeRenderMesh(3);
+// Two world poses (tray + center) and one HUD pose. Reuse buffers in place;
+// settled dice never need to rebuild hundreds of identical shaded patches.
+const cubePoseCache = { full: [], slot: [] };
 
 // 3D 주사위 렌더링 (g: 대상 컨텍스트, cx,cy: 중심, size: 반 변 길이 px)
 function drawCube(g, cx, cy, size, R, glowColor = null, glowStr = 0, skinId, detail = 'full') {
-  const material = diceMaterial(skinId), T = DICE_MAT_TEX;
+  const material = diceMaterial(skinId);
   if (glowColor && glowStr > 0) {
     const gr = g.createRadialGradient(cx, cy, size * 0.3, cx, cy, size * 2.4);
     gr.addColorStop(0, glowColor + Math.round(glowStr * 110).toString(16).padStart(2, '0'));
@@ -1672,6 +1716,48 @@ function drawCube(g, cx, cy, size, R, glowColor = null, glowStr = 0, skinId, det
     g.fillStyle = gr;
     g.beginPath(); g.arc(cx, cy, size * 2.4, 0, Math.PI * 2); g.fill();
   }
+  const transform = g.getTransform(), scale = Math.max(Math.hypot(transform.a, transform.b), Math.hypot(transform.c, transform.d));
+  const half = Math.ceil(size * 2 + 2), dimension = Math.ceil(half * 2 * scale);
+  // Unusually large external renders use the original path, keeping cache memory
+  // bounded. Normal center, tray, slot and icon sizes retain their actual density.
+  if (!(scale > 0) || dimension > 1024) { drawCubeSurface(g, cx, cy, size, R, material, detail); return; }
+  // drawCenterRoll runs before the HUD. Its full-detail raster already contains
+  // this exact material and rotation; a smaller slot can reuse it immediately.
+  // Independent slots (spectating, another pose, or insufficient density) retain
+  // the original fixed three-subdivision renderer.
+  if (detail === 'slot') {
+    const shared = cubePoseCache.full.find(c => c.valid && c.shareable && c.material === material && c.size >= size && c.size * c.scale >= size * scale && R.every((v, i) => v === c.R[i]));
+    if (shared) {
+      const ratio = size / shared.size, offset = shared.half * ratio, extent = shared.cv.width / shared.scale * ratio;
+      g.drawImage(shared.cv, cx - offset, cy - offset, extent, extent); return;
+    }
+  }
+  const bucket = cubePoseCache[detail === 'slot' ? 'slot' : 'full'];
+  let index = bucket.findIndex(c => c.material === material && c.size === size && c.scale === scale && R.every((v, i) => v === c.R[i]));
+  let frame;
+  if (index >= 0) frame = bucket.splice(index, 1)[0];
+  else {
+    frame = bucket.length >= (detail === 'slot' ? 1 : 2) ? bucket.shift() : { cv: null, R: new Float64Array(9) };
+    Object.assign(frame, { material, size, scale, half, shareable: detail === 'center', valid: false }); frame.R.set(R);
+    // Only the central roll has a second same-frame consumer. Other new poses
+    // are drawn directly and promoted after an exact repeat, as before.
+    if (detail !== 'center') { bucket.push(frame); drawCubeSurface(g, cx, cy, size, R, material, detail); return; }
+  }
+  if (detail === 'center') frame.shareable = true;
+  if (!frame.valid) {
+    if (!frame.cv) frame.cv = document.createElement('canvas');
+    if (frame.cv.width !== dimension || frame.cv.height !== dimension) frame.cv.width = frame.cv.height = dimension;
+    const cg = frame.cv.getContext('2d');
+    cg.setTransform(1, 0, 0, 1, 0, 0); cg.clearRect(0, 0, dimension, dimension);
+    cg.setTransform(scale, 0, 0, scale, 0, 0);
+    drawCubeSurface(cg, half, half, size, R, material, detail);
+    frame.valid = true;
+  }
+  bucket.push(frame);
+  g.drawImage(frame.cv, cx - half, cy - half, dimension / scale, dimension / scale);
+}
+function drawCubeSurface(g, cx, cy, size, R, material, detail) {
+  const T = DICE_MAT_TEX;
   const dot = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
   const half = [LIGHT[0], LIGHT[1], LIGHT[2] + 1], hl = Math.hypot(...half);
   half.forEach((v, i) => { half[i] = v / hl; });
@@ -1822,7 +1908,7 @@ function rollByButton() {
 function openInfHelp() {
   const h = $('inf-help'); if (!h) return;
   const t = $('help-title');
-  if (t) t.textContent = S.inf && S.inf.mode === 'clear' ? '무한 투기장 · 도전 안내' : '무한 투기장 · 무한 안내';
+  if (t) t.textContent = '무한 투기장 · ' + DKCONTENT.INFINITY.modeOf(S.inf && S.inf.mode).name;
   h.classList.remove('hidden');
 }
 function closeInfHelp() {
@@ -1840,7 +1926,8 @@ function buyChest() {
   if (S.gold < cost) { SFX.deny(); return null; }
   S.gold -= cost;
   S.inf.chests = (S.inf.chests || 0) + 1;
-  const kind = ch.draw(S.wave);
+  const drawn = PROGRESSION.draw(S.inf.growthSnapshot, Math.random);
+  const kind = drawn ? drawn.kind : ch.draw(S.wave);
   const rk = ch.rank(kind);
   const rare = rk >= 5 ? 3 : rk === 4 ? 2 : rk === 3 ? 1 : 0;
   const col = dieKindColor(kind);
@@ -1853,7 +1940,7 @@ function buyChest() {
   if (rk >= 3 && hasArt('chestOpen')) S.fxs.push({ kind: 'chestOpen', x: fx, y: fy, t: 0, dur: 0.6 + rare * 0.15, size: 260 + rare * 50, add: true });
   if (rare >= 2) SFX.win(); else if (kind === 'd1') SFX.deny(); else SFX.coin();
   if (rk >= 3) netLog(`${ch.grade[kind]} ${ch.label[kind]}를 뽑았습니다`, 'gacha'); // 유물 이상은 방에 알린다
-  rollDie(kind); // 뽑으면 무조건 굴러서 타워가 된다 — 배치부터 하고 다시 뽑는다
+  rollDie(kind, drawn ? drawn.face : undefined);
   coachHit('roll');
   syncUI();
   return kind;
@@ -1862,13 +1949,13 @@ const DIE_KIND_COLORS = { d1: '#9a9a9a', d4: '#d9c9a0', d6: '#e9dfc4', d8: '#7fd
 const dieKindColor = k => DIE_KIND_COLORS[k] || '#e9dfc4';
 const dieShape = k => { const ch = chestDef(); return (ch && ch.shape && ch.shape[k]) || k; };
 // 뽑기 결과를 바로 굴린다 (주머니 없음). 손이 차 있으면 대기열에 넣고, 배치해서 손이 비면 자동으로 이어 굴린다.
-function rollDie(kind) {
+function rollDie(kind, forcedFinal) {
   const ch = chestDef();
   if (!ch || S.mode !== 'infinity' || !S.inf || S.phase !== 'playing') return false;
   if (!canStartRoll()) return false;            // 손이 차 있으면 굴리지 않는다 — 큐는 호출자(pumpQueue)가 든다
   SLOT.active = true; SLOT.kind = kind;
   SLOT.t = 0; SLOT.t2 = 0; SLOT.phase = 0; SLOT.sndT = 0;
-  SLOT.final = ch.roll(kind);
+  SLOT.final = Number.isInteger(forcedFinal) && forcedFinal >= (ch.min[kind] || 1) && forcedFinal <= ch.sides[kind] ? forcedFinal : ch.roll(kind);
   SLOT.R = m3mul(m3axisAngle(Math.random(), Math.random(), Math.random() * 0.5 + 0.1, Math.random() * 6), TRAY_TILT);
   SLOT.w = [14 + Math.random() * 8, 12 + Math.random() * 8, 9 + Math.random() * 6];
   SFX.throwDie();
@@ -2050,12 +2137,16 @@ const CUBE_PIPS = [
   [[-1, -1], [1, -1], [-1, 0], [1, 0], [-1, 1], [1, 1]],
 ];
 function diceSkin(id) {
+  if (id === undefined) id = typeof window !== 'undefined' && window.DKCOSMETICS ? window.DKCOSMETICS.current() : 'base';
+  if (id === 'base') id = DICE_SKINS.defaultId;
+  if (DICE_SKINS.skins[id] && DICE_SKINS.skins[id].lazy && !(typeof window !== 'undefined' && window.DKCOSMETICS && window.DKCOSMETICS.pack(id))) id = DICE_SKINS.defaultId;
   const key = Object.prototype.hasOwnProperty.call(DICE_SKINS.skins, id) ? id : DICE_SKINS.defaultId;
   return { id: key, ...DICE_SKINS.skins[key] };
 }
 function diceMaterialTile(skin, w, h, materialKey = skin.materialKey) {
   const cv = document.createElement('canvas'); cv.width = w; cv.height = h;
-  const g = cv.getContext('2d'), supplied = A[materialKey];
+  const pack = typeof window !== 'undefined' && window.DKCOSMETICS && window.DKCOSMETICS.pack(skin.id);
+  const g = cv.getContext('2d'), supplied = pack ? pack.material : A[materialKey];
   const image = supplied && !supplied.missing ? supplied : A[skin.materialKey];
   g.fillStyle = '#e4d9bc'; g.fillRect(0, 0, w, h);
   if (image && !image.missing) g.drawImage(image, 0, 0, w, h);
@@ -2136,8 +2227,13 @@ function diceMaterial(id) {
     diceMaterialCache.delete(skin.id); diceMaterialCache.set(skin.id, value); return value;
   }
   const value = buildDiceMaterial(skin);
-  if (diceMaterialCache.size >= 2) diceMaterialCache.delete(diceMaterialCache.keys().next().value);
+  if (diceMaterialCache.size >= 2) evictDiceMaterial(diceMaterialCache.keys().next().value);
   diceMaterialCache.set(skin.id, value); return value;
+}
+function evictDiceMaterial(id) {
+  const material = diceMaterialCache.get(id); diceMaterialCache.delete(id);
+  if (typeof cubePoseCache !== 'undefined') for (const bucket of Object.values(cubePoseCache)) for (let i = bucket.length - 1; i >= 0; i--) if (bucket[i].material === material) bucket.splice(i, 1);
+  if (typeof orbRaster !== 'undefined' && orbRaster && material && orbRaster.tex === material.orb) { orbRaster.tex = null; orbRaster.data = null; orbRaster.R.fill(NaN); }
 }
 function buildDiceSprites() {
   // Icons, fallback towers and the rolling die share the same six 3D faces.
@@ -2146,6 +2242,44 @@ function buildDiceSprites() {
     cv.width = T; cv.height = T;
     drawCube(cv.getContext('2d'), T / 2, T / 2, T * .3, m3mul(TRAY_TILT, faceTopR(i + 1)));
     return { cv, w: T, h: T };
+  });
+}
+function attachCosmeticRenderer() {
+  if (!window.DKCOSMETICS) return;
+  const baseDice = A.dice, baseURLs = diceURLs.slice();
+  DKCOSMETICS.attach({
+    rolling: () => SLOT.active || ['grab', 'throw', 'roll', 'settle', 'fly'].includes(DIE.state),
+    async prepare(pack) {
+      pack.scaledTowers = [];
+      for (let i = 0; i < pack.towers.length; i++) { const sp = scaleTowerArt(pack.towers[i]); sp.cosmeticTheme = pack.id; sp.cosmeticFace = i + 1; pack.scaledTowers.push(sp); if (i % 2 === 1) await new Promise(resolve => setTimeout(resolve, 0)); }
+    },
+    evict(id, pack) {
+      evictDiceMaterial(id);
+      for (const sp of pack.scaledTowers || []) sp.cv.width = sp.cv.height = 0;
+    },
+    activate(id) {
+      cubePoseCache.full.length = cubePoseCache.slot.length = 0;
+      if (orbRaster) { orbRaster.tex = null; orbRaster.data = null; orbRaster.R.fill(NaN); }
+      if (id === 'base') { A.dice = baseDice; diceURLs = baseURLs.slice(); }
+      else { buildDiceSprites(); diceURLs = A.dice.map(sp => thumbURL(sp, 96)); }
+      if (S.phase === 'shop') renderShop(); syncUI();
+    },
+    async preview(id, pack, canvas) {
+      const kinds = ['d1', 'd4', 'd6', 'd8', 'd12', 'd20']; canvas.width = 600; canvas.height = 340;
+      const g = canvas.getContext('2d'); g.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < kinds.length; i++) {
+        const kind = kinds[i], R = kind === 'd6' ? m3mul(TRAY_TILT, faceTopR(5)) : kind === 'd1' ? m3id() : m3mul(TRAY_TILT, alignR(POLY[kind].faces[0].n));
+        const x = i % 3 * 200 + 100, y = Math.floor(i / 3) * 170 + 76;
+        if (kind === 'd6') drawCube(g, x, y, 36, R, null, 0, id);
+        else drawPolyDie(g, x, y, 46, kind, R, id);
+        g.font = uiFont(17); g.textAlign = 'center'; g.fillStyle = '#f3ddab'; g.fillText(kind.toUpperCase(), x, y + 77);
+        await new Promise(resolve => setTimeout(resolve, 0));
+      }
+      return { towers: pack.towers.map((sp, i) => ({ face: i + 1, url: thumbURL(sp, 128) })), theme: id };
+    },
+  });
+  window.DKcosmeticRender = Object.freeze({ preview: (id, canvas) => DKCOSMETICS.preview(id, canvas),
+    stats: () => ({ materialSets: diceMaterialCache.size, textures: diceMaterialCache.size * 52, cubePoses: cubePoseCache.full.length + cubePoseCache.slot.length, orbTheme: orbRaster && orbRaster.tex ? [...diceMaterialCache].find(([, m]) => m.orb === orbRaster.tex)?.[0] || null : null }),
   });
 }
 // 정다면체: 기존 정점/면/최종 자세를 유지하고 큐브와 같은 광원으로 재질을 비춘다.
@@ -2175,32 +2309,59 @@ function drawPoly3D(g, cx, cy, size, kind, R, skinId) {
   }
   g.restore();
 }
-// Low-resolution sphere UV mesh, shared by both views of d1. Its material and pip
-// follow SLOT.R as well; lighting stays in world space and has no plastic glint.
-const ORB_MESH = (() => {
-  const cols = 24, rows = 12, verts = [], quads = [];
-  for (let y = 0; y <= rows; y++) for (let x = 0; x <= cols; x++) {
-    const lon = (x / cols - .5) * Math.PI * 2, lat = (y / rows - .5) * Math.PI;
-    verts.push({ p: [Math.cos(lat) * Math.sin(lon), Math.sin(lat), Math.cos(lat) * Math.cos(lon)], uv: [x / cols * DICE_MAT_TEX * 2, y / rows * DICE_MAT_TEX] });
+// A sphere has an exact inverse UV map. Rasterize one pose, then share it between
+// center and slot instead of submitting 576 clipped texture triangles per frame.
+// This bounded buffer also reuses the settled pose. The material/pip still follows
+// the actual rotation matrix, with the same orthographic silhouette and lighting.
+let orbRaster = null;
+function orbFrame(tex, R) {
+  if (!orbRaster) {
+    const width = 128, radius = width / 2, cv = document.createElement('canvas');
+    cv.width = cv.height = width;
+    const g = cv.getContext('2d'), pixels = g.createImageData(width, width), samples = [];
+    for (let y = 0; y < width; y++) for (let x = 0; x < width; x++) {
+      const nx = (x + .5 - radius) / radius, ny = (y + .5 - radius) / radius, d2 = nx * nx + ny * ny;
+      if (d2 >= 1) continue;
+      const i = (y * width + x) * 4;
+      samples.push(i, nx, ny, Math.sqrt(1 - d2));
+      pixels.data[i + 3] = Math.min(255, (radius - Math.sqrt(d2) * radius) * 255);
+    }
+    orbRaster = {cv, g, pixels, samples: new Float64Array(samples), R: new Float64Array(9).fill(NaN), tex: null, data: null};
   }
-  for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) { const a = y * (cols + 1) + x; quads.push([a, a + 1, a + cols + 2, a + cols + 1]); }
-  return { verts, quads };
-})();
-function drawOrb(g, cx, cy, size, R, skinId) {
-  const tex = diceMaterial(skinId).orb;
-  const verts = ORB_MESH.verts.map(v => { const p = m3apply(R, v.p); return { z: p[2], xy: [cx + p[0] * size, cy + p[1] * size] }; });
-  const order = ORB_MESH.quads.map(idx => ({ idx, z: idx.reduce((sum, vi) => sum + verts[vi].z, 0) / 4 })).filter(q => q.z > 0).sort((a, b) => a.z - b.z);
-  g.save(); g.beginPath(); g.arc(cx, cy, size, 0, Math.PI * 2); g.clip();
-  g.fillStyle = '#e4d9bc'; g.fillRect(cx - size, cy - size, size * 2, size * 2);
-  for (const { idx } of order) for (let j = 1; j < 3; j++) {
-    const tri = [idx[0], idx[j], idx[j + 1]];
-    // Overlap internal UV triangles so their antialiasing cannot cut through
-    // the red pip; the outer circle above still clips the sphere silhouette.
-    texTri(g, tex, ...ORB_MESH.verts[tri[0]].uv, ...ORB_MESH.verts[tri[1]].uv, ...ORB_MESH.verts[tri[2]].uv, ...tri.map(i => verts[i].xy), 1.6);
+  const c = orbRaster;
+  if (c.tex === tex && R.every((v, i) => v === c.R[i])) return c.cv;
+  if (c.tex !== tex) {
+    c.data = tex.getContext('2d').getImageData(0, 0, tex.width, tex.height).data;
+    c.tex = tex;
   }
-  const gr = g.createRadialGradient(cx + size * LIGHT[0], cy + size * LIGHT[1], size * .08, cx, cy, size * 1.05);
+  const {samples, data} = c, dest = c.pixels.data, w = tex.width, h = tex.height;
+  for (let k = 0; k < samples.length; k += 4) {
+    const i = samples[k], x = samples[k + 1], y = samples[k + 2], z = samples[k + 3];
+    // R is orthonormal: transpose maps a visible sphere normal back to its skin.
+    const lx = R[0] * x + R[3] * y + R[6] * z;
+    const ly = R[1] * x + R[4] * y + R[7] * z;
+    const lz = R[2] * x + R[5] * y + R[8] * z;
+    const u = (Math.atan2(lx, lz) / (Math.PI * 2) + .5) * w - .5;
+    const v = Math.max(0, Math.min(h - 1, (Math.asin(Math.max(-1, Math.min(1, ly))) / Math.PI + .5) * h - .5));
+    const ix = Math.floor(u), iy = Math.floor(v), fx = u - ix, fy = v - iy;
+    const x0 = (ix + w) % w, x1 = (x0 + 1) % w, y1 = Math.min(h - 1, iy + 1);
+    const a = (iy * w + x0) * 4, b = (iy * w + x1) * 4, d = (y1 * w + x0) * 4, e = (y1 * w + x1) * 4;
+    for (let channel = 0; channel < 3; channel++) {
+      const top = data[a + channel] * (1 - fx) + data[b + channel] * fx;
+      const bottom = data[d + channel] * (1 - fx) + data[e + channel] * fx;
+      dest[i + channel] = top * (1 - fy) + bottom * fy;
+    }
+  }
+  c.g.putImageData(c.pixels, 0, 0);
+  const radius = c.cv.width / 2, g = c.g;
+  g.save(); g.globalCompositeOperation = 'source-atop';
+  const gr = g.createRadialGradient(radius + radius * LIGHT[0], radius + radius * LIGHT[1], radius * .08, radius, radius, radius * 1.05);
   gr.addColorStop(0, 'rgba(28,18,8,.065)'); gr.addColorStop(.55, 'rgba(28,18,8,.13)'); gr.addColorStop(1, 'rgba(28,18,8,.36)');
-  g.fillStyle = gr; g.fillRect(cx - size, cy - size, size * 2, size * 2); g.restore();
+  g.fillStyle = gr; g.fillRect(0, 0, c.cv.width, c.cv.height); g.restore();
+  c.R.set(R); return c.cv;
+}
+function drawOrb(g, cx, cy, size, R, skinId) {
+  g.drawImage(orbFrame(diceMaterial(skinId).orb, R), cx - size, cy - size, size * 2, size * 2);
   g.beginPath(); g.arc(cx, cy, size, 0, Math.PI * 2); g.strokeStyle = 'rgba(94,71,43,.4)'; g.lineWidth = .8; g.stroke();
 }
 function drawPolyDie(g, cx, cy, size, kind, R, skinId) {
@@ -2256,7 +2417,7 @@ function drawCenterRoll() {
     if (glow > 0) { const g = ctx.createRadialGradient(cx, dy, size * 0.3, cx, dy, size * 2.4); g.addColorStop(0, hexA('#ffd452', 0.4 * glow)); g.addColorStop(1, hexA('#ffd452', 0)); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, dy, size * 2.4, 0, Math.PI * 2); ctx.fill(); }
     drawPolyDie(ctx, cx, dy, size * 1.24, kind, R);
   } else {
-    drawCube(ctx, cx, dy, size, R, glow > 0 ? '#ffd452' : null, glow * 0.6);
+    drawCube(ctx, cx, dy, size, R, glow > 0 ? '#ffd452' : null, glow * 0.6, undefined, 'center');
   }
   ctx.restore();
 }
@@ -2633,6 +2794,7 @@ function startStage(n) {
   const C = window.DKCONTENT;
   const sd = C && C.stages && C.stages[n - 1];
   if (!sd) return;
+  if (window.DKCOSMETICS) S.cosmeticSnapshot = DKCOSMETICS.lockRun();
   S.mode = 'stage'; S.inf = null;
   S.stage = n;
   S.stageData = sd;
@@ -2654,20 +2816,29 @@ function startStage(n) {
 
 // 인피니티 런 시작 (로비에서 호출)
 // net: 함께하기 방 정보 { code, pid, seed, t0, timing } — 있으면 도전 규칙(101웨이브 완주)으로, 웨이브·배속은 각자 진행 (mpOnStart 가 만든다)
-function startInfinity(kind, net) {
+function startInfinity(kind, net, accountRun) {
   const C = window.DKCONTENT;
   const INF = C && C.INFINITY;
   if (!INF) return;
+  if (window.DKCOSMETICS) S.cosmeticSnapshot = DKCOSMETICS.lockRun();
   S.mode = 'infinity';
-  if (net) kind = 'clear';                                     // 멀티는 언제나 도전 규칙(101웨이브 완주 = 클리어)
-  const MODE = INF.modeOf(kind === 'clear' || kind === 'endless' ? kind : 'endless'); // 도전(클리어 있음) / 무한(진짜 무한)
+  if (net) kind = net.mode === 'extreme' ? 'extreme' : 'clear';
+  const MODE = INF.modeOf(kind);
   clearLog();
   S.net = net || null;
   S.inf = { sp: 0, power: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 }, kills: 0, spent: 0, queue: [], chests: 0, bossT: 0, cleared: 0, mode: MODE.key, gauntlet: MODE.gauntlet };
+  S.inf.clearWave = net ? net.timing.clearWave : MODE.clearWave;
+  S.inf.growthSnapshot = PROGRESSION.snapshot(progressionProfile(), MODE.key);
+  S.inf.recordKey = net ? (MODE.key === 'extreme' ? 'extremeMulti' : 'multi') : MODE.key;
+  S.inf.runId = globalThis.crypto && crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`;
+  S.inf.startedAt = performance.now();
+  S.inf.doneW = 0;
+  S.inf.accountTicket = accountRun ? accountRun.ticket : null;
+  S.paused = false;
   S.stage = 0;
   S.stageData = { n: 0, name: '무한 투기장', tier: INF.tier.tier, tierName: INF.tier.name + ' · ' + MODE.name, tierColor: INF.tier.color, lanes: INF.tier.lanes.length, waves: Infinity, bases: [], gem: 0 };
   S.stageWaves = Infinity;
-  setTimeout(() => pushLog(net ? `함께하기 — 첫 웨이브까지 ${Math.round(net.timing.prep / 1000)}초 · 각자 자기 속도로 진행합니다. 먼저 완주하면 1위` : MODE.key === 'clear' ? `도전 시작 — ${INF.clearWave}웨이브 완주가 목표입니다` : '무한 시작 — 버틸 수 있는 데까지', 'sys'), 60);
+  setTimeout(() => pushLog(`${MODE.name} 시작 — ${net ? '함께하기 · ' : ''}${MODE.sub}${net && MODE.key === 'extreme' ? ' · 100분 동안 완료 웨이브 경쟁' : ''}`, 'sys'), 60);
   S.mapKey = arenaKeyForScreen();   // 세로 화면이면 세로 아레나
   S.gold = INF.startGold;
   S.lives = INF.lives;
@@ -2699,11 +2870,10 @@ function startInfinity(kind, net) {
 // 도전 모드 클리어: 101웨이브를 완주하면 승리로 런이 끝난다. 무한 모드에는 클리어가 없다.
 function checkInfClear() {
   const INF = window.DKCONTENT && DKCONTENT.INFINITY;
-  if (!INF || !S.inf || S.mode !== 'infinity' || S.inf.mode !== 'clear') return false;
-  const line = S.net ? S.net.timing.clearWave : (INF.clearWave || 101);
-  if (S.wave < line || S.inf.cleared) return false;
+  if (!INF || !S.inf || S.mode !== 'infinity') return false;
+  const line = S.inf.clearWave;
+  if (!line || S.wave < line || S.inf.doneW < line || S.inf.cleared) return false;
   S.inf.cleared = 1;
-  SAVE.infClears = (SAVE.infClears || 0) + 1;
   S.shakeT = Math.max(S.shakeT || 0, 0.5);
   for (let i = 0; i < 5; i++) S.fxs.push({ kind: 'ring', x: W / 2, y: 200, t: 0, dur: 1.1 + i * 0.25, size: 160 + i * 60, color: '#ffd452' });
   S.texts.push({ str: `무한 투기장 클리어! ${line}웨이브 완주`, x: W / 2, y: H / 2 - 90, t: 0, color: '#ffd452', big: true });
@@ -2714,33 +2884,63 @@ function checkInfClear() {
 
 // 런의 젬·최고 기록·최근 런을 계산해 저장한다 (싱글 종료와 멀티 사망/완주가 같이 쓴다 — 멀티는 먼저 죽어도 이 즉시 저장된다)
 function settleInfRun(won) {
+  if (S.inf.settledResult) return S.inf.settledResult;
   const INF = window.DKCONTENT.INFINITY;
-  const wave = won ? S.wave : Math.max(0, S.wave - 1); // 클리어는 그 웨이브를 완료한 것
-  const prevBest = SAVE.infBest || 0;
-  const r = INF.gems(wave, SAVE.infMilestones, prevBest);   // 신기록 보너스는 갱신 전 기록으로 판정
-  const gems = r.gems + (won ? (INF.clearGems || 60) : 0);
-  SAVE.gems += gems;
-  SAVE.infMilestones = (SAVE.infMilestones || []).concat(r.newly);
-  const isBest = wave > (SAVE.infBest || 0);
-  if (isBest) SAVE.infBest = wave;
-  const run = { wave, kills: S.inf.kills, mode: S.inf.mode, date: new Date().toISOString().slice(0, 10) };
-  if (S.net) { run.mp = 1; run.code = S.net.code; }
-  SAVE.infRuns = [run].concat(SAVE.infRuns || []).slice(0, 5);
+  const wave = Math.max(0, S.inf.doneW || 0);
+  const record = progressionProfile().records[S.inf.recordKey];
+  const isBest = wave > record.best;
+  const r = INF.gems(wave, record.gemMilestones, record.best);
+  if (S.inf.accountTicket) {
+    const inf = S.inf;
+    const res = { wave, gems: 0, shards: 0, isBest, newly: [], record, pending: true };
+    inf.settledResult = res;
+    COMMERCE.finishRun(inf.accountTicket, { wave, kills: inf.kills, won: !!won, date: new Date().toISOString(), elapsed: Math.max(0, (performance.now() - inf.startedAt) / 1000) })
+      .then(result => {
+        res.pending = false; res.shards = result.shards || 0; res.record = progressionProfile().records[inf.recordKey];
+        if (!SAVE.accountGemRuns.includes(inf.accountTicket)) {
+          const cosmetic = INF.gems(wave, SAVE.infMilestones, SAVE.infBest);
+          res.gems = cosmetic.gems + (won ? INF.clearGems : 0); res.newly = cosmetic.newly;
+          SAVE.gems = Math.min(1e9, SAVE.gems + res.gems);
+          SAVE.infBest = Math.max(SAVE.infBest, wave); SAVE.infMilestones = SAVE.infMilestones.concat(cosmetic.newly);
+          SAVE.accountGemRuns = SAVE.accountGemRuns.concat(inf.accountTicket).slice(-64); saveSave();
+        }
+        if (S.inf === inf && S.phase === 'over') showOverlay(won ? '클리어!' : '런 종료', infResultHTML(won, res), '로비로');
+        else if (S.inf === inf && S.net) { mpRenderRivals(); if (S.net.ended) mpShowResult(S.net.ended); }
+      }).catch(error => {
+        res.pending = false; res.error = COMMERCE.errorText(error);
+        if (S.inf === inf && S.phase === 'over') showOverlay('런 종료', infResultHTML(won, res), '로비로');
+      });
+    return res;
+  }
+  const settled = PROGRESSION.settle(SAVE.progression, {
+    id: S.inf.runId, mode: S.inf.recordKey, wave, kills: S.inf.kills,
+    won: !!won && !!S.inf.clearWave && wave >= S.inf.clearWave,
+    date: new Date().toISOString(), elapsed: Math.max(0, (performance.now() - S.inf.startedAt) / 1000),
+  });
+  const gems = settled.ok && !settled.duplicate ? r.gems + (won ? INF.clearGems : 0) : 0;
+  if (settled.ok && !settled.duplicate) {
+    SAVE.gems = Math.min(1e9, SAVE.gems + gems);
+    record.gemMilestones = record.gemMilestones.concat(r.newly);
+  }
+  const res = { wave, gems, shards: settled.shards || 0, isBest, newly: r.newly, record };
+  S.inf.settledResult = res;
   saveSave();
-  return { wave, gems, isBest, newly: r.newly };
+  return res;
 }
 // 결과 오버레이 본문 (싱글은 종료 즉시, 멀티는 방 전체 결과가 모였을 때 순위표와 함께)
 function infResultHTML(won, res) {
   const INF = window.DKCONTENT.INFINITY;
-  const modeName = S.net ? '함께' : S.inf.mode === 'clear' ? '도전' : '무한';
-  const line = S.net ? S.net.timing.clearWave : INF.clearWave;
+  const resultRecord = res.record || progressionProfile().records[S.inf.recordKey];
+  const modeName = INF.modeOf(S.inf.mode).name + (S.net ? ' · 함께하기' : '');
+  const line = S.inf.clearWave;
   return (won
-      ? `<b>무한 투기장 · ${modeName}</b> ${line}웨이브를 완주했습니다 — <b>클리어!</b><br>통산 클리어 <b>${SAVE.infClears || 0}</b>회<br>`
-      : `${S.inf.bossLeak ? (S.inf.bossTimeout ? `보스 <b>${S.inf.bossLeak}</b>: 제한시간(5분 20초) 안에 잡지 못했습니다!<br>` : `보스 <b>${S.inf.bossLeak}</b>가 한계선을 넘었습니다!<br>`) : ''}<b>무한 투기장 · ${modeName}</b> 웨이브 <b>${res.wave}</b> 까지 버텼습니다${res.isBest ? ' — <b>최고 기록 갱신!</b>' : ` (최고 ${SAVE.infBest})`}<br>`) +
-    `<div class="stat-grid"><span>도달 웨이브</span><b>${won ? `${line} 완주` : res.wave}</b><span>처치</span><b>${S.inf.kills}</b><span>쓴 골드</span><b>${S.inf.spent}</b><span>젬</span><b class="gem">+${res.gems}</b></div>` +
-    `<small>${res.newly.length ? `마일스톤 ${res.newly.join(', ')} 달성 보너스 포함` : ''}${won ? `${res.newly.length ? ' · ' : ''}클리어 보너스 +${INF.clearGems || 60} 포함` : ''}</small>`;
+      ? `<b>${modeName}</b> ${line}웨이브 완주 — <b>클리어!</b><br>이 모드 클리어 <b>${resultRecord.clears}</b>회<br>`
+      : `${S.inf.bossLeak ? `보스 <b>${escapeHtml(S.inf.bossLeak)}</b>를 막지 못했습니다.<br>` : ''}<b>${modeName}</b> 완료 웨이브 <b>${res.wave}</b>${res.isBest ? ' — <b>최고 기록 갱신!</b>' : ` (최고 ${resultRecord.best})`}<br>`) +
+    `<div class="stat-grid"><span>완료 웨이브</span><b>${won ? `${line} 완주` : res.wave}</b><span>처치</span><b>${S.inf.kills}</b><span>쓴 골드</span><b>${S.inf.spent}</b><span>젬</span><b class="gem">+${res.gems}</b><span>성장 조각</span><b>+${res.shards || 0}</b></div>` +
+    `<small>${res.pending ? '계정 보상을 확인 중입니다. 상점에서 다시 확인할 수 있습니다.' : res.error ? escapeHtml(res.error) : res.newly.length ? `마일스톤 ${res.newly.join(', ')} 달성 보너스 포함` : ''}${won && res.gems ? ` · 클리어 젬 +${INF.clearGems} 포함` : ''}</small>`;
 }
 function endInfinity(won) {
+  if (!S.inf || S.inf.settledResult) return;
   if (S.net && !S.net.spectating) return netRunOver(won);   // 함께하기: 기록은 즉시 저장하고 관전으로
   S.phase = 'over';
   S.waveActive = false;
@@ -2836,7 +3036,7 @@ function spawnEnemy(item) {
   if (S.mode === 'infinity' && DIR_ART) {
     e.appearanceCode = DIR_ART.appearance(e.wave, e.bossRole === 1, e.isElite);
     const appearance = DIR_ART.decodeAppearance(e.appearanceCode);
-    e.artAssetId = appearance && appearance.assetId;
+    applyDirectionalAppearance(e, appearance);
     const table = e.isBoss ? INFC.artSizeBoss : INFC.artSize;
     e.drawHeight = directionalDrawHeight(e, table[e.sizeClass] || def.size);
   }
@@ -2932,7 +3132,7 @@ function spawnDeath(e, p) {
   const fr = currentEnemyFrame(e);
   const airY = enemyAirHeight(e, p, fr);
   if (fr) {
-    S.corpses.push({ fr, x: p.x, y: p.y + 4 - airY, h: fr.directional ? e.drawHeight : e.def.size, hue: e.hue, t: 0, dur: e.isBoss ? 0.7 : 0.42, boss: e.isBoss, flip: enemyFlip(e) });
+    S.corpses.push({ fr, x: p.x, y: p.y + 4 - airY, h: fr.directional ? e.drawHeight : e.def.size, hue: e.hue, evolutionTier: e.evolutionTier || 0, t: 0, dur: e.isBoss ? 0.7 : 0.42, boss: e.isBoss, flip: enemyFlip(e) });
   }
   const n = e.isBoss ? 18 : 7;
   for (let i = 0; i < n; i++) {
@@ -2988,6 +3188,7 @@ const towerDmg   = t => {
   let m = LVL_DMG[t.lvl - 1];
   const d = DP();
   if (d) { m *= d.dmgMult(powerLv(t.face)); const ex = powerSpecial(t.face, 'dmg'); if (ex) m *= 1 + ex * powerTier(t.face); }
+  if (S.mode === 'infinity' && S.inf) m *= PROGRESSION.damageMultiplier(S.inf.growthSnapshot, t.face);
   return t.def.dmg * m;
 };
 // 인피니티 사거리 보너스는 아레나마다 다르다 — 세로 아레나는 트랙이 길어 중앙 타워가 더 멀리 닿아야 한다
@@ -3283,6 +3484,7 @@ function update(dt) {
     S.texts.push({ str: '웨이브 클리어! +' + bonus + 'G', x: W / 2, y: H / 2 - 40, t: 0, color: '#a0ffc8' });
     SFX.coin();
     if (S.mode === 'infinity') {
+      S.inf.doneW = S.wave;
       if (S.net) { S.net.doneW = S.wave; if (window.DKNET) DKNET.done(S.wave); }   // 방에 완료 보고 (통계·카드용)
       if (checkInfClear()) return;              // 도전 모드: 101웨이브 완주 = 클리어
       S.autoT = DKCONTENT.INFINITY.intermission;
@@ -3454,12 +3656,16 @@ function enemyFramePlacement(fr, height) {
   if (fr.directional) {
     // Keep the rat readable head-on without changing its side size or gait phase.
     // Scale around the authored ground pivot, including stills and death frames.
-    const viewScale = fr.assetId === 'w001' && (fr.view === 'front' || fr.view === 'back') ? 1.6 : 1;
+    const viewScale = (fr.assetId === 'w001' || fr.legacyAssetId === 'w001') && (fr.view === 'front' || fr.view === 'back') ? 1.6 : 1;
     const scale = height * viewScale / fr.referenceHeight;
     return { w: fr.w * scale, h: fr.h * scale, x: -fr.pivot[0] * scale, y: -fr.pivot[1] * scale };
   }
   const w = height * fr.w / fr.h;
   return { w, h: height, x: -w / 2, y: -height };
+}
+function drawEnemyEvolution(tier, fr, height) {
+  const mark = tier && fr.directional && directionalArt && directionalArt.evolutionMark(tier, fr.view);
+  if (mark) ctx.drawImage(mark, -height * .62, -height * 1.05, height * 1.24, height * 1.24);
 }
 
 // 코드 생성 레인(하늘길·땅굴)과 추가 포탈을 배경 위에 그린다
@@ -3727,6 +3933,7 @@ function draw() {
       if (c.flip) ctx.scale(-1, 1);            // 죽을 때 보던 방향 그대로
       if (fr.cv.width) ctx.drawImage(fr.cv, place.x, place.y, place.w, place.h);
       ctx.filter = 'none';
+      drawEnemyEvolution(c.evolutionTier, fr, h);
       ctx.restore();
     } else {
       const e = ent.o, p = ent.p;
@@ -3766,6 +3973,7 @@ function draw() {
         const h = fr.directional ? e.drawHeight : e.def.size;
         const place = enemyFramePlacement(fr, h);
         ctx.drawImage(fr.cv, place.x, place.y, place.w, place.h);
+        drawEnemyEvolution(e.evolutionTier, fr, h);
         if (e.flashT > 0) {
           // 피격 플래시: 흰 실루엣을 겹친다
           const fl = flashCanvas(fr, place.w, place.h);
@@ -4377,7 +4585,11 @@ function dieIconURL(face) {
   return (starIconCache[face] = cv.toDataURL());
 }
 
-function syncUI() { syncStats(); syncUIRest(); }
+let uiInFrame = false, uiDirty = false;
+function syncUI() {
+  if (uiInFrame) { uiDirty = true; return; }
+  uiDirty = false; syncStats(); syncUIRest();
+}
 // 상단 칩 (골드·목숨·웨이브) — syncUI 에서만 돈다. 보스 남은 시간·막간 카운트다운은 draw() 의 캔버스 말풍선이 매 프레임 그린다
 function syncStats() {
   $('gold-val').textContent = S.gold;
@@ -4389,18 +4601,18 @@ function syncStats() {
     const M = S.wave > 0 && INF.monsterFor ? INF.monsterFor(S.wave) : null;
     const sz = M ? ` · ${M.boss ? '보스' : M.name}(${INF.sizeName[M.cls]})` : '';
     // 보스 남은 시간은 칩에 넣지 않는다 — 칩이 길어져 우상단 미니 버튼이 둘째 줄로 밀렸다. 캔버스 말풍선(draw)이 보여준다
-    const line = INF.clearWave || 101, cyc = Math.floor(Math.max(0, S.wave - 1) / 101);
-    const wtxt = S.inf && S.inf.mode === 'clear'
+    const line = S.inf ? S.inf.clearWave : 0, cyc = Math.floor(Math.max(0, S.wave - 1) / 101);
+    const wtxt = line > 0
       ? `${S.wave}/${S.net ? S.net.timing.clearWave : line}`  // 도전: 101웨이브 완주가 클리어
       : `${S.wave}${cyc ? ` (${cyc + 1}주기)` : ''}`;          // 무한: 끝이 없다
     const roomTxt = S.net && window.DKNET ? ` · 방 ${DKNET.members().length}명` : '';
     // 좁은 화면에서는 칩이 두 줄로 넘쳐 아레나를 가린다 — 몬스터 이름·최고 기록을 접는다
     const tight = stageEl.classList.contains('tiny'), mid = stageEl.classList.contains('small');
     $('wave-val').textContent = tight
-      ? `${S.wave}${S.inf && S.inf.mode === 'clear' ? '/' + line : ''} · ${n}/${cap}`
+      ? `${S.wave}${line ? '/' + line : ''} · ${n}/${cap}`
       : mid
         ? `웨이브 ${wtxt} · 필드 ${n}/${cap}${roomTxt}`
-        : `∞ 웨이브 ${wtxt}${sz} · 최고 ${SAVE.infBest || 0} · 필드 ${n}/${cap}${roomTxt}`;
+        : `∞ 웨이브 ${wtxt}${sz} · 최고 ${S.inf ? progressionProfile().records[S.inf.recordKey].best : 0} · 필드 ${n}/${cap}${roomTxt}`;
     $('wave-val').classList.toggle('hot', n >= cap * 0.9);
   }
   else $('wave-val').textContent = stageEl.classList.contains('tiny')
@@ -4598,6 +4810,7 @@ function showOverlay(title, descHTML, btnLabel) {
 // ==================== 화면 전환 (로비 / 스테이지선택 / 상점 / 플레이) ====================
 const SCREENS = ['lobby', 'stage-select', 'shop', 'mp-room'];   // 전체화면 .screen 들 — 전환 때 전부 숨긴다
 function showScreen(name) {
+  if (window.DKCOSMETICS && ['lobby', 'shop', 'title', 'stageSelect', 'mpRoom'].includes(name)) DKCOSMETICS.unlockRun();
   if (S.paused) setPaused(false);
   if (menuOpen()) $('menu').classList.add('hidden');
   overlayEl.classList.add('hidden');
@@ -4780,16 +4993,59 @@ function syncInfButtons() {
     if (!b) return;
     b.disabled = false;
     b.classList.remove('locked');
-    b.innerHTML = `<span class="bi" data-icon="${icon}">${emoji}</span>인피니티 · ${name}<small>${sub}</small>`;   // 아이콘 슬롯(.bi): 그림이 있으면 ui/icon-*.png, 없으면 이모지
+    b.innerHTML = `<span class="bi" data-icon="${icon}">${emoji}</span>${name}<small>${sub}</small>`;
   };
-  setBtn('btn-inf-clear', 'trophy', '&#127942;', '도전', `${line}웨이브 완주 = 클리어`);
-  setBtn('btn-infinity', 'infinity', '&#8734;', '무한', '끝이 없는 기록 도전');
+  setBtn('btn-inf-clear', 'trophy', '&#127942;', '순수운빨', `${line}웨이브 · 성장 미적용`);
+  setBtn('btn-inf-build', 'dice', '&#127922;', '덱빌드', `${line}웨이브 · 덱 성장 Lv20까지`);
+  setBtn('btn-infinity', 'infinity', '&#8734;', '극한', '끝없는 웨이브 · 덱 성장 Lv200까지');
   const info = $('lobby-inf');
   if (info) {
-    const played = (SAVE.infBest || 0) > 0 || (SAVE.infRuns || []).length;
-    info.innerHTML = played   // 처음이면 모드 설명, 해 봤으면 기록
-      ? `최고 기록 <b>${SAVE.infBest || 0}</b> 웨이브 · 도전 클리어 <b>${SAVE.infClears || 0}</b>회${(SAVE.infRuns || []).length ? ` · 최근 ${SAVE.infRuns.slice(0, 3).map(r => r.wave).join(' / ')}` : ''}`
-      : `<b>도전</b> ${line}웨이브 완주 = 클리어 · <b>무한</b> 끝없는 기록`;
+    const P = progressionProfile();
+    info.innerHTML = ['clear', 'build', 'extreme'].map(k => `${INF.modeOf(k).name} 최고 <b>${P.records[k].best}</b>`).join(' · ') +
+      `<br>모든 모드에서 성장 조각 획득 · 현재 <b>${P.shards}</b>개` +
+      (P.legacy.best ? `<br><small>이전 버전 통합 최고 ${P.legacy.best} · 새 모드 기록과 별도 보관</small>` : '');
+  }
+}
+
+let deckDraft = null;
+function renderDeck(reset) {
+  const grid = $('deck-grid'); if (!grid) return;
+  const P = progressionProfile();
+  if (reset || !deckDraft) deckDraft = P.deck.slice();
+  $('deck-shards').textContent = P.shards.toLocaleString();
+  $('deck-selected').textContent = `편성 ${deckDraft.length}/5 · ${deckDraft.map(f => '★' + f).join(' / ')}`;
+  $('deck-save').disabled = deckDraft.length !== 5 || S.phase !== 'lobby';
+  grid.innerHTML = '';
+  for (let f = 1; f <= 20; f++) {
+    const level = P.levels[f], selected = deckDraft.includes(f), cost = level ? PROGRESSION.upgradeCost(level) : PROGRESSION.cardUnlockCost(f);
+    const card = document.createElement('article');
+    card.className = 'deck-card' + (selected ? ' selected' : '') + (!level ? ' locked' : '');
+    const snap = PROGRESSION.snapshot(Object.assign({}, P, { deck: [f, ...P.deck.filter(x => x !== f)].slice(0, 5) }), 'extreme');
+    card.innerHTML = `<div class="deck-card-title"><img src="${dieIconURL(f)}" alt="" loading="lazy"><b>★${f} ${escapeHtml(TOWER_DEFS[f].name)}</b></div>` +
+      `<small>${level ? `Lv${level} · 극한 피해 ×${PROGRESSION.damageMultiplier(snap, f).toFixed(2)}` : '미해금 · 조각으로 확정 획득'}</small>`;
+    const choose = document.createElement('button');
+    choose.type = 'button'; choose.textContent = selected ? '편성 해제' : '덱에 넣기';
+    choose.setAttribute('aria-pressed', String(selected)); choose.dataset.face = f;
+    choose.disabled = !level || (!selected && deckDraft.length >= 5);
+    choose.addEventListener('click', () => {
+      if (S.phase !== 'lobby' || S.net) return;
+      deckDraft = selected ? deckDraft.filter(x => x !== f) : deckDraft.concat(f);
+      $('deck-status').textContent = '5종을 고른 뒤 덱을 저장하세요.'; renderDeck();
+    });
+    const grow = document.createElement('button');
+    grow.type = 'button'; grow.dataset.grow = f;
+    grow.textContent = level >= 200 ? '최대 성장' : `${level ? '강화' : '해금'} · 조각 ${cost}`;
+    grow.disabled = level >= 200 || P.shards < cost;
+    grow.addEventListener('click', async () => {
+      if (S.phase !== 'lobby' || S.net) return;
+      grow.disabled = true;
+      try {
+        const res = COMMERCE.linked() ? await COMMERCE.action(level ? 'upgrade' : 'unlock', { face: f }) : level ? PROGRESSION.upgrade(P, f) : PROGRESSION.unlock(P, f);
+        if (COMMERCE.linked() || res.ok) { if (!COMMERCE.linked()) saveSave(); $('deck-status').textContent = `★${f} ${level ? '강화' : '해금'} 완료`; syncInfButtons(); }
+      } catch (error) { $('deck-status').textContent = COMMERCE.errorText(error); }
+      finally { renderDeck(); }
+    });
+    card.append(choose, grow); grid.appendChild(card);
   }
 }
 
@@ -4799,6 +5055,9 @@ function renderLobby() {
   $('lobby-progress').innerHTML = `스테이지 <b>${SAVE.cleared.length}</b>/50 클리어 · 해금 타워 <b>${un}</b>/6`;
   syncInfButtons();
 }
+window.addEventListener('commerce:change', () => {
+  if (S.phase === 'lobby') { renderLobby(); if (!$('deck-panel').classList.contains('hidden')) renderDeck(true); }
+});
 
 function renderStageSelect() {
   $('ss-gems').textContent = SAVE.gems;
@@ -4843,6 +5102,7 @@ function skinThumb(key) {
 }
 
 function renderShop() {
+  COMMERCE.init().then(() => { if (window.DKrenderCommerce) DKrenderCommerce(); }).catch(() => {});
   $('shop-gems').textContent = SAVE.gems;
   const C = window.DKCONTENT;
   if (!C) return;
@@ -5396,13 +5656,37 @@ $('ov-btn').addEventListener('click', () => {
   }
   // 타이틀 → 로비 (?start=inf 이면 바로 인피니티, 새로고침 전 방이 있으면 그 방으로)
   if (mpResumeAfterTitle()) return;
-  if ((window.DKAUTOSTART === 'inf' || window.DKAUTOSTART === 'clear') && infinityUnlocked()) { const k = window.DKAUTOSTART === 'clear' ? 'clear' : 'endless'; window.DKAUTOSTART = null; startInfinity(k); return; }
+  if (['inf', 'clear', 'build', 'extreme'].includes(window.DKAUTOSTART) && infinityUnlocked()) { const k = window.DKAUTOSTART === 'inf' ? 'extreme' : window.DKAUTOSTART; window.DKAUTOSTART = null; startInf(k); return; }
   gotoLobby();
 });
 $('btn-stage-select').addEventListener('click', () => { audio(); gotoStageSelect(); });
-const startInf = (kind) => { if (!infinityUnlocked()) return; audio(); startInfinity(kind); };
-$('btn-infinity').addEventListener('click', () => startInf('endless'));
+let startingAccountRun = false;
+const startInf = async (kind) => {
+  if (!infinityUnlocked() || startingAccountRun) return;
+  audio(); startingAccountRun = true;
+  try { const run = await COMMERCE.startRun(kind); startInfinity(kind, null, run); }
+  catch (error) { toast(COMMERCE.errorText(error)); }
+  finally { startingAccountRun = false; }
+};
+$('btn-infinity').addEventListener('click', () => startInf('extreme'));
 if ($('btn-inf-clear')) $('btn-inf-clear').addEventListener('click', () => startInf('clear'));
+if ($('btn-inf-build')) $('btn-inf-build').addEventListener('click', () => startInf('build'));
+$('btn-deck-open').addEventListener('click', () => {
+  const closed = $('deck-panel').classList.toggle('hidden');
+  $('btn-deck-open').setAttribute('aria-expanded', String(!closed));
+  if (!closed) renderDeck(true);
+});
+$('deck-save').addEventListener('click', async () => {
+  if (S.phase !== 'lobby' || S.net) return;
+  $('deck-save').disabled = true;
+  try {
+    const res = COMMERCE.linked() ? await COMMERCE.action('deck', { deck: deckDraft }) : PROGRESSION.setDeck(SAVE.progression, deckDraft);
+    const ok = COMMERCE.linked() || res.ok;
+    $('deck-status').textContent = ok ? '덱을 저장했습니다. 다음 덱빌드·극한에서 사용합니다.' : '해금한 주사위 5종을 선택하세요.';
+    if (ok && !COMMERCE.linked()) saveSave();
+  } catch (error) { $('deck-status').textContent = COMMERCE.errorText(error); }
+  finally { renderDeck(); }
+});
 for (let f = 1; f <= 6; f++) { const b = $('inf-face-' + f); if (b) b.addEventListener('click', () => upgradeFace(f)); }
 if ($('help-btn')) $('help-btn').addEventListener('click', () => { audio(); openInfHelp(); });
 if ($('coach-skip')) $('coach-skip').addEventListener('click', () => { audio(); coachStop(false); });
@@ -5483,12 +5767,18 @@ const MP_LOG_KINDS = ['sys', 'gacha', 'up', 'boom', 'boss', 'life'];
 const mpOn = () => !!(window.DKNET && DKNET.CFG && DKNET.CFG.url);
 const mpPlayers = () => ((window.DKNET && DKNET.room && DKNET.room.players) || []).slice();
 const mpMePid = () => (window.DKNET && DKNET.me && DKNET.me.pid) || '';
+const mpModeInput = () => $('mp-mode').value === 'extreme' ? 'extreme' : 'clear';
+$('mp-mode').addEventListener('change', () => {
+  $('mp-mode-info').textContent = mpModeInput() === 'extreme'
+    ? '극한: 덱 성장 적용 · 100분 동안 완료 웨이브로 경쟁 · 싱글 극한은 시간 제한 없음'
+    : '순수운빨: 성장 미적용 · 먼저 101웨이브 완주하면 1위';
+});
 const mpSeat = (pid) => { const i = mpPlayers().findIndex(p => p.pid === pid); return i < 0 ? 0 : i; };
 const mpNameOf = (pid) => { const p = mpPlayers().find(x => x.pid === pid); return p ? p.name : '?'; };
 const mpErrText = (e) => {
   const c = e && e.code;
   const T = { 'bad-code': '그런 방이 없습니다', full: '방이 가득 찼습니다 (최대 4명)', started: '이미 시작된 방입니다', version: '게임 버전이 다릅니다 — 새로고침해 주세요',
-    expired: '끝난 방입니다', rate: '너무 자주 시도했습니다. 잠시 뒤 다시', origin: '허용되지 않은 주소입니다', name: '이름을 확인해 주세요', timeout: '서버가 응답하지 않습니다',
+    mode: '방의 모드가 다릅니다. 같은 모드를 선택한 뒤 참가해 주세요', expired: '끝난 방입니다', rate: '너무 자주 시도했습니다. 잠시 뒤 다시', origin: '허용되지 않은 주소입니다', name: '이름을 확인해 주세요', timeout: '서버가 응답하지 않습니다',
     'not-ready': '2명 이상 모여야 시작할 수 있습니다', 'not-host': '방장만 시작할 수 있습니다', 'bad-key': '이 방의 좌석이 아닙니다', 'bad-request': '잘못된 요청', busy: '지금은 방을 더 만들 수 없습니다. 잠시 뒤 다시', left: '상대가 나가 매칭이 취소되었습니다' };
   return T[c] || (`연결 실패${c ? ` (${c})` : ''}`);
 };
@@ -5502,13 +5792,13 @@ function mpNameInput() {
 async function mpCreate() {
   if (!mpOn() || S.phase !== 'lobby') return;
   audio(); mpStatus('방을 만드는 중…');
-  try { await DKNET.create(mpNameInput()); MP.quick = false; clearRoomChat(); mpStatus(''); gotoMpRoom(); }
+  try { await DKNET.create(mpNameInput(), mpModeInput()); MP.quick = false; clearRoomChat(); mpStatus(''); gotoMpRoom(); }
   catch (e) { mpStatus(mpErrText(e), true); }
 }
 async function mpQuick() {
   if (!mpOn() || S.phase !== 'lobby') return;
   audio(); mpStatus('매칭 서버에 붙는 중…');
-  try { await DKNET.quick(mpNameInput()); MP.quick = true; MP.queue = null; clearRoomChat(); mpStatus(''); gotoMpRoom(); }
+  try { await DKNET.quick(mpNameInput(), mpModeInput()); MP.quick = true; MP.queue = null; clearRoomChat(); mpStatus(''); gotoMpRoom(); }
   catch (e) { mpStatus(mpErrText(e), true); }
 }
 async function mpJoin(code) {
@@ -5516,7 +5806,7 @@ async function mpJoin(code) {
   code = String(code || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
   if (code.length !== 6) { mpStatus('방 코드는 6자리입니다', true); return; }
   audio(); mpStatus('방에 들어가는 중…');
-  try { await DKNET.join(code, mpNameInput()); MP.quick = false; clearRoomChat(); mpStatus(''); gotoMpRoom(); }
+  try { await DKNET.join(code, mpNameInput(), mpModeInput()); MP.quick = false; clearRoomChat(); mpStatus(''); gotoMpRoom(); }
   catch (e) { mpStatus(mpErrText(e), true); }
 }
 function mpLeave() {
@@ -5538,6 +5828,9 @@ function renderMpRoom() {
   $('mp-code-wrap').classList.toggle('hidden', queue || MP.quick);
   $('mp-slots').classList.toggle('hidden', queue);
   $('mp-room-title').textContent = queue || MP.quick ? '빠른 매칭' : '대기실';
+  $('mp-note').textContent = N.room && N.room.mode === 'extreme'
+    ? '극한 · 편성 덱과 성장 적용 · 100분 동안 완료 웨이브가 높은 순으로 경쟁합니다. 먼저 탈락하면 관전할 수 있습니다.'
+    : '순수운빨 · 성장 미적용 · 각자 자기 속도(x1~x3) · 먼저 101웨이브를 완주하면 1위, 탈락은 완료 웨이브 순입니다.';
   if (queue) {   // 대기열: 방이 아직 없다
     const q = MP.queue || { n: 1, eta: null };
     $('mp-count').textContent = `${q.n || 1}/4`;
@@ -5568,12 +5861,15 @@ function renderMpRoom() {
 }
 
 // ---- 런 시작 ----
-function mpOnStart(m) {
+async function mpOnStart(m) {
   const N = window.DKNET;
-  const net = { code: N.code, pid: mpMePid(), seed: m.seed, t0: m.t0, timing: m.timing,
+  const net = { code: N.code, pid: mpMePid(), mode: m.mode === 'extreme' ? 'extreme' : 'clear', seed: m.seed, t0: m.t0, timing: m.timing,
     rivals: {}, status: 'alive', doneW: 0, savedResult: null, spectating: false, forced: false, ended: null, watchers: 0 };
   if (VIEW.pid) mpViewExit(true);
-  startInfinity('clear', net);
+  try {
+    const run = await COMMERCE.startRun(net.mode === 'extreme' ? 'extremeMulti' : 'multi');
+    startInfinity(net.mode, net, run);
+  } catch (error) { mpLeave(); gotoLobby('multi'); mpStatus(COMMERCE.errorText(error), true); return; }
   mpStartSum();
   mpRenderRivals();
   mpLayoutCards();
@@ -5590,8 +5886,9 @@ function mpTick() {
 // ---- 요약 송신 ----
 function mpSummary(withField) {
   const net = S.net, boss = S.enemies.find(e => e.isBoss && !e.dead);
+  const maxWave = net.mode === 'extreme' ? 1000000 : net.timing.clearWave;
   const m = {
-    w: Math.max(0, Math.min(101, S.wave | 0)), dw: Math.max(0, Math.min(101, net.doneW | 0)),
+    w: Math.max(0, Math.min(maxWave, Math.floor(S.wave))), dw: Math.max(0, Math.min(maxWave, Math.floor(net.doneW))),
     l: Math.max(0, Math.min(20, S.lives | 0)), g: Math.max(0, Math.min(1e7, Math.floor(S.gold))), k: Math.max(0, Math.min(1e6, S.inf.kills | 0)),
     f: Math.min(200, S.enemies.length), sp: Math.max(1, Math.min(3, S.speed | 0)), hid: document.hidden ? 1 : 0,
     b: boss ? Math.max(0, Math.min(1, boss.hp / Math.max(1, boss.max))) : null, o: W < H ? 'p' : 'l',
@@ -5623,7 +5920,7 @@ function mpEnemyStream() {
   }
   if (DIR_ART) return DIR_ART.enemyStream(rows);
   let out = parts.join(';');
-  while (out.length > 3000) { parts.pop(); out = parts.join(';'); }
+  while (out.length > 5120) { parts.pop(); out = parts.join(';'); }
   return out;
 }
 function mpStartSum() {
@@ -5708,15 +6005,16 @@ function mpViewBuild(sum) {
       const key = i + ':' + (row.a || 0) + ':' + n, old = prev.get(key);
       const e = old || { type: base.id, def: base, sprite: base.sprite, move: base.move, name: base.name, lane: laneFor(base.move, 0), animT: Math.random(), face: 1, dead: false, hidden: false, hue: 0, slowT: 0, stunT: 0, flashT: 0, isElite: false, isBoss, entranceT: -1, stompPhase: 0, key, view: true };
       if (appearance) {
-        const inf = C.INFINITY, mon = inf.monsters[appearance.wave], cls = inf.monsterFor(appearance.wave).cls;
-        const legacy = inf.art(appearance.wave, appearance.role === 'secondary' ? 1 : 0);
+        const inf = C.INFINITY, baseWave = appearance.baseWave || appearance.wave, mon = inf.monsters[baseWave], cls = inf.monsterFor(appearance.wave).cls;
+        const legacy = inf.art(baseWave, appearance.role === 'secondary' ? 1 : 0);
         const table = isBoss ? inf.artSizeBoss : inf.artSize;
         const logicalSize = legacy ? table[cls] : Math.round(base.size * (inf.sizeScale[cls] || 1));
         e.def = Object.assign({}, base, { size: Math.round(logicalSize * (appearance.elite ? 1.2 : 1)) });
-        e.appearanceCode = row.a; e.artAssetId = appearance.assetId; e.isElite = appearance.elite; e.isBoss = isBoss;
+        e.appearanceCode = row.a; applyDirectionalAppearance(e, appearance); e.isElite = appearance.elite; e.isBoss = isBoss;
         e.bossRole = appearance.role === 'secondary' ? 1 : 0; e.wave = appearance.wave; e.sizeClass = cls;
         e.drawHeight = directionalDrawHeight(e, table[cls]);
-        e.name = (e.isElite ? '정예 ' : '') + (e.bossRole ? mon.second || mon.name + ' 부관' : mon.name);
+        const dart = inf.directionalArt(appearance.wave, e.bossRole);
+        e.name = (e.isElite ? '정예 ' : '') + (e.evolutionTier ? `진화 ${e.evolutionTier} · ` : '') + (dart ? dart.name : e.bossRole ? mon.second || mon.name + ' 부관' : mon.name);
         e.art = legacy && legacy.key; e.artWalk = legacy && legacy.walkKey; e.artWalkStride = legacy && legacy.walkStride || 0;
         e.artWalkDistance ||= 0;
         e.spdMult = inf.wave(appearance.wave, true).speedMult;
@@ -6076,7 +6374,7 @@ function mpResumeAfterTitle() {
   if (room.phase === 'playing' && room.game) {
     let last = { wave: 0, kills: 0 };
     try { last = JSON.parse(sessionStorage.getItem('dk_mp_run') || 'null') || last; } catch (e) { /* 없음 */ }
-    mpOnStart({ seed: room.game.seed || 0, t0: room.game.t0, timing: room.game.timing });
+    mpOnStart({ mode: room.game.mode || room.mode, seed: room.game.seed || 0, t0: room.game.t0, timing: room.game.timing });
     S.wave = Math.max(0, last.wave | 0); S.inf.kills = last.kills | 0; S.inf.reload = true;
     endInfinity(false);
     return true;
@@ -6127,12 +6425,19 @@ let lastTs = 0;
 function frame(ts) {
   const dt = Math.min(0.05, (ts - lastTs) / 1000 || 0);
   lastTs = ts;
-  if (!S.paused) {
-    for (let i = 0; i < S.speed; i++) update(dt);
-    updateDie(dt); // 주사위 물리는 배속과 무관하게 실제 시간으로
-    updateSlot(dt * S.speed);   // 뽑기 슬롯은 배속을 따라간다 (x3 에서 보상 큐가 굳지 않게)
+  uiInFrame = true;
+  try {
+    if (!S.paused) {
+      for (let i = 0; i < S.speed; i++) update(dt);
+      updateDie(dt);
+      updateSlot(dt * S.speed);
+    }
+    if (window.DKCOSMETICS) DKCOSMETICS.tick();
+    if (S.net) mpTick();
+  } finally {
+    uiInFrame = false;
+    if (uiDirty) syncUI(); // 광역 처치와 x3 시뮬레이션의 DOM 갱신/레이아웃을 화면당 한 번으로 합친다.
   }
-  if (S.net) mpTick();
   refreshDirectionalDemand(false);
   if (VIEW.pid) { mpViewAdvance(dt); withView(draw); }   // 상대 필드 보기: 내 시뮬은 위에서 돌았고, 그리기만 상대 것으로
   else draw();
@@ -6200,6 +6505,8 @@ function drawLoading(pr) {
     $('ov-desc').innerHTML += '<br><span style="color:#ff9f9f">⚠ file:// 로 열면 이미지 배경 보정이 생략됩니다. start.bat 또는 로컬 서버 사용을 권장합니다.</span>';
   }
   loadSave();
+  attachCosmeticRenderer();
+  await COMMERCE.init().catch(() => {});
   applyAudioSettings();
   // 개발용 URL 플래그: ?unlock=all → 50 스테이지 클리어·타워 전부 해금 상태로 시작 (저장은 플레이 후 갱신될 때만)
   //                    ?start=inf  → 타이틀 버튼을 누르면 로비 대신 바로 인피니티 시작
@@ -6228,6 +6535,7 @@ function drawLoading(pr) {
   window.DKART = directionalArt;
   window.DKappearance = DIR_ART;
   window.DKTD = TOWER_DEFS;                        // 테스트 훅
+  window.DKtowerDamage = towerDmg;
   window.DKdamage = damageEnemy; window.DKenhance = enhanceTower; window.DKqueue = () => S.inf && S.inf.queue; window.DKhelp = openInfHelp; // 메운디 시스템 테스트 훅
   window.DKlog = pushLog; window.DKlogs = () => LOG.nodes.map(n => n.textContent); window.DKchatOpen = chatOpen; // 로그·채팅 훅
   window.DKNETLOG = window.DKNET && DKNET._debug;   // 멀티 소켓 로그

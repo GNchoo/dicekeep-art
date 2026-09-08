@@ -35,8 +35,8 @@ export class Lobby extends DurableObject {
       setAlarm: (ts) => { if (ts == null) this.ctx.storage.deleteAlarm(); else this.ctx.storage.setAlarm(ts); },
       log: (o) => console.log(JSON.stringify(o)),
       putQuota: (q) => this.ctx.storage.put('quota', q),
-      claim: async ({ ver, players }) => {
-        const r = await claimRoom(this.env.ROOM, { kind: 'quick', ver, reserve: { players, until: Date.now() + RESERVE_TTL } });
+      claim: async ({ ver, mode, players }) => {
+        const r = await claimRoom(this.env.ROOM, { kind: 'quick', ver, mode, reserve: { players, until: Date.now() + RESERVE_TTL } });
         return r.ok ? { ok: true, code: r.code } : { ok: false, err: r.error };
       },
     });

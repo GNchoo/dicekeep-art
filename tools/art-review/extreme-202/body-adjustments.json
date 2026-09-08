@@ -1,0 +1,34 @@
+{
+  "w134": {
+    "back": {
+      "flipX": true,
+      "review": "Source rear shield was on the same screen side as front. Fixed whole back torso reflection preserves physical hand while keeping the source PNG immutable."
+    }
+  },
+  "w106": {
+    "back": {
+      "flipX": true,
+      "review": "Source rear key-spear was on the same screen side as front. Reflect the back torso to restore physical hand continuity."
+    }
+  },
+  "b181": {
+    "back": {
+      "target": {
+        "height": 255,
+        "top": 110,
+        "centerX": 266
+      },
+      "review": "Original-size articulated rear wing extended beyond left output boundary at 90-degree spread. Translate the whole back torso and attached sockets right by10 canonical pixels; preserve source, wing scale, angle phases and pivot."
+    }
+  },
+  "b201-2": {
+    "back": {
+      "target": {
+        "height": 255,
+        "top": 110,
+        "centerX": 268
+      },
+      "review": "Rear wing at full spread reached the left canonical boundary. Translate body and attached sockets12 canonical pixels right; wing source, scale, phase, angle and pivot remain unchanged."
+    }
+  }
+}

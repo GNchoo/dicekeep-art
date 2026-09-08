@@ -1,0 +1,218 @@
+[
+  {
+    "id": "b171",
+    "view": "side",
+    "baseRigId": "b070",
+    "source": "tools/art-review/directional-101/late-waves/sources/t7-boss-01-turnaround.png",
+    "sha256": "ccc3c6cff2e75b4a792f73f341ad35fa3d50b8b88700644d02d5fc8908dbe01c",
+    "sourceBounds": [
+      null,
+      null,
+      245,
+      571
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 80,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b171",
+    "view": "front",
+    "baseRigId": "b070",
+    "source": "tools/art-review/directional-101/late-waves/sources/t7-boss-01-turnaround.png",
+    "sha256": "ccc3c6cff2e75b4a792f73f341ad35fa3d50b8b88700644d02d5fc8908dbe01c",
+    "sourceBounds": [
+      null,
+      null,
+      299,
+      563
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 80,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b171",
+    "view": "back",
+    "baseRigId": "b070",
+    "source": "tools/art-review/directional-101/late-waves/sources/t7-boss-01-turnaround.png",
+    "sha256": "ccc3c6cff2e75b4a792f73f341ad35fa3d50b8b88700644d02d5fc8908dbe01c",
+    "sourceBounds": [
+      null,
+      null,
+      289,
+      568
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 80,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b171-2",
+    "view": "side",
+    "baseRigId": "b070-2",
+    "source": "tools/art-review/directional-101/late-waves/sources/t7-boss-01-turnaround.png",
+    "sha256": "ccc3c6cff2e75b4a792f73f341ad35fa3d50b8b88700644d02d5fc8908dbe01c",
+    "sourceBounds": [
+      null,
+      null,
+      212,
+      519
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 80,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b171-2",
+    "view": "front",
+    "baseRigId": "b070-2",
+    "source": "tools/art-review/directional-101/late-waves/sources/t7-boss-01-turnaround.png",
+    "sha256": "ccc3c6cff2e75b4a792f73f341ad35fa3d50b8b88700644d02d5fc8908dbe01c",
+    "sourceBounds": [
+      null,
+      null,
+      377,
+      529
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 80,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b171-2",
+    "view": "back",
+    "baseRigId": "b070-2",
+    "source": "tools/art-review/directional-101/late-waves/sources/t7-boss-01-turnaround.png",
+    "sha256": "ccc3c6cff2e75b4a792f73f341ad35fa3d50b8b88700644d02d5fc8908dbe01c",
+    "sourceBounds": [
+      null,
+      null,
+      334,
+      525
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 80,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b181",
+    "view": "side",
+    "baseRigId": "b080",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-boss-flight-01-side-parts.png",
+    "sha256": "c27cd66d38e07bb5170e4b6bfea16676827888e893f9acc174aa110e4dfde179",
+    "sourceBounds": [
+      null,
+      null,
+      296,
+      564
+    ],
+    "bodyTarget": {
+      "height": 255,
+      "top": 110,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b181",
+    "view": "front",
+    "baseRigId": "b080",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-boss-flight-01-front-back-parts.png",
+    "sha256": "262e5ad3998378a2087447670c009e660682f792deffa5885cd83dddb79b74a0",
+    "sourceBounds": [
+      null,
+      null,
+      198,
+      395
+    ],
+    "bodyTarget": {
+      "height": 255,
+      "top": 110,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b181",
+    "view": "back",
+    "baseRigId": "b080",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-boss-flight-01-front-back-parts.png",
+    "sha256": "262e5ad3998378a2087447670c009e660682f792deffa5885cd83dddb79b74a0",
+    "sourceBounds": [
+      null,
+      null,
+      184,
+      409
+    ],
+    "bodyTarget": {
+      "height": 255,
+      "top": 110,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b181-2",
+    "view": "side",
+    "baseRigId": "b080-2",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-quad-02-side-parts.png",
+    "sha256": "29a48f4448ec816978ca167b3eb53beecc27423aa037e9693af326c243bab241",
+    "sourceBounds": [
+      null,
+      null,
+      590,
+      583
+    ],
+    "bodyTarget": {
+      "height": 325,
+      "top": 35,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b181-2",
+    "view": "front",
+    "baseRigId": "b080-2",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-quad-02-front-back-parts.png",
+    "sha256": "2b8aafe222a1b396527a31ad80ef4114a059284baad1d79a28c8d3f178c14903",
+    "sourceBounds": [
+      null,
+      null,
+      313,
+      339
+    ],
+    "bodyTarget": {
+      "height": 325,
+      "top": 35,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b181-2",
+    "view": "back",
+    "baseRigId": "b080-2",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-quad-02-front-back-parts.png",
+    "sha256": "2b8aafe222a1b396527a31ad80ef4114a059284baad1d79a28c8d3f178c14903",
+    "sourceBounds": [
+      null,
+      null,
+      273,
+      407
+    ],
+    "bodyTarget": {
+      "height": 325,
+      "top": 35,
+      "centerX": 256
+    }
+  }
+]

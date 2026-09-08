@@ -5,12 +5,29 @@
   const VIEWS = ['side', 'front', 'back'];
   const finite = n => typeof n === 'number' && Number.isFinite(n);
   const mod = (n, m) => ((n % m) + m) % m;
+  const EXTREME_BASE = 1000, EVOLUTION_STEP = 512, MAX_EVOLUTION = 3, EN_MAX = 5120;
+
+  function roster(wave) {
+    const w = finite(wave) ? Math.max(1, Math.min(1000000, Math.floor(wave))) : 1;
+    const baseWave = mod(w - 1, 101) + 1;
+    return { wave: w, baseWave, rosterWave: w <= 101 ? baseWave : baseWave + 101,
+      evolutionTier: w <= 202 ? 0 : Math.min(MAX_EVOLUTION, Math.floor((w - 102) / 101)) };
+  }
 
   function appearance(wave, secondary, elite) {
-    const w = mod(Math.max(1, wave | 0) - 1, 101) + 1;
-    return w + (secondary ? 101 : 0) + (elite ? 256 : 0);
+    const r = roster(wave);
+    if (r.wave <= 101) return r.baseWave + (secondary ? 101 : 0) + (elite ? 256 : 0);
+    return EXTREME_BASE + (r.rosterWave - 102) * 4 + r.evolutionTier * EVOLUTION_STEP + (secondary ? 1 : 0) + (elite ? 2 : 0);
   }
   function decodeAppearance(value) {
+    if (Number.isInteger(value) && value >= EXTREME_BASE && value < EXTREME_BASE + (MAX_EVOLUTION + 1) * EVOLUTION_STEP) {
+      const offset = value - EXTREME_BASE, evolutionTier = Math.floor(offset / EVOLUTION_STEP), slot = offset % EVOLUTION_STEP;
+      const baseWave = Math.floor(slot / 4) + 1, secondary = !!(slot & 1), elite = !!(slot & 2), boss = baseWave % 10 === 0;
+      if (baseWave > 101 || (secondary && !boss) || (elite && boss)) return null;
+      const wave = baseWave + 101;
+      return { code: value, wave, baseWave, evolutionTier, role: secondary ? 'secondary' : boss ? 'boss' : 'normal', elite,
+        assetId: (boss ? 'b' : 'w') + String(wave).padStart(3, '0') + (secondary ? '-2' : '') };
+    }
     if (!Number.isInteger(value) || value <= 0 || value > 457) return null;
     const elite = value >= 257;
     let n = value - (elite ? 256 : 0);
@@ -24,6 +41,12 @@
     const sharedFirstBoss = secondary && n === 10;
     return { code: value, wave: n, role: secondary ? 'secondary' : boss ? 'boss' : 'normal', elite,
       assetId: (boss ? 'b' : 'w') + String(n).padStart(3, '0') + (secondary && !sharedFirstBoss ? '-2' : '') };
+  }
+  function legacyAssetId(value) {
+    const a = typeof value === 'number' ? decodeAppearance(value) : value;
+    if (!a) return null;
+    const wave = a.baseWave || a.wave, boss = a.role !== 'normal';
+    return (boss ? 'b' : 'w') + String(wave).padStart(3, '0') + (a.role === 'secondary' && wave !== 10 ? '-2' : '');
   }
   function direction(dx, dy, previous) {
     if (!finite(dx) || !finite(dy) || Math.hypot(dx, dy) < 0.001) return previous || 'side';
@@ -41,7 +64,7 @@
   }
 
   // Keep all legacy i,d,h rows whenever they fit. Optional appearance/phase never removes an enemy.
-  function enemyStream(rows, limit = 3000) {
+  function enemyStream(rows, limit = EN_MAX) {
     const valid = rows.slice(0, 200).filter(r => Number.isInteger(r.i) && r.i >= 0 && finite(r.d));
     const legacy = valid.map(r => [r.i, Math.max(0, Math.round(r.d)), Math.max(0, Math.min(9, r.h | 0))].join(','));
     const art = legacy.map((s, i) => decodeAppearance(valid[i].a) ? s + ',' + valid[i].a : s);
@@ -58,7 +81,7 @@
     return legacy.join(';');
   }
   function parseEnemyStream(text) {
-    if (typeof text !== 'string' || text.length > 3000) return [];
+    if (typeof text !== 'string' || text.length > EN_MAX) return [];
     const out = [];
     for (const row of text.split(';').slice(0, 200)) {
       if (!/^\d+,\d+,\d+(?:,\d+){0,2}$/.test(row)) continue;
@@ -94,12 +117,33 @@
     return { ...e, views };
   }
 
+  // Nine small shared marks, baked once at loading time. The character bitmap,
+  // gait, collision size and frame selection never depend on evolution.
+  function bakeEvolutionMark(makeCanvas, tier, view) {
+    const cv = makeCanvas(); cv.width = cv.height = 64;
+    const g = cv.getContext('2d'), colors = ['#85d9e9', '#bd9ff4', '#f4ce7e'];
+    g.strokeStyle = colors[tier - 1]; g.fillStyle = colors[tier - 1];
+    g.lineWidth = 1.4; g.globalAlpha = .48;
+    g.beginPath(); g.ellipse(32, 38, view === 'side' ? 26 : 23, 23, 0, Math.PI * .10, Math.PI * .90); g.stroke();
+    g.beginPath(); g.ellipse(32, 38, view === 'side' ? 26 : 23, 23, 0, Math.PI * 1.10, Math.PI * 1.90); g.stroke();
+    g.globalAlpha = .92;
+    const x = view === 'side' ? 45 : 32, y = view === 'back' ? 18 : 12;
+    for (let i = 0; i < tier; i++) {
+      const xx = x + (i - (tier - 1) / 2) * 7;
+      g.beginPath(); g.moveTo(xx, y - 4); g.lineTo(xx + 2.5, y); g.lineTo(xx, y + 4); g.lineTo(xx - 2.5, y); g.closePath(); g.stroke();
+    }
+    return cv;
+  }
+
   function create(options = {}) {
     const manifest = options.manifest || root.INF_DIRECTIONAL_ART || { entries: {} };
+    const extreme = options.extremeManifest || (!options.manifest && root.INF_EXTREME_ART) || { entries: {} };
     const entries = new Map(), records = new Map(), invalidReady = [];
-    for (const [id, e] of Object.entries(manifest.entries || {})) {
+    for (const source of [manifest, extreme]) for (const [id, e] of Object.entries(source.entries || {})) {
       const checked = validateEntry(id, e);
-      if (checked) entries.set(id, checked); else if (e && e.ready === true) invalidReady.push(id);
+      if (entries.has(id)) invalidReady.push('duplicate:' + id);
+      else if (checked) entries.set(id, { ...checked, assetVersion: source.version || 93 });
+      else if (e && e.ready === true) invalidReady.push(id);
     }
     const budget = options.budget || 96 * MiB, concurrency = Math.max(1, Math.min(2, options.concurrency || 2));
     const makeCanvas = options.makeCanvas || (() => root.document.createElement('canvas'));
@@ -107,8 +151,10 @@
     const base = options.base || (root.location && root.location.href) || 'http://localhost/';
     let resident = 0, reserved = 0, running = 0, generation = 0, tick = 0, peak = 0, maxRunning = 0, disposed = false;
     let initialization, initWaiter, initialized = false;
+    const evolutionMarks = new Map();
+    let overlayBytes = 0;
     const stats = { loads: 0, failures: 0, evictions: 0, budgetSkips: 0 };
-    const urlFor = src => { const u = new URL(src, base); u.searchParams.set('v', String(manifest.version || 93)); return u.href; };
+    const urlFor = (src, entry) => { const u = new URL(src, base); u.searchParams.set('v', String(entry.assetVersion)); return u.href; };
     const loader = options.loadImage || (url => new Promise((resolve, reject) => {
       const im = new root.Image();
       let settled = false;
@@ -148,7 +194,7 @@
       running++; reserved += reservation; maxRunning = Math.max(maxRunning, running); peak = Math.max(peak, resident + reserved);
       r.status = 'loading'; r.attempts++; let img, frames = [];
       try {
-        img = await loader(r.mandatory ? r.descriptor.fallback : urlFor(r.descriptor[r.kind]), r);
+        img = await loader(r.mandatory ? r.descriptor.fallback : urlFor(r.descriptor[r.kind], r.entry), r);
         const v = r.descriptor, cols = r.kind === 'sheet' ? v.cols : 1, rows = r.kind === 'sheet' ? v.rows : 1;
         if (img.width !== cols * v.cell || img.height !== rows * v.cell) throw new Error('unexpected directional art grid: ' + r.key);
         if (disposed || stamp !== generation || !r.wanted) { r.status = 'idle'; return; }
@@ -156,7 +202,7 @@
           const cv = makeCanvas(); cv.width = cv.height = v.cell;
           cv.getContext('2d').drawImage(img, i % cols * v.cell, Math.floor(i / cols) * v.cell, v.cell, v.cell, 0, 0, v.cell, v.cell);
           frames.push({ cv, w: v.cell, h: v.cell, pivot: v.pivot.slice(), referenceHeight: v.referenceHeight, directional: true,
-            assetId: r.id, view: r.view, cacheKey: r.key });
+            assetId: r.id, legacyAssetId: r.entry.legacyAssetId, view: r.view, cacheKey: r.key });
         }
         r.frames = frames; frames = []; r.status = 'ready'; r.consecutiveFailures = 0; r.retryAt = 0; delete r.error;
         resident += r.bytes; r.touched = ++tick; stats.loads++;
@@ -214,17 +260,23 @@
         for (const id of entries.keys()) for (const view of VIEWS) record(id, view, 'fallback');
         const mandatory = [...records.values()].filter(r => r.mandatory);
         const bytes = mandatory.reduce((n, r) => n + r.bytes, 0);
+        const markBytes = [...entries.values()].some(e => e.wave >= 102) ? MAX_EVOLUTION * VIEWS.length * 64 * 64 * 4 : 0;
         // Account for both decoded input images and output canvases while the final two decode.
-        if (bytes + Math.min(concurrency, mandatory.length) * 64 * 64 * 4 > budget) { reject(new Error('inline character fallbacks exceed art cache budget')); return; }
+        if (bytes + markBytes + Math.min(concurrency, mandatory.length) * 64 * 64 * 4 > budget) { reject(new Error('inline character fallbacks exceed art cache budget')); return; }
+        if (markBytes) {
+          for (let tier = 1; tier <= MAX_EVOLUTION; tier++) for (const view of VIEWS) evolutionMarks.set(tier + ':' + view, bakeEvolutionMark(makeCanvas, tier, view));
+          overlayBytes = markBytes; resident += markBytes;
+        }
         initWaiter = { resolve, reject }; pump(); checkInit();
       });
       return initialization;
     }
     return { entry: id => entries.get(id) || null, frame, demand, init,
+      evolutionMark: (tier, view) => evolutionMarks.get(Math.min(MAX_EVOLUTION, Math.max(0, tier | 0)) + ':' + view) || null,
       state: () => ({ version: manifest.version, approvedEntries: entries.size, initialized, invalidReady, budget, residentBytes: resident, reservedBytes: reserved, trackedBytes: resident + reserved,
-        peakTrackedBytes: peak, running, maxRunning, ...stats, records: [...records.values()].map(({ key, status, pin, bytes, attempts, consecutiveFailures, error }) => ({ key, status, pin, bytes, attempts, consecutiveFailures, error })) }),
+        overlayBytes, peakTrackedBytes: peak, running, maxRunning, ...stats, records: [...records.values()].map(({ key, status, pin, bytes, attempts, consecutiveFailures, error }) => ({ key, status, pin, bytes, attempts, consecutiveFailures, error })) }),
       clear() { generation++; for (const r of records.values()) { r.pin = !disposed && r.mandatory; r.wanted = r.pin; if (r.status === 'ready' && !r.pin) evict(r); } },
-      dispose() { disposed = true; this.clear(); checkInit(); } };
+      dispose() { disposed = true; this.clear(); for (const cv of evolutionMarks.values()) { cv.width = cv.height = 0; } evolutionMarks.clear(); resident -= overlayBytes; overlayBytes = 0; checkInit(); } };
   }
-  root.DKDirectionalArt = { create, appearance, decodeAppearance, direction, phase, phaseError, timePhaseAdvance, enemyStream, parseEnemyStream, validateEntry };
+  root.DKDirectionalArt = { create, roster, appearance, decodeAppearance, legacyAssetId, direction, phase, phaseError, timePhaseAdvance, enemyStream, parseEnemyStream, validateEntry, EN_MAX };
 })(typeof window === 'undefined' ? globalThis : window);

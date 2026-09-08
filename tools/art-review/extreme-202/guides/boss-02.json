@@ -1,0 +1,218 @@
+[
+  {
+    "id": "b131",
+    "view": "side",
+    "baseRigId": "b030",
+    "source": "tools/art-review/directional-101/early-boss-02-side-parts.png",
+    "sha256": "be371212aac5a39d08857ee9fda85f82a264e01f7953d2e7417dc96d60132f61",
+    "sourceBounds": [
+      null,
+      null,
+      367,
+      577
+    ],
+    "bodyTarget": {
+      "height": 340,
+      "top": 24,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b131",
+    "view": "front",
+    "baseRigId": "b030",
+    "source": "tools/art-review/directional-101/early-boss-02-front-back-parts.png",
+    "sha256": "28cf88ab492b1ce25b6ee44aaf12cb761c1e48301846efb229807827c6a12183",
+    "sourceBounds": [
+      null,
+      null,
+      293,
+      431
+    ],
+    "bodyTarget": {
+      "height": 340,
+      "top": 24,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b131",
+    "view": "back",
+    "baseRigId": "b030",
+    "source": "tools/art-review/directional-101/early-boss-02-front-back-parts.png",
+    "sha256": "28cf88ab492b1ce25b6ee44aaf12cb761c1e48301846efb229807827c6a12183",
+    "sourceBounds": [
+      null,
+      null,
+      281,
+      433
+    ],
+    "bodyTarget": {
+      "height": 340,
+      "top": 24,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b131-2",
+    "view": "side",
+    "baseRigId": "b030-2",
+    "source": "tools/art-review/directional-101/early-boss-02-side-parts.png",
+    "sha256": "be371212aac5a39d08857ee9fda85f82a264e01f7953d2e7417dc96d60132f61",
+    "sourceBounds": [
+      null,
+      null,
+      258,
+      538
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 100,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b131-2",
+    "view": "front",
+    "baseRigId": "b030-2",
+    "source": "tools/art-review/directional-101/early-boss-02-front-back-parts.png",
+    "sha256": "28cf88ab492b1ce25b6ee44aaf12cb761c1e48301846efb229807827c6a12183",
+    "sourceBounds": [
+      null,
+      null,
+      206,
+      421
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 100,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b131-2",
+    "view": "back",
+    "baseRigId": "b030-2",
+    "source": "tools/art-review/directional-101/early-boss-02-front-back-parts.png",
+    "sha256": "28cf88ab492b1ce25b6ee44aaf12cb761c1e48301846efb229807827c6a12183",
+    "sourceBounds": [
+      null,
+      null,
+      208,
+      425
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 100,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b141",
+    "view": "side",
+    "baseRigId": "b040",
+    "source": "tools/art-review/directional-101/middle-waves/t4-boss-01-side-parts.png",
+    "sha256": "e2028b26434723b61086b49bff4ad9eec64fcff69d7932bd3eb6c39aee80b8b9",
+    "sourceBounds": [
+      null,
+      null,
+      318,
+      418
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 244.58851674641147
+    }
+  },
+  {
+    "id": "b141",
+    "view": "front",
+    "baseRigId": "b040",
+    "source": "tools/art-review/directional-101/middle-waves/t4-boss-01-front-parts.png",
+    "sha256": "9c422528e4d83c3b172cc3a827494eb070c6996ffcfa3bcb03491933cd8854e0",
+    "sourceBounds": [
+      null,
+      null,
+      347,
+      437
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 254.80892448512586
+    }
+  },
+  {
+    "id": "b141",
+    "view": "back",
+    "baseRigId": "b040",
+    "source": "tools/art-review/directional-101/middle-waves/t4-boss-01-back-parts-clean.png",
+    "sha256": "64ba992588f3fe9978588bb4c64e294423f356512d00e4fcf50b0b8f2783b2b5",
+    "sourceBounds": [
+      null,
+      null,
+      352,
+      420
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 267.3142857142857
+    }
+  },
+  {
+    "id": "b141-2",
+    "view": "side",
+    "baseRigId": "b040-2",
+    "source": "tools/art-review/directional-101/middle-waves/t4-boss-01-side-parts.png",
+    "sha256": "e2028b26434723b61086b49bff4ad9eec64fcff69d7932bd3eb6c39aee80b8b9",
+    "sourceBounds": [
+      null,
+      null,
+      345,
+      410
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 248.42682926829266
+    }
+  },
+  {
+    "id": "b141-2",
+    "view": "front",
+    "baseRigId": "b040-2",
+    "source": "tools/art-review/directional-101/middle-waves/t4-boss-01-front-parts.png",
+    "sha256": "9c422528e4d83c3b172cc3a827494eb070c6996ffcfa3bcb03491933cd8854e0",
+    "sourceBounds": [
+      null,
+      null,
+      462,
+      442
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 257.5678733031674
+    }
+  },
+  {
+    "id": "b141-2",
+    "view": "back",
+    "baseRigId": "b040-2",
+    "source": "tools/art-review/directional-101/middle-waves/t4-boss-01-back-parts.png",
+    "sha256": "b78e2f4f8efe6f044b2435c46935a809f3fc20a1569f273b9c8640bbcf7126fc",
+    "sourceBounds": [
+      null,
+      null,
+      426,
+      404
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 268.6534653465347
+    }
+  }
+]

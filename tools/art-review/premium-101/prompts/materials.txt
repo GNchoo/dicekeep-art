@@ -1,0 +1,8 @@
+Prompt brief reconstructed from the generation record; wording is not a verbatim tool transcript.
+
+Use case: stylized-concept. Production UV material atlas for three premium dice skins, realistic tactile worn ivory. One wide 3:1 atlas, ideally 3072x1024, exactly three equal squares. Flat front-on evenly lit material samples, not dice.
+Left ROYAL: warm aged ivory porcelain stone, fine speckling, shallow antique gold filigree near corners, clean ivory center for red pips.
+Middle FROST: pale icy blue translucent mineral, cloudy internal inclusions, sparse silver-blue hairline veins, clean light center for navy pips.
+Right EMBER: charcoal obsidian satin, sparse copper-orange cracks near corners, readable dark center for gold pips.
+Consistent realistic grain, diffuse overhead light, no perspective, cast shadows or bloom. Suitable for UV sphere, tetrahedron, cube, octahedron, dodecahedron and D20.
+No numbers, pips, letters, dice, text, logos, watermarks or objects. Edge-to-edge three squares in one combined atlas to reduce cost.

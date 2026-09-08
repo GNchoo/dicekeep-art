@@ -22,13 +22,14 @@
 <body>
 <main>
 <h1>주사위 성채 개인정보처리방침</h1>
-<p class="meta">시행일: 2026-09-06 · 적용: 웹(dicekeep.cgn3731.workers.dev) 및 Android/iOS 앱 <code>com.fallman.dicekeep</code></p>
+<p class="meta">시행일: 2026-09-09 · 적용: 웹(dicekeep.cgn3731.workers.dev) 및 Android 앱 <code>com.fallman.dicekeep</code></p>
 
 <h2>1. 수집하지 않는 정보</h2>
-<p>주사위 성채는 <b>계정, 로그인, 광고, 분석(트래킹) 도구를 사용하지 않습니다.</b> 이름·이메일·전화번호·위치·기기 식별자·연락처·사진 등 어떤 개인정보도 수집·저장하지 않습니다. 회원 가입도 없습니다.</p>
+<p>무료 게스트 플레이는 로그인 없이 이용할 수 있습니다. 광고·분석 도구와 위치·연락처·사진 수집 기능은 사용하지 않습니다. <b>선택적인 계정·구매 기능은 준비 중이며, 활성화 여부는 게임 상점에 표시합니다.</b></p>
+<p>계정 기능이 활성화되고 Google 로그인을 선택하면 서버는 Google의 서명된 ID 토큰을 검증하고 계정 식별값의 해시, 내부 계정 ID, 로그인 세션, 성장·덱·보상 기록을 저장합니다. 구매 기능은 주문 ID, 상품·금액, 구매 검증 정보, 지급·환불 원장을 저장합니다. 카드번호를 게임 서버에 입력하거나 저장하지 않습니다.</p>
 
 <h2>2. 기기 안에만 저장되는 정보</h2>
-<p>게임 진행(클리어한 스테이지, 해금, 인피니티 기록)과 설정(소리, 게임 속도, 마지막에 쓴 닉네임, 멀티 서버 주소)은 브라우저·앱의 <code>localStorage</code>(예: <code>DKSAVE</code>, <code>dk_name</code>, <code>dk_net</code>)에 <b>기기 안에만</b> 저장됩니다. 이 데이터는 서버로 전송되지 않으며, 브라우저 데이터 삭제 또는 앱 삭제로 함께 지워집니다.</p>
+<p>게스트 진행과 설정은 <code>localStorage</code>의 <code>DKSAVE</code> 등에 저장됩니다. 계정 연결 시에는 별도의 로그인 세션과 미확인 거래·보상 식별값도 기기에 저장됩니다. 로그인한 계정의 성장과 구매는 서버에서 관리하며, 게스트 저장을 계정 원장으로 자동 업로드하지 않습니다. 기기 데이터를 지워도 서버 구매 기록은 자동 삭제되지 않습니다.</p>
 
 <h2>3. 멀티플레이("함께하기")를 할 때 전송되는 정보</h2>
 <p>함께하기 방에 들어갈 때만 다음 정보가 멀티플레이 서버(<code>wss://dicekeep-net.cgn3731.workers.dev</code>, Cloudflare Workers)로 전송됩니다.</p>
@@ -37,34 +38,34 @@
   <li>진행 요약 — 현재 웨이브, 처치 수, 남은 목숨, 결과 (같은 방 사람에게 보여 주기 위한 숫자)</li>
   <li>채팅에 입력한 <b>텍스트</b> (같은 방 사람에게 전달)</li>
 </ul>
-<p>이 정보는 방이 유지되는 동안 서버 <b>메모리에만</b> 머무르며 데이터베이스나 파일로 <b>저장하지 않고</b>, 제3자와 공유하거나 판매하지 않습니다. 방이 끝나거나 모두 나가면 즉시 사라집니다. IP 주소는 연결을 처리하고 남용을 막는 목적으로 Cloudflare 인프라가 일시적으로 다룰 수 있으나, 운영자가 따로 기록·보관하지 않습니다.</p>
+<p>방 상태와 결과는 접속 복구 및 게임 운영을 위해 Cloudflare Durable Objects에서 처리됩니다. 계정 성장·구매 원장은 방 상태와 별도로 보관됩니다. IP 주소는 접속 처리와 요청 남용 제한에 사용될 수 있습니다.</p>
 
 <h2>4. 아동의 개인정보</h2>
-<p>만 13세 미만 아동을 포함해 어떤 이용자의 개인정보도 수집하지 않습니다. 채팅은 닉네임과 텍스트만 오가며 보관되지 않습니다.</p>
+<p>로그인이 필요 없는 게스트 플레이를 제공합니다. 계정·결제 기능의 이용 조건과 대상 연령은 실판매 전에 확정해 안내합니다. 채팅에 개인정보를 입력하지 않도록 주의해 주세요.</p>
 
 <h2>5. 제3자 서비스</h2>
-<p>웹사이트와 멀티플레이 서버는 <b>Cloudflare</b>(Workers, Durable Objects) 위에서 동작합니다. Cloudflare 는 서비스 제공을 위해 네트워크 수준의 로그를 자체 정책에 따라 처리할 수 있습니다: <a href="https://www.cloudflare.com/privacypolicy/" rel="noopener">Cloudflare 개인정보처리방침</a>. 그 밖의 SDK, 광고망, 분석 도구는 없습니다.</p>
+<p>웹·게임 서버는 <b>Cloudflare</b>를 사용합니다. 선택적 로그인은 Google, 웹 결제는 토스페이먼츠, Android 구매는 Google Play를 통해 처리하도록 구성되어 있습니다. 각 서비스는 자신의 개인정보처리방침에 따라 인증·결제 정보를 처리합니다. 미설정 상점에서는 웹 로그인·결제 SDK를 불러오지 않습니다.</p>
 
 <h2>6. 권한</h2>
-<p>앱은 <b>인터넷</b> 권한만 사용합니다(멀티플레이 접속). 카메라·마이크·위치·저장소·연락처 권한은 요청하지 않습니다.</p>
+<p>앱은 인터넷과 Google Play 결제 기능을 사용합니다. 카메라·마이크·위치·연락처 권한은 요청하지 않습니다.</p>
 
 <h2>7. 방침 변경</h2>
 <p>방침이 바뀌면 이 페이지(<code>https://dicekeep.cgn3731.workers.dev/privacy.html</code>)의 시행일을 갱신해 알립니다. 중요한 변경은 앱 업데이트 노트에도 적습니다.</p>
 
 <h2>8. 연락처</h2>
-<p>문의: <a href="mailto:cgn3731@gmail.com">cgn3731@gmail.com</a></p>
+<p>개인정보·구매·삭제 요청 문의: <a href="mailto:cgn3731@gmail.com">cgn3731@gmail.com</a>. 비밀번호, 결제 비밀키, 전체 카드번호를 보내지 마세요. 계정 삭제 절차와 거래 보관 기간을 포함한 실판매 방침은 결제 활성화 전에 별도로 확정합니다.</p>
 
 <hr />
 
 <div class="en">
 <h1>Dicekeep Privacy Policy</h1>
-<p class="meta">Effective: 2026-09-06 · Applies to the web site (dicekeep.cgn3731.workers.dev) and the Android/iOS app <code>com.fallman.dicekeep</code></p>
+<p class="meta">Effective: 2026-09-09 · Applies to the web site (dicekeep.cgn3731.workers.dev) and the Android app <code>com.fallman.dicekeep</code></p>
 
 <h2>1. What we do not collect</h2>
-<p>Dicekeep has <b>no accounts, no sign-in, no ads and no analytics/tracking SDKs.</b> We do not collect or store any personal information — no name, email, phone number, location, device identifiers, contacts or photos.</p>
+<p>Guest play requires no sign-in and uses no advertising or analytics SDKs. Optional account and purchase features are being prepared; their availability is shown in the shop. When enabled and selected, Google sign-in verifies an ID token and stores a hashed account identifier, session and progression records. Purchase processing stores order, verification, delivery and refund records. The game server does not collect card numbers.</p>
 
 <h2>2. Data kept only on your device</h2>
-<p>Game progress (cleared stages, unlocks, Infinity records) and settings (sound, game speed, last nickname, multiplayer server address) are stored in the browser/app <code>localStorage</code> (e.g. <code>DKSAVE</code>, <code>dk_name</code>, <code>dk_net</code>) <b>on your device only</b>. It is never uploaded, and it is removed when you clear site data or uninstall the app.</p>
+<p>Guest progress and settings are kept in localStorage. Account sessions and pending order/reward identifiers are stored separately on the device. Signed-in progression and purchases are managed on the server; guest saves are not automatically uploaded or merged. Clearing device data does not delete server purchase records.</p>
 
 <h2>3. Data sent during multiplayer ("Play together")</h2>
 <p>Only when you join a multiplayer room, the following is sent to the relay server (<code>wss://dicekeep-net.cgn3731.workers.dev</code>, Cloudflare Workers):</p>
@@ -73,22 +74,22 @@
   <li>a progress summary — current wave, kills, lives left, result (numbers shown to the others in the room)</li>
   <li><b>chat text</b> you type (delivered to people in the same room)</li>
 </ul>
-<p>This data lives <b>in server memory only</b> while the room exists; it is <b>not persisted</b> to any database or file, and it is never shared with or sold to third parties. It is discarded as soon as the room ends or everyone leaves. IP addresses may be handled transiently by Cloudflare's infrastructure to route connections and prevent abuse; the operator does not log or keep them.</p>
+<p>Room state and results are processed using Cloudflare Durable Objects for game operation and reconnect handling. Account progression and purchase ledgers are kept separately. IP addresses may be processed to serve requests and limit abuse.</p>
 
 <h2>4. Children</h2>
-<p>We do not collect personal information from anyone, including children under 13. Chat carries only nicknames and text and is not retained.</p>
+<p>Guest play is available without sign-in. Account and purchase eligibility and age requirements must be finalized before commercial activation. Do not share personal information in chat.</p>
 
 <h2>5. Third-party services</h2>
-<p>The site and the relay server run on <b>Cloudflare</b> (Workers, Durable Objects). Cloudflare may process network-level logs under its own policy: <a href="https://www.cloudflare.com/privacypolicy/" rel="noopener">Cloudflare Privacy Policy</a>. There are no other SDKs, ad networks or analytics tools.</p>
+<p>The site and servers use Cloudflare. Optional sign-in uses Google; web purchases use Toss Payments and Android purchases use Google Play. These services process information under their own privacy policies. Unconfigured shops do not load web sign-in or payment SDKs.</p>
 
 <h2>6. Permissions</h2>
-<p>The app uses only the <b>Internet</b> permission (multiplayer). It does not request camera, microphone, location, storage or contacts.</p>
+<p>The app uses network and Google Play billing functionality. It does not request camera, microphone, location or contacts access.</p>
 
 <h2>7. Changes</h2>
 <p>Changes are announced by updating the effective date on this page (<code>https://dicekeep.cgn3731.workers.dev/privacy.html</code>). Significant changes are also noted in the app's release notes.</p>
 
 <h2>8. Contact</h2>
-<p><a href="mailto:cgn3731@gmail.com">cgn3731@gmail.com</a></p>
+<p>Privacy, purchase and deletion requests: <a href="mailto:cgn3731@gmail.com">cgn3731@gmail.com</a>. Do not send passwords, secret keys or full card numbers. Account deletion procedures and transaction retention periods must be finalized before commercial activation.</p>
 </div>
 </main>
 </body>

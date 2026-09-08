@@ -1,0 +1,764 @@
+[
+  {
+    "id": "w183",
+    "view": "side",
+    "baseRigId": "w082",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-quad-02-side-parts.png",
+    "sha256": "29a48f4448ec816978ca167b3eb53beecc27423aa037e9693af326c243bab241",
+    "sourceBounds": [
+      null,
+      null,
+      623,
+      425
+    ],
+    "bodyTarget": {
+      "height": 260,
+      "top": 65,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w183",
+    "view": "front",
+    "baseRigId": "w082",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-quad-02-front-back-parts.png",
+    "sha256": "2b8aafe222a1b396527a31ad80ef4114a059284baad1d79a28c8d3f178c14903",
+    "sourceBounds": [
+      null,
+      null,
+      143,
+      289
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 65,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w183",
+    "view": "back",
+    "baseRigId": "w082",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-quad-02-front-back-parts.png",
+    "sha256": "2b8aafe222a1b396527a31ad80ef4114a059284baad1d79a28c8d3f178c14903",
+    "sourceBounds": [
+      null,
+      null,
+      144,
+      330
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 65,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w124",
+    "view": "side",
+    "baseRigId": "w023",
+    "source": "tools/art-review/directional-101/forest-swamp-01-side-parts.png",
+    "sha256": "8ceb00c5ec6bedecf771ffc5e5c4c7e424b4832a261cb31dd375fa510c9fc5af",
+    "sourceBounds": [
+      null,
+      null,
+      326,
+      137
+    ],
+    "bodyTarget": {
+      "height": 145,
+      "top": 195,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w124",
+    "view": "front",
+    "baseRigId": "w023",
+    "source": "tools/art-review/directional-101/swamp-reptile-body-correction.png",
+    "sha256": "5bf74d69177b68c46656a171ebbbcda386e126a37a439f48ff3f11061d9bce78",
+    "sourceBounds": [
+      null,
+      null,
+      221,
+      390
+    ],
+    "bodyTarget": {
+      "height": 240,
+      "top": 120,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w124",
+    "view": "back",
+    "baseRigId": "w023",
+    "source": "tools/art-review/directional-101/swamp-reptile-body-correction.png",
+    "sha256": "5bf74d69177b68c46656a171ebbbcda386e126a37a439f48ff3f11061d9bce78",
+    "sourceBounds": [
+      null,
+      null,
+      202,
+      450
+    ],
+    "bodyTarget": {
+      "height": 240,
+      "top": 120,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w128",
+    "view": "side",
+    "baseRigId": "w027",
+    "source": "tools/art-review/directional-101/forest-swamp-01-side-parts.png",
+    "sha256": "8ceb00c5ec6bedecf771ffc5e5c4c7e424b4832a261cb31dd375fa510c9fc5af",
+    "sourceBounds": [
+      null,
+      null,
+      369,
+      149
+    ],
+    "bodyTarget": {
+      "height": 155,
+      "top": 175,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w128",
+    "view": "front",
+    "baseRigId": "w027",
+    "source": "tools/art-review/directional-101/swamp-reptile-body-correction.png",
+    "sha256": "5bf74d69177b68c46656a171ebbbcda386e126a37a439f48ff3f11061d9bce78",
+    "sourceBounds": [
+      null,
+      null,
+      249,
+      378
+    ],
+    "bodyTarget": {
+      "height": 220,
+      "top": 145,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w128",
+    "view": "back",
+    "baseRigId": "w027",
+    "source": "tools/art-review/directional-101/swamp-reptile-body-correction.png",
+    "sha256": "5bf74d69177b68c46656a171ebbbcda386e126a37a439f48ff3f11061d9bce78",
+    "sourceBounds": [
+      null,
+      null,
+      234,
+      494
+    ],
+    "bodyTarget": {
+      "height": 250,
+      "top": 115,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w172",
+    "view": "side",
+    "baseRigId": "w071",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-quad-01-side-parts.png",
+    "sha256": "f32ef1dac3abd2191b0e96aa1e0311aeeda75759d19eb8695e955dc5f0d5d462",
+    "sourceBounds": [
+      null,
+      null,
+      409,
+      329
+    ],
+    "bodyTarget": {
+      "height": 260,
+      "top": 65,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w172",
+    "view": "front",
+    "baseRigId": "w071",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-quad-01-body-correction.png",
+    "sha256": "daafa78bb1c9856850db992ea1b2cebe2e048cfc39a96f1b99d8b175fc7468d0",
+    "sourceBounds": [
+      null,
+      null,
+      156,
+      277
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 65,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w172",
+    "view": "back",
+    "baseRigId": "w071",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-quad-01-body-correction.png",
+    "sha256": "daafa78bb1c9856850db992ea1b2cebe2e048cfc39a96f1b99d8b175fc7468d0",
+    "sourceBounds": [
+      null,
+      null,
+      158,
+      330
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 65,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w122",
+    "view": "side",
+    "baseRigId": "w021",
+    "source": "tools/art-review/directional-101/swamp-special-01-side-parts.png",
+    "sha256": "4ecadd0b116600d910139b45e7f3c3a0e5d331c333312da2a9146ba6a3d90534",
+    "sourceBounds": [
+      null,
+      null,
+      211,
+      228
+    ],
+    "bodyTarget": [
+      314.10087719298247,
+      285,
+      101.79824561403508,
+      110
+    ]
+  },
+  {
+    "id": "w122",
+    "view": "front",
+    "baseRigId": "w021",
+    "source": "tools/art-review/directional-101/swamp-special-01-front-back-parts.png",
+    "sha256": "85c2c37f1fc9ac5acf83d359c295a34bf8dd83ba7cc2522dc552d65639c5dbf0",
+    "sourceBounds": [
+      null,
+      null,
+      136,
+      245
+    ],
+    "bodyTarget": [
+      225.46938775510205,
+      295,
+      61.06122448979592,
+      110
+    ]
+  },
+  {
+    "id": "w122",
+    "view": "back",
+    "baseRigId": "w021",
+    "source": "tools/art-review/directional-101/swamp-special-01-front-back-parts.png",
+    "sha256": "85c2c37f1fc9ac5acf83d359c295a34bf8dd83ba7cc2522dc552d65639c5dbf0",
+    "sourceBounds": [
+      null,
+      null,
+      122,
+      238
+    ],
+    "bodyTarget": [
+      227.80672268907563,
+      120,
+      56.38655462184874,
+      110
+    ]
+  },
+  {
+    "id": "w130",
+    "view": "side",
+    "baseRigId": "w029",
+    "source": "tools/art-review/directional-101/swamp-special-01-side-parts.png",
+    "sha256": "4ecadd0b116600d910139b45e7f3c3a0e5d331c333312da2a9146ba6a3d90534",
+    "sourceBounds": [
+      null,
+      null,
+      193,
+      269
+    ],
+    "bodyTarget": [
+      325.53903345724905,
+      285,
+      78.92193308550186,
+      110
+    ]
+  },
+  {
+    "id": "w130",
+    "view": "front",
+    "baseRigId": "w029",
+    "source": "tools/art-review/directional-101/swamp-special-01-front-back-parts.png",
+    "sha256": "85c2c37f1fc9ac5acf83d359c295a34bf8dd83ba7cc2522dc552d65639c5dbf0",
+    "sourceBounds": [
+      null,
+      null,
+      122,
+      294
+    ],
+    "bodyTarget": [
+      233.1768707482993,
+      295,
+      45.64625850340136,
+      110
+    ]
+  },
+  {
+    "id": "w130",
+    "view": "back",
+    "baseRigId": "w029",
+    "source": "tools/art-review/directional-101/swamp-back-body-correction.png",
+    "sha256": "98abfe48f2750e4626cb69c0d95f84e105a7f4e8880bdeffd6c68984c6810e6a",
+    "sourceBounds": [
+      null,
+      null,
+      157,
+      320
+    ],
+    "bodyTarget": [
+      229.015625,
+      120,
+      53.96875,
+      110
+    ]
+  },
+  {
+    "id": "w178",
+    "view": "side",
+    "baseRigId": "w077",
+    "source": "tools/art-review/directional-101/late-waves/derived/w077-side-slither-alpha.png",
+    "sha256": "d2ac8eca1b810b36d24e0c4ad70e998b93c6a61fef3efaa5d59a758767a74372",
+    "sourceBounds": [
+      null,
+      null,
+      189,
+      173
+    ],
+    "bodyTarget": {
+      "height": 145,
+      "top": 245,
+      "centerX": 360
+    }
+  },
+  {
+    "id": "w178",
+    "view": "front",
+    "baseRigId": "w077",
+    "source": "tools/art-review/directional-101/late-waves/derived/w077-front-slither-alpha.png",
+    "sha256": "844cdfdc371a37f7284ed96b2d86558576d686f7b2e1021a3b23ef2387f9aaa4",
+    "sourceBounds": [
+      null,
+      null,
+      106,
+      135
+    ],
+    "bodyTarget": {
+      "height": 145,
+      "top": 270,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w178",
+    "view": "back",
+    "baseRigId": "w077",
+    "source": "tools/art-review/directional-101/late-waves/derived/w077-back-slither-alpha.png",
+    "sha256": "88aa07f9bba99ffaf734c4635c736df9c4ef13dde27498cdc88d5d5d66b93e33",
+    "sourceBounds": [
+      null,
+      null,
+      98,
+      131
+    ],
+    "bodyTarget": {
+      "height": 145,
+      "top": 75,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w185",
+    "view": "side",
+    "baseRigId": "w084",
+    "source": "tools/art-review/directional-101/late-waves/derived/w084-side-slither-alpha.png",
+    "sha256": "8d58a5a39157f616ccc5d0e8b5afe25776b53583f983def7dac987d8bfabc98a",
+    "sourceBounds": [
+      null,
+      null,
+      185,
+      184
+    ],
+    "bodyTarget": {
+      "height": 145,
+      "top": 245,
+      "centerX": 360
+    }
+  },
+  {
+    "id": "w185",
+    "view": "front",
+    "baseRigId": "w084",
+    "source": "tools/art-review/directional-101/late-waves/derived/w084-front-slither-alpha.png",
+    "sha256": "a730d1e7c29664c583cbf5081284a4071a036731a4989713afe6fe01331511ab",
+    "sourceBounds": [
+      null,
+      null,
+      122,
+      143
+    ],
+    "bodyTarget": {
+      "height": 145,
+      "top": 270,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w185",
+    "view": "back",
+    "baseRigId": "w084",
+    "source": "tools/art-review/directional-101/late-waves/derived/w084-back-slither-alpha.png",
+    "sha256": "331e6cd64bc15ad680e044234792b63fbcb0ca6650387f6c2801d738224e7649",
+    "sourceBounds": [
+      null,
+      null,
+      103,
+      135
+    ],
+    "bodyTarget": {
+      "height": 145,
+      "top": 75,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w192",
+    "view": "side",
+    "baseRigId": "w091",
+    "source": "tools/art-review/directional-101/late-waves/derived/w091-side-slither-alpha.png",
+    "sha256": "506965e0894384df1f378db6b4e232efc137f23650d2470f50aaf4287cb0f40e",
+    "sourceBounds": [
+      null,
+      null,
+      192,
+      135
+    ],
+    "bodyTarget": {
+      "height": 95,
+      "top": 325,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w192",
+    "view": "front",
+    "baseRigId": "w091",
+    "source": "tools/art-review/directional-101/late-waves/derived/w091-front-slither-alpha.png",
+    "sha256": "481a88deab98e80cca21156b8f75cba2557ce7983c8da916abb0e2a2b983dc83",
+    "sourceBounds": [
+      null,
+      null,
+      155,
+      101
+    ],
+    "bodyTarget": {
+      "height": 95,
+      "top": 325,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w192",
+    "view": "back",
+    "baseRigId": "w091",
+    "source": "tools/art-review/directional-101/late-waves/derived/w091-back-slither-alpha.png",
+    "sha256": "7d40a2e11f9d7cfe4b9ab58f297664e4ea58381deaf42988ac63b3a2b24ad308",
+    "sourceBounds": [
+      null,
+      null,
+      166,
+      141
+    ],
+    "bodyTarget": {
+      "height": 95,
+      "top": 325,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w199",
+    "view": "side",
+    "baseRigId": "w098",
+    "source": "tools/art-review/directional-101/late-waves/derived/w098-side-slither-alpha.png",
+    "sha256": "3577f7edcaddff68a12d74f9b6f49c26c6c70b360ceb77f287c38eb776eadf22",
+    "sourceBounds": [
+      null,
+      null,
+      178,
+      190
+    ],
+    "bodyTarget": {
+      "height": 145,
+      "top": 245,
+      "centerX": 360
+    }
+  },
+  {
+    "id": "w199",
+    "view": "front",
+    "baseRigId": "w098",
+    "source": "tools/art-review/directional-101/late-waves/derived/w098-front-slither-alpha.png",
+    "sha256": "778e8a17ad8bc3fb6c4d414e9a53b77372a17f3b13b35d097e2b80549cf0604c",
+    "sourceBounds": [
+      null,
+      null,
+      122,
+      164
+    ],
+    "bodyTarget": {
+      "height": 145,
+      "top": 270,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w199",
+    "view": "back",
+    "baseRigId": "w098",
+    "source": "tools/art-review/directional-101/late-waves/derived/w098-back-slither-alpha.png",
+    "sha256": "6eb087bd856f71f208334f0a1c7408c78333f91b7fc7c69de19c08a05e42e21d",
+    "sourceBounds": [
+      null,
+      null,
+      105,
+      156
+    ],
+    "bodyTarget": {
+      "height": 145,
+      "top": 75,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w123",
+    "view": "side",
+    "baseRigId": "w022",
+    "source": "tools/art-review/directional-101/forest-swamp-01-side-parts.png",
+    "sha256": "8ceb00c5ec6bedecf771ffc5e5c4c7e424b4832a261cb31dd375fa510c9fc5af",
+    "sourceBounds": [
+      null,
+      null,
+      307,
+      173
+    ],
+    "bodyTarget": {
+      "height": 180,
+      "top": 155,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w123",
+    "view": "front",
+    "baseRigId": "w022",
+    "source": "tools/art-review/directional-101/forest-swamp-01-front-back-parts.png",
+    "sha256": "ccdc188105bd7deb6a4467a80938be8e4decaeaf63c0cb167796b2551e55371f",
+    "sourceBounds": [
+      null,
+      null,
+      265,
+      211
+    ],
+    "bodyTarget": {
+      "height": 190,
+      "top": 135,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w123",
+    "view": "back",
+    "baseRigId": "w022",
+    "source": "tools/art-review/directional-101/forest-swamp-01-back-correction.png",
+    "sha256": "3154a6a007ab8954b62abfcbd782722af65e0a45f12844d5428f36cd8d55354b",
+    "sourceBounds": [
+      null,
+      null,
+      262,
+      232
+    ],
+    "bodyTarget": {
+      "height": 190,
+      "top": 135,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w138",
+    "view": "side",
+    "baseRigId": "w037",
+    "source": "tools/art-review/directional-101/middle-waves/t4-biped-02a-side-front-parts-clean.png",
+    "sha256": "7c643f17a93baaa783ba77b484fa9b55aa17f43f261b8ae7721bc84286314678",
+    "sourceBounds": [
+      null,
+      null,
+      330,
+      401
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 254.76558603491273
+    }
+  },
+  {
+    "id": "w138",
+    "view": "front",
+    "baseRigId": "w037",
+    "source": "tools/art-review/directional-101/middle-waves/t4-biped-02a-side-front-parts-clean.png",
+    "sha256": "7c643f17a93baaa783ba77b484fa9b55aa17f43f261b8ae7721bc84286314678",
+    "sourceBounds": [
+      null,
+      null,
+      307,
+      368
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 276.02173913043475
+    }
+  },
+  {
+    "id": "w138",
+    "view": "back",
+    "baseRigId": "w037",
+    "source": "tools/art-review/directional-101/middle-waves/w037-back-single-parts.png",
+    "sha256": "7d0097e9e416ff42daa294a0d5cbc9dac62a23dbc950ce11fed45638d0913fb7",
+    "sourceBounds": [
+      null,
+      null,
+      543,
+      673
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 276.574294205052
+    }
+  },
+  {
+    "id": "w137",
+    "view": "side",
+    "baseRigId": "w036",
+    "source": "tools/art-review/directional-101/middle-waves/membrane-dragons-side-parts.png",
+    "sha256": "e6c04f326201f3b054ea2913ca81f80a87924bee050e2dc31b98704055d87e78",
+    "sourceBounds": [
+      null,
+      null,
+      493,
+      348
+    ],
+    "bodyTarget": {
+      "height": 235,
+      "top": 160,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w137",
+    "view": "front",
+    "baseRigId": "w036",
+    "source": "tools/art-review/directional-101/middle-waves/membrane-dragons-front-parts.png",
+    "sha256": "f77d895ba5740fa6af7c66d73931aae4d15198bbbf155432d90442989833935e",
+    "sourceBounds": [
+      null,
+      null,
+      212,
+      445
+    ],
+    "bodyTarget": {
+      "height": 235,
+      "top": 160,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w137",
+    "view": "back",
+    "baseRigId": "w036",
+    "source": "tools/art-review/directional-101/middle-waves/membrane-dragons-back-parts.png",
+    "sha256": "661f671c02e923a4217a1721147f285019029550cbab17babe5f8ce1a9f02d83",
+    "sourceBounds": [
+      null,
+      null,
+      226,
+      463
+    ],
+    "bodyTarget": {
+      "height": 235,
+      "top": 160,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w133",
+    "view": "side",
+    "baseRigId": "w032",
+    "source": "tools/art-review/directional-101/middle-waves/glider-three-view-parts.png",
+    "sha256": "ba2a259114391b379d6421e13ddc614f870a745e652a54fef593366fa4b1b4c1",
+    "sourceBounds": [
+      null,
+      null,
+      226,
+      345
+    ],
+    "bodyTarget": {
+      "height": 230,
+      "top": 160,
+      "centerX": 286
+    }
+  },
+  {
+    "id": "w133",
+    "view": "front",
+    "baseRigId": "w032",
+    "source": "tools/art-review/directional-101/middle-waves/glider-three-view-parts.png",
+    "sha256": "ba2a259114391b379d6421e13ddc614f870a745e652a54fef593366fa4b1b4c1",
+    "sourceBounds": [
+      null,
+      null,
+      309,
+      313
+    ],
+    "bodyTarget": {
+      "height": 230,
+      "top": 160,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w133",
+    "view": "back",
+    "baseRigId": "w032",
+    "source": "tools/art-review/directional-101/middle-waves/glider-three-view-parts.png",
+    "sha256": "ba2a259114391b379d6421e13ddc614f870a745e652a54fef593366fa4b1b4c1",
+    "sourceBounds": [
+      null,
+      null,
+      283,
+      323
+    ],
+    "bodyTarget": {
+      "height": 230,
+      "top": 160,
+      "centerX": 256
+    }
+  }
+]

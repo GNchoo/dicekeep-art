@@ -1420,10 +1420,16 @@ window.DKCONTENT = (function () {
   // Directional art has its own reviewed manifest. The legacy artReady set remains the fallback/size contract.
   function infDirectionalArt(w, k) {
     const n = (Math.max(1, w) - 1) % 101 + 1, m = INF_MONSTERS[n];
-    if (!m || (k && (!m.boss || !m.second))) return null;
-    const assetId = `${m.boss ? 'b' : 'w'}${pad3(n)}${k ? '-2' : ''}`;
-    const manifest = window.INF_DIRECTIONAL_ART, entry = manifest && manifest.entries && manifest.entries[assetId];
-    return entry && entry.ready === true ? { assetId, name: k ? m.second : m.name, entry } : null;
+    if (!m || (k && (!m.boss || (!m.second && w <= 101)))) return null;
+    const extremeId = `${m.boss ? 'b' : 'w'}${pad3(n + 101)}${k ? '-2' : ''}`;
+    const legacyId = `${m.boss ? 'b' : 'w'}${pad3(n)}${k && n !== 10 ? '-2' : ''}`;
+    const ids = w > 101 ? [extremeId, legacyId] : [legacyId];
+    for (const assetId of ids) {
+      const manifest = assetId === extremeId ? window.INF_EXTREME_ART : window.INF_DIRECTIONAL_ART;
+      const entry = manifest && manifest.entries && manifest.entries[assetId];
+      if (entry && entry.ready === true) return { assetId, name: entry.name || (k ? m.second || m.name + ' 부관' : m.name), entry };
+    }
+    return null;
   }
   // 웨이브 w 의 새 그림 (준비된 것만): 일반 { key, src, walkKey, walkSrc } · 보스 k(0 군주·1 부관) { key, src, name }
   function infArt(w, k) {
@@ -1500,12 +1506,14 @@ window.DKCONTENT = (function () {
     countOf(w, cls) { return Math.round(Math.min(36, 12 + Math.floor(w * 0.6)) * ({ S: 1.0, M: 1, L: 0.85 })[cls || 'M']); }, // 소형 ×1.2 는 31~33 소형 연속 구간에서 벽이 너무 높아 1.0 으로
     monsterFor(w) {
       const R = this.getRoster(), cycle = Math.floor((w - 1) / 101), r = R[(w - 1) % 101];
-      const hue = cycle ? (cycle * 97) % 360 : 0, prefix = cycle ? `${cycle + 1}주기 ` : '';
+      const hue = cycle ? (cycle * 97) % 360 : 0;
+      const evolutionTier = Math.min(3, Math.max(0, cycle - 1));
+      const prefix = evolutionTier ? `진화 ${evolutionTier} · ` : cycle ? '극한 · ' : '';
       if (r.boss) return { boss: true, cls: r.cls, hue, prefix, armor: this.armor(w), count: 0, name: '보스' };
       const base = bases.find((b) => b.id === r.id);
       const art = infArt((w - 1) % 101 + 1, 0);   // 새 그림이 준비된 웨이브는 설계된 이름으로 (그림은 game.js 가 spawnEnemy 에서 붙인다)
       const directional = infDirectionalArt(w, 0);
-      return { boss: false, base, name: prefix + (directional ? directional.name : art ? art.name : base.name), hue, cls: r.cls, move: base.move, tank: r.tank, art,
+      return { boss: false, base, name: prefix + (directional ? directional.name : art ? art.name : base.name), hue: directional ? 0 : hue, cls: r.cls, move: base.move, tank: r.tank, art,
                count: this.countOf(w, r.cls), armor: this.armor(w) + (r.tank ? 2 + cycle : 0), hpMult: r.tank ? 1.25 : 1 };
     },
     // ---- 방어력: 후반으로 갈수록 타격당 고정 감소, 33의 배수 웨이브는 고방어(버블피시 255) ----
@@ -1537,12 +1545,13 @@ window.DKCONTENT = (function () {
     bossEvery: 10,   // 10 웨이브마다 보스 (20 부터 2마리)
     eliteEvery: 5,   // 5 웨이브마다 정예 (HP×3, 크기×1.2, 골드×3)
     unlockAir: 1, unlockBurrow: 1,
-    // ---- 두 갈래: 도전(클리어 있음, 멀티 예정) / 무한(진짜 무한, 싱글 기록) ----
+    // 순수운빨은 기존 확률/전투 곡선 그대로. 계정 성장은 build/extreme에만 적용한다.
     modes: {
-      clear:   { key: 'clear',   name: '도전',  sub: '101웨이브 완주가 목표 · 91웨이브부터 최종 관문', gauntlet: true,  clearWave: 101 },
-      endless: { key: 'endless', name: '무한',  sub: '끝이 없는 기록 도전 · 주기마다 적이 강해진다',   gauntlet: false, clearWave: 0 },
+      clear: { key: 'clear', name: '순수운빨', sub: '101웨이브 · 계정 성장 미적용 · 기존 뽑기 확률', gauntlet: true, clearWave: 101, growth: false },
+      build: { key: 'build', name: '덱빌드', sub: '101웨이브 · 편성한 5종을 뽑기 · 성장 Lv20까지 적용', gauntlet: true, clearWave: 101, growth: true },
+      extreme: { key: 'extreme', name: '극한', sub: '끝없는 웨이브 · 편성 덱과 성장 Lv200까지 적용', gauntlet: false, clearWave: 0, growth: true },
     },
-    modeOf(key) { return this.modes[key] || this.modes.endless; },
+    modeOf(key) { return this.modes[key === 'endless' ? 'extreme' : key] || this.modes.clear; },
     clearWave: 101,   // 도전 모드 클리어 선 (로스터 한 사이클 = 메운디 1~101R)
     clearGems: 80,
     lateFrom: 90, lateExp: 1.08, // 최종 관문(도전 모드): 91웨이브부터 체력이 한 번 더 가팔라진다 (1.08 → 실질 1.166)
@@ -1557,7 +1566,7 @@ window.DKCONTENT = (function () {
     wave(w, gauntlet) {
       const late = gauntlet && w > this.lateFrom ? Math.pow(this.lateExp, w - this.lateFrom) : 1;
       return {
-        hpMult: +(1.8 * Math.pow(1.08, w - 1) * late).toFixed(3),   // w30 ≈ 16.8×, w50 ≈ 78×, w70 ≈ 364×, w101 ≈ 6,700× — 무한 순환·필드 한계선·사거리 160 기준 봇 재보정
+        hpMult: +Math.min(1e120, 1.8 * Math.pow(1.08, w - 1) * late).toFixed(3), // 기존 곡선 유지. 장기 극한 런도 Infinity/NaN 체력을 만들지 않는다.
         count: Math.min(36, 12 + Math.floor(w * 0.6)),
         gap: Math.max(0.3, 0.8 - w * 0.01),
         goldMult: +(1 + w * 0.025).toFixed(3),
@@ -1606,7 +1615,7 @@ window.DKCONTENT = (function () {
   };
   // Appearance only: kind/shape, odds and rewards remain in INFINITY.chest.
   // Every shape shares the approved worn ivory surface; markings follow its die type.
-  // Skin selection, ownership and shop UI are future extensions.
+  // Premium bundles only replace images. Their ownership is held by commerce.
   const DICE_SKINS = {
     defaultId: 'ivory-worn',
     skins: {
@@ -1616,6 +1625,9 @@ window.DKCONTENT = (function () {
         cubeMaterialKey: 'diceMaterialIvoryWorn', cubeMaterial: 'dice/skins/ivory-worn/cube-surface-v98.png', cubeMaterialVersion: 98,
         cubeMark: '#912321',
       },
+      royal: { lazy: true, materialKey: 'diceMaterialRoyal', material: 'dice/skins/royal/material-v101.png', version: 101, mark: '#542b30', cubeMark: '#912321' },
+      frost: { lazy: true, materialKey: 'diceMaterialFrost', material: 'dice/skins/frost/material-v101.png', version: 101, mark: '#542b30', cubeMark: '#912321' },
+      ember: { lazy: true, materialKey: 'diceMaterialEmber', material: 'dice/skins/ember/material-v101.png', version: 101, mark: '#e4a879', cubeMark: '#cc4a38' },
     },
   };
   return {

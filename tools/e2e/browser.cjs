@@ -37,7 +37,7 @@ function outputPath(name) {
 // Legacy optional assets may 404. New infinity assets and uncaught JS errors must fail.
 function watchArtErrors(page) {
   const errors = [];
-  const isInfinityArt = url => /\/casual\/(enemies|bosses)\/inf\//.test(new URL(url).pathname);
+  const isInfinityArt = url => /\/casual\/(enemies|bosses)\/(?:inf|extreme)\//.test(new URL(url).pathname);
   page.on('pageerror', error => errors.push(`PAGEERROR ${error.message}`));
   page.on('response', response => {
     if (response.status() >= 400 && isInfinityArt(response.url())) errors.push(`${response.status()} ${response.url()}`);

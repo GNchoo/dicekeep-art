@@ -2,6 +2,8 @@
 
 앱 패키징은 Capacitor 로 한다: 웹(루트)을 그대로 두고 `tools/build-www.mjs` 가 `www/` 를 만들어 `android/`·`ios/` 네이티브 껍데기에 넣는다. 빌드 절차는 맨 아래 체크리스트.
 
+현재 브랜치는 웹·Android 계정/구매 연동과 3개 모드를 추가한 출시 준비본이다. 실판매는 기본 비활성화이며, 아래 문구는 제출 완료 내역이 아니다. 가맹점·Google/Play 설정과 실제 구매/환불 시험, 판매자 공개 정보와 계정 삭제 운영 경로를 완성해야 한다. iOS 인앱 결제는 이번 구현 범위에 없다.
+
 ## 기본 정보
 
 | 항목 | 값 |
@@ -13,8 +15,8 @@
 | 개인정보처리방침 URL | https://dicekeep.cgn3731.workers.dev/privacy.html |
 | 지원·문의 이메일 | cgn3731@gmail.com |
 | 멀티 서버 | `wss://dicekeep-net.cgn3731.workers.dev` (Cloudflare Workers, net/) |
-| 가격 · 인앱 · 광고 | 무료 · 없음 · 없음 |
-| 대상 연령 | 전체이용가 (만화적 폭력) |
+| 가격 · 인앱 · 광고 | 무료 · 성장 조각/외형 구매 구현(활성화 전) · 광고 없음 |
+| 대상 연령 | 현재 콘텐츠를 기준으로 스토어 등급 심사 필요 |
 
 ## 짧은 설명 (≤ 80자)
 
@@ -35,16 +37,16 @@
 숲·사막·설원·용암… 6개 지역 50개 스테이지. 지역마다 다른 적과 보스가 성채를 노립니다.
 
 ♾️ 인피니티
-'도전'은 정해진 웨이브까지 버티기, '무한'은 끝없이 몰려오는 적을 상대로 기록 경쟁. 최고 기록은 기기에 남습니다.
+'순수운빨'은 계정 강화 없이 101웨이브에 도전합니다. '덱빌드'는 주사위 5종을 편성하고 성장시키며, '극한'은 끝없는 웨이브를 상대로 기록에 도전합니다. 무료 플레이로도 같은 성장 조각을 얻습니다.
 
 👥 함께하기 (2~4인)
 방 코드를 나누거나 빠른 매칭으로 친구와 같은 맵을 각자 속도로 플레이합니다. 다른 사람의 필드를 보고, 채팅으로 응원하세요.
 
 📴 오프라인 싱글
-싱글 플레이는 인터넷 없이도 됩니다. 계정·광고·분석 도구 없음.
+게스트 싱글 플레이는 인터넷 없이도 됩니다. 선택적인 Google 로그인과 계정 구매/성장은 인터넷 연결이 필요합니다. 광고·분석 SDK는 없습니다.
 
 - 세로·가로 모두 지원
-- 진행은 기기에 저장 (localStorage)
+- 게스트 진행은 기기, 로그인한 계정 진행과 구매는 서버에 저장
 - 멀티는 인터넷 연결 필요
 ```
 
@@ -60,16 +62,16 @@ Spend gold to roll dice and draw towers. Merge matching towers to rank them up �
 Forest, desert, snowfield, lava… 6 regions, 50 stages, each with its own enemies and bosses marching on your keep.
 
 ♾️ Infinity
-"Challenge" asks you to survive a fixed number of waves; "Endless" throws waves forever and keeps your best record on the device.
+Pure Luck preserves the 101-wave challenge without account upgrades. Deck Build uses five selected dice and progression. Extreme continues beyond 101 waves. All arena modes award the same progression currency that can also be purchased.
 
 👥 Play together (2–4 players)
 Share a room code or use quick match to play the same map with friends, each at your own pace. Peek at other players' fields and cheer in chat.
 
 📴 Offline single-player
-Single-player works without internet. No accounts, no ads, no analytics.
+Guest single-player works without internet. Optional Google sign-in, account progression and purchases require a connection. No advertising or analytics SDKs.
 
 - Portrait and landscape
-- Progress saved on device
+- Guest progress saved on device; account progress and purchases saved on the server
 - Multiplayer needs an internet connection
 ```
 
@@ -78,36 +80,16 @@ Single-player works without internet. No accounts, no ads, no analytics.
 ko: `타워디펜스, 주사위, 디펜스, 캐주얼, 전략, 무한모드, 협동, 멀티플레이, 오프라인`
 en: `tower defense, dice, casual, strategy, endless, co-op, multiplayer, offline, td`
 
-## 콘텐츠 등급 설문 (Play Console IARC · App Store 연령 등급)
+## 콘텐츠 등급과 데이터 보안 제출 준비
 
-| 질문 | 답 |
-|---|---|
-| 폭력 | 만화적·비현실적 폭력 (귀여운 동물 적이 사라짐, 피·고어 없음) |
-| 공포 | 없음 |
-| 성적 내용 · 노출 | 없음 |
-| 욕설 | 없음 (채팅은 사용자 입력이며 필터 없음 → "사용자 생성 콘텐츠" 항목 참고) |
-| 약물 · 술 · 담배 | 없음 |
-| 도박 · 사행성 | **없음** — 주사위는 게임 안 골드로만 굴리고 실제 돈·구매·현금화가 없다. "시뮬레이션 도박" 항목도 아니오 |
-| 사용자 간 상호작용 | **있음** — 방 안 텍스트 채팅 (2~4인, 방이 끝나면 사라짐, 저장 안 함) |
-| 개인정보·위치 공유 | 없음 (닉네임만, 실명·위치 아님) |
-| 디지털 구매 | 없음 |
-| 광고 | 없음 |
-| 무제한 인터넷 | 아니오 (앱 안에 브라우저 없음) |
+이전의 '구매 없음', '계정 없음', '서버 저장 없음', '데이터 수집 없음' 답변은 새 구현에 적용하지 않는다. 최종 앱과 활성화할 기능을 기준으로 Console 설문을 다시 작성한다.
 
-App Store 연령 등급: 만화 또는 판타지 폭력 "가끔/경미" → 4+ 또는 9+ (Apple 판정), 도박 없음, 무제한 웹 액세스 없음.
+- 판타지 전투, 사용자 간 채팅, 선택적 디지털 구매가 있다. 구매한 성장 조각은 덱빌드·극한 성장에 사용할 수 있으며 현금화나 이용자 간 거래 기능은 없다. 등급·도박 관련 설문 답변은 실제 문항과 최종 콘텐츠로 판단한다.
+- Google 로그인 식별자에서 만든 계정 ID, 서버 세션, 성장·덱·스킨 권한·기록, 구매·지급·환불 원장을 처리한다. 결제 수단 원문은 결제 제공자 화면에서 처리하고 게임 서버에 전체 카드 번호를 저장하지 않는다.
+- 게스트 저장과 계정 저장은 별개다. 앱 삭제가 서버 계정/구매 기록 삭제를 의미하지 않는다. 구매 중복 방지 키는 현재 보존되며 자동 계정 삭제·기간별 정리 작업은 구현되어 있지 않다.
+- 계정 삭제 접수·본인 확인·처리 경로와 보관 기간을 확정하고 앱 내 경로 및 웹 주소를 제공해야 한다. 실판매 설정은 계정 삭제 주소를 포함한 정책 URL을 요구하지만, URL 문자열 검사가 실제 운영 절차를 확인해 주지는 않는다.
 
-## 데이터 보안 양식 (Play Console "데이터 보안")
-
-| 질문 | 답 |
-|---|---|
-| 사용자 데이터를 수집하거나 공유하나요? | 예 (멀티플레이 시에만 전송, 저장은 안 함) — 보수적으로 아래처럼 신고 |
-| 수집 항목 | 앱 활동 > "기타 사용자 생성 콘텐츠": 닉네임·채팅 메시지 (선택 사항, 멀티 참가 시만). 앱 정보/성능·개인 정보·위치·기기 ID: 수집 안 함 |
-| 처리 방식 | 전송 중 암호화 (wss/https). 서버에 보관하지 않음 (메모리, 방 종료 시 삭제) → "일시적 처리(ephemeral)" 로 표시 |
-| 공유 | 제3자와 공유 안 함 (Cloudflare 는 서비스 제공자 = 공유 아님) |
-| 삭제 요청 | 서버에 남는 데이터 없음. 기기 데이터는 앱 삭제/브라우저 데이터 삭제로 지움 |
-| 가족 정책 | 아동 대상 아님 ("전체 이용가" 이지만 어린이 전용 설계 아님) |
-
-App Store "앱 개인정보 보호": 수집 항목 "없음(Data Not Collected)" 으로 신고해도 되는 수준이나, 채팅이 있으므로 "사용자 콘텐츠 > 기타 사용자 콘텐츠 — 사용자와 연결 안 됨, 추적 아님" 을 적는 편이 안전.
+기술적 데이터 흐름은 `privacy.html`, 구매 운영은 `commerce/README.md`를 참고한다. [Google Play 사용자 데이터 정책](https://support.google.com/googleplay/android-developer/answer/10144311)과 [계정 삭제 요구사항](https://support.google.com/googleplay/android-developer/answer/13327111)을 확인한 뒤 최종 제출한다. 현재 문서는 스토어 승인이나 규정 준수 인증이 아니다.
 
 ## 스크린샷 · 그래픽 목록
 
@@ -139,10 +121,10 @@ App Store "앱 개인정보 보호": 수집 항목 "없음(Data Not Collected)" 
 
 ### Android (Windows)
 
-1. 준비: Node LTS(22), Android Studio(최신, SDK 35 + Build-Tools 포함), JDK 는 Android Studio 내장(17+).
+1. 준비: Node LTS(22), Android Studio(최신, SDK 36 + Build-Tools 포함), JDK 는 Android Studio 내장(21+).
 2. `npm i` — Capacitor·sharp·글꼴 설치
 3. `npm run fonts` — `fonts/` 갱신 (Google Fonts 대신 로컬 글꼴)
-4. `npm run build:www -- --optimize` — `www/` 생성 (약 118 MB; 용량이 급하면 `--quantize`)
+4. `npm run build:www -- --optimize` — `www/` 생성. 빌드 후 `www/manifest.json`의 bytes와 APK/AAB 파일을 각각 측정한다. 2026-09-09 검증한 재압축 없는 `npm run build:www` 결과는 2,241파일·349,769,506 B(333.57 MiB), 로컬 debug APK는 362,762,574 B(345.96 MiB)다. `--optimize`나 release AAB 크기는 별도 측정해야 한다. `--quantize`는 손실 변환이므로 승인 아트를 재검수하지 않고 사용하지 않는다.
 5. `npx cap sync android` — www → `android/app/src/main/assets/public`, 플러그인 반영
 6. `npx cap open android` — Android Studio 열기 (첫 실행은 Gradle 동기화 수 분)
 7. USB 디버깅 켠 실기기 연결 → Run ▶ → 아래 "실기기 체크리스트" 확인
@@ -178,5 +160,6 @@ App Store "앱 개인정보 보호": 수집 항목 "없음(Data Not Collected)" 
 - [ ] 멀티: 함께하기 → 방 만들기·빠른 매칭이 `wss://dicekeep-net…` 에 붙음 (모바일 데이터·Wi-Fi 둘 다), 로비 화면에 버전 불일치 경고 없음
 - [ ] 소리: 첫 터치 뒤 효과음·배경음 재생 (자동재생 정책), 홈으로 나가면 멈추고 돌아오면 재개
 - [ ] 저장: 앱 강제 종료 후 재실행해도 진행·설정 유지 (localStorage)
+- [ ] 백업·기기 이전: WebView 세션·로컬 진행이 복원되지 않는지 확인. `backup_rules.xml`(API 23–30)과 `data_extraction_rules.xml`(API 31+)은 기본 `app_webview` 저장소를 클라우드·기기 이전에서 제외한다. 새 기기에서는 다시 로그인하고 계정 진행·구매를 서버에서 복구한다. 게스트 진행은 기기 간 이전되지 않는다. [Android 공식 백업 규칙](https://developer.android.com/identity/data/autobackup)을 따른다.
 - [ ] 오프라인: 비행기 모드에서 싱글 플레이 정상, 함께하기는 안내 메시지
-- [ ] 저사양 기기(3~4년 전 보급형): 인피니티 후반 프레임 확인, 앱 크기 ~120 MB 설치 확인
+- [ ] 저사양 기기(3~4년 전 보급형): 인피니티 후반 프레임 확인. 로컬 debug APK는 345.96 MiB이며, Play에서 전달하는 release AAB 다운로드 크기와 실기기 설치 후 저장 공간은 아직 별도 측정이 필요하다.

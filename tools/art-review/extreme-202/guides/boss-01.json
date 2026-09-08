@@ -1,0 +1,218 @@
+[
+  {
+    "id": "b111",
+    "view": "side",
+    "baseRigId": "b010",
+    "source": "tools/art-review/directional-101/b010-side-front-parts.png",
+    "sha256": "33c854929bdbbb5a15ae36e6eac8f85bf7acbaab5fe04994f45a7463e667b0ba",
+    "sourceBounds": [
+      null,
+      null,
+      499,
+      671
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b111",
+    "view": "front",
+    "baseRigId": "b010",
+    "source": "tools/art-review/directional-101/b010-side-front-parts.png",
+    "sha256": "33c854929bdbbb5a15ae36e6eac8f85bf7acbaab5fe04994f45a7463e667b0ba",
+    "sourceBounds": [
+      null,
+      null,
+      491,
+      672
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b111",
+    "view": "back",
+    "baseRigId": "b010",
+    "source": "tools/art-review/directional-101/b010-back-parts.png",
+    "sha256": "298494fb2538c3948c3073dc1b2f4232568d096e1338146e8454e8e52e14bfa7",
+    "sourceBounds": [
+      null,
+      null,
+      694,
+      770
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b111-2",
+    "view": "side",
+    "baseRigId": "b010",
+    "source": "tools/art-review/directional-101/b010-side-front-parts.png",
+    "sha256": "33c854929bdbbb5a15ae36e6eac8f85bf7acbaab5fe04994f45a7463e667b0ba",
+    "sourceBounds": [
+      null,
+      null,
+      499,
+      671
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b111-2",
+    "view": "front",
+    "baseRigId": "b010",
+    "source": "tools/art-review/directional-101/b010-side-front-parts.png",
+    "sha256": "33c854929bdbbb5a15ae36e6eac8f85bf7acbaab5fe04994f45a7463e667b0ba",
+    "sourceBounds": [
+      null,
+      null,
+      491,
+      672
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b111-2",
+    "view": "back",
+    "baseRigId": "b010",
+    "source": "tools/art-review/directional-101/b010-back-parts.png",
+    "sha256": "298494fb2538c3948c3073dc1b2f4232568d096e1338146e8454e8e52e14bfa7",
+    "sourceBounds": [
+      null,
+      null,
+      694,
+      770
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b121",
+    "view": "side",
+    "baseRigId": "b020",
+    "source": "tools/art-review/directional-101/early-equipment-torso-correction.png",
+    "sha256": "5cc46b17bf1ce29fadb9053018193bcce5cf87ac0384b15970a9cb9ab63d16b8",
+    "sourceBounds": [
+      null,
+      null,
+      293,
+      498
+    ],
+    "bodyTarget": {
+      "height": 320,
+      "top": 24,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b121",
+    "view": "front",
+    "baseRigId": "b020",
+    "source": "tools/art-review/directional-101/early-boss-01-front-back-parts.png",
+    "sha256": "ffd0c9709bf93d5b2c0eaf3eba19f7c8c1f6d96d50cc01f28e578ed577ea36a2",
+    "sourceBounds": [
+      null,
+      null,
+      291,
+      441
+    ],
+    "bodyTarget": {
+      "height": 320,
+      "top": 24,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b121",
+    "view": "back",
+    "baseRigId": "b020",
+    "source": "tools/art-review/directional-101/early-boss-01-front-back-parts.png",
+    "sha256": "ffd0c9709bf93d5b2c0eaf3eba19f7c8c1f6d96d50cc01f28e578ed577ea36a2",
+    "sourceBounds": [
+      null,
+      null,
+      277,
+      438
+    ],
+    "bodyTarget": {
+      "height": 320,
+      "top": 24,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b121-2",
+    "view": "side",
+    "baseRigId": "b020-2",
+    "source": "tools/art-review/directional-101/early-boss-01-side-parts.png",
+    "sha256": "f7742ad0a754b02cc7369140643b0287ec5e9252fc8e4f6377a63573b4473423",
+    "sourceBounds": [
+      null,
+      null,
+      366,
+      517
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 30,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b121-2",
+    "view": "front",
+    "baseRigId": "b020-2",
+    "source": "tools/art-review/directional-101/early-boss-01-front-back-parts.png",
+    "sha256": "ffd0c9709bf93d5b2c0eaf3eba19f7c8c1f6d96d50cc01f28e578ed577ea36a2",
+    "sourceBounds": [
+      null,
+      null,
+      307,
+      420
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 30,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b121-2",
+    "view": "back",
+    "baseRigId": "b020-2",
+    "source": "tools/art-review/directional-101/early-boss-01-front-back-parts.png",
+    "sha256": "ffd0c9709bf93d5b2c0eaf3eba19f7c8c1f6d96d50cc01f28e578ed577ea36a2",
+    "sourceBounds": [
+      null,
+      null,
+      289,
+      414
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 30,
+      "centerX": 256
+    }
+  }
+]

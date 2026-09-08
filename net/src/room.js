@@ -8,6 +8,7 @@ import { DurableObject } from 'cloudflare:workers';
 import { RoomHost } from './host.js';
 import { timingFor } from './timing.js';
 import { CLOSE } from './proto.js';
+import { matchMode } from './modes.js';
 
 function attOf(ws) {
   try { return ws.deserializeAttachment() || null; } catch (e) { return null; }
@@ -56,8 +57,10 @@ export class Room extends DurableObject {
       const code = req.headers.get('X-DK-Code') || '';
       let body = {};
       try { body = (await req.json()) || {}; } catch (e) { body = {}; }
+      const mode = matchMode(body.mode);
+      if (!mode) return new Response(JSON.stringify({ error: 'mode' }), { status: 400 });
       const quick = body.kind === 'quick' && body.reserve && Array.isArray(body.reserve.players);
-      const r = await this.host.claim({ code, kind: quick ? 'quick' : 'code', timing: timingFor(this.env.TIMING),
+      const r = await this.host.claim({ code, kind: quick ? 'quick' : 'code', mode, timing: timingFor(this.env.TIMING),
                                         ver: quick ? String(body.ver == null ? '' : body.ver) : null, reserve: quick ? body.reserve : null });
       return new Response(JSON.stringify(r), { status: r.ok ? 201 : 409, headers: { 'content-type': 'application/json' } });
     }

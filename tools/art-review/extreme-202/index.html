@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ko">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>주사위 성채 · 신규 스킨과 극한 몬스터</title>
+<link rel="icon" href="../../../ui/gold.png">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#151d20;color:#edf0df;font:15px/1.55 system-ui,sans-serif}main{max-width:1180px;margin:auto;padding:28px 20px}h1{font-size:27px;margin:0 0 6px}p{color:#b8c4c4;margin:4px 0 18px}nav{display:flex;flex-wrap:wrap;gap:9px;align-items:center;padding:12px 0;position:sticky;top:0;background:#151d20f5;z-index:2}button,select,a.button{font:inherit;border:1px solid #4d6063;background:#26373c;color:#edf0df;border-radius:5px;padding:7px 12px;cursor:pointer;text-decoration:none}button[aria-pressed=true]{background:#d1ae63;color:#1e2323;border-color:#d1ae63}button:focus-visible,select:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #91e1dd;outline-offset:3px}#grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:18px}article{min-width:0;background:#223136;border:1px solid #3b4d50;border-radius:6px;overflow:hidden}canvas{width:100%;display:block;background:linear-gradient(#26383d,#1d2c30)}.label{padding:12px 14px}.label b{display:block}.label small{color:#acbdbc}.label a{color:#dbc387;margin-left:10px}#status{color:#c3d3cc;margin-left:auto}input{accent-color:#d1ae63;max-width:145px}.pending{color:#a4b0b1;display:flex;height:256px;align-items:center;justify-content:center}footer{color:#94a8aa;margin:25px 0;font-size:13px}#towerGrid{display:none;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:15px}#towerGrid img{width:100%;background:#223136}#error{color:#ffb4a6}#theme{display:none}
+</style>
+<main>
+<h1>신규 스킨과 극한 몬스터</h1>
+<p>102~202웨이브의 일반 몬스터 91종·보스와 부관 20종, 세 테마의 1~20성 타워를 확인할 수 있습니다. 실제 게임 주사위는 상점에서 무료로 미리 볼 수 있습니다.</p>
+<nav><button id="monsters" aria-pressed="true">몬스터 111종</button><button id="towers" aria-pressed="false">타워 스킨 60종</button><select id="range" aria-label="웨이브 구간"></select><select id="theme" aria-label="타워 테마"><option value="royal">왕실 상아</option><option value="frost">서리 수정</option><option value="ember">잿불 흑요석</option></select><a class="button" href="../../../">게임 열기</a><span id="status" role="status"></span></nav>
+<nav id="motion"><button data-dir="right" aria-pressed="true">오른쪽 →</button><button data-dir="down" aria-pressed="false">아래 ↓</button><button data-dir="up" aria-pressed="false">위 ↑</button><button data-dir="left" aria-pressed="false">왼쪽 ←</button><button id="pause" aria-pressed="false">일시정지</button><input id="frame" type="range" min="0" max="7" value="0" aria-label="포즈 선택"><span id="pose"></span></nav>
+<div id="error" role="alert"></div><div id="grid"></div><div id="towerGrid"></div>
+<footer>걷기·기어가기는 방향별 8프레임, 비행·부유는 4프레임입니다. 왼쪽은 측면 반사이며 발 기준점은 실제 시트 메타데이터를 사용합니다. 게임의 재생 속도는 이동 거리에 따릅니다. 203웨이브부터는 이 로스터에 최대 3단계 진화 장식을 적용합니다. 이 검수 도구는 앱·운영 정적 배포에 포함되지 않습니다.</footer>
+</main>
+<script src="../../../extreme-art.js?v=101"></script>
+<script>
+'use strict';
+const root=new URL('../../../',location.href),$=id=>document.getElementById(id),manifest=window.INF_EXTREME_ART.entries;
+let catalog=[],direction='right',paused=false,cards=[],epoch=0,towerMode=false;
+for(let i=0;i<10;i++){const o=document.createElement('option');o.value=i;o.textContent='W'+(102+i*10)+'–'+(i===9?202:111+i*10);$('range').append(o);}
+const link=path=>new URL(path,root).href+'?v=101';
+function previewScale(im,e,v){const probe=document.createElement('canvas');probe.width=im.naturalWidth;probe.height=im.naturalHeight;const ctx=probe.getContext('2d',{willReadFrequently:true});ctx.drawImage(im,0,0);const data=ctx.getImageData(0,0,probe.width,probe.height).data;let horizontal=1,above=1,below=1;for(let y=0;y<probe.height;y++)for(let x=0;x<probe.width;x++){if(data[(y*probe.width+x)*4+3]<12)continue;horizontal=Math.max(horizontal,Math.abs(x%v.cell-v.pivot[0]));above=Math.max(above,v.pivot[1]-y%v.cell);below=Math.max(below,y%v.cell-v.pivot[1]);}probe.width=probe.height=0;return Math.min(155/(e.referenceHeight*v.scale),112/horizontal,211/above,12/below);}
+function setButtons(){document.querySelectorAll('[data-dir]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.dir===direction));$('pause').setAttribute('aria-pressed',paused);$('pause').textContent=paused?'재생':'일시정지';}
+async function render(){const token=++epoch;cards=[];$('grid').replaceChildren();$('error').textContent='';const start=Number($('range').value)*10+102,end=start===192?202:start+9,entries=catalog.filter(e=>e.wave>=start&&e.wave<=end);$('status').textContent=Object.values(manifest).filter(e=>e.ready).length+' / 111종 적용';
+ for(const c of entries){const article=document.createElement('article'),label=document.createElement('div');label.className='label';const b=document.createElement('b');b.textContent='W'+c.wave+' · '+c.name;label.append(b);const e=manifest[c.assetId];
+  if(!e?.ready){const pending=document.createElement('div');pending.className='pending';pending.textContent='검수 중';article.append(pending);}
+  else{const canvas=document.createElement('canvas');canvas.width=256;canvas.height=256;canvas.dataset.asset=c.assetId;canvas.setAttribute('aria-label',c.name+' 이동 미리보기');article.append(canvas);const note=document.createElement('small');note.textContent=c.role==='secondary'?'부관':c.role==='boss'?'보스':'일반 몬스터';label.append(note);const a=document.createElement('a');a.textContent='원본 시트';a.target='_blank';a.rel='noopener';label.append(a);cards.push({c,e,canvas,a,image:null});}
+  article.append(label);$('grid').append(article);
+ }
+ const view=direction==='down'?'front':direction==='up'?'back':'side',queue=[...cards];
+ async function worker(){while(queue.length&&token===epoch){const card=queue.shift(),v=card.e.views[view],im=new Image();card.v=v;card.a.href=link(v.sheet);im.src=link(v.sheet);try{await im.decode();if(token===epoch){card.scale=previewScale(im,card.e,v);card.image=im;card.canvas.dataset.view=view;card.canvas.dataset.ready='true';}}catch(e){if(token===epoch)$('error').textContent='시트 로드 실패: '+card.c.assetId;}}}
+ await Promise.all([worker(),worker()]);
+}
+function draw(t){const phase=paused?Number($('frame').value)/8:(t%1200)/1200;if(!document.hidden&&!towerMode)for(const card of cards){const {canvas,v,image,scale}=card;if(!image)continue;const g=canvas.getContext('2d'),idx=Math.min(v.frames-1,Math.floor(phase*v.frames));g.clearRect(0,0,256,256);g.strokeStyle='#546361';g.beginPath();g.moveTo(15,238.5);g.lineTo(241,238.5);g.stroke();g.save();g.translate(128,238);if(direction==='left')g.scale(-1,1);g.drawImage(image,(idx%v.cols)*v.cell,Math.floor(idx/v.cols)*v.cell,v.cell,v.cell,-v.pivot[0]*scale,-v.pivot[1]*scale,v.cell*scale,v.cell*scale);g.restore();}if(!towerMode)$('pose').textContent='주기 '+(Math.floor(phase*8)+1)+'/8';requestAnimationFrame(draw);}
+document.querySelectorAll('[data-dir]').forEach(b=>b.onclick=()=>{direction=b.dataset.dir;setButtons();render();});$('range').onchange=render;$('pause').onclick=()=>{paused=!paused;setButtons();};$('frame').oninput=()=>{paused=true;setButtons();};
+function renderTowers(){$('towerGrid').replaceChildren();$('status').textContent='20 / 20성';const theme=$('theme').value;for(let n=1;n<=20;n++){const a=document.createElement('article'),im=new Image(),label=document.createElement('div');im.src=link('casual/towers/skins/'+theme+'/t'+String(n).padStart(2,'0')+'.png');im.alt=$('theme').selectedOptions[0].textContent+' '+n+'성 타워';im.loading='lazy';label.className='label';label.textContent=n+'성';a.append(im,label);$('towerGrid').append(a);}}
+function mode(tower){towerMode=tower;$('monsters').setAttribute('aria-pressed',!tower);$('towers').setAttribute('aria-pressed',tower);$('grid').style.display=tower?'none':'grid';$('towerGrid').style.display=tower?'grid':'none';$('motion').style.display=tower?'none':'flex';$('range').hidden=tower;$('theme').style.display=tower?'inline-block':'none';if(tower){++epoch;cards=[];renderTowers();}else render();}
+$('monsters').onclick=()=>mode(false);$('towers').onclick=()=>mode(true);$('theme').onchange=renderTowers;
+fetch('catalog.json').then(r=>{if(!r.ok)throw Error('목록을 읽지 못했습니다.');return r.json();}).then(c=>{catalog=c.entries;return render();}).catch(e=>{$('error').textContent=e.message;});requestAnimationFrame(draw);
+</script>
+</html>

@@ -6,6 +6,7 @@
 # Preserve their original line endings across Windows and Unix checkouts.
 tools/art-review/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
 directional-art.js -text
+extreme-art.js -text
 *.png -text
 *.gif -text
 *.webp -text

@@ -1,0 +1,533 @@
+{
+  "scope": "Representative old/new neutral art comparison at equal source-cell scale; final moving GIFs replay the actual baked sheets. This board does not apply game-specific display sizes.",
+  "manifestSha256": "856afa8e0a1d3bb399c55b68722a00e2fd7d44e46a41bdae1924f6dec1c76960",
+  "records": [
+    {
+      "id": "w102",
+      "version": "old",
+      "view": "side",
+      "file": "casual/enemies/inf/directional/w001-side.png",
+      "sha256": "3f6f5538d258ec6546fff326d5e976571639764a9e93e0cffc5679588a938aa0"
+    },
+    {
+      "id": "w102",
+      "version": "old",
+      "view": "front",
+      "file": "casual/enemies/inf/directional/w001-front.png",
+      "sha256": "ef7f6d2297753b779cb2e5bb31bd4db97a60ef8158688b618a8952460f015844"
+    },
+    {
+      "id": "w102",
+      "version": "old",
+      "view": "back",
+      "file": "casual/enemies/inf/directional/w001-back.png",
+      "sha256": "9df016b1d8cd60247c488de2fa16e4f545ed8b6ef76eab2160fe3893bd0c5be2"
+    },
+    {
+      "id": "w102",
+      "version": "new",
+      "view": "side",
+      "file": "gen\\extreme-202-final\\casual\\enemies\\extreme\\w102-side.webp",
+      "sha256": "941d11cefd7238df95d59a5f4f4cfa510107faa4bd370dc021f07389fc9f726b"
+    },
+    {
+      "id": "w102",
+      "version": "new",
+      "view": "front",
+      "file": "gen\\extreme-202-final\\casual\\enemies\\extreme\\w102-front.webp",
+      "sha256": "a2778603d4256c4fa6eb67bb0558379c2fef3c969a7d80470a6411f53c38f69e"
+    },
+    {
+      "id": "w102",
+      "version": "new",
+      "view": "back",
+      "file": "gen\\extreme-202-final\\casual\\enemies\\extreme\\w102-back.webp",
+      "sha256": "668b2d4c7836fee8f0ba016ac77142fa2cc6115542fb52bbd3a4cbf7249f333c"
+    },
+    {
+      "id": "w123",
+      "version": "old",
+      "view": "side",
+      "file": "casual/enemies/inf/directional/w022-side.png",
+      "sha256": "857da7b8fa89036d2ff508d77395b27744e94f408e0b4697c403b7248837ab03"
+    },
+    {
+      "id": "w123",
+      "version": "old",
+      "view": "front",
+      "file": "casual/enemies/inf/directional/w022-front.png",
+      "sha256": "e82d1e522a1746be3a3f60b5161455c59908ef8738549760574e54239d36e336"
+    },
+    {
+      "id": "w123",
+      "version": "old",
+      "view": "back",
+      "file": "casual/enemies/inf/directional/w022-back.png",
+      "sha256": "696833e857902b419bcfd06846de232510de2876e30a7bd775f341363ad0e9b6"
+    },
+    {
+      "id": "w123",
+      "version": "new",
+      "view": "side",
+      "file": "gen\\extreme-202-final\\casual\\enemies\\extreme\\w123-side.webp",
+      "sha256": "71e8ccbd82c9a2cd813615886a9ac93f1ff86162bbdbd3cbf993258e331eddb9"
+    },
+    {
+      "id": "w123",
+      "version": "new",
+      "view": "front",
+      "file": "gen\\extreme-202-final\\casual\\enemies\\extreme\\w123-front.webp",
+      "sha256": "cb18983572c26e9f78d0c3f84d5c80dc08cbbd463c07beef023a780d3bae9eeb"
+    },
+    {
+      "id": "w123",
+      "version": "new",
+      "view": "back",
+      "file": "gen\\extreme-202-final\\casual\\enemies\\extreme\\w123-back.webp",
+      "sha256": "2d8c3824675f52493c460ab1c4409ff004fb8ad4770f1c26921d7e65a286398a"
+    },
+    {
+      "id": "w133",
+      "version": "old",
+      "view": "side",
+      "file": "casual/enemies/inf/directional/w032-side.png",
+      "sha256": "710626ce40da690333abd3e9ce920d082ca28acba1b6264eb474219c9be157ac"
+    },
+    {
+      "id": "w133",
+      "version": "old",
+      "view": "front",
+      "file": "casual/enemies/inf/directional/w032-front.png",
+      "sha256": "7b691f4dd42345b61719213368f9d99f2639d92f9640f7335b219dc1b13c1732"
+    },
+    {
+      "id": "w133",
+      "version": "old",
+      "view": "back",
+      "file": "casual/enemies/inf/directional/w032-back.png",
+      "sha256": "0abcf501e9b23613704c7ffaa46627b0dbcfe168cce7a73626b409d742e02aac"
+    },
+    {
+      "id": "w133",
+      "version": "new",
+      "view": "side",
+      "file": "gen\\extreme-202-final\\casual\\enemies\\extreme\\w133-side.webp",
+      "sha256": "b9cd683757de08e5f239caeea1bc751af57457d5f2da9ab726d011870561a84f"
+    },
+    {
+      "id": "w133",
+      "version": "new",
+      "view": "front",
+      "file": "gen\\extreme-202-final\\casual\\enemies\\extreme\\w133-front.webp",
+      "sha256": "7a25f2f00f066b579f943bc2641fc9c0ed91420a5301efd7613ed77f779f6615"
+    },
+    {
+      "id": "w133",
+      "version": "new",
+      "view": "back",
+      "file": "gen\\extreme-202-final\\casual\\enemies\\extreme\\w133-back.webp",
+      "sha256": "acc64165f512428729af34eb24929d7f83bd2330a0fcbbd341b4455c75cb3d23"
+    },
+    {
+      "id": "w138",
+      "version": "old",
+      "view": "side",
+      "file": "casual/enemies/inf/directional/w037-side.png",
+      "sha256": "4b2f4f89ba11896d63c107ee3f1e4549830c7f831d806865bd0676a9d3a19b1c"
+    },
+    {
+      "id": "w138",
+      "version": "old",
+      "view": "front",
+      "file": "casual/enemies/inf/directional/w037-front.png",
+      "sha256": "6fd31d8266b42dfe0388e4753e70fd8b7368c5a67df329e77b0d144782ecde86"
+    },
+    {
+      "id": "w138",
+      "version": "old",
+      "view": "back",
+      "file": "casual/enemies/inf/directional/w037-back.png",
+      "sha256": "17e31d91f0ca9872c427876d1ebf1328e228856bd5cc1df3abd4bf2bb2287fd5"
+    },
+    {
+      "id": "w138",
+      "version": "new",
+      "view": "side",
+      "file": "gen\\extreme-202-final\\casual\\enemies\\extreme\\w138-side.webp",
+      "sha256": "e3ae8cc5e781518b4bab84c296a7521d46293b1d9be7c9dd6262349fcc49d006"
+    },
+    {
+      "id": "w138",
+      "version": "new",
+      "view": "front",
+      "file": "gen\\extreme-202-final\\casual\\enemies\\extreme\\w138-front.webp",
+      "sha256": "76a41dd93a2b4e2adc1d29726d301cace714da3e3c7431318507cce41542b56a"
+    },
+    {
+      "id": "w138",
+      "version": "new",
+      "view": "back",
+      "file": "gen\\extreme-202-final\\casual\\enemies\\extreme\\w138-back.webp",
+      "sha256": "7fe9d44eda191c6914329b791a11ec03a13e61eeaa12a9bbbb71de6002848558"
+    },
+    {
+      "id": "w154",
+      "version": "old",
+      "view": "side",
+      "file": "casual/enemies/inf/directional/w053-side.png",
+      "sha256": "49477a87596ed9e8f2066f3bac557f1d4ac066b587a7c77840f147aa9b6785f1"
+    },
+    {
+      "id": "w154",
+      "version": "old",
+      "view": "front",
+      "file": "casual/enemies/inf/directional/w053-front.png",
+      "sha256": "abb4f3168e5e634507747a037397763fdd9f011d174a37d777103152cd877b41"
+    },
+    {
+      "id": "w154",
+      "version": "old",
+      "view": "back",
+      "file": "casual/enemies/inf/directional/w053-back.png",
+      "sha256": "11bd9d89fd3c2b2d98ab14659ea0718ab8faf3704f8f1ceb9287653328325472"
+    },
+    {
+      "id": "w154",
+      "version": "new",
+      "view": "side",
+      "file": "gen\\extreme-202-final\\casual\\enemies\\extreme\\w154-side.webp",
+      "sha256": "bbbcc2ee28c179e16402b92fdbca5ebe6b0607a2bccc32ae26853d817ecb1411"
+    },
+    {
+      "id": "w154",
+      "version": "new",
+      "view": "front",
+      "file": "gen\\extreme-202-final\\casual\\enemies\\extreme\\w154-front.webp",
+      "sha256": "f409245c2981e71c311435ed3d4d35a76f598e4e7059ebff16f5e46bca03f0c9"
+    },
+    {
+      "id": "w154",
+      "version": "new",
+      "view": "back",
+      "file": "gen\\extreme-202-final\\casual\\enemies\\extreme\\w154-back.webp",
+      "sha256": "81f2affd600e520bacca1eb6f1b14f2e642950320f31ad594f644a41a172dba2"
+    },
+    {
+      "id": "b171",
+      "version": "old",
+      "view": "side",
+      "file": "casual/bosses/inf/directional/b070-side.png",
+      "sha256": "d9295f058eef6f898dfb9abb3fd0561a75473bd08545493ebcde307624e5d7c5"
+    },
+    {
+      "id": "b171",
+      "version": "old",
+      "view": "front",
+      "file": "casual/bosses/inf/directional/b070-front.png",
+      "sha256": "bc67b6266fad112b7026e3dd9b718a03e69ccfc74f5fb3217df9877063011ed9"
+    },
+    {
+      "id": "b171",
+      "version": "old",
+      "view": "back",
+      "file": "casual/bosses/inf/directional/b070-back.png",
+      "sha256": "66632248e22463a899bf331d565349f322cc65d22f74964f7df5a604d598100d"
+    },
+    {
+      "id": "b171",
+      "version": "new",
+      "view": "side",
+      "file": "gen\\extreme-202-final\\casual\\bosses\\extreme\\b171-side.webp",
+      "sha256": "072abbe0ff74d1e3776d74b92cefaec3d9cf8a1e983534f334d6b9da9acd6e53"
+    },
+    {
+      "id": "b171",
+      "version": "new",
+      "view": "front",
+      "file": "gen\\extreme-202-final\\casual\\bosses\\extreme\\b171-front.webp",
+      "sha256": "e998c546b7ab3b2606d8e06632afaa2de9fc68f6395f5595548aa529356072e2"
+    },
+    {
+      "id": "b171",
+      "version": "new",
+      "view": "back",
+      "file": "gen\\extreme-202-final\\casual\\bosses\\extreme\\b171-back.webp",
+      "sha256": "64f81b3ce3cefbb633eb3e72928c7d3340379113dddbcce6c08db74dea1df9f8"
+    },
+    {
+      "id": "w183",
+      "version": "old",
+      "view": "side",
+      "file": "casual/enemies/inf/directional/w082-side.png",
+      "sha256": "d547360bde3c6d7072eb260dbf27c388153c3f42641e27afff91b58613907ef3"
+    },
+    {
+      "id": "w183",
+      "version": "old",
+      "view": "front",
+      "file": "casual/enemies/inf/directional/w082-front.png",
+      "sha256": "a4f6f37ff5bbb5f1eb2b24de92bfe16eb7d64ec47b8559e6ae5dc4ec0cbd181b"
+    },
+    {
+      "id": "w183",
+      "version": "old",
+      "view": "back",
+      "file": "casual/enemies/inf/directional/w082-back.png",
+      "sha256": "e8845c23e8a6a4a5d6afefc02efee2f8975c31cc66282011e86f2d03a1ea7488"
+    },
+    {
+      "id": "w183",
+      "version": "new",
+      "view": "side",
+      "file": "gen\\extreme-202-final\\casual\\enemies\\extreme\\w183-side.webp",
+      "sha256": "c78387f6ebbfc32a2b6c9182629293f0703a2306bec11cf62804185a4e427dbe"
+    },
+    {
+      "id": "w183",
+      "version": "new",
+      "view": "front",
+      "file": "gen\\extreme-202-final\\casual\\enemies\\extreme\\w183-front.webp",
+      "sha256": "d678bca4d9600057f0194a0ca1972472f87bf86dcf63d6f379b165a1ce86d85c"
+    },
+    {
+      "id": "w183",
+      "version": "new",
+      "view": "back",
+      "file": "gen\\extreme-202-final\\casual\\enemies\\extreme\\w183-back.webp",
+      "sha256": "9c1e56203f1cab3415de269463e0ad23ccbd8c4b6b926f11a7415a9accdd25b6"
+    },
+    {
+      "id": "b201",
+      "version": "old",
+      "view": "side",
+      "file": "casual/bosses/inf/directional/b100-side.png",
+      "sha256": "a23c8c237f8562f15491bf103f19d0ebf11d6dc742be075ad989e186753c641e"
+    },
+    {
+      "id": "b201",
+      "version": "old",
+      "view": "front",
+      "file": "casual/bosses/inf/directional/b100-front.png",
+      "sha256": "01312292571cfacc69d6142adf6b72a3d248a49c9a35e826d90065f30a3ab9cc"
+    },
+    {
+      "id": "b201",
+      "version": "old",
+      "view": "back",
+      "file": "casual/bosses/inf/directional/b100-back.png",
+      "sha256": "9488feee0b5fe4d2174657f7ef6ebddfd4b105eea74166fb40e2a48d16b9c983"
+    },
+    {
+      "id": "b201",
+      "version": "new",
+      "view": "side",
+      "file": "gen\\extreme-202-final\\casual\\bosses\\extreme\\b201-side.webp",
+      "sha256": "310d6e58a9321b80dd505665611609203440f96093d979b7be186e5d99eca4f1"
+    },
+    {
+      "id": "b201",
+      "version": "new",
+      "view": "front",
+      "file": "gen\\extreme-202-final\\casual\\bosses\\extreme\\b201-front.webp",
+      "sha256": "70fc54b526e6a8894f5527733551b1818ccbb249d10e27ffeda307b27f52eddf"
+    },
+    {
+      "id": "b201",
+      "version": "new",
+      "view": "back",
+      "file": "gen\\extreme-202-final\\casual\\bosses\\extreme\\b201-back.webp",
+      "sha256": "548b36588f789b60de91cf2eb9c7c0cb7cb6dfb49452709001ae71b5a6a68a1d"
+    }
+  ],
+  "reviewBoards": [
+    {
+      "file": "all-poses-1.jpg",
+      "source": "gen/extreme-202-final/review/all-poses-1.png",
+      "sourceSha256": "93b037ffe89ccec934c94cc8e42d0f34ea5e9ab06b8f857f5696da9bb9481c8a",
+      "derivation": "JPEG88 proof only; runtime and original source pixels unchanged."
+    },
+    {
+      "file": "all-poses-2.jpg",
+      "source": "gen/extreme-202-final/review/all-poses-2.png",
+      "sourceSha256": "97b558be21f3d5eccea4a50da92690265c5789238a4472eed882aeb88c70c356",
+      "derivation": "JPEG88 proof only; runtime and original source pixels unchanged."
+    },
+    {
+      "file": "all-poses-3.jpg",
+      "source": "gen/extreme-202-final/review/all-poses-3.png",
+      "sourceSha256": "e0e0fc4788ef03d32a446228f4b241b529534c0c205f5e2cf8bf92e4a337f31c",
+      "derivation": "JPEG88 proof only; runtime and original source pixels unchanged."
+    },
+    {
+      "file": "all-poses-4.jpg",
+      "source": "gen/extreme-202-final/review/all-poses-4.png",
+      "sourceSha256": "45a6d4cdbb34c6362b0cd999f9bcc8b825316fe139b6e131b63ac1e7895ae2c9",
+      "derivation": "JPEG88 proof only; runtime and original source pixels unchanged."
+    },
+    {
+      "file": "all-poses-5.jpg",
+      "source": "gen/extreme-202-final/review/all-poses-5.png",
+      "sourceSha256": "417a7a474fdcb093fec670c09a563fffe6d553b3a34bbf8f41635f6034e9364b",
+      "derivation": "JPEG88 proof only; runtime and original source pixels unchanged."
+    },
+    {
+      "file": "all-poses-6.jpg",
+      "source": "gen/extreme-202-final/review/all-poses-6.png",
+      "sourceSha256": "b9c284f45abbeed23264bdc8ad777ba158521ac769e331069cf8e1e8245f14e7",
+      "derivation": "JPEG88 proof only; runtime and original source pixels unchanged."
+    },
+    {
+      "file": "all-poses-7.jpg",
+      "source": "gen/extreme-202-final/review/all-poses-7.png",
+      "sourceSha256": "27d3726c05879f3e92de481ad3431ca01382013abfff9704def3887d969f77d6",
+      "derivation": "JPEG88 proof only; runtime and original source pixels unchanged."
+    },
+    {
+      "file": "all-poses-8.jpg",
+      "source": "gen/extreme-202-final/review/all-poses-8.png",
+      "sourceSha256": "fc93adfbdd14eca46a3d209de9dbadb84511ddef2a7ab6428f505d7e69a0f6fa",
+      "derivation": "JPEG88 proof only; runtime and original source pixels unchanged."
+    },
+    {
+      "file": "all-poses-9.jpg",
+      "source": "gen/extreme-202-final/review/all-poses-9.png",
+      "sourceSha256": "914251af07bf97c053bd45a51f355434128d090535988553a04bfab1ddb9d55b",
+      "derivation": "JPEG88 proof only; runtime and original source pixels unchanged."
+    },
+    {
+      "file": "all-poses-10.jpg",
+      "source": "gen/extreme-202-final/review/all-poses-10.png",
+      "sourceSha256": "c776d304c4a0225c0be29ff670c3ec5d944943e66b02bea4df3db0041f4ad9d2",
+      "derivation": "JPEG88 proof only; runtime and original source pixels unchanged."
+    },
+    {
+      "file": "all-poses-11.jpg",
+      "source": "gen/extreme-202-final/review/all-poses-11.png",
+      "sourceSha256": "ba40ae93c40c80150326ea7df1ec5b0f1d50e4aea45050995e058b1c9d6b123f",
+      "derivation": "JPEG88 proof only; runtime and original source pixels unchanged."
+    },
+    {
+      "file": "all-poses-12.jpg",
+      "source": "gen/extreme-202-final/review/all-poses-12.png",
+      "sourceSha256": "4faa09db5fd6bcce738cfb0a791541cf8a93b37dbd146563e2b9aedf5a0a8ab9",
+      "derivation": "JPEG88 proof only; runtime and original source pixels unchanged."
+    },
+    {
+      "file": "all-poses-13.jpg",
+      "source": "gen/extreme-202-final/review/all-poses-13.png",
+      "sourceSha256": "d5b936c15472742112593867e64abccbc219164f734c91e1aeae5fdf2cffdc3f",
+      "derivation": "JPEG88 proof only; runtime and original source pixels unchanged."
+    },
+    {
+      "file": "all-poses-14.jpg",
+      "source": "gen/extreme-202-final/review/all-poses-14.png",
+      "sourceSha256": "9a055a5e7eb98f7228cf77198d93124b0d2bf4ac1304cce678b3b9185546dde3",
+      "derivation": "JPEG88 proof only; runtime and original source pixels unchanged."
+    }
+  ],
+  "compressedQA": {
+    "file": "directional-qa.json.gz",
+    "decodedSha256": "3e01e1a21b4a79aec706f6d15044768c7470af87b36cfb59222897dbf2fa8bc5",
+    "encoding": "gzip JSON; complete per-frame provenance and image QA preserved"
+  },
+  "validationFiles": [
+    {
+      "file": "directional-validation.json",
+      "sha256": "16f734d2a421c720a6840d525eade254f16b1f7ff18f6ab934358bf2a200bc95"
+    },
+    {
+      "file": "directional-moving-qa.json",
+      "sha256": "0501aed52d8f1b8e9adba8d22b8af40ac82a89f311adc70e607c8e73d55c1e25"
+    },
+    {
+      "file": "directional-qa.json.gz",
+      "sha256": "b791bc421bbe4b56aecff53dab5bed15c8c5a44f1933885f4a5c4b5447a5851f"
+    }
+  ],
+  "files": [
+    {
+      "file": "all-poses-1.jpg",
+      "sha256": "3969a80bd611aff15b4a2b86c59798c2b77e77c8d914f72189361ef852296501"
+    },
+    {
+      "file": "all-poses-10.jpg",
+      "sha256": "55fd29d7c1191fc2e391f41a66a17822ea6a8389d59de4fe97528df69347f1e7"
+    },
+    {
+      "file": "all-poses-11.jpg",
+      "sha256": "c27ccb55584a00e74ea22106e38ec85a2d1dc5bacfe30a4f8520889313885c1c"
+    },
+    {
+      "file": "all-poses-12.jpg",
+      "sha256": "59466d0550990d4f0d28fbbca0b05d6eb38203bf79aa838e4ecc0cf7e61b3c40"
+    },
+    {
+      "file": "all-poses-13.jpg",
+      "sha256": "a283c4f7f59386676c02ffafb87bad1112b009eb0de84e8170b3105629004fe1"
+    },
+    {
+      "file": "all-poses-14.jpg",
+      "sha256": "433694520f8332cb271dcfec9ad530a16e145710c2cbd72af566da8b21b670e9"
+    },
+    {
+      "file": "all-poses-2.jpg",
+      "sha256": "e96ade45f66974c280b02e1eea18170324d0c89766c7f43c4f2aeb1a70a31489"
+    },
+    {
+      "file": "all-poses-3.jpg",
+      "sha256": "2494441ae2f196b291d755bd34ca51c5a62441a139bf2280277e3cd9caf4aa43"
+    },
+    {
+      "file": "all-poses-4.jpg",
+      "sha256": "eedb6db91d4cbd07397a553665ae22fb2abc5b283773adf7d9258d5da45e21b3"
+    },
+    {
+      "file": "all-poses-5.jpg",
+      "sha256": "5f7d2b24543a534489b2aa47fadc7a9e7de04daadb3def6cc8df0916e12f2144"
+    },
+    {
+      "file": "all-poses-6.jpg",
+      "sha256": "237ca26684cddce3380096f879a527a702f7922c6a643cb6b6ff9154325408d4"
+    },
+    {
+      "file": "all-poses-7.jpg",
+      "sha256": "4dbf2caed3f9747b4113deec1fb0d9ee46e0890382b6a147135405c7dd9b1ad5"
+    },
+    {
+      "file": "all-poses-8.jpg",
+      "sha256": "c341df2b26d4f4574fda1548b293f42df272bc28c2c3aa38ffc36c07e6b8aeda"
+    },
+    {
+      "file": "all-poses-9.jpg",
+      "sha256": "2e1fd76e90499f79b86f0979d6db502884219d16ec108006a530c2db189bcd76"
+    },
+    {
+      "file": "b201-moving.gif",
+      "sha256": "7215caa61778e1205f1af62a9310256156666754036ee59e382e68fdcc9a4c09"
+    },
+    {
+      "file": "old-new-three-view.png",
+      "sha256": "da28e2b4b7662e57ef2378b13316bfee664f3c00c1bf20c95f80ef249638d7ba"
+    },
+    {
+      "file": "w123-moving.gif",
+      "sha256": "465db3cfb2aa02f0ed90ae7412b9f8dc0f02d6b7751509d93e045d6e81c04195"
+    },
+    {
+      "file": "w138-motion-captures.png",
+      "sha256": "974ed16ff40963e3dbe1af9ef16fc2d622c346adb270e21cbfbc02cbde64c500"
+    },
+    {
+      "file": "w138-moving.gif",
+      "sha256": "fa37a9c87d26a0616a79c992677d435beda7e932493ded1466955353b89b9fe7"
+    },
+    {
+      "file": "w183-motion-captures.png",
+      "sha256": "a1376197e061cfe415ed527b1bb42242a7842f03150fd5412873350a89216261"
+    },
+    {
+      "file": "w183-moving.gif",
+      "sha256": "6aba6a1a6d4ec5e38db6d1483f4b6846132607814c21676914638553aca0b0b5"
+    }
+  ]
+}

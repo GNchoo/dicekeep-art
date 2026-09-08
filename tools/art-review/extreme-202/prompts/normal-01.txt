@@ -1,0 +1,21 @@
+Create ONE production sprite-parts atlas, a new image, not a collage of the reference. Exact grid: SIX equal columns by EIGHT equal rows =48 isolated sprites. Portrait3:4 canvas, largest available resolution (prefer2048x2732). Each row contains TWO characters: columns1/2/3 are character A strict RIGHT-facing SIDE/profile, straight FRONT, straight BACK; columns4/5/6 are character B sameviews. Exactly one connected HEAD+TORSO+ARMS+compact EQUIPMENT cutout in every cell. NO legs, thighs, knees, feet, ground, shadows, bases, captions, text, grid lines or borders. Waist-to-head only, like the reference's cut level. If clothing extends to hips keep a short hem but never a leg. All48 cells must be populated; identical scale and waistline across each character's3angles. Generous empty gutters20% ofcell, nothing touches cell edges. SOLID perfectly flat vivid MAGENTA #ff00ff background, NO checkerboard, no white ground, no atmospheric light outside characters. No magenta incharacter.
+
+Reference image is a BASE RIG SOCKET/PROPORTION guide only: every corresponding cell maps to the same outputcell. Preserve approximate trimmed body width/height proportions, torso center, waist cutoff width and height, anatomical skin/fur color and arm placement so original legs can be reused. New headgear, equipment, chest motifs and garments must be visibly new. Do not copy the old torso. Keep source approachable hand-painted fantasy game illustration: rounded readable shapes, muted material hues, leather/cloth/bronze brushwork, soft shaded volumes. No pixelart, photoreal horror, gore, torn flesh, exposed wounds, drool or exaggerated grimaces. New armor fully intact. BACK must show the real back of head and armor with NO face/eyes; keep physical handedness, so weapon swaps screen side between FRONT and BACK. SIDE faces right. Keep all attachments connected to body, compact weapons never far detached. For the16characters below read pairs per row in exact order:
+1. w116: royal raccoon cartographer: folded-map breast harness, tall feather cap, bronze compass, olive cloth, brown fur; distinct from hooded thief.
+2. w132: coolant goblin scout: blue padded jacket, rounded steel pipe helmet, glass gauge on chest, green skin and brown leather waist.
+3. w134: snowplow goblin: broad curved shovel shield, frosted rivet helmet, dark brown leather skirt, green skin.
+4. w135: ice-steel orc axe guard: flat icy steel brow visor, asymmetric boiler shoulder, brown belt and olive skin.
+5. w136: compressor troll: squat pressure-vessel backpack, double gauge cap, gray olive intact skin, broad leather apron.
+6. w138: rail bow hobgoblin: orange skin, navy hood with tiny rail sight, compact mechanical bow, brown waist cloth.
+7. w139: snowflake kobold: orange scales, six-spoke snowflake headplate, short navy collar, brass ice pick, brown waist.
+8. w140: engine-room foreman: square blue cap, dark moustache, long navy workcoat ending at waist, broad brass pressure-dial chest clasp.
+9. w142: coral shield soldier: closed pale shell helmet with two coral prongs, teal tunic, oval shell shield, short spear.
+10. w143: seed sapper: acorn-shaped steel helmet, olive apron, seed-container backpack, short copper planting hammer.
+11. w146: shell heavy knight: scalloped closed helmet, rounded nacre shoulder armor, dark teal tabard, shell shield and short sword.
+12. w147: seaweed squire: young human, kelp-braid headband over small steel cap, olive padded shoulders, tiny round blue shield.
+13. w148: pearl crossbow guard: bubble-shaped steel visor open at eyes, dark teal jacket, pearl clasp and compact wooden crossbow.
+14. w150: garden excavation gnome: orange beard, mushroom-shaped navy cap, copper seed-drill held close, olive apron.
+15. w152: moss guardian doll: smooth gray-green porcelain face, stitched olive gardener tunic, small mossy seed crate backpack; friendly serious no rot or gore.
+16. w154: coral masked soldier: ivory smooth ceramic mask with small dark eyes, coral tiara, burgundy short tabard, simple bronze spear; no exposed ribs.
+
+Prioritize all48 correct legless torso views and generous magenta separation. One coherent atlas only.

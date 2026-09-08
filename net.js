@@ -1,11 +1,11 @@
-// ==================== 멀티 연결 계층 (DKNET v3 · WebSocket 전용) ====================
+// ==================== 멀티 연결 계층 (DKNET v4 · WebSocket 전용) ====================
 // 설계: 서버(별도 Worker `dicekeep-net` + 방마다 Durable Object 하나)는 방·시드·중계·순위만 맡고,
 // 시뮬레이션(웨이브·배속 포함)은 각 클라이언트가 자기 보드만 자기 속도로 돌린다. 이 파일은 '연결 계층' 만 담는다 —
 // 게임 규칙·상대 위젯은 game.js 가 이벤트로 붙인다.
 //   1) 접속      — 방 만들기 {url}/ws/new · 참가·재접속 {url}/ws/room/{CODE} · 빠른 매칭 {url}/ws/quick(대기열 → matched{code} → 방으로 join). URL 에는 방 코드만 싣고
 //                  인증(pid+key)은 소켓을 연 직후 첫 프레임 hello 로 보낸다. 거절은 err 메시지 + 44xx 닫기
 //   2) 좌석      — pid(8자)·key(32 hex)는 탭 단위 sessionStorage(dk_mp_id): 새로고침 = 같은 좌석, 다른 탭 = 다른 플레이어.
-//                  마지막 방(dk_mp {code,pid,key,name})은 welcome 마다 저장하고 leave() 가 지운다 → 부팅 시 resume()
+//                  마지막 방(dk_mp {code,pid,key,name,mode})은 welcome 마다 저장하고 leave() 가 지운다 → 부팅 시 resume()
 //   3) 재접속    — 의도하지 않은 닫힘이면 1·2·4·8·16·30초 백오프로 같은 pid/key 로 다시 hello(op:'join').
 //                  화면 복귀(visibilitychange)·online 이면 즉시. 다시 붙어도 같은 답인 코드(4001·4403·4404·4409·4410·4426)는 포기
 //   4) 시각 동기 — time 왕복 표본(최근 8개) 중 RTT 가 가장 작은 표본의 오프셋. serverNow() = performance.now() + offset
@@ -15,13 +15,14 @@
 window.DKNET = (function () {
   'use strict';
 
-  const PROTOCOL = 3;
+  const PROTOCOL = 4;
+  const matchMode = (v) => v === undefined ? 'clear' : v === 'clear' || v === 'extreme' ? v : null;
   const WS_OPEN = 1;
   const CONNECT_TIMEOUT = 10000;   // 소켓 생성 → open 대기
   const HELLO_TIMEOUT = 5000;      // open → welcome 대기
   const BACKOFF = [1000, 2000, 4000, 8000, 16000, 30000];
-  const MAX_BYTES = 4000;          // 서버 프레임 한도 4,096 B 아래
-  const EN_MAX = 3000;             // sum.en 적 스트림 최대 길이 (서버 EN_MAX 와 같다)
+  const MAX_BYTES = 6000;          // 서버 프레임 한도 6,144 B 아래
+  const EN_MAX = 5120;             // sum.en 적 스트림 최대 길이 (서버 EN_MAX 와 같다)
   const TIME_SAMPLES = 8, TIME_BURST = 5, TIME_GAP = 200, TIME_JUMP = 500;
   const DEBUG_LINES = 200, DEBUG_TEXT = 60;
   const CODE_RE = /^[A-HJ-NP-Z2-9]{6}$/;                     // 알파벳 ABCDEFGHJKMNPQRSTUVWXYZ23456789
@@ -30,7 +31,7 @@ window.DKNET = (function () {
   const NO_RETRY = { 4000: 1, 4001: 1, 4403: 1, 4404: 1, 4409: 1, 4410: 1, 4426: 1 };
   // 방이 없어졌거나 좌석이 무효한 코드 → 저장한 세션(dk_mp)도 버린다 (부팅 때 헛된 resume 방지)
   const FORGET_CLOSE = { 4403: 1, 4404: 1, 4409: 1, 4410: 1, 4426: 1 };
-  const FORGET_ERR = { 'bad-code': 1, 'bad-key': 1, expired: 1, version: 1, started: 1, full: 1 };
+  const FORGET_ERR = { 'bad-code': 1, 'bad-key': 1, expired: 1, version: 1, mode: 1, started: 1, full: 1 };
   const CLOSE_NAME = { 4000: 'leave', 4001: 'replaced', 4400: 'bad-request', 4403: 'bad-key', 4404: 'bad-code', 4409: 'started', 4410: 'expired', 4426: 'version', 4429: 'rate' };
   const DEAD_REASONS = ['lives', 'bossLeak', 'bossTimeout', 'quit', 'reload', 'afk'];
   const LOG_KINDS = ['sys', 'gacha', 'up', 'boom', 'boss', 'life'];
@@ -153,11 +154,11 @@ window.DKNET = (function () {
     return R.id;
   }
   // 마지막 방 (새로고침 뒤 resume 용)
-  function saveSession() { if (R.code && R.id) sSet(SS(), 'dk_mp', JSON.stringify({ code: R.code, pid: R.id.pid, key: R.id.key, name: R.name })); }
+  function saveSession() { if (R.code && R.id) sSet(SS(), 'dk_mp', JSON.stringify({ code: R.code, pid: R.id.pid, key: R.id.key, name: R.name, mode: R.mode })); }
   function loadSession() {
     try {
       const o = JSON.parse(sGet(SS(), 'dk_mp') || 'null');
-      if (o && CODE_RE.test(String(o.code)) && PID_RE.test(String(o.pid)) && KEY_RE.test(String(o.key))) return { code: String(o.code), pid: String(o.pid), key: String(o.key), name: String(o.name || '') };
+      if (o && CODE_RE.test(String(o.code)) && PID_RE.test(String(o.pid)) && KEY_RE.test(String(o.key)) && matchMode(o.mode)) return { code: String(o.code), pid: String(o.pid), key: String(o.key), name: String(o.name || ''), mode: matchMode(o.mode) };
     } catch (_) {}
     return null;
   }
@@ -168,6 +169,7 @@ window.DKNET = (function () {
     state: 'offline',    // offline | connecting | queue | lobby | playing | ended | reconnecting  (queue = 빠른 매칭 대기열)
     id: null,            // { pid, key }
     name: '',            // 내가 요청한 이름(정규화 뒤) — hello 에 실린다
+    mode: 'clear',        // persisted through quick matching, reconnect, and reload
     me: null,            // { pid, name } — name 은 서버가 확정한 것(중복 접미 포함)
     room: null,          // 마지막 room 스냅샷 미러 { code, phase, hostId, ver, now, players[], game|null }
     code: null,
@@ -274,12 +276,14 @@ window.DKNET = (function () {
     dbg('drop ' + code + ' ' + (reason || ''));
   }
   // 새 접속 (create/join/resume). 이전 소켓·재접속은 버린다
-  function open(path, op, name) {
+  function open(path, op, name, mode = 'clear') {
+    if (!matchMode(mode)) return Promise.reject(netError('mode', '지원하지 않는 경쟁 모드입니다'));
     if (!CFG.url) return Promise.reject(netError('offline', '멀티 서버 주소가 없습니다'));
     dropSocket(1000, 'reopen');
     clearRetry();
     if (R.pending) { const p = R.pending; R.pending = null; p.reject(netError('replaced', '다른 접속으로 바뀌었습니다')); }
     R.attempt = 0; R.room = null; R.code = null; R.watching = null;
+    R.mode = mode;
     const id = identity();
     R.name = sanitizeName(name != null ? name : R.name, id.pid);
     R.me = { pid: id.pid, name: R.name };
@@ -287,7 +291,7 @@ window.DKNET = (function () {
     return connect(path, op, false);
   }
   // 빠른 매칭: 대기열(Lobby) 소켓. welcome 으로 대기열에 들어가면 resolve, 그 뒤 queued{n,eta} 이벤트 → matched{code} 가 오면 그 방으로 스스로 join 한다
-  function quick(name) { R.matched = null; return open('/ws/quick', 'quick', name); }
+  function quick(name, mode = 'clear') { R.matched = null; return open('/ws/quick', 'quick', name, mode); }
   function connect(path, op, retry) {
     return new Promise((resolve, reject) => {
       let ws;
@@ -302,7 +306,7 @@ window.DKNET = (function () {
         if (R.sock !== sock) return;
         clearTimeout(sock.timer);
         sock.timer = setTimeout(() => fail(sock, 'timeout', '서버가 응답하지 않습니다'), HELLO_TIMEOUT);
-        sendRaw({ t: 'hello', v: CFG.protocol, ver: CFG.ver, op, pid: R.id.pid, key: R.id.key, name: R.name });
+        sendRaw({ t: 'hello', v: CFG.protocol, ver: CFG.ver, op, mode: R.mode, pid: R.id.pid, key: R.id.key, name: R.name });
       };
       ws.onmessage = (ev) => { if (R.sock === sock) onMessage(sock, ev && ev.data); };
       ws.onerror = () => { if (R.sock === sock) dbg('ws error'); };
@@ -364,6 +368,12 @@ window.DKNET = (function () {
     let m;
     try { m = JSON.parse(data); } catch (_) { return; }
     if (!m || typeof m !== 'object' || typeof m.t !== 'string') return;
+    const rules = m.t === 'welcome' ? m.room : ['room', 'start', 'queued', 'matched'].includes(m.t) ? m : null;
+    if (rules && (matchMode(rules.mode) !== R.mode || (rules.game && matchMode(rules.game.mode) !== R.mode))) {
+      forgetSession(); clearRetry(); sock.retry = false;
+      emit('err', { t: 'err', code: 'mode', msg: '서버와 선택한 경쟁 모드가 다릅니다' });
+      fail(sock, 'mode', '서버와 선택한 경쟁 모드가 다릅니다'); return;
+    }
     if (!sock.welcomed && m.t !== 'welcome' && m.t !== 'err') {
       if (sock.op === 'quick' && (m.t === 'queued' || m.t === 'matched')) onWelcome(sock, { t: 'welcome', at: m.at, n: m.n, eta: m.eta });   // 대기열은 welcome 없이 queued 가 첫 프레임
       else return;
@@ -413,13 +423,13 @@ window.DKNET = (function () {
     const c = normCode(m.code);
     if (!CODE_RE.test(c)) return;
     R.matched = c;
-    emit('matched', { t: 'matched', code: c });
+    emit('matched', { t: 'matched', code: c, mode: R.mode });
     if (R.sock === sock) { dropSocket(1000, 'matched'); joinMatched(); }
   }
   function joinMatched() {
     const c = R.matched; R.matched = null;
     if (!c) return;
-    open('/ws/room/' + c, 'join', R.name).then(null, (e) => { emit('err', { t: 'err', code: (e && e.code) || 'closed', msg: e && e.message }); goOffline(4404, 'matched-room'); });
+    open('/ws/room/' + c, 'join', R.name, R.mode).then(null, (e) => { emit('err', { t: 'err', code: (e && e.code) || 'closed', msg: e && e.message }); goOffline(4404, 'matched-room'); });
   }
   // welcome 전 err = 거절(promise reject, 서버가 곧 닫는다). 그 뒤의 err 는 경고(not-host·not-ready·rate·name…) → 'err' 이벤트
   function onErr(sock, m) {
@@ -438,6 +448,7 @@ window.DKNET = (function () {
     const r = Object.assign({}, src || {});
     delete r.t; delete r.at;
     if (!r.code) r.code = R.code;
+    r.mode = matchMode(r.mode);
     if (!Array.isArray(r.players)) r.players = [];
     if (!(r.game && typeof r.game === 'object')) r.game = null;
     updateMe(r);
@@ -459,7 +470,8 @@ window.DKNET = (function () {
   function mirrorStart(m) {
     if (!R.room) R.room = mirrorFrom({ code: R.code });
     R.room.phase = 'playing';
-    R.room.game = Object.assign({}, R.room.game || {}, { t0: m.t0, timing: m.timing, seed: m.seed });
+    R.room.mode = matchMode(m.mode);
+    R.room.game = Object.assign({}, R.room.game || {}, { t0: m.t0, timing: m.timing, seed: m.seed, mode: R.room.mode });
     for (const p of R.room.players) if (p) p.status = 'alive';
   }
   function mirrorEnd(m) {
@@ -481,11 +493,11 @@ window.DKNET = (function () {
   }
 
   // ---- 공개 API ----
-  function create(name) { return open('/ws/new', 'create', name); }
-  function join(code, name) {
+  function create(name, mode = 'clear') { return open('/ws/new', 'create', name, mode); }
+  function join(code, name, mode = 'clear') {
     const c = normCode(code);
     if (!CODE_RE.test(c)) return Promise.reject(netError('bad-code', '방 코드는 6자리입니다'));
-    return open('/ws/room/' + c, 'join', name);
+    return open('/ws/room/' + c, 'join', name, mode);
   }
   // sessionStorage dk_mp 가 있으면 같은 좌석으로 재접속, 없으면 null. 방이 사라졌으면 세션을 지우고 reject
   function resume() {
@@ -494,7 +506,7 @@ window.DKNET = (function () {
     if (!CFG.url) return Promise.reject(netError('offline', '멀티 서버 주소가 없습니다'));
     R.id = { pid: s.pid, key: s.key };
     sSet(SS(), 'dk_mp_id', JSON.stringify(R.id));
-    return open('/ws/room/' + s.code, 'join', s.name);
+    return open('/ws/room/' + s.code, 'join', s.name, s.mode);
   }
   // 나가기: leave 전송 → 4000 으로 닫음(서버도 4000 을 '의도한 이탈' 로 본다) → offline, 세션 삭제, 재접속 없음
   function leave() {
@@ -507,6 +519,7 @@ window.DKNET = (function () {
     if (had) goOffline(4000, 'leave'); else setState('offline');
   }
   const start = () => send('start', {});
+  const waveLimit = () => R.mode === 'extreme' ? 1000000 : 101;
   // 요약 — 서버 스키마 범위로 자르고(위반은 서버가 폐기한다) 타워는 최대 15개
   function sum(o) {
     o = o || {};
@@ -514,7 +527,7 @@ window.DKNET = (function () {
       .filter((t) => Array.isArray(t) && t.length >= 3)
       .map((t) => [int(t[0], 0, 14), int(t[1], 1, 20), int(t[2], 1, 3)]);
     const m = {
-      w: int(o.w, 0, 101), dw: int(o.dw, 0, 101), l: int(o.l, 0, 20), g: int(o.g, 0, 1e7), k: int(o.k, 0, 1e6), f: int(o.f, 0, 200),
+      w: int(o.w, 0, waveLimit()), dw: int(o.dw, 0, waveLimit()), l: int(o.l, 0, 20), g: int(o.g, 0, 1e7), k: int(o.k, 0, 1e6), f: int(o.f, 0, 200),
       sp: int(o.sp == null ? 1 : o.sp, 1, 3),
       hid: o.hid == null ? ((DOC && DOC.hidden) ? 1 : 0) : (o.hid ? 1 : 0),
       b: o.b == null ? null : num(o.b, 0, 1, 3),
@@ -531,9 +544,9 @@ window.DKNET = (function () {
     R.watching = p;
     return send('watch', { pid: p });
   }
-  const done = (w) => send('done', { w: int(w, 0, 101) });
-  const dead = (w, k, r) => send('dead', { w: int(w, 0, 101), k: int(k, 0, 1e6), r: DEAD_REASONS.indexOf(r) >= 0 ? r : 'lives' });
-  const clear = (w, k) => send('clear', { w: int(w, 0, 101), k: int(k, 0, 1e6) });
+  const done = (w) => send('done', { w: int(w, 0, waveLimit()) });
+  const dead = (w, k, r) => send('dead', { w: int(w, 0, waveLimit()), k: int(k, 0, 1e6), r: DEAD_REASONS.indexOf(r) >= 0 ? r : 'lives' });
+  const clear = (w, k) => R.mode === 'extreme' ? false : send('clear', { w: int(w, 0, 101), k: int(k, 0, 1e6) });
   function chat(text) {
     const s = String(text == null ? '' : text).replace(/[\u0000-\u001f\u007f-\u009f]/g, '').trim().slice(0, 120);
     return s ? send('chat', { text: s }) : false;

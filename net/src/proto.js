@@ -4,8 +4,9 @@
 // 실패는 { ok:false, err } — 서버는 조용히 폐기하고 연속 3회면 4400 으로 닫는다.
 // 서버→클라 전용 종류(welcome·room·player·start·sum(pid 포함)·watched·queued·matched·chat·log·time·end·err)는 여기 없다.
 import { EN_MAX, LANE_MAX } from './timing.js';
+import { matchMode, MAX_WAVE } from './modes.js';
 
-export const PROTOCOL = 3;
+export const PROTOCOL = 4;
 
 export const CLOSE = Object.freeze({
   LEAVE: 4000,        // 클라가 leave
@@ -17,15 +18,15 @@ export const CLOSE = Object.freeze({
   EXPIRED: 4410,      // 끝난 방 · 만료
   VERSION: 4426,      // 프로토콜·게임 버전 불일치
   RATE: 4429,         // 소켓 속도 제한
-  TOO_BIG: 1009,      // 프레임 4,096 B 초과
+  TOO_BIG: 1009,      // 프레임 6,144 B 초과
 });
 
-export const ERR = ['bad-code', 'full', 'started', 'bad-key', 'version', 'name', 'rate', 'origin', 'not-host', 'not-ready', 'expired', 'bad-request', 'busy'];
+export const ERR = ['bad-code', 'full', 'started', 'bad-key', 'version', 'mode', 'name', 'rate', 'origin', 'not-host', 'not-ready', 'expired', 'bad-request', 'busy'];
 export const DEAD_REASONS = ['lives', 'bossLeak', 'bossTimeout', 'quit', 'reload', 'afk'];
 export const LOG_KINDS = ['sys', 'gacha', 'up', 'boom', 'boss', 'life'];
 export const NAME_MAX = 12, TEXT_MAX = 120, VER_MAX = 16, TOWERS_MAX = 15;
 export const HELLO_OPS = ['create', 'join', 'quick'];
-const EN_RE = /^[0-9;,]*$/;   // 적 스트림: 숫자·세미콜론·쉼표만
+const EN_RE = /^[0-9;,]*$/;   // 적 스트림: 숫자·세미콜론·쉼표만. v4 외형1000~2938도 불투명 숫자 열로 중계한다.
 
 export const PID_RE = /^[a-z0-9]{8,16}$/;
 export const KEY_RE = /^[0-9a-f]{32}$/;
@@ -64,15 +65,17 @@ const SCHEMA = {
     if (!isInt(m.v, 0, 1e6)) return null;
     if (!isStr(m.ver, 64)) return null;
     if (!HELLO_OPS.includes(m.op)) return null;
+    const mode = matchMode(m.mode);
+    if (!mode) return null;
     if (typeof m.pid !== 'string' || !PID_RE.test(m.pid)) return null;
     if (typeof m.key !== 'string' || !KEY_RE.test(m.key)) return null;
     if (typeof m.name !== 'string' || m.name.length > 256) return null;
-    return { t: 'hello', v: m.v, ver: cleanText(m.ver, VER_MAX), op: m.op, pid: m.pid, key: m.key, name: sanitizeName(m.name, m.pid) };
+    return { t: 'hello', v: m.v, ver: cleanText(m.ver, VER_MAX), op: m.op, mode, pid: m.pid, key: m.key, name: sanitizeName(m.name, m.pid) };
   },
   start() { return { t: 'start' }; },
   // sp 배속(1|2|3) · ll 레인 길이(선택) · en 적 스트림(선택, ≤ EN_MAX 자, [0-9;,] 만). lag 는 v3 에서 없어졌다
   sum(m) {
-    if (!isInt(m.w, 0, 101) || !isInt(m.dw, 0, 101) || !isInt(m.l, 0, 20) || !isInt(m.g, 0, 1e7)) return null;
+    if (!isInt(m.w, 0, MAX_WAVE) || !isInt(m.dw, 0, MAX_WAVE) || !isInt(m.l, 0, 20) || !isInt(m.g, 0, 1e7)) return null;
     if (!isInt(m.k, 0, 1e6) || !isInt(m.f, 0, 200) || !isInt(m.sp, 1, 3)) return null;
     if (m.hid !== 0 && m.hid !== 1) return null;
     if (m.b !== null && !isNum(m.b, 0, 1)) return null;
@@ -94,9 +97,9 @@ const SCHEMA = {
     if (m.pid === null) return { t: 'watch', pid: null };
     return typeof m.pid === 'string' && PID_RE.test(m.pid) ? { t: 'watch', pid: m.pid } : null;
   },
-  done(m) { return isInt(m.w, 0, 101) ? { t: 'done', w: m.w } : null; },
+  done(m) { return isInt(m.w, 0, MAX_WAVE) ? { t: 'done', w: m.w } : null; },
   dead(m) {
-    if (!isInt(m.w, 0, 101) || !isInt(m.k, 0, 1e6) || !DEAD_REASONS.includes(m.r)) return null;
+    if (!isInt(m.w, 0, MAX_WAVE) || !isInt(m.k, 0, 1e6) || !DEAD_REASONS.includes(m.r)) return null;
     return { t: 'dead', w: m.w, k: m.k, r: m.r };
   },
   clear(m) { return isInt(m.w, 0, 101) && isInt(m.k, 0, 1e6) ? { t: 'clear', w: m.w, k: m.k } : null; },
