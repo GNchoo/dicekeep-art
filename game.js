@@ -736,6 +736,12 @@ function directionalFutureIds(wave) {
   }
   return out;
 }
+function directionalDrawHeight(e, baseHeight) {
+  // A long-bodied rat should not be as tall as a humanoid in the same combat class.
+  // Share this presentation scale with spectators; drawHeight also sets the visual stride.
+  const characterScale = e.artAssetId === 'w001' ? 0.5 : 1;
+  return baseHeight * characterScale * (e.bossRole === 1 ? 0.7 : 1) * (e.isElite ? 1.2 : 1);
+}
 function directionalPhase(e) {
   if (e.view && Number.isFinite(e.viewPhase)) return e.viewPhase;
   const entry = directionalArt && directionalArt.entry(e.artAssetId);
@@ -2613,7 +2619,7 @@ function spawnEnemy(item) {
     const appearance = DIR_ART.decodeAppearance(e.appearanceCode);
     e.artAssetId = appearance && appearance.assetId;
     const table = e.isBoss ? INFC.artSizeBoss : INFC.artSize;
-    e.drawHeight = (table[e.sizeClass] || def.size) * (e.bossRole === 1 ? 0.7 : 1) * (e.isElite ? 1.2 : 1);
+    e.drawHeight = directionalDrawHeight(e, table[e.sizeClass] || def.size);
   }
   S.enemies.push(e);
   if (S.mode === 'infinity') enforceFieldCap();
@@ -5478,7 +5484,7 @@ function mpViewBuild(sum) {
         e.def = Object.assign({}, base, { size: Math.round(logicalSize * (appearance.elite ? 1.2 : 1)) });
         e.appearanceCode = row.a; e.artAssetId = appearance.assetId; e.isElite = appearance.elite; e.isBoss = isBoss;
         e.bossRole = appearance.role === 'secondary' ? 1 : 0; e.wave = appearance.wave; e.sizeClass = cls;
-        e.drawHeight = table[cls] * (e.bossRole ? 0.7 : 1) * (e.isElite ? 1.2 : 1);
+        e.drawHeight = directionalDrawHeight(e, table[cls]);
         e.name = (e.isElite ? '정예 ' : '') + (e.bossRole ? mon.second || mon.name + ' 부관' : mon.name);
         e.art = legacy && legacy.key; e.artWalk = legacy && legacy.walkKey; e.artWalkStride = legacy && legacy.walkStride || 0;
         e.artWalkDistance ||= 0;
