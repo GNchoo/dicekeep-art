@@ -3233,7 +3233,10 @@ function flashCanvas(fr, drawW, drawH) {
 }
 function enemyFramePlacement(fr, height) {
   if (fr.directional) {
-    const scale = height / fr.referenceHeight;
+    // Keep the rat readable head-on without changing its side size or gait phase.
+    // Scale around the authored ground pivot, including stills and death frames.
+    const viewScale = fr.assetId === 'w001' && (fr.view === 'front' || fr.view === 'back') ? 1.6 : 1;
+    const scale = height * viewScale / fr.referenceHeight;
     return { w: fr.w * scale, h: fr.h * scale, x: -fr.pivot[0] * scale, y: -fr.pivot[1] * scale };
   }
   const w = height * fr.w / fr.h;

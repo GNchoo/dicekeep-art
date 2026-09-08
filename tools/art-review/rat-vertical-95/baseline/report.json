@@ -1,0 +1,773 @@
+{
+  "label": "baseline",
+  "viewport": {
+    "width": 440,
+    "height": 956
+  },
+  "gameSha256": "1577a2ffaf579c80b532f6c85d25ec2cb3cd3394b873806f2502b781418eef83",
+  "pngRequests": [
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w001-back.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w001-front.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w001-side.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w001-back-walk-4x2.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w001-front-walk-4x2.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w001-side-walk-4x2.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w006-back.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w006-front.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w006-side.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w006-back-walk-4x2.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w006-side-walk-4x2.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w006-front-walk-4x2.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w001-side.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w001-side-walk-4x2.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w001-back.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w001-front.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w001-front-walk-4x2.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w001-side-walk-4x2.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w001-back-walk-4x2.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w001-front-walk-4x2.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w001-side-walk-4x2.png?v=93",
+      "status": 200
+    }
+  ],
+  "errors": [],
+  "pairs": [
+    {
+      "direction": "right",
+      "view": "side",
+      "rows": [
+        {
+          "id": "w001",
+          "frames": 8,
+          "meanWidthCss": 28.072916666666664,
+          "meanHeightCss": 12.565770696824599,
+          "meanAlphaAreaCss": 187.5522620742894,
+          "drawHeight": 21,
+          "logicalSize": 42,
+          "first": {
+            "id": "w001",
+            "view": "side",
+            "key": "w001:side:sheet",
+            "serial": 6,
+            "widthCss": 28.072916666666668,
+            "heightCss": 12.565770696824597,
+            "alphaAreaCss": 185.83225490679447,
+            "box": {
+              "x0": 226.5950469970703,
+              "x1": 272.5325469970703,
+              "y0": 963.546875,
+              "y1": 984.109375
+            },
+            "drawHeight": 21,
+            "logicalSize": 42,
+            "dist": 1397.5215167968745,
+            "walk": 8.59139999999984,
+            "animT": 0.9269072312734861,
+            "elite": false,
+            "wave": 1
+          },
+          "last": {
+            "id": "w001",
+            "view": "side",
+            "key": "w001:side:sheet",
+            "serial": 9,
+            "widthCss": 28.072916666666668,
+            "heightCss": 12.565770696824597,
+            "alphaAreaCss": 187.29761166247846,
+            "box": {
+              "x0": 259.56744384765625,
+              "x1": 305.50494384765625,
+              "y0": 963.546875,
+              "y1": 984.109375
+            },
+            "drawHeight": 21,
+            "logicalSize": 42,
+            "dist": 1430.4939167968753,
+            "walk": 41.563800000000626,
+            "animT": 1.7946019681155918,
+            "elite": false,
+            "wave": 1
+          }
+        },
+        {
+          "id": "w006",
+          "frames": 8,
+          "meanWidthCss": 50.463276836158165,
+          "meanHeightCss": 35.323727275833754,
+          "meanAlphaAreaCss": 1114.3037140192337,
+          "drawHeight": 58,
+          "logicalSize": 58,
+          "first": {
+            "id": "w006",
+            "view": "side",
+            "key": "w006:side:sheet",
+            "serial": 4,
+            "widthCss": 50.463276836158165,
+            "heightCss": 35.323727275833754,
+            "alphaAreaCss": 1125.31112541508,
+            "box": {
+              "x0": 378.44706338138906,
+              "x1": 461.0233345678297,
+              "y0": 926.1966101694916,
+              "y1": 984
+            },
+            "drawHeight": 58,
+            "logicalSize": 58,
+            "dist": 1567.6929167968744,
+            "walk": 1.8703999999999361,
+            "animT": 0.20296053366426017,
+            "elite": false,
+            "wave": 6
+          },
+          "last": {
+            "id": "w006",
+            "view": "side",
+            "key": "w006:side:sheet",
+            "serial": 19,
+            "widthCss": 50.463276836158165,
+            "heightCss": 35.323727275833754,
+            "alphaAreaCss": 1100.2503173059795,
+            "box": {
+              "x0": 403.6470755884203,
+              "x1": 486.22334677486094,
+              "y0": 926.1966101694916,
+              "y1": 984
+            },
+            "drawHeight": 58,
+            "logicalSize": 58,
+            "dist": 1592.8929167968752,
+            "walk": 27.070400000000664,
+            "animT": 0.8661184284011021,
+            "elite": false,
+            "wave": 6
+          }
+        }
+      ],
+      "ratOverBoar": {
+        "width": 0.5563038793103451,
+        "height": 0.35573173234811206,
+        "alphaArea": 0.16831341376203302
+      }
+    },
+    {
+      "direction": "down",
+      "view": "front",
+      "rows": [
+        {
+          "id": "w001",
+          "frames": 8,
+          "meanWidthCss": 7.4861111111111125,
+          "meanHeightCss": 14.069652828093496,
+          "meanAlphaAreaCss": 67.69903535748895,
+          "drawHeight": 21,
+          "logicalSize": 42,
+          "first": {
+            "id": "w001",
+            "view": "front",
+            "key": "w001:front:sheet",
+            "serial": 23,
+            "widthCss": 7.486111111111111,
+            "heightCss": 12.966805931829636,
+            "alphaAreaCss": 66.51290054458016,
+            "box": {
+              "x0": 83.875,
+              "x1": 96.125,
+              "y0": 447.01068115234375,
+              "y1": 468.22943115234375
+            },
+            "drawHeight": 21,
+            "logicalSize": 42,
+            "dist": 747.4426583984371,
+            "walk": 65.92760000000094,
+            "animT": 2.4357545996945427,
+            "elite": false,
+            "wave": 1
+          },
+          "last": {
+            "id": "w001",
+            "view": "front",
+            "key": "w001:front:sheet",
+            "serial": 25,
+            "widthCss": 7.486111111111111,
+            "heightCss": 15.37301734185988,
+            "alphaAreaCss": 68.15695934364018,
+            "box": {
+              "x0": 83.875,
+              "x1": 96.125,
+              "y0": 477.1106872558594,
+              "y1": 502.2669372558594
+            },
+            "drawHeight": 21,
+            "logicalSize": 42,
+            "dist": 777.542658398437,
+            "walk": 96.02760000000085,
+            "animT": 3.2278598628524366,
+            "elite": false,
+            "wave": 1
+          }
+        },
+        {
+          "id": "w006",
+          "frames": 8,
+          "meanWidthCss": 16.340489642184554,
+          "meanHeightCss": 38.92818924275556,
+          "meanAlphaAreaCss": 450.06959355841985,
+          "drawHeight": 58,
+          "logicalSize": 58,
+          "first": {
+            "id": "w006",
+            "view": "front",
+            "key": "w006:front:sheet",
+            "serial": 21,
+            "widthCss": 16.340489642184554,
+            "heightCss": 36.525214598141,
+            "alphaAreaCss": 441.047125201169,
+            "box": {
+              "x0": 76.23728813559322,
+              "x1": 102.97627118644067,
+              "y0": 651.1262366343353,
+              "y1": 710.895728159759
+            },
+            "drawHeight": 58,
+            "logicalSize": 58,
+            "dist": 988.9084583984371,
+            "walk": 36.4000000000008,
+            "animT": 1.1116342178747867,
+            "elite": false,
+            "wave": 6
+          },
+          "last": {
+            "id": "w006",
+            "view": "front",
+            "key": "w006:front:sheet",
+            "serial": 2,
+            "widthCss": 16.340489642184554,
+            "heightCss": 38.44759431383266,
+            "alphaAreaCss": 459.2364214093868,
+            "box": {
+              "x0": 76.23728813559322,
+              "x1": 102.97627118644067,
+              "y0": 677.2614295054291,
+              "y1": 740.1766837427172
+            },
+            "drawHeight": 58,
+            "logicalSize": 58,
+            "dist": 1015.043658398437,
+            "walk": 62.53520000000063,
+            "animT": 1.7994026389274194,
+            "elite": false,
+            "wave": 6
+          }
+        }
+      ],
+      "ratOverBoar": {
+        "width": 0.4581326064908724,
+        "height": 0.3614258228235423,
+        "alphaArea": 0.15041903813637988
+      }
+    },
+    {
+      "direction": "left",
+      "view": "side",
+      "rows": [
+        {
+          "id": "w001",
+          "frames": 8,
+          "meanWidthCss": 28.072916666666664,
+          "meanHeightCss": 12.565770696824599,
+          "meanAlphaAreaCss": 187.55226207428936,
+          "drawHeight": 21,
+          "logicalSize": 42,
+          "first": {
+            "id": "w001",
+            "view": "side",
+            "key": "w001:side:sheet",
+            "serial": 37,
+            "widthCss": 28.072916666666668,
+            "heightCss": 12.565770696824597,
+            "alphaAreaCss": 189.04889168756407,
+            "box": {
+              "x0": 277.9398498535156,
+              "x1": 323.8773498535156,
+              "y0": 243.546875,
+              "y1": 264.109375
+            },
+            "drawHeight": 21,
+            "logicalSize": 42,
+            "dist": 359.09139999999996,
+            "walk": 123.25520000000056,
+            "animT": 3.9443756523261175,
+            "elite": false,
+            "wave": 1
+          },
+          "last": {
+            "id": "w001",
+            "view": "side",
+            "key": "w001:side:sheet",
+            "serial": 44,
+            "widthCss": 28.072916666666668,
+            "heightCss": 12.565770696824597,
+            "alphaAreaCss": 185.83225490679447,
+            "box": {
+              "x0": 252.13986206054688,
+              "x1": 298.0773620605469,
+              "y0": 243.546875,
+              "y1": 264.109375
+            },
+            "drawHeight": 21,
+            "logicalSize": 42,
+            "dist": 384.89139999999986,
+            "walk": 149.05520000000047,
+            "animT": 4.623323020747172,
+            "elite": false,
+            "wave": 1
+          }
+        },
+        {
+          "id": "w006",
+          "frames": 8,
+          "meanWidthCss": 50.4632768361582,
+          "meanHeightCss": 35.32372727583379,
+          "meanAlphaAreaCss": 1114.3037140192337,
+          "drawHeight": 58,
+          "logicalSize": 58,
+          "first": {
+            "id": "w006",
+            "view": "side",
+            "key": "w006:side:sheet",
+            "serial": 10,
+            "widthCss": 50.46327683615819,
+            "heightCss": 35.32372727583379,
+            "alphaAreaCss": 1110.0090190811823,
+            "box": {
+              "x0": 183.3822593042406,
+              "x1": 265.95853049068126,
+              "y0": 206.19661016949152,
+              "y1": 264
+            },
+            "drawHeight": 58,
+            "logicalSize": 58,
+            "dist": 435.32959999999997,
+            "walk": 72.80000000000038,
+            "animT": 2.069528954716892,
+            "elite": false,
+            "wave": 6
+          },
+          "last": {
+            "id": "w006",
+            "view": "side",
+            "key": "w006:side:sheet",
+            "serial": 5,
+            "widthCss": 50.4632768361582,
+            "heightCss": 35.32372727583379,
+            "alphaAreaCss": 1106.544391231998,
+            "box": {
+              "x0": 159.11745827884997,
+              "x1": 241.69372946529066,
+              "y0": 206.19661016949152,
+              "y1": 264
+            },
+            "drawHeight": 58,
+            "logicalSize": 58,
+            "dist": 459.59440000000023,
+            "walk": 97.06480000000064,
+            "animT": 2.7080763231379414,
+            "elite": false,
+            "wave": 6
+          }
+        }
+      ],
+      "ratOverBoar": {
+        "width": 0.5563038793103446,
+        "height": 0.35573173234811173,
+        "alphaArea": 0.168313413762033
+      }
+    },
+    {
+      "direction": "up",
+      "view": "back",
+      "rows": [
+        {
+          "id": "w001",
+          "frames": 8,
+          "meanWidthCss": 6.9513888888888875,
+          "meanHeightCss": 14.0696528280935,
+          "meanAlphaAreaCss": 63.39678366320962,
+          "drawHeight": 21,
+          "logicalSize": 42,
+          "first": {
+            "id": "w001",
+            "view": "back",
+            "key": "w001:back:sheet",
+            "serial": 48,
+            "widthCss": 6.951388888888889,
+            "heightCss": 13.501519578503023,
+            "alphaAreaCss": 63.24265315079775,
+            "box": {
+              "x0": 624.3125,
+              "x1": 635.6875,
+              "y0": 764.3744506835938,
+              "y1": 786.4682006835938
+            },
+            "drawHeight": 21,
+            "logicalSize": 42,
+            "dist": 1951.108975195312,
+            "walk": 169.1276000000006,
+            "animT": 5.151544073378756,
+            "elite": false,
+            "wave": 1
+          },
+          "last": {
+            "id": "w001",
+            "view": "back",
+            "key": "w001:back:sheet",
+            "serial": 52,
+            "widthCss": 6.951388888888889,
+            "heightCss": 13.63519799017137,
+            "alphaAreaCss": 63.47496580718667,
+            "box": {
+              "x0": 624.3125,
+              "x1": 635.6875,
+              "y0": 731.41064453125,
+              "y1": 753.72314453125
+            },
+            "drawHeight": 21,
+            "logicalSize": 42,
+            "dist": 1984.0727751953123,
+            "walk": 202.09140000000082,
+            "animT": 6.0190124944313865,
+            "elite": false,
+            "wave": 1
+          }
+        },
+        {
+          "id": "w006",
+          "frames": 8,
+          "meanWidthCss": 15.859887005649778,
+          "meanHeightCss": 38.98826360887098,
+          "meanAlphaAreaCss": 422.8939188663801,
+          "drawHeight": 58,
+          "logicalSize": 58,
+          "first": {
+            "id": "w006",
+            "view": "back",
+            "key": "w006:back:sheet",
+            "serial": 45,
+            "widthCss": 15.859887005649776,
+            "heightCss": 38.20729684937125,
+            "alphaAreaCss": 427.7083079818092,
+            "box": {
+              "x0": 617.0237288135593,
+              "x1": 642.9762711864407,
+              "y0": 481.261429505429,
+              "y1": 543.7834634037341
+            },
+            "drawHeight": 58,
+            "logicalSize": 58,
+            "dist": 2196.871775195312,
+            "walk": 106.40000000000063,
+            "animT": 2.9537394810326787,
+            "elite": false,
+            "wave": 6
+          },
+          "last": {
+            "id": "w006",
+            "view": "back",
+            "key": "w006:back:sheet",
+            "serial": 61,
+            "widthCss": 15.859887005649776,
+            "heightCss": 37.9669993849098,
+            "alphaAreaCss": 414.83144114234057,
+            "box": {
+              "x0": 617.0237288135593,
+              "x1": 642.9762711864407,
+              "y0": 456.06141729839777,
+              "y1": 518.1902308577198
+            },
+            "drawHeight": 58,
+            "logicalSize": 58,
+            "dist": 2222.0717751953093,
+            "walk": 131.59999999999818,
+            "animT": 3.616897375769519,
+            "elite": false,
+            "wave": 6
+          }
+        }
+      ],
+      "ratOverBoar": {
+        "width": 0.4383000261233002,
+        "height": 0.36086892633228834,
+        "alphaArea": 0.14991178835853824
+      }
+    }
+  ],
+  "extra": [
+    {
+      "spawn": {
+        "wave": 405,
+        "id": "w001",
+        "drawHeight": 25.2,
+        "size": 50,
+        "hp": 1000000000000,
+        "speed": 86,
+        "spdMult": 1.5,
+        "armor": 62,
+        "gold": 300,
+        "elite": true
+      },
+      "sample": {
+        "direction": "right",
+        "view": "side",
+        "rows": [
+          {
+            "id": "w001",
+            "frames": 8,
+            "meanWidthCss": 33.6875,
+            "meanHeightCss": 15.07892483618956,
+            "meanAlphaAreaCss": 270.07525738697666,
+            "drawHeight": 25.2,
+            "logicalSize": 50,
+            "first": {
+              "id": "w001",
+              "view": "side",
+              "key": "w001:side:sheet",
+              "serial": 64,
+              "widthCss": 33.6875,
+              "heightCss": 15.07892483618956,
+              "alphaAreaCss": 269.96589173643054,
+              "box": {
+                "x0": 216.97889709472656,
+                "x1": 272.10389709472656,
+                "y0": 959.45625,
+                "y1": 984.13125
+              },
+              "drawHeight": 25.2,
+              "logicalSize": 50,
+              "dist": 1392.4991167968744,
+              "walk": 6.449999999999936,
+              "animT": 0.3055822018656632,
+              "elite": true,
+              "wave": 405
+            },
+            "last": {
+              "id": "w001",
+              "view": "side",
+              "key": "w001:side:sheet",
+              "serial": 71,
+              "widthCss": 33.6875,
+              "heightCss": 15.07892483618956,
+              "alphaAreaCss": 270.1974895846459,
+              "box": {
+                "x0": 232.033203125,
+                "x1": 287.158203125,
+                "y0": 959.45625,
+                "y1": 984.13125
+              },
+              "drawHeight": 25.2,
+              "logicalSize": 50,
+              "dist": 1407.5534167968747,
+              "walk": 21.504300000000175,
+              "animT": 0.70174799133935,
+              "elite": true,
+              "wave": 405
+            }
+          }
+        ]
+      }
+    },
+    {
+      "spawn": {
+        "wave": 102,
+        "id": "w001",
+        "drawHeight": 21,
+        "size": 42,
+        "hp": 1000000000000,
+        "speed": 86,
+        "spdMult": 1.5,
+        "armor": 12,
+        "gold": 32,
+        "elite": false
+      },
+      "sample": {
+        "direction": "right",
+        "view": "side",
+        "rows": [
+          {
+            "id": "w001",
+            "frames": 8,
+            "meanWidthCss": 28.072916666666664,
+            "meanHeightCss": 12.565770696824599,
+            "meanAlphaAreaCss": 187.55226207428936,
+            "drawHeight": 21,
+            "logicalSize": 42,
+            "first": {
+              "id": "w001",
+              "view": "side",
+              "key": "w001:side:sheet",
+              "serial": 71,
+              "widthCss": 28.072916666666668,
+              "heightCss": 12.565770696824597,
+              "alphaAreaCss": 187.637145544893,
+              "box": {
+                "x0": 221.57264709472656,
+                "x1": 267.51014709472656,
+                "y0": 963.546875,
+                "y1": 984.109375
+              },
+              "drawHeight": 21,
+              "logicalSize": 42,
+              "dist": 1392.4991167968747,
+              "walk": 4.295699999999835,
+              "animT": 0.7845194337451501,
+              "elite": false,
+              "wave": 102
+            },
+            "last": {
+              "id": "w001",
+              "view": "side",
+              "key": "w001:side:sheet",
+              "serial": 66,
+              "widthCss": 28.072916666666668,
+              "heightCss": 12.565770696824597,
+              "alphaAreaCss": 189.04889168756407,
+              "box": {
+                "x0": 240.92263793945312,
+                "x1": 286.8601379394531,
+                "y0": 963.546875,
+                "y1": 984.109375
+              },
+              "drawHeight": 21,
+              "logicalSize": 42,
+              "dist": 1411.8491167968746,
+              "walk": 23.645699999999742,
+              "animT": 1.2937299600609395,
+              "elite": false,
+              "wave": 102
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "pass": true,
+  "spawn1": {
+    "wave": 1,
+    "id": "w001",
+    "drawHeight": 21,
+    "size": 42,
+    "hp": 1000000000000,
+    "speed": 86,
+    "spdMult": 1,
+    "armor": 0,
+    "gold": 9,
+    "elite": false
+  },
+  "spawn6": {
+    "wave": 6,
+    "id": "w006",
+    "drawHeight": 58,
+    "size": 58,
+    "hp": 1000000000000,
+    "speed": 56,
+    "spdMult": 1,
+    "armor": 0,
+    "gold": 9,
+    "elite": false
+  },
+  "stun": {
+    "before": [
+      {
+        "id": "w001",
+        "dist": 1996.9727751953126,
+        "walk": 214.99140000000114,
+        "animT": 6.358486178641915,
+        "drawHeight": 21
+      },
+      {
+        "id": "w006",
+        "dist": 2230.4717751953085,
+        "walk": 139.99999999999736,
+        "animT": 3.8379500073484656,
+        "drawHeight": 58
+      }
+    ],
+    "after": [
+      {
+        "id": "w001",
+        "dist": 1996.9727751953126,
+        "walk": 214.99140000000114,
+        "animT": 6.358486178641915,
+        "drawHeight": 21
+      },
+      {
+        "id": "w006",
+        "dist": 2230.4717751953085,
+        "walk": 139.99999999999736,
+        "animT": 3.8379500073484656,
+        "drawHeight": 58
+      }
+    ],
+    "pass": true
+  }
+}

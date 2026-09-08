@@ -1,0 +1,268 @@
+{
+  "scope": "Actual directional manifest/PNGs; original-roster physics baseline, spectator and offline fallback contracts",
+  "pilot": false,
+  "checks": [
+    "110 real identities/330 inline direction stills decoded before boot; no optional art preload",
+    "101 wave roster physics/hp/size/speed/gold/armor unchanged by approved directional manifest",
+    "boss secondary code/0.7 drawing scale and all three path directions",
+    "old-wave W1 + main/secondary W20 retain identity concurrently in spectator; rank7/20; advancing phase",
+    "star emitter changes initial draw/flash only; exact projectile physical trajectory identical",
+    "offline approved W11 uses same-character directional inline still; never legacy"
+  ],
+  "pass": true,
+  "directions": {
+    "frames": [
+      {
+        "view": "side",
+        "frameView": "side",
+        "key": "w001:side:sheet",
+        "pivot": [
+          128,
+          157.5
+        ],
+        "ref": 96
+      },
+      {
+        "view": "front",
+        "frameView": "front",
+        "key": "w001:front:sheet",
+        "pivot": [
+          128,
+          157.5
+        ],
+        "ref": 96
+      },
+      {
+        "view": "back",
+        "frameView": "back",
+        "key": "w001:back:sheet",
+        "pivot": [
+          128,
+          157.5
+        ],
+        "ref": 96
+      }
+    ],
+    "path": [
+      {
+        "view": "front",
+        "actual": "front",
+        "flip": false
+      },
+      {
+        "view": "side",
+        "actual": "side",
+        "flip": false
+      },
+      {
+        "view": "back",
+        "actual": "back",
+        "flip": false
+      }
+    ]
+  },
+  "spectator": {
+    "before": [
+      {
+        "code": 1,
+        "phase": 0.9375,
+        "dist": 120.04046115331484,
+        "size": 42,
+        "draw": 21
+      },
+      {
+        "code": 20,
+        "phase": 0.0625,
+        "dist": 220.0741787810772,
+        "size": 99,
+        "draw": 120
+      },
+      {
+        "code": 121,
+        "phase": 0.5,
+        "dist": 320.10789640883957,
+        "size": 99,
+        "draw": 84
+      }
+    ],
+    "after": [
+      {
+        "code": 1,
+        "phase": 0.54614052412429,
+        "dist": 128.6433608693024,
+        "art": "w001"
+      },
+      {
+        "code": 20,
+        "phase": 0.13283620770702043,
+        "dist": 223.07519030991006,
+        "art": "b020"
+      },
+      {
+        "code": 121,
+        "phase": 0.623668057506849,
+        "dist": 323.1089079376724,
+        "art": "b020-2"
+      }
+    ],
+    "towers": [
+      7,
+      20
+    ],
+    "drawn": {
+      "w001": [
+        {
+          "id": "w001",
+          "key": "w001:front:sheet",
+          "view": "front"
+        }
+      ],
+      "b020": [
+        {
+          "id": "b020",
+          "key": "b020:front:fallback",
+          "view": "front"
+        },
+        {
+          "id": "b020",
+          "key": "b020:front:still",
+          "view": "front"
+        },
+        {
+          "id": "b020",
+          "key": "b020:front:sheet",
+          "view": "front"
+        }
+      ],
+      "b020-2": [
+        {
+          "id": "b020-2",
+          "key": "b020-2:side:fallback",
+          "view": "side"
+        },
+        {
+          "id": "b020-2",
+          "key": "b020-2:side:still",
+          "view": "side"
+        },
+        {
+          "id": "b020-2",
+          "key": "b020-2:side:sheet",
+          "view": "side"
+        }
+      ]
+    }
+  },
+  "towerPhysics": {
+    "configured": {
+      "start": {
+        "logical": [
+          310,
+          116
+        ],
+        "draw": {
+          "x": 325.60518387999997,
+          "y": 131.40937664
+        },
+        "muzzle": {
+          "kind": "muzzleFlash",
+          "x": 325.60518387999997,
+          "y": 131.40937664,
+          "t": 0.05,
+          "dur": 0.13,
+          "size": 43
+        }
+      },
+      "path": [
+        [
+          313.1447871009681,
+          117.71076418292664,
+          false
+        ],
+        [
+          316.28957420193615,
+          119.42152836585328,
+          false
+        ],
+        [
+          319.4343613029042,
+          121.13229254877992,
+          false
+        ],
+        [
+          322.5791484038723,
+          122.84305673170655,
+          false
+        ],
+        [
+          325.72393550484037,
+          124.55382091463319,
+          false
+        ]
+      ],
+      "end": {
+        "x": 325.72393550484037,
+        "y": 124.55382091463319
+      },
+      "physical": [
+        325.72393550484037,
+        124.55382091463319
+      ]
+    },
+    "legacy": {
+      "start": {
+        "logical": [
+          310,
+          116
+        ],
+        "draw": {
+          "x": 310,
+          "y": 116
+        },
+        "muzzle": {
+          "kind": "muzzleFlash",
+          "x": 310,
+          "y": 116,
+          "t": 0.05,
+          "dur": 0.13,
+          "size": 43
+        }
+      },
+      "path": [
+        [
+          313.1447871009681,
+          117.71076418292664,
+          false
+        ],
+        [
+          316.28957420193615,
+          119.42152836585328,
+          false
+        ],
+        [
+          319.4343613029042,
+          121.13229254877992,
+          false
+        ],
+        [
+          322.5791484038723,
+          122.84305673170655,
+          false
+        ],
+        [
+          325.72393550484037,
+          124.55382091463319,
+          false
+        ]
+      ],
+      "end": {
+        "x": 325.72393550484037,
+        "y": 124.55382091463319
+      },
+      "physical": [
+        325.72393550484037,
+        124.55382091463319
+      ]
+    }
+  }
+}
