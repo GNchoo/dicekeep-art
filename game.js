@@ -769,8 +769,6 @@ function refreshDirectionalDemand(force) {
 const SRCS = {
   map: BASE + 'map/battlefield.jpg',
   gold: BASE + 'ui/gold.png', heart: BASE + 'ui/heart.png',
-  d1: BASE + 'dice/dice-1.png', d2: BASE + 'dice/dice-2.png', d3: BASE + 'dice/dice-3.png',
-  d4: BASE + 'dice/dice-4.png', d5: BASE + 'dice/dice-5.png', d6: BASE + 'dice/dice-6.png',
   t1: BASE + 'towers/die-1.png', t2: BASE + 'towers/die-2.png', t3: BASE + 'towers/die-3.png',
   t4: BASE + 'towers/die-4.png', t5: BASE + 'towers/die-5.png', t6: BASE + 'towers/die-6.png',
   miteWalk: BASE + 'enemies/mite-walk-2x2.png', runnerWalk: BASE + 'enemies/runner-walk-2x2.png',
@@ -1052,7 +1050,6 @@ async function loadAssets(onProgress) {
     onProgress(0.6 + (++pi / keys.length) * 0.4);
     await new Promise(r => setTimeout(r, 0));
   }
-  A.dice = [A.d1, A.d2, A.d3, A.d4, A.d5, A.d6];
   if (A.uiFrame && !A.uiFrame.missing && A.uiFrame.w > 8) {
     document.body.classList.add('ui-art');   // 그림 아이콘(ui/icon-*.png) 사용
     // CSS 배경 아이콘은 처음 쓰일 때 받는다 → 배속을 x2 로 바꾸는 순간 아이콘이 잠깐 비었다. 전부 미리 받아 둔다 (23장, 장당 ~5KB)
@@ -1580,45 +1577,9 @@ function texTri(g, img, s0x, s0y, s1x, s1y, s2x, s2y, d0, d1, d2, clipBleed = 0)
   g.restore();
 }
 
-const TEX = 128;
-const faceTex = {};
-
-// dice-3.png 원본은 3/4 시점 사진이라 눈이 한쪽으로 쏠려 보인다.
-// → 정면 사진인 1눈 텍스처에서 눈(pip)을 복제해 정면 3눈 면을 합성한다.
-function fixDice3() {
-  const base = document.createElement('canvas');
-  base.width = TEX; base.height = TEX;
-  const g = base.getContext('2d');
-  g.fillStyle = '#e4d9bc';
-  g.fillRect(0, 0, TEX, TEX);
-  g.drawImage(A.dice[0].cv, 0, 0, TEX, TEX); // 중앙 눈 1개 포함
-  // 중앙 눈을 원형으로 떼어내 스탬프 제작
-  const pr = 16;
-  const pip = document.createElement('canvas');
-  pip.width = pr * 2; pip.height = pr * 2;
-  const pg = pip.getContext('2d');
-  pg.drawImage(base, TEX / 2 - pr, TEX / 2 - pr, pr * 2, pr * 2, 0, 0, pr * 2, pr * 2);
-  pg.globalCompositeOperation = 'destination-in';
-  pg.beginPath(); pg.arc(pr, pr, pr, 0, Math.PI * 2); pg.fill();
-  // 대각선(좌상·우하)에 추가 → 3눈 완성
-  g.drawImage(pip, TEX * 0.27 - pr, TEX * 0.27 - pr);
-  g.drawImage(pip, TEX * 0.73 - pr, TEX * 0.73 - pr);
-  A.dice[2] = { cv: base, w: TEX, h: TEX };
-}
-function buildFaceTex() {
-  for (let f = 1; f <= 6; f++) {
-    const cv = document.createElement('canvas');
-    cv.width = TEX; cv.height = TEX;
-    const g = cv.getContext('2d');
-    g.fillStyle = '#e4d9bc'; // 모서리 투명 부분을 상아색으로 채움
-    g.fillRect(0, 0, TEX, TEX);
-    g.drawImage(A.dice[f - 1].cv, 0, 0, TEX, TEX);
-    faceTex[f] = cv;
-  }
-}
-
 // 3D 주사위 렌더링 (g: 대상 컨텍스트, cx,cy: 중심, size: 반 변 길이 px)
-function drawCube(g, cx, cy, size, R, glowColor = null, glowStr = 0) {
+function drawCube(g, cx, cy, size, R, glowColor = null, glowStr = 0, skinId) {
+  const textures = diceMaterial(skinId).cube, T = DICE_MAT_TEX;
   if (glowColor && glowStr > 0) {
     const gr = g.createRadialGradient(cx, cy, size * 0.3, cx, cy, size * 2.4);
     gr.addColorStop(0, glowColor + Math.round(glowStr * 110).toString(16).padStart(2, '0'));
@@ -1646,17 +1607,22 @@ function drawCube(g, cx, cy, size, R, glowColor = null, glowStr = 0) {
       g.lineTo(C0[0], C0[1]); g.lineTo(D0[0], D0[1]);
       g.closePath();
     };
-    const tex = faceTex[face.val];
-    texTri(g, tex, 0, 0, TEX, 0, TEX, TEX, A0, B0, C0);
-    texTri(g, tex, 0, 0, TEX, TEX, 0, TEX, A0, C0, D0);
+    const tex = textures[face.val - 1];
+    quad(); g.fillStyle = '#d9cdb0'; g.fill();
+    // Keep the outside face crisp while overlapping the internal triangle
+    // clips: a transparent diagonal must not cut through the engraved pips.
+    g.save(); quad(); g.clip();
+    texTri(g, tex, 0, 0, T, 0, T, T, A0, B0, C0, .6);
+    texTri(g, tex, 0, 0, T, T, 0, T, A0, C0, D0, .6);
+    g.restore();
     // 면별 조명
     const br = 0.58 + 0.42 * Math.max(0, n[0] * LIGHT[0] + n[1] * LIGHT[1] + n[2] * LIGHT[2]);
     quad();
     g.fillStyle = `rgba(28,18,8,${Math.max(0, (1 - br) * 0.8)})`;
     g.fill();
     quad();
-    g.strokeStyle = 'rgba(58,44,26,0.45)';
-    g.lineWidth = 1;
+    g.strokeStyle = 'rgba(94,71,43,.35)';
+    g.lineWidth = .65;
     g.stroke();
   }
 }
@@ -1955,8 +1921,17 @@ function slotTargetR() {
   return alignR(P.faces[Math.max(1, Math.min(P.faces.length, SLOT.final)) - 1].n);
 }
 // Face-local textures: the engraved value and grain rotate with the face.
-// Two cached appearance sets at most (~13 MiB); rarity kinds share the d20 set.
+// Two cached appearance sets at most (~15 MiB); rarity kinds share the d20 set.
 const DICE_MAT_TEX = 192, diceMaterialCache = new Map();
+// Face-local, orthographic pips. Opposite faces are defined by FACES (sum = 7).
+const CUBE_PIPS = [
+  [[0, 0]],
+  [[-1, -1], [1, 1]],
+  [[-1, -1], [0, 0], [1, 1]],
+  [[-1, -1], [1, -1], [-1, 1], [1, 1]],
+  [[-1, -1], [1, -1], [0, 0], [-1, 1], [1, 1]],
+  [[-1, -1], [1, -1], [-1, 0], [1, 0], [-1, 1], [1, 1]],
+];
 function diceSkin(id) {
   const key = Object.prototype.hasOwnProperty.call(DICE_SKINS.skins, id) ? id : DICE_SKINS.defaultId;
   return { id: key, ...DICE_SKINS.skins[key] };
@@ -1966,11 +1941,7 @@ function diceMaterialTile(skin, w, h) {
   const g = cv.getContext('2d'), image = A[skin.materialKey];
   g.fillStyle = '#e4d9bc'; g.fillRect(0, 0, w, h);
   if (image && !image.missing) g.drawImage(image, 0, 0, w, h);
-  else if (faceTex[6]) {
-    // A blank ivory strip between the two pip columns keeps a failed material
-    // request in the same set, without importing extra pips onto numbered faces.
-    g.drawImage(faceTex[6], TEX * .46, TEX * .22, TEX * .08, TEX * .56, 0, 0, w, h);
-  }
+  // A missing material keeps the same opaque ivory base, without old face art.
   return cv;
 }
 function engraveDiceValue(g, value, x, y, fontSize, mark) {
@@ -1985,7 +1956,7 @@ function engraveDiceValue(g, value, x, y, fontSize, mark) {
   }
 }
 function buildDiceMaterial(skin) {
-  const out = { faces: {}, orb: null }, T = DICE_MAT_TEX, dot = (a, b) => a.reduce((n, v, i) => n + v * b[i], 0);
+  const out = { faces: {}, orb: null, cube: [] }, T = DICE_MAT_TEX, dot = (a, b) => a.reduce((n, v, i) => n + v * b[i], 0);
   for (const [kind, P] of Object.entries(POLY)) out.faces[kind] = P.faces.map((f, i) => {
     // Use the same final alignment as slotTargetR: the winning numeral is upright.
     const inv = m3transpose(alignR(f.n)), u = m3apply(inv, [1, 0, 0]), v = m3apply(inv, [0, 1, 0]);
@@ -2005,6 +1976,24 @@ function buildDiceMaterial(skin) {
   });
   out.orb = diceMaterialTile(skin, T * 2, T);
   engraveDiceValue(out.orb.getContext('2d'), 1, T, T / 2, T * .25, skin.mark || '#542b30');
+  out.cube = CUBE_PIPS.map(pips => {
+    const cv = diceMaterialTile(skin, T, T), g = cv.getContext('2d');
+    g.strokeStyle = 'rgba(102,74,44,.38)'; g.lineWidth = 7;
+    g.strokeRect(0, 0, T, T);
+    const rim = g.createLinearGradient(0, 0, T, T);
+    rim.addColorStop(0, 'rgba(255,243,211,.85)'); rim.addColorStop(.45, 'rgba(238,220,181,.4)'); rim.addColorStop(1, 'rgba(129,93,52,.38)');
+    g.strokeStyle = rim; g.lineWidth = 2.7; g.strokeRect(3, 3, T - 6, T - 6);
+    for (const [u, v] of pips) {
+      const x = T * (.5 + u * .245), y = T * (.5 + v * .245), r = T * .079;
+      // Thin stone lip and a dark recessed bowl, matching the engraved numerals.
+      g.beginPath(); g.arc(x, y + 1.1, r + .8, 0, Math.PI * 2);
+      g.fillStyle = 'rgba(255,242,210,.7)'; g.fill();
+      const bowl = g.createLinearGradient(x, y - r, x, y + r);
+      bowl.addColorStop(0, '#321e20'); bowl.addColorStop(.45, skin.mark || '#542b30'); bowl.addColorStop(1, skin.mark || '#542b30');
+      g.beginPath(); g.arc(x, y, r, 0, Math.PI * 2); g.fillStyle = bowl; g.fill();
+    }
+    return cv;
+  });
   return out;
 }
 function diceMaterial(id) {
@@ -2016,6 +2005,15 @@ function diceMaterial(id) {
   const value = buildDiceMaterial(skin);
   if (diceMaterialCache.size >= 2) diceMaterialCache.delete(diceMaterialCache.keys().next().value);
   diceMaterialCache.set(skin.id, value); return value;
+}
+function buildDiceSprites() {
+  // Icons, fallback towers and the rolling die share the same six 3D faces.
+  A.dice = CUBE_PIPS.map((_, i) => {
+    const cv = document.createElement('canvas'), T = DICE_MAT_TEX;
+    cv.width = T; cv.height = T;
+    drawCube(cv.getContext('2d'), T / 2, T / 2, T * .3, m3mul(TRAY_TILT, faceTopR(i + 1)));
+    return { cv, w: T, h: T };
+  });
 }
 // 정다면체: 기존 정점/면/최종 자세를 유지하고 큐브와 같은 광원으로 재질을 비춘다.
 function drawPoly3D(g, cx, cy, size, kind, R, skinId) {
@@ -4220,9 +4218,18 @@ const rollBtn = $('roll-btn'), waveBtn = $('wave-btn');
 const infoPanel = $('info-panel');
 let diceURLs = [];
 const starIconCache = {};
+function thumbURL(sprite, size, fallback = '') {
+  if (!sprite || !sprite.cv || sprite.missing) return fallback;
+  try {
+    const cv = document.createElement('canvas'); cv.width = size; cv.height = size;
+    const scale = size / Math.max(sprite.w, sprite.h), w = sprite.w * scale, h = sprite.h * scale;
+    cv.getContext('2d').drawImage(sprite.cv, (size - w) / 2, (size - h) / 2, w, h);
+    return cv.toDataURL();
+  } catch { return fallback; }
+}
 // 눈(1~6) 은 주사위 그림, 성(7~20) 은 코드로 만든 별 배지 아이콘
 function dieIconURL(face) {
-  if (face <= 6) return diceURLs[face - 1] || SRCS['d' + face];
+  if (face <= 6) return diceURLs[face - 1] || '';
   if (starIconCache[face]) return starIconCache[face];
   const def = TOWER_DEFS[face];
   const cv = document.createElement('canvas'); cv.width = 96; cv.height = 96;
@@ -4712,7 +4719,7 @@ function renderShop() {
     const cost = TOWER_COST[f] || 0;
     const card = document.createElement('div');
     card.className = 'shop-tower' + (owned ? '' : ' locked');
-    const img = diceURLs[f - 1] || SRCS['d' + f];
+    const img = dieIconURL(f);
     card.innerHTML = `<img src="${img}" alt=""><div class="t-name">${f}눈 · ${def.name}</div>`;
     if (owned) {
       const s = document.createElement('div'); s.className = 'owned'; s.textContent = '보유중';
@@ -6047,12 +6054,10 @@ function drawLoading(pr) {
   } catch (e) {
     console.warn(e);
   }
-  try { fixDice3(); } catch (e) { console.warn(e); }
+  try { buildDiceSprites(); } catch (e) { console.warn(e); }
   try { buildTowerSprites(); } catch (e) { console.warn(e); }
-  try { buildFaceTex(); } catch (e) { console.warn(e); }
-  try { diceMaterial(); } catch (e) { console.warn(e); }
   try {
-    diceURLs = A.dice.map((d, i) => thumbURL(d, 96, SRCS['d' + (i + 1)]));
+    diceURLs = A.dice.map(d => thumbURL(d, 96));
     $('icon-gold').src = A.gold ? thumbURL(A.gold, 44, SRCS.gold) : SRCS.gold;
     $('icon-heart').src = A.heart ? thumbURL(A.heart, 44, SRCS.heart) : SRCS.heart;
   } catch (e) { console.warn(e); }

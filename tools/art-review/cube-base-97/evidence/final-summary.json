@@ -1,0 +1,169 @@
+{
+  "gameSha256": "6e8456c947c0901824f872fd3ec26c334170424443c0cb5beb08a40c9934cba5",
+  "normal": {
+    "pass": true,
+    "viewports": [
+      {
+        "name": "phone",
+        "width": 440,
+        "height": 956
+      },
+      {
+        "name": "desktop",
+        "width": 1240,
+        "height": 860
+      }
+    ],
+    "actualKinds": 18,
+    "frozenPoseChecks": 18,
+    "faceLocalUvChecks": 18,
+    "nonCubeFacePixelsAndProjectionPreserved": 16,
+    "d20FinalOrientations": 20,
+    "cubeFaceOrientations": 12,
+    "pipCounts": [
+      {
+        "viewport": "phone",
+        "counts": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      },
+      {
+        "viewport": "desktop",
+        "counts": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      }
+    ],
+    "oppositeFaces": [
+      [
+        1,
+        6
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        2,
+        5
+      ]
+    ],
+    "uiFaces": 12,
+    "uiPaths": [
+      "held",
+      "drag ghost",
+      "tower info",
+      "shop"
+    ],
+    "legacyCubePngRequests": 0,
+    "pageerrors": []
+  },
+  "fallback": {
+    "pass": true,
+    "viewports": [
+      "phone"
+    ],
+    "abortedMaterialRequests": 1,
+    "cubeFaceOrientations": 6,
+    "uiFaces": 6,
+    "legacyCubePngRequests": 0,
+    "pageerrors": []
+  },
+  "historicalPngComparison": {
+    "exactMatches": 14,
+    "mismatches": [
+      {
+        "kind": "d12",
+        "referenceSha": "280d7587241e271fc62959c8e57c2cafafac13d85acbd0b768aa830d868dcd83",
+        "actualSha": "c08d38b009e91a3546aa7cb94c63f7cb340d80aed64fe69d69aa6015f1705c01",
+        "diagnostic": "d12-replay-diagnostic.json",
+        "viewport": "phone"
+      },
+      {
+        "kind": "d20",
+        "referenceSha": "9963d463e323912244c4fa50a121fa02f03b1d6f57a92e9dc3a167aad47e66c1",
+        "actualSha": "7fd8fc9e4a6b3078ca0f8e2c18c14daddf1e64612ddbd1ce8707940c7a511242",
+        "diagnostic": "d20-replay-diagnostic.json",
+        "viewport": "phone"
+      }
+    ],
+    "limitation": "Exact historical PNG equality is diagnostic, not the material-preservation claim. Face pixel hashes, projected geometry/UV, frozen-pose stability, settled outcomes and visual review are checked separately. Pinned v96/current same-browser replay is recorded in ../replay-diagnostic/report.json.",
+    "interpretation": "14/16 non-D6 historical raw canvas PNGs match exactly; phone d12/d20 do not. This is not reported as complete PNG preservation. Source face pixels and affine geometry matched in all 16 actual cases. Separate pinned v96 versus pre-seam e282 code replay produced zero RGBA differences for all eight noncube kinds, while v96 itself differed from historical d12/d20 hashes. That diagnostic was not rerun after the final cube-only seam fix.",
+    "diagnosticBaselineSha": "fb37de4ecab9c4c7d43e32215d7d54973b7f09922cf4ce7191567a3ee886d186",
+    "diagnosticCurrentSha": "e28221c81ae98b945ad58104ddcd81ba1a98d06a309fad79f86dbdc8f2db39f3",
+    "pairedPixelDifferences": [
+      {
+        "kind": "d1",
+        "channels": 0,
+        "pixels": 0,
+        "maxDelta": 0
+      },
+      {
+        "kind": "d4",
+        "channels": 0,
+        "pixels": 0,
+        "maxDelta": 0
+      },
+      {
+        "kind": "d8",
+        "channels": 0,
+        "pixels": 0,
+        "maxDelta": 0
+      },
+      {
+        "kind": "d12",
+        "channels": 0,
+        "pixels": 0,
+        "maxDelta": 0
+      },
+      {
+        "kind": "d20",
+        "channels": 0,
+        "pixels": 0,
+        "maxDelta": 0
+      },
+      {
+        "kind": "epic",
+        "channels": 0,
+        "pixels": 0,
+        "maxDelta": 0
+      },
+      {
+        "kind": "myth",
+        "channels": 0,
+        "pixels": 0,
+        "maxDelta": 0
+      },
+      {
+        "kind": "primal",
+        "channels": 0,
+        "pixels": 0,
+        "maxDelta": 0
+      }
+    ]
+  },
+  "artifacts": {
+    "after": "after/report.json",
+    "fallback": "fallback/report.json",
+    "sixFaces": "after/phone/d6-all-six-actual-game.png",
+    "allKinds": "after/phone/all-kinds-actual-game.png",
+    "samePoseBeforeAfter": "after/phone/before-after-all-kinds.png",
+    "desktopSamePoseBeforeAfter": "after/desktop/before-after-all-kinds.png",
+    "diagnostic": "replay-diagnostic/report.json"
+  },
+  "sourceChecks": {
+    "afterReportSha256": "61611d3e1e61c71f2c652b67d4b0a7836c3930720eda23f9c97012d99ba090e5",
+    "fallbackReportSha256": "432cc57456fece9a8658da2b70effa6292c68c6f3a496484395e4c66bf449b2c"
+  },
+  "pass": true
+}

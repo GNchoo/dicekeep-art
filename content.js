@@ -1605,15 +1605,14 @@ window.DKCONTENT = (function () {
     19: [.488950, .263094], 20: [.497706, .243990],
   };
   // Appearance only: kind/shape, odds and rewards remain in INFINITY.chest.
-  // cubeFaces records the existing base set; cube skin selection and ownership UI
-  // are a future extension. The current cube renderer continues to use these six files.
+  // All shapes, including the cube's six pip faces, use the same material.
+  // Skin selection, ownership and shop UI are future extensions.
   const DICE_SKINS = {
     defaultId: 'ivory-worn',
     skins: {
       'ivory-worn': {
         materialKey: 'diceMaterialIvoryWorn', material: 'dice/skins/ivory-worn/material.png', version: 96,
         mark: '#542b30',
-        cubeFaces: Array.from({ length: 6 }, (_, i) => `dice/dice-${i + 1}.png`),
       },
     },
   };

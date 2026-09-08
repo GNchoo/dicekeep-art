@@ -1,0 +1,52 @@
+{
+  "gameSha256": "6e8456c947c0901824f872fd3ec26c334170424443c0cb5beb08a40c9934cba5",
+  "additionalImageGenerationCalls": 0,
+  "sharedMaterialSha256": "07cc7cb5353b48c40758772fe20c14bc80de6753955f634f421487906901305b",
+  "files": [
+    {
+      "file": "before.png",
+      "source": "gen\\e2e\\cube-refresh\\baseline\\phone\\d6-spin-b-center.png",
+      "sha256": "32cb63e4b4df1c875d519d32e464662f7e7caa9b83c8417682cd098108cedc82"
+    },
+    {
+      "file": "after.png",
+      "source": "gen\\e2e\\cube-refresh\\after\\phone\\d6-baseline-pose-center.png",
+      "sha256": "826068629864cb21456410e5e3aeae9a46c322852f1545c0fa6e6c8e477a293f"
+    },
+    {
+      "file": "six-faces-phone.png",
+      "source": "gen\\e2e\\cube-refresh\\after\\phone\\d6-all-six-actual-game.png",
+      "sha256": "7cec52f5735d158e7361383399407330346644cbeed338d2a58c3f22161ba95b"
+    },
+    {
+      "file": "six-faces-desktop.png",
+      "source": "gen\\e2e\\cube-refresh\\after\\desktop\\d6-all-six-actual-game.png",
+      "sha256": "e047e5efb277442d453b71ff9290878bf752fc182fc729e8660064334d8dd374"
+    },
+    {
+      "file": "all-dice-phone.png",
+      "source": "gen\\e2e\\cube-refresh\\after\\phone\\all-kinds-actual-game.png",
+      "sha256": "563f71695678efe9903b2338dfe703cdb589164f1df2f5b61c18fcfc65405ecc"
+    },
+    {
+      "file": "shop-phone.png",
+      "source": "gen\\e2e\\cube-refresh\\after\\phone\\cube-shop-actual-game.png",
+      "sha256": "0439aed816e79c368cfc424b6dff3072e4b869d6a538f6a4a05a95d11a0f0cf3"
+    },
+    {
+      "file": "other-dice-control.json",
+      "source": "gen\\e2e\\cube-refresh\\replay-diagnostic\\report.json",
+      "sha256": "4865cd5647a4f8206f8931a6adbbcbbc1084d544790e0bca7df41d8797b8bb33"
+    },
+    {
+      "file": "build.log",
+      "source": "gen\\e2e\\cube-refresh\\checks\\build.log",
+      "sha256": "05320ec361a07c9005ac87f7df82276baf7bccdf6ecb7a730a82f1a7d520e382"
+    },
+    {
+      "file": "dice-loss.log",
+      "source": "gen\\e2e\\cube-refresh\\checks\\dice-loss.log",
+      "sha256": "843cabea0360f7540a7efeb0007340871d4cae181c103b8d41fdf417a35cc348"
+    }
+  ]
+}

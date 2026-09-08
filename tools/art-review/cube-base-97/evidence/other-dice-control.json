@@ -1,0 +1,304 @@
+{
+  "scope": "Diagnostic only: baseline HTTP game/content responses are replayed from the pinned v96 source. Current page uses real HTTP. Public state fixes the identical observed slot pose. No production file changes.",
+  "baselineGameSha": "fb37de4ecab9c4c7d43e32215d7d54973b7f09922cf4ce7191567a3ee886d186",
+  "currentGameSha": "e28221c81ae98b945ad58104ddcd81ba1a98d06a309fad79f86dbdc8f2db39f3",
+  "cases": [
+    {
+      "version": "baseline",
+      "kind": "d1",
+      "historicalSha": "5dc68e661e74a2c31fe4382e69da76a2d1906037f83faae8aac7cf90c47d3929",
+      "hashes": [
+        "5dc68e661e74a2c31fe4382e69da76a2d1906037f83faae8aac7cf90c47d3929",
+        "5dc68e661e74a2c31fe4382e69da76a2d1906037f83faae8aac7cf90c47d3929",
+        "5dc68e661e74a2c31fe4382e69da76a2d1906037f83faae8aac7cf90c47d3929",
+        "5dc68e661e74a2c31fe4382e69da76a2d1906037f83faae8aac7cf90c47d3929",
+        "5dc68e661e74a2c31fe4382e69da76a2d1906037f83faae8aac7cf90c47d3929",
+        "5dc68e661e74a2c31fe4382e69da76a2d1906037f83faae8aac7cf90c47d3929"
+      ],
+      "uniqueHashes": [
+        "5dc68e661e74a2c31fe4382e69da76a2d1906037f83faae8aac7cf90c47d3929"
+      ]
+    },
+    {
+      "version": "baseline",
+      "kind": "d4",
+      "historicalSha": "16206e23e2df9414911a1de8efa7fe711462d49f10c742a0254e747f061c4c21",
+      "hashes": [
+        "16206e23e2df9414911a1de8efa7fe711462d49f10c742a0254e747f061c4c21",
+        "16206e23e2df9414911a1de8efa7fe711462d49f10c742a0254e747f061c4c21",
+        "16206e23e2df9414911a1de8efa7fe711462d49f10c742a0254e747f061c4c21",
+        "16206e23e2df9414911a1de8efa7fe711462d49f10c742a0254e747f061c4c21",
+        "16206e23e2df9414911a1de8efa7fe711462d49f10c742a0254e747f061c4c21",
+        "16206e23e2df9414911a1de8efa7fe711462d49f10c742a0254e747f061c4c21"
+      ],
+      "uniqueHashes": [
+        "16206e23e2df9414911a1de8efa7fe711462d49f10c742a0254e747f061c4c21"
+      ]
+    },
+    {
+      "version": "baseline",
+      "kind": "d8",
+      "historicalSha": "5902c20cfeb456e5d2af5c200ae8029a425090bb9ce2b599d93d1ad786217f09",
+      "hashes": [
+        "5902c20cfeb456e5d2af5c200ae8029a425090bb9ce2b599d93d1ad786217f09",
+        "5902c20cfeb456e5d2af5c200ae8029a425090bb9ce2b599d93d1ad786217f09",
+        "5902c20cfeb456e5d2af5c200ae8029a425090bb9ce2b599d93d1ad786217f09",
+        "5902c20cfeb456e5d2af5c200ae8029a425090bb9ce2b599d93d1ad786217f09",
+        "5902c20cfeb456e5d2af5c200ae8029a425090bb9ce2b599d93d1ad786217f09",
+        "5902c20cfeb456e5d2af5c200ae8029a425090bb9ce2b599d93d1ad786217f09"
+      ],
+      "uniqueHashes": [
+        "5902c20cfeb456e5d2af5c200ae8029a425090bb9ce2b599d93d1ad786217f09"
+      ]
+    },
+    {
+      "version": "baseline",
+      "kind": "d12",
+      "historicalSha": "280d7587241e271fc62959c8e57c2cafafac13d85acbd0b768aa830d868dcd83",
+      "hashes": [
+        "c08d38b009e91a3546aa7cb94c63f7cb340d80aed64fe69d69aa6015f1705c01",
+        "c08d38b009e91a3546aa7cb94c63f7cb340d80aed64fe69d69aa6015f1705c01",
+        "c08d38b009e91a3546aa7cb94c63f7cb340d80aed64fe69d69aa6015f1705c01",
+        "c08d38b009e91a3546aa7cb94c63f7cb340d80aed64fe69d69aa6015f1705c01",
+        "c08d38b009e91a3546aa7cb94c63f7cb340d80aed64fe69d69aa6015f1705c01",
+        "c08d38b009e91a3546aa7cb94c63f7cb340d80aed64fe69d69aa6015f1705c01"
+      ],
+      "uniqueHashes": [
+        "c08d38b009e91a3546aa7cb94c63f7cb340d80aed64fe69d69aa6015f1705c01"
+      ]
+    },
+    {
+      "version": "baseline",
+      "kind": "d20",
+      "historicalSha": "9963d463e323912244c4fa50a121fa02f03b1d6f57a92e9dc3a167aad47e66c1",
+      "hashes": [
+        "24acf47b0540802a5ef90c3e9ab49ad914d9d3e9dc625e88faa16d87d5ebfd72",
+        "24acf47b0540802a5ef90c3e9ab49ad914d9d3e9dc625e88faa16d87d5ebfd72",
+        "24acf47b0540802a5ef90c3e9ab49ad914d9d3e9dc625e88faa16d87d5ebfd72",
+        "24acf47b0540802a5ef90c3e9ab49ad914d9d3e9dc625e88faa16d87d5ebfd72",
+        "24acf47b0540802a5ef90c3e9ab49ad914d9d3e9dc625e88faa16d87d5ebfd72",
+        "24acf47b0540802a5ef90c3e9ab49ad914d9d3e9dc625e88faa16d87d5ebfd72"
+      ],
+      "uniqueHashes": [
+        "24acf47b0540802a5ef90c3e9ab49ad914d9d3e9dc625e88faa16d87d5ebfd72"
+      ]
+    },
+    {
+      "version": "baseline",
+      "kind": "epic",
+      "historicalSha": "5c611f823dd74fd9cb41eb52533b1de9564a959ba36e1eb00b9aae878a269562",
+      "hashes": [
+        "5c611f823dd74fd9cb41eb52533b1de9564a959ba36e1eb00b9aae878a269562",
+        "5c611f823dd74fd9cb41eb52533b1de9564a959ba36e1eb00b9aae878a269562",
+        "5c611f823dd74fd9cb41eb52533b1de9564a959ba36e1eb00b9aae878a269562",
+        "5c611f823dd74fd9cb41eb52533b1de9564a959ba36e1eb00b9aae878a269562",
+        "5c611f823dd74fd9cb41eb52533b1de9564a959ba36e1eb00b9aae878a269562",
+        "5c611f823dd74fd9cb41eb52533b1de9564a959ba36e1eb00b9aae878a269562"
+      ],
+      "uniqueHashes": [
+        "5c611f823dd74fd9cb41eb52533b1de9564a959ba36e1eb00b9aae878a269562"
+      ]
+    },
+    {
+      "version": "baseline",
+      "kind": "myth",
+      "historicalSha": "7840fb3bf0d71330bf15fe79e4e9961dc88031d6eabd25016003632834fe2345",
+      "hashes": [
+        "7840fb3bf0d71330bf15fe79e4e9961dc88031d6eabd25016003632834fe2345",
+        "7840fb3bf0d71330bf15fe79e4e9961dc88031d6eabd25016003632834fe2345",
+        "7840fb3bf0d71330bf15fe79e4e9961dc88031d6eabd25016003632834fe2345",
+        "7840fb3bf0d71330bf15fe79e4e9961dc88031d6eabd25016003632834fe2345",
+        "7840fb3bf0d71330bf15fe79e4e9961dc88031d6eabd25016003632834fe2345",
+        "7840fb3bf0d71330bf15fe79e4e9961dc88031d6eabd25016003632834fe2345"
+      ],
+      "uniqueHashes": [
+        "7840fb3bf0d71330bf15fe79e4e9961dc88031d6eabd25016003632834fe2345"
+      ]
+    },
+    {
+      "version": "baseline",
+      "kind": "primal",
+      "historicalSha": "38a30f5a58cd9321f2e51cc163fa59c56afee0b3b3f2d3008827756acfa4d9e2",
+      "hashes": [
+        "38a30f5a58cd9321f2e51cc163fa59c56afee0b3b3f2d3008827756acfa4d9e2",
+        "38a30f5a58cd9321f2e51cc163fa59c56afee0b3b3f2d3008827756acfa4d9e2",
+        "38a30f5a58cd9321f2e51cc163fa59c56afee0b3b3f2d3008827756acfa4d9e2",
+        "38a30f5a58cd9321f2e51cc163fa59c56afee0b3b3f2d3008827756acfa4d9e2",
+        "38a30f5a58cd9321f2e51cc163fa59c56afee0b3b3f2d3008827756acfa4d9e2",
+        "38a30f5a58cd9321f2e51cc163fa59c56afee0b3b3f2d3008827756acfa4d9e2"
+      ],
+      "uniqueHashes": [
+        "38a30f5a58cd9321f2e51cc163fa59c56afee0b3b3f2d3008827756acfa4d9e2"
+      ]
+    },
+    {
+      "version": "current",
+      "kind": "d1",
+      "historicalSha": "5dc68e661e74a2c31fe4382e69da76a2d1906037f83faae8aac7cf90c47d3929",
+      "hashes": [
+        "5dc68e661e74a2c31fe4382e69da76a2d1906037f83faae8aac7cf90c47d3929",
+        "5dc68e661e74a2c31fe4382e69da76a2d1906037f83faae8aac7cf90c47d3929",
+        "5dc68e661e74a2c31fe4382e69da76a2d1906037f83faae8aac7cf90c47d3929",
+        "5dc68e661e74a2c31fe4382e69da76a2d1906037f83faae8aac7cf90c47d3929",
+        "5dc68e661e74a2c31fe4382e69da76a2d1906037f83faae8aac7cf90c47d3929",
+        "5dc68e661e74a2c31fe4382e69da76a2d1906037f83faae8aac7cf90c47d3929"
+      ],
+      "uniqueHashes": [
+        "5dc68e661e74a2c31fe4382e69da76a2d1906037f83faae8aac7cf90c47d3929"
+      ],
+      "pairDiff": {
+        "channels": 0,
+        "pixels": 0,
+        "maxDelta": 0
+      }
+    },
+    {
+      "version": "current",
+      "kind": "d4",
+      "historicalSha": "16206e23e2df9414911a1de8efa7fe711462d49f10c742a0254e747f061c4c21",
+      "hashes": [
+        "16206e23e2df9414911a1de8efa7fe711462d49f10c742a0254e747f061c4c21",
+        "16206e23e2df9414911a1de8efa7fe711462d49f10c742a0254e747f061c4c21",
+        "16206e23e2df9414911a1de8efa7fe711462d49f10c742a0254e747f061c4c21",
+        "16206e23e2df9414911a1de8efa7fe711462d49f10c742a0254e747f061c4c21",
+        "16206e23e2df9414911a1de8efa7fe711462d49f10c742a0254e747f061c4c21",
+        "16206e23e2df9414911a1de8efa7fe711462d49f10c742a0254e747f061c4c21"
+      ],
+      "uniqueHashes": [
+        "16206e23e2df9414911a1de8efa7fe711462d49f10c742a0254e747f061c4c21"
+      ],
+      "pairDiff": {
+        "channels": 0,
+        "pixels": 0,
+        "maxDelta": 0
+      }
+    },
+    {
+      "version": "current",
+      "kind": "d8",
+      "historicalSha": "5902c20cfeb456e5d2af5c200ae8029a425090bb9ce2b599d93d1ad786217f09",
+      "hashes": [
+        "5902c20cfeb456e5d2af5c200ae8029a425090bb9ce2b599d93d1ad786217f09",
+        "5902c20cfeb456e5d2af5c200ae8029a425090bb9ce2b599d93d1ad786217f09",
+        "5902c20cfeb456e5d2af5c200ae8029a425090bb9ce2b599d93d1ad786217f09",
+        "5902c20cfeb456e5d2af5c200ae8029a425090bb9ce2b599d93d1ad786217f09",
+        "5902c20cfeb456e5d2af5c200ae8029a425090bb9ce2b599d93d1ad786217f09",
+        "5902c20cfeb456e5d2af5c200ae8029a425090bb9ce2b599d93d1ad786217f09"
+      ],
+      "uniqueHashes": [
+        "5902c20cfeb456e5d2af5c200ae8029a425090bb9ce2b599d93d1ad786217f09"
+      ],
+      "pairDiff": {
+        "channels": 0,
+        "pixels": 0,
+        "maxDelta": 0
+      }
+    },
+    {
+      "version": "current",
+      "kind": "d12",
+      "historicalSha": "280d7587241e271fc62959c8e57c2cafafac13d85acbd0b768aa830d868dcd83",
+      "hashes": [
+        "c08d38b009e91a3546aa7cb94c63f7cb340d80aed64fe69d69aa6015f1705c01",
+        "c08d38b009e91a3546aa7cb94c63f7cb340d80aed64fe69d69aa6015f1705c01",
+        "c08d38b009e91a3546aa7cb94c63f7cb340d80aed64fe69d69aa6015f1705c01",
+        "c08d38b009e91a3546aa7cb94c63f7cb340d80aed64fe69d69aa6015f1705c01",
+        "c08d38b009e91a3546aa7cb94c63f7cb340d80aed64fe69d69aa6015f1705c01",
+        "c08d38b009e91a3546aa7cb94c63f7cb340d80aed64fe69d69aa6015f1705c01"
+      ],
+      "uniqueHashes": [
+        "c08d38b009e91a3546aa7cb94c63f7cb340d80aed64fe69d69aa6015f1705c01"
+      ],
+      "pairDiff": {
+        "channels": 0,
+        "pixels": 0,
+        "maxDelta": 0
+      }
+    },
+    {
+      "version": "current",
+      "kind": "d20",
+      "historicalSha": "9963d463e323912244c4fa50a121fa02f03b1d6f57a92e9dc3a167aad47e66c1",
+      "hashes": [
+        "24acf47b0540802a5ef90c3e9ab49ad914d9d3e9dc625e88faa16d87d5ebfd72",
+        "24acf47b0540802a5ef90c3e9ab49ad914d9d3e9dc625e88faa16d87d5ebfd72",
+        "24acf47b0540802a5ef90c3e9ab49ad914d9d3e9dc625e88faa16d87d5ebfd72",
+        "24acf47b0540802a5ef90c3e9ab49ad914d9d3e9dc625e88faa16d87d5ebfd72",
+        "24acf47b0540802a5ef90c3e9ab49ad914d9d3e9dc625e88faa16d87d5ebfd72",
+        "24acf47b0540802a5ef90c3e9ab49ad914d9d3e9dc625e88faa16d87d5ebfd72"
+      ],
+      "uniqueHashes": [
+        "24acf47b0540802a5ef90c3e9ab49ad914d9d3e9dc625e88faa16d87d5ebfd72"
+      ],
+      "pairDiff": {
+        "channels": 0,
+        "pixels": 0,
+        "maxDelta": 0
+      }
+    },
+    {
+      "version": "current",
+      "kind": "epic",
+      "historicalSha": "5c611f823dd74fd9cb41eb52533b1de9564a959ba36e1eb00b9aae878a269562",
+      "hashes": [
+        "5c611f823dd74fd9cb41eb52533b1de9564a959ba36e1eb00b9aae878a269562",
+        "5c611f823dd74fd9cb41eb52533b1de9564a959ba36e1eb00b9aae878a269562",
+        "5c611f823dd74fd9cb41eb52533b1de9564a959ba36e1eb00b9aae878a269562",
+        "5c611f823dd74fd9cb41eb52533b1de9564a959ba36e1eb00b9aae878a269562",
+        "5c611f823dd74fd9cb41eb52533b1de9564a959ba36e1eb00b9aae878a269562",
+        "5c611f823dd74fd9cb41eb52533b1de9564a959ba36e1eb00b9aae878a269562"
+      ],
+      "uniqueHashes": [
+        "5c611f823dd74fd9cb41eb52533b1de9564a959ba36e1eb00b9aae878a269562"
+      ],
+      "pairDiff": {
+        "channels": 0,
+        "pixels": 0,
+        "maxDelta": 0
+      }
+    },
+    {
+      "version": "current",
+      "kind": "myth",
+      "historicalSha": "7840fb3bf0d71330bf15fe79e4e9961dc88031d6eabd25016003632834fe2345",
+      "hashes": [
+        "7840fb3bf0d71330bf15fe79e4e9961dc88031d6eabd25016003632834fe2345",
+        "7840fb3bf0d71330bf15fe79e4e9961dc88031d6eabd25016003632834fe2345",
+        "7840fb3bf0d71330bf15fe79e4e9961dc88031d6eabd25016003632834fe2345",
+        "7840fb3bf0d71330bf15fe79e4e9961dc88031d6eabd25016003632834fe2345",
+        "7840fb3bf0d71330bf15fe79e4e9961dc88031d6eabd25016003632834fe2345",
+        "7840fb3bf0d71330bf15fe79e4e9961dc88031d6eabd25016003632834fe2345"
+      ],
+      "uniqueHashes": [
+        "7840fb3bf0d71330bf15fe79e4e9961dc88031d6eabd25016003632834fe2345"
+      ],
+      "pairDiff": {
+        "channels": 0,
+        "pixels": 0,
+        "maxDelta": 0
+      }
+    },
+    {
+      "version": "current",
+      "kind": "primal",
+      "historicalSha": "38a30f5a58cd9321f2e51cc163fa59c56afee0b3b3f2d3008827756acfa4d9e2",
+      "hashes": [
+        "38a30f5a58cd9321f2e51cc163fa59c56afee0b3b3f2d3008827756acfa4d9e2",
+        "38a30f5a58cd9321f2e51cc163fa59c56afee0b3b3f2d3008827756acfa4d9e2",
+        "38a30f5a58cd9321f2e51cc163fa59c56afee0b3b3f2d3008827756acfa4d9e2",
+        "38a30f5a58cd9321f2e51cc163fa59c56afee0b3b3f2d3008827756acfa4d9e2",
+        "38a30f5a58cd9321f2e51cc163fa59c56afee0b3b3f2d3008827756acfa4d9e2",
+        "38a30f5a58cd9321f2e51cc163fa59c56afee0b3b3f2d3008827756acfa4d9e2"
+      ],
+      "uniqueHashes": [
+        "38a30f5a58cd9321f2e51cc163fa59c56afee0b3b3f2d3008827756acfa4d9e2"
+      ],
+      "pairDiff": {
+        "channels": 0,
+        "pixels": 0,
+        "maxDelta": 0
+      }
+    }
+  ],
+  "errors": []
+}
