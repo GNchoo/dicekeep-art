@@ -1,0 +1,561 @@
+{
+  "version": 101,
+  "entries": {
+    "w116": {
+      "group": "normal-01",
+      "config": "tools/art-review/extreme-202/rigs/normal-01.json",
+      "sha256": "a3e330a958f4dfa0575e66dd8141265094582f6b2b10d4ef9126ee7e8e4ba4bb"
+    },
+    "w132": {
+      "group": "normal-01",
+      "config": "tools/art-review/extreme-202/rigs/normal-01.json",
+      "sha256": "a3e330a958f4dfa0575e66dd8141265094582f6b2b10d4ef9126ee7e8e4ba4bb"
+    },
+    "w134": {
+      "group": "normal-01",
+      "config": "tools/art-review/extreme-202/rigs/normal-01.json",
+      "sha256": "a3e330a958f4dfa0575e66dd8141265094582f6b2b10d4ef9126ee7e8e4ba4bb"
+    },
+    "w135": {
+      "group": "normal-01",
+      "config": "tools/art-review/extreme-202/rigs/normal-01.json",
+      "sha256": "a3e330a958f4dfa0575e66dd8141265094582f6b2b10d4ef9126ee7e8e4ba4bb"
+    },
+    "w136": {
+      "group": "normal-01",
+      "config": "tools/art-review/extreme-202/rigs/normal-01.json",
+      "sha256": "a3e330a958f4dfa0575e66dd8141265094582f6b2b10d4ef9126ee7e8e4ba4bb"
+    },
+    "w138": {
+      "group": "normal-06",
+      "config": "tools/art-review/extreme-202/rigs/normal-06.json",
+      "sha256": "935850cd420b05dba03b12ff73f98e87da20f922944ec27d35c477ac5b582a04"
+    },
+    "w139": {
+      "group": "normal-01",
+      "config": "tools/art-review/extreme-202/rigs/normal-01.json",
+      "sha256": "a3e330a958f4dfa0575e66dd8141265094582f6b2b10d4ef9126ee7e8e4ba4bb"
+    },
+    "w140": {
+      "group": "normal-01",
+      "config": "tools/art-review/extreme-202/rigs/normal-01.json",
+      "sha256": "a3e330a958f4dfa0575e66dd8141265094582f6b2b10d4ef9126ee7e8e4ba4bb"
+    },
+    "w142": {
+      "group": "normal-01",
+      "config": "tools/art-review/extreme-202/rigs/normal-01.json",
+      "sha256": "a3e330a958f4dfa0575e66dd8141265094582f6b2b10d4ef9126ee7e8e4ba4bb"
+    },
+    "w143": {
+      "group": "normal-01",
+      "config": "tools/art-review/extreme-202/rigs/normal-01.json",
+      "sha256": "a3e330a958f4dfa0575e66dd8141265094582f6b2b10d4ef9126ee7e8e4ba4bb"
+    },
+    "w146": {
+      "group": "normal-01",
+      "config": "tools/art-review/extreme-202/rigs/normal-01.json",
+      "sha256": "a3e330a958f4dfa0575e66dd8141265094582f6b2b10d4ef9126ee7e8e4ba4bb"
+    },
+    "w147": {
+      "group": "normal-01",
+      "config": "tools/art-review/extreme-202/rigs/normal-01.json",
+      "sha256": "a3e330a958f4dfa0575e66dd8141265094582f6b2b10d4ef9126ee7e8e4ba4bb"
+    },
+    "w148": {
+      "group": "normal-01",
+      "config": "tools/art-review/extreme-202/rigs/normal-01.json",
+      "sha256": "a3e330a958f4dfa0575e66dd8141265094582f6b2b10d4ef9126ee7e8e4ba4bb"
+    },
+    "w150": {
+      "group": "normal-01",
+      "config": "tools/art-review/extreme-202/rigs/normal-01.json",
+      "sha256": "a3e330a958f4dfa0575e66dd8141265094582f6b2b10d4ef9126ee7e8e4ba4bb"
+    },
+    "w152": {
+      "group": "normal-01",
+      "config": "tools/art-review/extreme-202/rigs/normal-01.json",
+      "sha256": "a3e330a958f4dfa0575e66dd8141265094582f6b2b10d4ef9126ee7e8e4ba4bb"
+    },
+    "w154": {
+      "group": "normal-01",
+      "config": "tools/art-review/extreme-202/rigs/normal-01.json",
+      "sha256": "a3e330a958f4dfa0575e66dd8141265094582f6b2b10d4ef9126ee7e8e4ba4bb"
+    },
+    "w126": {
+      "group": "normal-02",
+      "config": "tools/art-review/extreme-202/rigs/normal-02.json",
+      "sha256": "fa4d1cdf96307a146cb34fd25430faa3a238f0dc742e35e22eda250f84c7cda7"
+    },
+    "w127": {
+      "group": "normal-02",
+      "config": "tools/art-review/extreme-202/rigs/normal-02.json",
+      "sha256": "fa4d1cdf96307a146cb34fd25430faa3a238f0dc742e35e22eda250f84c7cda7"
+    },
+    "w129": {
+      "group": "normal-02",
+      "config": "tools/art-review/extreme-202/rigs/normal-02.json",
+      "sha256": "fa4d1cdf96307a146cb34fd25430faa3a238f0dc742e35e22eda250f84c7cda7"
+    },
+    "w173": {
+      "group": "normal-02",
+      "config": "tools/art-review/extreme-202/rigs/normal-02.json",
+      "sha256": "fa4d1cdf96307a146cb34fd25430faa3a238f0dc742e35e22eda250f84c7cda7"
+    },
+    "w177": {
+      "group": "normal-02",
+      "config": "tools/art-review/extreme-202/rigs/normal-02.json",
+      "sha256": "fa4d1cdf96307a146cb34fd25430faa3a238f0dc742e35e22eda250f84c7cda7"
+    },
+    "w189": {
+      "group": "normal-02",
+      "config": "tools/art-review/extreme-202/rigs/normal-02.json",
+      "sha256": "fa4d1cdf96307a146cb34fd25430faa3a238f0dc742e35e22eda250f84c7cda7"
+    },
+    "w103": {
+      "group": "normal-02",
+      "config": "tools/art-review/extreme-202/rigs/normal-02.json",
+      "sha256": "fa4d1cdf96307a146cb34fd25430faa3a238f0dc742e35e22eda250f84c7cda7"
+    },
+    "w104": {
+      "group": "normal-02",
+      "config": "tools/art-review/extreme-202/rigs/normal-02.json",
+      "sha256": "fa4d1cdf96307a146cb34fd25430faa3a238f0dc742e35e22eda250f84c7cda7"
+    },
+    "w106": {
+      "group": "normal-02",
+      "config": "tools/art-review/extreme-202/rigs/normal-02.json",
+      "sha256": "fa4d1cdf96307a146cb34fd25430faa3a238f0dc742e35e22eda250f84c7cda7"
+    },
+    "w108": {
+      "group": "normal-02",
+      "config": "tools/art-review/extreme-202/rigs/normal-02.json",
+      "sha256": "fa4d1cdf96307a146cb34fd25430faa3a238f0dc742e35e22eda250f84c7cda7"
+    },
+    "w110": {
+      "group": "normal-02",
+      "config": "tools/art-review/extreme-202/rigs/normal-02.json",
+      "sha256": "fa4d1cdf96307a146cb34fd25430faa3a238f0dc742e35e22eda250f84c7cda7"
+    },
+    "w156": {
+      "group": "normal-02",
+      "config": "tools/art-review/extreme-202/rigs/normal-02.json",
+      "sha256": "fa4d1cdf96307a146cb34fd25430faa3a238f0dc742e35e22eda250f84c7cda7"
+    },
+    "w158": {
+      "group": "normal-02",
+      "config": "tools/art-review/extreme-202/rigs/normal-02.json",
+      "sha256": "fa4d1cdf96307a146cb34fd25430faa3a238f0dc742e35e22eda250f84c7cda7"
+    },
+    "w159": {
+      "group": "normal-02",
+      "config": "tools/art-review/extreme-202/rigs/normal-02.json",
+      "sha256": "fa4d1cdf96307a146cb34fd25430faa3a238f0dc742e35e22eda250f84c7cda7"
+    },
+    "w164": {
+      "group": "normal-02",
+      "config": "tools/art-review/extreme-202/rigs/normal-02.json",
+      "sha256": "fa4d1cdf96307a146cb34fd25430faa3a238f0dc742e35e22eda250f84c7cda7"
+    },
+    "w166": {
+      "group": "normal-02",
+      "config": "tools/art-review/extreme-202/rigs/normal-02.json",
+      "sha256": "fa4d1cdf96307a146cb34fd25430faa3a238f0dc742e35e22eda250f84c7cda7"
+    },
+    "w167": {
+      "group": "normal-03",
+      "config": "tools/art-review/extreme-202/rigs/normal-03.json",
+      "sha256": "82b6e2c53557c61e428d9e29d5f169fac1e3ee148f7b8817dcfffdf0949644de"
+    },
+    "w170": {
+      "group": "normal-03",
+      "config": "tools/art-review/extreme-202/rigs/normal-03.json",
+      "sha256": "82b6e2c53557c61e428d9e29d5f169fac1e3ee148f7b8817dcfffdf0949644de"
+    },
+    "w175": {
+      "group": "normal-03",
+      "config": "tools/art-review/extreme-202/rigs/normal-03.json",
+      "sha256": "82b6e2c53557c61e428d9e29d5f169fac1e3ee148f7b8817dcfffdf0949644de"
+    },
+    "w176": {
+      "group": "normal-03",
+      "config": "tools/art-review/extreme-202/rigs/normal-03.json",
+      "sha256": "82b6e2c53557c61e428d9e29d5f169fac1e3ee148f7b8817dcfffdf0949644de"
+    },
+    "w180": {
+      "group": "normal-03",
+      "config": "tools/art-review/extreme-202/rigs/normal-03.json",
+      "sha256": "82b6e2c53557c61e428d9e29d5f169fac1e3ee148f7b8817dcfffdf0949644de"
+    },
+    "w182": {
+      "group": "normal-03",
+      "config": "tools/art-review/extreme-202/rigs/normal-03.json",
+      "sha256": "82b6e2c53557c61e428d9e29d5f169fac1e3ee148f7b8817dcfffdf0949644de"
+    },
+    "w184": {
+      "group": "normal-03",
+      "config": "tools/art-review/extreme-202/rigs/normal-03.json",
+      "sha256": "82b6e2c53557c61e428d9e29d5f169fac1e3ee148f7b8817dcfffdf0949644de"
+    },
+    "w187": {
+      "group": "normal-03",
+      "config": "tools/art-review/extreme-202/rigs/normal-03.json",
+      "sha256": "82b6e2c53557c61e428d9e29d5f169fac1e3ee148f7b8817dcfffdf0949644de"
+    },
+    "w188": {
+      "group": "normal-03",
+      "config": "tools/art-review/extreme-202/rigs/normal-03.json",
+      "sha256": "82b6e2c53557c61e428d9e29d5f169fac1e3ee148f7b8817dcfffdf0949644de"
+    },
+    "w190": {
+      "group": "normal-03",
+      "config": "tools/art-review/extreme-202/rigs/normal-03.json",
+      "sha256": "82b6e2c53557c61e428d9e29d5f169fac1e3ee148f7b8817dcfffdf0949644de"
+    },
+    "w194": {
+      "group": "normal-03",
+      "config": "tools/art-review/extreme-202/rigs/normal-03.json",
+      "sha256": "82b6e2c53557c61e428d9e29d5f169fac1e3ee148f7b8817dcfffdf0949644de"
+    },
+    "w195": {
+      "group": "normal-03",
+      "config": "tools/art-review/extreme-202/rigs/normal-03.json",
+      "sha256": "82b6e2c53557c61e428d9e29d5f169fac1e3ee148f7b8817dcfffdf0949644de"
+    },
+    "w196": {
+      "group": "normal-03",
+      "config": "tools/art-review/extreme-202/rigs/normal-03.json",
+      "sha256": "82b6e2c53557c61e428d9e29d5f169fac1e3ee148f7b8817dcfffdf0949644de"
+    },
+    "w198": {
+      "group": "normal-03",
+      "config": "tools/art-review/extreme-202/rigs/normal-03.json",
+      "sha256": "82b6e2c53557c61e428d9e29d5f169fac1e3ee148f7b8817dcfffdf0949644de"
+    },
+    "w200": {
+      "group": "normal-03",
+      "config": "tools/art-review/extreme-202/rigs/normal-03.json",
+      "sha256": "82b6e2c53557c61e428d9e29d5f169fac1e3ee148f7b8817dcfffdf0949644de"
+    },
+    "w202": {
+      "group": "normal-03",
+      "config": "tools/art-review/extreme-202/rigs/normal-03.json",
+      "sha256": "82b6e2c53557c61e428d9e29d5f169fac1e3ee148f7b8817dcfffdf0949644de"
+    },
+    "w105": {
+      "group": "normal-04",
+      "config": "tools/art-review/extreme-202/rigs/normal-04.json",
+      "sha256": "d3e1ff10a72616ebc35676ecdcfa617f36daf93a2ca45ff3172a7b6e4abe4105"
+    },
+    "w113": {
+      "group": "normal-04",
+      "config": "tools/art-review/extreme-202/rigs/normal-04.json",
+      "sha256": "d3e1ff10a72616ebc35676ecdcfa617f36daf93a2ca45ff3172a7b6e4abe4105"
+    },
+    "w117": {
+      "group": "normal-04",
+      "config": "tools/art-review/extreme-202/rigs/normal-04.json",
+      "sha256": "d3e1ff10a72616ebc35676ecdcfa617f36daf93a2ca45ff3172a7b6e4abe4105"
+    },
+    "w165": {
+      "group": "normal-04",
+      "config": "tools/art-review/extreme-202/rigs/normal-04.json",
+      "sha256": "d3e1ff10a72616ebc35676ecdcfa617f36daf93a2ca45ff3172a7b6e4abe4105"
+    },
+    "w197": {
+      "group": "normal-04",
+      "config": "tools/art-review/extreme-202/rigs/normal-04.json",
+      "sha256": "d3e1ff10a72616ebc35676ecdcfa617f36daf93a2ca45ff3172a7b6e4abe4105"
+    },
+    "w169": {
+      "group": "normal-04",
+      "config": "tools/art-review/extreme-202/rigs/normal-04.json",
+      "sha256": "d3e1ff10a72616ebc35676ecdcfa617f36daf93a2ca45ff3172a7b6e4abe4105"
+    },
+    "w153": {
+      "group": "normal-04",
+      "config": "tools/art-review/extreme-202/rigs/normal-04.json",
+      "sha256": "d3e1ff10a72616ebc35676ecdcfa617f36daf93a2ca45ff3172a7b6e4abe4105"
+    },
+    "w160": {
+      "group": "normal-04",
+      "config": "tools/art-review/extreme-202/rigs/normal-04.json",
+      "sha256": "d3e1ff10a72616ebc35676ecdcfa617f36daf93a2ca45ff3172a7b6e4abe4105"
+    },
+    "w162": {
+      "group": "normal-04",
+      "config": "tools/art-review/extreme-202/rigs/normal-04.json",
+      "sha256": "d3e1ff10a72616ebc35676ecdcfa617f36daf93a2ca45ff3172a7b6e4abe4105"
+    },
+    "w186": {
+      "group": "normal-04",
+      "config": "tools/art-review/extreme-202/rigs/normal-04.json",
+      "sha256": "d3e1ff10a72616ebc35676ecdcfa617f36daf93a2ca45ff3172a7b6e4abe4105"
+    },
+    "w193": {
+      "group": "normal-04",
+      "config": "tools/art-review/extreme-202/rigs/normal-04.json",
+      "sha256": "d3e1ff10a72616ebc35676ecdcfa617f36daf93a2ca45ff3172a7b6e4abe4105"
+    },
+    "w137": {
+      "group": "normal-06",
+      "config": "tools/art-review/extreme-202/rigs/normal-06.json",
+      "sha256": "935850cd420b05dba03b12ff73f98e87da20f922944ec27d35c477ac5b582a04"
+    },
+    "w145": {
+      "group": "normal-04",
+      "config": "tools/art-review/extreme-202/rigs/normal-04.json",
+      "sha256": "d3e1ff10a72616ebc35676ecdcfa617f36daf93a2ca45ff3172a7b6e4abe4105"
+    },
+    "w149": {
+      "group": "normal-04",
+      "config": "tools/art-review/extreme-202/rigs/normal-04.json",
+      "sha256": "d3e1ff10a72616ebc35676ecdcfa617f36daf93a2ca45ff3172a7b6e4abe4105"
+    },
+    "w133": {
+      "group": "normal-06",
+      "config": "tools/art-review/extreme-202/rigs/normal-06.json",
+      "sha256": "935850cd420b05dba03b12ff73f98e87da20f922944ec27d35c477ac5b582a04"
+    },
+    "w157": {
+      "group": "normal-04",
+      "config": "tools/art-review/extreme-202/rigs/normal-04.json",
+      "sha256": "d3e1ff10a72616ebc35676ecdcfa617f36daf93a2ca45ff3172a7b6e4abe4105"
+    },
+    "w109": {
+      "group": "normal-05",
+      "config": "tools/art-review/extreme-202/rigs/normal-05.json",
+      "sha256": "d0b00f1565c6747d57a351740d80c311ca6b3e93501fcbf8bb38817bd762e514"
+    },
+    "w125": {
+      "group": "normal-05",
+      "config": "tools/art-review/extreme-202/rigs/normal-05.json",
+      "sha256": "d0b00f1565c6747d57a351740d80c311ca6b3e93501fcbf8bb38817bd762e514"
+    },
+    "w163": {
+      "group": "normal-05",
+      "config": "tools/art-review/extreme-202/rigs/normal-05.json",
+      "sha256": "d0b00f1565c6747d57a351740d80c311ca6b3e93501fcbf8bb38817bd762e514"
+    },
+    "w144": {
+      "group": "normal-05",
+      "config": "tools/art-review/extreme-202/rigs/normal-05.json",
+      "sha256": "d0b00f1565c6747d57a351740d80c311ca6b3e93501fcbf8bb38817bd762e514"
+    },
+    "w102": {
+      "group": "normal-05",
+      "config": "tools/art-review/extreme-202/rigs/normal-05.json",
+      "sha256": "d0b00f1565c6747d57a351740d80c311ca6b3e93501fcbf8bb38817bd762e514"
+    },
+    "w107": {
+      "group": "normal-05",
+      "config": "tools/art-review/extreme-202/rigs/normal-05.json",
+      "sha256": "d0b00f1565c6747d57a351740d80c311ca6b3e93501fcbf8bb38817bd762e514"
+    },
+    "w112": {
+      "group": "normal-05",
+      "config": "tools/art-review/extreme-202/rigs/normal-05.json",
+      "sha256": "d0b00f1565c6747d57a351740d80c311ca6b3e93501fcbf8bb38817bd762e514"
+    },
+    "w114": {
+      "group": "normal-05",
+      "config": "tools/art-review/extreme-202/rigs/normal-05.json",
+      "sha256": "d0b00f1565c6747d57a351740d80c311ca6b3e93501fcbf8bb38817bd762e514"
+    },
+    "w115": {
+      "group": "normal-05",
+      "config": "tools/art-review/extreme-202/rigs/normal-05.json",
+      "sha256": "d0b00f1565c6747d57a351740d80c311ca6b3e93501fcbf8bb38817bd762e514"
+    },
+    "w118": {
+      "group": "normal-05",
+      "config": "tools/art-review/extreme-202/rigs/normal-05.json",
+      "sha256": "d0b00f1565c6747d57a351740d80c311ca6b3e93501fcbf8bb38817bd762e514"
+    },
+    "w119": {
+      "group": "normal-05",
+      "config": "tools/art-review/extreme-202/rigs/normal-05.json",
+      "sha256": "d0b00f1565c6747d57a351740d80c311ca6b3e93501fcbf8bb38817bd762e514"
+    },
+    "w120": {
+      "group": "normal-05",
+      "config": "tools/art-review/extreme-202/rigs/normal-05.json",
+      "sha256": "d0b00f1565c6747d57a351740d80c311ca6b3e93501fcbf8bb38817bd762e514"
+    },
+    "w155": {
+      "group": "normal-05",
+      "config": "tools/art-review/extreme-202/rigs/normal-05.json",
+      "sha256": "d0b00f1565c6747d57a351740d80c311ca6b3e93501fcbf8bb38817bd762e514"
+    },
+    "w168": {
+      "group": "normal-05",
+      "config": "tools/art-review/extreme-202/rigs/normal-05.json",
+      "sha256": "d0b00f1565c6747d57a351740d80c311ca6b3e93501fcbf8bb38817bd762e514"
+    },
+    "w174": {
+      "group": "normal-05",
+      "config": "tools/art-review/extreme-202/rigs/normal-05.json",
+      "sha256": "d0b00f1565c6747d57a351740d80c311ca6b3e93501fcbf8bb38817bd762e514"
+    },
+    "w179": {
+      "group": "normal-05",
+      "config": "tools/art-review/extreme-202/rigs/normal-05.json",
+      "sha256": "d0b00f1565c6747d57a351740d80c311ca6b3e93501fcbf8bb38817bd762e514"
+    },
+    "w183": {
+      "group": "repair-01",
+      "config": "tools/art-review/extreme-202/rigs/repair-01.json",
+      "sha256": "a9b2886dd370dee3196a99dfd702952cc44c95db11466fd740193d5cac71b2dd"
+    },
+    "w124": {
+      "group": "repair-01",
+      "config": "tools/art-review/extreme-202/rigs/repair-01.json",
+      "sha256": "a9b2886dd370dee3196a99dfd702952cc44c95db11466fd740193d5cac71b2dd"
+    },
+    "w128": {
+      "group": "normal-06",
+      "config": "tools/art-review/extreme-202/rigs/normal-06.json",
+      "sha256": "935850cd420b05dba03b12ff73f98e87da20f922944ec27d35c477ac5b582a04"
+    },
+    "w172": {
+      "group": "normal-06",
+      "config": "tools/art-review/extreme-202/rigs/normal-06.json",
+      "sha256": "935850cd420b05dba03b12ff73f98e87da20f922944ec27d35c477ac5b582a04"
+    },
+    "w122": {
+      "group": "normal-06",
+      "config": "tools/art-review/extreme-202/rigs/normal-06.json",
+      "sha256": "935850cd420b05dba03b12ff73f98e87da20f922944ec27d35c477ac5b582a04"
+    },
+    "w130": {
+      "group": "repair-01",
+      "config": "tools/art-review/extreme-202/rigs/repair-01.json",
+      "sha256": "a9b2886dd370dee3196a99dfd702952cc44c95db11466fd740193d5cac71b2dd"
+    },
+    "w178": {
+      "group": "normal-06",
+      "config": "tools/art-review/extreme-202/rigs/normal-06.json",
+      "sha256": "935850cd420b05dba03b12ff73f98e87da20f922944ec27d35c477ac5b582a04"
+    },
+    "w185": {
+      "group": "normal-06",
+      "config": "tools/art-review/extreme-202/rigs/normal-06.json",
+      "sha256": "935850cd420b05dba03b12ff73f98e87da20f922944ec27d35c477ac5b582a04"
+    },
+    "w192": {
+      "group": "normal-06",
+      "config": "tools/art-review/extreme-202/rigs/normal-06.json",
+      "sha256": "935850cd420b05dba03b12ff73f98e87da20f922944ec27d35c477ac5b582a04"
+    },
+    "w199": {
+      "group": "normal-06",
+      "config": "tools/art-review/extreme-202/rigs/normal-06.json",
+      "sha256": "935850cd420b05dba03b12ff73f98e87da20f922944ec27d35c477ac5b582a04"
+    },
+    "w123": {
+      "group": "repair-01",
+      "config": "tools/art-review/extreme-202/rigs/repair-01.json",
+      "sha256": "a9b2886dd370dee3196a99dfd702952cc44c95db11466fd740193d5cac71b2dd"
+    },
+    "b111": {
+      "group": "boss-01",
+      "config": "tools/art-review/extreme-202/rigs/boss-01.json",
+      "sha256": "c913d5962406545048ba9dc7a645244da0b57884c22f23076944bf63b975a42d"
+    },
+    "b111-2": {
+      "group": "boss-01",
+      "config": "tools/art-review/extreme-202/rigs/boss-01.json",
+      "sha256": "c913d5962406545048ba9dc7a645244da0b57884c22f23076944bf63b975a42d"
+    },
+    "b121": {
+      "group": "boss-01",
+      "config": "tools/art-review/extreme-202/rigs/boss-01.json",
+      "sha256": "c913d5962406545048ba9dc7a645244da0b57884c22f23076944bf63b975a42d"
+    },
+    "b121-2": {
+      "group": "boss-01",
+      "config": "tools/art-review/extreme-202/rigs/boss-01.json",
+      "sha256": "c913d5962406545048ba9dc7a645244da0b57884c22f23076944bf63b975a42d"
+    },
+    "b131": {
+      "group": "boss-02",
+      "config": "tools/art-review/extreme-202/rigs/boss-02.json",
+      "sha256": "51dba8ed3c1a57d0487578a150b9d3ad8576cab8bbb6ba451b0e9c8a8ff8d620"
+    },
+    "b131-2": {
+      "group": "boss-02",
+      "config": "tools/art-review/extreme-202/rigs/boss-02.json",
+      "sha256": "51dba8ed3c1a57d0487578a150b9d3ad8576cab8bbb6ba451b0e9c8a8ff8d620"
+    },
+    "b141": {
+      "group": "boss-02",
+      "config": "tools/art-review/extreme-202/rigs/boss-02.json",
+      "sha256": "51dba8ed3c1a57d0487578a150b9d3ad8576cab8bbb6ba451b0e9c8a8ff8d620"
+    },
+    "b141-2": {
+      "group": "boss-02",
+      "config": "tools/art-review/extreme-202/rigs/boss-02.json",
+      "sha256": "51dba8ed3c1a57d0487578a150b9d3ad8576cab8bbb6ba451b0e9c8a8ff8d620"
+    },
+    "b151": {
+      "group": "boss-03",
+      "config": "tools/art-review/extreme-202/rigs/boss-03.json",
+      "sha256": "b58a405eea22aa40063a2dbfceaffcae977681b89dba3878ba6fd8d5a7f88dea"
+    },
+    "b151-2": {
+      "group": "boss-03",
+      "config": "tools/art-review/extreme-202/rigs/boss-03.json",
+      "sha256": "b58a405eea22aa40063a2dbfceaffcae977681b89dba3878ba6fd8d5a7f88dea"
+    },
+    "b161": {
+      "group": "boss-03",
+      "config": "tools/art-review/extreme-202/rigs/boss-03.json",
+      "sha256": "b58a405eea22aa40063a2dbfceaffcae977681b89dba3878ba6fd8d5a7f88dea"
+    },
+    "b161-2": {
+      "group": "boss-03",
+      "config": "tools/art-review/extreme-202/rigs/boss-03.json",
+      "sha256": "b58a405eea22aa40063a2dbfceaffcae977681b89dba3878ba6fd8d5a7f88dea"
+    },
+    "b171": {
+      "group": "boss-04",
+      "config": "tools/art-review/extreme-202/rigs/boss-04.json",
+      "sha256": "e1261dda596480782d1fa371c4dec81a1292460ec27c75f0c7215647f130c4fc"
+    },
+    "b171-2": {
+      "group": "boss-04",
+      "config": "tools/art-review/extreme-202/rigs/boss-04.json",
+      "sha256": "e1261dda596480782d1fa371c4dec81a1292460ec27c75f0c7215647f130c4fc"
+    },
+    "b181": {
+      "group": "boss-04",
+      "config": "tools/art-review/extreme-202/rigs/boss-04.json",
+      "sha256": "e1261dda596480782d1fa371c4dec81a1292460ec27c75f0c7215647f130c4fc"
+    },
+    "b181-2": {
+      "group": "boss-04",
+      "config": "tools/art-review/extreme-202/rigs/boss-04.json",
+      "sha256": "e1261dda596480782d1fa371c4dec81a1292460ec27c75f0c7215647f130c4fc"
+    },
+    "b191": {
+      "group": "boss-05",
+      "config": "tools/art-review/extreme-202/rigs/boss-05.json",
+      "sha256": "5e81b00824aecfff70f7bffe847cec9b5d4321669b44e85e53fb227954f4ecd1"
+    },
+    "b191-2": {
+      "group": "boss-05",
+      "config": "tools/art-review/extreme-202/rigs/boss-05.json",
+      "sha256": "5e81b00824aecfff70f7bffe847cec9b5d4321669b44e85e53fb227954f4ecd1"
+    },
+    "b201": {
+      "group": "boss-05",
+      "config": "tools/art-review/extreme-202/rigs/boss-05.json",
+      "sha256": "5e81b00824aecfff70f7bffe847cec9b5d4321669b44e85e53fb227954f4ecd1"
+    },
+    "b201-2": {
+      "group": "boss-05",
+      "config": "tools/art-review/extreme-202/rigs/boss-05.json",
+      "sha256": "5e81b00824aecfff70f7bffe847cec9b5d4321669b44e85e53fb227954f4ecd1"
+    }
+  },
+  "scope": "Selected source group per final unique appearance; earlier rejected cores stay archived."
+}

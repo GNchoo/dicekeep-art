@@ -29,7 +29,7 @@ test('content.js 패리티: bossTimeLimit · clearWave', () => {
 });
 
 test('상수 값', () => {
-  assert.equal(T.MAX_FRAME, 4096);
+  assert.equal(T.MAX_FRAME, 6144);
   assert.equal(T.SUM_RELAY_MIN, 1500);
   assert.equal(T.SUM_WATCH_MIN, 1000);
   assert.equal(T.QUICK_WAIT, 10000);

@@ -3,10 +3,11 @@
 //   node tools/build-www.mjs --optimize   PNG 무손실 재압축 (sharp, compressionLevel 9)
 //   node tools/build-www.mjs --quantize   + 팔레트 양자화 (손실, quality 80) — 용량이 급할 때만
 // 규칙:
-//   고정 파일: index.html(app.js 스크립트 주입) · game.js · content.js · net.js · music.js · style.css · privacy.html
+//   고정 파일: 게임·성장·결제·아트 매니페스트 JS, index.html(app.js 주입), 결제 복귀·개인정보 페이지
 //   고정 폴더: fonts ui vfx dice props map towers enemies audio (있는 것만)
 //   casual/: game.js·content.js 안의 'casual/…' 경로 리터럴 + content.js 를 실행해 얻은 DKCONTENT 의 src/walkSrc
-//            + casual/tiles/** + casual/towers/star-*.png + casual/enemies/inf/** + casual/bosses/inf/**
+//            + casual/tiles/** + casual/towers/star-*.png + casual/towers/skins/**
+//            + casual/{enemies,bosses}/{inf,extreme}/** (PNG·무손실 WebP 모두 포함)
 //   제외: casual/maps/map-NN-*.jpg · casual/towers/*-attack-2x2.png · editor.* · *.md · net/ · serve.py · start.bat · wrangler.jsonc · tools · resources
 //   www/app.js = @capacitor/core UMD + 플러그인 UMD + 루트 app.js (번들러 없이 window.Capacitor.Plugins.* 를 쓰기 위해)
 import fs from 'node:fs';
@@ -20,7 +21,7 @@ const ARGS = new Set(process.argv.slice(2));
 const OPTIMIZE = ARGS.has('--optimize') || ARGS.has('--quantize');
 const QUANTIZE = ARGS.has('--quantize');
 
-const FIXED_FILES = ['index.html', 'game.js', 'content.js', 'directional-art.js', 'infinity-art.js', 'net.js', 'music.js', 'style.css', 'privacy.html'];
+const FIXED_FILES = ['index.html', 'game.js', 'content.js', 'progression.js', 'commerce-config.js', 'commerce-client.js', 'commerce-ui.js', 'cosmetics.js', 'payment.html', 'payment-return.js', 'directional-art.js', 'extreme-art.js', 'infinity-art.js', 'net.js', 'music.js', 'style.css', 'privacy.html'];
 const FIXED_DIRS = ['fonts', 'ui', 'vfx', 'dice', 'props', 'map', 'towers', 'enemies', 'audio'];
 const CAP_UMD = [
   '@capacitor/core/dist/capacitor.js',
@@ -71,6 +72,9 @@ function casualPaths() {
   for (const p of walk(path.join(ROOT, 'casual', 'tiles'))) set.add(rel(p));
   for (const p of walk(path.join(ROOT, 'casual', 'enemies', 'inf'))) set.add(rel(p));
   for (const p of walk(path.join(ROOT, 'casual', 'bosses', 'inf'))) set.add(rel(p));
+  for (const p of walk(path.join(ROOT, 'casual', 'enemies', 'extreme'))) set.add(rel(p));
+  for (const p of walk(path.join(ROOT, 'casual', 'bosses', 'extreme'))) set.add(rel(p));
+  for (const p of walk(path.join(ROOT, 'casual', 'towers', 'skins'))) set.add(rel(p));
   const towers = path.join(ROOT, 'casual', 'towers');
   if (fs.existsSync(towers)) for (const f of fs.readdirSync(towers)) if (/^star-.*\.png$/i.test(f)) set.add('casual/towers/' + f);
   const list = [...set].filter((p) => !excluded(p));

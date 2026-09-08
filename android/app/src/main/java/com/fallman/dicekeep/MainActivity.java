@@ -13,6 +13,7 @@ import com.getcapacitor.BridgeActivity;
 public class MainActivity extends BridgeActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        registerPlugin(DicekeepBillingPlugin.class);
         super.onCreate(savedInstanceState);
         applyImmersive();
     }

@@ -12,6 +12,10 @@
   var W = window;
   var Cap = W.Capacitor;
   if (!Cap || !Cap.isNativePlatform || !Cap.isNativePlatform()) return;   // 브라우저에서는 아무것도 안 함
+  // Native result objects include ID and purchase tokens. Never console-log
+  // bridge payloads, including in local debug builds.
+  Cap.isLoggingEnabled = false;
+  if (Cap.getPlatform() === 'android' && Cap.registerPlugin) Cap.registerPlugin('DicekeepBilling');
   var P = Cap.Plugins || {};
   var App = P.App, Splash = P.SplashScreen, Bar = P.StatusBar;
   var log = function () { try { console.log.apply(console, ['[app]'].concat([].slice.call(arguments))); } catch (_) {} };

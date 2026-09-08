@@ -1,0 +1,47 @@
+{
+  "actualCalls": 5,
+  "generator": "builtin-image_gen",
+  "cost": null,
+  "records": [
+    {
+      "call": 1,
+      "source": "sources/materials.png",
+      "prompt": "prompts/materials.txt",
+      "original": "C:/Users/PC/.codex/generated_images/01a07ae1-d8a0-73e1-abf1-73e88cf8bc12/exec-08bd6763-626b-441e-ba15-c72e03edea1f.png",
+      "status": "selected",
+      "sha256": "e40c81af06ce9020d4e4ec3356571309ffef558d72a2b2802034cc3f84fae26b"
+    },
+    {
+      "call": 2,
+      "source": "sources/royal-towers.png",
+      "prompt": "prompts/royal-towers.txt",
+      "original": "C:/Users/PC/.codex/generated_images/01a07ae1-d8a0-73e1-abf1-73e88cf8bc12/exec-bb913d76-8174-4f2a-8215-20c635d0a625.png",
+      "status": "reference-only; checkerboard would erase ivory highlights",
+      "sha256": "577f72666ce37401d5efca3355ac3ca4c706e5b48920c6229e0f856d73b60d70"
+    },
+    {
+      "call": 3,
+      "source": "sources/frost-towers.png",
+      "prompt": "prompts/frost-towers.txt",
+      "original": "C:/Users/PC/.codex/generated_images/01a07ae1-d8a0-73e1-abf1-73e88cf8bc12/exec-a9bd1ac3-e676-41f2-add3-a4b2f9cbfc7d.png",
+      "status": "selected",
+      "sha256": "8d0e1e2bdc8aadafa55beb2f3830990a5b30b26d025aec2b400a6e4633924791"
+    },
+    {
+      "call": 4,
+      "source": "sources/ember-towers.png",
+      "prompt": "prompts/ember-towers.txt",
+      "original": "C:/Users/PC/.codex/generated_images/01a07ae1-d8a0-73e1-abf1-73e88cf8bc12/exec-898bcc16-e239-4094-87ce-64bde792795e.png",
+      "status": "selected",
+      "sha256": "486b61e4d08a05ff1beb99663a9b20ae08cb0e462c0d07e8b5fa7ae044fa0e25"
+    },
+    {
+      "call": 5,
+      "source": "sources/royal-towers-keyed.png",
+      "prompt": "prompts/royal-background-fix.txt",
+      "original": "C:/Users/PC/.codex/generated_images/01a07ae1-d8a0-73e1-abf1-73e88cf8bc12/exec-cfaafaac-89c9-4f39-b440-025467d54de7.png",
+      "status": "selected",
+      "sha256": "7c66b1b674af72ab785afe3b695cdd6c1a17dd23eee27f5ac1b0638ee71c71b5"
+    }
+  ]
+}

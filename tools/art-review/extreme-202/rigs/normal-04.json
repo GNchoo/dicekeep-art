@@ -1,0 +1,4344 @@
+{
+  "version": 1,
+  "canonicalCell": 512,
+  "assetVersion": 101,
+  "entries": [
+    {
+      "assetId": "w105",
+      "wave": 105,
+      "role": "normal",
+      "locomotion": "flight",
+      "cell": 256,
+      "referenceHeight": 300,
+      "cycleStride": 0,
+      "cycleSeconds": 0.8,
+      "reviewApproved": false,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/t2-bird-01-side-parts.png",
+          "sourceSha256": "e0f74c26387c74cbce1f9daa274ec10cbd2a1f59aaa963bec1cddf870b9faea0",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            350
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 205,
+              "top": 142,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w105-side.png",
+            "sourceSha256": "27944aa51d9440cd881f40950842d4d2dc5ab66bffffc8b5ae2124f1f250ec37",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.36,
+                0,
+                0.31000000000000005,
+                0.5
+              ],
+              "socket": [
+                77.85773195876288,
+                63.55
+              ],
+              "sourcePivot": [
+                0.09,
+                0.035
+              ],
+              "scale": 0.5271084337349398,
+              "angleDeg": [
+                45,
+                52
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.672,
+                0,
+                0.32799999999999996,
+                0.5
+              ],
+              "socket": [
+                66.5034793814433,
+                63.55
+              ],
+              "sourcePivot": [
+                0.09,
+                0.035
+              ],
+              "scale": 0.5271084337349398,
+              "angleDeg": [
+                45,
+                52
+              ],
+              "phase": 0,
+              "layer": 1,
+              "flipX": true
+            }
+          ]
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/t2-bird-01-front-back-parts.png",
+          "sourceSha256": "eb9f71ec3bd49c3f3dc593e045b8619a80146a0f07ecf1ace127ba68ed0c1f31",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            350
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 205,
+              "top": 142,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w105-front.png",
+            "sourceSha256": "860c0529d699b937235bf803248ddceabc9142bf4f59f95c03e9800067449c82",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.33,
+                0,
+                0.31825253664036074,
+                0.27
+              ],
+              "socket": [
+                17.85534351145038,
+                63.55
+              ],
+              "sourcePivot": [
+                0.09,
+                0.035
+              ],
+              "scale": 0.5177514792899408,
+              "angleDeg": [
+                45,
+                52
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.649379932356257,
+                0,
+                0.350620067643743,
+                0.27
+              ],
+              "socket": [
+                67.17010178117049,
+                63.55
+              ],
+              "sourcePivot": [
+                0.09,
+                0.035
+              ],
+              "scale": 0.5177514792899408,
+              "angleDeg": [
+                -45,
+                -52
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            }
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/t2-bird-01-front-back-parts.png",
+          "sourceSha256": "eb9f71ec3bd49c3f3dc593e045b8619a80146a0f07ecf1ace127ba68ed0c1f31",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            350
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 205,
+              "top": 142,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w105-back.png",
+            "sourceSha256": "1f98733aae6cffc06c7a3a6e973cc6f595a12972ff4d472fee9f2344728c9275",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.33,
+                0.523,
+                0.2968320180383314,
+                0.22099999999999997
+              ],
+              "socket": [
+                19.38439226519337,
+                63.55
+              ],
+              "sourcePivot": [
+                0.09,
+                0.035
+              ],
+              "scale": 0.541795665634675,
+              "angleDeg": [
+                45,
+                52
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.6279594137542277,
+                0.523,
+                0.3720405862457723,
+                0.22099999999999997
+              ],
+              "socket": [
+                72.92223756906077,
+                63.55
+              ],
+              "sourcePivot": [
+                0.09,
+                0.035
+              ],
+              "scale": 0.5401234567901234,
+              "angleDeg": [
+                -45,
+                -52
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            }
+          ]
+        }
+      },
+      "name": "왕실 전서조",
+      "legacyAssetId": "w004",
+      "baseRigId": "w012"
+    },
+    {
+      "assetId": "w113",
+      "wave": 113,
+      "role": "normal",
+      "locomotion": "flight",
+      "cell": 256,
+      "referenceHeight": 300,
+      "cycleStride": 0,
+      "cycleSeconds": 0.8,
+      "reviewApproved": false,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/t2-bird-01-side-parts.png",
+          "sourceSha256": "e0f74c26387c74cbce1f9daa274ec10cbd2a1f59aaa963bec1cddf870b9faea0",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            350
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 205,
+              "top": 142,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w113-side.png",
+            "sourceSha256": "62b82fee468eda91edd2a46d2d6b74cab2377198fd6ed4cbe20a43573770ad37",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.36,
+                0,
+                0.31000000000000005,
+                0.5
+              ],
+              "socket": [
+                77.85773195876288,
+                63.55
+              ],
+              "sourcePivot": [
+                0.09,
+                0.035
+              ],
+              "scale": 0.5271084337349398,
+              "angleDeg": [
+                45,
+                52
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.672,
+                0,
+                0.32799999999999996,
+                0.5
+              ],
+              "socket": [
+                66.5034793814433,
+                63.55
+              ],
+              "sourcePivot": [
+                0.09,
+                0.035
+              ],
+              "scale": 0.5271084337349398,
+              "angleDeg": [
+                45,
+                52
+              ],
+              "phase": 0,
+              "layer": 1,
+              "flipX": true
+            }
+          ]
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/t2-bird-01-front-back-parts.png",
+          "sourceSha256": "eb9f71ec3bd49c3f3dc593e045b8619a80146a0f07ecf1ace127ba68ed0c1f31",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            350
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 205,
+              "top": 142,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w113-front.png",
+            "sourceSha256": "fd36483558a8e60c069d6a4f20ac28faff896fe40fe9279833be7b99fb7b3530",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.33,
+                0,
+                0.31825253664036074,
+                0.27
+              ],
+              "socket": [
+                17.85534351145038,
+                63.55
+              ],
+              "sourcePivot": [
+                0.09,
+                0.035
+              ],
+              "scale": 0.5177514792899408,
+              "angleDeg": [
+                45,
+                52
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.649379932356257,
+                0,
+                0.350620067643743,
+                0.27
+              ],
+              "socket": [
+                67.17010178117049,
+                63.55
+              ],
+              "sourcePivot": [
+                0.09,
+                0.035
+              ],
+              "scale": 0.5177514792899408,
+              "angleDeg": [
+                -45,
+                -52
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            }
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/t2-bird-01-front-back-parts.png",
+          "sourceSha256": "eb9f71ec3bd49c3f3dc593e045b8619a80146a0f07ecf1ace127ba68ed0c1f31",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            350
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 205,
+              "top": 142,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w113-back.png",
+            "sourceSha256": "ccb0e40107ec05fd4f202440ef7ff0c37e5ac38a535e6d8809af978fd1e798ad",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.33,
+                0.523,
+                0.2968320180383314,
+                0.22099999999999997
+              ],
+              "socket": [
+                19.38439226519337,
+                63.55
+              ],
+              "sourcePivot": [
+                0.09,
+                0.035
+              ],
+              "scale": 0.541795665634675,
+              "angleDeg": [
+                45,
+                52
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.6279594137542277,
+                0.523,
+                0.3720405862457723,
+                0.22099999999999997
+              ],
+              "socket": [
+                72.92223756906077,
+                63.55
+              ],
+              "sourcePivot": [
+                0.09,
+                0.035
+              ],
+              "scale": 0.5401234567901234,
+              "angleDeg": [
+                -45,
+                -52
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            }
+          ]
+        }
+      },
+      "name": "성문 수리부엉이",
+      "legacyAssetId": "w012",
+      "baseRigId": "w012"
+    },
+    {
+      "assetId": "w117",
+      "wave": 117,
+      "role": "normal",
+      "locomotion": "flight",
+      "cell": 256,
+      "referenceHeight": 300,
+      "cycleStride": 0,
+      "cycleSeconds": 0.8,
+      "reviewApproved": false,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/t2-bird-01-side-parts.png",
+          "sourceSha256": "e0f74c26387c74cbce1f9daa274ec10cbd2a1f59aaa963bec1cddf870b9faea0",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            350
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 205,
+              "top": 142,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w117-side.png",
+            "sourceSha256": "ef53f7bd846a966c4c244c758e968570045dff5c8925a8248cf9c3ad74c22d60",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.36,
+                0.5,
+                0.31000000000000005,
+                0.5
+              ],
+              "socket": [
+                87.37704918032787,
+                63.55
+              ],
+              "sourcePivot": [
+                0.09,
+                0.035
+              ],
+              "scale": 0.5271084337349398,
+              "angleDeg": [
+                45,
+                52
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.672,
+                0.5,
+                0.32799999999999996,
+                0.5
+              ],
+              "socket": [
+                74.63456284153006,
+                63.55
+              ],
+              "sourcePivot": [
+                0.09,
+                0.035
+              ],
+              "scale": 0.5255255255255256,
+              "angleDeg": [
+                45,
+                52
+              ],
+              "phase": 0,
+              "layer": 1,
+              "flipX": true
+            }
+          ]
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/t2-bird-01-front-back-parts.png",
+          "sourceSha256": "eb9f71ec3bd49c3f3dc593e045b8619a80146a0f07ecf1ace127ba68ed0c1f31",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            350
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 205,
+              "top": 142,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w117-front.png",
+            "sourceSha256": "8c4235126284071ac42f6b247657c6921d177e30b2e99f712af098ac8a4f3761",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.33,
+                0.27,
+                0.2979594137542277,
+                0.253
+              ],
+              "socket": [
+                18.834374999999998,
+                63.55
+              ],
+              "sourcePivot": [
+                0.09,
+                0.035
+              ],
+              "scale": 0.4654255319148936,
+              "angleDeg": [
+                45,
+                52
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.629086809470124,
+                0.27,
+                0.37091319052987604,
+                0.253
+              ],
+              "socket": [
+                70.853125,
+                63.55
+              ],
+              "sourcePivot": [
+                0.09,
+                0.035
+              ],
+              "scale": 0.4654255319148936,
+              "angleDeg": [
+                -45,
+                -52
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            }
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/t2-bird-01-front-back-parts.png",
+          "sourceSha256": "eb9f71ec3bd49c3f3dc593e045b8619a80146a0f07ecf1ace127ba68ed0c1f31",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            350
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 205,
+              "top": 142,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w117-back.png",
+            "sourceSha256": "af3c3bca0232f7c95e00a0ddc888beaf29fcccb58ce4963b9af9016415160eea",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.33,
+                0.744,
+                0.3035963923337091,
+                0.256
+              ],
+              "socket": [
+                20.430508474576268,
+                63.55
+              ],
+              "sourcePivot": [
+                0.09,
+                0.035
+              ],
+              "scale": 0.4807692307692308,
+              "angleDeg": [
+                45,
+                52
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.6347237880496054,
+                0.744,
+                0.3652762119503946,
+                0.256
+              ],
+              "socket": [
+                76.85762711864406,
+                63.55
+              ],
+              "sourcePivot": [
+                0.09,
+                0.035
+              ],
+              "scale": 0.4794520547945205,
+              "angleDeg": [
+                -45,
+                -52
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            }
+          ]
+        }
+      },
+      "name": "문장 독수리",
+      "legacyAssetId": "w016",
+      "baseRigId": "w016"
+    },
+    {
+      "assetId": "w165",
+      "wave": 165,
+      "role": "normal",
+      "locomotion": "flight",
+      "cell": 256,
+      "referenceHeight": 300,
+      "cycleStride": 0,
+      "cycleSeconds": 0.8,
+      "reviewApproved": false,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-flight-01-side-parts.png",
+          "sourceSha256": "c81f5b67d9646f4d98b77e0fbb40da4679ca48ad332934f8b092d6673707fff0",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 210,
+              "top": 135,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w165-side.png",
+            "sourceSha256": "80c9ec02988c07f9e185590d1005a0a2e2e8b43648a2db050197c5659d0e3d0f",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.36189402480270577,
+                0.27959413754227735,
+                0.26296505073280724,
+                0.20250845546786922
+              ],
+              "socketNormalized": [
+                0.43,
+                0.38
+              ],
+              "sourcePivot": [
+                0.93,
+                0.59
+              ],
+              "scale": 0.5484272761128799,
+              "angleDeg": [
+                0,
+                48
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.6685456595264938,
+                0.2801578354002255,
+                0.2686020293122886,
+                0.20307215332581735
+              ],
+              "socketNormalized": [
+                0.47,
+                0.38
+              ],
+              "sourcePivot": [
+                0.93,
+                0.59
+              ],
+              "scale": 0.5416817682184782,
+              "angleDeg": [
+                0,
+                48
+              ],
+              "phase": 0,
+              "layer": 1,
+              "flipX": false
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-flight-01-front-back-parts.png",
+          "sourceSha256": "e0a3609441ee4a9ff750d6ecb3895f0e3543a1e6be9568274df3816e2221a823",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 210,
+              "top": 135,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w165-front.png",
+            "sourceSha256": "e38be28cf83d21ee3a983fc93b17db775520f396e10d5232a7d133869a3a0dba",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.22009569377990432,
+                0.3253588516746411,
+                0.11822169059011164,
+                0.16606858054226475
+              ],
+              "socketNormalized": [
+                0.75,
+                0.38
+              ],
+              "sourcePivot": [
+                0.17,
+                0.05
+              ],
+              "scale": 0.716828615537148,
+              "angleDeg": [
+                -45,
+                45
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.36044657097288674,
+                0.3253588516746411,
+                0.11822169059011164,
+                0.16606858054226475
+              ],
+              "socketNormalized": [
+                0.25,
+                0.38
+              ],
+              "sourcePivot": [
+                0.87,
+                0.05
+              ],
+              "scale": 0.7072199818109254,
+              "angleDeg": [
+                45,
+                -45
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-flight-01-front-back-parts.png",
+          "sourceSha256": "e0a3609441ee4a9ff750d6ecb3895f0e3543a1e6be9568274df3816e2221a823",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 210,
+              "top": 135,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w165-back.png",
+            "sourceSha256": "5eaaae7ef88c42d6b9b7f5cff7f823e8b0bd926b5209dbab347a7f4727f01de3",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.696969696969697,
+                0.32456140350877194,
+                0.1078548644338118,
+                0.16606858054226475
+              ],
+              "socketNormalized": [
+                0.25,
+                0.38
+              ],
+              "sourcePivot": [
+                0.17,
+                0.05
+              ],
+              "scale": 0.7343534906659348,
+              "angleDeg": [
+                45,
+                -45
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.828548644338118,
+                0.33413078149920256,
+                0.1038676236044657,
+                0.15649920255183414
+              ],
+              "socketNormalized": [
+                0.75,
+                0.38
+              ],
+              "sourcePivot": [
+                0.87,
+                0.05
+              ],
+              "scale": 0.7662613465052197,
+              "angleDeg": [
+                -45,
+                45
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        }
+      },
+      "name": "불꽃 풍향조",
+      "legacyAssetId": "w064",
+      "baseRigId": "w064"
+    },
+    {
+      "assetId": "w197",
+      "wave": 197,
+      "role": "normal",
+      "locomotion": "flight",
+      "cell": 256,
+      "referenceHeight": 300,
+      "cycleStride": 0,
+      "cycleSeconds": 0.8,
+      "reviewApproved": false,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-flight-01-side-parts.png",
+          "sourceSha256": "c81f5b67d9646f4d98b77e0fbb40da4679ca48ad332934f8b092d6673707fff0",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 210,
+              "top": 135,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w197-side.png",
+            "sourceSha256": "f66776e86b048db0e62cbc59a6edd93805804e6988f6b801c060045f04cda68e",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.3370913190529876,
+                0.7147688838782412,
+                0.27423900789177,
+                0.21716459977452085
+              ],
+              "socketNormalized": [
+                0.43,
+                0.43
+              ],
+              "sourcePivot": [
+                0.93,
+                0.43
+              ],
+              "scale": 0.5273597590944753,
+              "angleDeg": [
+                0,
+                48
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.6403607666290868,
+                0.7153325817361894,
+                0.27649379932356255,
+                0.21547350620067643
+              ],
+              "socketNormalized": [
+                0.47,
+                0.43
+              ],
+              "sourcePivot": [
+                0.93,
+                0.43
+              ],
+              "scale": 0.5271080206815855,
+              "angleDeg": [
+                0,
+                48
+              ],
+              "phase": 0,
+              "layer": 1,
+              "flipX": false
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-flight-01-front-back-parts.png",
+          "sourceSha256": "e0a3609441ee4a9ff750d6ecb3895f0e3543a1e6be9568274df3816e2221a823",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 210,
+              "top": 135,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w197-front.png",
+            "sourceSha256": "a02dc65733edf5a04bcacc01487a65ce68934b9d19cee11b0bb4773ee51c829c",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.21690590111642744,
+                0.7695374800637959,
+                0.10944976076555024,
+                0.17404306220095694
+              ],
+              "socketNormalized": [
+                0.75,
+                0.43
+              ],
+              "sourcePivot": [
+                0.17,
+                0.05
+              ],
+              "scale": 0.7057326692910899,
+              "angleDeg": [
+                -45,
+                45
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.35566188197767146,
+                0.7719298245614035,
+                0.11024720893141945,
+                0.17165071770334928
+              ],
+              "socketNormalized": [
+                0.25,
+                0.43
+              ],
+              "sourcePivot": [
+                0.87,
+                0.05
+              ],
+              "scale": 0.7039134810378503,
+              "angleDeg": [
+                45,
+                -45
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-flight-01-front-back-parts.png",
+          "sourceSha256": "e0a3609441ee4a9ff750d6ecb3895f0e3543a1e6be9568274df3816e2221a823",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 210,
+              "top": 135,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w197-back.png",
+            "sourceSha256": "ec57184fa7fbd1262f34b02a4ee8d53f4aacb8440c5c837f6629b0756c5890e2",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.7033492822966507,
+                0.7703349282296651,
+                0.0950956937799043,
+                0.17643540669856458
+              ],
+              "socketNormalized": [
+                0.25,
+                0.43
+              ],
+              "sourcePivot": [
+                0.17,
+                0.05
+              ],
+              "scale": 0.7186479680245308,
+              "angleDeg": [
+                45,
+                -45
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.8341307814992025,
+                0.7719298245614035,
+                0.0950956937799043,
+                0.17404306220095694
+              ],
+              "socketNormalized": [
+                0.75,
+                0.43
+              ],
+              "sourcePivot": [
+                0.87,
+                0.05
+              ],
+              "scale": 0.7203369273749222,
+              "angleDeg": [
+                -45,
+                45
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        }
+      },
+      "name": "별밤 전서까마귀",
+      "legacyAssetId": "w096",
+      "baseRigId": "w096"
+    },
+    {
+      "assetId": "w169",
+      "wave": 169,
+      "role": "normal",
+      "locomotion": "flight",
+      "cell": 256,
+      "referenceHeight": 300,
+      "cycleStride": 0,
+      "cycleSeconds": 0.8,
+      "reviewApproved": false,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-flight-01-side-parts.png",
+          "sourceSha256": "c81f5b67d9646f4d98b77e0fbb40da4679ca48ad332934f8b092d6673707fff0",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 210,
+              "top": 135,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w169-side.png",
+            "sourceSha256": "10ba78e6db27d73cb2d9a5bd149cceacaf4b7652487eebe8dccc11609bd30b22",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.3810597519729425,
+                0.5180383314543405,
+                0.2246335963923337,
+                0.1483934611048478
+              ],
+              "socketNormalized": [
+                0.43,
+                0.45
+              ],
+              "sourcePivot": [
+                0.92,
+                0.53
+              ],
+              "scale": 0.7236902907252662,
+              "angleDeg": [
+                0,
+                48
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.6843291995490417,
+                0.5174746335963923,
+                0.22688838782412626,
+                0.15008455467869222
+              ],
+              "socketNormalized": [
+                0.47,
+                0.45
+              ],
+              "sourcePivot": [
+                0.92,
+                0.53
+              ],
+              "scale": 0.7160667042367236,
+              "angleDeg": [
+                0,
+                48
+              ],
+              "phase": 0,
+              "layer": 1,
+              "flipX": false
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-flight-01-front-back-parts.png",
+          "sourceSha256": "e0a3609441ee4a9ff750d6ecb3895f0e3543a1e6be9568274df3816e2221a823",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 210,
+              "top": 135,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w169-front.png",
+            "sourceSha256": "2094ab2ff3cfe451d69adda964ea1f4c47fff53cc5cb2129546d3bc281a4bac0",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.21690590111642744,
+                0.5534290271132376,
+                0.10625996810207336,
+                0.12779106858054226
+              ],
+              "socketNormalized": [
+                0.82,
+                0.45
+              ],
+              "sourcePivot": [
+                0.93,
+                0.52
+              ],
+              "scale": 1.1228695823521628,
+              "angleDeg": [
+                -10,
+                42
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.35566188197767146,
+                0.5558213716108453,
+                0.11343700159489634,
+                0.1246012759170654
+              ],
+              "socketNormalized": [
+                0.18,
+                0.45
+              ],
+              "sourcePivot": [
+                0.07,
+                0.52
+              ],
+              "scale": 1.0794498717089698,
+              "angleDeg": [
+                10,
+                -42
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-flight-01-front-back-parts.png",
+          "sourceSha256": "e0a3609441ee4a9ff750d6ecb3895f0e3543a1e6be9568274df3816e2221a823",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 210,
+              "top": 135,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w169-back.png",
+            "sourceSha256": "ea8a8edb9e64fd5fbf659f0f7efc7cc0aba1f35fce830c5ef1bab7c1d6f62f50",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.7185007974481659,
+                0.5550239234449761,
+                0.08074162679425838,
+                0.12619617224880383
+              ],
+              "socketNormalized": [
+                0.18,
+                0.45
+              ],
+              "sourcePivot": [
+                0.93,
+                0.52
+              ],
+              "scale": 1.3446517635630482,
+              "angleDeg": [
+                10,
+                -42
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.8301435406698564,
+                0.5558213716108453,
+                0.08951355661881978,
+                0.12539872408293462
+              ],
+              "socketNormalized": [
+                0.82,
+                0.45
+              ],
+              "sourcePivot": [
+                0.07,
+                0.52
+              ],
+              "scale": 1.266922051979896,
+              "angleDeg": [
+                -10,
+                42
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        }
+      },
+      "name": "살아있는 설계서",
+      "legacyAssetId": "w068",
+      "baseRigId": "w068"
+    },
+    {
+      "assetId": "w153",
+      "wave": 153,
+      "role": "normal",
+      "locomotion": "float",
+      "cell": 256,
+      "referenceHeight": 400,
+      "cycleStride": 0,
+      "cycleSeconds": 1.6,
+      "reviewApproved": false,
+      "hover": {
+        "lift": 8,
+        "roll": 1.1
+      },
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/middle-waves/t6-float-01-turnaround-clean.png",
+          "sourceSha256": "fffe7b88a8b5e207eacdf04d8599b3ba3bee57e56b5f0ea6f5ba90cc6205c925",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 346.9194312796209,
+              "top": 96.96682464454977,
+              "centerX": 263.1090047393365
+            },
+            "layer": 10,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w153-side.png",
+            "sourceSha256": "3d5a4d285781198b322c389caf242764d8e49d8fb11d65361d4ca989ecc1f07b",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [],
+          "jointReview": "Explicit float locomotion. One common source-pixel scale across all views. Original source body-center anchor [300,455] aligns to canonical pivot [256,460]; tail or bounding-box center does not recenter the character. No walking or wing claim.",
+          "reviewedSourceAnchor": [
+            300,
+            455
+          ]
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/middle-waves/t6-float-01-turnaround-clean.png",
+          "sourceSha256": "fffe7b88a8b5e207eacdf04d8599b3ba3bee57e56b5f0ea6f5ba90cc6205c925",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 400,
+              "top": 58.104265402843566,
+              "centerX": 253.6303317535545
+            },
+            "layer": 10,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w153-front.png",
+            "sourceSha256": "6389cb9bbb5eba04e4fd440d1b438c725e58854d8fdbf756692aa2273444d9a1",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [],
+          "jointReview": "Explicit float locomotion. One common source-pixel scale across all views. Original source body-center anchor [770,455] aligns to canonical pivot [256,460]; tail or bounding-box center does not recenter the character. No walking or wing claim.",
+          "reviewedSourceAnchor": [
+            770,
+            455
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/middle-waves/t6-float-01-turnaround-clean.png",
+          "sourceSha256": "fffe7b88a8b5e207eacdf04d8599b3ba3bee57e56b5f0ea6f5ba90cc6205c925",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 384.8341232227488,
+              "top": 73.27014218009481,
+              "centerX": 246.521327014218
+            },
+            "layer": 10,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w153-back.png",
+            "sourceSha256": "8b623ab273f56cf8220a46ef51155db0bc204107f541c3cc1c86ac70866e1a75",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [],
+          "jointReview": "Explicit float locomotion. One common source-pixel scale across all views. Original source body-center anchor [1220,455] aligns to canonical pivot [256,460]; tail or bounding-box center does not recenter the character. No walking or wing claim.",
+          "reviewedSourceAnchor": [
+            1220,
+            455
+          ]
+        }
+      },
+      "name": "해파리 정령등",
+      "legacyAssetId": "w052",
+      "baseRigId": "w052"
+    },
+    {
+      "assetId": "w160",
+      "wave": 160,
+      "role": "normal",
+      "locomotion": "float",
+      "cell": 256,
+      "referenceHeight": 400,
+      "cycleStride": 0,
+      "cycleSeconds": 1.6,
+      "reviewApproved": false,
+      "hover": {
+        "lift": 8,
+        "roll": 1.1
+      },
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/middle-waves/t6-float-01-turnaround.png",
+          "sourceSha256": "1b3507cf377fedc3911086df1b40ca94f0bdfef692a46376be083275352b9816",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 378.98989898989896,
+              "top": 72.92929292929296,
+              "centerX": 198.62626262626262
+            },
+            "layer": 10,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w160-side.png",
+            "sourceSha256": "0943abfb3e821cc984605f7878ff331fea2bf224346890d66bf76d3e8531aa77",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [],
+          "jointReview": "Explicit float locomotion. One common source-pixel scale across all views. Original source body-center anchor [300,980] aligns to canonical pivot [256,460]; tail or bounding-box center does not recenter the character. No walking or wing claim.",
+          "reviewedSourceAnchor": [
+            300,
+            980
+          ]
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/middle-waves/t6-float-01-turnaround.png",
+          "sourceSha256": "1b3507cf377fedc3911086df1b40ca94f0bdfef692a46376be083275352b9816",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 400,
+              "top": 68.88888888888891,
+              "centerX": 245.4949494949495
+            },
+            "layer": 10,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w160-front.png",
+            "sourceSha256": "843558827a06f2c13f9c402c88356bbfe55229ebc2b0e649718132849f81d7fd",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [],
+          "jointReview": "Explicit float locomotion. One common source-pixel scale across all views. Original source body-center anchor [768,980] aligns to canonical pivot [256,460]; tail or bounding-box center does not recenter the character. No walking or wing claim.",
+          "reviewedSourceAnchor": [
+            768,
+            980
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/middle-waves/t6-float-01-turnaround.png",
+          "sourceSha256": "1b3507cf377fedc3911086df1b40ca94f0bdfef692a46376be083275352b9816",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 395.95959595959596,
+              "top": 72.12121212121212,
+              "centerX": 253.5757575757576
+            },
+            "layer": 10,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w160-back.png",
+            "sourceSha256": "2ca6a41e718924c2292b0a4c8a38f6db8381c79ca67a910b38e496d51dfd7dca",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [],
+          "jointReview": "Explicit float locomotion. One common source-pixel scale across all views. Original source body-center anchor [1230,980] aligns to canonical pivot [256,460]; tail or bounding-box center does not recenter the character. No walking or wing claim.",
+          "reviewedSourceAnchor": [
+            1230,
+            980
+          ]
+        }
+      },
+      "name": "수련 노래정령",
+      "legacyAssetId": "w059",
+      "baseRigId": "w059"
+    },
+    {
+      "assetId": "w162",
+      "wave": 162,
+      "role": "normal",
+      "locomotion": "float",
+      "cell": 256,
+      "referenceHeight": 300,
+      "cycleStride": 0,
+      "cycleSeconds": 1.6,
+      "hover": {
+        "lift": 10,
+        "roll": 1.5
+      },
+      "reviewApproved": false,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/late-waves/sources/t7-float-01-turnaround.png",
+          "sourceSha256": "8bf85b6baf1cf57f460b8ec4ddf0e36092a2ca909f856954a57860720ac0202c",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            390
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 300,
+              "top": 80,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w162-side.png",
+            "sourceSha256": "151e85ad0437653e296a4d55a8b2c85d662be3a5df31ff161021ffe0c777009b",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": []
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/late-waves/sources/t7-float-01-turnaround.png",
+          "sourceSha256": "8bf85b6baf1cf57f460b8ec4ddf0e36092a2ca909f856954a57860720ac0202c",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            390
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 300,
+              "top": 80,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w162-front.png",
+            "sourceSha256": "dcb1dd83c43d2fc724f0f97c77533e1f203f0535062ab0b4ad2c0ce18b0ef6c2",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": []
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/late-waves/sources/t7-float-01-turnaround.png",
+          "sourceSha256": "8bf85b6baf1cf57f460b8ec4ddf0e36092a2ca909f856954a57860720ac0202c",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            390
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 300,
+              "top": 80,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w162-back.png",
+            "sourceSha256": "878c5ee8434c942e3ec1d23a1b0dddc5d091d297ea0ccb19959a7bc87e5ebfe6",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": []
+        }
+      },
+      "name": "용광로 불씨정령",
+      "legacyAssetId": "w061",
+      "baseRigId": "w061"
+    },
+    {
+      "assetId": "w186",
+      "wave": 186,
+      "role": "normal",
+      "locomotion": "float",
+      "cell": 256,
+      "referenceHeight": 300,
+      "cycleStride": 0,
+      "cycleSeconds": 1.6,
+      "hover": {
+        "lift": 10,
+        "roll": 1.5
+      },
+      "reviewApproved": false,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/late-waves/sources/t9-float-01-turnaround.png",
+          "sourceSha256": "3dfd60a628ab55b54c42f5ed3fb34f3fa43a0b6ab2d8b546206063cba9fb5471",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            390
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 300,
+              "top": 80,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w186-side.png",
+            "sourceSha256": "813d4de3f32ed2ebdebcab40b35282619e5b3e0de823d39ba487e6266b465dce",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": []
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/late-waves/sources/t9-float-01-turnaround.png",
+          "sourceSha256": "3dfd60a628ab55b54c42f5ed3fb34f3fa43a0b6ab2d8b546206063cba9fb5471",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            390
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 300,
+              "top": 80,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w186-front.png",
+            "sourceSha256": "b637656ae9bbc173f7024851ce177115952db761138bd3e41ef6b12c7b63308d",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": []
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/late-waves/sources/t9-float-01-turnaround.png",
+          "sourceSha256": "3dfd60a628ab55b54c42f5ed3fb34f3fa43a0b6ab2d8b546206063cba9fb5471",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            390
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 300,
+              "top": 80,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w186-back.png",
+            "sourceSha256": "f2b6a71d7da6d243eadc77ab7ce9c6e694675a7df7e8aac30994b7b7ff1d5398",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": []
+        }
+      },
+      "name": "별빛 망토정령",
+      "legacyAssetId": "w085",
+      "baseRigId": "w085"
+    },
+    {
+      "assetId": "w193",
+      "wave": 193,
+      "role": "normal",
+      "locomotion": "float",
+      "cell": 256,
+      "referenceHeight": 300,
+      "cycleStride": 0,
+      "cycleSeconds": 1.6,
+      "hover": {
+        "lift": 10,
+        "roll": 1.5
+      },
+      "reviewApproved": false,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/late-waves/derived/w092-side-parts.png",
+          "sourceSha256": "9eb04d24e034997dbc6a3ff77e44648f067ced28b8f27e1b41cd0d3f9cd629a8",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            390
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 300,
+              "top": 80,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w193-side.png",
+            "sourceSha256": "17cbb880b53e36187734faab59b0ba001e1a2d785096d895684f57083cfad104",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "wisp1",
+              "type": "appendage",
+              "roi": [
+                0.8,
+                0.03125,
+                0.2,
+                0.171875
+              ],
+              "socket": [
+                117.67554479418887,
+                65.37530266343826
+              ],
+              "sourcePivot": [
+                0.5,
+                0.5
+              ],
+              "scale": 0.7263922518159807,
+              "angleDeg": [
+                0,
+                12
+              ],
+              "phase": 0,
+              "layer": 1
+            },
+            {
+              "id": "wisp2",
+              "type": "appendage",
+              "roi": [
+                0.8,
+                0.265625,
+                0.2,
+                0.142578125
+              ],
+              "socket": [
+                11.2590799031477,
+                226.27118644067798
+              ],
+              "sourcePivot": [
+                0.5,
+                0.5
+              ],
+              "scale": 0.7263922518159807,
+              "angleDeg": [
+                0,
+                12
+              ],
+              "phase": 0.5,
+              "layer": 1
+            }
+          ]
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/late-waves/derived/w092-front-parts.png",
+          "sourceSha256": "81e8c13be0210d938edc9082f31b8930ba4cddd3558039ddd3d6fac55239bb45",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            390
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 300,
+              "top": 80,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w193-front.png",
+            "sourceSha256": "503237a2110c1fe7d6e738822d76142976dee872c48f41792fcf89ca866d7c44",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "wisp1",
+              "type": "appendage",
+              "roi": [
+                0.8,
+                0.03125,
+                0.2,
+                0.173828125
+              ],
+              "socket": [
+                4.721549636803874,
+                64.28571428571429
+              ],
+              "sourcePivot": [
+                0.5,
+                0.5
+              ],
+              "scale": 0.7263922518159807,
+              "angleDeg": [
+                0,
+                12
+              ],
+              "phase": 0,
+              "layer": 1
+            },
+            {
+              "id": "wisp2",
+              "type": "appendage",
+              "roi": [
+                0.8,
+                0.265625,
+                0.2,
+                0.15625
+              ],
+              "socket": [
+                2.9055690072639226,
+                223.00242130750604
+              ],
+              "sourcePivot": [
+                0.5,
+                0.5
+              ],
+              "scale": 0.7263922518159807,
+              "angleDeg": [
+                0,
+                12
+              ],
+              "phase": 0.25,
+              "layer": 1
+            },
+            {
+              "id": "wisp3",
+              "type": "appendage",
+              "roi": [
+                0.8,
+                0.5,
+                0.2,
+                0.15234375
+              ],
+              "socket": [
+                131.11380145278451,
+                228.08716707021793
+              ],
+              "sourcePivot": [
+                0.5,
+                0.5
+              ],
+              "scale": 0.7263922518159807,
+              "angleDeg": [
+                0,
+                12
+              ],
+              "phase": 0.5,
+              "layer": 1
+            },
+            {
+              "id": "wisp4",
+              "type": "appendage",
+              "roi": [
+                0.8,
+                0.734375,
+                0.2,
+                0.1484375
+              ],
+              "socket": [
+                133.29297820823246,
+                79.90314769975787
+              ],
+              "sourcePivot": [
+                0.5,
+                0.5
+              ],
+              "scale": 0.7263922518159807,
+              "angleDeg": [
+                0,
+                12
+              ],
+              "phase": 0.75,
+              "layer": 1
+            }
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/late-waves/derived/w092-back-parts.png",
+          "sourceSha256": "5e49a292354652dd734eb85d8688495adb98e988da07d2e2d28be2e32ca28cd1",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            390
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 300,
+              "top": 80,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w193-back.png",
+            "sourceSha256": "5a47b9f1d0c898c5bfb04b515d87586d2338871672a10d6b5092c77396b51ce5",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "wisp1",
+              "type": "appendage",
+              "roi": [
+                0.8,
+                0.03125,
+                0.2,
+                0.15625
+              ],
+              "socket": [
+                125.97087378640776,
+                73.54368932038835
+              ],
+              "sourcePivot": [
+                0.5,
+                0.5
+              ],
+              "scale": 0.7281553398058253,
+              "angleDeg": [
+                0,
+                12
+              ],
+              "phase": 0,
+              "layer": 1
+            },
+            {
+              "id": "wisp2",
+              "type": "appendage",
+              "roi": [
+                0.8,
+                0.265625,
+                0.2,
+                0.142578125
+              ],
+              "socket": [
+                8.009708737864077,
+                225.3640776699029
+              ],
+              "sourcePivot": [
+                0.5,
+                0.5
+              ],
+              "scale": 0.7281553398058253,
+              "angleDeg": [
+                0,
+                12
+              ],
+              "phase": 0.3333333333333333,
+              "layer": 1
+            },
+            {
+              "id": "wisp3",
+              "type": "appendage",
+              "roi": [
+                0.8,
+                0.5,
+                0.2,
+                0.146484375
+              ],
+              "socket": [
+                128.15533980582524,
+                226.82038834951456
+              ],
+              "sourcePivot": [
+                0.5,
+                0.5
+              ],
+              "scale": 0.7281553398058253,
+              "angleDeg": [
+                0,
+                12
+              ],
+              "phase": 0.6666666666666666,
+              "layer": 1
+            }
+          ]
+        }
+      },
+      "name": "망원 렌즈정령",
+      "legacyAssetId": "w092",
+      "baseRigId": "w092"
+    },
+    {
+      "assetId": "w137",
+      "wave": 137,
+      "role": "normal",
+      "locomotion": "flight",
+      "cell": 256,
+      "referenceHeight": 360,
+      "cycleStride": 0,
+      "cycleSeconds": 0.8,
+      "reviewApproved": false,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/middle-waves/membrane-dragons-side-parts.png",
+          "sourceSha256": "e6c04f326201f3b054ea2913ca81f80a87924bee050e2dc31b98704055d87e78",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            400
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 235,
+              "top": 160,
+              "centerX": 256
+            },
+            "layer": 10,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w137-side.png",
+            "sourceSha256": "f469f87fe55bce83929589a973685d00d8ecf7ba2ed1160b199e4e76125d5729",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.36,
+                0,
+                0.31,
+                0.48828125
+              ],
+              "socketNormalized": [
+                0.6,
+                0.58
+              ],
+              "sourcePivot": [
+                0.95,
+                0.73
+              ],
+              "scale": 0.65,
+              "angleDeg": [
+                20,
+                35
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.71,
+                0,
+                0.28,
+                0.48828125
+              ],
+              "socketNormalized": [
+                0.615,
+                0.58
+              ],
+              "sourcePivot": [
+                0.06,
+                0.74
+              ],
+              "scale": 0.65,
+              "angleDeg": [
+                20,
+                35
+              ],
+              "phase": 0,
+              "layer": 1,
+              "flipX": true
+            }
+          ],
+          "jointReview": "Independent membrane panels anchored at their authored shoulder joints; tucked creature limbs stay intact. Front leftWing is on screen right; back physical left is screen left. Single common canvas scale per part through all phases.",
+          "backgroundSeeds": [
+            [
+              439,
+              267
+            ]
+          ]
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/middle-waves/membrane-dragons-front-parts.png",
+          "sourceSha256": "f77d895ba5740fa6af7c66d73931aae4d15198bbbf155432d90442989833935e",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            400
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 235,
+              "top": 160,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w137-front.png",
+            "sourceSha256": "6bb0b31338cbdd86ad6ef7797156cd59d971e5002ffd7402f36b92a189452c78",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.37,
+                0,
+                0.23,
+                0.48828125
+              ],
+              "socketNormalized": [
+                0.78,
+                0.5
+              ],
+              "sourcePivot": [
+                0.07,
+                0.74
+              ],
+              "scale": 0.5,
+              "angleDeg": [
+                25,
+                -30
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.62,
+                0,
+                0.24,
+                0.48828125
+              ],
+              "socketNormalized": [
+                0.22,
+                0.5
+              ],
+              "sourcePivot": [
+                0.93,
+                0.73
+              ],
+              "scale": 0.5,
+              "angleDeg": [
+                -25,
+                30
+              ],
+              "phase": 0,
+              "layer": -1
+            }
+          ],
+          "jointReview": "Independent membrane panels anchored at their authored shoulder joints; tucked creature limbs stay intact. Front leftWing is on screen right; back physical left is screen left. Single common canvas scale per part through all phases."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/middle-waves/membrane-dragons-back-parts.png",
+          "sourceSha256": "661f671c02e923a4217a1721147f285019029550cbab17babe5f8ce1a9f02d83",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            400
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 235,
+              "top": 160,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w137-back.png",
+            "sourceSha256": "4da265bb2fdf1a5d7145fcf4819bf0fad7397515843791a6f3e8ec34a4a63e4f",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.35,
+                0,
+                0.26,
+                0.498046875
+              ],
+              "socketNormalized": [
+                0.22,
+                0.5
+              ],
+              "sourcePivot": [
+                0.2,
+                0.12
+              ],
+              "scale": 0.43,
+              "angleDeg": [
+                55,
+                38
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.64,
+                0,
+                0.26,
+                0.498046875
+              ],
+              "socketNormalized": [
+                0.78,
+                0.5
+              ],
+              "sourcePivot": [
+                0.2,
+                0.12
+              ],
+              "scale": 0.43,
+              "angleDeg": [
+                -55,
+                -38
+              ],
+              "phase": 0,
+              "layer": -1
+            }
+          ],
+          "jointReview": "Independent membrane panels anchored at their authored shoulder joints; tucked creature limbs stay intact. Front leftWing is on screen right; back physical left is screen left. Single common canvas scale per part through all phases."
+        }
+      },
+      "name": "서리익 용기수",
+      "legacyAssetId": "w036",
+      "baseRigId": "w036"
+    },
+    {
+      "assetId": "w145",
+      "wave": 145,
+      "role": "normal",
+      "locomotion": "flight",
+      "cell": 256,
+      "referenceHeight": 360,
+      "cycleStride": 0,
+      "cycleSeconds": 0.85,
+      "reviewApproved": false,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/middle-waves/winged-mounts-side-parts-clean.png",
+          "sourceSha256": "87ceabecb3648b251d0e351278f2fa053956df58c4a3d0bb2d8435def0193b77",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            400
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 280,
+              "top": 90,
+              "centerX": 256
+            },
+            "layer": 10,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w145-side.png",
+            "sourceSha256": "097d3d1d8d12d07390b62b1a243c083c24acf03653ecd9963e8a8f09a45be5ae",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.39,
+                0,
+                0.27,
+                0.4736328125
+              ],
+              "socketNormalized": [
+                0.66,
+                0.67
+              ],
+              "sourcePivot": [
+                0.14,
+                0.08
+              ],
+              "scale": 0.52,
+              "angleDeg": [
+                53,
+                40
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.67,
+                0,
+                0.29,
+                0.4736328125
+              ],
+              "socketNormalized": [
+                0.6950000000000001,
+                0.67
+              ],
+              "sourcePivot": [
+                0.14,
+                0.08
+              ],
+              "scale": 0.52,
+              "angleDeg": [
+                45,
+                40
+              ],
+              "phase": 0,
+              "layer": 1,
+              "flipX": true
+            }
+          ],
+          "jointReview": "Authored single feathered wings pivot at the proximal shoulder cap; body layer covers the closed socket. Physical left/right wing identity mirrors screen side between front and rear, with synchronous upstroke at phase 0.25. Every body and wing keeps one fixed size across the four poses."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/middle-waves/winged-mounts-front-parts.png",
+          "sourceSha256": "64d842896c261585f709c50733ed07b4effb00fd9bd68473d738e8def7f759c9",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            400
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 280,
+              "top": 90,
+              "centerX": 256
+            },
+            "layer": 10,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w145-front.png",
+            "sourceSha256": "fe9a44643790af99474e3aacff88af708c14e6cc13d067517d8495d1a792d224",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.65,
+                0,
+                0.3,
+                0.48828125
+              ],
+              "socketNormalized": [
+                0.75,
+                0.55
+              ],
+              "sourcePivot": [
+                0.2,
+                0.1
+              ],
+              "scale": 0.48,
+              "angleDeg": [
+                -45,
+                -40
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.31,
+                0,
+                0.25,
+                0.48828125
+              ],
+              "socketNormalized": [
+                0.25,
+                0.55
+              ],
+              "sourcePivot": [
+                0.8,
+                0.1
+              ],
+              "scale": 0.48,
+              "angleDeg": [
+                45,
+                40
+              ],
+              "phase": 0,
+              "layer": -1
+            }
+          ],
+          "jointReview": "Authored single feathered wings pivot at the proximal shoulder cap; body layer covers the closed socket. Physical left/right wing identity mirrors screen side between front and rear, with synchronous upstroke at phase 0.25. Every body and wing keeps one fixed size across the four poses."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/middle-waves/winged-mounts-back-parts-clean.png",
+          "sourceSha256": "7f1acb7be0790fac226a54fe088692504766d59b4f461f4525eb90c0710c38ae",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            400
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 280,
+              "top": 90,
+              "centerX": 256
+            },
+            "layer": 10,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w145-back.png",
+            "sourceSha256": "6dc5e2165b8d75f47272176f39bc386e95dcb7045fb7991c1bf088862aae95db",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.31,
+                0,
+                0.25,
+                0.48828125
+              ],
+              "socketNormalized": [
+                0.25,
+                0.51
+              ],
+              "sourcePivot": [
+                0.6,
+                0.1
+              ],
+              "scale": 0.48,
+              "angleDeg": [
+                45,
+                40
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.65,
+                0,
+                0.3,
+                0.48828125
+              ],
+              "socketNormalized": [
+                0.75,
+                0.51
+              ],
+              "sourcePivot": [
+                0.4,
+                0.1
+              ],
+              "scale": 0.48,
+              "angleDeg": [
+                -45,
+                -40
+              ],
+              "phase": 0,
+              "layer": -1
+            }
+          ],
+          "jointReview": "Authored single feathered wings pivot at the proximal shoulder cap; body layer covers the closed socket. Physical left/right wing identity mirrors screen side between front and rear, with synchronous upstroke at phase 0.25. Every body and wing keeps one fixed size across the four poses."
+        }
+      },
+      "name": "연꽃 그리폰기수",
+      "legacyAssetId": "w044",
+      "baseRigId": "w044"
+    },
+    {
+      "assetId": "w149",
+      "wave": 149,
+      "role": "normal",
+      "locomotion": "flight",
+      "cell": 256,
+      "referenceHeight": 360,
+      "cycleStride": 0,
+      "cycleSeconds": 0.85,
+      "reviewApproved": false,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/middle-waves/winged-mounts-side-parts-clean.png",
+          "sourceSha256": "87ceabecb3648b251d0e351278f2fa053956df58c4a3d0bb2d8435def0193b77",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            400
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 280,
+              "top": 90,
+              "centerX": 256
+            },
+            "layer": 10,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w149-side.png",
+            "sourceSha256": "16f004bc0c30d5566db28e964b38ddfe00421d03e81f91e51e27cb27e44dbcb8",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.39,
+                0.4736328125,
+                0.27,
+                0.5263671875
+              ],
+              "socketNormalized": [
+                0.66,
+                0.67
+              ],
+              "sourcePivot": [
+                0.14,
+                0.08
+              ],
+              "scale": 0.52,
+              "angleDeg": [
+                53,
+                40
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.67,
+                0.4736328125,
+                0.29,
+                0.5263671875
+              ],
+              "socketNormalized": [
+                0.6950000000000001,
+                0.67
+              ],
+              "sourcePivot": [
+                0.14,
+                0.08
+              ],
+              "scale": 0.52,
+              "angleDeg": [
+                45,
+                40
+              ],
+              "phase": 0,
+              "layer": 1,
+              "flipX": true
+            }
+          ],
+          "jointReview": "Authored single feathered wings pivot at the proximal shoulder cap; body layer covers the closed socket. Physical left/right wing identity mirrors screen side between front and rear, with synchronous upstroke at phase 0.25. Every body and wing keeps one fixed size across the four poses.",
+          "backgroundSeeds": [
+            [
+              420,
+              739
+            ],
+            [
+              416,
+              884
+            ]
+          ]
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/middle-waves/winged-mounts-front-parts.png",
+          "sourceSha256": "64d842896c261585f709c50733ed07b4effb00fd9bd68473d738e8def7f759c9",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            400
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 280,
+              "top": 90,
+              "centerX": 256
+            },
+            "layer": 10,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w149-front.png",
+            "sourceSha256": "57e832b813d3c68abd5126bd21b8318b96c68ea26dfe52a9a0b8c0f772a1eb6c",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.65,
+                0.48828125,
+                0.3,
+                0.51171875
+              ],
+              "socketNormalized": [
+                0.75,
+                0.55
+              ],
+              "sourcePivot": [
+                0.2,
+                0.1
+              ],
+              "scale": 0.48,
+              "angleDeg": [
+                -45,
+                -40
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.31,
+                0.48828125,
+                0.25,
+                0.51171875
+              ],
+              "socketNormalized": [
+                0.25,
+                0.55
+              ],
+              "sourcePivot": [
+                0.8,
+                0.1
+              ],
+              "scale": 0.48,
+              "angleDeg": [
+                45,
+                40
+              ],
+              "phase": 0,
+              "layer": -1
+            }
+          ],
+          "jointReview": "Authored single feathered wings pivot at the proximal shoulder cap; body layer covers the closed socket. Physical left/right wing identity mirrors screen side between front and rear, with synchronous upstroke at phase 0.25. Every body and wing keeps one fixed size across the four poses."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/middle-waves/winged-mounts-back-parts-clean.png",
+          "sourceSha256": "7f1acb7be0790fac226a54fe088692504766d59b4f461f4525eb90c0710c38ae",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            400
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 280,
+              "top": 90,
+              "centerX": 256
+            },
+            "layer": 10,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w149-back.png",
+            "sourceSha256": "d2135ddad2175d7232ed1906809c394014a9b6d77d3329498145d6d3f85b63e9",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.31,
+                0.48828125,
+                0.25,
+                0.51171875
+              ],
+              "socketNormalized": [
+                0.25,
+                0.51
+              ],
+              "sourcePivot": [
+                0.6,
+                0.1
+              ],
+              "scale": 0.48,
+              "angleDeg": [
+                45,
+                40
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.65,
+                0.48828125,
+                0.3,
+                0.51171875
+              ],
+              "socketNormalized": [
+                0.75,
+                0.51
+              ],
+              "sourcePivot": [
+                0.4,
+                0.1
+              ],
+              "scale": 0.48,
+              "angleDeg": [
+                -45,
+                -40
+              ],
+              "phase": 0,
+              "layer": -1
+            }
+          ],
+          "jointReview": "Authored single feathered wings pivot at the proximal shoulder cap; body layer covers the closed socket. Physical left/right wing identity mirrors screen side between front and rear, with synchronous upstroke at phase 0.25. Every body and wing keeps one fixed size across the four poses."
+        }
+      },
+      "name": "수련 페가수스기수",
+      "legacyAssetId": "w048",
+      "baseRigId": "w048"
+    },
+    {
+      "assetId": "w133",
+      "wave": 133,
+      "role": "normal",
+      "locomotion": "flight",
+      "cell": 256,
+      "referenceHeight": 330,
+      "cycleStride": 0,
+      "cycleSeconds": 1.2,
+      "reviewApproved": false,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/middle-waves/glider-three-view-parts.png",
+          "sourceSha256": "ba2a259114391b379d6421e13ddc614f870a745e652a54fef593366fa4b1b4c1",
+          "background": "checkerboard",
+          "backgroundSeeds": [
+            [
+              137,
+              229
+            ],
+            [
+              228,
+              163
+            ],
+            [
+              612,
+              290
+            ]
+          ],
+          "pivot": [
+            256,
+            400
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 230,
+              "top": 160,
+              "centerX": 286
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w133-side.png",
+            "sourceSha256": "8e6ae44c54fde67b56895b32259dd1f8791c5a6e089f7a3de2962e09178bf24b",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.34,
+                0,
+                0.32,
+                0.3450520833333333
+              ],
+              "socketNormalized": [
+                0.85,
+                0.05
+              ],
+              "sourcePivot": [
+                0.94,
+                0.045
+              ],
+              "scale": 0.64,
+              "angleDeg": [
+                35,
+                12
+              ],
+              "phase": 0,
+              "layer": 1
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.69,
+                0,
+                0.3,
+                0.3450520833333333
+              ],
+              "socketNormalized": [
+                0.85,
+                0.05
+              ],
+              "sourcePivot": [
+                0.055,
+                0.055
+              ],
+              "scale": 0.64,
+              "angleDeg": [
+                35,
+                12
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            }
+          ],
+          "jointReview": "Glider apex spar is the common root; canvas panels rotate slightly as the pilot banks. Tucked pilot feet are retained and are not walking supports. Original row 1 body appears in middle column; role-specific measured ROI used."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/middle-waves/glider-three-view-parts.png",
+          "sourceSha256": "ba2a259114391b379d6421e13ddc614f870a745e652a54fef593366fa4b1b4c1",
+          "background": "checkerboard",
+          "backgroundSeeds": [
+            [
+              440,
+              746
+            ],
+            [
+              568,
+              746
+            ],
+            [
+              428,
+              752
+            ],
+            [
+              580,
+              753
+            ]
+          ],
+          "pivot": [
+            256,
+            400
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 230,
+              "top": 160,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w133-front.png",
+            "sourceSha256": "f5eca8d26eeba790792a619e604e060755b0ba49a25a870c773bab755aef416e",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0,
+                0.3450520833333333,
+                0.325,
+                0.3059895833333333
+              ],
+              "socketNormalized": [
+                0.5,
+                0.055
+              ],
+              "sourcePivot": [
+                0.94,
+                0.045
+              ],
+              "scale": 0.64,
+              "angleDeg": [
+                35,
+                12
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.69,
+                0.3450520833333333,
+                0.3,
+                0.3059895833333333
+              ],
+              "socketNormalized": [
+                0.5,
+                0.055
+              ],
+              "sourcePivot": [
+                0.055,
+                0.055
+              ],
+              "scale": 0.64,
+              "angleDeg": [
+                -35,
+                -12
+              ],
+              "phase": 0,
+              "layer": -1
+            }
+          ],
+          "jointReview": "Glider apex spar is the common root; canvas panels rotate slightly as the pilot banks. Tucked pilot feet are retained and are not walking supports. Original row 1 body appears in middle column; role-specific measured ROI used."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/middle-waves/glider-three-view-parts.png",
+          "sourceSha256": "ba2a259114391b379d6421e13ddc614f870a745e652a54fef593366fa4b1b4c1",
+          "background": "checkerboard",
+          "backgroundSeeds": [
+            [
+              130,
+              1120
+            ],
+            [
+              190,
+              1120
+            ],
+            [
+              90,
+              1220
+            ],
+            [
+              231,
+              1220
+            ],
+            [
+              605,
+              1213
+            ],
+            [
+              589,
+              1279
+            ]
+          ],
+          "pivot": [
+            256,
+            400
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 230,
+              "top": 160,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w133-back.png",
+            "sourceSha256": "fc8a15ffc46c1f564388cf9694bd2779fdd0a688e660dfa65f66b1a1a9871a9e",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.34,
+                0.6510416666666666,
+                0.32,
+                0.3489583333333333
+              ],
+              "socketNormalized": [
+                0.5,
+                0.055
+              ],
+              "sourcePivot": [
+                0.94,
+                0.045
+              ],
+              "scale": 0.64,
+              "angleDeg": [
+                35,
+                12
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.69,
+                0.6510416666666666,
+                0.3,
+                0.3489583333333333
+              ],
+              "socketNormalized": [
+                0.5,
+                0.055
+              ],
+              "sourcePivot": [
+                0.055,
+                0.055
+              ],
+              "scale": 0.64,
+              "angleDeg": [
+                -35,
+                -12
+              ],
+              "phase": 0,
+              "layer": -1
+            }
+          ],
+          "jointReview": "Glider apex spar is the common root; canvas panels rotate slightly as the pilot banks. Tucked pilot feet are retained and are not walking supports. Original row 1 body appears in middle column; role-specific measured ROI used."
+        }
+      },
+      "name": "서리 글라이더조종사",
+      "legacyAssetId": "w032",
+      "baseRigId": "w032"
+    },
+    {
+      "assetId": "w157",
+      "wave": 157,
+      "role": "normal",
+      "cell": 256,
+      "locomotion": "legged",
+      "anatomy": "hand",
+      "referenceHeight": 400,
+      "cycleStride": 110,
+      "gait": {
+        "stanceDuty": 0.7,
+        "lift": 20,
+        "pelvis": "fixed"
+      },
+      "reviewApproved": false,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/middle-waves/wizard-hand-three-view-parts.png",
+          "sourceSha256": "9c09e97a0b79ced0eb80858ba224044c7213fb46c9f31f5aff2b7bcc14aa092c",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            430
+          ],
+          "body": {
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w157-side.png",
+            "sourceSha256": "d4dd89d7853e75d47329305570dfb33c5683cdc1292de5ac23908651ab9b9212",
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 280,
+              "top": 45,
+              "centerX": 256
+            },
+            "layer": 10,
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "thumb",
+              "type": "leg",
+              "roi": [
+                0.33891547049441784,
+                0.03987240829346093,
+                0.13556618819776714,
+                0.28149920255183414
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5420560747663551,
+                  0.05223880597014925
+                ],
+                "knee": [
+                  0.5794392523364486,
+                  0.43283582089552236
+                ],
+                "ankle": [
+                  0.2523364485981308,
+                  0.7873134328358209
+                ],
+                "sole": [
+                  0.267022696929239,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.14,
+                0.755
+              ],
+              "socketRoiNormalized": [
+                0.08500000000000002,
+                0.7,
+                0.11,
+                0.11
+              ],
+              "phase": 0,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 430,
+                "maximumStanceAngle": 166
+              },
+              "layer": 5,
+              "upperLayer": -3,
+              "proximalFeather": 0,
+              "proximalEdgeFeather": 0
+            },
+            {
+              "id": "index",
+              "type": "leg",
+              "roi": [
+                0.47926634768740034,
+                0.03349282296650718,
+                0.09888357256778309,
+                0.2894736842105263
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.3763440860215054,
+                  0.066006600660066
+                ],
+                "knee": [
+                  0.5913978494623656,
+                  0.5676567656765676
+                ],
+                "ankle": [
+                  0.6344086021505376,
+                  0.8316831683168316
+                ],
+                "sole": [
+                  0.6637738831033217,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.385,
+                0.9
+              ],
+              "socketRoiNormalized": [
+                0.33,
+                0.845,
+                0.11,
+                0.11
+              ],
+              "phase": 0.2,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 430,
+                "maximumStanceAngle": 166
+              },
+              "layer": 4,
+              "upperLayer": -3,
+              "proximalFeather": 0.45,
+              "proximalEdgeFeather": 0.12
+            },
+            {
+              "id": "middle",
+              "type": "leg",
+              "roi": [
+                0.6060606060606061,
+                0.03189792663476874,
+                0.09808612440191387,
+                0.28708133971291866
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.3917525773195876,
+                  0.06109324758842444
+                ],
+                "knee": [
+                  0.6082474226804123,
+                  0.5755627009646302
+                ],
+                "ankle": [
+                  0.6391752577319587,
+                  0.8327974276527331
+                ],
+                "sole": [
+                  0.708755825448383,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.65,
+                0.9
+              ],
+              "socketRoiNormalized": [
+                0.595,
+                0.845,
+                0.11,
+                0.11
+              ],
+              "phase": 0.4,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 430,
+                "maximumStanceAngle": 166
+              },
+              "layer": 3,
+              "upperLayer": -3,
+              "proximalFeather": 0.45,
+              "proximalEdgeFeather": 0.12
+            },
+            {
+              "id": "ring",
+              "type": "leg",
+              "roi": [
+                0.7240829346092504,
+                0.05980861244019139,
+                0.1076555023923445,
+                0.2631578947368421
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.3977272727272727,
+                  0.05725190839694656
+                ],
+                "knee": [
+                  0.6590909090909091,
+                  0.5114503816793893
+                ],
+                "ankle": [
+                  0.7045454545454546,
+                  0.7862595419847328
+                ],
+                "sole": [
+                  0.6881452537998279,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.88,
+                0.875
+              ],
+              "socketRoiNormalized": [
+                0.825,
+                0.82,
+                0.11,
+                0.11
+              ],
+              "phase": 0.6,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 430,
+                "maximumStanceAngle": 166
+              },
+              "layer": 2,
+              "upperLayer": -3,
+              "proximalFeather": 0.45,
+              "proximalEdgeFeather": 0.12
+            },
+            {
+              "id": "little",
+              "type": "leg",
+              "roi": [
+                0.8397129186602871,
+                0.07974481658692185,
+                0.10366826156299841,
+                0.23524720893141945
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.3614457831325301,
+                  0.07239819004524888
+                ],
+                "knee": [
+                  0.6385542168674698,
+                  0.5339366515837104
+                ],
+                "ankle": [
+                  0.6867469879518072,
+                  0.7828054298642534
+                ],
+                "sole": [
+                  0.6825607514804982,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.73,
+                0.79
+              ],
+              "socketRoiNormalized": [
+                0.6749999999999999,
+                0.735,
+                0.11,
+                0.11
+              ],
+              "phase": 0.8,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 430,
+                "maximumStanceAngle": 166
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.45,
+              "proximalEdgeFeather": 0.12
+            }
+          ]
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/middle-waves/wizard-hand-three-view-parts.png",
+          "sourceSha256": "9c09e97a0b79ced0eb80858ba224044c7213fb46c9f31f5aff2b7bcc14aa092c",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            430
+          ],
+          "body": {
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w157-front.png",
+            "sourceSha256": "76741314e950231b1a2bdf4b78b821b7f6a9f66b3ee94f3f26c409743e3f8709",
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 280,
+              "top": 45,
+              "centerX": 256
+            },
+            "layer": 10,
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "thumb",
+              "type": "leg",
+              "roi": [
+                0.34290271132376393,
+                0.39074960127591707,
+                0.12360446570972887,
+                0.2511961722488038
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.574468085106383,
+                  0.06177606177606178
+                ],
+                "knee": [
+                  0.5212765957446809,
+                  0.49034749034749037
+                ],
+                "ankle": [
+                  0.44680851063829785,
+                  0.7722007722007722
+                ],
+                "sole": [
+                  0.42604667124227863,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.095,
+                0.725
+              ],
+              "socketRoiNormalized": [
+                0.04,
+                0.6699999999999999,
+                0.11,
+                0.11
+              ],
+              "phase": 0,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 430,
+                "maximumStanceAngle": 166
+              },
+              "layer": 5,
+              "upperLayer": -3,
+              "proximalFeather": 0,
+              "proximalEdgeFeather": 0
+            },
+            {
+              "id": "index",
+              "type": "leg",
+              "roi": [
+                0.4824561403508772,
+                0.3708133971291866,
+                0.09728867623604466,
+                0.2751196172248804
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4155844155844156,
+                  0.0707070707070707
+                ],
+                "knee": [
+                  0.4155844155844156,
+                  0.531986531986532
+                ],
+                "ankle": [
+                  0.4155844155844156,
+                  0.8047138047138047
+                ],
+                "sole": [
+                  0.5031675641431739,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.28,
+                0.854
+              ],
+              "socketRoiNormalized": [
+                0.22500000000000003,
+                0.7989999999999999,
+                0.11,
+                0.11
+              ],
+              "phase": 0.2,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 430,
+                "maximumStanceAngle": 166
+              },
+              "layer": 4,
+              "upperLayer": -3,
+              "proximalFeather": 0.45,
+              "proximalEdgeFeather": 0.12
+            },
+            {
+              "id": "middle",
+              "type": "leg",
+              "roi": [
+                0.6060606060606061,
+                0.3708133971291866,
+                0.094896331738437,
+                0.2751196172248804
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.40789473684210525,
+                  0.046822742474916385
+                ],
+                "knee": [
+                  0.40789473684210525,
+                  0.5351170568561873
+                ],
+                "ankle": [
+                  0.40789473684210525,
+                  0.8060200668896321
+                ],
+                "sole": [
+                  0.5002111760883691,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.505,
+                0.875
+              ],
+              "socketRoiNormalized": [
+                0.45,
+                0.82,
+                0.11,
+                0.11
+              ],
+              "phase": 0.4,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 430,
+                "maximumStanceAngle": 166
+              },
+              "layer": 3,
+              "upperLayer": -3,
+              "proximalFeather": 0.45,
+              "proximalEdgeFeather": 0.12
+            },
+            {
+              "id": "ring",
+              "type": "leg",
+              "roi": [
+                0.7280701754385965,
+                0.39314194577352474,
+                0.08931419457735247,
+                0.2527910685805423
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5416666666666666,
+                  0.055970149253731345
+                ],
+                "knee": [
+                  0.4722222222222222,
+                  0.5223880597014925
+                ],
+                "ankle": [
+                  0.4861111111111111,
+                  0.7873134328358209
+                ],
+                "sole": [
+                  0.4969863731656184,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.74,
+                0.855
+              ],
+              "socketRoiNormalized": [
+                0.6849999999999999,
+                0.7999999999999999,
+                0.11,
+                0.11
+              ],
+              "phase": 0.6,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 430,
+                "maximumStanceAngle": 166
+              },
+              "layer": 2,
+              "upperLayer": -3,
+              "proximalFeather": 0.45,
+              "proximalEdgeFeather": 0.12
+            },
+            {
+              "id": "little",
+              "type": "leg",
+              "roi": [
+                0.8429027113237639,
+                0.40669856459330145,
+                0.0861244019138756,
+                0.23763955342902712
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5735294117647058,
+                  0.06048387096774194
+                ],
+                "knee": [
+                  0.5588235294117647,
+                  0.5443548387096774
+                ],
+                "ankle": [
+                  0.5441176470588235,
+                  0.8064516129032258
+                ],
+                "sole": [
+                  0.5100662036032125,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.932,
+                0.78
+              ],
+              "socketRoiNormalized": [
+                0.877,
+                0.725,
+                0.11,
+                0.11
+              ],
+              "phase": 0.8,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 430,
+                "maximumStanceAngle": 166
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.45,
+              "proximalEdgeFeather": 0.12
+            }
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/middle-waves/wizard-hand-three-view-parts.png",
+          "sourceSha256": "9c09e97a0b79ced0eb80858ba224044c7213fb46c9f31f5aff2b7bcc14aa092c",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            430
+          ],
+          "body": {
+            "source": "tools/art-review/extreme-202/bodies/normal-04/w157-back.png",
+            "sourceSha256": "59a0b8eaa8c2f117e8893c6b9932be28d7596f209abb18e0412d297153b3df16",
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 280,
+              "top": 45,
+              "centerX": 256
+            },
+            "layer": 10,
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "thumb",
+              "type": "leg",
+              "roi": [
+                0.34688995215311,
+                0.696969696969697,
+                0.11961722488038277,
+                0.2535885167464115
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5876288659793815,
+                  0.06177606177606178
+                ],
+                "knee": [
+                  0.5257731958762887,
+                  0.47876447876447875
+                ],
+                "ankle": [
+                  0.5463917525773195,
+                  0.8223938223938224
+                ],
+                "sole": [
+                  0.45904319930233284,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.915,
+                0.762
+              ],
+              "socketRoiNormalized": [
+                0.86,
+                0.707,
+                0.11,
+                0.11
+              ],
+              "phase": 0,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 430,
+                "maximumStanceAngle": 166
+              },
+              "layer": 5,
+              "upperLayer": -3,
+              "proximalFeather": 0,
+              "proximalEdgeFeather": 0
+            },
+            {
+              "id": "index",
+              "type": "leg",
+              "roi": [
+                0.48484848484848486,
+                0.6770334928229665,
+                0.10047846889952153,
+                0.2759170653907496
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4383561643835616,
+                  0.08532423208191127
+                ],
+                "knee": [
+                  0.4520547945205479,
+                  0.5494880546075085
+                ],
+                "ankle": [
+                  0.4383561643835616,
+                  0.8532423208191127
+                ],
+                "sole": [
+                  0.5029747695471739,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.734,
+                0.89
+              ],
+              "socketRoiNormalized": [
+                0.6789999999999999,
+                0.835,
+                0.11,
+                0.11
+              ],
+              "phase": 0.2,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 430,
+                "maximumStanceAngle": 166
+              },
+              "layer": 4,
+              "upperLayer": -3,
+              "proximalFeather": 0.45,
+              "proximalEdgeFeather": 0.12
+            },
+            {
+              "id": "middle",
+              "type": "leg",
+              "roi": [
+                0.6028708133971292,
+                0.6818181818181818,
+                0.10685805422647528,
+                0.2711323763955343
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.47297297297297297,
+                  0.09152542372881356
+                ],
+                "knee": [
+                  0.47297297297297297,
+                  0.559322033898305
+                ],
+                "ankle": [
+                  0.47297297297297297,
+                  0.8542372881355932
+                ],
+                "sole": [
+                  0.5083423423423423,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.5,
+                0.9
+              ],
+              "socketRoiNormalized": [
+                0.445,
+                0.845,
+                0.11,
+                0.11
+              ],
+              "phase": 0.4,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 430,
+                "maximumStanceAngle": 166
+              },
+              "layer": 3,
+              "upperLayer": -3,
+              "proximalFeather": 0.45,
+              "proximalEdgeFeather": 0.12
+            },
+            {
+              "id": "ring",
+              "type": "leg",
+              "roi": [
+                0.7344497607655502,
+                0.7017543859649122,
+                0.08851674641148326,
+                0.2511961722488038
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5915492957746479,
+                  0.06691449814126393
+                ],
+                "knee": [
+                  0.6056338028169014,
+                  0.516728624535316
+                ],
+                "ankle": [
+                  0.5774647887323944,
+                  0.8252788104089219
+                ],
+                "sole": [
+                  0.51293294357339,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.284,
+                0.9
+              ],
+              "socketRoiNormalized": [
+                0.22899999999999998,
+                0.845,
+                0.11,
+                0.11
+              ],
+              "phase": 0.6,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 430,
+                "maximumStanceAngle": 166
+              },
+              "layer": 2,
+              "upperLayer": -3,
+              "proximalFeather": 0.45,
+              "proximalEdgeFeather": 0.12
+            },
+            {
+              "id": "little",
+              "type": "leg",
+              "roi": [
+                0.84688995215311,
+                0.7137161084529505,
+                0.0861244019138756,
+                0.24082934609250398
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.6376811594202898,
+                  0.06451612903225806
+                ],
+                "knee": [
+                  0.6376811594202898,
+                  0.5241935483870968
+                ],
+                "ankle": [
+                  0.6231884057971014,
+                  0.842741935483871
+                ],
+                "sole": [
+                  0.5229631805718762,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.073,
+                0.86
+              ],
+              "socketRoiNormalized": [
+                0.017999999999999995,
+                0.8049999999999999,
+                0.11,
+                0.11
+              ],
+              "phase": 0.8,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 430,
+                "maximumStanceAngle": 166
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.45,
+              "proximalEdgeFeather": 0.12
+            }
+          ]
+        }
+      },
+      "name": "장갑 씨앗정령",
+      "legacyAssetId": "w056",
+      "baseRigId": "w056"
+    }
+  ]
+}

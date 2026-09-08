@@ -20,7 +20,7 @@ function harness(now = T0) {
     },
     hello(sid, pid, o = {}, at) {
       if (!o.noOpen) h.step({ k: 'open', sid }, at);
-      const m = { t: 'hello', v: o.v == null ? 3 : o.v, ver: o.ver || '78', op: o.op || 'quick', pid, key: KEY(pid), name: o.name || pid };
+      const m = { t: 'hello', v: o.v == null ? 4 : o.v, ver: o.ver || '78', mode: o.mode, op: o.op || 'quick', pid, key: KEY(pid), name: o.name || pid };
       return h.step({ k: 'hello', sid, m }, at);
     },
     close(sid, at) { return h.step({ k: 'close', sid }, at); },
@@ -171,4 +171,29 @@ test('U11 quota: 시간당 120 슬라이딩 창 · 복원', () => {
   assert.deepEqual(l.quota, [T0 - 10]);
   const r = reduce(l, { k: 'alarm' }, T0 + T.QUICK_WAIT - 5000);   // P(1) 이 10초 기다림 → 묶임
   assert.equal(matches(r).length, 1);
+});
+
+
+test('modes: same version queues and counts are isolated; 2 and 4 player groups', () => {
+  const h=harness();
+  h.hello('c1',P(1)); h.hello('x1',P(2),{mode:'extreme'});
+  const r=h.hello('x2',P(3),{mode:'extreme'});
+  assert.deepEqual(sends(r,'queued').map(x=>[x.sid,x.m.n,x.m.mode]),[['x1',2,'extreme'],['x2',2,'extreme']]);
+  const ready=h.alarm(T0+T.QUICK_WAIT);
+  assert.equal(matches(ready).length,1); assert.equal(matches(ready)[0].mode,'extreme');
+  assert.deepEqual(matches(ready)[0].players.map(p=>p.pid),[P(2),P(3)]);
+  assert.deepEqual(h.state.queue.map(p=>p.pid),[P(1)]);
+  const four=harness();
+  for(let i=1;i<=3;i++) assert.equal(matches(four.hello('x'+i,P(i),{mode:'extreme'})).length,0);
+  const batch=matches(four.hello('x4',P(4),{mode:'extreme'}))[0];
+  assert.equal(batch.mode,'extreme'); assert.equal(batch.players.length,4);
+});
+
+test('modes: requeue cannot inherit another mode wait; attachment restore retains mode', () => {
+  const h=harness(); h.hello('a',P(1),{},T0);
+  h.hello('b',P(1),{mode:'extreme'},T0+9000);
+  assert.equal(h.state.queue[0].since,T0+9000);
+  const rebuilt=lobbyFromSockets(h.state.queue,T0+9001,[]);
+  assert.equal(rebuilt.queue[0].mode,'extreme');
+  assert.equal(errOf(h.hello('bad',P(2),{mode:'normal'})),'mode');
 });

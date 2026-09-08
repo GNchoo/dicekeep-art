@@ -20,15 +20,18 @@
 import * as T from './timing.js';
 import { CLOSE, PROTOCOL, PID_RE, KEY_RE, sanitizeName } from './proto.js';
 import { take } from './ratelimit.js';
+import { matchMode, roomMode, waveLimit } from './modes.js';
 
 const ALIVE = 'alive';
 
 // ---- 생성 · live 골격 ----
 // reserve = { players: [{ pid, key, name }], until } (빠른 매칭). 있으면 바로 lobby, hostId 없음
-export function createRoom({ code, kind = 'code', now, ver = null, timing, reserve = null }) {
+export function createRoom({ code, kind = 'code', now, ver = null, timing, reserve = null, mode = 'clear' }) {
+  if (!matchMode(mode)) throw new Error('Invalid multiplayer mode');
   const tm = timing ? { ...timing } : T.timingFor('');
+  if (mode === 'extreme') tm.clearWave = 0;
   const st = {
-    sv: 2, code, kind, createdAt: now, ver,
+    sv: 3, code, kind, mode, createdAt: now, ver,
     phase: 'claimed', hostId: null, seed: null,
     timing: tm,
     players: {},
@@ -92,8 +95,8 @@ export function snapshot(state, live, now) {
              wave: p.wave, dw: p.dw || 0, deathWave: p.deathWave, kills: p.kills, sp: (L && L.sum && L.sum.sp) || 1, hidden: !!(L && L.hidden), rank: p.rank };
   });
   const g = state.game;
-  const game = g ? { t0: g.t0, timing: g.timing, seed: state.seed } : null;
-  return { t: 'room', code: state.code, kind: state.kind, phase: state.phase, hostId: state.hostId, ver: state.ver, reserveUntil: state.reserveUntil, now, players, game };
+  const game = g ? { t0: g.t0, timing: g.timing, seed: state.seed, mode: roomMode(state) } : null;
+  return { t: 'room', code: state.code, kind: state.kind, mode: roomMode(state), phase: state.phase, hostId: state.hostId, ver: state.ver, reserveUntil: state.reserveUntil, now, players, game };
 }
 
 // cleared 가 먼저(clearAt 오름차순) → 나머지는 deathWave 내림차순 → kills 내림차순 → joinedAt. 공동 순위 없음
@@ -209,10 +212,13 @@ function onHello(c, ev) {
   delete c.live.pending[sid];
   const routeOp = ev.op || (pend && pend.op) || m.op;
   if (m.v !== PROTOCOL) return c.reject(sid, 'version', CLOSE.VERSION, '서버와 프로토콜 버전이 다릅니다. 새로고침하세요');
+  const mode = matchMode(m.mode);
+  if (!mode) return c.reject(sid, 'mode', CLOSE.CONFLICT, '지원하지 않는 경쟁 모드입니다');
   if (m.op === 'quick') return c.reject(sid, 'bad-request', CLOSE.BAD_REQUEST, '빠른 매칭은 /ws/quick 으로 접속합니다');
   if (m.op !== routeOp) return c.reject(sid, 'bad-request', CLOSE.BAD_REQUEST, '요청 경로와 op 가 다릅니다');
   const st = c.state;
   if (!st) return c.reject(sid, 'bad-code', CLOSE.NO_ROOM, '없는 방 코드입니다');
+  if (st.phase !== 'claimed' && mode !== roomMode(st)) return c.reject(sid, 'mode', CLOSE.CONFLICT, '방과 선택한 경쟁 모드가 다릅니다');
   const known = st.players[m.pid];
   if (known) return resume(c, sid, m, known);
   switch (st.phase) {
@@ -249,6 +255,8 @@ function welcome(c, sid, pid, resumed) {
 
 function createHost(c, sid, m) {
   const st = c.state;
+  st.mode = matchMode(m.mode);
+  if (st.mode === 'extreme') st.timing.clearWave = 0;
   st.phase = 'lobby'; st.ver = m.ver; st.hostId = m.pid; st.expireAt = c.now + T.LOBBY_TTL;
   addPlayer(c, m);
   c.live.players[m.pid] = liveEntry(sid, c.now);
@@ -403,10 +411,10 @@ function startGame(c, byPid) {
     const L = c.live.players[p.pid];
     if (L) { L.lastBeat = c.now; L.hidden = false; L.sum = null; L.relayAt = null; L.watchRelayAt = null; }
   }
-  st.game = { t0, timing: T.wireTiming(tm), endedAt: null, reason: null, ranking: null };
+  st.game = { t0, timing: T.wireTiming(tm), mode: roomMode(st), endedAt: null, reason: null, ranking: null };
   st.phase = 'playing'; st.expireAt = null; st.reserveUntil = null;
   c.live.emptySince = anyConnected(c) ? null : c.now;
-  c.bcast({ t: 'start', seed: st.seed, t0, timing: st.game.timing, now: c.now });
+  c.bcast({ t: 'start', seed: st.seed, t0, timing: st.game.timing, mode: roomMode(st), now: c.now });
   c.bcast(c.room());
   c.persist = true;
   c.log('start', { pid: byPid, n: connectedCount(c), kind: st.kind });
@@ -418,7 +426,7 @@ const clampWave = (w, cw) => Math.max(0, Math.min(cw, w));
 function onSum(c, P, L, m) {
   const st = c.state;
   if (st.phase !== 'playing' || P.status !== ALIVE) return;
-  const cw = st.game.timing.clearWave;
+  const cw = waveLimit(st);
   const w = clampWave(m.w, cw), dw = clampWave(m.dw, cw);
   L.lastBeat = c.now; L.hidden = m.hid === 1;
   L.sum = { ...m, w, dw };
@@ -463,7 +471,7 @@ function onWatch(c, P, L, m) {
 function onDone(c, P, m) {
   const st = c.state;
   if (st.phase !== 'playing' || P.status !== ALIVE) return;
-  const cw = st.game.timing.clearWave;
+  const cw = waveLimit(st);
   if (m.w < 1 || m.w > cw) return c.log('anomaly', { pid: P.pid, w: m.w, kind: 'done-range', cw });
   P.wave = Math.max(P.wave, m.w);
   P.dw = Math.max(P.dw || 0, m.w);
@@ -472,7 +480,7 @@ function onDone(c, P, m) {
 function onDead(c, P, m) {
   const st = c.state;
   if (st.phase !== 'playing' || P.status !== ALIVE) return;
-  const w = clampWave(m.w, st.game.timing.clearWave);
+  const w = clampWave(m.w, waveLimit(st));
   P.status = 'dead'; P.wave = Math.max(P.wave, w); P.deathWave = Math.max(0, w - 1); P.deathAt = c.now;
   P.kills = Math.max(P.kills, m.k); P.deathReason = m.r;
   c.bcast({ t: 'player', pid: P.pid, status: 'dead', wave: P.wave, deathWave: P.deathWave, kills: P.kills });
@@ -484,6 +492,7 @@ function onDead(c, P, m) {
 function onClear(c, P, m) {
   const st = c.state;
   if (st.phase !== 'playing' || P.status !== ALIVE) return;
+  if (roomMode(st) === 'extreme') return c.err(P.pid, 'mode', '극한 경쟁에는 웨이브 완주 승리가 없습니다');
   const cw = st.game.timing.clearWave;
   if (m.w < cw) return c.log('anomaly', { pid: P.pid, w: m.w, kind: 'clear-early', cw });
   P.status = 'cleared'; P.wave = cw; P.dw = cw; P.deathWave = cw; P.clearAt = c.now; P.deathAt = c.now; P.kills = Math.max(P.kills, m.k);

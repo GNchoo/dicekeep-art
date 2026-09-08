@@ -1,0 +1,10 @@
+import fs from 'node:fs';import sharp from 'sharp';import {sha256} from '../../lib/directional-rig.mjs';
+const [id,originalPath,owner='art_direction']=process.argv.slice(2),dir='tools/art-review/extreme-202',file=dir+'/generation-ledger.json';
+const ledger=fs.existsSync(file)?JSON.parse(fs.readFileSync(file)):{version:1,tool:'built-in image_gen',calls:[]};
+const source=dir+'/sources/'+id+'.png',prompt=dir+'/prompts/'+id+'.txt',reference=dir+'/guides/'+id+'.png';
+const m=await sharp(source).metadata(),group=JSON.parse(fs.readFileSync(dir+'/catalog.json')).groups.find(g=>g.id===id);
+if(!group)throw Error('unknown group');
+const existing=ledger.calls.find(c=>c.id===id&&c.status!=='failed');
+const record={id,owner,status:'generated-under-review',source,originalPath,sourceSha256:sha256(fs.readFileSync(source)),actualSize:[m.width,m.height],hasAlpha:m.hasAlpha,prompt,promptSha256:sha256(fs.readFileSync(prompt)),reference,referenceSha256:sha256(fs.readFileSync(reference)),requestedCharacters:group.entries.length,requestedViews:group.entries.length*3,reviewNotes:existing?.reviewNotes||[]};
+if(existing)Object.assign(existing,record);else ledger.calls.push(record);
+fs.writeFileSync(file,JSON.stringify(ledger,null,2)+'\n');console.log(id+' recorded');

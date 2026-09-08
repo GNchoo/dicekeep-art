@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "entries": 111,
+  "approvedMovingRigViewsUnchanged": 333,
+  "range102to202Covered": true,
+  "newSourceHashesChecked": 333,
+  "assertions": "Old approved moving source, physical limb IDs/phase/joints/scale/stride and pivot preserved; only body source and authored body target changed."
+}

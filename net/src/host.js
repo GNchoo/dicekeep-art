@@ -84,10 +84,10 @@ export class RoomHost extends SocketHost {
 
   // /claim: 없으면 방을 만들고 저장, 있으면 409 (같은 코드가 END_TTL 안에 재사용되지 않도록)
   //   kind 'quick' 이면 reserve = { players:[{ pid, key, name }], until } 로 예약 좌석을 미리 넣는다
-  async claim({ code, kind = 'code', timing, ver = null, reserve = null }) {
+  async claim({ code, kind = 'code', timing, ver = null, reserve = null, mode = 'clear' }) {
     if (this.state) return { ok: false, err: 'exists' };
     const now = this.io.now();
-    this.state = createRoom({ code, kind, now, timing, ver, reserve });
+    this.state = createRoom({ code, kind, now, timing, ver, reserve, mode });
     this.live = emptyLive(now);
     await this.io.put(this.state);
     this.stats.puts++;
@@ -195,7 +195,7 @@ export class LobbyHost extends SocketHost {
     if (att.pid) return null;                  // 대기 중에는 hello 뒤 아무 메시지도 받지 않는다 (ping 만)
     await this.apply({ k: 'hello', sid, m });
     const e = this.state.queue.find((x) => x.sid === sid);
-    return e ? { att: { sid, pid: e.pid, key: e.key, name: e.name, ver: e.ver, since: e.since } } : null;
+    return e ? { att: { sid, pid: e.pid, key: e.key, name: e.name, ver: e.ver, mode: e.mode, since: e.since } } : null;
   }
 
   async apply(ev) {
@@ -225,9 +225,9 @@ export class LobbyHost extends SocketHost {
     };
     if (!(await this.quota())) return fail('rate', CLOSE.RATE, '방 생성 상한에 걸렸습니다. 잠시 뒤 다시 시도하세요');
     let r = null;
-    try { r = await this.io.claim({ ver: g.ver, players: g.players.map(({ pid, key, name }) => ({ pid, key, name })) }); } catch (e) { r = { ok: false, err: String(e) }; }
+    try { r = await this.io.claim({ ver: g.ver, mode: g.mode, players: g.players.map(({ pid, key, name }) => ({ pid, key, name })) }); } catch (e) { r = { ok: false, err: String(e) }; }
     if (!r || !r.ok) return fail('busy', CLOSE.BAD_REQUEST, '방을 만들지 못했습니다');
-    const text = JSON.stringify({ t: 'matched', code: r.code, at: this.io.now() });
+    const text = JSON.stringify({ t: 'matched', code: r.code, mode: g.mode, at: this.io.now() });
     for (const sid of sids) { this.stats.sends++; this.io.send(sid, text); this.kill(sid, CLOSE.LEAVE, 'matched'); }
     this.io.log({ ev: 'matched', room: r.code, n: sids.length, ver: g.ver });
   }

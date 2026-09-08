@@ -126,8 +126,8 @@ class LocalLobby {
       },
       log,
       putQuota: () => {},
-      claim: async ({ ver, players }) => {
-        const r = await claimLocal({ kind: 'quick', ver, reserve: { players, until: Date.now() + RESERVE_TTL } });
+      claim: async ({ ver, mode, players }) => {
+        const r = await claimLocal({ kind: 'quick', ver, mode, reserve: { players, until: Date.now() + RESERVE_TTL } });
         return r.ok ? { ok: true, code: r.code } : { ok: false, err: r.error };
       },
     });

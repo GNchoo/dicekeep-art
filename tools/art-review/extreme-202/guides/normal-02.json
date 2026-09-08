@@ -1,0 +1,875 @@
+[
+  {
+    "id": "w126",
+    "view": "side",
+    "baseRigId": "w025",
+    "source": "tools/art-review/directional-101/t3-arthropod-01-side-parts.png",
+    "sha256": "77d6cfae60b00988554cfbef23a2f77fc9b11ea58415066813bfaddde20d5f6b",
+    "sourceBounds": [
+      null,
+      null,
+      310,
+      228
+    ],
+    "bodyTarget": [
+      133.63157894736844,
+      165,
+      244.73684210526315,
+      180
+    ]
+  },
+  {
+    "id": "w126",
+    "view": "front",
+    "baseRigId": "w025",
+    "source": "tools/art-review/directional-101/t3-arthropod-01-front-back-parts.png",
+    "sha256": "5797b7f87410a9c9f39a54a7535ea70a2dad71b69f71bced9d787302365b4cfc",
+    "sourceBounds": [
+      null,
+      null,
+      170,
+      231
+    ],
+    "bodyTarget": [
+      180.56709956709955,
+      165,
+      150.86580086580088,
+      205
+    ]
+  },
+  {
+    "id": "w126",
+    "view": "back",
+    "baseRigId": "w025",
+    "source": "tools/art-review/directional-101/swamp-back-body-correction.png",
+    "sha256": "98abfe48f2750e4626cb69c0d95f84e105a7f4e8880bdeffd6c68984c6810e6a",
+    "sourceBounds": [
+      null,
+      null,
+      235,
+      333
+    ],
+    "bodyTarget": [
+      183.66516516516515,
+      165,
+      144.66966966966967,
+      205
+    ]
+  },
+  {
+    "id": "w127",
+    "view": "side",
+    "baseRigId": "w026",
+    "source": "tools/art-review/directional-101/t3-arthropod-01-side-parts.png",
+    "sha256": "77d6cfae60b00988554cfbef23a2f77fc9b11ea58415066813bfaddde20d5f6b",
+    "sourceBounds": [
+      null,
+      null,
+      333,
+      389
+    ],
+    "bodyTarget": [
+      134.01413881748073,
+      100,
+      243.97172236503857,
+      285
+    ]
+  },
+  {
+    "id": "w127",
+    "view": "front",
+    "baseRigId": "w026",
+    "source": "tools/art-review/directional-101/t3-arthropod-01-front-back-parts.png",
+    "sha256": "5797b7f87410a9c9f39a54a7535ea70a2dad71b69f71bced9d787302365b4cfc",
+    "sourceBounds": [
+      null,
+      null,
+      223,
+      356
+    ],
+    "bodyTarget": [
+      165.17134831460675,
+      100,
+      181.6573033707865,
+      290
+    ]
+  },
+  {
+    "id": "w127",
+    "view": "back",
+    "baseRigId": "w026",
+    "source": "tools/art-review/directional-101/swamp-back-body-correction.png",
+    "sha256": "98abfe48f2750e4626cb69c0d95f84e105a7f4e8880bdeffd6c68984c6810e6a",
+    "sourceBounds": [
+      null,
+      null,
+      212,
+      380
+    ],
+    "bodyTarget": [
+      175.10526315789474,
+      100,
+      161.78947368421052,
+      290
+    ]
+  },
+  {
+    "id": "w129",
+    "view": "side",
+    "baseRigId": "w028",
+    "source": "tools/art-review/directional-101/t3-arthropod-01-side-parts.png",
+    "sha256": "77d6cfae60b00988554cfbef23a2f77fc9b11ea58415066813bfaddde20d5f6b",
+    "sourceBounds": [
+      null,
+      null,
+      363,
+      236
+    ],
+    "bodyTarget": [
+      117.5677966101695,
+      165,
+      276.864406779661,
+      180
+    ]
+  },
+  {
+    "id": "w129",
+    "view": "front",
+    "baseRigId": "w028",
+    "source": "tools/art-review/directional-101/t3-arthropod-01-front-back-parts.png",
+    "sha256": "5797b7f87410a9c9f39a54a7535ea70a2dad71b69f71bced9d787302365b4cfc",
+    "sourceBounds": [
+      null,
+      null,
+      171,
+      256
+    ],
+    "bodyTarget": [
+      187.533203125,
+      165,
+      136.93359375,
+      205
+    ]
+  },
+  {
+    "id": "w129",
+    "view": "back",
+    "baseRigId": "w028",
+    "source": "tools/art-review/directional-101/swamp-back-body-correction.png",
+    "sha256": "98abfe48f2750e4626cb69c0d95f84e105a7f4e8880bdeffd6c68984c6810e6a",
+    "sourceBounds": [
+      null,
+      null,
+      230,
+      373
+    ],
+    "bodyTarget": [
+      192.79624664879356,
+      165,
+      126.40750670241287,
+      205
+    ]
+  },
+  {
+    "id": "w173",
+    "view": "side",
+    "baseRigId": "w072",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-flight-02-side-parts.png",
+    "sha256": "a110cfa729fe1338e2d1129a6e07bfad5c5c3e6923572da3a0229cfde4b2a8e7",
+    "sourceBounds": [
+      null,
+      null,
+      239,
+      387
+    ],
+    "bodyTarget": {
+      "height": 210,
+      "top": 135,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w173",
+    "view": "front",
+    "baseRigId": "w072",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-flight-02-front-back-parts.png",
+    "sha256": "be20dc5268ebe1494b6dff623e24519066470c088f2f5a5a0372d132156d4c7c",
+    "sourceBounds": [
+      null,
+      null,
+      148,
+      329
+    ],
+    "bodyTarget": {
+      "height": 210,
+      "top": 135,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w173",
+    "view": "back",
+    "baseRigId": "w072",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-flight-02-front-back-parts.png",
+    "sha256": "be20dc5268ebe1494b6dff623e24519066470c088f2f5a5a0372d132156d4c7c",
+    "sourceBounds": [
+      null,
+      null,
+      144,
+      330
+    ],
+    "bodyTarget": {
+      "height": 210,
+      "top": 135,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w177",
+    "view": "side",
+    "baseRigId": "w076",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-flight-02-side-parts.png",
+    "sha256": "a110cfa729fe1338e2d1129a6e07bfad5c5c3e6923572da3a0229cfde4b2a8e7",
+    "sourceBounds": [
+      null,
+      null,
+      310,
+      453
+    ],
+    "bodyTarget": {
+      "height": 210,
+      "top": 135,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w177",
+    "view": "front",
+    "baseRigId": "w076",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-flight-02-front-back-parts.png",
+    "sha256": "be20dc5268ebe1494b6dff623e24519066470c088f2f5a5a0372d132156d4c7c",
+    "sourceBounds": [
+      null,
+      null,
+      148,
+      380
+    ],
+    "bodyTarget": {
+      "height": 210,
+      "top": 135,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w177",
+    "view": "back",
+    "baseRigId": "w076",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-flight-02-front-back-parts.png",
+    "sha256": "be20dc5268ebe1494b6dff623e24519066470c088f2f5a5a0372d132156d4c7c",
+    "sourceBounds": [
+      null,
+      null,
+      164,
+      383
+    ],
+    "bodyTarget": {
+      "height": 210,
+      "top": 135,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w189",
+    "view": "side",
+    "baseRigId": "w088",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-flight-02-side-parts.png",
+    "sha256": "a110cfa729fe1338e2d1129a6e07bfad5c5c3e6923572da3a0229cfde4b2a8e7",
+    "sourceBounds": [
+      null,
+      null,
+      276,
+      330
+    ],
+    "bodyTarget": {
+      "height": 210,
+      "top": 135,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w189",
+    "view": "front",
+    "baseRigId": "w088",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-flight-02-front-back-parts.png",
+    "sha256": "be20dc5268ebe1494b6dff623e24519066470c088f2f5a5a0372d132156d4c7c",
+    "sourceBounds": [
+      null,
+      null,
+      171,
+      308
+    ],
+    "bodyTarget": {
+      "height": 210,
+      "top": 135,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w189",
+    "view": "back",
+    "baseRigId": "w088",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-flight-02-front-back-parts.png",
+    "sha256": "be20dc5268ebe1494b6dff623e24519066470c088f2f5a5a0372d132156d4c7c",
+    "sourceBounds": [
+      null,
+      null,
+      161,
+      304
+    ],
+    "bodyTarget": {
+      "height": 210,
+      "top": 135,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w103",
+    "view": "side",
+    "baseRigId": "w053",
+    "source": "tools/art-review/directional-101/middle-waves/t6-biped-01a-side-front-parts.png",
+    "sha256": "c300bd1c2b34d151dc24767d3b05f7fc8b39f4ea4a7383cc1d74f76eefbd1498",
+    "sourceBounds": [
+      null,
+      null,
+      182,
+      308
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 279.04545454545456
+    }
+  },
+  {
+    "id": "w103",
+    "view": "front",
+    "baseRigId": "w053",
+    "source": "tools/art-review/directional-101/middle-waves/t6-biped-01a-side-front-parts.png",
+    "sha256": "c300bd1c2b34d151dc24767d3b05f7fc8b39f4ea4a7383cc1d74f76eefbd1498",
+    "sourceBounds": [
+      null,
+      null,
+      220,
+      315
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 266.4761904761905
+    }
+  },
+  {
+    "id": "w103",
+    "view": "back",
+    "baseRigId": "w053",
+    "source": "tools/art-review/directional-101/middle-waves/t6-biped-01a-back-parts.png",
+    "sha256": "6c560506633769ef3f660a426b54f653db43d3c06ad5d1d59f0705d95a87021d",
+    "sourceBounds": [
+      null,
+      null,
+      266,
+      387
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 251.87596899224806
+    }
+  },
+  {
+    "id": "w104",
+    "view": "side",
+    "baseRigId": "w035",
+    "source": "tools/art-review/directional-101/middle-waves/t4-biped-01b-side-front-parts.png",
+    "sha256": "bc5d7ae111b97df969ac2b6d5e8c26fd49cf1b0097d127a83ebd430eaab5a180",
+    "sourceBounds": [
+      null,
+      null,
+      287,
+      333
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 268.92792792792795
+    }
+  },
+  {
+    "id": "w104",
+    "view": "front",
+    "baseRigId": "w035",
+    "source": "tools/art-review/directional-101/middle-waves/t4-biped-01b-side-front-parts.png",
+    "sha256": "bc5d7ae111b97df969ac2b6d5e8c26fd49cf1b0097d127a83ebd430eaab5a180",
+    "sourceBounds": [
+      null,
+      null,
+      304,
+      337
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 254.64688427299703
+    }
+  },
+  {
+    "id": "w104",
+    "view": "back",
+    "baseRigId": "w035",
+    "source": "tools/art-review/directional-101/middle-waves/t4-biped-01b-back-parts.png",
+    "sha256": "0bcfbe1317af882c1b804cf75f73fe1c4436fbf5685ecf619ad79a6456bd8c93",
+    "sourceBounds": [
+      null,
+      null,
+      447,
+      411
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 272.31386861313865
+    }
+  },
+  {
+    "id": "w106",
+    "view": "side",
+    "baseRigId": "w031",
+    "source": "tools/art-review/directional-101/middle-waves/t4-biped-01a-side-front-parts-clean.png",
+    "sha256": "21590a166e00074e0759362bcbb3009fbb62cc6aefaa0f6bcfa3f73e29d97976",
+    "sourceBounds": [
+      null,
+      null,
+      258,
+      338
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 258.2899408284024
+    }
+  },
+  {
+    "id": "w106",
+    "view": "front",
+    "baseRigId": "w031",
+    "source": "tools/art-review/directional-101/middle-waves/t4-biped-01a-side-front-parts-clean.png",
+    "sha256": "21590a166e00074e0759362bcbb3009fbb62cc6aefaa0f6bcfa3f73e29d97976",
+    "sourceBounds": [
+      null,
+      null,
+      293,
+      341
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 266.3108504398827
+    }
+  },
+  {
+    "id": "w106",
+    "view": "back",
+    "baseRigId": "w031",
+    "source": "tools/art-review/directional-101/middle-waves/t4-biped-01a-back-parts-clean.png",
+    "sha256": "978de260a5dfebafbacbbcd1eba038f991d9f1958c03a5b0e470bcd483ef6489",
+    "sourceBounds": [
+      null,
+      null,
+      322,
+      377
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 259.84350132625997
+    }
+  },
+  {
+    "id": "w108",
+    "view": "side",
+    "baseRigId": "w055",
+    "source": "tools/art-review/directional-101/middle-waves/t6-biped-01b-side-front-parts.png",
+    "sha256": "14ef710e2f8313c7acc7e909e10afecc4e8be8d3c98f8429375d080b79e8794d",
+    "sourceBounds": [
+      null,
+      null,
+      255,
+      315
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 262.07142857142856
+    }
+  },
+  {
+    "id": "w108",
+    "view": "front",
+    "baseRigId": "w055",
+    "source": "tools/art-review/directional-101/middle-waves/t6-biped-01b-side-front-parts.png",
+    "sha256": "14ef710e2f8313c7acc7e909e10afecc4e8be8d3c98f8429375d080b79e8794d",
+    "sourceBounds": [
+      null,
+      null,
+      273,
+      306
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 268.04411764705884
+    }
+  },
+  {
+    "id": "w108",
+    "view": "back",
+    "baseRigId": "w055",
+    "source": "tools/art-review/directional-101/middle-waves/t6-biped-01b-back-parts.png",
+    "sha256": "89d3fe2ae5bce4cefae466b9b56fb6653d3f5fb5a6270eac3144321fc529ecdb",
+    "sourceBounds": [
+      null,
+      null,
+      407,
+      388
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 233.97164948453607
+    }
+  },
+  {
+    "id": "w110",
+    "view": "side",
+    "baseRigId": "w034",
+    "source": "tools/art-review/directional-101/middle-waves/t4-biped-01b-side-front-parts.png",
+    "sha256": "bc5d7ae111b97df969ac2b6d5e8c26fd49cf1b0097d127a83ebd430eaab5a180",
+    "sourceBounds": [
+      null,
+      null,
+      293,
+      321
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 272.4299065420561
+    }
+  },
+  {
+    "id": "w110",
+    "view": "front",
+    "baseRigId": "w034",
+    "source": "tools/art-review/directional-101/middle-waves/t4-biped-01b-side-front-parts.png",
+    "sha256": "bc5d7ae111b97df969ac2b6d5e8c26fd49cf1b0097d127a83ebd430eaab5a180",
+    "sourceBounds": [
+      null,
+      null,
+      284,
+      305
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 251.80983606557376
+    }
+  },
+  {
+    "id": "w110",
+    "view": "back",
+    "baseRigId": "w034",
+    "source": "tools/art-review/directional-101/middle-waves/t4-biped-01b-back-parts.png",
+    "sha256": "0bcfbe1317af882c1b804cf75f73fe1c4436fbf5685ecf619ad79a6456bd8c93",
+    "sourceBounds": [
+      null,
+      null,
+      432,
+      407
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 271.9213759213759
+    }
+  },
+  {
+    "id": "w156",
+    "view": "side",
+    "baseRigId": "w055",
+    "source": "tools/art-review/directional-101/middle-waves/t6-biped-01b-side-front-parts.png",
+    "sha256": "14ef710e2f8313c7acc7e909e10afecc4e8be8d3c98f8429375d080b79e8794d",
+    "sourceBounds": [
+      null,
+      null,
+      255,
+      315
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 262.07142857142856
+    }
+  },
+  {
+    "id": "w156",
+    "view": "front",
+    "baseRigId": "w055",
+    "source": "tools/art-review/directional-101/middle-waves/t6-biped-01b-side-front-parts.png",
+    "sha256": "14ef710e2f8313c7acc7e909e10afecc4e8be8d3c98f8429375d080b79e8794d",
+    "sourceBounds": [
+      null,
+      null,
+      273,
+      306
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 268.04411764705884
+    }
+  },
+  {
+    "id": "w156",
+    "view": "back",
+    "baseRigId": "w055",
+    "source": "tools/art-review/directional-101/middle-waves/t6-biped-01b-back-parts.png",
+    "sha256": "89d3fe2ae5bce4cefae466b9b56fb6653d3f5fb5a6270eac3144321fc529ecdb",
+    "sourceBounds": [
+      null,
+      null,
+      407,
+      388
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 233.97164948453607
+    }
+  },
+  {
+    "id": "w158",
+    "view": "side",
+    "baseRigId": "w057",
+    "source": "tools/art-review/directional-101/middle-waves/t6-biped-01b-side-front-parts.png",
+    "sha256": "14ef710e2f8313c7acc7e909e10afecc4e8be8d3c98f8429375d080b79e8794d",
+    "sourceBounds": [
+      null,
+      null,
+      257,
+      309
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 259.74271844660194
+    }
+  },
+  {
+    "id": "w158",
+    "view": "front",
+    "baseRigId": "w057",
+    "source": "tools/art-review/directional-101/middle-waves/t6-biped-01b-side-front-parts.png",
+    "sha256": "14ef710e2f8313c7acc7e909e10afecc4e8be8d3c98f8429375d080b79e8794d",
+    "sourceBounds": [
+      null,
+      null,
+      274,
+      347
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 266.6599423631124
+    }
+  },
+  {
+    "id": "w158",
+    "view": "back",
+    "baseRigId": "w057",
+    "source": "tools/art-review/directional-101/middle-waves/t6-biped-01b-back-parts.png",
+    "sha256": "89d3fe2ae5bce4cefae466b9b56fb6653d3f5fb5a6270eac3144321fc529ecdb",
+    "sourceBounds": [
+      null,
+      null,
+      434,
+      398
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 272.356783919598
+    }
+  },
+  {
+    "id": "w159",
+    "view": "side",
+    "baseRigId": "w058",
+    "source": "tools/art-review/directional-101/middle-waves/t6-doll-three-view-parts.png",
+    "sha256": "d62dc725f3566043fe2dcd6784f0d9cf96d9dd1c5695feed637d680dc43c18aa",
+    "sourceBounds": [
+      null,
+      null,
+      208,
+      392
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 248.0408163265306
+    }
+  },
+  {
+    "id": "w159",
+    "view": "front",
+    "baseRigId": "w058",
+    "source": "tools/art-review/directional-101/middle-waves/t6-doll-three-view-parts.png",
+    "sha256": "d62dc725f3566043fe2dcd6784f0d9cf96d9dd1c5695feed637d680dc43c18aa",
+    "sourceBounds": [
+      null,
+      null,
+      208,
+      375
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 256.832
+    }
+  },
+  {
+    "id": "w159",
+    "view": "back",
+    "baseRigId": "w058",
+    "source": "tools/art-review/directional-101/middle-waves/t6-doll-three-view-parts.png",
+    "sha256": "d62dc725f3566043fe2dcd6784f0d9cf96d9dd1c5695feed637d680dc43c18aa",
+    "sourceBounds": [
+      null,
+      null,
+      209,
+      383
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 256.81853785900785
+    }
+  },
+  {
+    "id": "w164",
+    "view": "side",
+    "baseRigId": "w063",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-biped-01-side-parts.png",
+    "sha256": "c20c47648e57f279f054b573122997dd4018ac0ed4e448458b26af3b018fb35d",
+    "sourceBounds": [
+      null,
+      null,
+      152,
+      342
+    ],
+    "bodyTarget": {
+      "height": 220,
+      "top": 90,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w164",
+    "view": "front",
+    "baseRigId": "w063",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-biped-01-front-back-parts.png",
+    "sha256": "867f9ea6d77c6fdf37c215e62ae656e39336b31efeb832dc679ac973b5601e83",
+    "sourceBounds": [
+      null,
+      null,
+      217,
+      212
+    ],
+    "bodyTarget": {
+      "height": 220,
+      "top": 90,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w164",
+    "view": "back",
+    "baseRigId": "w063",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-biped-01-front-back-parts.png",
+    "sha256": "867f9ea6d77c6fdf37c215e62ae656e39336b31efeb832dc679ac973b5601e83",
+    "sourceBounds": [
+      null,
+      null,
+      220,
+      208
+    ],
+    "bodyTarget": {
+      "height": 220,
+      "top": 90,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w166",
+    "view": "side",
+    "baseRigId": "w065",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-biped-01-side-parts.png",
+    "sha256": "c20c47648e57f279f054b573122997dd4018ac0ed4e448458b26af3b018fb35d",
+    "sourceBounds": [
+      null,
+      null,
+      195,
+      355
+    ],
+    "bodyTarget": {
+      "height": 220,
+      "top": 90,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w166",
+    "view": "front",
+    "baseRigId": "w065",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-biped-01-front-back-parts.png",
+    "sha256": "867f9ea6d77c6fdf37c215e62ae656e39336b31efeb832dc679ac973b5601e83",
+    "sourceBounds": [
+      null,
+      null,
+      234,
+      218
+    ],
+    "bodyTarget": {
+      "height": 220,
+      "top": 90,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w166",
+    "view": "back",
+    "baseRigId": "w065",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-biped-01-front-back-parts.png",
+    "sha256": "867f9ea6d77c6fdf37c215e62ae656e39336b31efeb832dc679ac973b5601e83",
+    "sourceBounds": [
+      null,
+      null,
+      224,
+      216
+    ],
+    "bodyTarget": {
+      "height": 220,
+      "top": 90,
+      "centerX": 256
+    }
+  }
+]

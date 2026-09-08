@@ -1,0 +1,1921 @@
+{
+  "version": 1,
+  "canonicalCell": 512,
+  "assetVersion": 101,
+  "entries": [
+    {
+      "assetId": "b111",
+      "wave": 111,
+      "role": "boss",
+      "locomotion": "legged",
+      "cell": 512,
+      "referenceHeight": 450,
+      "cycleStride": 160,
+      "reviewApproved": false,
+      "gait": {
+        "stanceDuty": 0.5,
+        "lift": 25,
+        "pelvis": "support"
+      },
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/b010-side-front-parts.png",
+          "sourceSha256": "33c854929bdbbb5a15ae36e6eac8f85bf7acbaab5fe04994f45a7463e667b0ba",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 256
+            },
+            "layer": 10,
+            "source": "tools/art-review/extreme-202/bodies/boss-01/b111-side.png",
+            "sourceSha256": "a37d7acd999e9e99a7c8a20d7966c9cb664fbfc7779d0a4b67a5d0cf0a00dbba",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.565,
+                0,
+                0.205,
+                0.48
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4974,
+                  0.1
+                ],
+                "knee": [
+                  0.3684,
+                  0.6
+                ],
+                "ankle": [
+                  0.2842,
+                  0.86
+                ],
+                "sole": [
+                  0.62,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.55,
+                0.66
+              ],
+              "socketRoiNormalized": [
+                0.49000000000000005,
+                0.6000000000000001,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.79,
+                0,
+                0.21,
+                0.48
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.3736,
+                  0.1
+                ],
+                "knee": [
+                  0.4157,
+                  0.6
+                ],
+                "ankle": [
+                  0.3764,
+                  0.86
+                ],
+                "sole": [
+                  0.62,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.72,
+                0.66
+              ],
+              "socketRoiNormalized": [
+                0.6599999999999999,
+                0.6000000000000001,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Hip/knee/ankle x centers measured independently from each isolated source leg at the reviewed anatomical y rows. Corrected off-center knee pivots that created triangular overlap gaps."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/b010-side-front-parts.png",
+          "sourceSha256": "33c854929bdbbb5a15ae36e6eac8f85bf7acbaab5fe04994f45a7463e667b0ba",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 256
+            },
+            "layer": 10,
+            "source": "tools/art-review/extreme-202/bodies/boss-01/b111-front.png",
+            "sourceSha256": "a96bfc2465a012cc27b66645acf4915273d439887b0b0b6ff5f5244f052dfb80",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.585,
+                0.48,
+                0.18,
+                0.52
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.48,
+                  0.6
+                ],
+                "ankle": [
+                  0.48,
+                  0.87
+                ],
+                "sole": [
+                  0.5,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.65,
+                0.67
+              ],
+              "socketRoiNormalized": [
+                0.5900000000000001,
+                0.6100000000000001,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.79,
+                0.48,
+                0.21,
+                0.52
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.48,
+                  0.6
+                ],
+                "ankle": [
+                  0.48,
+                  0.87
+                ],
+                "sole": [
+                  0.5,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.35,
+                0.67
+              ],
+              "socketRoiNormalized": [
+                0.29,
+                0.6100000000000001,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/b010-back-parts.png",
+          "sourceSha256": "298494fb2538c3948c3073dc1b2f4232568d096e1338146e8454e8e52e14bfa7",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 256
+            },
+            "layer": 10,
+            "source": "tools/art-review/extreme-202/bodies/boss-01/b111-back.png",
+            "sourceSha256": "f9165f48f86e5240ca03d0279dc03f4a5081b1dd9a2dfed440eaa1e483dc00af",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.51,
+                0,
+                0.19,
+                1
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.48,
+                  0.6
+                ],
+                "ankle": [
+                  0.48,
+                  0.87
+                ],
+                "sole": [
+                  0.5,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.4,
+                0.65
+              ],
+              "socketRoiNormalized": [
+                0.34,
+                0.5900000000000001,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.72,
+                0,
+                0.19,
+                1
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.48,
+                  0.6
+                ],
+                "ankle": [
+                  0.48,
+                  0.87
+                ],
+                "sole": [
+                  0.5,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.64,
+                0.65
+              ],
+              "socketRoiNormalized": [
+                0.5800000000000001,
+                0.5900000000000001,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ]
+        }
+      },
+      "physicalLimbConvention": "right-facing side: right near, left far; front: left screen-right; back: left screen-left",
+      "reviewNote": "Root approved corrected physical limb orientation, body/socket proportions and assembled motion; game-canvas corner/residency QA remains separate.",
+      "name": "유적 왕자",
+      "legacyAssetId": "b010",
+      "baseRigId": "b010"
+    },
+    {
+      "assetId": "b111-2",
+      "wave": 111,
+      "role": "secondary",
+      "locomotion": "legged",
+      "cell": 512,
+      "referenceHeight": 450,
+      "cycleStride": 160,
+      "reviewApproved": false,
+      "gait": {
+        "stanceDuty": 0.5,
+        "lift": 25,
+        "pelvis": "support"
+      },
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/b010-side-front-parts.png",
+          "sourceSha256": "33c854929bdbbb5a15ae36e6eac8f85bf7acbaab5fe04994f45a7463e667b0ba",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 256
+            },
+            "layer": 10,
+            "source": "tools/art-review/extreme-202/bodies/boss-01/b111-2-side.png",
+            "sourceSha256": "cd0624069d9a0b4eb1793a27d3a485653d478582ed0b5a938ace21b7114fa658",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.565,
+                0,
+                0.205,
+                0.48
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4974,
+                  0.1
+                ],
+                "knee": [
+                  0.3684,
+                  0.6
+                ],
+                "ankle": [
+                  0.2842,
+                  0.86
+                ],
+                "sole": [
+                  0.62,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.55,
+                0.66
+              ],
+              "socketRoiNormalized": [
+                0.49000000000000005,
+                0.6000000000000001,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.79,
+                0,
+                0.21,
+                0.48
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.3736,
+                  0.1
+                ],
+                "knee": [
+                  0.4157,
+                  0.6
+                ],
+                "ankle": [
+                  0.3764,
+                  0.86
+                ],
+                "sole": [
+                  0.62,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.72,
+                0.66
+              ],
+              "socketRoiNormalized": [
+                0.6599999999999999,
+                0.6000000000000001,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Hip/knee/ankle x centers measured independently from each isolated source leg at the reviewed anatomical y rows. Corrected off-center knee pivots that created triangular overlap gaps."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/b010-side-front-parts.png",
+          "sourceSha256": "33c854929bdbbb5a15ae36e6eac8f85bf7acbaab5fe04994f45a7463e667b0ba",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 256
+            },
+            "layer": 10,
+            "source": "tools/art-review/extreme-202/bodies/boss-01/b111-2-front.png",
+            "sourceSha256": "5aa199ec639c06643fc86fc62eefaa5d6075a2ba2a424b596cf611414d1f6280",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.585,
+                0.48,
+                0.18,
+                0.52
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.48,
+                  0.6
+                ],
+                "ankle": [
+                  0.48,
+                  0.87
+                ],
+                "sole": [
+                  0.5,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.65,
+                0.67
+              ],
+              "socketRoiNormalized": [
+                0.5900000000000001,
+                0.6100000000000001,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.79,
+                0.48,
+                0.21,
+                0.52
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.48,
+                  0.6
+                ],
+                "ankle": [
+                  0.48,
+                  0.87
+                ],
+                "sole": [
+                  0.5,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.35,
+                0.67
+              ],
+              "socketRoiNormalized": [
+                0.29,
+                0.6100000000000001,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/b010-back-parts.png",
+          "sourceSha256": "298494fb2538c3948c3073dc1b2f4232568d096e1338146e8454e8e52e14bfa7",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            460
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 300,
+              "top": 35,
+              "centerX": 256
+            },
+            "layer": 10,
+            "source": "tools/art-review/extreme-202/bodies/boss-01/b111-2-back.png",
+            "sourceSha256": "f10b68fad9a15d78659d8ea6a1da1be37bb06c641e90e3db2f65e3ceb571b545",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.51,
+                0,
+                0.19,
+                1
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.48,
+                  0.6
+                ],
+                "ankle": [
+                  0.48,
+                  0.87
+                ],
+                "sole": [
+                  0.5,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.4,
+                0.65
+              ],
+              "socketRoiNormalized": [
+                0.34,
+                0.5900000000000001,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.72,
+                0,
+                0.19,
+                1
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.48,
+                  0.6
+                ],
+                "ankle": [
+                  0.48,
+                  0.87
+                ],
+                "sole": [
+                  0.5,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.64,
+                0.65
+              ],
+              "socketRoiNormalized": [
+                0.5800000000000001,
+                0.5900000000000001,
+                0.12,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 460,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.09
+            }
+          ]
+        }
+      },
+      "physicalLimbConvention": "right-facing side: right near, left far; front: left screen-right; back: left screen-left",
+      "reviewNote": "Root approved corrected physical limb orientation, body/socket proportions and assembled motion; game-canvas corner/residency QA remains separate.",
+      "name": "유적 인장대신",
+      "legacyAssetId": "b010",
+      "baseRigId": "b010"
+    },
+    {
+      "assetId": "b121",
+      "wave": 121,
+      "role": "boss",
+      "cell": 512,
+      "locomotion": "legged",
+      "referenceHeight": 450,
+      "cycleStride": 160,
+      "gait": {
+        "stanceDuty": 0.5,
+        "lift": 25,
+        "pelvis": "support"
+      },
+      "reviewApproved": false,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/early-boss-01-side-parts.png",
+          "sourceSha256": "f7742ad0a754b02cc7369140643b0287ec5e9252fc8e4f6377a63573b4473423",
+          "background": "checkerboard",
+          "pivot": [
+            262.5895582329317,
+            470
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 320,
+              "top": 24,
+              "centerX": 256
+            },
+            "layer": 10,
+            "source": "tools/art-review/extreme-202/bodies/boss-01/b121-side.png",
+            "sourceSha256": "6225a47d2a113c793290bcb51f51a2dafb9c1d3f9eed350ced0b173146c856e8",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.47,
+                0,
+                0.2,
+                0.51
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4479768786127168,
+                  0.1
+                ],
+                "knee": [
+                  0.5375722543352601,
+                  0.47
+                ],
+                "ankle": [
+                  0.3872832369942196,
+                  0.86
+                ],
+                "sole": [
+                  0.5694067688287341,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.5,
+                0.75
+              ],
+              "socketRoiNormalized": [
+                0.44,
+                0.69,
+                0.12,
+                0.12
+              ],
+              "phase": 0,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 470,
+                "maximumStanceAngle": 168
+              },
+              "layer": -1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.745,
+                0,
+                0.205,
+                0.51
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.43315508021390375,
+                  0.1
+                ],
+                "knee": [
+                  0.4786096256684492,
+                  0.48
+                ],
+                "ankle": [
+                  0.3983957219251337,
+                  0.86
+                ],
+                "sole": [
+                  0.56253552495737,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.57,
+                0.75
+              ],
+              "socketRoiNormalized": [
+                0.51,
+                0.69,
+                0.12,
+                0.12
+              ],
+              "phase": 0.5,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 470,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            }
+          ]
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/early-boss-01-front-back-parts.png",
+          "sourceSha256": "ffd0c9709bf93d5b2c0eaf3eba19f7c8c1f6d96d50cc01f28e578ed577ea36a2",
+          "background": "checkerboard",
+          "pivot": [
+            257.0557823129252,
+            470
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 320,
+              "top": 24,
+              "centerX": 256
+            },
+            "layer": 10,
+            "source": "tools/art-review/extreme-202/bodies/boss-01/b121-front.png",
+            "sourceSha256": "372af4d853f7fcc4ba56c0e6973daffe719c56e97e3a0c0b749e6ada2b298108",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.275,
+                0,
+                0.095,
+                0.49
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.6397849462365591,
+                  0.1
+                ],
+                "knee": [
+                  0.6612903225806451,
+                  0.48
+                ],
+                "ankle": [
+                  0.5645161290322581,
+                  0.86
+                ],
+                "sole": [
+                  0.4811223873384076,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.39,
+                0.79
+              ],
+              "socketRoiNormalized": [
+                0.33,
+                0.73,
+                0.12,
+                0.12
+              ],
+              "phase": 0.5,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 470,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.4,
+                0,
+                0.1,
+                0.49
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.3709677419354839,
+                  0.1
+                ],
+                "knee": [
+                  0.34946236559139787,
+                  0.48
+                ],
+                "ankle": [
+                  0.43548387096774194,
+                  0.86
+                ],
+                "sole": [
+                  0.523426703070752,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.62,
+                0.79
+              ],
+              "socketRoiNormalized": [
+                0.56,
+                0.73,
+                0.12,
+                0.12
+              ],
+              "phase": 0,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 470,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            }
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/early-boss-01-front-back-parts.png",
+          "sourceSha256": "ffd0c9709bf93d5b2c0eaf3eba19f7c8c1f6d96d50cc01f28e578ed577ea36a2",
+          "background": "checkerboard",
+          "pivot": [
+            258.02374429223744,
+            470
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 320,
+              "top": 24,
+              "centerX": 256
+            },
+            "layer": 10,
+            "source": "tools/art-review/extreme-202/bodies/boss-01/b121-back.png",
+            "sourceSha256": "201c12283743226809fc91d1a015335d2bb2fe3d3ef7d710ba9d4b0f7e93954d",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.735,
+                0,
+                0.1,
+                0.49
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.6632653061224489,
+                  0.1
+                ],
+                "knee": [
+                  0.6122448979591837,
+                  0.48
+                ],
+                "ankle": [
+                  0.5408163265306123,
+                  0.86
+                ],
+                "sole": [
+                  0.5176507496202365,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.4,
+                0.79
+              ],
+              "socketRoiNormalized": [
+                0.34,
+                0.73,
+                0.12,
+                0.12
+              ],
+              "phase": 0,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 470,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.875,
+                0,
+                0.115,
+                0.49
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.30526315789473685,
+                  0.1
+                ],
+                "knee": [
+                  0.3894736842105263,
+                  0.48
+                ],
+                "ankle": [
+                  0.45789473684210524,
+                  0.86
+                ],
+                "sole": [
+                  0.46110295659467393,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.62,
+                0.79
+              ],
+              "socketRoiNormalized": [
+                0.56,
+                0.73,
+                0.12,
+                0.12
+              ],
+              "phase": 0.5,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 470,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            }
+          ]
+        }
+      },
+      "name": "왕관나무 섭정",
+      "legacyAssetId": "b020",
+      "baseRigId": "b020"
+    },
+    {
+      "assetId": "b121-2",
+      "wave": 121,
+      "role": "secondary",
+      "cell": 512,
+      "locomotion": "legged",
+      "referenceHeight": 450,
+      "cycleStride": 130,
+      "gait": {
+        "stanceDuty": 0.65,
+        "lift": 22,
+        "pelvis": "fixed"
+      },
+      "reviewApproved": false,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/early-boss-01-side-parts.png",
+          "sourceSha256": "f7742ad0a754b02cc7369140643b0287ec5e9252fc8e4f6377a63573b4473423",
+          "background": "checkerboard",
+          "pivot": [
+            260.247582205029,
+            465
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 300,
+              "top": 30,
+              "centerX": 256
+            },
+            "layer": 10,
+            "source": "tools/art-review/extreme-202/bodies/boss-01/b121-2-side.png",
+            "sourceSha256": "708b094a53453828042d07e0532ab47f76535df5e473b4dc6a2a956afab07aeb",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftFore",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.47,
+                0.51,
+                0.2,
+                0.49
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4672897196261682,
+                  0.1
+                ],
+                "knee": [
+                  0.397196261682243,
+                  0.52
+                ],
+                "ankle": [
+                  0.45794392523364486,
+                  0.89
+                ],
+                "sole": [
+                  0.6191912791786068,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.77,
+                0.838
+              ],
+              "socketRoiNormalized": [
+                0.71,
+                0.778,
+                0.12,
+                0.12
+              ],
+              "phase": 0.75,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 465,
+                "maximumStanceAngle": 168
+              },
+              "layer": -1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightFore",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.47,
+                0.51,
+                0.2,
+                0.49
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4672897196261682,
+                  0.1
+                ],
+                "knee": [
+                  0.397196261682243,
+                  0.52
+                ],
+                "ankle": [
+                  0.45794392523364486,
+                  0.89
+                ],
+                "sole": [
+                  0.6191912791786068,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.77,
+                0.85
+              ],
+              "socketRoiNormalized": [
+                0.71,
+                0.79,
+                0.12,
+                0.12
+              ],
+              "phase": 0.25,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 465,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "leftHind",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.71,
+                0.51,
+                0.235,
+                0.49
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.43125,
+                  0.1
+                ],
+                "knee": [
+                  0.459375,
+                  0.52
+                ],
+                "ankle": [
+                  0.5375,
+                  0.89
+                ],
+                "sole": [
+                  0.6772700068399453,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.27,
+                0.818
+              ],
+              "socketRoiNormalized": [
+                0.21000000000000002,
+                0.758,
+                0.12,
+                0.12
+              ],
+              "phase": 0,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 465,
+                "maximumStanceAngle": 168
+              },
+              "layer": -1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightHind",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.71,
+                0.51,
+                0.235,
+                0.49
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.43125,
+                  0.1
+                ],
+                "knee": [
+                  0.459375,
+                  0.52
+                ],
+                "ankle": [
+                  0.5375,
+                  0.89
+                ],
+                "sole": [
+                  0.6772700068399453,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.27,
+                0.83
+              ],
+              "socketRoiNormalized": [
+                0.21000000000000002,
+                0.77,
+                0.12,
+                0.12
+              ],
+              "phase": 0.5,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 465,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            }
+          ],
+          "backgroundSeeds": [
+            [
+              323,
+              956
+            ],
+            [
+              157,
+              991
+            ]
+          ]
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/early-boss-01-front-back-parts.png",
+          "sourceSha256": "ffd0c9709bf93d5b2c0eaf3eba19f7c8c1f6d96d50cc01f28e578ed577ea36a2",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            465
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 300,
+              "top": 30,
+              "centerX": 256
+            },
+            "layer": 10,
+            "source": "tools/art-review/extreme-202/bodies/boss-01/b121-2-front.png",
+            "sourceSha256": "a295b2d76826c1d86ca3a5b02de9a60b3e10c551224508be54195a7ffb5030a0",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftFore",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.275,
+                0.49,
+                0.105,
+                0.51
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4888888888888889,
+                  0.1
+                ],
+                "knee": [
+                  0.4166666666666667,
+                  0.54
+                ],
+                "ankle": [
+                  0.4166666666666667,
+                  0.89
+                ],
+                "sole": [
+                  0.5031195625155357,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.6,
+                0.84
+              ],
+              "socketRoiNormalized": [
+                0.54,
+                0.78,
+                0.12,
+                0.12
+              ],
+              "phase": 0.75,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 465,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightFore",
+              "type": "leg",
+              "flipX": true,
+              "roi": [
+                0.275,
+                0.49,
+                0.105,
+                0.51
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4888888888888889,
+                  0.1
+                ],
+                "knee": [
+                  0.4166666666666667,
+                  0.54
+                ],
+                "ankle": [
+                  0.4166666666666667,
+                  0.89
+                ],
+                "sole": [
+                  0.5031195625155357,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.4,
+                0.84
+              ],
+              "socketRoiNormalized": [
+                0.34,
+                0.78,
+                0.12,
+                0.12
+              ],
+              "phase": 0.25,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 465,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "leftHind",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.4,
+                0.49,
+                0.1,
+                0.51
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4696969696969697,
+                  0.1
+                ],
+                "knee": [
+                  0.45454545454545453,
+                  0.54
+                ],
+                "ankle": [
+                  0.5,
+                  0.89
+                ],
+                "sole": [
+                  0.33758639021796916,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.68,
+                0.72
+              ],
+              "socketRoiNormalized": [
+                0.6200000000000001,
+                0.6599999999999999,
+                0.12,
+                0.12
+              ],
+              "phase": 0,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 420,
+                "maximumStanceAngle": 168
+              },
+              "layer": -1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightHind",
+              "type": "leg",
+              "flipX": true,
+              "roi": [
+                0.4,
+                0.49,
+                0.1,
+                0.51
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4696969696969697,
+                  0.1
+                ],
+                "knee": [
+                  0.45454545454545453,
+                  0.54
+                ],
+                "ankle": [
+                  0.5,
+                  0.89
+                ],
+                "sole": [
+                  0.33758639021796916,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.31999999999999995,
+                0.72
+              ],
+              "socketRoiNormalized": [
+                0.25999999999999995,
+                0.6599999999999999,
+                0.12,
+                0.12
+              ],
+              "phase": 0.5,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 420,
+                "maximumStanceAngle": 168
+              },
+              "layer": -1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            }
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/early-boss-01-front-back-parts.png",
+          "sourceSha256": "ffd0c9709bf93d5b2c0eaf3eba19f7c8c1f6d96d50cc01f28e578ed577ea36a2",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            465
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 300,
+              "top": 30,
+              "centerX": 256
+            },
+            "layer": 10,
+            "source": "tools/art-review/extreme-202/bodies/boss-01/b121-2-back.png",
+            "sourceSha256": "ede8327185dd8ea49bd5f8410789b7894d805fcacb765055e71b32dbf808dc66",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftFore",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.745,
+                0.49,
+                0.09,
+                0.51
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5174418604651163,
+                  0.1
+                ],
+                "knee": [
+                  0.6569767441860465,
+                  0.54
+                ],
+                "ankle": [
+                  0.6744186046511628,
+                  0.89
+                ],
+                "sole": [
+                  0.5910696738570961,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.4,
+                0.6
+              ],
+              "socketRoiNormalized": [
+                0.34,
+                0.54,
+                0.12,
+                0.12
+              ],
+              "phase": 0.75,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 420,
+                "maximumStanceAngle": 168
+              },
+              "layer": -1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightFore",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.745,
+                0.49,
+                0.09,
+                0.51
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5174418604651163,
+                  0.1
+                ],
+                "knee": [
+                  0.6569767441860465,
+                  0.54
+                ],
+                "ankle": [
+                  0.6744186046511628,
+                  0.89
+                ],
+                "sole": [
+                  0.5910696738570961,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.6,
+                0.6
+              ],
+              "socketRoiNormalized": [
+                0.54,
+                0.54,
+                0.12,
+                0.12
+              ],
+              "phase": 0.25,
+              "bend": 1,
+              "calibrate": {
+                "groundY": 420,
+                "maximumStanceAngle": 168
+              },
+              "layer": -1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "leftHind",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.875,
+                0.49,
+                0.115,
+                0.51
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4878048780487805,
+                  0.1
+                ],
+                "knee": [
+                  0.3353658536585366,
+                  0.54
+                ],
+                "ankle": [
+                  0.3170731707317073,
+                  0.89
+                ],
+                "sole": [
+                  0.4062185043338037,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.32,
+                0.82
+              ],
+              "socketRoiNormalized": [
+                0.26,
+                0.76,
+                0.12,
+                0.12
+              ],
+              "phase": 0,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 465,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightHind",
+              "type": "leg",
+              "flipX": false,
+              "roi": [
+                0.875,
+                0.49,
+                0.115,
+                0.51
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4878048780487805,
+                  0.1
+                ],
+                "knee": [
+                  0.3353658536585366,
+                  0.54
+                ],
+                "ankle": [
+                  0.3170731707317073,
+                  0.89
+                ],
+                "sole": [
+                  0.4062185043338037,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.6799999999999999,
+                0.82
+              ],
+              "socketRoiNormalized": [
+                0.6199999999999999,
+                0.76,
+                0.12,
+                0.12
+              ],
+              "phase": 0.5,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 465,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            }
+          ]
+        }
+      },
+      "name": "왕관 숲사슴",
+      "legacyAssetId": "b020-2",
+      "baseRigId": "b020-2"
+    }
+  ]
+}

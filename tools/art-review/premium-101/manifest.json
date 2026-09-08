@@ -1,0 +1,2121 @@
+{
+  "version": 101,
+  "generator": "builtin-image_gen",
+  "actualGenerationCalls": 5,
+  "cost": null,
+  "costNote": "The builtin generator did not return monetary cost. Includes one background correction to preserve ivory highlights.",
+  "materialSource": {
+    "path": "sources/materials.png",
+    "sha256": "e40c81af06ce9020d4e4ec3356571309ffef558d72a2b2802034cc3f84fae26b",
+    "width": 2172,
+    "height": 724
+  },
+  "themes": {
+    "royal": {
+      "source": {
+        "path": "sources/royal-towers-keyed.png",
+        "sha256": "7c66b1b674af72ab785afe3b695cdd6c1a17dd23eee27f5ac1b0638ee71c71b5",
+        "width": 1122,
+        "height": 1402,
+        "realAlpha": false,
+        "key": "magenta",
+        "droppedNoisePixels": 8
+      },
+      "material": {
+        "path": "dice/skins/royal/material-v101.png",
+        "sha256": "53c62b092eefa3cbbf65535488496ac6e188e58a2ac5adbd1fd462b51f3da406",
+        "bytes": 519972,
+        "size": [
+          512,
+          512
+        ]
+      },
+      "towers": [
+        {
+          "star": 1,
+          "name": "궁수 망루",
+          "path": "casual/towers/skins/royal/t01.png",
+          "sha256": "ebeb1bbb1d86aa16d56839d0496f051c03f6ab027d6ab1c4023b707dfbaff173",
+          "bytes": 128680,
+          "nominalCell": {
+            "left": 0,
+            "top": 0,
+            "width": 214,
+            "height": 303
+          },
+          "sourceCell": {
+            "left": 27,
+            "top": 9,
+            "width": 155,
+            "height": 291
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 147,
+            "height": 283
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 23237,
+          "footY": 376,
+          "foreground": {
+            "left": 101,
+            "top": 24,
+            "width": 183,
+            "height": 352
+          }
+        },
+        {
+          "star": 2,
+          "name": "쌍포 요새",
+          "path": "casual/towers/skins/royal/t02.png",
+          "sha256": "34aa294f6e3b0bb8f88775d650fbd98a1d104c4911062ae5ed2bb4e744d5dea2",
+          "bytes": 258360,
+          "nominalCell": {
+            "left": 214,
+            "top": 0,
+            "width": 263,
+            "height": 303
+          },
+          "sourceCell": {
+            "left": 247,
+            "top": 56,
+            "width": 214,
+            "height": 245
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 206,
+            "height": 237
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 35038,
+          "footY": 376,
+          "foreground": {
+            "left": 39,
+            "top": 24,
+            "width": 306,
+            "height": 352
+          }
+        },
+        {
+          "star": 3,
+          "name": "마력 결정탑",
+          "path": "casual/towers/skins/royal/t03.png",
+          "sha256": "7569371f0aaef7ed33a66e5d822ed131f8ac9e3424c5565c14117587cb2cae70",
+          "bytes": 160794,
+          "nominalCell": {
+            "left": 477,
+            "top": 0,
+            "width": 223,
+            "height": 303
+          },
+          "sourceCell": {
+            "left": 493,
+            "top": 8,
+            "width": 178,
+            "height": 293
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 170,
+            "height": 285
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 29801,
+          "footY": 376,
+          "foreground": {
+            "left": 87,
+            "top": 24,
+            "width": 210,
+            "height": 352
+          }
+        },
+        {
+          "star": 4,
+          "name": "서리 제어탑",
+          "path": "casual/towers/skins/royal/t04.png",
+          "sha256": "e4dcf2abc50d115ac7476150b5a72122eb6bd4235481726bcf578e2287971834",
+          "bytes": 131671,
+          "nominalCell": {
+            "left": 700,
+            "top": 0,
+            "width": 215,
+            "height": 303
+          },
+          "sourceCell": {
+            "left": 732,
+            "top": 8,
+            "width": 154,
+            "height": 294
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 146,
+            "height": 286
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 24056,
+          "footY": 376,
+          "foreground": {
+            "left": 102,
+            "top": 24,
+            "width": 180,
+            "height": 352
+          }
+        },
+        {
+          "star": 5,
+          "name": "번개 봉화",
+          "path": "casual/towers/skins/royal/t05.png",
+          "sha256": "7464b2b42be51462f36151d34142dc3e42f58b5123d53212d92be624b655ac4c",
+          "bytes": 158091,
+          "nominalCell": {
+            "left": 915,
+            "top": 0,
+            "width": 207,
+            "height": 303
+          },
+          "sourceCell": {
+            "left": 945,
+            "top": 17,
+            "width": 166,
+            "height": 284
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 158,
+            "height": 276
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 27679,
+          "footY": 376,
+          "foreground": {
+            "left": 91,
+            "top": 24,
+            "width": 202,
+            "height": 352
+          }
+        },
+        {
+          "star": 6,
+          "name": "주사위 투석성",
+          "path": "casual/towers/skins/royal/t06.png",
+          "sha256": "16f0c9b913252e5dc89175657bc0547a5b94612c464d04ddd365aa09fb2be9d6",
+          "bytes": 202439,
+          "nominalCell": {
+            "left": 0,
+            "top": 303,
+            "width": 247,
+            "height": 312
+          },
+          "sourceCell": {
+            "left": 11,
+            "top": 323,
+            "width": 221,
+            "height": 294
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 213,
+            "height": 286
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 39252,
+          "footY": 376,
+          "foreground": {
+            "left": 61,
+            "top": 24,
+            "width": 262,
+            "height": 352
+          }
+        },
+        {
+          "star": 7,
+          "name": "천문 관측탑",
+          "path": "casual/towers/skins/royal/t07.png",
+          "sha256": "8e4423e29a989247977f0ecbe962d80b74ddbbe6afe5980c175b8aa4b73a9122",
+          "bytes": 125759,
+          "nominalCell": {
+            "left": 247,
+            "top": 303,
+            "width": 193,
+            "height": 312
+          },
+          "sourceCell": {
+            "left": 263,
+            "top": 297,
+            "width": 157,
+            "height": 315
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 149,
+            "height": 307
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 26856,
+          "footY": 376,
+          "foreground": {
+            "left": 107,
+            "top": 24,
+            "width": 171,
+            "height": 352
+          }
+        },
+        {
+          "star": 8,
+          "name": "쌍종 성문",
+          "path": "casual/towers/skins/royal/t08.png",
+          "sha256": "b391d7581507d0bd43e33af3fc597e3d4e599bafeebe8de6cfe6c1e5ac20274c",
+          "bytes": 201558,
+          "nominalCell": {
+            "left": 440,
+            "top": 303,
+            "width": 262,
+            "height": 312
+          },
+          "sourceCell": {
+            "left": 460,
+            "top": 308,
+            "width": 231,
+            "height": 308
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 223,
+            "height": 300
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 42315,
+          "footY": 376,
+          "foreground": {
+            "left": 61,
+            "top": 24,
+            "width": 262,
+            "height": 352
+          }
+        },
+        {
+          "star": 9,
+          "name": "해시계",
+          "path": "casual/towers/skins/royal/t09.png",
+          "sha256": "be402335af2f15cea937b68929fb15d9340182b1cd9677d8fbbf90b978350874",
+          "bytes": 184617,
+          "nominalCell": {
+            "left": 702,
+            "top": 303,
+            "width": 222,
+            "height": 312
+          },
+          "sourceCell": {
+            "left": 713,
+            "top": 337,
+            "width": 192,
+            "height": 279
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 184,
+            "height": 271
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 31868,
+          "footY": 376,
+          "foreground": {
+            "left": 73,
+            "top": 24,
+            "width": 239,
+            "height": 352
+          }
+        },
+        {
+          "star": 10,
+          "name": "나침반",
+          "path": "casual/towers/skins/royal/t10.png",
+          "sha256": "06beef5b67f8746cbae54ce501147bb48b3b2d586e715f5a97d13d3412742ac5",
+          "bytes": 145890,
+          "nominalCell": {
+            "left": 924,
+            "top": 303,
+            "width": 198,
+            "height": 312
+          },
+          "sourceCell": {
+            "left": 944,
+            "top": 307,
+            "width": 166,
+            "height": 306
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 158,
+            "height": 298
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 28977,
+          "footY": 376,
+          "foreground": {
+            "left": 99,
+            "top": 24,
+            "width": 187,
+            "height": 352
+          }
+        },
+        {
+          "star": 11,
+          "name": "삼단 보루",
+          "path": "casual/towers/skins/royal/t11.png",
+          "sha256": "fb906f97ec183db83bfbc9fba2d81de5ac529fe9a46c4d9a55643bf23cf3fac6",
+          "bytes": 171083,
+          "nominalCell": {
+            "left": 0,
+            "top": 615,
+            "width": 227,
+            "height": 330
+          },
+          "sourceCell": {
+            "left": 6,
+            "top": 622,
+            "width": 206,
+            "height": 321
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 198,
+            "height": 313
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 38282,
+          "footY": 376,
+          "foreground": {
+            "left": 81,
+            "top": 24,
+            "width": 223,
+            "height": 352
+          }
+        },
+        {
+          "star": 12,
+          "name": "마법 서고",
+          "path": "casual/towers/skins/royal/t12.png",
+          "sha256": "83c3e892940acbd358810073fc2642953226e3aa24ec62f5a74aa664027bc1a2",
+          "bytes": 172680,
+          "nominalCell": {
+            "left": 227,
+            "top": 615,
+            "width": 212,
+            "height": 330
+          },
+          "sourceCell": {
+            "left": 243,
+            "top": 614,
+            "width": 187,
+            "height": 327
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 179,
+            "height": 319
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 40329,
+          "footY": 376,
+          "foreground": {
+            "left": 93,
+            "top": 24,
+            "width": 198,
+            "height": 352
+          }
+        },
+        {
+          "star": 13,
+          "name": "수호자 성채",
+          "path": "casual/towers/skins/royal/t13.png",
+          "sha256": "68d0965e73e5bc2dff6a4802925bb3e99bfb9be83350554cddb6b6731f9c716e",
+          "bytes": 190483,
+          "nominalCell": {
+            "left": 439,
+            "top": 615,
+            "width": 259,
+            "height": 330
+          },
+          "sourceCell": {
+            "left": 448,
+            "top": 614,
+            "width": 239,
+            "height": 337
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 231,
+            "height": 329
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 47808,
+          "footY": 376,
+          "foreground": {
+            "left": 69,
+            "top": 24,
+            "width": 247,
+            "height": 352
+          }
+        },
+        {
+          "star": 14,
+          "name": "구체 온실",
+          "path": "casual/towers/skins/royal/t14.png",
+          "sha256": "62a6dbcbdf413db3873537b1a308ee847fe19f2ea4e027b4f3b2ea7c8f2cde75",
+          "bytes": 187433,
+          "nominalCell": {
+            "left": 698,
+            "top": 615,
+            "width": 225,
+            "height": 330
+          },
+          "sourceCell": {
+            "left": 709,
+            "top": 629,
+            "width": 197,
+            "height": 312
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 189,
+            "height": 304
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 39957,
+          "footY": 376,
+          "foreground": {
+            "left": 83,
+            "top": 24,
+            "width": 219,
+            "height": 352
+          }
+        },
+        {
+          "star": 15,
+          "name": "부유 왕관",
+          "path": "casual/towers/skins/royal/t15.png",
+          "sha256": "71037acb31c3b7bde4b36f236492a22f1c4620d0422ed0a6a92d66ff93191d6e",
+          "bytes": 123054,
+          "nominalCell": {
+            "left": 923,
+            "top": 615,
+            "width": 199,
+            "height": 330
+          },
+          "sourceCell": {
+            "left": 940,
+            "top": 609,
+            "width": 164,
+            "height": 330
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 156,
+            "height": 322
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 28181,
+          "footY": 376,
+          "foreground": {
+            "left": 107,
+            "top": 24,
+            "width": 171,
+            "height": 352
+          }
+        },
+        {
+          "star": 16,
+          "name": "사첨탑 궁정",
+          "path": "casual/towers/skins/royal/t16.png",
+          "sha256": "e374263c9dda5965d802b1f941dfadf14fba4d5b9a5811d8fb3240af155dd25a",
+          "bytes": 161927,
+          "nominalCell": {
+            "left": 0,
+            "top": 945,
+            "width": 232,
+            "height": 457
+          },
+          "sourceCell": {
+            "left": 8,
+            "top": 955,
+            "width": 222,
+            "height": 367
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 214,
+            "height": 359
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 46714,
+          "footY": 376,
+          "foreground": {
+            "left": 87,
+            "top": 24,
+            "width": 210,
+            "height": 352
+          }
+        },
+        {
+          "star": 17,
+          "name": "진자 관문",
+          "path": "casual/towers/skins/royal/t17.png",
+          "sha256": "b5ae69e9e59829a3e0dbbb6cf54059e5156188644eac47a98fe93b1caccee273",
+          "bytes": 163716,
+          "nominalCell": {
+            "left": 232,
+            "top": 945,
+            "width": 214,
+            "height": 457
+          },
+          "sourceCell": {
+            "left": 235,
+            "top": 968,
+            "width": 205,
+            "height": 346
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 197,
+            "height": 338
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 42108,
+          "footY": 376,
+          "foreground": {
+            "left": 90,
+            "top": 24,
+            "width": 205,
+            "height": 352
+          }
+        },
+        {
+          "star": 18,
+          "name": "천체 궁전",
+          "path": "casual/towers/skins/royal/t18.png",
+          "sha256": "9ca69e98cce47633d2bb288cbe7760dfd6e5425fdadf5fa259eebfc3d184162b",
+          "bytes": 173513,
+          "nominalCell": {
+            "left": 446,
+            "top": 945,
+            "width": 238,
+            "height": 457
+          },
+          "sourceCell": {
+            "left": 453,
+            "top": 955,
+            "width": 228,
+            "height": 367
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 220,
+            "height": 359
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 50348,
+          "footY": 376,
+          "foreground": {
+            "left": 84,
+            "top": 24,
+            "width": 216,
+            "height": 352
+          }
+        },
+        {
+          "star": 19,
+          "name": "차원 고리",
+          "path": "casual/towers/skins/royal/t19.png",
+          "sha256": "2b06f266d5db26156c8ceb96b8724d6f52bc5fbfc8e3e82d534c2604b647b367",
+          "bytes": 171972,
+          "nominalCell": {
+            "left": 684,
+            "top": 945,
+            "width": 213,
+            "height": 457
+          },
+          "sourceCell": {
+            "left": 688,
+            "top": 954,
+            "width": 208,
+            "height": 368
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 200,
+            "height": 360
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 49705,
+          "footY": 376,
+          "foreground": {
+            "left": 94,
+            "top": 24,
+            "width": 196,
+            "height": 352
+          }
+        },
+        {
+          "star": 20,
+          "name": "황제 성채",
+          "path": "casual/towers/skins/royal/t20.png",
+          "sha256": "68fec5ffe9e2ab75d91972dd8d1a780d3990b551c1dc3968d4b56a9fb630648f",
+          "bytes": 164762,
+          "nominalCell": {
+            "left": 897,
+            "top": 945,
+            "width": 225,
+            "height": 457
+          },
+          "sourceCell": {
+            "left": 898,
+            "top": 935,
+            "width": 224,
+            "height": 414
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 217,
+            "height": 406
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 59763,
+          "footY": 376,
+          "foreground": {
+            "left": 98,
+            "top": 24,
+            "width": 188,
+            "height": 352
+          }
+        }
+      ]
+    },
+    "frost": {
+      "source": {
+        "path": "sources/frost-towers.png",
+        "sha256": "8d0e1e2bdc8aadafa55beb2f3830990a5b30b26d025aec2b400a6e4633924791",
+        "width": 1108,
+        "height": 1419,
+        "realAlpha": false,
+        "key": "magenta",
+        "droppedNoisePixels": 9
+      },
+      "material": {
+        "path": "dice/skins/frost/material-v101.png",
+        "sha256": "81218e7b41eb27bb1e39320f10a79f4ba01512f4b019a83ccd2e8727869a400c",
+        "bytes": 533658,
+        "size": [
+          512,
+          512
+        ]
+      },
+      "towers": [
+        {
+          "star": 1,
+          "name": "궁수 망루",
+          "path": "casual/towers/skins/frost/t01.png",
+          "sha256": "b0cd9985ebb7b66b9ad8f28ae4f650b3b085af88da5d09bba1145931de09786f",
+          "bytes": 131643,
+          "nominalCell": {
+            "left": 0,
+            "top": 0,
+            "width": 214,
+            "height": 320
+          },
+          "sourceCell": {
+            "left": 24,
+            "top": 9,
+            "width": 174,
+            "height": 308
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 166,
+            "height": 300
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 26928,
+          "footY": 376,
+          "foreground": {
+            "left": 95,
+            "top": 24,
+            "width": 195,
+            "height": 352
+          }
+        },
+        {
+          "star": 2,
+          "name": "쌍포 요새",
+          "path": "casual/towers/skins/frost/t02.png",
+          "sha256": "cc2521e69ef85b1adacb1fee44dac793f3c8a14a0361c2002f35ab03e5390cf8",
+          "bytes": 218061,
+          "nominalCell": {
+            "left": 214,
+            "top": 0,
+            "width": 237,
+            "height": 320
+          },
+          "sourceCell": {
+            "left": 231,
+            "top": 45,
+            "width": 205,
+            "height": 275
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 197,
+            "height": 267
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 37728,
+          "footY": 376,
+          "foreground": {
+            "left": 62,
+            "top": 24,
+            "width": 260,
+            "height": 352
+          }
+        },
+        {
+          "star": 3,
+          "name": "마력 결정탑",
+          "path": "casual/towers/skins/frost/t03.png",
+          "sha256": "06a2aac831f1e1b9cad42541590fbfc25d2bc588d4ec2b5f052fa2102bf1aeeb",
+          "bytes": 148466,
+          "nominalCell": {
+            "left": 451,
+            "top": 0,
+            "width": 217,
+            "height": 320
+          },
+          "sourceCell": {
+            "left": 467,
+            "top": 10,
+            "width": 176,
+            "height": 309
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 168,
+            "height": 301
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 31168,
+          "footY": 376,
+          "foreground": {
+            "left": 94,
+            "top": 24,
+            "width": 196,
+            "height": 352
+          }
+        },
+        {
+          "star": 4,
+          "name": "서리 제어탑",
+          "path": "casual/towers/skins/frost/t04.png",
+          "sha256": "ad93c759e8222449f069e91200b4b900689a89bdad9285e8920fb59f37800199",
+          "bytes": 141435,
+          "nominalCell": {
+            "left": 668,
+            "top": 0,
+            "width": 217,
+            "height": 320
+          },
+          "sourceCell": {
+            "left": 694,
+            "top": 10,
+            "width": 169,
+            "height": 312
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 161,
+            "height": 304
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 29938,
+          "footY": 376,
+          "foreground": {
+            "left": 99,
+            "top": 24,
+            "width": 186,
+            "height": 352
+          }
+        },
+        {
+          "star": 5,
+          "name": "번개 봉화",
+          "path": "casual/towers/skins/frost/t05.png",
+          "sha256": "22352a45ce4eefc0fe9d75545950b085791208eadc45a37799c84e27ea259a08",
+          "bytes": 147702,
+          "nominalCell": {
+            "left": 885,
+            "top": 0,
+            "width": 223,
+            "height": 320
+          },
+          "sourceCell": {
+            "left": 908,
+            "top": 10,
+            "width": 178,
+            "height": 310
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 170,
+            "height": 302
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 31198,
+          "footY": 376,
+          "foreground": {
+            "left": 93,
+            "top": 24,
+            "width": 198,
+            "height": 352
+          }
+        },
+        {
+          "star": 6,
+          "name": "주사위 투석성",
+          "path": "casual/towers/skins/frost/t06.png",
+          "sha256": "77a9c020eddb497fc36c48a4dc532110d5c192d478d8b25acf474169d7c05315",
+          "bytes": 193093,
+          "nominalCell": {
+            "left": 0,
+            "top": 320,
+            "width": 235,
+            "height": 320
+          },
+          "sourceCell": {
+            "left": 14,
+            "top": 334,
+            "width": 209,
+            "height": 304
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 201,
+            "height": 296
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 40307,
+          "footY": 376,
+          "foreground": {
+            "left": 73,
+            "top": 24,
+            "width": 239,
+            "height": 352
+          }
+        },
+        {
+          "star": 7,
+          "name": "천문 관측탑",
+          "path": "casual/towers/skins/frost/t07.png",
+          "sha256": "63c8cf69d2cc0f288f1119514e527aadcabaf8bdffaa408646d1ac97fdc87b61",
+          "bytes": 144556,
+          "nominalCell": {
+            "left": 235,
+            "top": 320,
+            "width": 202,
+            "height": 320
+          },
+          "sourceCell": {
+            "left": 247,
+            "top": 321,
+            "width": 179,
+            "height": 318
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 171,
+            "height": 310
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 32250,
+          "footY": 376,
+          "foreground": {
+            "left": 95,
+            "top": 24,
+            "width": 194,
+            "height": 352
+          }
+        },
+        {
+          "star": 8,
+          "name": "쌍종 성문",
+          "path": "casual/towers/skins/frost/t08.png",
+          "sha256": "74e9c3366acaaa3c125f6a57c993a994dbc455edd35d5145314b123f820419a4",
+          "bytes": 188482,
+          "nominalCell": {
+            "left": 437,
+            "top": 320,
+            "width": 236,
+            "height": 320
+          },
+          "sourceCell": {
+            "left": 449,
+            "top": 329,
+            "width": 211,
+            "height": 313
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 203,
+            "height": 305
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 41217,
+          "footY": 376,
+          "foreground": {
+            "left": 75,
+            "top": 24,
+            "width": 234,
+            "height": 352
+          }
+        },
+        {
+          "star": 9,
+          "name": "해시계",
+          "path": "casual/towers/skins/frost/t09.png",
+          "sha256": "aeb04f84d2b5728485b13fbbab31a1d9cae58de29046f1e7920075432655a26f",
+          "bytes": 164901,
+          "nominalCell": {
+            "left": 673,
+            "top": 320,
+            "width": 215,
+            "height": 320
+          },
+          "sourceCell": {
+            "left": 686,
+            "top": 339,
+            "width": 187,
+            "height": 302
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 179,
+            "height": 294
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 34060,
+          "footY": 376,
+          "foreground": {
+            "left": 85,
+            "top": 24,
+            "width": 214,
+            "height": 352
+          }
+        },
+        {
+          "star": 10,
+          "name": "나침반",
+          "path": "casual/towers/skins/frost/t10.png",
+          "sha256": "a7069b5dc799f0cbbc8cd069ad02555e60a12ff703a0493851047972f7ed556d",
+          "bytes": 145863,
+          "nominalCell": {
+            "left": 888,
+            "top": 320,
+            "width": 220,
+            "height": 320
+          },
+          "sourceCell": {
+            "left": 903,
+            "top": 321,
+            "width": 185,
+            "height": 318
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 177,
+            "height": 310
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 31904,
+          "footY": 376,
+          "foreground": {
+            "left": 92,
+            "top": 24,
+            "width": 201,
+            "height": 352
+          }
+        },
+        {
+          "star": 11,
+          "name": "삼단 보루",
+          "path": "casual/towers/skins/frost/t11.png",
+          "sha256": "aa6a3e8a3a796d9aa5b6b746b3b67b62b9c907096888569adcc5320f6d9f7dc5",
+          "bytes": 167632,
+          "nominalCell": {
+            "left": 0,
+            "top": 640,
+            "width": 229,
+            "height": 336
+          },
+          "sourceCell": {
+            "left": 9,
+            "top": 640,
+            "width": 211,
+            "height": 332
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 203,
+            "height": 324
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 40725,
+          "footY": 376,
+          "foreground": {
+            "left": 82,
+            "top": 24,
+            "width": 221,
+            "height": 352
+          }
+        },
+        {
+          "star": 12,
+          "name": "마법 서고",
+          "path": "casual/towers/skins/frost/t12.png",
+          "sha256": "ff79ee71deab5e5dab1e801d4cb145983e627d9a63a2e87deb36996e5fea4a0e",
+          "bytes": 168074,
+          "nominalCell": {
+            "left": 229,
+            "top": 640,
+            "width": 208,
+            "height": 336
+          },
+          "sourceCell": {
+            "left": 238,
+            "top": 639,
+            "width": 195,
+            "height": 337
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 187,
+            "height": 329
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 42358,
+          "footY": 376,
+          "foreground": {
+            "left": 92,
+            "top": 24,
+            "width": 200,
+            "height": 352
+          }
+        },
+        {
+          "star": 13,
+          "name": "수호자 성채",
+          "path": "casual/towers/skins/frost/t13.png",
+          "sha256": "6f76fce356aedeb1d4b879a119d8e616175c5d947699670d820d34806419d4eb",
+          "bytes": 185746,
+          "nominalCell": {
+            "left": 437,
+            "top": 640,
+            "width": 235,
+            "height": 336
+          },
+          "sourceCell": {
+            "left": 441,
+            "top": 638,
+            "width": 225,
+            "height": 342
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 217,
+            "height": 334
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 48773,
+          "footY": 376,
+          "foreground": {
+            "left": 78,
+            "top": 24,
+            "width": 229,
+            "height": 352
+          }
+        },
+        {
+          "star": 14,
+          "name": "구체 온실",
+          "path": "casual/towers/skins/frost/t14.png",
+          "sha256": "a75e50ebb1a2b67209e6b2aa3f1153b107938a2262dd77ae227afdc6e86ea299",
+          "bytes": 188608,
+          "nominalCell": {
+            "left": 672,
+            "top": 640,
+            "width": 220,
+            "height": 336
+          },
+          "sourceCell": {
+            "left": 678,
+            "top": 644,
+            "width": 200,
+            "height": 332
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 192,
+            "height": 324
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 46118,
+          "footY": 376,
+          "foreground": {
+            "left": 88,
+            "top": 24,
+            "width": 209,
+            "height": 352
+          }
+        },
+        {
+          "star": 15,
+          "name": "부유 왕관",
+          "path": "casual/towers/skins/frost/t15.png",
+          "sha256": "aa9ff6b3a95ecd09fa125054f9f980c37461c3da7ca205a21a4fb0c46db61f41",
+          "bytes": 133534,
+          "nominalCell": {
+            "left": 892,
+            "top": 640,
+            "width": 216,
+            "height": 336
+          },
+          "sourceCell": {
+            "left": 906,
+            "top": 639,
+            "width": 178,
+            "height": 336
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 170,
+            "height": 328
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 32552,
+          "footY": 376,
+          "foreground": {
+            "left": 101,
+            "top": 24,
+            "width": 182,
+            "height": 352
+          }
+        },
+        {
+          "star": 16,
+          "name": "사첨탑 궁정",
+          "path": "casual/towers/skins/frost/t16.png",
+          "sha256": "b2949ef873e3e36a2d12ac046b4960dc393a4eb0affe90476ec8f9e437c86ffc",
+          "bytes": 157160,
+          "nominalCell": {
+            "left": 0,
+            "top": 976,
+            "width": 228,
+            "height": 443
+          },
+          "sourceCell": {
+            "left": 9,
+            "top": 974,
+            "width": 217,
+            "height": 381
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 209,
+            "height": 373
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 49305,
+          "footY": 376,
+          "foreground": {
+            "left": 94,
+            "top": 24,
+            "width": 197,
+            "height": 352
+          }
+        },
+        {
+          "star": 17,
+          "name": "진자 관문",
+          "path": "casual/towers/skins/frost/t17.png",
+          "sha256": "6e3c1a24c1b029ee20d13f697e9c2672a76dfad4325cb33699ac1724fe3a8fa7",
+          "bytes": 153241,
+          "nominalCell": {
+            "left": 228,
+            "top": 976,
+            "width": 211,
+            "height": 443
+          },
+          "sourceCell": {
+            "left": 230,
+            "top": 982,
+            "width": 207,
+            "height": 374
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 199,
+            "height": 366
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 46006,
+          "footY": 376,
+          "foreground": {
+            "left": 97,
+            "top": 24,
+            "width": 191,
+            "height": 352
+          }
+        },
+        {
+          "star": 18,
+          "name": "천체 궁전",
+          "path": "casual/towers/skins/frost/t18.png",
+          "sha256": "19e5218240d3a9aa3e65364b64d73b6f4ee3d72150317afe68021d67159ea6fc",
+          "bytes": 173239,
+          "nominalCell": {
+            "left": 439,
+            "top": 976,
+            "width": 230,
+            "height": 443
+          },
+          "sourceCell": {
+            "left": 441,
+            "top": 982,
+            "width": 226,
+            "height": 375
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 218,
+            "height": 367
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 53296,
+          "footY": 376,
+          "foreground": {
+            "left": 88,
+            "top": 24,
+            "width": 209,
+            "height": 352
+          }
+        },
+        {
+          "star": 19,
+          "name": "차원 고리",
+          "path": "casual/towers/skins/frost/t19.png",
+          "sha256": "90cb419a2f6e6df3343243a1afc31bbbeb2462be1e1814cabc3ba64b502c4d73",
+          "bytes": 177857,
+          "nominalCell": {
+            "left": 669,
+            "top": 976,
+            "width": 213,
+            "height": 443
+          },
+          "sourceCell": {
+            "left": 671,
+            "top": 983,
+            "width": 212,
+            "height": 374
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 204,
+            "height": 366
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 54621,
+          "footY": 376,
+          "foreground": {
+            "left": 94,
+            "top": 24,
+            "width": 196,
+            "height": 352
+          }
+        },
+        {
+          "star": 20,
+          "name": "황제 성채",
+          "path": "casual/towers/skins/frost/t20.png",
+          "sha256": "5295560acfc2e130e48782c5aaee96c313ef42d9a84ad22ae3c1776e5fdbaf19",
+          "bytes": 178656,
+          "nominalCell": {
+            "left": 882,
+            "top": 976,
+            "width": 226,
+            "height": 443
+          },
+          "sourceCell": {
+            "left": 881,
+            "top": 974,
+            "width": 221,
+            "height": 391
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 213,
+            "height": 383
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 58840,
+          "footY": 376,
+          "foreground": {
+            "left": 94,
+            "top": 24,
+            "width": 196,
+            "height": 352
+          }
+        }
+      ]
+    },
+    "ember": {
+      "source": {
+        "path": "sources/ember-towers.png",
+        "sha256": "486b61e4d08a05ff1beb99663a9b20ae08cb0e462c0d07e8b5fa7ae044fa0e25",
+        "width": 1108,
+        "height": 1419,
+        "realAlpha": false,
+        "key": "magenta",
+        "droppedNoisePixels": 24
+      },
+      "material": {
+        "path": "dice/skins/ember/material-v101.png",
+        "sha256": "2de43461003deeeb3f4a97241d307bb649693b5ddf6c2f26f177e3dd74113af0",
+        "bytes": 471676,
+        "size": [
+          512,
+          512
+        ]
+      },
+      "towers": [
+        {
+          "star": 1,
+          "name": "궁수 망루",
+          "path": "casual/towers/skins/ember/t01.png",
+          "sha256": "1414fd5b7720eac1342b69dd2b3ba6c0da5ba793a1879d18b2fd5ca2ceb4b804",
+          "bytes": 145954,
+          "nominalCell": {
+            "left": 0,
+            "top": 0,
+            "width": 217,
+            "height": 322
+          },
+          "sourceCell": {
+            "left": 14,
+            "top": 17,
+            "width": 201,
+            "height": 302
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 193,
+            "height": 294
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 29787,
+          "footY": 376,
+          "foreground": {
+            "left": 77,
+            "top": 24,
+            "width": 231,
+            "height": 352
+          }
+        },
+        {
+          "star": 2,
+          "name": "쌍포 요새",
+          "path": "casual/towers/skins/ember/t02.png",
+          "sha256": "0ec9b197bb134efeb456abb88b8ec3517a4fd906a6f1f665a782c54bbef7e61b",
+          "bytes": 250440,
+          "nominalCell": {
+            "left": 217,
+            "top": 0,
+            "width": 246,
+            "height": 322
+          },
+          "sourceCell": {
+            "left": 219,
+            "top": 74,
+            "width": 240,
+            "height": 248
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 232,
+            "height": 240
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 39052,
+          "footY": 376,
+          "foreground": {
+            "left": 28,
+            "top": 37,
+            "width": 328,
+            "height": 339
+          }
+        },
+        {
+          "star": 3,
+          "name": "마력 결정탑",
+          "path": "casual/towers/skins/ember/t03.png",
+          "sha256": "b71faea959d80dcfb91f5212320212b4ddd759c710163ec6665165862dfeb6ff",
+          "bytes": 173075,
+          "nominalCell": {
+            "left": 463,
+            "top": 0,
+            "width": 213,
+            "height": 322
+          },
+          "sourceCell": {
+            "left": 468,
+            "top": 25,
+            "width": 196,
+            "height": 295
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 188,
+            "height": 287
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 33786,
+          "footY": 376,
+          "foreground": {
+            "left": 77,
+            "top": 24,
+            "width": 231,
+            "height": 352
+          }
+        },
+        {
+          "star": 4,
+          "name": "서리 제어탑",
+          "path": "casual/towers/skins/ember/t04.png",
+          "sha256": "4ea06e96e65221943e946b86ae4ad93799bffcc7740d97c6fd1e5b981e413719",
+          "bytes": 166649,
+          "nominalCell": {
+            "left": 676,
+            "top": 0,
+            "width": 225,
+            "height": 322
+          },
+          "sourceCell": {
+            "left": 688,
+            "top": 17,
+            "width": 201,
+            "height": 304
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 193,
+            "height": 296
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 34961,
+          "footY": 376,
+          "foreground": {
+            "left": 77,
+            "top": 24,
+            "width": 230,
+            "height": 352
+          }
+        },
+        {
+          "star": 5,
+          "name": "번개 봉화",
+          "path": "casual/towers/skins/ember/t05.png",
+          "sha256": "54404b1cdd2ccc91073c03cee97780e216252eae6a2602ef3dbb56d1ec9abf4a",
+          "bytes": 158304,
+          "nominalCell": {
+            "left": 901,
+            "top": 0,
+            "width": 207,
+            "height": 322
+          },
+          "sourceCell": {
+            "left": 913,
+            "top": 16,
+            "width": 185,
+            "height": 305
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 177,
+            "height": 297
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 32937,
+          "footY": 376,
+          "foreground": {
+            "left": 87,
+            "top": 24,
+            "width": 210,
+            "height": 352
+          }
+        },
+        {
+          "star": 6,
+          "name": "주사위 투석성",
+          "path": "casual/towers/skins/ember/t06.png",
+          "sha256": "55371d13a68bd7fb56bd1fcb2d27bcf10fb10e357ade3f4f7134c3ee6a1ff498",
+          "bytes": 198918,
+          "nominalCell": {
+            "left": 0,
+            "top": 322,
+            "width": 230,
+            "height": 328
+          },
+          "sourceCell": {
+            "left": 9,
+            "top": 350,
+            "width": 215,
+            "height": 298
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 207,
+            "height": 290
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 40964,
+          "footY": 376,
+          "foreground": {
+            "left": 67,
+            "top": 24,
+            "width": 251,
+            "height": 352
+          }
+        },
+        {
+          "star": 7,
+          "name": "천문 관측탑",
+          "path": "casual/towers/skins/ember/t07.png",
+          "sha256": "305f5a0916fd41fd5acd4f21980d270b0e4d370b3db02eb705d3defe7c6b0031",
+          "bytes": 162109,
+          "nominalCell": {
+            "left": 230,
+            "top": 322,
+            "width": 211,
+            "height": 328
+          },
+          "sourceCell": {
+            "left": 237,
+            "top": 335,
+            "width": 198,
+            "height": 312
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 190,
+            "height": 304
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 36140,
+          "footY": 376,
+          "foreground": {
+            "left": 82,
+            "top": 24,
+            "width": 220,
+            "height": 352
+          }
+        },
+        {
+          "star": 8,
+          "name": "쌍종 성문",
+          "path": "casual/towers/skins/ember/t08.png",
+          "sha256": "c72eed1445219dbada81df666d9429ecbf02c390373047c71cafb247af8b0130",
+          "bytes": 202027,
+          "nominalCell": {
+            "left": 441,
+            "top": 322,
+            "width": 239,
+            "height": 328
+          },
+          "sourceCell": {
+            "left": 448,
+            "top": 346,
+            "width": 228,
+            "height": 303
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 220,
+            "height": 295
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 42463,
+          "footY": 376,
+          "foreground": {
+            "left": 61,
+            "top": 24,
+            "width": 263,
+            "height": 352
+          }
+        },
+        {
+          "star": 9,
+          "name": "해시계",
+          "path": "casual/towers/skins/ember/t09.png",
+          "sha256": "1114cf08f7c5f7724a1eb0e8feb96e9b5e548ca7150dfc9b64334d38fbcb5e3c",
+          "bytes": 188906,
+          "nominalCell": {
+            "left": 680,
+            "top": 322,
+            "width": 224,
+            "height": 328
+          },
+          "sourceCell": {
+            "left": 685,
+            "top": 348,
+            "width": 217,
+            "height": 300
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 209,
+            "height": 292
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 39244,
+          "footY": 376,
+          "foreground": {
+            "left": 66,
+            "top": 24,
+            "width": 252,
+            "height": 352
+          }
+        },
+        {
+          "star": 10,
+          "name": "나침반",
+          "path": "casual/towers/skins/ember/t10.png",
+          "sha256": "42aac25b0db146eafa95c91327c1d60749f4de7082f5cd60b12e0ebc7e07efab",
+          "bytes": 151739,
+          "nominalCell": {
+            "left": 904,
+            "top": 322,
+            "width": 204,
+            "height": 328
+          },
+          "sourceCell": {
+            "left": 906,
+            "top": 336,
+            "width": 185,
+            "height": 312
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 177,
+            "height": 304
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 33013,
+          "footY": 376,
+          "foreground": {
+            "left": 90,
+            "top": 24,
+            "width": 205,
+            "height": 352
+          }
+        },
+        {
+          "star": 11,
+          "name": "삼단 보루",
+          "path": "casual/towers/skins/ember/t11.png",
+          "sha256": "242c2eb2483bc9cd6bcb1a0361df555c66df7bb401d4f084739b577bee75dffb",
+          "bytes": 182164,
+          "nominalCell": {
+            "left": 0,
+            "top": 650,
+            "width": 224,
+            "height": 324
+          },
+          "sourceCell": {
+            "left": 3,
+            "top": 656,
+            "width": 218,
+            "height": 316
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 210,
+            "height": 308
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 41511,
+          "footY": 376,
+          "foreground": {
+            "left": 72,
+            "top": 24,
+            "width": 240,
+            "height": 352
+          }
+        },
+        {
+          "star": 12,
+          "name": "마법 서고",
+          "path": "casual/towers/skins/ember/t12.png",
+          "sha256": "f6100f45a39ce65464c97b9371385dad92441c64b122d4a7135373c091895da6",
+          "bytes": 172814,
+          "nominalCell": {
+            "left": 224,
+            "top": 650,
+            "width": 205,
+            "height": 324
+          },
+          "sourceCell": {
+            "left": 228,
+            "top": 649,
+            "width": 201,
+            "height": 323
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 193,
+            "height": 315
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 41361,
+          "footY": 376,
+          "foreground": {
+            "left": 84,
+            "top": 24,
+            "width": 216,
+            "height": 352
+          }
+        },
+        {
+          "star": 13,
+          "name": "수호자 성채",
+          "path": "casual/towers/skins/ember/t13.png",
+          "sha256": "c6e8148d9fa040c324921349be2f8f8a23b83d85f596b3e6652f98213e6b7e92",
+          "bytes": 204017,
+          "nominalCell": {
+            "left": 429,
+            "top": 650,
+            "width": 255,
+            "height": 324
+          },
+          "sourceCell": {
+            "left": 430,
+            "top": 646,
+            "width": 255,
+            "height": 330
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 247,
+            "height": 322
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 51461,
+          "footY": 376,
+          "foreground": {
+            "left": 57,
+            "top": 24,
+            "width": 270,
+            "height": 352
+          }
+        },
+        {
+          "star": 14,
+          "name": "구체 온실",
+          "path": "casual/towers/skins/ember/t14.png",
+          "sha256": "1f392dc7383ab35e941c9682f680fdd6bee36250d1efd8036a817a58ff0e503c",
+          "bytes": 190927,
+          "nominalCell": {
+            "left": 684,
+            "top": 650,
+            "width": 217,
+            "height": 324
+          },
+          "sourceCell": {
+            "left": 684,
+            "top": 657,
+            "width": 211,
+            "height": 318
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 203,
+            "height": 310
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 43574,
+          "footY": 376,
+          "foreground": {
+            "left": 77,
+            "top": 24,
+            "width": 231,
+            "height": 352
+          }
+        },
+        {
+          "star": 15,
+          "name": "부유 왕관",
+          "path": "casual/towers/skins/ember/t15.png",
+          "sha256": "0a6926fa58cb92fc74b2ad939744d9b3d4996c0caf6c8c29fca884eef63bffbc",
+          "bytes": 149659,
+          "nominalCell": {
+            "left": 901,
+            "top": 650,
+            "width": 207,
+            "height": 324
+          },
+          "sourceCell": {
+            "left": 907,
+            "top": 646,
+            "width": 193,
+            "height": 327
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 185,
+            "height": 319
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 35024,
+          "footY": 376,
+          "foreground": {
+            "left": 90,
+            "top": 24,
+            "width": 204,
+            "height": 352
+          }
+        },
+        {
+          "star": 16,
+          "name": "사첨탑 궁정",
+          "path": "casual/towers/skins/ember/t16.png",
+          "sha256": "80f8d7835b0d039fa04a05bda93baf952dec904259041720e1c1ffdcec2072ce",
+          "bytes": 154069,
+          "nominalCell": {
+            "left": 0,
+            "top": 974,
+            "width": 224,
+            "height": 445
+          },
+          "sourceCell": {
+            "left": 6,
+            "top": 977,
+            "width": 219,
+            "height": 375
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 211,
+            "height": 367
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 48119,
+          "footY": 376,
+          "foreground": {
+            "left": 91,
+            "top": 24,
+            "width": 202,
+            "height": 352
+          }
+        },
+        {
+          "star": 17,
+          "name": "진자 관문",
+          "path": "casual/towers/skins/ember/t17.png",
+          "sha256": "6698008564c995df77114b1997b7b02b477138ad565df37dbdf8c30b6dfb21cc",
+          "bytes": 157869,
+          "nominalCell": {
+            "left": 224,
+            "top": 974,
+            "width": 208,
+            "height": 445
+          },
+          "sourceCell": {
+            "left": 224,
+            "top": 991,
+            "width": 210,
+            "height": 361
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 202,
+            "height": 353
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 45024,
+          "footY": 376,
+          "foreground": {
+            "left": 92,
+            "top": 24,
+            "width": 201,
+            "height": 352
+          }
+        },
+        {
+          "star": 18,
+          "name": "천체 궁전",
+          "path": "casual/towers/skins/ember/t18.png",
+          "sha256": "c9b7ad8df5451f8b4ae9fce27a73861f251a5297caadd06d0e04526b9bba3321",
+          "bytes": 191910,
+          "nominalCell": {
+            "left": 432,
+            "top": 974,
+            "width": 241,
+            "height": 445
+          },
+          "sourceCell": {
+            "left": 431,
+            "top": 990,
+            "width": 243,
+            "height": 365
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 235,
+            "height": 357
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 57956,
+          "footY": 376,
+          "foreground": {
+            "left": 76,
+            "top": 24,
+            "width": 232,
+            "height": 352
+          }
+        },
+        {
+          "star": 19,
+          "name": "차원 고리",
+          "path": "casual/towers/skins/ember/t19.png",
+          "sha256": "0abaf3b6ace3340234d913ce0f66108675df56796bde33529deed3912da1c14a",
+          "bytes": 175494,
+          "nominalCell": {
+            "left": 673,
+            "top": 974,
+            "width": 210,
+            "height": 445
+          },
+          "sourceCell": {
+            "left": 673,
+            "top": 984,
+            "width": 210,
+            "height": 370
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 202,
+            "height": 362
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 53669,
+          "footY": 376,
+          "foreground": {
+            "left": 94,
+            "top": 24,
+            "width": 196,
+            "height": 352
+          }
+        },
+        {
+          "star": 20,
+          "name": "황제 성채",
+          "path": "casual/towers/skins/ember/t20.png",
+          "sha256": "e1c80e1b18b414b53b3ef8e840c7661d2ee3d969f1e2b9ec641b09eab440c085",
+          "bytes": 163261,
+          "nominalCell": {
+            "left": 883,
+            "top": 974,
+            "width": 225,
+            "height": 445
+          },
+          "sourceCell": {
+            "left": 884,
+            "top": 969,
+            "width": 223,
+            "height": 390
+          },
+          "sourceCrop": {
+            "left": 4,
+            "top": 4,
+            "width": 215,
+            "height": 382
+          },
+          "touchesCell": false,
+          "opaqueSourcePixels": 54901,
+          "footY": 376,
+          "foreground": {
+            "left": 93,
+            "top": 24,
+            "width": 198,
+            "height": 352
+          }
+        }
+      ]
+    }
+  }
+}

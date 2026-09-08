@@ -1,0 +1,866 @@
+[
+  {
+    "id": "w116",
+    "view": "side",
+    "baseRigId": "w015",
+    "source": "tools/art-review/directional-101/forest-swamp-01-side-parts.png",
+    "sha256": "8ceb00c5ec6bedecf771ffc5e5c4c7e424b4832a261cb31dd375fa510c9fc5af",
+    "sourceBounds": [
+      null,
+      null,
+      311,
+      260
+    ],
+    "bodyTarget": {
+      "height": 260,
+      "top": 50,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w116",
+    "view": "front",
+    "baseRigId": "w015",
+    "source": "tools/art-review/directional-101/forest-swamp-01-front-back-parts.png",
+    "sha256": "ccdc188105bd7deb6a4467a80938be8e4decaeaf63c0cb167796b2551e55371f",
+    "sourceBounds": [
+      null,
+      null,
+      204,
+      276
+    ],
+    "bodyTarget": {
+      "height": 270,
+      "top": 40,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w116",
+    "view": "back",
+    "baseRigId": "w015",
+    "source": "tools/art-review/directional-101/forest-swamp-01-back-correction.png",
+    "sha256": "3154a6a007ab8954b62abfcbd782722af65e0a45f12844d5428f36cd8d55354b",
+    "sourceBounds": [
+      null,
+      null,
+      255,
+      353
+    ],
+    "bodyTarget": {
+      "height": 330,
+      "top": 35,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w132",
+    "view": "side",
+    "baseRigId": "w031",
+    "source": "tools/art-review/directional-101/middle-waves/t4-biped-01a-side-front-parts-clean.png",
+    "sha256": "21590a166e00074e0759362bcbb3009fbb62cc6aefaa0f6bcfa3f73e29d97976",
+    "sourceBounds": [
+      null,
+      null,
+      258,
+      338
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 258.2899408284024
+    }
+  },
+  {
+    "id": "w132",
+    "view": "front",
+    "baseRigId": "w031",
+    "source": "tools/art-review/directional-101/middle-waves/t4-biped-01a-side-front-parts-clean.png",
+    "sha256": "21590a166e00074e0759362bcbb3009fbb62cc6aefaa0f6bcfa3f73e29d97976",
+    "sourceBounds": [
+      null,
+      null,
+      293,
+      341
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 266.3108504398827
+    }
+  },
+  {
+    "id": "w132",
+    "view": "back",
+    "baseRigId": "w031",
+    "source": "tools/art-review/directional-101/middle-waves/t4-biped-01a-back-parts-clean.png",
+    "sha256": "978de260a5dfebafbacbbcd1eba038f991d9f1958c03a5b0e470bcd483ef6489",
+    "sourceBounds": [
+      null,
+      null,
+      322,
+      377
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 259.84350132625997
+    }
+  },
+  {
+    "id": "w134",
+    "view": "side",
+    "baseRigId": "w033",
+    "source": "tools/art-review/directional-101/middle-waves/t4-biped-01a-side-front-parts-clean.png",
+    "sha256": "21590a166e00074e0759362bcbb3009fbb62cc6aefaa0f6bcfa3f73e29d97976",
+    "sourceBounds": [
+      null,
+      null,
+      314,
+      295
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 259.19322033898305
+    }
+  },
+  {
+    "id": "w134",
+    "view": "front",
+    "baseRigId": "w033",
+    "source": "tools/art-review/directional-101/middle-waves/t4-biped-01a-side-front-parts-clean.png",
+    "sha256": "21590a166e00074e0759362bcbb3009fbb62cc6aefaa0f6bcfa3f73e29d97976",
+    "sourceBounds": [
+      null,
+      null,
+      316,
+      292
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 260.86986301369865
+    }
+  },
+  {
+    "id": "w134",
+    "view": "back",
+    "baseRigId": "w033",
+    "source": "tools/art-review/directional-101/middle-waves/t4-biped-01a-back-parts-clean.png",
+    "sha256": "978de260a5dfebafbacbbcd1eba038f991d9f1958c03a5b0e470bcd483ef6489",
+    "sourceBounds": [
+      null,
+      null,
+      420,
+      331
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 261.70996978851963
+    }
+  },
+  {
+    "id": "w135",
+    "view": "side",
+    "baseRigId": "w034",
+    "source": "tools/art-review/directional-101/middle-waves/t4-biped-01b-side-front-parts.png",
+    "sha256": "bc5d7ae111b97df969ac2b6d5e8c26fd49cf1b0097d127a83ebd430eaab5a180",
+    "sourceBounds": [
+      null,
+      null,
+      293,
+      321
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 272.4299065420561
+    }
+  },
+  {
+    "id": "w135",
+    "view": "front",
+    "baseRigId": "w034",
+    "source": "tools/art-review/directional-101/middle-waves/t4-biped-01b-side-front-parts.png",
+    "sha256": "bc5d7ae111b97df969ac2b6d5e8c26fd49cf1b0097d127a83ebd430eaab5a180",
+    "sourceBounds": [
+      null,
+      null,
+      284,
+      305
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 251.80983606557376
+    }
+  },
+  {
+    "id": "w135",
+    "view": "back",
+    "baseRigId": "w034",
+    "source": "tools/art-review/directional-101/middle-waves/t4-biped-01b-back-parts.png",
+    "sha256": "0bcfbe1317af882c1b804cf75f73fe1c4436fbf5685ecf619ad79a6456bd8c93",
+    "sourceBounds": [
+      null,
+      null,
+      432,
+      407
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 271.9213759213759
+    }
+  },
+  {
+    "id": "w136",
+    "view": "side",
+    "baseRigId": "w035",
+    "source": "tools/art-review/directional-101/middle-waves/t4-biped-01b-side-front-parts.png",
+    "sha256": "bc5d7ae111b97df969ac2b6d5e8c26fd49cf1b0097d127a83ebd430eaab5a180",
+    "sourceBounds": [
+      null,
+      null,
+      287,
+      333
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 268.92792792792795
+    }
+  },
+  {
+    "id": "w136",
+    "view": "front",
+    "baseRigId": "w035",
+    "source": "tools/art-review/directional-101/middle-waves/t4-biped-01b-side-front-parts.png",
+    "sha256": "bc5d7ae111b97df969ac2b6d5e8c26fd49cf1b0097d127a83ebd430eaab5a180",
+    "sourceBounds": [
+      null,
+      null,
+      304,
+      337
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 254.64688427299703
+    }
+  },
+  {
+    "id": "w136",
+    "view": "back",
+    "baseRigId": "w035",
+    "source": "tools/art-review/directional-101/middle-waves/t4-biped-01b-back-parts.png",
+    "sha256": "0bcfbe1317af882c1b804cf75f73fe1c4436fbf5685ecf619ad79a6456bd8c93",
+    "sourceBounds": [
+      null,
+      null,
+      447,
+      411
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 272.31386861313865
+    }
+  },
+  {
+    "id": "w138",
+    "view": "side",
+    "baseRigId": "w037",
+    "source": "tools/art-review/directional-101/middle-waves/t4-biped-02a-side-front-parts-clean.png",
+    "sha256": "7c643f17a93baaa783ba77b484fa9b55aa17f43f261b8ae7721bc84286314678",
+    "sourceBounds": [
+      null,
+      null,
+      330,
+      401
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 254.76558603491273
+    }
+  },
+  {
+    "id": "w138",
+    "view": "front",
+    "baseRigId": "w037",
+    "source": "tools/art-review/directional-101/middle-waves/t4-biped-02a-side-front-parts-clean.png",
+    "sha256": "7c643f17a93baaa783ba77b484fa9b55aa17f43f261b8ae7721bc84286314678",
+    "sourceBounds": [
+      null,
+      null,
+      307,
+      368
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 276.02173913043475
+    }
+  },
+  {
+    "id": "w138",
+    "view": "back",
+    "baseRigId": "w037",
+    "source": "tools/art-review/directional-101/middle-waves/w037-back-single-parts.png",
+    "sha256": "7d0097e9e416ff42daa294a0d5cbc9dac62a23dbc950ce11fed45638d0913fb7",
+    "sourceBounds": [
+      null,
+      null,
+      543,
+      673
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 276.574294205052
+    }
+  },
+  {
+    "id": "w139",
+    "view": "side",
+    "baseRigId": "w038",
+    "source": "tools/art-review/directional-101/middle-waves/t4-biped-02a-side-front-parts-clean.png",
+    "sha256": "7c643f17a93baaa783ba77b484fa9b55aa17f43f261b8ae7721bc84286314678",
+    "sourceBounds": [
+      null,
+      null,
+      231,
+      310
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 240.3516129032258
+    }
+  },
+  {
+    "id": "w139",
+    "view": "front",
+    "baseRigId": "w038",
+    "source": "tools/art-review/directional-101/middle-waves/t4-biped-02a-side-front-parts-clean.png",
+    "sha256": "7c643f17a93baaa783ba77b484fa9b55aa17f43f261b8ae7721bc84286314678",
+    "sourceBounds": [
+      null,
+      null,
+      256,
+      297
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 272.8080808080808
+    }
+  },
+  {
+    "id": "w139",
+    "view": "back",
+    "baseRigId": "w038",
+    "source": "tools/art-review/directional-101/middle-waves/w038-back-single-parts.png",
+    "sha256": "521521e557655630c622394c200bf8a56f7930b70c16e3cb797fe8fd08a766b7",
+    "sourceBounds": [
+      null,
+      null,
+      472,
+      633
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 258.2369668246445
+    }
+  },
+  {
+    "id": "w140",
+    "view": "side",
+    "baseRigId": "w039",
+    "source": "tools/art-review/directional-101/middle-waves/t4-biped-02b-side-front-parts.png",
+    "sha256": "e63d21e131d3fd4b95ee3a0ed89a6ca2d2de5ff2e4bd84ac6a39895aa563da89",
+    "sourceBounds": [
+      null,
+      null,
+      304,
+      391
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 295.6521739130435
+    }
+  },
+  {
+    "id": "w140",
+    "view": "front",
+    "baseRigId": "w039",
+    "source": "tools/art-review/directional-101/middle-waves/t4-biped-02b-side-front-parts.png",
+    "sha256": "e63d21e131d3fd4b95ee3a0ed89a6ca2d2de5ff2e4bd84ac6a39895aa563da89",
+    "sourceBounds": [
+      null,
+      null,
+      423,
+      384
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 226.2578125
+    }
+  },
+  {
+    "id": "w140",
+    "view": "back",
+    "baseRigId": "w039",
+    "source": "tools/art-review/directional-101/middle-waves/t4-biped-02b-back-parts.png",
+    "sha256": "6deb48bfed035f1853d984ed44317e59142187c2a995d27332f3f55fe441e04f",
+    "sourceBounds": [
+      null,
+      null,
+      524,
+      546
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 294.86813186813185
+    }
+  },
+  {
+    "id": "w142",
+    "view": "side",
+    "baseRigId": "w041",
+    "source": "tools/art-review/directional-101/middle-waves/t5-biped-01a-side-front-parts-clean.png",
+    "sha256": "32d6b0fdcc415df0ddf01b3189fec299a38f3e3c17d12b15d0e0d88afaa4c09c",
+    "sourceBounds": [
+      null,
+      null,
+      244,
+      330
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 275.96363636363634
+    }
+  },
+  {
+    "id": "w142",
+    "view": "front",
+    "baseRigId": "w041",
+    "source": "tools/art-review/directional-101/middle-waves/t5-biped-01a-side-front-parts-clean.png",
+    "sha256": "32d6b0fdcc415df0ddf01b3189fec299a38f3e3c17d12b15d0e0d88afaa4c09c",
+    "sourceBounds": [
+      null,
+      null,
+      268,
+      317
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 275.02208201892745
+    }
+  },
+  {
+    "id": "w142",
+    "view": "back",
+    "baseRigId": "w041",
+    "source": "tools/art-review/directional-101/middle-waves/t5-biped-01a-back-parts.png",
+    "sha256": "a60d20734c978ee2b5376e1c7ceae32bc2da87af69c2ae05fb44b937a7331f93",
+    "sourceBounds": [
+      null,
+      null,
+      372,
+      413
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 250.5956416464891
+    }
+  },
+  {
+    "id": "w143",
+    "view": "side",
+    "baseRigId": "w042",
+    "source": "tools/art-review/directional-101/middle-waves/t5-biped-01a-side-front-parts.png",
+    "sha256": "ddb67a09f7d79641194fec73d7e7841ba26ef74b7aa5fee11783a2fdc529dff7",
+    "sourceBounds": [
+      null,
+      null,
+      255,
+      302
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 247.1341059602649
+    }
+  },
+  {
+    "id": "w143",
+    "view": "front",
+    "baseRigId": "w042",
+    "source": "tools/art-review/directional-101/middle-waves/t5-biped-01a-side-front-parts-clean.png",
+    "sha256": "32d6b0fdcc415df0ddf01b3189fec299a38f3e3c17d12b15d0e0d88afaa4c09c",
+    "sourceBounds": [
+      null,
+      null,
+      264,
+      302
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 241.57615894039733
+    }
+  },
+  {
+    "id": "w143",
+    "view": "back",
+    "baseRigId": "w042",
+    "source": "tools/art-review/directional-101/middle-waves/t5-biped-01a-back-parts.png",
+    "sha256": "a60d20734c978ee2b5376e1c7ceae32bc2da87af69c2ae05fb44b937a7331f93",
+    "sourceBounds": [
+      null,
+      null,
+      353,
+      388
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 268.2822164948454
+    }
+  },
+  {
+    "id": "w146",
+    "view": "side",
+    "baseRigId": "w045",
+    "source": "tools/art-review/directional-101/middle-waves/t5-biped-01b-side-front-parts.png",
+    "sha256": "db5e3790e17fdfe725baf716a2a756f05d6a7e781715ab2abf889d63939e7248",
+    "sourceBounds": [
+      null,
+      null,
+      255,
+      349
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 280.11174785100286
+    }
+  },
+  {
+    "id": "w146",
+    "view": "front",
+    "baseRigId": "w045",
+    "source": "tools/art-review/directional-101/middle-waves/t5-biped-01b-side-front-parts.png",
+    "sha256": "db5e3790e17fdfe725baf716a2a756f05d6a7e781715ab2abf889d63939e7248",
+    "sourceBounds": [
+      null,
+      null,
+      323,
+      347
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 272.7550432276657
+    }
+  },
+  {
+    "id": "w146",
+    "view": "back",
+    "baseRigId": "w045",
+    "source": "tools/art-review/directional-101/middle-waves/t5-biped-01b-back-parts.png",
+    "sha256": "6d98d5fc17f9780cd32d32a88484f694c0257e4255b0aebfd0f636bca2d30f85",
+    "sourceBounds": [
+      null,
+      null,
+      497,
+      441
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 271.2142857142857
+    }
+  },
+  {
+    "id": "w147",
+    "view": "side",
+    "baseRigId": "w046",
+    "source": "tools/art-review/directional-101/middle-waves/t5-biped-01b-side-front-parts.png",
+    "sha256": "db5e3790e17fdfe725baf716a2a756f05d6a7e781715ab2abf889d63939e7248",
+    "sourceBounds": [
+      null,
+      null,
+      193,
+      329
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 261.27963525835867
+    }
+  },
+  {
+    "id": "w147",
+    "view": "front",
+    "baseRigId": "w046",
+    "source": "tools/art-review/directional-101/middle-waves/t5-biped-01b-side-front-parts.png",
+    "sha256": "db5e3790e17fdfe725baf716a2a756f05d6a7e781715ab2abf889d63939e7248",
+    "sourceBounds": [
+      null,
+      null,
+      231,
+      343
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 266.10204081632656
+    }
+  },
+  {
+    "id": "w147",
+    "view": "back",
+    "baseRigId": "w046",
+    "source": "tools/art-review/directional-101/middle-waves/t5-biped-01b-back-parts.png",
+    "sha256": "6d98d5fc17f9780cd32d32a88484f694c0257e4255b0aebfd0f636bca2d30f85",
+    "sourceBounds": [
+      null,
+      null,
+      410,
+      368
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 271.04076086956525
+    }
+  },
+  {
+    "id": "w148",
+    "view": "side",
+    "baseRigId": "w047",
+    "source": "tools/art-review/directional-101/middle-waves/t5-biped-02a-side-front-parts.png",
+    "sha256": "a1aa433d87fe5b3f48a99d288db82c4325e3ff4e116ba7ba89efe1f66f4e7e58",
+    "sourceBounds": [
+      null,
+      null,
+      295,
+      311
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w148",
+    "view": "front",
+    "baseRigId": "w047",
+    "source": "tools/art-review/directional-101/middle-waves/t5-biped-02a-side-front-parts.png",
+    "sha256": "a1aa433d87fe5b3f48a99d288db82c4325e3ff4e116ba7ba89efe1f66f4e7e58",
+    "sourceBounds": [
+      null,
+      null,
+      308,
+      309
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 254.50485436893203
+    }
+  },
+  {
+    "id": "w148",
+    "view": "back",
+    "baseRigId": "w047",
+    "source": "tools/art-review/directional-101/middle-waves/t5-biped-02a-back-parts.png",
+    "sha256": "8f9c8ff559ca14271adaf18131bf665c21dd1746420cd7aa92a499a34c8c2bb8",
+    "sourceBounds": [
+      null,
+      null,
+      410,
+      433
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 294.3487297921478
+    }
+  },
+  {
+    "id": "w150",
+    "view": "side",
+    "baseRigId": "w049",
+    "source": "tools/art-review/directional-101/middle-waves/t5-biped-02a-side-front-parts.png",
+    "sha256": "a1aa433d87fe5b3f48a99d288db82c4325e3ff4e116ba7ba89efe1f66f4e7e58",
+    "sourceBounds": [
+      null,
+      null,
+      297,
+      305
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 254.5393442622951
+    }
+  },
+  {
+    "id": "w150",
+    "view": "front",
+    "baseRigId": "w049",
+    "source": "tools/art-review/directional-101/middle-waves/w049-front-single-parts-clean.png",
+    "sha256": "ce89de861a0f4c5ec0d4f68026413e880daad95fd2f174a65e1147566e0c5264",
+    "sourceBounds": [
+      null,
+      null,
+      480,
+      554
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w150",
+    "view": "back",
+    "baseRigId": "w049",
+    "source": "tools/art-review/directional-101/middle-waves/t5-biped-02a-back-parts.png",
+    "sha256": "8f9c8ff559ca14271adaf18131bf665c21dd1746420cd7aa92a499a34c8c2bb8",
+    "sourceBounds": [
+      null,
+      null,
+      364,
+      380
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 284.7368421052632
+    }
+  },
+  {
+    "id": "w152",
+    "view": "side",
+    "baseRigId": "w051",
+    "source": "tools/art-review/directional-101/middle-waves/t6-biped-01a-side-front-parts.png",
+    "sha256": "c300bd1c2b34d151dc24767d3b05f7fc8b39f4ea4a7383cc1d74f76eefbd1498",
+    "sourceBounds": [
+      null,
+      null,
+      267,
+      316
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 221.78006329113924
+    }
+  },
+  {
+    "id": "w152",
+    "view": "front",
+    "baseRigId": "w051",
+    "source": "tools/art-review/directional-101/middle-waves/t6-biped-01a-side-front-parts.png",
+    "sha256": "c300bd1c2b34d151dc24767d3b05f7fc8b39f4ea4a7383cc1d74f76eefbd1498",
+    "sourceBounds": [
+      null,
+      null,
+      259,
+      302
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 258.57284768211923
+    }
+  },
+  {
+    "id": "w152",
+    "view": "back",
+    "baseRigId": "w051",
+    "source": "tools/art-review/directional-101/middle-waves/t6-biped-01a-back-parts.png",
+    "sha256": "6c560506633769ef3f660a426b54f653db43d3c06ad5d1d59f0705d95a87021d",
+    "sourceBounds": [
+      null,
+      null,
+      335,
+      387
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 258.5968992248062
+    }
+  },
+  {
+    "id": "w154",
+    "view": "side",
+    "baseRigId": "w053",
+    "source": "tools/art-review/directional-101/middle-waves/t6-biped-01a-side-front-parts.png",
+    "sha256": "c300bd1c2b34d151dc24767d3b05f7fc8b39f4ea4a7383cc1d74f76eefbd1498",
+    "sourceBounds": [
+      null,
+      null,
+      182,
+      308
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 279.04545454545456
+    }
+  },
+  {
+    "id": "w154",
+    "view": "front",
+    "baseRigId": "w053",
+    "source": "tools/art-review/directional-101/middle-waves/t6-biped-01a-side-front-parts.png",
+    "sha256": "c300bd1c2b34d151dc24767d3b05f7fc8b39f4ea4a7383cc1d74f76eefbd1498",
+    "sourceBounds": [
+      null,
+      null,
+      220,
+      315
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 266.4761904761905
+    }
+  },
+  {
+    "id": "w154",
+    "view": "back",
+    "baseRigId": "w053",
+    "source": "tools/art-review/directional-101/middle-waves/t6-biped-01a-back-parts.png",
+    "sha256": "6c560506633769ef3f660a426b54f653db43d3c06ad5d1d59f0705d95a87021d",
+    "sourceBounds": [
+      null,
+      null,
+      266,
+      387
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 251.87596899224806
+    }
+  }
+]

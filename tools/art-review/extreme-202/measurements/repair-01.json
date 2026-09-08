@@ -1,0 +1,389 @@
+{
+  "source": "tools/art-review/extreme-202/sources/repair-01.png",
+  "sourceSha256": "103770ab5754f0ddcde3124c1b89c8da7dbc88fed7a167fef2f6966b16794d3d",
+  "actualWidth": 1086,
+  "actualHeight": 1448,
+  "originalHasAlpha": false,
+  "hasRealTransparency": false,
+  "magentaPixelsRemoved": 978939,
+  "cols": 3,
+  "rows": 4,
+  "cells": 12,
+  "measurements": [
+    {
+      "assetId": "w183",
+      "view": "side",
+      "sourceCell": [
+        27,
+        48,
+        405,
+        262
+      ],
+      "paddedBounds": [
+        4,
+        4,
+        405,
+        262
+      ],
+      "body": "tools/art-review/extreme-202/bodies/repair-01/w183-side.png",
+      "sha256": "d40f5cfa1c891f5a000266c758a4f45dedbdcd29174ccddefa4d40947264f2af",
+      "foregroundPixels": 49974,
+      "boundaryPixels": 0,
+      "previousTarget": {
+        "height": 260,
+        "top": 65,
+        "centerX": 256
+      },
+      "newTarget": {
+        "height": 260,
+        "top": 65,
+        "centerX": 256
+      },
+      "baseRigId": "w082"
+    },
+    {
+      "assetId": "w183",
+      "view": "front",
+      "sourceCell": [
+        472,
+        44,
+        214,
+        294
+      ],
+      "paddedBounds": [
+        4,
+        4,
+        214,
+        294
+      ],
+      "body": "tools/art-review/extreme-202/bodies/repair-01/w183-front.png",
+      "sha256": "d95060ce39e5954f7d6b0a1df3e90163846b7b1cfbecf59e018bd826562b375b",
+      "foregroundPixels": 43985,
+      "boundaryPixels": 0,
+      "previousTarget": {
+        "height": 300,
+        "top": 65,
+        "centerX": 256
+      },
+      "newTarget": {
+        "height": 300,
+        "top": 65,
+        "centerX": 256
+      },
+      "baseRigId": "w082"
+    },
+    {
+      "assetId": "w183",
+      "view": "back",
+      "sourceCell": [
+        785,
+        47,
+        183,
+        310
+      ],
+      "paddedBounds": [
+        4,
+        4,
+        183,
+        310
+      ],
+      "body": "tools/art-review/extreme-202/bodies/repair-01/w183-back.png",
+      "sha256": "d34955f1f1f5832db0eaea40d1d538cb83c20d5b9da410629d8e67f0c2af81c1",
+      "foregroundPixels": 40897,
+      "boundaryPixels": 0,
+      "previousTarget": {
+        "height": 300,
+        "top": 65,
+        "centerX": 256
+      },
+      "newTarget": {
+        "height": 300,
+        "top": 65,
+        "centerX": 256
+      },
+      "baseRigId": "w082"
+    },
+    {
+      "assetId": "w124",
+      "view": "side",
+      "sourceCell": [
+        29,
+        417,
+        395,
+        206
+      ],
+      "paddedBounds": [
+        4,
+        4,
+        395,
+        206
+      ],
+      "body": "tools/art-review/extreme-202/bodies/repair-01/w124-side.png",
+      "sha256": "0fd37db89fa21e11f9f7a9fcdae92c4c2deae4edebb4d0402e66b33a5a24a95e",
+      "foregroundPixels": 42487,
+      "boundaryPixels": 0,
+      "previousTarget": {
+        "height": 145,
+        "top": 195,
+        "centerX": 256
+      },
+      "newTarget": {
+        "height": 145,
+        "top": 195,
+        "centerX": 256
+      },
+      "baseRigId": "w023"
+    },
+    {
+      "assetId": "w124",
+      "view": "front",
+      "sourceCell": [
+        452,
+        395,
+        248,
+        271
+      ],
+      "paddedBounds": [
+        4,
+        4,
+        248,
+        271
+      ],
+      "body": "tools/art-review/extreme-202/bodies/repair-01/w124-front.png",
+      "sha256": "f3fea897133530c3e514f566a613952554da37a3c99eb84aecabe6201fa5569a",
+      "foregroundPixels": 47258,
+      "boundaryPixels": 0,
+      "previousTarget": {
+        "height": 240,
+        "top": 120,
+        "centerX": 256
+      },
+      "newTarget": {
+        "height": 240,
+        "top": 120,
+        "centerX": 256
+      },
+      "baseRigId": "w023"
+    },
+    {
+      "assetId": "w124",
+      "view": "back",
+      "sourceCell": [
+        771,
+        395,
+        236,
+        273
+      ],
+      "paddedBounds": [
+        4,
+        4,
+        236,
+        273
+      ],
+      "body": "tools/art-review/extreme-202/bodies/repair-01/w124-back.png",
+      "sha256": "761ff67f9a3ce8d77b8b9034f2a6fa61c831cc3f94d9ea908b12bc319b754d86",
+      "foregroundPixels": 42998,
+      "boundaryPixels": 0,
+      "previousTarget": {
+        "height": 240,
+        "top": 120,
+        "centerX": 256
+      },
+      "newTarget": {
+        "height": 240,
+        "top": 120,
+        "centerX": 256
+      },
+      "baseRigId": "w023"
+    },
+    {
+      "assetId": "w123",
+      "view": "side",
+      "sourceCell": [
+        41,
+        729,
+        322,
+        296
+      ],
+      "paddedBounds": [
+        4,
+        4,
+        322,
+        296
+      ],
+      "body": "tools/art-review/extreme-202/bodies/repair-01/w123-side.png",
+      "sha256": "3adc4b5e30435c7d41f71dece37e236a56ad5c4f4ffafc4ea555afe22a912d9c",
+      "foregroundPixels": 74163,
+      "boundaryPixels": 0,
+      "previousTarget": {
+        "height": 180,
+        "top": 155,
+        "centerX": 256
+      },
+      "newTarget": {
+        "height": 180,
+        "top": 155,
+        "centerX": 256
+      },
+      "baseRigId": "w022"
+    },
+    {
+      "assetId": "w123",
+      "view": "front",
+      "sourceCell": [
+        417,
+        717,
+        300,
+        301
+      ],
+      "paddedBounds": [
+        4,
+        4,
+        300,
+        301
+      ],
+      "body": "tools/art-review/extreme-202/bodies/repair-01/w123-front.png",
+      "sha256": "75a0d10f5afc47cdea73cbffd88843a20c03ac38231c58112bbe65588352845e",
+      "foregroundPixels": 70451,
+      "boundaryPixels": 0,
+      "previousTarget": {
+        "height": 190,
+        "top": 135,
+        "centerX": 256
+      },
+      "newTarget": {
+        "height": 190,
+        "top": 135,
+        "centerX": 256
+      },
+      "baseRigId": "w022"
+    },
+    {
+      "assetId": "w123",
+      "view": "back",
+      "sourceCell": [
+        745,
+        727,
+        300,
+        297
+      ],
+      "paddedBounds": [
+        4,
+        4,
+        300,
+        297
+      ],
+      "body": "tools/art-review/extreme-202/bodies/repair-01/w123-back.png",
+      "sha256": "9b915c314008d0ab8327ead6694825c3e178bb549c909366a8999821fe9de12e",
+      "foregroundPixels": 68793,
+      "boundaryPixels": 0,
+      "previousTarget": {
+        "height": 190,
+        "top": 135,
+        "centerX": 256
+      },
+      "newTarget": {
+        "height": 190,
+        "top": 135,
+        "centerX": 256
+      },
+      "baseRigId": "w022"
+    },
+    {
+      "assetId": "w130",
+      "view": "side",
+      "sourceCell": [
+        110,
+        1074,
+        230,
+        269
+      ],
+      "paddedBounds": [
+        4,
+        4,
+        230,
+        269
+      ],
+      "body": "tools/art-review/extreme-202/bodies/repair-01/w130-side.png",
+      "sha256": "33d9e017fe60b397320eed1f15891a3b80678ae32cb1d5b9bf8d16fce5a9c8b5",
+      "foregroundPixels": 37749,
+      "boundaryPixels": 0,
+      "previousTarget": [
+        325.53903345724905,
+        285,
+        78.92193308550186,
+        110
+      ],
+      "newTarget": {
+        "height": 110,
+        "top": 285,
+        "centerX": 365
+      },
+      "baseRigId": "w029"
+    },
+    {
+      "assetId": "w130",
+      "view": "front",
+      "sourceCell": [
+        462,
+        1056,
+        181,
+        294
+      ],
+      "paddedBounds": [
+        4,
+        4,
+        181,
+        294
+      ],
+      "body": "tools/art-review/extreme-202/bodies/repair-01/w130-front.png",
+      "sha256": "969571c6dfce9e79e6628351077a4b6967268d2e81c805913d37e0f335328662",
+      "foregroundPixels": 35901,
+      "boundaryPixels": 0,
+      "previousTarget": [
+        233.1768707482993,
+        295,
+        45.64625850340136,
+        110
+      ],
+      "newTarget": {
+        "height": 110,
+        "top": 295,
+        "centerX": 256
+      },
+      "baseRigId": "w029"
+    },
+    {
+      "assetId": "w130",
+      "view": "back",
+      "sourceCell": [
+        780,
+        1061,
+        190,
+        301
+      ],
+      "paddedBounds": [
+        4,
+        4,
+        190,
+        301
+      ],
+      "body": "tools/art-review/extreme-202/bodies/repair-01/w130-back.png",
+      "sha256": "81e20ceca1b04f0fe98329817de41d7e10adee190e660eb56d9514b5f211cf44",
+      "foregroundPixels": 38922,
+      "boundaryPixels": 0,
+      "previousTarget": [
+        229.015625,
+        120,
+        53.96875,
+        110
+      ],
+      "newTarget": {
+        "height": 110,
+        "top": 120,
+        "centerX": 256
+      },
+      "baseRigId": "w029"
+    }
+  ]
+}

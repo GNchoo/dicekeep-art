@@ -1,0 +1,1199 @@
+{
+  "version": 1,
+  "canonicalCell": 512,
+  "assetVersion": 101,
+  "entries": [
+    {
+      "assetId": "b171",
+      "wave": 171,
+      "role": "boss",
+      "locomotion": "float",
+      "cell": 512,
+      "referenceHeight": 300,
+      "cycleStride": 0,
+      "cycleSeconds": 1.6,
+      "hover": {
+        "lift": 10,
+        "roll": 1.5
+      },
+      "reviewApproved": false,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/late-waves/sources/t7-boss-01-turnaround.png",
+          "sourceSha256": "ccc3c6cff2e75b4a792f73f341ad35fa3d50b8b88700644d02d5fc8908dbe01c",
+          "background": "checkerboard",
+          "backgroundSeeds": [
+            [
+              89,
+              514
+            ]
+          ],
+          "pivot": [
+            256,
+            390
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 300,
+              "top": 80,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/boss-04/b171-side.png",
+            "sourceSha256": "9be6487c014eb567aa140bbe2c7ae452b34cd6747af7529e41e4161cfc094c55",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": []
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/late-waves/sources/t7-boss-01-turnaround.png",
+          "sourceSha256": "ccc3c6cff2e75b4a792f73f341ad35fa3d50b8b88700644d02d5fc8908dbe01c",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            390
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 300,
+              "top": 80,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/boss-04/b171-front.png",
+            "sourceSha256": "25e4f54494afe4b3d9ba07b74d89e6fb730b37c251d8fb101f6fee6337ea78ce",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": []
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/late-waves/sources/t7-boss-01-turnaround.png",
+          "sourceSha256": "ccc3c6cff2e75b4a792f73f341ad35fa3d50b8b88700644d02d5fc8908dbe01c",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            390
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 300,
+              "top": 80,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/boss-04/b171-back.png",
+            "sourceSha256": "b0ebbb7b1c93856ebba638b1f7e86fcc6a27b084243f22e55c3f214bb9b00479",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": []
+        }
+      },
+      "name": "태양 공방장",
+      "legacyAssetId": "b070",
+      "baseRigId": "b070"
+    },
+    {
+      "assetId": "b171-2",
+      "wave": 171,
+      "role": "secondary",
+      "locomotion": "float",
+      "cell": 512,
+      "referenceHeight": 300,
+      "cycleStride": 0,
+      "cycleSeconds": 1.6,
+      "hover": {
+        "lift": 10,
+        "roll": 1.5
+      },
+      "reviewApproved": false,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/late-waves/sources/t7-boss-01-turnaround.png",
+          "sourceSha256": "ccc3c6cff2e75b4a792f73f341ad35fa3d50b8b88700644d02d5fc8908dbe01c",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            390
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 300,
+              "top": 80,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/boss-04/b171-2-side.png",
+            "sourceSha256": "cebf314c2c775dc5e31a27a2a02691f7d75a28ed793a08b0cd1ecb0e35c19378",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": []
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/late-waves/sources/t7-boss-01-turnaround.png",
+          "sourceSha256": "ccc3c6cff2e75b4a792f73f341ad35fa3d50b8b88700644d02d5fc8908dbe01c",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            390
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 300,
+              "top": 80,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/boss-04/b171-2-front.png",
+            "sourceSha256": "f16bcf928e499e882c7755e2be2c17fd13871fe8d7a324230c07592d1cf9b67d",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": []
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/late-waves/sources/t7-boss-01-turnaround.png",
+          "sourceSha256": "ccc3c6cff2e75b4a792f73f341ad35fa3d50b8b88700644d02d5fc8908dbe01c",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            390
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 300,
+              "top": 80,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/boss-04/b171-2-back.png",
+            "sourceSha256": "d1f517abd5b42b5c26157ff19dd889ff6ae14b1a2d303e0627b8f06dc03b36cf",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": []
+        }
+      },
+      "name": "태양 송풍정령",
+      "legacyAssetId": "b070-2",
+      "baseRigId": "b070-2"
+    },
+    {
+      "assetId": "b181",
+      "wave": 181,
+      "role": "boss",
+      "locomotion": "flight",
+      "cell": 512,
+      "referenceHeight": 300,
+      "cycleStride": 0,
+      "cycleSeconds": 0.8,
+      "reviewApproved": false,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-boss-flight-01-side-parts.png",
+          "sourceSha256": "c27cd66d38e07bb5170e4b6bfea16676827888e893f9acc174aa110e4dfde179",
+          "background": "checkerboard",
+          "backgroundSeeds": [
+            [
+              211,
+              600
+            ],
+            [
+              210,
+              1260
+            ]
+          ],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 255,
+              "top": 110,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/boss-04/b181-side.png",
+            "sourceSha256": "5d1a3c11ba1325dded6310d127ce41262803154231db37367bbe88e6e9e2bd67",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.3466796875,
+                0.11848958333333333,
+                0.293212890625,
+                0.34130859375
+              ],
+              "socketNormalized": [
+                0.47,
+                0.49
+              ],
+              "sourcePivot": [
+                0.93,
+                0.45
+              ],
+              "scale": 0.5262629189054749,
+              "angleDeg": [
+                0,
+                48
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.6884765625,
+                0.11848958333333333,
+                0.264892578125,
+                0.3419596354166667
+              ],
+              "socketNormalized": [
+                0.47,
+                0.49
+              ],
+              "sourcePivot": [
+                0.07,
+                0.45
+              ],
+              "scale": 0.5508651736202123,
+              "angleDeg": [
+                0,
+                48
+              ],
+              "phase": 0,
+              "layer": 1,
+              "flipX": true
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-boss-flight-01-front-back-parts.png",
+          "sourceSha256": "262e5ad3998378a2087447670c009e660682f792deffa5885cd83dddb79b74a0",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 255,
+              "top": 110,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/boss-04/b181-front.png",
+            "sourceSha256": "85d0031a799ef6310077d08d001e5bae26fce3cdf472ff45ae30355d80fa8257",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.220703125,
+                0.12109375,
+                0.13037109375,
+                0.305908203125
+              ],
+              "socketNormalized": [
+                0.94,
+                0.42
+              ],
+              "sourcePivot": [
+                0.27,
+                0.035
+              ],
+              "scale": 0.6304264943195935,
+              "angleDeg": [
+                -45,
+                45
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.388671875,
+                0.12109375,
+                0.13037109375,
+                0.308837890625
+              ],
+              "socketNormalized": [
+                0.38,
+                0.42
+              ],
+              "sourcePivot": [
+                0.73,
+                0.035
+              ],
+              "scale": 0.6255241723001747,
+              "angleDeg": [
+                45,
+                -45
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-boss-flight-01-front-back-parts.png",
+          "sourceSha256": "262e5ad3998378a2087447670c009e660682f792deffa5885cd83dddb79b74a0",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 255,
+              "top": 110,
+              "centerX": 266
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/boss-04/b181-back.png",
+            "sourceSha256": "1c33a3ef7649ab3a2d5f67f49e691aec38b6b7d3affce4b489d88e8d090e5d83",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false,
+            "review": "Original-size articulated rear wing extended beyond left output boundary at 90-degree spread. Translate the whole back torso and attached sockets right by10 canonical pixels; preserve source, wing scale, angle phases and pivot."
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.7220052083333334,
+                0.1220703125,
+                0.12255859375,
+                0.308837890625
+              ],
+              "socketNormalized": [
+                0.065,
+                0.405
+              ],
+              "sourcePivot": [
+                0.27,
+                0.035
+              ],
+              "scale": 0.6324518936530887,
+              "angleDeg": [
+                45,
+                -45
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.8684895833333334,
+                0.1220703125,
+                0.11930338541666667,
+                0.308837890625
+              ],
+              "socketNormalized": [
+                0.635,
+                0.405
+              ],
+              "sourcePivot": [
+                0.73,
+                0.035
+              ],
+              "scale": 0.6352754501451944,
+              "angleDeg": [
+                -45,
+                45
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        }
+      },
+      "name": "불씨 화룡감독",
+      "legacyAssetId": "b080",
+      "baseRigId": "b080"
+    },
+    {
+      "assetId": "b181-2",
+      "wave": 181,
+      "role": "secondary",
+      "locomotion": "legged",
+      "cell": 512,
+      "referenceHeight": 430,
+      "cycleStride": 160,
+      "gait": {
+        "stanceDuty": 0.65,
+        "lift": 18,
+        "pelvis": "fixed"
+      },
+      "reviewApproved": false,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-quad-02-side-parts.png",
+          "sourceSha256": "29a48f4448ec816978ca167b3eb53beecc27423aa037e9693af326c243bab241",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            420
+          ],
+          "body": {
+            "source": "tools/art-review/extreme-202/bodies/boss-04/b181-2-side.png",
+            "sourceSha256": "367bcbd000b709f1eb93f74544094e3c6e7a79d4d5a492f2a9631906cba30950",
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 325,
+              "top": 35,
+              "centerX": 256
+            },
+            "layer": 10,
+            "backgroundSeeds": [],
+            "background": "alpha",
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftFore",
+              "type": "leg",
+              "roi": [
+                0.6259765625,
+                0.6302083333333334,
+                0.105712890625,
+                0.20784505208333334
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5754716981132075,
+                  0.1
+                ],
+                "knee": [
+                  0.33490566037735847,
+                  0.48
+                ],
+                "ankle": [
+                  0.5047169811320755,
+                  0.87
+                ],
+                "sole": [
+                  0.5188679245283019,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.737,
+                0.652
+              ],
+              "socketRoiNormalized": [
+                0.6719999999999999,
+                0.5920000000000001,
+                0.13,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 420,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.75,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.1
+            },
+            {
+              "id": "rightFore",
+              "type": "leg",
+              "roi": [
+                0.6259765625,
+                0.6302083333333334,
+                0.105712890625,
+                0.20784505208333334
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5754716981132075,
+                  0.1
+                ],
+                "knee": [
+                  0.33490566037735847,
+                  0.48
+                ],
+                "ankle": [
+                  0.5047169811320755,
+                  0.87
+                ],
+                "sole": [
+                  0.5188679245283019,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.723,
+                0.66
+              ],
+              "socketRoiNormalized": [
+                0.6579999999999999,
+                0.6000000000000001,
+                0.13,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 420,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.25,
+              "layer": 11,
+              "upperLayer": 11,
+              "bend": 1,
+              "proximalFeather": 0.35,
+              "proximalEdgeFeather": 0.16
+            },
+            {
+              "id": "leftHind",
+              "type": "leg",
+              "roi": [
+                0.7880859375,
+                0.634765625,
+                0.154541015625,
+                0.20198567708333334
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.6346153846153846,
+                  0.1
+                ],
+                "knee": [
+                  0.38461538461538464,
+                  0.53
+                ],
+                "ankle": [
+                  0.4551282051282051,
+                  0.87
+                ],
+                "sole": [
+                  0.5705128205128205,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.40700000000000003,
+                0.642
+              ],
+              "socketRoiNormalized": [
+                0.342,
+                0.5820000000000001,
+                0.13,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 420,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": -1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.1
+            },
+            {
+              "id": "rightHind",
+              "type": "leg",
+              "roi": [
+                0.7880859375,
+                0.634765625,
+                0.154541015625,
+                0.20198567708333334
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.6346153846153846,
+                  0.1
+                ],
+                "knee": [
+                  0.38461538461538464,
+                  0.53
+                ],
+                "ankle": [
+                  0.4551282051282051,
+                  0.87
+                ],
+                "sole": [
+                  0.5705128205128205,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.393,
+                0.65
+              ],
+              "socketRoiNormalized": [
+                0.328,
+                0.5900000000000001,
+                0.13,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 420,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.5,
+              "layer": 11,
+              "upperLayer": 11,
+              "bend": -1,
+              "proximalFeather": 0.35,
+              "proximalEdgeFeather": 0.16
+            }
+          ],
+          "jointReview": "Four physical identities, actual fore/hind source geometry, closed full legless trunk, upper roots occluded by torso. All-view visual review required."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-quad-02-front-back-parts.png",
+          "sourceSha256": "2b8aafe222a1b396527a31ad80ef4114a059284baad1d79a28c8d3f178c14903",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            420
+          ],
+          "body": {
+            "source": "tools/art-review/extreme-202/bodies/boss-04/b181-2-front.png",
+            "sourceSha256": "15e54cf8a4041b9da920b145f0e0072189ff1eb8e35b8527377b4e36496871da",
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 325,
+              "top": 35,
+              "centerX": 256
+            },
+            "layer": 10,
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftFore",
+              "type": "leg",
+              "roi": [
+                0.2552083333333333,
+                0.6005859375,
+                0.059407552083333336,
+                0.280517578125
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5224719101123596,
+                  0.1
+                ],
+                "knee": [
+                  0.5112359550561798,
+                  0.52
+                ],
+                "ankle": [
+                  0.47191011235955055,
+                  0.87
+                ],
+                "sole": [
+                  0.550561797752809,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.68,
+                0.72
+              ],
+              "socketRoiNormalized": [
+                0.615,
+                0.6599999999999999,
+                0.13,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 420,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.75,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.1
+            },
+            {
+              "id": "rightFore",
+              "type": "leg",
+              "roi": [
+                0.2552083333333333,
+                0.6005859375,
+                0.059407552083333336,
+                0.280517578125
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5224719101123596,
+                  0.1
+                ],
+                "knee": [
+                  0.5112359550561798,
+                  0.52
+                ],
+                "ankle": [
+                  0.47191011235955055,
+                  0.87
+                ],
+                "sole": [
+                  0.550561797752809,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.32,
+                0.72
+              ],
+              "socketRoiNormalized": [
+                0.255,
+                0.6599999999999999,
+                0.13,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 420,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.25,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.1
+            },
+            {
+              "id": "leftHind",
+              "type": "leg",
+              "roi": [
+                0.38671875,
+                0.6123046875,
+                0.07047526041666667,
+                0.262939453125
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.6509433962264151,
+                  0.52
+                ],
+                "ankle": [
+                  0.589622641509434,
+                  0.87
+                ],
+                "sole": [
+                  0.5849056603773585,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.63,
+                0.64
+              ],
+              "socketRoiNormalized": [
+                0.565,
+                0.5800000000000001,
+                0.13,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 420,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": -1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.1
+            },
+            {
+              "id": "rightHind",
+              "type": "leg",
+              "roi": [
+                0.38671875,
+                0.6123046875,
+                0.07047526041666667,
+                0.262939453125
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5,
+                  0.1
+                ],
+                "knee": [
+                  0.6509433962264151,
+                  0.52
+                ],
+                "ankle": [
+                  0.589622641509434,
+                  0.87
+                ],
+                "sole": [
+                  0.5849056603773585,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.37,
+                0.64
+              ],
+              "socketRoiNormalized": [
+                0.305,
+                0.5800000000000001,
+                0.13,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 420,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.5,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": -1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.1
+            }
+          ],
+          "jointReview": "Four physical identities, actual fore/hind source geometry, closed full legless trunk, upper roots occluded by torso. All-view visual review required."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-quad-02-front-back-parts.png",
+          "sourceSha256": "2b8aafe222a1b396527a31ad80ef4114a059284baad1d79a28c8d3f178c14903",
+          "background": "checkerboard",
+          "pivot": [
+            256,
+            420
+          ],
+          "body": {
+            "source": "tools/art-review/extreme-202/bodies/boss-04/b181-2-back.png",
+            "sourceSha256": "82da208d46406b93ac733d185d61c15b62599597973661ed2231f0f710f85a05",
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 325,
+              "top": 35,
+              "centerX": 256
+            },
+            "layer": 10,
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftFore",
+              "type": "leg",
+              "roi": [
+                0.7799479166666666,
+                0.6015625,
+                0.056803385416666664,
+                0.272705078125
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5058823529411764,
+                  0.1
+                ],
+                "knee": [
+                  0.4647058823529412,
+                  0.52
+                ],
+                "ankle": [
+                  0.4588235294117647,
+                  0.87
+                ],
+                "sole": [
+                  0.4647058823529412,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.32,
+                0.62
+              ],
+              "socketRoiNormalized": [
+                0.255,
+                0.56,
+                0.13,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 420,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.75,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.1
+            },
+            {
+              "id": "rightFore",
+              "type": "leg",
+              "roi": [
+                0.7799479166666666,
+                0.6015625,
+                0.056803385416666664,
+                0.272705078125
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5058823529411764,
+                  0.1
+                ],
+                "knee": [
+                  0.4647058823529412,
+                  0.52
+                ],
+                "ankle": [
+                  0.4588235294117647,
+                  0.87
+                ],
+                "sole": [
+                  0.4647058823529412,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.68,
+                0.62
+              ],
+              "socketRoiNormalized": [
+                0.615,
+                0.56,
+                0.13,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 420,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.25,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.1
+            },
+            {
+              "id": "leftHind",
+              "type": "leg",
+              "roi": [
+                0.892578125,
+                0.6201171875,
+                0.06917317708333333,
+                0.254150390625
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4951923076923077,
+                  0.1
+                ],
+                "knee": [
+                  0.5192307692307693,
+                  0.52
+                ],
+                "ankle": [
+                  0.5192307692307693,
+                  0.87
+                ],
+                "sole": [
+                  0.5144230769230769,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.37,
+                0.68
+              ],
+              "socketRoiNormalized": [
+                0.305,
+                0.6200000000000001,
+                0.13,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 420,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": -1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.1
+            },
+            {
+              "id": "rightHind",
+              "type": "leg",
+              "roi": [
+                0.892578125,
+                0.6201171875,
+                0.06917317708333333,
+                0.254150390625
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4951923076923077,
+                  0.1
+                ],
+                "knee": [
+                  0.5192307692307693,
+                  0.52
+                ],
+                "ankle": [
+                  0.5192307692307693,
+                  0.87
+                ],
+                "sole": [
+                  0.5144230769230769,
+                  0.995
+                ]
+              },
+              "socketNormalized": [
+                0.63,
+                0.68
+              ],
+              "socketRoiNormalized": [
+                0.565,
+                0.6200000000000001,
+                0.13,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 420,
+                "maximumStanceAngle": 166
+              },
+              "phase": 0.5,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": -1,
+              "proximalFeather": 0.18,
+              "proximalEdgeFeather": 0.1
+            }
+          ],
+          "jointReview": "Four physical identities, actual fore/hind source geometry, closed full legless trunk, upper roots occluded by torso. All-view visual review required."
+        }
+      },
+      "name": "구리비늘 히드라",
+      "legacyAssetId": "b080-2",
+      "baseRigId": "b080-2"
+    }
+  ]
+}

@@ -5,6 +5,7 @@ import vm from 'node:vm';
 import { parse, byteLength } from '../src/proto.js';
 import { createRoom, emptyLive, reduce } from '../src/room-core.js';
 import { timingFor } from '../src/timing.js';
+import { EN_MAX, MAX_FRAME, SOCKET_RATE, SOCKET_BURST, SUM_WATCH_MIN } from '../src/timing.js';
 
 const source = fs.readFileSync(new URL('../../infinity-art.js', import.meta.url), 'utf8');
 const sandbox = { URL, setTimeout, clearTimeout };
@@ -18,7 +19,7 @@ function entry(id = 'w001', cell = 64) {
     views: Object.fromEntries(['side', 'front', 'back'].map(view => [view, { still: `${id}-${view}.png`, sheet: `${id}-${view}-walk.png`,
       frames: 8, cols: 4, rows: 2, cell, scale: cell / 512, pivot: [cell / 2, cell * 0.9], fallback: 'data:image/webp;base64,UklGRg==' }])) };
 }
-function fakeCanvas() { return { width: 0, height: 0, getContext: () => ({ drawImage() {} }) }; }
+function fakeCanvas() { return { width: 0, height: 0, getContext: () => ({ drawImage() {}, beginPath() {}, ellipse() {}, stroke() {}, moveTo() {}, lineTo() {}, closePath() {} }) }; }
 function setup(entries = { w001: entry() }, extra = {}) {
   const requests = [];
   const cache = Art.create({ manifest: { version: 93, entries }, base: 'https://game.example/', makeCanvas: fakeCanvas,
@@ -28,7 +29,7 @@ function setup(entries = { w001: entry() }, extra = {}) {
 const summary = en => ({ t: 'sum', w: 20, dw: 19, l: 20, g: 400, k: 12, f: 200, sp: 1, hid: 0, b: null, o: 'l', tw: [[0, 7, 1], [14, 20, 3]], ll: 9999, en });
 
 test('appearance retains roster wave, boss role and elite without a resident image', () => {
-  assert.equal(Art.appearance(102, false, false), 1);
+  assert.equal(Art.appearance(102, false, false), 1000);
   assert.equal(Art.appearance(20, true, false), 121);
   assert.equal(Art.appearance(5, false, true), 261);
   assert.deepEqual(plain(Art.decodeAppearance(121)), { code: 121, wave: 20, role: 'secondary', elite: false, assetId: 'b020-2' });
@@ -36,11 +37,11 @@ test('appearance retains roster wave, boss role and elite without a resident ima
   for (const bad of [0, -1, 1.5, 102, 202, 256, 266, 458, NaN]) assert.equal(Art.decodeAppearance(bad), null);
 });
 
-test('repeated slot10 secondary keeps its combat role within the reviewed nineteen boss assets', () => {
+test('original nineteen boss identities and old slot10 secondary codes remain compatible', () => {
   const content = { window: {} };
   vm.runInNewContext(fs.readFileSync(new URL('../../content.js', import.meta.url), 'utf8'), content);
   const inf = content.window.DKCONTENT.INFINITY, assets = new Set();
-  for (let wave = 1; wave <= 303; wave++) {
+  for (let wave = 1; wave <= 101; wave++) {
     if (!inf.isBossWave(wave)) continue;
     const count = inf.wave(wave, false).bosses;
     for (let k = 0; k < count; k++) {
@@ -65,6 +66,82 @@ test('flight spectator cadence follows original movement clock through scale, sl
   for (const args of [[NaN, 1, .8], [1, 0, .8], [1, 1, 0], [-1, 1, .8]]) assert.equal(Art.timePhaseAdvance(...args), 0);
 });
 
+test('extreme roster has 111 unique identities, ten distinct secondary bosses and bounded evolution', () => {
+  const ids = new Set();
+  for (let wave = 102; wave <= 202; wave++) {
+    const boss = (wave - 101) % 10 === 0;
+    for (const secondary of boss ? [false, true] : [false]) {
+      const a = Art.decodeAppearance(Art.appearance(wave, secondary, false));
+      assert.equal(a.wave, wave); assert.equal(a.baseWave, wave - 101); assert.equal(a.evolutionTier, 0);
+      assert.equal(a.role, secondary ? 'secondary' : boss ? 'boss' : 'normal'); ids.add(a.assetId);
+      assert.equal(Art.legacyAssetId(a), Art.decodeAppearance((wave - 101) + (secondary ? 101 : 0)).assetId);
+    }
+  }
+  assert.equal(ids.size, 111); assert.ok(ids.has('b111-2')); assert.ok(ids.has('w202'));
+  for (const [wave, id, tier] of [[101,'w101',0],[102,'w102',0],[202,'w202',0],[203,'w102',1],[303,'w202',1],[304,'w102',2],[405,'w102',3],[10000,'w102',3]]) {
+    const a = Art.decodeAppearance(Art.appearance(wave, false, false));
+    assert.equal(a.assetId, id); assert.equal(a.evolutionTier || 0, tier);
+  }
+  for (const wave of [10000,100000,1000000,Number.MAX_SAFE_INTEGER,Infinity,NaN]) {
+    const r = Art.roster(wave), a = Art.decodeAppearance(Art.appearance(wave, false, false));
+    assert.ok(Number.isFinite(r.wave)); assert.ok(a); assert.ok((a.evolutionTier || 0) <= 3);
+  }
+  assert.equal(Art.decodeAppearance(Art.appearance(205,false,true)).elite,true);
+  for (const bad of [458,999,1001,1038,1039,1404,1511,2939,2940,3048]) assert.equal(Art.decodeAppearance(bad),null, String(bad));
+});
+
+test('200 worst-case extreme identities and phases survive the bounded protocol 4 transport', () => {
+  const rows = Array.from({length:200},(_,i)=>({i:10000,d:100000,h:9,a:Art.appearance(202+i*101,false,true),p:.999}));
+  const en=Art.enemyStream(rows), decoded=Art.parseEnemyStream(en);
+  assert.equal(en.length,4799); assert.equal(decoded.length,200);
+  assert.ok(decoded.every(r=>r.appearance && r.appearance.assetId==='w202' && r.appearance.elite));
+  assert.ok(decoded.every(r=>r.p===255/256));
+  const result=parse(JSON.stringify({...summary(en),w:1000000,dw:999999,tw:Array.from({length:15},(_,i)=>[i,20,3])}));
+  assert.equal(result.ok,true); assert.equal(result.m.en,en); assert.ok(byteLength(JSON.stringify(result.m))<6000);
+  assert.equal(Art.EN_MAX,EN_MAX); assert.equal(EN_MAX,5120);assert.equal(MAX_FRAME,6144);
+  const client=fs.readFileSync(new URL('../../net.js',import.meta.url),'utf8');
+  assert.match(client,/const EN_MAX = 5120;/);assert.match(client,/const MAX_BYTES = 6000;/);
+  assert.equal(parse(JSON.stringify({...summary('1'.repeat(EN_MAX+1))})).ok,false);
+  assert.equal(SOCKET_RATE,20);assert.equal(SOCKET_BURST,40);assert.equal(SUM_WATCH_MIN,1000);
+});
+
+test('manifest merge versions new URLs separately and blocks duplicate approved IDs', async () => {
+  const newer={...entry('w102',256),wave:102,legacyAssetId:'w001'};
+  const {cache,requests}=setup(undefined,{extremeManifest:{version:101,entries:{w102:newer}}});
+  await cache.init(); assert.equal(cache.state().approvedEntries,2);
+  assert.ok(requests.every(x=>x.startsWith('data:')));
+  assert.equal(cache.state().overlayBytes,9*64*64*4);
+  cache.demand([{id:'w102',view:'front'},{id:'w001',view:'side'}]); await settle(cache);
+  assert.ok(requests.filter(x=>x.includes('/w102-')).every(x=>x.endsWith('?v=101')));
+  assert.ok(requests.filter(x=>x.includes('/w001-')).every(x=>x.endsWith('?v=93')));
+  assert.equal(cache.frame('w102','front',.5).legacyAssetId,'w001');
+  const marks=new Set(); for(let tier=1;tier<=3;tier++)for(const view of ['side','front','back'])marks.add(cache.evolutionMark(tier,view));
+  assert.equal(marks.size,9); assert.equal(cache.evolutionMark(10000,'front'),cache.evolutionMark(3,'front'));
+  const bytes=cache.state().residentBytes; for(let i=0;i<10000;i++)cache.evolutionMark(i,'side');
+  assert.equal(cache.state().residentBytes,bytes); cache.dispose(); assert.equal(cache.state().residentBytes,0);
+  await assert.rejects(setup(undefined,{extremeManifest:{version:101,entries:{w001:entry()}}}).cache.init(),/duplicate/);
+});
+
+test('221 identities retain offline fallbacks within 96 MiB and two optional requests at once', async () => {
+  const old={}, newer={};
+  for(let wave=1;wave<=202;wave++){
+    const boss=((wave-1)%101+1)%10===0;
+    for(const secondary of boss && (wave>101 || wave!==10) ? [false,true]:[false]){
+      const a=Art.decodeAppearance(Art.appearance(wave,secondary,false));
+      (wave<=101?old:newer)[a.assetId]={...entry(a.assetId,boss?512:256),wave:a.wave,role:a.role};
+    }
+  }
+  const {cache,requests}=setup(old,{extremeManifest:{version:101,entries:newer}});
+  await cache.init(); assert.equal(cache.state().approvedEntries,221); assert.equal(requests.length,663);
+  assert.ok(requests.every(x=>x.startsWith('data:')));
+  cache.demand(Object.keys({...old,...newer}).slice(0,200).map(id=>({id,view:'front'}))); await settle(cache);
+  assert.ok(cache.state().peakTrackedBytes<=96*1024*1024); assert.equal(cache.state().maxRunning,2);
+  for(const id of Object.keys(newer))assert.equal(cache.frame(id,'back',.2).assetId,id);
+  cache.demand([{id:'w102',view:'side'}],['w103']);await settle(cache);
+  assert.ok(cache.state().records.filter(r=>r.status==='ready'&&!r.key.endsWith(':fallback')).every(r=>r.key.startsWith('w102:')||r.key.startsWith('w103:')));
+  assert.ok(cache.state().evictions>0);cache.dispose();assert.equal(cache.state().residentBytes,0);
+});
+
 test('direction hysteresis and circular phase preserve a walk through corners/wrap', () => {
   assert.equal(Art.direction(1, 0, 'front'), 'side');
   assert.equal(Art.direction(0, 1, 'side'), 'front');
@@ -87,7 +164,7 @@ test('only flight/float may use zero-stride time animation; negative/invalid cyc
   assert.equal(Art.validateEntry('w001', { ...entry(), cycleSeconds: 0 }), null);
 });
 
-test('protocol 3 preserves optional numeric columns; old clients read unchanged first three', () => {
+test('protocol 4 preserves optional numeric columns; legacy clients read unchanged first three', () => {
   const rows = [{ i: 9, d: 125, h: 8, a: 5, p: 0.5 }, { i: 1001, d: 20, h: 9, a: 121, p: 0.25 }];
   const en = Art.enemyStream(rows), parsed = parse(JSON.stringify(summary(en)));
   assert.equal(parsed.ok, true); assert.equal(parsed.m.en, en);
@@ -100,7 +177,7 @@ test('protocol 3 preserves optional numeric columns; old clients read unchanged 
 
 test('200 enemies survive phase budget pressure and legal long-distance appearance overflow', () => {
   for (const row of [{ i: 99, d: 9999, h: 9, a: 201, p: 0.999 }, { i: 1099, d: 100000, h: 9, a: 201, p: 0.999 }]) {
-    const en = Art.enemyStream(Array(200).fill(row));
+    const en = Art.enemyStream(Array(200).fill(row), 3000);
     assert.equal(en.split(';').length, 200); assert.ok(en.length <= 3000);
     assert.equal(parse(JSON.stringify(summary(en))).ok, true);
     assert.ok(byteLength(JSON.stringify(summary(en))) < 4000);
@@ -192,7 +269,7 @@ test('unchanged server relays extended enemy data only to watchers and preserves
   let now = 1700000000000, state = createRoom({ code: 'ABC234', now, timing: timingFor('') }), live = emptyLive(now);
   const step = ev => { const result = reduce({ state, live }, ev, now); state = result.state; live = result.live; return result; };
   for (const [pid, sid, op] of [['aaaa1111', 'sA', 'create'], ['bbbb2222', 'sB', 'join'], ['cccc3333', 'sC', 'join']]) {
-    step({ k: 'open', sid, op }); step({ k: 'hello', sid, op, m: { t: 'hello', v: 3, ver: '89', op, pid, key: 'a'.repeat(32), name: pid } });
+    step({ k: 'open', sid, op }); step({ k: 'hello', sid, op, m: { t: 'hello', v: 4, ver: '89', op, pid, key: 'a'.repeat(32), name: pid } });
   }
   step({ k: 'msg', pid: 'aaaa1111', sid: 'sA', m: { t: 'start' } }); now = state.game.t0 + 1;
   step({ k: 'msg', pid: 'bbbb2222', sid: 'sB', m: { t: 'watch', pid: 'aaaa1111' } });

@@ -1,0 +1,2086 @@
+{
+  "reviewer": "art_direction assistant direct image inspection",
+  "reviewedAt": "2026-09-08T16:33:25.043Z",
+  "inputManifestSha256": "4db1267843cfa1eb6482c214eada1d744cf913d3a4a852f0788216e2069db7af",
+  "scope": "All111 appearances: direct inspection of3views and4representative phases per view on14final boards, plus prior neutral/source reviews and full8/4pose review of corrections and final bosses. Actual in-game loading/display QA is separate.",
+  "boards": [
+    {
+      "file": "gen/extreme-202-final/review/all-poses-1.png",
+      "sha256": "93b037ffe89ccec934c94cc8e42d0f34ea5e9ab06b8f857f5696da9bb9481c8a"
+    },
+    {
+      "file": "gen/extreme-202-final/review/all-poses-2.png",
+      "sha256": "97b558be21f3d5eccea4a50da92690265c5789238a4472eed882aeb88c70c356"
+    },
+    {
+      "file": "gen/extreme-202-final/review/all-poses-3.png",
+      "sha256": "e0e0fc4788ef03d32a446228f4b241b529534c0c205f5e2cf8bf92e4a337f31c"
+    },
+    {
+      "file": "gen/extreme-202-final/review/all-poses-4.png",
+      "sha256": "45a6d4cdbb34c6362b0cd999f9bcc8b825316fe139b6e131b63ac1e7895ae2c9"
+    },
+    {
+      "file": "gen/extreme-202-final/review/all-poses-5.png",
+      "sha256": "417a7a474fdcb093fec670c09a563fffe6d553b3a34bbf8f41635f6034e9364b"
+    },
+    {
+      "file": "gen/extreme-202-final/review/all-poses-6.png",
+      "sha256": "b9c284f45abbeed23264bdc8ad777ba158521ac769e331069cf8e1e8245f14e7"
+    },
+    {
+      "file": "gen/extreme-202-final/review/all-poses-7.png",
+      "sha256": "27d3726c05879f3e92de481ad3431ca01382013abfff9704def3887d969f77d6"
+    },
+    {
+      "file": "gen/extreme-202-final/review/all-poses-8.png",
+      "sha256": "fc93adfbdd14eca46a3d209de9dbadb84511ddef2a7ab6428f505d7e69a0f6fa"
+    },
+    {
+      "file": "gen/extreme-202-final/review/all-poses-9.png",
+      "sha256": "914251af07bf97c053bd45a51f355434128d090535988553a04bfab1ddb9d55b"
+    },
+    {
+      "file": "gen/extreme-202-final/review/all-poses-10.png",
+      "sha256": "c776d304c4a0225c0be29ff670c3ec5d944943e66b02bea4df3db0041f4ad9d2"
+    },
+    {
+      "file": "gen/extreme-202-final/review/all-poses-11.png",
+      "sha256": "ba40ae93c40c80150326ea7df1ec5b0f1d50e4aea45050995e058b1c9d6b123f"
+    },
+    {
+      "file": "gen/extreme-202-final/review/all-poses-12.png",
+      "sha256": "4faa09db5fd6bcce738cfb0a791541cf8a93b37dbd146563e2b9aedf5a0a8ab9"
+    },
+    {
+      "file": "gen/extreme-202-final/review/all-poses-13.png",
+      "sha256": "d5b936c15472742112593867e64abccbc219164f734c91e1aeae5fdf2cffdc3f"
+    },
+    {
+      "file": "gen/extreme-202-final/review/all-poses-14.png",
+      "sha256": "9a055a5e7eb98f7228cf77198d93124b0d2bf4ac1304cce678b3b9185546dde3"
+    }
+  ],
+  "representativeMotionCaptures": [
+    {
+      "file": "gen/extreme-202-final/review/w183-motion-captures.png",
+      "sha256": "a1376197e061cfe415ed527b1bb42242a7842f03150fd5412873350a89216261"
+    },
+    {
+      "file": "gen/extreme-202-final/review/w138-motion-captures.png",
+      "sha256": "974ed16ff40963e3dbe1af9ef16fc2d622c346adb270e21cbfbc02cbde64c500"
+    }
+  ],
+  "conclusions": [
+    "Approachable painted fantasy characters; no exposed wounds, gore or body-horror realism.",
+    "Side/front/back identity and equipment direction read consistently after the recorded repairs.",
+    "New isolated torso art no longer includes rejected fixed paws or duplicated articulated tail.",
+    "B181 and B201-2 rear maximum wing spread now fits with margins.",
+    "The appearance roster includes gear/wardrobe variants of related creature types, not111unrelated biological species."
+  ],
+  "limitations": [
+    "Existing articulated cutout gait is retained; torso/arms may remain rigid and8frame holds produce quantization between captured contacts.",
+    "Small costume details can converge at game scale; e.g. W102/W112 squirrel variants differ in equipment rather than species.",
+    "This visual approval does not substitute for runtime cache, gameplay speed, spectator or Android checks."
+  ],
+  "entries": [
+    {
+      "assetId": "w102",
+      "name": "왕관 운반다람쥐",
+      "approved": true,
+      "sourceGroup": "normal-05",
+      "board": "gen/extreme-202-final/review/all-poses-1.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w103",
+      "name": "유적 서기관",
+      "approved": true,
+      "sourceGroup": "normal-02",
+      "board": "gen/extreme-202-final/review/all-poses-1.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w104",
+      "name": "보관고 문지기",
+      "approved": true,
+      "sourceGroup": "normal-02",
+      "board": "gen/extreme-202-final/review/all-poses-1.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w105",
+      "name": "왕실 전서조",
+      "approved": true,
+      "sourceGroup": "normal-04",
+      "board": "gen/extreme-202-final/review/all-poses-1.png",
+      "phases": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w106",
+      "name": "열쇠 창병",
+      "approved": true,
+      "sourceGroup": "normal-02",
+      "board": "gen/extreme-202-final/review/all-poses-1.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w107",
+      "name": "청동 송곳니늑대",
+      "approved": true,
+      "sourceGroup": "normal-05",
+      "board": "gen/extreme-202-final/review/all-poses-1.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w108",
+      "name": "등불 수집가",
+      "approved": true,
+      "sourceGroup": "normal-02",
+      "board": "gen/extreme-202-final/review/all-poses-1.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w109",
+      "name": "유리날개 정찰충",
+      "approved": true,
+      "sourceGroup": "normal-05",
+      "board": "gen/extreme-202-final/review/all-poses-1.png",
+      "phases": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w110",
+      "name": "왕관 철갑병",
+      "approved": true,
+      "sourceGroup": "normal-02",
+      "board": "gen/extreme-202-final/review/all-poses-2.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "b111",
+      "name": "유적 왕자",
+      "approved": true,
+      "sourceGroup": "boss-01",
+      "board": "gen/extreme-202-final/review/all-poses-2.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "b111-2",
+      "name": "유적 인장대신",
+      "approved": true,
+      "sourceGroup": "boss-01",
+      "board": "gen/extreme-202-final/review/all-poses-2.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w112",
+      "name": "보석 꼬리다람쥐",
+      "approved": true,
+      "sourceGroup": "normal-05",
+      "board": "gen/extreme-202-final/review/all-poses-2.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w113",
+      "name": "성문 수리부엉이",
+      "approved": true,
+      "sourceGroup": "normal-04",
+      "board": "gen/extreme-202-final/review/all-poses-2.png",
+      "phases": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w114",
+      "name": "인장 여우",
+      "approved": true,
+      "sourceGroup": "normal-05",
+      "board": "gen/extreme-202-final/review/all-poses-2.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w115",
+      "name": "청동갑옷 오소리",
+      "approved": true,
+      "sourceGroup": "normal-05",
+      "board": "gen/extreme-202-final/review/all-poses-2.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w116",
+      "name": "왕실 지도사",
+      "approved": true,
+      "sourceGroup": "normal-01",
+      "board": "gen/extreme-202-final/review/all-poses-2.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w117",
+      "name": "문장 독수리",
+      "approved": true,
+      "sourceGroup": "normal-04",
+      "board": "gen/extreme-202-final/review/all-poses-3.png",
+      "phases": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w118",
+      "name": "유적 석판늑대",
+      "approved": true,
+      "sourceGroup": "normal-05",
+      "board": "gen/extreme-202-final/review/all-poses-3.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w119",
+      "name": "별침 고슴도치",
+      "approved": true,
+      "sourceGroup": "normal-05",
+      "board": "gen/extreme-202-final/review/all-poses-3.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w120",
+      "name": "문지기 큰곰",
+      "approved": true,
+      "sourceGroup": "normal-05",
+      "board": "gen/extreme-202-final/review/all-poses-3.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "b121",
+      "name": "왕관나무 섭정",
+      "approved": true,
+      "sourceGroup": "boss-01",
+      "board": "gen/extreme-202-final/review/all-poses-3.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "b121-2",
+      "name": "왕관 숲사슴",
+      "approved": true,
+      "sourceGroup": "boss-01",
+      "board": "gen/extreme-202-final/review/all-poses-3.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w122",
+      "name": "톱니 바늘지렁이",
+      "approved": true,
+      "sourceGroup": "normal-06",
+      "board": "gen/extreme-202-final/review/all-poses-3.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w123",
+      "name": "서리 압력두꺼비",
+      "approved": true,
+      "sourceGroup": "repair-01",
+      "board": "gen/extreme-202-final/review/all-poses-3.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w124",
+      "name": "냉각수 도롱뇽",
+      "approved": true,
+      "sourceGroup": "repair-01",
+      "board": "gen/extreme-202-final/review/all-poses-4.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w125",
+      "name": "기계 침벌",
+      "approved": true,
+      "sourceGroup": "normal-05",
+      "board": "gen/extreme-202-final/review/all-poses-4.png",
+      "phases": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w126",
+      "name": "얼음 나침반거미",
+      "approved": true,
+      "sourceGroup": "normal-02",
+      "board": "gen/extreme-202-final/review/all-poses-4.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w127",
+      "name": "서리 시계전갈",
+      "approved": true,
+      "sourceGroup": "normal-02",
+      "board": "gen/extreme-202-final/review/all-poses-4.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w128",
+      "name": "압력밸브 악어",
+      "approved": true,
+      "sourceGroup": "normal-06",
+      "board": "gen/extreme-202-final/review/all-poses-4.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w129",
+      "name": "굴착 톱니개미",
+      "approved": true,
+      "sourceGroup": "normal-02",
+      "board": "gen/extreme-202-final/review/all-poses-4.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w130",
+      "name": "청빙 관절뱀",
+      "approved": true,
+      "sourceGroup": "repair-01",
+      "board": "gen/extreme-202-final/review/all-poses-4.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "b131",
+      "name": "서리 마녀기술자",
+      "approved": true,
+      "sourceGroup": "boss-02",
+      "board": "gen/extreme-202-final/review/all-poses-4.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "b131-2",
+      "name": "빙철 박쥐관측관",
+      "approved": true,
+      "sourceGroup": "boss-02",
+      "board": "gen/extreme-202-final/review/all-poses-5.png",
+      "phases": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w132",
+      "name": "냉각수 정찰병",
+      "approved": true,
+      "sourceGroup": "normal-01",
+      "board": "gen/extreme-202-final/review/all-poses-5.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w133",
+      "name": "서리 글라이더조종사",
+      "approved": true,
+      "sourceGroup": "normal-06",
+      "board": "gen/extreme-202-final/review/all-poses-5.png",
+      "phases": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w134",
+      "name": "제설 방패병",
+      "approved": true,
+      "sourceGroup": "normal-01",
+      "board": "gen/extreme-202-final/review/all-poses-5.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w135",
+      "name": "빙철 도끼병",
+      "approved": true,
+      "sourceGroup": "normal-01",
+      "board": "gen/extreme-202-final/review/all-poses-5.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w136",
+      "name": "압축기 트롤",
+      "approved": true,
+      "sourceGroup": "normal-01",
+      "board": "gen/extreme-202-final/review/all-poses-5.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w137",
+      "name": "서리익 용기수",
+      "approved": true,
+      "sourceGroup": "normal-06",
+      "board": "gen/extreme-202-final/review/all-poses-5.png",
+      "phases": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w138",
+      "name": "레일 활잡이",
+      "approved": true,
+      "sourceGroup": "normal-06",
+      "board": "gen/extreme-202-final/review/all-poses-5.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w139",
+      "name": "눈꽃 코볼트",
+      "approved": true,
+      "sourceGroup": "normal-01",
+      "board": "gen/extreme-202-final/review/all-poses-6.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w140",
+      "name": "기관실 작업반장",
+      "approved": true,
+      "sourceGroup": "normal-01",
+      "board": "gen/extreme-202-final/review/all-poses-6.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "b141",
+      "name": "태엽 총감독",
+      "approved": true,
+      "sourceGroup": "boss-02",
+      "board": "gen/extreme-202-final/review/all-poses-6.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "b141-2",
+      "name": "압력망치 오우거",
+      "approved": true,
+      "sourceGroup": "boss-02",
+      "board": "gen/extreme-202-final/review/all-poses-6.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w142",
+      "name": "산호 방패병",
+      "approved": true,
+      "sourceGroup": "normal-01",
+      "board": "gen/extreme-202-final/review/all-poses-6.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w143",
+      "name": "씨앗 공병",
+      "approved": true,
+      "sourceGroup": "normal-01",
+      "board": "gen/extreme-202-final/review/all-poses-6.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w144",
+      "name": "다시마 기마대",
+      "approved": true,
+      "sourceGroup": "normal-05",
+      "board": "gen/extreme-202-final/review/all-poses-6.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w145",
+      "name": "연꽃 그리폰기수",
+      "approved": true,
+      "sourceGroup": "normal-04",
+      "board": "gen/extreme-202-final/review/all-poses-6.png",
+      "phases": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w146",
+      "name": "조개껍질 기사",
+      "approved": true,
+      "sourceGroup": "normal-01",
+      "board": "gen/extreme-202-final/review/all-poses-7.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w147",
+      "name": "해초 종자",
+      "approved": true,
+      "sourceGroup": "normal-01",
+      "board": "gen/extreme-202-final/review/all-poses-7.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w148",
+      "name": "진주 석궁병",
+      "approved": true,
+      "sourceGroup": "normal-01",
+      "board": "gen/extreme-202-final/review/all-poses-7.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w149",
+      "name": "수련 페가수스기수",
+      "approved": true,
+      "sourceGroup": "normal-04",
+      "board": "gen/extreme-202-final/review/all-poses-7.png",
+      "phases": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w150",
+      "name": "정원 굴착노움",
+      "approved": true,
+      "sourceGroup": "normal-01",
+      "board": "gen/extreme-202-final/review/all-poses-7.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "b151",
+      "name": "심연 정원사왕",
+      "approved": true,
+      "sourceGroup": "boss-03",
+      "board": "gen/extreme-202-final/review/all-poses-7.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "b151-2",
+      "name": "산호 관문골렘",
+      "approved": true,
+      "sourceGroup": "boss-03",
+      "board": "gen/extreme-202-final/review/all-poses-7.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w152",
+      "name": "이끼 수호인형",
+      "approved": true,
+      "sourceGroup": "normal-01",
+      "board": "gen/extreme-202-final/review/all-poses-7.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w153",
+      "name": "해파리 정령등",
+      "approved": true,
+      "sourceGroup": "normal-04",
+      "board": "gen/extreme-202-final/review/all-poses-8.png",
+      "phases": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w154",
+      "name": "산호 가면병",
+      "approved": true,
+      "sourceGroup": "normal-01",
+      "board": "gen/extreme-202-final/review/all-poses-8.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w155",
+      "name": "조개 강아지",
+      "approved": true,
+      "sourceGroup": "normal-05",
+      "board": "gen/extreme-202-final/review/all-poses-8.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w156",
+      "name": "정원 버섯관리인",
+      "approved": true,
+      "sourceGroup": "normal-02",
+      "board": "gen/extreme-202-final/review/all-poses-8.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w157",
+      "name": "장갑 씨앗정령",
+      "approved": true,
+      "sourceGroup": "normal-04",
+      "board": "gen/extreme-202-final/review/all-poses-8.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w158",
+      "name": "진주 관문기사",
+      "approved": true,
+      "sourceGroup": "normal-02",
+      "board": "gen/extreme-202-final/review/all-poses-8.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w159",
+      "name": "해초 봉제수호자",
+      "approved": true,
+      "sourceGroup": "normal-02",
+      "board": "gen/extreme-202-final/review/all-poses-8.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w160",
+      "name": "수련 노래정령",
+      "approved": true,
+      "sourceGroup": "normal-04",
+      "board": "gen/extreme-202-final/review/all-poses-8.png",
+      "phases": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "b161",
+      "name": "수중 도서관장",
+      "approved": true,
+      "sourceGroup": "boss-03",
+      "board": "gen/extreme-202-final/review/all-poses-9.png",
+      "phases": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "b161-2",
+      "name": "수중 서고용",
+      "approved": true,
+      "sourceGroup": "boss-03",
+      "board": "gen/extreme-202-final/review/all-poses-9.png",
+      "phases": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w162",
+      "name": "용광로 불씨정령",
+      "approved": true,
+      "sourceGroup": "normal-04",
+      "board": "gen/extreme-202-final/review/all-poses-9.png",
+      "phases": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w163",
+      "name": "황동 불꽃요정",
+      "approved": true,
+      "sourceGroup": "normal-05",
+      "board": "gen/extreme-202-final/review/all-poses-9.png",
+      "phases": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w164",
+      "name": "점토 공방지기",
+      "approved": true,
+      "sourceGroup": "normal-02",
+      "board": "gen/extreme-202-final/review/all-poses-9.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w165",
+      "name": "불꽃 풍향조",
+      "approved": true,
+      "sourceGroup": "normal-04",
+      "board": "gen/extreme-202-final/review/all-poses-9.png",
+      "phases": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w166",
+      "name": "모루 골렘",
+      "approved": true,
+      "sourceGroup": "normal-02",
+      "board": "gen/extreme-202-final/review/all-poses-9.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w167",
+      "name": "유리 용접정령",
+      "approved": true,
+      "sourceGroup": "normal-03",
+      "board": "gen/extreme-202-final/review/all-poses-9.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w168",
+      "name": "숯검댕 고양이",
+      "approved": true,
+      "sourceGroup": "normal-05",
+      "board": "gen/extreme-202-final/review/all-poses-10.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w169",
+      "name": "살아있는 설계서",
+      "approved": true,
+      "sourceGroup": "normal-04",
+      "board": "gen/extreme-202-final/review/all-poses-10.png",
+      "phases": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w170",
+      "name": "가마 수정골렘",
+      "approved": true,
+      "sourceGroup": "normal-03",
+      "board": "gen/extreme-202-final/review/all-poses-10.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "b171",
+      "name": "태양 공방장",
+      "approved": true,
+      "sourceGroup": "boss-04",
+      "board": "gen/extreme-202-final/review/all-poses-10.png",
+      "phases": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "b171-2",
+      "name": "태양 송풍정령",
+      "approved": true,
+      "sourceGroup": "boss-04",
+      "board": "gen/extreme-202-final/review/all-poses-10.png",
+      "phases": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w172",
+      "name": "황동 비늘도마뱀",
+      "approved": true,
+      "sourceGroup": "normal-06",
+      "board": "gen/extreme-202-final/review/all-poses-10.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w173",
+      "name": "숯날개 아기용",
+      "approved": true,
+      "sourceGroup": "normal-02",
+      "board": "gen/extreme-202-final/review/all-poses-10.png",
+      "phases": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w174",
+      "name": "주조소 매머드",
+      "approved": true,
+      "sourceGroup": "normal-05",
+      "board": "gen/extreme-202-final/review/all-poses-10.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w175",
+      "name": "가마 앞치마장인",
+      "approved": true,
+      "sourceGroup": "normal-03",
+      "board": "gen/extreme-202-final/review/all-poses-11.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w176",
+      "name": "증기 닭수호자",
+      "approved": true,
+      "sourceGroup": "normal-03",
+      "board": "gen/extreme-202-final/review/all-poses-11.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w177",
+      "name": "구리날개 와이번",
+      "approved": true,
+      "sourceGroup": "normal-02",
+      "board": "gen/extreme-202-final/review/all-poses-11.png",
+      "phases": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w178",
+      "name": "슬래그 관절벌레",
+      "approved": true,
+      "sourceGroup": "normal-06",
+      "board": "gen/extreme-202-final/review/all-poses-11.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w179",
+      "name": "모루등 짐승",
+      "approved": true,
+      "sourceGroup": "normal-05",
+      "board": "gen/extreme-202-final/review/all-poses-11.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w180",
+      "name": "용광로 용기사",
+      "approved": true,
+      "sourceGroup": "normal-03",
+      "board": "gen/extreme-202-final/review/all-poses-11.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "b181",
+      "name": "불씨 화룡감독",
+      "approved": true,
+      "sourceGroup": "boss-04",
+      "board": "gen/extreme-202-final/review/all-poses-11.png",
+      "phases": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "b181-2",
+      "name": "구리비늘 히드라",
+      "approved": true,
+      "sourceGroup": "boss-04",
+      "board": "gen/extreme-202-final/review/all-poses-11.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w182",
+      "name": "별가루 심부름꾼",
+      "approved": true,
+      "sourceGroup": "normal-03",
+      "board": "gen/extreme-202-final/review/all-poses-12.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w183",
+      "name": "천문대 파수견",
+      "approved": true,
+      "sourceGroup": "repair-01",
+      "board": "gen/extreme-202-final/review/all-poses-12.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w184",
+      "name": "유성 문지기",
+      "approved": true,
+      "sourceGroup": "normal-03",
+      "board": "gen/extreme-202-final/review/all-poses-12.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w185",
+      "name": "혜성 꼬리벌레",
+      "approved": true,
+      "sourceGroup": "normal-06",
+      "board": "gen/extreme-202-final/review/all-poses-12.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w186",
+      "name": "별빛 망토정령",
+      "approved": true,
+      "sourceGroup": "normal-04",
+      "board": "gen/extreme-202-final/review/all-poses-12.png",
+      "phases": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w187",
+      "name": "천문 관측사",
+      "approved": true,
+      "sourceGroup": "normal-03",
+      "board": "gen/extreme-202-final/review/all-poses-12.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w188",
+      "name": "오로라 불꽃병",
+      "approved": true,
+      "sourceGroup": "normal-03",
+      "board": "gen/extreme-202-final/review/all-poses-12.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w189",
+      "name": "운석 가고일",
+      "approved": true,
+      "sourceGroup": "normal-02",
+      "board": "gen/extreme-202-final/review/all-poses-12.png",
+      "phases": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w190",
+      "name": "별길 관문기사",
+      "approved": true,
+      "sourceGroup": "normal-03",
+      "board": "gen/extreme-202-final/review/all-poses-13.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "b191",
+      "name": "별빛 순찰대장",
+      "approved": true,
+      "sourceGroup": "boss-05",
+      "board": "gen/extreme-202-final/review/all-poses-13.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "b191-2",
+      "name": "운석 갑옷대장",
+      "approved": true,
+      "sourceGroup": "boss-05",
+      "board": "gen/extreme-202-final/review/all-poses-13.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w192",
+      "name": "천체 나침반촉수",
+      "approved": true,
+      "sourceGroup": "normal-06",
+      "board": "gen/extreme-202-final/review/all-poses-13.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w193",
+      "name": "망원 렌즈정령",
+      "approved": true,
+      "sourceGroup": "normal-04",
+      "board": "gen/extreme-202-final/review/all-poses-13.png",
+      "phases": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w194",
+      "name": "별판 거인",
+      "approved": true,
+      "sourceGroup": "normal-03",
+      "board": "gen/extreme-202-final/review/all-poses-13.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w195",
+      "name": "성좌 중갑기사",
+      "approved": true,
+      "sourceGroup": "normal-03",
+      "board": "gen/extreme-202-final/review/all-poses-13.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w196",
+      "name": "월식 길잡이",
+      "approved": true,
+      "sourceGroup": "normal-03",
+      "board": "gen/extreme-202-final/review/all-poses-13.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w197",
+      "name": "별밤 전서까마귀",
+      "approved": true,
+      "sourceGroup": "normal-04",
+      "board": "gen/extreme-202-final/review/all-poses-14.png",
+      "phases": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w198",
+      "name": "별핵 골렘",
+      "approved": true,
+      "sourceGroup": "normal-03",
+      "board": "gen/extreme-202-final/review/all-poses-14.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w199",
+      "name": "은하 관절벌레",
+      "approved": true,
+      "sourceGroup": "normal-06",
+      "board": "gen/extreme-202-final/review/all-poses-14.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w200",
+      "name": "운석 방패거상",
+      "approved": true,
+      "sourceGroup": "normal-03",
+      "board": "gen/extreme-202-final/review/all-poses-14.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "b201",
+      "name": "별왕관 총사령관",
+      "approved": true,
+      "sourceGroup": "boss-05",
+      "board": "gen/extreme-202-final/review/all-poses-14.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "b201-2",
+      "name": "은하 관측용",
+      "approved": true,
+      "sourceGroup": "boss-05",
+      "board": "gen/extreme-202-final/review/all-poses-14.png",
+      "phases": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    },
+    {
+      "assetId": "w202",
+      "name": "새벽 등대사자",
+      "approved": true,
+      "sourceGroup": "normal-03",
+      "board": "gen/extreme-202-final/review/all-poses-14.png",
+      "phases": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "views": [
+        "side",
+        "front",
+        "back"
+      ]
+    }
+  ]
+}

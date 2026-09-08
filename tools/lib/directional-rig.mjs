@@ -46,7 +46,7 @@ export function validateEntry(entry, canonicalCell = 512) {
   if (!/^(?:w\d{3}|b\d{3}(?:-2)?)$/.test(entry.assetId || '')) throw new Error('assetId must be wNNN, bNNN or bNNN-2');
   if (!['normal', 'boss', 'secondary'].includes(entry.role)) throw new Error('invalid role');
   if (!['legged', 'flight', 'slither', 'float'].includes(entry.locomotion)) throw new Error('invalid locomotion');
-  if (!Number.isInteger(entry.wave) || entry.wave < 1 || entry.wave > 101) throw new Error('wave must be 1..101');
+  if (!Number.isInteger(entry.wave) || entry.wave < 1 || entry.wave > 202) throw new Error('wave must be 1..202');
   if (Number(entry.assetId.slice(1, 4)) !== entry.wave) throw new Error('assetId number and wave disagree');
   if ((entry.assetId[0] === 'w') !== (entry.role === 'normal')) throw new Error('assetId and role disagree');
   if (entry.assetId.endsWith('-2') !== (entry.role === 'secondary')) throw new Error('secondary requires -2 assetId');

@@ -1,0 +1,221 @@
+[
+  {
+    "id": "b151",
+    "view": "side",
+    "baseRigId": "b050",
+    "source": "tools/art-review/directional-101/middle-waves/t5-boss-01-side-parts.png",
+    "sha256": "05d5fdbe35aa80fd3efc732b7febb3a5c455156335283482be3996228350ae09",
+    "sourceBounds": [
+      null,
+      null,
+      313,
+      411
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 243.43430656934308
+    }
+  },
+  {
+    "id": "b151",
+    "view": "front",
+    "baseRigId": "b050",
+    "source": "tools/art-review/directional-101/middle-waves/t5-boss-01-front-parts-clean.png",
+    "sha256": "1eaf17d28e51a9dd0c9bbe59dd925637b44d7212d98be2e227fe45982a0fd5e1",
+    "sourceBounds": [
+      null,
+      null,
+      351,
+      425
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 254.76117647058823
+    }
+  },
+  {
+    "id": "b151",
+    "view": "back",
+    "baseRigId": "b050",
+    "source": "tools/art-review/directional-101/middle-waves/t5-boss-01-back-parts-clean.png",
+    "sha256": "5225b09c3f87aec2491f52b2ef2c7f223dc1f5f5bb5b1e429bad3573f1b3d776",
+    "sourceBounds": [
+      null,
+      null,
+      430,
+      416
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 294.7620192307692
+    }
+  },
+  {
+    "id": "b151-2",
+    "view": "side",
+    "baseRigId": "b050-2",
+    "source": "tools/art-review/directional-101/boss50-side-cannon-correction.png",
+    "sha256": "a317a56dd6384cad937129efc9710ced4d28dcdf31a82ff762d4713334d20f4e",
+    "sourceBounds": [
+      null,
+      null,
+      300,
+      394
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 225.16243654822335
+    }
+  },
+  {
+    "id": "b151-2",
+    "view": "front",
+    "baseRigId": "b050-2",
+    "source": "tools/art-review/directional-101/middle-waves/t5-boss-01-front-parts-clean.png",
+    "sha256": "1eaf17d28e51a9dd0c9bbe59dd925637b44d7212d98be2e227fe45982a0fd5e1",
+    "sourceBounds": [
+      null,
+      null,
+      478,
+      394
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b151-2",
+    "view": "back",
+    "baseRigId": "b050-2",
+    "source": "tools/art-review/directional-101/boss50-back-golem-correction.png",
+    "sha256": "feec56d394ddaf5eb2055e8ebf9aa86e6e4b10727eb60d112c0a1ebe9bce9fee",
+    "sourceBounds": [
+      null,
+      null,
+      408,
+      365
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 35,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b161",
+    "view": "side",
+    "baseRigId": "b060",
+    "source": "tools/art-review/directional-101/middle-waves/t6-boss-01-turnaround.png",
+    "sha256": "b9762a95ad8cc5bf4763ffeebe30d3281113519d4338f64c0aea7bbe9cf6b073",
+    "sourceBounds": [
+      null,
+      null,
+      328,
+      467
+    ],
+    "bodyTarget": [
+      107.73116089613035,
+      68.96130346232178,
+      267.20977596741346,
+      380.4480651731161
+    ]
+  },
+  {
+    "id": "b161",
+    "view": "front",
+    "baseRigId": "b060",
+    "source": "tools/art-review/directional-101/middle-waves/t6-boss-01-turnaround.png",
+    "sha256": "b9762a95ad8cc5bf4763ffeebe30d3281113519d4338f64c0aea7bbe9cf6b073",
+    "sourceBounds": [
+      null,
+      null,
+      323,
+      491
+    ],
+    "bodyTarget": [
+      123.20977596741344,
+      60.81466395112011,
+      263.13645621181263,
+      400
+    ]
+  },
+  {
+    "id": "b161",
+    "view": "back",
+    "baseRigId": "b060",
+    "source": "tools/art-review/directional-101/middle-waves/t6-boss-01-turnaround.png",
+    "sha256": "b9762a95ad8cc5bf4763ffeebe30d3281113519d4338f64c0aea7bbe9cf6b073",
+    "sourceBounds": [
+      null,
+      null,
+      286,
+      477
+    ],
+    "bodyTarget": [
+      133.80040733197555,
+      70.59063136456211,
+      232.99389002036662,
+      388.5947046843177
+    ]
+  },
+  {
+    "id": "b161-2",
+    "view": "side",
+    "baseRigId": "b060-2",
+    "source": "tools/art-review/directional-101/middle-waves/membrane-dragons-side-parts.png",
+    "sha256": "e6c04f326201f3b054ea2913ca81f80a87924bee050e2dc31b98704055d87e78",
+    "sourceBounds": [
+      null,
+      null,
+      420,
+      364
+    ],
+    "bodyTarget": {
+      "height": 270,
+      "top": 110,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b161-2",
+    "view": "front",
+    "baseRigId": "b060-2",
+    "source": "tools/art-review/directional-101/middle-waves/membrane-dragons-front-parts-clean.png",
+    "sha256": "b467d7fe58fb6a19cc3cad3f9e421bd1ed945b9344e307f65fcbed0d61196011",
+    "sourceBounds": [
+      null,
+      null,
+      182,
+      365
+    ],
+    "bodyTarget": {
+      "height": 270,
+      "top": 110,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b161-2",
+    "view": "back",
+    "baseRigId": "b060-2",
+    "source": "tools/art-review/directional-101/middle-waves/membrane-dragons-back-parts-clean.png",
+    "sha256": "ba2c29bd88c460d16ed427ead4bb64e498049826cc96cd45e32adf116ba90e72",
+    "sourceBounds": [
+      null,
+      null,
+      185,
+      425
+    ],
+    "bodyTarget": {
+      "height": 270,
+      "top": 110,
+      "centerX": 256
+    }
+  }
+]

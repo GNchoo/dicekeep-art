@@ -1,0 +1,371 @@
+{
+  "version": 1,
+  "tool": "built-in image_gen",
+  "calls": [
+    {
+      "id": "normal-01",
+      "status": "generated-under-review",
+      "source": "tools/art-review/extreme-202/sources/normal-01.png",
+      "originalPath": "C:/Users/PC/.codex/generated_images/01a07aea-5930-7dc0-99e5-ca46164aa55a/exec-cb65b37a-38e1-4381-b494-f0f2dd62cea8.png",
+      "sourceSha256": "5e13af68811b7afa05db3e8f34185a63dc39dff34701aaf1562fa6da5dcd94bc",
+      "actualSize": [
+        1086,
+        1448
+      ],
+      "hasAlpha": false,
+      "prompt": "tools/art-review/extreme-202/prompts/normal-01.txt",
+      "promptSha256": "7cf221dd765939e4932ec4ef275a6a5d942474911aacc08bff07301184b37ec6",
+      "reference": "tools/art-review/extreme-202/guides/normal-01.png",
+      "referenceSha256": "9835c432b8ce68293a3d8be0ec4327c8bb442e5b0f25a8b07d4ed05cfbe6ef1c",
+      "requestedCharacters": 16,
+      "requestedViews": 48,
+      "observedViews": 48,
+      "measuredCells": 48,
+      "reviewNotes": [
+        "w138 side face has longer lizard-like muzzle than front hobgoblin: reject until corrected.",
+        "w134 shield screen-side continuity needs rear correction.",
+        "No runtime readiness from generation alone."
+      ],
+      "references": [
+        {
+          "path": "tools/art-review/extreme-202/guides/normal-01.png",
+          "sha256": "9835c432b8ce68293a3d8be0ec4327c8bb442e5b0f25a8b07d4ed05cfbe6ef1c"
+        }
+      ]
+    },
+    {
+      "id": "normal-02",
+      "owner": "art_direction",
+      "status": "generated-under-review",
+      "source": "tools/art-review/extreme-202/sources/normal-02.png",
+      "originalPath": "C:/Users/PC/.codex/generated_images/01a07aea-5930-7dc0-99e5-ca46164aa55a/exec-b6918cb7-baae-4be4-9567-1e9363232c10.png",
+      "sourceSha256": "dd92abcd5c7fe7068da3c7ff38439ee47537d3804c74e27d52c8e507ad1f7dda",
+      "actualSize": [
+        1086,
+        1448
+      ],
+      "hasAlpha": false,
+      "prompt": "tools/art-review/extreme-202/prompts/normal-02.txt",
+      "promptSha256": "b3ae314a97d99739cb51125d34a64804d97869092e05c7627463e8ff46c1752b",
+      "reference": "tools/art-review/extreme-202/guides/normal-02.png",
+      "referenceSha256": "6dd5afff25f49e5e5fb073d382412d3f8b637ac1ccf8beb069dee3c5f747e82e",
+      "requestedCharacters": 16,
+      "requestedViews": 48,
+      "reviewNotes": [],
+      "references": [
+        {
+          "path": "tools/art-review/extreme-202/guides/normal-02.png",
+          "sha256": "6dd5afff25f49e5e5fb073d382412d3f8b637ac1ccf8beb069dee3c5f747e82e"
+        }
+      ],
+      "observedViews": 48
+    },
+    {
+      "id": "normal-03",
+      "owner": "art_direction",
+      "status": "generated-under-review",
+      "source": "tools/art-review/extreme-202/sources/normal-03.png",
+      "originalPath": "C:/Users/PC/.codex/generated_images/01a07aea-5930-7dc0-99e5-ca46164aa55a/exec-6fb7d7c3-2b1c-41ab-af10-92b828120595.png",
+      "sourceSha256": "2b1c62fef1d0bef510a29ee87aefcc01a7f1319dc1396c24a408ef440778d567",
+      "actualSize": [
+        1086,
+        1448
+      ],
+      "hasAlpha": false,
+      "prompt": "tools/art-review/extreme-202/prompts/normal-03.txt",
+      "promptSha256": "6d798e8b1f752dbb7c7fe1426ac5779b0036e4f69a8f392a4c38fcac65f0091b",
+      "reference": "tools/art-review/extreme-202/guides/normal-03.png",
+      "referenceSha256": "5233a913cd85cafdce9d3cc6986054da27a040862494f07d51fbe5437649292d",
+      "requestedCharacters": 16,
+      "requestedViews": 48,
+      "reviewNotes": [],
+      "references": [
+        {
+          "path": "tools/art-review/extreme-202/guides/normal-03.png",
+          "sha256": "5233a913cd85cafdce9d3cc6986054da27a040862494f07d51fbe5437649292d"
+        }
+      ],
+      "observedViews": 48
+    },
+    {
+      "id": "normal-04",
+      "owner": "art_direction",
+      "status": "generated-under-review",
+      "source": "tools/art-review/extreme-202/sources/normal-04.png",
+      "originalPath": "C:/Users/PC/.codex/generated_images/01a07aea-5930-7dc0-99e5-ca46164aa55a/exec-2ff8bb38-3e7d-4ecd-b75b-442a514bf790.png",
+      "sourceSha256": "fa95fcaae3a95f7a0921eb089a2d24a49b924c57428c395b70d3f81a4758d82f",
+      "actualSize": [
+        1086,
+        1448
+      ],
+      "hasAlpha": false,
+      "prompt": "tools/art-review/extreme-202/prompts/normal-04.txt",
+      "promptSha256": "e4e804ed0236d0f1af79830ef3508fdc97c8d165837a85d74b636d39b58ff443",
+      "reference": "tools/art-review/extreme-202/guides/normal-04.png",
+      "referenceSha256": "aee9dc35b8724778f77dc83cadae87be98a1d353639b611880b2aac63f2aac1d",
+      "requestedCharacters": 16,
+      "requestedViews": 48,
+      "reviewNotes": [],
+      "references": [
+        {
+          "path": "tools/art-review/extreme-202/guides/normal-04.png",
+          "sha256": "aee9dc35b8724778f77dc83cadae87be98a1d353639b611880b2aac63f2aac1d"
+        }
+      ],
+      "observedViews": 48
+    },
+    {
+      "id": "boss-01",
+      "owner": "root",
+      "status": "generated-under-review",
+      "source": "tools/art-review/extreme-202/sources/boss-01.png",
+      "originalPath": "C:/Users/PC/.codex/generated_images/01a07ae1-d8a0-73e1-abf1-73e88cf8bc12/exec-d0eab34e-8fd1-4647-a4cf-926c8ef295fd.png",
+      "sourceSha256": "10e3387dfc9c6b61c78f3d9f3c69c87888b119835faae8a3ba0a6617c998665c",
+      "actualSize": [
+        1086,
+        1448
+      ],
+      "hasAlpha": false,
+      "prompt": "tools/art-review/extreme-202/prompts/boss-01.txt",
+      "promptSha256": "6c528a30184b116871bf36f8d70cdc4c0bdc67c2862564a91922b5200f9ea48a",
+      "reference": "tools/art-review/extreme-202/guides/boss-01.png",
+      "referenceSha256": "f1ceff2782e5660d93b2bb7f3addcafd45ec0ee36d094b58dc8ec67fcb2b089c",
+      "requestedCharacters": 4,
+      "requestedViews": 12,
+      "reviewNotes": [],
+      "references": [
+        {
+          "path": "tools/art-review/extreme-202/guides/boss-01.png",
+          "sha256": "f1ceff2782e5660d93b2bb7f3addcafd45ec0ee36d094b58dc8ec67fcb2b089c"
+        }
+      ],
+      "observedViews": 12
+    },
+    {
+      "id": "boss-02",
+      "owner": "root",
+      "status": "generated-under-review",
+      "source": "tools/art-review/extreme-202/sources/boss-02.png",
+      "originalPath": "C:/Users/PC/.codex/generated_images/01a07ae1-d8a0-73e1-abf1-73e88cf8bc12/exec-7798fb63-230f-451e-ae0e-4c06012260ed.png",
+      "sourceSha256": "bb7af1d8d01f7ee950c7035239fd2cfd14430fb98a0884b088c94f8e45de87f8",
+      "actualSize": [
+        1086,
+        1448
+      ],
+      "hasAlpha": false,
+      "prompt": "tools/art-review/extreme-202/prompts/boss-02.txt",
+      "promptSha256": "fcf9d06f463b120645958c5ad0fa01a2491d889c157cf07cf3a5a667334e25ba",
+      "reference": "tools/art-review/extreme-202/guides/boss-02.png",
+      "referenceSha256": "dcf7ce72082f211b7fa2041fc423bd668e8dddc6c97c6cacf0adc91e43ef1b69",
+      "requestedCharacters": 4,
+      "requestedViews": 12,
+      "reviewNotes": [],
+      "references": [
+        {
+          "path": "tools/art-review/extreme-202/guides/boss-02.png",
+          "sha256": "dcf7ce72082f211b7fa2041fc423bd668e8dddc6c97c6cacf0adc91e43ef1b69"
+        }
+      ],
+      "observedViews": 12
+    },
+    {
+      "id": "normal-05-attempt1",
+      "status": "failed",
+      "error": "built-in image_gen HTTP500",
+      "requestId": "49736fbf-675f-4aa9-897e-c9131ccef011",
+      "resultFile": null,
+      "prompt": "tools/art-review/extreme-202/prompts/normal-05.txt"
+    },
+    {
+      "id": "normal-05",
+      "owner": "art_direction",
+      "status": "generated-under-review",
+      "source": "tools/art-review/extreme-202/sources/normal-05.png",
+      "originalPath": "C:/Users/PC/.codex/generated_images/01a07aea-5930-7dc0-99e5-ca46164aa55a/exec-04661ec0-879e-4788-836e-ab3442701cc7.png",
+      "sourceSha256": "57c5f2f7cfabac30f0c731685f7dbcf68d030fa94a88d6028f0239fe52627564",
+      "actualSize": [
+        1086,
+        1448
+      ],
+      "hasAlpha": false,
+      "prompt": "tools/art-review/extreme-202/prompts/normal-05.txt",
+      "promptSha256": "133906c4168e7dd6e12277ceda79fd24bb7d3e785d8a621b876d611f632b928f",
+      "reference": "tools/art-review/extreme-202/guides/normal-05.png",
+      "referenceSha256": "15e3a00f01bf4b664fb76e416e71e0adb4cbb586a8d06cf8db133fffd95b8be9",
+      "requestedCharacters": 16,
+      "requestedViews": 48,
+      "reviewNotes": [],
+      "references": [
+        {
+          "path": "tools/art-review/extreme-202/guides/normal-05.png",
+          "sha256": "15e3a00f01bf4b664fb76e416e71e0adb4cbb586a8d06cf8db133fffd95b8be9"
+        }
+      ],
+      "observedViews": 48
+    },
+    {
+      "id": "normal-06",
+      "owner": "art_direction",
+      "status": "generated-under-review",
+      "source": "tools/art-review/extreme-202/sources/normal-06.png",
+      "originalPath": "C:/Users/PC/.codex/generated_images/01a07aea-5930-7dc0-99e5-ca46164aa55a/exec-cec864ec-142c-491b-bd6b-e97518eb2a01.png",
+      "sourceSha256": "d5d3527a651f3174904368f50a5f5496f55dc6b217f2c489db3c8e856cfafc1b",
+      "actualSize": [
+        1086,
+        1448
+      ],
+      "hasAlpha": false,
+      "prompt": "tools/art-review/extreme-202/prompts/normal-06.txt",
+      "promptSha256": "f6dc7a3c7d3cc46f17d733197b2cf5de6cb377df8707afaf62c7b2dfe5d2c7f6",
+      "reference": "tools/art-review/extreme-202/guides/normal-06.png",
+      "referenceSha256": "71c1d736beb1aef0241cc90344e9aba29f24cdd55e2a2e4bcaf0d981036b8c18",
+      "requestedCharacters": 14,
+      "requestedViews": 42,
+      "reviewNotes": [],
+      "references": [
+        {
+          "path": "tools/art-review/extreme-202/guides/normal-06.png",
+          "sha256": "71c1d736beb1aef0241cc90344e9aba29f24cdd55e2a2e4bcaf0d981036b8c18"
+        }
+      ],
+      "observedViews": 42
+    },
+    {
+      "id": "boss-03",
+      "owner": "root",
+      "status": "generated-under-review",
+      "source": "tools/art-review/extreme-202/sources/boss-03.png",
+      "originalPath": "C:/Users/PC/.codex/generated_images/01a07ae1-d8a0-73e1-abf1-73e88cf8bc12/exec-f2aa1283-7405-4fe9-9b14-d5f72605fcb5.png",
+      "sourceSha256": "7a649b3c0e0a11845aa563b200d8d9afc4eb615e00f09adcd274aea8392e3f53",
+      "actualSize": [
+        1086,
+        1448
+      ],
+      "hasAlpha": false,
+      "prompt": "tools/art-review/extreme-202/prompts/boss-03.txt",
+      "promptSha256": "714c643e1feef560b7e6fef92bb0f8d79a8fead353c42e9131ef9ae0f47a240f",
+      "reference": "tools/art-review/extreme-202/guides/boss-03.png",
+      "referenceSha256": "9185f349f16579ebe4b0fbf4b524411fc24226145c6b2b98926a2be37be32d37",
+      "requestedCharacters": 4,
+      "requestedViews": 12,
+      "reviewNotes": [],
+      "references": [
+        {
+          "path": "tools/art-review/extreme-202/guides/boss-03.png",
+          "sha256": "9185f349f16579ebe4b0fbf4b524411fc24226145c6b2b98926a2be37be32d37"
+        }
+      ],
+      "observedViews": 12
+    },
+    {
+      "id": "boss-04-attempt1",
+      "owner": "root",
+      "status": "failed",
+      "error": "built-in image_gen HTTP500",
+      "requestId": "08c9689f-2312-4f48-9c35-4882ddcccd82",
+      "resultFile": null,
+      "prompt": "tools/art-review/extreme-202/prompts/boss-04.txt"
+    },
+    {
+      "id": "boss-04",
+      "owner": "root",
+      "status": "generated-under-review",
+      "source": "tools/art-review/extreme-202/sources/boss-04.png",
+      "originalPath": "C:/Users/PC/.codex/generated_images/01a07ae1-d8a0-73e1-abf1-73e88cf8bc12/exec-4e5ae616-9ed0-4633-92b2-2662ba989242.png",
+      "sourceSha256": "d50b0b6b51a08580575e52d92300156dd0ddd75e04cbaf3a6c89416d2d6e9a77",
+      "actualSize": [
+        1086,
+        1448
+      ],
+      "hasAlpha": false,
+      "prompt": "tools/art-review/extreme-202/prompts/boss-04.txt",
+      "promptSha256": "cb67f9918e25571cc061965248039d3fec27f2e44e53f4bc7f4c173a13c25066",
+      "reference": "tools/art-review/extreme-202/guides/boss-04.png",
+      "referenceSha256": "d47d7a89e50df35d42479adb0c9fa05516ba68da1cda3da4d949405c53604a33",
+      "requestedCharacters": 4,
+      "requestedViews": 12,
+      "reviewNotes": [],
+      "references": [
+        {
+          "path": "tools/art-review/extreme-202/guides/boss-04.png",
+          "sha256": "d47d7a89e50df35d42479adb0c9fa05516ba68da1cda3da4d949405c53604a33"
+        }
+      ],
+      "observedViews": 12
+    },
+    {
+      "id": "boss-05-attempt1",
+      "owner": "root",
+      "status": "failed",
+      "error": "built-in image_gen HTTP500",
+      "requestId": "d3809f7f-fd10-43b7-a725-9c7b4d7e7f6a",
+      "resultFile": null,
+      "prompt": "tools/art-review/extreme-202/prompts/boss-05.txt"
+    },
+    {
+      "id": "repair-01",
+      "owner": "art_direction",
+      "status": "generated-under-review",
+      "source": "tools/art-review/extreme-202/sources/repair-01.png",
+      "originalPath": "C:/Users/PC/.codex/generated_images/01a07aea-5930-7dc0-99e5-ca46164aa55a/exec-e9d53b81-fc48-409f-98a9-af5743f17f8e.png",
+      "sourceSha256": "103770ab5754f0ddcde3124c1b89c8da7dbc88fed7a167fef2f6966b16794d3d",
+      "actualSize": [
+        1086,
+        1448
+      ],
+      "hasAlpha": false,
+      "prompt": "tools/art-review/extreme-202/prompts/repair-01.txt",
+      "promptSha256": "90850d5cb1be69d61a696e357396f9ae6d66e6285f5aafcb58e6e48999714365",
+      "reference": "tools/art-review/extreme-202/guides/repair-01.png",
+      "referenceSha256": "e315152d4545c15bf068ae64c74ca01acc8c66d199e99670baa1c918812c9b17",
+      "requestedCharacters": 4,
+      "requestedViews": 12,
+      "reviewNotes": [],
+      "references": [
+        {
+          "path": "tools/art-review/extreme-202/guides/repair-01-new-appearance.png",
+          "sha256": "252e4b65b9337213c09e28b8b925776b6a63ca4af5e2d50c2ea50c82cab0fddf"
+        },
+        {
+          "path": "tools/art-review/extreme-202/guides/repair-01.png",
+          "sha256": "e315152d4545c15bf068ae64c74ca01acc8c66d199e99670baa1c918812c9b17"
+        }
+      ],
+      "observedViews": 12
+    },
+    {
+      "id": "boss-05",
+      "owner": "root",
+      "status": "generated-under-review",
+      "source": "tools/art-review/extreme-202/sources/boss-05.png",
+      "originalPath": "C:/Users/PC/.codex/generated_images/01a07ae1-d8a0-73e1-abf1-73e88cf8bc12/exec-fcf03f1b-b408-4065-aab4-066d08a9d3ec.png",
+      "sourceSha256": "27fab2a968281a9da668fce26bd4281c42ec33d5fae0d03861dc5a4c5d475795",
+      "actualSize": [
+        1086,
+        1448
+      ],
+      "hasAlpha": false,
+      "prompt": "tools/art-review/extreme-202/prompts/boss-05.txt",
+      "promptSha256": "26069af01b18f29f070cf49da230c49c17c4afd1e8984f1d4bb80b2a7dad6c41",
+      "reference": "tools/art-review/extreme-202/guides/boss-05.png",
+      "referenceSha256": "b503f422f13e7041aa9405de491662fa7a228cabc0c237b2bcfc741d14abb5f9",
+      "requestedCharacters": 4,
+      "requestedViews": 12,
+      "reviewNotes": [],
+      "references": [
+        {
+          "path": "tools/art-review/extreme-202/guides/boss-05.png",
+          "sha256": "b503f422f13e7041aa9405de491662fa7a228cabc0c237b2bcfc741d14abb5f9"
+        }
+      ],
+      "observedViews": 12
+    }
+  ],
+  "summary": {
+    "successes": 12,
+    "failures": 3,
+    "newUniqueAppearances": 111,
+    "successfulGeneratedCores": 354,
+    "pricing": "No price or billable status inferred from tool attempts."
+  }
+}

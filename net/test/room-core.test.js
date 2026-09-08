@@ -30,7 +30,7 @@ function harness(now = T0, timing = T.timingFor(''), opts = {}) {
     hello(sid, pid, opts = {}, at) {
       const op = opts.op || 'join';
       if (!opts.noOpen) h.open(sid, op, at);
-      const m = { t: 'hello', v: opts.v == null ? 3 : opts.v, ver: opts.ver || '78', op, pid, key: opts.key || KEY(pid), name: opts.name || pid.slice(0, 4).toUpperCase() };
+      const m = { t: 'hello', v: opts.v == null ? 4 : opts.v, ver: opts.ver || '78', mode: opts.mode, op, pid, key: opts.key || KEY(pid), name: opts.name || pid.slice(0, 4).toUpperCase() };
       return h.step({ k: 'hello', sid, op, m }, at);
     },
     msg(pid, m, at) { const sid = h.live.players[pid] && h.live.players[pid].sid; return h.step({ k: 'msg', pid, sid, m }, at); },
@@ -97,7 +97,7 @@ test('U4 claimed 에 join 은 bad-code, 없는 방(state null)도 bad-code + per
   assert.equal(r.persist, false);
   assert.equal(h.state.phase, 'claimed');
   // 없는 방
-  const r2 = reduce({ state: null, live: emptyLive(T0) }, { k: 'hello', sid: 'x', op: 'join', m: { t: 'hello', v: 3, ver: '78', op: 'join', pid: A, key: KEY(A), name: 'A' } }, T0);
+  const r2 = reduce({ state: null, live: emptyLive(T0) }, { k: 'hello', sid: 'x', op: 'join', m: { t: 'hello', v: 4, ver: '78', op: 'join', pid: A, key: KEY(A), name: 'A' } }, T0);
   assert.equal(r2.state, null);
   assert.equal(r2.persist, false);
   assert.equal(errOf(r2), 'bad-code');
@@ -132,7 +132,7 @@ test('U4 ver 불일치 4426 · 프로토콜 v2 4426 · key 불일치 4403 · op 
   assert.equal(errOf(r), 'bad-key'); assert.equal(closes(r)[0].code, 4403);
   // 경로 op 와 hello op 불일치
   h.open('sX', 'join');
-  r = h.step({ k: 'hello', sid: 'sX', op: 'join', m: { t: 'hello', v: 3, ver: '78', op: 'create', pid: C, key: KEY(C), name: 'C' } });
+  r = h.step({ k: 'hello', sid: 'sX', op: 'join', m: { t: 'hello', v: 4, ver: '78', op: 'create', pid: C, key: KEY(C), name: 'C' } });
   assert.equal(errOf(r), 'bad-request'); assert.equal(closes(r)[0].code, 4400);
   // 빠른 매칭 op 는 Room 에서 거절
   r = h.hello('sQ', C, { op: 'quick' });
@@ -239,14 +239,14 @@ test('U5 start: 접속 1명 not-ready · 방장 아님 not-host · 2명 OK → s
   assert.equal(h.state.expireAt, null);
   const st = sends(r, 'start')[0];
   assert.equal(st.to, '*');
-  assert.deepEqual(st.m, { t: 'start', seed: 0xdeadbeef, t0: at + 20000, timing: { prep: 20000, bossLimit: 320000, clearWave: 101 }, now: at, at });
+  assert.deepEqual(st.m, { t: 'start', mode: 'clear', seed: 0xdeadbeef, t0: at + 20000, timing: { prep: 20000, bossLimit: 320000, clearWave: 101 }, now: at, at });
   assert.equal(sends(r, 'sched').length, 0);
   assert.equal(sends(r, 'hold').length, 0);
-  assert.deepEqual(g(h), { t0: at + 20000, timing: { prep: 20000, bossLimit: 320000, clearWave: 101 }, endedAt: null, reason: null, ranking: null });
+  assert.deepEqual(g(h), { t0: at + 20000, mode: 'clear', timing: { prep: 20000, bossLimit: 320000, clearWave: 101 }, endedAt: null, reason: null, ranking: null });
   const room = sends(r, 'room')[0].m;
   assert.equal(room.phase, 'playing');
   assert.deepEqual(room.players.map((p) => [p.status, p.wave, p.dw, p.sp]), [['alive', 0, 0, 1], ['alive', 0, 0, 1]]);
-  assert.deepEqual(room.game, { t0: at + 20000, timing: { prep: 20000, bossLimit: 320000, clearWave: 101 }, seed: 0xdeadbeef });
+  assert.deepEqual(room.game, { t0: at + 20000, mode: 'clear', timing: { prep: 20000, bossLimit: 320000, clearWave: 101 }, seed: 0xdeadbeef });
   assert.equal(h.alarmAt, at + 20000 + T.GAME_CAP);
   // 시작 뒤 start 거절 · 알람은 GAME_CAP 뿐 (서버 웨이브 시계 없음)
   r = h.msg(A, { t: 'start' });
@@ -412,7 +412,7 @@ test('U8 playing 중 close → 180s → left(alive 만) · 유예 안 hello → 
   let r = h.hello('sB2', B, {}, at + 50000);
   const w = sends(r, 'welcome')[0].m;
   assert.equal(w.resumed, true);
-  assert.deepEqual(w.room.game, { t0: t0(h), timing: g(h).timing, seed: 424242 });
+  assert.deepEqual(w.room.game, { t0: t0(h), timing: g(h).timing, seed: 424242, mode: 'clear' });
   assert.equal(sends(r, 'player')[0].m.connected, true);
   assert.equal(h.state.players[B].status, 'alive');
   assert.equal(r.persist, false);
@@ -569,9 +569,9 @@ test('U9 snapshot 필드 · 상태 문서가 JSON 왕복에 안전', () => {
   const h = playing([A, B]);
   h.sum(A, { w: 2, dw: 1, sp: 3, hid: 1 }, t0(h) + 100);
   const s = snapshot(h.state, h.live, h.now + 1);
-  assert.deepEqual(Object.keys(s).sort(), ['code', 'game', 'hostId', 'kind', 'now', 'phase', 'players', 'reserveUntil', 't', 'ver'].sort());
+  assert.deepEqual(Object.keys(s).sort(), ['code', 'game', 'hostId', 'kind', 'mode', 'now', 'phase', 'players', 'reserveUntil', 't', 'ver'].sort());
   assert.deepEqual(Object.keys(s.players[0]).sort(), ['connected', 'deathWave', 'dw', 'host', 'hidden', 'kills', 'name', 'pid', 'rank', 'sp', 'status', 'wave'].sort());
-  assert.deepEqual(Object.keys(s.game).sort(), ['seed', 't0', 'timing'].sort());
+  assert.deepEqual(Object.keys(s.game).sort(), ['seed', 't0', 'timing', 'mode'].sort());
   assert.deepEqual([s.players[0].wave, s.players[0].dw, s.players[0].sp, s.players[0].hidden], [2, 1, 3, true]);
   assert.deepEqual([s.players[1].sp, s.players[1].hidden], [1, false]);
   assert.deepEqual(JSON.parse(JSON.stringify(h.state)), h.state);
@@ -632,7 +632,7 @@ test('U10 예약 전원 접속 즉시 자동 시작 (방장 없이) · 알람은
   const r = h.hello('sB', B, {}, T0 + 2000);
   assert.equal(h.state.phase, 'playing');
   const st = sends(r, 'start')[0].m;
-  assert.deepEqual(st, { t: 'start', seed: 777, t0: T0 + 2000 + 2000, timing: { prep: 2000, bossLimit: 5000, clearWave: 12 }, now: T0 + 2000, at: T0 + 2000 });
+  assert.deepEqual(st, { t: 'start', mode: 'clear', seed: 777, t0: T0 + 2000 + 2000, timing: { prep: 2000, bossLimit: 5000, clearWave: 12 }, now: T0 + 2000, at: T0 + 2000 });
   assert.equal(sends(r, 'welcome')[0].m.room.phase, 'lobby');     // welcome 은 시작 전 스냅샷, 이어서 start·room
   const room = sends(r, 'room').find((x) => x.m.phase === 'playing').m;
   assert.equal(room.reserveUntil, null);
@@ -697,4 +697,75 @@ test('U10 reserveUntil: 접속 2명 이상이면 미접속 좌석을 빼고 시�
   assert.deepEqual(Object.keys(st.players), [A]);
   assert.equal(st.players[A].name, '플레이어-aaaa');
   assert.equal(createRoom({ code: 'ABC234', now: T0, kind: 'quick', reserve: { players: [] }, timing: T.timingFor('') }).phase, 'claimed');
+});
+
+
+function extreme(pids = [A, B]) {
+  const h = harness();
+  h.hello(SID(pids[0]), pids[0], { op: 'create', mode: 'extreme' });
+  for (const pid of pids.slice(1)) h.hello(SID(pid), pid, { mode: 'extreme' });
+  h.msg(pids[0], { t: 'start' });
+  return h;
+}
+
+test('extreme: mode is locked for joins and reconnects; invalid/old protocol rejected', () => {
+  const h = extreme();
+  assert.equal(h.state.mode, 'extreme');
+  assert.equal(h.state.game.timing.clearWave, 0);
+  const s = snapshot(h.state, h.live, h.now);
+  assert.equal(s.mode, 'extreme'); assert.equal(s.game.mode, 'extreme');
+  assert.equal(errOf(h.hello('wrong', B, { mode: 'clear' })), 'mode');
+  assert.equal(h.live.players[B].sid, SID(B), 'mismatch must not replace original socket');
+  assert.equal(errOf(h.hello('old', C, { v: 3, mode: 'extreme' })), 'version');
+  assert.equal(errOf(h.hello('bad', C, { mode: 'endless' })), 'mode');
+  const resumed = h.hello('newB', B, { mode: 'extreme' });
+  assert.equal(sends(resumed, 'welcome')[0].m.room.game.mode, 'extreme');
+  assert.equal(sends(resumed, 'welcome')[0].m.room.game.timing.clearWave, 0);
+  const clear = lobby();
+  assert.equal(errOf(clear.hello('x', C, { mode: 'extreme' })), 'mode');
+});
+
+test('extreme: wave 101 does not win; high reports retained; clear is rejected', () => {
+  const h = extreme();
+  h.sum(A, { w: 101, dw: 101, k: 100 });
+  h.msg(A, { t: 'done', w: 101 });
+  let r = h.msg(A, { t: 'clear', w: 101, k: 100 });
+  assert.equal(errOf(r), 'mode');
+  assert.equal(h.state.players[A].status, 'alive');
+  assert.equal(h.state.phase, 'playing');
+  h.sum(A, { w: 999999, dw: 999998, k: 500 });
+  h.msg(A, { t: 'done', w: 1000000 });
+  assert.equal(h.state.players[A].wave, 1000000);
+  assert.equal(h.state.players[A].dw, 1000000);
+  r = h.msg(A, { t: 'done', w: 1000001 });
+  assert.equal(h.state.players[A].wave, 1000000);
+  assert.ok(r.effects.some(e=>e.log?.kind==='done-range'));
+  h.msg(A, { t: 'dead', w: 1000000, k: 500, r: 'lives' });
+  h.msg(B, { t: 'dead', w: 102, k: 900, r: 'lives' });
+  assert.equal(h.state.game.reason, 'all-dead');
+  assert.deepEqual(h.state.game.ranking.map(p=>[p.pid,p.wave]), [[A,999999],[B,101]]);
+});
+
+test('extreme: timeout keeps 100 minute cap and ranks current wave then kills', () => {
+  const h = extreme([A,B,C,D]), at = t0(h);
+  h.sum(A, { w: 200, k: 40 }, at+100);
+  h.sum(B, { w: 201, k: 1 }, at+101);
+  h.sum(C, { w: 200, k: 50 }, at+102);
+  h.sum(D, { w: 200, k: 50 }, at+103);
+  assert.equal(h.alarmAt, at+T.GAME_CAP);
+  h.alarm(at+T.GAME_CAP);
+  assert.equal(h.state.game.reason, 'timeout');
+  assert.deepEqual(h.state.game.ranking.map(p=>[p.pid,p.wave,p.status]), [[B,201,'lost'],[C,200,'lost'],[D,200,'lost'],[A,200,'lost']]);
+});
+
+test('extreme quick reservation preserves mode through autostart and hibernation', () => {
+  const h = harness(T0, T.timingFor('fast'), { kind:'quick', mode:'extreme', ver:'78', reserve:reserve([A,B],T0+T.RESERVE_TTL) });
+  assert.equal(errOf(h.hello('wrong', A)), 'mode');
+  h.hello('sA', A, { mode:'extreme' });
+  const r = h.hello('sB', B, { mode:'extreme' });
+  assert.equal(sends(r,'start')[0].m.mode,'extreme');
+  assert.equal(sends(r,'start')[0].m.timing.clearWave,0);
+  const saved=JSON.parse(JSON.stringify(h.state));
+  const rebuilt=liveFromSockets(saved,[{sid:'sA',pid:A},{sid:'sB',pid:B}],h.now);
+  assert.equal(snapshot(saved,rebuilt,h.now).game.mode,'extreme');
 });

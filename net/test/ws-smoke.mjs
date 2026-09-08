@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 // ==================== 서버 통합 스모크 — Node 22 내장 WebSocket ====================
 // 대상: TIMING=fast 로 띄운 wrangler dev 또는 test/dev-server.mjs.   node test/ws-smoke.mjs [ws://localhost:8787]
-// 생성 → 2·3 참가 → start{seed,t0,timing} → 재접속 시 room.game → 없는 코드 4404 → Origin 불일치 403 → 4KB 초과 1009
+// 생성 → 2·3 참가 → start{seed,t0,timing} → 재접속 시 room.game → 없는 코드 4404 → Origin 불일치 403 → MAX_FRAME 초과 1009
 // → hello 없이 5초 4400 → 소켓 속도 제한 4429 → 개별 진행(A x3 로 clear, B dead, C clear) → end 순위(A·C·B)
 // → watch → 보는 사람에게만 en/ll → 빠른 매칭(/ws/quick 소켓 2개 → 10초 뒤 matched 같은 code → 둘 다 join → 자동 start).
 // 서버 웨이브 시계가 없으므로 판을 실제로 기다리지 않는다. 전체 ≈ 20초.
 import http from 'node:http';
 import crypto from 'node:crypto';
+import { MAX_FRAME } from '../src/timing.js';
 
 const BASE = (process.argv[2] || process.env.NET_URL || 'ws://localhost:8787').replace(/\/$/, '');
 const HTTP = BASE.replace(/^ws/, 'http');
@@ -55,7 +56,7 @@ function connect(path, name) {
   };
   c.none = async (pred, ms) => { try { await c.next(pred, ms); return false; } catch (e) { return true; } };   // ms 동안 안 오면 true
   c.hello = async (op, nm) => {
-    c.send({ t: 'hello', v: 3, ver: VER, op, pid: c.pid, key: c.key, name: nm || name });
+    c.send({ t: 'hello', v: 4, ver: VER, op, pid: c.pid, key: c.key, name: nm || name });
     const w = await c.next('welcome');
     c.offset = w.now - Date.now();
     return w;
@@ -81,7 +82,7 @@ async function main() {
   console.log(`smoke → ${BASE}`);
   // S0 health
   const health = await (await fetch(HTTP + '/health')).json();
-  ok(health.ok === true && health.protocol === 3, `/health ${JSON.stringify(health)}`);
+  ok(health.ok === true && health.protocol === 4, `/health ${JSON.stringify(health)}`);
 
   // S1 Origin: 불일치 403 · localhost 허용 · 없으면 통과
   ok((await rawUpgrade('/ws/new', { Origin: 'https://evil.example' })) === 403, 'Origin 불일치 → 403');
@@ -94,7 +95,7 @@ async function main() {
   {
     const c = connect('/ws/room/ZZZZZZ', 'ghost');
     await c.open();
-    c.send({ t: 'hello', v: 3, ver: VER, op: 'join', pid: c.pid, key: c.key, name: 'ghost' });
+    c.send({ t: 'hello', v: 4, ver: VER, op: 'join', pid: c.pid, key: c.key, name: 'ghost' });
     const err = await c.next('err');
     const cl = await c.closed;
     ok(err.code === 'bad-code' && cl.code === 4404, `없는 코드 → err bad-code + close 4404`);
@@ -105,13 +106,13 @@ async function main() {
   await noHello.open();
   const noHelloAt = Date.now();
 
-  // S4 4KB 초과 → 1009 (hello 전이라도 프레임 단계에서)
+  // S4 MAX_FRAME 초과 → 1009 (hello 전이라도 프레임 단계에서)
   {
     const c = connect('/ws/room/ZZZZZZ', 'big');
     await c.open();
-    c.send(JSON.stringify({ t: 'chat', text: 'x'.repeat(4200) }));
+    c.send(JSON.stringify({ t: 'chat', text: 'x'.repeat(MAX_FRAME) }));
     const cl = await c.closed;
-    ok(cl.code === 1009, `4,096 B 초과 → close 1009 (got ${cl.code})`);
+    ok(cl.code === 1009, `${MAX_FRAME} B 초과 → close 1009 (got ${cl.code})`);
   }
 
   // S5 방 만들기 · 속도 제한 4429 · ping/pong · v2 hello 거절
@@ -164,7 +165,7 @@ async function main() {
   {
     const X = connect(`/ws/room/${code}`, 'X'); X.pid = B.pid;
     await X.open();
-    X.send({ t: 'hello', v: 3, ver: VER, op: 'join', pid: B.pid, key: KEY(), name: 'X' });
+    X.send({ t: 'hello', v: 4, ver: VER, op: 'join', pid: B.pid, key: KEY(), name: 'X' });
     const err = await X.next('err'); const cl = await X.closed;
     ok(err.code === 'bad-key' && cl.code === 4403, 'key 불일치 → 4403');
   }
@@ -172,12 +173,12 @@ async function main() {
   {
     const X = connect(`/ws/room/${code}`, 'X');
     await X.open();
-    X.send({ t: 'hello', v: 3, ver: '1', op: 'join', pid: PID(), key: KEY(), name: 'X' });
+    X.send({ t: 'hello', v: 4, ver: '1', op: 'join', pid: PID(), key: KEY(), name: 'X' });
     const err = await X.next('err'); const cl = await X.closed;
     ok(err.code === 'version' && cl.code === 4426, 'ver 불일치 → 4426');
     const Q = connect(`/ws/room/${code}`, 'Q');
     await Q.open();
-    Q.send({ t: 'hello', v: 3, ver: VER, op: 'quick', pid: PID(), key: KEY(), name: 'Q' });
+    Q.send({ t: 'hello', v: 4, ver: VER, op: 'quick', pid: PID(), key: KEY(), name: 'Q' });
     const eq = await Q.next('err'); const cq = await Q.closed;
     ok(eq.code === 'bad-request' && cq.code === 4400, '방에 op quick → 4400');
   }
@@ -194,14 +195,14 @@ async function main() {
   ok(sA.seed === sB.seed && sA.seed === sC.seed && sA.t0 === sB.t0 && sA.t0 === sC.t0, `start 동일 seed=${sA.seed} t0=${sA.t0}`);
   ok(JSON.stringify(sA.timing) === JSON.stringify({ prep: 2000, bossLimit: 5000, clearWave: 12 }) && sA.t0 === sA.now + 2000, `TIMING=fast (timing ${JSON.stringify(sA.timing)})`);
   const rm = await A.next('room');
-  ok(rm.phase === 'playing' && rm.players.every((p) => p.status === 'alive' && p.sp === 1 && p.dw === 0) && JSON.stringify(rm.game) === JSON.stringify({ t0: sA.t0, timing: sA.timing, seed: sA.seed }), 'start 뒤 room{playing, game{t0,timing,seed}}');
+  ok(rm.phase === 'playing' && rm.players.every((p) => p.status === 'alive' && p.sp === 1 && p.dw === 0) && JSON.stringify(rm.game) === JSON.stringify({ t0: sA.t0, timing: sA.timing, seed: sA.seed, mode: 'clear' }), 'start 뒤 room{playing, game{t0,timing,seed}}');
   await B.next('room'); await C2.next('room');
   ok(await A.none('sched', 300), 'sched 는 오지 않는다 (서버 웨이브 시계 없음)');
   // 늦게 온 참가자 → started 4409
   {
     const X = connect(`/ws/room/${code}`, 'X');
     await X.open();
-    X.send({ t: 'hello', v: 3, ver: VER, op: 'join', pid: PID(), key: KEY(), name: 'X' });
+    X.send({ t: 'hello', v: 4, ver: VER, op: 'join', pid: PID(), key: KEY(), name: 'X' });
     const err = await X.next('err'); const cl = await X.closed;
     ok(err.code === 'started' && cl.code === 4409, '시작한 방에 모르는 pid → 4409');
   }
@@ -225,7 +226,7 @@ async function main() {
   A.next('log', 500).then(() => { gotOwnLog = true; }).catch(() => {});
 
   // 개별 진행: A 는 3배속으로 달린다. sum 은 en/ll 을 실어 보낸다
-  const EN = '1,2,3;4,5,6;7,8,9';
+  const EN = Array(200).fill('1099,100000,9,2938,255').join(';'); // 4,599자: v4 최악 실제 base index와 외형·위상 전원
   A.send(SUM({ w: 3, dw: 2, k: 30, sp: 3, ll: 900, en: EN }));
   const [sumB, sumC] = await Promise.all([B2.next((m) => m.t === 'sum' && m.pid === A.pid), C2.next((m) => m.t === 'sum' && m.pid === A.pid)]);
   ok(sumB.w === 3 && sumB.sp === 3 && !('en' in sumB) && !('ll' in sumB) && !('en' in sumC), 'sum 중계: 보는 사람이 없으면 en/ll 을 뗀다');
@@ -283,24 +284,24 @@ async function main() {
   {
     const bad = connect('/ws/quick', 'badop');
     await bad.open();
-    bad.send({ t: 'hello', v: 3, ver: VER, op: 'join', pid: bad.pid, key: bad.key, name: 'x' });
+    bad.send({ t: 'hello', v: 4, ver: VER, op: 'join', pid: bad.pid, key: bad.key, name: 'x' });
     const eb = await bad.next('err'); const cb = await bad.closed;
     ok(eb.code === 'bad-request' && cb.code === 4400, '/ws/quick 에 op join → 4400');
     const Q1 = connect('/ws/quick', 'Q1');
     await Q1.open();
-    Q1.send({ t: 'hello', v: 3, ver: VER, op: 'quick', pid: Q1.pid, key: Q1.key, name: 'Q1' });
+    Q1.send({ t: 'hello', v: 4, ver: VER, op: 'quick', pid: Q1.pid, key: Q1.key, name: 'Q1' });
     const q1 = await Q1.next('queued');
     ok(q1.n === 1 && q1.eta === null, 'quick hello → queued{n:1, eta:null}');
     const queuedAt = Date.now();
     const Q2 = connect('/ws/quick', 'Q2');
     await Q2.open();
-    Q2.send({ t: 'hello', v: 3, ver: VER, op: 'quick', pid: Q2.pid, key: Q2.key, name: 'Q2' });
+    Q2.send({ t: 'hello', v: 4, ver: VER, op: 'quick', pid: Q2.pid, key: Q2.key, name: 'Q2' });
     const [q1b, q2] = await Promise.all([Q1.next('queued'), Q2.next('queued')]);
     ok(q1b.n === 2 && q2.n === 2 && q2.eta > 8000 && q2.eta <= 10000, `2명 → queued{n:2, eta:${q2.eta}}`);
     // 같은 pid 재접속 → 옛 소켓 4001, 좌석 유지
     const Q2b = connect('/ws/quick', 'Q2'); Q2b.pid = Q2.pid; Q2b.key = Q2.key;
     await Q2b.open();
-    Q2b.send({ t: 'hello', v: 3, ver: VER, op: 'quick', pid: Q2.pid, key: Q2.key, name: 'Q2' });
+    Q2b.send({ t: 'hello', v: 4, ver: VER, op: 'quick', pid: Q2.pid, key: Q2.key, name: 'Q2' });
     const [q2b, cq2] = await Promise.all([Q2b.next('queued'), Q2.closed]);
     ok(q2b.n === 2 && cq2.code === 4001, '대기 중 같은 pid 재접속 → 좌석 교체, 옛 소켓 4001');
     console.log('  10초 매칭 대기');
@@ -312,7 +313,7 @@ async function main() {
     // 예약 밖 pid → full
     const X = connect(`/ws/room/${m1.code}`, 'X');
     await X.open();
-    X.send({ t: 'hello', v: 3, ver: VER, op: 'join', pid: PID(), key: KEY(), name: 'X' });
+    X.send({ t: 'hello', v: 4, ver: VER, op: 'join', pid: PID(), key: KEY(), name: 'X' });
     const ex = await X.next('err'); const cx = await X.closed;
     ok(ex.code === 'full' && cx.code === 4409, '예약 밖 pid → full 4409');
     // 둘 다 join → 첫 접속은 resumed false, 방장 없음, 예약 이름 → 전원 접속 즉시 start

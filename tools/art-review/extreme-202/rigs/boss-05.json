@@ -1,0 +1,1515 @@
+{
+  "version": 1,
+  "canonicalCell": 512,
+  "assetVersion": 101,
+  "entries": [
+    {
+      "assetId": "b191",
+      "wave": 191,
+      "role": "boss",
+      "locomotion": "legged",
+      "cell": 512,
+      "referenceHeight": 420,
+      "cycleStride": 180,
+      "reviewApproved": false,
+      "gait": {
+        "stanceDuty": 0.5,
+        "lift": 25,
+        "pelvis": "support"
+      },
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-boss-biped-01-side-parts.png",
+          "sourceSha256": "7fe0d55707d97548b9cf6125e9e7448b5d8a95e6da6b4b730f36c7a88c93f46a",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            455
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 270,
+              "top": 55,
+              "centerX": 256
+            },
+            "layer": 10,
+            "source": "tools/art-review/extreme-202/bodies/boss-05/b191-side.png",
+            "sourceSha256": "f941edddc48f8bd665279ed9e3d32c1c4e30d2c163d677289840cca3b78c4ec8",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.4365234375,
+                0.138671875,
+                0.131103515625,
+                0.2911783854166667
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5871212121212122,
+                  0.1
+                ],
+                "knee": [
+                  0.375,
+                  0.51
+                ],
+                "ankle": [
+                  0.3560606060606061,
+                  0.84
+                ],
+                "sole": [
+                  0.6553030303030303,
+                  0.995
+                ]
+              },
+              "flipX": false,
+              "socketNormalized": [
+                0.46,
+                0.8
+              ],
+              "socketRoiNormalized": [
+                0.39,
+                0.74,
+                0.14,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 455,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.15,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.76171875,
+                0.13932291666666666,
+                0.132080078125,
+                0.29052734375
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.43609022556390975,
+                  0.1
+                ],
+                "knee": [
+                  0.631578947368421,
+                  0.51
+                ],
+                "ankle": [
+                  0.6353383458646616,
+                  0.84
+                ],
+                "sole": [
+                  0.32706766917293234,
+                  0.995
+                ]
+              },
+              "flipX": true,
+              "socketNormalized": [
+                0.62,
+                0.8
+              ],
+              "socketRoiNormalized": [
+                0.55,
+                0.74,
+                0.14,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 455,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.15,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Authored cap/knee/ankle y landmarks and body pelvis reviewed; x centers measured at those rows. Source SHA pins ROI and landmarks. Visual animation approval remains separate."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-boss-biped-01-front-back-parts.png",
+          "sourceSha256": "26b30dbb30077476b921c62a964d6d801990c338d577064094980ace622689b6",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            455
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 270,
+              "top": 55,
+              "centerX": 256
+            },
+            "layer": 10,
+            "source": "tools/art-review/extreme-202/bodies/boss-05/b191-front.png",
+            "sourceSha256": "51933013d3c9e31e63a7679f33e0e18c7a873cde818fdc1098300175429e2d54",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.2786458333333333,
+                0.1455078125,
+                0.06852213541666667,
+                0.320556640625
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.587378640776699,
+                  0.1
+                ],
+                "knee": [
+                  0.4854368932038835,
+                  0.51
+                ],
+                "ankle": [
+                  0.4077669902912621,
+                  0.86
+                ],
+                "sole": [
+                  0.27184466019417475,
+                  0.995
+                ]
+              },
+              "flipX": false,
+              "socketNormalized": [
+                0.61,
+                0.8
+              ],
+              "socketRoiNormalized": [
+                0.54,
+                0.74,
+                0.14,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 455,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.15,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.4147135416666667,
+                0.1455078125,
+                0.06526692708333333,
+                0.320556640625
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.42346938775510207,
+                  0.1
+                ],
+                "knee": [
+                  0.5102040816326531,
+                  0.51
+                ],
+                "ankle": [
+                  0.5663265306122449,
+                  0.86
+                ],
+                "sole": [
+                  0.7193877551020408,
+                  0.995
+                ]
+              },
+              "flipX": false,
+              "socketNormalized": [
+                0.39,
+                0.8
+              ],
+              "socketRoiNormalized": [
+                0.32,
+                0.74,
+                0.14,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 455,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.15,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Authored cap/knee/ankle y landmarks and body pelvis reviewed; x centers measured at those rows. Source SHA pins ROI and landmarks. Visual animation approval remains separate."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-boss-biped-01-front-back-parts.png",
+          "sourceSha256": "26b30dbb30077476b921c62a964d6d801990c338d577064094980ace622689b6",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            455
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 270,
+              "top": 55,
+              "centerX": 256
+            },
+            "layer": 10,
+            "source": "tools/art-review/extreme-202/bodies/boss-05/b191-back.png",
+            "sourceSha256": "892746211aa2397bf391bda792fa421eb5a79fa87528e6990025d0e9a79d19aa",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.79296875,
+                0.1533203125,
+                0.06526692708333333,
+                0.310791015625
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5816326530612245,
+                  0.1
+                ],
+                "knee": [
+                  0.45408163265306123,
+                  0.51
+                ],
+                "ankle": [
+                  0.3877551020408163,
+                  0.86
+                ],
+                "sole": [
+                  0.4030612244897959,
+                  0.995
+                ]
+              },
+              "flipX": false,
+              "socketNormalized": [
+                0.39,
+                0.86
+              ],
+              "socketRoiNormalized": [
+                0.32,
+                0.8,
+                0.14,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 455,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.15,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.9049479166666666,
+                0.1513671875,
+                0.060709635416666664,
+                0.312744140625
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.45054945054945056,
+                  0.1
+                ],
+                "knee": [
+                  0.5494505494505495,
+                  0.51
+                ],
+                "ankle": [
+                  0.5659340659340659,
+                  0.86
+                ],
+                "sole": [
+                  0.5439560439560439,
+                  0.995
+                ]
+              },
+              "flipX": false,
+              "socketNormalized": [
+                0.61,
+                0.86
+              ],
+              "socketRoiNormalized": [
+                0.54,
+                0.8,
+                0.14,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 455,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.15,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Authored cap/knee/ankle y landmarks and body pelvis reviewed; x centers measured at those rows. Source SHA pins ROI and landmarks. Visual animation approval remains separate."
+        }
+      },
+      "name": "별빛 순찰대장",
+      "legacyAssetId": "b090",
+      "baseRigId": "b090"
+    },
+    {
+      "assetId": "b191-2",
+      "wave": 191,
+      "role": "secondary",
+      "locomotion": "legged",
+      "cell": 512,
+      "referenceHeight": 420,
+      "cycleStride": 180,
+      "reviewApproved": false,
+      "gait": {
+        "stanceDuty": 0.5,
+        "lift": 25,
+        "pelvis": "support"
+      },
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-boss-biped-01-side-parts.png",
+          "sourceSha256": "7fe0d55707d97548b9cf6125e9e7448b5d8a95e6da6b4b730f36c7a88c93f46a",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            455
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 270,
+              "top": 55,
+              "centerX": 256
+            },
+            "layer": 10,
+            "source": "tools/art-review/extreme-202/bodies/boss-05/b191-2-side.png",
+            "sourceSha256": "b185a7ab642a541ad0931a58e92f69dbf981151aefd4555faa5e40b20757ef66",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.43359375,
+                0.5540364583333334,
+                0.133056640625,
+                0.3230794270833333
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.6156716417910447,
+                  0.1
+                ],
+                "knee": [
+                  0.41044776119402987,
+                  0.51
+                ],
+                "ankle": [
+                  0.417910447761194,
+                  0.84
+                ],
+                "sole": [
+                  0.48880597014925375,
+                  0.995
+                ]
+              },
+              "flipX": false,
+              "socketNormalized": [
+                0.46,
+                0.82
+              ],
+              "socketRoiNormalized": [
+                0.39,
+                0.76,
+                0.14,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 455,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.15,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.7451171875,
+                0.5540364583333334,
+                0.128173828125,
+                0.3243815104166667
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.43023255813953487,
+                  0.1
+                ],
+                "knee": [
+                  0.5891472868217055,
+                  0.51
+                ],
+                "ankle": [
+                  0.5542635658914729,
+                  0.84
+                ],
+                "sole": [
+                  0.46124031007751937,
+                  0.995
+                ]
+              },
+              "flipX": false,
+              "socketNormalized": [
+                0.62,
+                0.82
+              ],
+              "socketRoiNormalized": [
+                0.55,
+                0.76,
+                0.14,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 455,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.15,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Authored cap/knee/ankle y landmarks and body pelvis reviewed; x centers measured at those rows. Source SHA pins ROI and landmarks. Visual animation approval remains separate."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-boss-biped-01-front-back-parts.png",
+          "sourceSha256": "26b30dbb30077476b921c62a964d6d801990c338d577064094980ace622689b6",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            455
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 270,
+              "top": 55,
+              "centerX": 256
+            },
+            "layer": 10,
+            "source": "tools/art-review/extreme-202/bodies/boss-05/b191-2-front.png",
+            "sourceSha256": "06c8130ccf77c5cc35fa6544c74784b1bf7fcbb9bb59f46baab1d19665f1f577",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.263671875,
+                0.5791015625,
+                0.08089192708333333,
+                0.326416015625
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.6762295081967213,
+                  0.1
+                ],
+                "knee": [
+                  0.5245901639344263,
+                  0.51
+                ],
+                "ankle": [
+                  0.42213114754098363,
+                  0.86
+                ],
+                "sole": [
+                  0.32786885245901637,
+                  0.995
+                ]
+              },
+              "flipX": false,
+              "socketNormalized": [
+                0.61,
+                0.82
+              ],
+              "socketRoiNormalized": [
+                0.54,
+                0.76,
+                0.14,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 455,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.15,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.412109375,
+                0.576171875,
+                0.07828776041666667,
+                0.329345703125
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.3601694915254237,
+                  0.1
+                ],
+                "knee": [
+                  0.4872881355932203,
+                  0.51
+                ],
+                "ankle": [
+                  0.5635593220338984,
+                  0.86
+                ],
+                "sole": [
+                  0.673728813559322,
+                  0.995
+                ]
+              },
+              "flipX": false,
+              "socketNormalized": [
+                0.39,
+                0.82
+              ],
+              "socketRoiNormalized": [
+                0.32,
+                0.76,
+                0.14,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 455,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.15,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Authored cap/knee/ankle y landmarks and body pelvis reviewed; x centers measured at those rows. Source SHA pins ROI and landmarks. Visual animation approval remains separate."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-boss-biped-01-front-back-parts.png",
+          "sourceSha256": "26b30dbb30077476b921c62a964d6d801990c338d577064094980ace622689b6",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            455
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 270,
+              "top": 55,
+              "centerX": 256
+            },
+            "layer": 10,
+            "source": "tools/art-review/extreme-202/bodies/boss-05/b191-2-back.png",
+            "sourceSha256": "926788a2a24ff5c6c2db1883631ff0a863980683480c44915d252dce65ac5b95",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.7805989583333334,
+                0.5830078125,
+                0.07503255208333333,
+                0.322509765625
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.6592920353982301,
+                  0.1
+                ],
+                "knee": [
+                  0.504424778761062,
+                  0.51
+                ],
+                "ankle": [
+                  0.415929203539823,
+                  0.86
+                ],
+                "sole": [
+                  0.3805309734513274,
+                  0.995
+                ]
+              },
+              "flipX": false,
+              "socketNormalized": [
+                0.39,
+                0.84
+              ],
+              "socketRoiNormalized": [
+                0.32,
+                0.78,
+                0.14,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 455,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.15,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.9069010416666666,
+                0.5859375,
+                0.07438151041666667,
+                0.319580078125
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.36607142857142855,
+                  0.1
+                ],
+                "knee": [
+                  0.48660714285714285,
+                  0.51
+                ],
+                "ankle": [
+                  0.5401785714285714,
+                  0.86
+                ],
+                "sole": [
+                  0.5982142857142857,
+                  0.995
+                ]
+              },
+              "flipX": false,
+              "socketNormalized": [
+                0.61,
+                0.84
+              ],
+              "socketRoiNormalized": [
+                0.54,
+                0.78,
+                0.14,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 455,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.15,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Authored cap/knee/ankle y landmarks and body pelvis reviewed; x centers measured at those rows. Source SHA pins ROI and landmarks. Visual animation approval remains separate."
+        }
+      },
+      "name": "운석 갑옷대장",
+      "legacyAssetId": "b090-2",
+      "baseRigId": "b090-2"
+    },
+    {
+      "assetId": "b201",
+      "wave": 201,
+      "role": "boss",
+      "locomotion": "legged",
+      "cell": 512,
+      "referenceHeight": 420,
+      "cycleStride": 180,
+      "reviewApproved": false,
+      "gait": {
+        "stanceDuty": 0.5,
+        "lift": 25,
+        "pelvis": "support"
+      },
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-boss-biped-02-all-parts.png",
+          "sourceSha256": "8999b20de57786f6fb67e0706aa49c9f79f6b94e4e04720f0426bc88b9541859",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            455
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 270,
+              "top": 55,
+              "centerX": 256
+            },
+            "layer": 10,
+            "source": "tools/art-review/extreme-202/bodies/boss-05/b201-side.png",
+            "sourceSha256": "a2428c27453715789dd09fe993e6ce58c9259982f1d3a07ce2c2cc4f8f0fc7f1",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.47801578354002255,
+                0.08173618940248027,
+                0.12091319052987598,
+                0.19912626832018038
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4666666666666667,
+                  0.1
+                ],
+                "knee": [
+                  0.43333333333333335,
+                  0.47
+                ],
+                "ankle": [
+                  0.3238095238095238,
+                  0.84
+                ],
+                "sole": [
+                  0.680952380952381,
+                  0.995
+                ]
+              },
+              "flipX": false,
+              "socketNormalized": [
+                0.4,
+                0.86
+              ],
+              "socketRoiNormalized": [
+                0.33,
+                0.8,
+                0.14,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 455,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": -2,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.15,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.7824126268320181,
+                0.08173618940248027,
+                0.11865839909808343,
+                0.19912626832018038
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5388349514563107,
+                  0.1
+                ],
+                "knee": [
+                  0.5631067961165048,
+                  0.47
+                ],
+                "ankle": [
+                  0.6601941747572816,
+                  0.84
+                ],
+                "sole": [
+                  0.3106796116504854,
+                  0.995
+                ]
+              },
+              "flipX": true,
+              "socketNormalized": [
+                0.56,
+                0.86
+              ],
+              "socketRoiNormalized": [
+                0.49000000000000005,
+                0.8,
+                0.14,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 455,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.15,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Authored cap/knee/ankle y landmarks and body pelvis reviewed; x centers measured at those rows. Source SHA pins ROI and landmarks. Visual animation approval remains separate."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-boss-biped-02-all-parts.png",
+          "sourceSha256": "8999b20de57786f6fb67e0706aa49c9f79f6b94e4e04720f0426bc88b9541859",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            455
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 270,
+              "top": 55,
+              "centerX": 256
+            },
+            "layer": 10,
+            "source": "tools/art-review/extreme-202/bodies/boss-05/b201-front.png",
+            "sourceSha256": "bf23d599207278c960673f9016d65324b1a1ea89587404961b3acbbfacc9f92d",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.4971815107102593,
+                0.40304396843291995,
+                0.09611048478015784,
+                0.2019447576099211
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5481927710843374,
+                  0.1
+                ],
+                "knee": [
+                  0.45180722891566266,
+                  0.51
+                ],
+                "ankle": [
+                  0.4457831325301205,
+                  0.86
+                ],
+                "sole": [
+                  0.3493975903614458,
+                  0.995
+                ]
+              },
+              "flipX": false,
+              "socketNormalized": [
+                0.61,
+                0.88
+              ],
+              "socketRoiNormalized": [
+                0.54,
+                0.8200000000000001,
+                0.14,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 455,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.15,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.7722660653889515,
+                0.40304396843291995,
+                0.09498308906426156,
+                0.2019447576099211
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4573170731707317,
+                  0.1
+                ],
+                "knee": [
+                  0.5304878048780488,
+                  0.51
+                ],
+                "ankle": [
+                  0.5426829268292683,
+                  0.86
+                ],
+                "sole": [
+                  0.6219512195121951,
+                  0.995
+                ]
+              },
+              "flipX": false,
+              "socketNormalized": [
+                0.39,
+                0.88
+              ],
+              "socketRoiNormalized": [
+                0.32,
+                0.8200000000000001,
+                0.14,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 455,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.15,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Authored cap/knee/ankle y landmarks and body pelvis reviewed; x centers measured at those rows. Source SHA pins ROI and landmarks. Visual animation approval remains separate."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-boss-biped-02-all-parts.png",
+          "sourceSha256": "8999b20de57786f6fb67e0706aa49c9f79f6b94e4e04720f0426bc88b9541859",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            455
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 270,
+              "top": 55,
+              "centerX": 256
+            },
+            "layer": 10,
+            "source": "tools/art-review/extreme-202/bodies/boss-05/b201-back.png",
+            "sourceSha256": "4297b0edde3d11823802234132b7b900b50deee1047a6d08dfb650ef0096186f",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.49943630214205187,
+                0.705749718151071,
+                0.09385569334836527,
+                0.1963077790304397
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5308641975308642,
+                  0.1
+                ],
+                "knee": [
+                  0.4691358024691358,
+                  0.51
+                ],
+                "ankle": [
+                  0.4506172839506173,
+                  0.86
+                ],
+                "sole": [
+                  0.4506172839506173,
+                  0.995
+                ]
+              },
+              "flipX": false,
+              "socketNormalized": [
+                0.39,
+                0.89
+              ],
+              "socketRoiNormalized": [
+                0.32,
+                0.8300000000000001,
+                0.14,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 455,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.15,
+              "proximalEdgeFeather": 0.09
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.7711386696730552,
+                0.705749718151071,
+                0.09385569334836527,
+                0.1963077790304397
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.47530864197530864,
+                  0.1
+                ],
+                "knee": [
+                  0.5308641975308642,
+                  0.51
+                ],
+                "ankle": [
+                  0.5432098765432098,
+                  0.86
+                ],
+                "sole": [
+                  0.5432098765432098,
+                  0.995
+                ]
+              },
+              "flipX": false,
+              "socketNormalized": [
+                0.61,
+                0.89
+              ],
+              "socketRoiNormalized": [
+                0.54,
+                0.8300000000000001,
+                0.14,
+                0.12
+              ],
+              "calibrate": {
+                "groundY": 455,
+                "maximumStanceAngle": 168
+              },
+              "phase": 0.5,
+              "layer": 1,
+              "upperLayer": -3,
+              "bend": 1,
+              "proximalFeather": 0.15,
+              "proximalEdgeFeather": 0.09
+            }
+          ],
+          "jointReview": "Authored cap/knee/ankle y landmarks and body pelvis reviewed; x centers measured at those rows. Source SHA pins ROI and landmarks. Visual animation approval remains separate."
+        }
+      },
+      "name": "별왕관 총사령관",
+      "legacyAssetId": "b100",
+      "baseRigId": "b100"
+    },
+    {
+      "assetId": "b201-2",
+      "wave": 201,
+      "role": "secondary",
+      "locomotion": "flight",
+      "cell": 512,
+      "referenceHeight": 300,
+      "cycleStride": 0,
+      "cycleSeconds": 0.8,
+      "reviewApproved": false,
+      "views": {
+        "side": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-boss-flight-01-side-parts.png",
+          "sourceSha256": "c27cd66d38e07bb5170e4b6bfea16676827888e893f9acc174aa110e4dfde179",
+          "background": "checkerboard",
+          "backgroundSeeds": [
+            [
+              211,
+              600
+            ],
+            [
+              210,
+              1260
+            ]
+          ],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 255,
+              "top": 110,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/boss-05/b201-2-side.png",
+            "sourceSha256": "b68072b829c68de8bc7ba9341380d30d6883eacd176b0104ab6cb5b546ff0170",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.3291015625,
+                0.5481770833333334,
+                0.307861328125,
+                0.3400065104166667
+              ],
+              "socketNormalized": [
+                0.5,
+                0.46
+              ],
+              "sourcePivot": [
+                0.95,
+                0.47
+              ],
+              "scale": 0.5179703135059316,
+              "angleDeg": [
+                0,
+                48
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.705078125,
+                0.5475260416666666,
+                0.255126953125,
+                0.34130859375
+              ],
+              "socketNormalized": [
+                0.5,
+                0.46
+              ],
+              "sourcePivot": [
+                0.055,
+                0.47
+              ],
+              "scale": 0.5685115121825843,
+              "angleDeg": [
+                0,
+                48
+              ],
+              "phase": 0,
+              "layer": 1,
+              "flipX": true
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        },
+        "front": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-boss-flight-01-front-back-parts.png",
+          "sourceSha256": "262e5ad3998378a2087447670c009e660682f792deffa5885cd83dddb79b74a0",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 255,
+              "top": 110,
+              "centerX": 256
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/boss-05/b201-2-front.png",
+            "sourceSha256": "38656865915381dd7c9b6393efe5d76ae55e2c981b403875c5413017bcd27adc",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.21028645833333334,
+                0.576171875,
+                0.13557942708333334,
+                0.319580078125
+              ],
+              "socketNormalized": [
+                0.95,
+                0.425
+              ],
+              "sourcePivot": [
+                0.34,
+                0.035
+              ],
+              "scale": 0.6143456842855798,
+              "angleDeg": [
+                -45,
+                45
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.3828125,
+                0.576171875,
+                0.14599609375,
+                0.321533203125
+              ],
+              "socketNormalized": [
+                0.41,
+                0.425
+              ],
+              "sourcePivot": [
+                0.69,
+                0.035
+              ],
+              "scale": 0.5986841687520047,
+              "angleDeg": [
+                45,
+                -45
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": false
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        },
+        "back": {
+          "source": "tools/art-review/directional-101/late-waves/sources/late-boss-flight-01-front-back-parts.png",
+          "sourceSha256": "262e5ad3998378a2087447670c009e660682f792deffa5885cd83dddb79b74a0",
+          "background": "checkerboard",
+          "backgroundSeeds": [],
+          "pivot": [
+            256,
+            385
+          ],
+          "body": {
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "target": {
+              "height": 255,
+              "top": 110,
+              "centerX": 268
+            },
+            "layer": 0,
+            "source": "tools/art-review/extreme-202/bodies/boss-05/b201-2-back.png",
+            "sourceSha256": "2f3ae69d046359bcbac14cec7e77789a50bd31b07025f7d61b68049993a4027b",
+            "background": "alpha",
+            "backgroundSeeds": [],
+            "flipX": false,
+            "review": "Rear wing at full spread reached the left canonical boundary. Translate body and attached sockets12 canonical pixels right; wing source, scale, phase, angle and pivot remain unchanged."
+          },
+          "parts": [
+            {
+              "id": "leftWing",
+              "type": "wing",
+              "roi": [
+                0.71484375,
+                0.576171875,
+                0.12125651041666667,
+                0.321533203125
+              ],
+              "socketNormalized": [
+                0.08,
+                0.415
+              ],
+              "sourcePivot": [
+                0.34,
+                0.035
+              ],
+              "scale": 0.6210880713043148,
+              "angleDeg": [
+                45,
+                -45
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            },
+            {
+              "id": "rightWing",
+              "type": "wing",
+              "roi": [
+                0.85546875,
+                0.576171875,
+                0.11930338541666667,
+                0.322509765625
+              ],
+              "socketNormalized": [
+                0.72,
+                0.415
+              ],
+              "sourcePivot": [
+                0.69,
+                0.035
+              ],
+              "scale": 0.6171602960926528,
+              "angleDeg": [
+                -45,
+                45
+              ],
+              "phase": 0,
+              "layer": -1,
+              "flipX": true
+            }
+          ],
+          "wingReview": "Shoulder root pivots identified independently from elbow/claw tips in source art. Full independently articulated left/right wings; final visual approval separate."
+        }
+      },
+      "name": "은하 관측용",
+      "legacyAssetId": "b100-2",
+      "baseRigId": "b100-2"
+    }
+  ]
+}

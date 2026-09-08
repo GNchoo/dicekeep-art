@@ -1,0 +1,221 @@
+[
+  {
+    "id": "w183",
+    "view": "side",
+    "baseRigId": "w082",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-quad-02-side-parts.png",
+    "sha256": "29a48f4448ec816978ca167b3eb53beecc27423aa037e9693af326c243bab241",
+    "sourceBounds": [
+      null,
+      null,
+      623,
+      425
+    ],
+    "bodyTarget": {
+      "height": 260,
+      "top": 65,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w183",
+    "view": "front",
+    "baseRigId": "w082",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-quad-02-front-back-parts.png",
+    "sha256": "2b8aafe222a1b396527a31ad80ef4114a059284baad1d79a28c8d3f178c14903",
+    "sourceBounds": [
+      null,
+      null,
+      143,
+      289
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 65,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w183",
+    "view": "back",
+    "baseRigId": "w082",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-quad-02-front-back-parts.png",
+    "sha256": "2b8aafe222a1b396527a31ad80ef4114a059284baad1d79a28c8d3f178c14903",
+    "sourceBounds": [
+      null,
+      null,
+      144,
+      330
+    ],
+    "bodyTarget": {
+      "height": 300,
+      "top": 65,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w124",
+    "view": "side",
+    "baseRigId": "w023",
+    "source": "tools/art-review/directional-101/forest-swamp-01-side-parts.png",
+    "sha256": "8ceb00c5ec6bedecf771ffc5e5c4c7e424b4832a261cb31dd375fa510c9fc5af",
+    "sourceBounds": [
+      null,
+      null,
+      326,
+      137
+    ],
+    "bodyTarget": {
+      "height": 145,
+      "top": 195,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w124",
+    "view": "front",
+    "baseRigId": "w023",
+    "source": "tools/art-review/directional-101/swamp-reptile-body-correction.png",
+    "sha256": "5bf74d69177b68c46656a171ebbbcda386e126a37a439f48ff3f11061d9bce78",
+    "sourceBounds": [
+      null,
+      null,
+      221,
+      390
+    ],
+    "bodyTarget": {
+      "height": 240,
+      "top": 120,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w124",
+    "view": "back",
+    "baseRigId": "w023",
+    "source": "tools/art-review/directional-101/swamp-reptile-body-correction.png",
+    "sha256": "5bf74d69177b68c46656a171ebbbcda386e126a37a439f48ff3f11061d9bce78",
+    "sourceBounds": [
+      null,
+      null,
+      202,
+      450
+    ],
+    "bodyTarget": {
+      "height": 240,
+      "top": 120,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w123",
+    "view": "side",
+    "baseRigId": "w022",
+    "source": "tools/art-review/directional-101/forest-swamp-01-side-parts.png",
+    "sha256": "8ceb00c5ec6bedecf771ffc5e5c4c7e424b4832a261cb31dd375fa510c9fc5af",
+    "sourceBounds": [
+      null,
+      null,
+      307,
+      173
+    ],
+    "bodyTarget": {
+      "height": 180,
+      "top": 155,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w123",
+    "view": "front",
+    "baseRigId": "w022",
+    "source": "tools/art-review/directional-101/forest-swamp-01-front-back-parts.png",
+    "sha256": "ccdc188105bd7deb6a4467a80938be8e4decaeaf63c0cb167796b2551e55371f",
+    "sourceBounds": [
+      null,
+      null,
+      265,
+      211
+    ],
+    "bodyTarget": {
+      "height": 190,
+      "top": 135,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w123",
+    "view": "back",
+    "baseRigId": "w022",
+    "source": "tools/art-review/directional-101/forest-swamp-01-back-correction.png",
+    "sha256": "3154a6a007ab8954b62abfcbd782722af65e0a45f12844d5428f36cd8d55354b",
+    "sourceBounds": [
+      null,
+      null,
+      262,
+      232
+    ],
+    "bodyTarget": {
+      "height": 190,
+      "top": 135,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "w130",
+    "view": "side",
+    "baseRigId": "w029",
+    "source": "tools/art-review/directional-101/swamp-special-01-side-parts.png",
+    "sha256": "4ecadd0b116600d910139b45e7f3c3a0e5d331c333312da2a9146ba6a3d90534",
+    "sourceBounds": [
+      null,
+      null,
+      193,
+      269
+    ],
+    "bodyTarget": [
+      325.53903345724905,
+      285,
+      78.92193308550186,
+      110
+    ]
+  },
+  {
+    "id": "w130",
+    "view": "front",
+    "baseRigId": "w029",
+    "source": "tools/art-review/directional-101/swamp-special-01-front-back-parts.png",
+    "sha256": "85c2c37f1fc9ac5acf83d359c295a34bf8dd83ba7cc2522dc552d65639c5dbf0",
+    "sourceBounds": [
+      null,
+      null,
+      122,
+      294
+    ],
+    "bodyTarget": [
+      233.1768707482993,
+      295,
+      45.64625850340136,
+      110
+    ]
+  },
+  {
+    "id": "w130",
+    "view": "back",
+    "baseRigId": "w029",
+    "source": "tools/art-review/directional-101/swamp-back-body-correction.png",
+    "sha256": "98abfe48f2750e4626cb69c0d95f84e105a7f4e8880bdeffd6c68984c6810e6a",
+    "sourceBounds": [
+      null,
+      null,
+      157,
+      320
+    ],
+    "bodyTarget": [
+      229.015625,
+      120,
+      53.96875,
+      110
+    ]
+  }
+]

@@ -1,0 +1,11 @@
+import fs from 'node:fs';import assert from 'node:assert/strict';import {expandConfig,validateEntry,sha256} from '../../lib/directional-rig.mjs';
+const d='tools/art-review/extreme-202',config=JSON.parse(fs.readFileSync(d+'/all-rigs.json')),catalog=JSON.parse(fs.readFileSync(d+'/catalog.json')),cache=new Map();let checked=0;
+assert.equal(config.entries.length,111);assert.equal(new Set(config.entries.map(e=>e.assetId)).size,111);
+assert.equal(config.entries.filter(e=>e.role==='normal').length,91);assert.equal(config.entries.filter(e=>e.role==='boss').length,10);assert.equal(config.entries.filter(e=>e.role==='secondary').length,10);
+for(let wave=102;wave<=202;wave++)assert.equal(config.entries.filter(e=>e.wave===wave).length,(wave-101)%10===0?2:1);
+for(const e of config.entries){validateEntry(e);const c=catalog.entries.find(c=>c.assetId===e.assetId);assert.ok(c);if(!cache.has(c.baseConfig))cache.set(c.baseConfig,expandConfig(JSON.parse(fs.readFileSync(c.baseConfig))));const old=cache.get(c.baseConfig).entries.find(x=>x.assetId===c.baseRigId);assert.ok(old);
+ for(const field of ['gait','cycleStride','cycleSeconds','referenceHeight','locomotion'])assert.deepEqual(e[field],old[field],e.assetId+' altered '+field);
+ for(const vn of ['side','front','back']){const v=e.views[vn],o=old.views[vn];for(const field of ['parts','pivot','source','sourceSha256','background','backgroundSeeds','layerOrderFrames'])assert.deepEqual(v[field],o[field],e.assetId+' '+vn+' altered approved moving '+field);assert.ok(v.body.source.startsWith(d+'/bodies/'));assert.equal(v.body.background,'alpha');assert.equal(sha256(fs.readFileSync(v.body.source)),v.body.sourceSha256);assert.deepEqual(v.body.roi,[0,0,1,1]);checked++;}
+}
+const normal=structuredClone(config.entries.find(e=>e.role==='normal'));normal.wave=202;normal.assetId='w202';assert.doesNotThrow(()=>validateEntry(normal));normal.wave=203;normal.assetId='w203';assert.throws(()=>validateEntry(normal),/1\.\.202/);
+const report={passed:true,entries:111,approvedMovingRigViewsUnchanged:checked,range102to202Covered:true,newSourceHashesChecked:checked,assertions:'Old approved moving source, physical limb IDs/phase/joints/scale/stride and pivot preserved; only body source and authored body target changed.'};fs.writeFileSync(d+'/pipeline-validation.json',JSON.stringify(report,null,2)+'\n');console.log(report);

@@ -1,0 +1,386 @@
+{
+  "source": "tools/art-review/extreme-202/sources/boss-05.png",
+  "sourceSha256": "27fab2a968281a9da668fce26bd4281c42ec33d5fae0d03861dc5a4c5d475795",
+  "actualWidth": 1086,
+  "actualHeight": 1448,
+  "originalHasAlpha": false,
+  "hasRealTransparency": false,
+  "magentaPixelsRemoved": 951676,
+  "cols": 3,
+  "rows": 4,
+  "cells": 12,
+  "measurements": [
+    {
+      "assetId": "b191",
+      "view": "side",
+      "sourceCell": [
+        34,
+        14,
+        177,
+        334
+      ],
+      "paddedBounds": [
+        4,
+        4,
+        177,
+        334
+      ],
+      "body": "tools/art-review/extreme-202/bodies/boss-05/b191-side.png",
+      "sha256": "f941edddc48f8bd665279ed9e3d32c1c4e30d2c163d677289840cca3b78c4ec8",
+      "foregroundPixels": 34439,
+      "boundaryPixels": 0,
+      "previousTarget": {
+        "height": 270,
+        "top": 55,
+        "centerX": 256
+      },
+      "newTarget": {
+        "height": 270,
+        "top": 55,
+        "centerX": 256
+      },
+      "baseRigId": "b090"
+    },
+    {
+      "assetId": "b191",
+      "view": "front",
+      "sourceCell": [
+        399,
+        14,
+        286,
+        343
+      ],
+      "paddedBounds": [
+        4,
+        4,
+        286,
+        343
+      ],
+      "body": "tools/art-review/extreme-202/bodies/boss-05/b191-front.png",
+      "sha256": "51933013d3c9e31e63a7679f33e0e18c7a873cde818fdc1098300175429e2d54",
+      "foregroundPixels": 63241,
+      "boundaryPixels": 0,
+      "previousTarget": {
+        "height": 270,
+        "top": 55,
+        "centerX": 256
+      },
+      "newTarget": {
+        "height": 270,
+        "top": 55,
+        "centerX": 256
+      },
+      "baseRigId": "b090"
+    },
+    {
+      "assetId": "b191",
+      "view": "back",
+      "sourceCell": [
+        770,
+        15,
+        275,
+        340
+      ],
+      "paddedBounds": [
+        4,
+        4,
+        275,
+        340
+      ],
+      "body": "tools/art-review/extreme-202/bodies/boss-05/b191-back.png",
+      "sha256": "892746211aa2397bf391bda792fa421eb5a79fa87528e6990025d0e9a79d19aa",
+      "foregroundPixels": 58430,
+      "boundaryPixels": 0,
+      "previousTarget": {
+        "height": 270,
+        "top": 55,
+        "centerX": 256
+      },
+      "newTarget": {
+        "height": 270,
+        "top": 55,
+        "centerX": 256
+      },
+      "baseRigId": "b090"
+    },
+    {
+      "assetId": "b191-2",
+      "view": "side",
+      "sourceCell": [
+        35,
+        365,
+        192,
+        345
+      ],
+      "paddedBounds": [
+        4,
+        4,
+        192,
+        345
+      ],
+      "body": "tools/art-review/extreme-202/bodies/boss-05/b191-2-side.png",
+      "sha256": "b185a7ab642a541ad0931a58e92f69dbf981151aefd4555faa5e40b20757ef66",
+      "foregroundPixels": 42313,
+      "boundaryPixels": 0,
+      "previousTarget": {
+        "height": 270,
+        "top": 55,
+        "centerX": 256
+      },
+      "newTarget": {
+        "height": 270,
+        "top": 55,
+        "centerX": 256
+      },
+      "baseRigId": "b090-2"
+    },
+    {
+      "assetId": "b191-2",
+      "view": "front",
+      "sourceCell": [
+        369,
+        368,
+        346,
+        347
+      ],
+      "paddedBounds": [
+        4,
+        4,
+        346,
+        347
+      ],
+      "body": "tools/art-review/extreme-202/bodies/boss-05/b191-2-front.png",
+      "sha256": "06c8130ccf77c5cc35fa6544c74784b1bf7fcbb9bb59f46baab1d19665f1f577",
+      "foregroundPixels": 76289,
+      "boundaryPixels": 0,
+      "previousTarget": {
+        "height": 270,
+        "top": 55,
+        "centerX": 256
+      },
+      "newTarget": {
+        "height": 270,
+        "top": 55,
+        "centerX": 256
+      },
+      "baseRigId": "b090-2"
+    },
+    {
+      "assetId": "b191-2",
+      "view": "back",
+      "sourceCell": [
+        750,
+        369,
+        312,
+        346
+      ],
+      "paddedBounds": [
+        4,
+        4,
+        312,
+        346
+      ],
+      "body": "tools/art-review/extreme-202/bodies/boss-05/b191-2-back.png",
+      "sha256": "926788a2a24ff5c6c2db1883631ff0a863980683480c44915d252dce65ac5b95",
+      "foregroundPixels": 66403,
+      "boundaryPixels": 0,
+      "previousTarget": {
+        "height": 270,
+        "top": 55,
+        "centerX": 256
+      },
+      "newTarget": {
+        "height": 270,
+        "top": 55,
+        "centerX": 256
+      },
+      "baseRigId": "b090-2"
+    },
+    {
+      "assetId": "b201",
+      "view": "side",
+      "sourceCell": [
+        31,
+        727,
+        248,
+        340
+      ],
+      "paddedBounds": [
+        4,
+        4,
+        248,
+        340
+      ],
+      "body": "tools/art-review/extreme-202/bodies/boss-05/b201-side.png",
+      "sha256": "a2428c27453715789dd09fe993e6ce58c9259982f1d3a07ce2c2cc4f8f0fc7f1",
+      "foregroundPixels": 43379,
+      "boundaryPixels": 0,
+      "previousTarget": {
+        "height": 270,
+        "top": 55,
+        "centerX": 256
+      },
+      "newTarget": {
+        "height": 270,
+        "top": 55,
+        "centerX": 256
+      },
+      "baseRigId": "b100"
+    },
+    {
+      "assetId": "b201",
+      "view": "front",
+      "sourceCell": [
+        399,
+        724,
+        279,
+        346
+      ],
+      "paddedBounds": [
+        4,
+        4,
+        279,
+        346
+      ],
+      "body": "tools/art-review/extreme-202/bodies/boss-05/b201-front.png",
+      "sha256": "bf23d599207278c960673f9016d65324b1a1ea89587404961b3acbbfacc9f92d",
+      "foregroundPixels": 63768,
+      "boundaryPixels": 0,
+      "previousTarget": {
+        "height": 270,
+        "top": 55,
+        "centerX": 256
+      },
+      "newTarget": {
+        "height": 270,
+        "top": 55,
+        "centerX": 256
+      },
+      "baseRigId": "b100"
+    },
+    {
+      "assetId": "b201",
+      "view": "back",
+      "sourceCell": [
+        767,
+        724,
+        285,
+        346
+      ],
+      "paddedBounds": [
+        4,
+        4,
+        285,
+        346
+      ],
+      "body": "tools/art-review/extreme-202/bodies/boss-05/b201-back.png",
+      "sha256": "4297b0edde3d11823802234132b7b900b50deee1047a6d08dfb650ef0096186f",
+      "foregroundPixels": 62068,
+      "boundaryPixels": 0,
+      "previousTarget": {
+        "height": 270,
+        "top": 55,
+        "centerX": 256
+      },
+      "newTarget": {
+        "height": 270,
+        "top": 55,
+        "centerX": 256
+      },
+      "baseRigId": "b100"
+    },
+    {
+      "assetId": "b201-2",
+      "view": "side",
+      "sourceCell": [
+        37,
+        1080,
+        203,
+        349
+      ],
+      "paddedBounds": [
+        4,
+        4,
+        203,
+        349
+      ],
+      "body": "tools/art-review/extreme-202/bodies/boss-05/b201-2-side.png",
+      "sha256": "b68072b829c68de8bc7ba9341380d30d6883eacd176b0104ab6cb5b546ff0170",
+      "foregroundPixels": 38899,
+      "boundaryPixels": 0,
+      "previousTarget": {
+        "height": 255,
+        "top": 110,
+        "centerX": 256
+      },
+      "newTarget": {
+        "height": 255,
+        "top": 110,
+        "centerX": 256
+      },
+      "baseRigId": "b100-2"
+    },
+    {
+      "assetId": "b201-2",
+      "view": "front",
+      "sourceCell": [
+        438,
+        1079,
+        180,
+        353
+      ],
+      "paddedBounds": [
+        4,
+        4,
+        180,
+        353
+      ],
+      "body": "tools/art-review/extreme-202/bodies/boss-05/b201-2-front.png",
+      "sha256": "38656865915381dd7c9b6393efe5d76ae55e2c981b403875c5413017bcd27adc",
+      "foregroundPixels": 35624,
+      "boundaryPixels": 0,
+      "previousTarget": {
+        "height": 255,
+        "top": 110,
+        "centerX": 256
+      },
+      "newTarget": {
+        "height": 255,
+        "top": 110,
+        "centerX": 256
+      },
+      "baseRigId": "b100-2"
+    },
+    {
+      "assetId": "b201-2",
+      "view": "back",
+      "sourceCell": [
+        829,
+        1080,
+        207,
+        349
+      ],
+      "paddedBounds": [
+        4,
+        4,
+        207,
+        349
+      ],
+      "body": "tools/art-review/extreme-202/bodies/boss-05/b201-2-back.png",
+      "sha256": "2f3ae69d046359bcbac14cec7e77789a50bd31b07025f7d61b68049993a4027b",
+      "foregroundPixels": 35982,
+      "boundaryPixels": 0,
+      "previousTarget": {
+        "height": 255,
+        "top": 110,
+        "centerX": 256
+      },
+      "newTarget": {
+        "height": 255,
+        "top": 110,
+        "centerX": 268
+      },
+      "baseRigId": "b100-2"
+    }
+  ]
+}

@@ -1,0 +1,218 @@
+[
+  {
+    "id": "b191",
+    "view": "side",
+    "baseRigId": "b090",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-boss-biped-01-side-parts.png",
+    "sha256": "7fe0d55707d97548b9cf6125e9e7448b5d8a95e6da6b4b730f36c7a88c93f46a",
+    "sourceBounds": [
+      null,
+      null,
+      228,
+      566
+    ],
+    "bodyTarget": {
+      "height": 270,
+      "top": 55,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b191",
+    "view": "front",
+    "baseRigId": "b090",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-boss-biped-01-front-back-parts.png",
+    "sha256": "26b30dbb30077476b921c62a964d6d801990c338d577064094980ace622689b6",
+    "sourceBounds": [
+      null,
+      null,
+      305,
+      412
+    ],
+    "bodyTarget": {
+      "height": 270,
+      "top": 55,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b191",
+    "view": "back",
+    "baseRigId": "b090",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-boss-biped-01-front-back-parts.png",
+    "sha256": "26b30dbb30077476b921c62a964d6d801990c338d577064094980ace622689b6",
+    "sourceBounds": [
+      null,
+      null,
+      301,
+      404
+    ],
+    "bodyTarget": {
+      "height": 270,
+      "top": 55,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b191-2",
+    "view": "side",
+    "baseRigId": "b090-2",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-boss-biped-01-side-parts.png",
+    "sha256": "7fe0d55707d97548b9cf6125e9e7448b5d8a95e6da6b4b730f36c7a88c93f46a",
+    "sourceBounds": [
+      null,
+      null,
+      222,
+      558
+    ],
+    "bodyTarget": {
+      "height": 270,
+      "top": 55,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b191-2",
+    "view": "front",
+    "baseRigId": "b090-2",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-boss-biped-01-front-back-parts.png",
+    "sha256": "26b30dbb30077476b921c62a964d6d801990c338d577064094980ace622689b6",
+    "sourceBounds": [
+      null,
+      null,
+      354,
+      370
+    ],
+    "bodyTarget": {
+      "height": 270,
+      "top": 55,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b191-2",
+    "view": "back",
+    "baseRigId": "b090-2",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-boss-biped-01-front-back-parts.png",
+    "sha256": "26b30dbb30077476b921c62a964d6d801990c338d577064094980ace622689b6",
+    "sourceBounds": [
+      null,
+      null,
+      337,
+      391
+    ],
+    "bodyTarget": {
+      "height": 270,
+      "top": 55,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b201",
+    "view": "side",
+    "baseRigId": "b100",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-boss-biped-02-all-parts.png",
+    "sha256": "8999b20de57786f6fb67e0706aa49c9f79f6b94e4e04720f0426bc88b9541859",
+    "sourceBounds": [
+      null,
+      null,
+      217,
+      381
+    ],
+    "bodyTarget": {
+      "height": 270,
+      "top": 55,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b201",
+    "view": "front",
+    "baseRigId": "b100",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-boss-biped-02-all-parts.png",
+    "sha256": "8999b20de57786f6fb67e0706aa49c9f79f6b94e4e04720f0426bc88b9541859",
+    "sourceBounds": [
+      null,
+      null,
+      274,
+      422
+    ],
+    "bodyTarget": {
+      "height": 270,
+      "top": 55,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b201",
+    "view": "back",
+    "baseRigId": "b100",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-boss-biped-02-all-parts.png",
+    "sha256": "8999b20de57786f6fb67e0706aa49c9f79f6b94e4e04720f0426bc88b9541859",
+    "sourceBounds": [
+      null,
+      null,
+      251,
+      394
+    ],
+    "bodyTarget": {
+      "height": 270,
+      "top": 55,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b201-2",
+    "view": "side",
+    "baseRigId": "b100-2",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-boss-flight-01-side-parts.png",
+    "sha256": "c27cd66d38e07bb5170e4b6bfea16676827888e893f9acc174aa110e4dfde179",
+    "sourceBounds": [
+      null,
+      null,
+      278,
+      585
+    ],
+    "bodyTarget": {
+      "height": 255,
+      "top": 110,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b201-2",
+    "view": "front",
+    "baseRigId": "b100-2",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-boss-flight-01-front-back-parts.png",
+    "sha256": "262e5ad3998378a2087447670c009e660682f792deffa5885cd83dddb79b74a0",
+    "sourceBounds": [
+      null,
+      null,
+      187,
+      397
+    ],
+    "bodyTarget": {
+      "height": 255,
+      "top": 110,
+      "centerX": 256
+    }
+  },
+  {
+    "id": "b201-2",
+    "view": "back",
+    "baseRigId": "b100-2",
+    "source": "tools/art-review/directional-101/late-waves/sources/late-boss-flight-01-front-back-parts.png",
+    "sha256": "262e5ad3998378a2087447670c009e660682f792deffa5885cd83dddb79b74a0",
+    "sourceBounds": [
+      null,
+      null,
+      164,
+      409
+    ],
+    "bodyTarget": {
+      "height": 255,
+      "top": 110,
+      "centerX": 256
+    }
+  }
+]

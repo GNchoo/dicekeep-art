@@ -20,8 +20,8 @@ export const RESERVE_TTL = 30000;        // 빠른 매칭 예약 좌석의 접�
 export const SUM_RELAY_MIN = 1500;       // sum 중계 최소 간격(멤버당, 보는 사람이 아닌 멤버에게)
 export const SUM_WATCH_MIN = 1000;       // sum 중계 최소 간격(이 pid 를 보고 있는 멤버에게 · en/ll 포함)
 export const HELLO_TIMEOUT = 5000;       // 소켓 열고 첫 프레임(hello) 대기
-export const MAX_FRAME = 4096;           // 수신 프레임 최대 바이트 (초과 1009)
-export const EN_MAX = 3000;              // sum.en 적 스트림 문자열 최대 길이
+export const MAX_FRAME = 6144;           // 수신 프레임 최대 바이트 (초과 1009); 200개 외형·위상과 JSON 여유
+export const EN_MAX = 5120;              // sum.en 적 스트림 문자열 최대 길이
 export const LANE_MAX = 100000;          // sum.ll 레인 길이 최대값
 export const SOCKET_RATE = 20, SOCKET_BURST = 40;   // 소켓당 메시지 토큰 버킷
 export const CHAT_RATE = 1, CHAT_BURST = 5;
