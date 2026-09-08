@@ -1,0 +1,148 @@
+{
+  "pass": true,
+  "finalGameSha256": "fb37de4ecab9c4c7d43e32215d7d54973b7f09922cf4ce7191567a3ee886d186",
+  "baselineGameSha256": "1a2ff3e9d7bce91aa850cd5c6de36cfc53492e3418d9717ce583420fe56acae1",
+  "after": {
+    "pass": true,
+    "gameSha256": "fb37de4ecab9c4c7d43e32215d7d54973b7f09922cf4ce7191567a3ee886d186",
+    "actualHttpMatchesPinnedSource": true,
+    "viewports": [
+      {
+        "name": "phone",
+        "width": 440,
+        "height": 956
+      },
+      {
+        "name": "desktop",
+        "width": 1240,
+        "height": 860
+      }
+    ],
+    "kindRolls": 18,
+    "frozenCanvasChecks": 18,
+    "faceTexturePoseChecks": 18,
+    "d6IdenticalBaselinePoseChecks": 2,
+    "d20FinalOrientations": 20,
+    "materialAborts": 0,
+    "pageErrors": [],
+    "errors": []
+  },
+  "missingMaterialFallback": {
+    "pass": true,
+    "gameSha256": "fb37de4ecab9c4c7d43e32215d7d54973b7f09922cf4ce7191567a3ee886d186",
+    "actualHttpMatchesPinnedSource": true,
+    "viewports": [
+      {
+        "name": "phone",
+        "width": 440,
+        "height": 956
+      },
+      {
+        "name": "desktop",
+        "width": 1240,
+        "height": 860
+      }
+    ],
+    "kindRolls": 18,
+    "frozenCanvasChecks": 18,
+    "faceTexturePoseChecks": 18,
+    "d6IdenticalBaselinePoseChecks": 2,
+    "d20FinalOrientations": 20,
+    "materialAborts": 2,
+    "pageErrors": [],
+    "errors": []
+  },
+  "material": {
+    "url": "http://localhost:8137/dice/skins/ivory-worn/material.png?v=96",
+    "status": 200,
+    "httpSha256": "07cc7cb5353b48c40758772fe20c14bc80de6753955f634f421487906901305b",
+    "sourceSha256": "07cc7cb5353b48c40758772fe20c14bc80de6753955f634f421487906901305b",
+    "bytes": 439341,
+    "pass": true
+  },
+  "originalD6Pngs": {
+    "baselineRevision": "61e2181",
+    "baselineGameSha256": "1a2ff3e9d7bce91aa850cd5c6de36cfc53492e3418d9717ce583420fe56acae1",
+    "files": [
+      {
+        "path": "dice/dice-1.png",
+        "baselineSha256": "0b224d9172c0ee16cbdb580bf19d17be83d88e188855409b7a720571bfc6d0ce",
+        "currentSha256": "0b224d9172c0ee16cbdb580bf19d17be83d88e188855409b7a720571bfc6d0ce",
+        "bytes": 108915,
+        "unchanged": true
+      },
+      {
+        "path": "dice/dice-2.png",
+        "baselineSha256": "ecaebbccd7f37628eec17ea8d45cccdb8a5de5cb3c278cd3c45cb65147ad77a6",
+        "currentSha256": "ecaebbccd7f37628eec17ea8d45cccdb8a5de5cb3c278cd3c45cb65147ad77a6",
+        "bytes": 123716,
+        "unchanged": true
+      },
+      {
+        "path": "dice/dice-3.png",
+        "baselineSha256": "b3e17c4299b479c8579b5a0bd6e7f73c01ce00ad3ca7fd51f678c52a2fd766cc",
+        "currentSha256": "b3e17c4299b479c8579b5a0bd6e7f73c01ce00ad3ca7fd51f678c52a2fd766cc",
+        "bytes": 107609,
+        "unchanged": true
+      },
+      {
+        "path": "dice/dice-4.png",
+        "baselineSha256": "b6142082b12e3710a6058eb0858466734740baf0398103f9614d2f018fc77c78",
+        "currentSha256": "b6142082b12e3710a6058eb0858466734740baf0398103f9614d2f018fc77c78",
+        "bytes": 113605,
+        "unchanged": true
+      },
+      {
+        "path": "dice/dice-5.png",
+        "baselineSha256": "b57083ba92fdb4307a3051117296386ae40e861bd177b494dea63e90468cc239",
+        "currentSha256": "b57083ba92fdb4307a3051117296386ae40e861bd177b494dea63e90468cc239",
+        "bytes": 115975,
+        "unchanged": true
+      },
+      {
+        "path": "dice/dice-6.png",
+        "baselineSha256": "94d20da4cfb1290ca35f3f21e14afde370bf1e3e17afdb43bea78eda407144f6",
+        "currentSha256": "94d20da4cfb1290ca35f3f21e14afde370bf1e3e17afdb43bea78eda407144f6",
+        "bytes": 126727,
+        "unchanged": true
+      }
+    ],
+    "pass": true
+  },
+  "rotationRegression": {
+    "command": "node tools/dice-rotation-test.cjs",
+    "testSha256": "6cf968d31968949fc4c30a4c384ca69df5c0f0a10a28466bcc89475547139ae2",
+    "cases": 1281,
+    "originalCases": 21,
+    "targetFaces": 20,
+    "maxTargetMatrixError": 1.4432899320127035e-15,
+    "baselineWrongFaces": 43,
+    "currentWrongFaces": 0,
+    "browserBefore": {
+      "requested": 7,
+      "visible": 16,
+      "held": 7
+    },
+    "browserAfter": {
+      "requested": 7,
+      "visible": 7,
+      "held": 7
+    }
+  },
+  "reviewArtifacts": [
+    "comparison-phone.png",
+    "comparison-desktop.png",
+    "after/phone/all-kinds-actual-game.png",
+    "after/desktop/all-kinds-actual-game.png",
+    "after/desktop/all-20-results-actual-game.png",
+    "orientation-diagnostic/near-pi-actual-game.png",
+    "orientation-diagnostic/near-pi-actual-game-after-fix.png"
+  ],
+  "notes": [
+    "All screenshots are captured from the original game renderer; composite boards only crop/arrange those captures at a common scale.",
+    "The explicit missing-material fixture aborts only the material URL; it never replaces a texture or production response with local bytes.",
+    "1281 constructed rotation matrices measure correctness, not the frequency/probability of the pre-existing failure.",
+    "The visual harness uses existing debug queue/forceFinal state controls for reproducible kind and orientation coverage; it does not estimate or modify chest odds.",
+    "Initial pre-seam failed geometry sweep remains in after-pre-seam/report.json; baseline first-attempt CSS screenshot artifact remains preserved separately."
+  ]
+}

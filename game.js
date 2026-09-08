@@ -791,7 +791,8 @@ const SRCS = {
   chest: BASE + 'ui/chest.png',
 };
 for (let g = 7; g <= 20; g++) SRCS['tStar' + g] = BASE + `casual/towers/star-${String(g).padStart(2, '0')}.png?v=93`; // 없으면 6눈 스킨으로 폴백
-for (const k of ['d1', 'd4', 'd8', 'd12', 'd20']) SRCS['poly' + k] = BASE + `dice/poly-${k}.png`;                 // 없으면 코드 다각형
+const DICE_SKINS = window.DKCONTENT.DICE_SKINS;
+for (const skin of Object.values(DICE_SKINS.skins)) SRCS[skin.materialKey] = BASE + skin.material + '?v=' + skin.version;
 // 인피니티 아레나 조각 (casual/tiles/arena/): 질감 3(floor·road·board) + 오브젝트 6. 없으면 코드가 그린다.
 for (const n of ['floor', 'road', 'board', 'pad', 'start', 'end', 'prop-1', 'prop-2', 'prop-3']) SRCS['tl_arena_' + n] = BASE + `casual/tiles/arena/${n}.${n === 'floor' ? 'jpg' : 'png'}`;
 if (window.DKCONTENT) {
@@ -1040,7 +1041,7 @@ async function loadAssets(onProgress) {
   }
   // 격자는 파일명 -walk-<열>x<행> 에서 (없으면 2x2). 안정화는 인피니티 새 시트만 (content.js infArtList 의 stabilize)
   for (const k of sheets) { const m = /-walk-(\d+)x(\d+)\.png/i.exec(SRCS[k] || ''); sheetOpt[k] = Object.assign({ cols: m ? +m[1] : 2, rows: m ? +m[2] : 2 }, sheetOpt[k] || {}); }
-  const raw = ['map'];
+  const raw = ['map', ...Object.values(DICE_SKINS.skins).map(skin => skin.materialKey)];
   if (window.DKCONTENT) for (const m of DKCONTENT.maps) if (m.src) raw.push(m.key);
   const isTexture = (k) => /^tl_.*_(floor|road|water|road-straight|board)$/.test(k); // 질감·바닥: 배경 제거 없이 그대로
   let pi = 0;
@@ -1512,19 +1513,23 @@ function m3orthonormalize(m) {
 
 // 회전 행렬 → 축·각 (정착 애니메이션 보간용)
 function m3toAxisAngle(m) {
-  const tr = m[0] + m[4] + m[8];
-  const ang = Math.acos(Math.max(-1, Math.min(1, (tr - 1) / 2)));
+  const c = Math.max(-1, Math.min(1, (m[0] + m[4] + m[8] - 1) / 2));
+  const skew = [m[7] - m[5], m[2] - m[6], m[3] - m[1]], skewLength = Math.hypot(...skew);
+  const ang = Math.atan2(skewLength / 2, c);
   if (ang < 1e-4) return { axis: [0, 0, 1], ang: 0 };
   if (Math.PI - ang < 0.02) {
-    // 180° 근처: 대각 성분에서 축 복원
-    const ax = Math.sqrt(Math.max(0, (m[0] + 1) / 2));
-    const ay = Math.sqrt(Math.max(0, (m[4] + 1) / 2)) * (m[1] >= 0 ? 1 : -1);
-    const az = Math.sqrt(Math.max(0, (m[8] + 1) / 2)) * (m[2] >= 0 ? 1 : -1);
-    const l = Math.hypot(ax, ay, az) || 1;
-    return { axis: [ax / l, ay / l, az / l], ang };
+    // Near 180 degrees an individual off-diagonal mixes axis products with
+    // sin(angle), so its sign can point to the wrong final face. Recover the
+    // largest axis component first and use symmetric pairs for the others.
+    const i = m[0] >= m[4] && m[0] >= m[8] ? 0 : m[4] >= m[8] ? 1 : 2;
+    const axis = [0, 0, 0], t = 1 - c;
+    axis[i] = Math.sqrt(Math.max(0, (m[i * 4] - c) / t));
+    for (let j = 0; j < 3; j++) if (j !== i) axis[j] = (m[i * 3 + j] + m[j * 3 + i]) / (2 * t * axis[i]);
+    const sign = axis.reduce((sum, v, j) => sum + v * skew[j], 0) < 0 ? -1 : 1;
+    const scale = sign / Math.hypot(...axis);
+    return { axis: axis.map(v => v * scale), ang };
   }
-  const s = 2 * Math.sin(ang);
-  return { axis: [(m[7] - m[5]) / s, (m[2] - m[6]) / s, (m[3] - m[1]) / s], ang };
+  return { axis: skew.map(v => v / skewLength), ang };
 }
 
 // 큐브 면 정의 (마주 보는 눈의 합 = 7, n: 법선, u/v: 텍스처 축)
@@ -1551,12 +1556,17 @@ function faceTopR(val) {
 const TRAY_TILT = m3mul(m3axisAngle(1, 0, 0, 0.45), m3axisAngle(0, 1, 0, -0.38));
 
 // 텍스처 삼각형 매핑 (아핀)
-function texTri(g, img, s0x, s0y, s1x, s1y, s2x, s2y, d0, d1, d2) {
+function texTri(g, img, s0x, s0y, s1x, s1y, s2x, s2y, d0, d1, d2, clipBleed = 0) {
   const den = s0x * (s1y - s2y) + s1x * (s2y - s0y) + s2x * (s0y - s1y);
   if (Math.abs(den) < 1e-8) return;
   g.save();
   g.beginPath();
-  g.moveTo(d0[0], d0[1]); g.lineTo(d1[0], d1[1]); g.lineTo(d2[0], d2[1]);
+  if (clipBleed) {
+    // Sphere mesh neighbours share continuous UVs. Overlap only their clipping
+    // masks by a subpixel amount; keep the affine UV transform unchanged.
+    const cx = (d0[0] + d1[0] + d2[0]) / 3, cy = (d0[1] + d1[1] + d2[1]) / 3;
+    [d0, d1, d2].forEach((p, i) => { const k = 1 + clipBleed / (Math.hypot(p[0] - cx, p[1] - cy) || 1), x = cx + (p[0] - cx) * k, y = cy + (p[1] - cy) * k; i ? g.lineTo(x, y) : g.moveTo(x, y); });
+  } else { g.moveTo(d0[0], d0[1]); g.lineTo(d1[0], d1[1]); g.lineTo(d2[0], d2[1]); }
   g.closePath();
   g.clip();
   const a = (d0[0] * (s1y - s2y) + d1[0] * (s2y - s0y) + d2[0] * (s0y - s1y)) / den;
@@ -1944,9 +1954,73 @@ function slotTargetR() {
   const P = POLY[dieShape(SLOT.kind)];
   return alignR(P.faces[Math.max(1, Math.min(P.faces.length, SLOT.final)) - 1].n);
 }
-// 정다면체 3D: 큐브와 같은 원근·뒷면 컬링·면별 조명. 면마다 숫자를 새긴다.
-function drawPoly3D(g, cx, cy, size, kind, R, col) {
+// Face-local textures: the engraved value and grain rotate with the face.
+// Two cached appearance sets at most (~13 MiB); rarity kinds share the d20 set.
+const DICE_MAT_TEX = 192, diceMaterialCache = new Map();
+function diceSkin(id) {
+  const key = Object.prototype.hasOwnProperty.call(DICE_SKINS.skins, id) ? id : DICE_SKINS.defaultId;
+  return { id: key, ...DICE_SKINS.skins[key] };
+}
+function diceMaterialTile(skin, w, h) {
+  const cv = document.createElement('canvas'); cv.width = w; cv.height = h;
+  const g = cv.getContext('2d'), image = A[skin.materialKey];
+  g.fillStyle = '#e4d9bc'; g.fillRect(0, 0, w, h);
+  if (image && !image.missing) g.drawImage(image, 0, 0, w, h);
+  else if (faceTex[6]) {
+    // A blank ivory strip between the two pip columns keeps a failed material
+    // request in the same set, without importing extra pips onto numbered faces.
+    g.drawImage(faceTex[6], TEX * .46, TEX * .22, TEX * .08, TEX * .56, 0, 0, w, h);
+  }
+  return cv;
+}
+function engraveDiceValue(g, value, x, y, fontSize, mark) {
+  g.font = uiFont(fontSize); g.textAlign = 'center'; g.textBaseline = 'middle';
+  g.lineJoin = 'round'; g.lineWidth = 1.6;
+  g.strokeStyle = 'rgba(255,242,210,.7)'; g.strokeText(String(value), x, y + 1.1);
+  g.fillStyle = '#321e20'; g.fillText(String(value), x, y - .6);
+  g.fillStyle = mark; g.fillText(String(value), x, y + .35);
+  // Disambiguate an inverted 6/9 without a screen-facing overlay.
+  if (value === 6 || value === 9) {
+    g.fillRect(x - fontSize * .15, y + fontSize * .43, fontSize * .3, Math.max(1, fontSize * .035));
+  }
+}
+function buildDiceMaterial(skin) {
+  const out = { faces: {}, orb: null }, T = DICE_MAT_TEX, dot = (a, b) => a.reduce((n, v, i) => n + v * b[i], 0);
+  for (const [kind, P] of Object.entries(POLY)) out.faces[kind] = P.faces.map((f, i) => {
+    // Use the same final alignment as slotTargetR: the winning numeral is upright.
+    const inv = m3transpose(alignR(f.n)), u = m3apply(inv, [1, 0, 0]), v = m3apply(inv, [0, 1, 0]);
+    const offsets = f.idx.map(vi => P.verts[vi].map((n, j) => n - f.c[j]));
+    const scale = T * .455 / Math.max(...offsets.map(o => Math.hypot(...o)));
+    const uv = offsets.map(o => [T / 2 + dot(o, u) * scale, T / 2 + dot(o, v) * scale]);
+    const cv = diceMaterialTile(skin, T, T), g = cv.getContext('2d');
+    const path = inset => { g.beginPath(); uv.forEach(([x, y], j) => { x = T / 2 + (x - T / 2) * inset; y = T / 2 + (y - T / 2) * inset; j ? g.lineTo(x, y) : g.moveTo(x, y); }); g.closePath(); };
+    g.save(); path(1); g.clip(); g.lineJoin = 'round';
+    path(1); g.strokeStyle = 'rgba(102,74,44,.38)'; g.lineWidth = 7; g.stroke();
+    const rim = g.createLinearGradient(0, 0, T, T);
+    rim.addColorStop(0, 'rgba(255,243,211,.85)'); rim.addColorStop(.45, 'rgba(238,220,181,.4)'); rim.addColorStop(1, 'rgba(129,93,52,.38)');
+    path(.97); g.strokeStyle = rim; g.lineWidth = 2.7; g.stroke();
+    engraveDiceValue(g, i + 1, T / 2, T / 2, T * (f.idx.length === 5 ? .36 : i < 9 ? .32 : .27), skin.mark || '#542b30');
+    g.restore();
+    return { cv, uv };
+  });
+  out.orb = diceMaterialTile(skin, T * 2, T);
+  engraveDiceValue(out.orb.getContext('2d'), 1, T, T / 2, T * .25, skin.mark || '#542b30');
+  return out;
+}
+function diceMaterial(id) {
+  const skin = diceSkin(id);
+  if (diceMaterialCache.has(skin.id)) {
+    const value = diceMaterialCache.get(skin.id);
+    diceMaterialCache.delete(skin.id); diceMaterialCache.set(skin.id, value); return value;
+  }
+  const value = buildDiceMaterial(skin);
+  if (diceMaterialCache.size >= 2) diceMaterialCache.delete(diceMaterialCache.keys().next().value);
+  diceMaterialCache.set(skin.id, value); return value;
+}
+// 정다면체: 기존 정점/면/최종 자세를 유지하고 큐브와 같은 광원으로 재질을 비춘다.
+function drawPoly3D(g, cx, cy, size, kind, R, skinId) {
   const P = POLY[kind]; if (!P) return;
+  const textures = diceMaterial(skinId).faces[kind];
   const persp = 10;
   const pv = P.verts.map(v => { const p = m3apply(R, v); const w = persp / (persp - p[2]); return [cx + p[0] * size * w, cy + p[1] * size * w]; });
   const order = P.faces.map((f, i) => ({ i, z: m3apply(R, f.n)[2] })).sort((a, b) => a.z - b.z);
@@ -1957,37 +2031,49 @@ function drawPoly3D(g, cx, cy, size, kind, R, col) {
     const f = P.faces[i];
     const path = () => { g.beginPath(); f.idx.forEach((vi, k) => (k ? g.lineTo(pv[vi][0], pv[vi][1]) : g.moveTo(pv[vi][0], pv[vi][1]))); g.closePath(); };
     const n = m3apply(R, f.n);
-    const br = 0.55 + 0.45 * Math.max(0, n[0] * LIGHT[0] + n[1] * LIGHT[1] + n[2] * LIGHT[2]);
-    path(); g.fillStyle = col; g.fill();
-    path(); g.fillStyle = `rgba(24,16,6,${Math.max(0, (1 - br) * 0.72)})`; g.fill();
-    path(); g.fillStyle = `rgba(255,250,235,${Math.max(0, (br - 0.72) * 0.9)})`; g.fill();
-    path(); g.strokeStyle = 'rgba(38,28,14,0.55)'; g.lineWidth = 1.2; g.stroke();
-    if (z > 0.42) { // 정면에 가까운 면에만 숫자
-      const c = m3apply(R, f.c), w = persp / (persp - c[2]);
-      const fs = size * (P.faces.length <= 8 ? 0.62 : 0.4) * z;
-      g.fillStyle = 'rgba(26,18,8,0.92)';
-      g.font = uiFont(Math.max(6, Math.round(fs)));
-      g.textAlign = 'center'; g.textBaseline = 'middle';
-      g.fillText(String(i + 1), cx + c[0] * size * w, cy + c[1] * size * w);
+    const tex = textures[i], uv = tex.uv;
+    // A fan triangulates both the triangle and pentagon using the original vertices.
+    // Underfill prevents subpixel seams from becoming transparent at the shared edges.
+    path(); g.fillStyle = '#d9cdb0'; g.fill();
+    for (let j = 1; j < f.idx.length - 1; j++) {
+      texTri(g, tex.cv, ...uv[0], ...uv[j], ...uv[j + 1], pv[f.idx[0]], pv[f.idx[j]], pv[f.idx[j + 1]]);
     }
+    const br = 0.58 + 0.42 * Math.max(0, n[0] * LIGHT[0] + n[1] * LIGHT[1] + n[2] * LIGHT[2]);
+    path(); g.fillStyle = `rgba(28,18,8,${Math.max(0, (1 - br) * 0.8)})`; g.fill();
+    path(); g.strokeStyle = 'rgba(94,71,43,.35)'; g.lineWidth = .65; g.stroke();
   }
   g.restore();
 }
-// 구슬(d1)
-function drawOrb(g, cx, cy, size, col) {
-  const gr = g.createRadialGradient(cx - size * 0.35, cy - size * 0.4, size * 0.1, cx, cy, size);
-  gr.addColorStop(0, '#ffffff'); gr.addColorStop(0.45, col); gr.addColorStop(1, '#2a2430');
-  g.beginPath(); g.arc(cx, cy, size, 0, Math.PI * 2);
-  g.fillStyle = gr; g.fill();
-  g.strokeStyle = 'rgba(30,24,16,0.6)'; g.lineWidth = 1.5; g.stroke();
-  g.fillStyle = 'rgba(26,18,8,0.9)'; g.font = uiFont(Math.round(size * 0.9));
-  g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('1', cx, cy + 1);
+// Low-resolution sphere UV mesh, shared by both views of d1. Its material and 1
+// follow SLOT.R as well; lighting stays in world space and has no plastic glint.
+const ORB_MESH = (() => {
+  const cols = 24, rows = 12, verts = [], quads = [];
+  for (let y = 0; y <= rows; y++) for (let x = 0; x <= cols; x++) {
+    const lon = (x / cols - .5) * Math.PI * 2, lat = (y / rows - .5) * Math.PI;
+    verts.push({ p: [Math.cos(lat) * Math.sin(lon), Math.sin(lat), Math.cos(lat) * Math.cos(lon)], uv: [x / cols * DICE_MAT_TEX * 2, y / rows * DICE_MAT_TEX] });
+  }
+  for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) { const a = y * (cols + 1) + x; quads.push([a, a + 1, a + cols + 2, a + cols + 1]); }
+  return { verts, quads };
+})();
+function drawOrb(g, cx, cy, size, R, skinId) {
+  const tex = diceMaterial(skinId).orb;
+  const verts = ORB_MESH.verts.map(v => { const p = m3apply(R, v.p); return { z: p[2], xy: [cx + p[0] * size, cy + p[1] * size] }; });
+  const order = ORB_MESH.quads.map(idx => ({ idx, z: idx.reduce((sum, vi) => sum + verts[vi].z, 0) / 4 })).filter(q => q.z > 0).sort((a, b) => a.z - b.z);
+  g.save(); g.beginPath(); g.arc(cx, cy, size, 0, Math.PI * 2); g.clip();
+  g.fillStyle = '#e4d9bc'; g.fillRect(cx - size, cy - size, size * 2, size * 2);
+  for (const { idx } of order) for (let j = 1; j < 3; j++) {
+    const tri = [idx[0], idx[j], idx[j + 1]];
+    texTri(g, tex, ...ORB_MESH.verts[tri[0]].uv, ...ORB_MESH.verts[tri[1]].uv, ...ORB_MESH.verts[tri[2]].uv, ...tri.map(i => verts[i].xy), .6);
+  }
+  const gr = g.createRadialGradient(cx + size * LIGHT[0], cy + size * LIGHT[1], size * .08, cx, cy, size * 1.05);
+  gr.addColorStop(0, 'rgba(28,18,8,.065)'); gr.addColorStop(.55, 'rgba(28,18,8,.13)'); gr.addColorStop(1, 'rgba(28,18,8,.36)');
+  g.fillStyle = gr; g.fillRect(cx - size, cy - size, size * 2, size * 2); g.restore();
+  g.beginPath(); g.arc(cx, cy, size, 0, Math.PI * 2); g.strokeStyle = 'rgba(94,71,43,.4)'; g.lineWidth = .8; g.stroke();
 }
-function drawPolyDie(g, cx, cy, size, kind, R, col) {
-  const sp = A['poly' + kind];
-  if (sp && sp.cv) { const h = size * 2.2, w = h * sp.w / sp.h; g.drawImage(sp.cv, cx - w / 2, cy - h / 2, w, h); return; }
-  if (kind === 'd1') drawOrb(g, cx, cy, size, col);
-  else drawPoly3D(g, cx, cy, size, kind, R, col);
+function drawPolyDie(g, cx, cy, size, kind, R, skinId) {
+  const shape = dieShape(kind);
+  if (shape === 'd1') drawOrb(g, cx, cy, size, R, skinId);
+  else drawPoly3D(g, cx, cy, size, shape, R, skinId);
 }
 
 function drawSlot() {
@@ -1999,7 +2085,7 @@ function drawSlot() {
   sctx.clearRect(0, 0, slotCanvas.width, slotCanvas.height);
   const bounce = SLOT.phase === 0 ? Math.abs(Math.sin(SLOT.t * 16)) * 4 : 0;
   if (SLOT.kind && SLOT.kind !== 'd6') {
-    drawPolyDie(sctx, 37, 40 - bounce, 21, dieShape(SLOT.kind), SLOT.R, dieKindColor(SLOT.kind));
+    drawPolyDie(sctx, 37, 40 - bounce, 21, SLOT.kind, SLOT.R);
     return;
   }
   drawCube(sctx, 37, 40 - bounce, 17, SLOT.R);
@@ -2035,7 +2121,7 @@ function drawCenterRoll() {
   const size = base * scale, dy = cy - bounce;
   if (poly) {
     if (glow > 0) { const g = ctx.createRadialGradient(cx, dy, size * 0.3, cx, dy, size * 2.4); g.addColorStop(0, hexA('#ffd452', 0.4 * glow)); g.addColorStop(1, hexA('#ffd452', 0)); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, dy, size * 2.4, 0, Math.PI * 2); ctx.fill(); }
-    drawPolyDie(ctx, cx, dy, size * 1.24, dieShape(kind), R, dieKindColor(kind));
+    drawPolyDie(ctx, cx, dy, size * 1.24, kind, R);
   } else {
     drawCube(ctx, cx, dy, size, R, glow > 0 ? '#ffd452' : null, glow * 0.6);
   }
@@ -5964,6 +6050,7 @@ function drawLoading(pr) {
   try { fixDice3(); } catch (e) { console.warn(e); }
   try { buildTowerSprites(); } catch (e) { console.warn(e); }
   try { buildFaceTex(); } catch (e) { console.warn(e); }
+  try { diceMaterial(); } catch (e) { console.warn(e); }
   try {
     diceURLs = A.dice.map((d, i) => thumbURL(d, 96, SRCS['d' + (i + 1)]));
     $('icon-gold').src = A.gold ? thumbURL(A.gold, 44, SRCS.gold) : SRCS.gold;

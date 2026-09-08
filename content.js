@@ -1604,8 +1604,21 @@ window.DKCONTENT = (function () {
     15: [.503571, .340604], 16: [.438776, .391231], 17: [.504373, .263699], 18: [.491358, .226131],
     19: [.488950, .263094], 20: [.497706, .243990],
   };
+  // Appearance only: kind/shape, odds and rewards remain in INFINITY.chest.
+  // cubeFaces records the existing base set; cube skin selection and ownership UI
+  // are a future extension. The current cube renderer continues to use these six files.
+  const DICE_SKINS = {
+    defaultId: 'ivory-worn',
+    skins: {
+      'ivory-worn': {
+        materialKey: 'diceMaterialIvoryWorn', material: 'dice/skins/ivory-worn/material.png', version: 96,
+        mark: '#542b30',
+        cubeFaces: Array.from({ length: 6 }, (_, i) => `dice/dice-${i + 1}.png`),
+      },
+    },
+  };
   return {
-    maps, towerSkins, STAR_TOWER_EMITTERS, skinLetters: SKIN_LETTERS, bases, bossBases, species, bosses, stages,
+    maps, towerSkins, STAR_TOWER_EMITTERS, DICE_SKINS, skinLetters: SKIN_LETTERS, bases, bossBases, species, bosses, stages,
     INFINITY, DICE_POWER,
     tiers: TIERS, tierOf, buildLayout, buildArenaLayout, buildArenaLayoutPortrait, layoutArena, makeAvoidFromImage, pathLength, pathAt, pathDist,
     TILE, GW, GH, THEMES, TILE_ASSETS, themeForStage, TEMPLATES_SINGLE, TEMPLATES_DUAL, buildGridLayout, templateForStage,

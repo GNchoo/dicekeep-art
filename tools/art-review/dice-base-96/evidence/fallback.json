@@ -1,0 +1,3320 @@
+{
+  "label": "fallback",
+  "baseUrl": "http://localhost:8137/",
+  "expectedGameSha256": "fb37de4ecab9c4c7d43e32215d7d54973b7f09922cf4ce7191567a3ee886d186",
+  "missingMaterialFixture": true,
+  "scope": "Actual HTTP game code and public test state hooks. Queue selects dice kind; existing forceFinal hook selects orientation coverage without modifying chest probabilities or production code. Browser canvas operations are observed without replacement. Missing-material fixture, when explicitly enabled, aborts only the ivory material request.",
+  "pages": [
+    {
+      "viewport": {
+        "name": "phone",
+        "width": 440,
+        "height": 956
+      },
+      "gameSha256": "fb37de4ecab9c4c7d43e32215d7d54973b7f09922cf4ce7191567a3ee886d186",
+      "assets": [
+        {
+          "url": "http://localhost:8137/dice/dice-1.png",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/dice/dice-2.png",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/dice/dice-3.png",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/dice/dice-4.png",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/dice/dice-5.png",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/dice/dice-6.png",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/dice/dice-1.png",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/dice/dice-2.png",
+          "status": 200
+        }
+      ],
+      "pageerrors": [],
+      "abortedMaterialRequests": [
+        "http://localhost:8137/dice/skins/ivory-worn/material.png?v=96"
+      ],
+      "kinds": [
+        {
+          "kind": "d1",
+          "forcedFinal": 1,
+          "rotationDelta": 2.6644123898789616,
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "angle": 0.08,
+            "sharedTextures": 1,
+            "sourcePixelsStable": true,
+            "matricesChanged": true
+          },
+          "d6BaselineReplay": null,
+          "spinA": {
+            "kind": "d1",
+            "shape": "d1",
+            "R": [
+              0.9912552743585861,
+              0.11099636900022092,
+              -0.0713637661916139,
+              -0.1306459359614486,
+              0.7494191493247426,
+              -0.6490782526337917,
+              -0.018563956287429836,
+              0.6527256274225381,
+              0.757366908989832
+            ],
+            "t": 0.26659999999999856,
+            "t2": 0,
+            "phase": 0,
+            "final": 1,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 288,
+              "labelCalls": 0,
+              "observedFrames": 8
+            },
+            "liveSourcePixels": {
+              "1": "23979909"
+            },
+            "files": {
+              "slot": "d1-spin-a-slot.png",
+              "center": "d1-spin-a-center.png",
+              "slotSha256": "0e96ae72e6bd330583a99af45a79687ad12a4fad98810c37e91137ca035726c6",
+              "slotCanvasSha256": "9a6d14856df012be158bc1030c1c0226347f58d239729e5e46caf0d7fd8c5c78",
+              "centerSha256": "82d4e072f96ded4b956bfd7509198764e40edd3a411fdf4c21f82d46d8d7cd83"
+            }
+          },
+          "spinB": {
+            "kind": "d1",
+            "shape": "d1",
+            "R": [
+              -0.2890509240546594,
+              0.812310808449829,
+              0.5065577102154629,
+              0.9568854671852082,
+              0.2609848674702274,
+              0.12750333972603972,
+              -0.028631555893691957,
+              0.5215726693636595,
+              -0.8527263245496607
+            ],
+            "t": 0.4000999999999985,
+            "t2": 0,
+            "phase": 0,
+            "final": 1,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 288,
+              "labelCalls": 0,
+              "observedFrames": 54
+            },
+            "liveSourcePixels": {
+              "1": "23979909"
+            },
+            "files": {
+              "slot": "d1-spin-b-slot.png",
+              "center": "d1-spin-b-center.png",
+              "slotSha256": "3bb4f3b080f60c8c57b06901a60ce43583307a9572dc6bc50b95fca60a0159cb",
+              "slotCanvasSha256": "ccd4bfdf15f880208aaa6f7200ad9ef5e2c914f29b79e996284b2b91239c752a",
+              "centerSha256": "56f856dc622629d0da8bc72bf477e01b7cff9a431bc692dfc3ab9b05fe4a8942"
+            }
+          },
+          "settled": {
+            "kind": "d1",
+            "shape": "d1",
+            "R": [
+              0.9999999999999999,
+              -2.7755575615628914e-17,
+              -2.7755575615628914e-17,
+              5.551115123125783e-17,
+              0.9999999999999999,
+              0,
+              2.7755575615628914e-17,
+              1.1102230246251565e-16,
+              1
+            ],
+            "t": 1.0167999999999953,
+            "t2": 0.3166999999999971,
+            "phase": 1,
+            "final": 1,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 288,
+              "labelCalls": 0,
+              "observedFrames": 102
+            },
+            "liveSourcePixels": {
+              "1": "23979909"
+            },
+            "frontFace": 1,
+            "frontNormalZ": null,
+            "files": {
+              "slot": "d1-settled-slot.png",
+              "center": "d1-settled-center.png",
+              "slotSha256": "d8f8ede9b47ee27dc4bcec9e5b556b0b49c185f1fcac5d7995b2604646d5f5e3",
+              "slotCanvasSha256": "8b63ca84e6b7c05e06cfd53029fc438e5fc36f82416c7d2f34504d005a51e665",
+              "centerSha256": "8849fafe7702a28ae5abe83b4a0bd0a72a0873b5ddca50831a92ba58619c8082"
+            }
+          },
+          "held": {
+            "held": 1,
+            "slotActive": false
+          }
+        },
+        {
+          "kind": "d4",
+          "forcedFinal": null,
+          "rotationDelta": 2.804974269278045,
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "angle": 0.08,
+            "sharedTextures": 1,
+            "sourcePixelsStable": true,
+            "matricesChanged": true
+          },
+          "d6BaselineReplay": null,
+          "spinA": {
+            "kind": "d4",
+            "shape": "d4",
+            "R": [
+              0.7184811039869131,
+              0.3552853548960641,
+              -0.5979608848496067,
+              -0.03829078743677289,
+              0.8785995523059785,
+              0.47602168257885674,
+              0.694491698158602,
+              -0.319116190883684,
+              0.6448613323069307
+            ],
+            "t": 0.23320000000000074,
+            "t2": 0,
+            "phase": 0,
+            "final": 2,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 1,
+              "labelCalls": 0,
+              "observedFrames": 146
+            },
+            "liveSourcePixels": {
+              "5": "75497dea"
+            },
+            "files": {
+              "slot": "d4-spin-a-slot.png",
+              "center": "d4-spin-a-center.png",
+              "slotSha256": "72162b7ede0befab0ca7b690e3edb158d4d4f86741bf42351108f26b0d137f60",
+              "slotCanvasSha256": "d3401c52532f9b7f309c0b7badaa4d7ee671353797967bc53336ba8e16bc6822",
+              "centerSha256": "fee6bdbf92fcbddf8906d7cd0d69cb3fc4c94c96ada439241ef3830992ae79c5"
+            }
+          },
+          "spinB": {
+            "kind": "d4",
+            "shape": "d4",
+            "R": [
+              0.5103670846068403,
+              0.66828079016423,
+              0.5412265925168372,
+              0.8584590648924517,
+              -0.4330472616361835,
+              -0.27480557325749505,
+              0.050729408176045904,
+              0.6048725937640713,
+              -0.7947047706282082
+            ],
+            "t": 0.4165,
+            "t2": 0,
+            "phase": 0,
+            "final": 2,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 2,
+              "labelCalls": 0,
+              "observedFrames": 182
+            },
+            "liveSourcePixels": {
+              "2": "e54deee1",
+              "4": "287a627a"
+            },
+            "files": {
+              "slot": "d4-spin-b-slot.png",
+              "center": "d4-spin-b-center.png",
+              "slotSha256": "81cb29b2d08af46ad4d4ed610b81c8d577098e85f6ec43c72b5c1f6353fc7500",
+              "slotCanvasSha256": "5c4d3a9586d6d6998b6fd19c950aeef09097f476ddea75837b47ae05a3123abb",
+              "centerSha256": "f0c4c67c46af0e7d084b02c361cbb3a5e0632a51f51f8bc6fb9bf8216441be9e"
+            }
+          },
+          "settled": {
+            "kind": "d4",
+            "shape": "d4",
+            "R": [
+              0.7886751345948126,
+              0.21132486540518713,
+              -0.5773502691896258,
+              0.21132486540518708,
+              0.7886751345948128,
+              0.5773502691896258,
+              0.5773502691896257,
+              -0.577350269189626,
+              0.5773502691896256
+            ],
+            "t": 1.0332000000000001,
+            "t2": 0.3165999999999985,
+            "phase": 1,
+            "final": 2,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 1,
+              "labelCalls": 0,
+              "observedFrames": 231
+            },
+            "liveSourcePixels": {
+              "5": "75497dea"
+            },
+            "frontFace": 2,
+            "frontNormalZ": 1.0000000000000002,
+            "files": {
+              "slot": "d4-settled-slot.png",
+              "center": "d4-settled-center.png",
+              "slotSha256": "8294c516e8628cb7bcbb4baf30476cc9082c3ed79cb9fe57a76f507279456383",
+              "slotCanvasSha256": "e5dfa9cbc1b71a9b1f8943a24ba4081b93753132f4a97b81cb7c2bbf41e085dd",
+              "centerSha256": "2f8e90921d7b47f182eeb4a560a1002ecaba7d456b21f78d710b356cea632e41"
+            }
+          },
+          "held": {
+            "held": 2,
+            "slotActive": false
+          }
+        },
+        {
+          "kind": "d6",
+          "forcedFinal": null,
+          "rotationDelta": 2.7170549119234044,
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "angle": 0.08,
+            "sharedTextures": 3,
+            "sourcePixelsStable": true,
+            "matricesChanged": true
+          },
+          "d6BaselineReplay": {
+            "baselineGameSha256": "1a2ff3e9d7bce91aa850cd5c6de36cfc53492e3418d9717ce583420fe56acae1",
+            "pose": [
+              -0.4787481621478388,
+              0.8088191625209535,
+              0.34148464032657483,
+              0.8249647552944056,
+              0.2813508682067393,
+              0.4901783772070692,
+              0.3003886645033538,
+              0.5163847899563053,
+              -0.8019435135591998
+            ],
+            "baselineSlotCanvasSha256": "e6540a73942f21d6ee4067620406fa41945a140e016fff85bad79c46721913a6",
+            "actualSlotCanvasSha256": "e6540a73942f21d6ee4067620406fa41945a140e016fff85bad79c46721913a6",
+            "visibleFaceHashes": [
+              "4a3c59c1",
+              "b0545a55",
+              "b0ecd1ed"
+            ],
+            "pass": true,
+            "files": {
+              "slot": "d6-baseline-identical-pose-slot.png",
+              "center": "d6-baseline-identical-pose-center.png",
+              "slotSha256": "3071b9965eaee4d06497fb6150c359206e0f0e02bf4ac33c764f89f14d1a3199",
+              "slotCanvasSha256": "e6540a73942f21d6ee4067620406fa41945a140e016fff85bad79c46721913a6",
+              "centerSha256": "fc9fc73e40e6fc51107259dd7e296f552728ce84c9bcf84581bb1e05dc005902"
+            }
+          },
+          "spinA": {
+            "kind": "d6",
+            "shape": "d6",
+            "R": [
+              0.2922996343346027,
+              0.9076457289698027,
+              0.30123106488331025,
+              0.8850252207711647,
+              -0.1373912889532248,
+              -0.44480781503782324,
+              -0.36234138925439974,
+              0.39661425138621403,
+              -0.8434487851852918
+            ],
+            "t": 0.23340000000000144,
+            "t2": 0,
+            "phase": 0,
+            "final": 2,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 6,
+              "labelCalls": 0,
+              "observedFrames": 269
+            },
+            "liveSourcePixels": {
+              "6": "b0ecd1ed",
+              "10": "b0545a55",
+              "11": "3f5a1a57"
+            },
+            "files": {
+              "slot": "d6-spin-a-slot.png",
+              "center": "d6-spin-a-center.png",
+              "slotSha256": "dd684eee36a181ac1f56fe89bacb6414a1c0afafe53db86bb142e3e97c56788c",
+              "slotCanvasSha256": "d25373fbac722e9a60f623e113c1238086b0502ddc060dba92e15410e98060c0",
+              "centerSha256": "bdde33b99dab5a4dbd8196dff922f59f3bf9bdbb742311427d26066ede7f70de"
+            }
+          },
+          "spinB": {
+            "kind": "d6",
+            "shape": "d6",
+            "R": [
+              -0.026507925888937554,
+              0.21338165124749334,
+              -0.9766092364789305,
+              -0.022935368923379593,
+              0.9765655455575019,
+              0.2139946356391378,
+              0.999385460529327,
+              0.028071447074776795,
+              -0.020992740214486952
+            ],
+            "t": 0.4000000000000036,
+            "t2": 0,
+            "phase": 0,
+            "final": 2,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 6,
+              "labelCalls": 0,
+              "observedFrames": 305
+            },
+            "liveSourcePixels": {
+              "6": "b0ecd1ed",
+              "7": "4a3c59c1",
+              "10": "b0545a55"
+            },
+            "files": {
+              "slot": "d6-spin-b-slot.png",
+              "center": "d6-spin-b-center.png",
+              "slotSha256": "a35eae625fa94451932c46a708a67956e4c49b29921b5d86fd43414e076067f5",
+              "slotCanvasSha256": "39b32233a6a69b32df0e2511e47db6836b3f292940639bd1f0738603ba1dc5c9",
+              "centerSha256": "344b951248a4a87565e93fc38471d5fda00649cb1e259212c6b3be5b883468e2"
+            }
+          },
+          "settled": {
+            "kind": "d6",
+            "shape": "d6",
+            "R": [
+              0.9999999999999999,
+              -1.5612511283791264e-17,
+              -1.214306433183765e-17,
+              3.426078865054194e-17,
+              1.1102230246251565e-16,
+              -0.9999999999999998,
+              -1.734723475976807e-18,
+              0.9999999999999997,
+              5.551115123125783e-17
+            ],
+            "t": 0.8667000000000038,
+            "t2": 0.3165999999999985,
+            "phase": 1,
+            "final": 2,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 2,
+              "labelCalls": 0,
+              "observedFrames": 358
+            },
+            "liveSourcePixels": {
+              "10": "b0545a55"
+            },
+            "frontFace": 2,
+            "frontNormalZ": 0.9999999999999997,
+            "files": {
+              "slot": "d6-settled-slot.png",
+              "center": "d6-settled-center.png",
+              "slotSha256": "2fc8a4658f810643e72d6080c64a4f31575d4d4f2b88354016c7e1df67e85769",
+              "slotCanvasSha256": "0e0f1a4b3468aefa4362f8c39ea2b015acf7b2cb3954d7dcfa24ff62881d8ba3",
+              "centerSha256": "2f01cebcf7b434be6fb472fcbfa33c89b3b703659b99873ab1dd3b58b9838b02"
+            }
+          },
+          "held": {
+            "held": 2,
+            "slotActive": false
+          }
+        },
+        {
+          "kind": "d8",
+          "forcedFinal": null,
+          "rotationDelta": 2.828181449381604,
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "angle": 0.08,
+            "sharedTextures": 4,
+            "sourcePixelsStable": true,
+            "matricesChanged": true
+          },
+          "d6BaselineReplay": null,
+          "spinA": {
+            "kind": "d8",
+            "shape": "d8",
+            "R": [
+              0.2521851112948082,
+              0.9676325753343241,
+              0.009479915246906083,
+              0.4451022173045382,
+              -0.12469043270070415,
+              0.8867560612386559,
+              0.859236105963785,
+              -0.2194071446985592,
+              -0.46214047546543313
+            ],
+            "t": 0.23329999999999929,
+            "t2": 0,
+            "phase": 0,
+            "final": 7,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 4,
+              "labelCalls": 0,
+              "observedFrames": 398
+            },
+            "liveSourcePixels": {
+              "12": "dd512f24",
+              "14": "e54deee1",
+              "15": "e24a1201",
+              "18": "4fb03c8"
+            },
+            "files": {
+              "slot": "d8-spin-a-slot.png",
+              "center": "d8-spin-a-center.png",
+              "slotSha256": "cf9e7029c6476c67e9f38e7fe1c7634fdc44e897df73fd854d914800a0882b59",
+              "slotCanvasSha256": "2ccd12ca7d9cf3c4313b5498787252c5d98356de7d89ed2f47cebd661e04f464",
+              "centerSha256": "9b16e140d04d000ae1163288398d53b573047de083d57c77d40f2505f32d4320"
+            }
+          },
+          "spinB": {
+            "kind": "d8",
+            "shape": "d8",
+            "R": [
+              0.9015109307471169,
+              -0.27375066156762257,
+              0.3351695347652529,
+              0.42809419633110657,
+              0.6775086424682041,
+              -0.5980948072408883,
+              -0.06335140733315317,
+              0.6826731389707524,
+              0.7279725163196265
+            ],
+            "t": 0.4165999999999985,
+            "t2": 0,
+            "phase": 0,
+            "final": 7,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 3,
+              "labelCalls": 0,
+              "observedFrames": 434
+            },
+            "liveSourcePixels": {
+              "13": "9b15534d",
+              "14": "e54deee1",
+              "16": "75497dea"
+            },
+            "files": {
+              "slot": "d8-spin-b-slot.png",
+              "center": "d8-spin-b-center.png",
+              "slotSha256": "f3e88afda337a88b8687a0ed1939af248b65caf05cb7cce448e87de81fb72aeb",
+              "slotCanvasSha256": "ad254ac47a5e03f20ebc7973ba33f15738b1e5aa1ea348aefd621776349370cb",
+              "centerSha256": "70ac67acdc923d7db6ab0ddf8dced2269a6c02c5dd8179a38b9e895eebb652d3"
+            }
+          },
+          "settled": {
+            "kind": "d8",
+            "shape": "d8",
+            "R": [
+              0.21132486540518702,
+              -0.7886751345948129,
+              0.5773502691896256,
+              -0.788675134594813,
+              0.21132486540518675,
+              0.5773502691896254,
+              -0.5773502691896255,
+              -0.5773502691896257,
+              -0.577350269189626
+            ],
+            "t": 1.0165999999999977,
+            "t2": 0.3001000000000022,
+            "phase": 1,
+            "final": 7,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 4,
+              "labelCalls": 0,
+              "observedFrames": 480
+            },
+            "liveSourcePixels": {
+              "12": "dd512f24",
+              "13": "9b15534d",
+              "17": "76cd0317",
+              "19": "ce17f70f"
+            },
+            "frontFace": 7,
+            "frontNormalZ": 1,
+            "files": {
+              "slot": "d8-settled-slot.png",
+              "center": "d8-settled-center.png",
+              "slotSha256": "11b46539967d3705c9a95d3663bf182d9e1823ab81203b69eebe19841208eaac",
+              "slotCanvasSha256": "bb41d91d2374400ef306395ddb740df6dfaf53187b82016d38d51077f5c9a257",
+              "centerSha256": "dc5d371490cd9089071f32bd7ab644f6eab4c0fb8e881af728e2eef01f4307dd"
+            }
+          },
+          "held": {
+            "held": 7,
+            "slotActive": false
+          }
+        },
+        {
+          "kind": "d12",
+          "forcedFinal": null,
+          "rotationDelta": 2.8282685402433594,
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "angle": 0.08,
+            "sharedTextures": 5,
+            "sourcePixelsStable": true,
+            "matricesChanged": true
+          },
+          "d6BaselineReplay": null,
+          "spinA": {
+            "kind": "d12",
+            "shape": "d12",
+            "R": [
+              0.758234850451567,
+              0.18785677151070326,
+              -0.624331438386908,
+              -0.2678876106208507,
+              0.962790517704726,
+              -0.03564613715000551,
+              0.5944040205420397,
+              0.19427880073605813,
+              0.7803458258669791
+            ],
+            "t": 0.23340000000000144,
+            "t2": 0,
+            "phase": 0,
+            "final": 8,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 18,
+              "labelCalls": 0,
+              "observedFrames": 515
+            },
+            "liveSourcePixels": {
+              "20": "95f466aa",
+              "21": "697b6f33",
+              "22": "f183751a",
+              "25": "b6f05913",
+              "29": "1a34b7be",
+              "30": "54d5a6e0"
+            },
+            "files": {
+              "slot": "d12-spin-a-slot.png",
+              "center": "d12-spin-a-center.png",
+              "slotSha256": "8a47de2a42d781977ff0ccff24ce6460c11ef0b7e6dbe2c477fe5e896309c7b9",
+              "slotCanvasSha256": "c79411c7b13c3ca63480d8cd1320cd8834871307e5e4c088ca77ede77c0cfeba",
+              "centerSha256": "661b793d5f25dc605002b89ade2497cb8f7f77e36b4387a6791ac9fc2f3fa588"
+            }
+          },
+          "spinB": {
+            "kind": "d12",
+            "shape": "d12",
+            "R": [
+              -0.20572522069550822,
+              0.6982371747792071,
+              0.6856690027455926,
+              0.9753260982622927,
+              0.20364205459070506,
+              0.0852579359973523,
+              -0.08010078412997454,
+              0.686290580846355,
+              -0.7229032459626501
+            ],
+            "t": 0.4001000000000021,
+            "t2": 0,
+            "phase": 0,
+            "final": 8,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 18,
+              "labelCalls": 0,
+              "observedFrames": 547
+            },
+            "liveSourcePixels": {
+              "22": "f183751a",
+              "24": "7e7d0d7a",
+              "26": "be266987",
+              "27": "39e62c2e",
+              "28": "e4306518",
+              "29": "1a34b7be"
+            },
+            "files": {
+              "slot": "d12-spin-b-slot.png",
+              "center": "d12-spin-b-center.png",
+              "slotSha256": "ad385c85896e7870dfd10ddb9e433c26e4d93f8bc16f380fc65acdef37abda13",
+              "slotCanvasSha256": "d1bda485c79bcd191618bdfa33eb97fa6b0d1baabe13d3552af21ea0d1fb0d11",
+              "centerSha256": "59952edcd36c8585c33be2735fe325426f45d93257dbfb79f9b86fe0a6c717ea"
+            }
+          },
+          "settled": {
+            "kind": "d12",
+            "shape": "d12",
+            "R": [
+              0.723606797749979,
+              0.44721359549995787,
+              0.5257311121191335,
+              0.44721359549995776,
+              0.2763932022500212,
+              -0.8506508083520401,
+              -0.5257311121191335,
+              0.85065080835204,
+              1.6653345369377348e-16
+            ],
+            "t": 1.0001000000000015,
+            "t2": 0.3,
+            "phase": 1,
+            "final": 8,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 18,
+              "labelCalls": 0,
+              "observedFrames": 595
+            },
+            "liveSourcePixels": {
+              "22": "f183751a",
+              "23": "7ddbff1f",
+              "24": "7e7d0d7a",
+              "25": "b6f05913",
+              "26": "be266987",
+              "27": "39e62c2e"
+            },
+            "frontFace": 8,
+            "frontNormalZ": 1,
+            "files": {
+              "slot": "d12-settled-slot.png",
+              "center": "d12-settled-center.png",
+              "slotSha256": "acc97d1753e80383f1d6e0e0eb323d3d242e346c5cf3279127103f5203be81e6",
+              "slotCanvasSha256": "5c1e2a8c73fa75622b66538c96cb837fda05811e91bd88b0ed1153679c537eec",
+              "centerSha256": "1d261c73f3a7453045e3bca01c48a6fc1a23f9b4fe9b9f4cb9b6c648b6b9c528"
+            }
+          },
+          "held": {
+            "held": 8,
+            "slotActive": false
+          }
+        },
+        {
+          "kind": "d20",
+          "forcedFinal": null,
+          "rotationDelta": 2.7886362093864117,
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "angle": 0.08,
+            "sharedTextures": 10,
+            "sourcePixelsStable": true,
+            "matricesChanged": true
+          },
+          "d6BaselineReplay": null,
+          "spinA": {
+            "kind": "d20",
+            "shape": "d20",
+            "R": [
+              -0.09133044464144165,
+              0.6438132923442462,
+              -0.7597125735977118,
+              0.31187056687027565,
+              0.7430146464178766,
+              0.5921705706369836,
+              0.9457248539620864,
+              -0.18284878946654246,
+              -0.26864627447446676
+            ],
+            "t": 0.23340000000000144,
+            "t2": 0,
+            "phase": 0,
+            "final": 14,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 10,
+              "labelCalls": 0,
+              "observedFrames": 634
+            },
+            "liveSourcePixels": {
+              "31": "c20544a6",
+              "32": "b38d1daa",
+              "33": "561d5439",
+              "37": "d31b5522",
+              "38": "35fb52b",
+              "40": "58ec9528",
+              "45": "6556debd",
+              "47": "194757b1",
+              "48": "ae5efd70",
+              "49": "f1584a11"
+            },
+            "files": {
+              "slot": "d20-spin-a-slot.png",
+              "center": "d20-spin-a-center.png",
+              "slotSha256": "068068ca1f5a13d8ba7853f0961f57123dc58b4209198b297cf9bb1278579d83",
+              "slotCanvasSha256": "7eb099b1a4b307e6cad225787daa082918e050d36d414c6b3e2d5002f7d4dffe",
+              "centerSha256": "0242559e6fed7a1bff088ec2ea2db622ecb110d1016ce990b3989bdb14eb4d38"
+            }
+          },
+          "spinB": {
+            "kind": "d20",
+            "shape": "d20",
+            "R": [
+              0.8851518200736753,
+              0.46519217287253267,
+              0.0101241156844113,
+              -0.10030176685577318,
+              0.21200704531135336,
+              -0.972107282301681,
+              -0.4543630827717739,
+              0.8594470635452083,
+              0.23431801889237788
+            ],
+            "t": 0.4001000000000021,
+            "t2": 0,
+            "phase": 0,
+            "final": 14,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 10,
+              "labelCalls": 0,
+              "observedFrames": 668
+            },
+            "liveSourcePixels": {
+              "32": "b38d1daa",
+              "34": "8c832449",
+              "35": "dda8f0a4",
+              "36": "ed325cc1",
+              "38": "35fb52b",
+              "39": "ffe2a3c1",
+              "40": "58ec9528",
+              "41": "84701358",
+              "42": "c9aa0c6d",
+              "43": "6abbf1f7"
+            },
+            "files": {
+              "slot": "d20-spin-b-slot.png",
+              "center": "d20-spin-b-center.png",
+              "slotSha256": "1a28f7fe7221165fe8c0e6f300e6d5858b0d2b9d6db0768e30abf269059559c5",
+              "slotCanvasSha256": "1c5916076956ffc2d568bfe4d07b825ec9532abde56ced86caa8cd00f4433940",
+              "centerSha256": "7223d08f434abf685c8a5bc5d52fcbd33648424f76e42dafb2b4d2c2a524339e"
+            }
+          },
+          "settled": {
+            "kind": "d20",
+            "shape": "d20",
+            "R": [
+              0.9999999999999999,
+              -1.3877787807814457e-17,
+              1.457167719820518e-16,
+              -9.204876444401933e-17,
+              0.35682208977308993,
+              0.9341723589627154,
+              -8.326672684688674e-17,
+              -0.9341723589627156,
+              0.3568220897730899
+            ],
+            "t": 1.0167999999999986,
+            "t2": 0.3165999999999986,
+            "phase": 1,
+            "final": 14,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 10,
+              "labelCalls": 0,
+              "observedFrames": 717
+            },
+            "liveSourcePixels": {
+              "31": "c20544a6",
+              "33": "561d5439",
+              "35": "dda8f0a4",
+              "38": "35fb52b",
+              "43": "6abbf1f7",
+              "46": "2efdb574",
+              "47": "194757b1",
+              "48": "ae5efd70",
+              "49": "f1584a11",
+              "50": "856805af"
+            },
+            "frontFace": 14,
+            "frontNormalZ": 0.9999999999999997,
+            "files": {
+              "slot": "d20-settled-slot.png",
+              "center": "d20-settled-center.png",
+              "slotSha256": "1c21976fe0c06a0657fbddee0edc5d8572972375d2a308402624a7a2466400d5",
+              "slotCanvasSha256": "c647b7a5d1212b609bec29a6057f8bcf5da3e80a125476130b7218865e4bd601",
+              "centerSha256": "3167e8a91b71e8bc93cb1d12e2aa8c85b353c72080f5bda4c2bb10450bd9e0fe"
+            }
+          },
+          "held": {
+            "held": 14,
+            "slotActive": false
+          }
+        },
+        {
+          "kind": "epic",
+          "forcedFinal": 14,
+          "rotationDelta": 2.78673413798177,
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "angle": 0.08,
+            "sharedTextures": 10,
+            "sourcePixelsStable": true,
+            "matricesChanged": true
+          },
+          "d6BaselineReplay": null,
+          "spinA": {
+            "kind": "epic",
+            "shape": "d20",
+            "R": [
+              -0.44425061893838613,
+              0.603929166153582,
+              0.6617484037320378,
+              0.7495908596010191,
+              -0.15397474407817094,
+              0.6437432107515131,
+              0.49066784159496957,
+              0.7820238746068441,
+              -0.38429640743758325
+            ],
+            "t": 0.23329999999999565,
+            "t2": 0,
+            "phase": 0,
+            "final": 15,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 10,
+              "labelCalls": 0,
+              "observedFrames": 757
+            },
+            "liveSourcePixels": {
+              "31": "c20544a6",
+              "32": "b38d1daa",
+              "34": "8c832449",
+              "37": "d31b5522",
+              "39": "ffe2a3c1",
+              "40": "58ec9528",
+              "41": "84701358",
+              "44": "eb999bee",
+              "45": "6556debd",
+              "48": "ae5efd70"
+            },
+            "files": {
+              "slot": "epic-spin-a-slot.png",
+              "center": "epic-spin-a-center.png",
+              "slotSha256": "7ee205c236a533f4c40d15f66211770776cc0aad130c60565c9d1c9d9089f966",
+              "slotCanvasSha256": "d1544ca91f77ce3579f21baa77d4a08096aa4961efde0bceb40aa6c8960e2efb",
+              "centerSha256": "125ff84b1afa90257deee2ffb2d93cb5837883deb0087efb035c54c4ed4d3afb"
+            }
+          },
+          "spinB": {
+            "kind": "epic",
+            "shape": "d20",
+            "R": [
+              0.9256368743377777,
+              -0.11849421932181019,
+              0.3593821042476988,
+              0.061111759682280706,
+              0.9840515598591522,
+              0.16705651848193415,
+              -0.3734457520105488,
+              -0.132671200816471,
+              0.9181158003101741
+            ],
+            "t": 0.4165999999999987,
+            "t2": 0,
+            "phase": 0,
+            "final": 15,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 10,
+              "labelCalls": 0,
+              "observedFrames": 792
+            },
+            "liveSourcePixels": {
+              "33": "561d5439",
+              "35": "dda8f0a4",
+              "36": "ed325cc1",
+              "38": "35fb52b",
+              "39": "ffe2a3c1",
+              "40": "58ec9528",
+              "42": "c9aa0c6d",
+              "43": "6abbf1f7",
+              "49": "f1584a11",
+              "50": "856805af"
+            },
+            "files": {
+              "slot": "epic-spin-b-slot.png",
+              "center": "epic-spin-b-center.png",
+              "slotSha256": "8ce464f53117ab48c59f97b35bc6cc4351adef7b356e280bedfef62c7ab24323",
+              "slotCanvasSha256": "efcc8f09e5172e623be15518e43dc95070aa722f37c4d6b5c8f70f30720adac2",
+              "centerSha256": "642d464e0a45ae2ddfbd5eb79487772ad7244e3152217846b86ef298f56141c8"
+            }
+          },
+          "settled": {
+            "kind": "epic",
+            "shape": "d20",
+            "R": [
+              1.0000000000000002,
+              1.942890293094024e-16,
+              -2.7755575615628914e-17,
+              -3.469446951953614e-17,
+              0.3568220897730899,
+              0.9341723589627158,
+              2.220446049250313e-16,
+              -0.9341723589627159,
+              0.3568220897730899
+            ],
+            "t": 1.0333000000000023,
+            "t2": 0.3167000000000045,
+            "phase": 1,
+            "final": 14,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 10,
+              "labelCalls": 0,
+              "observedFrames": 840
+            },
+            "liveSourcePixels": {
+              "31": "c20544a6",
+              "33": "561d5439",
+              "35": "dda8f0a4",
+              "38": "35fb52b",
+              "43": "6abbf1f7",
+              "46": "2efdb574",
+              "47": "194757b1",
+              "48": "ae5efd70",
+              "49": "f1584a11",
+              "50": "856805af"
+            },
+            "frontFace": 14,
+            "frontNormalZ": 1,
+            "files": {
+              "slot": "epic-settled-slot.png",
+              "center": "epic-settled-center.png",
+              "slotSha256": "8ec6c2b9cd533889a16c8664b64a8621bf1c329f901c91da6656424a014e0c19",
+              "slotCanvasSha256": "07c5b99c30bec64751182e37de23a0e79b0389303ceae90d71c3f202bb0e3a6d",
+              "centerSha256": "c1a5c6e1a030249426c331d79bd4454bc3e3010584358cc30822651848a8ad94"
+            }
+          },
+          "held": {
+            "held": 14,
+            "slotActive": false
+          }
+        },
+        {
+          "kind": "myth",
+          "forcedFinal": 18,
+          "rotationDelta": 2.800835663348113,
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "angle": 0.08,
+            "sharedTextures": 10,
+            "sourcePixelsStable": true,
+            "matricesChanged": true
+          },
+          "d6BaselineReplay": null,
+          "spinA": {
+            "kind": "myth",
+            "shape": "d20",
+            "R": [
+              0.418376669894036,
+              0.5392036043968196,
+              -0.7309038480496972,
+              -0.23320619150882982,
+              0.8415117351235618,
+              0.4873118835933302,
+              0.8778244894797159,
+              -0.03342862029474927,
+              0.47781449644696394
+            ],
+            "t": 0.2333999999999942,
+            "t2": 0,
+            "phase": 0,
+            "final": 18,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 10,
+              "labelCalls": 0,
+              "observedFrames": 879
+            },
+            "liveSourcePixels": {
+              "31": "c20544a6",
+              "32": "b38d1daa",
+              "33": "561d5439",
+              "35": "dda8f0a4",
+              "37": "d31b5522",
+              "38": "35fb52b",
+              "39": "ffe2a3c1",
+              "40": "58ec9528",
+              "48": "ae5efd70",
+              "49": "f1584a11"
+            },
+            "files": {
+              "slot": "myth-spin-a-slot.png",
+              "center": "myth-spin-a-center.png",
+              "slotSha256": "af60119f70090f2ecb4a3e51f1e1023b406d336100ee0dec8cf992dc6cf84a0b",
+              "slotCanvasSha256": "8c395436444789ab0bc1b8318daca1b75c2052d518a2f13e24353917e07642be",
+              "centerSha256": "89f65d6d7e638e0f6be6eeae1d34220a0ea5095a063ba20308e13c880a09e565"
+            }
+          },
+          "spinB": {
+            "kind": "myth",
+            "shape": "d20",
+            "R": [
+              0.5660930023983767,
+              0.49783454750910205,
+              0.6570384128359612,
+              0.7105122621132509,
+              0.10947844118816526,
+              -0.6951163904712079,
+              -0.41798449495442125,
+              0.8603343734975473,
+              -0.2917425710387162
+            ],
+            "t": 0.41669999999998997,
+            "t2": 0,
+            "phase": 0,
+            "final": 18,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 10,
+              "labelCalls": 0,
+              "observedFrames": 915
+            },
+            "liveSourcePixels": {
+              "32": "b38d1daa",
+              "34": "8c832449",
+              "36": "ed325cc1",
+              "39": "ffe2a3c1",
+              "40": "58ec9528",
+              "41": "84701358",
+              "42": "c9aa0c6d",
+              "43": "6abbf1f7",
+              "44": "eb999bee",
+              "45": "6556debd"
+            },
+            "files": {
+              "slot": "myth-spin-b-slot.png",
+              "center": "myth-spin-b-center.png",
+              "slotSha256": "ed33277a7228df28c46d869d4d047cee5fb348cc3aa59ea90ece1f4779182353",
+              "slotCanvasSha256": "e009425694fcbae208cadfa9b544e4a0ceeec138a3a24d3e06987600330ea16a",
+              "centerSha256": "e71ecb1b43e25cc3c03170a3fd6fb097f842fd527f7f00830b402a80a87cc7da"
+            }
+          },
+          "settled": {
+            "kind": "myth",
+            "shape": "d20",
+            "R": [
+              0.127322003750035,
+              0.3333333333333332,
+              0.9341723589627158,
+              0.33333333333333337,
+              0.8726779962499648,
+              -0.35682208977309,
+              -0.9341723589627159,
+              0.35682208977308993,
+              -1.1102230246251565e-16
+            ],
+            "t": 1.016799999999988,
+            "t2": 0.31670000000000437,
+            "phase": 1,
+            "final": 18,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 10,
+              "labelCalls": 0,
+              "observedFrames": 961
+            },
+            "liveSourcePixels": {
+              "34": "8c832449",
+              "35": "dda8f0a4",
+              "36": "ed325cc1",
+              "39": "ffe2a3c1",
+              "41": "84701358",
+              "42": "c9aa0c6d",
+              "43": "6abbf1f7",
+              "44": "eb999bee",
+              "46": "2efdb574",
+              "50": "856805af"
+            },
+            "frontFace": 18,
+            "frontNormalZ": 1,
+            "files": {
+              "slot": "myth-settled-slot.png",
+              "center": "myth-settled-center.png",
+              "slotSha256": "938bb4ff50b880df6c24cafb8c876c7b806d668f78f67f2c9af32922a1cd4dfb",
+              "slotCanvasSha256": "e23eb081ed88fefcc8dea8a3f6e6ce04c101f417cb19c6e361809204db156e39",
+              "centerSha256": "d0ee85a9a2a02798cb926eb34e478438b0788db8f8cc500fee2422b2b04c2bf2"
+            }
+          },
+          "held": {
+            "held": 18,
+            "slotActive": false
+          }
+        },
+        {
+          "kind": "primal",
+          "forcedFinal": 20,
+          "rotationDelta": 2.81931102536845,
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "angle": 0.08,
+            "sharedTextures": 9,
+            "sourcePixelsStable": true,
+            "matricesChanged": true
+          },
+          "d6BaselineReplay": null,
+          "spinA": {
+            "kind": "primal",
+            "shape": "d20",
+            "R": [
+              -0.8359338805509658,
+              -0.40537158918777555,
+              0.3699843537588869,
+              0.5476430237051096,
+              -0.5717781634270879,
+              0.6108656566014096,
+              -0.03607860770773305,
+              0.7132626490342278,
+              0.6999676617948488
+            ],
+            "t": 0.2333999999999942,
+            "t2": 0,
+            "phase": 0,
+            "final": 20,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 9,
+              "labelCalls": 0,
+              "observedFrames": 1000
+            },
+            "liveSourcePixels": {
+              "34": "8c832449",
+              "35": "dda8f0a4",
+              "36": "ed325cc1",
+              "37": "d31b5522",
+              "38": "35fb52b",
+              "39": "ffe2a3c1",
+              "40": "58ec9528",
+              "41": "84701358",
+              "42": "c9aa0c6d"
+            },
+            "files": {
+              "slot": "primal-spin-a-slot.png",
+              "center": "primal-spin-a-center.png",
+              "slotSha256": "bf875dbe6d8e655e4f938b8a060c6b1653ea3afb27fabd78320119db1a079a20",
+              "slotCanvasSha256": "a4955a31bf2d42b865efe8ebf46cbf269ccd9abd9b72ae28f73b23108a7f42cb",
+              "centerSha256": "77c2642b8c5a8b66088a312af247061e7a178b0bffe07af7e83196cd557ff20e"
+            }
+          },
+          "spinB": {
+            "kind": "primal",
+            "shape": "d20",
+            "R": [
+              0.6319200990600258,
+              -0.04303545380608534,
+              0.77383779832706,
+              -0.7203739101600999,
+              0.3357031387517314,
+              0.6069306650622326,
+              -0.2858993143829058,
+              -0.9409842465992404,
+              0.18113594256095164
+            ],
+            "t": 0.4000999999999914,
+            "t2": 0,
+            "phase": 0,
+            "final": 20,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 10,
+              "labelCalls": 0,
+              "observedFrames": 1036
+            },
+            "liveSourcePixels": {
+              "31": "c20544a6",
+              "33": "561d5439",
+              "35": "dda8f0a4",
+              "38": "35fb52b",
+              "43": "6abbf1f7",
+              "46": "2efdb574",
+              "47": "194757b1",
+              "48": "ae5efd70",
+              "49": "f1584a11",
+              "50": "856805af"
+            },
+            "files": {
+              "slot": "primal-spin-b-slot.png",
+              "center": "primal-spin-b-center.png",
+              "slotSha256": "e0d6ebd3d8946ee14c55aa94291cef75584459b87a18478d7e1383a060aa8117",
+              "slotCanvasSha256": "ac5b19848fdf5f1e4f6ff1a6f305129b340dd41b784cb04bb94679ad34e0b880",
+              "centerSha256": "82e388ade466001de4aa3f3f036878281415b889e60e54b5acd2081c21a872e0"
+            }
+          },
+          "settled": {
+            "kind": "primal",
+            "shape": "d20",
+            "R": [
+              0.21132486540518763,
+              -0.7886751345948126,
+              0.5773502691896255,
+              -0.7886751345948125,
+              0.2113248654051871,
+              0.5773502691896256,
+              -0.577350269189626,
+              -0.5773502691896257,
+              -0.5773502691896256
+            ],
+            "t": 1.0001999999999893,
+            "t2": 0.30009999999999865,
+            "phase": 1,
+            "final": 20,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 10,
+              "labelCalls": 0,
+              "observedFrames": 1083
+            },
+            "liveSourcePixels": {
+              "41": "84701358",
+              "42": "c9aa0c6d",
+              "43": "6abbf1f7",
+              "44": "eb999bee",
+              "45": "6556debd",
+              "46": "2efdb574",
+              "47": "194757b1",
+              "48": "ae5efd70",
+              "49": "f1584a11",
+              "50": "856805af"
+            },
+            "frontFace": 20,
+            "frontNormalZ": 1.0000000000000002,
+            "files": {
+              "slot": "primal-settled-slot.png",
+              "center": "primal-settled-center.png",
+              "slotSha256": "30ba2f62faea9c4c48f3c5b16f7c7023dd3ea660041cc4fa9fb4f180fcffd4c3",
+              "slotCanvasSha256": "f4d18bb7469efaece5a16237cae0653d86d03c3ceee6536a21ce5999a9973940",
+              "centerSha256": "9eeba15cd3f28c918a002efd7be8f59525652c7a14f8e38b4733be36d61fd81d"
+            }
+          },
+          "held": {
+            "held": 20,
+            "slotActive": false
+          }
+        }
+      ],
+      "finalOrientations": [],
+      "fixedPoseChecks": 9,
+      "rotatingKinds": 9,
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1240,
+        "height": 860
+      },
+      "gameSha256": "fb37de4ecab9c4c7d43e32215d7d54973b7f09922cf4ce7191567a3ee886d186",
+      "assets": [
+        {
+          "url": "http://localhost:8137/dice/dice-1.png",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/dice/dice-2.png",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/dice/dice-4.png",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/dice/dice-3.png",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/dice/dice-5.png",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/dice/dice-6.png",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/dice/dice-1.png",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/dice/dice-2.png",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/dice/dice-5.png",
+          "status": 200
+        },
+        {
+          "url": "http://localhost:8137/dice/dice-1.png",
+          "status": 200
+        }
+      ],
+      "pageerrors": [],
+      "abortedMaterialRequests": [
+        "http://localhost:8137/dice/skins/ivory-worn/material.png?v=96"
+      ],
+      "kinds": [
+        {
+          "kind": "d1",
+          "forcedFinal": 1,
+          "rotationDelta": 2.8250292435699835,
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "angle": 0.08,
+            "sharedTextures": 1,
+            "sourcePixelsStable": true,
+            "matricesChanged": true
+          },
+          "d6BaselineReplay": null,
+          "spinA": {
+            "kind": "d1",
+            "shape": "d1",
+            "R": [
+              -0.6849808716714639,
+              0.34232243881281166,
+              -0.6431302771052304,
+              0.04489014101618724,
+              0.9008936649507786,
+              0.43171226493012776,
+              0.7271767877784249,
+              0.26684443471206754,
+              -0.6324618304525963
+            ],
+            "t": 0.24989999999999418,
+            "t2": 0,
+            "phase": 0,
+            "final": 1,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 288,
+              "labelCalls": 0,
+              "observedFrames": 12
+            },
+            "liveSourcePixels": {
+              "1": "23979909"
+            },
+            "files": {
+              "slot": "d1-spin-a-slot.png",
+              "center": "d1-spin-a-center.png",
+              "slotSha256": "a3b2f8757488e5cf4414d5417865436e1e797ca7d9c7c6b8049810f49f9578ac",
+              "slotCanvasSha256": "96542bec8cd52c2b041c1f37fcdd51c2093f066bfef4299b1e893d1a6e81ecbd",
+              "centerSha256": "7f37514f78bc3de8407f1c33e206fc7fda8c61e4138e210760fc685e508ab7c6"
+            }
+          },
+          "spinB": {
+            "kind": "d1",
+            "shape": "d1",
+            "R": [
+              0.6334701339279346,
+              0.7608856652607263,
+              0.14060083151271258,
+              -0.2213620916657208,
+              0.35232330289155717,
+              -0.9093223381249144,
+              -0.7414272815284728,
+              0.5449048491620585,
+              0.39161753224922485
+            ],
+            "t": 0.4165999999999987,
+            "t2": 0,
+            "phase": 0,
+            "final": 1,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 288,
+              "labelCalls": 0,
+              "observedFrames": 60
+            },
+            "liveSourcePixels": {
+              "1": "23979909"
+            },
+            "files": {
+              "slot": "d1-spin-b-slot.png",
+              "center": "d1-spin-b-center.png",
+              "slotSha256": "afcbee8917da7926b173d337f1c216beb7b56ff1b7ba0e0bedac6434dc73c35d",
+              "slotCanvasSha256": "81672316b9c100ec8061ae206475985f378b6d7035f07f2bf5d8cf6a3111688f",
+              "centerSha256": "bd2f91e0eb55fdc6ad1bab911b861a678116328a86958d54d798d151487d55f2"
+            }
+          },
+          "settled": {
+            "kind": "d1",
+            "shape": "d1",
+            "R": [
+              1,
+              0,
+              2.7755575615628914e-17,
+              -5.551115123125783e-17,
+              1.0000000000000002,
+              1.6653345369377348e-16,
+              -6.938893903907228e-17,
+              -6.245004513516506e-17,
+              0.9999999999999999
+            ],
+            "t": 1.016599999999998,
+            "t2": 0.30000000000000004,
+            "phase": 1,
+            "final": 1,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 288,
+              "labelCalls": 0,
+              "observedFrames": 114
+            },
+            "liveSourcePixels": {
+              "1": "23979909"
+            },
+            "frontFace": 1,
+            "frontNormalZ": null,
+            "files": {
+              "slot": "d1-settled-slot.png",
+              "center": "d1-settled-center.png",
+              "slotSha256": "0648d34e005c30d4bde55467053e21f0a9e321cad280f703a1aa0628b80b9ccd",
+              "slotCanvasSha256": "2b374e785ebf2bb398660b0d2b5fe111be586ea2e3bc603fd04cb00a73048ca7",
+              "centerSha256": "e5a0ce8e5bd4db4e05eeea3e35f37ce90a979c5bd52744d982f93014c9a731ad"
+            }
+          },
+          "held": {
+            "held": 1,
+            "slotActive": false
+          }
+        },
+        {
+          "kind": "d4",
+          "forcedFinal": null,
+          "rotationDelta": 2.8263863909849847,
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "angle": 0.08,
+            "sharedTextures": 2,
+            "sourcePixelsStable": true,
+            "matricesChanged": true
+          },
+          "d6BaselineReplay": null,
+          "spinA": {
+            "kind": "d4",
+            "shape": "d4",
+            "R": [
+              0.24053888987859098,
+              -0.1916678993152942,
+              0.9515274346165944,
+              0.9136752407252468,
+              -0.28617916352252293,
+              -0.28861573216166087,
+              0.32762569640008027,
+              0.938810365695656,
+              0.10628499574611236
+            ],
+            "t": 0.23340000000000144,
+            "t2": 0,
+            "phase": 0,
+            "final": 2,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 2,
+              "labelCalls": 0,
+              "observedFrames": 173
+            },
+            "liveSourcePixels": {
+              "3": "e54deee1",
+              "4": "db33e206"
+            },
+            "files": {
+              "slot": "d4-spin-a-slot.png",
+              "center": "d4-spin-a-center.png",
+              "slotSha256": "347507ea064838619220d36e20fb303aa4254be5d5276222dd864c81d464392e",
+              "slotCanvasSha256": "6e246e2a9085324808805b63de476670c94e5ff4e095fb3ebb1cabb2291925e4",
+              "centerSha256": "108b66041748d4ab0cb02d1e93a59cf02ac691c4e71a6f3f74a197d2a1259f4b"
+            }
+          },
+          "spinB": {
+            "kind": "d4",
+            "shape": "d4",
+            "R": [
+              0.7625897574641455,
+              0.5489246222478761,
+              -0.3422551985007713,
+              0.017408373892757834,
+              0.5114779687466479,
+              0.8591200358536712,
+              0.6466481348687135,
+              -0.6611142462364806,
+              0.38049197507172805
+            ],
+            "t": 0.4000999999999987,
+            "t2": 0,
+            "phase": 0,
+            "final": 2,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 1,
+              "labelCalls": 0,
+              "observedFrames": 210
+            },
+            "liveSourcePixels": {
+              "2": "75497dea"
+            },
+            "files": {
+              "slot": "d4-spin-b-slot.png",
+              "center": "d4-spin-b-center.png",
+              "slotSha256": "8f8d8a755675e0cf883de68238e8e09e30e4daa12991144570060362f3497951",
+              "slotCanvasSha256": "edbb9b3f960db3005441c251a0f4efe503c9a7d992ebc6a60cbf0bd3c74f830e",
+              "centerSha256": "c9e271a18ddb78c38954629ed447c4150aa9fe7dd74b0aaaeb674de979c20b58"
+            }
+          },
+          "settled": {
+            "kind": "d4",
+            "shape": "d4",
+            "R": [
+              0.7886751345948129,
+              0.21132486540518702,
+              -0.5773502691896257,
+              0.21132486540518705,
+              0.7886751345948126,
+              0.5773502691896261,
+              0.5773502691896253,
+              -0.5773502691896262,
+              0.5773502691896254
+            ],
+            "t": 1.0000999999999982,
+            "t2": 0.3000000000000001,
+            "phase": 1,
+            "final": 2,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 1,
+              "labelCalls": 0,
+              "observedFrames": 259
+            },
+            "liveSourcePixels": {
+              "2": "75497dea"
+            },
+            "frontFace": 2,
+            "frontNormalZ": 0.9999999999999999,
+            "files": {
+              "slot": "d4-settled-slot.png",
+              "center": "d4-settled-center.png",
+              "slotSha256": "0c94c7a0c3ff44286d3c7fcc49d709624198e6398a0685c6da22358f66d0c6d2",
+              "slotCanvasSha256": "e5dfa9cbc1b71a9b1f8943a24ba4081b93753132f4a97b81cb7c2bbf41e085dd",
+              "centerSha256": "0fd2164730e7b391960156c34a80a7015b580f5381bf837f253de22d99c33d64"
+            }
+          },
+          "held": {
+            "held": 2,
+            "slotActive": false
+          }
+        },
+        {
+          "kind": "d6",
+          "forcedFinal": null,
+          "rotationDelta": 2.680701397680952,
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "angle": 0.08,
+            "sharedTextures": 3,
+            "sourcePixelsStable": true,
+            "matricesChanged": true
+          },
+          "d6BaselineReplay": {
+            "baselineGameSha256": "1a2ff3e9d7bce91aa850cd5c6de36cfc53492e3418d9717ce583420fe56acae1",
+            "pose": [
+              -0.022123991833286186,
+              0.8850648554234385,
+              -0.4649416422301284,
+              0.5390662149222079,
+              0.40222062351350724,
+              0.740017692997843,
+              0.8419727696991186,
+              -0.23426218584033914,
+              -0.48600728736357623
+            ],
+            "baselineSlotCanvasSha256": "6cf95f48822107b46b92fbfd226b8d6c8b396a438f6ceb0e8c654e349d71dd87",
+            "actualSlotCanvasSha256": "6cf95f48822107b46b92fbfd226b8d6c8b396a438f6ceb0e8c654e349d71dd87",
+            "visibleFaceHashes": [
+              "219361ee",
+              "4a3c59c1",
+              "b0ecd1ed"
+            ],
+            "pass": true,
+            "files": {
+              "slot": "d6-baseline-identical-pose-slot.png",
+              "center": "d6-baseline-identical-pose-center.png",
+              "slotSha256": "704701b1fd7c44e818906a59595e581c40cdd30e1904f5c305a5b1dfd3cb8d20",
+              "slotCanvasSha256": "6cf95f48822107b46b92fbfd226b8d6c8b396a438f6ceb0e8c654e349d71dd87",
+              "centerSha256": "bdf14b47318aedb64ac9b96db43400ab3035d844ad77c1597d524f7d7341253b"
+            }
+          },
+          "spinA": {
+            "kind": "d6",
+            "shape": "d6",
+            "R": [
+              -0.2767993217658565,
+              0.9601217604762514,
+              -0.039348958435331864,
+              0.10781697601462156,
+              0.0717214436031388,
+              0.9915803216132034,
+              0.9548600081441383,
+              0.270226274791082,
+              -0.12336987176580118
+            ],
+            "t": 0.2333000000000029,
+            "t2": 0,
+            "phase": 0,
+            "final": 2,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 6,
+              "labelCalls": 0,
+              "observedFrames": 313
+            },
+            "liveSourcePixels": {
+              "6": "4a3c59c1",
+              "9": "b0545a55",
+              "10": "b0ecd1ed"
+            },
+            "files": {
+              "slot": "d6-spin-a-slot.png",
+              "center": "d6-spin-a-center.png",
+              "slotSha256": "d7048a96e71296cf9e0ec121cd0cb904a79bfe6359bbb6dff9e690778afc6cb0",
+              "slotCanvasSha256": "f437a3597afa18575c2c23ead2c4d76b966ba5922ed6ad69ed2ceebe58d4b15f",
+              "centerSha256": "df8b07314efda2ea4b2479bf69dbfb6aa09d3f18b8cf977563c62e909ccb386d"
+            }
+          },
+          "spinB": {
+            "kind": "d6",
+            "shape": "d6",
+            "R": [
+              0.1879514701501817,
+              0.1921742949030067,
+              0.9631943133381329,
+              0.6318309459227535,
+              0.727162630984954,
+              -0.26837318024235934,
+              -0.7519733377206559,
+              0.6590171078792806,
+              0.015249619001291292
+            ],
+            "t": 0.4167000000000045,
+            "t2": 0,
+            "phase": 0,
+            "final": 2,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 4,
+              "labelCalls": 0,
+              "observedFrames": 353
+            },
+            "liveSourcePixels": {
+              "8": "3f5a1a57",
+              "9": "b0545a55"
+            },
+            "files": {
+              "slot": "d6-spin-b-slot.png",
+              "center": "d6-spin-b-center.png",
+              "slotSha256": "fdfd26b76213036b31b50d8fbad1d96d0c0fcc97620ce2c086c35a2159b2bf7c",
+              "slotCanvasSha256": "536b78257410146362aaf37d6abdf6d4b7f28b865d81149f141c4db7fae8f8d6",
+              "centerSha256": "6ee7a8135587b9033f295e71eda8b4ab6836ae598c3776011fe13d2b344c5edc"
+            }
+          },
+          "settled": {
+            "kind": "d6",
+            "shape": "d6",
+            "R": [
+              1,
+              0,
+              6.938893903907228e-16,
+              6.938893903907228e-16,
+              8.187894806610529e-16,
+              -0.9999999999999998,
+              2.7755575615628914e-16,
+              1.0000000000000002,
+              7.355227538141662e-16
+            ],
+            "t": 0.866700000000004,
+            "t2": 0.31659999999999855,
+            "phase": 1,
+            "final": 2,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 2,
+              "labelCalls": 0,
+              "observedFrames": 408
+            },
+            "liveSourcePixels": {
+              "9": "b0545a55"
+            },
+            "frontFace": 2,
+            "frontNormalZ": 1.0000000000000002,
+            "files": {
+              "slot": "d6-settled-slot.png",
+              "center": "d6-settled-center.png",
+              "slotSha256": "ede7112f2295e1dd1bbdec100a15c7ecf5e9877d787c6985c00893aa90d83eca",
+              "slotCanvasSha256": "0e0f1a4b3468aefa4362f8c39ea2b015acf7b2cb3954d7dcfa24ff62881d8ba3",
+              "centerSha256": "6b60c6ed5581f80e9b014e2ca77a9e729de613601936825f01ea71ccc54a383f"
+            }
+          },
+          "held": {
+            "held": 2,
+            "slotActive": false
+          }
+        },
+        {
+          "kind": "d8",
+          "forcedFinal": null,
+          "rotationDelta": 2.774720691691033,
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "angle": 0.08,
+            "sharedTextures": 4,
+            "sourcePixelsStable": true,
+            "matricesChanged": true
+          },
+          "d6BaselineReplay": null,
+          "spinA": {
+            "kind": "d8",
+            "shape": "d8",
+            "R": [
+              0.4254224316850231,
+              0.5684892682751822,
+              -0.7041560242411833,
+              0.0034244277910487455,
+              0.7770605731086436,
+              0.6294165067857456,
+              0.9049884131377077,
+              -0.2701792323181306,
+              0.3286322481292423
+            ],
+            "t": 0.23340000000000144,
+            "t2": 0,
+            "phase": 0,
+            "final": 5,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 4,
+              "labelCalls": 0,
+              "observedFrames": 462
+            },
+            "liveSourcePixels": {
+              "12": "dd512f24",
+              "13": "e54deee1",
+              "14": "e24a1201",
+              "17": "4fb03c8"
+            },
+            "files": {
+              "slot": "d8-spin-a-slot.png",
+              "center": "d8-spin-a-center.png",
+              "slotSha256": "12bf1a62b3671787dd0c512950fdb6bee847bdf8c88cdebc7c0031f7f41a4401",
+              "slotCanvasSha256": "296d4c2d9c38b9649a088d1466e8e341d070273e8fabe4aa3cd44b528123ac55",
+              "centerSha256": "1992d45b46aeb117f4e1b5ddb3312c6eb8d899b2f82b3c8dee6ad6177da89267"
+            }
+          },
+          "spinB": {
+            "kind": "d8",
+            "shape": "d8",
+            "R": [
+              0.30894512428400095,
+              0.58005268055328,
+              0.7537186464219243,
+              0.9438848207108622,
+              -0.08970118004742511,
+              -0.3178602578645573,
+              -0.11676624260789867,
+              0.809624966315302,
+              -0.5752156626050611
+            ],
+            "t": 0.4000000000000074,
+            "t2": 0,
+            "phase": 0,
+            "final": 5,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 4,
+              "labelCalls": 0,
+              "observedFrames": 498
+            },
+            "liveSourcePixels": {
+              "13": "e54deee1",
+              "15": "75497dea",
+              "16": "76cd0317",
+              "17": "4fb03c8"
+            },
+            "files": {
+              "slot": "d8-spin-b-slot.png",
+              "center": "d8-spin-b-center.png",
+              "slotSha256": "3410c46f3e13e096fe347851c753bc6286aa5ce056479e09a89f215621a53e71",
+              "slotCanvasSha256": "496f82daf5381633c1940fde4e9a9a65372cad17d93e2c1da91a98c9d66fd0ae",
+              "centerSha256": "139d7c6af598dd7a3a4d35b1b29420fcf8e94183bea5cfd29092e8d8c692eb83"
+            }
+          },
+          "settled": {
+            "kind": "d8",
+            "shape": "d8",
+            "R": [
+              0.2113248654051872,
+              -0.7886751345948132,
+              -0.5773502691896257,
+              -0.7886751345948129,
+              0.21132486540518688,
+              -0.5773502691896257,
+              0.5773502691896257,
+              0.5773502691896257,
+              -0.577350269189626
+            ],
+            "t": 1.0166000000000126,
+            "t2": 0.30000000000000004,
+            "phase": 1,
+            "final": 5,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 4,
+              "labelCalls": 0,
+              "observedFrames": 549
+            },
+            "liveSourcePixels": {
+              "12": "dd512f24",
+              "13": "e54deee1",
+              "16": "76cd0317",
+              "17": "4fb03c8"
+            },
+            "frontFace": 5,
+            "frontNormalZ": 1,
+            "files": {
+              "slot": "d8-settled-slot.png",
+              "center": "d8-settled-center.png",
+              "slotSha256": "c515531416a01e39eab8359f30d60b9730c52d329f82c95adce17146b465a365",
+              "slotCanvasSha256": "9b7c90ab9eebd0e27f1d4535b16960ecdd5aa1d430bea88c744ed8cd7cfcacfa",
+              "centerSha256": "5db9aaae673f2ba419eff6557df3289974099502e05e22b840c1b502f77dbb5d"
+            }
+          },
+          "held": {
+            "held": 5,
+            "slotActive": false
+          }
+        },
+        {
+          "kind": "d12",
+          "forcedFinal": null,
+          "rotationDelta": 2.7855415569825053,
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "angle": 0.08,
+            "sharedTextures": 6,
+            "sourcePixelsStable": true,
+            "matricesChanged": true
+          },
+          "d6BaselineReplay": null,
+          "spinA": {
+            "kind": "d12",
+            "shape": "d12",
+            "R": [
+              0.5747631505544353,
+              0.11002795848192717,
+              -0.8108891225790608,
+              0.11417856004350725,
+              0.9704437459632627,
+              0.2126080721590365,
+              0.8103151098129241,
+              -0.2147854377584527,
+              0.5452124710016996
+            ],
+            "t": 0.23329999999999565,
+            "t2": 0,
+            "phase": 0,
+            "final": 1,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 18,
+              "labelCalls": 0,
+              "observedFrames": 601
+            },
+            "liveSourcePixels": {
+              "19": "1a34b7be",
+              "20": "54d5a6e0",
+              "21": "f183751a",
+              "22": "697b6f33",
+              "23": "b6f05913",
+              "24": "95f466aa"
+            },
+            "files": {
+              "slot": "d12-spin-a-slot.png",
+              "center": "d12-spin-a-center.png",
+              "slotSha256": "363058f4ec00297827c79257f77c99026efd97d40b272bfe8d2bdce66a172e91",
+              "slotCanvasSha256": "473056dc4002d12ed8f10b81091ee27759dc02713f0f78839a2e1ce55802388e",
+              "centerSha256": "decb0d214a36f5d237e9f81d4fec5930124d58f643e0950577e8f4a2a4f4f7af"
+            }
+          },
+          "spinB": {
+            "kind": "d12",
+            "shape": "d12",
+            "R": [
+              0.3509780536607067,
+              0.7910757355487745,
+              0.5010125611943352,
+              0.933180890581268,
+              -0.33971473520104917,
+              -0.11733424112863527,
+              0.07738107845264061,
+              0.5087170916268162,
+              -0.8574491759773636
+            ],
+            "t": 0.40000000000000013,
+            "t2": 0,
+            "phase": 0,
+            "final": 1,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 18,
+              "labelCalls": 0,
+              "observedFrames": 644
+            },
+            "liveSourcePixels": {
+              "19": "1a34b7be",
+              "21": "f183751a",
+              "26": "7e7d0d7a",
+              "27": "39e62c2e",
+              "28": "be266987",
+              "29": "e4306518"
+            },
+            "files": {
+              "slot": "d12-spin-b-slot.png",
+              "center": "d12-spin-b-center.png",
+              "slotSha256": "9ad0e9ca15620db87b17756fdc93d522145aa7d1199b284a5b64c61602f25f1d",
+              "slotCanvasSha256": "4780927f24d28e61145859a8219014d9539f02c34eafd27ecc3cbaa4f137a7c9",
+              "centerSha256": "fe7158453da5f07130e7af86810369bfc5f64a6907f153259f8ff03ea9bd74b2"
+            }
+          },
+          "settled": {
+            "kind": "d12",
+            "shape": "d12",
+            "R": [
+              1,
+              3.469446951953614e-18,
+              -6.071532165918825e-18,
+              -5.898059818321144e-17,
+              0.85065080835204,
+              -0.5257311121191334,
+              7.28583859910259e-17,
+              0.5257311121191335,
+              0.8506508083520399
+            ],
+            "t": 0.9999999999999996,
+            "t2": 0.30000000000000004,
+            "phase": 1,
+            "final": 1,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 18,
+              "labelCalls": 0,
+              "observedFrames": 699
+            },
+            "liveSourcePixels": {
+              "21": "f183751a",
+              "22": "697b6f33",
+              "23": "b6f05913",
+              "24": "95f466aa",
+              "25": "7ddbff1f",
+              "26": "7e7d0d7a"
+            },
+            "frontFace": 1,
+            "frontNormalZ": 0.9999999999999999,
+            "files": {
+              "slot": "d12-settled-slot.png",
+              "center": "d12-settled-center.png",
+              "slotSha256": "70991196651243303ebf1815ae4d927183ade9f1e6a37a90040f74b15ede1791",
+              "slotCanvasSha256": "71c599033e0abb5ece154fc40826c30bceceec65b4dab6844ea375c4b6489f8f",
+              "centerSha256": "bc6c8f7bcb2499e5ae51893d87726290d6f2456e4c495d843860e9e57d66a024"
+            }
+          },
+          "held": {
+            "held": 1,
+            "slotActive": false
+          }
+        },
+        {
+          "kind": "d20",
+          "forcedFinal": null,
+          "rotationDelta": 2.7455884253549505,
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "angle": 0.08,
+            "sharedTextures": 8,
+            "sourcePixelsStable": true,
+            "matricesChanged": true
+          },
+          "d6BaselineReplay": null,
+          "spinA": {
+            "kind": "d20",
+            "shape": "d20",
+            "R": [
+              0.39701423473644226,
+              0.7594362561114956,
+              0.5153991369026457,
+              0.5506027811417215,
+              -0.646353569771166,
+              0.5282647444634857,
+              0.7343134717650485,
+              0.07405157491522657,
+              -0.6747592825867132
+            ],
+            "t": 0.23340000000000144,
+            "t2": 0,
+            "phase": 0,
+            "final": 18,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 9,
+              "labelCalls": 0,
+              "observedFrames": 752
+            },
+            "liveSourcePixels": {
+              "30": "58ec9528",
+              "31": "d31b5522",
+              "33": "ae5efd70",
+              "35": "194757b1",
+              "37": "c20544a6",
+              "43": "8c832449",
+              "45": "b38d1daa",
+              "46": "6556debd",
+              "47": "eb999bee"
+            },
+            "files": {
+              "slot": "d20-spin-a-slot.png",
+              "center": "d20-spin-a-center.png",
+              "slotSha256": "63c7254534f92c1cbaf90d18500772a273e3af6579fe73e1c40984fce1cfdb0c",
+              "slotCanvasSha256": "114bacf4eb399767156c37ba9dca0c7141e3ba3282a05c9a1d6efe4a5228a1d2",
+              "centerSha256": "06ac7dc0ddb6e84e7fa17ba1a3b6f60a6232f36b9167807142827687c1a28967"
+            }
+          },
+          "spinB": {
+            "kind": "d20",
+            "shape": "d20",
+            "R": [
+              0.8985553542883375,
+              -0.2810268785632605,
+              -0.33707887623633553,
+              0.3620909099097684,
+              0.9087284848711834,
+              0.20761193064089442,
+              0.24796864366382362,
+              -0.30860400889929157,
+              0.9183001238434034
+            ],
+            "t": 0.40000000000000013,
+            "t2": 0,
+            "phase": 0,
+            "final": 18,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 10,
+              "labelCalls": 0,
+              "observedFrames": 789
+            },
+            "liveSourcePixels": {
+              "30": "58ec9528",
+              "31": "d31b5522",
+              "32": "dda8f0a4",
+              "34": "856805af",
+              "36": "35fb52b",
+              "37": "c20544a6",
+              "38": "f1584a11",
+              "39": "561d5439",
+              "40": "ffe2a3c1",
+              "41": "ed325cc1"
+            },
+            "files": {
+              "slot": "d20-spin-b-slot.png",
+              "center": "d20-spin-b-center.png",
+              "slotSha256": "ebbb23580691b01ab23d74c2594b291e2983fd00b2a3ebee7c204ab91b48547b",
+              "slotCanvasSha256": "d9bbb09872e08c11a2a0770018a706869b3b995be9509b2b25ad59e94a5b427a",
+              "centerSha256": "e3c15ac632dc4d11d32505171cf9640da5aef532632d00e404df0295aedbc11c"
+            }
+          },
+          "settled": {
+            "kind": "d20",
+            "shape": "d20",
+            "R": [
+              0.1273220037500356,
+              0.33333333333333315,
+              0.9341723589627156,
+              0.33333333333333304,
+              0.8726779962499649,
+              -0.35682208977309016,
+              -0.9341723589627156,
+              0.3568220897730901,
+              3.885780586188048e-16
+            ],
+            "t": 0.9999999999999996,
+            "t2": 0.3000000000000001,
+            "phase": 1,
+            "final": 18,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 10,
+              "labelCalls": 0,
+              "observedFrames": 839
+            },
+            "liveSourcePixels": {
+              "32": "dda8f0a4",
+              "34": "856805af",
+              "40": "ffe2a3c1",
+              "41": "ed325cc1",
+              "42": "c9aa0c6d",
+              "43": "8c832449",
+              "44": "84701358",
+              "47": "eb999bee",
+              "48": "2efdb574",
+              "49": "6abbf1f7"
+            },
+            "frontFace": 18,
+            "frontNormalZ": 0.9999999999999998,
+            "files": {
+              "slot": "d20-settled-slot.png",
+              "center": "d20-settled-center.png",
+              "slotSha256": "684aed845a55c674f236429a417650e5661487d92605fd6711936874ef7e128f",
+              "slotCanvasSha256": "ddbe43dc219260a9b9e33df6ce4ebaeeee49ae62e1d5a42ab91301c321e7371c",
+              "centerSha256": "6d77eeea068f850ed9a73c507fe03f2b161e8442419e8f13d07fc47675ee4b5b"
+            }
+          },
+          "held": {
+            "held": 18,
+            "slotActive": false
+          }
+        },
+        {
+          "kind": "epic",
+          "forcedFinal": 14,
+          "rotationDelta": 2.8215860177773,
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "angle": 0.08,
+            "sharedTextures": 10,
+            "sourcePixelsStable": true,
+            "matricesChanged": true
+          },
+          "d6BaselineReplay": null,
+          "spinA": {
+            "kind": "epic",
+            "shape": "d20",
+            "R": [
+              0.2864105781258502,
+              0.5662243189161862,
+              -0.7728900318968522,
+              0.20922239249726365,
+              0.7502536974259963,
+              0.6271725280784725,
+              0.9349839416884853,
+              -0.3413347479623522,
+              0.0964137885270582
+            ],
+            "t": 0.23319999999999708,
+            "t2": 0,
+            "phase": 0,
+            "final": 17,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 10,
+              "labelCalls": 0,
+              "observedFrames": 894
+            },
+            "liveSourcePixels": {
+              "30": "58ec9528",
+              "31": "d31b5522",
+              "33": "ae5efd70",
+              "35": "194757b1",
+              "36": "35fb52b",
+              "37": "c20544a6",
+              "38": "f1584a11",
+              "39": "561d5439",
+              "45": "b38d1daa",
+              "46": "6556debd"
+            },
+            "files": {
+              "slot": "epic-spin-a-slot.png",
+              "center": "epic-spin-a-center.png",
+              "slotSha256": "7182f4da8c0333ef054bbe191a663494a5d9106c175133c28b583a6197882c0d",
+              "slotCanvasSha256": "5ca95ea73c88819f81611df37f14c532b03ca4b83e18a81a768485351302066b",
+              "centerSha256": "bedd06e67e5e5961b7395b9e2471987375b9345ce3d601d9344bee7d56d65236"
+            }
+          },
+          "spinB": {
+            "kind": "epic",
+            "shape": "d20",
+            "R": [
+              0.38314865311185403,
+              0.32944016791048714,
+              0.8629404877427423,
+              0.8367567166829919,
+              0.2718723700836451,
+              -0.4753142239308651,
+              -0.39119727338578314,
+              0.9041872539204538,
+              -0.1714937408283966
+            ],
+            "t": 0.41650000000000015,
+            "t2": 0,
+            "phase": 0,
+            "final": 17,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 10,
+              "labelCalls": 0,
+              "observedFrames": 933
+            },
+            "liveSourcePixels": {
+              "30": "58ec9528",
+              "40": "ffe2a3c1",
+              "41": "ed325cc1",
+              "42": "c9aa0c6d",
+              "43": "8c832449",
+              "44": "84701358",
+              "45": "b38d1daa",
+              "46": "6556debd",
+              "47": "eb999bee",
+              "49": "6abbf1f7"
+            },
+            "files": {
+              "slot": "epic-spin-b-slot.png",
+              "center": "epic-spin-b-center.png",
+              "slotSha256": "c6407c3730f6df595240ff86415aaf4d1c36829c64cf597b00c640493630aea1",
+              "slotCanvasSha256": "536c73aa1fb56c0c5fca6f1ac1652d4204db30052ca26ab745396e7de290e0d7",
+              "centerSha256": "1136d84605f37765aea10f17b932fc5ce445bf6ee9bb85c195317f7d5788ccc3"
+            }
+          },
+          "settled": {
+            "kind": "epic",
+            "shape": "d20",
+            "R": [
+              1.0000000000000004,
+              -3.122502256758253e-17,
+              0,
+              5.551115123125783e-17,
+              0.35682208977309016,
+              0.9341723589627159,
+              0,
+              -0.9341723589627158,
+              0.35682208977309016
+            ],
+            "t": 1.0165999999999982,
+            "t2": 0.30000000000000004,
+            "phase": 1,
+            "final": 14,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 10,
+              "labelCalls": 0,
+              "observedFrames": 983
+            },
+            "liveSourcePixels": {
+              "32": "dda8f0a4",
+              "33": "ae5efd70",
+              "34": "856805af",
+              "35": "194757b1",
+              "36": "35fb52b",
+              "37": "c20544a6",
+              "38": "f1584a11",
+              "39": "561d5439",
+              "48": "2efdb574",
+              "49": "6abbf1f7"
+            },
+            "frontFace": 14,
+            "frontNormalZ": 1,
+            "files": {
+              "slot": "epic-settled-slot.png",
+              "center": "epic-settled-center.png",
+              "slotSha256": "3802311e9e430db50c864183ce872b4f5ee9b3a3cdeefa0c1b3d652a0e95b94d",
+              "slotCanvasSha256": "dbe2638f16bc718b47099996e21b5e0f65ba4cc638a1ee146d8f9ad73ed7096f",
+              "centerSha256": "5222c483373f3346b2a81883a69df0307521f5b2d6c27ba9be1f7e7a54a3e698"
+            }
+          },
+          "held": {
+            "held": 14,
+            "slotActive": false
+          }
+        },
+        {
+          "kind": "myth",
+          "forcedFinal": 18,
+          "rotationDelta": 2.7557450334015208,
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "angle": 0.08,
+            "sharedTextures": 10,
+            "sourcePixelsStable": true,
+            "matricesChanged": true
+          },
+          "d6BaselineReplay": null,
+          "spinA": {
+            "kind": "myth",
+            "shape": "d20",
+            "R": [
+              0.699615141178977,
+              0.7123300178805025,
+              0.055898120357335775,
+              0.42651279951136595,
+              -0.3535706831744596,
+              -0.8325110232618685,
+              -0.5732586554829309,
+              0.6062785808734373,
+              -0.5511812735280415
+            ],
+            "t": 0.23340000000000147,
+            "t2": 0,
+            "phase": 0,
+            "final": 19,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 10,
+              "labelCalls": 0,
+              "observedFrames": 1038
+            },
+            "liveSourcePixels": {
+              "40": "ffe2a3c1",
+              "41": "ed325cc1",
+              "42": "c9aa0c6d",
+              "43": "8c832449",
+              "44": "84701358",
+              "45": "b38d1daa",
+              "46": "6556debd",
+              "47": "eb999bee",
+              "48": "2efdb574",
+              "49": "6abbf1f7"
+            },
+            "files": {
+              "slot": "myth-spin-a-slot.png",
+              "center": "myth-spin-a-center.png",
+              "slotSha256": "9720650d4106236bf2d8635f5f2c834c05515e29a1167526d35962ddd9f2ff55",
+              "slotCanvasSha256": "832b1a28009e998605e7ef9a7397145a98ca517b7ae5ad8c02e808fc48302bc4",
+              "centerSha256": "548a3c397a25baf55c5e173aeb5ca8736b8338a20c1fd6568b03cbd1eac43fcc"
+            }
+          },
+          "spinB": {
+            "kind": "myth",
+            "shape": "d20",
+            "R": [
+              -0.2901378325424299,
+              0.3198057856611717,
+              -0.9019669049279035,
+              0.4036289596808173,
+              0.8954692940999628,
+              0.18766567675282417,
+              0.8677002368528904,
+              -0.30961105080690365,
+              -0.3888923966647881
+            ],
+            "t": 0.4000999999999987,
+            "t2": 0,
+            "phase": 0,
+            "final": 19,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 10,
+              "labelCalls": 0,
+              "observedFrames": 1075
+            },
+            "liveSourcePixels": {
+              "30": "58ec9528",
+              "31": "d31b5522",
+              "33": "ae5efd70",
+              "35": "194757b1",
+              "37": "c20544a6",
+              "38": "f1584a11",
+              "39": "561d5439",
+              "45": "b38d1daa",
+              "46": "6556debd",
+              "47": "eb999bee"
+            },
+            "files": {
+              "slot": "myth-spin-b-slot.png",
+              "center": "myth-spin-b-center.png",
+              "slotSha256": "c22887913f524f84c6e0ea91323da465e306df7a3384813a935d8e798c82fb2b",
+              "slotCanvasSha256": "b703ae38b50f3050fcfb7ef097fb213f9be7e361faaca4f205a54d5dfee1ba55",
+              "centerSha256": "f3e123a13b627387bffab45f209cf258d0372ee553dae2e72f73575b2faba066"
+            }
+          },
+          "settled": {
+            "kind": "myth",
+            "shape": "d20",
+            "R": [
+              0.1273220037500351,
+              0.3333333333333334,
+              0.9341723589627157,
+              0.3333333333333334,
+              0.8726779962499648,
+              -0.35682208977309,
+              -0.9341723589627157,
+              0.35682208977309,
+              5.551115123125783e-17
+            ],
+            "t": 1.016899999999994,
+            "t2": 0.3166999999999972,
+            "phase": 1,
+            "final": 18,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 10,
+              "labelCalls": 0,
+              "observedFrames": 1126
+            },
+            "liveSourcePixels": {
+              "32": "dda8f0a4",
+              "34": "856805af",
+              "40": "ffe2a3c1",
+              "41": "ed325cc1",
+              "42": "c9aa0c6d",
+              "43": "8c832449",
+              "44": "84701358",
+              "47": "eb999bee",
+              "48": "2efdb574",
+              "49": "6abbf1f7"
+            },
+            "frontFace": 18,
+            "frontNormalZ": 0.9999999999999999,
+            "files": {
+              "slot": "myth-settled-slot.png",
+              "center": "myth-settled-center.png",
+              "slotSha256": "6b271b0ca4ec4d17a786d9d8b8f61da9df7ba0c9a1a55483d8f0648bfca9d5ef",
+              "slotCanvasSha256": "10702a02a6e839897a0a0f4e03219173b2590deb427643c2b31e7300a2b1a8fb",
+              "centerSha256": "c1223d2394fea47a7f282a956d7946f402b600f439a661c37c04ef6869a3753a"
+            }
+          },
+          "held": {
+            "held": 18,
+            "slotActive": false
+          }
+        },
+        {
+          "kind": "primal",
+          "forcedFinal": 20,
+          "rotationDelta": 2.806181829730557,
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "angle": 0.08,
+            "sharedTextures": 10,
+            "sourcePixelsStable": true,
+            "matricesChanged": true
+          },
+          "d6BaselineReplay": null,
+          "spinA": {
+            "kind": "primal",
+            "shape": "d20",
+            "R": [
+              0.4091228553513452,
+              0.9108104510288563,
+              0.055161685305779556,
+              0.84676951416423,
+              -0.40149185639979057,
+              0.34897804963453494,
+              0.33999982222235986,
+              -0.09606566265456928,
+              -0.9355060178040023
+            ],
+            "t": 0.2333000000000029,
+            "t2": 0,
+            "phase": 0,
+            "final": 20,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 10,
+              "labelCalls": 0,
+              "observedFrames": 1180
+            },
+            "liveSourcePixels": {
+              "31": "d31b5522",
+              "33": "ae5efd70",
+              "35": "194757b1",
+              "37": "c20544a6",
+              "43": "8c832449",
+              "44": "84701358",
+              "45": "b38d1daa",
+              "46": "6556debd",
+              "47": "eb999bee",
+              "48": "2efdb574"
+            },
+            "files": {
+              "slot": "primal-spin-a-slot.png",
+              "center": "primal-spin-a-center.png",
+              "slotSha256": "dbc1d97e52a9efb1e891e5360a18e0ed9c14088e3958762ab08795e3c3650368",
+              "slotCanvasSha256": "58260c649ef38c75356eb0ef6967e5c43d6555688a996af96d1d0d0df8a2a90c",
+              "centerSha256": "eb03c3e08f23bb8209e2a240d15bf2252f108e9a11d2e1808932a1c3f897ef92"
+            }
+          },
+          "spinB": {
+            "kind": "primal",
+            "shape": "d20",
+            "R": [
+              0.882103017694217,
+              -0.4707669481440073,
+              0.016515044957057412,
+              0.38392853770481783,
+              0.698190824814555,
+              -0.6042585953717267,
+              0.272934321972515,
+              0.5393589275055612,
+              0.7966170994960218
+            ],
+            "t": 0.4000000000000074,
+            "t2": 0,
+            "phase": 0,
+            "final": 20,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 9,
+              "labelCalls": 0,
+              "observedFrames": 1219
+            },
+            "liveSourcePixels": {
+              "30": "58ec9528",
+              "31": "d31b5522",
+              "32": "dda8f0a4",
+              "36": "35fb52b",
+              "37": "c20544a6",
+              "39": "561d5439",
+              "40": "ffe2a3c1",
+              "41": "ed325cc1",
+              "43": "8c832449"
+            },
+            "files": {
+              "slot": "primal-spin-b-slot.png",
+              "center": "primal-spin-b-center.png",
+              "slotSha256": "c0a0b7c84670c2b7c83f968c02f4d099f0c6aa51916c7754053adeed048bbdbe",
+              "slotCanvasSha256": "2619f9463ae68f505e26b4731eb92efd68c709da31f5e97ddfe899e39db2dd1e",
+              "centerSha256": "fa017cc18eedd9846b51d5ab5226bdb0a95f98249bc2919ed0f3ea3b2aeb8666"
+            }
+          },
+          "settled": {
+            "kind": "primal",
+            "shape": "d20",
+            "R": [
+              0.21132486540518725,
+              -0.7886751345948126,
+              0.5773502691896262,
+              -0.7886751345948129,
+              0.21132486540518733,
+              0.577350269189626,
+              -0.5773502691896258,
+              -0.577350269189626,
+              -0.5773502691896255
+            ],
+            "t": 1.0000000000000067,
+            "t2": 0.30000000000000004,
+            "phase": 1,
+            "final": 20,
+            "active": true,
+            "held": 0,
+            "paint": {
+              "imageCalls": 10,
+              "labelCalls": 0,
+              "observedFrames": 1267
+            },
+            "liveSourcePixels": {
+              "33": "ae5efd70",
+              "34": "856805af",
+              "35": "194757b1",
+              "38": "f1584a11",
+              "42": "c9aa0c6d",
+              "44": "84701358",
+              "46": "6556debd",
+              "47": "eb999bee",
+              "48": "2efdb574",
+              "49": "6abbf1f7"
+            },
+            "frontFace": 20,
+            "frontNormalZ": 1.0000000000000002,
+            "files": {
+              "slot": "primal-settled-slot.png",
+              "center": "primal-settled-center.png",
+              "slotSha256": "7c456c306a063b9c82fe8723f4c0a77d281d3e934754d2378217cf5f5ef278d3",
+              "slotCanvasSha256": "7e74b7dddd1444f3587506b9e7082b9a83c2fef6b48f2ac71d2644d505d33a2f",
+              "centerSha256": "3a60a14b0637ca8fbfeb680a9a5fa289ca5bc48f09c7d716b6ac685d4b1f29c7"
+            }
+          },
+          "held": {
+            "held": 20,
+            "slotActive": false
+          }
+        }
+      ],
+      "finalOrientations": [
+        {
+          "final": 1,
+          "actualFinal": 1,
+          "R": [
+            0.788675134594813,
+            -0.21132486540518708,
+            -0.5773502691896258,
+            -0.2113248654051872,
+            0.7886751345948129,
+            -0.577350269189626,
+            0.5773502691896257,
+            0.5773502691896258,
+            0.577350269189626
+          ],
+          "frontFace": 1,
+          "frontNormalZ": 1.0000000000000002,
+          "files": {
+            "slot": "d20-result-01-slot.png",
+            "center": "d20-result-01-center.png",
+            "slotSha256": "975d09226c9374f67b2f4c5f7f66f71c2d34bc949bd96d88b27127f9c3a97b6d",
+            "slotCanvasSha256": "fef4b269f3c4797e15adbc9f5e64d5469e92a2118410c7c71ee54a8aaa7b5c5a",
+            "centerSha256": "534adc939b7cfcf4a2752e2c2780a41fe8c57560ddf4d43532da11ed34b77285"
+          },
+          "paint": {
+            "imageCalls": 10,
+            "labelCalls": 0,
+            "observedFrames": 1366
+          }
+        },
+        {
+          "final": 2,
+          "actualFinal": 2,
+          "R": [
+            1,
+            -7.632783294297951e-17,
+            1.1102230246251565e-16,
+            0,
+            0.35682208977309,
+            -0.9341723589627158,
+            1.942890293094024e-16,
+            0.9341723589627158,
+            0.35682208977309016
+          ],
+          "frontFace": 2,
+          "frontNormalZ": 1,
+          "files": {
+            "slot": "d20-result-02-slot.png",
+            "center": "d20-result-02-center.png",
+            "slotSha256": "178914b01fe8c2f11fabd90265f0d2e992eb790cdcc26110b7ce3caae77dcdd1",
+            "slotCanvasSha256": "4dc62186a08ab3c5ee94c67e64c22649a7987c146f64308e5348c0c819fd83f6",
+            "centerSha256": "7ef0e9a7cc17eba5d65e85fea3b12c7f75fc5ed94b2361a15697fcc465c9f1f2"
+          },
+          "paint": {
+            "imageCalls": 10,
+            "labelCalls": 0,
+            "observedFrames": 1440
+          }
+        },
+        {
+          "final": 3,
+          "actualFinal": 3,
+          "R": [
+            0.9341723589627157,
+            0,
+            -0.3568220897730903,
+            5.551115123125783e-17,
+            1,
+            -4.440892098500626e-16,
+            0.35682208977309016,
+            5.551115123125783e-17,
+            0.9341723589627157
+          ],
+          "frontFace": 3,
+          "frontNormalZ": 0.9999999999999999,
+          "files": {
+            "slot": "d20-result-03-slot.png",
+            "center": "d20-result-03-center.png",
+            "slotSha256": "e9ec4fad1ce7a6f827488116f979e4f1aaf8596e51f74cd50298ca6f2ebd41ca",
+            "slotCanvasSha256": "7ae648188cf1d2a70fa8bcabf4886b8c999e3fd5c0867973806b5ef2a458a04f",
+            "centerSha256": "3f9f6d7d787b3c89f0b05ff13d42cccab6d89cc1a6c8fdbdf0d20c5b734c8ea2"
+          },
+          "paint": {
+            "imageCalls": 10,
+            "labelCalls": 0,
+            "observedFrames": 1514
+          }
+        },
+        {
+          "final": 4,
+          "actualFinal": 4,
+          "R": [
+            0.9341723589627156,
+            -2.7755575615628914e-17,
+            0.3568220897730902,
+            1.3877787807814457e-17,
+            0.9999999999999998,
+            -4.85722573273506e-17,
+            -0.3568220897730902,
+            -3.8163916471489756e-17,
+            0.9341723589627156
+          ],
+          "frontFace": 4,
+          "frontNormalZ": 0.9999999999999998,
+          "files": {
+            "slot": "d20-result-04-slot.png",
+            "center": "d20-result-04-center.png",
+            "slotSha256": "cdc4db66e506ecb0319e4bb46b085a366428a63eb28797f5be3808dc14a404c0",
+            "slotCanvasSha256": "9523d7fa5d28f3c911d02a5e7e21cab356b63a3e01d74ae0550e19d58ea03c9e",
+            "centerSha256": "c817a1137a2941ab8a92ec9870a954bc3db31e1c6c3fc17094442c121ddda517"
+          },
+          "paint": {
+            "imageCalls": 10,
+            "labelCalls": 0,
+            "observedFrames": 1587
+          }
+        },
+        {
+          "final": 5,
+          "actualFinal": 5,
+          "R": [
+            0.788675134594813,
+            0.21132486540518708,
+            0.5773502691896255,
+            0.21132486540518725,
+            0.7886751345948128,
+            -0.5773502691896257,
+            -0.5773502691896256,
+            0.5773502691896256,
+            0.5773502691896255
+          ],
+          "frontFace": 5,
+          "frontNormalZ": 0.9999999999999998,
+          "files": {
+            "slot": "d20-result-05-slot.png",
+            "center": "d20-result-05-center.png",
+            "slotSha256": "f14f610089dfef0c4fa9360066f383f2eb27463b24d6c7d11441c987720de144",
+            "slotCanvasSha256": "f1cb8ad8f48fcaf760e944277b276a4be6572fdc74b8843bc54a560f32cc058e",
+            "centerSha256": "fc3ffef50f4c9375aeb6578204391bb07c26898bde1d102bba7500d92c12c2c9"
+          },
+          "paint": {
+            "imageCalls": 10,
+            "labelCalls": 0,
+            "observedFrames": 1660
+          }
+        },
+        {
+          "final": 6,
+          "actualFinal": 6,
+          "R": [
+            0.127322003750035,
+            -0.3333333333333334,
+            -0.9341723589627157,
+            -0.33333333333333354,
+            0.8726779962499651,
+            -0.35682208977309005,
+            0.9341723589627157,
+            0.3568220897730903,
+            8.890457814381136e-18
+          ],
+          "frontFace": 6,
+          "frontNormalZ": 1,
+          "files": {
+            "slot": "d20-result-06-slot.png",
+            "center": "d20-result-06-center.png",
+            "slotSha256": "6968ba61ad1fb298fa6d8f6108ecb2973ea6ec4b9eb8e08e827d5aabe141d12f",
+            "slotCanvasSha256": "44a88c2d93964b056be8dc74c6db54ed4707949e2ee742dcaac51311e96d889a",
+            "centerSha256": "dae8f4b67a0c4c43d8181a504e3f4cf18c50c908fb46b26a4d172900736e1756"
+          },
+          "paint": {
+            "imageCalls": 10,
+            "labelCalls": 0,
+            "observedFrames": 1734
+          }
+        },
+        {
+          "final": 7,
+          "actualFinal": 7,
+          "R": [
+            1,
+            -2.0122792321330962e-16,
+            0,
+            -1.6653345369377348e-16,
+            -0.3568220897730898,
+            -0.9341723589627158,
+            5.551115123125783e-17,
+            0.9341723589627158,
+            -0.35682208977308993
+          ],
+          "frontFace": 7,
+          "frontNormalZ": 1,
+          "files": {
+            "slot": "d20-result-07-slot.png",
+            "center": "d20-result-07-center.png",
+            "slotSha256": "1626457a1ae5026cff93d4554055a43963823fc734c7b482da920c32d31dd4c2",
+            "slotCanvasSha256": "7a2681b6b27c40e1a0bd2503cb7e375a6bf5718c45ecbf37d93b57127139957a",
+            "centerSha256": "a2f6fb5022728bf681de6a7cc1a69c1810ca3c8ad8849b3a78eed68042febadb"
+          },
+          "paint": {
+            "imageCalls": 10,
+            "labelCalls": 0,
+            "observedFrames": 1807
+          }
+        },
+        {
+          "final": 8,
+          "actualFinal": 8,
+          "R": [
+            0.21132486540518663,
+            -0.788675134594813,
+            -0.5773502691896257,
+            -0.7886751345948131,
+            0.2113248654051872,
+            -0.5773502691896257,
+            0.577350269189626,
+            0.5773502691896261,
+            -0.577350269189626
+          ],
+          "frontFace": 8,
+          "frontNormalZ": 1.0000000000000004,
+          "files": {
+            "slot": "d20-result-08-slot.png",
+            "center": "d20-result-08-center.png",
+            "slotSha256": "2770fed7bc7c213ee70ecf802ef2f826ee015ed043969d9e8c5f3ed20e4b1d36",
+            "slotCanvasSha256": "431257a3a11c2e37523e6dbe6491ad7b650fe812611837ca172ecc39d5daf214",
+            "centerSha256": "eb1651b6892723160b7c153a9d1193c84863ef6e8803d630a0bd1b8b63e0ba42"
+          },
+          "paint": {
+            "imageCalls": 10,
+            "labelCalls": 0,
+            "observedFrames": 1882
+          }
+        },
+        {
+          "final": 9,
+          "actualFinal": 9,
+          "R": [
+            0.7886751345948128,
+            0.21132486540518697,
+            -0.5773502691896255,
+            0.2113248654051868,
+            0.7886751345948126,
+            0.5773502691896254,
+            0.5773502691896255,
+            -0.5773502691896255,
+            0.5773502691896256
+          ],
+          "frontFace": 9,
+          "frontNormalZ": 0.9999999999999998,
+          "files": {
+            "slot": "d20-result-09-slot.png",
+            "center": "d20-result-09-center.png",
+            "slotSha256": "7cb043f358943c029b907ec34949cb009b52ed940e85c14cf91de32d91e3d414",
+            "slotCanvasSha256": "1a64400de4e0d8fc367b459c5fe3c59018f360b11b308d3ae244e3d9bd267434",
+            "centerSha256": "4f7421747debd20d2cdb5afdd961c727534033e161a1c00af3135034e9db18a0"
+          },
+          "paint": {
+            "imageCalls": 10,
+            "labelCalls": 0,
+            "observedFrames": 1955
+          }
+        },
+        {
+          "final": 10,
+          "actualFinal": 10,
+          "R": [
+            0.12732200375003527,
+            0.33333333333333326,
+            -0.9341723589627159,
+            0.3333333333333332,
+            0.8726779962499651,
+            0.3568220897730899,
+            0.934172358962716,
+            -0.3568220897730899,
+            2.220446049250313e-16
+          ],
+          "frontFace": 10,
+          "frontNormalZ": 1.0000000000000002,
+          "files": {
+            "slot": "d20-result-10-slot.png",
+            "center": "d20-result-10-center.png",
+            "slotSha256": "d6eaad1c350eefe6be5460730ed49f0b472ec489f0872bc366f3e141f4d77bf0",
+            "slotCanvasSha256": "4b456bbc4f7a4495ac1394fcfa3f34f2ce32ff30bdd4bb09d72b4286f35c87a1",
+            "centerSha256": "ec50d9894605953f90b2959ba00fff67e5ccae3c1f171c7f97c4d15e69226386"
+          },
+          "paint": {
+            "imageCalls": 10,
+            "labelCalls": 0,
+            "observedFrames": 2028
+          }
+        },
+        {
+          "final": 11,
+          "actualFinal": 11,
+          "R": [
+            0.2113248654051872,
+            0.7886751345948126,
+            0.577350269189626,
+            0.7886751345948129,
+            0.2113248654051872,
+            -0.5773502691896257,
+            -0.5773502691896257,
+            0.577350269189626,
+            -0.5773502691896255
+          ],
+          "frontFace": 11,
+          "frontNormalZ": 1,
+          "files": {
+            "slot": "d20-result-11-slot.png",
+            "center": "d20-result-11-center.png",
+            "slotSha256": "81808f93990392b94a7f74e2fce99a4be4ca4b328513f4a7521d3d34e59b53c5",
+            "slotCanvasSha256": "64e90ac41699180bd65e2020c1b69f3d0445197dd440db2daa6dbf061d06c4b1",
+            "centerSha256": "aae6ebd65c44fc494b7a7f667dd10ec3e657d44b0b02a1354da7909cebc7829e"
+          },
+          "paint": {
+            "imageCalls": 10,
+            "labelCalls": 0,
+            "observedFrames": 2103
+          }
+        },
+        {
+          "final": 12,
+          "actualFinal": 12,
+          "R": [
+            -0.9341723589627158,
+            8.326672684688674e-17,
+            -0.3568220897730901,
+            0,
+            1,
+            1.1102230246251565e-16,
+            0.35682208977309027,
+            1.1102230246251565e-16,
+            -0.9341723589627157
+          ],
+          "frontFace": 12,
+          "frontNormalZ": 1,
+          "files": {
+            "slot": "d20-result-12-slot.png",
+            "center": "d20-result-12-center.png",
+            "slotSha256": "257043fec06c9d2737787ffd893ebca82706b40454079264aee9ac3efa68f8ca",
+            "slotCanvasSha256": "7ee82d50af304d61ef71b0a92d3be112ace1532a7a65ed63319095e480deee37",
+            "centerSha256": "2e58c0b4d404813e8be515e87e28c50697dc5d31d32e1cc0f7136a57f1149919"
+          },
+          "paint": {
+            "imageCalls": 10,
+            "labelCalls": 0,
+            "observedFrames": 2175
+          }
+        },
+        {
+          "final": 13,
+          "actualFinal": 13,
+          "R": [
+            -0.9341723589627157,
+            -5.551115123125783e-17,
+            0.35682208977309027,
+            4.163336342344337e-17,
+            1,
+            1.6653345369377348e-16,
+            -0.35682208977309016,
+            1.1102230246251565e-16,
+            -0.9341723589627159
+          ],
+          "frontFace": 13,
+          "frontNormalZ": 1.0000000000000002,
+          "files": {
+            "slot": "d20-result-13-slot.png",
+            "center": "d20-result-13-center.png",
+            "slotSha256": "151f7e7dd843902b197672d0e450c42e1a940841d429c3ee365a5d2454d5e5ca",
+            "slotCanvasSha256": "5a2a998ae745cf540d48f8c1c9fdc29fe4870a553103adb5830f64235202cbae",
+            "centerSha256": "12702be157d3595fed67188c1421568e629e6087b18841c15b01e5e24d1bfaa3"
+          },
+          "paint": {
+            "imageCalls": 10,
+            "labelCalls": 0,
+            "observedFrames": 2249
+          }
+        },
+        {
+          "final": 14,
+          "actualFinal": 14,
+          "R": [
+            0.9999999999999998,
+            1.3877787807814457e-17,
+            8.326672684688674e-17,
+            6.938893903907228e-18,
+            0.3568220897730898,
+            0.9341723589627158,
+            0,
+            -0.9341723589627157,
+            0.35682208977308977
+          ],
+          "frontFace": 14,
+          "frontNormalZ": 0.9999999999999998,
+          "files": {
+            "slot": "d20-result-14-slot.png",
+            "center": "d20-result-14-center.png",
+            "slotSha256": "7f8b9d44886907c76b2943f93cddc3458557727db32c7dbfd56a1adce363b2c8",
+            "slotCanvasSha256": "658baa9983780d79758bb0e5ec2af3cf3b67f04df20a3a63d2bc875cca18dfcb",
+            "centerSha256": "62097252906f27d875220812f2481819d6a7a96fc77055d20774cc5f7140b6e1"
+          },
+          "paint": {
+            "imageCalls": 10,
+            "labelCalls": 0,
+            "observedFrames": 2322
+          }
+        },
+        {
+          "final": 15,
+          "actualFinal": 15,
+          "R": [
+            0.21132486540518725,
+            0.7886751345948128,
+            -0.5773502691896258,
+            0.7886751345948129,
+            0.21132486540518708,
+            0.5773502691896257,
+            0.5773502691896256,
+            -0.577350269189626,
+            -0.5773502691896256
+          ],
+          "frontFace": 15,
+          "frontNormalZ": 1,
+          "files": {
+            "slot": "d20-result-15-slot.png",
+            "center": "d20-result-15-center.png",
+            "slotSha256": "c7272a3637d48a80cef21f4fcd919d77a6fe4b1820b91db61ff15e6b40aefb7a",
+            "slotCanvasSha256": "e7faad35d5203512db17adada00f76f07ccd9a6de90dda5731a9689b1784c909",
+            "centerSha256": "76e45adb7624efd17f1468a50ebb3e2f3e3b1b8bf96beae3463b56e3c4bc4ef8"
+          },
+          "paint": {
+            "imageCalls": 10,
+            "labelCalls": 0,
+            "observedFrames": 2396
+          }
+        },
+        {
+          "final": 16,
+          "actualFinal": 16,
+          "R": [
+            0.9999999999999998,
+            1.1102230246251565e-16,
+            0,
+            1.1102230246251565e-16,
+            -0.35682208977309005,
+            0.9341723589627153,
+            -2.220446049250313e-16,
+            -0.9341723589627154,
+            -0.3568220897730897
+          ],
+          "frontFace": 16,
+          "frontNormalZ": 0.9999999999999996,
+          "files": {
+            "slot": "d20-result-16-slot.png",
+            "center": "d20-result-16-center.png",
+            "slotSha256": "36865c79c6ff6640cf4ea282817e976ac5a087ed646a3c71dd28061bb18f2f64",
+            "slotCanvasSha256": "4085610c8ebfecbe3b811bf81ae47b77132aabf8a29542c2a91fcc6dfdde859a",
+            "centerSha256": "ba0bc22a09e39119de8563292225d7dacf3df2ad87f1c53463f5ba0108330e5b"
+          },
+          "paint": {
+            "imageCalls": 10,
+            "labelCalls": 0,
+            "observedFrames": 2470
+          }
+        },
+        {
+          "final": 17,
+          "actualFinal": 17,
+          "R": [
+            0.7886751345948126,
+            -0.21132486540518722,
+            0.5773502691896256,
+            -0.21132486540518697,
+            0.7886751345948128,
+            0.5773502691896257,
+            -0.5773502691896257,
+            -0.5773502691896258,
+            0.5773502691896256
+          ],
+          "frontFace": 17,
+          "frontNormalZ": 1,
+          "files": {
+            "slot": "d20-result-17-slot.png",
+            "center": "d20-result-17-center.png",
+            "slotSha256": "326632de7ca3416f9ddb510ecef150e739784c924981c1dbe71856d074420878",
+            "slotCanvasSha256": "3fe78e7e119804210afbe34b5cdaced3833e0e716b6a1af8c5086516f0294282",
+            "centerSha256": "64c3eaca5e8ab0f21a0a0ecf2ddc0939a6ecc0751b337273009e07500f8f440b"
+          },
+          "paint": {
+            "imageCalls": 10,
+            "labelCalls": 0,
+            "observedFrames": 2544
+          }
+        },
+        {
+          "final": 18,
+          "actualFinal": 18,
+          "R": [
+            0.12732200375003488,
+            0.33333333333333337,
+            0.9341723589627158,
+            0.3333333333333334,
+            0.8726779962499644,
+            -0.3568220897730897,
+            -0.9341723589627158,
+            0.3568220897730897,
+            -1.6653345369377348e-16
+          ],
+          "frontFace": 18,
+          "frontNormalZ": 0.9999999999999999,
+          "files": {
+            "slot": "d20-result-18-slot.png",
+            "center": "d20-result-18-center.png",
+            "slotSha256": "dd94c5877084fc93c449e95ff4e32e590fd05369b232042fe2124b2a76636d84",
+            "slotCanvasSha256": "98d633218ce7e1373cd912b8475f2f18ab43b29c46ccdc507a1210cbc81f6245",
+            "centerSha256": "43cd0d41dfa0c6e57f108b7a5f7357e007a20bb8119a32bc33dc66fb99aeda17"
+          },
+          "paint": {
+            "imageCalls": 10,
+            "labelCalls": 0,
+            "observedFrames": 2618
+          }
+        },
+        {
+          "final": 19,
+          "actualFinal": 19,
+          "R": [
+            0.12732200375003502,
+            -0.3333333333333336,
+            0.9341723589627158,
+            -0.3333333333333335,
+            0.8726779962499652,
+            0.35682208977309016,
+            -0.9341723589627157,
+            -0.35682208977308993,
+            -1.457167719820518e-16
+          ],
+          "frontFace": 19,
+          "frontNormalZ": 0.9999999999999998,
+          "files": {
+            "slot": "d20-result-19-slot.png",
+            "center": "d20-result-19-center.png",
+            "slotSha256": "d9b219dba6c81c027ec6f9368472f5b78f717e9908552b7b95ae0cc76bfaa3fe",
+            "slotCanvasSha256": "9ef722b286283a35489b1eff330540ac1069704cf58949fe5d9e365906a7690f",
+            "centerSha256": "8f5b77e1a4c0daa9a3a52fff6fdc01d3eecaca4fa4c6f656a6c5baeb70d8727d"
+          },
+          "paint": {
+            "imageCalls": 10,
+            "labelCalls": 0,
+            "observedFrames": 2692
+          }
+        },
+        {
+          "final": 20,
+          "actualFinal": 20,
+          "R": [
+            0.21132486540518694,
+            -0.7886751345948129,
+            0.577350269189626,
+            -0.7886751345948129,
+            0.21132486540518725,
+            0.5773502691896255,
+            -0.5773502691896257,
+            -0.5773502691896256,
+            -0.5773502691896256
+          ],
+          "frontFace": 20,
+          "frontNormalZ": 1,
+          "files": {
+            "slot": "d20-result-20-slot.png",
+            "center": "d20-result-20-center.png",
+            "slotSha256": "4137d661d1a1121d81499031e1a9ebeac5736b3010783a7bb612da2cee840a59",
+            "slotCanvasSha256": "8b9a706c07519f18ba71f48915c7d68569aacc573d08ad7082f6825a3edc33a1",
+            "centerSha256": "c3e7427c7608eef252330409697d8f2c6e99a288ae8c7b452695bf93142c9550"
+          },
+          "paint": {
+            "imageCalls": 10,
+            "labelCalls": 0,
+            "observedFrames": 2765
+          }
+        }
+      ],
+      "fixedPoseChecks": 9,
+      "rotatingKinds": 9,
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "pass": true,
+  "fullObservationReport": {
+    "path": "gen/e2e/dice-material/fallback/report.json",
+    "sha256": "8a5144d030961c87a79c0a1fc6782fe57fbb4fcc9e0938f6bb53413646d76059",
+    "note": "Only per-frame paint call arrays are summarized to counts in this PR copy. Original observations remain at the recorded local path."
+  }
+}
