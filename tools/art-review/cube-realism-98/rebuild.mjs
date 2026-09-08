@@ -1,0 +1,14 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import crypto from 'node:crypto';
+import sharp from 'sharp';
+const dir = path.dirname(fileURLToPath(import.meta.url));
+const meta = JSON.parse(fs.readFileSync(path.join(dir, 'generation.json'), 'utf8'));
+const source = path.join(dir, 'source.png');
+const hash = data => crypto.createHash('sha256').update(data).digest('hex');
+if (hash(fs.readFileSync(source)) !== meta.source.sha256) throw Error('Source image differs from generation record');
+const output = path.resolve(dir, '../../../dice/skins/ivory-worn/cube-surface-v98.png');
+await sharp(source).resize(512, 512, { kernel: 'lanczos3' }).png({ compressionLevel: 9 }).toFile(output);
+if (hash(fs.readFileSync(output)) !== meta.runtime.sha256) throw Error('Rebuilt asset differs from reviewed PNG');
+console.log(output);

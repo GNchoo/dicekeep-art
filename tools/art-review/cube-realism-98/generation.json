@@ -1,0 +1,30 @@
+{
+  "mode": "built-in image_gen",
+  "calls": 1,
+  "monetaryCost": "not provided by tool",
+  "prompt": "Use case: style-transfer, game material asset.\nDerive ONE flat orthographic square material swatch from the worn ivory stone of the two reference dice. Reference 1 and reference 2 are material/style references: preserve their convincing aged creamy ivory, fine hairline cracks, mineral speckles, worn smooth patches, small irregular ochre/brown grime in the perimeter and corners. The earlier reference die feels solid, carved, tactile and gently worn.\nThe output is a FULL-BLEED OPAQUE unnumbered face-surface texture to map onto a real rounded 3D dice mesh. Square, viewed perfectly straight-on, no perspective. Keep the middle roughly 70% warm pale ivory and readable, with sparse natural hairline fissures and subtle mottling; concentrate modest irregular patina near the outer 12%, with no uniform frame. More visible physical material detail than a flat beige/noise swatch, but still a restrained fantasy game prop.\nREMOVE all pips, holes, numbers, glyphs, red paint, red background, the die silhouette, bevel edges, cast shadows, drop shadows, lighting gradients and framing from the references. These will be rendered by the actual 3D mesh, so output only diffuse stone surface appearance. The full canvas is filled with continuous stone; no alpha margin, border, tile grid, collage, labels, metal, plastic, bones or gore. Soft neutral flat illumination. One asset only.\n",
+  "references": [
+    {
+      "path": "dice/dice-1.png",
+      "bytes": 108915,
+      "sha256": "0b224d9172c0ee16cbdb580bf19d17be83d88e188855409b7a720571bfc6d0ce"
+    },
+    {
+      "path": "dice/dice-6.png",
+      "bytes": 126727,
+      "sha256": "94d20da4cfb1290ca35f3f21e14afde370bf1e3e17afdb43bea78eda407144f6"
+    }
+  ],
+  "originalOutput": "C:/Users/PC/.codex/generated_images/01a07ae1-d8a0-73e1-abf1-73e88cf8bc12/exec-e84a9066-b6c8-4108-9caf-33c9a987d218.png",
+  "source": {
+    "path": "tools/art-review/cube-realism-98/source.png",
+    "bytes": 2709741,
+    "sha256": "13257a7ef0dab3b394ac55bea62d6e083eb283178080721c3f5ba6ebe9706bd8"
+  },
+  "runtime": {
+    "path": "dice/skins/ivory-worn/cube-surface-v98.png",
+    "bytes": 471322,
+    "sha256": "a22dfecfeb6feb7362420bc4568f9684e6c0705e5332fdf503504bd656badff9"
+  },
+  "processing": "Lanczos3 resize to 512x512; lossless PNG compression level9. No recoloring or pip stamps from old photos."
+}
