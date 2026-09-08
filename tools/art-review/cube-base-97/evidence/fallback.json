@@ -1,0 +1,482 @@
+{
+  "label": "fallback",
+  "baseUrl": "http://localhost:8137/",
+  "expectedGameSha256": "6e8456c947c0901824f872fd3ec26c334170424443c0cb5beb08a40c9934cba5",
+  "missingMaterialFixture": true,
+  "scope": "Actual HTTP game code and public test state hooks. Queue selects dice kind; existing forceFinal hook selects orientation coverage without modifying chest probabilities or production code. Browser canvas operations are observed without replacement. Missing-material fixture, when explicitly enabled, aborts only the ivory material request.",
+  "pages": [
+    {
+      "viewport": {
+        "name": "phone",
+        "width": 440,
+        "height": 956
+      },
+      "gameSha256": "6e8456c947c0901824f872fd3ec26c334170424443c0cb5beb08a40c9934cba5",
+      "assets": [],
+      "pageerrors": [],
+      "abortedMaterialRequests": [
+        "http://localhost:8137/dice/skins/ivory-worn/material.png?v=96"
+      ],
+      "oppositeFaces": [
+        [
+          1,
+          6
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          2,
+          5
+        ]
+      ],
+      "kinds": [],
+      "rawReplayMismatches": [],
+      "finalOrientations": [],
+      "cubeFaces": [
+        {
+          "final": 1,
+          "R": [
+            1.0000000000000002,
+            4.440892098500626e-16,
+            0,
+            4.3021142204224816e-16,
+            1.0000000000000002,
+            2.7755575615628914e-16,
+            3.3306690738754696e-16,
+            2.7755575615628914e-17,
+            0.9999999999999999
+          ],
+          "frontFace": 1,
+          "frontNormalZ": 0.9999999999999999,
+          "pixels": {
+            "face": 1,
+            "width": 192,
+            "height": 192,
+            "pipCount": 1,
+            "components": [
+              {
+                "pixels": 710,
+                "center": [
+                  0.5,
+                  0.49980193661971833
+                ]
+              }
+            ],
+            "maxPositionError": 0.0001980633802816656,
+            "pass": true
+          },
+          "texture": "d6-face-1-actual-texture.png",
+          "textureSha256": "f7661a7c7a6b669cea457d00054ec520523c2bd091b7a41735d13cecb5244515",
+          "files": {
+            "slot": "d6-result-1-slot.png",
+            "center": "d6-result-1-center.png",
+            "slotSha256": "df01a6118f16858513371ee77e8e2c8d09dd17ef8425cc9f755abe31f01b5a8f",
+            "slotCanvasSha256": "e6687e90c60a6a6dbc74e5accf3f158cbc53b52dbee7c35e0b34480f95c51cf2",
+            "centerSha256": "ddd3bde6b2b4f1210c6d3e9154680c0b69ccc2adc038521998313f1fdd9dbf38"
+          }
+        },
+        {
+          "final": 2,
+          "R": [
+            1.0000000000000002,
+            3.642919299551295e-16,
+            -5.551115123125783e-17,
+            1.6653345369377348e-16,
+            1.457167719820518e-16,
+            -1.0000000000000002,
+            5.551115123125783e-17,
+            1.0000000000000002,
+            -2.0816681711721685e-16
+          ],
+          "frontFace": 2,
+          "frontNormalZ": 1.0000000000000002,
+          "pixels": {
+            "face": 2,
+            "width": 192,
+            "height": 192,
+            "pipCount": 2,
+            "components": [
+              {
+                "pixels": 707,
+                "center": [
+                  0.25482157590759075,
+                  0.2546742397454031
+                ]
+              },
+              {
+                "pixels": 712,
+                "center": [
+                  0.7450842696629213,
+                  0.7447916666666666
+                ]
+              }
+            ],
+            "maxPositionError": 0.00037142280520602,
+            "pass": true
+          },
+          "texture": "d6-face-2-actual-texture.png",
+          "textureSha256": "bfa7d714db1ff4fcb1e8a610fc2d5dfc5e03a0f700aa2cbe3d7573d73c40135c",
+          "files": {
+            "slot": "d6-result-2-slot.png",
+            "center": "d6-result-2-center.png",
+            "slotSha256": "08030fabe8e3942a42da955f33388cc8f610d6e1af4388848c854ff41bc2060f",
+            "slotCanvasSha256": "6daa0583fc3864ef3fe702b00316b59207bcc144f55d80b370081c086c8e123d",
+            "centerSha256": "d1b1c1061a1c0170f07b4f31a0f9d48906e6b333d58dad5ad5a8ffc333b5bf3a"
+          }
+        },
+        {
+          "final": 3,
+          "R": [
+            2.220446049250313e-16,
+            5.551115123125783e-17,
+            -0.9999999999999998,
+            0,
+            0.9999999999999998,
+            1.6653345369377348e-16,
+            1,
+            -1.3877787807814457e-16,
+            2.220446049250313e-16
+          ],
+          "frontFace": 3,
+          "frontNormalZ": 1,
+          "pixels": {
+            "face": 3,
+            "width": 192,
+            "height": 192,
+            "pipCount": 3,
+            "components": [
+              {
+                "pixels": 707,
+                "center": [
+                  0.25482157590759075,
+                  0.2546742397454031
+                ]
+              },
+              {
+                "pixels": 710,
+                "center": [
+                  0.5,
+                  0.49980193661971833
+                ]
+              },
+              {
+                "pixels": 712,
+                "center": [
+                  0.7450842696629213,
+                  0.7447916666666666
+                ]
+              }
+            ],
+            "maxPositionError": 0.00037142280520602,
+            "pass": true
+          },
+          "texture": "d6-face-3-actual-texture.png",
+          "textureSha256": "70c0469acef2699c24c780562fdb6636d23dd7074d50f7b397ae817196c5d8bf",
+          "files": {
+            "slot": "d6-result-3-slot.png",
+            "center": "d6-result-3-center.png",
+            "slotSha256": "886245053eaa4688b547b28fc6bda0e29f5dca27194f71dd85a9fa97eadb8150",
+            "slotCanvasSha256": "bc1963f1805c9b35211b43b0bdf0b5d374ce297133bbc63de5383f8af7cb1dc7",
+            "centerSha256": "dd85d5a7c259136cb0e0f75573f168cc05d9c70070ca738f82d06f217ce8bc8d"
+          }
+        },
+        {
+          "final": 4,
+          "R": [
+            1.6653345369377348e-16,
+            1.3877787807814457e-16,
+            1.0000000000000002,
+            2.7755575615628914e-17,
+            1.0000000000000002,
+            -2.7755575615628914e-17,
+            -1,
+            -2.7755575615628914e-17,
+            5.551115123125783e-17
+          ],
+          "frontFace": 4,
+          "frontNormalZ": 1,
+          "pixels": {
+            "face": 4,
+            "width": 192,
+            "height": 192,
+            "pipCount": 4,
+            "components": [
+              {
+                "pixels": 707,
+                "center": [
+                  0.25482157590759075,
+                  0.2546742397454031
+                ]
+              },
+              {
+                "pixels": 707,
+                "center": [
+                  0.7451784240924093,
+                  0.2546742397454031
+                ]
+              },
+              {
+                "pixels": 712,
+                "center": [
+                  0.25491573033707865,
+                  0.7447916666666666
+                ]
+              },
+              {
+                "pixels": 712,
+                "center": [
+                  0.7450842696629213,
+                  0.7447916666666666
+                ]
+              }
+            ],
+            "maxPositionError": 0.00037142280520604675,
+            "pass": true
+          },
+          "texture": "d6-face-4-actual-texture.png",
+          "textureSha256": "37083bbd9aaa8295141e1a96dd07175f9f046fe8866e20c3e83e0c1a122419a6",
+          "files": {
+            "slot": "d6-result-4-slot.png",
+            "center": "d6-result-4-center.png",
+            "slotSha256": "592493d0dec8d592981297998a7ad83601ac95b39d141e46b832f2d3b7013408",
+            "slotCanvasSha256": "a7d4d15b11a896769c993b0246e1214cd9177958a5cba0be7f765fbb325a68a4",
+            "centerSha256": "d68f788e5144a6c4a3eff003a533aa27c07c13ae12d27a27d56412607e487930"
+          }
+        },
+        {
+          "final": 5,
+          "R": [
+            1,
+            1.6653345369377348e-16,
+            -2.7755575615628914e-17,
+            5.551115123125783e-17,
+            -1.6653345369377348e-16,
+            1,
+            1.6653345369377348e-16,
+            -1.0000000000000002,
+            -5.551115123125783e-17
+          ],
+          "frontFace": 5,
+          "frontNormalZ": 1.0000000000000002,
+          "pixels": {
+            "face": 5,
+            "width": 192,
+            "height": 192,
+            "pipCount": 5,
+            "components": [
+              {
+                "pixels": 707,
+                "center": [
+                  0.25482157590759075,
+                  0.2546742397454031
+                ]
+              },
+              {
+                "pixels": 707,
+                "center": [
+                  0.7451784240924093,
+                  0.2546742397454031
+                ]
+              },
+              {
+                "pixels": 710,
+                "center": [
+                  0.5,
+                  0.49980193661971833
+                ]
+              },
+              {
+                "pixels": 712,
+                "center": [
+                  0.25491573033707865,
+                  0.7447916666666666
+                ]
+              },
+              {
+                "pixels": 712,
+                "center": [
+                  0.7450842696629213,
+                  0.7447916666666666
+                ]
+              }
+            ],
+            "maxPositionError": 0.00037142280520604675,
+            "pass": true
+          },
+          "texture": "d6-face-5-actual-texture.png",
+          "textureSha256": "62808844ef79d37d7024b98cd7e343d48fb258517e6383b973f161c3e3b8e8b2",
+          "files": {
+            "slot": "d6-result-5-slot.png",
+            "center": "d6-result-5-center.png",
+            "slotSha256": "6a6ba6025ec997ace9268a14f19950fd4bac68db97616e23f09caaf0f6a31376",
+            "slotCanvasSha256": "31bb63da147680e5d86f1151804aacce59ed837baaad689d0722d7c80fe5b061",
+            "centerSha256": "c7a83eff61668bd39ebe20189bb62847280123f0b044bcd20e4cf65ff7894719"
+          }
+        },
+        {
+          "final": 6,
+          "R": [
+            1.0000000000000004,
+            -5.551115123125783e-17,
+            -5.551115123125783e-17,
+            0,
+            -1,
+            -2.220446049250313e-16,
+            8.326672684688674e-17,
+            2.220446049250313e-16,
+            -1
+          ],
+          "frontFace": 6,
+          "frontNormalZ": 1,
+          "pixels": {
+            "face": 6,
+            "width": 192,
+            "height": 192,
+            "pipCount": 6,
+            "components": [
+              {
+                "pixels": 707,
+                "center": [
+                  0.25482157590759075,
+                  0.2546742397454031
+                ]
+              },
+              {
+                "pixels": 707,
+                "center": [
+                  0.7451784240924093,
+                  0.2546742397454031
+                ]
+              },
+              {
+                "pixels": 712,
+                "center": [
+                  0.2550108263108614,
+                  0.49980249297752805
+                ]
+              },
+              {
+                "pixels": 712,
+                "center": [
+                  0.7449891736891385,
+                  0.49980249297752805
+                ]
+              },
+              {
+                "pixels": 712,
+                "center": [
+                  0.25491573033707865,
+                  0.7447916666666666
+                ]
+              },
+              {
+                "pixels": 712,
+                "center": [
+                  0.7450842696629213,
+                  0.7447916666666666
+                ]
+              }
+            ],
+            "maxPositionError": 0.00037142280520604675,
+            "pass": true
+          },
+          "texture": "d6-face-6-actual-texture.png",
+          "textureSha256": "9cca2839f16d9603e46267fe8a1b98a8034cf2c6e83648464cc30c0d0d00724b",
+          "files": {
+            "slot": "d6-result-6-slot.png",
+            "center": "d6-result-6-center.png",
+            "slotSha256": "8f466eeb3729a4546681fa91932ef273a3fed9e1db10c1ff1c669cecc55cc242",
+            "slotCanvasSha256": "55e62f182367dfe145996da4b359db4a52fc314c291b1e9a23b42598c0fb942e",
+            "centerSha256": "2a32651138c7d83580dbdd7117cfcfbadb1a630db264e7dfa5e3d32e292c1ab1"
+          }
+        }
+      ],
+      "uiFaces": [
+        {
+          "face": 1,
+          "iconSha256": "c06b621e58b9bb8e51e65ddece47ed84ae41cd6bddaacbf6a4b2def891f6bf58",
+          "width": 96,
+          "height": 96,
+          "heldGenerated": true,
+          "dragStarted": true,
+          "ghostMatches": true,
+          "infoMatches": true,
+          "shopMatches": true
+        },
+        {
+          "face": 2,
+          "iconSha256": "5ab4d49065ad2847cd1beefe17800a3df053023c6c15ff0c11e6bfa6204ccfb3",
+          "width": 96,
+          "height": 96,
+          "heldGenerated": true,
+          "dragStarted": true,
+          "ghostMatches": true,
+          "infoMatches": true,
+          "shopMatches": true
+        },
+        {
+          "face": 3,
+          "iconSha256": "7b18890683ba892a406143399b38784c7b9898051369ed6138b410b4d33387b6",
+          "width": 96,
+          "height": 96,
+          "heldGenerated": true,
+          "dragStarted": true,
+          "ghostMatches": true,
+          "infoMatches": true,
+          "shopMatches": true
+        },
+        {
+          "face": 4,
+          "iconSha256": "d859882787b320e1825e8d560c4710fd300d0a6fb74a5a8080ada0b4c4f97a73",
+          "width": 96,
+          "height": 96,
+          "heldGenerated": true,
+          "dragStarted": true,
+          "ghostMatches": true,
+          "infoMatches": true,
+          "shopMatches": true
+        },
+        {
+          "face": 5,
+          "iconSha256": "ed9554ed311501f0840de9cc0f8c0120be8297c564561b1e98de459e1757764d",
+          "width": 96,
+          "height": 96,
+          "heldGenerated": true,
+          "dragStarted": true,
+          "ghostMatches": true,
+          "infoMatches": true,
+          "shopMatches": true
+        },
+        {
+          "face": 6,
+          "iconSha256": "68c3dde673add09a0091dcb60252454504f0c0bbdb4e4d2fe66e643833e01c05",
+          "width": 96,
+          "height": 96,
+          "heldGenerated": true,
+          "dragStarted": true,
+          "ghostMatches": true,
+          "infoMatches": true,
+          "shopMatches": true
+        }
+      ],
+      "legacyCubePngRequests": 0,
+      "fixedPoseChecks": 0,
+      "rotatingKinds": 0,
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "pass": true,
+  "historicalPngComparison": {
+    "exactMatches": 0,
+    "mismatches": [],
+    "limitation": "Exact historical PNG equality is diagnostic, not the material-preservation claim. Face pixel hashes, projected geometry/UV, frozen-pose stability, settled outcomes and visual review are checked separately. Pinned v96/current same-browser replay is recorded in ../replay-diagnostic/report.json."
+  },
+  "rawEvidence": {
+    "path": "gen/e2e/cube-refresh/fallback/report.json",
+    "sha256": "432cc57456fece9a8658da2b70effa6292c68c6f3a496484395e4c66bf449b2c",
+    "note": "Per-frame image draw lists condensed to counts."
+  }
+}
