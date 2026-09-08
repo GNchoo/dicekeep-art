@@ -1,0 +1,57 @@
+{
+  "mode": "built-in image_gen",
+  "calls": 1,
+  "asset": "One shared unnumbered ivory material for all non-cube dice geometries",
+  "prompt": "Use case: style-transfer.\nAsset type: one production game material texture to wrap onto 3D dice faces in Dicekeep.\nInput images: Image 1 (dice-1.png) and Image 2 (dice-6.png) are MATERIAL AND COLOR REFERENCES ONLY. Keep the existing cube dice untouched.\nPrimary request: Create a single flat square unnumbered surface texture that matches the references' warm worn ivory mineral/stone dice, so tetrahedral, octahedral, dodecahedral, icosahedral and single-eye orb dice belong to the same physical dice set.\nFill the entire square edge to edge with the stone material, viewed exactly straight-on in orthographic projection. It is a flat unlit albedo-like texture tile, not a picture of a die or object. Warm creamy ivory base, restrained tan/brown patina, delicate tiny mineral speckles, a few subtle irregular hairline age cracks and modest worn surface texture. Match the ivory midtones from the clean face interiors of the reference, avoiding the red backdrop, red pips, dark outer bevel and cast shadows. Matte to softly satin, tactile illustrated game material with the references' finely detailed aged surface. Texture must be readable and harmonious when downsampled to 128 pixels.\nNo numerals, no pips, no symbols, no text, no grooves shaped like numbers, no drawn borders, no bevel frame, no separate object, no perspective, no background or margin, no vignette, no cast shadow, no directional light gradient, no gold trim, no colored plastic, no gore. Even material brightness across the full tile; mild natural mottling only. Solid opaque full-bleed square output, at least 1024 by 1024.",
+  "references": [
+    {
+      "path": "dice/dice-1.png",
+      "sha256": "0b224d9172c0ee16cbdb580bf19d17be83d88e188855409b7a720571bfc6d0ce"
+    },
+    {
+      "path": "dice/dice-6.png",
+      "sha256": "94d20da4cfb1290ca35f3f21e14afde370bf1e3e17afdb43bea78eda407144f6"
+    }
+  ],
+  "generatedPath": "C:/Users/PC/.codex/generated_images/01a07ae1-d8a0-73e1-abf1-73e88cf8bc12/exec-53018278-8691-4ddb-aed9-4c7dad2b6586.png",
+  "source": {
+    "path": "tools/art-review/dice-base-96/source.png",
+    "sha256": "d5a190c5e76e255cb1b138b05ac03de2f4309f3f64fd0e78063d51f0a1899322",
+    "width": 1254,
+    "height": 1254
+  },
+  "runtime": {
+    "path": "dice/skins/ivory-worn/material.png",
+    "sha256": "07cc7cb5353b48c40758772fe20c14bc80de6753955f634f421487906901305b",
+    "width": 512,
+    "height": 512
+  },
+  "processing": "Deterministic Lanczos resize to512x512 and lossless PNG compression; no recoloring or generated substitute",
+  "cost": "Tool did not report monetary cost",
+  "originalCubeFaces": [
+    {
+      "path": "dice/dice-1.png",
+      "sha256": "0b224d9172c0ee16cbdb580bf19d17be83d88e188855409b7a720571bfc6d0ce"
+    },
+    {
+      "path": "dice/dice-2.png",
+      "sha256": "ecaebbccd7f37628eec17ea8d45cccdb8a5de5cb3c278cd3c45cb65147ad77a6"
+    },
+    {
+      "path": "dice/dice-3.png",
+      "sha256": "b3e17c4299b479c8579b5a0bd6e7f73c01ce00ad3ca7fd51f678c52a2fd766cc"
+    },
+    {
+      "path": "dice/dice-4.png",
+      "sha256": "b6142082b12e3710a6058eb0858466734740baf0398103f9614d2f018fc77c78"
+    },
+    {
+      "path": "dice/dice-5.png",
+      "sha256": "b57083ba92fdb4307a3051117296386ae40e861bd177b494dea63e90468cc239"
+    },
+    {
+      "path": "dice/dice-6.png",
+      "sha256": "94d20da4cfb1290ca35f3f21e14afde370bf1e3e17afdb43bea78eda407144f6"
+    }
+  ]
+}

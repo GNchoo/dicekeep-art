@@ -1,0 +1,9 @@
+{
+  "command": "node tools/dice-rotation-test.cjs",
+  "gameSha256": "fb37de4ecab9c4c7d43e32215d7d54973b7f09922cf4ce7191567a3ee886d186",
+  "testSha256": "6cf968d31968949fc4c30a4c384ca69df5c0f0a10a28466bcc89475547139ae2",
+  "expectedFailure": false,
+  "exitCode": 0,
+  "stdout": "{\"pass\":true,\"cases\":1281,\"winningFaces\":20,\"maximumTargetMatrixError\":1.4432899320127035e-15}\n",
+  "stderr": ""
+}

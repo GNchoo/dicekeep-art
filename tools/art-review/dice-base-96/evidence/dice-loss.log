@@ -1,0 +1,10 @@
+browser C:\Program Files\Google\Chrome\Application\chrome.exe
+ok   ① 손패 8 보존 · 슬롯 완성 대기 {"held":8,"slot":true,"final":1}
+ok   ① 배치 후 굴린 결과가 손에 옴 {"held":1,"slot":false,"final":1}
+ok   ④ 굴리는 중 뽑기 차단 {"dg":0,"dq":0,"slot":true}
+ok   ③ 손패 유지·큐 대기 {"held":2,"slot":false,"q":1}
+ok   ③ 배치 후 큐가 굴러 손에 옴 {"held":16,"slot":false,"q":0}
+ok   ⑤ 실패 시 큐 보존 (1)
+ok   ② 보스 2마리 → 보상 2회 {"n":2,"dq":2,"dg":1217,"logs":["보스 고목 정령 처치! +400G · 서사 (보스 1마리 남음)","보스 거대 수사슴 처치! +400G · 서사"]}
+
+==== 실패 0 ====
