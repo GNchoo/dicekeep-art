@@ -1,0 +1,371 @@
+{
+  "pass": true,
+  "gameSha256": "d915497e67642b8c2131078a3c416146d0bfbf3aed8913752efdf085b7973c08",
+  "rotationRegression": {
+    "exitCode": 0,
+    "log": "rotation-regression.log"
+  },
+  "pages": [
+    {
+      "viewport": {
+        "name": "phone",
+        "width": 440,
+        "height": 956
+      },
+      "faces": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "pipCounts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "frozenPoseChecks": 6,
+      "uvRotationChecks": 6,
+      "detailRoleChecks": {
+        "slotSubdivisions": 3,
+        "fullSubdivisions": 6,
+        "checks": [
+          {
+            "final": 1,
+            "pose": "spin",
+            "actualSlotTriangles": 67,
+            "expectedSlotTriangles": 67,
+            "actualCenterTriangles": 189,
+            "expectedCenterTriangles": 189,
+            "pass": true
+          },
+          {
+            "final": 1,
+            "pose": "settled",
+            "actualSlotTriangles": 62,
+            "expectedSlotTriangles": 62,
+            "actualCenterTriangles": 162,
+            "expectedCenterTriangles": 162,
+            "pass": true
+          },
+          {
+            "final": 2,
+            "pose": "spin",
+            "actualSlotTriangles": 68,
+            "expectedSlotTriangles": 68,
+            "actualCenterTriangles": 190,
+            "expectedCenterTriangles": 190,
+            "pass": true
+          },
+          {
+            "final": 2,
+            "pose": "settled",
+            "actualSlotTriangles": 62,
+            "expectedSlotTriangles": 62,
+            "actualCenterTriangles": 162,
+            "expectedCenterTriangles": 162,
+            "pass": true
+          },
+          {
+            "final": 3,
+            "pose": "spin",
+            "actualSlotTriangles": 68,
+            "expectedSlotTriangles": 68,
+            "actualCenterTriangles": 191,
+            "expectedCenterTriangles": 191,
+            "pass": true
+          },
+          {
+            "final": 3,
+            "pose": "settled",
+            "actualSlotTriangles": 62,
+            "expectedSlotTriangles": 62,
+            "actualCenterTriangles": 162,
+            "expectedCenterTriangles": 162,
+            "pass": true
+          },
+          {
+            "final": 4,
+            "pose": "spin",
+            "actualSlotTriangles": 69,
+            "expectedSlotTriangles": 69,
+            "actualCenterTriangles": 195,
+            "expectedCenterTriangles": 195,
+            "pass": true
+          },
+          {
+            "final": 4,
+            "pose": "settled",
+            "actualSlotTriangles": 62,
+            "expectedSlotTriangles": 62,
+            "actualCenterTriangles": 162,
+            "expectedCenterTriangles": 162,
+            "pass": true
+          },
+          {
+            "final": 5,
+            "pose": "spin",
+            "actualSlotTriangles": 66,
+            "expectedSlotTriangles": 66,
+            "actualCenterTriangles": 188,
+            "expectedCenterTriangles": 188,
+            "pass": true
+          },
+          {
+            "final": 5,
+            "pose": "settled",
+            "actualSlotTriangles": 62,
+            "expectedSlotTriangles": 62,
+            "actualCenterTriangles": 162,
+            "expectedCenterTriangles": 162,
+            "pass": true
+          },
+          {
+            "final": 6,
+            "pose": "spin",
+            "actualSlotTriangles": 72,
+            "expectedSlotTriangles": 72,
+            "actualCenterTriangles": 197,
+            "expectedCenterTriangles": 197,
+            "pass": true
+          },
+          {
+            "final": 6,
+            "pose": "settled",
+            "actualSlotTriangles": 62,
+            "expectedSlotTriangles": 62,
+            "actualCenterTriangles": 162,
+            "expectedCenterTriangles": 162,
+            "pass": true
+          }
+        ]
+      },
+      "observedSourcesPerSettledFace": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "oppositeFaces": [
+        [
+          1,
+          6
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          2,
+          5
+        ]
+      ],
+      "uiFaces": 6,
+      "uiAllPassed": true,
+      "nonCubeSourceUvChecks": 8,
+      "assets": [
+        {
+          "url": "http://localhost:8137/dice/skins/ivory-worn/material.png?v=96",
+          "status": 200,
+          "sha256": "07cc7cb5353b48c40758772fe20c14bc80de6753955f634f421487906901305b",
+          "bytes": 439341
+        },
+        {
+          "url": "http://localhost:8137/dice/skins/ivory-worn/cube-surface-v98.png?v=98",
+          "status": 200,
+          "sha256": "a22dfecfeb6feb7362420bc4568f9684e6c0705e5332fdf503504bd656badff9",
+          "bytes": 471322
+        }
+      ],
+      "pageerrors": []
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1240,
+        "height": 860
+      },
+      "faces": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "pipCounts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "frozenPoseChecks": 6,
+      "uvRotationChecks": 6,
+      "detailRoleChecks": {
+        "slotSubdivisions": 3,
+        "fullSubdivisions": 6,
+        "checks": [
+          {
+            "final": 1,
+            "pose": "spin",
+            "actualSlotTriangles": 63,
+            "expectedSlotTriangles": 63,
+            "actualCenterTriangles": 189,
+            "expectedCenterTriangles": 189,
+            "pass": true
+          },
+          {
+            "final": 1,
+            "pose": "settled",
+            "actualSlotTriangles": 62,
+            "expectedSlotTriangles": 62,
+            "actualCenterTriangles": 162,
+            "expectedCenterTriangles": 162,
+            "pass": true
+          },
+          {
+            "final": 2,
+            "pose": "spin",
+            "actualSlotTriangles": 64,
+            "expectedSlotTriangles": 64,
+            "actualCenterTriangles": 173,
+            "expectedCenterTriangles": 173,
+            "pass": true
+          },
+          {
+            "final": 2,
+            "pose": "settled",
+            "actualSlotTriangles": 62,
+            "expectedSlotTriangles": 62,
+            "actualCenterTriangles": 162,
+            "expectedCenterTriangles": 162,
+            "pass": true
+          },
+          {
+            "final": 3,
+            "pose": "spin",
+            "actualSlotTriangles": 71,
+            "expectedSlotTriangles": 71,
+            "actualCenterTriangles": 196,
+            "expectedCenterTriangles": 196,
+            "pass": true
+          },
+          {
+            "final": 3,
+            "pose": "settled",
+            "actualSlotTriangles": 62,
+            "expectedSlotTriangles": 62,
+            "actualCenterTriangles": 162,
+            "expectedCenterTriangles": 162,
+            "pass": true
+          },
+          {
+            "final": 4,
+            "pose": "spin",
+            "actualSlotTriangles": 68,
+            "expectedSlotTriangles": 68,
+            "actualCenterTriangles": 190,
+            "expectedCenterTriangles": 190,
+            "pass": true
+          },
+          {
+            "final": 4,
+            "pose": "settled",
+            "actualSlotTriangles": 62,
+            "expectedSlotTriangles": 62,
+            "actualCenterTriangles": 162,
+            "expectedCenterTriangles": 162,
+            "pass": true
+          },
+          {
+            "final": 5,
+            "pose": "spin",
+            "actualSlotTriangles": 70,
+            "expectedSlotTriangles": 70,
+            "actualCenterTriangles": 195,
+            "expectedCenterTriangles": 195,
+            "pass": true
+          },
+          {
+            "final": 5,
+            "pose": "settled",
+            "actualSlotTriangles": 62,
+            "expectedSlotTriangles": 62,
+            "actualCenterTriangles": 162,
+            "expectedCenterTriangles": 162,
+            "pass": true
+          },
+          {
+            "final": 6,
+            "pose": "spin",
+            "actualSlotTriangles": 71,
+            "expectedSlotTriangles": 71,
+            "actualCenterTriangles": 198,
+            "expectedCenterTriangles": 198,
+            "pass": true
+          },
+          {
+            "final": 6,
+            "pose": "settled",
+            "actualSlotTriangles": 62,
+            "expectedSlotTriangles": 62,
+            "actualCenterTriangles": 162,
+            "expectedCenterTriangles": 162,
+            "pass": true
+          }
+        ]
+      },
+      "observedSourcesPerSettledFace": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "oppositeFaces": [
+        [
+          1,
+          6
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          2,
+          5
+        ]
+      ],
+      "uiFaces": 6,
+      "uiAllPassed": true,
+      "nonCubeSourceUvChecks": 8,
+      "assets": [
+        {
+          "url": "http://localhost:8137/dice/skins/ivory-worn/material.png?v=96",
+          "status": 200,
+          "sha256": "07cc7cb5353b48c40758772fe20c14bc80de6753955f634f421487906901305b",
+          "bytes": 439341
+        },
+        {
+          "url": "http://localhost:8137/dice/skins/ivory-worn/cube-surface-v98.png?v=98",
+          "status": 200,
+          "sha256": "a22dfecfeb6feb7362420bc4568f9684e6c0705e5332fdf503504bd656badff9",
+          "bytes": 471322
+        }
+      ],
+      "pageerrors": []
+    }
+  ],
+  "errors": [],
+  "reportSha256": "55ccf485c0285c0f3cdc8ffc9000014be031ea1c89c320d3c31d2095f92e7ac4",
+  "notes": "D6 uses central-face pip validation while allowing additional edge/corner texture sources. Actual slot and center triangle draws verify 3/6-subdivision roles. No non-D6 historical PNG comparison or D20 outcome sweep. Mesh geometry is independently checked by root/pipeline tooling; visual approval is separate."
+}

@@ -790,7 +790,10 @@ const SRCS = {
 };
 for (let g = 7; g <= 20; g++) SRCS['tStar' + g] = BASE + `casual/towers/star-${String(g).padStart(2, '0')}.png?v=93`; // 없으면 6눈 스킨으로 폴백
 const DICE_SKINS = window.DKCONTENT.DICE_SKINS;
-for (const skin of Object.values(DICE_SKINS.skins)) SRCS[skin.materialKey] = BASE + skin.material + '?v=' + skin.version;
+for (const skin of Object.values(DICE_SKINS.skins)) {
+  SRCS[skin.materialKey] = BASE + skin.material + '?v=' + skin.version;
+  if (skin.cubeMaterialKey) SRCS[skin.cubeMaterialKey] = BASE + skin.cubeMaterial + '?v=' + skin.cubeMaterialVersion;
+}
 // 인피니티 아레나 조각 (casual/tiles/arena/): 질감 3(floor·road·board) + 오브젝트 6. 없으면 코드가 그린다.
 for (const n of ['floor', 'road', 'board', 'pad', 'start', 'end', 'prop-1', 'prop-2', 'prop-3']) SRCS['tl_arena_' + n] = BASE + `casual/tiles/arena/${n}.${n === 'floor' ? 'jpg' : 'png'}`;
 if (window.DKCONTENT) {
@@ -1039,7 +1042,7 @@ async function loadAssets(onProgress) {
   }
   // 격자는 파일명 -walk-<열>x<행> 에서 (없으면 2x2). 안정화는 인피니티 새 시트만 (content.js infArtList 의 stabilize)
   for (const k of sheets) { const m = /-walk-(\d+)x(\d+)\.png/i.exec(SRCS[k] || ''); sheetOpt[k] = Object.assign({ cols: m ? +m[1] : 2, rows: m ? +m[2] : 2 }, sheetOpt[k] || {}); }
-  const raw = ['map', ...Object.values(DICE_SKINS.skins).map(skin => skin.materialKey)];
+  const raw = ['map', ...Object.values(DICE_SKINS.skins).flatMap(skin => [skin.materialKey, skin.cubeMaterialKey].filter(Boolean))];
   if (window.DKCONTENT) for (const m of DKCONTENT.maps) if (m.src) raw.push(m.key);
   const isTexture = (k) => /^tl_.*_(floor|road|water|road-straight|board)$/.test(k); // 질감·바닥: 배경 제거 없이 그대로
   let pi = 0;
@@ -1577,9 +1580,91 @@ function texTri(g, img, s0x, s0y, s1x, s1y, s2x, s2y, d0, d1, d2, clipBleed = 0)
   g.restore();
 }
 
+// Rounded unit cube for drawing only. FACES remains the six logical result faces.
+// The edge and corner grids use identical normalized integer barycentric weights.
+function makeCubeRenderMesh(subdivisions) {
+  const radius = .18, inner = 1 - radius, patches = [];
+  const dot = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+  const sub = (a, b) => a.map((x, i) => x - b[i]);
+  const cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+  const unit = a => { const length = Math.hypot(...a); return a.map(x => x / length); };
+  const mean = values => values[0].map((_, i) => values.reduce((sum, v) => sum + v[i], 0) / values.length);
+  // Welding also makes both sides of a seam use bit-identical point arrays.
+  const welded = new Map();
+  const weld = point => {
+    const key = point.map(x => Math.round(x * 1e12)).join(',');
+    if (!welded.has(key)) welded.set(key, point);
+    return welded.get(key);
+  };
+  const add = (kind, val, inputPoints, inputNormals, face) => {
+    const points = inputPoints.map(weld), normals = inputNormals.slice();
+    const n = unit(mean(normals)), center = mean(points);
+    if (dot(cross(sub(points[1], points[0]), sub(points[2], points[0])), n) < 0) {
+      points.reverse(); normals.reverse();
+    }
+    // A fixed object-space projection for unmarked edge/corner material. It is
+    // chosen during mesh construction, never from the animated camera rotation.
+    const basis = face || FACES.reduce((best, f) => dot(f.n, n) > dot(best.n, n) ? f : best, FACES[0]);
+    const uv = points.map(p => [.5 + .5 * dot(p, basis.u), .5 + .5 * dot(p, basis.v)]);
+    const planeNormal = unit(cross(sub(points[1], points[0]), sub(points[2], points[0])));
+    patches.push({ val, points, normals, uv, n, planeNormal, center, kind });
+  };
+
+  for (const face of FACES) {
+    const points = [[-1, -1], [1, -1], [1, 1], [-1, 1]].map(([u, v]) =>
+      face.n.map((x, i) => x + inner * (u * face.u[i] + v * face.v[i])));
+    add('face', face.val, points, points.map(() => face.n.slice()), face);
+  }
+
+  // Twelve rounded edges. Each has two longitudinal endpoints for every normal
+  // in the same barycentric boundary sequence used by its two corner caps.
+  for (let axis1 = 0; axis1 < 3; axis1++) for (let axis2 = axis1 + 1; axis2 < 3; axis2++) {
+    const tangent = 3 - axis1 - axis2;
+    for (const sign1 of [-1, 1]) for (const sign2 of [-1, 1]) {
+      const boundary = [];
+      for (let step = 0; step <= subdivisions; step++) {
+        const weight = [0, 0, 0]; weight[axis1] = sign1 * (subdivisions - step); weight[axis2] = sign2 * step;
+        const normal = unit(weight);
+        const endpoints = [-1, 1].map(sign => {
+          const p = normal.map(x => radius * x);
+          p[axis1] += inner * sign1; p[axis2] += inner * sign2; p[tangent] += inner * sign;
+          return p;
+        });
+        boundary.push({ normal, endpoints });
+      }
+      for (let step = 0; step < subdivisions; step++) {
+        const a = boundary[step], b = boundary[step + 1];
+        add('edge', 0, [a.endpoints[0], a.endpoints[1], b.endpoints[1], b.endpoints[0]], [a.normal, a.normal, b.normal, b.normal]);
+      }
+    }
+  }
+
+  // Eight spherical octants, each tessellated into subdivisions squared
+  // triangles. The edge with one zero barycentric weight exactly matches above.
+  for (const sx of [-1, 1]) for (const sy of [-1, 1]) for (const sz of [-1, 1]) {
+    const signs = [sx, sy, sz], grid = new Map();
+    for (let i = 0; i <= subdivisions; i++) for (let j = 0; j <= subdivisions - i; j++) {
+      const normal = unit([sx * i, sy * j, sz * (subdivisions - i - j)]);
+      const point = normal.map((x, k) => signs[k] * inner + radius * x);
+      grid.set(i + ',' + j, { point, normal });
+    }
+    const triangle = coords => {
+      const vertices = coords.map(([i, j]) => grid.get(i + ',' + j));
+      add('corner', 0, vertices.map(v => v.point), vertices.map(v => v.normal));
+    };
+    for (let i = 0; i < subdivisions; i++) for (let j = 0; j < subdivisions - i; j++) {
+      triangle([[i, j], [i + 1, j], [i, j + 1]]);
+      if (i + j < subdivisions - 1) triangle([[i + 1, j], [i + 1, j + 1], [i, j + 1]]);
+    }
+  }
+  return patches;
+}
+const CUBE_RENDER_MESH = makeCubeRenderMesh(6);
+const CUBE_SLOT_MESH = makeCubeRenderMesh(3);
+
 // 3D 주사위 렌더링 (g: 대상 컨텍스트, cx,cy: 중심, size: 반 변 길이 px)
-function drawCube(g, cx, cy, size, R, glowColor = null, glowStr = 0, skinId) {
-  const textures = diceMaterial(skinId).cube, T = DICE_MAT_TEX;
+function drawCube(g, cx, cy, size, R, glowColor = null, glowStr = 0, skinId, detail = 'full') {
+  const material = diceMaterial(skinId), T = DICE_MAT_TEX;
   if (glowColor && glowStr > 0) {
     const gr = g.createRadialGradient(cx, cy, size * 0.3, cx, cy, size * 2.4);
     gr.addColorStop(0, glowColor + Math.round(glowStr * 110).toString(16).padStart(2, '0'));
@@ -1587,44 +1672,76 @@ function drawCube(g, cx, cy, size, R, glowColor = null, glowStr = 0, skinId) {
     g.fillStyle = gr;
     g.beginPath(); g.arc(cx, cy, size * 2.4, 0, Math.PI * 2); g.fill();
   }
-  // 약한 원근: 계수가 작으면 큐브가 찌그러져 보인다
-  const persp = 10;
-  const P = v => {
-    const w = persp / (persp - v[2]);
-    return [cx + v[0] * size * w, cy + v[1] * size * w];
+  const dot = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+  const half = [LIGHT[0], LIGHT[1], LIGHT[2] + 1], hl = Math.hypot(...half);
+  half.forEach((v, i) => { half[i] = v / hl; });
+  const projected = new Map();
+  const project = point => {
+    if (!projected.has(point)) {
+      const p = m3apply(R, point), w = 10 / (10 - p[2]);
+      projected.set(point, { p, xy: [cx + p[0] * size * w, cy + p[1] * size * w] });
+    }
+    return projected.get(point);
   };
-  for (const face of FACES) {
-    const n = m3apply(R, face.n);
-    if (n[2] <= 0.02) continue; // 뒷면 컬링
-    const u = m3apply(R, face.u), v = m3apply(R, face.v);
-    const A0 = P([n[0] - u[0] - v[0], n[1] - u[1] - v[1], n[2] - u[2] - v[2]]);
-    const B0 = P([n[0] + u[0] - v[0], n[1] + u[1] - v[1], n[2] + u[2] - v[2]]);
-    const C0 = P([n[0] + u[0] + v[0], n[1] + u[1] + v[1], n[2] + u[2] + v[2]]);
-    const D0 = P([n[0] - u[0] + v[0], n[1] - u[1] + v[1], n[2] - u[2] + v[2]]);
-    const quad = () => {
-      g.beginPath();
-      g.moveTo(A0[0], A0[1]); g.lineTo(B0[0], B0[1]);
-      g.lineTo(C0[0], C0[1]); g.lineTo(D0[0], D0[1]);
-      g.closePath();
-    };
-    const tex = textures[face.val - 1];
-    quad(); g.fillStyle = '#d9cdb0'; g.fill();
-    // Keep the outside face crisp while overlapping the internal triangle
-    // clips: a transparent diagonal must not cut through the engraved pips.
-    g.save(); quad(); g.clip();
-    texTri(g, tex, 0, 0, T, 0, T, T, A0, B0, C0, .6);
-    texTri(g, tex, 0, 0, T, T, 0, T, A0, C0, D0, .6);
+  // The tiny HUD slot has its own fixed mesh; the central pop-in and cached
+  // icons always retain full detail, with no geometry switch during a roll.
+  const mesh = detail === 'slot' ? CUBE_SLOT_MESH : CUBE_RENDER_MESH;
+  const visible = mesh.map(patch => {
+    const n = m3apply(R, patch.planeNormal), c = m3apply(R, patch.center);
+    return { patch, c, facing: dot(n, [-c[0], -c[1], 10 - c[2]]), verts: patch.points.map(project) };
+  }).filter(p => p.facing > 1e-7).sort((a, b) => a.c[2] - b.c[2]);
+  // A single convex silhouette clip keeps overlapping surface patches inside
+  // the rounded outline. No strokes or transparent cracks between bevels.
+  const points = [...projected.values()].map(v => v.xy).sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  const cross = (a, b, c) => (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0]);
+  const lower = [], upper = [];
+  for (const p of points) { while (lower.length > 1 && cross(lower.at(-2), lower.at(-1), p) <= 0) lower.pop(); lower.push(p); }
+  for (let i = points.length - 1; i >= 0; i--) { const p = points[i]; while (upper.length > 1 && cross(upper.at(-2), upper.at(-1), p) <= 0) upper.pop(); upper.push(p); }
+  const hull = lower.slice(0, -1).concat(upper.slice(0, -1));
+  const path = (pts, bleed = 0) => {
+    const mx = pts.reduce((s, p) => s + p[0], 0) / pts.length, my = pts.reduce((s, p) => s + p[1], 0) / pts.length;
+    g.beginPath(); pts.forEach(([x, y], i) => { const k = 1 + bleed / (Math.hypot(x - mx, y - my) || 1); x = mx + (x - mx) * k; y = my + (y - my) * k; i ? g.lineTo(x, y) : g.moveTo(x, y); }); g.closePath();
+  };
+  g.save(); path(hull); g.clip(); g.fillStyle = '#d8c7a5'; g.fill();
+  for (const { patch, verts } of visible) {
+    const xy = verts.map(v => v.xy), uv = patch.uv.map(p => p.map(v => v * T));
+    const tex = patch.val ? material.cube[patch.val - 1] : material.cubeSurface;
+    g.save();
+    if (patch.val) { path(xy, .35); g.clip(); }
+    for (let i = 1; i < xy.length - 1; i++) texTri(g, tex, ...uv[0], ...uv[i], ...uv[i + 1], xy[0], xy[i], xy[i + 1], patch.val ? 1.6 : .6);
     g.restore();
-    // 면별 조명
-    const br = 0.58 + 0.42 * Math.max(0, n[0] * LIGHT[0] + n[1] * LIGHT[1] + n[2] * LIGHT[2]);
-    quad();
-    g.fillStyle = `rgba(28,18,8,${Math.max(0, (1 - br) * 0.8)})`;
-    g.fill();
-    quad();
-    g.strokeStyle = 'rgba(94,71,43,.35)';
-    g.lineWidth = .65;
-    g.stroke();
+    const normals = patch.normals.map(n => m3apply(R, n));
+    const shade = (values, rgb) => {
+      let lo = 0, hi = 0; values.forEach((v, i) => { if (v < values[lo]) lo = i; if (v > values[hi]) hi = i; });
+      if (values[hi] < .001) return;
+      if (values[hi] - values[lo] < .002) g.fillStyle = `rgba(${rgb},${values[hi]})`;
+      else {
+        let start, end;
+        if (xy.length === 3) {
+          // A planar scalar gradient through all three vertex values avoids
+          // artificial diagonal bands on the spherical corner patches.
+          const [p0, p1, p2] = xy, dx1 = p1[0] - p0[0], dy1 = p1[1] - p0[1], dx2 = p2[0] - p0[0], dy2 = p2[1] - p0[1];
+          const den = dx1 * dy2 - dy1 * dx2;
+          const gx = ((values[1] - values[0]) * dy2 - (values[2] - values[0]) * dy1) / den;
+          const gy = (dx1 * (values[2] - values[0]) - dx2 * (values[1] - values[0])) / den, gg = gx * gx + gy * gy;
+          if (Math.abs(den) > 1e-10 && gg > 1e-14) {
+            start = [p0[0] + gx * (values[lo] - values[0]) / gg, p0[1] + gy * (values[lo] - values[0]) / gg];
+            end = [p0[0] + gx * (values[hi] - values[0]) / gg, p0[1] + gy * (values[hi] - values[0]) / gg];
+          }
+        } else {
+          const mid = value => { const pts = xy.filter((_, i) => Math.abs(values[i] - value) < 1e-9); return [0, 1].map(k => pts.reduce((sum, p) => sum + p[k], 0) / pts.length); };
+          start = mid(values[lo]); end = mid(values[hi]);
+        }
+        const grad = start && end ? g.createLinearGradient(...start, ...end) : null;
+        if (!grad) { g.fillStyle = `rgba(${rgb},${values.reduce((a, b) => a + b, 0) / values.length})`; path(xy, .45); g.fill(); return; }
+        grad.addColorStop(0, `rgba(${rgb},${values[lo]})`); grad.addColorStop(1, `rgba(${rgb},${values[hi]})`); g.fillStyle = grad;
+      }
+      path(xy, .45); g.fill();
+    };
+    shade(normals.map(n => (1 - (.55 + .45 * Math.max(0, dot(n, LIGHT)))) * .88), '42,25,10');
+    shade(normals.map(n => Math.pow(Math.max(0, dot(n, half)), 20) * .16), '255,246,218');
   }
+  g.restore();
 }
 
 // ==================== 물리 주사위 ====================
@@ -1936,9 +2053,10 @@ function diceSkin(id) {
   const key = Object.prototype.hasOwnProperty.call(DICE_SKINS.skins, id) ? id : DICE_SKINS.defaultId;
   return { id: key, ...DICE_SKINS.skins[key] };
 }
-function diceMaterialTile(skin, w, h) {
+function diceMaterialTile(skin, w, h, materialKey = skin.materialKey) {
   const cv = document.createElement('canvas'); cv.width = w; cv.height = h;
-  const g = cv.getContext('2d'), image = A[skin.materialKey];
+  const g = cv.getContext('2d'), supplied = A[materialKey];
+  const image = supplied && !supplied.missing ? supplied : A[skin.materialKey];
   g.fillStyle = '#e4d9bc'; g.fillRect(0, 0, w, h);
   if (image && !image.missing) g.drawImage(image, 0, 0, w, h);
   // A missing material keeps the same opaque ivory base, without old face art.
@@ -1956,7 +2074,7 @@ function engraveDiceValue(g, value, x, y, fontSize, mark) {
   }
 }
 function buildDiceMaterial(skin) {
-  const out = { faces: {}, orb: null, cube: [] }, T = DICE_MAT_TEX, dot = (a, b) => a.reduce((n, v, i) => n + v * b[i], 0);
+  const out = { faces: {}, orb: null, cube: [], cubeSurface: null }, T = DICE_MAT_TEX, dot = (a, b) => a.reduce((n, v, i) => n + v * b[i], 0);
   for (const [kind, P] of Object.entries(POLY)) out.faces[kind] = P.faces.map((f, i) => {
     // Use the same final alignment as slotTargetR: the winning numeral is upright.
     const inv = m3transpose(alignR(f.n)), u = m3apply(inv, [1, 0, 0]), v = m3apply(inv, [0, 1, 0]);
@@ -1976,21 +2094,26 @@ function buildDiceMaterial(skin) {
   });
   out.orb = diceMaterialTile(skin, T * 2, T);
   engraveDiceValue(out.orb.getContext('2d'), 1, T, T / 2, T * .25, skin.mark || '#542b30');
+  out.cubeSurface = diceMaterialTile(skin, T, T, skin.cubeMaterialKey || skin.materialKey);
   out.cube = CUBE_PIPS.map(pips => {
-    const cv = diceMaterialTile(skin, T, T), g = cv.getContext('2d');
-    g.strokeStyle = 'rgba(102,74,44,.38)'; g.lineWidth = 7;
-    g.strokeRect(0, 0, T, T);
-    const rim = g.createLinearGradient(0, 0, T, T);
-    rim.addColorStop(0, 'rgba(255,243,211,.85)'); rim.addColorStop(.45, 'rgba(238,220,181,.4)'); rim.addColorStop(1, 'rgba(129,93,52,.38)');
-    g.strokeStyle = rim; g.lineWidth = 2.7; g.strokeRect(3, 3, T - 6, T - 6);
+    const cv = document.createElement('canvas'); cv.width = T; cv.height = T;
+    const g = cv.getContext('2d'); g.drawImage(out.cubeSurface, 0, 0);
     for (const [u, v] of pips) {
-      const x = T * (.5 + u * .245), y = T * (.5 + v * .245), r = T * .079;
-      // Thin stone lip and a dark recessed bowl, matching the engraved numerals.
-      g.beginPath(); g.arc(x, y + 1.1, r + .8, 0, Math.PI * 2);
-      g.fillStyle = 'rgba(255,242,210,.7)'; g.fill();
-      const bowl = g.createLinearGradient(x, y - r, x, y + r);
-      bowl.addColorStop(0, '#321e20'); bowl.addColorStop(.45, skin.mark || '#542b30'); bowl.addColorStop(1, skin.mark || '#542b30');
-      g.beginPath(); g.arc(x, y, r, 0, Math.PI * 2); g.fillStyle = bowl; g.fill();
+      const x = T * (.5 + u * .245), y = T * (.5 + v * .245), r = T * .096;
+      // A worn stone lip around a recessed, red-pigmented bowl.
+      g.beginPath(); g.arc(x, y + 1.1, r + 1.35, 0, Math.PI * 2);
+      g.fillStyle = 'rgba(255,239,199,.85)'; g.fill();
+      g.beginPath(); g.arc(x, y - .25, r + .6, 0, Math.PI * 2);
+      g.fillStyle = 'rgba(87,55,29,.72)'; g.fill();
+      const bowl = g.createRadialGradient(x, y + r * .58, r * .32, x, y, r);
+      bowl.addColorStop(0, skin.cubeMark || '#912321'); bowl.addColorStop(.56, '#8b1c20');
+      bowl.addColorStop(.8, '#681015'); bowl.addColorStop(.95, '#3e0b0d'); bowl.addColorStop(1, '#280909');
+      g.save(); g.beginPath(); g.arc(x, y, r, 0, Math.PI * 2); g.clip();
+      g.fillStyle = bowl; g.fillRect(x - r, y - r, r * 2, r * 2);
+      // The same mineral grain subtly breaks up the pigment without random stamps.
+      g.globalCompositeOperation = 'soft-light'; g.globalAlpha = .2;
+      g.drawImage(out.cubeSurface, 0, 0);
+      g.restore();
     }
     return cv;
   });
@@ -2086,7 +2209,7 @@ function drawSlot() {
     drawPolyDie(sctx, 37, 40 - bounce, 21, SLOT.kind, SLOT.R);
     return;
   }
-  drawCube(sctx, 37, 40 - bounce, 17, SLOT.R);
+  drawCube(sctx, 37, 40 - bounce, 17, SLOT.R, null, 0, undefined, 'slot');
 }
 
 // 굴리는 동안 아레나 한가운데에 큰 주사위. 획득 연출(acquireFx)이 같은 자리(W/2,H/2)에서 터지므로 굴림→결과가 한 곳에서 이어진다.

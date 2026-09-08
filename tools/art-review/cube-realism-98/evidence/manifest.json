@@ -1,0 +1,75 @@
+{
+  "gameSha256": "d915497e67642b8c2131078a3c416146d0bfbf3aed8913752efdf085b7973c08",
+  "baselineGameSha256": "6e8456c947c0901824f872fd3ec26c334170424443c0cb5beb08a40c9934cba5",
+  "additionalImageGenerationCalls": 1,
+  "generationMode": "built-in image_gen",
+  "sharedMaterialSha256": "07cc7cb5353b48c40758772fe20c14bc80de6753955f634f421487906901305b",
+  "cubeMaterialSha256": "a22dfecfeb6feb7362420bc4568f9684e6c0705e5332fdf503504bd656badff9",
+  "files": [
+    {
+      "file": "preview.png",
+      "source": "gen\\e2e\\cube-realism\\art-preview\\board.png",
+      "sha256": "e6730a1b3157bb4945b8f509ef77a2e38d083f8bec51638257c7880be99845c6"
+    },
+    {
+      "file": "front.png",
+      "source": "gen\\e2e\\cube-realism\\art-preview\\front.png",
+      "sha256": "9e605ca3c30ebb7d9d3d8e409d40f478e8d7522d4392661ade0027b5df8f0d4e"
+    },
+    {
+      "file": "six-faces-phone.png",
+      "source": "gen\\e2e\\cube-realism\\after\\phone\\d6-all-six-actual-game.png",
+      "sha256": "7cc0cf6738ae6dadbccdfba73fc26817022a999ffb40b185d4e29911db990945"
+    },
+    {
+      "file": "six-faces-desktop.png",
+      "source": "gen\\e2e\\cube-realism\\after\\desktop\\d6-all-six-actual-game.png",
+      "sha256": "3e8a2db9dd61657ac1677bb14de4c2182f4d1036c89bf43176393b8dba5abceb"
+    },
+    {
+      "file": "before-after-phone.png",
+      "source": "gen\\e2e\\cube-realism\\after\\phone\\before-after-six-faces.png",
+      "sha256": "5a1ff2eac10fb586411e5f392b5047071457d843b1052598ea7a24f6b7c51e03"
+    },
+    {
+      "file": "before-after-desktop.png",
+      "source": "gen\\e2e\\cube-realism\\after\\desktop\\before-after-six-faces.png",
+      "sha256": "cf44f8755fc71981abea3011c8562f69eac055080e366a0164b21c7199b68498"
+    },
+    {
+      "file": "shop-phone.png",
+      "source": "gen\\e2e\\cube-realism\\after\\phone\\cube-shop-actual-game.png",
+      "sha256": "068ebe58074df2e34e68a86947e3a1513c54732b8132c187dc01b464821e026f"
+    },
+    {
+      "file": "final-summary.json",
+      "source": "gen\\e2e\\cube-realism\\final-summary.json",
+      "sha256": "7eaf78a22187571886f08c2cc423ff57def0ed5f5ab68a74cdc23062e55925d5"
+    },
+    {
+      "file": "performance.json",
+      "source": "gen\\e2e\\cube-realism\\perf\\report.json",
+      "sha256": "ad6426b56c55862acb9274902e39b35db736aaec2a271d5e812bac677d01ff13"
+    },
+    {
+      "file": "performance-before-slot-lod.json",
+      "source": "gen\\e2e\\cube-realism\\perf\\report-full6-slot6.json",
+      "sha256": "9dfe175e9cb1ca4407dd4940661bbab5c312a0b8a12fe9ec987e23f5638bb7da"
+    },
+    {
+      "file": "rotation.log",
+      "source": "gen\\e2e\\cube-realism\\after\\rotation-regression.log",
+      "sha256": "26e7554385ee5147c6272519c7978448e60e51b0cabd2ab670ad9cf2bf09699a"
+    },
+    {
+      "file": "build.log",
+      "source": "gen\\e2e\\cube-realism\\checks\\build.log",
+      "sha256": "dabb405c31218c10382bda5dd42cff21159be248c34dd86a019a20c7b7ec36a7"
+    },
+    {
+      "file": "dice-loss.log",
+      "source": "gen\\e2e\\cube-realism\\checks\\dice-loss.log",
+      "sha256": "890403fb1ea3a12a7f1d8df3bac5f84f7e777cb34cbc159fcadf91331fa96fa6"
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "passed": true,
+  "source": "game.js",
+  "identicalMainFacesAcrossLod": true,
+  "meshes": {
+    "full": {
+      "radius": 0.18,
+      "subdivisions": 6,
+      "patches": 366,
+      "counts": {
+        "face": 6,
+        "edge": 72,
+        "corner": 288
+      },
+      "triangles": 444,
+      "vertices": 224,
+      "polygonEdges": 588,
+      "triangleEdges": 666,
+      "watertight": true,
+      "outward": true,
+      "exactCullingNormals": true,
+      "unitBounds": true,
+      "pips": 21,
+      "pipRadius": 0.096,
+      "pipOffset": [
+        0.245,
+        0.245
+      ],
+      "pipOuterRadius": 0.10876041666666666,
+      "pipSamples": 189,
+      "mainUvRange": [
+        0.09,
+        0.91
+      ],
+      "minimumOuterPipClearanceUV": 0.05623958333333337,
+      "volume": 7.833601987179155
+    },
+    "slot": {
+      "radius": 0.18,
+      "subdivisions": 3,
+      "patches": 114,
+      "counts": {
+        "face": 6,
+        "edge": 36,
+        "corner": 72
+      },
+      "triangles": 156,
+      "vertices": 80,
+      "polygonEdges": 192,
+      "triangleEdges": 234,
+      "watertight": true,
+      "outward": true,
+      "exactCullingNormals": true,
+      "unitBounds": true,
+      "pips": 21,
+      "pipRadius": 0.096,
+      "pipOffset": [
+        0.245,
+        0.245
+      ],
+      "pipOuterRadius": 0.10876041666666666,
+      "pipSamples": 189,
+      "mainUvRange": [
+        0.09,
+        0.91
+      ],
+      "minimumOuterPipClearanceUV": 0.05623958333333337,
+      "volume": 7.81298701182141
+    }
+  }
+}

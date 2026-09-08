@@ -1,0 +1,1819 @@
+{
+  "label": "after",
+  "baseUrl": "http://localhost:8137/",
+  "gameSha256": "d915497e67642b8c2131078a3c416146d0bfbf3aed8913752efdf085b7973c08",
+  "options": {
+    "cubeOnly": false
+  },
+  "scope": "Actual HTTP source and images; public state hooks choose six D6 outcomes for coverage. The browser observes unchanged canvas calls, natural spin and settled results. Multiple bevel image sources are allowed; the central front face is selected by projected geometry and its actual pip pixels. Non-D6 checks compare source pixels and UV projection only. No historical PNG byte equality, no D20 all-outcome repetition, no response substitution.",
+  "pages": [
+    {
+      "viewport": {
+        "name": "phone",
+        "width": 440,
+        "height": 956
+      },
+      "gameSha256": "d915497e67642b8c2131078a3c416146d0bfbf3aed8913752efdf085b7973c08",
+      "assets": [
+        {
+          "url": "http://localhost:8137/dice/skins/ivory-worn/material.png?v=96",
+          "status": 200,
+          "sha256": "07cc7cb5353b48c40758772fe20c14bc80de6753955f634f421487906901305b",
+          "bytes": 439341
+        },
+        {
+          "url": "http://localhost:8137/dice/skins/ivory-worn/cube-surface-v98.png?v=98",
+          "status": 200,
+          "sha256": "a22dfecfeb6feb7362420bc4568f9684e6c0705e5332fdf503504bd656badff9",
+          "bytes": 471322
+        }
+      ],
+      "pageerrors": [],
+      "detailRoles": {
+        "slotSubdivisions": 3,
+        "fullSubdivisions": 6,
+        "checks": [
+          {
+            "final": 1,
+            "pose": "spin",
+            "actualSlotTriangles": 67,
+            "expectedSlotTriangles": 67,
+            "actualCenterTriangles": 189,
+            "expectedCenterTriangles": 189,
+            "pass": true
+          },
+          {
+            "final": 1,
+            "pose": "settled",
+            "actualSlotTriangles": 62,
+            "expectedSlotTriangles": 62,
+            "actualCenterTriangles": 162,
+            "expectedCenterTriangles": 162,
+            "pass": true
+          },
+          {
+            "final": 2,
+            "pose": "spin",
+            "actualSlotTriangles": 68,
+            "expectedSlotTriangles": 68,
+            "actualCenterTriangles": 190,
+            "expectedCenterTriangles": 190,
+            "pass": true
+          },
+          {
+            "final": 2,
+            "pose": "settled",
+            "actualSlotTriangles": 62,
+            "expectedSlotTriangles": 62,
+            "actualCenterTriangles": 162,
+            "expectedCenterTriangles": 162,
+            "pass": true
+          },
+          {
+            "final": 3,
+            "pose": "spin",
+            "actualSlotTriangles": 68,
+            "expectedSlotTriangles": 68,
+            "actualCenterTriangles": 191,
+            "expectedCenterTriangles": 191,
+            "pass": true
+          },
+          {
+            "final": 3,
+            "pose": "settled",
+            "actualSlotTriangles": 62,
+            "expectedSlotTriangles": 62,
+            "actualCenterTriangles": 162,
+            "expectedCenterTriangles": 162,
+            "pass": true
+          },
+          {
+            "final": 4,
+            "pose": "spin",
+            "actualSlotTriangles": 69,
+            "expectedSlotTriangles": 69,
+            "actualCenterTriangles": 195,
+            "expectedCenterTriangles": 195,
+            "pass": true
+          },
+          {
+            "final": 4,
+            "pose": "settled",
+            "actualSlotTriangles": 62,
+            "expectedSlotTriangles": 62,
+            "actualCenterTriangles": 162,
+            "expectedCenterTriangles": 162,
+            "pass": true
+          },
+          {
+            "final": 5,
+            "pose": "spin",
+            "actualSlotTriangles": 66,
+            "expectedSlotTriangles": 66,
+            "actualCenterTriangles": 188,
+            "expectedCenterTriangles": 188,
+            "pass": true
+          },
+          {
+            "final": 5,
+            "pose": "settled",
+            "actualSlotTriangles": 62,
+            "expectedSlotTriangles": 62,
+            "actualCenterTriangles": 162,
+            "expectedCenterTriangles": 162,
+            "pass": true
+          },
+          {
+            "final": 6,
+            "pose": "spin",
+            "actualSlotTriangles": 72,
+            "expectedSlotTriangles": 72,
+            "actualCenterTriangles": 197,
+            "expectedCenterTriangles": 197,
+            "pass": true
+          },
+          {
+            "final": 6,
+            "pose": "settled",
+            "actualSlotTriangles": 62,
+            "expectedSlotTriangles": 62,
+            "actualCenterTriangles": 162,
+            "expectedCenterTriangles": 162,
+            "pass": true
+          }
+        ]
+      },
+      "oppositeFaces": [
+        [
+          1,
+          6
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          2,
+          5
+        ]
+      ],
+      "cubeFaces": [
+        {
+          "final": 1,
+          "frontFace": 1,
+          "frontNormalZ": 1.0000000000000002,
+          "R": [
+            1,
+            -2.7755575615628914e-17,
+            0,
+            0,
+            1,
+            -1.3877787807814457e-17,
+            -2.7755575615628914e-17,
+            -1.3877787807814457e-17,
+            1.0000000000000002
+          ],
+          "spin": {
+            "R": [
+              0.7962185396168376,
+              -0.011757125879668765,
+              -0.6048948728179795,
+              -0.04055760244855668,
+              0.9965248743906726,
+              -0.07275476344734233,
+              0.6036481740666948,
+              0.08246177727713326,
+              0.7929747393418287
+            ],
+            "files": {
+              "slot": "d6-1-spin-slot.png",
+              "center": "d6-1-spin-center.png",
+              "raw": "d6-1-spin-raw.png",
+              "rawSha256": "87599e3360b261b7981b3a30fd1869b4e1bb4d3d37aa3922a9c4804c3aa72170",
+              "full": "d6-1-spin-game.png"
+            }
+          },
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "sharedTextures": 3,
+            "sourcePixelsStable": true,
+            "matricesChanged": true
+          },
+          "observedSourceCount": 2,
+          "centralFaceSource": 2,
+          "projection": {
+            "area": 1427.160413765614,
+            "center": [
+              36.999999046325684,
+              39.999999046325684
+            ]
+          },
+          "pips": {
+            "face": 1,
+            "width": 192,
+            "height": 192,
+            "pipCount": 1,
+            "components": [
+              {
+                "pixels": 1080,
+                "center": [
+                  0.4999903549382716,
+                  0.49960937499999997
+                ]
+              }
+            ],
+            "maxPositionError": 0.0003907440566928315,
+            "pass": true
+          },
+          "textureFile": "d6-face-1-actual-texture.png",
+          "textureSha256": "0bd0d15fa4a9f848a2a55ff16435140c7bba4b929ae28908b6ea71b3e650012a",
+          "files": {
+            "slot": "d6-result-1-slot.png",
+            "center": "d6-result-1-center.png",
+            "raw": "d6-result-1-raw.png",
+            "rawSha256": "ae8d26474a2fcda826e6ff7d37df6a222a15059c1864654a928912f0f75444bd",
+            "full": "d6-result-1-game.png"
+          }
+        },
+        {
+          "final": 2,
+          "frontFace": 2,
+          "frontNormalZ": 1.0000000000000004,
+          "R": [
+            1.0000000000000002,
+            -4.996003610813204e-16,
+            -3.0531133177191805e-16,
+            -4.163336342344337e-16,
+            9.43689570931383e-16,
+            -1,
+            0,
+            1.0000000000000004,
+            6.38378239159465e-16
+          ],
+          "spin": {
+            "R": [
+              -0.7503730091802493,
+              -0.660610733666136,
+              -0.02310423465227083,
+              -0.01990332676095744,
+              -0.0123567087477298,
+              0.9997255470041616,
+              -0.6607149193696357,
+              0.7506269181917294,
+              -0.0038762105673550117
+            ],
+            "files": {
+              "slot": "d6-2-spin-slot.png",
+              "center": "d6-2-spin-center.png",
+              "raw": "d6-2-spin-raw.png",
+              "rawSha256": "b3bcbcfc7c588d342096715d012ffdd273d465f7a1238dfd0cf4dea1a9c1f771",
+              "full": "d6-2-spin-game.png"
+            }
+          },
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "sharedTextures": 3,
+            "sourcePixelsStable": true,
+            "matricesChanged": true
+          },
+          "observedSourceCount": 2,
+          "centralFaceSource": 4,
+          "projection": {
+            "area": 1427.160413765614,
+            "center": [
+              36.99999904632569,
+              39.99999904632568
+            ]
+          },
+          "pips": {
+            "face": 2,
+            "width": 192,
+            "height": 192,
+            "pipCount": 2,
+            "components": [
+              {
+                "pixels": 1070,
+                "center": [
+                  0.2551791277258567,
+                  0.25487246884735204
+                ]
+              },
+              {
+                "pixels": 1072,
+                "center": [
+                  0.74521435789801,
+                  0.744932563743781
+                ]
+              }
+            ],
+            "maxPositionError": 0.00022471528005927558,
+            "pass": true
+          },
+          "textureFile": "d6-face-2-actual-texture.png",
+          "textureSha256": "7d851358009b2b5d4f2c7b0749f33853dfce25a8b228ba63872e04bb4cfb150a",
+          "files": {
+            "slot": "d6-result-2-slot.png",
+            "center": "d6-result-2-center.png",
+            "raw": "d6-result-2-raw.png",
+            "rawSha256": "3f497f459553eacccb8f0e58f04433b05d766f5e7222db602bd35d183b100ac6",
+            "full": "d6-result-2-game.png"
+          }
+        },
+        {
+          "final": 3,
+          "frontFace": 3,
+          "frontNormalZ": 1,
+          "R": [
+            2.7755575615628914e-17,
+            4.163336342344337e-17,
+            -1,
+            0,
+            1,
+            1.1102230246251565e-16,
+            1,
+            5.551115123125783e-17,
+            -2.7755575615628914e-17
+          ],
+          "spin": {
+            "R": [
+              -0.2959016601750058,
+              0.6330232264619954,
+              -0.7153487277302735,
+              -0.32677369988001004,
+              0.6366193608297219,
+              0.698523255506562,
+              0.8975862947775022,
+              0.4404513414401209,
+              0.01847861605190193
+            ],
+            "files": {
+              "slot": "d6-3-spin-slot.png",
+              "center": "d6-3-spin-center.png",
+              "raw": "d6-3-spin-raw.png",
+              "rawSha256": "26f1c6228604cc0f7b1c25c2ca84def75e6c8a21e02419214145869a197d7618",
+              "full": "d6-3-spin-game.png"
+            }
+          },
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "sharedTextures": 3,
+            "sourcePixelsStable": true,
+            "matricesChanged": true
+          },
+          "observedSourceCount": 2,
+          "centralFaceSource": 6,
+          "projection": {
+            "area": 1427.160413765614,
+            "center": [
+              36.999999046325684,
+              39.999999046325684
+            ]
+          },
+          "pips": {
+            "face": 3,
+            "width": 192,
+            "height": 192,
+            "pipCount": 3,
+            "components": [
+              {
+                "pixels": 1070,
+                "center": [
+                  0.2551791277258567,
+                  0.25487246884735204
+                ]
+              },
+              {
+                "pixels": 1080,
+                "center": [
+                  0.4999903549382716,
+                  0.49960937499999997
+                ]
+              },
+              {
+                "pixels": 1072,
+                "center": [
+                  0.74521435789801,
+                  0.744932563743781
+                ]
+              }
+            ],
+            "maxPositionError": 0.0003907440566928315,
+            "pass": true
+          },
+          "textureFile": "d6-face-3-actual-texture.png",
+          "textureSha256": "12a8aa275209284e8c105b9709e2c6396fab874276fd266d5759e1caa4be098f",
+          "files": {
+            "slot": "d6-result-3-slot.png",
+            "center": "d6-result-3-center.png",
+            "raw": "d6-result-3-raw.png",
+            "rawSha256": "e1cb8d6cee06362dfb9a241c00423af3b0aae75202cdb1d962bf426872c727c4",
+            "full": "d6-result-3-game.png"
+          }
+        },
+        {
+          "final": 4,
+          "frontFace": 4,
+          "frontNormalZ": 1,
+          "R": [
+            6.938893903907228e-17,
+            -5.551115123125783e-17,
+            1,
+            -8.326672684688674e-17,
+            0.9999999999999999,
+            1.1102230246251565e-16,
+            -1,
+            -1.8041124150158794e-16,
+            -4.163336342344337e-17
+          ],
+          "spin": {
+            "R": [
+              -0.03979780459333687,
+              0.9494329725865206,
+              -0.31143725742928385,
+              0.8254330197891039,
+              0.2068858498946685,
+              0.5252224052296337,
+              0.5630954311583353,
+              -0.23616789722331893,
+              -0.7919269282766717
+            ],
+            "files": {
+              "slot": "d6-4-spin-slot.png",
+              "center": "d6-4-spin-center.png",
+              "raw": "d6-4-spin-raw.png",
+              "rawSha256": "1d4c5e626e7c6d6a47f5cb81eece3a1d203622942b8b8f186b55a01b625aff7c",
+              "full": "d6-4-spin-game.png"
+            }
+          },
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "sharedTextures": 4,
+            "sourcePixelsStable": true,
+            "matricesChanged": true
+          },
+          "observedSourceCount": 2,
+          "centralFaceSource": 3,
+          "projection": {
+            "area": 1427.160413765614,
+            "center": [
+              36.999999046325684,
+              39.999999046325684
+            ]
+          },
+          "pips": {
+            "face": 4,
+            "width": 192,
+            "height": 192,
+            "pipCount": 4,
+            "components": [
+              {
+                "pixels": 1070,
+                "center": [
+                  0.2551791277258567,
+                  0.25487246884735204
+                ]
+              },
+              {
+                "pixels": 1070,
+                "center": [
+                  0.7448938862928349,
+                  0.254823792834891
+                ]
+              },
+              {
+                "pixels": 1072,
+                "center": [
+                  0.25531522077114427,
+                  0.7448839785447761
+                ]
+              },
+              {
+                "pixels": 1072,
+                "center": [
+                  0.74521435789801,
+                  0.744932563743781
+                ]
+              }
+            ],
+            "maxPositionError": 0.000335894496282783,
+            "pass": true
+          },
+          "textureFile": "d6-face-4-actual-texture.png",
+          "textureSha256": "944173340f86fb2ff6a47a37b4278384e613548e0d2680bac327cdabd170090a",
+          "files": {
+            "slot": "d6-result-4-slot.png",
+            "center": "d6-result-4-center.png",
+            "raw": "d6-result-4-raw.png",
+            "rawSha256": "2715c1e214592dc66765b1d1520117626148a1a4c8e2ffd5d5748a15cd684c15",
+            "full": "d6-result-4-game.png"
+          }
+        },
+        {
+          "final": 5,
+          "frontFace": 5,
+          "frontNormalZ": 0.9999999999999999,
+          "R": [
+            0.9999999999999999,
+            -2.7755575615628914e-16,
+            -2.7755575615628914e-16,
+            1.6653345369377348e-16,
+            5.551115123125783e-17,
+            0.9999999999999998,
+            -1.3877787807814457e-16,
+            -0.9999999999999999,
+            6.661338147750939e-16
+          ],
+          "spin": {
+            "R": [
+              -0.9636896187077314,
+              0.2261314775966501,
+              0.1420101180722801,
+              0.2655652307566786,
+              0.7561120623386771,
+              0.5981384934938602,
+              0.027882378092610127,
+              0.6141328065051632,
+              -0.7887100030847792
+            ],
+            "files": {
+              "slot": "d6-5-spin-slot.png",
+              "center": "d6-5-spin-center.png",
+              "raw": "d6-5-spin-raw.png",
+              "rawSha256": "17a260c1078aa2c4803e7aa1cb46def73e2edd4b3c2eb3fe0c73e26d1dd27006",
+              "full": "d6-5-spin-game.png"
+            }
+          },
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "sharedTextures": 3,
+            "sourcePixelsStable": true,
+            "matricesChanged": true
+          },
+          "observedSourceCount": 2,
+          "centralFaceSource": 7,
+          "projection": {
+            "area": 1427.160413765614,
+            "center": [
+              36.99999904632568,
+              39.999999046325684
+            ]
+          },
+          "pips": {
+            "face": 5,
+            "width": 192,
+            "height": 192,
+            "pipCount": 5,
+            "components": [
+              {
+                "pixels": 1070,
+                "center": [
+                  0.2551791277258567,
+                  0.25487246884735204
+                ]
+              },
+              {
+                "pixels": 1070,
+                "center": [
+                  0.7448938862928349,
+                  0.254823792834891
+                ]
+              },
+              {
+                "pixels": 1080,
+                "center": [
+                  0.4999903549382716,
+                  0.49960937499999997
+                ]
+              },
+              {
+                "pixels": 1072,
+                "center": [
+                  0.25531522077114427,
+                  0.7448839785447761
+                ]
+              },
+              {
+                "pixels": 1072,
+                "center": [
+                  0.74521435789801,
+                  0.744932563743781
+                ]
+              }
+            ],
+            "maxPositionError": 0.0003907440566928315,
+            "pass": true
+          },
+          "textureFile": "d6-face-5-actual-texture.png",
+          "textureSha256": "8bab9a7910cce6db48627d4c5f96cc834df6dbae13f23ec30efd6c651e5bd5c0",
+          "files": {
+            "slot": "d6-result-5-slot.png",
+            "center": "d6-result-5-center.png",
+            "raw": "d6-result-5-raw.png",
+            "rawSha256": "c6a949675fda8d327e82b08236594817a7b91f23169fec4affa2be77862d5dbc",
+            "full": "d6-result-5-game.png"
+          }
+        },
+        {
+          "final": 6,
+          "frontFace": 6,
+          "frontNormalZ": 1.0000000000000002,
+          "R": [
+            1,
+            -1.4710455076283324e-15,
+            -4.996003610813204e-16,
+            -1.582067810090848e-15,
+            -0.9999999999999999,
+            6.800116025829084e-16,
+            -4.996003610813204e-16,
+            -6.245004513516506e-16,
+            -1.0000000000000002
+          ],
+          "spin": {
+            "R": [
+              0.558251796002313,
+              0.12651564196162535,
+              -0.8199687339156475,
+              -0.3119108619122712,
+              0.9478082194664144,
+              -0.06611500081713273,
+              0.768808523939047,
+              0.2926659724856021,
+              0.5685772437125152
+            ],
+            "files": {
+              "slot": "d6-6-spin-slot.png",
+              "center": "d6-6-spin-center.png",
+              "raw": "d6-6-spin-raw.png",
+              "rawSha256": "640bf3594b0cdd7e5c14a6e5bba31e0e98ec9af5760ee59e62019fcef6dd50e9",
+              "full": "d6-6-spin-game.png"
+            }
+          },
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "sharedTextures": 4,
+            "sourcePixelsStable": true,
+            "matricesChanged": true
+          },
+          "observedSourceCount": 2,
+          "centralFaceSource": 5,
+          "projection": {
+            "area": 1427.160413765614,
+            "center": [
+              37.00000095367429,
+              40.000000953674345
+            ]
+          },
+          "pips": {
+            "face": 6,
+            "width": 192,
+            "height": 192,
+            "pipCount": 6,
+            "components": [
+              {
+                "pixels": 1070,
+                "center": [
+                  0.2551791277258567,
+                  0.25487246884735204
+                ]
+              },
+              {
+                "pixels": 1070,
+                "center": [
+                  0.7448938862928349,
+                  0.254823792834891
+                ]
+              },
+              {
+                "pixels": 1076,
+                "center": [
+                  0.25486950123915736,
+                  0.49940462360594795
+                ]
+              },
+              {
+                "pixels": 1074,
+                "center": [
+                  0.7453542054624457,
+                  0.49960234326505276
+                ]
+              },
+              {
+                "pixels": 1072,
+                "center": [
+                  0.25531522077114427,
+                  0.7448839785447761
+                ]
+              },
+              {
+                "pixels": 1072,
+                "center": [
+                  0.74521435789801,
+                  0.744932563743781
+                ]
+              }
+            ],
+            "maxPositionError": 0.0006095104405798865,
+            "pass": true
+          },
+          "textureFile": "d6-face-6-actual-texture.png",
+          "textureSha256": "2b82788d2c229ce49513304155ae418e1442be17691bea01cf9dd97fb30ada22",
+          "files": {
+            "slot": "d6-result-6-slot.png",
+            "center": "d6-result-6-center.png",
+            "raw": "d6-result-6-raw.png",
+            "rawSha256": "a9b0c112c52aac779d488c0d170e4f851efa5a120dc81512f287471b7033527a",
+            "full": "d6-result-6-game.png"
+          }
+        }
+      ],
+      "uiFaces": [
+        {
+          "face": 1,
+          "iconSha256": "f09d6dc9c5720bcb9698bf0c229bdb642d90030e136f5996cc3d512538dc7ffb",
+          "width": 96,
+          "height": 96,
+          "heldGenerated": true,
+          "dragStarted": true,
+          "ghostMatches": true,
+          "infoMatches": true,
+          "shopMatches": true
+        },
+        {
+          "face": 2,
+          "iconSha256": "566e06c14d96df9d4f0cd1eda4061c6e98e4237db560260ced6652be09b6453b",
+          "width": 96,
+          "height": 96,
+          "heldGenerated": true,
+          "dragStarted": true,
+          "ghostMatches": true,
+          "infoMatches": true,
+          "shopMatches": true
+        },
+        {
+          "face": 3,
+          "iconSha256": "c7e91d0384b117a76338c66e3d3ec87eccfe0da0b19786fb6e16ad72ea579842",
+          "width": 96,
+          "height": 96,
+          "heldGenerated": true,
+          "dragStarted": true,
+          "ghostMatches": true,
+          "infoMatches": true,
+          "shopMatches": true
+        },
+        {
+          "face": 4,
+          "iconSha256": "c98df57df941252b212ae06a8d981d48ca6dd3048ab54a11e12cd3b4ad811aca",
+          "width": 96,
+          "height": 96,
+          "heldGenerated": true,
+          "dragStarted": true,
+          "ghostMatches": true,
+          "infoMatches": true,
+          "shopMatches": true
+        },
+        {
+          "face": 5,
+          "iconSha256": "a8f95c13ad80a45c7d82c4e0249dd3e4dc43577706af073c8e607e5399ddcde0",
+          "width": 96,
+          "height": 96,
+          "heldGenerated": true,
+          "dragStarted": true,
+          "ghostMatches": true,
+          "infoMatches": true,
+          "shopMatches": true
+        },
+        {
+          "face": 6,
+          "iconSha256": "1d9c6853ac1528ffa3f65301ce9e5229b3fa21c5b088b7519f3163285b7e5232",
+          "width": 96,
+          "height": 96,
+          "heldGenerated": true,
+          "dragStarted": true,
+          "ghostMatches": true,
+          "infoMatches": true,
+          "shopMatches": true
+        }
+      ],
+      "nonCubeProbes": [
+        {
+          "kind": "d1",
+          "sourcePixelHashes": [
+            "b23e4340"
+          ],
+          "sourcePixelsUnchanged": true,
+          "uvProjectionUnchanged": true
+        },
+        {
+          "kind": "d4",
+          "sourcePixelHashes": [
+            "6671655b",
+            "8d43784c"
+          ],
+          "sourcePixelsUnchanged": true,
+          "uvProjectionUnchanged": true
+        },
+        {
+          "kind": "d8",
+          "sourcePixelHashes": [
+            "1c7e89ab",
+            "1f546b84",
+            "8d43784c",
+            "b77accbb"
+          ],
+          "sourcePixelsUnchanged": true,
+          "uvProjectionUnchanged": true
+        },
+        {
+          "kind": "d12",
+          "sourcePixelHashes": [
+            "43a5a55c",
+            "4436ea46",
+            "553c0c56",
+            "9c9dc934",
+            "b10a381a",
+            "d4f246d0"
+          ],
+          "sourcePixelsUnchanged": true,
+          "uvProjectionUnchanged": true
+        },
+        {
+          "kind": "d20",
+          "sourcePixelHashes": [
+            "1e8725ed",
+            "203180f4",
+            "53639c4e",
+            "6d010b22",
+            "8d72fa49",
+            "b4d3b92e",
+            "dafb34cb",
+            "eefed10b",
+            "fff99090"
+          ],
+          "sourcePixelsUnchanged": true,
+          "uvProjectionUnchanged": true
+        },
+        {
+          "kind": "epic",
+          "sourcePixelHashes": [
+            "10fc6e38",
+            "2c3303a8",
+            "438b7568",
+            "4ba4f35a",
+            "752e2719",
+            "8a7b3b5c",
+            "8d72fa49",
+            "916a1a43",
+            "eefed10b",
+            "fff99090"
+          ],
+          "sourcePixelsUnchanged": true,
+          "uvProjectionUnchanged": true
+        },
+        {
+          "kind": "myth",
+          "sourcePixelHashes": [
+            "100748cd",
+            "2c3303a8",
+            "438b7568",
+            "4ba4f35a",
+            "752e2719",
+            "8a7b3b5c",
+            "916a1a43",
+            "b4d3b92e",
+            "eefed10b",
+            "fff99090"
+          ],
+          "sourcePixelsUnchanged": true,
+          "uvProjectionUnchanged": true
+        },
+        {
+          "kind": "primal",
+          "sourcePixelHashes": [
+            "100748cd",
+            "203180f4",
+            "381e2414",
+            "53639c4e",
+            "8a7b3b5c",
+            "916a1a43",
+            "b0e72369",
+            "b4d3b92e",
+            "dafb34cb",
+            "eb7c556c"
+          ],
+          "sourcePixelsUnchanged": true,
+          "uvProjectionUnchanged": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1240,
+        "height": 860
+      },
+      "gameSha256": "d915497e67642b8c2131078a3c416146d0bfbf3aed8913752efdf085b7973c08",
+      "assets": [
+        {
+          "url": "http://localhost:8137/dice/skins/ivory-worn/material.png?v=96",
+          "status": 200,
+          "sha256": "07cc7cb5353b48c40758772fe20c14bc80de6753955f634f421487906901305b",
+          "bytes": 439341
+        },
+        {
+          "url": "http://localhost:8137/dice/skins/ivory-worn/cube-surface-v98.png?v=98",
+          "status": 200,
+          "sha256": "a22dfecfeb6feb7362420bc4568f9684e6c0705e5332fdf503504bd656badff9",
+          "bytes": 471322
+        }
+      ],
+      "pageerrors": [],
+      "detailRoles": {
+        "slotSubdivisions": 3,
+        "fullSubdivisions": 6,
+        "checks": [
+          {
+            "final": 1,
+            "pose": "spin",
+            "actualSlotTriangles": 63,
+            "expectedSlotTriangles": 63,
+            "actualCenterTriangles": 189,
+            "expectedCenterTriangles": 189,
+            "pass": true
+          },
+          {
+            "final": 1,
+            "pose": "settled",
+            "actualSlotTriangles": 62,
+            "expectedSlotTriangles": 62,
+            "actualCenterTriangles": 162,
+            "expectedCenterTriangles": 162,
+            "pass": true
+          },
+          {
+            "final": 2,
+            "pose": "spin",
+            "actualSlotTriangles": 64,
+            "expectedSlotTriangles": 64,
+            "actualCenterTriangles": 173,
+            "expectedCenterTriangles": 173,
+            "pass": true
+          },
+          {
+            "final": 2,
+            "pose": "settled",
+            "actualSlotTriangles": 62,
+            "expectedSlotTriangles": 62,
+            "actualCenterTriangles": 162,
+            "expectedCenterTriangles": 162,
+            "pass": true
+          },
+          {
+            "final": 3,
+            "pose": "spin",
+            "actualSlotTriangles": 71,
+            "expectedSlotTriangles": 71,
+            "actualCenterTriangles": 196,
+            "expectedCenterTriangles": 196,
+            "pass": true
+          },
+          {
+            "final": 3,
+            "pose": "settled",
+            "actualSlotTriangles": 62,
+            "expectedSlotTriangles": 62,
+            "actualCenterTriangles": 162,
+            "expectedCenterTriangles": 162,
+            "pass": true
+          },
+          {
+            "final": 4,
+            "pose": "spin",
+            "actualSlotTriangles": 68,
+            "expectedSlotTriangles": 68,
+            "actualCenterTriangles": 190,
+            "expectedCenterTriangles": 190,
+            "pass": true
+          },
+          {
+            "final": 4,
+            "pose": "settled",
+            "actualSlotTriangles": 62,
+            "expectedSlotTriangles": 62,
+            "actualCenterTriangles": 162,
+            "expectedCenterTriangles": 162,
+            "pass": true
+          },
+          {
+            "final": 5,
+            "pose": "spin",
+            "actualSlotTriangles": 70,
+            "expectedSlotTriangles": 70,
+            "actualCenterTriangles": 195,
+            "expectedCenterTriangles": 195,
+            "pass": true
+          },
+          {
+            "final": 5,
+            "pose": "settled",
+            "actualSlotTriangles": 62,
+            "expectedSlotTriangles": 62,
+            "actualCenterTriangles": 162,
+            "expectedCenterTriangles": 162,
+            "pass": true
+          },
+          {
+            "final": 6,
+            "pose": "spin",
+            "actualSlotTriangles": 71,
+            "expectedSlotTriangles": 71,
+            "actualCenterTriangles": 198,
+            "expectedCenterTriangles": 198,
+            "pass": true
+          },
+          {
+            "final": 6,
+            "pose": "settled",
+            "actualSlotTriangles": 62,
+            "expectedSlotTriangles": 62,
+            "actualCenterTriangles": 162,
+            "expectedCenterTriangles": 162,
+            "pass": true
+          }
+        ]
+      },
+      "oppositeFaces": [
+        [
+          1,
+          6
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          2,
+          5
+        ]
+      ],
+      "cubeFaces": [
+        {
+          "final": 1,
+          "frontFace": 1,
+          "frontNormalZ": 1,
+          "R": [
+            1,
+            -1.6653345369377348e-16,
+            -1.0408340855860843e-17,
+            5.551115123125783e-17,
+            1,
+            1.3183898417423734e-16,
+            -3.469446951953614e-18,
+            -1.3183898417423734e-16,
+            1
+          ],
+          "spin": {
+            "R": [
+              -0.3642003730304179,
+              0.0619760292413704,
+              0.9292561864652702,
+              0.8956022145654488,
+              0.2969867485238074,
+              0.33120317701785507,
+              -0.25545011558026015,
+              0.952868219115702,
+              -0.1636685536360059
+            ],
+            "files": {
+              "slot": "d6-1-spin-slot.png",
+              "center": "d6-1-spin-center.png",
+              "raw": "d6-1-spin-raw.png",
+              "rawSha256": "39332405f9f82c614833def221f9a169013482a70c0e3c81000645dc39b22d10",
+              "full": "d6-1-spin-game.png"
+            }
+          },
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "sharedTextures": 4,
+            "sourcePixelsStable": true,
+            "matricesChanged": true
+          },
+          "observedSourceCount": 2,
+          "centralFaceSource": 6,
+          "projection": {
+            "area": 1427.160413765614,
+            "center": [
+              36.999999046325684,
+              39.999999046325684
+            ]
+          },
+          "pips": {
+            "face": 1,
+            "width": 192,
+            "height": 192,
+            "pipCount": 1,
+            "components": [
+              {
+                "pixels": 1080,
+                "center": [
+                  0.4999903549382716,
+                  0.49960937499999997
+                ]
+              }
+            ],
+            "maxPositionError": 0.0003907440566928315,
+            "pass": true
+          },
+          "textureFile": "d6-face-1-actual-texture.png",
+          "textureSha256": "0bd0d15fa4a9f848a2a55ff16435140c7bba4b929ae28908b6ea71b3e650012a",
+          "files": {
+            "slot": "d6-result-1-slot.png",
+            "center": "d6-result-1-center.png",
+            "raw": "d6-result-1-raw.png",
+            "rawSha256": "0c329e55bb9693a93e88c71542cb7c359ca77dbff34da8a18e5ceb28fbaa275d",
+            "full": "d6-result-1-game.png"
+          }
+        },
+        {
+          "final": 2,
+          "frontFace": 2,
+          "frontNormalZ": 1,
+          "R": [
+            0.9999999999999998,
+            -9.020562075079397e-17,
+            1.3877787807814457e-17,
+            -3.469446951953614e-17,
+            5.551115123125783e-17,
+            -0.9999999999999998,
+            5.551115123125783e-17,
+            1,
+            1.1102230246251565e-16
+          ],
+          "spin": {
+            "R": [
+              0.31218623067222234,
+              0.9447203590331841,
+              0.10021577025040447,
+              0.9438939972658733,
+              -0.3204033830407425,
+              0.08003620469199332,
+              0.10772130385453674,
+              0.06960686291062884,
+              -0.9917414004324008
+            ],
+            "files": {
+              "slot": "d6-2-spin-slot.png",
+              "center": "d6-2-spin-center.png",
+              "raw": "d6-2-spin-raw.png",
+              "rawSha256": "974b834f99e8bb471c66e1c5d5dced3f4855e51c90d72a79dc0d93cf0d9779f6",
+              "full": "d6-2-spin-game.png"
+            }
+          },
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "sharedTextures": 2,
+            "sourcePixelsStable": true,
+            "matricesChanged": true
+          },
+          "observedSourceCount": 2,
+          "centralFaceSource": 3,
+          "projection": {
+            "area": 1427.160413765614,
+            "center": [
+              36.999999046325684,
+              39.999999046325684
+            ]
+          },
+          "pips": {
+            "face": 2,
+            "width": 192,
+            "height": 192,
+            "pipCount": 2,
+            "components": [
+              {
+                "pixels": 1070,
+                "center": [
+                  0.2551791277258567,
+                  0.25487246884735204
+                ]
+              },
+              {
+                "pixels": 1072,
+                "center": [
+                  0.74521435789801,
+                  0.744932563743781
+                ]
+              }
+            ],
+            "maxPositionError": 0.00022471528005927558,
+            "pass": true
+          },
+          "textureFile": "d6-face-2-actual-texture.png",
+          "textureSha256": "7d851358009b2b5d4f2c7b0749f33853dfce25a8b228ba63872e04bb4cfb150a",
+          "files": {
+            "slot": "d6-result-2-slot.png",
+            "center": "d6-result-2-center.png",
+            "raw": "d6-result-2-raw.png",
+            "rawSha256": "0e6d40064c4bf42042df84204abe9a74053eba230af2bad2842ac04d48aac642",
+            "full": "d6-result-2-game.png"
+          }
+        },
+        {
+          "final": 3,
+          "frontFace": 3,
+          "frontNormalZ": 0.9999999999999998,
+          "R": [
+            -2.7755575615628914e-16,
+            -1.249000902703301e-16,
+            -0.9999999999999997,
+            1.6653345369377348e-16,
+            0.9999999999999994,
+            -4.787836793695988e-16,
+            0.9999999999999998,
+            -2.7755575615628914e-16,
+            -2.7755575615628914e-16
+          ],
+          "spin": {
+            "R": [
+              -0.6896891589691968,
+              -0.6666211066889258,
+              0.28274575879612024,
+              0.5399771667444975,
+              -0.2133227068968216,
+              0.8141978151019555,
+              -0.4824453579369869,
+              0.7142196600759774,
+              0.5070865347906689
+            ],
+            "files": {
+              "slot": "d6-3-spin-slot.png",
+              "center": "d6-3-spin-center.png",
+              "raw": "d6-3-spin-raw.png",
+              "rawSha256": "73eb67dc8c721a5e790f89f0fb963a9036899e4d06a0951a373c5dc0caac877f",
+              "full": "d6-3-spin-game.png"
+            }
+          },
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "sharedTextures": 4,
+            "sourcePixelsStable": true,
+            "matricesChanged": true
+          },
+          "observedSourceCount": 2,
+          "centralFaceSource": 4,
+          "projection": {
+            "area": 1427.160413765614,
+            "center": [
+              36.999999046325684,
+              39.9999990463257
+            ]
+          },
+          "pips": {
+            "face": 3,
+            "width": 192,
+            "height": 192,
+            "pipCount": 3,
+            "components": [
+              {
+                "pixels": 1070,
+                "center": [
+                  0.2551791277258567,
+                  0.25487246884735204
+                ]
+              },
+              {
+                "pixels": 1080,
+                "center": [
+                  0.4999903549382716,
+                  0.49960937499999997
+                ]
+              },
+              {
+                "pixels": 1072,
+                "center": [
+                  0.74521435789801,
+                  0.744932563743781
+                ]
+              }
+            ],
+            "maxPositionError": 0.0003907440566928315,
+            "pass": true
+          },
+          "textureFile": "d6-face-3-actual-texture.png",
+          "textureSha256": "12a8aa275209284e8c105b9709e2c6396fab874276fd266d5759e1caa4be098f",
+          "files": {
+            "slot": "d6-result-3-slot.png",
+            "center": "d6-result-3-center.png",
+            "raw": "d6-result-3-raw.png",
+            "rawSha256": "7f28d3e54e3034d3c5e2c50cefd9da4d4d76992efd346fafcac9b27a72c0102e",
+            "full": "d6-result-3-game.png"
+          }
+        },
+        {
+          "final": 4,
+          "frontFace": 4,
+          "frontNormalZ": 1,
+          "R": [
+            -1.1102230246251565e-16,
+            6.938893903907228e-17,
+            1,
+            5.551115123125783e-17,
+            0.9999999999999993,
+            -2.7755575615628914e-16,
+            -1,
+            2.220446049250313e-16,
+            -8.326672684688674e-17
+          ],
+          "spin": {
+            "R": [
+              0.5108007631246386,
+              0.0662315662910399,
+              -0.8571440719143559,
+              -0.031567654419189774,
+              0.9978005842168702,
+              0.05828788322578867,
+              0.8591193535160045,
+              -0.002715467383003139,
+              0.5117680750605047
+            ],
+            "files": {
+              "slot": "d6-4-spin-slot.png",
+              "center": "d6-4-spin-center.png",
+              "raw": "d6-4-spin-raw.png",
+              "rawSha256": "2b98106cddfce06588f1503529ca30a5945203379455f966ac7b4ed699b70ca9",
+              "full": "d6-4-spin-game.png"
+            }
+          },
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "sharedTextures": 3,
+            "sourcePixelsStable": true,
+            "matricesChanged": true
+          },
+          "observedSourceCount": 2,
+          "centralFaceSource": 7,
+          "projection": {
+            "area": 1427.160413765614,
+            "center": [
+              36.999999046325684,
+              39.999999046325684
+            ]
+          },
+          "pips": {
+            "face": 4,
+            "width": 192,
+            "height": 192,
+            "pipCount": 4,
+            "components": [
+              {
+                "pixels": 1070,
+                "center": [
+                  0.2551791277258567,
+                  0.25487246884735204
+                ]
+              },
+              {
+                "pixels": 1070,
+                "center": [
+                  0.7448938862928349,
+                  0.254823792834891
+                ]
+              },
+              {
+                "pixels": 1072,
+                "center": [
+                  0.25531522077114427,
+                  0.7448839785447761
+                ]
+              },
+              {
+                "pixels": 1072,
+                "center": [
+                  0.74521435789801,
+                  0.744932563743781
+                ]
+              }
+            ],
+            "maxPositionError": 0.000335894496282783,
+            "pass": true
+          },
+          "textureFile": "d6-face-4-actual-texture.png",
+          "textureSha256": "944173340f86fb2ff6a47a37b4278384e613548e0d2680bac327cdabd170090a",
+          "files": {
+            "slot": "d6-result-4-slot.png",
+            "center": "d6-result-4-center.png",
+            "raw": "d6-result-4-raw.png",
+            "rawSha256": "17f029c535372d2605aee5ebb7738603779d6bcdaa2973d1779e2e522c849574",
+            "full": "d6-result-4-game.png"
+          }
+        },
+        {
+          "final": 5,
+          "frontFace": 5,
+          "frontNormalZ": 1,
+          "R": [
+            1.0000000000000002,
+            -2.42861286636753e-16,
+            2.7755575615628914e-17,
+            -6.938893903907228e-18,
+            -5.551115123125783e-17,
+            1,
+            -1.1449174941446927e-16,
+            -1,
+            -5.551115123125783e-17
+          ],
+          "spin": {
+            "R": [
+              -0.1524057898887852,
+              0.8837502653653854,
+              -0.4424454132149933,
+              0.5515921806140203,
+              0.4475253339500229,
+              0.703894268877358,
+              0.8200722782132348,
+              -0.13677186823148674,
+              -0.5556751880070077
+            ],
+            "files": {
+              "slot": "d6-5-spin-slot.png",
+              "center": "d6-5-spin-center.png",
+              "raw": "d6-5-spin-raw.png",
+              "rawSha256": "7f46006d9ae2e76ba96d159d4d5d0c844ff19d79c9d2fa1516f78625bdfc4750",
+              "full": "d6-5-spin-game.png"
+            }
+          },
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "sharedTextures": 4,
+            "sourcePixelsStable": true,
+            "matricesChanged": true
+          },
+          "observedSourceCount": 2,
+          "centralFaceSource": 5,
+          "projection": {
+            "area": 1427.160413765614,
+            "center": [
+              36.999999046325684,
+              39.999999046325684
+            ]
+          },
+          "pips": {
+            "face": 5,
+            "width": 192,
+            "height": 192,
+            "pipCount": 5,
+            "components": [
+              {
+                "pixels": 1070,
+                "center": [
+                  0.2551791277258567,
+                  0.25487246884735204
+                ]
+              },
+              {
+                "pixels": 1070,
+                "center": [
+                  0.7448938862928349,
+                  0.254823792834891
+                ]
+              },
+              {
+                "pixels": 1080,
+                "center": [
+                  0.4999903549382716,
+                  0.49960937499999997
+                ]
+              },
+              {
+                "pixels": 1072,
+                "center": [
+                  0.25531522077114427,
+                  0.7448839785447761
+                ]
+              },
+              {
+                "pixels": 1072,
+                "center": [
+                  0.74521435789801,
+                  0.744932563743781
+                ]
+              }
+            ],
+            "maxPositionError": 0.0003907440566928315,
+            "pass": true
+          },
+          "textureFile": "d6-face-5-actual-texture.png",
+          "textureSha256": "8bab9a7910cce6db48627d4c5f96cc834df6dbae13f23ec30efd6c651e5bd5c0",
+          "files": {
+            "slot": "d6-result-5-slot.png",
+            "center": "d6-result-5-center.png",
+            "raw": "d6-result-5-raw.png",
+            "rawSha256": "3911f59678e417f92d934d5c432c42cb3250d68fa7543dc7167ed3d0574d909e",
+            "full": "d6-result-5-game.png"
+          }
+        },
+        {
+          "final": 6,
+          "frontFace": 6,
+          "frontNormalZ": 1,
+          "R": [
+            0.9999999999999996,
+            -5.551115123125783e-17,
+            2.7755575615628914e-17,
+            2.7755575615628914e-17,
+            -1,
+            0,
+            1.3877787807814457e-16,
+            -5.551115123125783e-17,
+            -1
+          ],
+          "spin": {
+            "R": [
+              0.8851754673504928,
+              0.413897700073925,
+              0.21249255486805096,
+              -0.06565594792129902,
+              0.5632745550294554,
+              -0.8236571326461788,
+              -0.46060144214211074,
+              0.7151296872105676,
+              0.5257716633356382
+            ],
+            "files": {
+              "slot": "d6-6-spin-slot.png",
+              "center": "d6-6-spin-center.png",
+              "raw": "d6-6-spin-raw.png",
+              "rawSha256": "a5f78fd56936359330f8ab980a3c168d557c2475405065c4196c37754ef718ad",
+              "full": "d6-6-spin-game.png"
+            }
+          },
+          "frozenPoseStable": true,
+          "uvProbe": {
+            "sharedTextures": 4,
+            "sourcePixelsStable": true,
+            "matricesChanged": true
+          },
+          "observedSourceCount": 2,
+          "centralFaceSource": 2,
+          "projection": {
+            "area": 1427.160413765614,
+            "center": [
+              37.000000953674316,
+              40.000000953674316
+            ]
+          },
+          "pips": {
+            "face": 6,
+            "width": 192,
+            "height": 192,
+            "pipCount": 6,
+            "components": [
+              {
+                "pixels": 1070,
+                "center": [
+                  0.2551791277258567,
+                  0.25487246884735204
+                ]
+              },
+              {
+                "pixels": 1070,
+                "center": [
+                  0.7448938862928349,
+                  0.254823792834891
+                ]
+              },
+              {
+                "pixels": 1076,
+                "center": [
+                  0.25486950123915736,
+                  0.49940462360594795
+                ]
+              },
+              {
+                "pixels": 1074,
+                "center": [
+                  0.7453542054624457,
+                  0.49960234326505276
+                ]
+              },
+              {
+                "pixels": 1072,
+                "center": [
+                  0.25531522077114427,
+                  0.7448839785447761
+                ]
+              },
+              {
+                "pixels": 1072,
+                "center": [
+                  0.74521435789801,
+                  0.744932563743781
+                ]
+              }
+            ],
+            "maxPositionError": 0.0006095104405798865,
+            "pass": true
+          },
+          "textureFile": "d6-face-6-actual-texture.png",
+          "textureSha256": "2b82788d2c229ce49513304155ae418e1442be17691bea01cf9dd97fb30ada22",
+          "files": {
+            "slot": "d6-result-6-slot.png",
+            "center": "d6-result-6-center.png",
+            "raw": "d6-result-6-raw.png",
+            "rawSha256": "6653a068df1577127eba9ad037e4e93eb0d9f79c515406db0856777ca02166c3",
+            "full": "d6-result-6-game.png"
+          }
+        }
+      ],
+      "uiFaces": [
+        {
+          "face": 1,
+          "iconSha256": "f09d6dc9c5720bcb9698bf0c229bdb642d90030e136f5996cc3d512538dc7ffb",
+          "width": 96,
+          "height": 96,
+          "heldGenerated": true,
+          "dragStarted": true,
+          "ghostMatches": true,
+          "infoMatches": true,
+          "shopMatches": true
+        },
+        {
+          "face": 2,
+          "iconSha256": "566e06c14d96df9d4f0cd1eda4061c6e98e4237db560260ced6652be09b6453b",
+          "width": 96,
+          "height": 96,
+          "heldGenerated": true,
+          "dragStarted": true,
+          "ghostMatches": true,
+          "infoMatches": true,
+          "shopMatches": true
+        },
+        {
+          "face": 3,
+          "iconSha256": "c7e91d0384b117a76338c66e3d3ec87eccfe0da0b19786fb6e16ad72ea579842",
+          "width": 96,
+          "height": 96,
+          "heldGenerated": true,
+          "dragStarted": true,
+          "ghostMatches": true,
+          "infoMatches": true,
+          "shopMatches": true
+        },
+        {
+          "face": 4,
+          "iconSha256": "c98df57df941252b212ae06a8d981d48ca6dd3048ab54a11e12cd3b4ad811aca",
+          "width": 96,
+          "height": 96,
+          "heldGenerated": true,
+          "dragStarted": true,
+          "ghostMatches": true,
+          "infoMatches": true,
+          "shopMatches": true
+        },
+        {
+          "face": 5,
+          "iconSha256": "a8f95c13ad80a45c7d82c4e0249dd3e4dc43577706af073c8e607e5399ddcde0",
+          "width": 96,
+          "height": 96,
+          "heldGenerated": true,
+          "dragStarted": true,
+          "ghostMatches": true,
+          "infoMatches": true,
+          "shopMatches": true
+        },
+        {
+          "face": 6,
+          "iconSha256": "1d9c6853ac1528ffa3f65301ce9e5229b3fa21c5b088b7519f3163285b7e5232",
+          "width": 96,
+          "height": 96,
+          "heldGenerated": true,
+          "dragStarted": true,
+          "ghostMatches": true,
+          "infoMatches": true,
+          "shopMatches": true
+        }
+      ],
+      "nonCubeProbes": [
+        {
+          "kind": "d1",
+          "sourcePixelHashes": [
+            "b23e4340"
+          ],
+          "sourcePixelsUnchanged": true,
+          "uvProjectionUnchanged": true
+        },
+        {
+          "kind": "d4",
+          "sourcePixelHashes": [
+            "6671655b",
+            "8d43784c"
+          ],
+          "sourcePixelsUnchanged": true,
+          "uvProjectionUnchanged": true
+        },
+        {
+          "kind": "d8",
+          "sourcePixelHashes": [
+            "1f546b84",
+            "65d4588e",
+            "b77accbb"
+          ],
+          "sourcePixelsUnchanged": true,
+          "uvProjectionUnchanged": true
+        },
+        {
+          "kind": "d12",
+          "sourcePixelHashes": [
+            "1d1301e4",
+            "2d259cce",
+            "43a5a55c",
+            "4436ea46",
+            "5553a463",
+            "99a94384"
+          ],
+          "sourcePixelsUnchanged": true,
+          "uvProjectionUnchanged": true
+        },
+        {
+          "kind": "d20",
+          "sourcePixelHashes": [
+            "100748cd",
+            "2c3303a8",
+            "381e2414",
+            "438b7568",
+            "752e2719",
+            "8a7b3b5c",
+            "916a1a43",
+            "b4d3b92e",
+            "eefed10b"
+          ],
+          "sourcePixelsUnchanged": true,
+          "uvProjectionUnchanged": true
+        },
+        {
+          "kind": "epic",
+          "sourcePixelHashes": [
+            "100748cd",
+            "1e8725ed",
+            "203180f4",
+            "381e2414",
+            "53639c4e",
+            "8a7b3b5c",
+            "b0e72369",
+            "b4d3b92e",
+            "dafb34cb",
+            "eb7c556c"
+          ],
+          "sourcePixelsUnchanged": true,
+          "uvProjectionUnchanged": true
+        },
+        {
+          "kind": "myth",
+          "sourcePixelHashes": [
+            "1e8725ed",
+            "203180f4",
+            "53639c4e",
+            "6d010b22",
+            "8d72fa49",
+            "b0e72369",
+            "b4d3b92e",
+            "dafb34cb",
+            "eb7c556c",
+            "fff99090"
+          ],
+          "sourcePixelsUnchanged": true,
+          "uvProjectionUnchanged": true
+        },
+        {
+          "kind": "primal",
+          "sourcePixelHashes": [
+            "10fc6e38",
+            "2c3303a8",
+            "438b7568",
+            "4ba4f35a",
+            "752e2719",
+            "8a7b3b5c",
+            "8d72fa49",
+            "916a1a43",
+            "eefed10b",
+            "fff99090"
+          ],
+          "sourcePixelsUnchanged": true,
+          "uvProjectionUnchanged": true
+        }
+      ],
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "pass": true,
+  "rotationRegression": {
+    "exitCode": 0,
+    "log": "rotation-regression.log"
+  },
+  "rawEvidence": {
+    "path": "gen\\e2e\\cube-realism\\after\\report.json",
+    "sha256": "55ccf485c0285c0f3cdc8ffc9000014be031ea1c89c320d3c31d2095f92e7ac4",
+    "note": "Per-frame image draw lists condensed to counts. Actual poses, UV tests, pip analysis, UI checks and assertions retained."
+  }
+}
