@@ -1,0 +1,1321 @@
+{
+  "label": "after",
+  "baseUrl": "http://localhost:8137/",
+  "expectedGameSha256": "1a2ff3e9d7bce91aa850cd5c6de36cfc53492e3418d9717ce583420fe56acae1",
+  "viewport": {
+    "width": 440,
+    "height": 956
+  },
+  "gameSha256": "1a2ff3e9d7bce91aa850cd5c6de36cfc53492e3418d9717ce583420fe56acae1",
+  "pngRequests": [
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w001-back.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w001-front.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w001-side.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w001-back-walk-4x2.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w001-front-walk-4x2.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w001-side-walk-4x2.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w006-back.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w006-front.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w006-side.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w006-back-walk-4x2.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w006-front-walk-4x2.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w006-side-walk-4x2.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w001-side.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w001-side-walk-4x2.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w001-back.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w001-front.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w001-front-walk-4x2.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w001-side-walk-4x2.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w001-back-walk-4x2.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w001-side-walk-4x2.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w001-front-walk-4x2.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w001-side-walk-4x2.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w001-back-walk-4x2.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w001-side-walk-4x2.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w001-back-walk-4x2.png?v=93",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8137/casual/enemies/inf/directional/w001-front-walk-4x2.png?v=93",
+      "status": 200
+    }
+  ],
+  "errors": [],
+  "pairs": [
+    {
+      "direction": "right",
+      "view": "side",
+      "rows": [
+        {
+          "id": "w001",
+          "frames": 8,
+          "meanWidthCss": 28.072916666666664,
+          "meanHeightCss": 12.565770696824599,
+          "meanAlphaAreaCss": 187.55226207428936,
+          "drawHeight": 21,
+          "logicalSize": 42,
+          "first": {
+            "id": "w001",
+            "view": "side",
+            "key": "w001:side:sheet",
+            "serial": 6,
+            "requestedPhase": 0.7088272108843414,
+            "pivot": [
+              128,
+              157.5
+            ],
+            "referenceHeight": 96,
+            "widthCss": 28.072916666666668,
+            "heightCss": 12.565770696824597,
+            "alphaAreaCss": 189.04889168756407,
+            "box": {
+              "x0": 228.02264404296875,
+              "x1": 273.96014404296875,
+              "y0": 963.546875,
+              "y1": 984.109375
+            },
+            "anchorCanvas": [
+              250.99139404296875,
+              984
+            ],
+            "pivotResidualCanvas": 0,
+            "drawHeight": 21,
+            "logicalSize": 42,
+            "dist": 1398.9491167968745,
+            "walk": 10.018999999999824,
+            "animT": 0.6152413577337703,
+            "elite": false,
+            "wave": 1
+          },
+          "last": {
+            "id": "w001",
+            "view": "side",
+            "key": "w001:side:sheet",
+            "serial": 8,
+            "requestedPhase": 0.9399597278911762,
+            "pivot": [
+              128,
+              157.5
+            ],
+            "referenceHeight": 96,
+            "widthCss": 28.072916666666668,
+            "heightCss": 12.565770696824597,
+            "alphaAreaCss": 187.29761166247846,
+            "box": {
+              "x0": 259.558837890625,
+              "x1": 305.496337890625,
+              "y0": 963.546875,
+              "y1": 984.109375
+            },
+            "anchorCanvas": [
+              282.527587890625,
+              984
+            ],
+            "pivotResidualCanvas": 0,
+            "drawHeight": 21,
+            "logicalSize": 42,
+            "dist": 1430.485316796875,
+            "walk": 41.55520000000028,
+            "animT": 1.445141357733772,
+            "elite": false,
+            "wave": 1
+          }
+        },
+        {
+          "id": "w006",
+          "frames": 8,
+          "meanWidthCss": 50.463276836158165,
+          "meanHeightCss": 35.323727275833754,
+          "meanAlphaAreaCss": 1114.3037140192337,
+          "drawHeight": 58,
+          "logicalSize": 58,
+          "first": {
+            "id": "w006",
+            "view": "side",
+            "key": "w006:side:sheet",
+            "serial": 4,
+            "requestedPhase": 0.06062359702501352,
+            "pivot": [
+              128,
+              175
+            ],
+            "referenceHeight": 147.5,
+            "widthCss": 50.463276836158165,
+            "heightCss": 35.323727275833754,
+            "alphaAreaCss": 1125.31112541508,
+            "box": {
+              "x0": 378.4414786645922,
+              "x1": 461.0177498510328,
+              "y0": 926.1966101694916,
+              "y1": 984
+            },
+            "anchorCanvas": [
+              419.7296142578125,
+              984
+            ],
+            "pivotResidualCanvas": 0,
+            "drawHeight": 58,
+            "logicalSize": 58,
+            "dist": 1567.6873167968745,
+            "walk": 1.8703999999998961,
+            "animT": 1.0255553007076403,
+            "elite": false,
+            "wave": 6
+          },
+          "last": {
+            "id": "w006",
+            "view": "side",
+            "key": "w006:side:sheet",
+            "serial": 19,
+            "requestedPhase": 0.8774085868830199,
+            "pivot": [
+              128,
+              175
+            ],
+            "referenceHeight": 147.5,
+            "widthCss": 50.463276836158165,
+            "heightCss": 35.323727275833754,
+            "alphaAreaCss": 1100.2503173059795,
+            "box": {
+              "x0": 403.6414603540453,
+              "x1": 486.21773154048594,
+              "y0": 926.1966101694916,
+              "y1": 984
+            },
+            "anchorCanvas": [
+              444.9295959472656,
+              984
+            ],
+            "pivotResidualCanvas": 0,
+            "drawHeight": 58,
+            "logicalSize": 58,
+            "dist": 1592.8873167968743,
+            "walk": 27.070399999999715,
+            "animT": 1.6887131954444825,
+            "elite": false,
+            "wave": 6
+          }
+        }
+      ],
+      "ratOverBoar": {
+        "width": 0.5563038793103451,
+        "height": 0.35573173234811206,
+        "alphaArea": 0.168313413762033
+      }
+    },
+    {
+      "direction": "down",
+      "view": "front",
+      "rows": [
+        {
+          "id": "w001",
+          "frames": 8,
+          "meanWidthCss": 11.97777777777779,
+          "meanHeightCss": 22.511444524949617,
+          "meanAlphaAreaCss": 173.30953051517176,
+          "drawHeight": 21,
+          "logicalSize": 42,
+          "first": {
+            "id": "w001",
+            "view": "front",
+            "key": "w001:front:sheet",
+            "serial": 24,
+            "requestedPhase": 0.7646574149659786,
+            "pivot": [
+              128,
+              157.5
+            ],
+            "referenceHeight": 96,
+            "widthCss": 11.977777777777792,
+            "heightCss": 24.596827746975805,
+            "alphaAreaCss": 174.48181591971888,
+            "box": {
+              "x0": 80.19999999999999,
+              "x1": 99.80000000000001,
+              "y0": 434.7302001953125,
+              "y1": 474.9802001953125
+            },
+            "anchorCanvas": [
+              90,
+              467.4552001953125
+            ],
+            "pivotResidualCanvas": 0,
+            "drawHeight": 21,
+            "logicalSize": 42,
+            "dist": 747.434058398437,
+            "walk": 67.3465999999999,
+            "animT": 2.12386241036535,
+            "elite": false,
+            "wave": 1
+          },
+          "last": {
+            "id": "w001",
+            "view": "front",
+            "key": "w001:front:sheet",
+            "serial": 24,
+            "requestedPhase": 0.7931809523809319,
+            "pivot": [
+              128,
+              157.5
+            ],
+            "referenceHeight": 96,
+            "widthCss": 11.977777777777792,
+            "heightCss": 24.596827746975805,
+            "alphaAreaCss": 174.48181591971888,
+            "box": {
+              "x0": 80.19999999999999,
+              "x1": 99.80000000000001,
+              "y0": 463.4025939941406,
+              "y1": 503.6525939941406
+            },
+            "anchorCanvas": [
+              90,
+              496.1275939941406
+            ],
+            "pivotResidualCanvas": 0,
+            "drawHeight": 21,
+            "logicalSize": 42,
+            "dist": 776.1064583984368,
+            "walk": 96.0189999999997,
+            "animT": 2.8783992524706123,
+            "elite": false,
+            "wave": 1
+          }
+        },
+        {
+          "id": "w006",
+          "frames": 8,
+          "meanWidthCss": 16.340489642184554,
+          "meanHeightCss": 38.92818924275556,
+          "meanAlphaAreaCss": 450.06959355841985,
+          "drawHeight": 58,
+          "logicalSize": 58,
+          "first": {
+            "id": "w006",
+            "view": "front",
+            "key": "w006:front:sheet",
+            "serial": 21,
+            "requestedPhase": 0.21011233941850693,
+            "pivot": [
+              128,
+              175
+            ],
+            "referenceHeight": 147.5,
+            "widthCss": 16.340489642184554,
+            "heightCss": 36.525214598141,
+            "alphaAreaCss": 441.047125201169,
+            "box": {
+              "x0": 76.23728813559322,
+              "x1": 102.97627118644067,
+              "y0": 651.1262366343353,
+              "y1": 710.895728159759
+            },
+            "anchorCanvas": [
+              90,
+              708.9296264648438
+            ],
+            "pivotResidualCanvas": 0,
+            "drawHeight": 58,
+            "logicalSize": 58,
+            "dist": 988.908458398437,
+            "walk": 37.33519999999941,
+            "animT": 1.9588395112339552,
+            "elite": false,
+            "wave": 6
+          },
+          "last": {
+            "id": "w006",
+            "view": "front",
+            "key": "w006:front:sheet",
+            "serial": 2,
+            "requestedPhase": 0.026897329276513116,
+            "pivot": [
+              128,
+              175
+            ],
+            "referenceHeight": 147.5,
+            "widthCss": 16.340489642184554,
+            "heightCss": 38.44759431383266,
+            "alphaAreaCss": 459.2364214093868,
+            "box": {
+              "x0": 76.23728813559322,
+              "x1": 102.97627118644067,
+              "y0": 676.3261878062103,
+              "y1": 739.2414420434984
+            },
+            "anchorCanvas": [
+              90,
+              734.1295776367188
+            ],
+            "pivotResidualCanvas": 0,
+            "drawHeight": 58,
+            "logicalSize": 58,
+            "dist": 1014.1084583984368,
+            "walk": 62.53519999999923,
+            "animT": 2.621997405970795,
+            "elite": false,
+            "wave": 6
+          }
+        }
+      ],
+      "ratOverBoar": {
+        "width": 0.7330121703853965,
+        "height": 0.5782813165176683,
+        "alphaArea": 0.3850727376291326
+      }
+    },
+    {
+      "direction": "left",
+      "view": "side",
+      "rows": [
+        {
+          "id": "w001",
+          "frames": 8,
+          "meanWidthCss": 28.072916666666664,
+          "meanHeightCss": 12.565770696824599,
+          "meanAlphaAreaCss": 187.55226207428936,
+          "drawHeight": 21,
+          "logicalSize": 42,
+          "first": {
+            "id": "w001",
+            "view": "side",
+            "key": "w001:side:sheet",
+            "serial": 37,
+            "requestedPhase": 0.8210960544217265,
+            "pivot": [
+              128,
+              157.5
+            ],
+            "referenceHeight": 96,
+            "widthCss": 28.072916666666668,
+            "heightCss": 12.565770696824597,
+            "alphaAreaCss": 188.28047290104692,
+            "box": {
+              "x0": 277.9312438964844,
+              "x1": 323.8687438964844,
+              "y0": 243.546875,
+              "y1": 264.109375
+            },
+            "anchorCanvas": [
+              300.8999938964844,
+              264
+            ],
+            "pivotResidualCanvas": 0,
+            "drawHeight": 21,
+            "logicalSize": 42,
+            "dist": 359.09999999999974,
+            "walk": 124.6827999999994,
+            "animT": 3.632709778786399,
+            "elite": false,
+            "wave": 1
+          },
+          "last": {
+            "id": "w001",
+            "view": "side",
+            "key": "w001:side:sheet",
+            "serial": 38,
+            "requestedPhase": 0.9506198639455139,
+            "pivot": [
+              128,
+              157.5
+            ],
+            "referenceHeight": 96,
+            "widthCss": 28.072916666666668,
+            "heightCss": 12.565770696824597,
+            "alphaAreaCss": 187.29761166247846,
+            "box": {
+              "x0": 247.83123779296875,
+              "x1": 293.76873779296875,
+              "y0": 243.546875,
+              "y1": 264.109375
+            },
+            "anchorCanvas": [
+              270.79998779296875,
+              264
+            ],
+            "pivotResidualCanvas": 0,
+            "drawHeight": 21,
+            "logicalSize": 42,
+            "dist": 389.1999999999994,
+            "walk": 154.7827999999991,
+            "animT": 4.424815041944296,
+            "elite": false,
+            "wave": 1
+          }
+        },
+        {
+          "id": "w006",
+          "frames": 8,
+          "meanWidthCss": 50.4632768361582,
+          "meanHeightCss": 35.32372727583379,
+          "meanAlphaAreaCss": 1114.3037140192337,
+          "drawHeight": 58,
+          "logicalSize": 58,
+          "first": {
+            "id": "w006",
+            "view": "side",
+            "key": "w006:side:sheet",
+            "serial": 13,
+            "requestedPhase": 0.39009438810005026,
+            "pivot": [
+              128,
+              175
+            ],
+            "referenceHeight": 147.5,
+            "widthCss": 50.46327683615819,
+            "heightCss": 35.32372727583379,
+            "alphaAreaCss": 1108.5654241440222,
+            "box": {
+              "x0": 183.37105935306872,
+              "x1": 265.9473305395094,
+              "y0": 206.19661016949152,
+              "y1": 264
+            },
+            "anchorCanvas": [
+              224.65919494628906,
+              264
+            ],
+            "pivotResidualCanvas": 0,
+            "drawHeight": 58,
+            "logicalSize": 58,
+            "dist": 435.34080000000006,
+            "walk": 73.74079999999947,
+            "animT": 2.9168816164971134,
+            "elite": false,
+            "wave": 6
+          },
+          "last": {
+            "id": "w006",
+            "view": "side",
+            "key": "w006:side:sheet",
+            "serial": 9,
+            "requestedPhase": 0.2671399594320474,
+            "pivot": [
+              128,
+              175
+            ],
+            "referenceHeight": 147.5,
+            "widthCss": 50.4632768361582,
+            "heightCss": 35.32372727583379,
+            "alphaAreaCss": 1110.0090190811823,
+            "box": {
+              "x0": 156.31187051029528,
+              "x1": 238.88814169673597,
+              "y0": 206.19661016949152,
+              "y1": 264
+            },
+            "anchorCanvas": [
+              197.60000610351562,
+              264
+            ],
+            "pivotResidualCanvas": 0,
+            "drawHeight": 58,
+            "logicalSize": 58,
+            "dist": 462.40000000000055,
+            "walk": 100.79999999999995,
+            "animT": 3.6289658270234226,
+            "elite": false,
+            "wave": 6
+          }
+        }
+      ],
+      "ratOverBoar": {
+        "width": 0.5563038793103446,
+        "height": 0.35573173234811173,
+        "alphaArea": 0.168313413762033
+      }
+    },
+    {
+      "direction": "up",
+      "view": "back",
+      "rows": [
+        {
+          "id": "w001",
+          "frames": 8,
+          "meanWidthCss": 11.12222222222225,
+          "meanHeightCss": 22.511444524949617,
+          "meanAlphaAreaCss": 162.29576617781666,
+          "drawHeight": 21,
+          "logicalSize": 42,
+          "first": {
+            "id": "w001",
+            "view": "back",
+            "key": "w001:back:sheet",
+            "serial": 48,
+            "requestedPhase": 0.8781431292516775,
+            "pivot": [
+              128,
+              157.5
+            ],
+            "referenceHeight": 96,
+            "widthCss": 11.12222222222225,
+            "heightCss": 21.602431325604854,
+            "alphaAreaCss": 161.90119206604228,
+            "box": {
+              "x0": 620.9,
+              "x1": 639.1,
+              "y0": 747.8111938476562,
+              "y1": 783.1611938476562
+            },
+            "anchorCanvas": [
+              630,
+              780.5361938476562
+            ],
+            "pivotResidualCanvas": 0,
+            "drawHeight": 21,
+            "logicalSize": 42,
+            "dist": 1955.4003751953126,
+            "walk": 182.02759999999967,
+            "animT": 5.141783462996939,
+            "elite": false,
+            "wave": 1
+          },
+          "last": {
+            "id": "w001",
+            "view": "back",
+            "key": "w001:back:sheet",
+            "serial": 50,
+            "requestedPhase": 0.10805877551026022,
+            "pivot": [
+              128,
+              157.5
+            ],
+            "referenceHeight": 96,
+            "widthCss": 11.12222222222225,
+            "heightCss": 22.457973160282258,
+            "alphaAreaCss": 162.17567840466793,
+            "box": {
+              "x0": 620.9,
+              "x1": 639.1,
+              "y0": 716.2922119140625,
+              "y1": 753.0422119140625
+            },
+            "anchorCanvas": [
+              630,
+              749.0172119140625
+            ],
+            "pivotResidualCanvas": 0,
+            "drawHeight": 21,
+            "logicalSize": 42,
+            "dist": 1986.9193751953137,
+            "walk": 213.5466000000008,
+            "animT": 5.971230831417995,
+            "elite": false,
+            "wave": 1
+          }
+        },
+        {
+          "id": "w006",
+          "frames": 8,
+          "meanWidthCss": 15.859887005649778,
+          "meanHeightCss": 38.98826360887097,
+          "meanAlphaAreaCss": 422.8939188663801,
+          "drawHeight": 58,
+          "logicalSize": 58,
+          "first": {
+            "id": "w006",
+            "view": "back",
+            "key": "w006:back:sheet",
+            "serial": 45,
+            "requestedPhase": 0.630155510480058,
+            "pivot": [
+              128,
+              175
+            ],
+            "referenceHeight": 147.5,
+            "widthCss": 15.859887005649776,
+            "heightCss": 41.09086642290871,
+            "alphaAreaCss": 424.4746553225703,
+            "box": {
+              "x0": 617.0237288135593,
+              "x1": 642.9762711864407,
+              "y0": 481.27259893902277,
+              "y1": 548.5132769051245
+            },
+            "anchorCanvas": [
+              630,
+              539.0759887695312
+            ],
+            "pivotResidualCanvas": 0,
+            "drawHeight": 58,
+            "logicalSize": 58,
+            "dist": 2196.860575195312,
+            "walk": 112.00000000000011,
+            "animT": 3.9237026691286854,
+            "elite": false,
+            "wave": 6
+          },
+          "last": {
+            "id": "w006",
+            "view": "back",
+            "key": "w006:back:sheet",
+            "serial": 61,
+            "requestedPhase": 0.5073825895875075,
+            "pivot": [
+              128,
+              175
+            ],
+            "referenceHeight": 147.5,
+            "widthCss": 15.859887005649776,
+            "heightCss": 38.687891778294144,
+            "alphaAreaCss": 427.59282038683625,
+            "box": {
+              "x0": 617.0237288135593,
+              "x1": 642.9762711864407,
+              "y0": 454.2078406382415,
+              "y1": 517.5163152145127
+            },
+            "anchorCanvas": [
+              630,
+              512.01123046875
+            ],
+            "pivotResidualCanvas": 0,
+            "drawHeight": 58,
+            "logicalSize": 58,
+            "dist": 2223.92537519531,
+            "walk": 139.0647999999984,
+            "animT": 4.635934248076061,
+            "elite": false,
+            "wave": 6
+          }
+        }
+      ],
+      "ratOverBoar": {
+        "width": 0.7012800417972823,
+        "height": 0.5773902821316619,
+        "alphaArea": 0.38377417819785803
+      }
+    }
+  ],
+  "extra": [
+    {
+      "spawn": {
+        "wave": 405,
+        "id": "w001",
+        "drawHeight": 25.2,
+        "size": 50,
+        "hp": 1000000000000,
+        "speed": 86,
+        "spdMult": 1.5,
+        "armor": 62,
+        "gold": 300,
+        "elite": true
+      },
+      "sample": {
+        "direction": "down",
+        "view": "front",
+        "rows": [
+          {
+            "id": "w001",
+            "frames": 8,
+            "meanWidthCss": 14.373333333333322,
+            "meanHeightCss": 27.013733429939506,
+            "meanAlphaAreaCss": 249.56572394184727,
+            "drawHeight": 25.2,
+            "logicalSize": 50,
+            "first": {
+              "id": "w001",
+              "view": "front",
+              "key": "w001:front:sheet",
+              "serial": 90,
+              "requestedPhase": 0.38103265306124756,
+              "pivot": [
+                128,
+                157.5
+              ],
+              "referenceHeight": 96,
+              "widthCss": 14.373333333333322,
+              "heightCss": 27.462892893145156,
+              "alphaAreaCss": 248.35523918850802,
+              "box": {
+                "x0": 78.24000000000001,
+                "x1": 101.75999999999999,
+                "y0": 421.03859375,
+                "y1": 465.97859375
+              },
+              "anchorCanvas": [
+                90,
+                460.30859375
+              ],
+              "pivotResidualCanvas": 0,
+              "drawHeight": 25.2,
+              "logicalSize": 50,
+              "dist": 740.2874583984374,
+              "walk": 6.46290000000039,
+              "animT": 0.8125117572304532,
+              "elite": true,
+              "wave": 405
+            },
+            "last": {
+              "id": "w001",
+              "view": "front",
+              "key": "w001:front:sheet",
+              "serial": 97,
+              "requestedPhase": 0.2831537414966454,
+              "pivot": [
+                128,
+                157.5
+              ],
+              "referenceHeight": 96,
+              "widthCss": 14.373333333333322,
+              "heightCss": 29.51619329637094,
+              "alphaAreaCss": 252.96660967741937,
+              "box": {
+                "x0": 78.24000000000001,
+                "x1": 101.75999999999999,
+                "y0": 453.3015026855469,
+                "y1": 501.60150268554685
+              },
+              "anchorCanvas": [
+                90,
+                492.5715026855469
+              ],
+              "pivotResidualCanvas": 0,
+              "drawHeight": 25.2,
+              "logicalSize": 50,
+              "dist": 772.5503583984378,
+              "walk": 38.72580000000079,
+              "animT": 1.661535441440987,
+              "elite": true,
+              "wave": 405
+            }
+          }
+        ]
+      }
+    },
+    {
+      "spawn": {
+        "wave": 102,
+        "id": "w001",
+        "drawHeight": 21,
+        "size": 42,
+        "hp": 1000000000000,
+        "speed": 86,
+        "spdMult": 1.5,
+        "armor": 12,
+        "gold": 32,
+        "elite": false
+      },
+      "sample": {
+        "direction": "down",
+        "view": "front",
+        "rows": [
+          {
+            "id": "w001",
+            "frames": 8,
+            "meanWidthCss": 11.97777777777779,
+            "meanHeightCss": 22.51144452494962,
+            "meanAlphaAreaCss": 173.30953051517176,
+            "drawHeight": 21,
+            "logicalSize": 42,
+            "first": {
+              "id": "w001",
+              "view": "front",
+              "key": "w001:front:sheet",
+              "serial": 97,
+              "requestedPhase": 0.30482612244899676,
+              "pivot": [
+                128,
+                157.5
+              ],
+              "referenceHeight": 96,
+              "widthCss": 11.977777777777792,
+              "heightCss": 24.596827746975805,
+              "alphaAreaCss": 175.67125672043016,
+              "box": {
+                "x0": 80.19999999999999,
+                "x1": 99.80000000000001,
+                "y0": 425.429296875,
+                "y1": 465.679296875
+              },
+              "anchorCanvas": [
+                90,
+                458.154296875
+              ],
+              "pivotResidualCanvas": 0,
+              "drawHeight": 21,
+              "logicalSize": 42,
+              "dist": 738.1331583984372,
+              "walk": 4.308600000000242,
+              "animT": 0.28319879183193863,
+              "elite": false,
+              "wave": 102
+            },
+            "last": {
+              "id": "w001",
+              "view": "front",
+              "key": "w001:front:sheet",
+              "serial": 95,
+              "requestedPhase": 0.673805714285765,
+              "pivot": [
+                128,
+                157.5
+              ],
+              "referenceHeight": 96,
+              "widthCss": 11.977777777777792,
+              "heightCss": 20.746889490927447,
+              "alphaAreaCss": 170.27302539412526,
+              "box": {
+                "x0": 80.19999999999999,
+                "x1": 99.80000000000001,
+                "y0": 444.7793029785156,
+                "y1": 478.72930297851565
+              },
+              "anchorCanvas": [
+                90,
+                477.5043029785156
+              ],
+              "pivotResidualCanvas": 0,
+              "drawHeight": 21,
+              "logicalSize": 42,
+              "dist": 757.4831583984377,
+              "walk": 23.658600000000718,
+              "animT": 0.7924093181477282,
+              "elite": false,
+              "wave": 102
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "pass": true,
+  "spawn1": {
+    "wave": 1,
+    "id": "w001",
+    "drawHeight": 21,
+    "size": 42,
+    "hp": 1000000000000,
+    "speed": 86,
+    "spdMult": 1,
+    "armor": 0,
+    "gold": 9,
+    "elite": false
+  },
+  "spawn6": {
+    "wave": 6,
+    "id": "w006",
+    "drawHeight": 58,
+    "size": 58,
+    "hp": 1000000000000,
+    "speed": 56,
+    "spdMult": 1,
+    "armor": 0,
+    "gold": 9,
+    "elite": false
+  },
+  "continuity": [
+    {
+      "end": 556.9894291992185,
+      "from": "side",
+      "to": "front",
+      "before": {
+        "id": "w001",
+        "view": "side",
+        "key": "w001:side:sheet",
+        "serial": 62,
+        "requestedPhase": 0.9333648979592688,
+        "pivot": [
+          128,
+          157.5
+        ],
+        "referenceHeight": 96,
+        "widthCss": 28.072916666666668,
+        "heightCss": 12.565770696824597,
+        "alphaAreaCss": 187.29761166247846,
+        "box": {
+          "x0": 85.03706359863281,
+          "x1": 130.9745635986328,
+          "y0": 260.788818359375,
+          "y1": 281.351318359375
+        },
+        "anchorCanvas": [
+          108.00581359863281,
+          281.241943359375
+        ],
+        "pivotResidualCanvas": 0,
+        "drawHeight": 21,
+        "logicalSize": 42,
+        "dist": 556.4446291992186,
+        "walk": 239.34660000000122,
+        "animT": 6.650178199839049,
+        "elite": false,
+        "wave": 1
+      },
+      "after": {
+        "id": "w001",
+        "view": "front",
+        "key": "w001:front:sheet",
+        "serial": 63,
+        "requestedPhase": 0.5418002721089294,
+        "pivot": [
+          128,
+          157.5
+        ],
+        "referenceHeight": 96,
+        "widthCss": 11.977777777777792,
+        "heightCss": 21.81631678427422,
+        "alphaAreaCss": 173.8870955193633,
+        "box": {
+          "x0": 92.8698989868164,
+          "x1": 112.46989898681642,
+          "y0": 255.23920288085935,
+          "y1": 290.9392028808594
+        },
+        "anchorCanvas": [
+          102.6698989868164,
+          287.9642028808594
+        ],
+        "pivotResidualCanvas": 0,
+        "drawHeight": 21,
+        "logicalSize": 42,
+        "dist": 565.0446291992187,
+        "walk": 247.94660000000124,
+        "animT": 6.876493989312733,
+        "elite": false,
+        "wave": 1
+      },
+      "commonStride": 14.134615384615385,
+      "phaseResidual": 8.881784197001252e-16,
+      "maxPivotResidual": 0,
+      "walkDelta": 8.600000000000023,
+      "anchorStep": 8.58258456519848
+    },
+    {
+      "end": 1250.9682875976557,
+      "from": "front",
+      "to": "side",
+      "before": {
+        "id": "w001",
+        "view": "front",
+        "key": "w001:front:sheet",
+        "serial": 64,
+        "requestedPhase": 0.6576707482994522,
+        "pivot": [
+          128,
+          157.5
+        ],
+        "referenceHeight": 96,
+        "widthCss": 11.977777777777792,
+        "heightCss": 20.746889490927447,
+        "alphaAreaCss": 170.27302539412526,
+        "box": {
+          "x0": 97.45241088867186,
+          "x1": 117.05241088867189,
+          "y0": 933.2828125,
+          "y1": 967.2328125
+        },
+        "anchorCanvas": [
+          107.25241088867188,
+          966.0078125
+        ],
+        "pivotResidualCanvas": 0,
+        "drawHeight": 21,
+        "logicalSize": 42,
+        "dist": 1250.4406875976563,
+        "walk": 263.71900000000187,
+        "animT": 7.291557147207476,
+        "elite": false,
+        "wave": 1
+      },
+      "after": {
+        "id": "w001",
+        "view": "side",
+        "key": "w001:side:sheet",
+        "serial": 71,
+        "requestedPhase": 0.16449741496613512,
+        "pivot": [
+          128,
+          157.5
+        ],
+        "referenceHeight": 96,
+        "widthCss": 28.072916666666668,
+        "heightCss": 12.565770696824597,
+        "alphaAreaCss": 187.8694582012819,
+        "box": {
+          "x0": 89.86969757080078,
+          "x1": 135.80719757080078,
+          "y0": 950.0131225585938,
+          "y1": 970.5756225585938
+        },
+        "anchorCanvas": [
+          112.83844757080078,
+          970.4662475585938
+        ],
+        "pivotResidualCanvas": 0,
+        "drawHeight": 21,
+        "logicalSize": 42,
+        "dist": 1257.6044875976565,
+        "walk": 270.88280000000213,
+        "animT": 7.480078199839054,
+        "elite": false,
+        "wave": 1
+      },
+      "commonStride": 14.134615384615385,
+      "phaseResidual": 2.4424906541753444e-15,
+      "maxPivotResidual": 0,
+      "walkDelta": 7.163800000000265,
+      "anchorStep": 7.147128723185806
+    },
+    {
+      "end": 1764.9471459960932,
+      "from": "side",
+      "to": "back",
+      "before": {
+        "id": "w001",
+        "view": "side",
+        "key": "w001:side:sheet",
+        "serial": 72,
+        "requestedPhase": 0.28036789115666494,
+        "pivot": [
+          128,
+          157.5
+        ],
+        "referenceHeight": 96,
+        "widthCss": 28.072916666666668,
+        "heightCss": 12.565770696824597,
+        "alphaAreaCss": 187.637145544893,
+        "box": {
+          "x0": 589.0458984375,
+          "x1": 634.9833984375,
+          "y0": 946.2892456054688,
+          "y1": 966.8517456054688
+        },
+        "anchorCanvas": [
+          612.0146484375,
+          966.7423706054688
+        ],
+        "pivotResidualCanvas": 0,
+        "drawHeight": 21,
+        "logicalSize": 42,
+        "dist": 1764.4281459960937,
+        "walk": 286.6552000000029,
+        "animT": 7.895141357733796,
+        "elite": false,
+        "wave": 1
+      },
+      "after": {
+        "id": "w001",
+        "view": "back",
+        "key": "w001:back:sheet",
+        "serial": 79,
+        "requestedPhase": 0.7865861224491937,
+        "pivot": [
+          128,
+          157.5
+        ],
+        "referenceHeight": 96,
+        "widthCss": 11.12222222222225,
+        "heightCss": 21.81631678427422,
+        "alphaAreaCss": 161.3522193887909,
+        "box": {
+          "x0": 607.3662475585937,
+          "x1": 625.5662475585938,
+          "y0": 928.4365600585937,
+          "y1": 964.1365600585938
+        },
+        "anchorCanvas": [
+          616.4662475585938,
+          961.1615600585938
+        ],
+        "pivotResidualCanvas": 0,
+        "drawHeight": 21,
+        "logicalSize": 42,
+        "dist": 1771.5833459960938,
+        "walk": 293.810400000003,
+        "animT": 8.083436094575895,
+        "elite": false,
+        "wave": 1
+      },
+      "commonStride": 14.134615384615385,
+      "phaseResidual": 1.1102230246251565e-15,
+      "maxPivotResidual": 0,
+      "walkDelta": 7.15520000000015,
+      "anchorStep": 7.138780084512611
+    },
+    {
+      "end": 2458.92600439453,
+      "from": "back",
+      "to": "side",
+      "before": {
+        "id": "w001",
+        "view": "back",
+        "key": "w001:back:sheet",
+        "serial": 80,
+        "requestedPhase": 0.9024565986397235,
+        "pivot": [
+          128,
+          157.5
+        ],
+        "referenceHeight": 96,
+        "widthCss": 11.12222222222225,
+        "heightCss": 21.602431325604854,
+        "alphaAreaCss": 161.90119206604228,
+        "box": {
+          "x0": 603.6476196289062,
+          "x1": 621.8476196289063,
+          "y0": 249.26715698242185,
+          "y1": 284.6171569824219
+        },
+        "anchorCanvas": [
+          612.7476196289062,
+          281.9921569824219
+        ],
+        "pivotResidualCanvas": 0,
+        "drawHeight": 21,
+        "logicalSize": 42,
+        "dist": 2458.3984043945306,
+        "walk": 309.5828000000038,
+        "animT": 8.498499252470635,
+        "elite": false,
+        "wave": 1
+      },
+      "after": {
+        "id": "w001",
+        "view": "side",
+        "key": "w001:side:sheet",
+        "serial": 87,
+        "requestedPhase": 0.40989170068056424,
+        "pivot": [
+          128,
+          157.5
+        ],
+        "referenceHeight": 96,
+        "widthCss": 28.072916666666668,
+        "heightCss": 12.565770696824597,
+        "alphaAreaCss": 187.47631370585452,
+        "box": {
+          "x0": 584.1859741210938,
+          "x1": 630.1234741210938,
+          "y0": 257.07537841796875,
+          "y1": 277.63787841796875
+        },
+        "anchorCanvas": [
+          607.1547241210938,
+          277.52850341796875
+        ],
+        "pivotResidualCanvas": 0,
+        "drawHeight": 21,
+        "logicalSize": 42,
+        "dist": 2465.570804394531,
+        "walk": 316.75520000000415,
+        "animT": 8.68724662089169,
+        "elite": false,
+        "wave": 1
+      },
+      "commonStride": 14.134615384615385,
+      "phaseResidual": 2.4424906541753444e-15,
+      "maxPivotResidual": 0,
+      "walkDelta": 7.17240000000038,
+      "anchorStep": 7.155744776385219
+    }
+  ],
+  "stun": {
+    "before": [
+      {
+        "id": "w001",
+        "dist": 2469.8622043945306,
+        "walk": 321.04660000000376,
+        "animT": 8.800178199839053,
+        "drawHeight": 21
+      },
+      {
+        "id": "w006",
+        "dist": 2232.3309751953093,
+        "walk": 147.47039999999754,
+        "animT": 4.8571342480760595,
+        "drawHeight": 58
+      }
+    ],
+    "after": [
+      {
+        "id": "w001",
+        "dist": 2469.8622043945306,
+        "walk": 321.04660000000376,
+        "animT": 8.800178199839053,
+        "drawHeight": 21
+      },
+      {
+        "id": "w006",
+        "dist": 2232.3309751953093,
+        "walk": 147.47039999999754,
+        "animT": 4.8571342480760595,
+        "drawHeight": 58
+      }
+    ],
+    "pass": true
+  }
+}
