@@ -1,0 +1,17 @@
+{
+  "name": "주사위 성채 (Dicekeep)",
+  "install": "python3 --version",
+  "terminals": [
+    {
+      "name": "game-server",
+      "command": "python3 serve.py",
+      "description": "정적 게임을 http://localhost:8137 에서 제공하는 개발 서버 (serve.py). 브라우저로 접속해 플레이."
+    }
+  ],
+  "ports": [
+    {
+      "name": "game",
+      "port": 8137
+    }
+  ]
+}
