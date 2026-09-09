@@ -5,12 +5,13 @@
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),crypto=require('node:crypto');
 const {launchBrowser}=require('./browser.cjs');
 const repo=path.resolve(__dirname,'../..'),label=process.argv[2]||'after',legacy=process.argv.includes('--legacy');
+const smoke=process.argv.includes('--smoke'); // W20 actual down/spectator; W121/222 spawn; W4 flight.
 const compare=process.argv.find(x=>x.startsWith('--compare='))?.slice(10);
 assert.match(label,/^[a-z0-9_-]+$/i);assert.ok(process.env.E2E_BASE_URL,'Explicit E2E_BASE_URL required');
 const base=new URL(process.env.E2E_BASE_URL);if(!base.pathname.endsWith('/'))base.pathname+='/';
 const root=path.join(repo,'gen/e2e/stag-ground'),out=path.join(root,label);assert.ok(!fs.existsSync(path.join(out,'report.json')),'Preserve existing report; choose a new label');fs.mkdirSync(out,{recursive:true});
 const sha=b=>crypto.createHash('sha256').update(b).digest('hex');
-const report={version:1,label,legacy,baseUrl:base.href,startedAt:new Date().toISOString(),checkerSha256:sha(fs.readFileSync(__filename)),
+const report={version:1,label,legacy,smoke,baseUrl:base.href,startedAt:new Date().toISOString(),checkerSha256:sha(fs.readFileSync(__filename)),
   scope:'HTTP game source plus closure exports only; no logic/art response replacement. Actual buildInfinityWave/spawnEnemy select combat/identity. Isolated public test state positions actors on real lane straights. Draw observation subtracts actual road camera transform. Spectator uses actual serialized enemy rows and mpViewBuild, without a remote room.',
   pixelLimit:'A rendered pivot at the authored floor is a runtime grounding check, not independent proof of anatomical foot contact in every textured pose.',
   anchorToleranceWorldPx:.001,anchorToleranceReason:'Canvas getTransform translations are float32-quantized while path coordinates are JS doubles. Baseline measured horizontal residual 0.000007397px; tolerance remains one-thousandth of a game pixel.',
@@ -42,6 +43,7 @@ async function main(){
   try{
     const page=await browser.newPage({viewport:{width:440,height:956}}),pending=[];
     page.on('pageerror',e=>report.errors.push(e.message));
+    page.on('requestfailed',r=>{if(/\.js(?:\?|$)|\/casual\//.test(r.url()))report.errors.push({url:r.url(),failure:r.failure()});});
     page.on('response',r=>{const u=new URL(r.url());
       if(r.status()>=400){const item={url:r.url(),status:r.status()};if(/\/audio\/bgm-(lobby|battle|boss)\.(ogg|mp3)$/.test(u.pathname))report.optionalAudio404.push(item);else report.errors.push(item);}
       if(r.status()===200&&/\/(directional-art|extreme-art)\.js$/.test(u.pathname))pending.push(r.body().then(b=>{report.source[path.basename(u.pathname)]={url:r.url(),sha256:sha(b)};}));
@@ -88,7 +90,8 @@ async function main(){
       const c=await create(wave,1);report.cases.push(c);assert.equal(c.id,wave===20?'b020-2':'b121-2');assert.equal(c.entry.locomotion,'legged');
       const expected=legacy&&wave===20?'air':'ground';assert.equal(c.cold.move,expected);
       if(expected==='ground')assert.equal(c.cold.airHeight,0,'Ground before optional texture readiness');
-      for(const direction of ['down','right','left','up'])await sample(c,direction,expected);
+      if(smoke&&wave!==20){flush();console.log('STAG SPAWN PASS',wave,expected);continue;}
+      for(const direction of smoke?['down']:['down','right','left','up'])await sample(c,direction,expected);
       // Serialize this exact real spawn and rebuild it via the production spectator path.
       const data=await page.evaluate(()=>{const e=DK.enemies[0];return{en:__stagFns.mpEnemyStream(),w:DK.wave,ll:DKLANES()[e.lane||0].len,sp:1,o:'p',l:20,f:1,tw:[]};});
       await page.evaluate(data=>{DK.net={rivals:{peer:{w:data.w}},status:'alive'};__stagFns.VIEW.pid='peer';__stagFns.mpViewBuild(data);DK.enemies=[];DK.paused=true;},data);
@@ -97,7 +100,7 @@ async function main(){
       await page.waitForFunction(()=>__stagQA.rows.some(r=>r.view==='front'&&r.key.endsWith(':sheet')),null,{timeout:15000});
       const spectator=await page.evaluate(()=>{const e=__stagFns.VIEW.enemies[0],row=__stagQA.rows.at(-1);return{wave:DK.wave,id:e.artAssetId,move:e.move,row};});
       assert.equal(spectator.id,c.id);assert.equal(spectator.move,expected);if(expected==='ground')assert.ok(Math.abs(spectator.row.gap)<report.anchorToleranceWorldPx);
-      report.spectator.push(spectator);await page.screenshot({path:path.join(out,`w${wave}-spectator.png`)});flush();console.log('STAG PASS',wave,expected,'4 directions + spectator');
+      report.spectator.push(spectator);await page.screenshot({path:path.join(out,`w${wave}-spectator.png`)});flush();console.log('STAG PASS',wave,expected,(smoke?'down':'4 directions')+' + spectator');
     }
     const flight=await create(4,0);report.flight=flight;assert.equal(flight.id,'w004');assert.equal(flight.cold.move,'air');await sample(flight,'down','air');
     await Promise.all(pending);

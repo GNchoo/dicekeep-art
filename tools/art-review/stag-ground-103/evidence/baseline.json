@@ -1,0 +1,1838 @@
+{
+  "version": 1,
+  "label": "baseline",
+  "legacy": true,
+  "baseUrl": "https://dicekeep.cgn3731.workers.dev/",
+  "startedAt": "2026-09-09T04:58:50.336Z",
+  "checkerSha256": "250219e35f31a772ed21c793739e4634ff758222492816661e31d48c074495f1",
+  "scope": "HTTP game source plus closure exports only; no logic/art response replacement. Actual buildInfinityWave/spawnEnemy select combat/identity. Isolated public test state positions actors on real lane straights. Draw observation subtracts actual road camera transform. Spectator uses actual serialized enemy rows and mpViewBuild, without a remote room.",
+  "pixelLimit": "A rendered pivot at the authored floor is a runtime grounding check, not independent proof of anatomical foot contact in every textured pose.",
+  "anchorToleranceWorldPx": 0.001,
+  "anchorToleranceReason": "Canvas getTransform translations are float32-quantized while path coordinates are JS doubles. Baseline measured horizontal residual 0.000007397px; tolerance remains one-thousandth of a game pixel.",
+  "source": {
+    "game": {
+      "url": "https://dicekeep.cgn3731.workers.dev/game.js?v=101",
+      "sha256": "f7322ccc598ac2d5c8b7a2136a41cf0eeaef9e35de457cb7824fc1ae46eb5988",
+      "status": 200
+    },
+    "exportedGameSha256": "53a79edcf56696a69eb31f23dc5b5a746231d17074ffd6126d7c924803579f93",
+    "extreme-art.js": {
+      "url": "https://dicekeep.cgn3731.workers.dev/extreme-art.js?v=102",
+      "sha256": "827de4060045b1bb2c40ffb4bfc8b26d268b97a35cc72e6d51f78936be89a8bd"
+    },
+    "directional-art.js": {
+      "url": "https://dicekeep.cgn3731.workers.dev/directional-art.js?v=102",
+      "sha256": "2b58b56a00f859cf3f3139046ab1ce7a11ff1bced0ffdc01d7f06f85b1cd270b"
+    }
+  },
+  "artResponses": [
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/enemies/inf/directional/w001-front.png?v=93",
+      "sha256": "ef7f6d2297753b779cb2e5bb31bd4db97a60ef8158688b618a8952460f015844",
+      "bytes": 14144
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/enemies/inf/directional/w001-back.png?v=93",
+      "sha256": "9df016b1d8cd60247c488de2fa16e4f545ed8b6ef76eab2160fe3893bd0c5be2",
+      "bytes": 13053
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/enemies/inf/directional/w002-back.png?v=93",
+      "sha256": "ffe0206488b4511d0ffcccda5237e460e86424cea88cc341114e07a7d24be024",
+      "bytes": 43600
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/enemies/inf/directional/w001-side.png?v=93",
+      "sha256": "3f6f5538d258ec6546fff326d5e976571639764a9e93e0cffc5679588a938aa0",
+      "bytes": 32654
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/bosses/inf/directional/b020-2-front.png?v=93",
+      "sha256": "e873f14083a76d26b6149eb4142b0aabd4a12b4ec6feada339deb93bf09b86d3",
+      "bytes": 140810
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/bosses/inf/directional/b020-2-front-walk-4x2.png?v=93",
+      "sha256": "75efe73c837bd9ccc44b3171da725050a9bf539cdc66447784a9d37f180256f2",
+      "bytes": 548906
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/bosses/inf/directional/b020-2-back.png?v=93",
+      "sha256": "4549058f9f58254bb94b2f9f54cc2925dbd76d698e36c7efd80b79c8ed091161",
+      "bytes": 130880
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/bosses/inf/directional/b020-2-side.png?v=93",
+      "sha256": "eff9911219ab0d50846153cac31936e8d90c442e8d95178bcf95c83ad7dd1aea",
+      "bytes": 149026
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/bosses/inf/directional/b020-back.png?v=93",
+      "sha256": "9d56347107a08702d95ea79a8886e274746a818a6c09e9a899f3453fc0bc44ea",
+      "bytes": 176066
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/bosses/inf/directional/b020-front.png?v=93",
+      "sha256": "8c4983bbf27c0939eaa1659deed1727dabfe1ce65c2120598261c987211b643f",
+      "bytes": 185717
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/bosses/inf/directional/b020-side.png?v=93",
+      "sha256": "d11b69fa46d513bef908c2f75a5ecf7bc0941da8ca2296ec96916102624aeb5b",
+      "bytes": 157681
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/enemies/inf/directional/w021-back.png?v=93",
+      "sha256": "a0f8452c53b9b7f4d5bb77f4110acd34a4c897f6ad3a3473b4a213d079a495e8",
+      "bytes": 13233
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/enemies/inf/directional/w021-front.png?v=93",
+      "sha256": "5385ebfda364377449a8df99aa79f81ee18c3a99074c19f443c84e087b4c8225",
+      "bytes": 12608
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/enemies/inf/directional/w021-side.png?v=93",
+      "sha256": "eaf21157d86635b2089ced3cfe8690e69d75c09efd11be0c58fbcc5970e8e9c2",
+      "bytes": 14403
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/bosses/inf/directional/b020-2-back-walk-4x2.png?v=93",
+      "sha256": "ad5213313c13a4dc7192895fca17879049e9162604dbbb2af8b23c711e1f289f",
+      "bytes": 523226
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/bosses/inf/directional/b020-2-side-walk-4x2.png?v=93",
+      "sha256": "cfb3246aa8e5006f042181f3f7cab5218db3a4aee052fc33586b01fd11a4be67",
+      "bytes": 682057
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/bosses/inf/directional/b020-back-walk-4x2.png?v=93",
+      "sha256": "42675b571371b279474318446fe72672ab2852f31250b920cd77c9e9295d435d",
+      "bytes": 1127835
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/bosses/inf/directional/b020-front-walk-4x2.png?v=93",
+      "sha256": "b5eb9d2ecebc0bbabebe17752da3ad1c4cf3526de1df991e6701291d83033c3f",
+      "bytes": 1196553
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/enemies/inf/directional/w021-back-walk-4x2.png?v=93",
+      "sha256": "661a40f2fe128b7b171a65333cca4d10f445c9125edf0d6426cfa6a30ad8efd6",
+      "bytes": 83552
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/bosses/inf/directional/b020-side-walk-4x2.png?v=93",
+      "sha256": "79cc1f3c8950421bc68091ab335884430704400fb3b29a368395aa5a6e6b7a7e",
+      "bytes": 1037508
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/enemies/inf/directional/w021-front-walk-4x2.png?v=93",
+      "sha256": "18fe53dd95763050d834a1dc2e9beed1667e3892156f08e14044068f3063a38a",
+      "bytes": 79914
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/enemies/inf/directional/w021-side-walk-4x2.png?v=93",
+      "sha256": "47046ecae640e873d0106cbcb9682ac35fd2b3cc8f0ce8cf7ca658372ab63d2a",
+      "bytes": 77854
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/bosses/extreme/b121-2-front.webp?v=101",
+      "sha256": "73078d233d9512f3500f24a30010e6a918dad3309f8b6599a83b5d78ff579785",
+      "bytes": 107790
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/bosses/extreme/b121-2-front-walk-4x2.webp?v=101",
+      "sha256": "45c2c506ad1ec3e77a2f2e158fb1deb139057041136e2f7a0d70b0cf9107f267",
+      "bytes": 325188
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/bosses/extreme/b121-2-back.webp?v=101",
+      "sha256": "cf926ba7fd1aa0e177a4c15e0228d38df3b099e347fbfd592b7725363cf99aec",
+      "bytes": 101784
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/bosses/extreme/b121-2-side.webp?v=101",
+      "sha256": "f25018a4a4bdf286954bae4d7e5d1fd6ca38d63651a1228665b8bbf4b68e0fff",
+      "bytes": 117894
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/bosses/extreme/b121-back.webp?v=101",
+      "sha256": "6c2f965107ff891a6ed9da8039b5cfdfb5938bc42d20ee90379a0029e0cd63c4",
+      "bytes": 124964
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/bosses/extreme/b121-front.webp?v=101",
+      "sha256": "bf52800dc42cde4f65fab999f234f8185053a5bf6b54626de0e3d4d7a7c8056c",
+      "bytes": 139982
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/bosses/extreme/b121-side.webp?v=101",
+      "sha256": "787cee4cadf64edc07a6545bb76c4a094adf121c441916b77444c1e45ff503ab",
+      "bytes": 115182
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/enemies/extreme/w122-back.webp?v=101",
+      "sha256": "499e9a2114435aff44e1487ef04a809c5e216a6ad1762d4a4317eb5a109a476a",
+      "bytes": 9802
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/enemies/extreme/w122-front.webp?v=101",
+      "sha256": "d167848405550cc9d6f4022cb8bbc849cf3e7905d7105e9745651c89f4f451ed",
+      "bytes": 9674
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/enemies/extreme/w122-side.webp?v=101",
+      "sha256": "0883b815e9c29dc7980f539ae517471cd8682aa506de3b3dd7865abfefb762a1",
+      "bytes": 13120
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/bosses/extreme/b121-2-back-walk-4x2.webp?v=101",
+      "sha256": "b0f9874056375f025ea76045e1a1db5905492d9f9e2e785bdbe7b38b635c139d",
+      "bytes": 309284
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/bosses/extreme/b121-2-side-walk-4x2.webp?v=101",
+      "sha256": "4399672a6792dfce50cea70de0a48b0e57a7747da9462c888c84f52841ebf22b",
+      "bytes": 438364
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/bosses/extreme/b121-back-walk-4x2.webp?v=101",
+      "sha256": "aee076bd3e946134f08e10a2e0b3fcf86d325fe3ac4c84f45774382c6043660c",
+      "bytes": 739584
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/bosses/extreme/b121-front-walk-4x2.webp?v=101",
+      "sha256": "3b978c5ee56318d1abe2e6aa81287398aea7a11642cb6dab9e5f7dd505e57fac",
+      "bytes": 820640
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/enemies/extreme/w122-back-walk-4x2.webp?v=101",
+      "sha256": "b7f812551a9e6f18a724def9af8b0c8261a093cb4637b9337e67951307babeb3",
+      "bytes": 62990
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/bosses/extreme/b121-side-walk-4x2.webp?v=101",
+      "sha256": "6b0c685f6a2acf34062a396932fafa4e0da1161e5e7203e0ace31b39ff46c43f",
+      "bytes": 735624
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/enemies/extreme/w122-front-walk-4x2.webp?v=101",
+      "sha256": "7b835d0df56ec91d6391676cfd7b36fc881a74753845124b41c55cc948f7c784",
+      "bytes": 60570
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/enemies/extreme/w122-side-walk-4x2.webp?v=101",
+      "sha256": "2f39b4f75452127fea76631293575b7e10727b5da5739d8d52f9ba070db56639",
+      "bytes": 56872
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/enemies/inf/directional/w004-front-walk-2x2.png?v=93",
+      "sha256": "0036804dcadbe7b523c2d2dd80b8b5b1a7f12398ab68fcd5f51577c149c9be69",
+      "bytes": 101182
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/enemies/inf/directional/w004-front.png?v=93",
+      "sha256": "1f3cc2b45c13411146917d0c051e92f85c3638d1a9f3f40e01d9ccdc481b1e02",
+      "bytes": 31097
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/enemies/inf/directional/w004-side.png?v=93",
+      "sha256": "9a5f567ba8d320b315098c341b9a29823d477ca25d1f0c24747582c527ce9836",
+      "bytes": 35504
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/enemies/inf/directional/w004-back.png?v=93",
+      "sha256": "e813df26d4f6007098ec2b675b602fa52aafd256137af1beac5d273ecb324985",
+      "bytes": 29778
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/enemies/inf/directional/w005-back.png?v=93",
+      "sha256": "3272462fe7b7c4adcc33091c62587be7a8abdfc418835350700e6a4968d60b67",
+      "bytes": 61657
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/enemies/inf/directional/w005-front.png?v=93",
+      "sha256": "3446368f6272f98570b8b17023f1e3a092356cbc34849988bd28e6f78f372759",
+      "bytes": 66065
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/enemies/inf/directional/w005-side.png?v=93",
+      "sha256": "0e294a5ad8a438de41a162b3fa8cb88b13a3bd7e719c9bda4dac64ebaabea84d",
+      "bytes": 52683
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/enemies/inf/directional/w004-back-walk-2x2.png?v=93",
+      "sha256": "39d3e4d866a9dc1c6e5c67dc49dd7b7cd709b3b6a4411d1dfd26498c88ce6efe",
+      "bytes": 98674
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/enemies/inf/directional/w004-side-walk-2x2.png?v=93",
+      "sha256": "298e1e10e8d2f9bbe7fdaf428beba5ab2bfa4067cf0b8ff3554bd32ee574c7c8",
+      "bytes": 140022
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/casual/enemies/inf/directional/w005-back-walk-4x2.png?v=93",
+      "sha256": "c84a0ca5f2b9a8e375a7f5d724cca567634d263625fb43cea34be907d1248425",
+      "bytes": 393080
+    }
+  ],
+  "cases": [
+    {
+      "wave": 20,
+      "role": 1,
+      "id": "b020-2",
+      "initial": [
+        {
+          "id": "b020",
+          "type": "hamsterKing",
+          "move": "ground",
+          "lane": 0,
+          "size": 99,
+          "speed": 30,
+          "spdMult": 1,
+          "hp": 6863.804799999999,
+          "gold": 198,
+          "armor": 0,
+          "drawHeight": 120,
+          "role": 0
+        },
+        {
+          "id": "b020-2",
+          "type": "eagleEmperor",
+          "move": "air",
+          "lane": 0,
+          "size": 106,
+          "speed": 32,
+          "spdMult": 1,
+          "hp": 8178.150399999999,
+          "gold": 219,
+          "armor": 0,
+          "drawHeight": 84,
+          "role": 1
+        }
+      ],
+      "cold": {
+        "move": "air",
+        "frameKey": "b020-2:front:fallback",
+        "airHeight": 42
+      },
+      "entry": {
+        "id": "b020-2",
+        "locomotion": "legged",
+        "cycleStride": 130,
+        "referenceHeight": 450,
+        "views": {
+          "side": {
+            "frames": 8,
+            "cols": 4,
+            "rows": 2,
+            "cell": 512,
+            "pivot": [
+              260.247582205029,
+              465
+            ],
+            "still": "casual/bosses/inf/directional/b020-2-side.png",
+            "sheet": "casual/bosses/inf/directional/b020-2-side-walk-4x2.png"
+          },
+          "front": {
+            "frames": 8,
+            "cols": 4,
+            "rows": 2,
+            "cell": 512,
+            "pivot": [
+              256,
+              465
+            ],
+            "still": "casual/bosses/inf/directional/b020-2-front.png",
+            "sheet": "casual/bosses/inf/directional/b020-2-front-walk-4x2.png"
+          },
+          "back": {
+            "frames": 8,
+            "cols": 4,
+            "rows": 2,
+            "cell": 512,
+            "pivot": [
+              256,
+              465
+            ],
+            "still": "casual/bosses/inf/directional/b020-2-back.png",
+            "sheet": "casual/bosses/inf/directional/b020-2-back-walk-4x2.png"
+          }
+        }
+      },
+      "directions": [
+        {
+          "direction": "down",
+          "view": "front",
+          "frames": 8,
+          "observed": 28,
+          "maxAbsGap": 46.99998662109374,
+          "minGap": 37.09686972656232,
+          "first": {
+            "id": "b020-2",
+            "key": "b020-2:front:sheet",
+            "view": "front",
+            "phase": 0.13186813186813384,
+            "pivot": [
+              256,
+              465
+            ],
+            "serial": 2,
+            "sequence": 2,
+            "move": "air",
+            "type": "eagleEmperor",
+            "dist": 715.1788583984371,
+            "walk": 3.2000000000000455,
+            "animT": 0.1633145649569609,
+            "groundX": 90,
+            "groundY": 435.20000000000005,
+            "pivotX": 90,
+            "pivotY": 389.0478210449219,
+            "gap": 46.15217895507817,
+            "xError": 0,
+            "drawHeight": 84,
+            "flip": false
+          },
+          "last": {
+            "id": "b020-2",
+            "key": "b020-2:front:sheet",
+            "view": "front",
+            "phase": 0.054549450549443046,
+            "pivot": [
+              256,
+              465
+            ],
+            "serial": 9,
+            "sequence": 29,
+            "move": "air",
+            "type": "eagleEmperor",
+            "dist": 737.5692583984369,
+            "walk": 25.590399999999818,
+            "animT": 0.7525356175885374,
+            "groundX": 90,
+            "groundY": 457.5903999999998,
+            "pivotX": 90,
+            "pivotY": 420.4935302734375,
+            "gap": 37.09686972656232,
+            "xError": 0,
+            "drawHeight": 84,
+            "flip": false
+          },
+          "lane": {
+            "direction": "down",
+            "segment": {
+              "ax": 90,
+              "ay": 320,
+              "bx": 90,
+              "by": 920,
+              "len": 600,
+              "acc": 603.9788583984371
+            },
+            "lane": 0
+          },
+          "screenshot": "w20-b020-2-down.png"
+        },
+        {
+          "direction": "right",
+          "view": "side",
+          "frames": 8,
+          "observed": 39,
+          "maxAbsGap": 46.95184326171875,
+          "minGap": 37.0020751953125,
+          "first": {
+            "id": "b020-2",
+            "key": "b020-2:side:sheet",
+            "view": "side",
+            "phase": 0.054549450549443046,
+            "pivot": [
+              260.247582205029,
+              465
+            ],
+            "serial": 10,
+            "sequence": 40,
+            "move": "air",
+            "type": "eagleEmperor",
+            "dist": 1373.5577167968745,
+            "walk": 25.590399999999818,
+            "animT": 0.7525356175885374,
+            "groundX": 225.5999999999999,
+            "groundY": 984,
+            "pivotX": 225.60000610351562,
+            "pivotY": 946.9031372070312,
+            "gap": 37.09686279296875,
+            "xError": 0.00000610351571594947,
+            "drawHeight": 84,
+            "flip": false
+          },
+          "last": {
+            "id": "b020-2",
+            "key": "b020-2:side:sheet",
+            "view": "side",
+            "phase": 0.8896703296703294,
+            "pivot": [
+              260.247582205029,
+              465
+            ],
+            "serial": 17,
+            "sequence": 78,
+            "move": "air",
+            "type": "eagleEmperor",
+            "dist": 1393.8233167968747,
+            "walk": 45.855999999999995,
+            "animT": 1.2858408807464308,
+            "groundX": 245.8656000000001,
+            "groundY": 984,
+            "pivotX": 245.8656005859375,
+            "pivotY": 937.0481567382812,
+            "gap": 46.95184326171875,
+            "xError": 5.859374141437002e-7,
+            "drawHeight": 84,
+            "flip": false
+          },
+          "lane": {
+            "direction": "right",
+            "segment": {
+              "ax": 150,
+              "ay": 980,
+              "bx": 570,
+              "by": 980,
+              "len": 420,
+              "acc": 1297.9577167968746
+            },
+            "lane": 0
+          },
+          "screenshot": "w20-b020-2-right.png"
+        },
+        {
+          "direction": "left",
+          "view": "side",
+          "frames": 8,
+          "observed": 40,
+          "maxAbsGap": 46.9979248046875,
+          "minGap": 37.000030517578125,
+          "first": {
+            "id": "b020-2",
+            "key": "b020-2:side:sheet",
+            "view": "side",
+            "phase": 0.9116923076923078,
+            "pivot": [
+              260.247582205029,
+              465
+            ],
+            "serial": 17,
+            "sequence": 90,
+            "move": "air",
+            "type": "eagleEmperor",
+            "dist": 338.3344,
+            "walk": 46.3904,
+            "animT": 1.2999040386411682,
+            "groundX": 321.6656,
+            "groundY": 264,
+            "pivotX": 321.66558837890625,
+            "pivotY": 217.0074462890625,
+            "gap": 46.9925537109375,
+            "xError": -0.000011621093733538146,
+            "drawHeight": 84,
+            "flip": true
+          },
+          "last": {
+            "id": "b020-2",
+            "key": "b020-2:side:sheet",
+            "view": "side",
+            "phase": 0.7688351648351679,
+            "pivot": [
+              260.247582205029,
+              465
+            ],
+            "serial": 16,
+            "sequence": 129,
+            "move": "air",
+            "type": "eagleEmperor",
+            "dist": 359.1344000000001,
+            "walk": 67.19040000000007,
+            "animT": 1.8472724596937986,
+            "groundX": 300.8655999999999,
+            "groundY": 264,
+            "pivotX": 300.8656005859375,
+            "pivotY": 226.98062133789062,
+            "gap": 37.019378662109375,
+            "xError": 5.859375846739567e-7,
+            "drawHeight": 84,
+            "flip": true
+          },
+          "lane": {
+            "direction": "left",
+            "segment": {
+              "ax": 360,
+              "ay": 260,
+              "bx": 150,
+              "by": 260,
+              "len": 210,
+              "acc": 300
+            },
+            "lane": 0
+          },
+          "screenshot": "w20-b020-2-left.png"
+        },
+        {
+          "direction": "up",
+          "view": "back",
+          "frames": 8,
+          "observed": 40,
+          "maxAbsGap": 46.99879150390643,
+          "minGap": 37.01934814453125,
+          "first": {
+            "id": "b020-2",
+            "key": "b020-2:back:sheet",
+            "view": "back",
+            "phase": 0.7688351648351679,
+            "pivot": [
+              256,
+              465
+            ],
+            "serial": 18,
+            "sequence": 141,
+            "move": "air",
+            "type": "eagleEmperor",
+            "dist": 1919.936575195312,
+            "walk": 67.19040000000007,
+            "animT": 1.8472724596937986,
+            "groundX": 630,
+            "groundY": 816,
+            "pivotX": 630,
+            "pivotY": 778.9806518554688,
+            "gap": 37.01934814453125,
+            "xError": 0,
+            "drawHeight": 84,
+            "flip": false
+          },
+          "last": {
+            "id": "b020-2",
+            "key": "b020-2:back:sheet",
+            "view": "back",
+            "phase": 0.6259780219780136,
+            "pivot": [
+              256,
+              465
+            ],
+            "serial": 25,
+            "sequence": 180,
+            "move": "air",
+            "type": "eagleEmperor",
+            "dist": 1940.7365751953116,
+            "walk": 87.9903999999998,
+            "animT": 2.394640880746431,
+            "groundX": 630,
+            "groundY": 795.2000000000003,
+            "pivotX": 630,
+            "pivotY": 748.3324584960938,
+            "gap": 46.86754150390652,
+            "xError": 0,
+            "drawHeight": 84,
+            "flip": false
+          },
+          "lane": {
+            "direction": "up",
+            "segment": {
+              "ax": 630,
+              "ay": 920,
+              "bx": 630,
+              "by": 320,
+              "len": 600,
+              "acc": 1811.936575195312
+            },
+            "lane": 0
+          },
+          "screenshot": "w20-b020-2-up.png"
+        }
+      ]
+    },
+    {
+      "wave": 121,
+      "role": 1,
+      "id": "b121-2",
+      "initial": [
+        {
+          "id": "b121",
+          "type": "eagleEmperor",
+          "move": "air",
+          "lane": 0,
+          "size": 106,
+          "speed": 32,
+          "spdMult": 1.5,
+          "hp": 44440571.896,
+          "gold": 588,
+          "armor": 15,
+          "drawHeight": 120,
+          "role": 0
+        },
+        {
+          "id": "b121-2",
+          "type": "axolotlSage",
+          "move": "ground",
+          "lane": 0,
+          "size": 101,
+          "speed": 28,
+          "spdMult": 1.5,
+          "hp": 38885500.408999994,
+          "gold": 547,
+          "armor": 15,
+          "drawHeight": 84,
+          "role": 1
+        }
+      ],
+      "cold": {
+        "move": "ground",
+        "frameKey": "b121-2:front:fallback",
+        "airHeight": 0
+      },
+      "entry": {
+        "id": "b121-2",
+        "locomotion": "legged",
+        "cycleStride": 130,
+        "referenceHeight": 450,
+        "views": {
+          "side": {
+            "frames": 8,
+            "cols": 4,
+            "rows": 2,
+            "cell": 512,
+            "pivot": [
+              260.247582205029,
+              465
+            ],
+            "still": "casual/bosses/extreme/b121-2-side.webp",
+            "sheet": "casual/bosses/extreme/b121-2-side-walk-4x2.webp"
+          },
+          "front": {
+            "frames": 8,
+            "cols": 4,
+            "rows": 2,
+            "cell": 512,
+            "pivot": [
+              256,
+              465
+            ],
+            "still": "casual/bosses/extreme/b121-2-front.webp",
+            "sheet": "casual/bosses/extreme/b121-2-front-walk-4x2.webp"
+          },
+          "back": {
+            "frames": 8,
+            "cols": 4,
+            "rows": 2,
+            "cell": 512,
+            "pivot": [
+              256,
+              465
+            ],
+            "still": "casual/bosses/extreme/b121-2-back.webp",
+            "sheet": "casual/bosses/extreme/b121-2-back-walk-4x2.webp"
+          }
+        }
+      },
+      "directions": [
+        {
+          "direction": "down",
+          "view": "front",
+          "frames": 8,
+          "observed": 33,
+          "maxAbsGap": 0.000014501953387480171,
+          "minGap": -0.000014501953046419658,
+          "first": {
+            "id": "b121-2",
+            "key": "b121-2:front:sheet",
+            "view": "front",
+            "phase": 0.2883461538461547,
+            "pivot": [
+              256,
+              465
+            ],
+            "serial": 28,
+            "sequence": 216,
+            "move": "ground",
+            "type": "axolotlSage",
+            "dist": 718.9760583984371,
+            "walk": 6.997200000000021,
+            "animT": 0.5639708896144223,
+            "groundX": 90,
+            "groundY": 438.9972,
+            "pivotX": 90,
+            "pivotY": 438.9971923828125,
+            "gap": 0.000007617187520736479,
+            "xError": 0,
+            "drawHeight": 84,
+            "flip": false
+          },
+          "last": {
+            "id": "b121-2",
+            "key": "b121-2:front:sheet",
+            "view": "front",
+            "phase": 0.21153846153847478,
+            "pivot": [
+              256,
+              465
+            ],
+            "serial": 35,
+            "sequence": 248,
+            "move": "ground",
+            "type": "axolotlSage",
+            "dist": 741.3788583984374,
+            "walk": 29.40000000000032,
+            "animT": 1.1535182580354768,
+            "groundX": 90,
+            "groundY": 461.4000000000003,
+            "pivotX": 90,
+            "pivotY": 461.3999938964844,
+            "gap": 0.000006103515943323146,
+            "xError": 0,
+            "drawHeight": 84,
+            "flip": false
+          },
+          "lane": {
+            "direction": "down",
+            "segment": {
+              "ax": 90,
+              "ay": 320,
+              "bx": 90,
+              "by": 920,
+              "len": 600,
+              "acc": 603.9788583984371
+            },
+            "lane": 0
+          },
+          "screenshot": "w121-b121-2-down.png"
+        },
+        {
+          "direction": "right",
+          "view": "side",
+          "frames": 8,
+          "observed": 29,
+          "maxAbsGap": 0,
+          "minGap": 0,
+          "first": {
+            "id": "b121-2",
+            "key": "b121-2:side:sheet",
+            "view": "side",
+            "phase": 0.21153846153847478,
+            "pivot": [
+              260.247582205029,
+              465
+            ],
+            "serial": 36,
+            "sequence": 268,
+            "move": "ground",
+            "type": "axolotlSage",
+            "dist": 1373.5577167968745,
+            "walk": 29.40000000000032,
+            "animT": 1.1535182580354768,
+            "groundX": 225.5999999999999,
+            "groundY": 984,
+            "pivotX": 225.60000610351562,
+            "pivotY": 984,
+            "gap": 0,
+            "xError": 0.00000610351571594947,
+            "drawHeight": 84,
+            "flip": false
+          },
+          "last": {
+            "id": "b121-2",
+            "key": "b121-2:side:sheet",
+            "view": "side",
+            "phase": 0.019115384615310482,
+            "pivot": [
+              260.247582205029,
+              465
+            ],
+            "serial": 43,
+            "sequence": 296,
+            "move": "ground",
+            "type": "axolotlSage",
+            "dist": 1393.1549167968724,
+            "walk": 48.9971999999982,
+            "animT": 1.669234047509166,
+            "groundX": 245.1971999999978,
+            "groundY": 984,
+            "pivotX": 245.19720458984375,
+            "pivotY": 984,
+            "gap": 0,
+            "xError": 0.00000458984595752554,
+            "drawHeight": 84,
+            "flip": false
+          },
+          "lane": {
+            "direction": "right",
+            "segment": {
+              "ax": 150,
+              "ay": 980,
+              "bx": 570,
+              "by": 980,
+              "len": 420,
+              "acc": 1297.9577167968746
+            },
+            "lane": 0
+          },
+          "screenshot": "w121-b121-2-right.png"
+        },
+        {
+          "direction": "left",
+          "view": "side",
+          "frames": 8,
+          "observed": 30,
+          "maxAbsGap": 0,
+          "minGap": 0,
+          "first": {
+            "id": "b121-2",
+            "key": "b121-2:side:sheet",
+            "view": "side",
+            "phase": 0.04784615384607793,
+            "pivot": [
+              260.247582205029,
+              465
+            ],
+            "serial": 43,
+            "sequence": 309,
+            "move": "ground",
+            "type": "axolotlSage",
+            "dist": 338.49719999999996,
+            "walk": 49.694399999998154,
+            "animT": 1.6875814159302172,
+            "groundX": 321.50280000000004,
+            "groundY": 264,
+            "pivotX": 321.5028076171875,
+            "pivotY": 264,
+            "gap": 0,
+            "xError": 0.00000761718746389306,
+            "drawHeight": 84,
+            "flip": true
+          },
+          "last": {
+            "id": "b121-2",
+            "key": "b121-2:side:sheet",
+            "view": "side",
+            "phase": 0.8844999999999237,
+            "pivot": [
+              260.247582205029,
+              465
+            ],
+            "serial": 42,
+            "sequence": 338,
+            "move": "ground",
+            "type": "axolotlSage",
+            "dist": 358.79999999999995,
+            "walk": 69.99719999999814,
+            "animT": 2.2218656264565353,
+            "groundX": 301.20000000000005,
+            "groundY": 264,
+            "pivotX": 301.20001220703125,
+            "pivotY": 264,
+            "gap": 0,
+            "xError": 0.000012207031204525265,
+            "drawHeight": 84,
+            "flip": true
+          },
+          "lane": {
+            "direction": "left",
+            "segment": {
+              "ax": 360,
+              "ay": 260,
+              "bx": 150,
+              "by": 260,
+              "len": 210,
+              "acc": 300
+            },
+            "lane": 0
+          },
+          "screenshot": "w121-b121-2-left.png"
+        },
+        {
+          "direction": "up",
+          "view": "back",
+          "frames": 8,
+          "observed": 31,
+          "maxAbsGap": 0.000028222655828358256,
+          "minGap": -0.000028222655828358256,
+          "first": {
+            "id": "b121-2",
+            "key": "b121-2:back:sheet",
+            "view": "back",
+            "phase": 0.9132307692306956,
+            "pivot": [
+              256,
+              465
+            ],
+            "serial": 44,
+            "sequence": 350,
+            "move": "ground",
+            "type": "axolotlSage",
+            "dist": 1920.633775195312,
+            "walk": 70.69439999999821,
+            "animT": 2.24021299487759,
+            "groundX": 630,
+            "groundY": 815.3027999999999,
+            "pivotX": 630,
+            "pivotY": 815.3027954101562,
+            "gap": 0.000004589843683788786,
+            "xError": 0,
+            "drawHeight": 84,
+            "flip": false
+          },
+          "last": {
+            "id": "b121-2",
+            "key": "b121-2:back:sheet",
+            "view": "back",
+            "phase": 0.7786153846152453,
+            "pivot": [
+              256,
+              465
+            ],
+            "serial": 51,
+            "sequence": 380,
+            "move": "ground",
+            "type": "axolotlSage",
+            "dist": 1941.6337751953104,
+            "walk": 91.69439999999662,
+            "animT": 2.792844573824959,
+            "groundX": 630,
+            "groundY": 794.3028000000015,
+            "pivotX": 630,
+            "pivotY": 794.3027954101562,
+            "gap": 0.000004589845275404514,
+            "xError": 0,
+            "drawHeight": 84,
+            "flip": false
+          },
+          "lane": {
+            "direction": "up",
+            "segment": {
+              "ax": 630,
+              "ay": 920,
+              "bx": 630,
+              "by": 320,
+              "len": 600,
+              "acc": 1811.936575195312
+            },
+            "lane": 0
+          },
+          "screenshot": "w121-b121-2-up.png"
+        }
+      ]
+    },
+    {
+      "wave": 222,
+      "role": 1,
+      "id": "b121-2",
+      "initial": [
+        {
+          "id": "b121",
+          "type": "axolotlSage",
+          "move": "ground",
+          "lane": 0,
+          "size": 101,
+          "speed": 28,
+          "spdMult": 1.5,
+          "hp": 144373611609.6288,
+          "gold": 891,
+          "armor": 32,
+          "drawHeight": 120,
+          "role": 0
+        },
+        {
+          "id": "b121-2",
+          "type": "auroraMoose",
+          "move": "ground",
+          "lane": 0,
+          "size": 106,
+          "speed": 28,
+          "spdMult": 1.5,
+          "hp": 159105612794.2848,
+          "gold": 891,
+          "armor": 32,
+          "drawHeight": 84,
+          "role": 1
+        }
+      ],
+      "cold": {
+        "move": "ground",
+        "frameKey": "b121-2:front:sheet",
+        "airHeight": 0
+      },
+      "entry": {
+        "id": "b121-2",
+        "locomotion": "legged",
+        "cycleStride": 130,
+        "referenceHeight": 450,
+        "views": {
+          "side": {
+            "frames": 8,
+            "cols": 4,
+            "rows": 2,
+            "cell": 512,
+            "pivot": [
+              260.247582205029,
+              465
+            ],
+            "still": "casual/bosses/extreme/b121-2-side.webp",
+            "sheet": "casual/bosses/extreme/b121-2-side-walk-4x2.webp"
+          },
+          "front": {
+            "frames": 8,
+            "cols": 4,
+            "rows": 2,
+            "cell": 512,
+            "pivot": [
+              256,
+              465
+            ],
+            "still": "casual/bosses/extreme/b121-2-front.webp",
+            "sheet": "casual/bosses/extreme/b121-2-front-walk-4x2.webp"
+          },
+          "back": {
+            "frames": 8,
+            "cols": 4,
+            "rows": 2,
+            "cell": 512,
+            "pivot": [
+              256,
+              465
+            ],
+            "still": "casual/bosses/extreme/b121-2-back.webp",
+            "sheet": "casual/bosses/extreme/b121-2-back-walk-4x2.webp"
+          }
+        }
+      },
+      "directions": [
+        {
+          "direction": "down",
+          "view": "front",
+          "frames": 8,
+          "observed": 31,
+          "maxAbsGap": 0.000014501953273793333,
+          "minGap": -0.000013720703122999112,
+          "first": {
+            "id": "b121-2",
+            "key": "b121-2:front:sheet",
+            "view": "front",
+            "phase": 0.028903846153842894,
+            "pivot": [
+              256,
+              465
+            ],
+            "serial": 34,
+            "sequence": 402,
+            "move": "ground",
+            "type": "auroraMoose",
+            "dist": 712.680258398437,
+            "walk": 0.7013999999999214,
+            "animT": 0.6648282043711436,
+            "groundX": 90,
+            "groundY": 432.7013999999999,
+            "pivotX": 90,
+            "pivotY": 432.7013854980469,
+            "gap": 0.000014501953046419658,
+            "xError": 0,
+            "drawHeight": 84,
+            "flip": false
+          },
+          "last": {
+            "id": "b121-2",
+            "key": "b121-2:front:sheet",
+            "view": "front",
+            "phase": 0.8942884615384679,
+            "pivot": [
+              256,
+              465
+            ],
+            "serial": 33,
+            "sequence": 432,
+            "move": "ground",
+            "type": "auroraMoose",
+            "dist": 733.6802583984372,
+            "walk": 21.70140000000015,
+            "animT": 1.2174597833185121,
+            "groundX": 90,
+            "groundY": 453.70140000000015,
+            "pivotX": 90,
+            "pivotY": 453.7013854980469,
+            "gap": 0.000014501953273793333,
+            "xError": 0,
+            "drawHeight": 84,
+            "flip": false
+          },
+          "lane": {
+            "direction": "down",
+            "segment": {
+              "ax": 90,
+              "ay": 320,
+              "bx": 90,
+              "by": 920,
+              "len": 600,
+              "acc": 603.9788583984371
+            },
+            "lane": 0
+          },
+          "screenshot": "w222-b121-2-down.png"
+        },
+        {
+          "direction": "right",
+          "view": "side",
+          "frames": 8,
+          "observed": 30,
+          "maxAbsGap": 0,
+          "minGap": 0,
+          "first": {
+            "id": "b121-2",
+            "key": "b121-2:side:sheet",
+            "view": "side",
+            "phase": 0.9231923076923105,
+            "pivot": [
+              260.247582205029,
+              465
+            ],
+            "serial": 42,
+            "sequence": 444,
+            "move": "ground",
+            "type": "auroraMoose",
+            "dist": 1374.2591167968744,
+            "walk": 22.40280000000007,
+            "animT": 1.235917678055351,
+            "groundX": 226.30139999999983,
+            "groundY": 984,
+            "pivotX": 226.30140686035156,
+            "pivotY": 984,
+            "gap": 0,
+            "xError": 0.000006860351732029812,
+            "drawHeight": 84,
+            "flip": false
+          },
+          "last": {
+            "id": "b121-2",
+            "key": "b121-2:side:sheet",
+            "view": "side",
+            "phase": 0.7600192307692062,
+            "pivot": [
+              260.247582205029,
+              465
+            ],
+            "serial": 41,
+            "sequence": 473,
+            "move": "ground",
+            "type": "auroraMoose",
+            "dist": 1394.5661167968738,
+            "walk": 42.709799999999404,
+            "animT": 1.770312414897457,
+            "groundX": 246.60839999999916,
+            "groundY": 984,
+            "pivotX": 246.6083984375,
+            "pivotY": 984,
+            "gap": 0,
+            "xError": -0.0000015624991647200659,
+            "drawHeight": 84,
+            "flip": false
+          },
+          "lane": {
+            "direction": "right",
+            "segment": {
+              "ax": 150,
+              "ay": 980,
+              "bx": 570,
+              "by": 980,
+              "len": 420,
+              "acc": 1297.9577167968746
+            },
+            "lane": 0
+          },
+          "screenshot": "w222-b121-2-right.png"
+        },
+        {
+          "direction": "left",
+          "view": "side",
+          "frames": 8,
+          "observed": 30,
+          "maxAbsGap": 0,
+          "minGap": 0,
+          "first": {
+            "id": "b121-2",
+            "key": "b121-2:side:sheet",
+            "view": "side",
+            "phase": 0.7889230769230469,
+            "pivot": [
+              260.247582205029,
+              465
+            ],
+            "serial": 41,
+            "sequence": 485,
+            "move": "ground",
+            "type": "auroraMoose",
+            "dist": 338.5013999999999,
+            "walk": 43.41119999999927,
+            "animT": 1.7887703096342957,
+            "groundX": 321.4986000000001,
+            "groundY": 264,
+            "pivotX": 321.49859619140625,
+            "pivotY": 264,
+            "gap": 0,
+            "xError": -0.0000038085938740550773,
+            "drawHeight": 84,
+            "flip": true
+          },
+          "last": {
+            "id": "b121-2",
+            "key": "b121-2:side:sheet",
+            "view": "side",
+            "phase": 0.6254038461538243,
+            "pivot": [
+              260.247582205029,
+              465
+            ],
+            "serial": 40,
+            "sequence": 514,
+            "move": "ground",
+            "type": "auroraMoose",
+            "dist": 358.80000000000007,
+            "walk": 63.70979999999946,
+            "animT": 2.3229439938448255,
+            "groundX": 301.19999999999993,
+            "groundY": 264,
+            "pivotX": 301.20001220703125,
+            "pivotY": 264,
+            "gap": 0,
+            "xError": 0.000012207031318212103,
+            "drawHeight": 84,
+            "flip": true
+          },
+          "lane": {
+            "direction": "left",
+            "segment": {
+              "ax": 360,
+              "ay": 260,
+              "bx": 150,
+              "by": 260,
+              "len": 210,
+              "acc": 300
+            },
+            "lane": 0
+          },
+          "screenshot": "w222-b121-2-left.png"
+        },
+        {
+          "direction": "up",
+          "view": "back",
+          "frames": 8,
+          "observed": 31,
+          "maxAbsGap": 0.000029003907002334017,
+          "minGap": -0.000028222655828358256,
+          "first": {
+            "id": "b121-2",
+            "key": "b121-2:back:sheet",
+            "view": "back",
+            "phase": 0.6541346153845868,
+            "pivot": [
+              256,
+              465
+            ],
+            "serial": 50,
+            "sequence": 527,
+            "move": "ground",
+            "type": "auroraMoose",
+            "dist": 1920.6337751953117,
+            "walk": 64.4069999999993,
+            "animT": 2.3412913622658764,
+            "groundX": 630,
+            "groundY": 815.3028000000002,
+            "pivotX": 630,
+            "pivotY": 815.3027954101562,
+            "gap": 0.000004589843911162461,
+            "xError": 0,
+            "drawHeight": 84,
+            "flip": false
+          },
+          "last": {
+            "id": "b121-2",
+            "key": "b121-2:back:sheet",
+            "view": "back",
+            "phase": 0.5196923076922544,
+            "pivot": [
+              256,
+              465
+            ],
+            "serial": 49,
+            "sequence": 557,
+            "move": "ground",
+            "type": "auroraMoose",
+            "dist": 1941.6379751953111,
+            "walk": 85.4111999999987,
+            "animT": 2.8940334675290322,
+            "groundX": 630,
+            "groundY": 794.2986000000008,
+            "pivotX": 630,
+            "pivotY": 794.298583984375,
+            "gap": 0.00001601562576070137,
+            "xError": 0,
+            "drawHeight": 84,
+            "flip": false
+          },
+          "lane": {
+            "direction": "up",
+            "segment": {
+              "ax": 630,
+              "ay": 920,
+              "bx": 630,
+              "by": 320,
+              "len": 600,
+              "acc": 1811.936575195312
+            },
+            "lane": 0
+          },
+          "screenshot": "w222-b121-2-up.png"
+        }
+      ]
+    }
+  ],
+  "spectator": [
+    {
+      "wave": 20,
+      "id": "b020-2",
+      "move": "air",
+      "row": {
+        "id": "b020-2",
+        "key": "b020-2:front:sheet",
+        "view": "front",
+        "phase": 0.6470294033105544,
+        "pivot": [
+          256,
+          465
+        ],
+        "serial": 6,
+        "sequence": 192,
+        "move": "air",
+        "type": "eagleEmperor",
+        "dist": 874.5134385854399,
+        "walk": 0.5345801870027854,
+        "animT": 0.8769489599079524,
+        "groundX": 90,
+        "groundY": 594.5345801870028,
+        "pivotX": 90,
+        "pivotY": 556.7990112304688,
+        "gap": 37.73556895653405,
+        "xError": 0,
+        "drawHeight": 84,
+        "flip": false
+      }
+    },
+    {
+      "wave": 121,
+      "id": "b121-2",
+      "move": "ground",
+      "row": {
+        "id": "b121-2",
+        "key": "b121-2:front:sheet",
+        "view": "front",
+        "phase": 0.8062573418451024,
+        "pivot": [
+          256,
+          465
+        ],
+        "serial": 32,
+        "sequence": 391,
+        "move": "ground",
+        "type": "axolotlSage",
+        "dist": 874.6804948938782,
+        "walk": 0.7016364954411559,
+        "animT": 0.8731206585417794,
+        "groundX": 90,
+        "groundY": 594.7016364954411,
+        "pivotX": 90,
+        "pivotY": 594.70166015625,
+        "gap": -0.00002366080889260047,
+        "xError": 0,
+        "drawHeight": 84,
+        "flip": false
+      }
+    },
+    {
+      "wave": 222,
+      "id": "b121-2",
+      "move": "ground",
+      "row": {
+        "id": "b121-2",
+        "key": "b121-2:front:sheet",
+        "view": "front",
+        "phase": 0.5773584336901925,
+        "pivot": [
+          256,
+          465
+        ],
+        "serial": 30,
+        "sequence": 570,
+        "move": "ground",
+        "type": "auroraMoose",
+        "dist": 874.6846963100184,
+        "walk": 1.403272990882006,
+        "animT": 0.136806405654578,
+        "groundX": 90,
+        "groundY": 594.7058379115813,
+        "pivotX": 90,
+        "pivotY": 594.705810546875,
+        "gap": 0.000027364706284060958,
+        "xError": 0,
+        "drawHeight": 84,
+        "flip": false
+      }
+    }
+  ],
+  "errors": [],
+  "optionalAudio404": [
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/audio/bgm-lobby.ogg",
+      "status": 404
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/audio/bgm-battle.ogg",
+      "status": 404
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/audio/bgm-lobby.mp3",
+      "status": 404
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/audio/bgm-boss.ogg",
+      "status": 404
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/audio/bgm-battle.mp3",
+      "status": 404
+    },
+    {
+      "url": "https://dicekeep.cgn3731.workers.dev/audio/bgm-boss.mp3",
+      "status": 404
+    }
+  ],
+  "pass": true,
+  "flight": {
+    "wave": 4,
+    "role": 0,
+    "id": "w004",
+    "initial": [
+      {
+        "id": "w004",
+        "type": "swift",
+        "move": "air",
+        "lane": 0,
+        "size": 42,
+        "speed": 114,
+        "spdMult": 1,
+        "hp": 36.272,
+        "gold": 10,
+        "armor": 0,
+        "drawHeight": 42,
+        "role": 0
+      },
+      {
+        "id": "w004",
+        "type": "swift",
+        "move": "air",
+        "lane": 0,
+        "size": 42,
+        "speed": 114,
+        "spdMult": 1,
+        "hp": 36.272,
+        "gold": 10,
+        "armor": 0,
+        "drawHeight": 42,
+        "role": 0
+      },
+      {
+        "id": "w004",
+        "type": "swift",
+        "move": "air",
+        "lane": 0,
+        "size": 42,
+        "speed": 114,
+        "spdMult": 1,
+        "hp": 36.272,
+        "gold": 10,
+        "armor": 0,
+        "drawHeight": 42,
+        "role": 0
+      },
+      {
+        "id": "w004",
+        "type": "swift",
+        "move": "air",
+        "lane": 0,
+        "size": 42,
+        "speed": 114,
+        "spdMult": 1,
+        "hp": 36.272,
+        "gold": 10,
+        "armor": 0,
+        "drawHeight": 42,
+        "role": 0
+      },
+      {
+        "id": "w004",
+        "type": "swift",
+        "move": "air",
+        "lane": 0,
+        "size": 42,
+        "speed": 114,
+        "spdMult": 1,
+        "hp": 36.272,
+        "gold": 10,
+        "armor": 0,
+        "drawHeight": 42,
+        "role": 0
+      },
+      {
+        "id": "w004",
+        "type": "swift",
+        "move": "air",
+        "lane": 0,
+        "size": 42,
+        "speed": 114,
+        "spdMult": 1,
+        "hp": 36.272,
+        "gold": 10,
+        "armor": 0,
+        "drawHeight": 42,
+        "role": 0
+      },
+      {
+        "id": "w004",
+        "type": "swift",
+        "move": "air",
+        "lane": 0,
+        "size": 42,
+        "speed": 114,
+        "spdMult": 1,
+        "hp": 36.272,
+        "gold": 10,
+        "armor": 0,
+        "drawHeight": 42,
+        "role": 0
+      },
+      {
+        "id": "w004",
+        "type": "swift",
+        "move": "air",
+        "lane": 0,
+        "size": 42,
+        "speed": 114,
+        "spdMult": 1,
+        "hp": 36.272,
+        "gold": 10,
+        "armor": 0,
+        "drawHeight": 42,
+        "role": 0
+      },
+      {
+        "id": "w004",
+        "type": "swift",
+        "move": "air",
+        "lane": 0,
+        "size": 42,
+        "speed": 114,
+        "spdMult": 1,
+        "hp": 36.272,
+        "gold": 10,
+        "armor": 0,
+        "drawHeight": 42,
+        "role": 0
+      },
+      {
+        "id": "w004",
+        "type": "swift",
+        "move": "air",
+        "lane": 0,
+        "size": 42,
+        "speed": 114,
+        "spdMult": 1,
+        "hp": 36.272,
+        "gold": 10,
+        "armor": 0,
+        "drawHeight": 42,
+        "role": 0
+      },
+      {
+        "id": "w004",
+        "type": "swift",
+        "move": "air",
+        "lane": 0,
+        "size": 42,
+        "speed": 114,
+        "spdMult": 1,
+        "hp": 36.272,
+        "gold": 10,
+        "armor": 0,
+        "drawHeight": 42,
+        "role": 0
+      },
+      {
+        "id": "w004",
+        "type": "swift",
+        "move": "air",
+        "lane": 0,
+        "size": 42,
+        "speed": 114,
+        "spdMult": 1,
+        "hp": 36.272,
+        "gold": 10,
+        "armor": 0,
+        "drawHeight": 42,
+        "role": 0
+      },
+      {
+        "id": "w004",
+        "type": "swift",
+        "move": "air",
+        "lane": 0,
+        "size": 42,
+        "speed": 114,
+        "spdMult": 1,
+        "hp": 36.272,
+        "gold": 10,
+        "armor": 0,
+        "drawHeight": 42,
+        "role": 0
+      },
+      {
+        "id": "w004",
+        "type": "swift",
+        "move": "air",
+        "lane": 0,
+        "size": 42,
+        "speed": 114,
+        "spdMult": 1,
+        "hp": 36.272,
+        "gold": 10,
+        "armor": 0,
+        "drawHeight": 42,
+        "role": 0
+      }
+    ],
+    "cold": {
+      "move": "air",
+      "frameKey": "w004:front:fallback",
+      "airHeight": 42
+    },
+    "entry": {
+      "id": "w004",
+      "locomotion": "flight",
+      "cycleStride": 0,
+      "referenceHeight": 328,
+      "views": {
+        "side": {
+          "frames": 4,
+          "cols": 2,
+          "rows": 2,
+          "cell": 256,
+          "pivot": [
+            127.75,
+            210
+          ],
+          "still": "casual/enemies/inf/directional/w004-side.png",
+          "sheet": "casual/enemies/inf/directional/w004-side-walk-2x2.png"
+        },
+        "front": {
+          "frames": 4,
+          "cols": 2,
+          "rows": 2,
+          "cell": 256,
+          "pivot": [
+            127.75,
+            210
+          ],
+          "still": "casual/enemies/inf/directional/w004-front.png",
+          "sheet": "casual/enemies/inf/directional/w004-front-walk-2x2.png"
+        },
+        "back": {
+          "frames": 4,
+          "cols": 2,
+          "rows": 2,
+          "cell": 256,
+          "pivot": [
+            127.75,
+            210
+          ],
+          "still": "casual/enemies/inf/directional/w004-back.png",
+          "sheet": "casual/enemies/inf/directional/w004-back-walk-2x2.png"
+        }
+      }
+    },
+    "directions": [
+      {
+        "direction": "down",
+        "view": "front",
+        "frames": 4,
+        "observed": 13,
+        "maxAbsGap": 46.94760131835949,
+        "minGap": 40.13096201171879,
+        "first": {
+          "id": "w004",
+          "key": "w004:front:sheet",
+          "view": "front",
+          "phase": 0.29368486069733946,
+          "pivot": [
+            127.75,
+            210
+          ],
+          "serial": 53,
+          "sequence": 592,
+          "move": "air",
+          "type": "swift",
+          "dist": 730.9826583984376,
+          "walk": 19.003800000000524,
+          "animT": 1.0349478885578716,
+          "groundX": 90,
+          "groundY": 451.0038000000005,
+          "pivotX": 90,
+          "pivotY": 409.3709716796875,
+          "gap": 41.632828320313024,
+          "xError": 0,
+          "drawHeight": 42,
+          "flip": false
+        },
+        "last": {
+          "id": "w004",
+          "key": "w004:front:sheet",
+          "view": "front",
+          "phase": 0.04330986069731679,
+          "pivot": [
+            127.75,
+            210
+          ],
+          "serial": 56,
+          "sequence": 604,
+          "move": "air",
+          "type": "swift",
+          "dist": 753.7712583984371,
+          "walk": 41.79240000000004,
+          "animT": 1.6346478885578537,
+          "groundX": 90,
+          "groundY": 473.79240000000004,
+          "pivotX": 90,
+          "pivotY": 433.66143798828125,
+          "gap": 40.13096201171879,
+          "xError": 0,
+          "drawHeight": 42,
+          "flip": false
+        },
+        "lane": {
+          "direction": "down",
+          "segment": {
+            "ax": 90,
+            "ay": 320,
+            "bx": 90,
+            "by": 920,
+            "len": 600,
+            "acc": 603.9788583984371
+          },
+          "lane": 0
+        },
+        "screenshot": "w4-w004-down.png"
+      }
+    ]
+  },
+  "finishedAt": "2026-09-09T04:59:27.162Z"
+}
