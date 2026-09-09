@@ -17,15 +17,20 @@ const arg = name => (process.argv.find(a => a.startsWith(`--${name}=`)) || '').s
 const RUNS = Number(arg('runs')) || 40;
 const SEED0 = Number(arg('seed0')) || 1;
 const POLICIES = (arg('policy') || 'greedy,naive').split(',').filter(Boolean);
-const TUNE = { reserve: Number(arg('reserve')) || 3, enhMax: Number(arg('enhmax')) || 10 };
+const TUNE = { reserve: Number(arg('reserve')) || 3, enhMax: Number(arg('enhmax')) || 10, powerFirst: arg('powerfirst') === '1' };
+// 밸런스 손잡이를 측정 시점에만 덮어쓴다 (content.js 는 건드리지 않는다). 미지정이면 저장소 값 그대로.
+const LATE_EXP = arg('lateexp') ? Number(arg('lateexp')) : null;
+const BOSS_LIMIT = arg('bosslimit') ? Number(arg('bosslimit')) : null;   // 보스 제한시간(초)
 const CLEAR_WAVE = 101;
 const base = (process.env.E2E_BASE_URL || 'http://localhost:8137/').replace(/\/?$/, '/');
 fs.mkdirSync(out, { recursive: true });
 
 // ── 페이지 안에서 도는 봇 ────────────────────────────────────────────────
 // 게임의 공개 훅(DKchest/DKplace/판매 버튼)만 쓴다. 규칙(7★ 이상 판매 불가 등)은 게임 코드가 그대로 판정한다.
-function playRun({ seed, policy, clearWave, tune }) {
-  tune = tune || { reserve: 3, enhMax: 10 };
+function playRun({ seed, policy, clearWave, tune, lateExp, bossLimit }) {
+  tune = tune || { reserve: 3, enhMax: 10, powerFirst: false };
+  if (lateExp != null) DKCONTENT.INFINITY.lateExp = lateExp;         // 91웨이브 이후 추가 체력 곡선
+  if (bossLimit != null) DKCONTENT.INFINITY.bossTimeLimit = bossLimit; // 보스 제한시간
   DKSAVE.progression = DKPROGRESSION.defaultProfile();   // 갓 시작한 무과금 계정
   DKSAVE.gems = 0;
   globalThis.__pureSeed(seed);
@@ -77,9 +82,8 @@ function playRun({ seed, policy, clearWave, tune }) {
   //  1) 6눈 파워업 — powerLv 가 7★ 이상을 6눈 트랙에 묶어 두므로, 판의 강한 타워 전부가 같이 세진다.
   //  2) 확률강화 — 레벨을 유지한 채 눈이 오른다. 눈이 낮을수록 싸고 성공률이 높아 낮은 눈부터 올린다.
   //  3) 남은 골드로 상자.
-  const investGold = () => {
-    if (policy !== 'player') return;
-    // 확률강화 먼저: 레벨을 유지한 채 눈이 오르고, 눈 피해는 1.28^k 로 지수 성장한다. 낮은 눈일수록 싸고 안전하다.
+  const doEnhance = () => {
+    // 확률강화: 레벨을 유지한 채 눈이 오르고, 눈 피해는 1.28^k 로 지수 성장한다. 낮은 눈일수록 싸고 안전하다.
     for (let g = 0; g < 20; g++) {
       let pick = null;
       for (const t of DK.towers) if (t.lvl === 3 && t.face <= tune.enhMax && (!pick || t.face < pick.face)) pick = t;
@@ -92,7 +96,9 @@ function playRun({ seed, policy, clearWave, tune }) {
       enhanced++;
       if (DK.towers.length < before) enhBoom++;
     }
-    // 파워업: 상자 몇 개분 여유가 있을 때만. 6눈 트랙이 7★ 이상 전부를 올린다.
+  };
+  const doPower = () => {
+    // 6눈 트랙이 7★ 이상 전부를 올린다 (powerLv 가 face>6 을 6눈에 묶는다). Lv10 이면 피해 2.5배.
     for (let g = 0; g < 40; g++) {
       const lv6 = DK.inf.power[6] || 0;
       if (lv6 < 10 && DK.gold >= powerCost(lv6) + CHEST * tune.reserve) { if (DKupgrade(6) === false) break; powerUps++; continue; }
@@ -106,6 +112,10 @@ function playRun({ seed, policy, clearWave, tune }) {
         break;
       }
     }
+  };
+  const investGold = () => {
+    if (policy !== 'player') return;
+    if (tune.powerFirst) { doPower(); doEnhance(); } else { doEnhance(); doPower(); }
   };
 
   let ticks = 0, sold = 0, stuck = 0;
@@ -130,7 +140,7 @@ function playRun({ seed, policy, clearWave, tune }) {
   }
   const towers = DK.towers.map(t => `${t.face}★Lv${t.lvl}`).sort();
   return {
-    seed, policy, ticks, cleared: !!DK.inf.cleared, doneW: DK.inf.doneW, wave: DK.wave,
+    seed, policy, lateExp: DKCONTENT.INFINITY.lateExp, bossLimit: DKCONTENT.INFINITY.bossTimeLimit, ticks, cleared: !!DK.inf.cleared, doneW: DK.inf.doneW, wave: DK.wave,
     lives: DK.lives, kills: DK.inf.kills, chests: DK.inf.chests, phase: DK.phase, stuck,
     hitTickCap: ticks >= MAX_TICKS, heldStuck: DK.heldDie, towers,
     maxFace: DK.towers.reduce((m, t) => Math.max(m, t.face), 0),
@@ -202,7 +212,7 @@ function summarize(rows) {
   const report = {
     scope: `순수운빨(clear) 절대 클리어율 측정. 봇 정책별 ${RUNS} 런 × 최대 ${CLEAR_WAVE}웨이브.`,
     caveat: '사람의 클리어율이 아니라 명시된 봇 정책의 클리어율이다. 확률강화(도박)는 쓰지 않는다.',
-    base, runs: RUNS, seed0: SEED0, policies: POLICIES, clearWave: CLEAR_WAVE,
+    base, runs: RUNS, seed0: SEED0, policies: POLICIES, clearWave: CLEAR_WAVE, lateExp: LATE_EXP, bossLimit: BOSS_LIMIT, tune: TUNE,
     started: new Date().toISOString(), byPolicy: {}, rows: [],
   };
   try {
@@ -214,7 +224,7 @@ function summarize(rows) {
           const seed = SEED0 + i * 7919;                    // 씨앗을 성기게 흩어 인접 씨앗의 상관을 피한다
           await page.evaluate(() => { try { DKlobby(); } catch (e) { /* 첫 런 */ } });
           const t0 = Date.now();
-          const r = await page.evaluate(playRun, { seed, policy, clearWave: CLEAR_WAVE, tune: TUNE });
+          const r = await page.evaluate(playRun, { seed, policy, clearWave: CLEAR_WAVE, tune: TUNE, lateExp: LATE_EXP, bossLimit: BOSS_LIMIT });
           r.ms = Date.now() - t0;
           rows.push(r); report.rows.push(r);
           console.log(`[${policy}] ${String(i + 1).padStart(3)}/${RUNS} 씨앗 ${seed} → ${r.cleared ? '클리어' : `${r.doneW}웨이브`} (${r.reason} · 상자 ${r.chests} · 최고 ${r.maxFace}★ · 파워업 ${r.powerUps} · 강화 ${r.enhanced}/소멸 ${r.enhBoom} · ${(r.ms / 1000).toFixed(1)}s)`);
