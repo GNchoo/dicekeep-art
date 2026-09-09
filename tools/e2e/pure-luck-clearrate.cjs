@@ -22,15 +22,17 @@ const TUNE = { reserve: Number(arg('reserve')) || 3, enhMax: Number(arg('enhmax'
 const LATE_EXP = arg('lateexp') ? Number(arg('lateexp')) : null;
 const BOSS_LIMIT = arg('bosslimit') ? Number(arg('bosslimit')) : null;   // 보스 제한시간(초)
 const HP_EXP = arg('hpexp') ? Number(arg('hpexp')) : null;               // 기본 체력 곡선의 밑 (저장소 값 1.08)
+const LATE_FROM = arg('latefrom') ? Number(arg('latefrom')) : null;      // 후반 곡선이 걸리기 시작하는 웨이브 (저장소 값 90)
 const CLEAR_WAVE = 101;
 const base = (process.env.E2E_BASE_URL || 'http://localhost:8137/').replace(/\/?$/, '/');
 fs.mkdirSync(out, { recursive: true });
 
 // ── 페이지 안에서 도는 봇 ────────────────────────────────────────────────
 // 게임의 공개 훅(DKchest/DKplace/판매 버튼)만 쓴다. 규칙(7★ 이상 판매 불가 등)은 게임 코드가 그대로 판정한다.
-function playRun({ seed, policy, clearWave, tune, lateExp, bossLimit, hpExp }) {
+function playRun({ seed, policy, clearWave, tune, lateExp, bossLimit, hpExp, lateFrom }) {
   tune = tune || { reserve: 3, enhMax: 10, powerFirst: false };
-  if (lateExp != null) DKCONTENT.INFINITY.lateExp = lateExp;         // 91웨이브 이후 추가 체력 곡선
+  if (lateExp != null) DKCONTENT.INFINITY.lateExp = lateExp;         // 후반 곡선의 밑 (1 미만이면 감산)
+  if (lateFrom != null) DKCONTENT.INFINITY.lateFrom = lateFrom;      // 후반 곡선 시작 웨이브
   if (bossLimit != null) DKCONTENT.INFINITY.bossTimeLimit = bossLimit; // 보스 제한시간
   if (hpExp != null && !DKCONTENT.INFINITY.__hpExpPatched) {           // 기본 체력 곡선의 밑만 갈아끼운다
     const INF = DKCONTENT.INFINITY, orig = INF.wave;
@@ -151,7 +153,7 @@ function playRun({ seed, policy, clearWave, tune, lateExp, bossLimit, hpExp }) {
   }
   const towers = DK.towers.map(t => `${t.face}★Lv${t.lvl}`).sort();
   return {
-    seed, policy, lateExp: DKCONTENT.INFINITY.lateExp, bossLimit: DKCONTENT.INFINITY.bossTimeLimit, hpExp, ticks, cleared: !!DK.inf.cleared, doneW: DK.inf.doneW, wave: DK.wave,
+    seed, policy, lateExp: DKCONTENT.INFINITY.lateExp, lateFrom: DKCONTENT.INFINITY.lateFrom, bossLimit: DKCONTENT.INFINITY.bossTimeLimit, hpExp, ticks, cleared: !!DK.inf.cleared, doneW: DK.inf.doneW, wave: DK.wave,
     lives: DK.lives, kills: DK.inf.kills, chests: DK.inf.chests, phase: DK.phase, stuck,
     hitTickCap: ticks >= MAX_TICKS, heldStuck: DK.heldDie, towers,
     maxFace: DK.towers.reduce((m, t) => Math.max(m, t.face), 0),
@@ -223,7 +225,7 @@ function summarize(rows) {
   const report = {
     scope: `순수운빨(clear) 절대 클리어율 측정. 봇 정책별 ${RUNS} 런 × 최대 ${CLEAR_WAVE}웨이브.`,
     caveat: '사람의 클리어율이 아니라 명시된 봇 정책의 클리어율이다. 확률강화(도박)는 쓰지 않는다.',
-    base, runs: RUNS, seed0: SEED0, policies: POLICIES, clearWave: CLEAR_WAVE, lateExp: LATE_EXP, bossLimit: BOSS_LIMIT, hpExp: HP_EXP, tune: TUNE,
+    base, runs: RUNS, seed0: SEED0, policies: POLICIES, clearWave: CLEAR_WAVE, lateExp: LATE_EXP, bossLimit: BOSS_LIMIT, hpExp: HP_EXP, lateFrom: LATE_FROM, tune: TUNE,
     started: new Date().toISOString(), byPolicy: {}, rows: [],
   };
   try {
@@ -235,7 +237,7 @@ function summarize(rows) {
           const seed = SEED0 + i * 7919;                    // 씨앗을 성기게 흩어 인접 씨앗의 상관을 피한다
           await page.evaluate(() => { try { DKlobby(); } catch (e) { /* 첫 런 */ } });
           const t0 = Date.now();
-          const r = await page.evaluate(playRun, { seed, policy, clearWave: CLEAR_WAVE, tune: TUNE, lateExp: LATE_EXP, bossLimit: BOSS_LIMIT, hpExp: HP_EXP });
+          const r = await page.evaluate(playRun, { seed, policy, clearWave: CLEAR_WAVE, tune: TUNE, lateExp: LATE_EXP, bossLimit: BOSS_LIMIT, hpExp: HP_EXP, lateFrom: LATE_FROM });
           r.ms = Date.now() - t0;
           rows.push(r); report.rows.push(r);
           console.log(`[${policy}] ${String(i + 1).padStart(3)}/${RUNS} 씨앗 ${seed} → ${r.cleared ? '클리어' : `${r.doneW}웨이브`} (${r.reason} · 상자 ${r.chests} · 최고 ${r.maxFace}★ · 파워업 ${r.powerUps} · 강화 ${r.enhanced}/소멸 ${r.enhBoom} · ${(r.ms / 1000).toFixed(1)}s)`);
