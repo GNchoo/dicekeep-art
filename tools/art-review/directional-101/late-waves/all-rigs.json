@@ -12440,7 +12440,7 @@
                   0.995
                 ]
               },
-              "flipX": false,
+              "flipX": true,
               "socketNormalized": [
                 0.61,
                 0.8
@@ -12489,7 +12489,7 @@
                   0.995
                 ]
               },
-              "flipX": false,
+              "flipX": true,
               "socketNormalized": [
                 0.39,
                 0.8
@@ -12512,7 +12512,8 @@
               "proximalEdgeFeather": 0.09
             }
           ],
-          "jointReview": "Authored cap/knee/ankle y landmarks and body pelvis reviewed; x centers measured at those rows. Source SHA pins ROI and landmarks. Visual animation approval remains separate."
+          "jointReview": "Authored cap/knee/ankle y landmarks and body pelvis reviewed; x centers measured at those rows. Source SHA pins ROI and landmarks. Visual animation approval remains separate.",
+          "assetVersion": 102
         },
         "back": {
           "source": "tools/art-review/directional-101/late-waves/sources/late-boss-biped-01-front-back-parts.png",
@@ -12832,7 +12833,7 @@
                   0.995
                 ]
               },
-              "flipX": false,
+              "flipX": true,
               "socketNormalized": [
                 0.61,
                 0.82
@@ -12881,7 +12882,7 @@
                   0.995
                 ]
               },
-              "flipX": false,
+              "flipX": true,
               "socketNormalized": [
                 0.39,
                 0.82
@@ -12904,7 +12905,8 @@
               "proximalEdgeFeather": 0.09
             }
           ],
-          "jointReview": "Authored cap/knee/ankle y landmarks and body pelvis reviewed; x centers measured at those rows. Source SHA pins ROI and landmarks. Visual animation approval remains separate."
+          "jointReview": "Authored cap/knee/ankle y landmarks and body pelvis reviewed; x centers measured at those rows. Source SHA pins ROI and landmarks. Visual animation approval remains separate.",
+          "assetVersion": 102
         },
         "back": {
           "source": "tools/art-review/directional-101/late-waves/sources/late-boss-biped-01-front-back-parts.png",
@@ -16497,7 +16499,7 @@
                   0.995
                 ]
               },
-              "flipX": false,
+              "flipX": true,
               "socketNormalized": [
                 0.61,
                 0.88
@@ -16546,7 +16548,7 @@
                   0.995
                 ]
               },
-              "flipX": false,
+              "flipX": true,
               "socketNormalized": [
                 0.39,
                 0.88
@@ -16569,7 +16571,8 @@
               "proximalEdgeFeather": 0.09
             }
           ],
-          "jointReview": "Authored cap/knee/ankle y landmarks and body pelvis reviewed; x centers measured at those rows. Source SHA pins ROI and landmarks. Visual animation approval remains separate."
+          "jointReview": "Authored cap/knee/ankle y landmarks and body pelvis reviewed; x centers measured at those rows. Source SHA pins ROI and landmarks. Visual animation approval remains separate.",
+          "assetVersion": 102
         },
         "back": {
           "source": "tools/art-review/directional-101/late-waves/sources/late-boss-biped-02-all-parts.png",

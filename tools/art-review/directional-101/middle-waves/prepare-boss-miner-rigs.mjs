@@ -3,6 +3,8 @@ const c={version:1,canonicalCell:512,assetVersion:93,entries:[]};
 for(let i=0;i<2;i++){const e=newBiped(40);e.assetId=i?'b040-2':'b040';e.role=i?'secondary':'boss';e.cell=512;
  e.views.side=measuredView('t4-boss-01-side-parts',i,{name:'side',sockets:i?[[.45,.81],[.61,.81]]:[[.48,.84],[.62,.84]],kneeY:i?.45:.55,ankleY:.75});
  e.views.front=measuredView('t4-boss-01-front-parts',i,{name:'front',sockets:i?[[.60,.80],[.39,.80]]:[[.62,.84],[.39,.84]],kneeY:i?.4:.55,ankleY:.75});
+ // The authored front feet point inward; reflect each leg without swapping its physical ID or socket.
+ e.views.front.assetVersion=102;for(const p of e.views.front.parts)if(p.type==='leg')p.flipX=true;
  if(i)e.views.back=measuredView('t4-boss-01-back-parts',i,{name:'back',sockets:[[.34,.81],[.58,.81]],kneeY:.45,ankleY:.75});
  c.entries.push(e);
 }fs.writeFileSync(dir+'/t4-boss-01-rigs.json',JSON.stringify(c,null,2)+'\n');

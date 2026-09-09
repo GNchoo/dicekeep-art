@@ -198,6 +198,35 @@ test('unapproved/malformed entries are never requested', async () => {
   assert.equal(cache.state().approvedEntries, 0); assert.equal(requests.length, 0);
 });
 
+test('a repaired front direction invalidates only its images across both art manifests', async () => {
+  const old = entry('b040'), extreme = entry('b141');
+  old.views.front.assetVersion = extreme.views.front.assetVersion = 102;
+  const { cache, requests } = setup({ b040: old }, { extremeManifest: { version: 101, entries: { b141: extreme } } });
+  await cache.init();
+  for (const view of ['front', 'side', 'back']) {
+    cache.demand([{ id: 'b040', view }, { id: 'b141', view }]); await settle(cache);
+    const before = requests.length;
+    cache.demand([{ id: 'b040', view }, { id: 'b141', view }]); await settle(cache);
+    assert.equal(requests.length, before, 'unchanged demand must reuse the decoded sheets');
+  }
+  const urls = requests.filter(url => url.startsWith('https:'));
+  assert.equal(urls.length, 12); assert.equal(new Set(urls).size, 12);
+  for (const url of urls) {
+    const u = new URL(url), expected = u.pathname.includes('-front') ? 102 : u.pathname.startsWith('/b040') ? 93 : 101;
+    assert.equal(u.searchParams.get('v'), String(expected), url);
+  }
+  assert.equal(cache.frame('b040', 'front', .5).view, 'front');
+  assert.equal(cache.state().failures, 0); assert.ok(cache.state().maxRunning <= 2);
+});
+
+test('invalid directional asset revisions are rejected before any image request', async () => {
+  for (const version of [0, -1, 1.5, '102', NaN, Infinity, Number.MAX_SAFE_INTEGER + 1]) {
+    const bad = entry(); bad.views.front.assetVersion = version;
+    const { cache, requests } = setup({ w001: bad });
+    await assert.rejects(cache.init(), /invalid approved/); assert.equal(requests.length, 0);
+  }
+});
+
 test('cache loads at most two at once, keeps pivots/scale, versions URLs and reuses a request', async () => {
   const { cache, requests } = setup();
   cache.demand([{ id: 'w001', view: 'front' }, { id: 'w001', view: 'front' }]); await settle(cache);

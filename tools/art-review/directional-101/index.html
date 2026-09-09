@@ -9,12 +9,12 @@
 <nav id="motion"><button data-dir="right" aria-pressed="true">오른쪽 →</button><button data-dir="down" aria-pressed="false">아래 ↓</button><button data-dir="up" aria-pressed="false">위 ↑</button><button data-dir="left" aria-pressed="false">왼쪽 ←</button><button id="pause" aria-pressed="false">일시정지</button><input id="frame" type="range" min="0" max="7" value="0" aria-label="포즈 선택"><span id="pose"></span></nav>
 <div id="error" role="alert"></div><div id="grid"></div><div id="towerGrid"></div>
 <footer>동일한 캐릭터의 측면·정면·후면 시트입니다. 왼쪽은 측면 반사이며, 각도별 발 기준점과 배율은 시트 메타데이터를 사용합니다. 이 페이지는 검수 도구이며 게임 배포에는 포함되지 않습니다.</footer>
-</main><script src="../../../directional-art.js"></script><script>
+</main><script src="../../../directional-art.js?v=102"></script><script>
 'use strict';
 const root=new URL('../../../',location.href),$=id=>document.getElementById(id),manifest=window.INF_DIRECTIONAL_ART.entries;
 let catalog=[],direction='right',paused=false,cards=[],epoch=0,towerMode=false;
 for(let i=0;i<10;i++){const o=document.createElement('option');o.value=i;o.textContent='W'+(i*10+1)+'–'+(i===9?101:i*10+10);$('range').append(o);}
-const link=(path)=>new URL(path,root).href;
+const link=(path,version)=>{const u=new URL(path,root);if(version!=null)u.searchParams.set('v',String(version));return u.href;};
 function previewScale(im,e,v){const probe=document.createElement('canvas');probe.width=im.naturalWidth;probe.height=im.naturalHeight;const ctx=probe.getContext('2d',{willReadFrequently:true});ctx.drawImage(im,0,0);const data=ctx.getImageData(0,0,probe.width,probe.height).data;let horizontal=1,above=1,below=1;for(let y=0;y<probe.height;y++)for(let x=0;x<probe.width;x++){if(data[(y*probe.width+x)*4+3]<12)continue;const px=x%v.cell-v.pivot[0],py=y%v.cell-v.pivot[1];horizontal=Math.max(horizontal,Math.abs(px));above=Math.max(above,-py);below=Math.max(below,py);}return Math.min(155/(e.referenceHeight*v.scale),112/horizontal,211/above,12/below);}
 function setButtons(){document.querySelectorAll('[data-dir]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.dir===direction));$('pause').setAttribute('aria-pressed',paused);$('pause').textContent=paused?'재생':'일시정지';}
 async function render(){const token=++epoch;cards=[];$('grid').replaceChildren();$('error').textContent='';const start=Number($('range').value)*10+1,end=start===91?101:start+9,entries=catalog.filter(e=>e.wave>=start&&e.wave<=end);$('status').textContent=Object.values(manifest).filter(e=>e.ready).length+' / 110종 검수 완료';
@@ -24,7 +24,7 @@ async function render(){const token=++epoch;cards=[];$('grid').replaceChildren()
   article.append(label);$('grid').append(article);
  }
  const view=direction==='down'?'front':direction==='up'?'back':'side',queue=[...cards];
- async function worker(){while(queue.length&&token===epoch){const card=queue.shift(),v=card.e.views[view],im=new Image();card.v=v;card.a.href=link(v.sheet);im.src=link(v.sheet);try{await im.decode();if(token===epoch){card.scale=previewScale(im,card.e,v);card.image=im;}}catch(e){if(token===epoch)$('error').textContent='시트 로드 실패: '+card.c.assetId;}}}
+ async function worker(){while(queue.length&&token===epoch){const card=queue.shift(),v=card.e.views[view],im=new Image();card.v=v;card.a.href=link(v.sheet,v.assetVersion);im.src=link(v.sheet,v.assetVersion);try{await im.decode();if(token===epoch){card.scale=previewScale(im,card.e,v);card.image=im;}}catch(e){if(token===epoch)$('error').textContent='시트 로드 실패: '+card.c.assetId;}}}
  await Promise.all([worker(),worker()]);
 }
 function draw(t){const phase=paused?Number($('frame').value)/8:(t%1200)/1200;for(const card of cards){const {canvas,v,image,scale}=card;if(!image)continue;const g=canvas.getContext('2d'),idx=Math.min(v.frames-1,Math.floor(phase*v.frames));g.clearRect(0,0,256,256);g.strokeStyle='#546361';g.beginPath();g.moveTo(15,238.5);g.lineTo(241,238.5);g.stroke();g.save();g.translate(128,238);if(direction==='left')g.scale(-1,1);g.drawImage(image,(idx%v.cols)*v.cell,Math.floor(idx/v.cols)*v.cell,v.cell,v.cell,-v.pivot[0]*scale,-v.pivot[1]*scale,v.cell*scale,v.cell*scale);g.restore();}if(!towerMode)$('pose').textContent='주기 '+(Math.floor(phase*8)+1)+'/8';requestAnimationFrame(draw);}

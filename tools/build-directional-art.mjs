@@ -72,6 +72,7 @@ try {
       const fallback = await sharp(still).resize(64, 64).webp({ lossless: true, effort: 6 }).toBuffer();
       const fallbackStats = await inspectAlpha(fallback, entry.assetId + ' ' + name + ' inline fallback');
       runtime.views[name] = { still: stillFile, sheet: sheetFile, frames: rig.count, cols, rows, cell: entry.cell, pivot: rig.pivot.map(n => n * scale), scale, fallback: 'data:image/webp;base64,' + fallback.toString('base64') };
+      if (entry.views[name].assetVersion != null) runtime.views[name].assetVersion = entry.views[name].assetVersion;
       result.views[name] = { geometry: rig.geometry, provenance: rig.provenance, rasterDiagnostics: rendered.rasterDiagnostics || [], frameStats: stats, stillStats, fallbackStats, uniqueFrames: new Set(hashes).size, frameHashes: hashes, projection: rig.projection || { forward: [1, 0], height: [0, 1] }, frames: rig.frames, motionFrames: rig.motionFrames || null };
       console.log('rendered', entry.assetId, name, rig.count + ' frames');
     }

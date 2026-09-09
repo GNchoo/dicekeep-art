@@ -1,0 +1,179 @@
+{
+  "version": 102,
+  "fronts": [
+    {
+      "id": "b040",
+      "kind": "still",
+      "path": "casual/bosses/inf/directional/b040-front.png",
+      "beforeSha256": "dc9d62ad82dcb4ce73cda08f275eb0d4f8ffc10472ea8f46890c828478df5d7a",
+      "sha256": "21ca24014fc91cb2c73eddc68f194d7669cc846b6e1ce187de7c8473fc8c3b70",
+      "bytes": 196819
+    },
+    {
+      "id": "b040",
+      "kind": "sheet",
+      "path": "casual/bosses/inf/directional/b040-front-walk-4x2.png",
+      "beforeSha256": "8221a23613a1eca2ed254c214ef6347137026dc3b4fba5714fa14fdabb34fe0a",
+      "sha256": "6043ddc02b7d031c6ac568cf26ff0c39c876a7fd59225f6f0288af50621aac6f",
+      "bytes": 1281558
+    },
+    {
+      "id": "b040-2",
+      "kind": "still",
+      "path": "casual/bosses/inf/directional/b040-2-front.png",
+      "beforeSha256": "6ee509f33e335e43ab603682fb247573fad060106b7f01853294683a39e8b158",
+      "sha256": "d4d7c8be13cd28c71396274c4017211a78ccdf581be73e9660434d0c0dae62a0",
+      "bytes": 257290
+    },
+    {
+      "id": "b040-2",
+      "kind": "sheet",
+      "path": "casual/bosses/inf/directional/b040-2-front-walk-4x2.png",
+      "beforeSha256": "6c7ea33142bd1ad17f54e3bfa64f98895548397c89c7f4adf37fdc782c7cd78a",
+      "sha256": "8ce062286534f160d1e9cc2ce39dd25f0e606e8fa6761f92ebba0101f39f8436",
+      "bytes": 1669559
+    },
+    {
+      "id": "b090",
+      "kind": "still",
+      "path": "casual/bosses/inf/directional/b090-front.png",
+      "beforeSha256": "cb89261fc3dfd250dde4ad675fcd135a1fe30109cf552860cf973ebecd55a29d",
+      "sha256": "14498c87d8877109103010a163cb9dc0ed0745596415b2631a8a90b33547ae45",
+      "bytes": 153176
+    },
+    {
+      "id": "b090",
+      "kind": "sheet",
+      "path": "casual/bosses/inf/directional/b090-front-walk-4x2.png",
+      "beforeSha256": "e244870c1c9c941de7b25623b6cc5c7ccaa0a38b17047cf56272c05b2315a43d",
+      "sha256": "1e4c3e5fb3b1ff28c3d056f11327c265150251adae39f47f450c6208f4dc0c19",
+      "bytes": 999758
+    },
+    {
+      "id": "b090-2",
+      "kind": "still",
+      "path": "casual/bosses/inf/directional/b090-2-front.png",
+      "beforeSha256": "6a9823650c30354fc1a97defa0842dcad2c3317b781067492d8a943b01560fb0",
+      "sha256": "79e6d74c6a9258238e4f7fdfe4163cdd434c420d23d398753b7e5f902ce32854",
+      "bytes": 173408
+    },
+    {
+      "id": "b090-2",
+      "kind": "sheet",
+      "path": "casual/bosses/inf/directional/b090-2-front-walk-4x2.png",
+      "beforeSha256": "e3cfc4f982fdd837d330c9e693203242264dedfcb62a30d87e13e80a497b6236",
+      "sha256": "a4230c16844c5368395a10faf0cbd1bc5f91bb65c5f7f9c5bca1313492340c74",
+      "bytes": 1141698
+    },
+    {
+      "id": "b100",
+      "kind": "still",
+      "path": "casual/bosses/inf/directional/b100-front.png",
+      "beforeSha256": "01312292571cfacc69d6142adf6b72a3d248a49c9a35e826d90065f30a3ab9cc",
+      "sha256": "e7ce899b3b03c1e656d5e8140acbc2ee73a9ec836e4a406f5939af9c33dec39b",
+      "bytes": 128912
+    },
+    {
+      "id": "b100",
+      "kind": "sheet",
+      "path": "casual/bosses/inf/directional/b100-front-walk-4x2.png",
+      "beforeSha256": "bed7f5c063f3d2f50072bcf3fb3ef62c2beaa461d2b4f52e54143b5f2f564a35",
+      "sha256": "b591e51b9f4b9f08b22fbca7fd11e13b46d5764489d7dabeb633a452b52c1aaa",
+      "bytes": 832313
+    },
+    {
+      "id": "b141",
+      "kind": "still",
+      "path": "casual/bosses/extreme/b141-front.webp",
+      "beforeSha256": "65dea02670e889e6fa3eb42d5b5cf5e7132b012293ba5c3fb06a08cbc4f52528",
+      "sha256": "3f5ce65f7391b469fd3dc57f0962cb9fd2fc1ec781150964d4d1152df08343cb",
+      "bytes": 127754
+    },
+    {
+      "id": "b141",
+      "kind": "sheet",
+      "path": "casual/bosses/extreme/b141-front-walk-4x2.webp",
+      "beforeSha256": "0fe2aab8d4d35d53a51dfc52b313f3651aed13073dddad04a478dd3057470643",
+      "sha256": "6b4b1eea883c2ef70be369c0fc8bff570b254b4582eac158cce065e7086d1b96",
+      "bytes": 840384
+    },
+    {
+      "id": "b141-2",
+      "kind": "still",
+      "path": "casual/bosses/extreme/b141-2-front.webp",
+      "beforeSha256": "faf96e6a8b93e16cc804a14919331c11d17554bfad1522584518302029b0395e",
+      "sha256": "a998a50443a6f97b315e1eaf83e3e4b8d70668cacc0df1d1cdbc378e566ab444",
+      "bytes": 151218
+    },
+    {
+      "id": "b141-2",
+      "kind": "sheet",
+      "path": "casual/bosses/extreme/b141-2-front-walk-4x2.webp",
+      "beforeSha256": "bf05361465b18b747d773d96114d1b6b24c89cbbae808f0dac1288450a65bd30",
+      "sha256": "bdb7cc0b4780f95cf8eb2816ef47892713a843477690a731a043344c9f30cde8",
+      "bytes": 911696
+    },
+    {
+      "id": "b191",
+      "kind": "still",
+      "path": "casual/bosses/extreme/b191-front.webp",
+      "beforeSha256": "ed9f7c5189cc84ed8ad06350852e2aa2d520a97bb33c4f2360482f5438d1d09a",
+      "sha256": "1644689528bfc472d8f07328b86f074ce73b3a74f7a3887bffa157ac0efd709b",
+      "bytes": 108530
+    },
+    {
+      "id": "b191",
+      "kind": "sheet",
+      "path": "casual/bosses/extreme/b191-front-walk-4x2.webp",
+      "beforeSha256": "74f50331b95e370632765ffe5b7dff1a7dee89dfca52b19b71ca13e167ea430a",
+      "sha256": "6bc3e059bf4aa1d295e422391a5c477561da2e4f5e35e2af84e79b4c5b330dca",
+      "bytes": 699476
+    },
+    {
+      "id": "b191-2",
+      "kind": "still",
+      "path": "casual/bosses/extreme/b191-2-front.webp",
+      "beforeSha256": "1f9c7d81389243ac5ba290fe4b2a847fe66d6b1caa52403875483b1ed9a51967",
+      "sha256": "643243c0aaabdf57233f9cfa5c55b10b5a13c0d84cff9153a6ef677d8c982b86",
+      "bytes": 117308
+    },
+    {
+      "id": "b191-2",
+      "kind": "sheet",
+      "path": "casual/bosses/extreme/b191-2-front-walk-4x2.webp",
+      "beforeSha256": "f577418386bdc88a418c23e743f7a390b45eef598d476a2a30760bbf8b5f22c1",
+      "sha256": "756a185c31c793a918eefb8f8d59888a4120acd2ef2ee64b80219c686f6eb1df",
+      "bytes": 760154
+    },
+    {
+      "id": "b201",
+      "kind": "still",
+      "path": "casual/bosses/extreme/b201-front.webp",
+      "beforeSha256": "70fc54b526e6a8894f5527733551b1818ccbb249d10e27ffeda307b27f52eddf",
+      "sha256": "1560af29302d4228f1818f4c9b57f7c38284d086c4207a833d5518ea6e5f36eb",
+      "bytes": 100702
+    },
+    {
+      "id": "b201",
+      "kind": "sheet",
+      "path": "casual/bosses/extreme/b201-front-walk-4x2.webp",
+      "beforeSha256": "412e7eec96c0da3cd0ddc7da2f8927a14b4a203f7fb295b0644ec4b7e016e801",
+      "sha256": "c965cc6b27d3960cfe1df3acd2565e7d382fefb5d451b9a707d5869263b5ab93",
+      "bytes": 625230
+    }
+  ],
+  "unchangedSideBackFiles": 40,
+  "manifests": [
+    {
+      "path": "directional-art.js",
+      "sha256": "2b58b56a00f859cf3f3139046ab1ce7a11ff1bced0ffdc01d7f06f85b1cd270b",
+      "entries": 110
+    },
+    {
+      "path": "extreme-art.js",
+      "sha256": "827de4060045b1bb2c40ffb4bfc8b26d268b97a35cc72e6d51f78936be89a8bd",
+      "entries": 111
+    }
+  ],
+  "passed": true
+}
