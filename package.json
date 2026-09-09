@@ -12,7 +12,9 @@
     "test:net": "cd net && npm test",
     "test:progression": "node tools/progression-test.cjs",
     "test:commerce": "cd commerce && npm test",
-    "test:game-modes": "node tools/e2e/game-modes.cjs"
+    "test:game-modes": "node tools/e2e/game-modes.cjs",
+    "test:pure-luck": "node tools/e2e/pure-luck-parity.cjs",
+    "test:pure-luck-baseline": "node tools/e2e/pure-luck-baseline.cjs"
   },
   "dependencies": {
     "@capacitor-community/safe-area": "^7.0.0",

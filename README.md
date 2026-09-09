@@ -100,6 +100,21 @@ npx cap open android                   # Android Studio → USB 실기기 Run
 
 iOS: `ios/` 도 커밋되어 있고 SPM 이라 CocoaPods 이 필요 없다. Mac 이 없으면 Codemagic/Appflow 같은 클라우드 빌드로 `npx cap sync ios` + Xcode Archive → TestFlight. Apple Developer($99/년)·번들 ID 등록이 먼저. 웹뷰 원점 `capacitor://localhost` 는 멀티 서버가 이미 허용한다.
 
+### 순수운빨 무결성 검증
+
+순수운빨은 무과금·과금의 영향이 전혀 없어야 하고, 난이도는 메운디 이식본 그대로여야 한다. 두 성질을 각각 실제 게임으로 확인한다.
+
+```bash
+python3 serve.py &                                   # 현재 빌드 (8137)
+npm run test:progression                             # 순수 모드 스냅샷·성장 판정·입장 가드 (브라우저 불필요)
+npm run test:pure-luck                               # 무과금 계정 vs 최대 성장·구매 계정: 같은 씨앗의 런이 완전히 동일한가
+                                                     #   (덱빌드에서는 반드시 달라져야 한다 — 검사가 헛돌지 않는지 같이 본다)
+
+git worktree add /tmp/dk-base 1459ac3                # 성장·상거래 도입 직전 리비전
+(cd /tmp/dk-base && PORT=8138 python3 serve.py &)
+npm run test:pure-luck-baseline                      # 두 리비전을 같은 씨앗으로 돌려 난이도가 유지됐는지
+```
+
 ### 기기 레이아웃 검증
 
 `scratchpad/devices-test.js`(저장소 밖, 세션 스크래치)가 iPhone SE~17 Pro Max · Galaxy S/A · Z Fold 펼침/접힘 · Z Flip · 태블릿 16기기 × 2방향 × 11화면을 Playwright 로 열어 스크린샷과 자동 검사(가로 스크롤·HUD 줄 수·안전영역·가림·줄바꿈·레터박스)를 남긴다. 실기기 뷰포트가 다르면 `window.innerWidth/innerHeight` 를 표에 반영한다. 안전영역은 `--sa-t/r/b/l` CSS 변수로 흉내낸다(GAME-SPEC §3).

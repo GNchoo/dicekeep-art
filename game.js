@@ -2829,7 +2829,10 @@ function startInfinity(kind, net, accountRun) {
   S.net = net || null;
   S.inf = { sp: 0, power: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 }, kills: 0, spent: 0, queue: [], chests: 0, bossT: 0, cleared: 0, mode: MODE.key, gauntlet: MODE.gauntlet };
   S.inf.clearWave = net ? net.timing.clearWave : MODE.clearWave;
-  S.inf.growthSnapshot = PROGRESSION.snapshot(progressionProfile(), MODE.key);
+  // 순수운빨(clear·multi)에는 무과금·과금 어느 쪽 성장도 붙지 않는다.
+  // content.js 의 모드 표와 progression 모듈의 성장 판정이 어긋나면 성장 없는 쪽으로 강제한다 (조용히 새는 것보다 낫다).
+  const snap = PROGRESSION.snapshot(progressionProfile(), MODE.key);
+  S.inf.growthSnapshot = MODE.growth === false && (!snap || snap.growth) ? PROGRESSION.pureSnapshot() : snap;
   S.inf.recordKey = net ? (MODE.key === 'extreme' ? 'extremeMulti' : 'multi') : MODE.key;
   S.inf.runId = globalThis.crypto && crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`;
   S.inf.startedAt = performance.now();
@@ -2888,7 +2891,10 @@ function settleInfRun(won) {
   if (S.inf.settledResult) return S.inf.settledResult;
   const INF = window.DKCONTENT.INFINITY;
   const wave = Math.max(0, S.inf.doneW || 0);
-  const record = progressionProfile().records[S.inf.recordKey];
+  // 계정 티켓이 없으면(게스트, 또는 과금 서비스가 막혀 순수운빨을 계정 보상 없이 시작한 경우)
+  // 읽는 기록과 쓰는 기록이 같은 로컬 파일이어야 한다 — 한쪽만 계정 기록을 보면 최고 기록·젬이 어긋난다.
+  const profile = S.inf.accountTicket ? progressionProfile() : SAVE.progression;
+  const record = profile.records[S.inf.recordKey];
   const isBest = wave > record.best;
   const r = INF.gems(wave, record.gemMilestones, record.best);
   if (S.inf.accountTicket) {
@@ -2913,7 +2919,7 @@ function settleInfRun(won) {
       });
     return res;
   }
-  const settled = PROGRESSION.settle(SAVE.progression, {
+  const settled = PROGRESSION.settle(profile, {
     id: S.inf.runId, mode: S.inf.recordKey, wave, kills: S.inf.kills,
     won: !!won && !!S.inf.clearWave && wave >= S.inf.clearWave,
     date: new Date().toISOString(), elapsed: Math.max(0, (performance.now() - S.inf.startedAt) / 1000),
@@ -5663,11 +5669,25 @@ $('ov-btn').addEventListener('click', () => {
 });
 $('btn-stage-select').addEventListener('click', () => { audio(); gotoStageSelect(); });
 let startingAccountRun = false;
+// 순수운빨은 과금 서비스의 상태와 무관하게 언제나 시작할 수 있어야 한다.
+// 계정 런 티켓을 못 받으면(로그인 만료·요청 제한·서버 장애·이전 런 정산 실패) 계정 보상 없이 로컬 기록으로 진행한다.
+// 성장이 붙는 모드(덱빌드·극한)는 계정 상태가 곧 전투력이라 종전대로 실패 시 시작하지 않는다.
+// 성장 여부의 판단은 실제로 성장을 적용하는 progression 모듈 한 곳에서만 한다 (mode: clear·build·extreme·multi·extremeMulti).
+const startAccountRun = async (mode, onPure) => {
+  try { return await COMMERCE.startRun(mode); }
+  catch (error) {
+    if (PROGRESSION.growsIn(mode)) throw error;
+    onPure(COMMERCE.errorText(error));
+    return null;
+  }
+};
 const startInf = async (kind) => {
   if (!infinityUnlocked() || startingAccountRun) return;
   audio(); startingAccountRun = true;
-  try { const run = await COMMERCE.startRun(kind); startInfinity(kind, null, run); }
-  catch (error) { toast(COMMERCE.errorText(error)); }
+  try {
+    const run = await startAccountRun(kind, text => toast(`${text} 순수운빨은 그대로 시작합니다 — 이 런은 계정 보상 없이 기록됩니다.`));
+    startInfinity(kind, null, run);
+  } catch (error) { toast(COMMERCE.errorText(error)); }
   finally { startingAccountRun = false; }
 };
 $('btn-infinity').addEventListener('click', () => startInf('extreme'));
@@ -5868,10 +5888,12 @@ async function mpOnStart(m) {
   const net = { code: N.code, pid: mpMePid(), mode: m.mode === 'extreme' ? 'extreme' : 'clear', seed: m.seed, t0: m.t0, timing: m.timing,
     rivals: {}, status: 'alive', doneW: 0, savedResult: null, spectating: false, forced: false, ended: null, watchers: 0 };
   if (VIEW.pid) mpViewExit(true);
+  // 순수운빨 방은 과금 서비스가 막히더라도 시작한다 (계정 보상만 빠진다). 극한은 성장이 붙으므로 종전대로 중단.
+  let run = null;
   try {
-    const run = await COMMERCE.startRun(net.mode === 'extreme' ? 'extremeMulti' : 'multi');
-    startInfinity(net.mode, net, run);
+    run = await startAccountRun(net.mode === 'extreme' ? 'extremeMulti' : 'multi', text => mpStatus(`${text} 계정 보상 없이 진행합니다.`, true));
   } catch (error) { mpLeave(); gotoLobby('multi'); mpStatus(COMMERCE.errorText(error), true); return; }
+  startInfinity(net.mode, net, run);
   mpStartSum();
   mpRenderRivals();
   mpLayoutCards();

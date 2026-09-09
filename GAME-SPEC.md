@@ -591,6 +591,12 @@ prep '준비 완료' 투표 · 플레이어별 시드 운 스트림(`chest.draw/
 - 루트 `wrangler.jsonc` 에 `main`/Durable Object 넣기 (브랜치 프리뷰 URL 이 사라진다 — 서버는 `net/` 의 별도 Worker)
 - content.js 의 웨이브 계수(`INFINITY.wave` 의 count·gap·bosses)를 바꾸고 `net/test/timing.test.js` 패리티 테스트를 안 돌리기
 - 서버가 한 번 방송한 웨이브 시각 `T_w` 를 바꾸기 · 멀티 시뮬을 `S.net` 가드 없이 싱글 경로에 섞기
+- **순수운빨(clear·multi)에 계정 상태를 들이기** — 무과금·과금 어느 쪽 성장도, 스킨도, 젬도 이 모드의 결과를 바꾸면 안 된다.
+  성장 여부의 판단은 `progression.js` `growsIn()` 한 곳뿐이고, 순수 모드의 런 스냅샷은 계정과 무관한 상수다(`pureSnapshot`).
+  순수운빨 **입장**도 과금 서비스에 묶으면 안 된다 (`startAccountRun` — 티켓을 못 받으면 계정 보상 없이 그냥 시작한다).
+  확인: `npm run test:pure-luck` (무과금 vs 최대 과금 계정의 런이 씨앗 단위로 완전히 동일한지 + 덱빌드는 달라지는지)
+- **순수운빨의 난이도(클리어율)를 건드리기** — 웨이브 곡선·뽑기 표·타워 수치·맵은 메운디 이식본 그대로다.
+  확인: `npm run test:pure-luck-baseline` (성장·상거래 도입 전 리비전을 별도 포트로 띄워 같은 씨앗으로 대조)
 
 ---
 

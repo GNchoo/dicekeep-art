@@ -142,3 +142,52 @@ test('wallet saturation is explicit and invalid run data never partially mutates
   }
   const clean = P.sanitize(JSON.parse(JSON.stringify(p))); assert.deepEqual(clean, p);
 });
+
+// ---- 순수운빨: 무과금·과금 어느 쪽 성장도 붙지 않는다 ----
+
+test('pure modes never carry account state into a run snapshot', () => {
+  const rich = P.defaultProfile();
+  for (let face = 1; face <= 20; face++) rich.levels[face] = P.MAX_LEVEL;
+  rich.deck = [20, 19, 18, 17, 16]; rich.shards = P.MAX_SHARDS;
+  const poor = P.defaultProfile();
+  for (const mode of ['clear', 'multi']) {
+    const a = P.snapshot(rich, mode), b = P.snapshot(poor, mode);
+    assert.deepEqual(a, b, mode + ': 최대 성장 계정과 신규 계정의 스냅샷이 같아야 한다');
+    assert.equal(a.growth, false); assert.equal(a.levelCap, 0);
+    assert.deepEqual(a.deck, [1, 2, 3, 4, 5], mode + ': 계정 편성이 담기면 안 된다');
+    assert.equal(Math.max(...Object.values(a.levels)), 1, mode + ': 계정 레벨이 담기면 안 된다');
+    // 성장이 없으니 어떤 눈도 피해 배수가 1 이고, 덱 뽑기는 난수를 쓰지도 않는다.
+    for (let face = 1; face <= 20; face++) assert.equal(P.damageMultiplier(a, face), 1);
+    assert.equal(P.draw(a, () => { throw new Error('순수 모드는 난수를 소비하면 안 된다'); }), null);
+  }
+  for (const mode of ['build', 'extreme', 'extremeMulti']) {
+    const a = P.snapshot(rich, mode);
+    assert.deepEqual(a.deck, [20, 19, 18, 17, 16], mode + ': 성장 모드는 계정 편성을 쓴다');
+    assert.ok(P.damageMultiplier(a, 20) > 1, mode + ': 성장 모드는 피해가 올라간다');
+  }
+});
+
+test('pure snapshot fallback is a constant the caller can force', () => {
+  const pure = P.pureSnapshot();
+  assert.deepEqual(pure, P.snapshot(P.defaultProfile(), 'clear'));
+  assert.equal(Object.isFrozen(pure) && Object.isFrozen(pure.deck) && Object.isFrozen(pure.levels), true);
+  for (let face = 1; face <= 20; face++) assert.equal(P.damageMultiplier(pure, face), 1);
+  assert.equal(P.draw(pure, Math.random), null);
+});
+
+test('growsIn is the single source of truth for which modes grow', () => {
+  assert.deepEqual(P.MODES.map(P.growsIn), [false, true, true, false, true]);
+  for (const mode of ['clear', 'multi']) assert.equal(P.growsIn(mode), false, mode + ' 는 순수 모드다');
+  assert.equal(P.growsIn('nope'), false, '모르는 모드는 순수 쪽으로 실패해야 한다');
+});
+
+
+// 순수운빨 입장은 과금 서비스에 묶이면 안 된다 — 두 진입점이 모두 성장 여부로 분기하는지 소스에서 확인한다.
+test('pure-mode entry never depends on the paid service', () => {
+  const game = require('node:fs').readFileSync(require('node:path').join(__dirname, '..', 'game.js'), 'utf8');
+  const guard = game.match(/const startAccountRun = async \(mode, onPure\) => \{[\s\S]*?\n\};/);
+  assert.ok(guard, 'startAccountRun 진입 가드가 있어야 한다');
+  assert.match(guard[0], /if \(PROGRESSION\.growsIn\(mode\)\) throw error;/, '성장 모드만 실패 시 중단해야 한다');
+  assert.equal(game.match(/COMMERCE\.startRun\(/g).length, 1, 'startRun 호출은 가드 안 한 곳뿐이어야 한다');
+  assert.equal(game.match(/await startAccountRun\(/g).length, 2, '싱글·멀티 두 진입점이 모두 가드를 지나야 한다');
+});
