@@ -146,14 +146,30 @@ function playRun({ account, mode, seed, waves }) {
     account_gems: DKSAVE.gems, account_towers: DKSAVE.unlockedTowers.length, account_skin: DKSAVE.equippedSkin[1],
     drawCount: draws.length, drawHash: hash(JSON.stringify(draws)), traceHash: hash(trace.join('\n')), traceRows: trace.length,
     firstDraws: draws.slice(0, 8), lastRow: trace[trace.length - 1],
+    // 두 계정이 같은 아레나에서 뛰었는지 확인용 (폰 화면비는 첫 진입 뒤에야 캔버스가 확정된다)
+    canvas: (() => { const c = document.getElementById('game'); return c.width + 'x' + c.height; })(), mapKey: DK.mapKey,
   };
+}
+
+// 세로 아레나의 캔버스 크기는 arenaCanvasForScreen 이 hudEl.offsetHeight 를 읽어 정한다.
+// 그 높이는 앞선 런이 남긴 HUD 내용(웨이브 칩 글자 수, 보스 칩 유무)에 따라 달라져서,
+// 한 페이지에서 연달아 돌리면 두 계정이 서로 다른 크기의 아레나에서 뛴다. 폰 화면비에서
+// 실제로 720x1240 과 720x1198 로 갈렸고, 그 차이가 계정 탓으로 잘못 읽혔다.
+// (같은 무과금 계정을 세 번 돌려도 결과가 달랐으므로 계정 누수가 아니다.)
+// 런마다 페이지를 새로 열어 레이아웃 출발점을 똑같이 맞춘다.
+async function restart(page) {
+  await page.goto(url.href);
+  await ready(page);
+  await page.click('#ov-btn');
+  await page.evaluate(() => { DK.muted = true; });
 }
 
 async function compare(page, row, mode, seed) {
   const results = {};
   for (const account of Object.keys(ACCOUNTS)) {
-    await page.evaluate(() => { try { DKlobby(); } catch (e) { /* 첫 런 전에는 로비 상태 */ } });
+    await restart(page);   // 두 계정이 반드시 같은 아레나에서 뛰게 한다
     results[account] = await page.evaluate(playRun, { account, mode, seed, waves: WAVES });
+    if (process.env.E2E_DEBUG) console.log('  run', account, results[account].canvas);
   }
   const { free, paid } = results;
   row.runs.push({ mode, seed, free, paid });
@@ -175,6 +191,9 @@ async function verify(page, row) {
       [free.snapshot, paid.snapshot], [{ growth: false, levelCap: 0, deck: [1, 2, 3, 4, 5], maxLevel: 1 }, { growth: false, levelCap: 0, deck: [1, 2, 3, 4, 5], maxLevel: 1 }]);
 
     // 본 검증: 그럼에도 런이 완전히 같아야 한다.
+    // 대조가 성립하려면 두 런이 같은 아레나에서 뛰어야 한다. 여기서 갈리면 아래 비교는 뜻이 없다.
+    check(row, `씨앗 ${seed}: 두 런이 같은 아레나·캔버스에서 뛰었다`,
+      [free.mapKey === paid.mapKey, free.canvas === paid.canvas, free.canvas], [true, true, free.canvas]);
     check(row, `씨앗 ${seed}: 순수운빨 뽑기 결과가 계정과 무관하게 동일`,
       [free.drawCount === paid.drawCount, free.drawHash === paid.drawHash], [true, true]);
     check(row, `씨앗 ${seed}: 순수운빨 런 전체(골드·목숨·적 체력·배치)가 동일`,

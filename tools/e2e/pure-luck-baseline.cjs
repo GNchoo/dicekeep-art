@@ -13,7 +13,11 @@ const out = path.resolve(process.env.E2E_OUTPUT_DIR || path.join(repo, 'gen/e2e/
 const CURRENT = (process.env.E2E_BASE_URL || 'http://localhost:8137/').replace(/\/?$/, '/');
 const BASELINE = (process.env.E2E_BASELINE_URL || 'http://localhost:8138/').replace(/\/?$/, '/');
 const WAVES = Number((process.argv.find(a => a.startsWith('--waves=')) || '').split('=')[1]) || 30;
+// 런 전체 대조는 후반 곡선을 낮춘 구간(lateFrom 뒤)에서는 당연히 어긋난다.
+// 곡선이 그대로인 앞 구간에서만 "우리가 건드리지 않은 것은 하나도 안 바뀌었다" 를 증명한다.
+const TRACE_LIMIT = 60;
 const SEEDS = [20260909, 777, 31337, 4242, 99999];
+if (WAVES > TRACE_LIMIT) throw new Error(`--waves 는 ${TRACE_LIMIT} 이하여야 한다: 후반 곡선을 낮춘 구간은 기준 리비전과 일부러 다르다`);
 fs.mkdirSync(out, { recursive: true });
 
 const report = { scope: '두 리비전을 같은 씨앗으로 구동해 순수운빨 진행이 같은지 대조. 절대 클리어율 측정이 아니다.', current: CURRENT, baseline: BASELINE, waves: WAVES, seeds: SEEDS, started: new Date().toISOString(), rows: [], pass: false };
@@ -59,7 +63,10 @@ function playRun({ seed, waves }) {
     seed, ticks, waveReached: DK.wave, phase: DK.phase, lives: DK.lives, kills: DK.inf.kills,
     drawCount: draws.length, drawHash: hash(JSON.stringify(draws)), traceHash: hash(trace.join('\n')),
     // 곡선 자체도 같이 기록해 둔다 (수치가 바뀌면 해시보다 원인을 읽기 쉽다).
-    curve: [1, 25, 50, 75, 90, 101].map(w => DKCONTENT.INFINITY.wave(w, true).hpMult),
+    // 후반 곡선은 의도적으로 낮췄으므로 시작 웨이브 앞뒤를 나눠 기록한다.
+    lateFrom: DKCONTENT.INFINITY.lateFrom, lateExp: DKCONTENT.INFINITY.lateExp,
+    curveEarly: [1, 10, 25, 40, 50, 60].map(w => DKCONTENT.INFINITY.wave(w, true).hpMult),
+    curveLate: [70, 80, 90, 100, 101].map(w => DKCONTENT.INFINITY.wave(w, true).hpMult),
   };
 }
 
@@ -114,8 +121,14 @@ async function openGame(browser, base, rows) {
         const same = a.traceHash === b.traceHash;
         report.rows.push({ seed, current: a, baseline: b, identicalTrace: same, killDrift: +killDrift.toFixed(4) });
         console.log(`씨앗 ${seed}: 현재 ${a.waveReached}웨이브/목숨 ${a.lives}/처치 ${a.kills} · 기준 ${b.waveReached}웨이브/목숨 ${b.lives}/처치 ${b.kills} → ${same ? '완전 동일' : `처치 편차 ${(killDrift * 100).toFixed(1)}%`}`);
-        // 난이도를 결정하는 값은 정확히 같아야 한다.
-        assert.deepEqual(a.curve, b.curve, `씨앗 ${seed}: 웨이브 체력 곡선`);
+        // 후반 곡선(lateFrom 앞)까지는 난이도가 정확히 같아야 한다.
+        assert.deepEqual(a.curveEarly, b.curveEarly, `씨앗 ${seed}: ${a.lateFrom}웨이브까지의 체력 곡선`);
+        // 그 뒤는 의도적으로 낮췄다. 공식과 맞는지, 그리고 반드시 가벼워졌는지 둘 다 본다.
+        const LATE_WAVES = [70, 80, 90, 100, 101];
+        assert.deepEqual(a.curveLate, LATE_WAVES.map(w => +Math.min(1e120, 1.8 * Math.pow(1.08, w - 1) * Math.pow(a.lateExp, Math.max(0, w - a.lateFrom))).toFixed(3)),
+          `씨앗 ${seed}: 후반 체력 곡선이 lateFrom ${a.lateFrom} · lateExp ${a.lateExp} 공식과 일치`);
+        a.curveLate.forEach((hp, i) => assert.ok(hp < b.curveLate[i],
+          `씨앗 ${seed}: ${LATE_WAVES[i]}웨이브 체력이 기준(${b.curveLate[i]})보다 가벼워야 한다 — 현재 ${hp}`));
         assert.equal(a.drawHash, b.drawHash, `씨앗 ${seed}: 뽑기 결과 순서 (등급·눈)`);
         assert.equal(a.drawCount, b.drawCount, `씨앗 ${seed}: 뽑기 횟수`);
         // 런 결과도 같아야 한다. 프레임 단위 타이밍은 미세하게 어긋날 수 있어 처치 수만 여유를 둔다.
@@ -143,5 +156,5 @@ async function openGame(browser, base, rows) {
     fs.writeFileSync(path.join(out, 'report.json'), JSON.stringify(report, null, 2));
     await browser.close();
   }
-  console.log('PASS 순수운빨 난이도 유지 —', SEEDS.length, '씨앗 ×', WAVES, '웨이브;', path.join(out, 'report.json'));
+  console.log('PASS 순수운빨 —', SEEDS.length, '씨앗 ×', WAVES, '웨이브 (앞 구간 완전 동일 · 후반은 의도한 만큼만 완화);', path.join(out, 'report.json'));
 })().catch(error => { console.error('FAIL', error); process.exitCode = 1; });

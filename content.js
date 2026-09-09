@@ -1554,7 +1554,13 @@ window.DKCONTENT = (function () {
     modeOf(key) { return this.modes[key === 'endless' ? 'extreme' : key] || this.modes.clear; },
     clearWave: 101,   // 도전 모드 클리어 선 (로스터 한 사이클 = 메운디 1~101R)
     clearGems: 80,
-    lateFrom: 90, lateExp: 1.08, // 최종 관문(도전 모드): 91웨이브부터 체력이 한 번 더 가팔라진다 (1.08 → 실질 1.166)
+    // 최종 관문(도전 모드): 61웨이브부터 체력 배율에 lateExp^(w-lateFrom) 이 한 번 더 곱해진다.
+    // lateExp 가 1 미만이면 감산이다 — 초반 60웨이브는 한 톨도 바뀌지 않고 후반만 완만해진다.
+    // 예전 값(lateFrom 90 · lateExp 1.08)은 클리어를 소수점대로 묶으려던 장치였는데, 실측 결과
+    // 소수점대가 아니라 0 이었다(봇 120런 클리어 0회). 100웨이브 보스를 320초 안에 잡으려면
+    // 15칸 중 8.6칸이 20★ 3레벨이어야 하고, 그 판은 한 런 수입으로 감당이 안 된다.
+    // 지금 값은 봇 256런에서 클리어율 2.3%(신뢰구간 1.1~5.0%) — tools/e2e/pure-luck-clearrate.cjs.
+    lateFrom: 60, lateExp: 0.99,
     // ---- 보스 주기는 로스터 기준 (2주기부터 w % 10 과 어긋난다) ----
     isBossWave(w) { const r = this.getRoster()[(Math.max(1, w) - 1) % 101]; return !!(r && r.boss); },
     bossFor,   // (순번, k) → 겉보기 순 보스 (bosses 항목)
@@ -1567,7 +1573,7 @@ window.DKCONTENT = (function () {
     paletteOf(w) { return INF_PALETTE[this.tierIndex(w)]; },
     bossOrdinal(w) { const c = Math.floor((Math.max(1, w) - 1) / 101), i = (Math.max(1, w) - 1) % 101 + 1; return c * 10 + Math.round(i / this.bossEvery); },
     wave(w, gauntlet) {
-      const late = gauntlet && w > this.lateFrom ? Math.pow(this.lateExp, w - this.lateFrom) : 1;
+      const late = gauntlet && w > this.lateFrom ? Math.pow(this.lateExp, w - this.lateFrom) : 1; // lateExp<1 이면 후반 감산
       return {
         hpMult: +Math.min(1e120, 1.8 * Math.pow(1.08, w - 1) * late).toFixed(3), // 기존 곡선 유지. 장기 극한 런도 Infinity/NaN 체력을 만들지 않는다.
         count: Math.min(36, 12 + Math.floor(w * 0.6)),
