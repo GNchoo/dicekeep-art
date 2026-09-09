@@ -21824,7 +21824,8 @@
               "upperLayer": -3,
               "bend": 1,
               "proximalFeather": 0.18,
-              "proximalEdgeFeather": 0.09
+              "proximalEdgeFeather": 0.09,
+              "flipX": true
             },
             {
               "id": "rightLeg",
@@ -21872,10 +21873,12 @@
               "upperLayer": -3,
               "bend": 1,
               "proximalFeather": 0.18,
-              "proximalEdgeFeather": 0.09
+              "proximalEdgeFeather": 0.09,
+              "flipX": true
             }
           ],
-          "jointReview": "Source t4-boss-01-front-parts row 0 front. Reviewed hip cuff/knee/ankle y 0.1/0.55/0.75; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained. Body translated once so mean hip socket aligns to canonical pivot X."
+          "jointReview": "Source t4-boss-01-front-parts row 0 front. Reviewed hip cuff/knee/ankle y 0.1/0.55/0.75; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained. Body translated once so mean hip socket aligns to canonical pivot X.",
+          "assetVersion": 102
         },
         "back": {
           "source": "tools/art-review/directional-101/middle-waves/t4-boss-01-back-parts-clean.png",
@@ -22211,7 +22214,8 @@
               "upperLayer": -3,
               "bend": 1,
               "proximalFeather": 0.18,
-              "proximalEdgeFeather": 0.09
+              "proximalEdgeFeather": 0.09,
+              "flipX": true
             },
             {
               "id": "rightLeg",
@@ -22259,7 +22263,8 @@
               "upperLayer": -3,
               "bend": 1,
               "proximalFeather": 0.18,
-              "proximalEdgeFeather": 0.09
+              "proximalEdgeFeather": 0.09,
+              "flipX": true
             }
           ],
           "jointReview": "Source t4-boss-01-front-parts row 1 front. Reviewed hip cuff/knee/ankle y 0.1/0.4/0.75; corresponding x measured independently per part. Fixed texture scale, physical left/right phase and source provenance retained. Body translated once so mean hip socket aligns to canonical pivot X.",
@@ -22268,7 +22273,8 @@
               511,
               909
             ]
-          ]
+          ],
+          "assetVersion": 102
         },
         "back": {
           "source": "tools/art-review/directional-101/middle-waves/t4-boss-01-back-parts.png",
@@ -43255,7 +43261,7 @@
                   0.995
                 ]
               },
-              "flipX": false,
+              "flipX": true,
               "socketNormalized": [
                 0.61,
                 0.8
@@ -43304,7 +43310,7 @@
                   0.995
                 ]
               },
-              "flipX": false,
+              "flipX": true,
               "socketNormalized": [
                 0.39,
                 0.8
@@ -43327,7 +43333,8 @@
               "proximalEdgeFeather": 0.09
             }
           ],
-          "jointReview": "Authored cap/knee/ankle y landmarks and body pelvis reviewed; x centers measured at those rows. Source SHA pins ROI and landmarks. Visual animation approval remains separate."
+          "jointReview": "Authored cap/knee/ankle y landmarks and body pelvis reviewed; x centers measured at those rows. Source SHA pins ROI and landmarks. Visual animation approval remains separate.",
+          "assetVersion": 102
         },
         "back": {
           "source": "tools/art-review/directional-101/late-waves/sources/late-boss-biped-01-front-back-parts.png",
@@ -43650,7 +43657,7 @@
                   0.995
                 ]
               },
-              "flipX": false,
+              "flipX": true,
               "socketNormalized": [
                 0.61,
                 0.82
@@ -43699,7 +43706,7 @@
                   0.995
                 ]
               },
-              "flipX": false,
+              "flipX": true,
               "socketNormalized": [
                 0.39,
                 0.82
@@ -43722,7 +43729,8 @@
               "proximalEdgeFeather": 0.09
             }
           ],
-          "jointReview": "Authored cap/knee/ankle y landmarks and body pelvis reviewed; x centers measured at those rows. Source SHA pins ROI and landmarks. Visual animation approval remains separate."
+          "jointReview": "Authored cap/knee/ankle y landmarks and body pelvis reviewed; x centers measured at those rows. Source SHA pins ROI and landmarks. Visual animation approval remains separate.",
+          "assetVersion": 102
         },
         "back": {
           "source": "tools/art-review/directional-101/late-waves/sources/late-boss-biped-01-front-back-parts.png",
@@ -47345,7 +47353,7 @@
                   0.995
                 ]
               },
-              "flipX": false,
+              "flipX": true,
               "socketNormalized": [
                 0.61,
                 0.88
@@ -47394,7 +47402,7 @@
                   0.995
                 ]
               },
-              "flipX": false,
+              "flipX": true,
               "socketNormalized": [
                 0.39,
                 0.88
@@ -47417,7 +47425,8 @@
               "proximalEdgeFeather": 0.09
             }
           ],
-          "jointReview": "Authored cap/knee/ankle y landmarks and body pelvis reviewed; x centers measured at those rows. Source SHA pins ROI and landmarks. Visual animation approval remains separate."
+          "jointReview": "Authored cap/knee/ankle y landmarks and body pelvis reviewed; x centers measured at those rows. Source SHA pins ROI and landmarks. Visual animation approval remains separate.",
+          "assetVersion": 102
         },
         "back": {
           "source": "tools/art-review/directional-101/late-waves/sources/late-boss-biped-02-all-parts.png",

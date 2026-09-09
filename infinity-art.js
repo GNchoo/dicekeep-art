@@ -103,6 +103,7 @@
     for (const name of VIEWS) {
       const v = e.views && e.views[name], scale = v && v.scale == null ? 1 : v && v.scale;
       if (!v || typeof v.still !== 'string' || typeof v.sheet !== 'string' || !v.still || !v.sheet) return null;
+      if (v.assetVersion != null && (!Number.isSafeInteger(v.assetVersion) || v.assetVersion <= 0)) return null;
       if (typeof v.fallback !== 'string' || !/^data:image\/webp;base64,[A-Za-z0-9+/]+={0,2}$/.test(v.fallback)) return null;
       if (![4, 8].includes(v.frames) || !Number.isInteger(v.cols) || v.cols < 1 || v.cols > v.frames || v.frames % v.cols) return null;
       if (!Number.isInteger(v.cell) || v.cell < 32 || v.cell > 1024 || !finite(scale) || scale <= 0) return null;
@@ -154,7 +155,8 @@
     const evolutionMarks = new Map();
     let overlayBytes = 0;
     const stats = { loads: 0, failures: 0, evictions: 0, budgetSkips: 0 };
-    const urlFor = (src, entry) => { const u = new URL(src, base); u.searchParams.set('v', String(entry.assetVersion)); return u.href; };
+    // A corrected direction can invalidate its own images while other views keep their cache URLs.
+    const urlFor = (src, entry, view) => { const u = new URL(src, base); u.searchParams.set('v', String(view.assetVersion ?? entry.assetVersion)); return u.href; };
     const loader = options.loadImage || (url => new Promise((resolve, reject) => {
       const im = new root.Image();
       let settled = false;
@@ -194,7 +196,7 @@
       running++; reserved += reservation; maxRunning = Math.max(maxRunning, running); peak = Math.max(peak, resident + reserved);
       r.status = 'loading'; r.attempts++; let img, frames = [];
       try {
-        img = await loader(r.mandatory ? r.descriptor.fallback : urlFor(r.descriptor[r.kind], r.entry), r);
+        img = await loader(r.mandatory ? r.descriptor.fallback : urlFor(r.descriptor[r.kind], r.entry, r.descriptor), r);
         const v = r.descriptor, cols = r.kind === 'sheet' ? v.cols : 1, rows = r.kind === 'sheet' ? v.rows : 1;
         if (img.width !== cols * v.cell || img.height !== rows * v.cell) throw new Error('unexpected directional art grid: ' + r.key);
         if (disposed || stamp !== generation || !r.wanted) { r.status = 'idle'; return; }

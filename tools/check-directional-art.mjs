@@ -31,6 +31,7 @@ for (const [id, entry] of Object.entries(m.entries)) {
   const scales = new Set();
   for (const [name, view] of Object.entries(entry.views)) {
     try {
+      check(view.assetVersion == null || (Number.isSafeInteger(view.assetVersion) && view.assetVersion > 0), id + ' ' + name + ': invalid asset version');
       const image = await sharp(path.join(directory, view.sheet)).metadata();
       check(qa.files.some(f => f.file === view.sheet) && qa.files.some(f => f.file === view.still), id + ': runtime files lack hash records');
       check(image.width === view.cell * view.cols && image.height === view.cell * view.rows && view.frames === view.cols * view.rows, id + ' ' + name + ': grid mismatch');

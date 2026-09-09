@@ -1,0 +1,40 @@
+{
+  "version": 102,
+  "date": "2026-09-09",
+  "passed": true,
+  "ids": [
+    "b040",
+    "b040-2",
+    "b090",
+    "b090-2",
+    "b100",
+    "b141",
+    "b141-2",
+    "b191",
+    "b191-2",
+    "b201"
+  ],
+  "frontPosesReviewed": 80,
+  "method": "Existing front leg pixels and source joints are reflected together using flipX. Physical limb identity, sockets, phase, IK link lengths and vertical foot contact are preserved.",
+  "visualReview": "Root compared b040 original, exchanged source legs and mirrored source legs. Independent art reviewer inspected the final eight front poses of every listed boss against the original boards: outward feet, continuous knees/ankles, no unnatural foot overlap or clipping.",
+  "excluded": "Already outward b020/b121, b050/b151, b050-2/b151-2; near-straight b010/b111/b111-2 and b030/b131; quadrupeds and flyers.",
+  "generationRequests": 0,
+  "scope": "Baked front-pose visual approval. Actual game checks and release file hashes are recorded separately.",
+  "builds": {
+    "middle": {
+      "manifestSha256": "dffe12cd6d427bcbcc21c8b3324189799d5d37fe4485126e11957453bb02015b",
+      "qaSha256": "48322f67955ea6199ca6ed3ede9979ed894c45a01011d78d6efbf82ffa142005",
+      "movingQaSha256": "28480782b75e390ff63b87916578c9599498ebe899af8d51cb9c76f9e65862c3"
+    },
+    "late": {
+      "manifestSha256": "13efbcae64ee7bf9bbc0178d059a6baccf62eb1d36ba77eb5caabbc6ce593cef",
+      "qaSha256": "d6e63d174b56ada252ad12fd436151e3c3661aa929b2af5fafa6fee29ae2ad68",
+      "movingQaSha256": "4863b2f4cc329969860f222a48b38c6c082123d70327b9d7bad14da5001632cf"
+    },
+    "extreme": {
+      "manifestSha256": "b769686c245bea9a0fd84f73475955d2f9cb58bffb27c2378ac92446ecad6133",
+      "qaSha256": "6b835749999fc30cdf832f72f9ccc96ff67e1a51ac5804b9c51cae9f5a3f6cb3",
+      "movingQaSha256": "553aeba56f9b3f066b37ce08ab9dc0917aae5edc506512a609c16b7c5597930d"
+    }
+  }
+}

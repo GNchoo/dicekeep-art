@@ -28,6 +28,8 @@ for(const e of catalog.filter(e=>e.wave>=61&&e.gait==='biped')){
    const sx=name==='side'?(cp??p)[k+3]:name==='front'?[.61,.39][k]:[.39,.61][k],sy=(corrected?cp:p)[vi];
    return{id:k?'rightLeg':'leftLeg',type:'leg',roi:roi(legData.raw,c.bounds),sourceJoints:joints(legData.raw,legData.mask,c.bounds,ys),flipX:name==='side'?(flips[e.assetId]?.[k]??false):false,socketNormalized:[sx,sy],socketRoiNormalized:[sx-.07,sy-.06,.14,.12],calibrate:{groundY:ground,maximumStanceAngle:168},phase:k*.5,layer:name==='side'?k?1:-2:1,upperLayer:-3,bend:1,proximalFeather:.15,proximalEdgeFeather:.09};
   }),jointReview:'Authored cap/knee/ankle y landmarks and body pelvis reviewed; x centers measured at those rows. Source SHA pins ROI and landmarks. Visual animation approval remains separate.'};
+  // Only these reviewed front feet need reflection; physical IDs, sockets and gait phases remain fixed.
+  if(name==='front'&&['b090','b090-2','b100'].includes(e.assetId)){views[name].assetVersion=102;for(const p of views[name].parts)if(p.type==='leg')p.flipX=true;}
  }
  if(complete)entries.push({assetId:e.assetId,wave:e.wave,role:e.role,locomotion:'legged',cell:e.role==='normal'?256:512,referenceHeight:e.role==='normal'?350:420,cycleStride:e.role==='normal'?160:180,reviewApproved:false,gait:{stanceDuty:.5,lift:25,pelvis:'support'},views});
 }

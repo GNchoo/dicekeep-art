@@ -1,0 +1,122 @@
+{
+  "version": 102,
+  "files": [
+    {
+      "file": "middle-directional-qa.json.gz",
+      "sourceSha256": "48322f67955ea6199ca6ed3ede9979ed894c45a01011d78d6efbf82ffa142005",
+      "sha256": "11036f672f3bd11a07a6361d7d8b6859c07c08c1600325705e84576e85c051dd"
+    },
+    {
+      "file": "middle-directional-art.json.gz",
+      "sourceSha256": "dffe12cd6d427bcbcc21c8b3324189799d5d37fe4485126e11957453bb02015b",
+      "sha256": "c140ec267ec01b3c1d470826d83be47c98bd935dc23c9ff60d38bfb0f91edfcd"
+    },
+    {
+      "file": "middle-directional-validation.json.gz",
+      "sourceSha256": "247c0bdfd336ef26dbd69e0fa76e6a31866509671c9c2e3410e893131023fff2",
+      "sha256": "efd9509de0bbb7dedf734a76817aed623a7c12519a9fdcfb81793c8f63db8a40"
+    },
+    {
+      "file": "middle-directional-moving-qa.json.gz",
+      "sourceSha256": "28480782b75e390ff63b87916578c9599498ebe899af8d51cb9c76f9e65862c3",
+      "sha256": "4fae290d7acf318cf9dce6e7fee356560a999cb210fdd150c5adac0916162501"
+    },
+    {
+      "file": "late-directional-qa.json.gz",
+      "sourceSha256": "d6e63d174b56ada252ad12fd436151e3c3661aa929b2af5fafa6fee29ae2ad68",
+      "sha256": "318e506453b0c029ec4aafb39b87fc2805026cb360698d7ae71f63c6d67302f6"
+    },
+    {
+      "file": "late-directional-art.json.gz",
+      "sourceSha256": "13efbcae64ee7bf9bbc0178d059a6baccf62eb1d36ba77eb5caabbc6ce593cef",
+      "sha256": "e5d63fee4e277471a0974a8a303e45c9b5b49008fb5e6c0e86b9709912e330fe"
+    },
+    {
+      "file": "late-directional-validation.json.gz",
+      "sourceSha256": "0ac21d5ffab4460fb75ac76e0571385b1b0e10410aa97b65ec1e8b83fc4f8bf1",
+      "sha256": "a60dc5641e51521ae50bd10cccb42eb0c7f4e60eae05ee97ea986a8cf299f122"
+    },
+    {
+      "file": "late-directional-moving-qa.json.gz",
+      "sourceSha256": "4863b2f4cc329969860f222a48b38c6c082123d70327b9d7bad14da5001632cf",
+      "sha256": "1a5e96187983b0cea22dac3c1f3180dba51c7c46dc7fe998bbdb5ad5d5583ff1"
+    },
+    {
+      "file": "extreme-directional-qa.json.gz",
+      "sourceSha256": "6b835749999fc30cdf832f72f9ccc96ff67e1a51ac5804b9c51cae9f5a3f6cb3",
+      "sha256": "8bf2bf4a73097b0daf2d1a4f060eda63aee7034c33feb0970638dbbb28541fdc"
+    },
+    {
+      "file": "extreme-directional-art.json.gz",
+      "sourceSha256": "b769686c245bea9a0fd84f73475955d2f9cb58bffb27c2378ac92446ecad6133",
+      "sha256": "93aedaab44fe5babd9e16118d24eafa215f1a6b99b726df85dcb34402a9e5155"
+    },
+    {
+      "file": "extreme-directional-validation.json.gz",
+      "sourceSha256": "38ae1ce91023d59e85a08d70dc0c70510595b3301db894ad5a8ac3d75900cd15",
+      "sha256": "81cd899966b451a76dc298e7cde96be4c74551e5f24c7546cb0a6846eb04d12b"
+    },
+    {
+      "file": "extreme-directional-moving-qa.json.gz",
+      "sourceSha256": "553aeba56f9b3f066b37ce08ab9dc0917aae5edc506512a609c16b7c5597930d",
+      "sha256": "c60dd855c6438a3a8eef636a3ea3a3bb00eeb0ec52551967b79c971b0b814925"
+    },
+    {
+      "file": "front-poses-1.jpg",
+      "ids": [
+        "b040",
+        "b040-2",
+        "b090",
+        "b090-2",
+        "b100"
+      ],
+      "poses": 40,
+      "sha256": "647870908ba10b093b6a1d4809d7061dfa15aa7987d5301b2dd615f9fb649941"
+    },
+    {
+      "file": "front-poses-2.jpg",
+      "ids": [
+        "b141",
+        "b141-2",
+        "b191",
+        "b191-2",
+        "b201"
+      ],
+      "poses": 40,
+      "sha256": "00c55586f75378eb97c9b7a52970f03e238adbac129ca1deda9370c5b077c589"
+    },
+    {
+      "file": "baseline-runtime.json.gz",
+      "sourceSha256": "a3cfcf87337a836325da7fdc88db0d74317929bc4a03f073c3c0b997f8d5ce0a",
+      "sha256": "4c6ef3b99f8888e44ed35a9379fefadb9fbee5cfb7d294c7d4db2ab0991f497a"
+    },
+    {
+      "file": "after-runtime.json.gz",
+      "sourceSha256": "61d570ea60be0e7f5fd75ce13d449214026fb9c3fce114f8c8ef9f117dc2eb14",
+      "sha256": "1fd51738e1b27dfc8f5b2785939dd0f34e99ee2eb4c7d9118ad17563737be79c"
+    },
+    {
+      "file": "b040-before-after.gif",
+      "sha256": "8368bcf5fe15f207c9a9246e9d6f6f47f085d6026821453208e178a4c616d5ae",
+      "frames": 8,
+      "source": "Existing actual-game screenshot crops; no redraw or art injection"
+    },
+    {
+      "file": "b090-before-after.gif",
+      "sha256": "80ed29897947b37746450cc6c60ed85d8bac10f43ea2bc902ba5f409b10683c2",
+      "frames": 8,
+      "source": "Existing actual-game screenshot crops; no redraw or art injection"
+    },
+    {
+      "file": "b201-before-after.gif",
+      "sha256": "9fe2ed9f91141c9aa4ddcd40f2cf61d67787de6705b6079af8e94f747a426757",
+      "frames": 8,
+      "source": "Existing actual-game screenshot crops; no redraw or art injection"
+    },
+    {
+      "file": "runtime-checker.cjs",
+      "sha256": "3f666d31ff3a25c505505f81d8f27e7baf6a623a3f98a193c077274a733fb50b",
+      "scope": "Exact checker used for baseline and after; copy to gen/boss-front-footwork-runtime.cjs to run."
+    }
+  ]
+}

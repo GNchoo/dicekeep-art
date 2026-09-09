@@ -14,13 +14,13 @@
 <div id="error" role="alert"></div><div id="grid"></div><div id="towerGrid"></div>
 <footer>걷기·기어가기는 방향별 8프레임, 비행·부유는 4프레임입니다. 왼쪽은 측면 반사이며 발 기준점은 실제 시트 메타데이터를 사용합니다. 게임의 재생 속도는 이동 거리에 따릅니다. 203웨이브부터는 이 로스터에 최대 3단계 진화 장식을 적용합니다. 이 검수 도구는 앱·운영 정적 배포에 포함되지 않습니다.</footer>
 </main>
-<script src="../../../extreme-art.js?v=101"></script>
+<script src="../../../extreme-art.js?v=102"></script>
 <script>
 'use strict';
 const root=new URL('../../../',location.href),$=id=>document.getElementById(id),manifest=window.INF_EXTREME_ART.entries;
 let catalog=[],direction='right',paused=false,cards=[],epoch=0,towerMode=false;
 for(let i=0;i<10;i++){const o=document.createElement('option');o.value=i;o.textContent='W'+(102+i*10)+'–'+(i===9?202:111+i*10);$('range').append(o);}
-const link=path=>new URL(path,root).href+'?v=101';
+const link=(path,version=101)=>new URL(path,root).href+'?v='+version;
 function previewScale(im,e,v){const probe=document.createElement('canvas');probe.width=im.naturalWidth;probe.height=im.naturalHeight;const ctx=probe.getContext('2d',{willReadFrequently:true});ctx.drawImage(im,0,0);const data=ctx.getImageData(0,0,probe.width,probe.height).data;let horizontal=1,above=1,below=1;for(let y=0;y<probe.height;y++)for(let x=0;x<probe.width;x++){if(data[(y*probe.width+x)*4+3]<12)continue;horizontal=Math.max(horizontal,Math.abs(x%v.cell-v.pivot[0]));above=Math.max(above,v.pivot[1]-y%v.cell);below=Math.max(below,y%v.cell-v.pivot[1]);}probe.width=probe.height=0;return Math.min(155/(e.referenceHeight*v.scale),112/horizontal,211/above,12/below);}
 function setButtons(){document.querySelectorAll('[data-dir]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.dir===direction));$('pause').setAttribute('aria-pressed',paused);$('pause').textContent=paused?'재생':'일시정지';}
 async function render(){const token=++epoch;cards=[];$('grid').replaceChildren();$('error').textContent='';const start=Number($('range').value)*10+102,end=start===192?202:start+9,entries=catalog.filter(e=>e.wave>=start&&e.wave<=end);$('status').textContent=Object.values(manifest).filter(e=>e.ready).length+' / 111종 적용';
@@ -30,7 +30,7 @@ async function render(){const token=++epoch;cards=[];$('grid').replaceChildren()
   article.append(label);$('grid').append(article);
  }
  const view=direction==='down'?'front':direction==='up'?'back':'side',queue=[...cards];
- async function worker(){while(queue.length&&token===epoch){const card=queue.shift(),v=card.e.views[view],im=new Image();card.v=v;card.a.href=link(v.sheet);im.src=link(v.sheet);try{await im.decode();if(token===epoch){card.scale=previewScale(im,card.e,v);card.image=im;card.canvas.dataset.view=view;card.canvas.dataset.ready='true';}}catch(e){if(token===epoch)$('error').textContent='시트 로드 실패: '+card.c.assetId;}}}
+ async function worker(){while(queue.length&&token===epoch){const card=queue.shift(),v=card.e.views[view],im=new Image();card.v=v;card.a.href=link(v.sheet,v.assetVersion);im.src=link(v.sheet,v.assetVersion);try{await im.decode();if(token===epoch){card.scale=previewScale(im,card.e,v);card.image=im;card.canvas.dataset.view=view;card.canvas.dataset.ready='true';}}catch(e){if(token===epoch)$('error').textContent='시트 로드 실패: '+card.c.assetId;}}}
  await Promise.all([worker(),worker()]);
 }
 function draw(t){const phase=paused?Number($('frame').value)/8:(t%1200)/1200;if(!document.hidden&&!towerMode)for(const card of cards){const {canvas,v,image,scale}=card;if(!image)continue;const g=canvas.getContext('2d'),idx=Math.min(v.frames-1,Math.floor(phase*v.frames));g.clearRect(0,0,256,256);g.strokeStyle='#546361';g.beginPath();g.moveTo(15,238.5);g.lineTo(241,238.5);g.stroke();g.save();g.translate(128,238);if(direction==='left')g.scale(-1,1);g.drawImage(image,(idx%v.cols)*v.cell,Math.floor(idx/v.cols)*v.cell,v.cell,v.cell,-v.pivot[0]*scale,-v.pivot[1]*scale,v.cell*scale,v.cell*scale);g.restore();}if(!towerMode)$('pose').textContent='주기 '+(Math.floor(phase*8)+1)+'/8';requestAnimationFrame(draw);}

@@ -83,6 +83,7 @@ export function validatePreparedViews(entry, views) {
 
 export async function prepareView(entry, name, view, repo, canonicalCell = 512) {
   const { count } = validateEntry(entry, canonicalCell);
+  if (view.assetVersion != null && (!Number.isSafeInteger(view.assetVersion) || view.assetVersion <= 0)) throw new Error(name + ': assetVersion must be a positive safe integer');
   const pivot = point(view.pivot, name + '.pivot');
   if (pivot.some(n => n < 0 || n > canonicalCell)) throw new Error('pivot outside canonical cell');
   if (view.legacySheet) return prepareLegacySheet(entry, name, view, repo, canonicalCell);
