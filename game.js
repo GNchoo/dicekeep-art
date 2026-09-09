@@ -2695,7 +2695,8 @@ function buildInfinityWave(w) {
       // reviewed slot10 character at the secondary drawing scale.
       const sharedFirstBoss = k === 1 && (w - 1) % 101 + 1 === 10 && directionalArt && directionalArt.entry('b010');
       const directionalName = dart ? dart.name : sharedFirstBoss ? INF.monsters[10].name + ' 부관' : null;
-      add(bbase.id, { name: M.prefix + (directionalName || (bart ? bart.name : boss.name)), hue: bart || directionalName ? 0 : boss.hue, hpMult: P.hpMult * P.bossHp, isBoss: true, bossCount: P.bosses, bossRole: k, lane: laneFor(bbase.move, k), art: bart && bart.key });
+      const move = INF.bossMoveFor(w, k, bbase.move);
+      add(bbase.id, { name: M.prefix + (directionalName || (bart ? bart.name : boss.name)), hue: bart || directionalName ? 0 : boss.hue, hpMult: P.hpMult * P.bossHp, isBoss: true, bossCount: P.bosses, bossRole: k, lane: laneFor(move, k), art: bart && bart.key });
       t += 1.5;
     }
     return q;
@@ -3005,9 +3006,10 @@ function spawnEnemy(item) {
     }
   }
   if (!def) def = ENEMY_DEFS.mite;
-  const lane = (item.lane != null && LANES[item.lane]) ? item.lane : laneFor(move, 0);
   const isBoss = !!item.isBoss;
   const INFC = window.DKCONTENT && DKCONTENT.INFINITY;
+  if (S.mode === 'infinity' && isBoss && INFC) move = INFC.bossMoveFor(item.wave, item.bossRole || 0, move);
+  const lane = (item.lane != null && LANES[item.lane]) ? item.lane : laneFor(move, 0);
   // Collision size is determined by the existing roster contract, never by a network/cache result.
   const artOk = !!item.art;
   if (artOk && item.sizeClass && INFC && INFC.artSize && INFC.artSize[item.sizeClass]) {   // 인피니티 새 그림: 등급별 고정 높이 (content.js artSize · 보스는 artSizeBoss)
@@ -6012,6 +6014,8 @@ function mpViewBuild(sum) {
         e.def = Object.assign({}, base, { size: Math.round(logicalSize * (appearance.elite ? 1.2 : 1)) });
         e.appearanceCode = row.a; applyDirectionalAppearance(e, appearance); e.isElite = appearance.elite; e.isBoss = isBoss;
         e.bossRole = appearance.role === 'secondary' ? 1 : 0; e.wave = appearance.wave; e.sizeClass = cls;
+        e.move = isBoss ? inf.bossMoveFor(e.wave, e.bossRole, base.move) : base.move;
+        e.lane = laneFor(e.move, e.bossRole);
         e.drawHeight = directionalDrawHeight(e, table[cls]);
         const dart = inf.directionalArt(appearance.wave, e.bossRole);
         e.name = (e.isElite ? '정예 ' : '') + (e.evolutionTier ? `진화 ${e.evolutionTier} · ` : '') + (dart ? dart.name : e.bossRole ? mon.second || mon.name + ' 부관' : mon.name);

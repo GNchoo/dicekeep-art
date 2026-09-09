@@ -1,0 +1,961 @@
+{
+  "version": 1,
+  "label": "after",
+  "legacy": false,
+  "smoke": true,
+  "baseUrl": "http://127.0.0.1:8139/",
+  "startedAt": "2026-09-09T05:03:41.016Z",
+  "checkerSha256": "06ef3ead7f3b46cbe87b9d5e5dd3f411b416fec06ec38f23ea256a69cb9b2ccd",
+  "scope": "HTTP game source plus closure exports only; no logic/art response replacement. Actual buildInfinityWave/spawnEnemy select combat/identity. Isolated public test state positions actors on real lane straights. Draw observation subtracts actual road camera transform. Spectator uses actual serialized enemy rows and mpViewBuild, without a remote room.",
+  "pixelLimit": "A rendered pivot at the authored floor is a runtime grounding check, not independent proof of anatomical foot contact in every textured pose.",
+  "anchorToleranceWorldPx": 0.001,
+  "anchorToleranceReason": "Canvas getTransform translations are float32-quantized while path coordinates are JS doubles. Baseline measured horizontal residual 0.000007397px; tolerance remains one-thousandth of a game pixel.",
+  "source": {
+    "game": {
+      "url": "http://127.0.0.1:8139/game.js?v=103",
+      "sha256": "b358d5b9d305112c0f9d018550bdc091b700ed907e48c8b753617c7b50df9e55",
+      "status": 200
+    },
+    "exportedGameSha256": "57043ebf79f041198e24f67403fa7c9f85c6d1608b073e392b6ad12956b23ce8",
+    "directional-art.js": {
+      "url": "http://127.0.0.1:8139/directional-art.js?v=102",
+      "sha256": "2b58b56a00f859cf3f3139046ab1ce7a11ff1bced0ffdc01d7f06f85b1cd270b"
+    },
+    "extreme-art.js": {
+      "url": "http://127.0.0.1:8139/extreme-art.js?v=102",
+      "sha256": "827de4060045b1bb2c40ffb4bfc8b26d268b97a35cc72e6d51f78936be89a8bd"
+    }
+  },
+  "artResponses": [
+    {
+      "url": "http://127.0.0.1:8139/casual/enemies/inf/directional/w001-back.png?v=93",
+      "sha256": "9df016b1d8cd60247c488de2fa16e4f545ed8b6ef76eab2160fe3893bd0c5be2",
+      "bytes": 13053
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/enemies/inf/directional/w001-front.png?v=93",
+      "sha256": "ef7f6d2297753b779cb2e5bb31bd4db97a60ef8158688b618a8952460f015844",
+      "bytes": 14144
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/enemies/inf/directional/w001-side.png?v=93",
+      "sha256": "3f6f5538d258ec6546fff326d5e976571639764a9e93e0cffc5679588a938aa0",
+      "bytes": 32654
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/enemies/inf/directional/w002-back.png?v=93",
+      "sha256": "ffe0206488b4511d0ffcccda5237e460e86424cea88cc341114e07a7d24be024",
+      "bytes": 43600
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/enemies/inf/directional/w002-side.png?v=93",
+      "sha256": "580704a918ddfb1b691adffcb422aa2e2305a44ae139e6ae28f64ad323e39b4f",
+      "bytes": 38639
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/enemies/inf/directional/w002-front.png?v=93",
+      "sha256": "8658f6553aa5cfd8ac74a99efbf2c52933c13d72ad8024c56485dbac42003769",
+      "bytes": 44709
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/enemies/inf/directional/w001-back-walk-4x2.png?v=93",
+      "sha256": "80b7fd7b9e529b9f907326baf29f53d72e2f930ddd1737b33e20320691d58321",
+      "bytes": 46701
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/enemies/inf/directional/w001-front-walk-4x2.png?v=93",
+      "sha256": "03cbbe51cb1bf8c36f82d422aad884f14b057e4ad2c980d2f0080d0647a0e923",
+      "bytes": 52567
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/enemies/inf/directional/w001-side-walk-4x2.png?v=93",
+      "sha256": "8fe4b1b781f6c119d5055ee78af266251ff9cad5f286e36ee53f82ca2b9e961f",
+      "bytes": 138641
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/enemies/inf/directional/w002-back-walk-4x2.png?v=93",
+      "sha256": "9a07d09b300655f3852e953f544ee7e784ebb4df69cac9ca493c5b300d9b69fc",
+      "bytes": 280050
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/enemies/inf/directional/w002-front-walk-4x2.png?v=93",
+      "sha256": "86bbe310179eceb3a30db5eac5d94f04ef2ec90133c3e0854c078d3600fb9db4",
+      "bytes": 290702
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/enemies/inf/directional/w002-side-walk-4x2.png?v=93",
+      "sha256": "8ef25bde8ad80a837dcba502fff78b5b1d0c8b3e1f9fe13bdea7a974a8e99254",
+      "bytes": 279046
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/bosses/inf/directional/b020-2-front.png?v=93",
+      "sha256": "e873f14083a76d26b6149eb4142b0aabd4a12b4ec6feada339deb93bf09b86d3",
+      "bytes": 140810
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/bosses/inf/directional/b020-2-front-walk-4x2.png?v=93",
+      "sha256": "75efe73c837bd9ccc44b3171da725050a9bf539cdc66447784a9d37f180256f2",
+      "bytes": 548906
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/bosses/inf/directional/b020-2-side.png?v=93",
+      "sha256": "eff9911219ab0d50846153cac31936e8d90c442e8d95178bcf95c83ad7dd1aea",
+      "bytes": 149026
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/bosses/inf/directional/b020-2-back.png?v=93",
+      "sha256": "4549058f9f58254bb94b2f9f54cc2925dbd76d698e36c7efd80b79c8ed091161",
+      "bytes": 130880
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/bosses/inf/directional/b020-front.png?v=93",
+      "sha256": "8c4983bbf27c0939eaa1659deed1727dabfe1ce65c2120598261c987211b643f",
+      "bytes": 185717
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/bosses/inf/directional/b020-back.png?v=93",
+      "sha256": "9d56347107a08702d95ea79a8886e274746a818a6c09e9a899f3453fc0bc44ea",
+      "bytes": 176066
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/bosses/inf/directional/b020-side.png?v=93",
+      "sha256": "d11b69fa46d513bef908c2f75a5ecf7bc0941da8ca2296ec96916102624aeb5b",
+      "bytes": 157681
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/enemies/inf/directional/w021-back.png?v=93",
+      "sha256": "a0f8452c53b9b7f4d5bb77f4110acd34a4c897f6ad3a3473b4a213d079a495e8",
+      "bytes": 13233
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/enemies/inf/directional/w021-front.png?v=93",
+      "sha256": "5385ebfda364377449a8df99aa79f81ee18c3a99074c19f443c84e087b4c8225",
+      "bytes": 12608
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/enemies/inf/directional/w021-side.png?v=93",
+      "sha256": "eaf21157d86635b2089ced3cfe8690e69d75c09efd11be0c58fbcc5970e8e9c2",
+      "bytes": 14403
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/bosses/inf/directional/b020-2-back-walk-4x2.png?v=93",
+      "sha256": "ad5213313c13a4dc7192895fca17879049e9162604dbbb2af8b23c711e1f289f",
+      "bytes": 523226
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/bosses/inf/directional/b020-2-side-walk-4x2.png?v=93",
+      "sha256": "cfb3246aa8e5006f042181f3f7cab5218db3a4aee052fc33586b01fd11a4be67",
+      "bytes": 682057
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/bosses/inf/directional/b020-back-walk-4x2.png?v=93",
+      "sha256": "42675b571371b279474318446fe72672ab2852f31250b920cd77c9e9295d435d",
+      "bytes": 1127835
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/bosses/inf/directional/b020-side-walk-4x2.png?v=93",
+      "sha256": "79cc1f3c8950421bc68091ab335884430704400fb3b29a368395aa5a6e6b7a7e",
+      "bytes": 1037508
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/bosses/inf/directional/b020-front-walk-4x2.png?v=93",
+      "sha256": "b5eb9d2ecebc0bbabebe17752da3ad1c4cf3526de1df991e6701291d83033c3f",
+      "bytes": 1196553
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/enemies/inf/directional/w021-back-walk-4x2.png?v=93",
+      "sha256": "661a40f2fe128b7b171a65333cca4d10f445c9125edf0d6426cfa6a30ad8efd6",
+      "bytes": 83552
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/enemies/inf/directional/w021-front-walk-4x2.png?v=93",
+      "sha256": "18fe53dd95763050d834a1dc2e9beed1667e3892156f08e14044068f3063a38a",
+      "bytes": 79914
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/enemies/inf/directional/w021-side-walk-4x2.png?v=93",
+      "sha256": "47046ecae640e873d0106cbcb9682ac35fd2b3cc8f0ce8cf7ca658372ab63d2a",
+      "bytes": 77854
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/enemies/inf/directional/w004-front.png?v=93",
+      "sha256": "1f3cc2b45c13411146917d0c051e92f85c3638d1a9f3f40e01d9ccdc481b1e02",
+      "bytes": 31097
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/enemies/inf/directional/w004-front-walk-2x2.png?v=93",
+      "sha256": "0036804dcadbe7b523c2d2dd80b8b5b1a7f12398ab68fcd5f51577c149c9be69",
+      "bytes": 101182
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/enemies/inf/directional/w004-back.png?v=93",
+      "sha256": "e813df26d4f6007098ec2b675b602fa52aafd256137af1beac5d273ecb324985",
+      "bytes": 29778
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/enemies/inf/directional/w004-side.png?v=93",
+      "sha256": "9a5f567ba8d320b315098c341b9a29823d477ca25d1f0c24747582c527ce9836",
+      "bytes": 35504
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/enemies/inf/directional/w005-back.png?v=93",
+      "sha256": "3272462fe7b7c4adcc33091c62587be7a8abdfc418835350700e6a4968d60b67",
+      "bytes": 61657
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/enemies/inf/directional/w005-front.png?v=93",
+      "sha256": "3446368f6272f98570b8b17023f1e3a092356cbc34849988bd28e6f78f372759",
+      "bytes": 66065
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/enemies/inf/directional/w005-side.png?v=93",
+      "sha256": "0e294a5ad8a438de41a162b3fa8cb88b13a3bd7e719c9bda4dac64ebaabea84d",
+      "bytes": 52683
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/enemies/inf/directional/w004-back-walk-2x2.png?v=93",
+      "sha256": "39d3e4d866a9dc1c6e5c67dc49dd7b7cd709b3b6a4411d1dfd26498c88ce6efe",
+      "bytes": 98674
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/enemies/inf/directional/w004-side-walk-2x2.png?v=93",
+      "sha256": "298e1e10e8d2f9bbe7fdaf428beba5ab2bfa4067cf0b8ff3554bd32ee574c7c8",
+      "bytes": 140022
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/enemies/inf/directional/w005-back-walk-4x2.png?v=93",
+      "sha256": "c84a0ca5f2b9a8e375a7f5d724cca567634d263625fb43cea34be907d1248425",
+      "bytes": 393080
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/enemies/inf/directional/w005-front-walk-4x2.png?v=93",
+      "sha256": "61d32517290baf7dcc3d78985f1ab789bf07664cb882195d77044744b7244396",
+      "bytes": 431330
+    },
+    {
+      "url": "http://127.0.0.1:8139/casual/enemies/inf/directional/w005-side-walk-4x2.png?v=93",
+      "sha256": "6ce7ca5b5e0b14e1a0a39e85ec56c387315ff8290049f7c6a09c87364e1cff0b",
+      "bytes": 370694
+    }
+  ],
+  "cases": [
+    {
+      "wave": 20,
+      "role": 1,
+      "id": "b020-2",
+      "initial": [
+        {
+          "id": "b020",
+          "type": "hamsterKing",
+          "move": "ground",
+          "lane": 0,
+          "size": 99,
+          "speed": 30,
+          "spdMult": 1,
+          "hp": 6863.804799999999,
+          "gold": 198,
+          "armor": 0,
+          "drawHeight": 120,
+          "role": 0
+        },
+        {
+          "id": "b020-2",
+          "type": "eagleEmperor",
+          "move": "ground",
+          "lane": 0,
+          "size": 106,
+          "speed": 32,
+          "spdMult": 1,
+          "hp": 8178.150399999999,
+          "gold": 219,
+          "armor": 0,
+          "drawHeight": 84,
+          "role": 1
+        }
+      ],
+      "cold": {
+        "move": "ground",
+        "frameKey": "b020-2:front:fallback",
+        "airHeight": 0
+      },
+      "entry": {
+        "id": "b020-2",
+        "locomotion": "legged",
+        "cycleStride": 130,
+        "referenceHeight": 450,
+        "views": {
+          "side": {
+            "frames": 8,
+            "cols": 4,
+            "rows": 2,
+            "cell": 512,
+            "pivot": [
+              260.247582205029,
+              465
+            ],
+            "still": "casual/bosses/inf/directional/b020-2-side.png",
+            "sheet": "casual/bosses/inf/directional/b020-2-side-walk-4x2.png"
+          },
+          "front": {
+            "frames": 8,
+            "cols": 4,
+            "rows": 2,
+            "cell": 512,
+            "pivot": [
+              256,
+              465
+            ],
+            "still": "casual/bosses/inf/directional/b020-2-front.png",
+            "sheet": "casual/bosses/inf/directional/b020-2-front-walk-4x2.png"
+          },
+          "back": {
+            "frames": 8,
+            "cols": 4,
+            "rows": 2,
+            "cell": 512,
+            "pivot": [
+              256,
+              465
+            ],
+            "still": "casual/bosses/inf/directional/b020-2-back.png",
+            "sheet": "casual/bosses/inf/directional/b020-2-back-walk-4x2.png"
+          }
+        }
+      },
+      "directions": [
+        {
+          "direction": "down",
+          "view": "front",
+          "frames": 8,
+          "observed": 28,
+          "maxAbsGap": 0.000015136718729991117,
+          "minGap": -0.000014208984339347808,
+          "first": {
+            "id": "b020-2",
+            "key": "b020-2:front:sheet",
+            "view": "front",
+            "phase": 0.11024175824175897,
+            "pivot": [
+              256,
+              465
+            ],
+            "serial": 2,
+            "sequence": 3,
+            "move": "ground",
+            "type": "eagleEmperor",
+            "dist": 714.6540583984371,
+            "walk": 2.675200000000018,
+            "animT": 0.6819868711771643,
+            "groundX": 90,
+            "groundY": 434.6752,
+            "pivotX": 90,
+            "pivotY": 434.6752014160156,
+            "gap": -0.000001416015606992005,
+            "xError": 0,
+            "drawHeight": 84,
+            "flip": false
+          },
+          "last": {
+            "id": "b020-2",
+            "key": "b020-2:front:sheet",
+            "view": "front",
+            "phase": 0.8792967032966965,
+            "pivot": [
+              256,
+              465
+            ],
+            "serial": 9,
+            "sequence": 30,
+            "move": "ground",
+            "type": "eagleEmperor",
+            "dist": 733.3164583984369,
+            "walk": 21.33759999999984,
+            "animT": 1.1731026606508492,
+            "groundX": 90,
+            "groundY": 453.33759999999984,
+            "pivotX": 90,
+            "pivotY": 453.33758544921875,
+            "gap": 0.000014550781088473741,
+            "xError": 0,
+            "drawHeight": 84,
+            "flip": false
+          },
+          "lane": {
+            "direction": "down",
+            "segment": {
+              "ax": 90,
+              "ay": 320,
+              "bx": 90,
+              "by": 920,
+              "len": 600,
+              "acc": 603.9788583984371
+            },
+            "lane": 0
+          },
+          "screenshot": "w20-b020-2-down.png"
+        }
+      ]
+    },
+    {
+      "wave": 121,
+      "role": 1,
+      "id": "b121-2",
+      "initial": [
+        {
+          "id": "b121",
+          "type": "eagleEmperor",
+          "move": "air",
+          "lane": 0,
+          "size": 106,
+          "speed": 32,
+          "spdMult": 1.5,
+          "hp": 44440571.896,
+          "gold": 588,
+          "armor": 15,
+          "drawHeight": 120,
+          "role": 0
+        },
+        {
+          "id": "b121-2",
+          "type": "axolotlSage",
+          "move": "ground",
+          "lane": 0,
+          "size": 101,
+          "speed": 28,
+          "spdMult": 1.5,
+          "hp": 38885500.408999994,
+          "gold": 547,
+          "armor": 15,
+          "drawHeight": 84,
+          "role": 1
+        }
+      ],
+      "cold": {
+        "move": "ground",
+        "frameKey": "b121-2:front:fallback",
+        "airHeight": 0
+      },
+      "entry": {
+        "id": "b121-2",
+        "locomotion": "legged",
+        "cycleStride": 130,
+        "referenceHeight": 450,
+        "views": {
+          "side": {
+            "frames": 8,
+            "cols": 4,
+            "rows": 2,
+            "cell": 512,
+            "pivot": [
+              260.247582205029,
+              465
+            ],
+            "still": "casual/bosses/extreme/b121-2-side.webp",
+            "sheet": "casual/bosses/extreme/b121-2-side-walk-4x2.webp"
+          },
+          "front": {
+            "frames": 8,
+            "cols": 4,
+            "rows": 2,
+            "cell": 512,
+            "pivot": [
+              256,
+              465
+            ],
+            "still": "casual/bosses/extreme/b121-2-front.webp",
+            "sheet": "casual/bosses/extreme/b121-2-front-walk-4x2.webp"
+          },
+          "back": {
+            "frames": 8,
+            "cols": 4,
+            "rows": 2,
+            "cell": 512,
+            "pivot": [
+              256,
+              465
+            ],
+            "still": "casual/bosses/extreme/b121-2-back.webp",
+            "sheet": "casual/bosses/extreme/b121-2-back-walk-4x2.webp"
+          }
+        }
+      },
+      "directions": []
+    },
+    {
+      "wave": 222,
+      "role": 1,
+      "id": "b121-2",
+      "initial": [
+        {
+          "id": "b121",
+          "type": "axolotlSage",
+          "move": "ground",
+          "lane": 0,
+          "size": 101,
+          "speed": 28,
+          "spdMult": 1.5,
+          "hp": 144373611609.6288,
+          "gold": 891,
+          "armor": 32,
+          "drawHeight": 120,
+          "role": 0
+        },
+        {
+          "id": "b121-2",
+          "type": "auroraMoose",
+          "move": "ground",
+          "lane": 0,
+          "size": 106,
+          "speed": 28,
+          "spdMult": 1.5,
+          "hp": 159105612794.2848,
+          "gold": 891,
+          "armor": 32,
+          "drawHeight": 84,
+          "role": 1
+        }
+      ],
+      "cold": {
+        "move": "ground",
+        "frameKey": "b121-2:front:fallback",
+        "airHeight": 0
+      },
+      "entry": {
+        "id": "b121-2",
+        "locomotion": "legged",
+        "cycleStride": 130,
+        "referenceHeight": 450,
+        "views": {
+          "side": {
+            "frames": 8,
+            "cols": 4,
+            "rows": 2,
+            "cell": 512,
+            "pivot": [
+              260.247582205029,
+              465
+            ],
+            "still": "casual/bosses/extreme/b121-2-side.webp",
+            "sheet": "casual/bosses/extreme/b121-2-side-walk-4x2.webp"
+          },
+          "front": {
+            "frames": 8,
+            "cols": 4,
+            "rows": 2,
+            "cell": 512,
+            "pivot": [
+              256,
+              465
+            ],
+            "still": "casual/bosses/extreme/b121-2-front.webp",
+            "sheet": "casual/bosses/extreme/b121-2-front-walk-4x2.webp"
+          },
+          "back": {
+            "frames": 8,
+            "cols": 4,
+            "rows": 2,
+            "cell": 512,
+            "pivot": [
+              256,
+              465
+            ],
+            "still": "casual/bosses/extreme/b121-2-back.webp",
+            "sheet": "casual/bosses/extreme/b121-2-back-walk-4x2.webp"
+          }
+        }
+      },
+      "directions": []
+    }
+  ],
+  "spectator": [
+    {
+      "wave": 20,
+      "id": "b020-2",
+      "move": "ground",
+      "row": {
+        "id": "b020-2",
+        "key": "b020-2:front:sheet",
+        "view": "front",
+        "phase": 0.92270123143176,
+        "pivot": [
+          256,
+          465
+        ],
+        "serial": 9,
+        "sequence": 42,
+        "move": "ground",
+        "type": "eagleEmperor",
+        "dist": 875.0416166145144,
+        "walk": 1.0627582160773708,
+        "animT": 0.8176246574529327,
+        "groundX": 90,
+        "groundY": 595.0627582160773,
+        "pivotX": 90,
+        "pivotY": 595.062744140625,
+        "gap": 0.000014075452327233506,
+        "xError": 0,
+        "drawHeight": 84,
+        "flip": false
+      }
+    }
+  ],
+  "errors": [],
+  "optionalAudio404": [
+    {
+      "url": "http://127.0.0.1:8139/audio/bgm-lobby.ogg",
+      "status": 404
+    },
+    {
+      "url": "http://127.0.0.1:8139/audio/bgm-lobby.mp3",
+      "status": 404
+    },
+    {
+      "url": "http://127.0.0.1:8139/audio/bgm-battle.ogg",
+      "status": 404
+    },
+    {
+      "url": "http://127.0.0.1:8139/audio/bgm-battle.mp3",
+      "status": 404
+    },
+    {
+      "url": "http://127.0.0.1:8139/audio/bgm-boss.ogg",
+      "status": 404
+    },
+    {
+      "url": "http://127.0.0.1:8139/audio/bgm-boss.mp3",
+      "status": 404
+    }
+  ],
+  "pass": true,
+  "flight": {
+    "wave": 4,
+    "role": 0,
+    "id": "w004",
+    "initial": [
+      {
+        "id": "w004",
+        "type": "swift",
+        "move": "air",
+        "lane": 0,
+        "size": 42,
+        "speed": 114,
+        "spdMult": 1,
+        "hp": 36.272,
+        "gold": 10,
+        "armor": 0,
+        "drawHeight": 42,
+        "role": 0
+      },
+      {
+        "id": "w004",
+        "type": "swift",
+        "move": "air",
+        "lane": 0,
+        "size": 42,
+        "speed": 114,
+        "spdMult": 1,
+        "hp": 36.272,
+        "gold": 10,
+        "armor": 0,
+        "drawHeight": 42,
+        "role": 0
+      },
+      {
+        "id": "w004",
+        "type": "swift",
+        "move": "air",
+        "lane": 0,
+        "size": 42,
+        "speed": 114,
+        "spdMult": 1,
+        "hp": 36.272,
+        "gold": 10,
+        "armor": 0,
+        "drawHeight": 42,
+        "role": 0
+      },
+      {
+        "id": "w004",
+        "type": "swift",
+        "move": "air",
+        "lane": 0,
+        "size": 42,
+        "speed": 114,
+        "spdMult": 1,
+        "hp": 36.272,
+        "gold": 10,
+        "armor": 0,
+        "drawHeight": 42,
+        "role": 0
+      },
+      {
+        "id": "w004",
+        "type": "swift",
+        "move": "air",
+        "lane": 0,
+        "size": 42,
+        "speed": 114,
+        "spdMult": 1,
+        "hp": 36.272,
+        "gold": 10,
+        "armor": 0,
+        "drawHeight": 42,
+        "role": 0
+      },
+      {
+        "id": "w004",
+        "type": "swift",
+        "move": "air",
+        "lane": 0,
+        "size": 42,
+        "speed": 114,
+        "spdMult": 1,
+        "hp": 36.272,
+        "gold": 10,
+        "armor": 0,
+        "drawHeight": 42,
+        "role": 0
+      },
+      {
+        "id": "w004",
+        "type": "swift",
+        "move": "air",
+        "lane": 0,
+        "size": 42,
+        "speed": 114,
+        "spdMult": 1,
+        "hp": 36.272,
+        "gold": 10,
+        "armor": 0,
+        "drawHeight": 42,
+        "role": 0
+      },
+      {
+        "id": "w004",
+        "type": "swift",
+        "move": "air",
+        "lane": 0,
+        "size": 42,
+        "speed": 114,
+        "spdMult": 1,
+        "hp": 36.272,
+        "gold": 10,
+        "armor": 0,
+        "drawHeight": 42,
+        "role": 0
+      },
+      {
+        "id": "w004",
+        "type": "swift",
+        "move": "air",
+        "lane": 0,
+        "size": 42,
+        "speed": 114,
+        "spdMult": 1,
+        "hp": 36.272,
+        "gold": 10,
+        "armor": 0,
+        "drawHeight": 42,
+        "role": 0
+      },
+      {
+        "id": "w004",
+        "type": "swift",
+        "move": "air",
+        "lane": 0,
+        "size": 42,
+        "speed": 114,
+        "spdMult": 1,
+        "hp": 36.272,
+        "gold": 10,
+        "armor": 0,
+        "drawHeight": 42,
+        "role": 0
+      },
+      {
+        "id": "w004",
+        "type": "swift",
+        "move": "air",
+        "lane": 0,
+        "size": 42,
+        "speed": 114,
+        "spdMult": 1,
+        "hp": 36.272,
+        "gold": 10,
+        "armor": 0,
+        "drawHeight": 42,
+        "role": 0
+      },
+      {
+        "id": "w004",
+        "type": "swift",
+        "move": "air",
+        "lane": 0,
+        "size": 42,
+        "speed": 114,
+        "spdMult": 1,
+        "hp": 36.272,
+        "gold": 10,
+        "armor": 0,
+        "drawHeight": 42,
+        "role": 0
+      },
+      {
+        "id": "w004",
+        "type": "swift",
+        "move": "air",
+        "lane": 0,
+        "size": 42,
+        "speed": 114,
+        "spdMult": 1,
+        "hp": 36.272,
+        "gold": 10,
+        "armor": 0,
+        "drawHeight": 42,
+        "role": 0
+      },
+      {
+        "id": "w004",
+        "type": "swift",
+        "move": "air",
+        "lane": 0,
+        "size": 42,
+        "speed": 114,
+        "spdMult": 1,
+        "hp": 36.272,
+        "gold": 10,
+        "armor": 0,
+        "drawHeight": 42,
+        "role": 0
+      }
+    ],
+    "cold": {
+      "move": "air",
+      "frameKey": "w004:front:fallback",
+      "airHeight": 42
+    },
+    "entry": {
+      "id": "w004",
+      "locomotion": "flight",
+      "cycleStride": 0,
+      "referenceHeight": 328,
+      "views": {
+        "side": {
+          "frames": 4,
+          "cols": 2,
+          "rows": 2,
+          "cell": 256,
+          "pivot": [
+            127.75,
+            210
+          ],
+          "still": "casual/enemies/inf/directional/w004-side.png",
+          "sheet": "casual/enemies/inf/directional/w004-side-walk-2x2.png"
+        },
+        "front": {
+          "frames": 4,
+          "cols": 2,
+          "rows": 2,
+          "cell": 256,
+          "pivot": [
+            127.75,
+            210
+          ],
+          "still": "casual/enemies/inf/directional/w004-front.png",
+          "sheet": "casual/enemies/inf/directional/w004-front-walk-2x2.png"
+        },
+        "back": {
+          "frames": 4,
+          "cols": 2,
+          "rows": 2,
+          "cell": 256,
+          "pivot": [
+            127.75,
+            210
+          ],
+          "still": "casual/enemies/inf/directional/w004-back.png",
+          "sheet": "casual/enemies/inf/directional/w004-back-walk-2x2.png"
+        }
+      }
+    },
+    "directions": [
+      {
+        "direction": "down",
+        "view": "front",
+        "frames": 4,
+        "observed": 11,
+        "maxAbsGap": 46.994924121093504,
+        "minGap": 38.14910664062495,
+        "first": {
+          "id": "w004",
+          "key": "w004:front:sheet",
+          "view": "front",
+          "phase": 0.1258457644994131,
+          "pivot": [
+            127.75,
+            210
+          ],
+          "serial": 12,
+          "sequence": 58,
+          "move": "air",
+          "type": "swift",
+          "dist": 721.463658398437,
+          "walk": 9.48479999999995,
+          "animT": 0.9006766115995305,
+          "groundX": 90,
+          "groundY": 441.48479999999995,
+          "pivotX": 90,
+          "pivotY": 403.335693359375,
+          "gap": 38.14910664062495,
+          "xError": 0,
+          "drawHeight": 42,
+          "flip": false
+        },
+        "last": {
+          "id": "w004",
+          "key": "w004:front:sheet",
+          "view": "front",
+          "phase": 0.7505957644994079,
+          "pivot": [
+            127.75,
+            210
+          ],
+          "serial": 15,
+          "sequence": 68,
+          "move": "air",
+          "type": "swift",
+          "dist": 740.4560583984368,
+          "walk": 28.477199999999698,
+          "animT": 1.4004766115995264,
+          "groundX": 90,
+          "groundY": 460.4771999999997,
+          "pivotX": 90,
+          "pivotY": 414.2116394042969,
+          "gap": 46.26556059570282,
+          "xError": 0,
+          "drawHeight": 42,
+          "flip": false
+        },
+        "lane": {
+          "direction": "down",
+          "segment": {
+            "ax": 90,
+            "ay": 320,
+            "bx": 90,
+            "by": 920,
+            "len": 600,
+            "acc": 603.9788583984371
+          },
+          "lane": 0
+        },
+        "screenshot": "w4-w004-down.png"
+      }
+    ]
+  },
+  "comparison": {
+    "label": "baseline",
+    "unchangedSpawnStats": 20,
+    "unchangedArtResponses": 32
+  },
+  "finishedAt": "2026-09-09T05:03:59.544Z"
+}
