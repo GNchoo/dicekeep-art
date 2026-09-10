@@ -3238,6 +3238,7 @@ function upgradeFace(f) {
 }
 
 function towerFire(t, dt) {
+  if (t.moving) return;   // 들어올려 옮기는 중에는 사격하지 않는다 (커서로 적을 쫓는 것을 막는다)
   t.cd -= dt;
   if (t.cd > 0) return;
   const range = towerRange(t);
@@ -3804,7 +3805,8 @@ function draw() {
     const occupied = towerAt(i);
     const extra = i >= SPOT_BASE; // 티어 추가 석단 (아트에 없음 → 항상 받침을 그린다)
     const hover = Math.hypot(S.mouse.x - sx, S.mouse.y - sy) < SPOT_R
-      || (DRAG.active && DRAG.overSpot === i);
+      || (DRAG.active && DRAG.overSpot === i)
+      || (MOVE.tower && MOVE.overSpot === i);   // 타워 이동: 내려놓을 자리
     const dragging = DRAG.active && S.heldDie;
     const mergePad = occupied && occupied.face === heldFace() && occupied.lvl < MAX_LVL;
     if (extra) {
@@ -3888,7 +3890,8 @@ function draw() {
 
   // 개체 (y순 정렬)
   const ents = [];
-  for (const t of S.towers) ents.push({ y: t.y, kind: 't', o: t });
+  // 들어올린 타워는 다른 타워·적에 가려지지 않게 맨 위에 그린다
+  for (const t of S.towers) ents.push({ y: t.moving ? 1e9 : t.y, kind: 't', o: t });
   for (const e of S.enemies) { const p = epos(e); ents.push({ y: p.y, kind: 'e', o: e, p }); }
   for (const c of S.corpses) ents.push({ y: c.y, kind: 'c', o: c });
   ents.sort((a, b) => a.y - b.y);
@@ -3902,6 +3905,15 @@ function draw() {
       const face = heldFace();
       const mergeable = face && t.face === face && t.lvl < MAX_LVL;
       const hovered = mergeable && DRAG.active && DRAG.overSpot === t.spot;
+      if (t.moving) {
+        // 떠 있는 동안: 바닥에 그림자를 남겨 어디에 내려놓는지 보이게 한다
+        ctx.save();
+        ctx.translate(t.x, (t.moveGroundY || t.y) + 8);
+        ctx.scale(1, 0.4);
+        ctx.beginPath(); ctx.arc(0, 0, SPOT_R - 4, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(0,0,0,0.34)'; ctx.fill();
+        ctx.restore();
+      }
       if (mergeable) {
         drawMergeHalo(t, sp, hovered);
       } else {
@@ -4728,9 +4740,11 @@ function syncInfo() {
         ? (S.dieFocus
             ? '빈 석단을 눌러 타워를 놓으세요 (끌어다 놓아도 됩니다). 같은 눈 위에 놓으면 합체.'
             : '주사위를 보류했습니다. 타워를 눌러 판매·확률강화할 수 있고, 주사위 칸을 다시 누르면 배치 모드, 아래 "바로 판매"로 팔 수도 있습니다.')
-        : S.mode === 'infinity'
-          ? '석단의 타워를 누르면 여기에서 판매·확률강화를 할 수 있습니다.'
-          : '석단의 타워를 누르면 여기에서 능력치와 판매를 확인할 수 있습니다.';
+        : MOVE.tower
+          ? '빈 석단으로 끌어다 놓으면 옮겨집니다. 다른 곳에 놓으면 제자리로 돌아갑니다.'
+          : S.mode === 'infinity'
+            ? '석단의 타워를 누르면 판매·확률강화를 할 수 있고, 잠깐 누르고 있으면 들어올려 옮길 수 있습니다.'
+            : '석단의 타워를 누르면 능력치와 판매를 볼 수 있고, 잠깐 누르고 있으면 들어올려 옮길 수 있습니다.';
       hint.classList.toggle('hidden', S.phase !== 'playing');
     }
     return;
@@ -4994,6 +5008,7 @@ function relayoutArena(key, force) {
   S.selTower = selSpot >= 0 ? (S.towers.find(t => t.spot === selSpot) || null) : null;
   S.projs = []; S.beams = []; S.fxs = []; S.texts = [];   // 수명 1초 미만이라 버린다
   if (DRAG.active) stopPlaceDrag();
+  if (MOVE.tower || MOVE.armed) moveAbort();
   fitStage();
   syncUI();
   return true;
@@ -5287,6 +5302,107 @@ function tryPlace(idx) {
   return true;
 }
 
+// ==================== 놓인 타워 옮기기 ====================
+// 석단 위 타워를 잠깐 누르고 있으면 떠올라 손끝을 따라오고, 빈 석단에 놓으면 그리로 옮겨진다.
+// 옮기는 동안에는 사격하지 않는다(towerFire). 옮기는 데 드는 비용은 없다 — 위치만 바꾸는 것이라
+// 순수운빨의 뽑기·전투에는 영향이 없다.
+const MOVE = {
+  tower: null,      // 떠 있는 타워 (null 이면 이동 중이 아님)
+  armed: null,      // 길게 누르기 대기 중인 타워
+  pid: -1,
+  timer: 0,
+  startX: 0, startY: 0,   // 누른 지점 (캔버스 좌표)
+  x: 0, y: 0,             // 지금 손끝 (캔버스 좌표)
+  fromSpot: -1, overSpot: -1,
+  lift: 0,
+};
+const MOVE_HOLD_MS = 380;   // 이만큼 누르고 있으면 떠오른다
+const MOVE_SLOP_PX = 14;    // 그 전에 이만큼(화면 기준) 움직이면 길게 누르기가 아니다
+
+function moveCancelArm() {
+  if (MOVE.timer) { clearTimeout(MOVE.timer); MOVE.timer = 0; }
+  MOVE.armed = null;
+}
+function moveArm(ev, p) {
+  // 손에 주사위를 든 동안에는 배치가 우선이라 이동을 시작하지 않는다.
+  if (S.phase !== 'playing' || VIEW.pid || S.heldDie || MOVE.tower || DRAG.active) return false;
+  const idx = spotAt(p.x, p.y, touchExtra(24));
+  if (idx < 0) return false;
+  const t = towerAt(idx);
+  if (!t) return false;
+  moveCancelArm();
+  MOVE.armed = t;
+  MOVE.pid = ev.pointerId;
+  MOVE.startX = p.x; MOVE.startY = p.y;
+  MOVE.x = p.x; MOVE.y = p.y;
+  MOVE.fromSpot = idx;
+  MOVE.timer = setTimeout(() => { MOVE.timer = 0; moveLift(); }, MOVE_HOLD_MS);
+  try { canvas.setPointerCapture(ev.pointerId); } catch (e) { /* 무시 */ }
+  return true;
+}
+function moveLift() {
+  const t = MOVE.armed;
+  if (!t || S.phase !== 'playing' || !S.towers.includes(t)) { moveCancelArm(); return; }
+  MOVE.armed = null;
+  MOVE.tower = t;
+  MOVE.overSpot = MOVE.fromSpot;
+  MOVE.lift = 0;
+  t.moving = true;
+  t.moveGroundY = MOVE.y;
+  S.selTower = null;
+  suppressClick = true;
+  SFX.place();
+  S.texts.push({ str: '들어올렸습니다 — 빈 석단에 놓으세요', x: t.x, y: t.y - 78, t: 0, color: '#a0e8ff' });
+  syncUI();
+}
+function moveTrack(p) {
+  if (MOVE.armed) {
+    // 떠오르기 전에 손이 많이 움직였으면 길게 누르기가 아니다 (긁기·오조작)
+    if (Math.hypot(p.x - MOVE.startX, p.y - MOVE.startY) * stageScale() > MOVE_SLOP_PX) moveCancelArm();
+    return;
+  }
+  const t = MOVE.tower;
+  if (!t) return;
+  MOVE.x = p.x; MOVE.y = p.y;
+  const idx = spotAt(p.x, p.y, touchExtra(28));
+  MOVE.overSpot = (idx >= 0 && (idx === MOVE.fromSpot || !towerAt(idx))) ? idx : -1;
+  t.moveGroundY = p.y;
+  t.x = p.x;
+  t.y = p.y - 22;             // 떠 있는 만큼 위로
+}
+function moveDrop() {
+  const t = MOVE.tower;
+  if (!t) { moveCancelArm(); return; }
+  const to = MOVE.overSpot;
+  const ok = to >= 0 && to !== MOVE.fromSpot && !towerAt(to) && SPOTS[to];
+  const spot = SPOTS[ok ? to : MOVE.fromSpot];
+  if (ok) {
+    t.spot = to;
+    SFX.place();
+    S.fxs.push({ kind: 'ring', x: spot[0], y: spot[1] - 30, t: 0, dur: 0.45, size: 70, color: t.def.color });
+    S.texts.push({ str: '옮겼습니다', x: spot[0], y: spot[1] - 78, t: 0, color: '#a0e8ff' });
+  } else {
+    SFX.deny();
+    if (to !== MOVE.fromSpot) S.texts.push({ str: '빈 석단에만 놓을 수 있어요', x: spot[0], y: spot[1] - 78, t: 0, color: '#ff9f9f' });
+  }
+  t.x = spot[0]; t.y = spot[1];
+  t.moving = false; t.moveGroundY = 0;
+  t.cd = Math.max(t.cd || 0, 0.25);   // 옮긴 직후 한 박자 쉰다
+  MOVE.tower = null; MOVE.overSpot = -1; MOVE.pid = -1;
+  suppressClick = true;
+  syncUI();
+}
+function moveAbort() {
+  const t = MOVE.tower;
+  if (t) {
+    const spot = SPOTS[MOVE.fromSpot] || [t.x, t.y];
+    t.x = spot[0]; t.y = spot[1];
+    t.moving = false; t.moveGroundY = 0;
+  }
+  MOVE.tower = null; MOVE.overSpot = -1; MOVE.pid = -1;
+  moveCancelArm();
+}
+
 const DRAG = {
   active: false, face: 0, morph: 0,
   startX: 0, startY: 0, x: 0, y: 0,
@@ -5409,12 +5525,15 @@ canvas.addEventListener('pointerdown', ev => {
     DIE.w = [0, 0, 0];
     canvas.setPointerCapture(ev.pointerId);
     ev.preventDefault();
+    return;
   }
+  moveArm(ev, p);   // 석단 위 타워를 길게 누르면 들어올린다
 });
 
 canvas.addEventListener('pointermove', ev => {
   const p = canvasPos(ev);
   S.mouse = p;
+  if (MOVE.armed || MOVE.tower) { if (ev.pointerId === MOVE.pid) { moveTrack(p); ev.preventDefault(); } }
   if (DIE.state === 'grab') {
     DIE.x = Math.max(30, Math.min(W - 30, p.x + DIE.grabDX));
     DIE.y = Math.max(56, Math.min(H - 26, p.y + DIE.grabDY));
@@ -5461,12 +5580,21 @@ function endGrab(ev) {
   }
 }
 
-canvas.addEventListener('pointerup', endGrab);
-canvas.addEventListener('pointercancel', endGrab);
+canvas.addEventListener('pointerup', ev => {
+  if (ev.pointerId === MOVE.pid) { if (MOVE.tower) moveDrop(); else moveCancelArm(); }
+  endGrab(ev);
+});
+canvas.addEventListener('pointercancel', ev => {
+  if (ev.pointerId === MOVE.pid) moveAbort();
+  endGrab(ev);
+});
+// 손가락이 캔버스 밖으로 나가도 놓기를 놓치지 않는다
+window.addEventListener('pointerup', ev => { if (MOVE.pid >= 0 && ev.pointerId === MOVE.pid) { if (MOVE.tower) moveDrop(); else moveCancelArm(); } });
+window.addEventListener('pointercancel', ev => { if (MOVE.pid >= 0 && ev.pointerId === MOVE.pid) moveAbort(); });
 
 canvas.addEventListener('click', ev => {
   if (suppressClick) { suppressClick = false; return; }
-  if (DRAG.active || VIEW.pid) return;
+  if (DRAG.active || VIEW.pid || MOVE.tower) return;
   if (S.phase !== 'playing') return;
   const { x, y } = canvasPos(ev);
   const idx = spotAt(x, y, touchExtra(24)); // 탭 선택: 화면 기준 24px 반경(=48px 타겟)
@@ -6572,6 +6700,8 @@ function drawLoading(pr) {
   window.DKlog = pushLog; window.DKlogs = () => LOG.nodes.map(n => n.textContent); window.DKchatOpen = chatOpen; // 로그·채팅 훅
   window.DKNETLOG = window.DKNET && DKNET._debug;   // 멀티 소켓 로그
   window.DKplace = tryPlace;                      // 보유 주사위를 석단 idx 에 놓기
+  window.DKMOVE = MOVE;                           // 타워 이동 상태 (테스트·콘솔)
+  window.DKmoveHoldMs = () => MOVE_HOLD_MS;       // 길게 누르기 기준 시간
   window.DKend = gameEnd;                         // 결과 화면 (레이아웃 테스트)
   window.DKlobbyView = lobbyShow;                  // 로비 갈래 열기 (테스트: 'hub' | 'single' | 'multi')
   window.DKlobby = () => { if (S.net) mpLeave(); closeInfHelp(); closeSettings(); if (COACH.on) coachStop(false); S.mode = 'stage'; S.inf = null; S.selTower = null; S.heldDie = 0; DIE.state = 'tray'; SLOT.active = false; gotoLobby(); fitStage(); };   // 레이아웃 테스트: 어느 화면에서든 로비로
