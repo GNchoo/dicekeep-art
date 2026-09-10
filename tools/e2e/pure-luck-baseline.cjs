@@ -1,6 +1,7 @@
-// 순수운빨의 난이도(=클리어율)가 성장·상거래 도입 전과 같은지 확인한다.
-// 같은 씨앗·같은 봇으로 두 리비전을 각각 돌려 웨이브 진행과 뽑기 흐름을 통째로 대조한다.
-// 클리어율을 새로 측정하는 것이 아니라, 곡선·뽑기·전투가 그대로임을 보여 "유지"를 증명하는 쪽이다.
+// 순수운빨에서 "우리가 일부러 바꾼 것 말고는 아무것도 안 바뀌었다" 를 기준 리비전과 대조해 확인한다.
+// 메운디에서 옮겨 온 표(뽑기 확률·타워·경제·로스터·상성표)는 한 톨도 달라지면 안 되고,
+// 의도한 두 가지 변경(후반 체력 곡선, 보스 상성 면제)은 정확히 그만큼만 달라야 한다.
+// 클리어율을 재는 도구가 아니다 — 그건 tools/e2e/pure-luck-clearrate.cjs 다.
 //   E2E_BASE_URL=http://localhost:8137/ E2E_BASELINE_URL=http://localhost:8138/ node tools/e2e/pure-luck-baseline.cjs [--waves=30]
 // 기준 리비전은 모드 분리 직전(성장·상거래 도입 전)을 별도 포트로 띄워 둔다.
 const fs = require('node:fs');
@@ -12,15 +13,57 @@ const repo = path.resolve(__dirname, '../..');
 const out = path.resolve(process.env.E2E_OUTPUT_DIR || path.join(repo, 'gen/e2e/pure-luck-baseline'));
 const CURRENT = (process.env.E2E_BASE_URL || 'http://localhost:8137/').replace(/\/?$/, '/');
 const BASELINE = (process.env.E2E_BASELINE_URL || 'http://localhost:8138/').replace(/\/?$/, '/');
-const WAVES = Number((process.argv.find(a => a.startsWith('--waves=')) || '').split('=')[1]) || 30;
-// 런 전체 대조는 후반 곡선을 낮춘 구간(lateFrom 뒤)에서는 당연히 어긋난다.
-// 곡선이 그대로인 앞 구간에서만 "우리가 건드리지 않은 것은 하나도 안 바뀌었다" 를 증명한다.
-const TRACE_LIMIT = 60;
+const WAVES = Number((process.argv.find(a => a.startsWith('--waves=')) || '').split('=')[1]) || 9;
+// 런 전체 대조는 보스가 끼는 순간부터 일부러 갈린다 (보스가 상성 없이 1배로 받게 바꿨다).
+// 첫 보스는 10웨이브(bossEvery)이므로 그 앞 구간에서만 전투·뽑기·경제가 그대로임을 증명한다.
+const TRACE_LIMIT = 9;
 const SEEDS = [20260909, 777, 31337, 4242, 99999];
-if (WAVES > TRACE_LIMIT) throw new Error(`--waves 는 ${TRACE_LIMIT} 이하여야 한다: 후반 곡선을 낮춘 구간은 기준 리비전과 일부러 다르다`);
+if (WAVES > TRACE_LIMIT) throw new Error(`--waves 는 ${TRACE_LIMIT} 이하여야 한다: 보스 웨이브부터는 기준 리비전과 일부러 다르다`);
 fs.mkdirSync(out, { recursive: true });
 
-const report = { scope: '두 리비전을 같은 씨앗으로 구동해 순수운빨 진행이 같은지 대조. 절대 클리어율 측정이 아니다.', current: CURRENT, baseline: BASELINE, waves: WAVES, seeds: SEEDS, started: new Date().toISOString(), rows: [], pass: false };
+const report = { scope: '메운디 이식분은 그대로인지, 의도한 변경만 갈리는지 기준 리비전과 대조. 절대 클리어율 측정이 아니다.', current: CURRENT, baseline: BASELINE, waves: WAVES, seeds: SEEDS, started: new Date().toISOString(), rows: [], pass: false };
+
+
+// 메운디에서 옮겨 온 표들. 두 리비전에서 한 톨도 달라지면 안 된다.
+// (상성표 자체도 여기 포함된다 — 바꾼 것은 "보스에게 적용하지 않는다" 이지 표가 아니다.)
+function portedTables() {
+  const INF = DKCONTENT.INFINITY, C = INF.chest, DP = DKCONTENT.DICE_POWER;
+  const TD = window.DKTD || null;
+  const bossWaves = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+  return {
+    chest: { table: C.table, kinds: C.kinds, sides: C.sides, min: C.min, cost: C.cost(0), costLate: C.cost(50) },
+    economy: { startGold: INF.startGold, lives: INF.lives, fieldCap: INF.fieldCap, capDmg: INF.capDmg,
+               intermission: INF.intermission, bossEvery: INF.bossEvery, eliteEvery: INF.eliteEvery,
+               bossTimeLimit: INF.bossTimeLimit, clearWave: INF.clearWave, rangeBonus: INF.rangeBonus },
+    bossReward: bossWaves.map(w => INF.bossReward(w)),
+    enhance: { maxFace: INF.enhance.maxFace, cost: [1, 6, 12, 19].map(f => INF.enhance.cost(f)),
+               odds: [1, 6, 12, 19].map(f => INF.enhance.odds(f)) },
+    power: DP ? { maxLv: DP.maxLv, cost: [0, 5, 9].map(l => DP.cost(l)), dmgMult: [0, 5, 10].map(l => DP.dmgMult(l)),
+                  rangeAdd: [0, 5, 10].map(l => DP.rangeAdd(l)), special: DP.special } : null,
+    towers: TD ? Array.from({ length: 20 }, (_, i) => i + 1).map(f => ({
+      f, dmg: TD[f].dmg, rate: TD[f].rate, range: TD[f].range, atk: TD[f].atk || null, perk: TD[f].perk || null,
+      splash: TD[f].splash || 0 })) : null,
+    sizeMult: INF.sizeMult, sizeSeq: INF.sizeSeq.join(''),
+    armor: [30, 33, 60, 66, 90, 99].map(w => INF.armor(w)),
+    countOf: [1, 25, 50, 75, 101].map(w => INF.countOf(w, 'M')),
+    roster: INF.getRoster().map(r => [r.id || null, r.cls, !!r.boss, !!r.tank]),
+    // 곡선은 후반만 일부러 바꿨다 — 앞 구간은 여기서 같이 본다.
+    curveEarly: [1, 10, 25, 40, 50, 60].map(w => INF.wave(w, true).hpMult),
+  };
+}
+
+// 보스가 상성을 받는가 — 이 리비전의 실제 동작을 damageEnemy 로 직접 확인한다.
+function bossMatchupProbe() {
+  if (!window.DKdamage || !window.DKTD) return null;
+  DKstartInf ? DKstartInf('clear') : null;
+  DK.paused = true;
+  const hit = (isBoss, cls, face) => {
+    const HP = 1e9, e = { hp: HP, max: HP, dead: false, armor: 0, sizeClass: cls, isBoss, stunT: 0, flashT: 0, gold: 0, def: { gold: 0 } };
+    DKdamage(e, 1000, { def: DKTD[face], face });
+    return +((HP - e.hp) / 1000).toFixed(4);
+  };
+  return { bossExpS: hit(true, 'S', 2), mobExpS: hit(false, 'S', 2), bossVibL: hit(true, 'L', 1), mobVibL: hit(false, 'L', 1) };
+}
 
 // 계정 상태를 전혀 건드리지 않는 봇. 기준 리비전에는 성장·상거래가 없으므로 양쪽에서 똑같이 돌아간다.
 function playRun({ seed, waves }) {
@@ -121,23 +164,41 @@ async function openGame(browser, base, rows) {
         const same = a.traceHash === b.traceHash;
         report.rows.push({ seed, current: a, baseline: b, identicalTrace: same, killDrift: +killDrift.toFixed(4) });
         console.log(`씨앗 ${seed}: 현재 ${a.waveReached}웨이브/목숨 ${a.lives}/처치 ${a.kills} · 기준 ${b.waveReached}웨이브/목숨 ${b.lives}/처치 ${b.kills} → ${same ? '완전 동일' : `처치 편차 ${(killDrift * 100).toFixed(1)}%`}`);
-        // 후반 곡선(lateFrom 앞)까지는 난이도가 정확히 같아야 한다.
+        // 첫 보스(10웨이브) 앞 구간은 전투·뽑기·경제가 전부 그대로여야 한다.
         assert.deepEqual(a.curveEarly, b.curveEarly, `씨앗 ${seed}: ${a.lateFrom}웨이브까지의 체력 곡선`);
-        // 그 뒤는 의도적으로 낮췄다. 공식과 맞는지, 그리고 반드시 가벼워졌는지 둘 다 본다.
-        const LATE_WAVES = [70, 80, 90, 100, 101];
-        assert.deepEqual(a.curveLate, LATE_WAVES.map(w => +Math.min(1e120, 1.8 * Math.pow(1.08, w - 1) * Math.pow(a.lateExp, Math.max(0, w - a.lateFrom))).toFixed(3)),
-          `씨앗 ${seed}: 후반 체력 곡선이 lateFrom ${a.lateFrom} · lateExp ${a.lateExp} 공식과 일치`);
-        a.curveLate.forEach((hp, i) => assert.ok(hp < b.curveLate[i],
-          `씨앗 ${seed}: ${LATE_WAVES[i]}웨이브 체력이 기준(${b.curveLate[i]})보다 가벼워야 한다 — 현재 ${hp}`));
         assert.equal(a.drawHash, b.drawHash, `씨앗 ${seed}: 뽑기 결과 순서 (등급·눈)`);
         assert.equal(a.drawCount, b.drawCount, `씨앗 ${seed}: 뽑기 횟수`);
-        // 런 결과도 같아야 한다. 프레임 단위 타이밍은 미세하게 어긋날 수 있어 처치 수만 여유를 둔다.
         assert.equal(a.waveReached, b.waveReached, `씨앗 ${seed}: 도달 웨이브`);
         assert.equal(a.lives, b.lives, `씨앗 ${seed}: 남은 목숨`);
         assert.equal(a.phase, b.phase, `씨앗 ${seed}: 런 상태`);
         assert.ok(killDrift < 0.02, `씨앗 ${seed}: 처치 수 편차 ${(killDrift * 100).toFixed(1)}% (허용 2%)`);
         assert.ok(a.drawCount > 0 && a.ticks > 100, `씨앗 ${seed}: 런이 실제로 진행되어야 한다`);
+        // 후반 곡선은 의도적으로 낮췄다. 공식과 맞는지, 그리고 반드시 가벼워졌는지 둘 다 본다.
+        const LATE_WAVES = [70, 80, 90, 100, 101];
+        assert.deepEqual(a.curveLate, LATE_WAVES.map(w => +Math.min(1e120, 1.8 * Math.pow(1.08, w - 1) * Math.pow(a.lateExp, Math.max(0, w - a.lateFrom))).toFixed(3)),
+          `씨앗 ${seed}: 후반 체력 곡선이 lateFrom ${a.lateFrom} · lateExp ${a.lateExp} 공식과 일치`);
+        a.curveLate.forEach((hp, i) => assert.ok(hp < b.curveLate[i],
+          `씨앗 ${seed}: ${LATE_WAVES[i]}웨이브 체력이 기준(${b.curveLate[i]})보다 가벼워야 한다 — 현재 ${hp}`));
       }
+      // ── 메운디 이식분: 두 리비전에서 완전히 같아야 한다 ─────────────────────
+      const curTables = await cur.page.evaluate(portedTables);
+      const baseTables = await base.page.evaluate(portedTables);
+      report.tables = { current: curTables, baseline: baseTables };
+      const keys = Object.keys(curTables).filter(k => curTables[k] !== null && baseTables[k] !== null);
+      report.tableKeys = keys;
+      assert.ok(keys.length >= 10, `대조한 표가 너무 적다 (${keys.length}종) — 훅이 빠졌는지 확인하라`);
+      for (const k of keys) assert.deepEqual(curTables[k], baseTables[k], `메운디 이식분 "${k}" 가 기준 리비전과 달라졌다`);
+      console.log(`이식분 ${keys.length}종 동일: ${keys.join(' · ')}`);
+
+      // ── 의도한 변경 ①: 보스는 상성을 받지 않는다 (기준 리비전은 받는다) ──────
+      const curProbe = await cur.page.evaluate(bossMatchupProbe);
+      const baseProbe = await base.page.evaluate(bossMatchupProbe);
+      report.bossMatchup = { current: curProbe, baseline: baseProbe };
+      assert.deepEqual([curProbe.bossExpS, curProbe.bossVibL], [1, 1], '현재: 보스는 상성 배수를 받지 않는다');
+      assert.deepEqual([curProbe.mobExpS, curProbe.mobVibL], [0.5, 0.25], '현재: 잡몹은 상성 배수를 그대로 받는다');
+      assert.deepEqual([baseProbe.bossExpS, baseProbe.bossVibL], [0.5, 0.25], '기준: 보스도 상성을 받았다 (변경 전 동작 확인)');
+      console.log(`보스 상성 — 기준 ${baseProbe.bossExpS}·${baseProbe.bossVibL} → 현재 ${curProbe.bossExpS}·${curProbe.bossVibL} (잡몹은 ${curProbe.mobExpS}·${curProbe.mobVibL} 그대로)`);
+
       assert.deepEqual(rows.errors, [], '브라우저 오류');
       // 클리어 판정은 두 리비전에서 다르다 (기준: 101 진입 = 클리어 / 현재: 101 완주 = 클리어).
       // 의도된 변경이므로 여기서 고정해 두고, 다시 바뀌면 이 검사가 잡는다.
@@ -156,5 +217,5 @@ async function openGame(browser, base, rows) {
     fs.writeFileSync(path.join(out, 'report.json'), JSON.stringify(report, null, 2));
     await browser.close();
   }
-  console.log('PASS 순수운빨 —', SEEDS.length, '씨앗 ×', WAVES, '웨이브 (앞 구간 완전 동일 · 후반은 의도한 만큼만 완화);', path.join(out, 'report.json'));
+  console.log('PASS 순수운빨 —', SEEDS.length, '씨앗 ×', WAVES, '웨이브 · 이식분 동일 · 의도한 변경 2건만 갈림;', path.join(out, 'report.json'));
 })().catch(error => { console.error('FAIL', error); process.exitCode = 1; });

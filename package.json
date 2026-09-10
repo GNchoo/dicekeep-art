@@ -15,7 +15,9 @@
     "test:game-modes": "node tools/e2e/game-modes.cjs",
     "test:pure-luck": "node tools/e2e/pure-luck-parity.cjs",
     "test:pure-luck-baseline": "node tools/e2e/pure-luck-baseline.cjs",
-    "measure:clear-rate": "node tools/e2e/pure-luck-clearrate.cjs"
+    "test:boss-matchup": "node tools/e2e/boss-matchup.cjs",
+    "measure:clear-rate": "node tools/e2e/pure-luck-clearrate.cjs",
+    "measure:boss-board": "node tools/e2e/boss-board-req.cjs"
   },
   "dependencies": {
     "@capacitor-community/safe-area": "^7.0.0",
