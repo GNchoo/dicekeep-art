@@ -3077,7 +3077,11 @@ function damageEnemy(e, dmg, src) {
   if (COSMETIC) { e.flashT = 0.13; return; }
   if (S.mode === 'infinity' && S.inf && window.DKCONTENT) { // 메운디: 상성 · 방어력 · 에픽 락다운 (인피니티 전용)
     const INF = DKCONTENT.INFINITY, def = src && src.def;
-    if (def && e.sizeClass && INF.sizeMult) { const m = INF.sizeMult[def.atk || 'norm']; if (m && m[e.sizeClass] != null) dmg *= m[e.sizeClass]; }
+    // 상성은 잡몹에만 건다. 보스는 어떤 공격형이든 1배로 받는다.
+    // 순수운빨은 뽑은 눈이 전부인 모드라, 보스 크기와 공격형이 안 맞는다는 이유로 판이 통째로
+    // 막히면 운이 아니라 상성 퍼즐이 된다 (100웨이브 보스는 소형이라 7~19★ 폭발형이 절반만
+    // 들어갔고, 15★ 3레벨로 15칸을 다 채워도 시간 안에 못 잡았다).
+    if (!e.isBoss && def && e.sizeClass && INF.sizeMult) { const m = INF.sizeMult[def.atk || 'norm']; if (m && m[e.sizeClass] != null) dmg *= m[e.sizeClass]; }
     const ignoreArmor = !!(def && def.perk === 'epic');
     if (e.armor > 0 && !ignoreArmor) dmg = Math.max(dmg * 0.1, dmg - e.armor);
     if (def && def.perk === 'epic' && INF.stun && Math.random() < INF.stun.p) e.stunT = Math.max(e.stunT || 0, e.isBoss ? INF.stun.bossDur : INF.stun.dur);
