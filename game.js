@@ -4698,7 +4698,9 @@ function syncInfPanel() {
     const maxed = lv >= d.maxLv;
     const cost = maxed ? 0 : d.cost(lv);
     btn.querySelector('.inf-lv').textContent = maxed ? 'MAX' : `Lv${lv}`;
-    btn.querySelector('.inf-cost').textContent = maxed ? '—' : `${cost} G`;
+    // 비용은 숫자와 단위를 나눠 둔다 — 좁은 화면에서는 단위만 접어 숫자는 계속 보이게 한다.
+    btn.querySelector('.inf-cost-n').textContent = maxed ? '—' : String(cost);
+    btn.querySelector('.inf-cost-u').textContent = maxed ? '' : 'G';
     btn.disabled = maxed || S.gold < cost || !unlockedFaces().includes(f);
     btn.classList.toggle('maxed', maxed);
     btn.title = `${TOWER_DEFS[f].name} 파워업 · 피해 ×${d.dmgMult(lv).toFixed(2)} · 사거리 +${d.rangeAdd(lv)} · ${d.special[f].label} (${d.tier(lv)}단계)${f === 6 ? ' · ★ 히든 타워 포함' : ''} — 다음 ${maxed ? '없음' : cost + 'G'}`;
