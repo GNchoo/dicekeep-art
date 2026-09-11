@@ -169,11 +169,11 @@
                 ]
               },
               "socketNormalized": [
-                0.25,
+                0.18,
                 0.662
               ],
               "socketRoiNormalized": [
-                0.185,
+                0.115,
                 0.597,
                 0.13,
                 0.13
@@ -217,11 +217,11 @@
                 ]
               },
               "socketNormalized": [
-                0.25,
+                0.18,
                 0.67
               ],
               "socketRoiNormalized": [
-                0.185,
+                0.115,
                 0.605,
                 0.13,
                 0.13
@@ -846,11 +846,11 @@
                 ]
               },
               "socketNormalized": [
-                0.44,
+                0.3,
                 0.672
               ],
               "socketRoiNormalized": [
-                0.375,
+                0.235,
                 0.607,
                 0.13,
                 0.13
@@ -894,11 +894,11 @@
                 ]
               },
               "socketNormalized": [
-                0.44,
+                0.3,
                 0.68
               ],
               "socketRoiNormalized": [
-                0.375,
+                0.235,
                 0.615,
                 0.13,
                 0.13
@@ -1523,11 +1523,11 @@
                 ]
               },
               "socketNormalized": [
-                0.3,
+                0.22,
                 0.742
               ],
               "socketRoiNormalized": [
-                0.235,
+                0.155,
                 0.677,
                 0.13,
                 0.13
@@ -1571,11 +1571,11 @@
                 ]
               },
               "socketNormalized": [
-                0.3,
+                0.22,
                 0.75
               ],
               "socketRoiNormalized": [
-                0.235,
+                0.155,
                 0.685,
                 0.13,
                 0.13
@@ -2200,11 +2200,11 @@
                 ]
               },
               "socketNormalized": [
-                0.29,
+                0.18,
                 0.692
               ],
               "socketRoiNormalized": [
-                0.22499999999999998,
+                0.115,
                 0.627,
                 0.13,
                 0.13
@@ -2248,11 +2248,11 @@
                 ]
               },
               "socketNormalized": [
-                0.29,
+                0.18,
                 0.7
               ],
               "socketRoiNormalized": [
-                0.22499999999999998,
+                0.115,
                 0.635,
                 0.13,
                 0.13

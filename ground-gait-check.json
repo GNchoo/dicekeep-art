@@ -1,0 +1,2522 @@
+{
+  "manifest": "tools/art-review/pr29-gait/rig-manifest.json",
+  "selected": [
+    1,
+    2,
+    3,
+    5,
+    6,
+    7,
+    9
+  ],
+  "browserRequested": true,
+  "previewAssets": false,
+  "interpretation": "Geometry and source-atlas provenance checks do not validate the separate assembled anatomical masters or replace visual review of socket anatomy, occlusion, texture seams, character tone or perceived weight. Gameplay planting is measured at the first actual draw of each pose within a complete contact event; discrete frames allow movement between captures.",
+  "kinematics": [
+    {
+      "wave": 1,
+      "errors": [],
+      "limbs": [
+        {
+          "id": "nearFore",
+          "stanceFrames": 6,
+          "maximumLift": 11.712595282731456,
+          "footXSpan": 53.84615384615387,
+          "maximumReferenceSlip": 5.329070518200751e-15,
+          "maximumLoopStep": 29.646941854931043
+        },
+        {
+          "id": "farFore",
+          "stanceFrames": 6,
+          "maximumLift": 11.712595282731456,
+          "footXSpan": 53.84615384615387,
+          "maximumReferenceSlip": 5.329070518200751e-15,
+          "maximumLoopStep": 29.646941854930994
+        },
+        {
+          "id": "nearHind",
+          "stanceFrames": 6,
+          "maximumLift": 11.712595282731456,
+          "footXSpan": 53.84615384615384,
+          "maximumReferenceSlip": 2.3092638912203256e-14,
+          "maximumLoopStep": 29.646941854931015
+        },
+        {
+          "id": "farHind",
+          "stanceFrames": 6,
+          "maximumLift": 11.712595282731456,
+          "footXSpan": 53.84615384615384,
+          "maximumReferenceSlip": 2.3092638912203256e-14,
+          "maximumLoopStep": 29.646941854931043
+        }
+      ],
+      "pairs": [
+        {
+          "pair": "fore",
+          "minimumNearMinusFarX": -48.10217904961934,
+          "maximumNearMinusFarX": 38.05166710422685,
+          "phaseError": 2.0097183471152322e-14,
+          "liftError": 0
+        },
+        {
+          "pair": "hind",
+          "minimumNearMinusFarX": -48.10217904961928,
+          "maximumNearMinusFarX": 38.05166710422685,
+          "phaseError": 2.4613922385709617e-14,
+          "liftError": 0
+        }
+      ],
+      "anatomy": {
+        "profile": "fixed-body",
+        "limbs": [
+          {
+            "id": "nearFore",
+            "kneeAngles": [
+              104.35327871722717,
+              97.78952633881075,
+              148.40900119342967,
+              134.56531023599274,
+              128.5432057445441,
+              128.02153354936505,
+              132.86558718520263,
+              144.69370961904576
+            ],
+            "stanceKneeRange": [
+              128.02153354936505,
+              148.40900119342967
+            ],
+            "swingKneeRange": [
+              97.78952633881075,
+              104.35327871722717
+            ],
+            "maximumSocketDrift": 0,
+            "maximumBoneError": 4.263256414560601e-14,
+            "bendSigns": [
+              1
+            ],
+            "maximumJointStep": 29.646941854931043,
+            "maximumAngleStep": 50.61947485461893,
+            "maximumBodyStep": 0
+          },
+          {
+            "id": "farFore",
+            "kneeAngles": [
+              134.0933619749148,
+              133.52591340232792,
+              138.85142047069684,
+              152.72273133833136,
+              108.13336094504206,
+              101.38686719722274,
+              157.59822450568458,
+              140.7549053632907
+            ],
+            "stanceKneeRange": [
+              133.52591340232792,
+              157.59822450568458
+            ],
+            "swingKneeRange": [
+              101.38686719722274,
+              108.13336094504206
+            ],
+            "maximumSocketDrift": 0,
+            "maximumBoneError": 5.684341886080802e-14,
+            "bendSigns": [
+              1
+            ],
+            "maximumJointStep": 29.646941854930994,
+            "maximumAngleStep": 56.21135730846184,
+            "maximumBodyStep": 0
+          },
+          {
+            "id": "nearHind",
+            "kneeAngles": [
+              122.68813099349275,
+              114.77062374386992,
+              110.82801837084382,
+              110.4749834201539,
+              113.68384254195297,
+              120.7462982913549,
+              94.29270361009833,
+              89.28677330165921
+            ],
+            "stanceKneeRange": [
+              110.4749834201539,
+              122.68813099349275
+            ],
+            "swingKneeRange": [
+              89.28677330165921,
+              94.29270361009833
+            ],
+            "maximumSocketDrift": 0,
+            "maximumBoneError": 2.842170943040401e-14,
+            "bendSigns": [
+              -1
+            ],
+            "maximumJointStep": 29.646941854931015,
+            "maximumAngleStep": 33.40135769183354,
+            "maximumBodyStep": 0
+          },
+          {
+            "id": "farHind",
+            "kneeAngles": [
+              117.20113515326457,
+              124.51789226223997,
+              97.04786293372901,
+              91.96241550844644,
+              126.54771307090891,
+              118.32111160676219,
+              114.26704443895635,
+              113.905188813534
+            ],
+            "stanceKneeRange": [
+              113.905188813534,
+              126.54771307090891
+            ],
+            "swingKneeRange": [
+              91.96241550844644,
+              97.04786293372901
+            ],
+            "maximumSocketDrift": 0,
+            "maximumBoneError": 2.842170943040401e-14,
+            "bendSigns": [
+              -1
+            ],
+            "maximumJointStep": 29.646941854931043,
+            "maximumAngleStep": 34.58529756246247,
+            "maximumBodyStep": 0
+          }
+        ],
+        "pelvis": null,
+        "sockets": [
+          {
+            "id": "nearFore",
+            "reviewedRoi": [
+              0.58,
+              0.48,
+              0.18,
+              0.28
+            ],
+            "normalizedPoints": [
+              [
+                0.67,
+                0.65
+              ],
+              [
+                0.67,
+                0.65
+              ],
+              [
+                0.67,
+                0.65
+              ],
+              [
+                0.67,
+                0.65
+              ],
+              [
+                0.67,
+                0.65
+              ],
+              [
+                0.67,
+                0.65
+              ],
+              [
+                0.67,
+                0.65
+              ],
+              [
+                0.67,
+                0.65
+              ]
+            ],
+            "sourceSocket": [
+              601.0600000000001,
+              421.45000000000005
+            ],
+            "sourceAtlas": "tools/art-review/pr29-gait/sources/w001-anatomy-puppet.png"
+          },
+          {
+            "id": "farFore",
+            "reviewedRoi": [
+              0.58,
+              0.48,
+              0.18,
+              0.28
+            ],
+            "normalizedPoints": [
+              [
+                0.682,
+                0.64
+              ],
+              [
+                0.682,
+                0.64
+              ],
+              [
+                0.682,
+                0.64
+              ],
+              [
+                0.682,
+                0.64
+              ],
+              [
+                0.682,
+                0.64
+              ],
+              [
+                0.682,
+                0.64
+              ],
+              [
+                0.682,
+                0.64
+              ],
+              [
+                0.682,
+                0.64
+              ]
+            ],
+            "sourceSocket": [
+              610.8760000000001,
+              418.52
+            ],
+            "sourceAtlas": "tools/art-review/pr29-gait/sources/w001-anatomy-puppet.png"
+          },
+          {
+            "id": "nearHind",
+            "reviewedRoi": [
+              0.25,
+              0.36,
+              0.2,
+              0.32
+            ],
+            "normalizedPoints": [
+              [
+                0.34,
+                0.56
+              ],
+              [
+                0.34,
+                0.56
+              ],
+              [
+                0.34,
+                0.56
+              ],
+              [
+                0.34,
+                0.56
+              ],
+              [
+                0.34,
+                0.56
+              ],
+              [
+                0.34,
+                0.56
+              ],
+              [
+                0.34,
+                0.56
+              ],
+              [
+                0.34,
+                0.56
+              ]
+            ],
+            "sourceSocket": [
+              331.12,
+              395.08000000000004
+            ],
+            "sourceAtlas": "tools/art-review/pr29-gait/sources/w001-anatomy-puppet.png"
+          },
+          {
+            "id": "farHind",
+            "reviewedRoi": [
+              0.25,
+              0.36,
+              0.2,
+              0.32
+            ],
+            "normalizedPoints": [
+              [
+                0.352,
+                0.55
+              ],
+              [
+                0.352,
+                0.55
+              ],
+              [
+                0.352,
+                0.55
+              ],
+              [
+                0.352,
+                0.55
+              ],
+              [
+                0.352,
+                0.55
+              ],
+              [
+                0.352,
+                0.55
+              ],
+              [
+                0.352,
+                0.55
+              ],
+              [
+                0.352,
+                0.55
+              ]
+            ],
+            "sourceSocket": [
+              340.936,
+              392.15
+            ],
+            "sourceAtlas": "tools/art-review/pr29-gait/sources/w001-anatomy-puppet.png"
+          }
+        ],
+        "footfalls": {
+          "starts": [
+            {
+              "id": "nearHind",
+              "phase": 0
+            },
+            {
+              "id": "nearFore",
+              "phase": 0.25
+            },
+            {
+              "id": "farHind",
+              "phase": 0.5
+            },
+            {
+              "id": "farFore",
+              "phase": 0.75
+            }
+          ],
+          "supportingFeetPerFrame": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        }
+      }
+    },
+    {
+      "wave": 2,
+      "errors": [],
+      "limbs": [
+        {
+          "id": "near",
+          "stanceFrames": 4,
+          "maximumLift": 19.817999999999984,
+          "footXSpan": 79.27199999999999,
+          "maximumReferenceSlip": 1.7763568394002505e-14,
+          "maximumLoopStep": 28.62165507748982
+        },
+        {
+          "id": "far",
+          "stanceFrames": 4,
+          "maximumLift": 19.817999999999984,
+          "footXSpan": 79.27199999999999,
+          "maximumReferenceSlip": 1.7763568394002505e-14,
+          "maximumLoopStep": 28.62165507748982
+        }
+      ],
+      "pairs": [
+        {
+          "pair": "legs",
+          "minimumNearMinusFarX": -79.58456396932019,
+          "maximumNearMinusFarX": 78.9594360306798,
+          "phaseError": 2.842170943040401e-14,
+          "liftError": 0
+        }
+      ],
+      "anatomy": {
+        "profile": "support-leg-pelvis",
+        "limbs": [
+          {
+            "id": "near",
+            "kneeAngles": [
+              168.0000000000006,
+              167.87690883204644,
+              168.00000000000014,
+              167.8769088320465,
+              168.0000000000004,
+              131.73370986194615,
+              119.63312522793909,
+              131.73370986194612
+            ],
+            "stanceKneeRange": [
+              167.87690883204644,
+              168.0000000000006
+            ],
+            "swingKneeRange": [
+              119.63312522793909,
+              168.0000000000004
+            ],
+            "maximumSocketDrift": 0,
+            "maximumBoneError": 4.263256414560601e-14,
+            "bendSigns": [
+              -1
+            ],
+            "maximumJointStep": 29.07113349366151,
+            "maximumAngleStep": 36.26629013805447,
+            "maximumBodyStep": 3.9545129631642713
+          },
+          {
+            "id": "far",
+            "kneeAngles": [
+              168.0000000000007,
+              131.7337098619462,
+              119.63312522793916,
+              131.7337098619462,
+              168.0000000000008,
+              167.8769088320467,
+              168.00000000000054,
+              167.8769088320469
+            ],
+            "stanceKneeRange": [
+              167.8769088320467,
+              168.0000000000008
+            ],
+            "swingKneeRange": [
+              119.63312522793916,
+              168.0000000000007
+            ],
+            "maximumSocketDrift": 0,
+            "maximumBoneError": 4.263256414560601e-14,
+            "bendSigns": [
+              -1
+            ],
+            "maximumJointStep": 29.071133493661655,
+            "maximumAngleStep": 36.266290138054586,
+            "maximumBodyStep": 3.9545129631642713
+          }
+        ],
+        "pelvis": {
+          "sourceHeightSpan": 5.272683950885693,
+          "midstanceRises": [
+            {
+              "id": "near",
+              "startFrame": 0,
+              "centerFrame": 2,
+              "rise": 5.272683950885693
+            },
+            {
+              "id": "far",
+              "startFrame": 4,
+              "centerFrame": 6,
+              "rise": 5.272683950885693
+            }
+          ]
+        },
+        "sockets": [],
+        "footfalls": null
+      }
+    },
+    {
+      "wave": 3,
+      "errors": [],
+      "limbs": [
+        {
+          "id": "near",
+          "stanceFrames": 4,
+          "maximumLift": 20.105999999999995,
+          "footXSpan": 80.42399999999998,
+          "maximumReferenceSlip": 7.105427357601002e-15,
+          "maximumLoopStep": 29.037591936018252
+        },
+        {
+          "id": "far",
+          "stanceFrames": 4,
+          "maximumLift": 20.105999999999995,
+          "footXSpan": 80.42399999999998,
+          "maximumReferenceSlip": 7.105427357601002e-15,
+          "maximumLoopStep": 29.037591936018252
+        }
+      ],
+      "pairs": [
+        {
+          "pair": "legs",
+          "minimumNearMinusFarX": -80.21525840722347,
+          "maximumNearMinusFarX": 80.63274159277648,
+          "phaseError": 0,
+          "liftError": 0
+        }
+      ],
+      "anatomy": {
+        "profile": "support-leg-pelvis",
+        "limbs": [
+          {
+            "id": "near",
+            "kneeAngles": [
+              167.99998706754633,
+              167.87593555707886,
+              167.9999999999999,
+              167.87593555707886,
+              167.9999870675463,
+              131.54144124506385,
+              119.37765979640912,
+              131.54144124506382
+            ],
+            "stanceKneeRange": [
+              167.87593555707886,
+              167.9999999999999
+            ],
+            "swingKneeRange": [
+              119.37765979640912,
+              167.9999870675463
+            ],
+            "maximumSocketDrift": 5.684341886080802e-14,
+            "maximumBoneError": 5.684341886080802e-14,
+            "bendSigns": [
+              -1
+            ],
+            "maximumJointStep": 29.538769510045558,
+            "maximumAngleStep": 36.458545822482506,
+            "maximumBodyStep": 4.01184814652512
+          },
+          {
+            "id": "far",
+            "kneeAngles": [
+              168.0000129324891,
+              131.54142109616635,
+              119.37762842497233,
+              131.54142109616637,
+              168.000012932489,
+              167.8759417480246,
+              167.99999999999994,
+              167.87594174802453
+            ],
+            "stanceKneeRange": [
+              167.87594174802453,
+              168.000012932489
+            ],
+            "swingKneeRange": [
+              119.37762842497233,
+              168.0000129324891
+            ],
+            "maximumSocketDrift": 5.684341886080802e-14,
+            "maximumBoneError": 5.684341886080802e-14,
+            "bendSigns": [
+              -1
+            ],
+            "maximumJointStep": 29.53877572764865,
+            "maximumAngleStep": 36.45859183632277,
+            "maximumBodyStep": 4.01184814652512
+          }
+        ],
+        "pelvis": {
+          "sourceHeightSpan": 5.3491308620334905,
+          "midstanceRises": [
+            {
+              "id": "near",
+              "startFrame": 0,
+              "centerFrame": 2,
+              "rise": 5.3491308620334905
+            },
+            {
+              "id": "far",
+              "startFrame": 4,
+              "centerFrame": 6,
+              "rise": 5.3491308620334905
+            }
+          ]
+        },
+        "sockets": [],
+        "footfalls": null
+      }
+    },
+    {
+      "wave": 5,
+      "errors": [],
+      "limbs": [
+        {
+          "id": "near",
+          "stanceFrames": 4,
+          "maximumLift": 20.137999999999977,
+          "footXSpan": 80.55000000000001,
+          "maximumReferenceSlip": 1.7763568394002505e-14,
+          "maximumLoopStep": 29.083114730086635
+        },
+        {
+          "id": "far",
+          "stanceFrames": 4,
+          "maximumLift": 20.137999999999977,
+          "footXSpan": 80.54999999999998,
+          "maximumReferenceSlip": 1.0658141036401503e-14,
+          "maximumLoopStep": 29.083114730086606
+        }
+      ],
+      "pairs": [
+        {
+          "pair": "legs",
+          "minimumNearMinusFarX": -80.75686895803256,
+          "maximumNearMinusFarX": 80.34313104196744,
+          "phaseError": 1.7404671430534633e-14,
+          "liftError": 0
+        }
+      ],
+      "anatomy": {
+        "profile": "support-leg-pelvis",
+        "limbs": [
+          {
+            "id": "near",
+            "kneeAngles": [
+              168.00000871734392,
+              167.87691027124671,
+              168.00000000000014,
+              167.8769102712467,
+              168.00000871734392,
+              131.7334588791039,
+              119.63286453276515,
+              131.73345887910392
+            ],
+            "stanceKneeRange": [
+              167.8769102712467,
+              168.00000871734392
+            ],
+            "swingKneeRange": [
+              119.63286453276515,
+              168.00000871734392
+            ],
+            "maximumSocketDrift": 0,
+            "maximumBoneError": 4.263256414560601e-14,
+            "bendSigns": [
+              -1
+            ],
+            "maximumJointStep": 29.53958026916742,
+            "maximumAngleStep": 36.266549838240024,
+            "maximumBodyStep": 4.018293674013094
+          },
+          {
+            "id": "far",
+            "kneeAngles": [
+              167.99999128267183,
+              131.73347021995238,
+              119.63288270069577,
+              131.73347021995247,
+              167.99999128267183,
+              167.87690608618058,
+              168.0000000000001,
+              167.87690608618044
+            ],
+            "stanceKneeRange": [
+              167.87690608618044,
+              168.0000000000001
+            ],
+            "swingKneeRange": [
+              119.63288270069577,
+              167.99999128267183
+            ],
+            "maximumSocketDrift": 0,
+            "maximumBoneError": 5.684341886080802e-14,
+            "bendSigns": [
+              -1
+            ],
+            "maximumJointStep": 29.53957239582565,
+            "maximumAngleStep": 36.26652106271945,
+            "maximumBodyStep": 4.018293674013094
+          }
+        ],
+        "pelvis": {
+          "sourceHeightSpan": 5.3577248986841255,
+          "midstanceRises": [
+            {
+              "id": "near",
+              "startFrame": 0,
+              "centerFrame": 2,
+              "rise": 5.3577248986841255
+            },
+            {
+              "id": "far",
+              "startFrame": 4,
+              "centerFrame": 6,
+              "rise": 5.3577248986841255
+            }
+          ]
+        },
+        "sockets": [],
+        "footfalls": null
+      }
+    },
+    {
+      "wave": 6,
+      "errors": [],
+      "limbs": [
+        {
+          "id": "nearFore",
+          "stanceFrames": 6,
+          "maximumLift": 13.51453301853627,
+          "footXSpan": 65.38461538461536,
+          "maximumReferenceSlip": 3.907985046680551e-14,
+          "maximumLoopStep": 35.99508917891475
+        },
+        {
+          "id": "farFore",
+          "stanceFrames": 6,
+          "maximumLift": 13.51453301853627,
+          "footXSpan": 65.38461538461542,
+          "maximumReferenceSlip": 3.907985046680551e-14,
+          "maximumLoopStep": 35.99508917891475
+        },
+        {
+          "id": "nearHind",
+          "stanceFrames": 6,
+          "maximumLift": 13.51453301853627,
+          "footXSpan": 65.38461538461539,
+          "maximumReferenceSlip": 1.7763568394002505e-14,
+          "maximumLoopStep": 35.99508917891475
+        },
+        {
+          "id": "farHind",
+          "stanceFrames": 6,
+          "maximumLift": 13.51453301853627,
+          "footXSpan": 65.38461538461539,
+          "maximumReferenceSlip": 1.7763568394002505e-14,
+          "maximumLoopStep": 35.99508917891475
+        }
+      ],
+      "pairs": [
+        {
+          "pair": "fore",
+          "minimumNearMinusFarX": -58.145792070162656,
+          "maximumNearMinusFarX": 46.469592545221985,
+          "phaseError": 6.665481691674458e-14,
+          "liftError": 0
+        },
+        {
+          "pair": "hind",
+          "minimumNearMinusFarX": -58.1457920701626,
+          "maximumNearMinusFarX": 46.46959254522204,
+          "phaseError": 0,
+          "liftError": 0
+        }
+      ],
+      "anatomy": {
+        "profile": "fixed-body",
+        "limbs": [
+          {
+            "id": "nearFore",
+            "kneeAngles": [
+              117.53624313495541,
+              113.23604772405254,
+              147.45054995863512,
+              140.58483655919508,
+              137.36719015410551,
+              137.08450648661,
+              139.68631930487962,
+              145.70775770736626
+            ],
+            "stanceKneeRange": [
+              137.08450648661,
+              147.45054995863512
+            ],
+            "swingKneeRange": [
+              113.23604772405254,
+              117.53624313495541
+            ],
+            "maximumSocketDrift": 0,
+            "maximumBoneError": 7.105427357601002e-14,
+            "bendSigns": [
+              1
+            ],
+            "maximumJointStep": 35.99508917891475,
+            "maximumAngleStep": 34.21450223458258,
+            "maximumBodyStep": 0
+          },
+          {
+            "id": "farFore",
+            "kneeAngles": [
+              142.5905300366445,
+              142.27565817940746,
+              145.19694051679537,
+              152.2243923099447,
+              121.07027995198021,
+              116.58751891025618,
+              154.36021369365264,
+              146.21915731345564
+            ],
+            "stanceKneeRange": [
+              142.27565817940746,
+              154.36021369365264
+            ],
+            "swingKneeRange": [
+              116.58751891025618,
+              121.07027995198021
+            ],
+            "maximumSocketDrift": 0,
+            "maximumBoneError": 4.973799150320701e-14,
+            "bendSigns": [
+              1
+            ],
+            "maximumJointStep": 35.99508917891475,
+            "maximumAngleStep": 37.77269478339646,
+            "maximumBodyStep": 0
+          },
+          {
+            "id": "nearHind",
+            "kneeAngles": [
+              135.016465792091,
+              129.70515155215733,
+              127.08292000720884,
+              126.84910081313635,
+              128.98044683898829,
+              133.70986461231016,
+              111.07053484135284,
+              107.27703766928096
+            ],
+            "stanceKneeRange": [
+              126.84910081313635,
+              135.016465792091
+            ],
+            "swingKneeRange": [
+              107.27703766928096,
+              111.07053484135284
+            ],
+            "maximumSocketDrift": 0,
+            "maximumBoneError": 4.973799150320701e-14,
+            "bendSigns": [
+              -1
+            ],
+            "maximumJointStep": 35.99508917891475,
+            "maximumAngleStep": 27.73942812281004,
+            "maximumBodyStep": 0
+          },
+          {
+            "id": "farHind",
+            "kneeAngles": [
+              133.00315030099782,
+              138.07244693972558,
+              114.0669961368207,
+              110.1551982755703,
+              139.49006959601664,
+              133.7743844987127,
+              130.99199888194653,
+              130.744952582072
+            ],
+            "stanceKneeRange": [
+              130.744952582072,
+              139.49006959601664
+            ],
+            "swingKneeRange": [
+              110.1551982755703,
+              114.0669961368207
+            ],
+            "maximumSocketDrift": 0,
+            "maximumBoneError": 5.684341886080802e-14,
+            "bendSigns": [
+              -1
+            ],
+            "maximumJointStep": 35.99508917891475,
+            "maximumAngleStep": 29.33487132044634,
+            "maximumBodyStep": 0
+          }
+        ],
+        "pelvis": null,
+        "sockets": [
+          {
+            "id": "nearFore",
+            "reviewedRoi": [
+              0.52,
+              0.45,
+              0.2,
+              0.32
+            ],
+            "normalizedPoints": [
+              [
+                0.61,
+                0.63
+              ],
+              [
+                0.61,
+                0.63
+              ],
+              [
+                0.61,
+                0.63
+              ],
+              [
+                0.61,
+                0.63
+              ],
+              [
+                0.61,
+                0.63
+              ],
+              [
+                0.61,
+                0.63
+              ],
+              [
+                0.61,
+                0.63
+              ],
+              [
+                0.61,
+                0.63
+              ]
+            ],
+            "sourceSocket": [
+              556.96,
+              667.23
+            ],
+            "sourceAtlas": "tools/art-review/pr29-gait/sources/w006-anatomy-puppet.png"
+          },
+          {
+            "id": "farFore",
+            "reviewedRoi": [
+              0.52,
+              0.45,
+              0.2,
+              0.32
+            ],
+            "normalizedPoints": [
+              [
+                0.624,
+                0.62
+              ],
+              [
+                0.624,
+                0.62
+              ],
+              [
+                0.624,
+                0.62
+              ],
+              [
+                0.624,
+                0.62
+              ],
+              [
+                0.624,
+                0.62
+              ],
+              [
+                0.624,
+                0.62
+              ],
+              [
+                0.624,
+                0.62
+              ],
+              [
+                0.624,
+                0.62
+              ]
+            ],
+            "sourceSocket": [
+              568.664,
+              663.02
+            ],
+            "sourceAtlas": "tools/art-review/pr29-gait/sources/w006-anatomy-puppet.png"
+          },
+          {
+            "id": "nearHind",
+            "reviewedRoi": [
+              0.14,
+              0.33,
+              0.2,
+              0.35
+            ],
+            "normalizedPoints": [
+              [
+                0.23000000000000004,
+                0.5100000000000001
+              ],
+              [
+                0.23000000000000004,
+                0.5100000000000001
+              ],
+              [
+                0.23000000000000004,
+                0.5100000000000001
+              ],
+              [
+                0.23000000000000004,
+                0.5100000000000001
+              ],
+              [
+                0.23000000000000004,
+                0.5100000000000001
+              ],
+              [
+                0.23000000000000004,
+                0.5100000000000001
+              ],
+              [
+                0.23000000000000004,
+                0.5100000000000001
+              ],
+              [
+                0.23000000000000004,
+                0.5100000000000001
+              ]
+            ],
+            "sourceSocket": [
+              239.28000000000003,
+              616.71
+            ],
+            "sourceAtlas": "tools/art-review/pr29-gait/sources/w006-anatomy-puppet.png"
+          },
+          {
+            "id": "farHind",
+            "reviewedRoi": [
+              0.14,
+              0.33,
+              0.2,
+              0.35
+            ],
+            "normalizedPoints": [
+              [
+                0.24399999999999997,
+                0.5
+              ],
+              [
+                0.24399999999999997,
+                0.5
+              ],
+              [
+                0.24399999999999997,
+                0.5
+              ],
+              [
+                0.24399999999999997,
+                0.5
+              ],
+              [
+                0.24399999999999997,
+                0.5
+              ],
+              [
+                0.24399999999999997,
+                0.5
+              ],
+              [
+                0.24399999999999997,
+                0.5
+              ],
+              [
+                0.24399999999999997,
+                0.5
+              ]
+            ],
+            "sourceSocket": [
+              250.98399999999998,
+              612.5
+            ],
+            "sourceAtlas": "tools/art-review/pr29-gait/sources/w006-anatomy-puppet.png"
+          }
+        ],
+        "footfalls": {
+          "starts": [
+            {
+              "id": "nearHind",
+              "phase": 0
+            },
+            {
+              "id": "nearFore",
+              "phase": 0.25
+            },
+            {
+              "id": "farHind",
+              "phase": 0.5
+            },
+            {
+              "id": "farFore",
+              "phase": 0.75
+            }
+          ],
+          "supportingFeetPerFrame": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        }
+      }
+    },
+    {
+      "wave": 7,
+      "errors": [],
+      "limbs": [
+        {
+          "id": "near",
+          "stanceFrames": 4,
+          "maximumLift": 19.906000000000006,
+          "footXSpan": 79.62400000000002,
+          "maximumReferenceSlip": 6.394884621840902e-14,
+          "maximumLoopStep": 28.748746895373486
+        },
+        {
+          "id": "far",
+          "stanceFrames": 4,
+          "maximumLift": 19.906000000000006,
+          "footXSpan": 79.62400000000002,
+          "maximumReferenceSlip": 7.105427357601002e-15,
+          "maximumLoopStep": 28.748746895373536
+        }
+      ],
+      "pairs": [
+        {
+          "pair": "legs",
+          "minimumNearMinusFarX": -79.78777040590046,
+          "maximumNearMinusFarX": 79.46022959409959,
+          "phaseError": 3.4809342861069267e-14,
+          "liftError": 0
+        }
+      ],
+      "anatomy": {
+        "profile": "support-leg-pelvis",
+        "limbs": [
+          {
+            "id": "near",
+            "kneeAngles": [
+              168.00000346451202,
+              167.87678266276623,
+              167.99999999999972,
+              167.87678266276617,
+              168.0000034645121,
+              131.70984580481613,
+              119.60136395319248,
+              131.70984580481613
+            ],
+            "stanceKneeRange": [
+              167.87678266276617,
+              168.00000346451202
+            ],
+            "swingKneeRange": [
+              119.60136395319248,
+              168.0000034645121
+            ],
+            "maximumSocketDrift": 0,
+            "maximumBoneError": 4.263256414560601e-14,
+            "bendSigns": [
+              -1
+            ],
+            "maximumJointStep": 29.217151223201334,
+            "maximumAngleStep": 36.29015765969598,
+            "maximumBodyStep": 3.9721259572475915
+          },
+          {
+            "id": "far",
+            "kneeAngles": [
+              167.99999653548932,
+              131.70984710357865,
+              119.60136690946626,
+              131.70984710357868,
+              167.99999653548932,
+              167.8767809831467,
+              168.00000000000014,
+              167.8767809831467
+            ],
+            "stanceKneeRange": [
+              167.8767809831467,
+              168.00000000000014
+            ],
+            "swingKneeRange": [
+              119.60136690946626,
+              167.99999653548932
+            ],
+            "maximumSocketDrift": 0,
+            "maximumBoneError": 4.263256414560601e-14,
+            "bendSigns": [
+              -1
+            ],
+            "maximumJointStep": 29.21715052750225,
+            "maximumAngleStep": 36.29014943191066,
+            "maximumBodyStep": 3.9721259572475915
+          }
+        ],
+        "pelvis": {
+          "sourceHeightSpan": 5.296167942996789,
+          "midstanceRises": [
+            {
+              "id": "near",
+              "startFrame": 0,
+              "centerFrame": 2,
+              "rise": 5.296167942996789
+            },
+            {
+              "id": "far",
+              "startFrame": 4,
+              "centerFrame": 6,
+              "rise": 5.296167942996789
+            }
+          ]
+        },
+        "sockets": [],
+        "footfalls": null
+      }
+    },
+    {
+      "wave": 9,
+      "errors": [],
+      "limbs": [
+        {
+          "id": "near",
+          "stanceFrames": 4,
+          "maximumLift": 18.262999999999977,
+          "footXSpan": 73.05200000000005,
+          "maximumReferenceSlip": 3.197442310920451e-14,
+          "maximumLoopStep": 26.375884886476797
+        },
+        {
+          "id": "far",
+          "stanceFrames": 4,
+          "maximumLift": 18.262999999999977,
+          "footXSpan": 73.05200000000002,
+          "maximumReferenceSlip": 3.197442310920451e-14,
+          "maximumLoopStep": 26.37588488647677
+        }
+      ],
+      "pairs": [
+        {
+          "pair": "legs",
+          "minimumNearMinusFarX": -73.0324819941662,
+          "maximumNearMinusFarX": 73.07151800583387,
+          "phaseError": 5.123796534383003e-14,
+          "liftError": 0
+        }
+      ],
+      "anatomy": {
+        "profile": "support-leg-pelvis",
+        "limbs": [
+          {
+            "id": "near",
+            "kneeAngles": [
+              168.00000000000006,
+              167.87548730720818,
+              167.99999999999997,
+              167.87548730720818,
+              167.99999999999994,
+              131.45043674521816,
+              119.25677457610178,
+              131.45043674521816
+            ],
+            "stanceKneeRange": [
+              167.87548730720818,
+              168.00000000000006
+            ],
+            "swingKneeRange": [
+              119.25677457610178,
+              167.99999999999994
+            ],
+            "maximumSocketDrift": 5.684341886080802e-14,
+            "maximumBoneError": 4.973799150320701e-14,
+            "bendSigns": [
+              -1
+            ],
+            "maximumJointStep": 26.82820534250438,
+            "maximumAngleStep": 36.5495632547819,
+            "maximumBodyStep": 3.6439666740917147
+          },
+          {
+            "id": "far",
+            "kneeAngles": [
+              167.99999999999994,
+              131.45043674521816,
+              119.25677457610178,
+              131.45043674521816,
+              168.00000000000006,
+              167.87548730720818,
+              167.99999999999997,
+              167.87548730720818
+            ],
+            "stanceKneeRange": [
+              167.87548730720818,
+              168.00000000000006
+            ],
+            "swingKneeRange": [
+              119.25677457610178,
+              167.99999999999994
+            ],
+            "maximumSocketDrift": 5.684341886080802e-14,
+            "maximumBoneError": 4.973799150320701e-14,
+            "bendSigns": [
+              -1
+            ],
+            "maximumJointStep": 26.82820534250438,
+            "maximumAngleStep": 36.5495632547819,
+            "maximumBodyStep": 3.6439666740917147
+          }
+        ],
+        "pelvis": {
+          "sourceHeightSpan": 4.858622232122286,
+          "midstanceRises": [
+            {
+              "id": "near",
+              "startFrame": 0,
+              "centerFrame": 2,
+              "rise": 4.858622232122286
+            },
+            {
+              "id": "far",
+              "startFrame": 4,
+              "centerFrame": 6,
+              "rise": 4.858622232122286
+            }
+          ]
+        },
+        "sockets": [],
+        "footfalls": null
+      }
+    }
+  ],
+  "textures": [
+    {
+      "wave": 1,
+      "file": "casual/enemies/inf/w001-walk-4x2.png",
+      "sourceAtlas": {
+        "file": "tools/art-review/pr29-gait/sources/w001-anatomy-puppet.png",
+        "sha256": "abe0bfa4a035842a9d98fe96a35f55c9a83675335b44dd08a8b31e8a0db6c6fc",
+        "matchesReviewedAtlas": true
+      },
+      "crop": {
+        "x": 47,
+        "y": 123,
+        "w": 418,
+        "h": 192
+      },
+      "feet": [
+        {
+          "frame": 0,
+          "id": "nearFore",
+          "pixels": 40,
+          "closest": 1.444744786664816,
+          "valid": true
+        },
+        {
+          "frame": 0,
+          "id": "farFore",
+          "pixels": 38,
+          "closest": 1.5034614934774688,
+          "valid": true
+        },
+        {
+          "frame": 0,
+          "id": "nearHind",
+          "pixels": 37,
+          "closest": 1.2645044048800818,
+          "valid": true
+        },
+        {
+          "frame": 0,
+          "id": "farHind",
+          "pixels": 37,
+          "closest": 1.2335587483594337,
+          "valid": true
+        },
+        {
+          "frame": 1,
+          "id": "nearFore",
+          "pixels": 87,
+          "closest": 0.35914936497326977,
+          "valid": true
+        },
+        {
+          "frame": 1,
+          "id": "farFore",
+          "pixels": 37,
+          "closest": 1.6827976821174673,
+          "valid": true
+        },
+        {
+          "frame": 1,
+          "id": "nearHind",
+          "pixels": 38,
+          "closest": 1.4175420297346035,
+          "valid": true
+        },
+        {
+          "frame": 1,
+          "id": "farHind",
+          "pixels": 38,
+          "closest": 1.3814032162840995,
+          "valid": true
+        },
+        {
+          "frame": 2,
+          "id": "nearFore",
+          "pixels": 38,
+          "closest": 1.1850496059089002,
+          "valid": true
+        },
+        {
+          "frame": 2,
+          "id": "farFore",
+          "pixels": 37,
+          "closest": 2.0427626986569494,
+          "valid": true
+        },
+        {
+          "frame": 2,
+          "id": "nearHind",
+          "pixels": 35,
+          "closest": 2.013813927804518,
+          "valid": true
+        },
+        {
+          "frame": 2,
+          "id": "farHind",
+          "pixels": 64,
+          "closest": 0.6785941711460309,
+          "valid": true
+        },
+        {
+          "frame": 3,
+          "id": "nearFore",
+          "pixels": 39,
+          "closest": 1.3232837151469432,
+          "valid": true
+        },
+        {
+          "frame": 3,
+          "id": "farFore",
+          "pixels": 39,
+          "closest": 1.2900367567043782,
+          "valid": true
+        },
+        {
+          "frame": 3,
+          "id": "nearHind",
+          "pixels": 34,
+          "closest": 2.0536260228832464,
+          "valid": true
+        },
+        {
+          "frame": 3,
+          "id": "farHind",
+          "pixels": 36,
+          "closest": 1.5987457722881901,
+          "valid": true
+        },
+        {
+          "frame": 4,
+          "id": "nearFore",
+          "pixels": 38,
+          "closest": 1.4846972380997394,
+          "valid": true
+        },
+        {
+          "frame": 4,
+          "id": "farFore",
+          "pixels": 64,
+          "closest": 0.8132476627646754,
+          "valid": true
+        },
+        {
+          "frame": 4,
+          "id": "nearHind",
+          "pixels": 37,
+          "closest": 1.218942994420469,
+          "valid": true
+        },
+        {
+          "frame": 4,
+          "id": "farHind",
+          "pixels": 37,
+          "closest": 1.2801179969945888,
+          "valid": true
+        },
+        {
+          "frame": 5,
+          "id": "nearFore",
+          "pixels": 36,
+          "closest": 1.6625525142408382,
+          "valid": true
+        },
+        {
+          "frame": 5,
+          "id": "farFore",
+          "pixels": 38,
+          "closest": 1.5209590973975373,
+          "valid": true
+        },
+        {
+          "frame": 5,
+          "id": "nearHind",
+          "pixels": 38,
+          "closest": 1.3641015655624158,
+          "valid": true
+        },
+        {
+          "frame": 5,
+          "id": "farHind",
+          "pixels": 38,
+          "closest": 1.4355531007647457,
+          "valid": true
+        },
+        {
+          "frame": 6,
+          "id": "nearFore",
+          "pixels": 37,
+          "closest": 1.852118978936211,
+          "valid": true
+        },
+        {
+          "frame": 6,
+          "id": "farFore",
+          "pixels": 37,
+          "closest": 1.1987910311841607,
+          "valid": true
+        },
+        {
+          "frame": 6,
+          "id": "nearHind",
+          "pixels": 37,
+          "closest": 1.8632203820880073,
+          "valid": true
+        },
+        {
+          "frame": 6,
+          "id": "farHind",
+          "pixels": 35,
+          "closest": 2.0169230258641693,
+          "valid": true
+        },
+        {
+          "frame": 7,
+          "id": "nearFore",
+          "pixels": 38,
+          "closest": 1.2742316889575802,
+          "valid": true
+        },
+        {
+          "frame": 7,
+          "id": "farFore",
+          "pixels": 39,
+          "closest": 1.3399603581967348,
+          "valid": true
+        },
+        {
+          "frame": 7,
+          "id": "nearHind",
+          "pixels": 84,
+          "closest": 0.7167781145844745,
+          "valid": true
+        },
+        {
+          "frame": 7,
+          "id": "farHind",
+          "pixels": 33,
+          "closest": 2.0595068344358003,
+          "valid": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "wave": 2,
+      "file": "casual/enemies/inf/w002-walk-4x2.png",
+      "sourceAtlas": {
+        "file": "tools/art-review/pr29-gait/sources/w002-puppet.png",
+        "sha256": "a79943e950b598e1c046e7634ae96d7f98274b82585144a112268ebb543c8c1b",
+        "matchesReviewedAtlas": true
+      },
+      "crop": {
+        "x": 145,
+        "y": 14,
+        "w": 222,
+        "h": 446
+      },
+      "feet": [
+        {
+          "frame": 0,
+          "id": "near",
+          "pixels": 19,
+          "closest": 3.1549897474129596,
+          "valid": true
+        },
+        {
+          "frame": 0,
+          "id": "far",
+          "pixels": 19,
+          "closest": 3.167782208877638,
+          "valid": true
+        },
+        {
+          "frame": 1,
+          "id": "near",
+          "pixels": 19,
+          "closest": 3.21599228103032,
+          "valid": true
+        },
+        {
+          "frame": 1,
+          "id": "far",
+          "pixels": 19,
+          "closest": 3.4006862730545095,
+          "valid": true
+        },
+        {
+          "frame": 2,
+          "id": "near",
+          "pixels": 18,
+          "closest": 3.285955020540033,
+          "valid": true
+        },
+        {
+          "frame": 2,
+          "id": "far",
+          "pixels": 112,
+          "closest": 0.3915912309606808,
+          "valid": true
+        },
+        {
+          "frame": 3,
+          "id": "near",
+          "pixels": 17,
+          "closest": 3.3643190161424776,
+          "valid": true
+        },
+        {
+          "frame": 3,
+          "id": "far",
+          "pixels": 106,
+          "closest": 0.32012508189661526,
+          "valid": true
+        },
+        {
+          "frame": 4,
+          "id": "near",
+          "pixels": 19,
+          "closest": 3.081657777246537,
+          "valid": true
+        },
+        {
+          "frame": 4,
+          "id": "far",
+          "pixels": 19,
+          "closest": 3.265306198874569,
+          "valid": true
+        },
+        {
+          "frame": 5,
+          "id": "near",
+          "pixels": 19,
+          "closest": 3.2627691411503728,
+          "valid": true
+        },
+        {
+          "frame": 5,
+          "id": "far",
+          "pixels": 17,
+          "closest": 3.3413536033480447,
+          "valid": true
+        },
+        {
+          "frame": 6,
+          "id": "near",
+          "pixels": 112,
+          "closest": 0.38627265672412947,
+          "valid": true
+        },
+        {
+          "frame": 6,
+          "id": "far",
+          "pixels": 18,
+          "closest": 3.4253921283270845,
+          "valid": true
+        },
+        {
+          "frame": 7,
+          "id": "near",
+          "pixels": 110,
+          "closest": 0.36783899052717534,
+          "valid": true
+        },
+        {
+          "frame": 7,
+          "id": "far",
+          "pixels": 18,
+          "closest": 3.5168489536804586,
+          "valid": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "wave": 3,
+      "file": "casual/enemies/inf/w003-walk-4x2.png",
+      "sourceAtlas": {
+        "file": "tools/art-review/pr29-gait/sources/w003-puppet.png",
+        "sha256": "92da3b77c3415e98f25934abb3a081ea4f29a22a1576732a97c8a11a2d8c9bf1",
+        "matchesReviewedAtlas": true
+      },
+      "crop": {
+        "x": 159,
+        "y": 11,
+        "w": 222,
+        "h": 449
+      },
+      "feet": [
+        {
+          "frame": 0,
+          "id": "near",
+          "pixels": 44,
+          "closest": 1.000203666458542,
+          "valid": true
+        },
+        {
+          "frame": 0,
+          "id": "far",
+          "pixels": 39,
+          "closest": 2.0298918638093846,
+          "valid": true
+        },
+        {
+          "frame": 1,
+          "id": "near",
+          "pixels": 45,
+          "closest": 1.0079297000306822,
+          "valid": true
+        },
+        {
+          "frame": 1,
+          "id": "far",
+          "pixels": 42,
+          "closest": 1.787280364263312,
+          "valid": true
+        },
+        {
+          "frame": 2,
+          "id": "near",
+          "pixels": 44,
+          "closest": 1.0266007919394806,
+          "valid": true
+        },
+        {
+          "frame": 2,
+          "id": "far",
+          "pixels": 113,
+          "closest": 0.453487544784997,
+          "valid": true
+        },
+        {
+          "frame": 3,
+          "id": "near",
+          "pixels": 43,
+          "closest": 1.0556363444944448,
+          "valid": true
+        },
+        {
+          "frame": 3,
+          "id": "far",
+          "pixels": 84,
+          "closest": 0.21719377068835957,
+          "valid": true
+        },
+        {
+          "frame": 4,
+          "id": "near",
+          "pixels": 44,
+          "closest": 1.094211587228182,
+          "valid": true
+        },
+        {
+          "frame": 4,
+          "id": "far",
+          "pixels": 37,
+          "closest": 2.0130590419369807,
+          "valid": true
+        },
+        {
+          "frame": 5,
+          "id": "near",
+          "pixels": 47,
+          "closest": 0.8510372713848776,
+          "valid": true
+        },
+        {
+          "frame": 5,
+          "id": "far",
+          "pixels": 37,
+          "closest": 2.0278498045465994,
+          "valid": true
+        },
+        {
+          "frame": 6,
+          "id": "near",
+          "pixels": 112,
+          "closest": 0.25523555005282345,
+          "valid": true
+        },
+        {
+          "frame": 6,
+          "id": "far",
+          "pixels": 38,
+          "closest": 2.048027088022794,
+          "valid": true
+        },
+        {
+          "frame": 7,
+          "id": "near",
+          "pixels": 88,
+          "closest": 0.2965288068950441,
+          "valid": true
+        },
+        {
+          "frame": 7,
+          "id": "far",
+          "pixels": 38,
+          "closest": 2.050677169932919,
+          "valid": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "wave": 5,
+      "file": "casual/enemies/inf/w005-walk-4x2.png",
+      "sourceAtlas": {
+        "file": "tools/art-review/pr29-gait/sources/w005-puppet.png",
+        "sha256": "273a81d49006b6d372f6b934ebb29afdd2e39619ae67808cb21dd1b8fa126570",
+        "matchesReviewedAtlas": true
+      },
+      "crop": {
+        "x": 108,
+        "y": 20,
+        "w": 296,
+        "h": 440
+      },
+      "feet": [
+        {
+          "frame": 0,
+          "id": "near",
+          "pixels": 49,
+          "closest": 1.0427065604942256,
+          "valid": true
+        },
+        {
+          "frame": 0,
+          "id": "far",
+          "pixels": 49,
+          "closest": 1.001140431083767,
+          "valid": true
+        },
+        {
+          "frame": 1,
+          "id": "near",
+          "pixels": 50,
+          "closest": 1.012383070387188,
+          "valid": true
+        },
+        {
+          "frame": 1,
+          "id": "far",
+          "pixels": 47,
+          "closest": 1.7781590303972288,
+          "valid": true
+        },
+        {
+          "frame": 2,
+          "id": "near",
+          "pixels": 49,
+          "closest": 1.0002072240868265,
+          "valid": true
+        },
+        {
+          "frame": 2,
+          "id": "far",
+          "pixels": 113,
+          "closest": 0.2658506532824754,
+          "valid": true
+        },
+        {
+          "frame": 3,
+          "id": "near",
+          "pixels": 50,
+          "closest": 1.006837623961462,
+          "valid": true
+        },
+        {
+          "frame": 3,
+          "id": "far",
+          "pixels": 75,
+          "closest": 1.426627902792959,
+          "valid": true
+        },
+        {
+          "frame": 4,
+          "id": "near",
+          "pixels": 49,
+          "closest": 1.0319118232355213,
+          "valid": true
+        },
+        {
+          "frame": 4,
+          "id": "far",
+          "pixels": 48,
+          "closest": 1.1170393686581555,
+          "valid": true
+        },
+        {
+          "frame": 5,
+          "id": "near",
+          "pixels": 62,
+          "closest": 0.8877674892179993,
+          "valid": true
+        },
+        {
+          "frame": 5,
+          "id": "far",
+          "pixels": 49,
+          "closest": 1.0644371862166337,
+          "valid": true
+        },
+        {
+          "frame": 6,
+          "id": "near",
+          "pixels": 113,
+          "closest": 0.1394936956119117,
+          "valid": true
+        },
+        {
+          "frame": 6,
+          "id": "far",
+          "pixels": 49,
+          "closest": 1.0254913797057124,
+          "valid": true
+        },
+        {
+          "frame": 7,
+          "id": "near",
+          "pixels": 85,
+          "closest": 0.9094595752194871,
+          "valid": true
+        },
+        {
+          "frame": 7,
+          "id": "far",
+          "pixels": 50,
+          "closest": 1.0040174880452333,
+          "valid": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "wave": 6,
+      "file": "casual/enemies/inf/w006-walk-4x2.png",
+      "sourceAtlas": {
+        "file": "tools/art-review/pr29-gait/sources/w006-anatomy-puppet.png",
+        "sha256": "813bd2f5632d711f4b87a19897c7c0661037f1554c6584773f983439bb4dd275",
+        "matchesReviewedAtlas": true
+      },
+      "crop": {
+        "x": 48,
+        "y": 55,
+        "w": 416,
+        "h": 295
+      },
+      "feet": [
+        {
+          "frame": 0,
+          "id": "nearFore",
+          "pixels": 48,
+          "closest": 1.283846410059346,
+          "valid": true
+        },
+        {
+          "frame": 0,
+          "id": "farFore",
+          "pixels": 44,
+          "closest": 1.040423496900086,
+          "valid": true
+        },
+        {
+          "frame": 0,
+          "id": "nearHind",
+          "pixels": 48,
+          "closest": 1.1096549597239997,
+          "valid": true
+        },
+        {
+          "frame": 0,
+          "id": "farHind",
+          "pixels": 49,
+          "closest": 1.0012211831174198,
+          "valid": true
+        },
+        {
+          "frame": 1,
+          "id": "nearFore",
+          "pixels": 112,
+          "closest": 0.5327431498917833,
+          "valid": true
+        },
+        {
+          "frame": 1,
+          "id": "farFore",
+          "pixels": 44,
+          "closest": 1.0642283972684623,
+          "valid": true
+        },
+        {
+          "frame": 1,
+          "id": "nearHind",
+          "pixels": 49,
+          "closest": 1.0933694267692788,
+          "valid": true
+        },
+        {
+          "frame": 1,
+          "id": "farHind",
+          "pixels": 49,
+          "closest": 1.0003777152044775,
+          "valid": true
+        },
+        {
+          "frame": 2,
+          "id": "nearFore",
+          "pixels": 44,
+          "closest": 1.0004075037261164,
+          "valid": true
+        },
+        {
+          "frame": 2,
+          "id": "farFore",
+          "pixels": 44,
+          "closest": 1.0929398106620645,
+          "valid": true
+        },
+        {
+          "frame": 2,
+          "id": "nearHind",
+          "pixels": 49,
+          "closest": 1.0645927538349311,
+          "valid": true
+        },
+        {
+          "frame": 2,
+          "id": "farHind",
+          "pixels": 104,
+          "closest": 0.31525470201931705,
+          "valid": true
+        },
+        {
+          "frame": 3,
+          "id": "nearFore",
+          "pixels": 44,
+          "closest": 1.0011692335755913,
+          "valid": true
+        },
+        {
+          "frame": 3,
+          "id": "farFore",
+          "pixels": 43,
+          "closest": 1.1101163634315145,
+          "valid": true
+        },
+        {
+          "frame": 3,
+          "id": "nearHind",
+          "pixels": 49,
+          "closest": 1.0407175789658558,
+          "valid": true
+        },
+        {
+          "frame": 3,
+          "id": "farHind",
+          "pixels": 48,
+          "closest": 1.4894734960524332,
+          "valid": true
+        },
+        {
+          "frame": 4,
+          "id": "nearFore",
+          "pixels": 45,
+          "closest": 1.007818840135355,
+          "valid": true
+        },
+        {
+          "frame": 4,
+          "id": "farFore",
+          "pixels": 100,
+          "closest": 0.4295310004260484,
+          "valid": true
+        },
+        {
+          "frame": 4,
+          "id": "nearHind",
+          "pixels": 49,
+          "closest": 1.0220874455475293,
+          "valid": true
+        },
+        {
+          "frame": 4,
+          "id": "farHind",
+          "pixels": 49,
+          "closest": 1.0618569539116776,
+          "valid": true
+        },
+        {
+          "frame": 5,
+          "id": "nearFore",
+          "pixels": 44,
+          "closest": 1.0202412039963125,
+          "valid": true
+        },
+        {
+          "frame": 5,
+          "id": "farFore",
+          "pixels": 46,
+          "closest": 1.5336242253081371,
+          "valid": true
+        },
+        {
+          "frame": 5,
+          "id": "nearHind",
+          "pixels": 50,
+          "closest": 1.0089929301287675,
+          "valid": true
+        },
+        {
+          "frame": 5,
+          "id": "farHind",
+          "pixels": 49,
+          "closest": 1.0385155887220794,
+          "valid": true
+        },
+        {
+          "frame": 6,
+          "id": "nearFore",
+          "pixels": 44,
+          "closest": 1.038229133505004,
+          "valid": true
+        },
+        {
+          "frame": 6,
+          "id": "farFore",
+          "pixels": 45,
+          "closest": 1.0088517999092448,
+          "valid": true
+        },
+        {
+          "frame": 6,
+          "id": "nearHind",
+          "pixels": 54,
+          "closest": 1.3122373399407876,
+          "valid": true
+        },
+        {
+          "frame": 6,
+          "id": "farHind",
+          "pixels": 49,
+          "closest": 1.0204525393145727,
+          "valid": true
+        },
+        {
+          "frame": 7,
+          "id": "nearFore",
+          "pixels": 44,
+          "closest": 1.0614997279848213,
+          "valid": true
+        },
+        {
+          "frame": 7,
+          "id": "farFore",
+          "pixels": 44,
+          "closest": 1.0218680657392436,
+          "valid": true
+        },
+        {
+          "frame": 7,
+          "id": "nearHind",
+          "pixels": 115,
+          "closest": 0.5560214740831548,
+          "valid": true
+        },
+        {
+          "frame": 7,
+          "id": "farHind",
+          "pixels": 50,
+          "closest": 1.0079516166438707,
+          "valid": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "wave": 7,
+      "file": "casual/enemies/inf/w007-walk-4x2.png",
+      "sourceAtlas": {
+        "file": "tools/art-review/pr29-gait/sources/w007-puppet.png",
+        "sha256": "41c3249ae3dc198e49ee66536c7f537ebcec812192bf42a3213498a799772e66",
+        "matchesReviewedAtlas": true
+      },
+      "crop": {
+        "x": 132,
+        "y": 15,
+        "w": 256,
+        "h": 445
+      },
+      "feet": [
+        {
+          "frame": 0,
+          "id": "near",
+          "pixels": 39,
+          "closest": 2.011654019639338,
+          "valid": true
+        },
+        {
+          "frame": 0,
+          "id": "far",
+          "pixels": 38,
+          "closest": 2.026001890072567,
+          "valid": true
+        },
+        {
+          "frame": 1,
+          "id": "near",
+          "pixels": 40,
+          "closest": 2.0037310658335095,
+          "valid": true
+        },
+        {
+          "frame": 1,
+          "id": "far",
+          "pixels": 71,
+          "closest": 0.9244672134507124,
+          "valid": true
+        },
+        {
+          "frame": 2,
+          "id": "near",
+          "pixels": 40,
+          "closest": 2.000199108499327,
+          "valid": true
+        },
+        {
+          "frame": 2,
+          "id": "far",
+          "pixels": 114,
+          "closest": 0.16495274186465514,
+          "valid": true
+        },
+        {
+          "frame": 3,
+          "id": "near",
+          "pixels": 40,
+          "closest": 2.001081398418541,
+          "valid": true
+        },
+        {
+          "frame": 3,
+          "id": "far",
+          "pixels": 92,
+          "closest": 0.29669487511075104,
+          "valid": true
+        },
+        {
+          "frame": 4,
+          "id": "near",
+          "pixels": 40,
+          "closest": 2.006372112184549,
+          "valid": true
+        },
+        {
+          "frame": 4,
+          "id": "far",
+          "pixels": 39,
+          "closest": 2.000687670657195,
+          "valid": true
+        },
+        {
+          "frame": 5,
+          "id": "near",
+          "pixels": 77,
+          "closest": 0.1948494629810429,
+          "valid": true
+        },
+        {
+          "frame": 5,
+          "id": "far",
+          "pixels": 39,
+          "closest": 2.0004315237678574,
+          "valid": true
+        },
+        {
+          "frame": 6,
+          "id": "near",
+          "pixels": 113,
+          "closest": 0.0981451661647234,
+          "valid": true
+        },
+        {
+          "frame": 6,
+          "id": "far",
+          "pixels": 40,
+          "closest": 2.00458808912172,
+          "valid": true
+        },
+        {
+          "frame": 7,
+          "id": "near",
+          "pixels": 96,
+          "closest": 0.1445076822275539,
+          "valid": true
+        },
+        {
+          "frame": 7,
+          "id": "far",
+          "pixels": 39,
+          "closest": 2.013130033756673,
+          "valid": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "wave": 9,
+      "file": "casual/enemies/inf/w009-walk-4x2.png",
+      "sourceAtlas": {
+        "file": "tools/art-review/pr29-gait/sources/w009-puppet.png",
+        "sha256": "fa76d2c8be8a372a2f7813d3a508f2e2ae00d04ef376ec79832e88e12fe0eea3",
+        "matchesReviewedAtlas": true
+      },
+      "crop": {
+        "x": 126,
+        "y": 36,
+        "w": 260,
+        "h": 424
+      },
+      "feet": [
+        {
+          "frame": 0,
+          "id": "near",
+          "pixels": 40,
+          "closest": 2.0013789600323064,
+          "valid": true
+        },
+        {
+          "frame": 0,
+          "id": "far",
+          "pixels": 45,
+          "closest": 1.0000038184504836,
+          "valid": true
+        },
+        {
+          "frame": 1,
+          "id": "near",
+          "pixels": 40,
+          "closest": 2.0088839367123583,
+          "valid": true
+        },
+        {
+          "frame": 1,
+          "id": "far",
+          "pixels": 111,
+          "closest": 0.31117032842979025,
+          "valid": true
+        },
+        {
+          "frame": 2,
+          "id": "near",
+          "pixels": 40,
+          "closest": 2.050377916556329,
+          "valid": true
+        },
+        {
+          "frame": 2,
+          "id": "far",
+          "pixels": 116,
+          "closest": 0.5396599316053918,
+          "valid": true
+        },
+        {
+          "frame": 3,
+          "id": "near",
+          "pixels": 40,
+          "closest": 2.020243929788331,
+          "valid": true
+        },
+        {
+          "frame": 3,
+          "id": "far",
+          "pixels": 112,
+          "closest": 0.36679644611537565,
+          "valid": true
+        },
+        {
+          "frame": 4,
+          "id": "near",
+          "pixels": 40,
+          "closest": 2.0001241124909113,
+          "valid": true
+        },
+        {
+          "frame": 4,
+          "id": "far",
+          "pixels": 45,
+          "closest": 1.0014983977027956,
+          "valid": true
+        },
+        {
+          "frame": 5,
+          "id": "near",
+          "pixels": 111,
+          "closest": 0.2924643991470175,
+          "valid": true
+        },
+        {
+          "frame": 5,
+          "id": "far",
+          "pixels": 44,
+          "closest": 1.0214511447890284,
+          "valid": true
+        },
+        {
+          "frame": 6,
+          "id": "near",
+          "pixels": 116,
+          "closest": 0.522703166913938,
+          "valid": true
+        },
+        {
+          "frame": 6,
+          "id": "far",
+          "pixels": 44,
+          "closest": 1.1054699642144732,
+          "valid": true
+        },
+        {
+          "frame": 7,
+          "id": "near",
+          "pixels": 113,
+          "closest": 0.3857962038697391,
+          "valid": true
+        },
+        {
+          "frame": 7,
+          "id": "far",
+          "pixels": 45,
+          "closest": 1.034712634660459,
+          "valid": true
+        }
+      ],
+      "errors": []
+    }
+  ],
+  "browser": null,
+  "errors": [
+    "page.waitForFunction: Timeout 15000ms exceeded."
+  ]
+}
