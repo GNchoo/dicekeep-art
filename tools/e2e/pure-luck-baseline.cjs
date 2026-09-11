@@ -1,6 +1,13 @@
 // 순수운빨에서 "우리가 일부러 바꾼 것 말고는 아무것도 안 바뀌었다" 를 기준 리비전과 대조해 확인한다.
 // 메운디에서 옮겨 온 표(뽑기 확률·타워·경제·로스터·상성표)는 한 톨도 달라지면 안 되고,
-// 의도한 두 가지 변경(후반 체력 곡선, 보스 상성 면제)은 정확히 그만큼만 달라야 한다.
+// 의도한 변경들(후반 체력 곡선, 보스 상성 면제, 상자 밴드, 태초 공속)은 정확히 그만큼만 달라야 한다.
+//
+// 뽑기 '순서' 는 더 이상 대조하지 않는다. 광역 명중 부호 수정(9b64b15) 으로 1~9웨이브에서
+// 폭발 타워가 큰 적을 실제로 맞히게 되면서 처치 수가 늘었고(씨앗 20260909 에서 102 → 103),
+// 골드가 달라져 상자를 사는 시점이 밀린다. 전투와 뽑기가 같은 난수 줄기를 쓰므로 그 뒤로는
+// 등급 순서가 어긋나는 게 정상이다 — 확률 자체가 바뀐 게 아니다.
+// 뽑기 확률은 chest 표(이식분 비교)와 chestFaceOdds(눈별 ppm)로 직접 고정하고,
+// 광역 명중 동작 자체는 tools/e2e/splash-hit.cjs 가 실제 보스 웨이브로 따로 검증한다.
 // 클리어율을 재는 도구가 아니다 — 그건 tools/e2e/pure-luck-clearrate.cjs 다.
 //   E2E_BASE_URL=http://localhost:8137/ E2E_BASELINE_URL=http://localhost:8138/ node tools/e2e/pure-luck-baseline.cjs [--waves=30]
 // 기준 리비전은 모드 분리 직전(성장·상거래 도입 전)을 별도 포트로 띄워 둔다.
@@ -132,7 +139,7 @@ function playRun({ seed, waves }) {
   return {
     seed, ticks, waveReached: DK.wave, phase: DK.phase, lives: DK.lives, kills: DK.inf.kills,
     drawCount: draws.length, drawHash: hash(JSON.stringify(draws)), traceHash: hash(trace.join('\n')),
-    // 등급 순서는 난수 흐름 그대로여야 하고, 눈은 에픽·신화 칸에서만 갈릴 수 있다 (의도한 변경 ③).
+    // 순서 대조는 하지 않지만(머리말 참고) 원인을 읽으려면 남아 있어야 한다.
     draws, gradeHash: hash(draws.map(d => d[0]).join(',')),
     // 곡선 자체도 같이 기록해 둔다 (수치가 바뀌면 해시보다 원인을 읽기 쉽다).
     // 후반 곡선은 의도적으로 낮췄으므로 시작 웨이브 앞뒤를 나눠 기록한다.
@@ -192,29 +199,18 @@ async function openGame(browser, base, rows) {
         const killDrift = Math.abs(a.kills - b.kills) / Math.max(1, b.kills);
         const same = a.traceHash === b.traceHash;
         report.rows.push({ seed, current: a, baseline: b, identicalTrace: same, killDrift: +killDrift.toFixed(4) });
-        console.log(`씨앗 ${seed}: 현재 ${a.waveReached}웨이브/목숨 ${a.lives}/처치 ${a.kills} · 기준 ${b.waveReached}웨이브/목숨 ${b.lives}/처치 ${b.kills} → ${same ? '완전 동일' : `처치 편차 ${(killDrift * 100).toFixed(1)}%`}`);
+        console.log(`씨앗 ${seed}: 현재 ${a.waveReached}웨이브/목숨 ${a.lives}/처치 ${a.kills} · 기준 ${b.waveReached}웨이브/목숨 ${b.lives}/처치 ${b.kills} → ${same ? '완전 동일' : `처치 편차 ${(killDrift * 100).toFixed(1)}% (광역 수정 반영분)`}`);
         // 첫 보스(10웨이브) 앞 구간은 전투·뽑기·경제가 전부 그대로여야 한다.
         assert.deepEqual(a.curveEarly, b.curveEarly, `씨앗 ${seed}: ${a.lateFrom}웨이브까지의 체력 곡선`);
         assert.equal(a.drawCount, b.drawCount, `씨앗 ${seed}: 뽑기 횟수`);
-        // 등급 순서 = 난수 흐름. 한 톨도 달라지면 안 된다.
-        assert.equal(a.gradeHash, b.gradeHash, `씨앗 ${seed}: 뽑은 등급 순서 (난수 흐름)`);
-        // 눈은 에픽·신화 상자에서만 갈릴 수 있다 (범위를 특전 밴드로 좁혔으므로). 나머지는 그대로.
-        const BAND = { epic: [14, 17], myth: [18, 19] };
-        const drawDiff = [];
-        a.draws.forEach(([kind, final, face], i) => {
-          const [bk, bf] = b.draws[i];
-          if (final === bf) return;
-          assert.ok(BAND[kind], `씨앗 ${seed}: ${i}번째 뽑기(${kind})의 눈이 ${bf} → ${final} 로 갈렸다 — 에픽·신화만 갈려야 한다`);
-          assert.ok(final >= BAND[kind][0] && final <= BAND[kind][1],
-            `씨앗 ${seed}: ${kind} 상자가 밴드 ${BAND[kind].join('~')} 밖의 ${final} 을 뱉었다`);
-          drawDiff.push({ i, kind, baseline: bf, current: final });
-        });
-        report.rows[report.rows.length - 1].drawDiff = drawDiff;
-        if (drawDiff.length) console.log(`  └ 에픽·신화 눈 재배치 ${drawDiff.length}건: ` + drawDiff.map(d => `${d.kind} ${d.baseline}→${d.current}`).join(' · '));
+        // 뽑은 눈이 그 등급의 밴드 안인지는 양쪽 다 구조적으로 성립해야 한다 (순서는 위 머리말 참고).
+        const BAND = { d1: [1, 1], d4: [1, 4], d6: [1, 6], d8: [1, 8], d12: [1, 12], d20: [1, 20], epic: [14, 17], myth: [18, 19], primal: [20, 20] };
+        a.draws.forEach(([kind, final], i) => assert.ok(BAND[kind] && final >= BAND[kind][0] && final <= BAND[kind][1],
+          `씨앗 ${seed}: ${i}번째 뽑기 ${kind} 가 밴드 밖의 ${final} 을 뱉었다`));
         assert.equal(a.waveReached, b.waveReached, `씨앗 ${seed}: 도달 웨이브`);
         assert.equal(a.lives, b.lives, `씨앗 ${seed}: 남은 목숨`);
         assert.equal(a.phase, b.phase, `씨앗 ${seed}: 런 상태`);
-        assert.ok(killDrift < 0.02, `씨앗 ${seed}: 처치 수 편차 ${(killDrift * 100).toFixed(1)}% (허용 2%)`);
+        assert.ok(killDrift < 0.05, `씨앗 ${seed}: 처치 수 편차 ${(killDrift * 100).toFixed(1)}% (허용 5% — 광역 명중 수정으로 실제 전투가 달라진다)`);
         assert.ok(a.drawCount > 0 && a.ticks > 100, `씨앗 ${seed}: 런이 실제로 진행되어야 한다`);
         // 후반 곡선은 의도적으로 낮췄다. 공식과 맞는지, 그리고 반드시 가벼워졌는지 둘 다 본다.
         const LATE_WAVES = [70, 80, 90, 100, 101];
@@ -280,5 +276,5 @@ async function openGame(browser, base, rows) {
     fs.writeFileSync(path.join(out, 'report.json'), JSON.stringify(report, null, 2));
     await browser.close();
   }
-  console.log('PASS 순수운빨 —', SEEDS.length, '씨앗 ×', WAVES, '웨이브 · 이식분 동일 · 의도한 변경 4건만 갈림;', path.join(out, 'report.json'));
+  console.log('PASS 순수운빨 —', SEEDS.length, '씨앗 ×', WAVES, '웨이브 · 이식분 동일 · 의도한 변경만 갈림;', path.join(out, 'report.json'));
 })().catch(error => { console.error('FAIL', error); process.exitCode = 1; });
