@@ -3810,7 +3810,8 @@ function draw() {
     const extra = i >= SPOT_BASE; // 티어 추가 석단 (아트에 없음 → 항상 받침을 그린다)
     const hover = Math.hypot(S.mouse.x - sx, S.mouse.y - sy) < SPOT_R
       || (DRAG.active && DRAG.overSpot === i)
-      || (MOVE.tower && MOVE.overSpot === i);   // 타워 이동: 내려놓을 자리
+      || (MOVE.tower && MOVE.overSpot === i)   // 타워 이동: 내려놓을 자리
+      || (MOVE.picking && !occupied && MOVE.picking.spot !== i);   // 이동 버튼으로 고르는 중: 놓을 수 있는 칸
     const dragging = DRAG.active && S.heldDie;
     const mergePad = occupied && occupied.face === heldFace() && occupied.lvl < MAX_LVL;
     if (extra) {
@@ -3929,16 +3930,6 @@ function draw() {
       }
       if (!sp.dedicated) drawTopper(t);
       if (t.face > 6) drawStarBadge(t);
-      // 레벨 표시 (받침 앞의 금색 점)
-      for (let i = 0; i < MAX_LVL; i++) {
-        ctx.beginPath();
-        ctx.arc(t.x - 12 + i * 12, t.y + 15, 3.2, 0, Math.PI * 2);
-        ctx.fillStyle = i < t.lvl ? '#ffd452' : 'rgba(0,0,0,0.45)';
-        ctx.fill();
-        ctx.strokeStyle = 'rgba(0,0,0,0.6)';
-        ctx.lineWidth = 1;
-        ctx.stroke();
-      }
       if (S.selTower === t) {
         ctx.save();
         ctx.translate(t.x, t.y + 6);
@@ -4078,6 +4069,27 @@ function draw() {
       ctx.stroke();
       ctx.restore();
     }
+  }
+
+  // 합체 레벨 점 — 개체 정렬 뒤에 한 번에 그린다.
+  // 예전에는 타워마다 제 몸과 같이 그려서, 앞줄 타워가 뒷줄 타워의 점을 가려 몇 강인지 보이지 않았다.
+  // 어두운 알약 배경을 깔아 무엇 위에 얹혀도 읽히게 한다.
+  for (const t of S.towers) {
+    const px = t.x, py = t.y + 15, w = 12 * (MAX_LVL - 1) + 16, h = 12;
+    ctx.save();
+    ctx.beginPath();
+    if (ctx.roundRect) ctx.roundRect(px - w / 2, py - h / 2, w, h, h / 2);
+    else ctx.rect(px - w / 2, py - h / 2, w, h);
+    ctx.fillStyle = 'rgba(12,8,6,0.62)'; ctx.fill();
+    ctx.strokeStyle = 'rgba(0,0,0,0.5)'; ctx.lineWidth = 1; ctx.stroke();
+    for (let i = 0; i < MAX_LVL; i++) {
+      ctx.beginPath();
+      ctx.arc(px - 12 + i * 12, py, 3.2, 0, Math.PI * 2);
+      ctx.fillStyle = i < t.lvl ? '#ffd452' : 'rgba(255,255,255,0.22)';
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(0,0,0,0.6)'; ctx.lineWidth = 1; ctx.stroke();
+    }
+    ctx.restore();
   }
 
   // 투사체
@@ -4354,12 +4366,16 @@ function draw() {
 
   // 웨이브 예고 · 보스 남은 시간 — 같은 말풍선. (보스 시간을 칩에 넣으면 칩이 길어져 우상단 미니 버튼이 둘째 줄로 밀린다)
   const bossT = S.mode === 'infinity' && S.inf && S.inf.bossT > 0 ? S.inf.bossT : 0;
-  if (S.phase === 'playing' && !VIEW.pid && (bossT > 0 || (!S.waveActive && S.wave < S.stageWaves))) {
+  const picking = MOVE.picking && S.towers.includes(MOVE.picking);
+  if (S.phase === 'playing' && !VIEW.pid && (picking || bossT > 0 || (!S.waveActive && S.wave < S.stageWaves))) {
     ctx.save();
     ctx.textAlign = 'center';
     const cd = waveCountdown();
     const urgent = bossT > 0 && bossT < 30;
-    const msg = bossT > 0
+    // 자리를 고르는 동안에는 그 안내가 가장 위다 — 떴다 사라지는 글자만으로는 놓치기 쉽다.
+    const msg = picking
+      ? '타워를 놓을 곳을 선택해 주세요 — 빈 석단을 누르면 옮겨집니다'
+      : bossT > 0
       ? `보스 웨이브 ${S.wave} · 남은 시간 ${Math.floor(bossT / 60)}:${String(Math.floor(bossT % 60)).padStart(2, '0')}`
       : S.net
         ? (S.wave === 0 ? `첫 웨이브까지 ${cd}초 — 뽑기(160G)로 타워를 놓으세요` : `다음 웨이브까지 ${cd}초`)
@@ -4375,11 +4391,11 @@ function draw() {
     const pw = Math.min(W - 40, tw + 34), ph = fs + 18;
     // 좌상단 칩·우상단 미니 버튼(HTML) 바로 아래. 높이는 화면 기준이라 캔버스로 환산한다 (좁은 세로 화면은 미니 버튼이 둘째 줄로 내려온다)
     const by = Math.round(hudTopPx() / sc + ph / 2);
-    ctx.fillStyle = bossT > 0 ? 'rgba(46,8,8,0.78)' : 'rgba(14,10,6,0.72)';                         // 보스: 붉은 말풍선, 30초 밑이면 테두리·글자가 깜빡인다
-    ctx.strokeStyle = urgent ? (Math.floor(S.time * 2) % 2 ? 'rgba(255,110,110,0.95)' : 'rgba(255,60,60,0.6)') : bossT > 0 ? 'rgba(255,140,120,0.65)' : 'rgba(232,182,74,0.5)';
+    ctx.fillStyle = picking ? 'rgba(8,34,52,0.82)' : bossT > 0 ? 'rgba(46,8,8,0.78)' : 'rgba(14,10,6,0.72)';                         // 보스: 붉은 말풍선, 30초 밑이면 테두리·글자가 깜빡인다
+    ctx.strokeStyle = picking ? 'rgba(127,212,255,0.9)' : urgent ? (Math.floor(S.time * 2) % 2 ? 'rgba(255,110,110,0.95)' : 'rgba(255,60,60,0.6)') : bossT > 0 ? 'rgba(255,140,120,0.65)' : 'rgba(232,182,74,0.5)';
     ctx.lineWidth = urgent ? 2 : 1.5;
     ctx.beginPath(); ctx.roundRect(W / 2 - pw / 2, by - ph / 2, pw, ph, ph / 2); ctx.fill(); ctx.stroke();
-    ctx.fillStyle = urgent ? '#ffb0a0' : bossT > 0 ? '#ffe0d0' : 'rgba(255,240,200,0.95)';
+    ctx.fillStyle = picking ? '#d6f2ff' : urgent ? '#ffb0a0' : bossT > 0 ? '#ffe0d0' : 'rgba(255,240,200,0.95)';
     ctx.textBaseline = 'middle';
     ctx.fillText(msg, W / 2, by);
     ctx.restore();
@@ -4753,8 +4769,22 @@ function syncInfo() {
     }
     return;
   }
-  if (hint) hint.classList.add('hidden');
   const t = S.selTower, inf = S.mode === 'infinity';
+  const mv = $('move-btn');
+  if (mv) {
+    const picking = MOVE.picking === t;
+    const free = SPOTS.some((sp, i) => i !== t.spot && !towerAt(i));
+    mv.textContent = picking ? '이동 취소' : '이동';
+    mv.classList.toggle('picking', picking);
+    mv.disabled = S.phase !== 'playing' || (!picking && !free);
+    mv.title = picking ? '고르기를 그만둡니다' : free ? '이 타워를 다른 빈 석단으로 옮깁니다' : '빈 석단이 없습니다';
+  }
+  // 자리를 고르는 동안에는 안내를 띄워 둔다 (평소에는 정보창이 안내를 대신한다)
+  if (hint) {
+    const picking = MOVE.picking === t;
+    hint.textContent = '타워를 놓을 곳을 선택해 주세요 — 빈 석단을 누르면 옮겨집니다.';
+    hint.classList.toggle('hidden', !picking);
+  }
   infoPanel.classList.remove('hidden');
   $('info-dice').src = dieIconURL(t.face);
   $('info-name').textContent = `${t.def.name} · Lv${t.lvl}`;
@@ -5319,6 +5349,7 @@ const MOVE = {
   x: 0, y: 0,             // 지금 손끝 (캔버스 좌표)
   fromSpot: -1, overSpot: -1,
   lift: 0,
+  picking: null,   // '이동' 버튼으로 자리를 고르는 중인 타워 (길게 누르기 없이 탭으로 옮긴다)
 };
 const MOVE_HOLD_MS = 380;   // 이만큼 누르고 있으면 떠오른다
 const MOVE_SLOP_PX = 14;    // 그 전에 이만큼(화면 기준) 움직이면 길게 누르기가 아니다
@@ -5329,7 +5360,7 @@ function moveCancelArm() {
 }
 function moveArm(ev, p) {
   // 손에 주사위를 든 동안에는 배치가 우선이라 이동을 시작하지 않는다.
-  if (S.phase !== 'playing' || VIEW.pid || S.heldDie || MOVE.tower || DRAG.active) return false;
+  if (S.phase !== 'playing' || VIEW.pid || S.heldDie || MOVE.tower || MOVE.picking || DRAG.active) return false;
   const idx = spotAt(p.x, p.y, touchExtra(24));
   if (idx < 0) return false;
   const t = towerAt(idx);
@@ -5396,7 +5427,49 @@ function moveDrop() {
   suppressClick = true;
   syncUI();
 }
+// ── '이동' 버튼으로 옮기기 ────────────────────────────────────────────────
+// 길게 누르기는 발견하기 어렵다는 의견이 있어, 타워 정보창에도 같은 일을 하는 버튼을 뒀다.
+// 버튼을 누르면 자리 고르기 모드가 되고, 빈 석단을 한 번 탭하면 그리로 옮긴다.
+function movePickStart(t) {
+  if (!t || S.phase !== 'playing' || VIEW.pid || !S.towers.includes(t)) return;
+  moveAbort();
+  MOVE.picking = t;
+  MOVE.fromSpot = t.spot;
+  S.texts.push({ str: '타워를 놓을 곳을 선택해 주세요', x: t.x, y: t.y - 78, t: 0, color: '#a0e8ff' });
+  SFX.place();
+  syncUI();
+}
+function movePickCancel(quiet) {
+  if (!MOVE.picking) return;
+  MOVE.picking = null;
+  if (!quiet) SFX.deny();
+  syncUI();
+}
+// 자리 고르기 중의 탭 처리. 처리했으면 true 를 돌려 준다.
+function movePickTap(idx) {
+  const t = MOVE.picking;
+  if (!t) return false;
+  if (!S.towers.includes(t)) { movePickCancel(true); return true; }
+  if (idx < 0) { movePickCancel(); S.texts.push({ str: '이동을 취소했습니다', x: W / 2, y: H / 2 - 40, t: 0, color: '#d9c9a0' }); return true; }
+  if (idx === t.spot) { movePickCancel(); S.texts.push({ str: '이동을 취소했습니다', x: t.x, y: t.y - 78, t: 0, color: '#d9c9a0' }); return true; }
+  const sp = SPOTS[idx];
+  if (towerAt(idx) || !sp) {
+    SFX.deny();
+    S.texts.push({ str: '빈 석단을 골라 주세요', x: sp ? sp[0] : W / 2, y: (sp ? sp[1] : H / 2) - 78, t: 0, color: '#ff9f9f' });
+    return true;   // 고르기는 계속 — 다시 고를 수 있게 둔다
+  }
+  t.spot = idx; t.x = sp[0]; t.y = sp[1];
+  t.cd = Math.max(t.cd || 0, 0.25);
+  MOVE.picking = null;
+  SFX.place();
+  S.fxs.push({ kind: 'ring', x: sp[0], y: sp[1] - 30, t: 0, dur: 0.45, size: 70, color: t.def.color });
+  S.texts.push({ str: '옮겼습니다', x: sp[0], y: sp[1] - 78, t: 0, color: '#a0e8ff' });
+  syncUI();
+  return true;
+}
+
 function moveAbort() {
+  MOVE.picking = null;
   const t = MOVE.tower;
   if (t) {
     const spot = SPOTS[MOVE.fromSpot] || [t.x, t.y];
@@ -5602,6 +5675,7 @@ canvas.addEventListener('click', ev => {
   if (S.phase !== 'playing') return;
   const { x, y } = canvasPos(ev);
   const idx = spotAt(x, y, touchExtra(24)); // 탭 선택: 화면 기준 24px 반경(=48px 타겟)
+  if (movePickTap(idx)) return;             // '이동' 버튼으로 자리를 고르는 중이면 그쪽이 먼저
   if (idx >= 0) {
     if (S.heldDie && S.dieFocus) {
       tryPlace(idx);
@@ -5737,6 +5811,13 @@ $('held-sell').addEventListener('click', () => {   // 손에 든 주사위 바�
   if (DRAG.active) stopPlaceDrag();
   SFX.sell();
   syncUI();
+});
+$('move-btn').addEventListener('click', () => {
+  audio();
+  if (MOVE.picking) { movePickCancel(); return; }   // 다시 누르면 취소
+  const t = S.selTower;
+  if (!t) return;
+  movePickStart(t);
 });
 $('sell-btn').addEventListener('click', () => {
   if (!S.selTower) return;

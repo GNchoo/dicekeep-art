@@ -90,7 +90,7 @@ body { touch-action: manipulation; }
 
 /* ---- 좌상단 자원 표시 ---- */
 /* ---- 버튼: 한 벌로 통일. 상단 하이라이트 + 하단 베벨 + 바깥 두께로 '찍히는' 느낌 ---- */
-.btn, #roll-btn, #wave-btn, #sell-btn, #enhance-btn, #help-btn, .big-btn, #ov-btn, #help-close, .back-btn {
+.btn, #roll-btn, #wave-btn, #sell-btn, #move-btn, #enhance-btn, #help-btn, .big-btn, #ov-btn, #help-close, .back-btn {
   font-family: var(--font-display);
   border-radius: var(--r-md);
   cursor: pointer;
@@ -98,20 +98,20 @@ body { touch-action: manipulation; }
   box-shadow: var(--bevel), var(--bevel-b), var(--edge);
 }
 .btn:hover:not(:disabled), #roll-btn:hover:not(:disabled), #wave-btn:hover:not(:disabled),
-#sell-btn:hover:not(:disabled), #enhance-btn:hover:not(:disabled), #help-btn:hover:not(:disabled),
+#sell-btn:hover:not(:disabled), #move-btn:hover:not(:disabled), #enhance-btn:hover:not(:disabled), #help-btn:hover:not(:disabled),
 .big-btn:hover:not(:disabled), #ov-btn:hover:not(:disabled), #help-close:hover:not(:disabled) {
   filter: brightness(1.14);
   transform: translateY(-1px);
   box-shadow: var(--bevel), var(--bevel-b), 0 3px 0 #17100a, 0 6px 12px rgba(0,0,0,.5);
 }
 .btn:active:not(:disabled), #roll-btn:active:not(:disabled), #wave-btn:active:not(:disabled),
-#sell-btn:active:not(:disabled), #enhance-btn:active:not(:disabled), #help-btn:active:not(:disabled),
+#sell-btn:active:not(:disabled), #move-btn:active:not(:disabled), #enhance-btn:active:not(:disabled), #help-btn:active:not(:disabled),
 .big-btn:active:not(:disabled), #ov-btn:active:not(:disabled), #help-close:active:not(:disabled) {
   transform: translateY(2px);
   box-shadow: var(--bevel-b), 0 0 0 #17100a;   /* 두께가 사라지며 눌린다 */
   filter: brightness(.96);
 }
-.btn:disabled, #roll-btn:disabled, #wave-btn:disabled, #sell-btn:disabled, #enhance-btn:disabled, .big-btn:disabled {
+.btn:disabled, #roll-btn:disabled, #wave-btn:disabled, #sell-btn:disabled, #move-btn:disabled, #enhance-btn:disabled, .big-btn:disabled {
   opacity: .5; cursor: default; filter: grayscale(.35);
   box-shadow: var(--bevel-b); transform: none;
 }
@@ -410,7 +410,7 @@ body { touch-action: manipulation; }
 #wrap.over #wave-btn { min-width: 112px; font-size: 13px; padding: 9px 10px; white-space: nowrap; }
 /* 타워 정보 카드: 겹침 HUD 가 낮으니 카드는 위(아레나 쪽)로 자란다 */
 #wrap.over #info-panel { inset: auto max(6px, var(--sa-r)) max(5px, var(--sa-b)) max(6px, var(--sa-l)); min-height: calc(100% - 10px); flex-direction: row; align-items: center; gap: 10px; padding: 6px 36px 6px 10px; }
-#wrap.over #info-panel #sell-btn, #wrap.over #info-panel #enhance-btn { min-height: 30px; padding: 5px 10px; font-size: 12px; }
+#wrap.over #info-panel #sell-btn, #wrap.over #info-panel #move-btn, #wrap.over #info-panel #enhance-btn { min-height: 30px; padding: 5px 10px; font-size: 12px; }
 #wrap.over #log-panel { bottom: calc(var(--hud-h, 70px) + 8px + var(--kb, 0px)); }
 
 /* ---- 세로에서 남는 공간을 HUD 가 먹은 상태: 터치 타겟을 키운다 ---- */
@@ -432,7 +432,7 @@ body { touch-action: manipulation; }
 #hud.roomy .inf-face .inf-pip { font-size: 19px; }
 #hud.roomy .inf-sp-chip { font-size: 13px; }
 #hud.roomy #help-btn { width: 32px; height: 32px; }
-#hud.roomy #sell-btn, #hud.roomy #enhance-btn { font-size: 14px; padding: 8px 12px; }
+#hud.roomy #sell-btn, #hud.roomy #move-btn, #hud.roomy #enhance-btn { font-size: 14px; padding: 8px 12px; }
 #hud.roomy #info-body, #hud.roomy #hud-hint { font-size: 13px; }
 
 /* 주사위 패널 */
@@ -550,6 +550,9 @@ body { touch-action: manipulation; }
 #info-atk { font-size: 10px; color: #cfe4ff; background: rgba(80,120,190,.28); border: 1px solid #5b7fb8; border-radius: 999px; padding: 1px 7px; }
 #info-body { color: #cfc3a5; line-height: 1.4; }
 #info-actions { display: flex; align-items: center; gap: 8px; margin-top: 0; flex-shrink: 0; flex-wrap: wrap; }
+/* 타워 이동 버튼: 놓을 자리를 고르는 동안 눌린 상태로 보인다 */
+#move-btn { background: linear-gradient(#3f6fa8, #2b4d75); border-color: #6da0d6; color: #dceaff; }
+#move-btn.picking { background: linear-gradient(#7fd4ff, #3f9ad0); border-color: #bfe9ff; color: #07263c; box-shadow: var(--bevel-b), 0 0 0 2px rgba(127,212,255,.5); }
 #sell-btn {
   font-size: 13px; padding: 7px 12px; min-height: 34px;
   background: var(--btn-danger); color: #ffd7c9;

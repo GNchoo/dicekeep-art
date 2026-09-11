@@ -126,6 +126,41 @@ async function longPress(page, from, opts = {}) {
     check('옮겨도 피해·사거리·레벨·눈이 그대로다', [power2.dmg, power2.range, power2.lvl, power2.face], [power.dmg, power.range, power.lvl, power.face]);
     check('옮긴 자리는 3번', power2.spot, 3);
 
+    // ── 8. 정보창의 '이동' 버튼으로 옮기기 (길게 누르기 없이 탭 두 번) ──────
+    const before = await state();
+    const face4 = before.towers.find(t => t.face === 4);
+    await page.evaluate(spot => { DK.selTower = DK.towers.find(t => t.spot === spot); DKsync(); }, face4.spot);
+    check('타워를 선택하면 이동 버튼이 눌리는 상태다', await page.evaluate(() => {
+      const b = document.getElementById('move-btn');
+      return { exists: !!b, disabled: b.disabled, text: b.textContent, picking: b.classList.contains('picking') };
+    }), { exists: true, disabled: false, text: '이동', picking: false });
+
+    await page.click('#move-btn');
+    check('이동을 누르면 자리 고르기로 바뀐다', await page.evaluate(() => {
+      const b = document.getElementById('move-btn'), h = document.getElementById('hud-hint');
+      return { picking: !!DKMOVE.picking, text: b.textContent, cls: b.classList.contains('picking'),
+        hint: h.classList.contains('hidden') ? null : h.textContent };
+    }), { picking: true, text: '이동 취소', cls: true, hint: '타워를 놓을 곳을 선택해 주세요 — 빈 석단을 누르면 옮겨집니다.' });
+
+    const s7 = await at(7);
+    await page.mouse.click(s7.x, s7.y);
+    await page.waitForTimeout(120);
+    st = await state();
+    const moved2 = st.towers.find(t => t.face === 4);
+    check('빈 석단을 탭하면 그리로 옮겨진다', [moved2.spot, st.lifted, await page.evaluate(() => !!DKMOVE.picking)], [7, false, false]);
+
+    // 점유된 칸을 고르면 고르기가 유지된다
+    await page.evaluate(() => { DK.selTower = DK.towers.find(t => t.face === 4); DKsync(); });
+    await page.click('#move-btn');
+    await page.mouse.click(s9.x, s9.y);
+    await page.waitForTimeout(120);
+    check('점유된 칸을 고르면 옮기지 않고 고르기를 유지한다',
+      [await page.evaluate(() => !!DKMOVE.picking), (await state()).towers.find(t => t.face === 4).spot], [true, 7]);
+
+    // 다시 누르면 취소
+    await page.click('#move-btn');
+    check('이동 버튼을 다시 누르면 취소된다', await page.evaluate(() => !!DKMOVE.picking), false);
+
     assert.deepEqual(errors, [], '브라우저 오류');
     report.pass = true;
     await context.close();
