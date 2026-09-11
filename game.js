@@ -66,7 +66,7 @@ for (let g = 7; g <= 20; g++) {
   const b = starBand(g), k = g - 6;
   // 메운디 등급 특전(인피니티): 14~17★ 에픽 = 방어 무시 + 락다운, 18~19★ 신화 = 공속 ×1.5, 20★ 태초 = 트랙 전체 스플래시 (일반형)
   const perk = g >= 20 ? 'primal' : g >= 18 ? 'myth' : g >= 14 ? 'epic' : null;
-  const perkDesc = perk === 'primal' ? ' · 태초: 일반형, 트랙 전체 스플래시' : perk === 'myth' ? ' · 신화: 공속 ×1.5' : perk === 'epic' ? ' · 에픽: 방어 무시 + 락다운' : '';
+  const perkDesc = perk === 'primal' ? ' · 태초: 일반형, 트랙 전체 스플래시, 공속 ×1.25' : perk === 'myth' ? ' · 신화: 공속 ×1.5' : perk === 'epic' ? ' · 에픽: 방어 무시 + 락다운' : '';
   TOWER_DEFS[g] = {
     name: `${b.name} ★${g}`, desc: `${g}성 히든 타워 · 폭발 주사위 투척${perkDesc}`, star: g,
     dmg: Math.round(40 * Math.pow(1.28, k)), rate: +(1.25 * Math.pow(0.97, k)).toFixed(3), range: 175 + 5 * k,
@@ -3210,7 +3210,8 @@ function arenaRangeBonus() {
   return (m && m.rangeBonus != null) ? m.rangeBonus : (DKCONTENT.INFINITY.rangeBonus || 0);
 }
 const towerRange = t => t.def.range + LVL_RANGE[t.lvl - 1] + (DP() ? DP().rangeAdd(powerLv(t.face)) : 0) + arenaRangeBonus();
-const towerRate  = t => { let r = t.def.rate * LVL_RATE[t.lvl - 1]; const ex = powerSpecial(t.face, 'rate'); if (ex) r *= Math.pow(ex, powerTier(t.face)); if (S.mode === 'infinity' && t.def.perk === 'myth' && window.DKCONTENT) r /= DKCONTENT.INFINITY.mythRate || 1.5; return r; };
+const towerRate  = t => { let r = t.def.rate * LVL_RATE[t.lvl - 1]; const ex = powerSpecial(t.face, 'rate'); if (ex) r *= Math.pow(ex, powerTier(t.face)); if (S.mode === 'infinity' && window.DKCONTENT) { const INF = DKCONTENT.INFINITY; if (t.def.perk === 'myth') r /= INF.mythRate || 1.5; else if (t.def.perk === 'primal') r /= INF.primalRate || 1; }   // 태초도 공속을 받는다 — 없으면 19★ 보다 1대1 피해가 낮았다
+  return r; };
 const towerSplash = t => (t.def.splash || 0) + ((powerSpecial(t.face, 'splash') || 0) * powerTier(t.face));
 const towerSlowPct = t => 0.26 + 0.06 * t.lvl + ((powerSpecial(t.face, 'slow') || 0) * powerTier(t.face));
 const towerChain = t => 2 + t.lvl + ((powerSpecial(t.face, 'chain') || 0) * powerTier(t.face));

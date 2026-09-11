@@ -31,7 +31,8 @@ function portedTables() {
   const TD = window.DKTD || null;
   const bossWaves = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
   return {
-    chest: { table: C.table, kinds: C.kinds, sides: C.sides, min: C.min, cost: C.cost(0), costLate: C.cost(50) },
+    // chest 의 sides 는 의도적으로 갈린다 (아래 '의도한 변경 ③'). 나머지는 그대로여야 한다.
+    chest: { table: C.table, kinds: C.kinds, min: C.min, cost: C.cost(0), costLate: C.cost(50) },
     economy: { startGold: INF.startGold, lives: INF.lives, fieldCap: INF.fieldCap, capDmg: INF.capDmg,
                intermission: INF.intermission, bossEvery: INF.bossEvery, eliteEvery: INF.eliteEvery,
                bossTimeLimit: INF.bossTimeLimit, clearWave: INF.clearWave, rangeBonus: INF.rangeBonus },
@@ -50,6 +51,32 @@ function portedTables() {
     // 곡선은 후반만 일부러 바꿨다 — 앞 구간은 여기서 같이 본다.
     curveEarly: [1, 10, 25, 40, 50, 60].map(w => INF.wave(w, true).hpMult),
   };
+}
+
+// 상자 한 개에서 각 눈이 나올 확률 — 등급 표와 등급별 주사위 범위에서 직접 계산한다.
+function chestFaceOdds() {
+  const C = DKCONTENT.INFINITY.chest;
+  const p = f => {
+    let acc = 0;
+    for (const [k, w] of C.table) {
+      const lo = C.min[k] || 1, hi = C.sides[k] || 6;
+      if (f >= lo && f <= hi) acc += w / (hi - lo + 1);
+    }
+    return +(acc * 1e6).toFixed(2);   // ppm
+  };
+  return { sides: C.sides, f13: p(13), f17: p(17), f18: p(18), f19: p(19), f20: p(20) };
+}
+
+// 20★ 이 19★ 보다 1대1 피해가 센가 — towerDmg/towerRate 로 실제 값을 잰다.
+function topDpsProbe() {
+  if (!window.DKTD || !window.__pureQA || !__pureQA.towerDmg) return null;
+  DKlobby(); DKstartInf('clear'); DK.paused = true;
+  DK.inf.power[6] = 10;
+  const dps = f => {
+    const t = { face: f, def: DKTD[f], lvl: 1, spot: 0, x: 0, y: 0, cd: 0, skin: 0 };
+    return Math.round(__pureQA.towerDmg(t) / __pureQA.towerRate(t));
+  };
+  return { f18: dps(18), f19: dps(19), f20: dps(20) };
 }
 
 // 보스가 상성을 받는가 — 이 리비전의 실제 동작을 damageEnemy 로 직접 확인한다.
@@ -135,7 +162,7 @@ async function openGame(browser, base, rows) {
     const response = await route.fetch(), original = await response.text();
     const anchor = 'window.DK = S;';
     assert.equal(original.split(anchor).length, 2, base + ': 테스트 훅 삽입 지점');
-    const hook = 'window.__pureQA={update,finishSlot,startWave,chestCost,towerAt,SPOTS:()=>SPOTS};\n';
+    const hook = 'window.__pureQA={update,finishSlot,startWave,chestCost,towerAt,towerDmg,towerRate,SPOTS:()=>SPOTS};\n';
     await route.fulfill({ response, body: original.replace(anchor, hook + anchor) });
   });
   const url = new URL('index.html', base);
@@ -199,6 +226,26 @@ async function openGame(browser, base, rows) {
       assert.deepEqual([baseProbe.bossExpS, baseProbe.bossVibL], [0.5, 0.25], '기준: 보스도 상성을 받았다 (변경 전 동작 확인)');
       console.log(`보스 상성 — 기준 ${baseProbe.bossExpS}·${baseProbe.bossVibL} → 현재 ${curProbe.bossExpS}·${curProbe.bossVibL} (잡몹은 ${curProbe.mobExpS}·${curProbe.mobVibL} 그대로)`);
 
+      // ── 의도한 변경 ③: 최상위가 더 흔했던 역전을 없앴다 (에픽 14~17 · 신화 18~19) ──
+      const curOdds = await cur.page.evaluate(chestFaceOdds);
+      const baseOdds = await base.page.evaluate(chestFaceOdds);
+      report.chestFaceOdds = { current: curOdds, baseline: baseOdds };
+      assert.deepEqual([baseOdds.sides.epic, baseOdds.sides.myth], [20, 20], '기준: 에픽·신화 주사위가 20까지 나왔다');
+      assert.deepEqual([curOdds.sides.epic, curOdds.sides.myth], [17, 19], '현재: 에픽 14~17 · 신화 18~19');
+      assert.ok(baseOdds.f20 > baseOdds.f19, `기준: 20★ 이 19★ 보다 흔했다 (${baseOdds.f20} > ${baseOdds.f19} ppm)`);
+      assert.ok(curOdds.f20 < curOdds.f19 && curOdds.f19 <= curOdds.f17,
+        `현재: 17★ ≥ 19★ > 20★ 순으로 희귀해야 한다 (${curOdds.f17} / ${curOdds.f19} / ${curOdds.f20} ppm)`);
+      console.log(`상자 눈 확률(ppm) — 17★ ${curOdds.f17} · 18★ ${curOdds.f18} · 19★ ${curOdds.f19} · 20★ ${curOdds.f20} (기준 20★ ${baseOdds.f20})`);
+
+      // ── 의도한 변경 ④: 태초(20★)가 1대1 피해에서도 가장 세다 ────────────────
+      const curDps = await cur.page.evaluate(topDpsProbe);
+      const baseDps = await base.page.evaluate(topDpsProbe);
+      report.topDps = { current: curDps, baseline: baseDps };
+      assert.ok(baseDps.f20 < baseDps.f19, `기준: 20★ 이 19★ 보다 약했다 (${baseDps.f20} < ${baseDps.f19})`);
+      assert.ok(curDps.f20 > curDps.f19 && curDps.f19 > curDps.f18,
+        `현재: 18★ < 19★ < 20★ 순으로 세야 한다 (${curDps.f18} / ${curDps.f19} / ${curDps.f20})`);
+      console.log(`1대1 DPS — 18★ ${curDps.f18} · 19★ ${curDps.f19} · 20★ ${curDps.f20} (기준 20★ ${baseDps.f20})`);
+
       assert.deepEqual(rows.errors, [], '브라우저 오류');
       // 클리어 판정은 두 리비전에서 다르다 (기준: 101 진입 = 클리어 / 현재: 101 완주 = 클리어).
       // 의도된 변경이므로 여기서 고정해 두고, 다시 바뀌면 이 검사가 잡는다.
@@ -217,5 +264,5 @@ async function openGame(browser, base, rows) {
     fs.writeFileSync(path.join(out, 'report.json'), JSON.stringify(report, null, 2));
     await browser.close();
   }
-  console.log('PASS 순수운빨 —', SEEDS.length, '씨앗 ×', WAVES, '웨이브 · 이식분 동일 · 의도한 변경 2건만 갈림;', path.join(out, 'report.json'));
+  console.log('PASS 순수운빨 —', SEEDS.length, '씨앗 ×', WAVES, '웨이브 · 이식분 동일 · 의도한 변경 4건만 갈림;', path.join(out, 'report.json'));
 })().catch(error => { console.error('FAIL', error); process.exitCode = 1; });
