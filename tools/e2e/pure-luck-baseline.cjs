@@ -6,6 +6,7 @@
 // 폭발 타워가 큰 적을 실제로 맞히게 되면서 처치 수가 늘었고(씨앗 20260909 에서 102 → 103),
 // 골드가 달라져 상자를 사는 시점이 밀린다. 전투와 뽑기가 같은 난수 줄기를 쓰므로 그 뒤로는
 // 등급 순서가 어긋나는 게 정상이다 — 확률 자체가 바뀐 게 아니다.
+// 대신 '현재가 기준보다 나빠지지 않는다'(처치·뽑기 횟수)를 방향성 불변량으로 잡는다.
 // 뽑기 확률은 chest 표(이식분 비교)와 chestFaceOdds(눈별 ppm)로 직접 고정하고,
 // 광역 명중 동작 자체는 tools/e2e/splash-hit.cjs 가 실제 보스 웨이브로 따로 검증한다.
 // 클리어율을 재는 도구가 아니다 — 그건 tools/e2e/pure-luck-clearrate.cjs 다.
@@ -199,19 +200,23 @@ async function openGame(browser, base, rows) {
         const killDrift = Math.abs(a.kills - b.kills) / Math.max(1, b.kills);
         const same = a.traceHash === b.traceHash;
         report.rows.push({ seed, current: a, baseline: b, identicalTrace: same, killDrift: +killDrift.toFixed(4) });
-        console.log(`씨앗 ${seed}: 현재 ${a.waveReached}웨이브/목숨 ${a.lives}/처치 ${a.kills} · 기준 ${b.waveReached}웨이브/목숨 ${b.lives}/처치 ${b.kills} → ${same ? '완전 동일' : `처치 편차 ${(killDrift * 100).toFixed(1)}% (광역 수정 반영분)`}`);
-        // 첫 보스(10웨이브) 앞 구간은 전투·뽑기·경제가 전부 그대로여야 한다.
+        console.log(`씨앗 ${seed}: 현재 ${a.waveReached}웨이브/목숨 ${a.lives}/처치 ${a.kills} · 기준 ${b.waveReached}웨이브/목숨 ${b.lives}/처치 ${b.kills} → ${same ? '완전 동일' : `처치 +${a.kills - b.kills} (광역 수정 반영분, 줄면 실패)`}`);
+        // 체력 곡선은 앞 구간이 한 톨도 달라지면 안 된다 (뒤 구간은 일부러 낮췄다 — 아래에서 따로 본다).
         assert.deepEqual(a.curveEarly, b.curveEarly, `씨앗 ${seed}: ${a.lateFrom}웨이브까지의 체력 곡선`);
-        assert.equal(a.drawCount, b.drawCount, `씨앗 ${seed}: 뽑기 횟수`);
-        // 뽑은 눈이 그 등급의 밴드 안인지는 양쪽 다 구조적으로 성립해야 한다 (순서는 위 머리말 참고).
-        const BAND = { d1: [1, 1], d4: [1, 4], d6: [1, 6], d8: [1, 8], d12: [1, 12], d20: [1, 20], epic: [14, 17], myth: [18, 19], primal: [20, 20] };
-        a.draws.forEach(([kind, final], i) => assert.ok(BAND[kind] && final >= BAND[kind][0] && final <= BAND[kind][1],
-          `씨앗 ${seed}: ${i}번째 뽑기 ${kind} 가 밴드 밖의 ${final} 을 뱉었다`));
+        // 같은 씨앗이면 같은 웨이브까지, 같은 목숨으로, 같은 상태로 끝나야 한다.
         assert.equal(a.waveReached, b.waveReached, `씨앗 ${seed}: 도달 웨이브`);
         assert.equal(a.lives, b.lives, `씨앗 ${seed}: 남은 목숨`);
         assert.equal(a.phase, b.phase, `씨앗 ${seed}: 런 상태`);
-        assert.ok(killDrift < 0.05, `씨앗 ${seed}: 처치 수 편차 ${(killDrift * 100).toFixed(1)}% (허용 5% — 광역 명중 수정으로 실제 전투가 달라진다)`);
         assert.ok(a.drawCount > 0 && a.ticks > 100, `씨앗 ${seed}: 런이 실제로 진행되어야 한다`);
+        // 방향성 불변량: 광역 명중 수정은 피해를 더하기만 한다. 그러니 현재가 기준보다 나빠지면 퇴행이다.
+        // (같은 씨앗에서 더 잡고 → 골드가 늘고 → 상자를 더 산다. 씨앗 31337 은 81 → 95 처치.)
+        assert.ok(a.kills >= b.kills, `씨앗 ${seed}: 처치 수가 기준보다 줄었다 (${b.kills} → ${a.kills}) — 광역 수정은 피해를 더하기만 한다`);
+        assert.ok(a.drawCount >= b.drawCount, `씨앗 ${seed}: 뽑기 횟수가 기준보다 줄었다 (${b.drawCount} → ${a.drawCount})`);
+        // 뽑은 눈이 그 등급의 밴드 안인지는 양쪽 다 구조적으로 성립해야 한다 (순서는 위 머리말 참고).
+        const BAND = { d1: [1, 1], d4: [1, 4], d6: [1, 6], d8: [1, 8], d12: [1, 12], d20: [1, 20], epic: [14, 17], myth: [18, 19], primal: [20, 20] };
+        for (const [who, run] of [['현재', a], ['기준', b]]) run.draws.forEach(([kind, final], i) =>
+          assert.ok(BAND[kind] && final >= BAND[kind][0] && final <= BAND[kind][1],
+            `씨앗 ${seed}: ${who} ${i}번째 뽑기 ${kind} 가 밴드 밖의 ${final} 을 뱉었다`));
         // 후반 곡선은 의도적으로 낮췄다. 공식과 맞는지, 그리고 반드시 가벼워졌는지 둘 다 본다.
         const LATE_WAVES = [70, 80, 90, 100, 101];
         assert.deepEqual(a.curveLate, LATE_WAVES.map(w => +Math.min(1e120, 1.8 * Math.pow(1.08, w - 1) * Math.pow(a.lateExp, Math.max(0, w - a.lateFrom))).toFixed(3)),
