@@ -132,6 +132,8 @@ function playRun({ seed, waves }) {
   return {
     seed, ticks, waveReached: DK.wave, phase: DK.phase, lives: DK.lives, kills: DK.inf.kills,
     drawCount: draws.length, drawHash: hash(JSON.stringify(draws)), traceHash: hash(trace.join('\n')),
+    // 등급 순서는 난수 흐름 그대로여야 하고, 눈은 에픽·신화 칸에서만 갈릴 수 있다 (의도한 변경 ③).
+    draws, gradeHash: hash(draws.map(d => d[0]).join(',')),
     // 곡선 자체도 같이 기록해 둔다 (수치가 바뀌면 해시보다 원인을 읽기 쉽다).
     // 후반 곡선은 의도적으로 낮췄으므로 시작 웨이브 앞뒤를 나눠 기록한다.
     lateFrom: DKCONTENT.INFINITY.lateFrom, lateExp: DKCONTENT.INFINITY.lateExp,
@@ -193,8 +195,22 @@ async function openGame(browser, base, rows) {
         console.log(`씨앗 ${seed}: 현재 ${a.waveReached}웨이브/목숨 ${a.lives}/처치 ${a.kills} · 기준 ${b.waveReached}웨이브/목숨 ${b.lives}/처치 ${b.kills} → ${same ? '완전 동일' : `처치 편차 ${(killDrift * 100).toFixed(1)}%`}`);
         // 첫 보스(10웨이브) 앞 구간은 전투·뽑기·경제가 전부 그대로여야 한다.
         assert.deepEqual(a.curveEarly, b.curveEarly, `씨앗 ${seed}: ${a.lateFrom}웨이브까지의 체력 곡선`);
-        assert.equal(a.drawHash, b.drawHash, `씨앗 ${seed}: 뽑기 결과 순서 (등급·눈)`);
         assert.equal(a.drawCount, b.drawCount, `씨앗 ${seed}: 뽑기 횟수`);
+        // 등급 순서 = 난수 흐름. 한 톨도 달라지면 안 된다.
+        assert.equal(a.gradeHash, b.gradeHash, `씨앗 ${seed}: 뽑은 등급 순서 (난수 흐름)`);
+        // 눈은 에픽·신화 상자에서만 갈릴 수 있다 (범위를 특전 밴드로 좁혔으므로). 나머지는 그대로.
+        const BAND = { epic: [14, 17], myth: [18, 19] };
+        const drawDiff = [];
+        a.draws.forEach(([kind, final, face], i) => {
+          const [bk, bf] = b.draws[i];
+          if (final === bf) return;
+          assert.ok(BAND[kind], `씨앗 ${seed}: ${i}번째 뽑기(${kind})의 눈이 ${bf} → ${final} 로 갈렸다 — 에픽·신화만 갈려야 한다`);
+          assert.ok(final >= BAND[kind][0] && final <= BAND[kind][1],
+            `씨앗 ${seed}: ${kind} 상자가 밴드 ${BAND[kind].join('~')} 밖의 ${final} 을 뱉었다`);
+          drawDiff.push({ i, kind, baseline: bf, current: final });
+        });
+        report.rows[report.rows.length - 1].drawDiff = drawDiff;
+        if (drawDiff.length) console.log(`  └ 에픽·신화 눈 재배치 ${drawDiff.length}건: ` + drawDiff.map(d => `${d.kind} ${d.baseline}→${d.current}`).join(' · '));
         assert.equal(a.waveReached, b.waveReached, `씨앗 ${seed}: 도달 웨이브`);
         assert.equal(a.lives, b.lives, `씨앗 ${seed}: 남은 목숨`);
         assert.equal(a.phase, b.phase, `씨앗 ${seed}: 런 상태`);
