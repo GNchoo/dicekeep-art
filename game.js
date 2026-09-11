@@ -3378,7 +3378,11 @@ function projHit(p) {
     for (const e of S.enemies) {
       if (e.dead) continue;
       const ep = epos(e);
-      if (Math.hypot(ep.x - hx, ep.y - hy + e.def.size * 0.4) <= p.splash) damageEnemy(e, p.dmg, p.src);
+      // hy 는 이미 '명중 지점의 몸통 중심' 이다. 상대도 같은 기준(발밑 - 크기×0.4)으로 맞춰 빼야 한다.
+      // 예전에는 더하고 있어서, 조준해서 맞힌 대상 자신과의 거리가 0 이 아니라 0.8×크기 로 나왔다.
+      // 그래서 큰 적일수록 광역 타워에 면역이 됐다 — 대형 보스(크기 120)는 거리 96 이라
+      // 2·6·7~16 눈의 폭발이 통째로 빗나갔다.
+      if (Math.hypot(ep.x - hx, (ep.y - e.def.size * 0.4) - hy) <= p.splash) damageEnemy(e, p.dmg, p.src);
     }
     if (p.kind === 'dieBomb' || p.kind === 'die6') {
       sheetHit('dieExplode', hx, hy, p.splash * 2.2, 0.4);

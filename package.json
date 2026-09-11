@@ -17,6 +17,7 @@
     "test:pure-luck-baseline": "node tools/e2e/pure-luck-baseline.cjs",
     "test:boss-matchup": "node tools/e2e/boss-matchup.cjs",
     "test:tower-move": "node tools/e2e/tower-move.cjs",
+    "test:splash-hit": "node tools/e2e/splash-hit.cjs",
     "measure:clear-rate": "node tools/e2e/pure-luck-clearrate.cjs",
     "measure:boss-board": "node tools/e2e/boss-board-req.cjs"
   },
