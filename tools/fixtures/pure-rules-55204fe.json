@@ -1,0 +1,5180 @@
+{
+  "config": {
+    "mapKey": "cInf",
+    "tier": {
+      "tier": 6,
+      "name": "무한",
+      "color": "#ff7ad9",
+      "lanes": [
+        "ground"
+      ],
+      "extraSpots": 0,
+      "hpScale": 1,
+      "countBonus": 0,
+      "startGold": 400
+    },
+    "startGold": 400,
+    "lives": 20,
+    "intermission": 6,
+    "rangeBonus": 160,
+    "fieldCap": 200,
+    "capDmg": 1,
+    "chest": {
+      "table": [
+        [
+          "d1",
+          0.5
+        ],
+        [
+          "d4",
+          0.331
+        ],
+        [
+          "d6",
+          0.102
+        ],
+        [
+          "d8",
+          0.051
+        ],
+        [
+          "d12",
+          0.008
+        ],
+        [
+          "d20",
+          0.005
+        ],
+        [
+          "epic",
+          0.002
+        ],
+        [
+          "myth",
+          0.0008
+        ],
+        [
+          "primal",
+          0.00019
+        ]
+      ],
+      "kinds": [
+        "d1",
+        "d4",
+        "d6",
+        "d8",
+        "d12",
+        "d20",
+        "epic",
+        "myth",
+        "primal"
+      ],
+      "sides": {
+        "d1": 1,
+        "d4": 4,
+        "d6": 6,
+        "d8": 8,
+        "d12": 12,
+        "d20": 20,
+        "epic": 17,
+        "myth": 19,
+        "primal": 20
+      },
+      "min": {
+        "d1": 1,
+        "d4": 1,
+        "d6": 1,
+        "d8": 1,
+        "d12": 1,
+        "d20": 1,
+        "epic": 14,
+        "myth": 18,
+        "primal": 20
+      },
+      "grade": {
+        "d1": "일반",
+        "d4": "레어",
+        "d6": "고대",
+        "d8": "유물",
+        "d12": "서사",
+        "d20": "전설",
+        "epic": "에픽",
+        "myth": "신화",
+        "primal": "태초"
+      },
+      "label": {
+        "d1": "외눈 주사위",
+        "d4": "4면체",
+        "d6": "6면체",
+        "d8": "8면체",
+        "d12": "12면체",
+        "d20": "20면체",
+        "epic": "에픽 20면체",
+        "myth": "신화 20면체",
+        "primal": "태초 주사위"
+      },
+      "shape": {
+        "d1": "d1",
+        "d4": "d4",
+        "d6": "d6",
+        "d8": "d8",
+        "d12": "d12",
+        "d20": "d20",
+        "epic": "d20",
+        "myth": "d20",
+        "primal": "d20"
+      },
+      "bossPick": [
+        "d8",
+        "d12",
+        "d20"
+      ]
+    },
+    "sizeMult": {
+      "vib": {
+        "S": 1,
+        "M": 0.5,
+        "L": 0.25
+      },
+      "exp": {
+        "S": 0.5,
+        "M": 0.75,
+        "L": 1
+      },
+      "norm": {
+        "S": 1,
+        "M": 1,
+        "L": 1
+      }
+    },
+    "sizeName": {
+      "S": "소형",
+      "M": "중형",
+      "L": "대형"
+    },
+    "sizeScale": {
+      "S": 0.9,
+      "M": 1,
+      "L": 1.15
+    },
+    "artSize": {
+      "S": 42,
+      "M": 50,
+      "L": 58
+    },
+    "artSizeBoss": {
+      "S": 96,
+      "M": 108,
+      "L": 120
+    },
+    "sizeSeq": [
+      "S",
+      "S",
+      "L",
+      "S",
+      "M",
+      "L",
+      "L",
+      "S",
+      "L",
+      "L",
+      "S",
+      "L",
+      "S",
+      "L",
+      "M",
+      "L",
+      "M",
+      "S",
+      "L",
+      "L",
+      "S",
+      "L",
+      "S",
+      "S",
+      "M",
+      "S",
+      "L",
+      "L",
+      "L",
+      "S",
+      "S",
+      "S",
+      "S",
+      "L",
+      "L",
+      "L",
+      "M",
+      "S",
+      "M",
+      "S",
+      "L",
+      "M",
+      "L",
+      "L",
+      "L",
+      "S",
+      "M",
+      "L",
+      "S",
+      "L",
+      "L",
+      "S",
+      "M",
+      "S",
+      "L",
+      "L",
+      "L",
+      "S",
+      "M",
+      "L",
+      "M",
+      "S",
+      "S",
+      "M",
+      "L",
+      "L",
+      "S",
+      "S",
+      "L",
+      "S",
+      "L",
+      "S",
+      "L",
+      "S",
+      "S",
+      "S",
+      "S",
+      "L",
+      "M",
+      "M",
+      "S",
+      "M",
+      "L",
+      "L",
+      "S",
+      "S",
+      "L",
+      "S",
+      "L",
+      "L",
+      "S",
+      "S",
+      "L",
+      "L",
+      "M",
+      "S",
+      "L",
+      "M",
+      "L",
+      "S",
+      "M"
+    ],
+    "roster": null,
+    "bossTimeLimit": 320,
+    "enhance": {
+      "maxFace": 20
+    },
+    "perks": {
+      "epic": [
+        14,
+        17
+      ],
+      "myth": [
+        18,
+        19
+      ],
+      "primal": [
+        20,
+        20
+      ]
+    },
+    "stun": {
+      "p": 0.12,
+      "dur": 1,
+      "bossDur": 0.4
+    },
+    "mythRate": 1.5,
+    "primalRate": 1.25,
+    "bossEvery": 10,
+    "eliteEvery": 5,
+    "unlockAir": 1,
+    "unlockBurrow": 1,
+    "modes": {
+      "clear": {
+        "key": "clear",
+        "name": "순수운빨",
+        "sub": "101웨이브 · 계정 성장 미적용 · 기존 뽑기 확률",
+        "gauntlet": true,
+        "clearWave": 101,
+        "growth": false
+      }
+    },
+    "clearWave": 101,
+    "clearGems": 80,
+    "lateFrom": 60,
+    "lateExp": 0.9845,
+    "monsters": {
+      "1": {
+        "name": "역병쥐",
+        "cls": "S",
+        "move": "ground",
+        "tier": 1,
+        "walk": "4x2",
+        "stabilize": false,
+        "walkStride": 86.15384615384615
+      },
+      "2": {
+        "name": "해골 잡졸",
+        "cls": "S",
+        "move": "ground",
+        "tier": 1,
+        "walk": "4x2",
+        "stabilize": false,
+        "walkStride": 158.544
+      },
+      "3": {
+        "name": "묘지 오우거",
+        "cls": "L",
+        "move": "ground",
+        "tier": 1,
+        "walk": "4x2",
+        "stabilize": false,
+        "walkStride": 160.848
+      },
+      "4": {
+        "name": "까마귀 정찰병",
+        "cls": "S",
+        "move": "air",
+        "tier": 1
+      },
+      "5": {
+        "name": "고블린 창병",
+        "cls": "M",
+        "move": "ground",
+        "tier": 1,
+        "walk": "4x2",
+        "stabilize": false,
+        "walkStride": 161.1
+      },
+      "6": {
+        "name": "썩은 멧돼지",
+        "cls": "L",
+        "move": "ground",
+        "tier": 1,
+        "walk": "4x2",
+        "stabilize": false,
+        "walkStride": 104.61538461538461
+      },
+      "7": {
+        "name": "무덤 파는 구울",
+        "cls": "L",
+        "move": "burrow",
+        "tier": 1,
+        "walk": "4x2",
+        "stabilize": false,
+        "walkStride": 159.248
+      },
+      "8": {
+        "name": "시체파리 떼",
+        "cls": "S",
+        "move": "air",
+        "tier": 1
+      },
+      "9": {
+        "name": "녹슨 철갑 오크",
+        "cls": "L",
+        "move": "ground",
+        "tier": 1,
+        "walk": "4x2",
+        "stabilize": false,
+        "walkStride": 146.104
+      },
+      "10": {
+        "boss": true,
+        "name": "역병 쥐왕",
+        "second": null,
+        "cls": "L",
+        "tier": 1
+      },
+      "11": {
+        "name": "도토리다람쥐",
+        "cls": "S",
+        "move": "ground",
+        "tier": 2
+      },
+      "12": {
+        "name": "수리부엉이",
+        "cls": "L",
+        "move": "air",
+        "tier": 2
+      },
+      "13": {
+        "name": "아기여우",
+        "cls": "S",
+        "move": "ground",
+        "tier": 2
+      },
+      "14": {
+        "name": "오소리",
+        "cls": "L",
+        "move": "burrow",
+        "tier": 2
+      },
+      "15": {
+        "name": "도적너구리",
+        "cls": "M",
+        "move": "ground",
+        "tier": 2
+      },
+      "16": {
+        "name": "검독수리",
+        "cls": "L",
+        "move": "air",
+        "tier": 2
+      },
+      "17": {
+        "name": "회색늑대",
+        "cls": "M",
+        "move": "ground",
+        "tier": 2
+      },
+      "18": {
+        "name": "가시고슴도치",
+        "cls": "S",
+        "move": "ground",
+        "tier": 2
+      },
+      "19": {
+        "name": "불곰",
+        "cls": "L",
+        "move": "ground",
+        "tier": 2
+      },
+      "20": {
+        "boss": true,
+        "name": "고목 정령",
+        "second": "거대 수사슴",
+        "cls": "L",
+        "tier": 2
+      },
+      "21": {
+        "name": "늪지렁이",
+        "cls": "S",
+        "move": "burrow",
+        "tier": 3
+      },
+      "22": {
+        "name": "왕두꺼비",
+        "cls": "L",
+        "move": "ground",
+        "tier": 3
+      },
+      "23": {
+        "name": "도롱뇽",
+        "cls": "S",
+        "move": "ground",
+        "tier": 3
+      },
+      "24": {
+        "name": "왕모기",
+        "cls": "S",
+        "move": "air",
+        "tier": 3
+      },
+      "25": {
+        "name": "동굴거미",
+        "cls": "M",
+        "move": "ground",
+        "tier": 3
+      },
+      "26": {
+        "name": "독전갈",
+        "cls": "S",
+        "move": "ground",
+        "tier": 3
+      },
+      "27": {
+        "name": "늪악어",
+        "cls": "L",
+        "move": "ground",
+        "tier": 3
+      },
+      "28": {
+        "name": "개미귀신",
+        "cls": "L",
+        "move": "burrow",
+        "tier": 3
+      },
+      "29": {
+        "name": "아나콘다",
+        "cls": "L",
+        "move": "ground",
+        "tier": 3
+      },
+      "30": {
+        "boss": true,
+        "name": "두꺼비 마녀",
+        "second": "박쥐 군주",
+        "cls": "S",
+        "tier": 3
+      },
+      "31": {
+        "name": "고블린 정찰병",
+        "cls": "S",
+        "move": "ground",
+        "tier": 4
+      },
+      "32": {
+        "name": "고블린 글라이더",
+        "cls": "S",
+        "move": "air",
+        "tier": 4
+      },
+      "33": {
+        "name": "방패 고블린",
+        "cls": "S",
+        "move": "ground",
+        "tier": 4
+      },
+      "34": {
+        "name": "오크 전사",
+        "cls": "L",
+        "move": "ground",
+        "tier": 4
+      },
+      "35": {
+        "name": "트롤 굴착병",
+        "cls": "L",
+        "move": "burrow",
+        "tier": 4
+      },
+      "36": {
+        "name": "와이번 기수",
+        "cls": "L",
+        "move": "air",
+        "tier": 4
+      },
+      "37": {
+        "name": "홉고블린 궁수",
+        "cls": "M",
+        "move": "ground",
+        "tier": 4
+      },
+      "38": {
+        "name": "코볼트",
+        "cls": "S",
+        "move": "ground",
+        "tier": 4
+      },
+      "39": {
+        "name": "산적 두목",
+        "cls": "M",
+        "move": "ground",
+        "tier": 4
+      },
+      "40": {
+        "boss": true,
+        "name": "고블린 왕",
+        "second": "오우거 장사",
+        "cls": "S",
+        "tier": 4
+      },
+      "41": {
+        "name": "방패병",
+        "cls": "L",
+        "move": "ground",
+        "tier": 5
+      },
+      "42": {
+        "name": "공병",
+        "cls": "M",
+        "move": "burrow",
+        "tier": 5
+      },
+      "43": {
+        "name": "창기병",
+        "cls": "L",
+        "move": "ground",
+        "tier": 5
+      },
+      "44": {
+        "name": "그리폰 기사",
+        "cls": "L",
+        "move": "air",
+        "tier": 5
+      },
+      "45": {
+        "name": "중장기사",
+        "cls": "L",
+        "move": "ground",
+        "tier": 5
+      },
+      "46": {
+        "name": "종자",
+        "cls": "S",
+        "move": "ground",
+        "tier": 5
+      },
+      "47": {
+        "name": "석궁병",
+        "cls": "M",
+        "move": "ground",
+        "tier": 5
+      },
+      "48": {
+        "name": "페가수스 기사",
+        "cls": "L",
+        "move": "air",
+        "tier": 5
+      },
+      "49": {
+        "name": "굴착 노움",
+        "cls": "S",
+        "move": "burrow",
+        "tier": 5
+      },
+      "50": {
+        "boss": true,
+        "name": "강철 성주",
+        "second": "공성 골렘",
+        "cls": "L",
+        "tier": 5
+      },
+      "51": {
+        "name": "좀비",
+        "cls": "L",
+        "move": "ground",
+        "tier": 6
+      },
+      "52": {
+        "name": "도깨비불",
+        "cls": "S",
+        "move": "air",
+        "tier": 6
+      },
+      "53": {
+        "name": "해골 병사",
+        "cls": "M",
+        "move": "ground",
+        "tier": 6
+      },
+      "54": {
+        "name": "뼈다귀 강아지",
+        "cls": "S",
+        "move": "ground",
+        "tier": 6
+      },
+      "55": {
+        "name": "구울",
+        "cls": "L",
+        "move": "ground",
+        "tier": 6
+      },
+      "56": {
+        "name": "무덤손",
+        "cls": "L",
+        "move": "burrow",
+        "tier": 6
+      },
+      "57": {
+        "name": "해골 기사",
+        "cls": "L",
+        "move": "ground",
+        "tier": 6
+      },
+      "58": {
+        "name": "저주 인형",
+        "cls": "S",
+        "move": "ground",
+        "tier": 6
+      },
+      "59": {
+        "name": "밴시",
+        "cls": "M",
+        "move": "ground",
+        "tier": 6
+      },
+      "60": {
+        "boss": true,
+        "name": "리치",
+        "second": "뼈 용",
+        "cls": "L",
+        "tier": 6
+      },
+      "61": {
+        "name": "불 정령",
+        "cls": "M",
+        "move": "ground",
+        "tier": 7
+      },
+      "62": {
+        "name": "서리 요정",
+        "cls": "S",
+        "move": "ground",
+        "tier": 7
+      },
+      "63": {
+        "name": "흙 정령",
+        "cls": "S",
+        "move": "burrow",
+        "tier": 7
+      },
+      "64": {
+        "name": "천둥새",
+        "cls": "M",
+        "move": "air",
+        "tier": 7
+      },
+      "65": {
+        "name": "바위 골렘",
+        "cls": "L",
+        "move": "ground",
+        "tier": 7
+      },
+      "66": {
+        "name": "수정 정령",
+        "cls": "L",
+        "move": "ground",
+        "tier": 7
+      },
+      "67": {
+        "name": "마법 고양이",
+        "cls": "S",
+        "move": "ground",
+        "tier": 7
+      },
+      "68": {
+        "name": "살아있는 마도서",
+        "cls": "S",
+        "move": "air",
+        "tier": 7
+      },
+      "69": {
+        "name": "수정 골렘",
+        "cls": "L",
+        "move": "ground",
+        "tier": 7
+      },
+      "70": {
+        "boss": true,
+        "name": "대마법사",
+        "second": "폭풍 정령",
+        "cls": "S",
+        "tier": 7
+      },
+      "71": {
+        "name": "드레이크",
+        "cls": "L",
+        "move": "ground",
+        "tier": 8
+      },
+      "72": {
+        "name": "새끼용",
+        "cls": "S",
+        "move": "air",
+        "tier": 8
+      },
+      "73": {
+        "name": "매머드",
+        "cls": "L",
+        "move": "ground",
+        "tier": 8
+      },
+      "74": {
+        "name": "도마뱀 인간",
+        "cls": "S",
+        "move": "ground",
+        "tier": 8
+      },
+      "75": {
+        "name": "코카트리스",
+        "cls": "S",
+        "move": "ground",
+        "tier": 8
+      },
+      "76": {
+        "name": "와이번",
+        "cls": "S",
+        "move": "air",
+        "tier": 8
+      },
+      "77": {
+        "name": "모래 벌레",
+        "cls": "S",
+        "move": "burrow",
+        "tier": 8
+      },
+      "78": {
+        "name": "베히모스",
+        "cls": "L",
+        "move": "ground",
+        "tier": 8
+      },
+      "79": {
+        "name": "용 전사",
+        "cls": "M",
+        "move": "ground",
+        "tier": 8
+      },
+      "80": {
+        "boss": true,
+        "name": "화룡",
+        "second": "히드라",
+        "cls": "M",
+        "tier": 8
+      },
+      "81": {
+        "name": "임프",
+        "cls": "S",
+        "move": "ground",
+        "tier": 9
+      },
+      "82": {
+        "name": "헬하운드",
+        "cls": "M",
+        "move": "ground",
+        "tier": 9
+      },
+      "83": {
+        "name": "지옥 오우거",
+        "cls": "L",
+        "move": "ground",
+        "tier": 9
+      },
+      "84": {
+        "name": "지옥 벌레",
+        "cls": "L",
+        "move": "burrow",
+        "tier": 9
+      },
+      "85": {
+        "name": "그림자 악귀",
+        "cls": "S",
+        "move": "ground",
+        "tier": 9
+      },
+      "86": {
+        "name": "임프 주술사",
+        "cls": "S",
+        "move": "ground",
+        "tier": 9
+      },
+      "87": {
+        "name": "화염 악마",
+        "cls": "L",
+        "move": "ground",
+        "tier": 9
+      },
+      "88": {
+        "name": "가고일",
+        "cls": "S",
+        "move": "air",
+        "tier": 9
+      },
+      "89": {
+        "name": "지옥 기사",
+        "cls": "L",
+        "move": "ground",
+        "tier": 9
+      },
+      "90": {
+        "boss": true,
+        "name": "마왕",
+        "second": "구덩이 악마",
+        "cls": "L",
+        "tier": 9
+      },
+      "91": {
+        "name": "심연 촉수",
+        "cls": "S",
+        "move": "burrow",
+        "tier": 10
+      },
+      "92": {
+        "name": "공허의 눈",
+        "cls": "S",
+        "move": "air",
+        "tier": 10
+      },
+      "93": {
+        "name": "심연 거인",
+        "cls": "L",
+        "move": "ground",
+        "tier": 10
+      },
+      "94": {
+        "name": "파멸 기사",
+        "cls": "L",
+        "move": "ground",
+        "tier": 10
+      },
+      "95": {
+        "name": "그림자 암살자",
+        "cls": "M",
+        "move": "ground",
+        "tier": 10
+      },
+      "96": {
+        "name": "파멸 까마귀",
+        "cls": "S",
+        "move": "air",
+        "tier": 10
+      },
+      "97": {
+        "name": "공허 골렘",
+        "cls": "L",
+        "move": "ground",
+        "tier": 10
+      },
+      "98": {
+        "name": "공허 벌레",
+        "cls": "M",
+        "move": "burrow",
+        "tier": 10
+      },
+      "99": {
+        "name": "흑요석 거상",
+        "cls": "L",
+        "move": "ground",
+        "tier": 10
+      },
+      "100": {
+        "boss": true,
+        "name": "파멸의 군주",
+        "second": "공허 용",
+        "cls": "S",
+        "tier": 10
+      },
+      "101": {
+        "name": "종말의 사자",
+        "cls": "M",
+        "move": "ground",
+        "tier": 10
+      }
+    },
+    "tiers": [
+      "",
+      "폐허의 잡졸",
+      "숲의 야수",
+      "늪과 동굴",
+      "산적과 고블린",
+      "왕국의 병사와 기사",
+      "언데드",
+      "마법 생물과 정령",
+      "용족과 거대 야수",
+      "악마",
+      "심연과 파멸"
+    ],
+    "palette": [
+      "",
+      {
+        "ko": "핏빛 녹 · 마른 피 · 잿빛 살갗",
+        "en": "rust red, dried blood, ash-grey skin, small ember accents"
+      },
+      {
+        "ko": "검은 털 · 먹빛 초록 · 탁한 호박색 눈",
+        "en": "black fur and feathers, ink-dark green, dull amber eyes, dried mud"
+      },
+      {
+        "ko": "탁한 청록 · 검보라 · 독의 점광",
+        "en": "murky teal, black-purple, faint toxic glints on wet chitin"
+      },
+      {
+        "ko": "와인빛 자주 · 검은 가죽 · 녹슨 쇠",
+        "en": "wine-purple cloth, black leather, rusted iron"
+      },
+      {
+        "ko": "검푸른 강철 · 검붉은 휘장 · 바랜 금",
+        "en": "blued black steel, dark red banners, tarnished gold"
+      },
+      {
+        "ko": "창백한 뼈 · 검보라 그림자 · 차가운 회청 빛",
+        "en": "pale bone, black-violet shadow, cold grey-blue glow"
+      },
+      {
+        "ko": "짙은 보라 · 자수정 · 검은 마력 연기",
+        "en": "deep violet, amethyst, black arcane smoke"
+      },
+      {
+        "ko": "검붉은 비늘 · 흑요석 · 꺼져가는 불씨",
+        "en": "dark crimson scales, obsidian, smoldering embers"
+      },
+      {
+        "ko": "지옥의 진홍 · 검은 뿔 · 살 틈의 주홍빛",
+        "en": "hellish crimson, black horns, dim orange glow in skin cracks"
+      },
+      {
+        "ko": "심연의 검정 · 보라 공허 광채 · 별빛 눈",
+        "en": "abyssal black, violet void glow, star-like eyes"
+      }
+    ],
+    "artReady": {},
+    "milestones": [
+      10,
+      25,
+      50,
+      75,
+      100,
+      150,
+      200
+    ]
+  },
+  "power": {
+    "maxLv": 10,
+    "unit": "G",
+    "special": {
+      "1": {
+        "label": "연사 −6%/3Lv",
+        "rate": 0.94
+      },
+      "2": {
+        "label": "광역 +8/3Lv",
+        "splash": 8
+      },
+      "3": {
+        "label": "피해 +10%/3Lv",
+        "dmg": 0.1
+      },
+      "4": {
+        "label": "둔화 +4%/3Lv",
+        "slow": 0.04
+      },
+      "5": {
+        "label": "연쇄 +1/3Lv",
+        "chain": 1
+      },
+      "6": {
+        "label": "광역 +6·피해 +8%/3Lv",
+        "splash": 6,
+        "dmg": 0.08
+      }
+    }
+  },
+  "towers": {
+    "TOWER_DEFS": {
+      "1": {
+        "name": "궁수 주사위",
+        "desc": "속사 레이저",
+        "dmg": 8,
+        "rate": 0.5,
+        "range": 150,
+        "laser": true,
+        "canAir": true,
+        "color": "#9fd463",
+        "topper": "laserMuzzle",
+        "atk": "vib"
+      },
+      "2": {
+        "name": "대포 주사위",
+        "desc": "쌍포 광역 포격",
+        "dmg": 22,
+        "rate": 1.6,
+        "range": 135,
+        "proj": "shell",
+        "pspd": 300,
+        "splash": 60,
+        "canAir": true,
+        "color": "#e0862c",
+        "topper": "muzzleFlash",
+        "atk": "exp"
+      },
+      "3": {
+        "name": "마법 주사위",
+        "desc": "자수정 마력탄",
+        "dmg": 24,
+        "rate": 0.95,
+        "range": 165,
+        "proj": "bolt",
+        "pspd": 430,
+        "canAir": true,
+        "color": "#b78bff",
+        "topper": "bolt",
+        "atk": "norm"
+      },
+      "4": {
+        "name": "서리 주사위",
+        "desc": "사방 냉기 둔화",
+        "dmg": 8,
+        "rate": 0.8,
+        "range": 140,
+        "proj": "frostShard",
+        "pspd": 400,
+        "slow": true,
+        "canAir": true,
+        "color": "#7fd4ff",
+        "topper": "frostShard",
+        "atk": "norm"
+      },
+      "5": {
+        "name": "전격 주사위",
+        "desc": "연쇄 번개",
+        "dmg": 16,
+        "rate": 1.1,
+        "range": 150,
+        "chain": true,
+        "canAir": true,
+        "color": "#ffe86b",
+        "topper": "spark",
+        "atk": "norm"
+      },
+      "6": {
+        "name": "폭군 주사위",
+        "desc": "최강! 폭발 주사위 투척",
+        "dmg": 40,
+        "rate": 1.25,
+        "range": 175,
+        "proj": "dieBomb",
+        "pspd": 340,
+        "splash": 55,
+        "canAir": true,
+        "color": "#ff5555",
+        "topper": "dieBomb",
+        "atk": "exp"
+      },
+      "7": {
+        "name": "별빛 첨탑 ★7",
+        "desc": "7성 히든 타워 · 폭발 주사위 투척",
+        "star": 7,
+        "dmg": 51,
+        "rate": 1.212,
+        "range": 180,
+        "proj": "dieBomb",
+        "pspd": 346,
+        "splash": 59,
+        "canAir": true,
+        "color": "#7fd4ff",
+        "rainbow": false,
+        "topper": "dieBomb",
+        "atk": "exp",
+        "perk": null
+      },
+      "8": {
+        "name": "별빛 첨탑 ★8",
+        "desc": "8성 히든 타워 · 폭발 주사위 투척",
+        "star": 8,
+        "dmg": 66,
+        "rate": 1.176,
+        "range": 185,
+        "proj": "dieBomb",
+        "pspd": 352,
+        "splash": 63,
+        "canAir": true,
+        "color": "#7fd4ff",
+        "rainbow": false,
+        "topper": "dieBomb",
+        "atk": "exp",
+        "perk": null
+      },
+      "9": {
+        "name": "별빛 첨탑 ★9",
+        "desc": "9성 히든 타워 · 폭발 주사위 투척",
+        "star": 9,
+        "dmg": 84,
+        "rate": 1.141,
+        "range": 190,
+        "proj": "dieBomb",
+        "pspd": 358,
+        "splash": 67,
+        "canAir": true,
+        "color": "#7fd4ff",
+        "rainbow": false,
+        "topper": "dieBomb",
+        "atk": "exp",
+        "perk": null
+      },
+      "10": {
+        "name": "별빛 첨탑 ★10",
+        "desc": "10성 히든 타워 · 폭발 주사위 투척",
+        "star": 10,
+        "dmg": 107,
+        "rate": 1.107,
+        "range": 195,
+        "proj": "dieBomb",
+        "pspd": 364,
+        "splash": 71,
+        "canAir": true,
+        "color": "#7fd4ff",
+        "rainbow": false,
+        "topper": "dieBomb",
+        "atk": "exp",
+        "perk": null
+      },
+      "11": {
+        "name": "성운 요새 ★11",
+        "desc": "11성 히든 타워 · 폭발 주사위 투척",
+        "star": 11,
+        "dmg": 137,
+        "rate": 1.073,
+        "range": 200,
+        "proj": "dieBomb",
+        "pspd": 370,
+        "splash": 75,
+        "canAir": true,
+        "color": "#c78bff",
+        "rainbow": false,
+        "topper": "dieBomb",
+        "atk": "exp",
+        "perk": null
+      },
+      "12": {
+        "name": "성운 요새 ★12",
+        "desc": "12성 히든 타워 · 폭발 주사위 투척",
+        "star": 12,
+        "dmg": 176,
+        "rate": 1.041,
+        "range": 205,
+        "proj": "dieBomb",
+        "pspd": 376,
+        "splash": 79,
+        "canAir": true,
+        "color": "#c78bff",
+        "rainbow": false,
+        "topper": "dieBomb",
+        "atk": "exp",
+        "perk": null
+      },
+      "13": {
+        "name": "성운 요새 ★13",
+        "desc": "13성 히든 타워 · 폭발 주사위 투척",
+        "star": 13,
+        "dmg": 225,
+        "rate": 1.01,
+        "range": 210,
+        "proj": "dieBomb",
+        "pspd": 382,
+        "splash": 83,
+        "canAir": true,
+        "color": "#c78bff",
+        "rainbow": false,
+        "topper": "dieBomb",
+        "atk": "exp",
+        "perk": null
+      },
+      "14": {
+        "name": "성운 요새 ★14",
+        "desc": "14성 히든 타워 · 폭발 주사위 투척 · 에픽: 방어 무시 + 락다운",
+        "star": 14,
+        "dmg": 288,
+        "rate": 0.98,
+        "range": 215,
+        "proj": "dieBomb",
+        "pspd": 388,
+        "splash": 87,
+        "canAir": true,
+        "color": "#c78bff",
+        "rainbow": false,
+        "topper": "dieBomb",
+        "atk": "exp",
+        "perk": "epic"
+      },
+      "15": {
+        "name": "천공 옥좌 ★15",
+        "desc": "15성 히든 타워 · 폭발 주사위 투척 · 에픽: 방어 무시 + 락다운",
+        "star": 15,
+        "dmg": 369,
+        "rate": 0.95,
+        "range": 220,
+        "proj": "dieBomb",
+        "pspd": 394,
+        "splash": 91,
+        "canAir": true,
+        "color": "#ffd452",
+        "rainbow": false,
+        "topper": "dieBomb",
+        "atk": "exp",
+        "perk": "epic"
+      },
+      "16": {
+        "name": "천공 옥좌 ★16",
+        "desc": "16성 히든 타워 · 폭발 주사위 투척 · 에픽: 방어 무시 + 락다운",
+        "star": 16,
+        "dmg": 472,
+        "rate": 0.922,
+        "range": 225,
+        "proj": "dieBomb",
+        "pspd": 400,
+        "splash": 95,
+        "canAir": true,
+        "color": "#ffd452",
+        "rainbow": false,
+        "topper": "dieBomb",
+        "atk": "exp",
+        "perk": "epic"
+      },
+      "17": {
+        "name": "천공 옥좌 ★17",
+        "desc": "17성 히든 타워 · 폭발 주사위 투척 · 에픽: 방어 무시 + 락다운",
+        "star": 17,
+        "dmg": 604,
+        "rate": 0.894,
+        "range": 230,
+        "proj": "dieBomb",
+        "pspd": 406,
+        "splash": 99,
+        "canAir": true,
+        "color": "#ffd452",
+        "rainbow": false,
+        "topper": "dieBomb",
+        "atk": "exp",
+        "perk": "epic"
+      },
+      "18": {
+        "name": "천공 옥좌 ★18",
+        "desc": "18성 히든 타워 · 폭발 주사위 투척 · 신화: 공속 ×1.5",
+        "star": 18,
+        "dmg": 774,
+        "rate": 0.867,
+        "range": 235,
+        "proj": "dieBomb",
+        "pspd": 412,
+        "splash": 103,
+        "canAir": true,
+        "color": "#ffd452",
+        "rainbow": false,
+        "topper": "dieBomb",
+        "atk": "exp",
+        "perk": "myth"
+      },
+      "19": {
+        "name": "차원 군주 ★19",
+        "desc": "19성 히든 타워 · 폭발 주사위 투척 · 신화: 공속 ×1.5",
+        "star": 19,
+        "dmg": 990,
+        "rate": 0.841,
+        "range": 240,
+        "proj": "dieBomb",
+        "pspd": 418,
+        "splash": 107,
+        "canAir": true,
+        "color": "#ff7ad9",
+        "rainbow": true,
+        "topper": "dieBomb",
+        "atk": "exp",
+        "perk": "myth"
+      },
+      "20": {
+        "name": "차원 군주 ★20",
+        "desc": "20성 히든 타워 · 폭발 주사위 투척 · 태초: 일반형, 트랙 전체 스플래시, 공속 ×1.25",
+        "star": 20,
+        "dmg": 1268,
+        "rate": 0.816,
+        "range": 245,
+        "proj": "dieBomb",
+        "pspd": 424,
+        "splash": 111,
+        "canAir": true,
+        "color": "#ff7ad9",
+        "rainbow": true,
+        "topper": "dieBomb",
+        "atk": "norm",
+        "perk": "primal"
+      }
+    },
+    "LVL_DMG": [
+      1,
+      1.6,
+      2.4
+    ],
+    "LVL_RANGE": [
+      0,
+      12,
+      24
+    ],
+    "LVL_RATE": [
+      1,
+      0.92,
+      0.85
+    ]
+  },
+  "waves": [
+    {
+      "wave": 1,
+      "values": {
+        "hpMult": 1.8,
+        "count": 12,
+        "gap": 0.79,
+        "goldMult": 1.025,
+        "speedMult": 1,
+        "bossHp": 0.71,
+        "bosses": 1,
+        "elites": 2
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "shrimp",
+          "name": "새우닌자",
+          "hp": 28,
+          "speed": 86,
+          "gold": 9,
+          "dmg": 1,
+          "size": 40,
+          "move": "ground",
+          "sprite": "cShrimp",
+          "src": "casual/enemies/shrimp.png",
+          "faceLeft": true,
+          "look": 1
+        },
+        "name": "역병쥐",
+        "hue": 0,
+        "cls": "S",
+        "move": "ground",
+        "tank": false,
+        "art": {
+          "key": "infW1",
+          "src": "casual/enemies/inf/w001.png?v=92",
+          "walkKey": "infW1Walk",
+          "walkSrc": "casual/enemies/inf/w001-walk-4x2.png?v=92",
+          "name": "역병쥐",
+          "stabilize": false,
+          "anchor": "foot",
+          "walkStride": 86.15384615384615
+        },
+        "count": 12,
+        "armor": 0,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 2,
+      "values": {
+        "hpMult": 1.944,
+        "count": 13,
+        "gap": 0.78,
+        "goldMult": 1.05,
+        "speedMult": 1,
+        "bossHp": 0.72,
+        "bosses": 1,
+        "elites": 2
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "marshmallow",
+          "name": "마시멜로정찰",
+          "hp": 28,
+          "speed": 50,
+          "gold": 7,
+          "dmg": 1,
+          "size": 42,
+          "move": "ground",
+          "sprite": "cMarshmallow",
+          "src": "casual/enemies/marshmallow.png",
+          "look": 1
+        },
+        "name": "해골 잡졸",
+        "hue": 0,
+        "cls": "S",
+        "move": "ground",
+        "tank": false,
+        "art": {
+          "key": "infW2",
+          "src": "casual/enemies/inf/w002.png?v=92",
+          "walkKey": "infW2Walk",
+          "walkSrc": "casual/enemies/inf/w002-walk-4x2.png?v=92",
+          "name": "해골 잡졸",
+          "stabilize": false,
+          "anchor": "foot",
+          "walkStride": 158.544
+        },
+        "count": 13,
+        "armor": 0,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 3,
+      "values": {
+        "hpMult": 2.1,
+        "count": 13,
+        "gap": 0.77,
+        "goldMult": 1.075,
+        "speedMult": 1,
+        "bossHp": 0.74,
+        "bosses": 1,
+        "elites": 2
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "egg",
+          "name": "달걀병정",
+          "hp": 28,
+          "speed": 52,
+          "gold": 7,
+          "dmg": 1,
+          "size": 40,
+          "move": "ground",
+          "sprite": "cEgg",
+          "src": "casual/enemies/egg.png",
+          "look": 1
+        },
+        "name": "묘지 오우거",
+        "hue": 0,
+        "cls": "L",
+        "move": "ground",
+        "tank": false,
+        "art": {
+          "key": "infW3",
+          "src": "casual/enemies/inf/w003.png?v=92",
+          "walkKey": "infW3Walk",
+          "walkSrc": "casual/enemies/inf/w003-walk-4x2.png?v=92",
+          "name": "묘지 오우거",
+          "stabilize": false,
+          "anchor": "foot",
+          "walkStride": 160.848
+        },
+        "count": 11,
+        "armor": 0,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 4,
+      "values": {
+        "hpMult": 2.267,
+        "count": 14,
+        "gap": 0.76,
+        "goldMult": 1.1,
+        "speedMult": 1,
+        "bossHp": 0.75,
+        "bosses": 1,
+        "elites": 2
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "swift",
+          "name": "칼새전령",
+          "hp": 16,
+          "speed": 114,
+          "gold": 9,
+          "dmg": 1,
+          "size": 38,
+          "move": "air",
+          "sprite": "cSwift",
+          "src": "casual/enemies/swift.png",
+          "look": 1
+        },
+        "name": "까마귀 정찰병",
+        "hue": 0,
+        "cls": "S",
+        "move": "air",
+        "tank": false,
+        "art": {
+          "key": "infW4",
+          "src": "casual/enemies/inf/w004.png?v=92",
+          "walkKey": "infW4Walk",
+          "walkSrc": "casual/enemies/inf/w004-walk-2x2.png?v=92",
+          "name": "까마귀 정찰병",
+          "stabilize": true,
+          "anchor": "center",
+          "walkStride": 0
+        },
+        "count": 14,
+        "armor": 0,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 5,
+      "values": {
+        "hpMult": 2.449,
+        "count": 15,
+        "gap": 0.75,
+        "goldMult": 1.125,
+        "speedMult": 1,
+        "bossHp": 0.76,
+        "bosses": 1,
+        "elites": 2
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "moon",
+          "name": "달님정찰",
+          "hp": 32,
+          "speed": 50,
+          "gold": 10,
+          "dmg": 1,
+          "size": 44,
+          "move": "ground",
+          "sprite": "cMoon",
+          "src": "casual/enemies/moon.png",
+          "look": 1
+        },
+        "name": "고블린 창병",
+        "hue": 0,
+        "cls": "M",
+        "move": "ground",
+        "tank": false,
+        "art": {
+          "key": "infW5",
+          "src": "casual/enemies/inf/w005.png?v=92",
+          "walkKey": "infW5Walk",
+          "walkSrc": "casual/enemies/inf/w005-walk-4x2.png?v=92",
+          "name": "고블린 창병",
+          "stabilize": false,
+          "anchor": "foot",
+          "walkStride": 161.1
+        },
+        "count": 15,
+        "armor": 0,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 6,
+      "values": {
+        "hpMult": 2.645,
+        "count": 15,
+        "gap": 0.74,
+        "goldMult": 1.15,
+        "speedMult": 1,
+        "bossHp": 0.77,
+        "bosses": 1,
+        "elites": 2
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "clownfish",
+          "name": "흰동가리선원",
+          "hp": 36,
+          "speed": 56,
+          "gold": 8,
+          "dmg": 1,
+          "size": 44,
+          "move": "ground",
+          "sprite": "cClownfish",
+          "src": "casual/enemies/clownfish.png",
+          "faceLeft": true,
+          "look": 1
+        },
+        "name": "썩은 멧돼지",
+        "hue": 0,
+        "cls": "L",
+        "move": "ground",
+        "tank": false,
+        "art": {
+          "key": "infW6",
+          "src": "casual/enemies/inf/w006.png?v=92",
+          "walkKey": "infW6Walk",
+          "walkSrc": "casual/enemies/inf/w006-walk-4x2.png?v=92",
+          "name": "썩은 멧돼지",
+          "stabilize": false,
+          "anchor": "foot",
+          "walkStride": 104.61538461538461
+        },
+        "count": 13,
+        "armor": 0,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 7,
+      "values": {
+        "hpMult": 2.856,
+        "count": 16,
+        "gap": 0.73,
+        "goldMult": 1.175,
+        "speedMult": 1,
+        "bossHp": 0.78,
+        "bosses": 1,
+        "elites": 2
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "echidna",
+          "name": "가시두더지",
+          "hp": 62,
+          "speed": 38,
+          "gold": 11,
+          "dmg": 2,
+          "size": 46,
+          "move": "burrow",
+          "sprite": "cEchidna",
+          "src": "casual/enemies/echidna.png"
+        },
+        "name": "무덤 파는 구울",
+        "hue": 0,
+        "cls": "L",
+        "move": "burrow",
+        "tank": false,
+        "art": {
+          "key": "infW7",
+          "src": "casual/enemies/inf/w007.png?v=92",
+          "walkKey": "infW7Walk",
+          "walkSrc": "casual/enemies/inf/w007-walk-4x2.png?v=92",
+          "name": "무덤 파는 구울",
+          "stabilize": false,
+          "anchor": "foot",
+          "walkStride": 159.248
+        },
+        "count": 14,
+        "armor": 0,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 8,
+      "values": {
+        "hpMult": 3.085,
+        "count": 16,
+        "gap": 0.7200000000000001,
+        "goldMult": 1.2,
+        "speedMult": 1,
+        "bossHp": 0.8,
+        "bosses": 1,
+        "elites": 2
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "dandelion",
+          "name": "민들레홀씨",
+          "hp": 16,
+          "speed": 100,
+          "gold": 8,
+          "dmg": 1,
+          "size": 40,
+          "move": "air",
+          "sprite": "cDandelion",
+          "src": "casual/enemies/dandelion.png",
+          "look": 1
+        },
+        "name": "시체파리 떼",
+        "hue": 0,
+        "cls": "S",
+        "move": "air",
+        "tank": false,
+        "art": {
+          "key": "infW8",
+          "src": "casual/enemies/inf/w008.png?v=92",
+          "walkKey": "infW8Walk",
+          "walkSrc": "casual/enemies/inf/w008-walk-2x2.png?v=92",
+          "name": "시체파리 떼",
+          "stabilize": true,
+          "anchor": "center",
+          "walkStride": 0
+        },
+        "count": 16,
+        "armor": 0,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 9,
+      "values": {
+        "hpMult": 3.332,
+        "count": 17,
+        "gap": 0.7100000000000001,
+        "goldMult": 1.225,
+        "speedMult": 1,
+        "bossHp": 0.81,
+        "bosses": 1,
+        "elites": 2
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "guava",
+          "name": "구아바기사",
+          "hp": 38,
+          "speed": 48,
+          "gold": 8,
+          "dmg": 1,
+          "size": 44,
+          "move": "ground",
+          "sprite": "cGuava",
+          "src": "casual/enemies/guava.png",
+          "look": 1
+        },
+        "name": "녹슨 철갑 오크",
+        "hue": 0,
+        "cls": "L",
+        "move": "ground",
+        "tank": false,
+        "art": {
+          "key": "infW9",
+          "src": "casual/enemies/inf/w009.png?v=92",
+          "walkKey": "infW9Walk",
+          "walkSrc": "casual/enemies/inf/w009-walk-4x2.png?v=92",
+          "name": "녹슨 철갑 오크",
+          "stabilize": false,
+          "anchor": "foot",
+          "walkStride": 146.104
+        },
+        "count": 14,
+        "armor": 0,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 10,
+      "values": {
+        "hpMult": 3.598,
+        "count": 18,
+        "gap": 0.7000000000000001,
+        "goldMult": 1.25,
+        "speedMult": 1,
+        "bossHp": 0.82,
+        "bosses": 1,
+        "elites": 2
+      },
+      "monster": {
+        "boss": true,
+        "cls": "L",
+        "hue": 0,
+        "prefix": "",
+        "armor": 0,
+        "count": 0,
+        "name": "보스"
+      }
+    },
+    {
+      "wave": 11,
+      "values": {
+        "hpMult": 3.886,
+        "count": 18,
+        "gap": 0.6900000000000001,
+        "goldMult": 1.275,
+        "speedMult": 1,
+        "bossHp": 0.83,
+        "bosses": 1,
+        "elites": 2
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "datefruit",
+          "name": "대추야자",
+          "hp": 30,
+          "speed": 54,
+          "gold": 8,
+          "dmg": 1,
+          "size": 40,
+          "move": "ground",
+          "sprite": "cDatefruit",
+          "src": "casual/enemies/datefruit.png",
+          "look": 1
+        },
+        "name": "대추야자",
+        "hue": 0,
+        "cls": "S",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 18,
+        "armor": 0,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 12,
+      "values": {
+        "hpMult": 4.197,
+        "count": 19,
+        "gap": 0.68,
+        "goldMult": 1.3,
+        "speedMult": 1,
+        "bossHp": 0.84,
+        "bosses": 1,
+        "elites": 2
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "sparkfairy",
+          "name": "불꽃요정",
+          "hp": 18,
+          "speed": 102,
+          "gold": 10,
+          "dmg": 1,
+          "size": 40,
+          "move": "air",
+          "sprite": "cSparkfairy",
+          "src": "casual/enemies/sparkfairy.png",
+          "look": 1
+        },
+        "name": "불꽃요정",
+        "hue": 0,
+        "cls": "L",
+        "move": "air",
+        "tank": false,
+        "art": null,
+        "count": 16,
+        "armor": 0,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 13,
+      "values": {
+        "hpMult": 4.533,
+        "count": 19,
+        "gap": 0.67,
+        "goldMult": 1.325,
+        "speedMult": 1,
+        "bossHp": 0.86,
+        "bosses": 1,
+        "elites": 2
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "passionfruit",
+          "name": "패션프루트",
+          "hp": 32,
+          "speed": 56,
+          "gold": 8,
+          "dmg": 1,
+          "size": 42,
+          "move": "ground",
+          "sprite": "cPassionfruit",
+          "src": "casual/enemies/passionfruit.png",
+          "look": 1
+        },
+        "name": "패션프루트",
+        "hue": 0,
+        "cls": "S",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 19,
+        "armor": 0,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 14,
+      "values": {
+        "hpMult": 4.895,
+        "count": 20,
+        "gap": 0.66,
+        "goldMult": 1.35,
+        "speedMult": 1,
+        "bossHp": 0.87,
+        "bosses": 1,
+        "elites": 2
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "arma",
+          "name": "아르마딜로",
+          "hp": 70,
+          "speed": 38,
+          "gold": 11,
+          "dmg": 2,
+          "size": 48,
+          "move": "burrow",
+          "sprite": "cArma",
+          "src": "casual/enemies/arma.png"
+        },
+        "name": "아르마딜로",
+        "hue": 0,
+        "cls": "L",
+        "move": "burrow",
+        "tank": true,
+        "art": null,
+        "count": 17,
+        "armor": 2,
+        "hpMult": 1.25
+      }
+    },
+    {
+      "wave": 15,
+      "values": {
+        "hpMult": 5.287,
+        "count": 21,
+        "gap": 0.65,
+        "goldMult": 1.375,
+        "speedMult": 1,
+        "bossHp": 0.88,
+        "bosses": 1,
+        "elites": 2
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "snowman",
+          "name": "눈사람정찰",
+          "hp": 40,
+          "speed": 48,
+          "gold": 8,
+          "dmg": 1,
+          "size": 46,
+          "move": "ground",
+          "sprite": "cSnowman",
+          "src": "casual/enemies/snowman.png",
+          "look": 1
+        },
+        "name": "눈사람정찰",
+        "hue": 0,
+        "cls": "M",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 21,
+        "armor": 0,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 16,
+      "values": {
+        "hpMult": 5.71,
+        "count": 21,
+        "gap": 0.64,
+        "goldMult": 1.4,
+        "speedMult": 1,
+        "bossHp": 0.89,
+        "bosses": 1,
+        "elites": 2
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "fairy",
+          "name": "민들레요정",
+          "hp": 22,
+          "speed": 90,
+          "gold": 11,
+          "dmg": 1,
+          "size": 42,
+          "move": "air",
+          "sprite": "cFairy",
+          "src": "casual/enemies/fairy.png",
+          "look": 1
+        },
+        "name": "민들레요정",
+        "hue": 0,
+        "cls": "L",
+        "move": "air",
+        "tank": false,
+        "art": null,
+        "count": 18,
+        "armor": 0,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 17,
+      "values": {
+        "hpMult": 6.167,
+        "count": 22,
+        "gap": 0.63,
+        "goldMult": 1.425,
+        "speedMult": 1,
+        "bossHp": 0.9,
+        "bosses": 1,
+        "elites": 2
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "tomato",
+          "name": "토마토포병",
+          "hp": 42,
+          "speed": 48,
+          "gold": 9,
+          "dmg": 1,
+          "size": 44,
+          "move": "ground",
+          "sprite": "cTomato",
+          "src": "casual/enemies/tomato.png",
+          "look": 1
+        },
+        "name": "토마토포병",
+        "hue": 0,
+        "cls": "M",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 22,
+        "armor": 0,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 18,
+      "values": {
+        "hpMult": 6.66,
+        "count": 22,
+        "gap": 0.6200000000000001,
+        "goldMult": 1.45,
+        "speedMult": 1,
+        "bossHp": 0.92,
+        "bosses": 1,
+        "elites": 2
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "lemon",
+          "name": "레몬닌자",
+          "hp": 32,
+          "speed": 82,
+          "gold": 9,
+          "dmg": 1,
+          "size": 42,
+          "move": "ground",
+          "sprite": "cLemon",
+          "src": "casual/enemies/lemon.png",
+          "look": 1
+        },
+        "name": "레몬닌자",
+        "hue": 0,
+        "cls": "S",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 22,
+        "armor": 0,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 19,
+      "values": {
+        "hpMult": 7.193,
+        "count": 23,
+        "gap": 0.6100000000000001,
+        "goldMult": 1.475,
+        "speedMult": 1,
+        "bossHp": 0.93,
+        "bosses": 1,
+        "elites": 2
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "dodo",
+          "name": "도도탐험가",
+          "hp": 70,
+          "speed": 34,
+          "gold": 12,
+          "dmg": 2,
+          "size": 50,
+          "move": "ground",
+          "sprite": "cDodo",
+          "src": "casual/enemies/dodo.png",
+          "look": 1
+        },
+        "name": "도도탐험가",
+        "hue": 0,
+        "cls": "L",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 20,
+        "armor": 0,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 20,
+      "values": {
+        "hpMult": 7.768,
+        "count": 24,
+        "gap": 0.6000000000000001,
+        "goldMult": 1.5,
+        "speedMult": 1,
+        "bossHp": 0.94,
+        "bosses": 2,
+        "elites": 3
+      },
+      "monster": {
+        "boss": true,
+        "cls": "L",
+        "hue": 0,
+        "prefix": "",
+        "armor": 0,
+        "count": 0,
+        "name": "보스"
+      }
+    },
+    {
+      "wave": 21,
+      "values": {
+        "hpMult": 8.39,
+        "count": 24,
+        "gap": 0.5900000000000001,
+        "goldMult": 1.525,
+        "speedMult": 1,
+        "bossHp": 0.95,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "pillbug",
+          "name": "공벌레방패",
+          "hp": 72,
+          "speed": 32,
+          "gold": 12,
+          "dmg": 2,
+          "size": 48,
+          "move": "burrow",
+          "sprite": "cPillbug",
+          "src": "casual/enemies/pillbug.png"
+        },
+        "name": "공벌레방패",
+        "hue": 0,
+        "cls": "S",
+        "move": "burrow",
+        "tank": true,
+        "art": null,
+        "count": 24,
+        "armor": 2,
+        "hpMult": 1.25
+      }
+    },
+    {
+      "wave": 22,
+      "values": {
+        "hpMult": 9.061,
+        "count": 25,
+        "gap": 0.5800000000000001,
+        "goldMult": 1.55,
+        "speedMult": 1,
+        "bossHp": 0.96,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "watermelon",
+          "name": "수박전차",
+          "hp": 78,
+          "speed": 32,
+          "gold": 12,
+          "dmg": 2,
+          "size": 52,
+          "move": "ground",
+          "sprite": "cWatermelon",
+          "src": "casual/enemies/watermelon.png",
+          "look": 1
+        },
+        "name": "수박전차",
+        "hue": 0,
+        "cls": "L",
+        "move": "ground",
+        "tank": true,
+        "art": null,
+        "count": 21,
+        "armor": 2,
+        "hpMult": 1.25
+      }
+    },
+    {
+      "wave": 23,
+      "values": {
+        "hpMult": 9.786,
+        "count": 25,
+        "gap": 0.5700000000000001,
+        "goldMult": 1.575,
+        "speedMult": 1,
+        "bossHp": 0.98,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "pretzel",
+          "name": "프레첼정찰",
+          "hp": 34,
+          "speed": 50,
+          "gold": 8,
+          "dmg": 1,
+          "size": 42,
+          "move": "ground",
+          "sprite": "cPretzel",
+          "src": "casual/enemies/pretzel.png",
+          "look": 1
+        },
+        "name": "프레첼정찰",
+        "hue": 0,
+        "cls": "S",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 25,
+        "armor": 0,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 24,
+      "values": {
+        "hpMult": 10.569,
+        "count": 26,
+        "gap": 0.56,
+        "goldMult": 1.6,
+        "speedMult": 1,
+        "bossHp": 0.99,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "waxwing",
+          "name": "밀화부리",
+          "hp": 24,
+          "speed": 88,
+          "gold": 10,
+          "dmg": 1,
+          "size": 42,
+          "move": "air",
+          "sprite": "cWaxwing",
+          "src": "casual/enemies/waxwing.png",
+          "look": 1
+        },
+        "name": "밀화부리",
+        "hue": 0,
+        "cls": "S",
+        "move": "air",
+        "tank": false,
+        "art": null,
+        "count": 26,
+        "armor": 0,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 25,
+      "values": {
+        "hpMult": 11.414,
+        "count": 27,
+        "gap": 0.55,
+        "goldMult": 1.625,
+        "speedMult": 1,
+        "bossHp": 1,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "kokeshi",
+          "name": "코케시",
+          "hp": 46,
+          "speed": 34,
+          "gold": 10,
+          "dmg": 1,
+          "size": 44,
+          "move": "ground",
+          "sprite": "cKokeshi",
+          "src": "casual/enemies/kokeshi.png",
+          "look": 1
+        },
+        "name": "코케시",
+        "hue": 0,
+        "cls": "M",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 27,
+        "armor": 0,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 26,
+      "values": {
+        "hpMult": 12.327,
+        "count": 27,
+        "gap": 0.54,
+        "goldMult": 1.65,
+        "speedMult": 1,
+        "bossHp": 1.01,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "chihuahua",
+          "name": "치와와기사",
+          "hp": 26,
+          "speed": 88,
+          "gold": 9,
+          "dmg": 1,
+          "size": 38,
+          "move": "ground",
+          "sprite": "cChihuahua",
+          "src": "casual/enemies/chihuahua.png",
+          "look": 2
+        },
+        "name": "치와와기사",
+        "hue": 0,
+        "cls": "S",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 27,
+        "armor": 0,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 27,
+      "values": {
+        "hpMult": 13.313,
+        "count": 28,
+        "gap": 0.53,
+        "goldMult": 1.675,
+        "speedMult": 1,
+        "bossHp": 1.02,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "hare",
+          "name": "산토끼정찰",
+          "hp": 28,
+          "speed": 92,
+          "gold": 9,
+          "dmg": 1,
+          "size": 42,
+          "move": "ground",
+          "sprite": "cHare",
+          "src": "casual/enemies/hare.png",
+          "look": 2
+        },
+        "name": "산토끼정찰",
+        "hue": 0,
+        "cls": "L",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 24,
+        "armor": 0,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 28,
+      "values": {
+        "hpMult": 14.379,
+        "count": 28,
+        "gap": 0.52,
+        "goldMult": 1.7,
+        "speedMult": 1,
+        "bossHp": 1.04,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "termite",
+          "name": "흰개미병정",
+          "hp": 26,
+          "speed": 64,
+          "gold": 7,
+          "dmg": 1,
+          "size": 36,
+          "move": "burrow",
+          "sprite": "cTermite",
+          "src": "casual/enemies/termite.png",
+          "look": 1
+        },
+        "name": "흰개미병정",
+        "hue": 0,
+        "cls": "L",
+        "move": "burrow",
+        "tank": false,
+        "art": null,
+        "count": 24,
+        "armor": 0,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 29,
+      "values": {
+        "hpMult": 15.529,
+        "count": 29,
+        "gap": 0.51,
+        "goldMult": 1.725,
+        "speedMult": 1,
+        "bossHp": 1.05,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "borzoi",
+          "name": "보르조이",
+          "hp": 40,
+          "speed": 80,
+          "gold": 11,
+          "dmg": 1,
+          "size": 50,
+          "move": "ground",
+          "sprite": "cBorzoi",
+          "src": "casual/enemies/borzoi.png",
+          "faceLeft": true,
+          "look": 2
+        },
+        "name": "보르조이",
+        "hue": 0,
+        "cls": "L",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 25,
+        "armor": 0,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 30,
+      "values": {
+        "hpMult": 16.771,
+        "count": 30,
+        "gap": 0.5,
+        "goldMult": 1.75,
+        "speedMult": 1,
+        "bossHp": 1.06,
+        "bosses": 2,
+        "elites": 3
+      },
+      "monster": {
+        "boss": true,
+        "cls": "S",
+        "hue": 0,
+        "prefix": "",
+        "armor": 0,
+        "count": 0,
+        "name": "보스"
+      }
+    },
+    {
+      "wave": 31,
+      "values": {
+        "hpMult": 18.113,
+        "count": 30,
+        "gap": 0.49000000000000005,
+        "goldMult": 1.775,
+        "speedMult": 1,
+        "bossHp": 1.07,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "shihtzu",
+          "name": "시츄",
+          "hp": 30,
+          "speed": 52,
+          "gold": 8,
+          "dmg": 1,
+          "size": 40,
+          "move": "ground",
+          "sprite": "cShihtzu",
+          "src": "casual/enemies/shihtzu.png",
+          "look": 2
+        },
+        "name": "시츄",
+        "hue": 0,
+        "cls": "S",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 30,
+        "armor": 0,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 32,
+      "values": {
+        "hpMult": 19.562,
+        "count": 31,
+        "gap": 0.48000000000000004,
+        "goldMult": 1.8,
+        "speedMult": 1,
+        "bossHp": 1.08,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "dipper",
+          "name": "물까마귀",
+          "hp": 24,
+          "speed": 84,
+          "gold": 9,
+          "dmg": 1,
+          "size": 42,
+          "move": "air",
+          "sprite": "cDipper",
+          "src": "casual/enemies/dipper.png",
+          "look": 1
+        },
+        "name": "물까마귀",
+        "hue": 0,
+        "cls": "S",
+        "move": "air",
+        "tank": false,
+        "art": null,
+        "count": 31,
+        "armor": 0,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 33,
+      "values": {
+        "hpMult": 21.127,
+        "count": 31,
+        "gap": 0.47000000000000003,
+        "goldMult": 1.825,
+        "speedMult": 1,
+        "bossHp": 1.1,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "stoat",
+          "name": "에르민",
+          "hp": 32,
+          "speed": 84,
+          "gold": 10,
+          "dmg": 1,
+          "size": 40,
+          "move": "ground",
+          "sprite": "cStoat",
+          "src": "casual/enemies/stoat.png",
+          "look": 2
+        },
+        "name": "에르민",
+        "hue": 0,
+        "cls": "S",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 31,
+        "armor": 6,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 34,
+      "values": {
+        "hpMult": 22.817,
+        "count": 32,
+        "gap": 0.46,
+        "goldMult": 1.85,
+        "speedMult": 1,
+        "bossHp": 1.11,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "emu",
+          "name": "에뮤질주",
+          "hp": 46,
+          "speed": 80,
+          "gold": 10,
+          "dmg": 1,
+          "size": 50,
+          "move": "ground",
+          "sprite": "cEmu",
+          "src": "casual/enemies/emu.png",
+          "look": 2
+        },
+        "name": "에뮤질주",
+        "hue": 0,
+        "cls": "L",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 27,
+        "armor": 0,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 35,
+      "values": {
+        "hpMult": 24.642,
+        "count": 33,
+        "gap": 0.45,
+        "goldMult": 1.875,
+        "speedMult": 1,
+        "bossHp": 1.12,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "okra",
+          "name": "오크라광부",
+          "hp": 34,
+          "speed": 50,
+          "gold": 8,
+          "dmg": 1,
+          "size": 42,
+          "move": "burrow",
+          "sprite": "cOkra",
+          "src": "casual/enemies/okra.png",
+          "look": 1
+        },
+        "name": "오크라광부",
+        "hue": 0,
+        "cls": "L",
+        "move": "burrow",
+        "tank": false,
+        "art": null,
+        "count": 28,
+        "armor": 0,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 36,
+      "values": {
+        "hpMult": 26.614,
+        "count": 33,
+        "gap": 0.44000000000000006,
+        "goldMult": 1.9,
+        "speedMult": 1,
+        "bossHp": 1.13,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "cloudsheep",
+          "name": "구름양",
+          "hp": 40,
+          "speed": 60,
+          "gold": 11,
+          "dmg": 1,
+          "size": 50,
+          "move": "air",
+          "sprite": "cCloudsheep",
+          "src": "casual/enemies/cloudsheep.png",
+          "look": 1
+        },
+        "name": "구름양",
+        "hue": 0,
+        "cls": "L",
+        "move": "air",
+        "tank": false,
+        "art": null,
+        "count": 28,
+        "armor": 1,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 37,
+      "values": {
+        "hpMult": 28.743,
+        "count": 34,
+        "gap": 0.43000000000000005,
+        "goldMult": 1.925,
+        "speedMult": 1,
+        "bossHp": 1.14,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "llama",
+          "name": "라마짐꾼",
+          "hp": 54,
+          "speed": 48,
+          "gold": 10,
+          "dmg": 1,
+          "size": 50,
+          "move": "ground",
+          "sprite": "cLlama",
+          "src": "casual/enemies/llama.png",
+          "faceLeft": true,
+          "look": 2
+        },
+        "name": "라마짐꾼",
+        "hue": 0,
+        "cls": "M",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 34,
+        "armor": 1,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 38,
+      "values": {
+        "hpMult": 31.042,
+        "count": 34,
+        "gap": 0.42000000000000004,
+        "goldMult": 1.95,
+        "speedMult": 1,
+        "bossHp": 1.16,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "mink",
+          "name": "밍크도둑",
+          "hp": 34,
+          "speed": 82,
+          "gold": 10,
+          "dmg": 1,
+          "size": 42,
+          "move": "ground",
+          "sprite": "cMink",
+          "src": "casual/enemies/mink.png",
+          "look": 2
+        },
+        "name": "밍크도둑",
+        "hue": 0,
+        "cls": "S",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 34,
+        "armor": 1,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 39,
+      "values": {
+        "hpMult": 33.525,
+        "count": 35,
+        "gap": 0.41000000000000003,
+        "goldMult": 1.975,
+        "speedMult": 1,
+        "bossHp": 1.17,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "poodle",
+          "name": "푸들요리사",
+          "hp": 36,
+          "speed": 56,
+          "gold": 9,
+          "dmg": 1,
+          "size": 44,
+          "move": "ground",
+          "sprite": "cPoodle",
+          "src": "casual/enemies/poodle.png",
+          "look": 2
+        },
+        "name": "푸들요리사",
+        "hue": 0,
+        "cls": "M",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 35,
+        "armor": 1,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 40,
+      "values": {
+        "hpMult": 36.208,
+        "count": 36,
+        "gap": 0.4,
+        "goldMult": 2,
+        "speedMult": 1,
+        "bossHp": 1.18,
+        "bosses": 2,
+        "elites": 3
+      },
+      "monster": {
+        "boss": true,
+        "cls": "S",
+        "hue": 0,
+        "prefix": "",
+        "armor": 1,
+        "count": 0,
+        "name": "보스"
+      }
+    },
+    {
+      "wave": 41,
+      "values": {
+        "hpMult": 39.104,
+        "count": 36,
+        "gap": 0.39,
+        "goldMult": 2.025,
+        "speedMult": 1.01,
+        "bossHp": 1.19,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "capybara",
+          "name": "카피바라온천",
+          "hp": 60,
+          "speed": 40,
+          "gold": 10,
+          "dmg": 1,
+          "size": 50,
+          "move": "ground",
+          "sprite": "cCapybara",
+          "src": "casual/enemies/capybara.png",
+          "walk": "cCapybaraWalk",
+          "walkSrc": "casual/enemies/capybara-walk-2x2.png",
+          "look": 2
+        },
+        "name": "카피바라온천",
+        "hue": 0,
+        "cls": "L",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 31,
+        "armor": 1,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 42,
+      "values": {
+        "hpMult": 42.232,
+        "count": 36,
+        "gap": 0.38000000000000006,
+        "goldMult": 2.05,
+        "speedMult": 1.02,
+        "bossHp": 1.2,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "wombat",
+          "name": "웜뱃광부",
+          "hp": 64,
+          "speed": 40,
+          "gold": 11,
+          "dmg": 2,
+          "size": 48,
+          "move": "burrow",
+          "sprite": "cWombat",
+          "src": "casual/enemies/wombat.png",
+          "look": 1
+        },
+        "name": "웜뱃광부",
+        "hue": 0,
+        "cls": "M",
+        "move": "burrow",
+        "tank": false,
+        "art": null,
+        "count": 36,
+        "armor": 2,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 43,
+      "values": {
+        "hpMult": 45.611,
+        "count": 36,
+        "gap": 0.37000000000000005,
+        "goldMult": 2.075,
+        "speedMult": 1.03,
+        "bossHp": 1.22,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "dugong",
+          "name": "듀공기사",
+          "hp": 70,
+          "speed": 32,
+          "gold": 12,
+          "dmg": 1,
+          "size": 52,
+          "move": "ground",
+          "sprite": "cDugong",
+          "src": "casual/enemies/dugong.png",
+          "look": 2
+        },
+        "name": "듀공기사",
+        "hue": 0,
+        "cls": "L",
+        "move": "ground",
+        "tank": true,
+        "art": null,
+        "count": 31,
+        "armor": 4,
+        "hpMult": 1.25
+      }
+    },
+    {
+      "wave": 44,
+      "values": {
+        "hpMult": 49.26,
+        "count": 36,
+        "gap": 0.36000000000000004,
+        "goldMult": 2.1,
+        "speedMult": 1.04,
+        "bossHp": 1.23,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "frigatebird",
+          "name": "군함조",
+          "hp": 30,
+          "speed": 100,
+          "gold": 12,
+          "dmg": 1,
+          "size": 50,
+          "move": "air",
+          "sprite": "cFrigatebird",
+          "src": "casual/enemies/frigatebird.png",
+          "faceLeft": true,
+          "look": 2
+        },
+        "name": "군함조",
+        "hue": 0,
+        "cls": "L",
+        "move": "air",
+        "tank": false,
+        "art": null,
+        "count": 31,
+        "armor": 2,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 45,
+      "values": {
+        "hpMult": 53.201,
+        "count": 36,
+        "gap": 0.35000000000000003,
+        "goldMult": 2.125,
+        "speedMult": 1.05,
+        "bossHp": 1.24,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "camel",
+          "name": "낙타짐꾼",
+          "hp": 70,
+          "speed": 42,
+          "gold": 11,
+          "dmg": 2,
+          "size": 52,
+          "move": "ground",
+          "sprite": "cCamel",
+          "src": "casual/enemies/camel.png",
+          "faceLeft": true,
+          "look": 2
+        },
+        "name": "낙타짐꾼",
+        "hue": 0,
+        "cls": "L",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 31,
+        "armor": 2,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 46,
+      "values": {
+        "hpMult": 57.457,
+        "count": 36,
+        "gap": 0.34,
+        "goldMult": 2.15,
+        "speedMult": 1.06,
+        "bossHp": 1.25,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "otter",
+          "name": "수달창병",
+          "hp": 36,
+          "speed": 64,
+          "gold": 8,
+          "dmg": 1,
+          "size": 42,
+          "move": "ground",
+          "sprite": "cOtter",
+          "src": "casual/enemies/otter.png",
+          "walk": "cOtterWalk",
+          "walkSrc": "casual/enemies/otter-walk-2x2.png",
+          "look": 2
+        },
+        "name": "수달창병",
+        "hue": 0,
+        "cls": "S",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 36,
+        "armor": 2,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 47,
+      "values": {
+        "hpMult": 62.053,
+        "count": 36,
+        "gap": 0.33,
+        "goldMult": 2.175,
+        "speedMult": 1.07,
+        "bossHp": 1.26,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "basset",
+          "name": "바셋하운드",
+          "hp": 42,
+          "speed": 40,
+          "gold": 9,
+          "dmg": 1,
+          "size": 46,
+          "move": "ground",
+          "sprite": "cBasset",
+          "src": "casual/enemies/basset.png",
+          "look": 2
+        },
+        "name": "바셋하운드",
+        "hue": 0,
+        "cls": "M",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 36,
+        "armor": 2,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 48,
+      "values": {
+        "hpMult": 67.018,
+        "count": 36,
+        "gap": 0.32000000000000006,
+        "goldMult": 2.2,
+        "speedMult": 1.08,
+        "bossHp": 1.28,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "quetzal",
+          "name": "케찰",
+          "hp": 32,
+          "speed": 82,
+          "gold": 12,
+          "dmg": 1,
+          "size": 50,
+          "move": "air",
+          "sprite": "cQuetzal",
+          "src": "casual/enemies/quetzal.png",
+          "look": 2
+        },
+        "name": "케찰",
+        "hue": 0,
+        "cls": "L",
+        "move": "air",
+        "tank": false,
+        "art": null,
+        "count": 31,
+        "armor": 3,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 49,
+      "values": {
+        "hpMult": 72.379,
+        "count": 36,
+        "gap": 0.31000000000000005,
+        "goldMult": 2.225,
+        "speedMult": 1.09,
+        "bossHp": 1.29,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "gecko",
+          "name": "도마뱀헬멧",
+          "hp": 36,
+          "speed": 60,
+          "gold": 8,
+          "dmg": 1,
+          "size": 40,
+          "move": "burrow",
+          "sprite": "cGecko",
+          "src": "casual/enemies/gecko.png",
+          "look": 1
+        },
+        "name": "도마뱀헬멧",
+        "hue": 0,
+        "cls": "S",
+        "move": "burrow",
+        "tank": false,
+        "art": null,
+        "count": 36,
+        "armor": 3,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 50,
+      "values": {
+        "hpMult": 78.169,
+        "count": 36,
+        "gap": 0.30000000000000004,
+        "goldMult": 2.25,
+        "speedMult": 1.1,
+        "bossHp": 1.3,
+        "bosses": 2,
+        "elites": 3
+      },
+      "monster": {
+        "boss": true,
+        "cls": "L",
+        "hue": 0,
+        "prefix": "",
+        "armor": 3,
+        "count": 0,
+        "name": "보스"
+      }
+    },
+    {
+      "wave": 51,
+      "values": {
+        "hpMult": 84.423,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 2.275,
+        "speedMult": 1.11,
+        "bossHp": 1.31,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "manatee",
+          "name": "매너티선원",
+          "hp": 78,
+          "speed": 32,
+          "gold": 12,
+          "dmg": 2,
+          "size": 52,
+          "move": "ground",
+          "sprite": "cManatee",
+          "src": "casual/enemies/manatee.png",
+          "look": 2
+        },
+        "name": "매너티선원",
+        "hue": 0,
+        "cls": "L",
+        "move": "ground",
+        "tank": true,
+        "art": null,
+        "count": 31,
+        "armor": 5,
+        "hpMult": 1.25
+      }
+    },
+    {
+      "wave": 52,
+      "values": {
+        "hpMult": 91.177,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 2.3,
+        "speedMult": 1.12,
+        "bossHp": 1.32,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "swan",
+          "name": "백조기사",
+          "hp": 40,
+          "speed": 72,
+          "gold": 11,
+          "dmg": 1,
+          "size": 50,
+          "move": "air",
+          "sprite": "cSwan",
+          "src": "casual/enemies/swan.png",
+          "look": 2
+        },
+        "name": "백조기사",
+        "hue": 0,
+        "cls": "S",
+        "move": "air",
+        "tank": false,
+        "art": null,
+        "count": 36,
+        "armor": 3,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 53,
+      "values": {
+        "hpMult": 98.471,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 2.325,
+        "speedMult": 1.13,
+        "bossHp": 1.34,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "collie",
+          "name": "콜리기사",
+          "hp": 46,
+          "speed": 62,
+          "gold": 10,
+          "dmg": 1,
+          "size": 48,
+          "move": "ground",
+          "sprite": "cCollie",
+          "src": "casual/enemies/collie.png",
+          "look": 2
+        },
+        "name": "콜리기사",
+        "hue": 0,
+        "cls": "M",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 36,
+        "armor": 3,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 54,
+      "values": {
+        "hpMult": 106.349,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 2.35,
+        "speedMult": 1.1400000000000001,
+        "bossHp": 1.35,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "monkey",
+          "name": "원숭이창병",
+          "hp": 36,
+          "speed": 76,
+          "gold": 9,
+          "dmg": 1,
+          "size": 42,
+          "move": "ground",
+          "sprite": "cMonkey",
+          "src": "casual/enemies/monkey.png",
+          "look": 2
+        },
+        "name": "원숭이창병",
+        "hue": 0,
+        "cls": "S",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 36,
+        "armor": 4,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 55,
+      "values": {
+        "hpMult": 114.856,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 2.375,
+        "speedMult": 1.15,
+        "bossHp": 1.36,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "narwhal",
+          "name": "일각경기사",
+          "hp": 58,
+          "speed": 48,
+          "gold": 11,
+          "dmg": 1,
+          "size": 50,
+          "move": "ground",
+          "sprite": "cNarwhal",
+          "src": "casual/enemies/narwhal.png",
+          "look": 3
+        },
+        "name": "일각경기사",
+        "hue": 0,
+        "cls": "L",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 31,
+        "armor": 4,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 56,
+      "values": {
+        "hpMult": 124.045,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 2.4,
+        "speedMult": 1.16,
+        "bossHp": 1.37,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "worm",
+          "name": "모래벌레",
+          "hp": 55,
+          "speed": 40,
+          "gold": 10,
+          "dmg": 2,
+          "size": 50,
+          "move": "burrow",
+          "sprite": "cWorm",
+          "src": "casual/enemies/worm.png",
+          "look": 1
+        },
+        "name": "모래벌레",
+        "hue": 0,
+        "cls": "L",
+        "move": "burrow",
+        "tank": false,
+        "art": null,
+        "count": 31,
+        "armor": 4,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 57,
+      "values": {
+        "hpMult": 133.969,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 2.425,
+        "speedMult": 1.17,
+        "bossHp": 1.38,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "oryx",
+          "name": "오릭스기사",
+          "hp": 64,
+          "speed": 52,
+          "gold": 11,
+          "dmg": 1,
+          "size": 50,
+          "move": "ground",
+          "sprite": "cOryx",
+          "src": "casual/enemies/oryx.png",
+          "look": 3
+        },
+        "name": "오릭스기사",
+        "hue": 0,
+        "cls": "L",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 31,
+        "armor": 4,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 58,
+      "values": {
+        "hpMult": 144.686,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 2.45,
+        "speedMult": 1.18,
+        "bossHp": 1.4,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "durian",
+          "name": "두리안기사",
+          "hp": 64,
+          "speed": 32,
+          "gold": 12,
+          "dmg": 1,
+          "size": 50,
+          "move": "ground",
+          "sprite": "cDurian",
+          "src": "casual/enemies/durian.png",
+          "look": 3
+        },
+        "name": "두리안기사",
+        "hue": 0,
+        "cls": "S",
+        "move": "ground",
+        "tank": true,
+        "art": null,
+        "count": 36,
+        "armor": 6,
+        "hpMult": 1.25
+      }
+    },
+    {
+      "wave": 59,
+      "values": {
+        "hpMult": 156.261,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 2.475,
+        "speedMult": 1.19,
+        "bossHp": 1.41,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "hyena",
+          "name": "하이에나정찰",
+          "hp": 44,
+          "speed": 72,
+          "gold": 10,
+          "dmg": 1,
+          "size": 46,
+          "move": "ground",
+          "sprite": "cHyena",
+          "src": "casual/enemies/hyena.png",
+          "look": 3
+        },
+        "name": "하이에나정찰",
+        "hue": 0,
+        "cls": "M",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 36,
+        "armor": 4,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 60,
+      "values": {
+        "hpMult": 168.762,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 2.5,
+        "speedMult": 1.2,
+        "bossHp": 1.42,
+        "bosses": 2,
+        "elites": 3
+      },
+      "monster": {
+        "boss": true,
+        "cls": "L",
+        "hue": 0,
+        "prefix": "",
+        "armor": 5,
+        "count": 0,
+        "name": "보스"
+      }
+    },
+    {
+      "wave": 61,
+      "values": {
+        "hpMult": 179.438,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 2.525,
+        "speedMult": 1.21,
+        "bossHp": 1.43,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "husky",
+          "name": "허스키썰매",
+          "hp": 50,
+          "speed": 58,
+          "gold": 10,
+          "dmg": 1,
+          "size": 48,
+          "move": "ground",
+          "sprite": "cHusky",
+          "src": "casual/enemies/husky.png",
+          "look": 3
+        },
+        "name": "허스키썰매",
+        "hue": 0,
+        "cls": "M",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 36,
+        "armor": 5,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 62,
+      "values": {
+        "hpMult": 190.789,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 2.55,
+        "speedMult": 1.22,
+        "bossHp": 1.44,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "orca",
+          "name": "범고래아기",
+          "hp": 70,
+          "speed": 48,
+          "gold": 13,
+          "dmg": 2,
+          "size": 52,
+          "move": "ground",
+          "sprite": "cOrca",
+          "src": "casual/enemies/orca.png",
+          "look": 3
+        },
+        "name": "범고래아기",
+        "hue": 0,
+        "cls": "S",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 36,
+        "armor": 5,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 63,
+      "values": {
+        "hpMult": 202.858,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 2.575,
+        "speedMult": 1.23,
+        "bossHp": 1.46,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "sandfish",
+          "name": "모래고기",
+          "hp": 38,
+          "speed": 58,
+          "gold": 9,
+          "dmg": 1,
+          "size": 42,
+          "move": "burrow",
+          "sprite": "cSandfish",
+          "src": "casual/enemies/sandfish.png",
+          "faceLeft": true,
+          "look": 1
+        },
+        "name": "모래고기",
+        "hue": 0,
+        "cls": "S",
+        "move": "burrow",
+        "tank": false,
+        "art": null,
+        "count": 36,
+        "armor": 5,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 64,
+      "values": {
+        "hpMult": 215.691,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 2.6,
+        "speedMult": 1.24,
+        "bossHp": 1.47,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "spoonbill",
+          "name": "저어새",
+          "hp": 30,
+          "speed": 80,
+          "gold": 10,
+          "dmg": 1,
+          "size": 48,
+          "move": "air",
+          "sprite": "cSpoonbill",
+          "src": "casual/enemies/spoonbill.png",
+          "look": 2
+        },
+        "name": "저어새",
+        "hue": 0,
+        "cls": "M",
+        "move": "air",
+        "tank": false,
+        "art": null,
+        "count": 36,
+        "armor": 5,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 65,
+      "values": {
+        "hpMult": 229.336,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 2.625,
+        "speedMult": 1.25,
+        "bossHp": 1.48,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "cow",
+          "name": "소기사",
+          "hp": 70,
+          "speed": 42,
+          "gold": 11,
+          "dmg": 2,
+          "size": 50,
+          "move": "ground",
+          "sprite": "cCow",
+          "src": "casual/enemies/cow.png",
+          "look": 3
+        },
+        "name": "소기사",
+        "hue": 0,
+        "cls": "L",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 31,
+        "armor": 5,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 66,
+      "values": {
+        "hpMult": 243.843,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 2.65,
+        "speedMult": 1.26,
+        "bossHp": 1.49,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "saintbernard",
+          "name": "세인트버나드",
+          "hp": 72,
+          "speed": 36,
+          "gold": 12,
+          "dmg": 1,
+          "size": 54,
+          "move": "ground",
+          "sprite": "cSaintbernard",
+          "src": "casual/enemies/saintbernard.png",
+          "look": 3
+        },
+        "name": "세인트버나드",
+        "hue": 0,
+        "cls": "L",
+        "move": "ground",
+        "tank": true,
+        "art": null,
+        "count": 31,
+        "armor": 26,
+        "hpMult": 1.25
+      }
+    },
+    {
+      "wave": 67,
+      "values": {
+        "hpMult": 259.269,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 2.675,
+        "speedMult": 1.27,
+        "bossHp": 1.5,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "panda",
+          "name": "팬더수도승",
+          "hp": 72,
+          "speed": 36,
+          "gold": 11,
+          "dmg": 2,
+          "size": 50,
+          "move": "ground",
+          "sprite": "cPanda",
+          "src": "casual/enemies/panda.png",
+          "walk": "cPandaWalk",
+          "walkSrc": "casual/enemies/panda-walk-2x2.png",
+          "look": 3
+        },
+        "name": "팬더수도승",
+        "hue": 0,
+        "cls": "S",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 36,
+        "armor": 6,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 68,
+      "values": {
+        "hpMult": 275.67,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 2.7,
+        "speedMult": 1.28,
+        "bossHp": 1.52,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "condor",
+          "name": "콘도르정찰",
+          "hp": 40,
+          "speed": 88,
+          "gold": 12,
+          "dmg": 1,
+          "size": 50,
+          "move": "air",
+          "sprite": "cCondor",
+          "src": "casual/enemies/condor.png",
+          "faceLeft": true,
+          "look": 2
+        },
+        "name": "콘도르정찰",
+        "hue": 0,
+        "cls": "S",
+        "move": "air",
+        "tank": false,
+        "art": null,
+        "count": 36,
+        "armor": 6,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 69,
+      "values": {
+        "hpMult": 293.109,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 2.725,
+        "speedMult": 1.29,
+        "bossHp": 1.53,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "greatdane",
+          "name": "그레이트데인",
+          "hp": 72,
+          "speed": 44,
+          "gold": 12,
+          "dmg": 1,
+          "size": 56,
+          "move": "ground",
+          "sprite": "cGreatdane",
+          "src": "casual/enemies/greatdane.png",
+          "look": 3
+        },
+        "name": "그레이트데인",
+        "hue": 0,
+        "cls": "L",
+        "move": "ground",
+        "tank": true,
+        "art": null,
+        "count": 31,
+        "armor": 8,
+        "hpMult": 1.25
+      }
+    },
+    {
+      "wave": 70,
+      "values": {
+        "hpMult": 311.651,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 2.75,
+        "speedMult": 1.3,
+        "bossHp": 1.54,
+        "bosses": 2,
+        "elites": 3
+      },
+      "monster": {
+        "boss": true,
+        "cls": "S",
+        "hue": 0,
+        "prefix": "",
+        "armor": 6,
+        "count": 0,
+        "name": "보스"
+      }
+    },
+    {
+      "wave": 71,
+      "values": {
+        "hpMult": 331.366,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 2.775,
+        "speedMult": 1.31,
+        "bossHp": 1.55,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "moose",
+          "name": "무스레인저",
+          "hp": 74,
+          "speed": 40,
+          "gold": 12,
+          "dmg": 2,
+          "size": 54,
+          "move": "ground",
+          "sprite": "cMoose",
+          "src": "casual/enemies/moose.png",
+          "look": 3
+        },
+        "name": "무스레인저",
+        "hue": 0,
+        "cls": "L",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 31,
+        "armor": 6,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 72,
+      "values": {
+        "hpMult": 352.329,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 2.8,
+        "speedMult": 1.32,
+        "bossHp": 1.56,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "kite",
+          "name": "연새",
+          "hp": 20,
+          "speed": 104,
+          "gold": 9,
+          "dmg": 1,
+          "size": 42,
+          "move": "air",
+          "sprite": "cKite",
+          "src": "casual/enemies/kite.png",
+          "faceLeft": true,
+          "look": 2
+        },
+        "name": "연새",
+        "hue": 0,
+        "cls": "S",
+        "move": "air",
+        "tank": false,
+        "art": null,
+        "count": 36,
+        "armor": 7,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 73,
+      "values": {
+        "hpMult": 374.617,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 2.825,
+        "speedMult": 1.33,
+        "bossHp": 1.58,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "ram",
+          "name": "숫양돌격",
+          "hp": 78,
+          "speed": 38,
+          "gold": 12,
+          "dmg": 2,
+          "size": 50,
+          "move": "ground",
+          "sprite": "cRam",
+          "src": "casual/enemies/ram.png",
+          "look": 3
+        },
+        "name": "숫양돌격",
+        "hue": 0,
+        "cls": "L",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 31,
+        "armor": 7,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 74,
+      "values": {
+        "hpMult": 398.315,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 2.85,
+        "speedMult": 1.34,
+        "bossHp": 1.59,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "newfoundland",
+          "name": "뉴펀들랜드",
+          "hp": 78,
+          "speed": 32,
+          "gold": 13,
+          "dmg": 1,
+          "size": 56,
+          "move": "ground",
+          "sprite": "cNewfoundland",
+          "src": "casual/enemies/newfoundland.png",
+          "look": 3
+        },
+        "name": "뉴펀들랜드",
+        "hue": 0,
+        "cls": "S",
+        "move": "ground",
+        "tank": true,
+        "art": null,
+        "count": 36,
+        "armor": 9,
+        "hpMult": 1.25
+      }
+    },
+    {
+      "wave": 75,
+      "values": {
+        "hpMult": 423.512,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 2.875,
+        "speedMult": 1.35,
+        "bossHp": 1.6,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "boar",
+          "name": "멧돼지기사",
+          "hp": 78,
+          "speed": 40,
+          "gold": 12,
+          "dmg": 2,
+          "size": 50,
+          "move": "ground",
+          "sprite": "cBoar",
+          "src": "casual/enemies/boar.png",
+          "walk": "cBoarWalk",
+          "walkSrc": "casual/enemies/boar-walk-2x2.png",
+          "look": 3
+        },
+        "name": "멧돼지기사",
+        "hue": 0,
+        "cls": "S",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 36,
+        "armor": 7,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 76,
+      "values": {
+        "hpMult": 450.304,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 2.9,
+        "speedMult": 1.3599999999999999,
+        "bossHp": 1.61,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "starling",
+          "name": "찌르레기",
+          "hp": 22,
+          "speed": 92,
+          "gold": 9,
+          "dmg": 1,
+          "size": 42,
+          "move": "air",
+          "sprite": "cStarling",
+          "src": "casual/enemies/starling.png",
+          "look": 2
+        },
+        "name": "찌르레기",
+        "hue": 0,
+        "cls": "S",
+        "move": "air",
+        "tank": false,
+        "art": null,
+        "count": 36,
+        "armor": 7,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 77,
+      "values": {
+        "hpMult": 478.79,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 2.925,
+        "speedMult": 1.37,
+        "bossHp": 1.62,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "spider",
+          "name": "함정거미",
+          "hp": 44,
+          "speed": 48,
+          "gold": 10,
+          "dmg": 1,
+          "size": 44,
+          "move": "burrow",
+          "sprite": "cSpider",
+          "src": "casual/enemies/spider.png",
+          "look": 2
+        },
+        "name": "함정거미",
+        "hue": 0,
+        "cls": "S",
+        "move": "burrow",
+        "tank": false,
+        "art": null,
+        "count": 36,
+        "armor": 7,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 78,
+      "values": {
+        "hpMult": 509.078,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 2.95,
+        "speedMult": 1.38,
+        "bossHp": 1.64,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "hippo",
+          "name": "하마선원",
+          "hp": 80,
+          "speed": 36,
+          "gold": 12,
+          "dmg": 2,
+          "size": 52,
+          "move": "ground",
+          "sprite": "cHippo",
+          "src": "casual/enemies/hippo.png",
+          "walk": "cHippoWalk",
+          "walkSrc": "casual/enemies/hippo-walk-2x2.png",
+          "look": 3
+        },
+        "name": "하마선원",
+        "hue": 0,
+        "cls": "L",
+        "move": "ground",
+        "tank": true,
+        "art": null,
+        "count": 31,
+        "armor": 10,
+        "hpMult": 1.25
+      }
+    },
+    {
+      "wave": 79,
+      "values": {
+        "hpMult": 541.283,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 2.975,
+        "speedMult": 1.3900000000000001,
+        "bossHp": 1.65,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "akita",
+          "name": "아키타수호",
+          "hp": 52,
+          "speed": 50,
+          "gold": 10,
+          "dmg": 1,
+          "size": 48,
+          "move": "ground",
+          "sprite": "cAkita",
+          "src": "casual/enemies/akita.png",
+          "look": 3
+        },
+        "name": "아키타수호",
+        "hue": 0,
+        "cls": "M",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 36,
+        "armor": 8,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 80,
+      "values": {
+        "hpMult": 575.524,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 3,
+        "speedMult": 1.4,
+        "bossHp": 1.66,
+        "bosses": 2,
+        "elites": 3
+      },
+      "monster": {
+        "boss": true,
+        "cls": "M",
+        "hue": 0,
+        "prefix": "",
+        "armor": 8,
+        "count": 0,
+        "name": "보스"
+      }
+    },
+    {
+      "wave": 81,
+      "values": {
+        "hpMult": 611.932,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 3.025,
+        "speedMult": 1.4100000000000001,
+        "bossHp": 1.67,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "matchstick",
+          "name": "성냥개비",
+          "hp": 18,
+          "speed": 80,
+          "gold": 7,
+          "dmg": 1,
+          "size": 40,
+          "move": "ground",
+          "sprite": "cMatchstick",
+          "src": "casual/enemies/matchstick.png",
+          "look": 3
+        },
+        "name": "성냥개비",
+        "hue": 0,
+        "cls": "S",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 36,
+        "armor": 8,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 82,
+      "values": {
+        "hpMult": 650.643,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 3.05,
+        "speedMult": 1.42,
+        "bossHp": 1.68,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "porcupine",
+          "name": "호저방패",
+          "hp": 70,
+          "speed": 38,
+          "gold": 11,
+          "dmg": 2,
+          "size": 48,
+          "move": "ground",
+          "sprite": "cPorcupine",
+          "src": "casual/enemies/porcupine.png",
+          "walk": "cPorcupineWalk",
+          "walkSrc": "casual/enemies/porcupine-walk-2x2.png",
+          "faceLeft": true,
+          "look": 3
+        },
+        "name": "호저방패",
+        "hue": 0,
+        "cls": "M",
+        "move": "ground",
+        "tank": true,
+        "art": null,
+        "count": 36,
+        "armor": 10,
+        "hpMult": 1.25
+      }
+    },
+    {
+      "wave": 83,
+      "values": {
+        "hpMult": 691.802,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 3.075,
+        "speedMult": 1.43,
+        "bossHp": 1.7,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "walrus",
+          "name": "바다코끼리",
+          "hp": 84,
+          "speed": 32,
+          "gold": 12,
+          "dmg": 2,
+          "size": 52,
+          "move": "ground",
+          "sprite": "cWalrus",
+          "src": "casual/enemies/walrus.png",
+          "look": 3
+        },
+        "name": "바다코끼리",
+        "hue": 0,
+        "cls": "L",
+        "move": "ground",
+        "tank": true,
+        "art": null,
+        "count": 31,
+        "armor": 10,
+        "hpMult": 1.25
+      }
+    },
+    {
+      "wave": 84,
+      "values": {
+        "hpMult": 735.566,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 3.1,
+        "speedMult": 1.44,
+        "bossHp": 1.71,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "pangolin",
+          "name": "천산갑",
+          "hp": 80,
+          "speed": 34,
+          "gold": 12,
+          "dmg": 2,
+          "size": 50,
+          "move": "burrow",
+          "sprite": "cPangolin",
+          "src": "casual/enemies/pangolin.png",
+          "look": 2
+        },
+        "name": "천산갑",
+        "hue": 0,
+        "cls": "L",
+        "move": "burrow",
+        "tank": true,
+        "art": null,
+        "count": 31,
+        "armor": 11,
+        "hpMult": 1.25
+      }
+    },
+    {
+      "wave": 85,
+      "values": {
+        "hpMult": 782.098,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 3.125,
+        "speedMult": 1.45,
+        "bossHp": 1.72,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "snake",
+          "name": "뱀닌자",
+          "hp": 34,
+          "speed": 82,
+          "gold": 10,
+          "dmg": 1,
+          "size": 42,
+          "move": "ground",
+          "sprite": "cSnake",
+          "src": "casual/enemies/snake.png",
+          "walk": "cSnakeWalk",
+          "walkSrc": "casual/enemies/snake-walk-2x2.png",
+          "look": 3
+        },
+        "name": "뱀닌자",
+        "hue": 0,
+        "cls": "S",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 36,
+        "armor": 9,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 86,
+      "values": {
+        "hpMult": 831.573,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 3.15,
+        "speedMult": 1.46,
+        "bossHp": 1.73,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "compass",
+          "name": "나침반",
+          "hp": 36,
+          "speed": 48,
+          "gold": 9,
+          "dmg": 1,
+          "size": 42,
+          "move": "ground",
+          "sprite": "cCompass",
+          "src": "casual/enemies/compass.png",
+          "look": 3
+        },
+        "name": "나침반",
+        "hue": 0,
+        "cls": "S",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 36,
+        "armor": 9,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 87,
+      "values": {
+        "hpMult": 884.178,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 3.175,
+        "speedMult": 1.47,
+        "bossHp": 1.74,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "turtle",
+          "name": "거북전차",
+          "hp": 85,
+          "speed": 32,
+          "gold": 12,
+          "dmg": 2,
+          "size": 50,
+          "move": "ground",
+          "sprite": "cTurtle",
+          "src": "casual/enemies/turtle.png",
+          "walk": "cTurtleWalk",
+          "walkSrc": "casual/enemies/turtle-walk-2x2.png",
+          "faceLeft": true,
+          "look": 3
+        },
+        "name": "거북전차",
+        "hue": 0,
+        "cls": "L",
+        "move": "ground",
+        "tank": true,
+        "art": null,
+        "count": 31,
+        "armor": 11,
+        "hpMult": 1.25
+      }
+    },
+    {
+      "wave": 88,
+      "values": {
+        "hpMult": 940.112,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 3.2,
+        "speedMult": 1.48,
+        "bossHp": 1.76,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "snipe",
+          "name": "도요새",
+          "hp": 24,
+          "speed": 86,
+          "gold": 9,
+          "dmg": 1,
+          "size": 42,
+          "move": "air",
+          "sprite": "cSnipe",
+          "src": "casual/enemies/snipe.png",
+          "faceLeft": true,
+          "look": 2
+        },
+        "name": "도요새",
+        "hue": 0,
+        "cls": "S",
+        "move": "air",
+        "tank": false,
+        "art": null,
+        "count": 36,
+        "armor": 9,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 89,
+      "values": {
+        "hpMult": 999.583,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 3.225,
+        "speedMult": 1.49,
+        "bossHp": 1.77,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "polar",
+          "name": "북극곰아기",
+          "hp": 72,
+          "speed": 38,
+          "gold": 12,
+          "dmg": 2,
+          "size": 50,
+          "move": "ground",
+          "sprite": "cPolar",
+          "src": "casual/enemies/polar.png",
+          "look": 4
+        },
+        "name": "북극곰아기",
+        "hue": 0,
+        "cls": "L",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 31,
+        "armor": 9,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 90,
+      "values": {
+        "hpMult": 1062.817,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 3.25,
+        "speedMult": 1.5,
+        "bossHp": 1.78,
+        "bosses": 2,
+        "elites": 3
+      },
+      "monster": {
+        "boss": true,
+        "cls": "L",
+        "hue": 0,
+        "prefix": "",
+        "armor": 10,
+        "count": 0,
+        "name": "보스"
+      }
+    },
+    {
+      "wave": 91,
+      "values": {
+        "hpMult": 1130.05,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 3.275,
+        "speedMult": 1.5,
+        "bossHp": 1.79,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "ferret",
+          "name": "페럿도둑",
+          "hp": 32,
+          "speed": 78,
+          "gold": 9,
+          "dmg": 1,
+          "size": 40,
+          "move": "burrow",
+          "sprite": "cFerret",
+          "src": "casual/enemies/ferret.png",
+          "look": 2
+        },
+        "name": "페럿도둑",
+        "hue": 0,
+        "cls": "S",
+        "move": "burrow",
+        "tank": false,
+        "art": null,
+        "count": 36,
+        "armor": 10,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 92,
+      "values": {
+        "hpMult": 1201.537,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 3.3,
+        "speedMult": 1.5,
+        "bossHp": 1.8,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "blackbird",
+          "name": "검은새",
+          "hp": 24,
+          "speed": 90,
+          "gold": 9,
+          "dmg": 1,
+          "size": 42,
+          "move": "air",
+          "sprite": "cBlackbird",
+          "src": "casual/enemies/blackbird.png",
+          "look": 2
+        },
+        "name": "검은새",
+        "hue": 0,
+        "cls": "S",
+        "move": "air",
+        "tank": false,
+        "art": null,
+        "count": 36,
+        "armor": 10,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 93,
+      "values": {
+        "hpMult": 1277.547,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 3.325,
+        "speedMult": 1.5,
+        "bossHp": 1.82,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "crocodile",
+          "name": "악어선원",
+          "hp": 82,
+          "speed": 36,
+          "gold": 12,
+          "dmg": 2,
+          "size": 52,
+          "move": "ground",
+          "sprite": "cCrocodile",
+          "src": "casual/enemies/crocodile.png",
+          "look": 4
+        },
+        "name": "악어선원",
+        "hue": 0,
+        "cls": "L",
+        "move": "ground",
+        "tank": true,
+        "art": null,
+        "count": 31,
+        "armor": 12,
+        "hpMult": 1.25
+      }
+    },
+    {
+      "wave": 94,
+      "values": {
+        "hpMult": 1358.364,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 3.35,
+        "speedMult": 1.5,
+        "bossHp": 1.83,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "yak",
+          "name": "야크전사",
+          "hp": 88,
+          "speed": 34,
+          "gold": 13,
+          "dmg": 2,
+          "size": 54,
+          "move": "ground",
+          "sprite": "cYak",
+          "src": "casual/enemies/yak.png",
+          "look": 4
+        },
+        "name": "야크전사",
+        "hue": 0,
+        "cls": "L",
+        "move": "ground",
+        "tank": true,
+        "art": null,
+        "count": 31,
+        "armor": 12,
+        "hpMult": 1.25
+      }
+    },
+    {
+      "wave": 95,
+      "values": {
+        "hpMult": 1444.294,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 3.375,
+        "speedMult": 1.5,
+        "bossHp": 1.84,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "bison",
+          "name": "들소전사",
+          "hp": 90,
+          "speed": 36,
+          "gold": 13,
+          "dmg": 2,
+          "size": 54,
+          "move": "ground",
+          "sprite": "cBison",
+          "src": "casual/enemies/bison.png",
+          "faceLeft": true,
+          "look": 4
+        },
+        "name": "들소전사",
+        "hue": 0,
+        "cls": "M",
+        "move": "ground",
+        "tank": true,
+        "art": null,
+        "count": 36,
+        "armor": 12,
+        "hpMult": 1.25
+      }
+    },
+    {
+      "wave": 96,
+      "values": {
+        "hpMult": 1535.66,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 3.4,
+        "speedMult": 1.5,
+        "bossHp": 1.85,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "kingbird",
+          "name": "왕새",
+          "hp": 26,
+          "speed": 90,
+          "gold": 10,
+          "dmg": 1,
+          "size": 42,
+          "move": "air",
+          "sprite": "cKingbird",
+          "src": "casual/enemies/kingbird.png",
+          "look": 2
+        },
+        "name": "왕새",
+        "hue": 0,
+        "cls": "S",
+        "move": "air",
+        "tank": false,
+        "art": null,
+        "count": 36,
+        "armor": 11,
+        "hpMult": 1
+      }
+    },
+    {
+      "wave": 97,
+      "values": {
+        "hpMult": 1632.806,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 3.425,
+        "speedMult": 1.5,
+        "bossHp": 1.86,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "elephant",
+          "name": "아기코끼리",
+          "hp": 95,
+          "speed": 32,
+          "gold": 14,
+          "dmg": 2,
+          "size": 56,
+          "move": "ground",
+          "sprite": "cElephant",
+          "src": "casual/enemies/elephant.png",
+          "look": 4
+        },
+        "name": "아기코끼리",
+        "hue": 0,
+        "cls": "L",
+        "move": "ground",
+        "tank": true,
+        "art": null,
+        "count": 31,
+        "armor": 13,
+        "hpMult": 1.25
+      }
+    },
+    {
+      "wave": 98,
+      "values": {
+        "hpMult": 1736.098,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 3.45,
+        "speedMult": 1.5,
+        "bossHp": 1.88,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "pebblegolem",
+          "name": "조약돌골렘",
+          "hp": 80,
+          "speed": 28,
+          "gold": 13,
+          "dmg": 2,
+          "size": 50,
+          "move": "burrow",
+          "sprite": "cPebblegolem",
+          "src": "casual/enemies/pebblegolem.png",
+          "look": 3
+        },
+        "name": "조약돌골렘",
+        "hue": 0,
+        "cls": "M",
+        "move": "burrow",
+        "tank": true,
+        "art": null,
+        "count": 36,
+        "armor": 13,
+        "hpMult": 1.25
+      }
+    },
+    {
+      "wave": 99,
+      "values": {
+        "hpMult": 1845.923,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 3.475,
+        "speedMult": 1.5,
+        "bossHp": 1.89,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "rhino",
+          "name": "아기코뿔소",
+          "hp": 88,
+          "speed": 34,
+          "gold": 13,
+          "dmg": 2,
+          "size": 52,
+          "move": "ground",
+          "sprite": "cRhino",
+          "src": "casual/enemies/rhino.png",
+          "walk": "cRhinoWalk",
+          "walkSrc": "casual/enemies/rhino-walk-2x2.png",
+          "faceLeft": true,
+          "look": 5
+        },
+        "name": "아기코뿔소",
+        "hue": 0,
+        "cls": "L",
+        "move": "ground",
+        "tank": true,
+        "art": null,
+        "count": 31,
+        "armor": 46,
+        "hpMult": 1.25
+      }
+    },
+    {
+      "wave": 100,
+      "values": {
+        "hpMult": 1962.696,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 3.5,
+        "speedMult": 1.5,
+        "bossHp": 1.9,
+        "bosses": 2,
+        "elites": 3
+      },
+      "monster": {
+        "boss": true,
+        "cls": "S",
+        "hue": 0,
+        "prefix": "",
+        "armor": 11,
+        "count": 0,
+        "name": "보스"
+      }
+    },
+    {
+      "wave": 101,
+      "values": {
+        "hpMult": 2086.857,
+        "count": 36,
+        "gap": 0.3,
+        "goldMult": 3.525,
+        "speedMult": 1.5,
+        "bossHp": 1.91,
+        "bosses": 1,
+        "elites": 3
+      },
+      "monster": {
+        "boss": false,
+        "base": {
+          "id": "wolverine",
+          "name": "울버린",
+          "hp": 58,
+          "speed": 54,
+          "gold": 12,
+          "dmg": 2,
+          "size": 46,
+          "move": "ground",
+          "sprite": "cWolverine",
+          "src": "casual/enemies/wolverine.png",
+          "look": 5
+        },
+        "name": "울버린",
+        "hue": 0,
+        "cls": "M",
+        "move": "ground",
+        "tank": false,
+        "art": null,
+        "count": 36,
+        "armor": 11,
+        "hpMult": 1
+      }
+    }
+  ]
+}

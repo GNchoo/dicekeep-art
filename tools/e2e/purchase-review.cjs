@@ -40,7 +40,11 @@ fs.mkdirSync(out, { recursive: true });
       await buy.click(); await page.keyboard.press('Escape'); assert.equal(orders, 0);
       await buy.click(); await page.click('#purchase-review-confirm');
       await page.waitForFunction(() => document.getElementById('commerce-status').textContent.length > 0);
-      assert.equal(orders, 1); assert.deepEqual(errors, []);
+      assert.equal(orders, 1);
+      await page.locator('[data-sku="skinRoyal"]').click();
+      assert.match(await page.locator('#purchase-review-item').innerText(), /20종 타워 외형/);
+      assert.match(await page.locator('#purchase-review-price').innerText(), /2,900/);
+      await page.keyboard.press('Escape'); assert.equal(orders, 1); assert.deepEqual(errors, []);
       rows.push({ tag, orders, cancelCreatesOrder: false, pass: true });
       await context.close(); console.log('PASS purchase review', tag);
     }

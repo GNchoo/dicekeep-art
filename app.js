@@ -52,6 +52,7 @@
 
   // 백그라운드: 배경음 멈춤 · 복귀: 재개 + 크기 다시 계산 (회전·시스템바 변화)
   App.addListener('pause', function () {
+    try { if (W.DKAPP && W.DKAPP.saveRun) W.DKAPP.saveRun(); } catch (_) {}
     try { if (W.DKBGM && W.DKBGM.suspend) W.DKBGM.suspend(); } catch (_) {}
   });
   App.addListener('resume', function () {

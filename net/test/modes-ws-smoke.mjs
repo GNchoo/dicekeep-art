@@ -44,6 +44,7 @@ try {
   assert.equal(back.resumed,true);assert.equal(back.room.game.mode,'extreme');assert.equal(back.room.game.timing.clearWave,0);
   assert.equal(back.room.players.find(p=>p.pid===a.id.pid).wave,205);
   report.cases.push('extreme start, wave 205, clear rejection, reconnect retain rules and progress');
+  replacement.send({t:'done',w:205});b.send({t:'done',w:102});
   replacement.send({t:'dead',w:206,k:70,r:'lives'});b.send({t:'dead',w:103,k:999,r:'lives'});
   const end=await b.wait(type('end'));assert.equal(end.reason,'all-dead');assert.deepEqual(end.ranking.map(p=>p.wave),[205,102]);
   report.cases.push('extreme friend ranking uses completed wave ahead of kills');

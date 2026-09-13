@@ -247,5 +247,5 @@
   }
 
   return Object.freeze({ VERSION, ECONOMY_VERSION, MAX_SHARDS, MAX_LEVEL, MAX_COUNTER, DECK_SIZE, MODES, MILESTONES, GEM_MILESTONES, migrateEconomy,
-    defaultProfile, sanitize, normalizeRecord, cardUnlockCost, upgradeCost, unlock, upgrade, setDeck, snapshot, pureSnapshot, growsIn: growthMode, damageMultiplier, draw, settle });
+    defaultProfile, sanitize, normalizeRecord, cardUnlockCost, upgradeCost, unlock, upgrade, setDeck, snapshot, snapshotValid, pureSnapshot, growsIn: growthMode, damageMultiplier, draw, settle });
 });

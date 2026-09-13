@@ -14,7 +14,7 @@
 // 서버는 sum(진행 요약)·done·dead·clear 보고를 받아 중계·순위·종료만 맡는다.
 //   순위: cleared 는 clearAt 오름차순(먼저 완주 = 1위, 공동 없음) → 그다음 lost/dead/left 는 deathWave 내림차순 → kills 내림차순 → joinedAt
 //   종료: alive 0 → cleared(완주자 있음) / all-dead(dead·lost 있음) / empty(전원 left)
-//         t0 + GAME_CAP → 남은 alive 를 lost(deathWave = wave) 로 → timeout · 전원 끊김 EMPTY_END → empty
+//         t0 + GAME_CAP → 남은 alive 를 lost(극한 deathWave = dw, 순수운빨 deathWave = wave) 로 → timeout · 전원 끊김 EMPTY_END → empty
 // 빠른 매칭 방(kind 'quick'): Lobby 가 예약 좌석(pid·key·name)을 넣어 만든다. 방장 없음, 예약 전원 접속 즉시 또는 reserveUntil 에
 //   접속 2명 이상이면 서버가 시작, 1명 이하면 err expired + 4410 후 폐기.
 import * as T from './timing.js';
@@ -112,7 +112,7 @@ export function ranking(state) {
   ps.sort((a, b) => cmpKey(a.k, b.k) || (a.p.joinedAt - b.p.joinedAt) || (a.p.pid < b.p.pid ? -1 : 1));
   return ps.map(({ p }, i) => {
     const wave = p.status === 'cleared' ? p.wave : (p.deathWave != null ? p.deathWave : p.wave);
-    return { pid: p.pid, name: p.name, rank: i + 1, status: p.status, wave, deathWave: p.deathWave, kills: p.kills, clearAt: p.clearAt };
+    return { pid: p.pid, name: p.name, rank: i + 1, status: p.status, wave, ...(roomMode(state) === 'extreme' ? { reachedWave: p.wave } : {}), deathWave: p.deathWave, kills: p.kills, clearAt: p.clearAt };
   });
 }
 
@@ -341,7 +341,7 @@ function removePlayer(c, pid) {
 }
 
 function markLeft(c, P) {
-  P.status = 'left'; P.deathWave = P.wave; P.deathAt = c.now;
+  P.status = 'left'; P.deathWave = roomMode(c.state) === 'extreme' ? P.dw || 0 : P.wave; P.deathAt = c.now;
   c.bcast({ t: 'player', pid: P.pid, status: 'left', wave: P.wave, deathWave: P.deathWave });
   delegateHost(c);
   c.persist = true;
@@ -427,7 +427,7 @@ function onSum(c, P, L, m) {
   const st = c.state;
   if (st.phase !== 'playing' || P.status !== ALIVE) return;
   const cw = waveLimit(st);
-  const w = clampWave(m.w, cw), dw = clampWave(m.dw, cw);
+  const w = clampWave(m.w, cw), dw = Math.min(roomMode(st) === 'extreme' ? w : cw, clampWave(m.dw, cw));
   L.lastBeat = c.now; L.hidden = m.hid === 1;
   L.sum = { ...m, w, dw };
   P.wave = Math.max(P.wave, w);
@@ -481,7 +481,7 @@ function onDead(c, P, m) {
   const st = c.state;
   if (st.phase !== 'playing' || P.status !== ALIVE) return;
   const w = clampWave(m.w, waveLimit(st));
-  P.status = 'dead'; P.wave = Math.max(P.wave, w); P.deathWave = Math.max(0, w - 1); P.deathAt = c.now;
+  P.status = 'dead'; P.wave = Math.max(P.wave, w); P.deathWave = roomMode(st) === 'extreme' ? P.dw || 0 : Math.max(0, w - 1); P.deathAt = c.now;
   P.kills = Math.max(P.kills, m.k); P.deathReason = m.r;
   c.bcast({ t: 'player', pid: P.pid, status: 'dead', wave: P.wave, deathWave: P.deathWave, kills: P.kills });
   c.persist = true;
@@ -576,7 +576,7 @@ function tick(c) {
 function forceEnd(c, status, reason) {
   for (const p of Object.values(c.state.players)) {
     if (p.status !== ALIVE) continue;
-    p.status = status; p.deathWave = p.wave; p.deathAt = c.now;
+    p.status = status; p.deathWave = roomMode(c.state) === 'extreme' ? p.dw || 0 : p.wave; p.deathAt = c.now;
     c.bcast({ t: 'player', pid: p.pid, status, wave: p.wave, deathWave: p.deathWave });
   }
   endGame(c, reason);

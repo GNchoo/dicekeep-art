@@ -16,6 +16,7 @@
     funds: '성장 조각이 부족합니다.', debt: '환불된 구매를 정리해야 성장을 사용할 수 있습니다.',
     pending: '결제 승인을 기다리고 있습니다. 승인된 뒤 다시 확인해 주세요.',
     'purchase-pending': '결제 승인을 기다리고 있습니다.', 'account-mismatch': '구매한 Google 계정으로 로그인해 주세요.',
+    'run-inactive': '이미 종료되었거나 다른 기기에서 새로 시작한 런입니다.', 'run-not-found': '이 계정의 이어하기 기록을 찾지 못했습니다.',
     'run-too-fast': '런 기록을 확인하지 못했습니다. 이번 계정 보상은 지급되지 않았습니다.',
     'payment-not-complete': '결제 승인이 완료되지 않았습니다. 잠시 후 다시 확인해 주세요.',
     'payment-not-confirmed': '아직 승인된 결제가 없습니다. 구매 내역은 다음 확인을 위해 남겨 둡니다.',
@@ -123,6 +124,10 @@
     await retryPending(true);
     const result = adopt(await api('/runs/start', { mode }));
     if (window.DKCOSMETICS) await DKCOSMETICS.sync().catch(() => false); return result;
+  }
+  async function resumeRun(ticket) {
+    if (!session) throw new Error('저장한 계정으로 다시 로그인해 주세요.');
+    return adopt(await api('/runs/resume', { ticket }));
   }
   function pendingList() { const list = read(PENDING, []); return Array.isArray(list) ? list.slice(-32) : []; }
   async function finishRun(ticket, run) {
@@ -233,7 +238,7 @@
     return initialized;
   }
   window.DKCOMMERCE = Object.freeze({
-    init, signIn, signOut, action, startRun, finishRun, refresh, retryPending, restore, buy, completeWebPayment, errorText,
+    init, signIn, signOut, action, startRun, resumeRun, finishRun, refresh, retryPending, restore, buy, completeWebPayment, errorText,
     profile: () => current, linked: () => !!session,
     state: () => ({ configured: !!endpoint, config, accountId: session && session.accountId, wallet, cosmetics: { owned: cosmetics.owned.slice(), equipped: cosmetics.equipped }, busy, native: native(), platform: platform(), ready: !!current }),
     products: async ids => native() && billing() ? billing().products({ productIds: ids }) : { products: [] },

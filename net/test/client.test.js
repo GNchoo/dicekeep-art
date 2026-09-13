@@ -61,6 +61,7 @@ function makeEnv(opts = {}) {
   const addL = (type, fn) => { (listeners[type] = listeners[type] || []).push(fn); };
   const document = { currentScript: { src: opts.src || 'net.js?v=78' }, hidden: false, visibilityState: 'visible', addEventListener: addL };
   const window = { addEventListener: addL };
+  if (opts.native) window.Capacitor = { isNativePlatform: () => true };
   if (opts.location) window.location = opts.location;
   if (opts.DK_NET_URL) window.DK_NET_URL = opts.DK_NET_URL;
   const sandbox = Object.assign({
@@ -718,4 +719,16 @@ test('v4 client: invalid requested mode and mismatching server mode fail closed'
  const {ws:active}=await connectedExtreme(e);
  active._recv({t:'start',mode:'clear',seed:1,t0:0,timing:{clearWave:101},at:3});
  assert.equal(N.state,'offline');assert.equal(e.events.filter(x=>x.t==='start').length,0);
+});
+
+test('native restart recovers the persistent seat; web still isolates tabs', async () => {
+  const first = makeEnv({ native: true }); await connected(first);
+  const saved = first.sandbox.localStorage.getItem('dk_mp');
+  assert.ok(saved); assert.equal(first.sandbox.sessionStorage.getItem('dk_mp'), null);
+  const second = makeEnv({ native: true, localStorage: { dk_mp: saved } }); second.N.CFG.url='ws://test';
+  const pending = second.N.resume(), ws=second.lastSock(); ws._open(); const hello=ws.json()[0];
+  assert.equal(hello.pid,first.N.me.pid);
+  ws._recv(welcomeMsg(hello.pid,{resumed:true}));await pending;
+  second.N.leave();assert.equal(second.sandbox.localStorage.getItem('dk_mp'),null);
+  const web=makeEnv({localStorage:{dk_mp:saved}});assert.equal(await web.N.resume(),null);
 });

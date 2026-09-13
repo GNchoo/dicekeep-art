@@ -7,20 +7,20 @@ const { launchBrowser, gameUrl, watchArtErrors } = require('./browser.cjs');
 
 const repo = path.resolve(__dirname, '../..');
 const out = path.join(repo, 'gen/e2e/directional-pressure');
-const pilot = process.argv.includes('--pilot');
+const pilot = process.argv.includes('--pilot'), extreme = process.argv.includes('--extreme');
 const budget = 96 * 1024 * 1024;
-const prefix = pilot ? 'pilot-' : '';
+const prefix = extreme ? 'extreme-' : pilot ? 'pilot-' : '';
 fs.mkdirSync(out, { recursive: true });
 const compact = ({ records, ...state }) => state;
 
 (async () => {
   const report = {
-    scope: '200 actual spawned enemies, checked-in PNGs and actual game Canvas.drawImage calls; four natural travel directions under cache pressure',
-    pilot, startedAt: new Date().toISOString(), command: 'node tools/e2e/directional-cache-pressure.cjs' + (pilot ? ' --pilot' : ''),
+    scope: '200 actual spawned enemies, checked-in art assets and actual game Canvas.drawImage calls; four natural travel directions under cache pressure',
+    pilot, startedAt: new Date().toISOString(), command: 'node tools/e2e/directional-cache-pressure.cjs' + (pilot ? ' --pilot' : '') + (extreme ? ' --extreme' : ''),
     manifestSha256: crypto.createHash('sha256').update(fs.readFileSync(path.join(repo, 'directional-art.js'))).digest('hex'),
     budget, entityTarget: 200, rounds: [], checks: [], passed: false,
     limitations: [
-      '200 entities share up to 110 art identities; this is not 200 unique species.',
+      '200 entities share 110 original or 111 extreme art identities; this is not 200 unique species.',
       'The decoded sheets for every simultaneous identity/direction cannot all fit in 96MiB. Same-character, same-direction stills or mandatory 64px inline stills are allowed to stop animating under pressure.',
       'Decoded canvas memory plus input/output reservations are checked. This is not a measurement of browser/GPU process memory.',
       'Finite phase, frame selection, natural movement and rendered identity are regression checks, not independent anatomy or foot-contact quality judgments.',
@@ -39,7 +39,7 @@ const compact = ({ records, ...state }) => state;
       assert.equal(game.split('window.DK = S;').length, 2, 'one diagnostic hook anchor');
       const hook = `const pressureOriginalFrame = currentEnemyFrame;
         currentEnemyFrame = function(e) { const f = pressureOriginalFrame(e); if (window.__pressureFrame) window.__pressureFrame(e, f); return f; };
-        Object.assign(window, {buildInfinityWave, spawnEnemy, refreshDirectionalDemand, directionalPhase, posAt, VIEW});\n`;
+        Object.assign(window, {buildInfinityWave, spawnEnemy, refreshDirectionalDemand, directionalPhase, posAt, persistRun, readRunSave, VIEW});\n`;
       return route.fulfill({ contentType: 'application/javascript', body: game.replace('window.DK = S;', hook + 'window.DK = S;') });
     });
     await page.addInitScript(() => {
@@ -47,16 +47,16 @@ const compact = ({ records, ...state }) => state;
     });
     await page.goto(gameUrl());
     await page.waitForFunction(() => window.DK && DK.phase === 'title', null, { timeout: 120000 });
-    const manifest = await page.evaluate(() => ({ ids: Object.keys(INF_DIRECTIONAL_ART.entries).sort(), state: DKART.state() }));
+    const manifest = await page.evaluate(extreme => ({ ids: Object.keys((extreme ? INF_EXTREME_ART : INF_DIRECTIONAL_ART).entries).sort(), state: DKART.state() }), extreme);
     const ids = manifest.ids, count = ids.length;
     report.boot = compact(manifest.state); report.approvedIds = ids;
-    assert.ok(count > 0 && count <= 110, 'nonempty approved roster, at most110');
-    if (!pilot) assert.equal(count, 110, 'Release pressure test requires all110 approved identities; use --pilot for incomplete rollout');
-    assert.equal(manifest.state.approvedEntries, count);
+    assert.ok(count > 0 && count <= 111, 'nonempty approved roster');
+    if (!pilot) assert.equal(count, extreme ? 111 : 110, 'Release pressure test requires the complete approved roster; use --pilot for incomplete rollout');
+    assert.ok(manifest.state.approvedEntries >= count);
     assert.equal(manifest.state.initialized, true);
     assert.deepEqual(manifest.state.invalidReady, []);
     assert.equal(manifest.state.budget, budget);
-    const mandatoryBytes = count * 3 * 64 * 64 * 4;
+    const mandatoryBytes = manifest.state.approvedEntries * 3 * 64 * 64 * 4 + manifest.state.overlayBytes;
     assert.equal(manifest.state.residentBytes, mandatoryBytes);
     assert.equal(pngRequests.size, 0, 'boot decodes inline fallbacks only');
     report.checks.push(`${count} identities/${count * 3} mandatory directional fallbacks decoded before play`);
@@ -179,7 +179,7 @@ const compact = ({ records, ...state }) => state;
           allocations[dir] = (allocations[dir] || 0) + 1;
         }
         window.__pressure.enabled = true; DK.paused = false; refreshDirectionalDemand(true); window.__pressureSample('round-' + round + '-start');
-        const allStills = Object.values(INF_DIRECTIONAL_ART.entries).reduce((sum, e) => sum + Object.values(e.views).reduce((n, v) => n + v.cell * v.cell * 4, 0), 0);
+        const allStills = Object.values({...INF_DIRECTIONAL_ART.entries,...INF_EXTREME_ART.entries}).reduce((sum, e) => sum + Object.values(e.views).reduce((n, v) => n + v.cell * v.cell * 4, 0), 0);
         return { allocations, activeSheets: active.size, requestedSheetBytes: [...active.values()].reduce((n, v) => n + v.cell * v.cell * v.frames * 4, 0), requestedStillBytes: allStills };
       }, round);
       // Real game ticks select poses. Optional jobs may remain budget-blocked, so never wait for an empty queue.
@@ -222,6 +222,8 @@ const compact = ({ records, ...state }) => state;
     };
     assert.ok(report.renderTotals.sheetDraws > 0 && report.renderTotals.animatedIdentityDirections > 0, 'real sheet animation drawn under pressure');
     assert.ok(report.renderTotals.stillDraws + report.renderTotals.inlineFallbackDraws > 0, 'same-character static fallback exercised');
+    report.checkpointBytes = await page.evaluate(() => { const lives = DK.lives; DK.lives = 20; persistRun(); const saved = readRunSave(false); DK.lives = lives; if (saved.enemies.length !== 200) throw Error('checkpoint actor count'); return JSON.stringify(saved).length; });
+    assert.ok(report.checkpointBytes < 2000000);
     report.beforeRemoval = compact(await page.evaluate(() => DKART.state()));
     assert.ok(report.beforeRemoval.evictions > 0, 'direction switching evicts old optional assets');
     assert.ok(report.beforeRemoval.budgetSkips > 0, 'optional requests are budget constrained');

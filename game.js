@@ -1477,7 +1477,7 @@ function loadSave() {
     for (const f of [1, 2, 3]) if (!SAVE.unlockedTowers.includes(f)) SAVE.unlockedTowers.push(f);
     SAVE.unlockedTowers.sort((a, b) => a - b);
     const economy = PROGRESSION.migrateEconomy(SAVE.progression);
-    if (economy.ok) saveSave();
+    if (economy.ok && economy.refund !== undefined) saveSave();
   } catch (e) { SAVE = defaultSave(); }
 }
 function saveSave() {
@@ -2787,13 +2787,27 @@ function startWave() {
 }
 // 메운디: 크기·방어력 예고
 function announceWave(n) {
-  if (S.mode !== 'infinity' || !window.DKCONTENT) return;
+  if (S.mode !== 'infinity') {
+    const tip = n === 1 ? stageLesson(S.stage) : n === 3 ? '공중 적은 빠르게 이동합니다. 모든 주사위가 공중 적을 공격할 수 있습니다.' : n === 5 ? '땅굴 적은 숨었을 때 공격받지 않습니다. 모습을 드러내는 구간에 화력을 모으세요.' : '';
+    if (tip) pushLog(tip, 'sys'); return;
+  }
+  if (!window.DKCONTENT) return;
   const INF = DKCONTENT.INFINITY, M = INF.monsterFor(n), hi = INF.highArmor(n);
   const who = M.boss ? '보스' : `${M.name} ×${M.count}`;
   S.texts.push({ str: `웨이브 ${n} · ${who} · ${INF.sizeName[M.cls]}${M.armor ? ` · 방어 ${M.armor}` : ''}${hi ? ' · 고방어!' : ''}`, x: W / 2, y: H / 2 - 70, t: 0, color: hi ? '#ff7a7a' : M.boss ? '#ffd452' : '#ffe6b0' });
   if (M.boss || hi || n % 10 === 1) pushLog(`웨이브 ${n} — ${who}${hi ? ' · 고방어!' : ''}`, M.boss ? 'boss' : 'sys'); // 굵직한 웨이브만
 }
 
+function stageLesson(n) {
+  const lessons = [
+    '40G로 뽑고 빈 석단에 배치하세요. 같은 눈을 합체하면 최대 Lv3까지 올라갑니다. 젬으로 4~6눈을 해금할 수 있습니다.',
+    '하늘길이 추가됩니다. 여러 동선이 사거리 안에 들어오는 석단을 우선 사용하세요.',
+    '땅굴 길이 추가됩니다. 숨은 적은 공격할 수 없으니 출구 주변과 합류점도 지키세요.',
+    '두 번째 흙길에서 적이 들어옵니다. 한쪽에만 배치하지 말고 양쪽 입구와 합류점을 함께 지키세요.',
+    '흙길 두 개·하늘길·땅굴이 모두 열립니다. 광역 공격과 둔화를 함께 배치하고 합체·판매로 보드를 정리하세요.',
+  ];
+  return lessons[Math.min(4, Math.max(0, Math.floor((n - 1) / 10)))];
+}
 // 선택한 스테이지 시작 (로비/스테이지선택에서 호출)
 function startStage(n) {
   const C = window.DKCONTENT;
@@ -2835,7 +2849,7 @@ function startInfinity(kind, net, accountRun) {
   S.inf.clearWave = net ? net.timing.clearWave : MODE.clearWave;
   // 순수운빨(clear·multi)에는 무과금·과금 어느 쪽 성장도 붙지 않는다.
   // content.js 의 모드 표와 progression 모듈의 성장 판정이 어긋나면 성장 없는 쪽으로 강제한다 (조용히 새는 것보다 낫다).
-  const snap = PROGRESSION.snapshot(progressionProfile(), MODE.key);
+  const snap = accountRun && PROGRESSION.snapshotValid(accountRun.snapshot) ? accountRun.snapshot : PROGRESSION.snapshot(progressionProfile(), MODE.key);
   S.inf.growthSnapshot = MODE.growth === false && (!snap || snap.growth) ? PROGRESSION.pureSnapshot() : snap;
   S.inf.recordKey = net ? (MODE.key === 'extreme' ? 'extremeMulti' : 'multi') : MODE.key;
   S.inf.runId = globalThis.crypto && crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`;
@@ -2921,6 +2935,7 @@ function settleInfRun(won) {
         res.pending = false; res.error = COMMERCE.errorText(error);
         if (S.inf === inf && S.phase === 'over') showOverlay('런 종료', infResultHTML(won, res), '로비로');
       });
+    removeRunSave(inf.runId);
     return res;
   }
   const settled = PROGRESSION.settle(profile, {
@@ -2936,6 +2951,7 @@ function settleInfRun(won) {
   const res = { wave, gems, shards: settled.shards || 0, isBest, newly: r.newly, record };
   S.inf.settledResult = res;
   saveSave();
+  removeRunSave(S.inf.runId);
   return res;
 }
 // 결과 오버레이 본문 (싱글은 종료 즉시, 멀티는 방 전체 결과가 모였을 때 순위표와 함께)
@@ -2963,6 +2979,7 @@ function endInfinity(won) {
 
 // 스테이지 클리어 처리: 젬 보상 + 다음 스테이지 해금 + 저장
 function onStageClear() {
+  if (S.mode !== 'stage' || S.phase !== 'playing') return;
   S.phase = 'stageClear';
   S.waveActive = false;
   const sd = S.stageData;
@@ -4919,7 +4936,7 @@ function lobbyShow(view) {
   const h = $('lobby-title'); if (h) h.textContent = view === 'single' ? '싱글플레이' : view === 'multi' ? '멀티플레이' : '주사위 성채';
   const box2 = document.querySelector('#lobby .screen-box'); if (box2) box2.scrollTop = 0;
 }
-function gotoLobby(view) { S.phase = 'lobby'; showScreen('lobby'); lobbyShow(view || 'hub'); }
+function gotoLobby(view) { S.phase = 'lobby'; showScreen('lobby'); lobbyShow(view || 'hub'); renderRunResume(); }
 function gotoMpRoom() { S.phase = 'mpRoom'; showScreen('mpRoom'); }
 function gotoStageSelect() { S.phase = 'stageSelect'; showScreen('stageSelect'); }
 function gotoShop() { S.phase = 'shop'; showScreen('shop'); }
@@ -5037,17 +5054,22 @@ function relayoutArena(key, force) {
   const INF = window.DKCONTENT && DKCONTENT.INFINITY;
   if (!INF || S.mode !== 'infinity' || (S.mapKey === key && !force)) return false;
   // 좌표는 버리고 '어느 칸', '경로의 몇 %' 만 남긴다
-  const from = S.mapKey;
-  const towers = S.towers.map(t => ({ spot: remapSpot(from, key, t.spot), face: t.face, def: t.def, lvl: t.lvl, skin: t.skin, cd: t.cd }));
-  const selSpot = S.selTower ? remapSpot(from, key, S.selTower.spot) : -1;
-  const enemies = S.enemies.map(e => ({ e, ratio: e.dist / Math.max(1, laneLen(e)) }));
+  const from = S.mapKey, keepCombat = growthRun(), oldW = W, oldH = H;
+  const selectedSpot = S.selTower ? S.selTower.spot : -1;
+  const towers = S.towers.map(t => keepCombat ? Object.assign(t, { spot: remapSpot(from, key, t.spot) }) : ({ spot: remapSpot(from, key, t.spot), face: t.face, def: t.def, lvl: t.lvl, skin: t.skin, cd: t.cd, ...(t.growthCarry ? { growthCarry: t.growthCarry } : {}) }));
+  const selSpot = selectedSpot >= 0 ? remapSpot(from, key, selectedSpot) : -1;
+  const enemies = [...new Set(keepCombat ? [...S.enemies, ...S.projs.map(p => p.tgt)] : S.enemies)].map(e => ({ e, ratio: e.dist / Math.max(1, laneLen(e)) }));
+  if (keepCombat) for (const t of new Set(S.projs.map(p => p.src))) if (!S.towers.includes(t)) t.spot = remapSpot(from, key, t.spot);
   S.mapKey = key;
   applyMapLayout(key, INF.tier);
   for (const t of towers) { const sp = SPOTS[t.spot]; if (sp) { t.x = sp[0]; t.y = sp[1]; } }
   S.towers = towers.filter(t => SPOTS[t.spot]).map(t => Object.assign(t, { kick: 0 }));
   for (const { e, ratio } of enemies) e.dist = Math.min(laneLen(e) - 1, ratio * laneLen(e));
   S.selTower = selSpot >= 0 ? (S.towers.find(t => t.spot === selSpot) || null) : null;
-  S.projs = []; S.beams = []; S.fxs = []; S.texts = [];   // 수명 1초 미만이라 버린다
+  if (keepCombat) {
+    for (const p of S.projs) { p.x *= W / oldW; p.y *= H / oldH; p.trail = []; const sp = SPOTS[p.src.spot]; if (sp) { p.src.x = sp[0]; p.src.y = sp[1]; } }
+  } else S.projs = [];
+  S.beams = []; S.fxs = []; S.texts = [];   // 이미 판정한 시각 효과만 비운다
   if (DRAG.active) stopPlaceDrag();
   if (MOVE.tower || MOVE.armed) moveAbort();
   fitStage();
@@ -5072,7 +5094,8 @@ function syncInfButtons() {
   if (info) {
     const P = progressionProfile();
     info.innerHTML = ['clear', 'build', 'extreme'].map(k => `${INF.modeOf(k).name} 최고 <b>${P.records[k].best}</b>`).join(' · ') +
-      `<br>모든 모드에서 성장 조각 획득 · 현재 <b>${P.shards}</b>개` +
+      `<br>모든 투기장 모드에서 성장 조각 획득 · 현재 <b>${P.shards}</b>개` +
+      `<br><small>극한 다음 목표 ${Math.max(25, (Math.floor(P.records.extreme.best / 25) + 1) * 25)}웨이브 · 102부터 새 로스터 · 203부터 진화</small>` +
       (P.legacy.best ? `<br><small>이전 버전 통합 최고 ${P.legacy.best} · 새 모드 기록과 별도 보관</small>` : '');
   }
 }
@@ -5126,6 +5149,7 @@ function renderLobby() {
   const un = (SAVE.unlockedTowers || []).length;
   $('lobby-progress').innerHTML = `스테이지 <b>${SAVE.cleared.length}</b>/50 클리어 · 해금 타워 <b>${un}</b>/6`;
   syncInfButtons();
+  renderRunResume();
 }
 window.addEventListener('commerce:change', () => {
   if (S.phase === 'lobby') { renderLobby(); if (!$('deck-panel').classList.contains('hidden')) renderDeck(true); }
@@ -5853,6 +5877,7 @@ function toast(msg, ms) {
 }
 // 하드웨어 뒤로가기: 열린 것을 하나 닫으면 true, 더 닫을 게 없으면(로비) false → app.js 가 두 번 누름으로 종료
 window.DKAPP = {
+  saveRun: () => { try { persistRun(); if (growthRun() && !S.net && S.phase === 'playing') openMenu(); } catch (_) {} },
   toast,
   back() {
     if (settingsOpen()) { closeSettings(); return true; }
@@ -5913,6 +5938,10 @@ const startInf = async (kind) => {
   if (!infinityUnlocked() || startingAccountRun) return;
   audio(); startingAccountRun = true;
   try {
+    if (readRunSave(false)) {
+      if (kind === 'clear') { startInfinity('clear', null, null); toast('저장된 도전을 유지합니다. 이번 순수운빨 보상은 이 기기에 저장됩니다.'); return; }
+      lobbyShow('single'); renderRunResume(); toast('저장된 도전을 이어가거나 보상을 받은 뒤 새로 시작하세요.'); return;
+    }
     const run = await startAccountRun(kind, text => toast(`${text} 순수운빨은 그대로 시작합니다 — 이 런은 계정 보상 없이 기록됩니다.`));
     startInfinity(kind, null, run);
   } catch (error) { toast(COMMERCE.errorText(error)); }
@@ -5985,6 +6014,9 @@ function openMenu() {
   $('menu-note').innerHTML = spec ? '관전 중입니다. 기록·젬은 이미 저장됐습니다.' : S.net ? '<b>함께하기</b> 중에는 게임이 멈추지 않습니다. 포기하면 관전으로 넘어가고 기록·젬은 저장됩니다.' : (S.mode === 'infinity' ? '메뉴가 열려 있는 동안 게임이 멈춥니다. 포기하면 지금까지의 기록·젬이 저장됩니다.' : '메뉴가 열려 있는 동안 게임이 멈춥니다.');
   $('menu-quit-txt').textContent = spec ? '관전 끝내고 나가기' : S.mode === 'infinity' ? '포기하고 나가기 (기록 저장)' : '스테이지 선택으로 나가기';
   $('menu-help').classList.toggle('hidden', S.mode !== 'infinity');
+  $('menu-save').classList.toggle('hidden', !growthRun() || !!S.net || spec);
+  if (growthRun() && !S.net && !spec) $('menu-note').textContent = `메뉴를 닫을 때까지 멈춥니다. 다음 구간 목표 ${Math.max(25, (Math.floor(S.inf.doneW / 25) + 1) * 25)}웨이브 · 시작할 때의 덱과 성장 유지 · 5초마다 기기에 자동 저장됩니다.`;
+  if (S.mode === 'stage' && !spec) $('menu-note').textContent = stageLesson(S.stage) + ' 계정 성장 조각은 투기장 전용입니다.';
   setPaused(!spec);
 }
 function closeMenu() { $('menu').classList.add('hidden'); setPaused(false); }
@@ -5996,12 +6028,101 @@ function quitToMenu() {
   gotoStageSelect();
 }
 $('exit-btn').addEventListener('click', () => { if (menuOpen()) closeMenu(); else openMenu(); });
+$('menu-save').addEventListener('click', () => {
+  try { persistRun(); closeMenu(); S.mode = 'stage'; S.inf = null; gotoLobby('single'); }
+  catch (error) { toast(error.message); }
+});
+$('run-resume-play').addEventListener('click', () => resumeSavedRun(false));
+$('run-resume-end').addEventListener('click', () => resumeSavedRun(true));
+window.addEventListener('pagehide', () => { try { persistRun(); } catch (_) {} });
+document.addEventListener('visibilitychange', () => { if (document.hidden) { try { persistRun(); } catch (_) {} if (growthRun() && !S.net && S.phase === 'playing') openMenu(); } });
 $('menu-resume').addEventListener('click', () => { audio(); closeMenu(); });
 $('menu-pause').addEventListener('click', () => { audio(); setPaused(!S.paused); });
 $('menu-settings').addEventListener('click', () => { audio(); openSettings(); });
 $('menu-help').addEventListener('click', () => { audio(); closeMenu(); openInfHelp(); });
 $('menu-quit').addEventListener('click', () => { audio(); quitToMenu(); });
 $('menu').addEventListener('click', (ev) => { if (ev.target === $('menu')) closeMenu(); });
+
+// Growth runs keep a single device-local slot per owner (multiplayer is tab-local).
+const RUNSAVE = window.DKRUNSAVE;
+let runSaveAt = 0, runResumeBusy = false;
+const runOwner = () => COMMERCE && COMMERCE.linked() ? 'account:' + COMMERCE.state().accountId : 'guest';
+const runStore = multi => multi && !window.Capacitor?.isNativePlatform?.() ? sessionStorage : localStorage;
+const runSaveKey = (multi = false) => 'dk_growth_run_v1:' + runOwner() + (multi ? ':mp' : '');
+function readRunSave(multi) {
+  try {
+    const p = RUNSAVE.decode(runStore(multi).getItem(runSaveKey(multi)), runOwner());
+    if (!p || !PROGRESSION.snapshotValid(p.inf.growthSnapshot) || !!p.match !== !!multi) return null;
+    if (progressionProfile().settled.includes(p.inf.accountTicket || p.inf.runId)) { runStore(multi).removeItem(runSaveKey(multi)); return null; }
+    return p;
+  } catch (_) { return null; }
+}
+function persistRun() {
+  if (!growthRun() || S.phase !== 'playing' || S.inf.settledResult || S.lives <= 0) return false;
+  const p = RUNSAVE.capture(S, SLOT, { owner: runOwner(), savedAt: Date.now(), elapsed: Math.max(0, (performance.now() - S.inf.startedAt) / 1000),
+    size: [W, H], mapKey: S.mapKey, lanes: LANES.map(l => l.len),
+    match: S.net ? { code: S.net.code, pid: S.net.pid, t0: S.net.t0, seed: S.net.seed, doneW: S.net.doneW } : null });
+  runStore(!!S.net).setItem(runSaveKey(!!S.net), RUNSAVE.encode(p));
+  return true;
+}
+function removeRunSave(id) {
+  for (const multi of [false, true]) {
+    const p = readRunSave(multi);
+    if (p && p.inf.runId === id) runStore(multi).removeItem(runSaveKey(multi));
+  }
+}
+function renderRunResume() {
+  const retry = $('mp-resume-run'); if (retry) retry.classList.toggle('hidden', !MP.resumeRoom || !window.DKNET?.inRoom());
+  const el = $('run-resume'); if (!el) return;
+  const p = readRunSave(false);
+  let raw = null; try { raw = localStorage.getItem(runSaveKey()); } catch (_) {}
+  el.classList.toggle('hidden', !p && !raw);
+  $('run-resume-play').disabled = !p; $('run-resume-end').textContent = p ? '종료하고 보상받기' : '이 저장 지우기';
+  if (!p) {
+    if (raw) { $('run-resume-title').textContent = '이어하기를 읽지 못했습니다'; $('run-resume-note').textContent = '손상되었거나 호환되지 않는 전투 버전의 저장입니다. 계정 성장과 구매 내역은 별도로 보관됩니다.'; }
+    return;
+  }
+  $('run-resume-title').textContent = `${DKCONTENT.INFINITY.modeOf(p.inf.mode).name} · ${p.inf.doneW}웨이브 완료`;
+  $('run-resume-note').textContent = `이 기기에 저장됨 · ${new Date(p.savedAt).toLocaleString()} · 진행 중인 전투부터 이어갑니다.`;
+}
+async function restoreRunSave(p, net) {
+  if (!p || p.owner !== runOwner()) throw new Error('저장한 계정의 도전만 이어갈 수 있습니다.');
+  const accountRun = p.inf.accountTicket ? await COMMERCE.resumeRun(p.inf.accountTicket) : null;
+  if (accountRun && JSON.stringify(accountRun.snapshot) !== JSON.stringify(p.inf.growthSnapshot)) throw new Error('저장된 덱이 런 시작 기록과 일치하지 않습니다.');
+  if (net && (net.code !== p.match?.code || net.pid !== p.match.pid || net.t0 !== p.match.t0 || net.seed !== p.match.seed)) throw new Error('다른 방의 전투는 복구할 수 없습니다.');
+  const restored = RUNSAVE.hydrate(p, TOWER_DEFS), { slot, ...state } = restored;
+  startInfinity(p.inf.mode, net, accountRun);
+  Object.assign(S, state);
+  S.inf.startedAt = performance.now() - p.elapsed * 1000;
+  const snap = S.inf.growthSnapshot;
+  S.inf.growthSnapshot = Object.freeze({ ...snap, deck: Object.freeze(snap.deck), levels: Object.freeze(snap.levels) });
+  const sx = W / p.size[0], sy = H / p.size[1];
+  const allTowers = new Set([...S.towers, ...S.projs.map(q => q.src)]);
+  for (const t of allTowers) { t.spot = remapSpot(p.mapKey, S.mapKey, t.spot); t.x = SPOTS[t.spot][0]; t.y = SPOTS[t.spot][1]; }
+  for (const e of new Set([...S.enemies, ...S.projs.map(q => q.tgt)])) e.dist *= LANES[e.lane].len / p.lanes[e.lane];
+  for (const q of S.projs) { q.x *= sx; q.y *= sy; q.trail = []; }
+  Object.assign(SLOT, slot); DIE.state = 'tray'; DIE.hits = [];
+  setSpeed(Math.max(1, Math.min(3, p.speed || 1)));
+  S.paused = !net;
+  if (net) { net.doneW = S.inf.doneW; mpStartSum(); mpRenderRivals(); mpLayoutCards(); }
+  refreshDirectionalDemand(true); syncUI(); persistRun();
+  if (!net) openMenu();
+}
+async function resumeSavedRun(end) {
+  if (runResumeBusy || S.phase !== 'lobby') return;
+  runResumeBusy = true;
+  try {
+    const p = readRunSave(false);
+    if (!p && end) { localStorage.removeItem(runSaveKey()); return; }
+    if (!p) throw new Error('이어갈 저장이 없습니다.');
+    await restoreRunSave(p, null);
+    if (end) { closeMenu(); S.inf.quit = true; endInfinity(false); }
+  } catch (error) {
+    if (['run-inactive', 'run-not-found'].includes(error.code)) localStorage.removeItem(runSaveKey());
+    toast(COMMERCE.errorText(error));
+  }
+  finally { runResumeBusy = false; renderRunResume(); }
+}
 
 // ==================== 멀티 (인피니티 · 함께) ====================
 // 서버(Cloudflare Worker + Room DO)는 방·시계·시드·중계만 갖고, 시뮬레이션은 각자 자기 보드에서 돈다 (GAME-SPEC §6.5).
@@ -6041,18 +6162,21 @@ function mpNameInput() {
 }
 async function mpCreate() {
   if (!mpOn() || S.phase !== 'lobby') return;
+  if (readRunSave(false)) { lobbyShow('single'); renderRunResume(); toast('저장된 싱글 도전을 종료한 뒤 함께하기에 입장하세요.'); return; }
   audio(); mpStatus('방을 만드는 중…');
   try { await DKNET.create(mpNameInput(), mpModeInput()); MP.quick = false; clearRoomChat(); mpStatus(''); gotoMpRoom(); }
   catch (e) { mpStatus(mpErrText(e), true); }
 }
 async function mpQuick() {
   if (!mpOn() || S.phase !== 'lobby') return;
+  if (readRunSave(false)) { lobbyShow('single'); renderRunResume(); toast('저장된 싱글 도전을 종료한 뒤 함께하기에 입장하세요.'); return; }
   audio(); mpStatus('매칭 서버에 붙는 중…');
   try { await DKNET.quick(mpNameInput(), mpModeInput()); MP.quick = true; MP.queue = null; clearRoomChat(); mpStatus(''); gotoMpRoom(); }
   catch (e) { mpStatus(mpErrText(e), true); }
 }
 async function mpJoin(code) {
   if (!mpOn() || S.phase !== 'lobby') return;
+  if (readRunSave(false)) { lobbyShow('single'); renderRunResume(); toast('저장된 싱글 도전을 종료한 뒤 함께하기에 입장하세요.'); return; }
   code = String(code || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
   if (code.length !== 6) { mpStatus('방 코드는 6자리입니다', true); return; }
   audio(); mpStatus('방에 들어가는 중…');
@@ -6111,10 +6235,13 @@ function renderMpRoom() {
 }
 
 // ---- 런 시작 ----
-async function mpOnStart(m) {
+function mpRunInfo(m) {
   const N = window.DKNET;
-  const net = { code: N.code, pid: mpMePid(), mode: m.mode === 'extreme' ? 'extreme' : 'clear', seed: m.seed, t0: m.t0, timing: m.timing,
+  return { code: N.code, pid: mpMePid(), mode: m.mode === 'extreme' ? 'extreme' : 'clear', seed: m.seed, t0: m.t0, timing: m.timing,
     rivals: {}, status: 'alive', doneW: 0, savedResult: null, spectating: false, forced: false, ended: null, watchers: 0 };
+}
+async function mpOnStart(m) {
+  const net = mpRunInfo(m);
   if (VIEW.pid) mpViewExit(true);
   // 순수운빨 방은 과금 서비스가 막히더라도 시작한다 (계정 보상만 빠진다). 극한은 성장이 붙으므로 종전대로 중단.
   let run = null;
@@ -6417,7 +6544,7 @@ function mpShowResult(m) {
   const REASON = { lives: '목숨', bossLeak: '보스 한계선', bossTimeout: '보스 시간초과', quit: '포기', reload: '새로고침', afk: '자리 비움' };
   const STATUS = { cleared: '🏆 클리어', dead: '탈락', lost: '미완료', left: '나감', alive: '진행 중' };
   const clearTxt = (r) => (r.clearAt != null && net.t0 != null ? `완주 · ${mpDur(r.clearAt - net.t0)}` : `${net.timing.clearWave} 완주`);
-  const rows = ranking.map(r => `<tr class="${r.pid === me ? 'me' : ''}"><td>${r.rank || '-'}</td><td><span class="mp-dot" style="background:${PC[mpSeat(r.pid)]}"></span>${escapeHtml(r.name || '?')}</td><td>${STATUS[r.status] || r.status || ''}</td><td>${r.status === 'cleared' ? clearTxt(r) : `웨이브 ${r.wave || 0}`}</td><td>${r.kills || 0}</td></tr>`).join('');
+  const rows = ranking.map(r => `<tr class="${r.pid === me ? 'me' : ''}"><td>${r.rank || '-'}</td><td><span class="mp-dot" style="background:${PC[mpSeat(r.pid)]}"></span>${escapeHtml(r.name || '?')}</td><td>${STATUS[r.status] || r.status || ''}</td><td>${r.status === 'cleared' ? clearTxt(r) : S.net.mode === 'extreme' ? `완료 ${r.wave || 0}<small> · 도달 ${r.reachedWave ?? r.wave ?? 0}</small>` : `웨이브 ${r.wave || 0}`}</td><td>${r.kills || 0}</td></tr>`).join('');
   const html = `<table class="rank"><thead><tr><th>순위</th><th>이름</th><th>결과</th><th>도달</th><th>처치</th></tr></thead><tbody>${rows}</tbody></table>` +
     `<div class="rank-reason">${m.reason === 'cleared' ? '전원 완주 또는 탈락 — 완주는 빠른 순, 탈락은 웨이브 순' : m.reason === 'all-dead' ? '전원 탈락' : m.reason === 'timeout' ? '시간 종료' : m.reason === 'empty' ? '모두 나가 방이 닫혔습니다' : ''}${S.inf && S.inf.bossLeak && !saved.won ? ` · 내 탈락 사유: ${REASON[S.inf.bossTimeout ? 'bossTimeout' : 'bossLeak']}` : ''}</div>` +
     infResultHTML(saved.won, saved.res);
@@ -6617,29 +6744,49 @@ async function mpTryResume() {
   if (!mpOn() || !window.DKNET.resume) return;
   try {
     const room = await DKNET.resume();
-    if (room) MP.resumeRoom = room;
+    if (room) { MP.resumeRoom = room; if (S.phase === 'lobby') renderRunResume(); }
   } catch (e) { /* 복귀 실패 → 그냥 새로 시작 */ }
 }
-// 타이틀 버튼을 눌렀을 때: 새로고침 전 방이 있었으면 로비 대신 그 방으로. 판이 진행 중이면 보드가 없으니 탈락 처리 후 관전
+// Rejoin the same extreme room with its board; the server's clock and seat
+// status are authoritative. A pure room keeps its existing spectator fallback.
 function mpResumeAfterTitle() {
   const room = MP.resumeRoom; MP.resumeRoom = null;
   if (!room || !window.DKNET || !DKNET.inRoom()) return false;
   if (room.phase === 'lobby') { gotoMpRoom(); return true; }
   if (room.phase === 'playing' && room.game) {
+    const m = { mode: room.game.mode || room.mode, seed: room.game.seed || 0, t0: room.game.t0, timing: room.game.timing };
+    const p = m.mode === 'extreme' && readRunSave(true);
+    const me = room.players.find(p => p.pid === mpMePid());
+    if (p && me?.status === 'alive' && p.match.code === room.code && p.match.pid === me.pid && p.match.t0 === m.t0 && p.match.seed === m.seed) {
+      if (runResumeBusy) return true;
+      runResumeBusy = true;
+      restoreRunSave(p, mpRunInfo(m)).then(() => {
+        const live = DKNET.room, seat = live?.players.find(p => p.pid === mpMePid());
+        if (live?.phase !== 'playing' || seat?.status !== 'alive') { S.inf.quit = true; endInfinity(false); }
+        else toast('극한 전투를 복구했습니다. 방의 제한시간은 계속 흐릅니다.');
+      }).catch(error => {
+        MP.resumeRoom = DKNET.room || room; gotoLobby('multi'); mpStatus(COMMERCE.errorText(error), true);
+      }).finally(() => { runResumeBusy = false; renderRunResume(); });
+      return true;
+    }
     let last = { wave: 0, kills: 0 };
-    try { last = JSON.parse(sessionStorage.getItem('dk_mp_run') || 'null') || last; } catch (e) { /* 없음 */ }
-    mpOnStart({ mode: room.game.mode || room.mode, seed: room.game.seed || 0, t0: room.game.t0, timing: room.game.timing });
-    S.wave = Math.max(0, last.wave | 0); S.inf.kills = last.kills | 0; S.inf.reload = true;
-    endInfinity(false);
+    try { last = JSON.parse(sessionStorage.getItem('dk_mp_run') || 'null') || last; } catch (_) {}
+    // mpOnStart obtains an account ticket asynchronously: wait before using S.inf.
+    mpOnStart(m).then(() => {
+      if (!S.net || !S.inf) return;
+      S.wave = Math.max(0, last.wave | 0); S.inf.doneW = Math.max(0, Math.min(S.wave, me?.dw || 0));
+      S.inf.kills = last.kills | 0; S.inf.reload = true; endInfinity(false);
+    });
     return true;
   }
-  DKNET.leave();
-  return false;
+  DKNET.leave(); return false;
 }
+
 function mpInit() {
   const N = window.DKNET; if (!N || !$('mp-block')) return;
   const nameInp = $('mp-name'); if (nameInp) nameInp.value = SAVE.name || '';
   if (!mpOn()) { $('mp-block').classList.add('off'); mpStatus('이 주소에는 멀티 서버가 없습니다 (?net=ws://… 로 지정할 수 있습니다)'); }
+  $('mp-resume-run').addEventListener('click', () => { MP.resumeRoom = DKNET.room || MP.resumeRoom; mpResumeAfterTitle(); });
   $('mp-create').addEventListener('click', mpCreate);
   $('mp-quick').addEventListener('click', mpQuick);
   $('mp-chat-form').addEventListener('submit', (ev) => { ev.preventDefault(); const inp = $('mp-chat-input'); const txt = (inp.value || '').trim().slice(0, 120); inp.value = ''; if (txt && N.inRoom()) N.chat(txt); });
@@ -6688,6 +6835,7 @@ function frame(ts) {
     }
     if (window.DKCOSMETICS) DKCOSMETICS.tick();
     if (S.net) mpTick();
+    if (growthRun() && S.phase === 'playing' && ts - runSaveAt > 5000) { runSaveAt = ts; try { persistRun(); } catch (_) {} }
   } finally {
     uiInFrame = false;
     if (uiDirty) syncUI(); // 광역 처치와 x3 시뮬레이션의 DOM 갱신/레이아웃을 화면당 한 번으로 합친다.

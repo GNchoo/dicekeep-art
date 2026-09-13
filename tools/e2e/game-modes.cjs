@@ -112,7 +112,8 @@ async function modeDraws(page, row, dir) {
     p.deck = [1, 4, 8, 13, 20]; DKSAVE.progression = p;
   });
   for (const [mode, selector] of [['clear', '#btn-inf-clear'], ['build', '#btn-inf-build'], ['extreme', '#btn-infinity']]) {
-    await page.evaluate(() => { DKlobby(); DKlobbyView('single'); });
+    // Each case starts a new fixture run; recovery itself has a separate end-to-end suite.
+    await page.evaluate(() => { DKlobby(); localStorage.removeItem('dk_growth_run_v1:guest'); DKlobbyView('single'); });
     await page.click(selector); await page.waitForFunction(m => DK.phase === 'playing' && DK.inf.mode === m, mode);
     row.modes ??= {};
     row.modes[mode] = await page.evaluate(() => {

@@ -21,7 +21,7 @@ const ARGS = new Set(process.argv.slice(2));
 const OPTIMIZE = ARGS.has('--optimize') || ARGS.has('--quantize');
 const QUANTIZE = ARGS.has('--quantize');
 
-const FIXED_FILES = ['index.html', 'game.js', 'content.js', 'progression.js', 'commerce-config.js', 'commerce-client.js', 'commerce-ui.js', 'cosmetics.js', 'payment.html', 'payment-return.js', 'directional-art.js', 'extreme-art.js', 'infinity-art.js', 'net.js', 'music.js', 'style.css', 'privacy.html'];
+const FIXED_FILES = ['index.html', 'game.js', 'content.js', 'progression.js', 'run-save.js', 'commerce-config.js', 'commerce-client.js', 'commerce-ui.js', 'cosmetics.js', 'payment.html', 'payment-return.js', 'directional-art.js', 'extreme-art.js', 'infinity-art.js', 'net.js', 'music.js', 'style.css', 'privacy.html'];
 const FIXED_DIRS = ['fonts', 'ui', 'vfx', 'dice', 'props', 'map', 'towers', 'enemies', 'audio'];
 const CAP_UMD = [
   '@capacitor/core/dist/capacitor.js',

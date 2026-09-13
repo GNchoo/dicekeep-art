@@ -29,7 +29,7 @@ python serve.py
 
 Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크로마키 실패).
 
-캐시: `index.html`·`editor.html`의 `?v=N` 을 올릴 것 (현재 v104).
+캐시: `index.html`·`editor.html`의 `?v=N` 을 올릴 것 (현재 v105).
 
 개발용 URL: `http://localhost:8137/?unlock=all` (50 스테이지 클리어·타워 전부 해금 상태로 시작, 젬 200 보장) · `?start=inf` / `?start=clear` (타이틀에서 바로 인피니티 무한/도전). 인피니티는 해금 조건이 없어졌으므로 `?inf=1` 은 하위호환용 무의미 플래그다.
 

@@ -76,6 +76,7 @@ export class CommerceLedger {
       requireThat(req.method === 'POST', 'not-found', 404); const b = await body(req);
       if (path === '/profile/action') return json(await this.action(id, b));
       if (path === '/runs/start') return json(await this.startRun(id, b));
+      if (path === '/runs/resume') return json(await this.resumeRun(id, b));
       if (path === '/runs/settle') return json(await this.settleRun(id, b));
       if (path === '/orders') return json(await this.order(id, b));
       if (path === '/payments/toss/confirm') return json(await this.toss(id, b));
@@ -121,6 +122,17 @@ export class CommerceLedger {
       const snapshot = PG.snapshot(a.profile, b.mode);
       await tx.put('run:' + ticket, { id: ticket, accountId: id, mode: b.mode, startedAt: this.now(), snapshot });
       a.activeRun = ticket; await tx.put('account:' + id, a); return { ticket, ...view(a), snapshot, startedAt: this.now() };
+    });
+  }
+  async resumeRun(id, b) {
+    fields(b, ['ticket']);
+    requireThat(typeof b.ticket === 'string' && /^[a-f0-9]{64}$/.test(b.ticket), 'invalid-run');
+    return this.storage.transaction(async tx => {
+      const run = await tx.get('run:' + b.ticket), a = await tx.get('account:' + id);
+      requireThat(run && run.accountId === id, 'run-not-found', 404);
+      requireThat(!run.status && a.activeRun === b.ticket, 'run-inactive', 409);
+      requireThat(!a.wallet.debt || ['clear', 'multi'].includes(run.mode), 'refund-debt', 409);
+      return { ticket: run.id, ...view(a), snapshot: run.snapshot, startedAt: run.startedAt };
     });
   }
   async settleRun(id, b) {

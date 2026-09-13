@@ -4,6 +4,7 @@
 // 게임 규칙·상대 위젯은 game.js 가 이벤트로 붙인다.
 //   1) 접속      — 방 만들기 {url}/ws/new · 참가·재접속 {url}/ws/room/{CODE} · 빠른 매칭 {url}/ws/quick(대기열 → matched{code} → 방으로 join). URL 에는 방 코드만 싣고
 //                  인증(pid+key)은 소켓을 연 직후 첫 프레임 hello 로 보낸다. 거절은 err 메시지 + 44xx 닫기
+//   앱의 좌석·방 정보는 localStorage 에 보관해 앱 재실행에도 복구한다. 웹은 탭별 저장을 유지한다.
 //   2) 좌석      — pid(8자)·key(32 hex)는 탭 단위 sessionStorage(dk_mp_id): 새로고침 = 같은 좌석, 다른 탭 = 다른 플레이어.
 //                  마지막 방(dk_mp {code,pid,key,name,mode})은 welcome 마다 저장하고 leave() 가 지운다 → 부팅 시 resume()
 //   3) 재접속    — 의도하지 않은 닫힘이면 1·2·4·8·16·30초 백오프로 같은 pid/key 로 다시 hello(op:'join').
@@ -41,7 +42,7 @@ window.DKNET = (function () {
   const now = () => (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
 
   // ---- 저장소 (막혀 있어도 죽지 않게 전부 try/catch) ----
-  const SS = () => { try { return (typeof sessionStorage !== 'undefined') ? sessionStorage : null; } catch (_) { return null; } };
+  const SS = () => { try { return W.Capacitor?.isNativePlatform?.() ? localStorage : (typeof sessionStorage !== 'undefined') ? sessionStorage : null; } catch (_) { return null; } };
   const LS = () => { try { return (typeof localStorage !== 'undefined') ? localStorage : null; } catch (_) { return null; } };
   function sGet(st, k) { try { return st ? st.getItem(k) : null; } catch (_) { return null; } }
   function sSet(st, k, v) { try { if (st) st.setItem(k, v); } catch (_) {} }

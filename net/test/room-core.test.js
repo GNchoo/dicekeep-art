@@ -741,21 +741,22 @@ test('extreme: wave 101 does not win; high reports retained; clear is rejected',
   assert.equal(h.state.players[A].wave, 1000000);
   assert.ok(r.effects.some(e=>e.log?.kind==='done-range'));
   h.msg(A, { t: 'dead', w: 1000000, k: 500, r: 'lives' });
+  h.msg(B, { t: 'done', w: 101 });
   h.msg(B, { t: 'dead', w: 102, k: 900, r: 'lives' });
   assert.equal(h.state.game.reason, 'all-dead');
-  assert.deepEqual(h.state.game.ranking.map(p=>[p.pid,p.wave]), [[A,999999],[B,101]]);
+  assert.deepEqual(h.state.game.ranking.map(p=>[p.pid,p.wave]), [[A,1000000],[B,101]]);
 });
 
-test('extreme: timeout keeps 100 minute cap and ranks current wave then kills', () => {
+test('extreme: timeout keeps 100 minute cap and ranks completed wave then kills', () => {
   const h = extreme([A,B,C,D]), at = t0(h);
-  h.sum(A, { w: 200, k: 40 }, at+100);
-  h.sum(B, { w: 201, k: 1 }, at+101);
-  h.sum(C, { w: 200, k: 50 }, at+102);
-  h.sum(D, { w: 200, k: 50 }, at+103);
+  h.sum(A, { w: 200, dw: 199, k: 40 }, at+100);
+  h.sum(B, { w: 201, dw: 200, k: 1 }, at+101);
+  h.sum(C, { w: 200, dw: 199, k: 50 }, at+102);
+  h.sum(D, { w: 200, dw: 199, k: 50 }, at+103);
   assert.equal(h.alarmAt, at+T.GAME_CAP);
   h.alarm(at+T.GAME_CAP);
   assert.equal(h.state.game.reason, 'timeout');
-  assert.deepEqual(h.state.game.ranking.map(p=>[p.pid,p.wave,p.status]), [[B,201,'lost'],[C,200,'lost'],[D,200,'lost'],[A,200,'lost']]);
+  assert.deepEqual(h.state.game.ranking.map(p=>[p.pid,p.wave,p.status]), [[B,200,'lost'],[C,199,'lost'],[D,199,'lost'],[A,199,'lost']]);
 });
 
 test('extreme quick reservation preserves mode through autostart and hibernation', () => {
@@ -768,4 +769,20 @@ test('extreme quick reservation preserves mode through autostart and hibernation
   const saved=JSON.parse(JSON.stringify(h.state));
   const rebuilt=liveFromSockets(saved,[{sid:'sA',pid:A},{sid:'sB',pid:B}],h.now);
   assert.equal(snapshot(saved,rebuilt,h.now).game.mode,'extreme');
+});
+
+test('extreme: death, voluntary leave and disconnect all use completed waves; a started wave is not a point', () => {
+  const h = extreme([A,B,C,D]), at = t0(h);
+  h.sum(A, { w: 301, dw: 300, k: 100 }, at+100);
+  h.sum(B, { w: 302, dw: 300, k: 99 }, at+110);
+  h.sum(C, { w: 305, dw: 299, k: 999 }, at+120);
+  h.sum(D, { w: 10, dw: 999, k: 0 }, at+130);
+  assert.equal(h.state.players[D].dw, 10);
+  h.msg(A, { t: 'dead', w: 301, k: 100, r: 'lives' }, at+200);
+  h.msg(B, { t: 'leave' }, at+201);
+  h.close(SID(C), at+202);
+  h.alarm(at+202+T.RECONNECT_GRACE);
+  h.msg(D, { t: 'dead', w: 10, k: 0, r: 'lives' }, at+203+T.RECONNECT_GRACE);
+  assert.deepEqual(h.state.game.ranking.map(p=>[p.pid,p.wave]), [[A,300],[B,300],[C,299],[D,10]]);
+  assert.equal(h.state.game.ranking[0].reachedWave, 301);
 });

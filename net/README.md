@@ -74,10 +74,10 @@ node test/ws-smoke.mjs [ws://localhost:8787] # TIMING=fast 서버 상대. 한 �
   - `done{w}` — 통계용. clear는 `1..clearWave`, extreme은 `1..MAX_WAVE`만 받는다.
   - `dead{w,k,r}` — alive 만. 모드 상한으로 제한한 `w`에 대해 `deathWave = max(0, w−1)`. `player{status:'dead', wave, deathWave, kills}` 방송.
   - `clear{w,k}` — clear 모드의 alive만, `w ≥ clearWave`면 수락(보스 처치·완주 검증은 클라 몫). `clearAt = now`. `player{status:'cleared', wave, kills, clearAt}` 방송. 미달이면 anomaly 로그. extreme은 `err mode`로 거절한다.
-- **순위** `end.ranking[]`: `cleared` 는 `clearAt` 오름차순(먼저 완주 = 1위, **공동 없음**, 동시각은 joinedAt) → 그다음 `lost`/`dead`/`left` 는 `deathWave` 내림차순 → `kills` 내림차순 → joinedAt. 항목 `{ pid, name, rank, status, wave, deathWave, kills, clearAt }`, `rank` 는 1부터 연속.
-- **종료**: alive 0 → `cleared`(완주자 있음) / `all-dead`(dead·lost 있음) / `empty`(전원 left). `t0 + GAME_CAP` → 남은 alive 를 `lost`(deathWave = wave) 로 → `timeout`. 플레이 중 전원 끊김 `EMPTY_END` → `empty`. 재접속 유예 180 s 뒤 alive 는 `left`.
+- **순위** `end.ranking[]`: `cleared` 는 `clearAt` 오름차순(먼저 완주 = 1위, **공동 없음**, 동시각은 joinedAt) → 그다음 `lost`/`dead`/`left` 는 `deathWave` 내림차순 → `kills` 내림차순 → joinedAt. 항목 `{ pid, name, rank, status, wave, deathWave, kills, clearAt }` (극한은 `reachedWave`도 포함), `rank` 는 1부터 연속.
+- **종료**: alive 0 → `cleared`(완주자 있음) / `all-dead`(dead·lost 있음) / `empty`(전원 left). `t0 + GAME_CAP` → 남은 alive 를 `lost`(극한 deathWave = dw, 순수운빨 deathWave = wave) 로 → `timeout`. 플레이 중 전원 끊김 `EMPTY_END` → `empty`. 재접속 유예 180 s 뒤 alive 는 `left`.
 - 클라이언트의 `dead`·`clear` 보고 없이 서버가 종료 status를 정하는 경우는 `left`(유예 만료·leave)·`lost`(GAME_CAP)다. 보스 시간초과는 각 클라가 `dead{r:'bossTimeout'}` 으로 보고한다.
-- **검증 한계**: 진행·처치·완주·적 외형 스트림은 클라이언트 보고값이다. 서버는 형식·범위·모드·상태·전송량을 검사하고 방 안 순위를 계산하지만 전투를 재실행하거나 조작을 판별하지 않는다. 이 순위는 서버 권위의 부정행위 방지 기록이나 결제·재화 지급 근거가 아니다. `dead`는 보고 웨이브의 직전 값을 쓰고, `left`·`lost`는 현재 기록된 `wave`를 쓰므로 `dw`가 모든 종료 사유의 순위 기준인 것도 아니다.
+- **검증 한계**: 진행·처치·완주·적 외형 스트림은 클라이언트 보고값이다. 서버는 형식·범위·모드·상태·전송량을 검사하고 방 안 순위를 계산하지만 전투를 재실행하거나 조작을 판별하지 않는다. 이 순위는 서버 권위의 부정행위 방지 기록이나 결제·재화 지급 근거가 아니다. 순수운빨은 기존 `dead = 보고 웨이브 - 1`, `left/lost = 도달 wave` 규칙을 유지한다. 극한은 모든 종료 사유에서 `dw`를 사용하며 시작한 웨이브를 완료 점수로 세지 않는다. 극한 `sum.dw`는 함께 보고한 `w` 이하로 제한한다.
 
 ## 프로토콜 요약 (v4)
 
@@ -135,3 +135,10 @@ node test/ws-smoke.mjs [ws://localhost:8787] # TIMING=fast 서버 상대. 한 �
 - 관전(`watch`)은 보는 사람 수만큼 1 s 간격 `sum{en}`이 늘어난다. 최대 3명에게 각 5,120자 이하의 `en`과 나머지 JSON 필드를 중계하며, 클라이언트 수신 전송량은 실제 패킷 크기로 측정한다. 6,144 B 상한은 서버가 **수신하는** 프레임 제한이며 중계 JSON에는 `pid`·`at` 등이 추가된다.
 - Lobby DO 는 대기열이 비면 하이버네이션, 있으면 5 s 알람으로 깨어 있다. 대기열은 소켓 attachment 로, 방 생성 카운터는 storage 로 복원한다.
 - 배포 후 첫 판 뒤 대시보드에서 rows written · GB-s 를 실측해 여기에 적는다. 부족하면 클라 `sumInterval` 4초 또는 유료 플랜.
+
+
+## v105 클라이언트 복구
+
+극한 전투 저장은 루트 `run-save.js`/`game.js`가 맡는다. 웹은 탭별 좌석·저장, 네이티브 앱은 영구 기기 저장으로 같은 좌석을 복구한다. 새로고침만으로 탈락시키지 않으며 방·pid·t0·seed·alive를 확인한다. 끊김 유예와 운영 시간은 복구로 초기화되지 않는다. 계정 정산 티켓은 별도 commerce 서버가 확인한다.
+
+전송 필드 `dw`는 기존 protocol 4에 있었으므로 번호를 변경하지 않았다. 최신 `net` Worker를 먼저 배포한 뒤 웹·앱을 배포해야 모든 클라이언트 결과가 같은 완료 기준을 사용한다. Git main 푸시만으로 개별 Worker의 운영 배포가 완료되었다고 간주하지 않는다. 로컬 검증은 `test/dev-server.mjs`를 사용했다.

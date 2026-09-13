@@ -20,10 +20,14 @@
     "test:splash-hit": "node tools/e2e/splash-hit.cjs",
     "measure:clear-rate": "node tools/e2e/pure-luck-clearrate.cjs",
     "measure:boss-board": "node tools/e2e/boss-board-req.cjs",
-    "test:pure-main": "node tools/e2e/pure-luck-parity.cjs --main-baseline",
+    "test:pure-main": "node tools/pure-main-rules-test.cjs && node tools/e2e/pure-luck-parity.cjs --main-baseline",
     "test:purchase-review": "node tools/e2e/purchase-review.cjs",
     "test:commerce-client": "node tools/commerce-client-test.cjs",
-    "measure:growth": "node tools/e2e/growth-balance.cjs"
+    "measure:growth": "node tools/e2e/growth-balance.cjs",
+    "test:run-resume": "node tools/e2e/run-resume.cjs",
+    "test:extreme-multi": "node tools/e2e/extreme-multiplayer.cjs",
+    "test:campaign": "node tools/e2e/campaign.cjs",
+    "measure:campaign": "node tools/e2e/campaign.cjs --full-combat"
   },
   "dependencies": {
     "@capacitor-community/safe-area": "^7.0.0",
@@ -40,6 +44,7 @@
     "@fontsource/do-hyeon": "^5.0.0",
     "@fontsource/noto-sans-kr": "^5.0.0",
     "http-server": "^14.1.1",
+    "playwright-core": "1.63.0",
     "sharp": "^0.34.0"
   }
 }
