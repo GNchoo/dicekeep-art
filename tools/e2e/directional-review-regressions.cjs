@@ -78,7 +78,7 @@ process.env.E2E_OUTPUT_DIR ||= path.join(repo, 'gen/e2e/directional-review');
         if (wave === 111 || wave === 212) {
           DK.net = { rivals: { peer: {} }, status: 'alive' }; VIEW.pid = 'peer'; VIEW.enemies = [];
           const e = DK.enemies[1], i = DKCONTENT.bossBases.findIndex(b => b.id === e.type);
-          mpViewBuild({ w: wave, sp: 1, o: 'p', ll: LANES[0].len, l: 20, f: 1, tw: [], en: `${1000 + i},400,9,111,64` });
+          mpViewBuild({ w: wave, sp: 1, o: 'p', ll: LANES[0].len, l: 20, f: 1, tw: [], en: `${1000 + i},400,9,${e.appearanceCode},64` });
           const v = VIEW.enemies[0]; rows.push({ wave, actors, spectator: { role: v.bossRole, id: v.artAssetId, frameId: currentEnemyFrame(v)?.assetId, name: v.name, draw: v.drawHeight } });
           VIEW.pid = null; VIEW.enemies = []; DK.net = null;
         } else rows.push({ wave, actors });
@@ -89,10 +89,11 @@ process.env.E2E_OUTPUT_DIR ||= path.join(repo, 'gen/e2e/directional-review');
       assert.equal(row.actors.length, row.wave === 10 ? 1 : 2);
       assert.ok(row.actors.every(e => e.physicsMatchesQueue && e.id === e.frameId));
       if (row.spectator) {
-        assert.equal(row.actors[1].role, 1); assert.equal(row.actors[1].id, 'b010');
-        assert.equal(row.spectator.id, 'b010'); assert.equal(row.spectator.frameId, 'b010'); assert.equal(row.spectator.role, 1);
+        // W111 and its evolutions now have their own promoted extreme identity.
+        assert.equal(row.actors[1].role, 1); assert.equal(row.actors[1].id, 'b111-2');
+        assert.equal(row.spectator.id, 'b111-2'); assert.equal(row.spectator.frameId, 'b111-2'); assert.equal(row.spectator.role, 1);
         assert.ok(Math.abs(row.actors[1].draw / row.actors[0].draw - .7) < 1e-12);
-        assert.equal(row.spectator.draw, row.actors[1].draw); assert.match(row.actors[1].name, /부관/);
+        assert.equal(row.spectator.draw, row.actors[1].draw); assert.match(row.actors[1].name, /유적 인장대신/);
       }
     }
     report.recovery = await page.evaluate(async () => {

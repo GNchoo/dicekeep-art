@@ -1593,9 +1593,16 @@ window.DKCONTENT = (function () {
     // ---- 보스 주기는 로스터 기준 (2주기부터 w % 10 과 어긋난다) ----
     isBossWave(w) { const r = this.getRoster()[(Math.max(1, w) - 1) % 101]; return !!(r && r.boss); },
     bossFor,   // (순번, k) → 겉보기 순 보스 (bosses 항목)
-    // The slot20 stag keeps its legacy stats, but walks on the ground in every
-    // 101-wave cycle. Gameplay movement must not depend on the art cache.
-    bossMoveFor(w, k, baseMove) { return k === 1 && (Math.max(1, w) - 1) % 101 + 1 === 20 ? 'ground' : baseMove; },
+    // Boss appearances keep their locomotion across 101-wave cycles, while the
+    // legacy stat donors rotate. Do not inherit an owl's flight for a walking
+    // lord (slot100), or ground a dragon. This rule is independent of art loading.
+    // Floating casters (60 primary, 70 both) retain their existing movement.
+    bossMoveFor(w, k, baseMove) {
+      const slot = (Math.max(1, w) - 1) % 101 + 1;
+      if (slot % 10 || slot > 100 || slot === 70 || (slot === 60 && k !== 1)) return baseMove;
+      const flies = k === 1 ? [30, 60, 100].includes(slot) : slot === 80;
+      return flies ? 'air' : 'ground';
+    },
     monsters: INF_MONSTERS, tiers: INF_TIERS, palette: INF_PALETTE, artReady: INF_ART_READY, art: infArt, artList: infArtList, directionalArt: infDirectionalArt,
     tierIndex(w) { return Math.min(10, Math.floor(((Math.max(1, w) - 1) % 101) / 10) + 1); },
     tierOf(w) { return INF_TIERS[this.tierIndex(w)]; },

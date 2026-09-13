@@ -6099,7 +6099,11 @@ async function restoreRunSave(p, net) {
   const sx = W / p.size[0], sy = H / p.size[1];
   const allTowers = new Set([...S.towers, ...S.projs.map(q => q.src)]);
   for (const t of allTowers) { t.spot = remapSpot(p.mapKey, S.mapKey, t.spot); t.x = SPOTS[t.spot][0]; t.y = SPOTS[t.spot][1]; }
-  for (const e of new Set([...S.enemies, ...S.projs.map(q => q.tgt)])) e.dist *= LANES[e.lane].len / p.lanes[e.lane];
+  for (const e of new Set([...S.enemies, ...S.projs.map(q => q.tgt)])) {
+    e.dist *= LANES[e.lane].len / p.lanes[e.lane];
+    // Correct old checkpoints without discarding their board, HP or run ticket.
+    if (e.isBoss) e.move = DKCONTENT.INFINITY.bossMoveFor(e.wave, e.bossRole || 0, e.move);
+  }
   for (const q of S.projs) { q.x *= sx; q.y *= sy; q.trail = []; }
   Object.assign(SLOT, slot); DIE.state = 'tray'; DIE.hits = [];
   setSpeed(Math.max(1, Math.min(3, p.speed || 1)));
