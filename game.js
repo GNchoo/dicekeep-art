@@ -1299,25 +1299,33 @@ function towerSpr(face, skin) {
   return pack[((skin || 0) % pack.length + pack.length) % pack.length];
 }
 
-// The building remains fixed; only its weapon socket / magical core reacts.
+// Original tower squash/glow, with only a brief muzzle light added at release.
 function paintTowerBody(t, sp) {
-  MOTION.paintTower(ctx, t, sp, DKCONTENT.STAR_TOWER_EMITTERS[t.face]);
+  const kick = t.kick || 0;
+  const cx = sp.cx ?? TS_CX, by = sp.baseY ?? TS_BASE_Y;
+  const k = kick * kick; // 발사 직후 가장 강하고 빠르게 풀린다
+  ctx.save();
+  ctx.scale(1 + k * 0.07, 1 - k * 0.09);
+  if (kick > 0.05) {
+    ctx.shadowColor = (t.def && t.def.color) || '#ffd452';
+    ctx.shadowBlur = 6 + 22 * kick;
+  }
+  ctx.drawImage(sp.cv, -cx, -by);
+  ctx.restore();
+  MOTION.paintMuzzle(ctx, t, sp, DKCONTENT.STAR_TOWER_EMITTERS[t.face]);
 }
 function towerVisualEmitter(t) {
-  return MOTION.emitter(t, towerSpr(t.face, t.skin), DKCONTENT.STAR_TOWER_EMITTERS[t.face]);
+  const xy = window.DKCONTENT && DKCONTENT.STAR_TOWER_EMITTERS && DKCONTENT.STAR_TOWER_EMITTERS[t.face];
+  const sp = xy && towerSpr(t.face, t.skin);
+  if (!xy || !sp || !sp.dedicated) return { x: t.x, y: t.y - 64 };
+  const recoil = (t.kick || 0) ** 2;
+  return { x: t.x + (xy[0] * sp.w - sp.cx) * (1 + recoil * 0.07),
+    y: t.y + 6 + (xy[1] * sp.h - sp.baseY) * (1 - recoil * 0.09) };
 }
 function projectileDrawPosition(p) {
   const u = Math.max(0, Math.min(1, (p.visualAge || 0) / 0.1)), weight = (1 - u) ** 2;
-  const base = { x: p.x + (p.launchOffset ? p.launchOffset[0] * weight : 0),
+  return { x: p.x + (p.launchOffset ? p.launchOffset[0] * weight : 0),
     y: p.y + (p.launchOffset ? p.launchOffset[1] * weight : 0) };
-  if (p.tgt && !p.tgt.dead) {
-    const tp = epos(p.tgt), aim = enemyVisualTarget(p.tgt);
-    const ty = tp.y - p.tgt.def.size * .4 - (p.tgt.move === 'air' ? 42 : 0);
-    const end = Math.max(0, 1 - Math.hypot(tp.x - p.x, ty - p.y) / Math.max(1, p.spd * .14));
-    base.x += (aim.x - tp.x) * end * end;
-    base.y += (aim.y - ty) * end * end;
-  }
-  return base;
 }
 
 // ==================== 사운드 (WebAudio 신디사이저) ====================
@@ -3201,15 +3209,6 @@ function currentEnemyFrame(e) {
   return null;
 }
 
-function enemyVisualTarget(e) {
-  const p = epos(e), fr = currentEnemyFrame(e), h = fr?.directional ? e.drawHeight : e.def.size;
-  return { x: p.x, y: p.y + 4 - enemyAirHeight(e, p, fr) - h * .46 };
-}
-function combatImpact(type, at, size, seed, angle) {
-  S.fxs.push({ kind: 'combatHit', family: type, x: at.x, y: at.y, t: 0,
-    dur: type === 'cannon' || type === 'dice' ? .48 : type === 'primal' ? .55 : .34, size, seed, angle: angle || 0 });
-}
-
 function towerAt(spotIdx) {
   return S.towers.find(t => t.spot === spotIdx) || null;
 }
@@ -3278,9 +3277,7 @@ function towerFire(t, dt) {
   }
   if (!best) return;
   t.cd = towerRate(t);
-  t.kick = 1; t.attackAge = 0; t.shotSerial = (t.shotSerial || 0) + 1;
-  const shotTarget = enemyVisualTarget(best);
-  t.attackAim = Math.atan2(shotTarget.y - (t.y - 40), shotTarget.x - t.x);
+  t.kick = 1; t.muzzleAge = 0; t.shotSerial = (t.shotSerial || 0) + 1;
   const dmg = towerDmg(t);
   const from = { x: t.x, y: t.y - 64 };
   const visualFrom = towerVisualEmitter(t);
@@ -3289,9 +3286,8 @@ function towerFire(t, dt) {
     const tp = epos(best);
     const to = { x: tp.x, y: tp.y - best.def.size * 0.45 - (best.move === 'air' ? 42 : 0) };
     damageEnemy(best, dmg, t);
-    S.beams.push({ pts: [from, to], visualPts: [visualFrom, shotTarget], t: 0, dur: 0.11, style: 'laser' });
-    combatImpact('laser', shotTarget, 25, t.spot * .7, t.attackAim);
-    S.fxs.push({ kind: 'laserMuzzle', x: visualFrom.x, y: visualFrom.y, t: 0, dur: 0.1, size: 20 });
+    S.beams.push({ pts: [from, to], t: 0, dur: 0.11, style: 'laser' });
+    S.fxs.push({ kind: 'laserMuzzle', x: from.x, y: from.y, t: 0, dur: 0.1, size: 28 });
     SFX.t1();
   } else if (t.def.chain) {
     const maxChain = towerChain(t);
@@ -3310,17 +3306,16 @@ function towerFire(t, dt) {
       if (!next) break;
       hitList.push(next); cur = next;
     }
-    const pts = [from], visualPts = [visualFrom];
+    const pts = [from];
     let dd = dmg;
     for (const e of hitList) {
       const p = epos(e);
       pts.push({ x: p.x, y: p.y - e.def.size * 0.45 });
-      const visualHit = enemyVisualTarget(e); visualPts.push(visualHit);
       damageEnemy(e, dd, t);
       dd *= 0.75;
-      combatImpact('lightning', visualHit, 32, t.spot + hitList.indexOf(e), t.attackAim);
+      S.fxs.push({ kind: 'spark', x: p.x, y: p.y - e.def.size * 0.4, t: 0, dur: 0.16, size: 34 });
     }
-    S.beams.push({ pts, visualPts, t: 0, dur: 0.16, style: 'lightning' });
+    S.beams.push({ pts, t: 0, dur: 0.16, style: 'lightning' });
     SFX.t5();
   } else {
     S.projs.push({
@@ -3332,7 +3327,7 @@ function towerFire(t, dt) {
       rot: 0, spin: 0, src: t,
     });
     if (t.face === 2) {
-      S.fxs.push({ kind: 'combatHit', family: 'cannon', x: visualFrom.x, y: visualFrom.y, t: 0, dur: .2, size: 22, seed: t.spot });
+      S.fxs.push({ kind: 'muzzleFlash', x: from.x, y: from.y, t: 0, dur: 0.12, size: 38 });
     }
     if (t.def.star) { // ★ 타워: 밴드색 발사 섬광 + 링 — 성이 높을수록 크다
       const sc = starColor(t.def), k = t.def.star - 6;
@@ -3345,10 +3340,7 @@ function towerFire(t, dt) {
 
 // 투사체·이펙트·빔·텍스트 갱신 — update() 와 관전 뷰(mpViewAdvance, 시각 전용 시뮬)가 같이 쓴다
 function updateVisuals(dt) {
-  for (const t of S.towers) {
-    if (Number.isFinite(t.attackAge)) t.attackAge = Math.min(10, t.attackAge + dt);
-    if (t.kick > 0) t.kick = Math.max(0, t.kick - dt / .37);
-  }
+  for (const t of S.towers) if (Number.isFinite(t.muzzleAge)) t.muzzleAge = Math.min(1, t.muzzleAge + dt);
   // 투사체
   for (const p of S.projs) {
     if (p.tgt.dead || (LANES[p.tgt.lane || 0].loopAt == null && p.tgt.dist >= laneLen(p.tgt))) { p.gone = true; continue; }
@@ -3359,7 +3351,7 @@ function updateVisuals(dt) {
     p.rot = Math.atan2(dy, dx);
     p.spin += dt * 13;
     const step = p.spd * dt;
-    if (p.trail) { p.trail.push(projectileDrawPosition(p)); if (p.trail.length > 7) p.trail.shift(); }
+    if (p.trail) { p.trail.push(projectileDrawPosition(p)); if (p.trail.length > 3) p.trail.shift(); }
     p.visualAge = (p.visualAge || 0) + dt;
     if (d <= step + 8) { projHit(p); p.gone = true; }
     else { p.x += dx / d * step; p.y += dy / d * step; }
@@ -3385,29 +3377,27 @@ function sheetHit(kind, x, y, size, dur) {
 // ★ 타워 명중 연출: 밴드색 충격파 + 파편, 등급 특전마다 다르게 보이게 한다
 function starImpact(p, hx, hy) {
   const col = p.color || '#ffd452', k = p.star - 6;
-  S.fxs.push({ kind: 'combatHalo', family: MOTION.family(p.src.face), x: hx, y: hy, t: 0, dur: 0.3 + k * 0.012, size: p.splash * 2 + k * 8, color: col });
+  S.fxs.push({ kind: 'ring', x: hx, y: hy, t: 0, dur: 0.3 + k * 0.012, size: p.splash * 2 + k * 8, color: col });
   const shards = Math.min(10, 3 + Math.floor(k / 2));
   for (let i = 0; i < shards; i++) {
     const a = Math.random() * Math.PI * 2, v = 90 + Math.random() * 110;
-    S.fxs.push({ kind: 'combatShard', family: MOTION.family(p.src.face), seed: a, x: hx, y: hy, vx: Math.cos(a) * v, vy: Math.sin(a) * v * 0.6, t: 0, dur: 0.3, size: 12 + k, color: col });
+    S.fxs.push({ kind: 'spark', x: hx, y: hy, vx: Math.cos(a) * v, vy: Math.sin(a) * v * 0.6, t: 0, dur: 0.3, size: 12 + k, color: col });
   }
   const perk = p.src && p.src.def.perk;
   if (perk === 'epic') {        // 방어 무시: 흰 파쇄 샤드
-    S.fxs.push({ kind: 'combatHalo', family: MOTION.family(p.src.face), x: hx, y: hy, t: 0, dur: 0.22, size: p.splash * 1.3, color: '#ffffff' });
+    S.fxs.push({ kind: 'ring', x: hx, y: hy, t: 0, dur: 0.22, size: p.splash * 1.3, color: '#ffffff' });
   } else if (perk === 'myth') { // 공속: 이중 링으로 연타감
-    S.fxs.push({ kind: 'combatHalo', family: MOTION.family(p.src.face), x: hx, y: hy, t: 0, dur: 0.44, size: p.splash * 2.6, color: col }); // 느리게 퍼지는 두 번째 링
+    S.fxs.push({ kind: 'ring', x: hx, y: hy, t: 0, dur: 0.44, size: p.splash * 2.6, color: col }); // 느리게 퍼지는 두 번째 링
   }
 }
 
 function projHit(p) {
   const tp = epos(p.tgt);
   const hx = tp.x, hy = tp.y - p.tgt.def.size * 0.4;
-  const visualHit = enemyVisualTarget(p.tgt), type = MOTION.family(p.src?.face || p.star || 6);
-  combatImpact(type, visualHit, p.splash ? p.splash * 1.2 : 42, (p.src?.spot || 0) * .71, p.rot);
   if (p.src && p.src.def.perk === 'primal' && S.mode === 'infinity') { // 태초: 트랙 위 모든 적에게 스플래시
     for (const e of S.enemies) if (!e.dead) damageEnemy(e, p.dmg, p.src);
-
-    S.fxs.push({ kind: 'combatHalo', family: MOTION.family(p.src.face), x: visualHit.x, y: visualHit.y, t: 0, dur: 0.5, size: 220, color: '#ffffff' });
+    sheetHit('dieExplode', hx, hy, 260, 0.5);
+    S.fxs.push({ kind: 'ring', x: hx, y: hy, t: 0, dur: 0.5, size: 420, color: '#ffffff' });
     S.texts.push({ str: '태초의 일격!', x: hx, y: hy - 40, t: 0, color: '#ffffff' });
   } else if (p.splash) {
     for (const e of S.enemies) {
@@ -3419,13 +3409,22 @@ function projHit(p) {
       // 2·6·7~16 눈의 폭발이 통째로 빗나갔다.
       if (Math.hypot(ep.x - hx, (ep.y - e.def.size * 0.4) - hy) <= p.splash) damageEnemy(e, p.dmg, p.src);
     }
-    if (p.star) starImpact(p, visualHit.x, visualHit.y);
+    if (p.kind === 'dieBomb' || p.kind === 'die6') {
+      sheetHit('dieExplode', hx, hy, p.splash * 2.2, 0.4);
+    } else {
+      sheetHit('cannonBlast', hx, hy, p.splash * 2, 0.34);
+    }
+    if (p.star) starImpact(p, hx, hy);
   } else {
     damageEnemy(p.tgt, p.dmg, p.src);
     if (p.slow && !p.tgt.dead) {
       p.tgt.slowT = Math.max(p.tgt.slowT, p.slow.dur);
       p.tgt.slowPct = Math.max(p.tgt.slowPct, p.slow.pct);
-
+      sheetHit('frostBurst', hx, hy, 48, 0.3);
+    } else if (p.kind === 'bolt') {
+      sheetHit('arcaneBurst', hx, hy, 46, 0.3);
+    } else {
+      S.fxs.push({ kind: 'hit', x: hx, y: hy, t: 0, dur: 0.15, size: 16 });
     }
   }
 }
@@ -3931,6 +3930,7 @@ function draw() {
     if (ent.kind === 't') {
       const t = ent.o;
       const sp = towerSpr(t.face, t.skin);
+      if (t.kick > 0) t.kick = Math.max(0, t.kick - 0.045);
       const face = heldFace();
       const mergeable = face && t.face === face && t.lvl < MAX_LVL;
       const hovered = mergeable && DRAG.active && DRAG.overSpot === t.spot;
@@ -4111,15 +4111,43 @@ function draw() {
     ctx.restore();
   }
 
-  // Distinct silhouettes and trails; this never changes projectile travel/hits.
-  for (const p of S.projs) MOTION.paintProjectile(ctx, p, projectileDrawPosition(p));
+  // 투사체
+  for (const p of S.projs) {
+    if (p.trail && p.trail.length) { // ★ 탄: 지나온 자리에 짧은 잔상
+      ctx.save();
+      for (let i = 0; i < p.trail.length; i++) {
+        const q = p.trail[i], a = (i + 1) / (p.trail.length + 1);
+        ctx.globalAlpha = a * 0.4;
+        ctx.fillStyle = p.color || '#ff5555';
+        ctx.beginPath(); ctx.arc(q.x, q.y, 4 + a * 5, 0, Math.PI * 2); ctx.fill();
+      }
+      ctx.restore();
+    }
+    ctx.save();
+    const drawPoint = projectileDrawPosition(p);
+    ctx.translate(drawPoint.x, drawPoint.y);
+    if (p.kind === 'dieBomb' || p.kind === 'die6') {
+      const sp = A.dieBomb || A.dice[5];
+      const w = 26 + (p.star ? (p.star - 6) * 1.1 : 0);   // ★ 가 높을수록 큰 탄
+      const s = w / sp.w;
+      ctx.rotate(p.spin);
+      ctx.shadowColor = p.color || '#ff5555'; ctx.shadowBlur = p.star ? 15 : 8;
+      ctx.drawImage(sp.cv, -w / 2, -sp.h * s / 2, w, sp.h * s);
+    } else {
+      const sp = A[p.kind];
+      const len = p.kind === 'arrow' ? 36 : p.kind === 'shell' ? 22 : 26;
+      const s = len / sp.w;
+      ctx.rotate(p.rot);
+      ctx.drawImage(sp.cv, -len / 2, -sp.h * s / 2, len, sp.h * s);
+    }
+    ctx.restore();
+  }
 
   // 레이저 / 전격 빔
   for (const b of S.beams) {
-    const points = b.visualPts || b.pts;
     const alpha = 1 - b.t / b.dur;
     if (b.style === 'laser' && A.laserBeam) {
-      const a = points[0], c = points[points.length - 1];
+      const a = b.pts[0], c = b.pts[b.pts.length - 1];
       const dx = c.x - a.x, dy = c.y - a.y;
       const len = Math.hypot(dx, dy) || 1;
       const sp = A.laserBeam;
@@ -4136,8 +4164,8 @@ function draw() {
         ctx.strokeStyle = pass === 0 ? `rgba(120,200,255,${alpha * 0.55})` : `rgba(255,255,220,${alpha * 0.9})`;
         ctx.lineWidth = pass === 0 ? 5 : 1.8;
         ctx.beginPath();
-        for (let i = 0; i < points.length - 1; i++) {
-          const a = points[i], c = points[i + 1];
+        for (let i = 0; i < b.pts.length - 1; i++) {
+          const a = b.pts[i], c = b.pts[i + 1];
           ctx.moveTo(a.x, a.y);
           const midx = (a.x + c.x) / 2 + (Math.random() - 0.5) * 14;
           const midy = (a.y + c.y) / 2 + (Math.random() - 0.5) * 14;
@@ -4148,8 +4176,8 @@ function draw() {
         ctx.restore();
       }
       if (A.lightningArc) {
-        for (let i = 0; i < points.length - 1; i++) {
-          const a = points[i], c = points[i + 1];
+        for (let i = 0; i < b.pts.length - 1; i++) {
+          const a = b.pts[i], c = b.pts[i + 1];
           const dx = c.x - a.x, dy = c.y - a.y;
           const len = Math.hypot(dx, dy) || 1;
           const sp = A.lightningArc;
@@ -4174,7 +4202,6 @@ function draw() {
       acquireBurst: A.acquireBurst, confetti: A.confetti, chestOpen: A.chestOpen,
     };
     if (pr < 0) continue;                                       // 지연 시작 (t 가 음수)
-    if (f.kind === 'combatHit' || f.kind === 'combatShard' || f.kind === 'combatHalo') { MOTION.paintImpact(ctx, f); continue; }
     if (sheetMap[f.kind]) {
       const frames = sheetMap[f.kind];
       const fr = frames[Math.min(3, Math.floor(pr * 4))];

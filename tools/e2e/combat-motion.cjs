@@ -3,12 +3,12 @@ const { execFileSync } = require('node:child_process');
 const { launchBrowser, gameUrl } = require('./browser.cjs');
 const { motionPreview } = require('./motion-preview.cjs');
 const root = path.resolve(__dirname, '../..'), out = path.join(root, 'gen/e2e/combat-motion'); fs.mkdirSync(out, { recursive: true });
-const hooks = 'Object.assign(window,{A,towerFire,updateVisuals,projHit,draw,buildInfinityWave,spawnEnemy,currentEnemyFrame,epos,enemyFramePlacement,towerSpr,towerVisualEmitter,enemyVisualTarget,refreshDirectionalDemand,VIEW}); Object.defineProperty(window,"LANES",{get:()=>LANES}); window.DK = S;';
+const hooks = 'Object.assign(window,{A,paintTowerBody,TS_CX,TS_BASE_Y,towerFire,updateVisuals,projHit,draw,buildInfinityWave,spawnEnemy,currentEnemyFrame,epos,enemyFramePlacement,towerSpr,towerVisualEmitter,refreshDirectionalDemand,VIEW}); Object.defineProperty(window,"LANES",{get:()=>LANES}); window.DK = S;';
 async function open(browser, baseline = false, viewport = { width: 1240, height: 860 }) {
   const page = await browser.newPage({ viewport }), errors = [];
   page.on('pageerror', e => errors.push(e.message));
   const source = baseline ? execFileSync('git', ['show', '2fb8489:game.js'], { cwd: root, encoding: 'utf8' }) : fs.readFileSync(path.join(root, 'game.js'), 'utf8');
-  const hook = baseline ? hooks.replace('enemyVisualTarget,', '') : hooks;
+  const hook = hooks;
   await page.route('**/game.js*', r => r.fulfill({ contentType: 'application/javascript', body: source.replace('window.DK = S;', hook) }));
   await page.addInitScript(() => { localStorage.setItem('dk_coachDone', '1'); localStorage.setItem('dk_infHelpSeen', '1'); });
   await page.goto(gameUrl()); await page.waitForFunction(() => window.DK?.phase === 'title', null, { timeout: 120000 });
@@ -76,21 +76,28 @@ async function combatTrace(page) {
       for (const f of row.frames) assert.equal(f.current, f.original, 'unwarped original pixels: ' + row.id + ':' + row.view);
     }
     report.checks.push('Ground/flight W100 bosses and W1 walker: original frame pixels unchanged in all3 directions; authored animation still advances');
-    report.towers = await page.evaluate(() => {
-      const c = document.createElement('canvas'); c.width = c.height = 180; const g = c.getContext('2d'), rows = [];
+    const originalTowerSource = execFileSync('git', ['show', '2fb8489:game.js'], { cwd: root, encoding: 'utf8' });
+    const originalTower = originalTowerSource.slice(originalTowerSource.indexOf('function paintTowerBody('), originalTowerSource.indexOf('function towerVisualEmitter(')).trim();
+    report.towers = await page.evaluate(original => {
+      const c = document.createElement('canvas'); c.width = c.height = 180; const g = c.getContext('2d', { willReadFrequently: true }), rows = [];
+      const before = new Function('ctx', 'TS_CX', 'TS_BASE_Y', 'return (' + original + ');')(g, TS_CX, TS_BASE_Y);
+      const after = new Function('ctx', 'TS_CX', 'TS_BASE_Y', 'MOTION', 'DKCONTENT', 'return (' + paintTowerBody.toString() + ');')(g, TS_CX, TS_BASE_Y, DKMOTION, DKCONTENT);
       const hash = data => { let n = 2166136261; for (const b of data) n = Math.imul(n ^ b, 16777619); return n >>> 0; };
-      for (let face = 1; face <= 20; face++) {
-        const sp = towerSpr(face, 0), t = { face, def: DKTD[face], x: 90, y: 150, shotSerial: 1, attackAim: -2, cd: .5 }, base = [], mechanism = [], baseDiff = []; let basePixels;
-        for (const age of [1, .035, .09, .18, .29]) {
-          t.attackAge = age; g.clearRect(0, 0, 180, 180); g.save(); g.translate(90, 156); DKMOTION.paintTower(g, t, sp, DKCONTENT.STAR_TOWER_EMITTERS[face]); g.restore();
-          const pixels = g.getImageData(0, 148, 180, 30).data; base.push(hash(pixels)); if (!basePixels) basePixels = pixels; else { let changed = 0, max = 0; for(let i=0;i<pixels.length;i++) if(pixels[i] !== basePixels[i]) { changed++; max=Math.max(max,Math.abs(pixels[i]-basePixels[i])); } baseDiff.push({changed,max}); } mechanism.push(hash(g.getImageData(0, 0, 180, 145).data));
-        }
-        rows.push({ face, base, baseDiff, mechanism, emitter: towerVisualEmitter(t), family: DKMOTION.family(face) });
+      for (let face = 1; face <= 20; face++) for (let skin = 0; skin < 3; skin++) {
+        const sp = towerSpr(face, skin), t = { face, def: DKTD[face], skin, x: 90, y: 150, shotSerial: 1 }, poses = [];
+        const render = painter => { g.clearRect(0, 0, 180, 180); g.save(); g.translate(90, 156); painter(t, sp); g.restore(); return hash(g.getImageData(0, 0, 180, 180).data); };
+        for (const kick of [0, .25, .6, 1]) { t.kick = kick; t.muzzleAge = 1; poses.push({ kick, original: render(before), current: render(after) }); }
+        t.kick = .8; t.muzzleAge = .03; const lit = render(after); t.muzzleAge = .3; const expired = render(after), baseline = render(before);
+        rows.push({ face, skin, poses, lit, expired, baseline });
       }
       return rows;
-    });
-    for (const t of report.towers) { assert.ok(t.baseDiff.every(d => d.max <= 1 && d.changed <= 4), 'stationary base (one-channel GPU rounding) ' + t.face); assert.ok(new Set(t.mechanism).size >= 3, 'attack mechanism ' + t.face); }
-    report.checks.push('All20 towers have changing attack mechanisms and stationary foundations (at most one pixel/channel rounding)');
+    }, originalTower);
+    for (const t of report.towers) {
+      for (const p of t.poses) assert.equal(p.current, p.original, 'original tower/recoil ' + t.face + ':' + t.skin);
+      assert.notEqual(t.lit, t.baseline, 'muzzle light appears ' + t.face + ':' + t.skin);
+      assert.equal(t.expired, t.baseline, 'no lingering overlay ' + t.face + ':' + t.skin);
+    }
+    report.checks.push('20 towers ×3 skins match original body/recoil at4 kick values; muzzle-only light appears and expires');
     // Review assets are exported separately, not retained by the game renderer.
     const gallery = await page.evaluate(async () => {
       const actors = [];
@@ -105,10 +112,10 @@ async function combatTrace(page) {
         actors.push({ id: a.assetId, name: a.name, gait: e.locomotion, views });
       }
       const towers = [];
-      for (let face = 1; face <= 20; face++) { const sp = towerSpr(face, 0); towers.push({ face, name: DKTD[face].name, w: sp.w, h: sp.h, cx: sp.cx, baseY: sp.baseY, image: sp.cv.toDataURL(), port: DKCONTENT.STAR_TOWER_EMITTERS[face] }); }
+      for (let face = 1; face <= 20; face++) { const sp = towerSpr(face, 0); towers.push({ face, name: DKTD[face].name, color: DKTD[face].color, w: sp.w, h: sp.h, cx: sp.cx, baseY: sp.baseY, image: sp.cv.toDataURL(), port: DKCONTENT.STAR_TOWER_EMITTERS[face] }); }
       const legacy={};for(const key of ['shell','bolt','frostShard','dieBomb','laserBeam','lightningArc','cannonBlast','arcaneBurst','frostBurst','dieExplode']){const pack=Array.isArray(A[key])?A[key]:[A[key]];legacy[key]=pack.filter(x=>x?.cv).map(x=>x.cv.toDataURL('image/webp',.9));} return { actors, towers, legacy };
     });
-    fs.writeFileSync(path.join(out, 'preview.html'), motionPreview(gallery, fs.readFileSync(path.join(root, 'combat-motion.js'), 'utf8')));
+    fs.writeFileSync(path.join(out, 'preview.html'), motionPreview(gallery, fs.readFileSync(path.join(root, 'combat-motion.js'), 'utf8'), originalTower));
     assert.deepEqual(current.errors, []); await page.close();
     report.checks.push('Exported interactive before/after preview from actual checked-in frames and20 current tower sprites');
     // Actual game draw workload, with resident art, 200 actors and 15 firing towers.
