@@ -28,7 +28,8 @@
     "test:extreme-multi": "node tools/e2e/extreme-multiplayer.cjs",
     "test:campaign": "node tools/e2e/campaign.cjs",
     "measure:campaign": "node tools/e2e/campaign.cjs --full-combat",
-    "test:boss-locomotion": "node tools/e2e/boss-locomotion.cjs"
+    "test:boss-locomotion": "node tools/e2e/boss-locomotion.cjs",
+    "test:combat-motion": "node tools/e2e/combat-motion.cjs"
   },
   "dependencies": {
     "@capacitor-community/safe-area": "^7.0.0",

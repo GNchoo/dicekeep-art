@@ -142,6 +142,25 @@ test('221 identities retain offline fallbacks within 96 MiB and two optional req
   assert.ok(cache.state().evictions>0);cache.dispose();assert.equal(cache.state().residentBytes,0);
 });
 
+test('visible animation survives still pressure without repeated eviction and reload', async () => {
+  const entries = Object.fromEntries(Array.from({ length: 60 }, (_, i) => {
+    const id = 'w' + String(i + 1).padStart(3, '0'); return [id, entry(id, 512)];
+  }));
+  const { cache } = setup(entries), active = Object.keys(entries).map(id => ({ id, view: 'front' }));
+  await cache.init(); cache.demand(active); await settle(cache);
+  const first = cache.state();
+  assert.ok(first.budgetSkips > 0);
+  assert.ok(active.some(a => cache.frame(a.id, a.view, .1).cv !== cache.frame(a.id, a.view, .7).cv), 'resident sheet frames actually vary');
+  for (const { id } of active) for (const view of ['side', 'front', 'back']) {
+    const frame = cache.frame(id, view, .5); assert.equal(frame.assetId, id); assert.equal(frame.view, view);
+  }
+  for (let i = 0; i < 10; i++) { cache.demand(active); await settle(cache); }
+  assert.equal(cache.state().loads, first.loads, 'unchanged demand must not reload useful stills');
+  assert.equal(cache.state().evictions, first.evictions);
+  assert.ok(cache.state().peakTrackedBytes <= 96 * 1024 * 1024);
+  cache.dispose(); assert.equal(cache.state().residentBytes, 0);
+});
+
 test('direction hysteresis and circular phase preserve a walk through corners/wrap', () => {
   assert.equal(Art.direction(1, 0, 'front'), 'side');
   assert.equal(Art.direction(0, 1, 'side'), 'front');
@@ -250,7 +269,8 @@ test('dead-frame pins survive demand change, then eviction releases their canvas
 });
 
 test('budget never grows to satisfy pinned sheets; same-character still remains available', async () => {
-  const { cache } = setup({ w001: entry('w001', 128) }, { budget: 1024 * 1024 });
+  // The 8-frame sheet needs 1 MiB during decode; 768 KiB can fit the stills only.
+  const { cache } = setup({ w001: entry('w001', 128) }, { budget: 768 * 1024 });
   cache.demand([{ id: 'w001', view: 'side' }]); await settle(cache);
   assert.ok(cache.state().trackedBytes <= cache.state().budget);
   assert.ok(cache.state().peakTrackedBytes <= cache.state().budget);

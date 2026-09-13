@@ -186,7 +186,10 @@
     }
     function space(required, incoming) {
       if (resident + reserved + required <= budget) return true;
-      for (const r of [...records.values()].filter(r => r.status === 'ready' && !r.pin && (!r.wanted || r.priority > incoming.priority)).sort((a, b) => Number(a.wanted) - Number(b.wanted) || a.touched - b.touched)) {
+      const candidates = [...records.values()].filter(r => r.status === 'ready' && !r.pin && (!r.wanted || r.priority > incoming.priority)).sort((a, b) => Number(a.wanted) - Number(b.wanted) || a.touched - b.touched);
+      // Do not discard useful stills if even reclaiming all of them cannot fit the decode.
+      if (resident + reserved + required - candidates.reduce((n, r) => n + r.bytes, 0) > budget) return false;
+      for (const r of candidates) {
         evict(r); if (resident + reserved + required <= budget) return true;
       }
       return false;
@@ -230,8 +233,11 @@
       for (const r of records.values()) { r.pin = r.mandatory; r.wanted = r.mandatory; r.priority = r.mandatory ? -1 : 9; }
       const want = (id, view, kind, priority, pin) => { const r = record(id, view, kind); if (!r) return; r.wanted = true; r.pin ||= pin; r.priority = Math.min(r.priority, priority); };
       for (const a of active) {
-        for (const v of VIEWS) want(a.id, v, 'still', v === a.view ? 0 : 2, true);
-        want(a.id, a.view || 'side', 'sheet', 1, true);
+        const view = a.view || 'side';
+        // Inline fallbacks already preserve every identity/direction. Optional stills
+        // must not pin the whole budget and prevent visible walk/flight sheets loading.
+        want(a.id, view, 'sheet', 0, true);
+        for (const v of VIEWS) want(a.id, v, 'still', v === view ? 1 : 2, false);
       }
       for (const id of future) for (const v of VIEWS) { want(id, v, 'still', 3, false); want(id, v, 'sheet', 4, false); }
       for (const key of retained) { const r = records.get(key); if (r) { r.pin = true; r.wanted = true; } }

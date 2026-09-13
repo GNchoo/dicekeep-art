@@ -98,17 +98,23 @@ const compact = ({ records, ...state }) => state;
         if (f.view !== view || match?.[2] !== view) issue('wrong direction ' + e.artAssetId + ':' + view + ' <- ' + f.cacheKey);
         const matrix = this.getTransform();
         if (![phase, e.artWalkDistance, e.animT, e.drawHeight, f.w, f.h, f.referenceHeight, ...args, matrix.a, matrix.b, matrix.c, matrix.d, matrix.e, matrix.f].every(Number.isFinite)
-          || phase < 0 || phase >= 1 || e.drawHeight <= 0 || source.width <= 0 || source.height <= 0 || args.length !== 4 || args[2] <= 0 || args[3] <= 0) issue('invalid numeric pose ' + e.artAssetId);
+          || phase < 0 || phase >= 1 || e.drawHeight <= 0 || source.width <= 0 || source.height <= 0 || ![4, 8].includes(args.length) || args[2] <= 0 || args[3] <= 0 || (args.length === 8 && (args[6] <= 0 || args[7] <= 0))) issue('invalid numeric pose ' + e.artAssetId);
         const entry = DKART.entry(e.artAssetId), expectedCell = match?.[3] === 'fallback' ? 64 : entry.views[view].cell;
         if (source.width !== expectedCell || source.height !== expectedCell || !Array.isArray(f.pivot) || !f.pivot.every(n => Number.isFinite(n) && n >= 0 && n <= expectedCell)) issue('invalid frame grid/pivot ' + f.cacheKey);
         if ((direction === 'right' && e.face !== 1) || (direction === 'left' && e.face !== -1)) issue('wrong lateral face ' + e.artAssetId);
         // Ignore transparent cell padding: test where the actual sprite pixels land.
-        const fg = source.width > 0 && source.height > 0 ? foreground(source) : null;
+        let fg = source.width > 0 && source.height > 0 ? foreground(source) : null;
+        const crop = args.length === 8 ? args.slice(0, 4) : [0, 0, source.width, source.height];
+        const dest = args.length === 8 ? args.slice(4) : args;
+        if (fg && args.length === 8) {
+          fg = { left: Math.max(fg.left, crop[0]), top: Math.max(fg.top, crop[1]), right: Math.min(fg.right, crop[0] + crop[2]), bottom: Math.min(fg.bottom, crop[1] + crop[3]) };
+          if (fg.right <= fg.left || fg.bottom <= fg.top) return result; // transparent skin strip
+        }
         if (!fg) issue('empty foreground ' + f.cacheKey);
         let bounds = null, visibleFraction = 0, fullyInside = false;
         if (fg) {
           const corners = [[fg.left, fg.top], [fg.right, fg.top], [fg.left, fg.bottom], [fg.right, fg.bottom]].map(([u, v]) => {
-            const x = args[0] + u / source.width * args[2], y = args[1] + v / source.height * args[3];
+            const x = dest[0] + (u - crop[0]) / crop[2] * dest[2], y = dest[1] + (v - crop[1]) / crop[3] * dest[3];
             return { x: matrix.a * x + matrix.c * y + matrix.e, y: matrix.b * x + matrix.d * y + matrix.f };
           });
           bounds = { left: Math.min(...corners.map(p => p.x)), top: Math.min(...corners.map(p => p.y)), right: Math.max(...corners.map(p => p.x)), bottom: Math.max(...corners.map(p => p.y)) };
