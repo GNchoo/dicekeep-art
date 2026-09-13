@@ -3201,17 +3201,9 @@ function currentEnemyFrame(e) {
   return null;
 }
 
-function enemyMotionPose(e, fr, h, place) {
-  const entry = directionalArt && directionalArt.entry(e.artAssetId);
-  return { gait: entry ? entry.locomotion : e.move === 'air' ? 'flight' : e.move === 'burrow' ? 'slither' : 'legged',
-    phase: directionalPhase(e), view: fr?.view || 'side',
-    height: fr?.directional ? place.h / fr.h * fr.referenceHeight : h };
-}
 function enemyVisualTarget(e) {
   const p = epos(e), fr = currentEnemyFrame(e), h = fr?.directional ? e.drawHeight : e.def.size;
-  const place = fr ? enemyFramePlacement(fr, h) : { h };
-  const pose = enemyMotionPose(e, fr, h, place), offset = MOTION.enemyOffset(-h * .46, pose);
-  return { x: p.x + offset[0] * (enemyFlip(e) ? -1 : 1), y: p.y + 4 - enemyAirHeight(e, p, fr) - h * .46 + offset[1] };
+  return { x: p.x, y: p.y + 4 - enemyAirHeight(e, p, fr) - h * .46 };
 }
 function combatImpact(type, at, size, seed, angle) {
   S.fxs.push({ kind: 'combatHit', family: type, x: at.x, y: at.y, t: 0,
@@ -4018,14 +4010,12 @@ function draw() {
       if (fr && fr.cv) {
         const h = fr.directional ? e.drawHeight : e.def.size;
         const place = enemyFramePlacement(fr, h);
-        const pose = enemyMotionPose(e, fr, h, place);
-        MOTION.paintEnemy(ctx, fr.cv, place, pose);
-        const head = MOTION.enemyOffset(-h * .95, pose);
-        ctx.save(); ctx.translate(head[0], head[1]); drawEnemyEvolution(e.evolutionTier, fr, h); ctx.restore();
+        MOTION.paintEnemy(ctx, fr.cv, place);
+        drawEnemyEvolution(e.evolutionTier, fr, h);
         if (e.flashT > 0) {
           // 피격 플래시: 흰 실루엣을 겹친다
           const fl = flashCanvas(fr, place.w, place.h);
-          if (fl) { ctx.filter = 'none'; ctx.globalAlpha = Math.min(1, e.flashT / 0.13) * 0.85; MOTION.paintEnemy(ctx, fl, place, pose); }
+          if (fl) { ctx.filter = 'none'; ctx.globalAlpha = Math.min(1, e.flashT / 0.13) * 0.85; MOTION.paintEnemy(ctx, fl, place); }
         }
       }
       ctx.filter = 'none';

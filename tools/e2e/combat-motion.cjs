@@ -3,12 +3,12 @@ const { execFileSync } = require('node:child_process');
 const { launchBrowser, gameUrl } = require('./browser.cjs');
 const { motionPreview } = require('./motion-preview.cjs');
 const root = path.resolve(__dirname, '../..'), out = path.join(root, 'gen/e2e/combat-motion'); fs.mkdirSync(out, { recursive: true });
-const hooks = 'Object.assign(window,{A,towerFire,updateVisuals,projHit,draw,buildInfinityWave,spawnEnemy,currentEnemyFrame,epos,enemyMotionPose,enemyFramePlacement,towerSpr,towerVisualEmitter,enemyVisualTarget,refreshDirectionalDemand,VIEW}); Object.defineProperty(window,"LANES",{get:()=>LANES}); window.DK = S;';
+const hooks = 'Object.assign(window,{A,towerFire,updateVisuals,projHit,draw,buildInfinityWave,spawnEnemy,currentEnemyFrame,epos,enemyFramePlacement,towerSpr,towerVisualEmitter,enemyVisualTarget,refreshDirectionalDemand,VIEW}); Object.defineProperty(window,"LANES",{get:()=>LANES}); window.DK = S;';
 async function open(browser, baseline = false, viewport = { width: 1240, height: 860 }) {
   const page = await browser.newPage({ viewport }), errors = [];
   page.on('pageerror', e => errors.push(e.message));
   const source = baseline ? execFileSync('git', ['show', '2fb8489:game.js'], { cwd: root, encoding: 'utf8' }) : fs.readFileSync(path.join(root, 'game.js'), 'utf8');
-  const hook = baseline ? hooks.replace('enemyMotionPose,', '').replace('enemyVisualTarget,', '') : hooks;
+  const hook = baseline ? hooks.replace('enemyVisualTarget,', '') : hooks;
   await page.route('**/game.js*', r => r.fulfill({ contentType: 'application/javascript', body: source.replace('window.DK = S;', hook) }));
   await page.addInitScript(() => { localStorage.setItem('dk_coachDone', '1'); localStorage.setItem('dk_infHelpSeen', '1'); });
   await page.goto(gameUrl()); await page.waitForFunction(() => window.DK?.phase === 'title', null, { timeout: 120000 });
@@ -46,36 +46,36 @@ async function combatTrace(page) {
     report.combatCases = actual.length; report.checks.push('60 actual attack cases match previous damage, first-hit tick, cooldown, slow/stun, projectile coordinates and RNG');
     const page = current.page;
     report.pixels = await page.evaluate(async () => {
-      const art = INF_DIRECTIONAL_ART.entries.b100, v = art.views.side;
-      const image = new Image(); image.src = v.still; await image.decode();
-      const source = document.createElement('canvas'); source.width = source.height = v.cell; source.getContext('2d').drawImage(image, 0, 0);
-      const c = document.createElement('canvas'); c.width = c.height = 300; const g = c.getContext('2d');
-      const h = 210, scale = h / art.referenceHeight, place = { x: -v.pivot[0] * scale, y: -v.pivot[1] * scale, w: v.cell * scale, h: v.cell * scale };
-      const hash = data => { let n = 2166136261; for (const b of data) n = Math.imul(n ^ b, 16777619); return n >>> 0; };
-      const feet = [], chest = [], heads = [];
-      for (let i = 0; i < 8; i++) {
-        g.clearRect(0, 0, 300, 300); g.save(); g.translate(150, 270);
-        DKMOTION.paintEnemy(g, source, place, { height: h, phase: i / 8, gait: 'legged', view: 'side' }); g.restore();
-        feet.push(hash(g.getImageData(0, 252, 300, 22).data)); chest.push(hash(g.getImageData(0, 115, 300, 50).data)); heads.push(hash(g.getImageData(0, 42, 300, 45).data));
+      const rows = [], hash = data => { let n = 2166136261; for (const b of data) n = Math.imul(n ^ b, 16777619); return n >>> 0; };
+      // Ground boss, flight boss and ordinary walker: every original frame in
+      // all three directions must survive rendering without any geometric filter.
+      for (const id of ['b100', 'b100-2', 'w001']) for (const view of ['side', 'front', 'back']) {
+        const art = INF_DIRECTIONAL_ART.entries[id], v = art.views[view];
+        const image = new Image(); image.src = v.sheet; await image.decode();
+        const source = document.createElement('canvas'); source.width = source.height = v.cell; const sg = source.getContext('2d');
+        // Readback must use the same CPU rasterizer on the first and later draws.
+        const c = document.createElement('canvas'); c.width = c.height = 300; const g = c.getContext('2d', { willReadFrequently: true });
+        const scale = 180 / (art.referenceHeight * (v.scale || 1)), place = { x: -v.pivot[0] * scale, y: -v.pivot[1] * scale, w: v.cell * scale, h: v.cell * scale };
+        const frames = [];
+        for (let i = 0; i < v.frames; i++) {
+          sg.clearRect(0, 0, v.cell, v.cell); sg.drawImage(image, i % v.cols * v.cell, Math.floor(i / v.cols) * v.cell, v.cell, v.cell, 0, 0, v.cell, v.cell);
+          const render = wrapped => {
+            g.clearRect(0, 0, 300, 300); g.save(); g.translate(150, 270);
+            if (wrapped) DKMOTION.paintEnemy(g, source, place);
+            else g.drawImage(source, place.x, place.y, place.w, place.h);
+            g.restore(); return hash(g.getImageData(0, 0, 300, 300).data);
+          };
+          frames.push({ original: render(false), current: render(true) });
+        }
+        rows.push({ id, view, frames });
       }
-      let allocations = 0; const create = document.createElement;
-      document.createElement = function (...args) { allocations++; return create.apply(this, args); };
-      try { for (let i = 0; i < 20; i++) DKMOTION.paintEnemy(g, source, place, { height: h, phase: i / 20, gait: 'legged', view: 'side' }); }
-      finally { document.createElement = create; }
-      // Exercise every actual authored profile, with exact loop and foot anchors.
-      const identities = [...Object.values(INF_DIRECTIONAL_ART.entries), ...Object.values(INF_EXTREME_ART.entries)];
-      let maxOffset = 0;
-      for (const e of identities) for (const view of ['side', 'front', 'back']) for (let i = 0; i < 32; i++) for (const y of [0, -20, -60, -100, -140]) {
-        const pose = { height: 140, phase: i / 32, gait: e.locomotion, view }, xy = DKMOTION.enemyOffset(y, pose);
-        if (!xy.every(Number.isFinite)) throw Error('invalid pose ' + e.assetId);
-        if (e.locomotion === 'legged' && y === 0 && xy.some(x => x !== 0)) throw Error('foot drift');
-        maxOffset = Math.max(maxOffset, ...xy.map(Math.abs));
-      }
-      return { feet, chest, heads, allocations, identities: identities.length, maxOffset };
+      return rows;
     });
-    assert.equal(new Set(report.pixels.feet).size, 1); assert.ok(new Set(report.pixels.chest).size >= 6); assert.ok(new Set(report.pixels.heads).size >= 6);
-    assert.equal(report.pixels.allocations, 0); assert.equal(report.pixels.identities, 221); assert.ok(report.pixels.maxOffset < 6);
-    report.checks.push('Same source pose: chest and head change while foot pixels stay fixed; all221 profiles finite; no canvas allocation in skin rendering');
+    for (const row of report.pixels) {
+      assert.ok(new Set(row.frames.map(f => f.original)).size > 1, 'authored animation still varies: ' + row.id + ':' + row.view);
+      for (const f of row.frames) assert.equal(f.current, f.original, 'unwarped original pixels: ' + row.id + ':' + row.view);
+    }
+    report.checks.push('Ground/flight W100 bosses and W1 walker: original frame pixels unchanged in all3 directions; authored animation still advances');
     report.towers = await page.evaluate(() => {
       const c = document.createElement('canvas'); c.width = c.height = 180; const g = c.getContext('2d'), rows = [];
       const hash = data => { let n = 2166136261; for (const b of data) n = Math.imul(n ^ b, 16777619); return n >>> 0; };

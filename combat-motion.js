@@ -4,51 +4,14 @@
   if (root) root.DKMOTION = api;
 })(typeof window === 'undefined' ? null : window, function () {
   'use strict';
-  // Canvas cutout animation. No generated textures, frame cache or combat RNG.
-  // A continuous, piecewise affine skin keeps the authored feet in place while
-  // pelvis, chest and head counterbalance. The original limb animation remains.
+  // Preserve authored monster frames. Upper-body strip warping was rejected in
+  // visual review; it bent armor and faces like a ripple filter.
   const TAU = Math.PI * 2, clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
   const smooth = x => { x = clamp(x); return x * x * (3 - 2 * x); };
   const noise = x => { const n = Math.sin(x * 127.1 + 311.7) * 43758.5453; return n - Math.floor(n); };
-  function enemyOffset(y, pose) {
-    const h = pose.height, u = -y / h, a = pose.phase * TAU;
-    if (pose.gait === 'legged') {
-      if (u <= .18) return [0, 0]; // Authored stance feet and lower shin never move.
-      const keys = [.18, .40, .64, .84, 1.12];
-      const lateral = [0, Math.sin(a) * .021, -Math.sin(a + .28) * .022, Math.sin(a - .38) * .010, Math.sin(a - .38) * .010];
-      const vertical = [0, (1 - Math.cos(a * 2)) * .004, Math.sin(a * 2 - .4) * .010, Math.sin(a * 2 - .8) * .004, Math.sin(a * 2 - .8) * .004];
-      let i = 0; while (i < keys.length - 2 && u > keys[i + 1]) i++;
-      const t = smooth((u - keys[i]) / (keys[i + 1] - keys[i]));
-      const direction = pose.view === 'back' ? -1 : 1;
-      return [h * (lateral[i] * (1 - t) + lateral[i + 1] * t) * direction,
-        h * (vertical[i] * (1 - t) + vertical[i + 1] * t)];
-    }
-    if (pose.gait === 'flight') {
-      // Downstroke carries the chest, followed by the head and lower appendages.
-      const lead = smooth((u - .2) / .65);
-      return [h * .012 * Math.sin(a - u * .9), -h * .025 * Math.sin(a - .5) + h * .012 * Math.sin(a - lead * .75)];
-    }
-    if (pose.gait === 'slither') {
-      const weight = smooth(u / .35);
-      return [h * .025 * Math.sin(a - u * 3) * weight, h * .006 * Math.cos(a - u * 3) * weight];
-    }
-    return [h * .009 * Math.sin(a - u * 1.1), -h * .025 * Math.sin(a) + h * .007 * Math.sin(a - u)];
-  }
-  function paintEnemy(g, cv, place, pose) {
+  function paintEnemy(g, cv, place) {
     if (!cv?.width || !(place.h > 0)) return;
-    // Eight shared strip boundaries; transforms meet exactly at every boundary.
-    // Draw directly from resident frames rather than allocating per-actor images.
-    const bands = 8, dy = place.h / bands, sh = cv.height / bands;
-    for (let i = 0; i < bands; i++) {
-      const y = place.y + i * dy, a = enemyOffset(y, pose), b = enemyOffset(y + dy, pose);
-      const shear = (b[0] - a[0]) / dy, scale = 1 + (b[1] - a[1]) / dy;
-      g.save();
-      g.transform(1, 0, shear, scale, a[0] - shear * y, a[1] - (scale - 1) * y);
-      // A subpixel overlap removes antialiased seams, without adding a hard cut.
-      const extra = i === bands - 1 ? 0 : Math.min(.35 * cv.height / place.h, sh * .025);
-      g.drawImage(cv, 0, i * sh, cv.width, sh + extra, place.x, y, place.w, dy + extra * place.h / cv.height);
-      g.restore();
-    }
+    g.drawImage(cv, place.x, place.y, place.w, place.h);
   }
   function family(face) {
     return face <= 6 ? ['laser', 'cannon', 'arcane', 'frost', 'lightning', 'dice'][face - 1]
@@ -179,5 +142,5 @@
     }
     g.restore();
   }
-  return Object.freeze({ enemyOffset, paintEnemy, family, COLORS, towerPorts, towerPose, paintTower, emitter, paintProjectile, paintImpact });
+  return Object.freeze({ paintEnemy, family, COLORS, towerPorts, towerPose, paintTower, emitter, paintProjectile, paintImpact });
 });
