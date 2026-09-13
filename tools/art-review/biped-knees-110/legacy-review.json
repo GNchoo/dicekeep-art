@@ -1,0 +1,105 @@
+{
+  "version": 110,
+  "baseline": "5630cdd",
+  "reviewer": "Codex",
+  "reviewedAt": "2026-09-13T17:04:58.361Z",
+  "passed": true,
+  "scope": "Five early bipeds: ten front/back views corrected. Correct legacy side configs and production images remain unchanged; generated side outputs must not be promoted.",
+  "configSha256": "436cac1909c4f2b86425a1bf0020bf9b795519ac62a16cb84c2ca43da448cf04",
+  "ids": [
+    "w002",
+    "w003",
+    "w005",
+    "w007",
+    "w009"
+  ],
+  "builds": {
+    "legacy": {
+      "manifestSha256": "29b3d68fa478df368a4947a5ed8306ec0b3854c7152b35e058ba8cd30bf71a91",
+      "qaSha256": "e94b1d6226f9d503e853f7b66333c8709870c5aaf506b28494d71569245935ca",
+      "movingQaSha256": "5493b32fc6fa8e500ab46bbe48da70320c1e3b49eb3c3fffde68653e63ac0e64"
+    }
+  },
+  "visualReview": {
+    "method": "Viewed all ten actual front/back eight-frame raster review boards (80 corrected poses), plus both baseline/candidate comparison boards at frames2/6. No newly detached limbs or clipped silhouettes found. Front/back projected poses do not establish anatomical bend sign by themselves; unprojected geometry guard confirms forward knees at256phases perview.",
+    "boards": [
+      {
+        "id": "w002",
+        "view": "front",
+        "file": "review/w002-front.png",
+        "sha256": "5325d45f337e60915a819c900ddaa9bedf3048d4fe9bbea6571d457a12651132",
+        "visuallyInspectedFrameCount": 8
+      },
+      {
+        "id": "w002",
+        "view": "back",
+        "file": "review/w002-back.png",
+        "sha256": "80909859087679fa4e643980c23c7c15476444a5b4457db60595260c5a442a57",
+        "visuallyInspectedFrameCount": 8
+      },
+      {
+        "id": "w003",
+        "view": "front",
+        "file": "review/w003-front.png",
+        "sha256": "f575fb8f8d0a1250a8d98938d9b6e9784b805f45c177a06434e81933694f48ef",
+        "visuallyInspectedFrameCount": 8
+      },
+      {
+        "id": "w003",
+        "view": "back",
+        "file": "review/w003-back.png",
+        "sha256": "dba1c7ef5ef54d13bb09b2a9c990f8d0774cc65ae07f41d53eff7e246bcf58bc",
+        "visuallyInspectedFrameCount": 8
+      },
+      {
+        "id": "w005",
+        "view": "front",
+        "file": "review/w005-front.png",
+        "sha256": "e1ff67f1ed34fc68006e128bc960ea9d99f84caa3865216e281c52f34b055ca2",
+        "visuallyInspectedFrameCount": 8
+      },
+      {
+        "id": "w005",
+        "view": "back",
+        "file": "review/w005-back.png",
+        "sha256": "f71002b84b72a0cfd905c4de6cc228d888141e8e109673b0f5a852ee7030ae31",
+        "visuallyInspectedFrameCount": 8
+      },
+      {
+        "id": "w007",
+        "view": "front",
+        "file": "review/w007-front.png",
+        "sha256": "0de19789b1156a28c6f34551c51eced91afe76ec8048b3e40e0256b0c38e2232",
+        "visuallyInspectedFrameCount": 8
+      },
+      {
+        "id": "w007",
+        "view": "back",
+        "file": "review/w007-back.png",
+        "sha256": "0d48393ab111e97a6fc01f344a77db06ffc7f3298c7bb2dfa61cdbe342b9dab9",
+        "visuallyInspectedFrameCount": 8
+      },
+      {
+        "id": "w009",
+        "view": "front",
+        "file": "review/w009-front.png",
+        "sha256": "d18af4a144334c816ac21e97440dce7df432786eab578a05418d0c8cc84bf937",
+        "visuallyInspectedFrameCount": 8
+      },
+      {
+        "id": "w009",
+        "view": "back",
+        "file": "review/w009-back.png",
+        "sha256": "cb8dbb9626a6e971fd9c7401d052964a881a6a325487f3a455f15fb8be14ba57",
+        "visuallyInspectedFrameCount": 8
+      }
+    ]
+  },
+  "numericalReview": {
+    "changedViews": 10,
+    "knees": 20,
+    "poseSamplesPerView": 256,
+    "minimumForwardKneeOffset": 10.284950907388865
+  },
+  "preservation": "Round-trip config comparison preserves side definitions and all front/back source-joint, flipX, socket, placement, footfall and gait fields. Runtime promotion must retain the entire prior side view, fallback, cache version and image bytes."
+}

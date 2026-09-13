@@ -1,0 +1,558 @@
+{
+  "baseline": "5630cdd",
+  "scope": "Supplemental5earlybipeds;10front/backviews corrected, complete5sideviews excluded frompromotion.",
+  "sourceConfigs": [
+    {
+      "path": "tools/art-review/directional-101/legacy-directional-rigs.json",
+      "sha256": "fcc4960a8edd1763f8e132145755dd85ca22c9fcf9a0c6093d6e801354e99bb7",
+      "matchesGitBaseline": true
+    }
+  ],
+  "configRoundTripPassed": true,
+  "correctedIds": [
+    "w002",
+    "w003",
+    "w005",
+    "w007",
+    "w009"
+  ],
+  "correctedViews": [
+    "front",
+    "back"
+  ],
+  "unchangedViews": [
+    "side"
+  ],
+  "placementFieldsUnchanged": 15,
+  "frontBackMetadata": [
+    {
+      "id": "w002",
+      "referenceHeight": 446,
+      "cycleStride": 237.81600000000003,
+      "views": {
+        "front": {
+          "pivot": [
+            256,
+            430
+          ],
+          "assetVersion": 110,
+          "legs": [
+            {
+              "id": "rightLeg",
+              "bend": -1,
+              "flipX": false
+            },
+            {
+              "id": "leftLeg",
+              "bend": -1,
+              "flipX": false
+            }
+          ]
+        },
+        "back": {
+          "pivot": [
+            256,
+            430
+          ],
+          "assetVersion": 110,
+          "legs": [
+            {
+              "id": "leftLeg",
+              "bend": -1,
+              "flipX": false
+            },
+            {
+              "id": "rightLeg",
+              "bend": -1,
+              "flipX": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "w003",
+      "referenceHeight": 449,
+      "cycleStride": 241.27200000000002,
+      "views": {
+        "front": {
+          "pivot": [
+            256,
+            430
+          ],
+          "assetVersion": 110,
+          "legs": [
+            {
+              "id": "rightLeg",
+              "bend": -1,
+              "flipX": false
+            },
+            {
+              "id": "leftLeg",
+              "bend": -1,
+              "flipX": false
+            }
+          ]
+        },
+        "back": {
+          "pivot": [
+            256,
+            430
+          ],
+          "assetVersion": 110,
+          "legs": [
+            {
+              "id": "leftLeg",
+              "bend": -1,
+              "flipX": false
+            },
+            {
+              "id": "rightLeg",
+              "bend": -1,
+              "flipX": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "w005",
+      "referenceHeight": 440,
+      "cycleStride": 241.64999999999998,
+      "views": {
+        "front": {
+          "pivot": [
+            256,
+            430
+          ],
+          "assetVersion": 110,
+          "legs": [
+            {
+              "id": "rightLeg",
+              "bend": -1,
+              "flipX": false
+            },
+            {
+              "id": "leftLeg",
+              "bend": -1,
+              "flipX": false
+            }
+          ]
+        },
+        "back": {
+          "pivot": [
+            256,
+            430
+          ],
+          "assetVersion": 110,
+          "legs": [
+            {
+              "id": "leftLeg",
+              "bend": -1,
+              "flipX": false
+            },
+            {
+              "id": "rightLeg",
+              "bend": -1,
+              "flipX": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "w007",
+      "referenceHeight": 445,
+      "cycleStride": 238.87199999999999,
+      "views": {
+        "front": {
+          "pivot": [
+            256,
+            430
+          ],
+          "assetVersion": 110,
+          "legs": [
+            {
+              "id": "rightLeg",
+              "bend": -1,
+              "flipX": false
+            },
+            {
+              "id": "leftLeg",
+              "bend": -1,
+              "flipX": false
+            }
+          ]
+        },
+        "back": {
+          "pivot": [
+            256,
+            430
+          ],
+          "assetVersion": 110,
+          "legs": [
+            {
+              "id": "leftLeg",
+              "bend": -1,
+              "flipX": false
+            },
+            {
+              "id": "rightLeg",
+              "bend": -1,
+              "flipX": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "w009",
+      "referenceHeight": 424,
+      "cycleStride": 219.156,
+      "views": {
+        "front": {
+          "pivot": [
+            256,
+            430
+          ],
+          "assetVersion": 110,
+          "legs": [
+            {
+              "id": "rightLeg",
+              "bend": -1,
+              "flipX": false
+            },
+            {
+              "id": "leftLeg",
+              "bend": -1,
+              "flipX": false
+            }
+          ]
+        },
+        "back": {
+          "pivot": [
+            256,
+            430
+          ],
+          "assetVersion": 110,
+          "legs": [
+            {
+              "id": "leftLeg",
+              "bend": -1,
+              "flipX": false
+            },
+            {
+              "id": "rightLeg",
+              "bend": -1,
+              "flipX": false
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "images": [
+    {
+      "id": "w002",
+      "view": "side",
+      "kind": "still",
+      "file": "casual/enemies/inf/directional/w002-side.png",
+      "baselineSha256": "580704a918ddfb1b691adffcb422aa2e2305a44ae139e6ae28f64ad323e39b4f",
+      "candidateSha256": "b97c86ea5ca4be1a4a6a3707815a40f3a4fcd9ba5549a7d32de234ea6c9c97b2",
+      "changed": true,
+      "promote": false
+    },
+    {
+      "id": "w002",
+      "view": "side",
+      "kind": "sheet",
+      "file": "casual/enemies/inf/directional/w002-side-walk-4x2.png",
+      "baselineSha256": "8ef25bde8ad80a837dcba502fff78b5b1d0c8b3e1f9fe13bdea7a974a8e99254",
+      "candidateSha256": "17f6159087c87d42c1fb9b15f05d1a3b530c36f558ef9a4f09f7165035d96f36",
+      "changed": true,
+      "promote": false
+    },
+    {
+      "id": "w002",
+      "view": "front",
+      "kind": "still",
+      "file": "casual/enemies/inf/directional/w002-front.png",
+      "baselineSha256": "8658f6553aa5cfd8ac74a99efbf2c52933c13d72ad8024c56485dbac42003769",
+      "candidateSha256": "1b2b48cc82e867d9cc3c99553bfc25fedbfcabe77988f8fb5ab41e92466b21ee",
+      "changed": true,
+      "promote": true
+    },
+    {
+      "id": "w002",
+      "view": "front",
+      "kind": "sheet",
+      "file": "casual/enemies/inf/directional/w002-front-walk-4x2.png",
+      "baselineSha256": "86bbe310179eceb3a30db5eac5d94f04ef2ec90133c3e0854c078d3600fb9db4",
+      "candidateSha256": "27ba9ec44b458712793fcbe2f2f2a0539662ffd04b56bc6414b75023bb40d395",
+      "changed": true,
+      "promote": true
+    },
+    {
+      "id": "w002",
+      "view": "back",
+      "kind": "still",
+      "file": "casual/enemies/inf/directional/w002-back.png",
+      "baselineSha256": "ffe0206488b4511d0ffcccda5237e460e86424cea88cc341114e07a7d24be024",
+      "candidateSha256": "29d11eaeb71a9c123eab8ac9c613edadf19bbab82c8f41ec155e18fd83d3cbd6",
+      "changed": true,
+      "promote": true
+    },
+    {
+      "id": "w002",
+      "view": "back",
+      "kind": "sheet",
+      "file": "casual/enemies/inf/directional/w002-back-walk-4x2.png",
+      "baselineSha256": "9a07d09b300655f3852e953f544ee7e784ebb4df69cac9ca493c5b300d9b69fc",
+      "candidateSha256": "80b0e1e8ff0113c348fbf71b05ae1c697325768134d771a21d9af230d43b163a",
+      "changed": true,
+      "promote": true
+    },
+    {
+      "id": "w003",
+      "view": "side",
+      "kind": "still",
+      "file": "casual/enemies/inf/directional/w003-side.png",
+      "baselineSha256": "c732d01042f6ed3fef2d8c0cfc9597979ffd9d6bc74fd912742eb24aada57039",
+      "candidateSha256": "530d2e18fee7a63a71c7c7fed014bea2c61131fe2e7aa145c36cc079251faa72",
+      "changed": true,
+      "promote": false
+    },
+    {
+      "id": "w003",
+      "view": "side",
+      "kind": "sheet",
+      "file": "casual/enemies/inf/directional/w003-side-walk-4x2.png",
+      "baselineSha256": "852101c1587b1433bb551b2a99f57432635b66281c984509ca2bf40eba79471d",
+      "candidateSha256": "b8330d26dabf8c57ed68ca22ccd07717f6d1befde49b12d081fb922caf66061f",
+      "changed": true,
+      "promote": false
+    },
+    {
+      "id": "w003",
+      "view": "front",
+      "kind": "still",
+      "file": "casual/enemies/inf/directional/w003-front.png",
+      "baselineSha256": "0721962ae41be0227a868c722ba6628f7ed766ca5b927be2a182f87e8705d13e",
+      "candidateSha256": "24b7615309030661ed2830036e7598b5c9585bbbf796a32e9322801324fef09e",
+      "changed": true,
+      "promote": true
+    },
+    {
+      "id": "w003",
+      "view": "front",
+      "kind": "sheet",
+      "file": "casual/enemies/inf/directional/w003-front-walk-4x2.png",
+      "baselineSha256": "0b5dcccd59617d38dfbc94cec4b3a2ad8641397d996a2e5eae526b84b00764de",
+      "candidateSha256": "1cf0e5ebca0e23ee3b82d051466c2bd315f3454a0be788583e1c9474bf6092e5",
+      "changed": true,
+      "promote": true
+    },
+    {
+      "id": "w003",
+      "view": "back",
+      "kind": "still",
+      "file": "casual/enemies/inf/directional/w003-back.png",
+      "baselineSha256": "d4cc6368ce09427490d22ae1f9f166c72064aedffdcd314cd838fac7a6c8e143",
+      "candidateSha256": "d1181771931bc60b8e27605823fe7438efe5b5931a71c341680bdd2b7d32a34e",
+      "changed": true,
+      "promote": true
+    },
+    {
+      "id": "w003",
+      "view": "back",
+      "kind": "sheet",
+      "file": "casual/enemies/inf/directional/w003-back-walk-4x2.png",
+      "baselineSha256": "6bf741540a3d708ac7374ac720554535d16bbf13b1af3f4681304533e3046e8e",
+      "candidateSha256": "0a348df2c427b9cdb2925f089106878e57f3f553cfae6cc64c2589cbf316dcc1",
+      "changed": true,
+      "promote": true
+    },
+    {
+      "id": "w005",
+      "view": "side",
+      "kind": "still",
+      "file": "casual/enemies/inf/directional/w005-side.png",
+      "baselineSha256": "0e294a5ad8a438de41a162b3fa8cb88b13a3bd7e719c9bda4dac64ebaabea84d",
+      "candidateSha256": "602686f078dd05b48e3aab77455f2c1183add616b3366bd3f7a88abb0d44a2ce",
+      "changed": true,
+      "promote": false
+    },
+    {
+      "id": "w005",
+      "view": "side",
+      "kind": "sheet",
+      "file": "casual/enemies/inf/directional/w005-side-walk-4x2.png",
+      "baselineSha256": "6ce7ca5b5e0b14e1a0a39e85ec56c387315ff8290049f7c6a09c87364e1cff0b",
+      "candidateSha256": "4fcaea20ffd4e021a4f98ee57c64025c5c8210b6911e8a016961e43e988175c9",
+      "changed": true,
+      "promote": false
+    },
+    {
+      "id": "w005",
+      "view": "front",
+      "kind": "still",
+      "file": "casual/enemies/inf/directional/w005-front.png",
+      "baselineSha256": "3446368f6272f98570b8b17023f1e3a092356cbc34849988bd28e6f78f372759",
+      "candidateSha256": "f0d44207d1068e751608e6721820070840afaf40bfff31cf4faba289dd6cf82a",
+      "changed": true,
+      "promote": true
+    },
+    {
+      "id": "w005",
+      "view": "front",
+      "kind": "sheet",
+      "file": "casual/enemies/inf/directional/w005-front-walk-4x2.png",
+      "baselineSha256": "61d32517290baf7dcc3d78985f1ab789bf07664cb882195d77044744b7244396",
+      "candidateSha256": "15e3ad2f6f9cd38da656dd9608172d06da71432a23c99872bab55d2853b2378d",
+      "changed": true,
+      "promote": true
+    },
+    {
+      "id": "w005",
+      "view": "back",
+      "kind": "still",
+      "file": "casual/enemies/inf/directional/w005-back.png",
+      "baselineSha256": "3272462fe7b7c4adcc33091c62587be7a8abdfc418835350700e6a4968d60b67",
+      "candidateSha256": "b7ce6b351210f756a3b20fe3cdbbae1ebf792ef3e916d6c945077ae6c6ccc1c9",
+      "changed": true,
+      "promote": true
+    },
+    {
+      "id": "w005",
+      "view": "back",
+      "kind": "sheet",
+      "file": "casual/enemies/inf/directional/w005-back-walk-4x2.png",
+      "baselineSha256": "c84a0ca5f2b9a8e375a7f5d724cca567634d263625fb43cea34be907d1248425",
+      "candidateSha256": "5a0db01d445a3387eb0fa5062e5aad21f5f976618323aee8adf0b2ef164f2544",
+      "changed": true,
+      "promote": true
+    },
+    {
+      "id": "w007",
+      "view": "side",
+      "kind": "still",
+      "file": "casual/enemies/inf/directional/w007-side.png",
+      "baselineSha256": "ddb30ebd9bff1e628d5f200ef94e59cfbdcd9e378955af7bc1aa30eab738d0ef",
+      "candidateSha256": "cceee31920605efa6046078b6a0991a47245e4496edced96c20e732988cd4a8a",
+      "changed": true,
+      "promote": false
+    },
+    {
+      "id": "w007",
+      "view": "side",
+      "kind": "sheet",
+      "file": "casual/enemies/inf/directional/w007-side-walk-4x2.png",
+      "baselineSha256": "7b21518ee168902d091c4fac44fcf725a2a76d8f6cdf8fd06499d445260f5a4f",
+      "candidateSha256": "317bf1502be5ac8c0d0f4d2f48414702e85b0346d7125951b8d8b1d133d3124f",
+      "changed": true,
+      "promote": false
+    },
+    {
+      "id": "w007",
+      "view": "front",
+      "kind": "still",
+      "file": "casual/enemies/inf/directional/w007-front.png",
+      "baselineSha256": "c254d384701173f9ef2c42e91c72f3387d1e8f01b1d623ef3ced65ec22dcc0ad",
+      "candidateSha256": "720743db98f6879ca048379e62f9fea6b4f243598fc2f1e49f5c868a42859545",
+      "changed": true,
+      "promote": true
+    },
+    {
+      "id": "w007",
+      "view": "front",
+      "kind": "sheet",
+      "file": "casual/enemies/inf/directional/w007-front-walk-4x2.png",
+      "baselineSha256": "9345db1d2a605d75e1ad4555b4ffc20c66f0dbed4397c70dac2bb57be2eab005",
+      "candidateSha256": "c9c60fcc719e3bc766bf67b8ace58eae6792830d54cc31d689c84904aca8e6b8",
+      "changed": true,
+      "promote": true
+    },
+    {
+      "id": "w007",
+      "view": "back",
+      "kind": "still",
+      "file": "casual/enemies/inf/directional/w007-back.png",
+      "baselineSha256": "2f6ae36673fed078ab0c5723890d1249c6c8d413160bdc2d1eefc6453f8981e1",
+      "candidateSha256": "2263cf3367703a96b81c85f2e6c3bebe66cc416c6380fae991db70c23ab27680",
+      "changed": true,
+      "promote": true
+    },
+    {
+      "id": "w007",
+      "view": "back",
+      "kind": "sheet",
+      "file": "casual/enemies/inf/directional/w007-back-walk-4x2.png",
+      "baselineSha256": "ebcd94d6c537306a123cef5e3e5296a94f612065f6934099247a1257b1693ff8",
+      "candidateSha256": "5460264d570a73883d65e264474614e56520370a66bb7d42553741680f9f7863",
+      "changed": true,
+      "promote": true
+    },
+    {
+      "id": "w009",
+      "view": "side",
+      "kind": "still",
+      "file": "casual/enemies/inf/directional/w009-side.png",
+      "baselineSha256": "48c8466dfc29ad26440f987e826cc7106e409ebf8ec879935db78e338af1ccff",
+      "candidateSha256": "91998eba8618024a719576cce47bde45b3908fc0125abb7d7d84293e40e94cf5",
+      "changed": true,
+      "promote": false
+    },
+    {
+      "id": "w009",
+      "view": "side",
+      "kind": "sheet",
+      "file": "casual/enemies/inf/directional/w009-side-walk-4x2.png",
+      "baselineSha256": "f21e8a319a1c9b8107af173dc895d6a4f57a4f7230721c569c2f8008c951dc54",
+      "candidateSha256": "bd903615e10bf178d1683f5a2a0c1196657c40754a4b32ffb49da3b9d02c4ed3",
+      "changed": true,
+      "promote": false
+    },
+    {
+      "id": "w009",
+      "view": "front",
+      "kind": "still",
+      "file": "casual/enemies/inf/directional/w009-front.png",
+      "baselineSha256": "5d56f5fffa38195d07e9850361803d95b5f904e9a1a8609b75473f2c0b9f9dfa",
+      "candidateSha256": "1fc7c658d42685632f03efb515eac74f314e4c9d17ed12852604a3138c8cbe1a",
+      "changed": true,
+      "promote": true
+    },
+    {
+      "id": "w009",
+      "view": "front",
+      "kind": "sheet",
+      "file": "casual/enemies/inf/directional/w009-front-walk-4x2.png",
+      "baselineSha256": "5cff63a7a44fc95f9975d6dc6cc73277dfdd999fe90917a5391dc2b1193edd36",
+      "candidateSha256": "d200d150366482750f6302a92a63e7e9001fd1701dad089cc110e532398089d0",
+      "changed": true,
+      "promote": true
+    },
+    {
+      "id": "w009",
+      "view": "back",
+      "kind": "still",
+      "file": "casual/enemies/inf/directional/w009-back.png",
+      "baselineSha256": "220c3b1f668d9ea2c5237d38d53e02dd7b74c407ac51bb122188d66405d34662",
+      "candidateSha256": "01b636f4943099b94d6e62e42fc9767fdbb2750ef83126402fda03644ef097f6",
+      "changed": true,
+      "promote": true
+    },
+    {
+      "id": "w009",
+      "view": "back",
+      "kind": "sheet",
+      "file": "casual/enemies/inf/directional/w009-back-walk-4x2.png",
+      "baselineSha256": "b28d871192e7db61930577fbc7c2cd1dc0e0bae151e4b0a78d6b8164596ecc7c",
+      "candidateSha256": "9e40ecd6eb675d88c7250883b10fda97dfaaee04e268b38db56c4dfda7925b73",
+      "changed": true,
+      "promote": true
+    }
+  ],
+  "sidePolicy": "Do not copy regenerated side files or update side fallback/version; retain full original runtime side view.",
+  "visualReview": "All10front/back8frameboards inspected;80correctedposes, plusbefore/afterframe2and6comparisons. No new detached limbs or clipped silhouettes found. Unprojected numerical anatomy checks cover256phases/view."
+}

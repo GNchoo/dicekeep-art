@@ -1,0 +1,3177 @@
+{
+  "baseline": "5630cdd",
+  "method": "Actual baked side frames 2 and 6, zero-based, for all 98 changed identities. Shared old/new source scale and authored pivot; transparent crops never recenter poses. This generator records artifacts, not human visual approval.",
+  "identities": 98,
+  "actualSideImages": 392,
+  "boards": [
+    {
+      "file": "side-before-after-01.png",
+      "ids": [
+        "b010",
+        "w015",
+        "b020",
+        "b030",
+        "w031"
+      ],
+      "sha256": "9e24e9b72e974714bfd916ca9eea4be2cb19cda16ef944da9801559014bf17ed"
+    },
+    {
+      "file": "side-before-after-02.png",
+      "ids": [
+        "w033",
+        "w034",
+        "w035",
+        "w037",
+        "w038"
+      ],
+      "sha256": "827e20d113e7b04c373c5106a4c189a3c905fba4e0a7b905391f76a40f7d2243"
+    },
+    {
+      "file": "side-before-after-03.png",
+      "ids": [
+        "w039",
+        "b040",
+        "b040-2",
+        "w041",
+        "w042"
+      ],
+      "sha256": "b0ff10666688baca13c0b38e092b0a59e5fe3aa7c1911241e9b78e4e4f86b7c9"
+    },
+    {
+      "file": "side-before-after-04.png",
+      "ids": [
+        "w045",
+        "w046",
+        "w047",
+        "w049",
+        "b050"
+      ],
+      "sha256": "4eb834b7182758cadf8107c7d7d97f2c9ca7eb8a2a62a4cde903b46a40bcec72"
+    },
+    {
+      "file": "side-before-after-05.png",
+      "ids": [
+        "b050-2",
+        "w051",
+        "w053",
+        "w055",
+        "w057"
+      ],
+      "sha256": "0a5b7121c462e0e6734f17f6480ed48a7b01e963c9e01117bba169f36c79cc73"
+    },
+    {
+      "file": "side-before-after-06.png",
+      "ids": [
+        "w058",
+        "w063",
+        "w065",
+        "w066",
+        "w069"
+      ],
+      "sha256": "fe8356ee1203aa6ae038109164d5bffa0b9897c664e1ac0b44814ba4b6e7707b"
+    },
+    {
+      "file": "side-before-after-07.png",
+      "ids": [
+        "w074",
+        "w079",
+        "w081",
+        "w083",
+        "w086"
+      ],
+      "sha256": "de4cf44d0e1bbaaefb118c500db25b1c7c27589883b9ee44aab2692576ceac4b"
+    },
+    {
+      "file": "side-before-after-08.png",
+      "ids": [
+        "w087",
+        "w089",
+        "b090",
+        "b090-2",
+        "w093"
+      ],
+      "sha256": "63df7a4660f9bca622f7eace9901efd714544d7238169bc22be2b232aebf4ad3"
+    },
+    {
+      "file": "side-before-after-09.png",
+      "ids": [
+        "w094",
+        "w095",
+        "w097",
+        "w099",
+        "b100"
+      ],
+      "sha256": "1ed43c35fbddbf6387ad678c1e61b76b3359dc54b0f88fb7e60e2d3abdcc6148"
+    },
+    {
+      "file": "side-before-after-10.png",
+      "ids": [
+        "w101",
+        "w103",
+        "w104",
+        "w106",
+        "w108"
+      ],
+      "sha256": "e6a2bcbe94378a86309fdcba1ddac6f91e19a512ff5de8c8633a9aa048873e25"
+    },
+    {
+      "file": "side-before-after-11.png",
+      "ids": [
+        "w110",
+        "b111",
+        "b111-2",
+        "w116",
+        "b121"
+      ],
+      "sha256": "4bc875a4bb4c05a01cfb9128d080e3a8fbe35958d6e270a517cfcc5f84f85ae5"
+    },
+    {
+      "file": "side-before-after-12.png",
+      "ids": [
+        "b131",
+        "w132",
+        "w134",
+        "w135",
+        "w136"
+      ],
+      "sha256": "f87aa83694fa0c45d329ec30308d888a997a36506e24fcb90ae2ad6f90033d74"
+    },
+    {
+      "file": "side-before-after-13.png",
+      "ids": [
+        "w138",
+        "w139",
+        "w140",
+        "b141",
+        "b141-2"
+      ],
+      "sha256": "d24045b1857c8335e7bf2011ea5d097f212fb7862a9dfb0df8fe6ad6cde679dc"
+    },
+    {
+      "file": "side-before-after-14.png",
+      "ids": [
+        "w142",
+        "w143",
+        "w146",
+        "w147",
+        "w148"
+      ],
+      "sha256": "b75f8ad5f120a0964e98c9e5b61dce432853f903932f8f5353a216594a1bcef3"
+    },
+    {
+      "file": "side-before-after-15.png",
+      "ids": [
+        "w150",
+        "b151",
+        "b151-2",
+        "w152",
+        "w154"
+      ],
+      "sha256": "155954d8bab1828068b07786bfdbbbe3e8f737216dc1ef9233bbe79da55cf933"
+    },
+    {
+      "file": "side-before-after-16.png",
+      "ids": [
+        "w156",
+        "w158",
+        "w159",
+        "w164",
+        "w166"
+      ],
+      "sha256": "297b7a18d315d5257cfd662481c17b7ee9ac4235ca6f45d408aaccc9a21ced81"
+    },
+    {
+      "file": "side-before-after-17.png",
+      "ids": [
+        "w167",
+        "w170",
+        "w175",
+        "w180",
+        "w182"
+      ],
+      "sha256": "4582c1df6e895720d4cfb19815911dc335d6b65a5eb52be16e33689cd2e66aab"
+    },
+    {
+      "file": "side-before-after-18.png",
+      "ids": [
+        "w184",
+        "w187",
+        "w188",
+        "w190",
+        "b191"
+      ],
+      "sha256": "3db9d44ae347c4a81d4f02f0fc51741f8d3be8e43f56d72c71b9ec22c9ec94de"
+    },
+    {
+      "file": "side-before-after-19.png",
+      "ids": [
+        "b191-2",
+        "w194",
+        "w195",
+        "w196",
+        "w198"
+      ],
+      "sha256": "58fadce1ebc66f70166412378e8cb8fe4e885f6eaa927bb626f4088d51302004"
+    },
+    {
+      "file": "side-before-after-20.png",
+      "ids": [
+        "w200",
+        "b201",
+        "w202"
+      ],
+      "sha256": "ffa77afb197bebee768222ebc48e7af468d1d9ffa9085041eb0b3f4b700cd5a5"
+    }
+  ],
+  "records": [
+    {
+      "id": "b010",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/bosses/inf/directional/b010-side-walk-4x2.png",
+        "sha256": "e73eeb18cb1b83ba2d0e7ab031a24467886b17f3ab9ff170ffbafea5abbda5ee"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/bosses/inf/directional/b010-side-walk-4x2.png",
+        "sha256": "cd1e25baa5fed303ef1c7b28266a2feaf101b7982a70cec88945a8bc8c93bde7"
+      },
+      "pivot": [
+        256,
+        460
+      ],
+      "referenceHeight": 450,
+      "scale": 1,
+      "reviewTransform": {
+        "scale": 0.39111111111111113,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w015",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/inf/directional/w015-side-walk-4x2.png",
+        "sha256": "112de2d212bf34f1183354cd6e4420ff9fed455671e75f538e1163d88748a52b"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/enemies/inf/directional/w015-side-walk-4x2.png",
+        "sha256": "b5e3635abe683ed4770d7c264461ddf77fa23fe506a28aed66d01ba7162e7652"
+      },
+      "pivot": [
+        158.3225,
+        225
+      ],
+      "referenceHeight": 410,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8585365853658536,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "b020",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/bosses/inf/directional/b020-side-walk-4x2.png",
+        "sha256": "0817b82e2690aa5956d616921db966ee111f57a1b71d147e5e472f19bec8ee30"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/bosses/inf/directional/b020-side-walk-4x2.png",
+        "sha256": "de3973786574d604307ef6d7b391dc9ba93c6246a4aa11ffa1998e37b79d771f"
+      },
+      "pivot": [
+        262.5895582329317,
+        470
+      ],
+      "referenceHeight": 450,
+      "scale": 1,
+      "reviewTransform": {
+        "scale": 0.39111111111111113,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "b030",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/bosses/inf/directional/b030-side-walk-4x2.png",
+        "sha256": "c12d0bffce2813dbec6fea81af9f5b1df86fbbd54c39e0527ed61fa3b4248797"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/bosses/inf/directional/b030-side-walk-4x2.png",
+        "sha256": "40f9050a6b4f43bc5a8d1647bcf6633d510b4211d43597a5d75d03991d87e73e"
+      },
+      "pivot": [
+        263.5689774696707,
+        460
+      ],
+      "referenceHeight": 450,
+      "scale": 1,
+      "reviewTransform": {
+        "scale": 0.39111111111111113,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w031",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/inf/directional/w031-side-walk-4x2.png",
+        "sha256": "eeff7d63c0c562f6ecf9453b148fa742069a4179ad1aa42383d466451bcd120b"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/enemies/inf/directional/w031-side-walk-4x2.png",
+        "sha256": "f8cec8eef0c7bd73bbfe4e7192ffb7749330d04ca7e0d6facdfa40f5e9d3352b"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w033",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/inf/directional/w033-side-walk-4x2.png",
+        "sha256": "cc3cddcf92a96208c0f14f7e18ee9570badfa60189d065160dab3b4366eed5c2"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/enemies/inf/directional/w033-side-walk-4x2.png",
+        "sha256": "cea0006a0deedc42e41bda1a46b7eb40ae3cb20b23f2692176136844af3fbe68"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w034",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/inf/directional/w034-side-walk-4x2.png",
+        "sha256": "41c54078043521e8e1a03c43de0925f073d923369d14532e057f381cb261a241"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/enemies/inf/directional/w034-side-walk-4x2.png",
+        "sha256": "476d813186772f3b39959a5e833b706765e1416a356ad3256aba95d664ae9cd3"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w035",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/inf/directional/w035-side-walk-4x2.png",
+        "sha256": "e53e2f5ce16571cd78347adf2e5c5bbe870091c18562267de545baf1978f1589"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/enemies/inf/directional/w035-side-walk-4x2.png",
+        "sha256": "f6f8ae591439959c8d324225603b0899cc5091d71cb5c16d1f712fbd746f7c44"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w037",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/inf/directional/w037-side-walk-4x2.png",
+        "sha256": "61459ec9575cfdd7bb869598ae70153fbf07d53bae4d89b3deed6fb63bfae53a"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/enemies/inf/directional/w037-side-walk-4x2.png",
+        "sha256": "7fa76e78966d9a5ff3341c5141e5176783f1ef6002c5b0e58f44df4151820ee0"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w038",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/inf/directional/w038-side-walk-4x2.png",
+        "sha256": "e76c5f614a579b1806686069365ffdc1b8f8dad40ab80d1d147596cc8ef5663c"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/enemies/inf/directional/w038-side-walk-4x2.png",
+        "sha256": "365a379263553c5bff25ff82f4f8ff46369afe3c6c8940e9ee3cf5c30baa7768"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w039",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/inf/directional/w039-side-walk-4x2.png",
+        "sha256": "31fc7f83e8f40f5410d3851896a1b9011f5f4cf4de8593b874f50e8e872da8ea"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/enemies/inf/directional/w039-side-walk-4x2.png",
+        "sha256": "859c3d4078195efe6cd53c06c5dfe48afd168c3054017b7d33887111c3269658"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "b040",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/bosses/inf/directional/b040-side-walk-4x2.png",
+        "sha256": "ee0162be7f773e9b5036111ed80efa568fb36e01cdfb17a3fe072c1e877c48d8"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/bosses/inf/directional/b040-side-walk-4x2.png",
+        "sha256": "3293952a4d7503469b8569e5d41efdb1e24149f21049496ca4212373af8e5db5"
+      },
+      "pivot": [
+        256,
+        460
+      ],
+      "referenceHeight": 425,
+      "scale": 1,
+      "reviewTransform": {
+        "scale": 0.41411764705882353,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "b040-2",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/bosses/inf/directional/b040-2-side-walk-4x2.png",
+        "sha256": "50d669f633e668d4cd5e4e5780d39552a669c3c0aabd6ed5ed21d6c9d415ea36"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/bosses/inf/directional/b040-2-side-walk-4x2.png",
+        "sha256": "201e88057d381f26a080a2ddec3f59f0f8163ca6e4d78bf5e4d2ecc9fb2438eb"
+      },
+      "pivot": [
+        256,
+        460
+      ],
+      "referenceHeight": 425,
+      "scale": 1,
+      "reviewTransform": {
+        "scale": 0.41411764705882353,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w041",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/inf/directional/w041-side-walk-4x2.png",
+        "sha256": "047ca63d12227dba4befcebdd63c86eceeb19fbe181301cff9db2b3140e40088"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/enemies/inf/directional/w041-side-walk-4x2.png",
+        "sha256": "3bac63b43bbbcf0c09a3cf21d931ec2ffe0bfeba177fee529d38f8ded599984f"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w042",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/inf/directional/w042-side-walk-4x2.png",
+        "sha256": "c953e05c137c068c34ccbea16dc3a7b709baee828a6cb6c6758f1fa2e1450eda"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/enemies/inf/directional/w042-side-walk-4x2.png",
+        "sha256": "866ae7a91cebd81712b489367e6665d01b867b8070d75ded3c6ca6b481af7866"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w045",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/inf/directional/w045-side-walk-4x2.png",
+        "sha256": "156fcca44aeb5585573b511ae6a2c840dd8a9dc92c37f5578c7a85c75f9f0065"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/enemies/inf/directional/w045-side-walk-4x2.png",
+        "sha256": "a27c37b2c908cea1ee44957601a6f8f7a3a9fe73cf4665ab2dab15064685c54b"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w046",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/inf/directional/w046-side-walk-4x2.png",
+        "sha256": "177cfad7c5e13548dbf3b28818f17d9c5f85399116a2a0f4508d2d20d9783a05"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/enemies/inf/directional/w046-side-walk-4x2.png",
+        "sha256": "d6949133c45973a18e6c37ca04836ded3cb58b66d1e5a6ac8ffd836bcc944be5"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w047",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/inf/directional/w047-side-walk-4x2.png",
+        "sha256": "a07426451e29bea44f00631b0b3edd5632ab27ceb472ffe6bd0546c561bf9d31"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/enemies/inf/directional/w047-side-walk-4x2.png",
+        "sha256": "839af4f4c30e484df00b6c2668217b8ccf9d85274a0bcda7870f6008bc9f9448"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w049",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/inf/directional/w049-side-walk-4x2.png",
+        "sha256": "2e60854b5e6a6743a6b6bf9ed3326531832942feb21dd86660585c7435a9f7dc"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/enemies/inf/directional/w049-side-walk-4x2.png",
+        "sha256": "73a4a6df8b88c1b9b2f1965659f45e2cd35288dcd1d1723a8f139b0ca3da6cf3"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "b050",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/bosses/inf/directional/b050-side-walk-4x2.png",
+        "sha256": "ef5cf3963ba04af01e7d53522802423ddeb11086533241ea4091a643c60f7275"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/bosses/inf/directional/b050-side-walk-4x2.png",
+        "sha256": "f4b5ce4adce3367ba05cff7042139832ae5dce5abe642f4b0ac1f36aab46f104"
+      },
+      "pivot": [
+        256,
+        460
+      ],
+      "referenceHeight": 425,
+      "scale": 1,
+      "reviewTransform": {
+        "scale": 0.41411764705882353,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "b050-2",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/bosses/inf/directional/b050-2-side-walk-4x2.png",
+        "sha256": "7aede233a08de20cfb1f3a12ea04059930b3a549700a3c93cd94c06e216aedd1"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/bosses/inf/directional/b050-2-side-walk-4x2.png",
+        "sha256": "fd407b73ed28bc0b90cf77c0e2dfa7ed17336ec4bbc969bd464b09339f4da2d1"
+      },
+      "pivot": [
+        256,
+        460
+      ],
+      "referenceHeight": 425,
+      "scale": 1,
+      "reviewTransform": {
+        "scale": 0.41411764705882353,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w051",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/inf/directional/w051-side-walk-4x2.png",
+        "sha256": "5901dae654e2874fc9b43c5734f9025a3d9ba24636951be6ed34a25dbf79cc75"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/enemies/inf/directional/w051-side-walk-4x2.png",
+        "sha256": "fcc4df23da13cf6f5e96e9c7497f5f102e4b8c6311663c32b206c903aa8fc03c"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w053",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/inf/directional/w053-side-walk-4x2.png",
+        "sha256": "4d9693355ede2ac6470ffeacc7ff5b0f85755c739fdc62fcc49e7b0aece008d8"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/enemies/inf/directional/w053-side-walk-4x2.png",
+        "sha256": "446198d6da3ae48d7c703cfecdf52eed4b5b2896272f30c3cdb6912854adbf85"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w055",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/inf/directional/w055-side-walk-4x2.png",
+        "sha256": "e4ffc41f4541f027c1c131e9209715f27d451ac0ad4263a121e42c2f1a1e7884"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/enemies/inf/directional/w055-side-walk-4x2.png",
+        "sha256": "99524e727d0d7fa4046a5fc94b2f2956e71bc5e537ad3bc147de9e6c8d4dee1f"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w057",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/inf/directional/w057-side-walk-4x2.png",
+        "sha256": "ee8eee1f48d72a4382ec8fb78590fe85a9386c6d090556bee3116ecc178c6c86"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/enemies/inf/directional/w057-side-walk-4x2.png",
+        "sha256": "99d3a9a01fa22e511418742001e40f2cc79bb8729b821dc8d7a44884b3c342d7"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w058",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/inf/directional/w058-side-walk-4x2.png",
+        "sha256": "db51db4d762daf591166520b32fdb0e9c61099c409375c0da56068ab942f7cd9"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/enemies/inf/directional/w058-side-walk-4x2.png",
+        "sha256": "639ea0f9e5bf20d9a517c84587baaf3d7d1046c410fd46ed10c45cd9bcdaa835"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w063",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/inf/directional/w063-side-walk-4x2.png",
+        "sha256": "4cd4f78bcc6b18f18dd5f8653ba9ed3fb24fdd63764fa4205e8c6c5cecaf4caf"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/enemies/inf/directional/w063-side-walk-4x2.png",
+        "sha256": "2572cacca62d50e611c71eefbc454c0c27e03827995411e412ebbb224d6756c7"
+      },
+      "pivot": [
+        128,
+        215
+      ],
+      "referenceHeight": 350,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 1.0057142857142858,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w065",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/inf/directional/w065-side-walk-4x2.png",
+        "sha256": "0d70ec272fb3a13987a6e61a2550edc6b5c6bf08a59eb9574914d2a13f39c9c1"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/enemies/inf/directional/w065-side-walk-4x2.png",
+        "sha256": "5eeba1784dd2343a6fa80ee2b5949a56961a3ceca9fff1eb4329c53d89c47f0d"
+      },
+      "pivot": [
+        128,
+        215
+      ],
+      "referenceHeight": 350,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 1.0057142857142858,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w066",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/inf/directional/w066-side-walk-4x2.png",
+        "sha256": "a378bfd798692da07bc3f2c9482be30fd851efe7fb455d53064976cbd48318c5"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/enemies/inf/directional/w066-side-walk-4x2.png",
+        "sha256": "d665edfdcb7ec46d03a1b6f691e2e9b8aa843d918db0566dccaf81747c226265"
+      },
+      "pivot": [
+        128,
+        215
+      ],
+      "referenceHeight": 350,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 1.0057142857142858,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w069",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/inf/directional/w069-side-walk-4x2.png",
+        "sha256": "2b0404ff17e3554598ca82d037814ca23dded89dacb3dab0c3735c6d8469e7f5"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/enemies/inf/directional/w069-side-walk-4x2.png",
+        "sha256": "2f66b80fb309b4717c194d2ebfb60f03fb4e2832de0a339a5cdfecd41afa348b"
+      },
+      "pivot": [
+        128,
+        215
+      ],
+      "referenceHeight": 350,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 1.0057142857142858,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w074",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/inf/directional/w074-side-walk-4x2.png",
+        "sha256": "c19e984b64aff772f1e464065f30719afc575a269761b4447ed40ee1e3037705"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/enemies/inf/directional/w074-side-walk-4x2.png",
+        "sha256": "cd82b76177c99f750e0137ce35d0513d2f872d817d33a5bd70940307ee7c8eb3"
+      },
+      "pivot": [
+        128,
+        215
+      ],
+      "referenceHeight": 350,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 1.0057142857142858,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w079",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/inf/directional/w079-side-walk-4x2.png",
+        "sha256": "05eaa1abb690ca2f943b95ce98b0c3b73ef74a06677a7a0d00be9e3ae49fefc7"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/enemies/inf/directional/w079-side-walk-4x2.png",
+        "sha256": "36ceca775140352860878c9bf4064cbea13b97bc0a5c9f9dccf9ff65df625ce3"
+      },
+      "pivot": [
+        128,
+        215
+      ],
+      "referenceHeight": 350,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 1.0057142857142858,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w081",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/inf/directional/w081-side-walk-4x2.png",
+        "sha256": "00f407f152edcff88dd2328fe5bc4cb7314afcbd9250477e0738c5cee13344f5"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/enemies/inf/directional/w081-side-walk-4x2.png",
+        "sha256": "1482c1f896cfffe464fe9c7f5d51393416226e6b7916beba6c4073652a4a2977"
+      },
+      "pivot": [
+        128,
+        215
+      ],
+      "referenceHeight": 350,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 1.0057142857142858,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w083",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/inf/directional/w083-side-walk-4x2.png",
+        "sha256": "907f1f3b0282e5edfb6b42eae43758ac208a18f60fdbb8377eb332a11f99a202"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/enemies/inf/directional/w083-side-walk-4x2.png",
+        "sha256": "58fb09e4a3c3353fe1b3eb870041f233bf9a9ecffc80a68ceae2989c9cb2e93b"
+      },
+      "pivot": [
+        128,
+        215
+      ],
+      "referenceHeight": 350,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 1.0057142857142858,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w086",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/inf/directional/w086-side-walk-4x2.png",
+        "sha256": "a8e5ce26f20513780fd2030e46d511de81186c3dcce6859c0966cf18b0d3ac81"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/enemies/inf/directional/w086-side-walk-4x2.png",
+        "sha256": "66286266a2900ccc35203c184208a67eed604170197709147da2712ab534d77a"
+      },
+      "pivot": [
+        128,
+        215
+      ],
+      "referenceHeight": 350,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 1.0057142857142858,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w087",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/inf/directional/w087-side-walk-4x2.png",
+        "sha256": "10f90ea947e1411f8a4ce33b8f1b7c2703af49c4ef3ea670b0ee2a09315fdeb1"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/enemies/inf/directional/w087-side-walk-4x2.png",
+        "sha256": "87f676c325e2a8261f30b82a4c251c88c1790ff106c4972caa7be1ef9991e6d1"
+      },
+      "pivot": [
+        128,
+        215
+      ],
+      "referenceHeight": 350,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 1.0057142857142858,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w089",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/inf/directional/w089-side-walk-4x2.png",
+        "sha256": "4e6f7b9198a47d23e56c5bb3d75e87d978baa712693b2043bd36700a83bcb24b"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/enemies/inf/directional/w089-side-walk-4x2.png",
+        "sha256": "9a36e0398f7a79e716c75715684145561c8f3a4478747a51ecf8f9bb2d9735af"
+      },
+      "pivot": [
+        128,
+        215
+      ],
+      "referenceHeight": 350,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 1.0057142857142858,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "b090",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/bosses/inf/directional/b090-side-walk-4x2.png",
+        "sha256": "5d0268d04c6ec8ea7ade11641bccdba0ae995264dd552dc073583fc45d0b6a84"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/bosses/inf/directional/b090-side-walk-4x2.png",
+        "sha256": "805116b480c1857a8331e7baa4c686e3f04991a2b2c7b2d9d00f870b58d7f1d4"
+      },
+      "pivot": [
+        256,
+        455
+      ],
+      "referenceHeight": 420,
+      "scale": 1,
+      "reviewTransform": {
+        "scale": 0.41904761904761906,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "b090-2",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/bosses/inf/directional/b090-2-side-walk-4x2.png",
+        "sha256": "54d87bc04ba1d430b53ad34c5a72612a90e2acabe96959cc5faa9f42309bb277"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/bosses/inf/directional/b090-2-side-walk-4x2.png",
+        "sha256": "d5433d7e93b6b82cd3a73bce5c1827b8b9ccb22e829454372a0fd6a8ec955b5b"
+      },
+      "pivot": [
+        256,
+        455
+      ],
+      "referenceHeight": 420,
+      "scale": 1,
+      "reviewTransform": {
+        "scale": 0.41904761904761906,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w093",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/inf/directional/w093-side-walk-4x2.png",
+        "sha256": "646de9d8a6c4af36f5d1abdb0876c32ef7694e6b3d5326a14aeb6a92c95e5eaa"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/enemies/inf/directional/w093-side-walk-4x2.png",
+        "sha256": "cc5a4a68ccfbc946ef9ca287877fe7c07d09504d7bf546111a181a227f8e58a2"
+      },
+      "pivot": [
+        128,
+        215
+      ],
+      "referenceHeight": 350,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 1.0057142857142858,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w094",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/inf/directional/w094-side-walk-4x2.png",
+        "sha256": "e5cc4251bbc36e0de68833685f2c9b179b31de972b02d2e8e7e7653e1e0b07b0"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/enemies/inf/directional/w094-side-walk-4x2.png",
+        "sha256": "8c53c14cebcf72cf0ad1cb333db4187ccd49a621b8ca3d046d921f464b2690d5"
+      },
+      "pivot": [
+        128,
+        215
+      ],
+      "referenceHeight": 350,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 1.0057142857142858,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w095",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/inf/directional/w095-side-walk-4x2.png",
+        "sha256": "b8f1e839af03b3a0770291eea1aa77887d4ada2224b877fa0cbeb283fe412a2d"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/enemies/inf/directional/w095-side-walk-4x2.png",
+        "sha256": "22bfe4b3b02b224a7a01a891b49e0e71d6f7d6b994e5c9ff24402751c0df88cb"
+      },
+      "pivot": [
+        128,
+        215
+      ],
+      "referenceHeight": 350,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 1.0057142857142858,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w097",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/inf/directional/w097-side-walk-4x2.png",
+        "sha256": "0bb8c2aef6e2c094d7f2aca5a37cb5bf28d741fea8fb40720a6f8e054e76150a"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/enemies/inf/directional/w097-side-walk-4x2.png",
+        "sha256": "2e4d8ddf02430d95203ec7c1e817c27226a936879ec1d5b56fdc7f9db1afc33c"
+      },
+      "pivot": [
+        128,
+        215
+      ],
+      "referenceHeight": 350,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 1.0057142857142858,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w099",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/inf/directional/w099-side-walk-4x2.png",
+        "sha256": "9984f8f9d90e6e04595c1e1750a9782f66faa8ccc72147a0d450d074c51c004c"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/enemies/inf/directional/w099-side-walk-4x2.png",
+        "sha256": "6f9638e4102d3af20e77442cde421ab02a75a69e9cd42c80b49dace86f0a84b5"
+      },
+      "pivot": [
+        128,
+        215
+      ],
+      "referenceHeight": 350,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 1.0057142857142858,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "b100",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/bosses/inf/directional/b100-side-walk-4x2.png",
+        "sha256": "7dc21ffb273dc73003986779dfcf3442e2b5e4da7e6ef326894bd5c41c778155"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/bosses/inf/directional/b100-side-walk-4x2.png",
+        "sha256": "efeb8ed354c3d3b892b2ab79c85725edb9e31ebc31d5fafeb75740f4ecdd2e5d"
+      },
+      "pivot": [
+        256,
+        455
+      ],
+      "referenceHeight": 420,
+      "scale": 1,
+      "reviewTransform": {
+        "scale": 0.41904761904761906,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w101",
+      "kind": "original",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/inf/directional/w101-side-walk-4x2.png",
+        "sha256": "9c7445484062b991a5976422e280ba22c9c7f82ee218768b97560dd940d53b37"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\original",
+        "file": "casual/enemies/inf/directional/w101-side-walk-4x2.png",
+        "sha256": "9fc79fd138c22b278a41d0877d4f8b65029ffc90d975d3c12d720550a279648a"
+      },
+      "pivot": [
+        128,
+        215
+      ],
+      "referenceHeight": 350,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 1.0057142857142858,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w103",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w103-side-walk-4x2.webp",
+        "sha256": "b8bacb8eb75d0a010223f03eb58b8e01e38f631eaa991c551fe44fb978a0a4bd"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w103-side-walk-4x2.webp",
+        "sha256": "2bcaf1293cf2791871c57cafd3a6919631a7efaa4d39a85c4fa4b47726a9ef02"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w104",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w104-side-walk-4x2.webp",
+        "sha256": "ae7acd7e25be71b1a589a6451d7376c10518ef79239a74202f01a0e4517af16c"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w104-side-walk-4x2.webp",
+        "sha256": "d03141545955a54b113ee9551c757a99b4f29124a48f739bf825b96752d60fae"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w106",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w106-side-walk-4x2.webp",
+        "sha256": "2c980a0439594c539346f65ef9c4ddeead9e5bd2d082eb521b7175f9501af6b6"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w106-side-walk-4x2.webp",
+        "sha256": "700591834586e911a1827b1e586348648cc5099fc96d971a1267cff95038dbb4"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w108",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w108-side-walk-4x2.webp",
+        "sha256": "7fa6130bc39c69d0db0cf76b81e6c99b750f5a5cf5ebd9203c1d664b3562600b"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w108-side-walk-4x2.webp",
+        "sha256": "626a51ba3a51cbef722e0995c4237504b5e9727b207ef7a69bb77439a00e524c"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w110",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w110-side-walk-4x2.webp",
+        "sha256": "b6b8f5c81a2a2bc9b36327a06247e5263b0d2bcdc3ed70d42258e7620b8e6168"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w110-side-walk-4x2.webp",
+        "sha256": "4741c8cf5df3811326213e8b5266d9212a96a535f6e992ef8add4071500bd863"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "b111",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/bosses/extreme/b111-side-walk-4x2.webp",
+        "sha256": "35669aebfa30fe99242d2146728bab8941a6f1a5d5de43b01e79af3138230166"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/bosses/extreme/b111-side-walk-4x2.webp",
+        "sha256": "35d60ed2806825570278ceaf43c977269110363c5b9f94e723aabc0900dbc104"
+      },
+      "pivot": [
+        256,
+        460
+      ],
+      "referenceHeight": 450,
+      "scale": 1,
+      "reviewTransform": {
+        "scale": 0.39111111111111113,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "b111-2",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/bosses/extreme/b111-2-side-walk-4x2.webp",
+        "sha256": "3bd936e20bf0c22f3a46cda0010b89efe2ed29c93dbd3738219dd27ec74fe05f"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/bosses/extreme/b111-2-side-walk-4x2.webp",
+        "sha256": "834ffa6e89658843aa13c6e0865a40184a9055f02f85a7c238dae8ea60a38c51"
+      },
+      "pivot": [
+        256,
+        460
+      ],
+      "referenceHeight": 450,
+      "scale": 1,
+      "reviewTransform": {
+        "scale": 0.39111111111111113,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w116",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w116-side-walk-4x2.webp",
+        "sha256": "dca2cde20bfedd4671b1cd808a7f5712a76fc0d6d37eb83b808026a2de05294c"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w116-side-walk-4x2.webp",
+        "sha256": "ce302547633eace93c74893dbdef72b986b34344bd90e4c9db2a443bb5b6d5ea"
+      },
+      "pivot": [
+        158.3225,
+        225
+      ],
+      "referenceHeight": 410,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8585365853658536,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "b121",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/bosses/extreme/b121-side-walk-4x2.webp",
+        "sha256": "6b0c685f6a2acf34062a396932fafa4e0da1161e5e7203e0ace31b39ff46c43f"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/bosses/extreme/b121-side-walk-4x2.webp",
+        "sha256": "4629ade75437ae57d6516d763ec50711eece7671aa240131f0db5591e7f0712d"
+      },
+      "pivot": [
+        262.5895582329317,
+        470
+      ],
+      "referenceHeight": 450,
+      "scale": 1,
+      "reviewTransform": {
+        "scale": 0.39111111111111113,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "b131",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/bosses/extreme/b131-side-walk-4x2.webp",
+        "sha256": "db572976ca8f815ca2b0190b8dcf4fc699ce32fb10093c963081098093e7ff71"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/bosses/extreme/b131-side-walk-4x2.webp",
+        "sha256": "755ee4486e781e69b6c1feb881f16c84b02d24bb5c415da055b877a3e426eb85"
+      },
+      "pivot": [
+        263.5689774696707,
+        460
+      ],
+      "referenceHeight": 450,
+      "scale": 1,
+      "reviewTransform": {
+        "scale": 0.39111111111111113,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w132",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w132-side-walk-4x2.webp",
+        "sha256": "14c4bf4a824b49aaeec0ab82714d7d376d9becda54dddaa538af67efa1c6cbff"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w132-side-walk-4x2.webp",
+        "sha256": "9d1e9112a16a9cfca46c8b7e884895c0f379e2075acdcffbd44d65330fcd42a2"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w134",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w134-side-walk-4x2.webp",
+        "sha256": "b174d39d5384b30a6f9a7c8fb127973293a0230a7e92daeb367824766ae35832"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w134-side-walk-4x2.webp",
+        "sha256": "afb221d4b1a3daf6dc8a1ba5c39cacd5a0a4397270f9ce554cebcc0d97709fcd"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w135",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w135-side-walk-4x2.webp",
+        "sha256": "20cba02136de2ad020323c14cf6d067602e51830f0de1e28bb0845fe4a956aa2"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w135-side-walk-4x2.webp",
+        "sha256": "9713b0cb98cb41a90322c00a62b133a9e1c7ef71429dfbe8d524f8dd89e9db09"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w136",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w136-side-walk-4x2.webp",
+        "sha256": "ccb815d931b47b7dfe986d4703871c7e08f390206dced371425fc5a11c7052c9"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w136-side-walk-4x2.webp",
+        "sha256": "129fc14ec8f93e8fe868cb9c30635de82eee2edffdec547f8228437d5ff1fe81"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w138",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w138-side-walk-4x2.webp",
+        "sha256": "966414fed8e4fdf45a7e9c1708f8e877addb5fca67fae9a3d665f1b7f9a51344"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w138-side-walk-4x2.webp",
+        "sha256": "546685541766b15aac5f4eb183aadbfd79dd7799b3d3bbc2ab8e5e84dc43c938"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w139",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w139-side-walk-4x2.webp",
+        "sha256": "30ea995cf5a9ca47135912ec073d44c0045d57fdacb35ea20a98a3ce5fc26f67"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w139-side-walk-4x2.webp",
+        "sha256": "9d3cb779fa298e5f46afcf17dd636717291b77492282ab63af0d4a028880dfd3"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w140",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w140-side-walk-4x2.webp",
+        "sha256": "af88f4fcf80ebb34966dbe7140067df6e5494d46c2db2f8b4a478c71e5d1901e"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w140-side-walk-4x2.webp",
+        "sha256": "07fc748def56fb74bb01cf6431712a0c8303aeacf10e88b75343ff235b3622a2"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "b141",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/bosses/extreme/b141-side-walk-4x2.webp",
+        "sha256": "85675fd5076a6eb8c77c447bd2506ac144c412e8e75b3b3dd009d341a48a35be"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/bosses/extreme/b141-side-walk-4x2.webp",
+        "sha256": "546f5c343f5098783b57cf508126fcd0f090a0d04fc45ee74d878563b8d372a7"
+      },
+      "pivot": [
+        256,
+        460
+      ],
+      "referenceHeight": 425,
+      "scale": 1,
+      "reviewTransform": {
+        "scale": 0.41411764705882353,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "b141-2",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/bosses/extreme/b141-2-side-walk-4x2.webp",
+        "sha256": "f3bd881594315e15363fd9b082fa6ead2923a527e1462b54667d836dac565402"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/bosses/extreme/b141-2-side-walk-4x2.webp",
+        "sha256": "3e17e8be6b689ba6c573bad50048c8d1e14de77c28fe85f932cc7d42bf11d9cb"
+      },
+      "pivot": [
+        256,
+        460
+      ],
+      "referenceHeight": 425,
+      "scale": 1,
+      "reviewTransform": {
+        "scale": 0.41411764705882353,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w142",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w142-side-walk-4x2.webp",
+        "sha256": "f4a4de870570f2159b18a973da3dbd9b8698b8d8806880c42bf9812170665a62"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w142-side-walk-4x2.webp",
+        "sha256": "4b76db7a3a0088cfa75b5cdfdf448b22da59152377e3d6dc70a7aa4f9cb1fbe2"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w143",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w143-side-walk-4x2.webp",
+        "sha256": "1e59e0c4aa9f1976aaa6484b71976ef50b669ad203aafdda023d32fe57e4c0a3"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w143-side-walk-4x2.webp",
+        "sha256": "9e5b60b56a211e052d0482c3b363810fdd3c73e938e26d2ccb8090e75b81ef6c"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w146",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w146-side-walk-4x2.webp",
+        "sha256": "89d4f23031d227a4630e9431ba8d97ad1023dfc3627014d6f0d49df08b5713a9"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w146-side-walk-4x2.webp",
+        "sha256": "472428412f0c9b95bb13f996f4900349efa9f5f6e749ec7da343e9e9ee02dac1"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w147",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w147-side-walk-4x2.webp",
+        "sha256": "b040154e83dc46c189c4281e84bcf373be83f3718cacadf32568fec5854f2dcc"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w147-side-walk-4x2.webp",
+        "sha256": "1155940c52e0baae13faea1282f6e10cc8b9b00c613fa280a2370de8f8a7a68a"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w148",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w148-side-walk-4x2.webp",
+        "sha256": "81317ad426eb7cf982ff106ff2319e7607dd608daf1690434d72a9a851c4a9fc"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w148-side-walk-4x2.webp",
+        "sha256": "4faf7724a40ce0cccf11929ac349d2351893f9e499db9977614083cc1d787a07"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w150",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w150-side-walk-4x2.webp",
+        "sha256": "643adaa40455479b37c0744283396af072f610359649d0b2015f251f5a5b79b5"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w150-side-walk-4x2.webp",
+        "sha256": "170b8d778915c381a2e3cf0ea150c924d7da402bbd60f20f0337382208a4dd8f"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "b151",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/bosses/extreme/b151-side-walk-4x2.webp",
+        "sha256": "fdf25b9ff42fa61d46c5ee23483c421b2981829fb707cbdb3501c90e4592b718"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/bosses/extreme/b151-side-walk-4x2.webp",
+        "sha256": "5a449878a75e6eab1fc3cfbc08cc703d23654915c51a6d1857a2b0bfbc289dcb"
+      },
+      "pivot": [
+        256,
+        460
+      ],
+      "referenceHeight": 425,
+      "scale": 1,
+      "reviewTransform": {
+        "scale": 0.41411764705882353,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "b151-2",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/bosses/extreme/b151-2-side-walk-4x2.webp",
+        "sha256": "558c55154fe3a8f9468fc0b2653cee085b1fdf782e11cff0d11dbcbfe9318f9e"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/bosses/extreme/b151-2-side-walk-4x2.webp",
+        "sha256": "0b0d7c7aa07a42d1d62e01bcd52860d98ac5ea27232fadf36773c36ba90fe5de"
+      },
+      "pivot": [
+        256,
+        460
+      ],
+      "referenceHeight": 425,
+      "scale": 1,
+      "reviewTransform": {
+        "scale": 0.41411764705882353,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w152",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w152-side-walk-4x2.webp",
+        "sha256": "4cd5a7b63077489776426050c627b3e3236fb60e639deca4821aa70dbabe5b5a"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w152-side-walk-4x2.webp",
+        "sha256": "109da38fd3e5ea05d9e0783cde0b41b557d1001e154432dc6b5dd2504f2b4a7f"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w154",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w154-side-walk-4x2.webp",
+        "sha256": "f590cc5f35851a10b412e427944c9378abe92b41676f744663c363475ebfe0e2"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w154-side-walk-4x2.webp",
+        "sha256": "5e558f73ccaaacbf2b2cfb10fbe3923ffc96e45ea8c1f0d9859250a22b790186"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w156",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w156-side-walk-4x2.webp",
+        "sha256": "03d7e7868951fdefd29656250bcbee8bbb840b77caccfdea6aeda33b732173eb"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w156-side-walk-4x2.webp",
+        "sha256": "f86c03e4745df4b8007d7cc279e23fce05aad0253745bf53f850ac447561a24b"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w158",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w158-side-walk-4x2.webp",
+        "sha256": "0df170f158c2c44c166acf7a5c68cf79ff65e9440e308e8a31529052298514a6"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w158-side-walk-4x2.webp",
+        "sha256": "faa3f285e03e5ca3cb01d877480fdd876094c0f5cb638eb3defcc2f1db490935"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w159",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w159-side-walk-4x2.webp",
+        "sha256": "45c3b82417232e3d64d03d3be171351b95f9d45ab5aa5feffa477f4694ece055"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w159-side-walk-4x2.webp",
+        "sha256": "185f70b8e75fa77b140b2199a7d321ed50c0fe277879d6a7569deded7f61450c"
+      },
+      "pivot": [
+        128,
+        230
+      ],
+      "referenceHeight": 425,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 0.8282352941176471,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w164",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w164-side-walk-4x2.webp",
+        "sha256": "7a2573b0d1226b87453f6316dbba6bcdc0307961ab7ed717e2c2124907f4e9b4"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w164-side-walk-4x2.webp",
+        "sha256": "17436cdda54b9d60200664aa0b9a0d354b1682f4a6a970f3f5f8d5ad4eae40d2"
+      },
+      "pivot": [
+        128,
+        215
+      ],
+      "referenceHeight": 350,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 1.0057142857142858,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w166",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w166-side-walk-4x2.webp",
+        "sha256": "404998fabf175b47dd7c49e3f2d472f6f3023803d95468404a7d2bdecd303bcb"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w166-side-walk-4x2.webp",
+        "sha256": "b8900e43f3999c12717c535ccb2f0c66367b04efdf77873311746c83205bfa71"
+      },
+      "pivot": [
+        128,
+        215
+      ],
+      "referenceHeight": 350,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 1.0057142857142858,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w167",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w167-side-walk-4x2.webp",
+        "sha256": "a32c725e0d03eeb784521cf5d68002273c1e8ca920246d2ef1bfd2ec58d795ca"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w167-side-walk-4x2.webp",
+        "sha256": "412884610e66a12707c3b5b463df6d607c2916cba18cf276c7d2f20aee4f5508"
+      },
+      "pivot": [
+        128,
+        215
+      ],
+      "referenceHeight": 350,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 1.0057142857142858,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w170",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w170-side-walk-4x2.webp",
+        "sha256": "b310c22f30e90f9906c6efabc8f7df883b27413a4159dd681ab06dacc52b54a0"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w170-side-walk-4x2.webp",
+        "sha256": "7a901632633f0c27c6b239226efdefab0f8eeeb814621566bf88f713be4aef14"
+      },
+      "pivot": [
+        128,
+        215
+      ],
+      "referenceHeight": 350,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 1.0057142857142858,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w175",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w175-side-walk-4x2.webp",
+        "sha256": "98e08793128a495d6260e45067533e26385a8db3644b32c8550e0861b0a8eeea"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w175-side-walk-4x2.webp",
+        "sha256": "f1758fdde4ad30b1d0a78f6c78ceafcd7d72c50b46c9a538841f569047325743"
+      },
+      "pivot": [
+        128,
+        215
+      ],
+      "referenceHeight": 350,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 1.0057142857142858,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w180",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w180-side-walk-4x2.webp",
+        "sha256": "fe9efc609f06f054421ec379144f532c79f5affdd31bf4fc4d9e65a852f20fe7"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w180-side-walk-4x2.webp",
+        "sha256": "441e90604664c77f45db6c94c85e1105f4dc1e614c8cdac3dbc650c43b96ae4f"
+      },
+      "pivot": [
+        128,
+        215
+      ],
+      "referenceHeight": 350,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 1.0057142857142858,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w182",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w182-side-walk-4x2.webp",
+        "sha256": "d1671f56fd0e4084010b227880f72211c2f75a2f9e1f840d54ad6943caee54aa"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w182-side-walk-4x2.webp",
+        "sha256": "140cc6763d0dce75f092f4abe47ebb5a05b8df9f5d286da281eceb75ceeb599f"
+      },
+      "pivot": [
+        128,
+        215
+      ],
+      "referenceHeight": 350,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 1.0057142857142858,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w184",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w184-side-walk-4x2.webp",
+        "sha256": "8a8a809a9cc3660b1388e5379d2ac5c3e54a4fdc3d33adf374854ec220b86554"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w184-side-walk-4x2.webp",
+        "sha256": "f000bb4d05644c529e4a023f250f83cbea3942e1a4f4c905e05ce88ef680e304"
+      },
+      "pivot": [
+        128,
+        215
+      ],
+      "referenceHeight": 350,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 1.0057142857142858,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w187",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w187-side-walk-4x2.webp",
+        "sha256": "0a30b55940d817ef8358accf4eb02906409bb06a29931e205961b11df1f77536"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w187-side-walk-4x2.webp",
+        "sha256": "cd42a48ebc4c742c4425c289b0b79d1da0e17faca16e8654b1b86ac0debcac3d"
+      },
+      "pivot": [
+        128,
+        215
+      ],
+      "referenceHeight": 350,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 1.0057142857142858,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w188",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w188-side-walk-4x2.webp",
+        "sha256": "54f320e992c0a2b6f1d7b491d9bd9a1d11702c74c54937a94207d7e02951e185"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w188-side-walk-4x2.webp",
+        "sha256": "d6e63fad9c8d3d80d30d10c6da190dc02701c4d2d8bbba558577148ede603f70"
+      },
+      "pivot": [
+        128,
+        215
+      ],
+      "referenceHeight": 350,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 1.0057142857142858,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w190",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w190-side-walk-4x2.webp",
+        "sha256": "790cb35aaed3e3a83b8e55abcc66bd51236405b7f05edf0c8c9efe5c5024390c"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w190-side-walk-4x2.webp",
+        "sha256": "39bb650f319837da4c3da8e74376cc32961ef7299d05a4eb4e955ff76e4949ba"
+      },
+      "pivot": [
+        128,
+        215
+      ],
+      "referenceHeight": 350,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 1.0057142857142858,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "b191",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/bosses/extreme/b191-side-walk-4x2.webp",
+        "sha256": "8adb1aab3fe6e65adf67c9234c673df0736c95337aa08271c3d035375c04ed6e"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/bosses/extreme/b191-side-walk-4x2.webp",
+        "sha256": "d9a803a2ef56103f64c89edac2c6df608cda9659a2aae503a2dd330bfd0430a1"
+      },
+      "pivot": [
+        256,
+        455
+      ],
+      "referenceHeight": 420,
+      "scale": 1,
+      "reviewTransform": {
+        "scale": 0.41904761904761906,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "b191-2",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/bosses/extreme/b191-2-side-walk-4x2.webp",
+        "sha256": "1a3abd236895694fa051b51e8007012d61354fcdbc7e707aaac2de8f5bd10009"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/bosses/extreme/b191-2-side-walk-4x2.webp",
+        "sha256": "81692df09bc7be1b880f8788ef0ce2368e536f6f2982cc8adc9ba672bcdf6fc2"
+      },
+      "pivot": [
+        256,
+        455
+      ],
+      "referenceHeight": 420,
+      "scale": 1,
+      "reviewTransform": {
+        "scale": 0.41904761904761906,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w194",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w194-side-walk-4x2.webp",
+        "sha256": "488c5c9cd521ae431e43c7078a8ed0fe629c9bf4576daa10e56ac0a693aea746"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w194-side-walk-4x2.webp",
+        "sha256": "c0003ad2d5c88b7f74fd790dbbf5c2a8ebc9e76237eb008a64f3320b38d17592"
+      },
+      "pivot": [
+        128,
+        215
+      ],
+      "referenceHeight": 350,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 1.0057142857142858,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w195",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w195-side-walk-4x2.webp",
+        "sha256": "72725a8754abf1a0feb4446e5dc3cc75f2dd1d853d8d53b46b442d5ae80bb51d"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w195-side-walk-4x2.webp",
+        "sha256": "a70f49f5ad762700841d58be9808033bf26b594819993bceab138d74985f3808"
+      },
+      "pivot": [
+        128,
+        215
+      ],
+      "referenceHeight": 350,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 1.0057142857142858,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w196",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w196-side-walk-4x2.webp",
+        "sha256": "a9745fc5878c9185389f0d3b9ebbbfe1eccd9fe6a3ebbbcc31c607e7d9a831a4"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w196-side-walk-4x2.webp",
+        "sha256": "58c552216bc60d204301032fc0660e1ecf27bf0d9e7963aadd1e0c162479115f"
+      },
+      "pivot": [
+        128,
+        215
+      ],
+      "referenceHeight": 350,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 1.0057142857142858,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w198",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w198-side-walk-4x2.webp",
+        "sha256": "357e1b033607b3db2619b086d6f7ad0d986740e8e3652fba1f34613763ae5f54"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w198-side-walk-4x2.webp",
+        "sha256": "db958b4bd7c5c5d356f464ac2131b0792c0d1d1679502b4c17bba83aa97b614f"
+      },
+      "pivot": [
+        128,
+        215
+      ],
+      "referenceHeight": 350,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 1.0057142857142858,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w200",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w200-side-walk-4x2.webp",
+        "sha256": "631c90ff47e9c7824137b75efdd23c5078713caef94520f09bb3b44e1f49500a"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w200-side-walk-4x2.webp",
+        "sha256": "cd4aa177c08af1e7e65c31d89644a014b3b8adbd3edaf1dc51d5ef435bcc5823"
+      },
+      "pivot": [
+        128,
+        215
+      ],
+      "referenceHeight": 350,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 1.0057142857142858,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "b201",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/bosses/extreme/b201-side-walk-4x2.webp",
+        "sha256": "10c4cb7032627e1fd5be050d91db606929ba1f2c175f8c69e41e6df2959d2d60"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/bosses/extreme/b201-side-walk-4x2.webp",
+        "sha256": "124cb8b9d7b52145c403e942de95fbd0e6c22b16b0ceac17ccc24374b6e51b09"
+      },
+      "pivot": [
+        256,
+        455
+      ],
+      "referenceHeight": 420,
+      "scale": 1,
+      "reviewTransform": {
+        "scale": 0.41904761904761906,
+        "ground": 206,
+        "center": 119
+      }
+    },
+    {
+      "id": "w202",
+      "kind": "extreme",
+      "view": "side",
+      "frames": [
+        2,
+        6
+      ],
+      "before": {
+        "commit": "5630cdd",
+        "file": "casual/enemies/extreme/w202-side-walk-4x2.webp",
+        "sha256": "2e149ea6d596bc828b3bdf6813be83985721fbf288c8db4accf77791cadc576c"
+      },
+      "after": {
+        "directory": "gen\\biped-knees-110\\extreme",
+        "file": "casual/enemies/extreme/w202-side-walk-4x2.webp",
+        "sha256": "ef585995ec1a1c11625c1b88fd5449f3e651b7a21903659c741274f094b6774c"
+      },
+      "pivot": [
+        128,
+        215
+      ],
+      "referenceHeight": 350,
+      "scale": 0.5,
+      "reviewTransform": {
+        "scale": 1.0057142857142858,
+        "ground": 206,
+        "center": 119
+      }
+    }
+  ],
+  "loopExamples": [
+    "w035",
+    "w049",
+    "b050",
+    "b100",
+    "w103",
+    "b201"
+  ],
+  "loops": "Six actual 8-frame sheets per view with all three directions, both generations. No interpolation or image warping."
+}

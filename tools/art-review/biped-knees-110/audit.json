@@ -1,0 +1,5698 @@
+{
+  "scope": "Every side/front/back view of release-selected biped family; sagittal +X is forward. Identity is forward only when all three views are forward. Two avian hocks are explicit exceptions.",
+  "summary": {
+    "original": {
+      "backward": 0,
+      "forward": 51,
+      "avianHock": 1,
+      "mixed": 0,
+      "unresolved": 0
+    },
+    "extreme": {
+      "backward": 0,
+      "forward": 52,
+      "avianHock": 1,
+      "mixed": 0,
+      "unresolved": 0
+    }
+  },
+  "viewSummary": {
+    "backward": 0,
+    "forward": 309,
+    "avianHock": 6,
+    "mixed": 0,
+    "unresolved": 0
+  },
+  "rows": [
+    {
+      "id": "w002",
+      "name": "해골 잡졸",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/directional-101/legacy-directional-rigs.json",
+        "front": "tools/art-review/biped-knees-110/legacy-front-back-rigs.json",
+        "back": "tools/art-review/biped-knees-110/legacy-front-back-rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "near",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "far",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w003",
+      "name": "묘지 오우거",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/directional-101/legacy-directional-rigs.json",
+        "front": "tools/art-review/biped-knees-110/legacy-front-back-rigs.json",
+        "back": "tools/art-review/biped-knees-110/legacy-front-back-rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "near",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "far",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w005",
+      "name": "고블린 창병",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/directional-101/legacy-directional-rigs.json",
+        "front": "tools/art-review/biped-knees-110/legacy-front-back-rigs.json",
+        "back": "tools/art-review/biped-knees-110/legacy-front-back-rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "near",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "far",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w007",
+      "name": "무덤 파는 구울",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/directional-101/legacy-directional-rigs.json",
+        "front": "tools/art-review/biped-knees-110/legacy-front-back-rigs.json",
+        "back": "tools/art-review/biped-knees-110/legacy-front-back-rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "near",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "far",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w009",
+      "name": "녹슨 철갑 오크",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/directional-101/legacy-directional-rigs.json",
+        "front": "tools/art-review/biped-knees-110/legacy-front-back-rigs.json",
+        "back": "tools/art-review/biped-knees-110/legacy-front-back-rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "near",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "far",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "b010",
+      "name": "역병 쥐왕",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w015",
+      "name": "도적너구리",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "b020",
+      "name": "고목 정령",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "b030",
+      "name": "두꺼비 마녀",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w031",
+      "name": "고블린 정찰병",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w033",
+      "name": "방패 고블린",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w034",
+      "name": "오크 전사",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w035",
+      "name": "트롤 굴착병",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w037",
+      "name": "홉고블린 궁수",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w038",
+      "name": "코볼트",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w039",
+      "name": "산적 두목",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "b040",
+      "name": "고블린 왕",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "b040-2",
+      "name": "오우거 장사",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w041",
+      "name": "방패병",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w042",
+      "name": "공병",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w045",
+      "name": "중장기사",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w046",
+      "name": "종자",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w047",
+      "name": "석궁병",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w049",
+      "name": "굴착 노움",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "b050",
+      "name": "강철 성주",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "b050-2",
+      "name": "공성 골렘",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w051",
+      "name": "좀비",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w053",
+      "name": "해골 병사",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w055",
+      "name": "구울",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w057",
+      "name": "해골 기사",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w058",
+      "name": "저주 인형",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w063",
+      "name": "흙 정령",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w065",
+      "name": "바위 골렘",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w066",
+      "name": "수정 정령",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w069",
+      "name": "수정 골렘",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w074",
+      "name": "도마뱀 인간",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w075",
+      "name": "코카트리스",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/directional-101/late-waves/all-rigs.json",
+        "front": "tools/art-review/directional-101/late-waves/all-rigs.json",
+        "back": "tools/art-review/directional-101/late-waves/all-rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": 1,
+            "kneeForward": -33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": 1,
+            "kneeForward": -33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": 1,
+            "kneeForward": -33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": 1,
+            "kneeForward": -33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": 1,
+            "kneeForward": -33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": 1,
+            "kneeForward": -33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "avianHock",
+        "front": "avianHock",
+        "back": "avianHock"
+      },
+      "status": "avianHock"
+    },
+    {
+      "id": "w079",
+      "name": "용 전사",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w081",
+      "name": "임프",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w083",
+      "name": "지옥 오우거",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w086",
+      "name": "임프 주술사",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w087",
+      "name": "화염 악마",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w089",
+      "name": "지옥 기사",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "b090",
+      "name": "마왕",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "b090-2",
+      "name": "구덩이 악마",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w093",
+      "name": "심연 거인",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w094",
+      "name": "파멸 기사",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w095",
+      "name": "그림자 암살자",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w097",
+      "name": "공허 골렘",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w099",
+      "name": "흑요석 거상",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "b100",
+      "name": "파멸의 군주",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w101",
+      "name": "종말의 사자",
+      "kind": "original",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w103",
+      "name": "유적 서기관",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w104",
+      "name": "보관고 문지기",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w106",
+      "name": "열쇠 창병",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w108",
+      "name": "등불 수집가",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w110",
+      "name": "왕관 철갑병",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "b111",
+      "name": "유적 왕자",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "b111-2",
+      "name": "유적 인장대신",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w116",
+      "name": "왕실 지도사",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "b121",
+      "name": "왕관나무 섭정",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "b131",
+      "name": "서리 마녀기술자",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w132",
+      "name": "냉각수 정찰병",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w134",
+      "name": "제설 방패병",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w135",
+      "name": "빙철 도끼병",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w136",
+      "name": "압축기 트롤",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w138",
+      "name": "레일 활잡이",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w139",
+      "name": "눈꽃 코볼트",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w140",
+      "name": "기관실 작업반장",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "b141",
+      "name": "태엽 총감독",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "b141-2",
+      "name": "압력망치 오우거",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w142",
+      "name": "산호 방패병",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w143",
+      "name": "씨앗 공병",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w146",
+      "name": "조개껍질 기사",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w147",
+      "name": "해초 종자",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w148",
+      "name": "진주 석궁병",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w150",
+      "name": "정원 굴착노움",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "b151",
+      "name": "심연 정원사왕",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "b151-2",
+      "name": "산호 관문골렘",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w152",
+      "name": "이끼 수호인형",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w154",
+      "name": "산호 가면병",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w156",
+      "name": "정원 버섯관리인",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w158",
+      "name": "진주 관문기사",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w159",
+      "name": "해초 봉제수호자",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w164",
+      "name": "점토 공방지기",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w166",
+      "name": "모루 골렘",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w167",
+      "name": "유리 용접정령",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w170",
+      "name": "가마 수정골렘",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w175",
+      "name": "가마 앞치마장인",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w176",
+      "name": "증기 닭수호자",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/extreme-202/all-rigs.json",
+        "front": "tools/art-review/extreme-202/all-rigs.json",
+        "back": "tools/art-review/extreme-202/all-rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": 1,
+            "kneeForward": -33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": 1,
+            "kneeForward": -33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": 1,
+            "kneeForward": -33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": 1,
+            "kneeForward": -33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": 1,
+            "kneeForward": -33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": 1,
+            "kneeForward": -33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "avianHock",
+        "front": "avianHock",
+        "back": "avianHock"
+      },
+      "status": "avianHock"
+    },
+    {
+      "id": "w180",
+      "name": "용광로 용기사",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w182",
+      "name": "별가루 심부름꾼",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w184",
+      "name": "유성 문지기",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w187",
+      "name": "천문 관측사",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w188",
+      "name": "오로라 불꽃병",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w190",
+      "name": "별길 관문기사",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "b191",
+      "name": "별빛 순찰대장",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "b191-2",
+      "name": "운석 갑옷대장",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w194",
+      "name": "별판 거인",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w195",
+      "name": "성좌 중갑기사",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w196",
+      "name": "월식 길잡이",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w198",
+      "name": "별핵 골렘",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w200",
+      "name": "운석 방패거상",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "b201",
+      "name": "별왕관 총사령관",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    },
+    {
+      "id": "w202",
+      "name": "새벽 등대사자",
+      "kind": "extreme",
+      "sources": {
+        "side": "tools/art-review/biped-knees-110/rigs.json",
+        "front": "tools/art-review/biped-knees-110/rigs.json",
+        "back": "tools/art-review/biped-knees-110/rigs.json"
+      },
+      "views": {
+        "side": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "front": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ],
+        "back": [
+          {
+            "id": "leftLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          },
+          {
+            "id": "rightLeg",
+            "bend": -1,
+            "kneeForward": 33.166247903554
+          }
+        ]
+      },
+      "viewStatus": {
+        "side": "forward",
+        "front": "forward",
+        "back": "forward"
+      },
+      "status": "forward"
+    }
+  ]
+}

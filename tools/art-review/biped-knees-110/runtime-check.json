@@ -1,0 +1,69 @@
+{
+  "baseline": "5630cdd",
+  "scope": "Real game spawn/direction/placement and served image integrity in desktop Chrome viewports; not native device performance or visual anatomy approval.",
+  "passed": true,
+  "integrity": {
+    "changedIdentities": 103,
+    "unchangedIdentities": 118,
+    "unchangedImageFiles": 718,
+    "changedViews": 304,
+    "preservedLegacySides": [
+      "w002",
+      "w003",
+      "w005",
+      "w007",
+      "w009"
+    ],
+    "preservedAvianIds": [
+      "w075",
+      "w176"
+    ],
+    "stableGeometry": true
+  },
+  "viewports": [
+    {
+      "tag": "phone",
+      "spawns": 103,
+      "directionalPlacements": 309,
+      "bosses": [
+        {
+          "id": "b100",
+          "move": "ground",
+          "altitude": 0
+        },
+        {
+          "id": "b100-2",
+          "move": "air",
+          "altitude": 42
+        }
+      ],
+      "errors": []
+    },
+    {
+      "tag": "desktop",
+      "spawns": 103,
+      "directionalPlacements": 309,
+      "bosses": [
+        {
+          "id": "b100",
+          "move": "ground",
+          "altitude": 0
+        },
+        {
+          "id": "b100-2",
+          "move": "air",
+          "altitude": 42
+        }
+      ],
+      "errors": []
+    }
+  ],
+  "delivery": {
+    "views": 304,
+    "sheets": 304,
+    "stills": 304,
+    "inlineFallbacks": 304,
+    "servedSha256Matches": 608,
+    "bytes": 127861793
+  }
+}

@@ -29,7 +29,8 @@
     "test:campaign": "node tools/e2e/campaign.cjs",
     "measure:campaign": "node tools/e2e/campaign.cjs --full-combat",
     "test:boss-locomotion": "node tools/e2e/boss-locomotion.cjs",
-    "test:combat-motion": "node tools/e2e/combat-motion.cjs"
+    "test:combat-motion": "node tools/e2e/combat-motion.cjs",
+    "test:biped-knees": "node tools/directional-rig-test.mjs && node tools/audit-biped-knees.mjs --check && node tools/e2e/biped-knees-runtime.cjs"
   },
   "dependencies": {
     "@capacitor-community/safe-area": "^7.0.0",

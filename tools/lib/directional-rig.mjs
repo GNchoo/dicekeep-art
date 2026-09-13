@@ -273,12 +273,22 @@ export function inspectGeometry(rig, poses) {
   for (const def of rig.limbs) {
     const samples = poses.map(p => p.legs.find(l => l.id === def.id));
     const contact = samples.filter(l => l.contact), swing = samples.filter(l => !l.contact);
+    let minimumForwardKneeOffset = Infinity;
     fail(contact.length > 0 && swing.length > 0, def.id + ': requires stance and swing');
     fail(span(samples.map(l => l.sagittal.sole[0])) >= rig.stride * rig.gait.duty * .95, def.id + ': insufficient relative foot travel');
     fail(Math.max(...samples.map(l => l.lift)) >= rig.gait.lift * .95, def.id + ': missing lifted swing');
     for (let i = 0; i < samples.length; i++) {
       const l = samples[i], s = l.sagittal;
       fail(Math.abs(distance(s.hip, s.knee) - def.links[0]) < 1e-6 && Math.abs(distance(s.knee, s.ankle) - def.links[1]) < 1e-6, def.id + ': changing bone length');
+      if (rig.anatomy === 'biped') {
+        // +X is forward and +Y is down in every view's sagittal plane. Use
+        // the hip→ankle line, not hip X or projected PNG angles: the foot
+        // travels ahead of and behind the pelvis during the same stride.
+        const dx = s.ankle[0] - s.hip[0], dy = s.ankle[1] - s.hip[1];
+        const forward = ((s.knee[0] - s.hip[0]) * dy - (s.knee[1] - s.hip[1]) * dx) / Math.hypot(dx, dy);
+        minimumForwardKneeOffset = Math.min(minimumForwardKneeOffset, forward);
+        fail(forward >= -1e-6, def.id + ': biped knee bends behind hip-ankle line in sagittal +X-forward space');
+      }
       if (l.contact) { minSupport = Math.min(minSupport, l.kneeAngle); maxSupport = Math.max(maxSupport, l.kneeAngle); }
       if (l.contact && rig.gait.pelvis === 'support') fail(l.kneeAngle >= 160 - 1e-8 && l.kneeAngle <= 175 + 1e-8, def.id + ': crouched/hyperextended support');
     }
@@ -290,7 +300,8 @@ export function inspectGeometry(rig, poses) {
     if (run.length > 2) runs.push(run);
     const slip = Math.max(0, ...runs.map(r => Math.hypot(span(r.map(p => p.point[0])), span(r.map(p => p.point[1])))));
     fail(slip <= 1e-6, def.id + ': projected contact moves with root (slip ' + slip + ')');
-    checks.push({ id: def.id, contacts: contact.length, swings: swing.length, maximumSwingLift: Math.max(...samples.map(l => l.lift)), projectedContactSlip: slip });
+    checks.push({ id: def.id, contacts: contact.length, swings: swing.length, maximumSwingLift: Math.max(...samples.map(l => l.lift)), projectedContactSlip: slip,
+      ...(rig.anatomy === 'biped' ? { minimumForwardKneeOffset } : {}) });
   }
   if (rig.anatomy === 'hand') fail(poses.every(p => p.legs.filter(l => l.contact).length >= 3 && p.legs.filter(l => !l.contact).length <= 2), 'finger walk requires at least three supports and no more than two swinging digits');
   else if (rig.limbs.length >= 4) fail(poses.every(p => p.legs.filter(l => l.contact).length >= 2), 'multi-legged walk has fewer than two support feet');

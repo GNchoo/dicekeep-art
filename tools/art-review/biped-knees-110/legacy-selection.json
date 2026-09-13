@@ -1,0 +1,97 @@
+{
+  "version": 110,
+  "baseline": "5630cdd",
+  "scope": "Five existing legacy side walks retained exactly; only front/back forward-knee corrections.",
+  "selection": [
+    {
+      "id": "w002",
+      "kind": "legacy",
+      "source": "tools/art-review/directional-101/legacy-directional-rigs.json",
+      "sourceSha256": "fcc4960a8edd1763f8e132145755dd85ca22c9fcf9a0c6093d6e801354e99bb7",
+      "directions": [
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w003",
+      "kind": "legacy",
+      "source": "tools/art-review/directional-101/legacy-directional-rigs.json",
+      "sourceSha256": "fcc4960a8edd1763f8e132145755dd85ca22c9fcf9a0c6093d6e801354e99bb7",
+      "directions": [
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w005",
+      "kind": "legacy",
+      "source": "tools/art-review/directional-101/legacy-directional-rigs.json",
+      "sourceSha256": "fcc4960a8edd1763f8e132145755dd85ca22c9fcf9a0c6093d6e801354e99bb7",
+      "directions": [
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w007",
+      "kind": "legacy",
+      "source": "tools/art-review/directional-101/legacy-directional-rigs.json",
+      "sourceSha256": "fcc4960a8edd1763f8e132145755dd85ca22c9fcf9a0c6093d6e801354e99bb7",
+      "directions": [
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w009",
+      "kind": "legacy",
+      "source": "tools/art-review/directional-101/legacy-directional-rigs.json",
+      "sourceSha256": "fcc4960a8edd1763f8e132145755dd85ca22c9fcf9a0c6093d6e801354e99bb7",
+      "directions": [
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    }
+  ]
+}

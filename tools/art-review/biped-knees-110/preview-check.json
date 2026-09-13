@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "embeddedImages": 36,
+  "canvases": 12,
+  "pauseHoldsFrame": true,
+  "directions": [
+    "side",
+    "front",
+    "back"
+  ],
+  "errors": [],
+  "captures": [
+    "preview-side.png",
+    "preview-front.png",
+    "preview-back.png"
+  ]
+}

@@ -151,6 +151,56 @@ test('contact corruption rejects world slip and modified bones independently', a
   assert.ok(result.errors.some(e => /changing bone/.test(e)));
 });
 
+test('human biped knees bend forward in all projections without changing footfalls or fixed bone lengths', async () => {
+  const config = JSON.parse(fs.readFileSync(new URL('./art-review/directional-101/middle-waves/t4-biped-01a-rigs.json', import.meta.url)));
+  const entry = structuredClone(config.entries[0]); entry.anatomy = 'biped';
+  for (const name of ['side', 'front', 'back']) {
+    const view = structuredClone(entry.views[name]);
+    for (const part of view.parts.filter(p => p.type === 'leg')) part.bend = -1;
+    const rig = await prepareView(entry, name, view, repo);
+    assert.equal(rig.geometry.passed, true, name);
+    assert.ok(rig.geometry.checks.every(c => c.minimumForwardKneeOffset > 0), name);
+
+    // The old branch has valid lengths, support angles and contacts. Only
+    // the anatomical direction guard must reject it, in every projection.
+    const backwards = structuredClone(rig); backwards.limbs.forEach(l => { l.bend = 1; });
+    const goodPoses = Array.from({ length: 256 }, (_, i) => poseAt(rig, i / 256));
+    const badPoses = Array.from({ length: 256 }, (_, i) => poseAt(backwards, i / 256));
+    const result = inspectGeometry(backwards, badPoses);
+    assert.equal(result.passed, false, name);
+    assert.equal(result.errors.length, 2, name);
+    assert.ok(result.errors.every(e => /biped knee bends behind hip-ankle line/.test(e)), name);
+    assert.ok(result.checks.every(c => c.minimumForwardKneeOffset < 0), name);
+    for (let i = 0; i < goodPoses.length; i++) {
+      const good = goodPoses[i], bad = badPoses[i];
+      assert.deepEqual(good.body, bad.body);
+      assert.equal(good.rootAdvance, bad.rootAdvance);
+      for (let j = 0; j < good.legs.length; j++) {
+        const a = good.legs[j], b = bad.legs[j];
+        for (const key of ['hip', 'ankle', 'sole']) {
+          assert.deepEqual(a.sagittal[key], b.sagittal[key]);
+          assert.deepEqual(a.screen[key], b.screen[key]);
+        }
+        assert.equal(a.phase, b.phase); assert.equal(a.contact, b.contact); assert.equal(a.lift, b.lift); assert.equal(a.kneeAngle, b.kneeAngle);
+      }
+    }
+
+    // A corrupt single swing sample must fail too, even when the rig's
+    // bend flag still says forward and all contact samples remain valid.
+    const damaged = structuredClone(goodPoses), index = damaged.findIndex(p => !p.legs[0].contact);
+    damaged[index].legs[0] = structuredClone(badPoses[index].legs[0]);
+    assert.ok(inspectGeometry(rig, damaged).errors.some(e => /biped knee bends behind/.test(e)));
+    const wrongView = structuredClone(view); wrongView.parts.find(p => p.type === 'leg').bend = 1;
+    await assert.rejects(prepareView(entry, name, wrongView, repo), /biped knee bends behind hip-ankle line/);
+
+    // Opt-in anatomy matters: deliberate animal/hock and finger articulation
+    // is not classified as a human knee from leg count or texture alone.
+    const animal = { ...backwards, anatomy: 'quadruped' };
+    assert.equal(inspectGeometry(animal, badPoses).passed, true);
+    assert.ok(inspectGeometry(animal, badPoses).checks.every(c => !('minimumForwardKneeOffset' in c)));
+  }
+});
+
 test('source hash, cropped ROI, stretched body, stale socket, fake direction scaling reject before raster', async () => {
   const e = pilot.entries[0];
   for (const [mutate, error] of [

@@ -1,0 +1,2326 @@
+{
+  "version": 110,
+  "scope": "Only bend +1 → -1, biped anatomy guard and per-view cache version; previous front-foot mirrors retained. Two avian hocks excluded.",
+  "exceptions": [
+    {
+      "id": "w075",
+      "reason": "Avian exposed hock; backward bend is intentional."
+    },
+    {
+      "id": "w176",
+      "reason": "Avian exposed hock; backward bend is intentional."
+    }
+  ],
+  "selection": [
+    {
+      "id": "b010",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/pilot-b010-rigs.json",
+      "sourceSha256": "a97669feda2dad1c7cec3ca7580d8f18ce06487bad1ee39c476f05c4ec474e62",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w015",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/early-six-rigs.json",
+      "sourceSha256": "91940080f1aad07e35f3eacef7147c5e2ac4fdca4223b8d57d3fa18431871e8b",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "b020",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/early-six-rigs.json",
+      "sourceSha256": "91940080f1aad07e35f3eacef7147c5e2ac4fdca4223b8d57d3fa18431871e8b",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "b030",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/early-boss30-rigs.json",
+      "sourceSha256": "76e949ab0dc994e4f1aaf9baa08e32180f06a25e28cc120ff1f9c486575b5ad7",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w031",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/middle-waves/production-rigs.json",
+      "sourceSha256": "768626e90ea429fcb0ed6059d91828dde45006c4a69c231f94f0572ba2d57a5d",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": [
+            "rightLeg"
+          ]
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w033",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/middle-waves/production-rigs.json",
+      "sourceSha256": "768626e90ea429fcb0ed6059d91828dde45006c4a69c231f94f0572ba2d57a5d",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": [
+            "rightLeg"
+          ]
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w034",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/middle-waves/production-rigs.json",
+      "sourceSha256": "768626e90ea429fcb0ed6059d91828dde45006c4a69c231f94f0572ba2d57a5d",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w035",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/middle-waves/production-rigs.json",
+      "sourceSha256": "768626e90ea429fcb0ed6059d91828dde45006c4a69c231f94f0572ba2d57a5d",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w037",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/middle-waves/production-rigs.json",
+      "sourceSha256": "768626e90ea429fcb0ed6059d91828dde45006c4a69c231f94f0572ba2d57a5d",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w038",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/middle-waves/production-rigs.json",
+      "sourceSha256": "768626e90ea429fcb0ed6059d91828dde45006c4a69c231f94f0572ba2d57a5d",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w039",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/middle-waves/production-rigs.json",
+      "sourceSha256": "768626e90ea429fcb0ed6059d91828dde45006c4a69c231f94f0572ba2d57a5d",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "b040",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/middle-waves/ground-next-rigs.json",
+      "sourceSha256": "7f4b3d326a4b3ef15a1293a968f6926f40539755e06dab6e001092968855f6ff",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 102,
+          "flippedLegs": [
+            "leftLeg",
+            "rightLeg"
+          ]
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "b040-2",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/middle-waves/ground-next-rigs.json",
+      "sourceSha256": "7f4b3d326a4b3ef15a1293a968f6926f40539755e06dab6e001092968855f6ff",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 102,
+          "flippedLegs": [
+            "leftLeg",
+            "rightLeg"
+          ]
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w041",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/middle-waves/production-rigs.json",
+      "sourceSha256": "768626e90ea429fcb0ed6059d91828dde45006c4a69c231f94f0572ba2d57a5d",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w042",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/middle-waves/production-rigs.json",
+      "sourceSha256": "768626e90ea429fcb0ed6059d91828dde45006c4a69c231f94f0572ba2d57a5d",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w045",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/middle-waves/production-rigs.json",
+      "sourceSha256": "768626e90ea429fcb0ed6059d91828dde45006c4a69c231f94f0572ba2d57a5d",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w046",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/middle-waves/production-rigs.json",
+      "sourceSha256": "768626e90ea429fcb0ed6059d91828dde45006c4a69c231f94f0572ba2d57a5d",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w047",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/middle-waves/ground-next-rigs.json",
+      "sourceSha256": "7f4b3d326a4b3ef15a1293a968f6926f40539755e06dab6e001092968855f6ff",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w049",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/middle-waves/ground-next-rigs.json",
+      "sourceSha256": "7f4b3d326a4b3ef15a1293a968f6926f40539755e06dab6e001092968855f6ff",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "b050",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/middle-waves/t5-boss-01-rigs.json",
+      "sourceSha256": "5c99956ee9e067a31e5d934ee04c965c3bcca9ded6f326fec1db9a4b5c5121bd",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "b050-2",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/middle-waves/t5-boss-01-rigs.json",
+      "sourceSha256": "5c99956ee9e067a31e5d934ee04c965c3bcca9ded6f326fec1db9a4b5c5121bd",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w051",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/middle-waves/production-rigs.json",
+      "sourceSha256": "768626e90ea429fcb0ed6059d91828dde45006c4a69c231f94f0572ba2d57a5d",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w053",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/middle-waves/production-rigs.json",
+      "sourceSha256": "768626e90ea429fcb0ed6059d91828dde45006c4a69c231f94f0572ba2d57a5d",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w055",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/middle-waves/production-rigs.json",
+      "sourceSha256": "768626e90ea429fcb0ed6059d91828dde45006c4a69c231f94f0572ba2d57a5d",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w057",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/middle-waves/production-rigs.json",
+      "sourceSha256": "768626e90ea429fcb0ed6059d91828dde45006c4a69c231f94f0572ba2d57a5d",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w058",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/middle-waves/ground-next-rigs.json",
+      "sourceSha256": "7f4b3d326a4b3ef15a1293a968f6926f40539755e06dab6e001092968855f6ff",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w063",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/late-waves/all-rigs.json",
+      "sourceSha256": "ff95d40ef68b07c006712885a807fe2cece386861d9a48d75a149906c541b025",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w065",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/late-waves/all-rigs.json",
+      "sourceSha256": "ff95d40ef68b07c006712885a807fe2cece386861d9a48d75a149906c541b025",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w066",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/late-waves/all-rigs.json",
+      "sourceSha256": "ff95d40ef68b07c006712885a807fe2cece386861d9a48d75a149906c541b025",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w069",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/late-waves/all-rigs.json",
+      "sourceSha256": "ff95d40ef68b07c006712885a807fe2cece386861d9a48d75a149906c541b025",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w074",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/late-waves/all-rigs.json",
+      "sourceSha256": "ff95d40ef68b07c006712885a807fe2cece386861d9a48d75a149906c541b025",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w079",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/late-waves/all-rigs.json",
+      "sourceSha256": "ff95d40ef68b07c006712885a807fe2cece386861d9a48d75a149906c541b025",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w081",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/late-waves/all-rigs.json",
+      "sourceSha256": "ff95d40ef68b07c006712885a807fe2cece386861d9a48d75a149906c541b025",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w083",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/late-waves/all-rigs.json",
+      "sourceSha256": "ff95d40ef68b07c006712885a807fe2cece386861d9a48d75a149906c541b025",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w086",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/late-waves/all-rigs.json",
+      "sourceSha256": "ff95d40ef68b07c006712885a807fe2cece386861d9a48d75a149906c541b025",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w087",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/late-waves/all-rigs.json",
+      "sourceSha256": "ff95d40ef68b07c006712885a807fe2cece386861d9a48d75a149906c541b025",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w089",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/late-waves/all-rigs.json",
+      "sourceSha256": "ff95d40ef68b07c006712885a807fe2cece386861d9a48d75a149906c541b025",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "b090",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/late-waves/all-rigs.json",
+      "sourceSha256": "ff95d40ef68b07c006712885a807fe2cece386861d9a48d75a149906c541b025",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": [
+            "rightLeg"
+          ]
+        },
+        {
+          "view": "front",
+          "priorVersion": 102,
+          "flippedLegs": [
+            "leftLeg",
+            "rightLeg"
+          ]
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "b090-2",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/late-waves/all-rigs.json",
+      "sourceSha256": "ff95d40ef68b07c006712885a807fe2cece386861d9a48d75a149906c541b025",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 102,
+          "flippedLegs": [
+            "leftLeg",
+            "rightLeg"
+          ]
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w093",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/late-waves/all-rigs.json",
+      "sourceSha256": "ff95d40ef68b07c006712885a807fe2cece386861d9a48d75a149906c541b025",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w094",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/late-waves/all-rigs.json",
+      "sourceSha256": "ff95d40ef68b07c006712885a807fe2cece386861d9a48d75a149906c541b025",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w095",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/late-waves/all-rigs.json",
+      "sourceSha256": "ff95d40ef68b07c006712885a807fe2cece386861d9a48d75a149906c541b025",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w097",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/late-waves/all-rigs.json",
+      "sourceSha256": "ff95d40ef68b07c006712885a807fe2cece386861d9a48d75a149906c541b025",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w099",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/late-waves/all-rigs.json",
+      "sourceSha256": "ff95d40ef68b07c006712885a807fe2cece386861d9a48d75a149906c541b025",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": [
+            "leftLeg"
+          ]
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "b100",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/late-waves/all-rigs.json",
+      "sourceSha256": "ff95d40ef68b07c006712885a807fe2cece386861d9a48d75a149906c541b025",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": [
+            "rightLeg"
+          ]
+        },
+        {
+          "view": "front",
+          "priorVersion": 102,
+          "flippedLegs": [
+            "leftLeg",
+            "rightLeg"
+          ]
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w101",
+      "kind": "original",
+      "source": "tools/art-review/directional-101/late-waves/all-rigs.json",
+      "sourceSha256": "ff95d40ef68b07c006712885a807fe2cece386861d9a48d75a149906c541b025",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 93,
+          "flippedLegs": [
+            "leftLeg"
+          ]
+        },
+        {
+          "view": "front",
+          "priorVersion": 93,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 93,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w103",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w104",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w106",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": [
+            "rightLeg"
+          ]
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w108",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w110",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "b111",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "b111-2",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w116",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "b121",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "b131",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w132",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": [
+            "rightLeg"
+          ]
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w134",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": [
+            "rightLeg"
+          ]
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w135",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w136",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w138",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w139",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w140",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "b141",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 102,
+          "flippedLegs": [
+            "leftLeg",
+            "rightLeg"
+          ]
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "b141-2",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 102,
+          "flippedLegs": [
+            "leftLeg",
+            "rightLeg"
+          ]
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w142",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w143",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w146",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w147",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w148",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w150",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "b151",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "b151-2",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w152",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w154",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w156",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w158",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w159",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w164",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w166",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w167",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w170",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w175",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w180",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w182",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w184",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w187",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w188",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w190",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "b191",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": [
+            "rightLeg"
+          ]
+        },
+        {
+          "view": "front",
+          "priorVersion": 102,
+          "flippedLegs": [
+            "leftLeg",
+            "rightLeg"
+          ]
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "b191-2",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 102,
+          "flippedLegs": [
+            "leftLeg",
+            "rightLeg"
+          ]
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w194",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w195",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w196",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w198",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w200",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": [
+            "leftLeg"
+          ]
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "b201",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": [
+            "rightLeg"
+          ]
+        },
+        {
+          "view": "front",
+          "priorVersion": 102,
+          "flippedLegs": [
+            "leftLeg",
+            "rightLeg"
+          ]
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    },
+    {
+      "id": "w202",
+      "kind": "extreme",
+      "source": "tools/art-review/extreme-202/all-rigs.json",
+      "sourceSha256": "c41927c1f683760405fc79a212266e9b58d75c5db67b5a45b8cd12640c895fa3",
+      "directions": [
+        {
+          "view": "side",
+          "priorVersion": 101,
+          "flippedLegs": [
+            "leftLeg"
+          ]
+        },
+        {
+          "view": "front",
+          "priorVersion": 101,
+          "flippedLegs": []
+        },
+        {
+          "view": "back",
+          "priorVersion": 101,
+          "flippedLegs": []
+        }
+      ]
+    }
+  ]
+}
