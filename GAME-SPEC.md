@@ -1,6 +1,8 @@
 # 주사위 성채 (Dicekeep) — 게임 명세
 
-최종 정리: 2026-09-02. 저장소: https://github.com/GNchoo/dicekeep-art
+현행 모드·성장 갱신: 2026-09-13. 아래 초기 설계 기록과 다른 내용은 `docs/MODES-AND-PERFORMANCE.md`, `docs/BUSINESS-MODEL.md`, `docs/DEVELOPMENT-STATUS.md`를 우선한다.
+
+초기 정리: 2026-09-02. 저장소: https://github.com/GNchoo/dicekeep-art
 
 이 문서는 **현재 구현된 규칙·아트·파일 위치**의 단일 소스다.
 이어서 작업할 때는 이 파일 → `content.js` → `game.js` → `ART-PROMPTS.md`(생성 프롬프트) → `GROK-HANDOFF.md`(옛 브리프) 순으로 읽는다.
@@ -27,7 +29,7 @@ python serve.py
 
 Windows: `start.bat`. **file://로 열지 말 것** (캔버스 tainted → 크로마키 실패).
 
-캐시: `index.html`·`editor.html`의 `?v=N` 을 올릴 것 (현재 v48).
+캐시: `index.html`·`editor.html`의 `?v=N` 을 올릴 것 (현재 v104).
 
 개발용 URL: `http://localhost:8137/?unlock=all` (50 스테이지 클리어·타워 전부 해금 상태로 시작, 젬 200 보장) · `?start=inf` / `?start=clear` (타이틀에서 바로 인피니티 무한/도전). 인피니티는 해금 조건이 없어졌으므로 `?inf=1` 은 하위호환용 무의미 플래그다.
 

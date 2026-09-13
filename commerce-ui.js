@@ -4,11 +4,27 @@
   let playProducts = null, querying = false, previewBusy = false, previewRevision = 0;
   const report = error => { if ($('commerce-status')) $('commerce-status').textContent = C.errorText(error); };
   const draft = [
-    { sku: 'shards60', kind: 'currency', shards: 60, amount: 1100, currency: 'KRW', playProductId: 'dicekeep.shards60' },
-    { sku: 'shards600', kind: 'currency', shards: 600, amount: 9900, currency: 'KRW', playProductId: 'dicekeep.shards600' },
-    { sku: 'shards2000', kind: 'currency', shards: 2000, amount: 33000, currency: 'KRW', playProductId: 'dicekeep.shards2000' },
-    ...['royal', 'frost', 'ember'].map(id => ({ sku: 'skin' + id[0].toUpperCase() + id.slice(1), kind: 'cosmetic', skinId: id, shards: 0, amount: 4900, playProductId: 'dicekeep.skin_' + id })),
+    { sku: 'shards200', kind: 'currency', shards: 200, amount: 1100, currency: 'KRW', playProductId: 'dicekeep.shards200' },
+    { sku: 'shards600', kind: 'currency', shards: 600, amount: 3300, currency: 'KRW', playProductId: 'dicekeep.shards600' },
+    { sku: 'shards2000', kind: 'currency', shards: 2000, amount: 9900, currency: 'KRW', playProductId: 'dicekeep.shards2000' },
+    ...['royal', 'frost', 'ember'].map(id => ({ sku: 'skin' + id[0].toUpperCase() + id.slice(1), kind: 'cosmetic', skinId: id, shards: 0, amount: 2900, playProductId: 'dicekeep.skin_' + id })),
   ];
+  function reviewPurchase(product, price) {
+    if (!price || C.state().busy) return;
+    let dialog = $('purchase-review');
+    if (!dialog) {
+      dialog = document.createElement('dialog'); dialog.id = 'purchase-review';
+      dialog.setAttribute('aria-labelledby', 'purchase-review-title');
+      dialog.innerHTML = '<h2 id="purchase-review-title">구매 전 확인</h2><p id="purchase-review-item"></p><p id="purchase-review-price"></p><p>한 번만 결제합니다. 자동 갱신이나 정기 결제가 없습니다.</p><p id="purchase-review-note"></p><div class="purchase-review-actions"><button type="button" id="purchase-review-cancel">돌아가기</button><button type="button" id="purchase-review-confirm">결제창으로</button></div>';
+      document.body.append(dialog);
+      $('purchase-review-cancel').onclick = () => dialog.close();
+    }
+    $('purchase-review-item').textContent = product.kind === 'cosmetic' ? window.DKCOSMETICS.themes[product.skinId].name + ' · 6종 주사위와 20종 타워 외형' : `성장 조각 ${product.shards.toLocaleString()}개 · 확정 지급`;
+    $('purchase-review-price').textContent = `표시 가격 ${price} · 결제창에서 최종 금액 확인`;
+    $('purchase-review-note').textContent = product.kind === 'cosmetic' ? '외형만 바뀝니다. 공격력과 뽑기 확률에는 영향이 없습니다.' : '플레이로 얻는 조각과 같습니다. 순수운빨의 전투에는 영향을 주지 않습니다. 결제하지 않아도 모든 주사위를 해금·성장시킬 수 있습니다.';
+    $('purchase-review-confirm').onclick = () => { dialog.close(); C.buy(product.sku).catch(report); };
+    dialog.showModal(); $('purchase-review-cancel').focus();
+  }
   async function preview(id) {
     if (previewBusy) return; const P = window.DKCOSMETICS;
     if (!P || !$('cosmetic-preview')) return;
@@ -41,7 +57,7 @@
       } else {
         const nativeProduct = playProducts && playProducts.find(p => p.productId === product.playProductId), price = state.native ? nativeProduct && nativeProduct.formattedPrice : product.amount.toLocaleString() + '원';
         button.dataset.sku = product.sku; button.textContent = !enabled ? product.amount.toLocaleString() + '원 · 준비 중' : !price ? '스토어 가격 확인 중' : price + ' · 구매';
-        button.disabled = !enabled || !profile || state.busy || (state.native && !nativeProduct); button.addEventListener('click', () => C.buy(product.sku).catch(report));
+        button.disabled = !enabled || !profile || state.busy || (state.native && !nativeProduct); button.addEventListener('click', () => reviewPurchase(product, price));
       }
       card.append(button); container.append(card);
     }
@@ -62,12 +78,12 @@
       const nativeProduct = playProducts && playProducts.find(p => p.productId === product.playProductId);
       const card = document.createElement('article'); card.className = 'commerce-product';
       const name = document.createElement('h4'); name.textContent = `성장 조각 ${product.shards.toLocaleString()}개`;
-      const detail = document.createElement('p'); detail.textContent = '해금·강화에 사용 · 무료 플레이로도 획득';
+      const detail = document.createElement('p'); detail.textContent = '무료 조각과 같은 해금·강화에 사용 · 확률이나 최대 레벨은 바뀌지 않습니다.';
       const button = document.createElement('button'); button.type = 'button'; button.dataset.sku = product.sku;
       const price = state.native ? nativeProduct && nativeProduct.formattedPrice : `${product.amount.toLocaleString()}원`;
       button.textContent = !enabled ? `${product.amount.toLocaleString()}원 · 준비 중` : state.native && !nativeProduct ? '스토어 가격 확인 중' : `${price} · 구매`;
       button.disabled = !enabled || !profile || state.busy || (state.native && !nativeProduct);
-      button.addEventListener('click', () => C.buy(product.sku).catch(report));
+      button.addEventListener('click', () => reviewPurchase(product, price));
       card.append(name, detail, button); container.appendChild(card);
     }
     renderCosmetics(list, state, enabled, profile);

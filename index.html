@@ -11,7 +11,7 @@
 <!-- 키아트를 스크립트보다 먼저 받기 시작한다 (세로/가로 중 화면에 맞는 한 장). game.js 는 이 그림이 뜬 뒤에 에셋 로딩을 시작한다 -->
 <link rel="preload" as="image" href="ui/title-keyart-p.jpg?v=91" media="(max-aspect-ratio: 3/4)" fetchpriority="high" />
 <link rel="preload" as="image" href="ui/title-keyart-l.jpg?v=91" media="(min-aspect-ratio: 3001/4000)" fetchpriority="high" />
-<link rel="stylesheet" href="style.css?v=101" />
+<link rel="stylesheet" href="style.css?v=104" />
 <link rel="icon" href="ui/gold.png" />
 </head>
 <body>
@@ -78,7 +78,7 @@
           <button id="btn-deck-open" class="big-btn deck-open" type="button" aria-expanded="false" aria-controls="deck-panel">주사위 컬렉션 · 덱 편성</button>
           <section id="deck-panel" class="hidden" aria-label="주사위 컬렉션">
             <div class="deck-heading"><h2>나만의 주사위 덱</h2><b>성장 조각 <span id="deck-shards">0</span></b></div>
-            <p class="deck-help">5종을 편성하면 뽑을 때 각 20%로 등장합니다. 편성한 주사위의 성장만 적용되며, 보스 보상은 기존 무작위 보상을 유지합니다. 순수운빨에서는 편성·성장 효과를 사용하지 않습니다.</p>
+            <p class="deck-help">5종을 편성하면 뽑을 때 각 20%로 등장합니다. 편성한 주사위의 성장이 적용됩니다. 확률강화 성공 시 기존 성장 배율을 이어받고, 성장 모드에서는 모든 타워를 판매할 수 있습니다. 보스 보상은 기존 무작위 보상을 유지합니다. 순수운빨에서는 편성·성장 효과를 사용하지 않습니다.</p>
             <p class="deck-help">완료 5웨이브마다 조각 5개, 첫 구간 달성 시 추가 보상. 입장료·일일 횟수 제한 없이 반복 획득할 수 있습니다. 기본 보상은 한 판에 최대 500개입니다.</p>
             <div id="deck-selected" class="deck-selected"></div>
             <div id="deck-grid" class="deck-grid"></div>
@@ -284,10 +284,10 @@
       <li><b>&#127873; 뽑기 160G</b> — 등급이 정해지고 <b>바로 굴러 타워가 됩니다.</b> 굴려 나온 숫자 = 타워 성(★). 손에 타워가 있으면 먼저 석단에 배치해야 다시 뽑을 수 있습니다.<br><small>일반 50% (1★) · 레어 33.1% (1~4★) · 고대 10.2% (1~6★) · 유물 5.1% (1~8★) · 서사 0.8% (1~12★) · 전설 0.5% (1~20★) · 에픽 0.2% (14★↑) · 신화 0.08% (18★↑) · 태초 0.019% (20★)</small></li>
       <li><b>보상 대기</b> — 보스를 잡으면 주사위를 받습니다. 손이 비는 대로 하나씩 자동으로 굴러갑니다.</li>
       <li><b>확률강화</b> — 배치한 타워를 누르면 하단 상태창에 <b>판매 / 확률강화</b>가 뜹니다. 골드를 걸고 <b>강화(★+1) · 유지 · 소멸</b> 셋 중 하나가 나오며, 성(★)이 높을수록 비싸고 소멸 확률도 커집니다. 합체 레벨은 강화해도 유지됩니다.</li>
-      <li><b>판매</b> — 7★ 이상은 팔 수 없습니다.</li>
+      <li><b>판매</b> — 순수운빨은 7★ 이상을 팔 수 없습니다. 덱빌드·극한에서는 모든 별의 타워를 판매할 수 있습니다.</li>
       <li><b>파워업</b> — 골드로 눈(1~6)을 강화합니다. 강화할수록 비싸집니다. ★ 히든 타워는 6눈 파워업을 따릅니다.</li>
       <li><b>패배</b> — 필드에 적이 200마리를 넘으면 가장 오래된 적이 사라지며 목숨 −1. 보스는 5분 20초 안에 잡아야 합니다.</li>
-      <li><b>두 갈래</b> — <b>도전</b>은 <b>101웨이브 완주가 클리어</b>입니다. 91웨이브부터 체력이 한 번 더 가팔라지는 <b>최종 관문</b>이라 뽑기·확률강화 운이 아주 좋아야 닿습니다. <b>무한</b>은 클리어가 없는 진짜 무한 — 101웨이브를 넘으면 더 강해진 2주기가 이어지고, 최고 기록만 남습니다.</li>
+      <li><b>세 가지 모드</b> — <b>순수운빨·덱빌드</b>는 <b>101웨이브 완주가 클리어</b>입니다. 91웨이브부터 체력이 한 번 더 가팔라지는 <b>최종 관문</b>이라 뽑기·확률강화 운이 아주 좋아야 닿습니다. <b>극한</b>은 계정 성장을 Lv200까지 적용하는 무한 도전 — 101웨이브를 넘으면 더 강해진 2주기가 이어지고, 최고 기록만 남습니다.</li>
       <li><b>함께 하기</b> — 2~4명이 <b>각자 보드</b>에서 <b>각자 속도</b>(배속 x1~x3)로 101웨이브 완주에 도전합니다(도전 규칙). 먼저 죽으면 관전, 순위는 <b>완주는 빠른 순, 탈락은 웨이브 순</b>. 첫 웨이브 전 20초 동안 타워를 놓으세요. 상대 카드를 누르면 그 필드를 라이브로 보고, <b>Enter</b>/💬 로 채팅. 방 코드 또는 빠른 매칭(2명 이상 10초, 4명 즉시).</li>
     </ol></div>
     <button id="help-close">알겠어요</button>
@@ -301,15 +301,15 @@
 <!-- APP -->
 <script src="music.js?v=89"></script>
 <script src="net.js?v=101"></script>
-<script src="content.js?v=103"></script>
-<script src="progression.js?v=101"></script>
+<script src="content.js?v=104"></script>
+<script src="progression.js?v=104"></script>
 <script src="cosmetics.js?v=101"></script>
 <script src="commerce-config.js?v=101"></script>
 <script src="commerce-client.js?v=101"></script>
-<script src="commerce-ui.js?v=101"></script>
+<script src="commerce-ui.js?v=104"></script>
 <script src="directional-art.js?v=102"></script>
 <script src="extreme-art.js?v=102"></script>
 <script src="infinity-art.js?v=102"></script>
-<script src="game.js?v=103"></script>
+<script src="game.js?v=104"></script>
 </body>
 </html>

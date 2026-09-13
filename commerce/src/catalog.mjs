@@ -1,11 +1,12 @@
 import { requireThat, list, unb64 } from './common.mjs';
 export const PRODUCTS = Object.freeze([
-  { sku: 'shards60', kind: 'currency', shards: 60, amount: 1100, currency: 'KRW', playProductId: 'dicekeep.shards60' },
-  { sku: 'shards600', kind: 'currency', shards: 600, amount: 9900, currency: 'KRW', playProductId: 'dicekeep.shards600' },
-  { sku: 'shards2000', kind: 'currency', shards: 2000, amount: 33000, currency: 'KRW', playProductId: 'dicekeep.shards2000' },
-  { sku: 'skinRoyal', kind: 'cosmetic', skinId: 'royal', shards: 0, amount: 4900, currency: 'KRW', playProductId: 'dicekeep.skin_royal' },
-  { sku: 'skinFrost', kind: 'cosmetic', skinId: 'frost', shards: 0, amount: 4900, currency: 'KRW', playProductId: 'dicekeep.skin_frost' },
-  { sku: 'skinEmber', kind: 'cosmetic', skinId: 'ember', shards: 0, amount: 4900, currency: 'KRW', playProductId: 'dicekeep.skin_ember' }
+  { sku: 'shards200', kind: 'currency', shards: 200, amount: 1100, currency: 'KRW', playProductId: 'dicekeep.shards200' },
+  { sku: 'shards60', available: false, kind: 'currency', shards: 60, amount: 1100, currency: 'KRW', playProductId: 'dicekeep.shards60' },
+  { sku: 'shards600', kind: 'currency', shards: 600, amount: 3300, currency: 'KRW', playProductId: 'dicekeep.shards600' },
+  { sku: 'shards2000', kind: 'currency', shards: 2000, amount: 9900, currency: 'KRW', playProductId: 'dicekeep.shards2000' },
+  { sku: 'skinRoyal', kind: 'cosmetic', skinId: 'royal', shards: 0, amount: 2900, currency: 'KRW', playProductId: 'dicekeep.skin_royal' },
+  { sku: 'skinFrost', kind: 'cosmetic', skinId: 'frost', shards: 0, amount: 2900, currency: 'KRW', playProductId: 'dicekeep.skin_frost' },
+  { sku: 'skinEmber', kind: 'cosmetic', skinId: 'ember', shards: 0, amount: 2900, currency: 'KRW', playProductId: 'dicekeep.skin_ember' }
 ]);
 const httpsUrl = value => { try { const u = new URL(value); return u.protocol === 'https:' && !!u.hostname && !u.username && !u.password; } catch { return false; } };
 export function liveReady(env) {
@@ -30,7 +31,7 @@ export function publicConfig(env) {
   const web = enabled(env, 'toss'), android = enabled(env, 'google');
   return { paymentMode: env.PAYMENT_MODE || 'disabled', purchasesEnabled: web || android,
     providers: { web, android }, googleClientId: env.GOOGLE_WEB_CLIENT_ID || list(env.GOOGLE_CLIENT_IDS)[0] || null,
-    products: PRODUCTS, tossClientKey: web ? env.TOSS_CLIENT_KEY : null,
+    products: PRODUCTS.filter(p => p.available !== false), tossClientKey: web ? env.TOSS_CLIENT_KEY : null,
     merchant: { name: env.MERCHANT_BUSINESS_NAME || null, registrationNumber: env.MERCHANT_REGISTRATION_NUMBER || null, contact: env.MERCHANT_CONTACT || null },
     policies: { terms: env.TERMS_URL || null, privacy: env.PRIVACY_URL || null, refund: env.REFUND_POLICY_URL || null, accountDeletion: env.ACCOUNT_DELETION_URL || null },
     maxRunReward: 550, maxBaseRunReward: 500, firstMilestoneRewardCap: 50,

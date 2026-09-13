@@ -29,7 +29,7 @@ fs.mkdirSync(out, { recursive: true });
 
 // ── 페이지 안에서 도는 봇 ────────────────────────────────────────────────
 // 게임의 공개 훅(DKchest/DKplace/판매 버튼)만 쓴다. 규칙(7★ 이상 판매 불가 등)은 게임 코드가 그대로 판정한다.
-function playRun({ seed, policy, clearWave, tune, lateExp, bossLimit, hpExp, lateFrom }) {
+function playRun({ seed, policy, clearWave, tune, lateExp, bossLimit, hpExp, lateFrom, mode = 'clear', deck, level = 1 }) {
   tune = tune || { reserve: 3, enhMax: 10, powerFirst: false };
   if (lateExp != null) DKCONTENT.INFINITY.lateExp = lateExp;         // 후반 곡선의 밑 (1 미만이면 감산)
   if (lateFrom != null) DKCONTENT.INFINITY.lateFrom = lateFrom;      // 후반 곡선 시작 웨이브
@@ -45,9 +45,10 @@ function playRun({ seed, policy, clearWave, tune, lateExp, bossLimit, hpExp, lat
     };
   }
   DKSAVE.progression = DKPROGRESSION.defaultProfile();   // 갓 시작한 무과금 계정
+  if (deck) { DKSAVE.progression.deck = deck.slice(); for (const f of deck) DKSAVE.progression.levels[f] = level; }
   DKSAVE.gems = 0;
   globalThis.__pureSeed(seed);
-  DKstartInf('clear');
+  DKstartInf(mode);
   DK.paused = true;                                       // rAF 를 멈추고 아래에서 고정 dt 로 직접 돌린다
 
   const DT = 1 / 60, MAX_TICKS = 1500000;                 // 게임 내 약 7시간 — 101웨이브에 충분한 여유
@@ -55,7 +56,7 @@ function playRun({ seed, policy, clearWave, tune, lateExp, bossLimit, hpExp, lat
   const emptySpot = () => { for (let i = 0; i < N; i++) if (!__pureQA.towerAt(i)) return i; return -1; };
   const weakestSellable = () => {                          // 인피니티는 7★ 이상 판매 불가
     let w = null;
-    for (const t of DK.towers) if (t.face < 7 && (!w || t.face < w.face || (t.face === w.face && t.lvl < w.lvl))) w = t;
+    for (const t of DK.towers) if ((mode !== 'clear' || t.face < 7) && (!w || t.face < w.face || (t.face === w.face && t.lvl < w.lvl))) w = t;
     return w;
   };
   const clickSell = el => { const b = document.getElementById(el); if (!b) return false; b.disabled = false; b.click(); return true; };
@@ -81,7 +82,7 @@ function playRun({ seed, policy, clearWave, tune, lateExp, bossLimit, hpExp, lat
       const freed = emptySpot();
       if (freed >= 0 && DKplace(freed) !== false) return true;
     }
-    if (f < 7) { clickSell('held-sell'); return !DK.heldDie; }   // 4) 약한 눈은 바로 판다
+    if (mode !== 'clear' || f < 7) { clickSell('held-sell'); return !DK.heldDie; }   // 4) 약한 눈은 바로 판다
     return false;                                          // 7★ 이상인데 판이 꽉 찬 교착 (게임 규칙상 사람도 같다)
   };
   // 판이 전부 3레벨로 차면 뽑기 자체가 막힌다(canPlaceAnywhere). 약한 타워를 하나 팔아 자리를 낸다.
@@ -219,7 +220,8 @@ function summarize(rows) {
   };
 }
 
-(async () => {
+module.exports = { playRun, openGame, summarize };
+if (require.main === module) (async () => {
   const browser = await launchBrowser();
   const errors = [];
   const report = {

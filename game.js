@@ -1437,6 +1437,8 @@ const SAVE_KEY = 'DKSAVE';
 const PROGRESSION = window.DKPROGRESSION;
 const COMMERCE = window.DKCOMMERCE;
 const progressionProfile = () => (COMMERCE && COMMERCE.profile()) || SAVE.progression;
+const growthRun = () => S.mode === 'infinity' && !!(S.inf && S.inf.growthSnapshot && S.inf.growthSnapshot.growth);
+const canSellFace = face => S.mode !== 'infinity' || face < 7 || growthRun();
 const TOWER_COST = { 1: 0, 2: 0, 3: 0, 4: 30, 5: 55, 6: 90 }; // 젬으로 해금 (1~3 기본)
 const SKIN_COST = 20; // 스킨 1종 해금 비용(젬)
 
@@ -1474,6 +1476,8 @@ function loadSave() {
     // 기본 3종은 항상 해금 보장
     for (const f of [1, 2, 3]) if (!SAVE.unlockedTowers.includes(f)) SAVE.unlockedTowers.push(f);
     SAVE.unlockedTowers.sort((a, b) => a - b);
+    const economy = PROGRESSION.migrateEconomy(SAVE.progression);
+    if (economy.ok) saveSave();
   } catch (e) { SAVE = defaultSave(); }
 }
 function saveSave() {
@@ -1932,7 +1936,7 @@ function buyChest() {
   const rare = rk >= 5 ? 3 : rk === 4 ? 2 : rk === 3 ? 1 : 0;
   const col = dieKindColor(kind);
   // 글자는 위쪽 HUD 바로 아래, 상자 열림·링·버스트는 주사위가 크게 뜨는 화면 중앙(drawCenterRoll)과 같은 자리
-  S.texts.push({ str: kind === 'd1' ? '꽝… 일반: 외눈 주사위' : `보물상자: ${ch.grade[kind]} — ${ch.label[kind]} 획득!`, x: W / 2, y: topTextY(), t: 0, color: col });
+  S.texts.push({ str: drawn ? `덱 소환 · ${TOWER_DEFS[drawn.face].name}` : kind === 'd1' ? '꽝… 일반: 외눈 주사위' : `보물상자: ${ch.grade[kind]} — ${ch.label[kind]} 획득!`, x: W / 2, y: topTextY(), t: 0, color: col });
   const fx = W / 2, fy = H / 2;
   S.fxs.push({ kind: 'ring', x: fx, y: fy, t: 0, dur: 0.6 + rare * 0.2, size: 140 + rare * 50, color: col });
   if (rk >= 3) spawnBurst(fx, fy, col, 6 + rk * 3, 100 + rk * 24, 0.6);
@@ -2679,7 +2683,7 @@ const FAST_AIR = new Set(['bat', 'bee', 'wasp', 'paperplane', 'dandelion', 'horn
 function buildInfinityWave(w) {
   const C = window.DKCONTENT;
   const INF = C.INFINITY;
-  const P = INF.wave(w, !!(S.inf && S.inf.gauntlet)); // 도전 모드만 최종 관문 곡선
+  const P = INF.waveForMode(w, S.inf && S.inf.mode);
   const M = INF.monsterFor(w); // 메운디식 로스터: 웨이브 하나 = 몬스터 한 종류 (보스 웨이브는 보스만)
   const q = [];
   let t = 0.45;
@@ -3196,11 +3200,12 @@ const powerLv = face => (S.mode === 'infinity' && S.inf) ? (S.inf.power[face > 6
 const DP = () => window.DKCONTENT && DKCONTENT.DICE_POWER;
 const powerTier = face => DP() ? DP().tier(powerLv(face)) : 0;
 const powerSpecial = (face, key) => { const d = DP(); const s = d && d.special[face]; return (s && s[key] != null) ? s[key] : null; };
+const towerGrowth = t => growthRun() ? Math.max(PROGRESSION.damageMultiplier(S.inf.growthSnapshot, t.face), t.growthCarry || 1) : 1;
 const towerDmg   = t => {
   let m = LVL_DMG[t.lvl - 1];
   const d = DP();
   if (d) { m *= d.dmgMult(powerLv(t.face)); const ex = powerSpecial(t.face, 'dmg'); if (ex) m *= 1 + ex * powerTier(t.face); }
-  if (S.mode === 'infinity' && S.inf) m *= PROGRESSION.damageMultiplier(S.inf.growthSnapshot, t.face);
+  if (S.mode === 'infinity' && S.inf) m *= towerGrowth(t);
   return t.def.dmg * m;
 };
 // 인피니티 사거리 보너스는 아레나마다 다르다 — 세로 아레나는 트랙이 길어 중앙 타워가 더 멀리 닿아야 한다
@@ -4684,7 +4689,7 @@ function syncUIRest() {
     $('held-name').textContent = (S.dieFocus ? '' : '보류 · ') + def.name;
     $('held-desc').textContent = S.dieFocus ? def.desc + ' · 같은 눈 타워에 놓으면 합체' : '주사위 칸을 다시 누르면 배치 모드로 돌아갑니다';
     const hs = $('held-sell');   // 약한 눈이 나와 놓을 데가 없을 때: 놓지 않고 바로 판다 (★7+ 는 판매 불가 규칙 그대로)
-    if (hs) { const canSell = S.phase === 'playing' && !(S.mode === 'infinity' && S.heldDie >= 7); hs.classList.toggle('hidden', !canSell); hs.textContent = `판매 +${sellPrice({ face: S.heldDie, lvl: 1 })}G`; }
+    if (hs) { const canSell = S.phase === 'playing' && canSellFace(S.heldDie); hs.classList.toggle('hidden', !canSell); hs.textContent = `판매 +${sellPrice({ face: S.heldDie, lvl: 1 })}G`; }
   } else {
     diceSlot.classList.remove('has-die');
     diceSlot.classList.remove('unfocused');
@@ -4797,7 +4802,7 @@ function syncInfo() {
   if (t.def.chain) bits.push(`연쇄 ${towerChain(t)}회`);
   bits.push(t.lvl < MAX_LVL ? `같은 눈 합체 시 Lv${t.lvl + 1}` : '최대 레벨');
   $('info-body').textContent = bits.join(' · ');
-  const noSell = inf && t.face >= 7; // 7★ 이상은 판매 불가
+  const noSell = !canSellFace(t.face);
   $('sell-btn').disabled = noSell;
   $('sell-btn').textContent = noSell ? '판매 불가 (7★ 이상)' : `판매 +${sellPrice(t)}G`;
   const eb = $('enhance-btn'), eo = $('enhance-odds'), en = enhanceDef(t);
@@ -4825,6 +4830,7 @@ function enhanceTower() {
   S.inf.spent = (S.inf.spent || 0) + en.cost;
   const x = t.x, y = t.y - 40, r = Math.random();
   if (r < en.up) {
+    if (growthRun()) t.growthCarry = towerGrowth(t); // Keep the earned multiplier once; never multiply it again.
     t.face = en.next; t.def = TOWER_DEFS[en.next]; t.skin = equippedSkinIndex(t.face);
     const col = t.def.color || '#ffd452';
     S.texts.push({ str: `강화 성공! ${t.def.name}`, x, y, t: 0, color: col, big: t.face >= 14 });
@@ -5086,7 +5092,9 @@ function renderDeck(reset) {
     card.className = 'deck-card' + (selected ? ' selected' : '') + (!level ? ' locked' : '');
     const snap = PROGRESSION.snapshot(Object.assign({}, P, { deck: [f, ...P.deck.filter(x => x !== f)].slice(0, 5) }), 'extreme');
     card.innerHTML = `<div class="deck-card-title"><img src="${dieIconURL(f)}" alt="" loading="lazy"><b>★${f} ${escapeHtml(TOWER_DEFS[f].name)}</b></div>` +
-      `<small>${level ? `Lv${level} · 극한 피해 ×${PROGRESSION.damageMultiplier(snap, f).toFixed(2)}` : '미해금 · 조각으로 확정 획득'}</small>`;
+      `<p class="deck-role">${escapeHtml(TOWER_DEFS[f].desc)}</p>` +
+      `<small>${level ? `계정 Lv${level} · 덱빌드 적용 Lv${Math.min(level, 20)} / 극한 Lv${level}` : '미해금 · 조각으로 확정 획득'}</small>` +
+      `<small>${level ? `덱빌드 피해 ×${PROGRESSION.damageMultiplier(PROGRESSION.snapshot(Object.assign({}, P, { deck: snap.deck.slice() }), 'build'), f).toFixed(2)} · 극한 ×${PROGRESSION.damageMultiplier(snap, f).toLocaleString(undefined, { maximumFractionDigits: 2 })}` : `해금 ${cost}조각 · 구매 없이 획득 가능`}</small>`;
     const choose = document.createElement('button');
     choose.type = 'button'; choose.textContent = selected ? '편성 해제' : '덱에 넣기';
     choose.setAttribute('aria-pressed', String(selected)); choose.dataset.face = f;
@@ -5804,7 +5812,7 @@ rollBtn.addEventListener('click', rollByButton);
 waveBtn.addEventListener('click', () => startWave());
 $('held-sell').addEventListener('click', () => {   // 손에 든 주사위 바로 판매
   if (!S.heldDie || S.phase !== 'playing') return;
-  if (S.mode === 'infinity' && S.heldDie >= 7) { SFX.deny(); return; }
+  if (!canSellFace(S.heldDie)) { SFX.deny(); return; }
   const price = sellPrice({ face: S.heldDie, lvl: 1 }), def = TOWER_DEFS[S.heldDie];
   S.gold += price;
   S.texts.push({ str: `${def.name} 판매 +${price}G`, x: W / 2, y: H / 2 - 30, t: 0, color: '#ffd452' });
@@ -5822,7 +5830,7 @@ $('move-btn').addEventListener('click', () => {
 });
 $('sell-btn').addEventListener('click', () => {
   if (!S.selTower) return;
-  if (S.mode === 'infinity' && S.selTower.face >= 7) { SFX.deny(); return; } // 전설 이상 판매 불가
+  if (!canSellFace(S.selTower.face)) { SFX.deny(); return; }
   S.gold += sellPrice(S.selTower);
   S.towers = S.towers.filter(t => t !== S.selTower);
   S.selTower = null;

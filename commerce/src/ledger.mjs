@@ -11,6 +11,13 @@ function credit(a, amount, kind) {
   const debtPaid = Math.min(amount, a.wallet.debt); a.wallet.debt -= debtPaid;
   a.wallet[kind] += amount - debtPaid; sync(a); return { debtPaid, credited: amount - debtPaid };
 }
+function migrateEconomy(a) {
+  const before = a.profile.shards;
+  const result = PG.migrateEconomy(a.profile);
+  requireThat(result.ok, 'invalid-profile', 409);
+  a.profile.shards = before;
+  if (result.shards) credit(a, result.shards, 'free');
+}
 function revoke(a, amount) {
   const taken = Math.min(a.wallet.paid, amount); a.wallet.paid -= taken; a.wallet.debt += amount - taken; sync(a);
 }
@@ -45,6 +52,12 @@ export class CommerceLedger {
     const match = /^Bearer ([a-f0-9]{64})$/.exec(req.headers.get('authorization') || '');
     requireThat(match, 'login-required', 401); const key = 'session:' + await sha(match[1]); const s = await this.storage.get(key);
     requireThat(s && s.expiresAt > this.now(), 'session-expired', 401); this.rate('account:' + s.accountId);
+    await this.storage.transaction(async tx => {
+      const a = await tx.get('account:' + s.accountId);
+      if (a && a.profile.economyVersion !== PG.ECONOMY_VERSION) {
+        migrateEconomy(a); await tx.put('account:' + s.accountId, a);
+      }
+    });
     return { id: s.accountId, sessionKey: key };
   }
   async fetch(req) {
@@ -78,6 +91,7 @@ export class CommerceLedger {
       let id = await tx.get(subjectKey); if (!id) { id = random(16); await tx.put(subjectKey, id); }
       let a = await tx.get('account:' + id);
       if (!a) { a = { id, createdAt: this.now(), profile: PG.defaultProfile(), wallet: { free: 0, paid: 0, debt: 0 }, activeRun: null, obfuscatedAccountId: await sha('dicekeep-account:' + id) }; await tx.put('account:' + id, a); }
+      migrateEconomy(a);
       // One current session per account; re-login rotates and revokes the previous bearer.
       if (a.sessionKey) await tx.delete(a.sessionKey); a.sessionKey = sessionKey;
       await tx.put('account:' + id, a); await tx.put(sessionKey, { accountId: id, expiresAt });
@@ -135,6 +149,7 @@ export class CommerceLedger {
   async order(id, b) {
     fields(b, ['sku', 'platform']); requireThat(['web', 'android'].includes(b.platform), 'invalid-platform');
     paymentGate(this.env, b.platform === 'web' ? 'toss' : 'google'); const product = PRODUCTS.find(p => p.sku === b.sku); requireThat(product, 'unknown-product');
+    requireThat(product.available !== false || this.env.PAYMENT_MODE === 'test', 'product-retired', 409);
     const a = await this.storage.get('account:' + id);
     requireThat(a.profile.shards + product.shards <= PG.MAX_SHARDS, 'wallet-limit', 409);
     if (product.kind === 'cosmetic') requireThat(!cosmetics(a).owned.includes(product.skinId), 'already-owned', 409);

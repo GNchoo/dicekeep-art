@@ -8,7 +8,7 @@
 
   // Persistent progression is separate from in-run gold/power and cosmetic gems.
   // This module does not charge money, verify payments or certify combat results.
-  const VERSION = 1, MAX_SHARDS = 1000000000, MAX_LEVEL = 200;
+  const VERSION = 1, MAX_SHARDS = 1000000000, MAX_LEVEL = 200, ECONOMY_VERSION = 2;
   const MAX_COUNTER = Number.MAX_SAFE_INTEGER, DECK_SIZE = 5;
   const MODES = Object.freeze(['clear', 'build', 'extreme', 'multi', 'extremeMulti']);
   const MILESTONES = Object.freeze([10, 25, 50, 75, 100]);
@@ -38,7 +38,7 @@
     const levels = {}, records = {};
     for (let face = 1; face <= 20; face++) levels[face] = face <= 6 ? 1 : 0;
     for (const mode of MODES) records[mode] = emptyRecord();
-    return { version: VERSION, shards: 0, levels, deck: [1, 2, 3, 4, 5], records, legacy: legacyFrom(legacySave), settled: [] };
+    return { version: VERSION, economyVersion: ECONOMY_VERSION, shards: 0, levels, deck: [1, 2, 3, 4, 5], records, legacy: legacyFrom(legacySave), settled: [] };
   }
 
   function runValid(run, mode) {
@@ -71,6 +71,7 @@
     const source = isObject(raw) && raw.version === VERSION ? raw : {};
     const out = defaultProfile(isObject(source.legacy) ? source.legacy : legacySave);
     out.shards = count(source.shards, MAX_SHARDS);
+    out.economyVersion = source.economyVersion === ECONOMY_VERSION ? ECONOMY_VERSION : 1;
     if (isObject(source.levels)) for (let face = 1; face <= 20; face++) {
       const fallback = face <= 6 ? 1 : 0;
       out.levels[face] = Math.max(fallback, count(source.levels[face], MAX_LEVEL, fallback));
@@ -111,13 +112,26 @@
   }
 
   // Cost is for advancing the current level by one. Level 200 is the shared cap.
-  // 1->20 costs 10..100; 20->21 starts at 120, then +15 per level
-  // with a quadratic surcharge every ten levels. Costs remain finite integers.
+  // Keep early collection pacing; later levels cost 105..194 instead of a
+  // quadratic grind. Existing investment is returned once by migrateEconomy.
   function upgradeCost(level) {
     if (!integer(level, 1, MAX_LEVEL - 1)) return null;
     if (level < 20) return 10 + 5 * (level - 1);
-    const extra = level - 20;
-    return 120 + 15 * extra + 5 * Math.pow(Math.floor(extra / 10), 2);
+    return 105 + Math.floor((level - 20) / 2);
+  }
+
+  function migrateEconomy(profile) {
+    if (!profileValid(profile)) return { ok: false, shards: 0 };
+    if (profile.economyVersion === ECONOMY_VERSION) return { ok: true, shards: 0 };
+    let refund = 0;
+    for (let face = 1; face <= 20; face++) for (let level = 20; level < profile.levels[face]; level++) {
+      const extra = level - 20;
+      refund += 120 + 15 * extra + 5 * Math.pow(Math.floor(extra / 10), 2) - upgradeCost(level);
+    }
+    const shards = Math.min(refund, MAX_SHARDS - profile.shards);
+    profile.shards += shards;
+    profile.economyVersion = ECONOMY_VERSION;
+    return { ok: true, shards, refund, capped: shards < refund };
   }
 
   function unlock(profile, face) {
@@ -232,6 +246,6 @@
     return { ok: true, shards, earnedShards, capped: shards < earnedShards, record, newly, duplicate: false };
   }
 
-  return Object.freeze({ VERSION, MAX_SHARDS, MAX_LEVEL, MAX_COUNTER, DECK_SIZE, MODES, MILESTONES, GEM_MILESTONES,
+  return Object.freeze({ VERSION, ECONOMY_VERSION, MAX_SHARDS, MAX_LEVEL, MAX_COUNTER, DECK_SIZE, MODES, MILESTONES, GEM_MILESTONES, migrateEconomy,
     defaultProfile, sanitize, normalizeRecord, cardUnlockCost, upgradeCost, unlock, upgrade, setDeck, snapshot, pureSnapshot, growsIn: growthMode, damageMultiplier, draw, settle });
 });

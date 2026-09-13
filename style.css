@@ -1386,3 +1386,12 @@ body.ui-art .icon-btn[data-icon] { font-size: 0; background-position: center; ba
   #lobby .inf-btns .big-btn { flex: 1 1 100%; margin-top: 4px; }   /* 좁은 가로: 인피니티 버튼 두 개를 세로로 */
   #lobby .lobby-btns:not(.inf-btns):not(.mp-btns):not(.hub-btns) .big-btn { flex: 1 1 100%; }
 }
+
+/* Purchase review: equal actions, readable price, no urgency or default purchase. */
+#purchase-review { color: #f7ead1; background: #211c19; border: 1px solid #ac8952; border-radius: 16px; width: min(440px, calc(100vw - 32px)); padding: 24px; box-sizing: border-box; max-height: 85dvh; overflow: auto; }
+#purchase-review::backdrop { background: rgba(0,0,0,.72); }
+#purchase-review p { line-height: 1.6; }
+#purchase-review-price { font-size: 1.2rem; color: #ffda89; }
+.purchase-review-actions { display: flex; gap: 12px; margin-top: 24px; }
+.purchase-review-actions button { flex: 1; min-height: 44px; }
+.deck-role { font-size: 13px; line-height: 1.5; margin: 4px 0; }

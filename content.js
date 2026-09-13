@@ -1559,6 +1559,12 @@ window.DKCONTENT = (function () {
       extreme: { key: 'extreme', name: '극한', sub: '끝없는 웨이브 · 편성 덱과 성장 Lv200까지 적용', gauntlet: false, clearWave: 0, growth: true },
     },
     modeOf(key) { return this.modes[key === 'endless' ? 'extreme' : key] || this.modes.clear; },
+    // Growth tuning belongs here, never in the protected pure-luck wave table.
+    waveForMode(w, key) {
+      const mode = this.modeOf(key), result = this.wave(w, mode.gauntlet);
+      if (mode.growth) result.hpMult *= mode.hpScale || 1;
+      return result;
+    },
     clearWave: 101,   // 도전 모드 클리어 선 (로스터 한 사이클 = 메운디 1~101R)
     clearGems: 80,
     // 최종 관문(도전 모드): 61웨이브부터 체력 배율에 lateExp^(w-lateFrom) 이 한 번 더 곱해진다.

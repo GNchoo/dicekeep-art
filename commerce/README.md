@@ -36,10 +36,14 @@ npm run test:worker --prefix commerce
 
 ## 상품 초안
 
-- `shards60`: 조각60, 웹 1,100 KRW, Play `dicekeep.shards60`.
-- `shards600`: 조각600, 웹 9,900 KRW, Play `dicekeep.shards600`.
-- `shards2000`: 조각2,000, 웹 33,000 KRW, Play `dicekeep.shards2000`.
-- `skinRoyal`, `skinFrost`, `skinEmber`: 각 웹 4,900 KRW. 각각 `royal`, `frost`, `ember` 주사위 재질+1~20성 타워 외형 묶음이며 Play ID는 `dicekeep.skin_royal`, `dicekeep.skin_frost`, `dicekeep.skin_ember`입니다.
+- `shards200`: 조각200, 웹 1,100 KRW, Play `dicekeep.shards200`.
+- `shards600`: 조각600, 웹 3,300 KRW, Play `dicekeep.shards600`.
+- `shards2000`: 조각2,000, 웹 9,900 KRW, Play `dicekeep.shards2000`.
+- `skinRoyal`, `skinFrost`, `skinEmber`: 각 웹 2,900 KRW. 각각 `royal`, `frost`, `ember` 주사위 재질+1~20성 타워 외형 묶음이며 Play ID는 `dicekeep.skin_royal`, `dicekeep.skin_frost`, `dicekeep.skin_ember`입니다.
+
+이전 `shards60` 상품은 신규 상점/운영 주문에서 제외하고 과거 영수증 검증·지급용으로 보존한다. 이전에 생성한 웹 주문은 주문에 저장된 금액과 지급량을 따른다.
+
+경제 버전 2는 Lv20 이후 업그레이드 비용을 낮춘다. 로그인과 인증 요청에서 기존 투자 차액을 무료 잔액으로 한 번만 돌려주며 원장 트랜잭션에서 버전·레벨·잔액을 함께 저장한다. 원래 유료 잔액은 그대로이고 기존 환불 부채가 있으면 적립 규칙에 따라 먼저 상환한다.
 
 조각은 `kind:'currency'` 소모품, 스킨은 `kind:'cosmetic'` 비소모품입니다. Play의 실제 가격·상품/구매옵션은 Play Console 등록 결과가 기준입니다. 이 초안 가격은 상품 등록·사업자 승인 완료를 의미하지 않습니다.
 

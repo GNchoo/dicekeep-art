@@ -53,15 +53,31 @@ test('unlock and upgrade debit exact costs once and reject invalid mutations ato
   p.shards = NaN; unchanged(p, () => P.unlock(p, 8), 'invalid-profile');
 });
 
-test('all levels have finite increasing costs, shared cap permits free or paid currency to reach the same endpoint', () => {
+test('all levels have finite nondecreasing costs, shared cap permits free or paid currency to reach the same endpoint', () => {
   const p = funded(); let spent = 0, prev = 0;
   for (let level = 1; level < 200; level++) {
-    const cost = P.upgradeCost(level); assert.ok(Number.isSafeInteger(cost) && cost > prev); prev = cost;
+    const cost = P.upgradeCost(level); assert.ok(Number.isSafeInteger(cost) && cost >= prev); prev = cost;
     const result = P.upgrade(p, 1); assert.equal(result.level, level + 1); assert.equal(result.cost, cost); spent += cost;
   }
-  assert.equal(P.upgradeCost(1), 10); assert.equal(P.upgradeCost(19), 100); assert.equal(P.upgradeCost(20), 120);
+  assert.equal(P.upgradeCost(1), 10); assert.equal(P.upgradeCost(19), 100); assert.equal(P.upgradeCost(20), 105);
   assert.equal(P.upgradeCost(200), null); assert.equal(P.upgradeCost(Infinity), null);
   assert.equal(p.shards, P.MAX_SHARDS - spent); unchanged(p, () => P.upgrade(p, 1), 'max-level');
+});
+
+test('old growth investment is refunded once without changing levels, paid source or run records', () => {
+  const p = P.defaultProfile(); delete p.economyVersion;
+  p.levels[1] = 21; p.levels[6] = 22; p.shards = 50;
+  const before = JSON.stringify({ levels: p.levels, records: p.records, deck: p.deck });
+  const result = P.migrateEconomy(p);
+  assert.equal(result.shards, 60); // (120-105) + (120-105)+(135-105)
+  assert.equal(p.shards, 110);
+  assert.equal(P.migrateEconomy(p).shards, 0);
+  const reloaded = P.sanitize(JSON.parse(JSON.stringify(p)));
+  assert.equal(P.migrateEconomy(reloaded).shards, 0);
+  assert.equal(JSON.stringify({ levels: p.levels, records: p.records, deck: p.deck }), before);
+  const capped = P.defaultProfile(); delete capped.economyVersion; capped.levels[1] = 200; capped.shards = P.MAX_SHARDS - 3;
+  assert.equal(P.migrateEconomy(capped).shards, 3);
+  assert.equal(P.migrateEconomy(capped).shards, 0);
 });
 
 test('deck selection is exactly five distinct unlocked faces and snapshots cannot follow later profile changes', () => {

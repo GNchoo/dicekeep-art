@@ -227,6 +227,28 @@ async function endings(page, row, dir) {
   check(row, 'complete progression and gems survive a real reload after settlement', await page.evaluate(() => ({ progression: DKSAVE.progression, gems: DKSAVE.gems })), { progression: row.rewards.progression, gems: row.rewards.gems });
 }
 
+async function growthRegressions(page, row) {
+  const r = await page.evaluate(() => {
+    const p = DKPROGRESSION.defaultProfile(); p.deck = [1,2,3,4,6]; p.levels[6] = 20; DKSAVE.progression = p;
+    DKstartInf('build'); DK.paused = true; DK.gold = 100000;
+    DK.heldDie = 6; DKplace(0); const t = DK.towers[0]; DK.selTower = t;
+    const before = __modeQA.towerDmg(t), random = Math.random;
+    try { Math.random = () => 0; DKenhance(); DKenhance(); } finally { Math.random = random; }
+    const enhanced = { before, face: t.face, carry: t.growthCarry, after: __modeQA.towerDmg(t), expected: t.def.dmg * 2.52 };
+    document.getElementById('sell-btn').click();
+    const soldGrowth = DK.towers.length === 0;
+    DK.heldDie = 20; DKsync(); document.getElementById('held-sell').click();
+    const soldHeld = !DK.heldDie;
+    DKstartInf('clear'); DK.paused = true; DK.heldDie = 20; DKplace(0); DK.selTower = DK.towers[0];
+    DKsync(); document.getElementById('sell-btn').click();
+    const pureKept = DK.towers.length === 1;
+    return { enhanced, soldGrowth, soldHeld, pureKept };
+  });
+  assert.ok(r.enhanced.after > r.enhanced.before);
+  check(row, 'repeated evolution carries earned growth once without stacking', [r.enhanced.face,r.enhanced.carry,r.enhanced.after], [8,2.52,r.enhanced.expected]);
+  check(row, 'growth can free a high-star board/held reward; pure selling stays unchanged', [r.soldGrowth,r.soldHeld,r.pureKept], [true,true,true]);
+}
+
 (async () => {
   const browser = await launchBrowser();
   try {
@@ -240,6 +262,7 @@ async function endings(page, row, dir) {
         await collection(page, row, dir);
         await modeDraws(page, row, dir);
         await endings(page, row, dir);
+        await growthRegressions(page, row);
         check(row, 'no uncaught browser errors', row.errors, []);
         row.pass = true; console.log('PASS', tag, row.checks.length, 'checks', row.gameSha256);
       } catch (error) {

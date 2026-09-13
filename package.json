@@ -19,7 +19,11 @@
     "test:tower-move": "node tools/e2e/tower-move.cjs",
     "test:splash-hit": "node tools/e2e/splash-hit.cjs",
     "measure:clear-rate": "node tools/e2e/pure-luck-clearrate.cjs",
-    "measure:boss-board": "node tools/e2e/boss-board-req.cjs"
+    "measure:boss-board": "node tools/e2e/boss-board-req.cjs",
+    "test:pure-main": "node tools/e2e/pure-luck-parity.cjs --main-baseline",
+    "test:purchase-review": "node tools/e2e/purchase-review.cjs",
+    "test:commerce-client": "node tools/commerce-client-test.cjs",
+    "measure:growth": "node tools/e2e/growth-balance.cjs"
   },
   "dependencies": {
     "@capacitor-community/safe-area": "^7.0.0",

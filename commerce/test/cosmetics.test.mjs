@@ -9,7 +9,7 @@ function skinPurchase(a, skin = 'royal', orderId = 'GPA.skin-royal') {
 test('six registered draft products separate currency from cosmetic; PG profile and combat snapshot remain unchanged', async () => {
   const f = await fixture(), a = await f.login(), products = (await f.call('/config')).body.products;
   assert.equal(products.length, 6); const skins = products.filter(p => p.kind === 'cosmetic');
-  assert.deepEqual(skins.map(p => [p.sku, p.skinId, p.amount, p.shards]), [['skinRoyal', 'royal', 4900, 0], ['skinFrost', 'frost', 4900, 0], ['skinEmber', 'ember', 4900, 0]]);
+  assert.deepEqual(skins.map(p => [p.sku, p.skinId, p.amount, p.shards]), [['skinRoyal', 'royal', 2900, 0], ['skinFrost', 'frost', 2900, 0], ['skinEmber', 'ember', 2900, 0]]);
   assert.deepEqual(a.cosmetics, { owned: ['base'], equipped: 'base' });
   const before = structuredClone(a.profile), initial = (await f.call('/runs/start', { mode: 'clear' }, a.token)).body.snapshot;
   const { result } = await paidToss(f, a, 'skinRoyal'); assert.deepEqual(result.body.profile, before); assert.equal(result.body.shards, 0);
@@ -64,7 +64,7 @@ test('multiple paid entitlement sources combine with OR; only last valid refund 
 });
 test('provider-confirmed partial refund revokes indivisible bundle only; Google authenticated RTDN has same base fallback', async () => {
   const f = await fixture(), a = await f.login(); const { order } = await paidToss(f, a, 'skinFrost');
-  const toss = f.state.toss.get(order.orderId); toss.status = 'PARTIAL_CANCELED'; toss.balanceAmount = 4000;
+  const toss = f.state.toss.get(order.orderId); toss.status = 'PARTIAL_CANCELED'; toss.balanceAmount = order.amount - 900;
   await f.call('/webhooks/toss', { data: { orderId: order.orderId } }); assert.deepEqual((await f.call('/cosmetics', undefined, a.token)).body.owned, ['base']);
   f.state.google.set('rtdn-skin', skinPurchase(a)); await f.call('/payments/google/verify', { productId: 'dicekeep.skin_royal', purchaseToken: 'rtdn-skin' }, a.token);
   await f.call('/profile/action', { type: 'skinEquip', skinId: 'royal', requestId: 'equip-royal-0001' }, a.token);

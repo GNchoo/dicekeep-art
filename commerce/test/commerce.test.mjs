@@ -56,7 +56,7 @@ test('Toss lost approval response recovers with GET; concurrent retries grant on
   const rows = await Promise.all(Array.from({ length: 3 }, () => f.call('/payments/toss/confirm', { orderId: o.orderId, paymentKey: 'retry-key' }, a.token)));
   assert.ok(rows.every(x => x.status === 200)); assert.equal(rows.reduce((n, x) => n + x.body.shards, 0), 600);
   assert.equal((await f.call('/profile', undefined, a.token)).body.shards, 600);
-  assert.ok(f.state.calls.filter(c => c.url.endsWith('/confirm')).every(c => JSON.parse(c.body).amount === 9900));
+  assert.ok(f.state.calls.filter(c => c.url.endsWith('/confirm')).every(c => JSON.parse(c.body).amount === 3300));
 });
 test('lost return URL restores own order without paymentKey and never approves a missing payment', async () => {
   const f = await fixture(), a = await f.login(); const o = (await f.call('/orders', { sku: 'shards60', platform: 'web' }, a.token)).body;

@@ -1,0 +1,67 @@
+{
+  "ref": "55204fe",
+  "gameSha256": "7d944b53c9f9e2b96fb2da3355b85f28108dcf519021f23608f53a5b9887bbf0",
+  "waves": 12,
+  "rows": [
+    {
+      "tag": "desktop",
+      "seed": 20260909,
+      "traceHash": "0d02d84dde382e21:17502",
+      "drawHash": "b837a55f7b697869:199",
+      "drawCount": 18,
+      "waveReached": 12,
+      "canvas": "831x576",
+      "mapKey": "cInf"
+    },
+    {
+      "tag": "desktop",
+      "seed": 777,
+      "traceHash": "1b7fd7474f69a219:26065",
+      "drawHash": "74c2746bde0905bf:177",
+      "drawCount": 16,
+      "waveReached": 12,
+      "canvas": "831x576",
+      "mapKey": "cInf"
+    },
+    {
+      "tag": "desktop",
+      "seed": 31337,
+      "traceHash": "b742fe5211c78eb0:17228",
+      "drawHash": "6b01c68e39408cae:177",
+      "drawCount": 16,
+      "waveReached": 12,
+      "canvas": "831x576",
+      "mapKey": "cInf"
+    },
+    {
+      "tag": "phone",
+      "seed": 20260909,
+      "traceHash": "47dbee57986eac67:32233",
+      "drawHash": "7b416ab2e8f470fc:177",
+      "drawCount": 16,
+      "waveReached": 12,
+      "canvas": "720x1381",
+      "mapKey": "cInfP"
+    },
+    {
+      "tag": "phone",
+      "seed": 777,
+      "traceHash": "1ba8419b5a118441:21682",
+      "drawHash": "bd1717a5285d5afb:199",
+      "drawCount": 18,
+      "waveReached": 12,
+      "canvas": "720x1381",
+      "mapKey": "cInfP"
+    },
+    {
+      "tag": "phone",
+      "seed": 31337,
+      "traceHash": "45198e6ddd32b825:17985",
+      "drawHash": "fbbd14e6966e30ec:199",
+      "drawCount": 18,
+      "waveReached": 12,
+      "canvas": "720x1381",
+      "mapKey": "cInfP"
+    }
+  ]
+}

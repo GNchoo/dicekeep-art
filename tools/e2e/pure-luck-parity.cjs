@@ -15,7 +15,7 @@ const url = new URL('index.html', (process.env.E2E_BASE_URL || 'http://localhost
 url.searchParams.set('net', 'off');
 url.searchParams.set('v', Date.now());
 const WAVES = Number((process.argv.find(a => a.startsWith('--waves=')) || '').split('=')[1]) || 12;
-const SEEDS = [20260909, 777, 31337];
+const SEEDS = process.argv.some(a => a.startsWith('--seed=')) ? [Number(process.argv.find(a => a.startsWith('--seed=')).split('=')[1])] : [20260909, 777, 31337];
 fs.mkdirSync(out, { recursive: true });
 
 const sha = value => crypto.createHash('sha256').update(value).digest('hex');
@@ -198,6 +198,14 @@ async function verify(page, row) {
       [free.drawCount === paid.drawCount, free.drawHash === paid.drawHash], [true, true]);
     check(row, `씨앗 ${seed}: 순수운빨 런 전체(골드·목숨·적 체력·배치)가 동일`,
       [free.traceHash === paid.traceHash, free.waveReached === paid.waveReached, free.phase === paid.phase], [true, true, true]);
+    if (process.argv.includes('--main-baseline')) {
+      const baseline = require('../fixtures/pure-main-55204fe.json');
+      assert.equal(WAVES, baseline.waves, 'baseline wave count');
+      const previous = baseline.rows.find(r => r.tag === row.tag && r.seed === seed);
+      assert.ok(previous, 'matching baseline viewport/seed');
+      for (const key of ['traceHash', 'drawHash', 'drawCount', 'waveReached', 'canvas', 'mapKey'])
+        check(row, `current pure gameplay preserves main 55204fe: ${seed}/${key}`, free[key], previous[key]);
+    }
     assert.ok(free.drawCount > 0 && free.ticks > 100, `씨앗 ${seed}: 런이 실제로 진행되어야 한다`);
     row.checks.push({ name: `씨앗 ${seed}: 런이 비어 있지 않다 (뽑기 ${free.drawCount}회 · ${free.ticks}틱 · ${free.waveReached}웨이브)`, pass: true });
   }

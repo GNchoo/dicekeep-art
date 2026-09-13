@@ -41,7 +41,7 @@ function fixture({ configured = true, linked = true, native = false, router, pur
     async fetch(url, options) {
       const call = { path: new URL(url).pathname, method: options.method, headers: copy(options.headers), data: options.body && JSON.parse(options.body) }; calls.push(call);
       let result = router && await router(call, sandbox);
-      if (result === undefined) result = call.path === '/config' ? { body: config } : call.path === '/profile' ? { body: { profile: profile(700) } } : { status: 500, body: { error: 'unmocked-path' } };
+      if (result === undefined) result = call.path === '/config' ? { body: config } : call.path === '/profile' ? { body: { profile: profile(700) } } : call.path === '/wallet' ? { body: { free: 700, paid: 0, debt: 0 } } : call.path === '/cosmetics' ? { body: { owned: ['base'], equipped: 'base' } } : { status: 500, body: { error: 'unmocked-path' } };
       const status = result.status || 200; return { ok: status >= 200 && status < 300, status, json: async () => copy(result.body) };
     },
   };
@@ -221,6 +221,8 @@ test('phone/desktop shop UI is disabled offline; mock account profile never over
           let body, status = 200;
           if (u.pathname === '/config') body = config;
           else if (u.pathname === '/profile') body = { profile: account };
+          else if (u.pathname === '/wallet') body = { wallet: { free: account.shards, paid: 0, debt: 0 } };
+          else if (u.pathname === '/cosmetics') body = { cosmetics: { owned: ['classic'], equipped: 'classic' } };
           else if (u.pathname === '/profile/action') { account = profile(690); account.levels[1] = 2; body = { profile: account }; }
           else { status = 500; body = { error: 'unexpected mock path' }; }
           return route.fulfill({ status, contentType: 'application/json', headers: { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Authorization, Content-Type' }, body: JSON.stringify(body) });
