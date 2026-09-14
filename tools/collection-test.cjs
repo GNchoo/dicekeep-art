@@ -76,8 +76,8 @@ test('free pack results are reproducible from persisted state and twentieth pack
   P.openPack(a); unchanged(a, () => P.openPack(a), 'no-packs');
 });
 
-test('all modes award collection resources without changing legacy shards; duplicate/invalid runs cannot grant twice', () => {
-  for (const mode of P.MODES) {
+test('established modes award collection resources without changing legacy shards; duplicate/invalid runs cannot grant twice', () => {
+  for (const mode of ['clear', 'build', 'extreme', 'multi', 'extremeMulti']) {
     const p = legacyProfile(), before = structuredClone(p.collection), result = P.settle(p, run('reward-' + mode, mode));
     assert.equal(result.shards, 45); assert.deepEqual(result.collectionRewards, { gold: 280, packs: 2 });
     assert.equal(p.collection.gold - before.gold, 280); assert.equal(p.collection.packs - before.packs, 2);

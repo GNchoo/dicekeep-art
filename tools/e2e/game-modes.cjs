@@ -78,7 +78,7 @@ async function boot(browser, viewport, row) {
 }
 
 async function collection(page, row, dir) {
-  check(row, 'old mixed records stay legacy; all five new record lanes start empty', await page.evaluate(() => ({ legacy: DKSAVE.progression.legacy, modes: Object.fromEntries(Object.entries(DKSAVE.progression.records).map(([k, r]) => [k, r.best])) })), { legacy: { best: 77, clears: 3 }, modes: { clear: 0, build: 0, extreme: 0, multi: 0, extremeMulti: 0 } });
+  check(row, 'old mixed records stay legacy; all seven record lanes start empty', await page.evaluate(() => ({ legacy: DKSAVE.progression.legacy, modes: Object.fromEntries(Object.entries(DKSAVE.progression.records).map(([k, r]) => [k, r.best])) })), { legacy: { best: 77, clears: 3 }, modes: { clear: 0, build: 0, extreme: 0, multi: 0, extremeMulti: 0, duel: 0, coop: 0 } });
   await page.waitForSelector('#btn-inf-build');
   row.lobbyLayout = await layout(page, ['#btn-inf-clear', '#btn-inf-build', '#btn-infinity', '#btn-deck-open']);
   check(row, 'three mode buttons fit without overlap', row.lobbyLayout.issues, []);

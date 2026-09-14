@@ -11,7 +11,7 @@
 // 같은 pid 재접속은 좌석 교체(옛 소켓 4001, since 는 유지). 소켓 닫힘 = 대기 취소. 대기열 QUICK_QUEUE_MAX 초과 → err rate + 4429.
 import * as T from './timing.js';
 import { CLOSE, PROTOCOL } from './proto.js';
-import { matchMode } from './modes.js';
+import { matchMode, roomCapacity } from './modes.js';
 
 export function createLobby() {
   return { queue: [], pending: {}, quota: [] };
@@ -48,7 +48,8 @@ export function group(queue, now) {
   const out = [];
   for (const list of byVer(queue).values()) {
     let rest = list;
-    while (rest.length >= T.ROOM_SIZE) { out.push(rest.slice(0, T.ROOM_SIZE)); rest = rest.slice(T.ROOM_SIZE); }
+    const size=roomCapacity(matchMode(list[0]?.mode));
+    while (rest.length >= size) { out.push(rest.slice(0, size)); rest = rest.slice(size); }
     if (rest.length >= 2 && now - rest[0].since >= T.QUICK_WAIT) out.push(rest);
   }
   return out;
@@ -57,7 +58,7 @@ export function group(queue, now) {
 // 같은 ver·mode 대기열의 queued 내용
 function queuedOf(list, now) {
   const n = list.length;
-  const eta = n >= T.ROOM_SIZE ? 0 : n >= 2 ? Math.max(0, list[0].since + T.QUICK_WAIT - now) : null;
+  const eta = n >= roomCapacity(matchMode(list[0]?.mode)) ? 0 : n >= 2 ? Math.max(0, list[0].since + T.QUICK_WAIT - now) : null;
   return { t: 'queued', n, eta, mode: matchMode(list[0]?.mode) };
 }
 

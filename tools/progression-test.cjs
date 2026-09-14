@@ -24,7 +24,7 @@ test('browser and CommonJS share a side-effect-free API; defaults preserve legac
   assert.deepEqual(p.legacy, { best: 401, clears: 4 });
   assert.deepEqual(p.deck, [1, 2, 3, 4, 5]); assert.equal(p.shards, 0);
   for (let face = 1; face <= 20; face++) assert.equal(p.levels[face], face <= 6 ? 1 : 0);
-  assert.deepEqual(Object.keys(p.records), ['clear', 'build', 'extreme', 'multi', 'extremeMulti']);
+  assert.deepEqual(Object.keys(p.records), ['clear', 'build', 'extreme', 'multi', 'extremeMulti', 'duel', 'coop']);
   assert.ok(Object.values(p.records).every(r => r.best === 0 && r.clears === 0 && !r.runs.length && !r.gemMilestones.length));
 });
 
@@ -129,9 +129,9 @@ test('every face maps to a legal renderer, and each selected deck entry has an e
   for (const value of [-1, 1, NaN, Infinity, '0.5']) assert.equal(P.draw(P.snapshot(p, 'extreme'), () => value), null);
 });
 
-test('every arena mode pays completed waves and independent first milestones, without touching gems/legacy', () => {
+test('established arena modes pay completed waves and independent first milestones, without touching gems/legacy', () => {
   const p = legacyProfile({ infBest: 600, infClears: 3 });
-  for (const mode of P.MODES) {
+  for (const mode of ['clear', 'build', 'extreme', 'multi', 'extremeMulti']) {
     const record = p.records[mode]; record.gemMilestones.push(150);
     const result = P.settle(p, run(mode, { mode }));
     assert.equal(result.ok, true); assert.equal(result.shards, 45); assert.deepEqual(result.newly, [10, 25]);
@@ -197,7 +197,7 @@ test('pure snapshot fallback is a constant the caller can force', () => {
 });
 
 test('growsIn is the single source of truth for which modes grow', () => {
-  assert.deepEqual(P.MODES.map(P.growsIn), [false, true, true, false, true]);
+  assert.deepEqual(P.MODES.map(P.growsIn), [false, true, true, false, true, true, true]);
   for (const mode of ['clear', 'multi']) assert.equal(P.growsIn(mode), false, mode + ' 는 순수 모드다');
   assert.equal(P.growsIn('nope'), false, '모르는 모드는 순수 쪽으로 실패해야 한다');
 });

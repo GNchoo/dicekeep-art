@@ -73,6 +73,14 @@ const SCHEMA = {
     return { t: 'hello', v: m.v, ver: cleanText(m.ver, VER_MAX), op: m.op, mode, pid: m.pid, key: m.key, name: sanitizeName(m.name, m.pid) };
   },
   start() { return { t: 'start' }; },
+  battle(m) {
+    if (!isStr(m.matchId,128) || !m.matchId || !isInt(m.seq,1,1e12) || !['kill','leak','assist'].includes(m.kind)) return null;
+    if (m.kind==='assist') return {t:'battle',matchId:m.matchId,seq:m.seq,kind:m.kind};
+    if (!isInt(m.count,1,100)) return null;
+    if (m.kind==='kill' && typeof m.transferred!=='boolean' || m.kind==='leak' && typeof m.boss!=='boolean') return null;
+    return {t:'battle',matchId:m.matchId,seq:m.seq,kind:m.kind,count:m.count,...(m.kind==='kill'?{transferred:m.transferred}:{boss:m.boss})};
+  },
+  battleAck(m) { return isStr(m.matchId,128)&&!!m.matchId&&isStr(m.eventId,160)&&!!m.eventId ? {t:'battleAck',matchId:m.matchId,eventId:m.eventId}:null; },
   // sp 배속(1|2|3) · ll 레인 길이(선택) · en 적 스트림(선택, ≤ EN_MAX 자, [0-9;,] 만).
   // ds:1 덱 전투는 [spot, face, 1, pips1..7], ds 생략은 기존 [spot, face, lvl1..3].
   sum(m) {

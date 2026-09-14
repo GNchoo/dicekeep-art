@@ -12,6 +12,11 @@ function credit(a, amount, kind) {
   a.wallet[kind] += amount - debtPaid; sync(a); return { debtPaid, credited: amount - debtPaid };
 }
 function migrateEconomy(a) {
+  // Existing accounts predate the trial record slots. Add only missing slots;
+  // keep wallets, collection investments and active frozen run snapshots intact.
+  if (a.profile.records) for (const mode of ['duel', 'coop']) {
+    if (a.profile.records[mode] === undefined) a.profile.records[mode] = PG.normalizeRecord(null, mode);
+  }
   const collection = PG.migrateCollection(a.profile);
   requireThat(collection.ok, 'invalid-profile', 409);
   const tree = PG.migrateTree(a.profile); requireThat(tree.ok, 'invalid-profile', 409);
@@ -57,7 +62,8 @@ export class CommerceLedger {
     requireThat(s && s.expiresAt > this.now(), 'session-expired', 401); this.rate('account:' + s.accountId);
     await this.storage.transaction(async tx => {
       const a = await tx.get('account:' + s.accountId);
-      if (a && (a.profile.economyVersion !== PG.ECONOMY_VERSION || a.profile.collection?.version !== PG.COLLECTION_VERSION || a.profile.tree?.version !== PG.TREE_VERSION)) {
+      if (a && (a.profile.economyVersion !== PG.ECONOMY_VERSION || a.profile.collection?.version !== PG.COLLECTION_VERSION || a.profile.tree?.version !== PG.TREE_VERSION
+        || a.profile.records?.duel === undefined || a.profile.records?.coop === undefined)) {
         migrateEconomy(a); await tx.put('account:' + s.accountId, a);
       }
     });
@@ -127,7 +133,11 @@ export class CommerceLedger {
     });
   }
   async startRun(id, b) {
-    fields(b, ['mode']); requireThat(PG.MODES.includes(b.mode), 'invalid-mode'); const ticket = random();
+    fields(b, ['mode']); requireThat(PG.MODES.includes(b.mode), 'invalid-mode');
+    // Trial co-op and duel use the multiplayer server, without account tickets
+    // or economic rewards. Reject before replacing an existing account run.
+    requireThat(!['duel', 'coop'].includes(b.mode), 'mode-not-account-enabled', 409);
+    const ticket = random();
     return this.storage.transaction(async tx => {
       const a = await tx.get('account:' + id); requireThat(a.wallet.debt === 0 || ['clear', 'multi'].includes(b.mode), 'refund-debt', 409);
       if (a.activeRun) { const previous = await tx.get('run:' + a.activeRun); if (previous && !previous.status) { previous.status = 'abandoned'; await tx.put('run:' + a.activeRun, previous); } }

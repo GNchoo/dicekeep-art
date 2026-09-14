@@ -17,7 +17,8 @@ window.DKNET = (function () {
   'use strict';
 
   const PROTOCOL = 4;
-  const matchMode = (v) => v === undefined ? 'clear' : v === 'clear' || v === 'extreme' ? v : null;
+  const matchMode = (v) => v === undefined ? 'clear' : ['clear','extreme','duel','coop'].includes(v) ? v : null;
+  const battleMode = v => v==='duel'||v==='coop';
   const WS_OPEN = 1;
   const CONNECT_TIMEOUT = 10000;   // 소켓 생성 → open 대기
   const HELLO_TIMEOUT = 5000;      // open → welcome 대기
@@ -383,10 +384,11 @@ window.DKNET = (function () {
     switch (m.t) {                                   // 허용목록 — 모르는 종류는 버린다
       case 'welcome': onWelcome(sock, m); break;
       case 'err': onErr(sock, m); break;
-      case 'room': mirrorRoom(m); syncState(); emit('room', m); break;
+      case 'room': mirrorRoom(m); syncState(); emit('room', m); if(m.game?.battle) receiveBattle(m.game.battle); break;
       case 'player': mirrorPlayer(m); emit('player', m); break;
-      case 'start': mirrorStart(m); setState('playing'); emit('start', m); break;
-      case 'end': mirrorEnd(m); setState('ended'); emit('end', m); break;
+      case 'start': mirrorStart(m); setState('playing'); if(m.battle) receiveBattle(m.battle); emit('start', m); break;
+      case 'end': mirrorEnd(m); setState('ended'); if(m.battle) receiveBattle(m.battle); emit('end', m); break;
+      case 'battle': if(m.battle)receiveBattle(m.battle); break;
       case 'time': onTime(m); emit('time', m); break;
       case 'queued': emit('queued', m); break;
       case 'matched': onMatched(sock, m); break;
@@ -415,6 +417,7 @@ window.DKNET = (function () {
     armTimers();
     emit('welcome', m);
     emit('room', Object.assign({ t: 'room', at: m.at }, R.room));   // 재접속도 평소처럼 room 한 번
+    if(R.room.game?.battle)receiveBattle(R.room.game.battle);
     if (pending) pending.resolve(R.room);
     if (R.watching && R.room && R.room.phase === 'playing') sendRaw({ t: 'watch', pid: R.watching });   // 재접속: 보던 상대를 다시 등록
     timeBurst(TIME_BURST);
@@ -472,7 +475,7 @@ window.DKNET = (function () {
     if (!R.room) R.room = mirrorFrom({ code: R.code });
     R.room.phase = 'playing';
     R.room.mode = matchMode(m.mode);
-    R.room.game = Object.assign({}, R.room.game || {}, { t0: m.t0, timing: m.timing, seed: m.seed, mode: R.room.mode });
+    R.room.game = Object.assign({}, R.room.game || {}, { t0: m.t0, timing: m.timing, seed: m.seed, mode: R.room.mode, ...(m.battle?{battle:m.battle}:{}) });
     for (const p of R.room.players) if (p) p.status = 'alive';
   }
   function mirrorEnd(m) {
@@ -520,17 +523,17 @@ window.DKNET = (function () {
     if (had) goOffline(4000, 'leave'); else setState('offline');
   }
   const start = () => send('start', {});
-  const waveLimit = () => R.mode === 'extreme' ? 1000000 : 101;
+  const waveLimit = () => R.mode === 'extreme' || battleMode(R.mode) ? 1000000 : 101;
   // 요약 — 서버 스키마 범위로 자르고(위반은 서버가 폐기한다) 타워는 최대 15개
   function sum(o) {
     o = o || {};
-    const deck = R.mode === 'extreme' && o.ds === 1;
+    const deck = (R.mode === 'extreme' || battleMode(R.mode)) && o.ds === 1;
     const tw = (Array.isArray(o.tw) ? o.tw : []).slice(0, 15)
       .filter((t) => Array.isArray(t) && t.length >= 3)
       .map((t) => deck ? [int(t[0],0,14),int(t[1],1,20),1,int(t[3],1,7)] : [int(t[0], 0, 14), int(t[1], 1, 20), int(t[2], 1, 3)]);
     const m = {
       w: int(o.w, 0, waveLimit()), dw: int(o.dw, 0, waveLimit()), l: int(o.l, 0, 20), g: int(o.g, 0, 1e7), k: int(o.k, 0, 1e6), f: int(o.f, 0, 200),
-      sp: int(o.sp == null ? 1 : o.sp, 1, 3),
+      sp: battleMode(R.mode)?1:int(o.sp == null ? 1 : o.sp, 1, 3),
       hid: o.hid == null ? ((DOC && DOC.hidden) ? 1 : 0) : (o.hid ? 1 : 0),
       b: o.b == null ? null : num(o.b, 0, 1, 3),
       o: o.o === 'p' ? 'p' : 'l',
@@ -549,7 +552,57 @@ window.DKNET = (function () {
   }
   const done = (w) => send('done', { w: int(w, 0, waveLimit()) });
   const dead = (w, k, r) => send('dead', { w: int(w, 0, waveLimit()), k: int(k, 0, 1e6), r: DEAD_REASONS.indexOf(r) >= 0 ? r : 'lives' });
-  const clear = (w, k) => R.mode === 'extreme' ? false : send('clear', { w: int(w, 0, 101), k: int(k, 0, 1e6) });
+  const clear = (w, k) => R.mode === 'extreme'||battleMode(R.mode) ? false : send('clear', { w: int(w, 0, 101), k: int(k, 0, 1e6) });
+
+  // Deferred, stop-and-wait transport. The game can capture this outbox and its
+  // board in one synchronous checkpoint immediately after battleReport().
+  let BT={matchId:null,seq:0,outbox:[]}, battleTimer=null;
+  const copyBattle=x=>JSON.parse(JSON.stringify(x));
+  function storeBattle(){sSet(SS(),'dk_battle_transport',JSON.stringify(BT));}
+  function battleExport(){return copyBattle(BT);}
+  function battleRestore(value){
+    const b=R.room?.game?.battle;
+    if(!value||typeof value.matchId!=='string'||!Number.isSafeInteger(value.seq)||value.seq<0||!Array.isArray(value.outbox)||value.outbox.length>256||b&&value.matchId!==b.matchId)return false;
+    if(!value.outbox.every((m,i)=>m&&m.t==='battle'&&m.matchId===value.matchId&&Number.isSafeInteger(m.seq)&&m.seq>=1&&m.seq<=value.seq&&(!i||m.seq===value.outbox[i-1].seq+1)&&['kill','leak','assist'].includes(m.kind)
+      &&(m.kind==='assist'||Number.isInteger(m.count)&&m.count>=1&&m.count<=100&&(m.kind==='kill'?typeof m.transferred==='boolean':typeof m.boss==='boolean'))))return false;
+    const accepted=b?.seats?.[R.me?.pid]?.lastSeq||0;
+    BT={matchId:value.matchId,seq:Math.max(value.seq,accepted),outbox:copyBattle(value.outbox).filter(m=>m.seq>accepted)};
+    storeBattle();scheduleBattle();return true;
+  }
+  function scheduleBattle(){if(battleTimer===null&&BT.outbox.length)battleTimer=setTimeout(pumpBattle,200);}
+  function pumpBattle(){
+    battleTimer=null;const b=R.room?.game?.battle;
+    if(!b||b.result||b.matchId!==BT.matchId||R.state!=='playing')return;
+    const m=BT.outbox[0];if(!m)return;
+    if(serverNow()>=b.t0){m.attempted=true;storeBattle();sendRaw(m);}
+    scheduleBattle();
+  }
+  function receiveBattle(b){
+    if(!b||b.version!==1||!battleMode(b.mode)||b.mode!==R.mode||!b.seats?.[R.me?.pid]||typeof b.matchId!=='string')return;
+    const previous=R.room?.game?.battle;
+    if(previous?.matchId===b.matchId&&previous.revision>b.revision)return;
+    if(BT.matchId!==b.matchId){
+      BT={matchId:b.matchId,seq:0,outbox:[]};
+      try{const saved=JSON.parse(sGet(SS(),'dk_battle_transport')||'null');if(saved?.matchId===b.matchId)battleRestore(saved);}catch(_){}
+    }
+    if(!R.room.game)R.room.game={};R.room.game.battle=b;
+    const accepted=b.seats[R.me.pid].lastSeq;BT.seq=Math.max(BT.seq,accepted);BT.outbox=BT.outbox.filter(m=>m.seq>accepted);
+    if(b.result)BT.outbox=[];
+    storeBattle();emit('battle',b);scheduleBattle();
+  }
+  function battleReport(kind,data={}){
+    const b=R.room?.game?.battle;
+    if(!b||b.result||!battleMode(R.mode)||!['playing','reconnecting'].includes(R.state)||BT.matchId!==b.matchId||!['kill','leak','assist'].includes(kind))return false;
+    const count=data.count===undefined?1:data.count;
+    if(kind!=='assist'&&(!Number.isInteger(count)||count<1||count>100))return false;
+    const attrs=kind==='kill'?{transferred:!!data.transferred}:kind==='leak'?{boss:!!data.boss}:{};
+    const last=BT.outbox[BT.outbox.length-1];
+    if(kind!=='assist'&&last&&!last.attempted&&last.kind===kind&&last.count+count<=100&&last.transferred===attrs.transferred&&last.boss===attrs.boss)last.count+=count;
+    else {if(BT.outbox.length>=256)return false;BT.outbox.push({t:'battle',matchId:b.matchId,seq:++BT.seq,kind,...(kind==='assist'?{}:{count}),...attrs});}
+    storeBattle();scheduleBattle();return true;
+  }
+  const battleAssist=()=>battleReport('assist');
+  function battleAck(eventId){const b=R.room?.game?.battle;return !!b&&typeof eventId==='string'&&send('battleAck',{matchId:b.matchId,eventId});}
   function chat(text) {
     const s = String(text == null ? '' : text).replace(/[\u0000-\u001f\u007f-\u009f]/g, '').trim().slice(0, 120);
     return s ? send('chat', { text: s }) : false;
@@ -568,6 +621,7 @@ window.DKNET = (function () {
     CFG, on, off, emit,
     create, join, quick, resume, start, leave,
     sum, watch, done, dead, clear, chat, log, send,
+    battleReport, battleAssist, battleAck, battleExport, battleRestore,
     serverNow, offset: () => T.offset, rtt: () => T.rtt,
     get state() { return R.state; },
     get me() { return R.me; },

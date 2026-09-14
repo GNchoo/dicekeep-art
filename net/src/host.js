@@ -8,6 +8,7 @@ import * as LC from './lobby-core.js';
 import { parse, byteLength, CLOSE } from './proto.js';
 import { take } from './ratelimit.js';
 import { MAX_FRAME, SOCKET_RATE, SOCKET_BURST, ROOMS_PER_HOUR } from './timing.js';
+import { battleMode } from './modes.js';
 
 const BAD_LIMIT = 3;
 
@@ -127,13 +128,25 @@ export class RoomHost extends SocketHost {
     return list.map((pid) => L[pid]).filter((l) => l && l.connected && l.sid).map((l) => l.sid);
   }
 
-  async apply(ev) {
+  apply(ev) {
+    if (!battleMode(this.state?.mode) && !battleMode(ev.m?.mode)) return this.applyEvent(ev);
+    const next=(this.battleWork||Promise.resolve()).then(()=>this.applyEvent(ev));
+    this.battleWork=next.catch(()=>{});return next;
+  }
+  async applyEvent(ev) {
     const now = this.io.now();
+    const before=battleMode(this.state?.mode)?JSON.parse(JSON.stringify(this.state)):null;
     this.stats.reduces++;
     // 대기실에서는 언제든 서버가 시작할 수 있으므로(방장 start · 예약 방 자동 시작) 시드를 미리 채워 둔다
     if (this.state && this.state.phase === 'lobby' && this.live.seed == null) this.live.seed = this.io.random32() >>> 0;
     const r = reduce({ state: this.state, live: this.live }, ev, now);
     this.state = r.state; this.live = r.live;
+    // New battle acknowledgments must never outrun the durable event ledger.
+    const durableFirst=!!(r.persist && this.state?.game?.battle);
+    if (durableFirst) {
+      this.stats.puts++;
+      try {await this.io.put(this.state);} catch(error) {if(before)this.state=before;throw error;}
+    }
     let alarm = null, destroy = false;
     for (const e of r.effects) {
       if (e.send) {
@@ -154,7 +167,7 @@ export class RoomHost extends SocketHost {
     if (destroy) {
       this.io.log({ ev: 'destroy', code: ev.code, ms: now, stats: this.stats });
       await this.io.destroy();
-    } else if (r.persist) {
+    } else if (r.persist && !durableFirst) {
       this.stats.puts++;
       await this.io.put(this.state);
     }

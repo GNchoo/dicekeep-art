@@ -1,6 +1,6 @@
 # dicekeep-net — 멀티플레이 중계 서버
 
-주사위 성채 '인피니티 · 함께' 의 서버. **방 · 시드 · 중계 · 방 안 순위 · 빠른 매칭만** 맡고 시뮬레이션과 웨이브 진행은 각 클라이언트가 자기 보드에서 **자기 속도로** 돌린다. 프로토콜 4는 `clear`(101웨이브 완주)와 `extreme`(극한 경쟁)을 별도 방·매칭으로 운영한다.
+주사위 성채 '인피니티 · 함께'의 서버. 기존 `clear`(101웨이브)와 `extreme`(극한)은 각자 속도로 플레이하는 2~4인 기록 경쟁이다. v115에 추가된 `duel`(1대1 대전)과 `coop`(2인 협동)은 정확히 2명, 1배속, 공동 시계로 진행하며 서버가 HP·처치 목표·전송·보급·최종 승패를 관리한다. 실제 적의 이동·공격·처치는 여전히 클라이언트에서 계산한다. 프로토콜 4와 게임 버전 일치 검사로 구버전 방을 분리한다.
 루트의 정적 Worker `dicekeep` 와 별개의 Worker(`dicekeep-net`)이며, Durable Object `Room` 하나가 방 하나, `Lobby` 단일 객체가 빠른 매칭 대기열이다.
 
 ```
@@ -16,7 +16,8 @@ net/
   src/lobby-core.js    Lobby 순수 상태 머신 (묶기 규칙 · queued · 시간당 방 생성 상한)
   src/claim.js         코드 생성 → Room /claim (Worker 와 Lobby 공용)
   src/timing.js        상수 표 · TIMING=fast
-  src/modes.js         clear/extreme 모드 · 극한 보고 웨이브 상한
+  src/modes.js         4개 모드 · 정원 · 덱/웨이브 보고 규칙
+  src/battle-core.js   대전/협동 HP·목표·전송·보급·중복 방지·최종 승패
   src/proto.js         메시지 스키마·정규화 · 닫기 코드 · PROTOCOL=4
   src/codes.js         방 코드 (31자 · 6자리)
   src/ratelimit.js     토큰 버킷

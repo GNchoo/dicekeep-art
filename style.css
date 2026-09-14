@@ -1546,3 +1546,11 @@ body.ui-art .icon-btn[data-icon] { font-size: 0; background-position: center; ba
   .tree-node b { font-size: 11px; }.tree-node small { font-size: 8px; }
   #supporter-note { font-size: 9px; } #supporter-panel { padding: 5px 8px; }
 }
+
+/* Multiplayer trial: readable shared objective next to the battle controls. */
+#right-panel:has(#battle-status:not(.hidden)) { flex-wrap: wrap; max-width: 290px; }
+#battle-status { flex-basis: 100%; color: #ffe7b0; font: 12px/1.55 var(--font-ui); white-space: normal; }
+#battle-assist { min-height: 36px; padding: 7px 10px; border: 1px solid #66b790; border-radius: 7px; background: #19372c; color: #c7ffdb; font: 13px var(--font-ui); cursor: pointer; }
+#battle-assist:disabled { opacity: .55; cursor: default; }
+#wrap.side #right-panel:has(#battle-status:not(.hidden)) { max-width: none; }
+#wrap.over #right-panel:has(#battle-status:not(.hidden)) { max-width: 100%; }

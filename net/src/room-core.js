@@ -20,7 +20,8 @@
 import * as T from './timing.js';
 import { CLOSE, PROTOCOL, PID_RE, KEY_RE, sanitizeName } from './proto.js';
 import { take } from './ratelimit.js';
-import { matchMode, roomMode, waveLimit } from './modes.js';
+import { matchMode, roomMode, waveLimit, battleMode, roomCapacity, deckMode } from './modes.js';
+import { createBattle, advanceBattle, endBattle, battleReport, battleAck } from './battle-core.js';
 
 const ALIVE = 'alive';
 
@@ -29,7 +30,7 @@ const ALIVE = 'alive';
 export function createRoom({ code, kind = 'code', now, ver = null, timing, reserve = null, mode = 'clear' }) {
   if (!matchMode(mode)) throw new Error('Invalid multiplayer mode');
   const tm = timing ? { ...timing } : T.timingFor('');
-  if (mode === 'extreme') tm.clearWave = 0;
+  if (deckMode(mode)) tm.clearWave = 0;
   const st = {
     sv: 3, code, kind, mode, createdAt: now, ver,
     phase: 'claimed', hostId: null, seed: null,
@@ -40,7 +41,7 @@ export function createRoom({ code, kind = 'code', now, ver = null, timing, reser
     alarmAt: null, expireAt: now + T.CLAIM_TTL,
   };
   const seats = reserve && Array.isArray(reserve.players)
-    ? reserve.players.filter((p) => p && typeof p.pid === 'string' && PID_RE.test(p.pid) && typeof p.key === 'string' && KEY_RE.test(p.key)).slice(0, T.ROOM_SIZE)
+    ? reserve.players.filter((p) => p && typeof p.pid === 'string' && PID_RE.test(p.pid) && typeof p.key === 'string' && KEY_RE.test(p.key)).slice(0, roomCapacity(mode))
     : [];
   if (seats.length) {
     st.phase = 'lobby';
@@ -81,7 +82,11 @@ export function liveFromSockets(state, atts, now) {
     else live.pending[a.sid] = { openedAt: now, op: a.op || null };
   }
   if (state) {
-    for (const pid of Object.keys(state.players)) if (!live.players[pid]) live.players[pid] = offlineEntry(now);
+    for (const pid of Object.keys(state.players)) if (!live.players[pid]) {
+      live.players[pid] = offlineEntry(now);
+      const disconnectedAt=state.game?.battle?.seats[pid]?.disconnectedAt;
+      if (disconnectedAt!=null) live.players[pid].disconnectedAt=disconnectedAt;
+    }
     if (state.phase === 'playing') live.emptySince = Object.values(live.players).some((l) => l.connected) ? null : now;
   }
   return live;
@@ -95,7 +100,7 @@ export function snapshot(state, live, now) {
              wave: p.wave, dw: p.dw || 0, deathWave: p.deathWave, kills: p.kills, sp: (L && L.sum && L.sum.sp) || 1, hidden: !!(L && L.hidden), rank: p.rank };
   });
   const g = state.game;
-  const game = g ? { t0: g.t0, timing: g.timing, seed: state.seed, mode: roomMode(state) } : null;
+  const game = g ? { t0: g.t0, timing: g.timing, seed: state.seed, mode: roomMode(state), ...(g.battle?{battle:JSON.parse(JSON.stringify(g.battle))}:{}) } : null;
   return { t: 'room', code: state.code, kind: state.kind, mode: roomMode(state), phase: state.phase, hostId: state.hostId, ver: state.ver, reserveUntil: state.reserveUntil, now, players, game };
 }
 
@@ -108,6 +113,11 @@ function rankKey(p) {
 function cmpKey(a, b) { for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) return a[i] - b[i]; return 0; }
 
 export function ranking(state) {
+  if (state.game?.battle?.result) {
+    const b=state.game.battle;
+    return Object.values(state.players).map(p=>({pid:p.pid,name:p.name,rank:b.result.winners.includes(p.pid)?1:b.mode==='coop'?1:2,
+      status:b.result.winners.includes(p.pid)?'cleared':'dead',wave:p.dw||0,kills:b.seats[p.pid].kills,clearAt:b.result.winners.includes(p.pid)?b.result.at:null}));
+  }
   const ps = Object.values(state.players).map((p) => ({ p, k: rankKey(p) }));
   ps.sort((a, b) => cmpKey(a.k, b.k) || (a.p.joinedAt - b.p.joinedAt) || (a.p.pid < b.p.pid ? -1 : 1));
   return ps.map(({ p }, i) => {
@@ -123,6 +133,7 @@ export function nextAlarm(state, live, now) {
   if (!state) return Number.isFinite(t) ? t : null;
   if (state.phase === 'playing') {
     t = Math.min(t, state.game.t0 + T.GAME_CAP);
+    if (state.game.battle) t=Math.min(t,state.game.battle.nextBossAt);
     for (const p of Object.values(state.players)) {
       const L = live.players[p.pid];
       if (p.status === ALIVE && L && !L.connected && L.disconnectedAt != null) t = Math.min(t, L.disconnectedAt + T.RECONNECT_GRACE);
@@ -229,7 +240,7 @@ function onHello(c, ev) {
       if (m.op !== 'join') return c.reject(sid, 'bad-request', CLOSE.BAD_REQUEST, '이미 만들어진 방입니다');
       if (st.ver !== m.ver) return c.reject(sid, 'version', CLOSE.VERSION, '방장과 게임 버전이 다릅니다. 새로고침하세요');
       if (st.reserveUntil != null) return c.reject(sid, 'full', CLOSE.CONFLICT, '예약된 방입니다');
-      if (Object.keys(st.players).length >= T.ROOM_SIZE) return c.reject(sid, 'full', CLOSE.CONFLICT, '방이 가득 찼습니다');
+      if (Object.keys(st.players).length >= roomCapacity(roomMode(st))) return c.reject(sid, 'full', CLOSE.CONFLICT, '방이 가득 찼습니다');
       return join(c, sid, m);
     case 'playing':
       return c.reject(sid, 'started', CLOSE.CONFLICT, '이미 시작한 방입니다');
@@ -256,7 +267,7 @@ function welcome(c, sid, pid, resumed) {
 function createHost(c, sid, m) {
   const st = c.state;
   st.mode = matchMode(m.mode);
-  if (st.mode === 'extreme') st.timing.clearWave = 0;
+  if (deckMode(st.mode)) st.timing.clearWave = 0;
   st.phase = 'lobby'; st.ver = m.ver; st.hostId = m.pid; st.expireAt = c.now + T.LOBBY_TTL;
   addPlayer(c, m);
   c.live.players[m.pid] = liveEntry(sid, c.now);
@@ -288,11 +299,13 @@ function resume(c, sid, m, P) {
   c.live.players[P.pid] = L;
   c.live.emptySince = null;
   const first = !!P.reserved;
+  if (st.game?.battle?.seats[P.pid]) { delete st.game.battle.seats[P.pid].disconnectedAt; c.persist=true; }
   if (first) { delete P.reserved; c.persist = true; }
   welcome(c, sid, P.pid, !first);
   if (st.phase === 'playing') c.bcast({ t: 'player', pid: P.pid, connected: true }, P.pid);
   if (st.phase === 'lobby') c.bcast(c.room(), P.pid);
-  if (st.phase === 'ended' && st.game) c.send(P.pid, { t: 'end', reason: st.game.reason, ranking: st.game.ranking, seed: st.seed });
+  if (st.game?.battle) c.send(P.pid,{t:'battle',battle:JSON.parse(JSON.stringify(st.game.battle))});
+  if (st.phase === 'ended' && st.game) c.send(P.pid, { t: 'end', reason: st.game.reason, ranking: st.game.ranking, seed: st.seed, ...(st.game.battle?{battle:JSON.parse(JSON.stringify(st.game.battle))}:{}) });
   if (L.watching) notifyWatched(c, L.watching);
   c.log(first ? 'join' : 'back', { pid: P.pid });
 }
@@ -322,6 +335,7 @@ function disconnect(c, pid, reason) {
     if (reason === 'leave' || st.phase === 'claimed') removePlayer(c, pid);
     else c.bcast(c.room(), pid);
   } else if (st.phase === 'playing') {
+    if (st.game.battle) { st.game.battle.seats[pid].disconnectedAt=c.now; c.persist=true; }
     if (reason === 'leave' && P.status === ALIVE) markLeft(c, P);
     else c.bcast({ t: 'player', pid, connected: false }, pid);
     if (!anyConnected(c)) c.live.emptySince = c.now;
@@ -341,6 +355,7 @@ function removePlayer(c, pid) {
 }
 
 function markLeft(c, P) {
+  if (c.state.game?.battle) { endBattle(c.state.game.battle,'disconnect',[P.pid],c.now);finishBattle(c);return; }
   P.status = 'left'; P.deathWave = roomMode(c.state) === 'extreme' ? P.dw || 0 : P.wave; P.deathAt = c.now;
   c.bcast({ t: 'player', pid: P.pid, status: 'left', wave: P.wave, deathWave: P.deathWave });
   delegateHost(c);
@@ -377,6 +392,8 @@ function onMsg(c, ev) {
     case 'done': return onDone(c, P, m);
     case 'dead': return onDead(c, P, m);
     case 'clear': return onClear(c, P, m);
+    case 'battle': return onBattle(c,P,L,m);
+    case 'battleAck': return onBattleAck(c,P,m);
     case 'chat': return onChat(c, P, L, m);
     case 'log': return onLog(c, P, L, m);
     case 'time': return c.send(P.pid, { t: 'time', c: m.c, s: c.now });
@@ -402,6 +419,7 @@ function onStart(c, P) {
 // 시작: seed · t0 · timing 을 나눠 주고 전원 alive. 이후 진행은 각 클라 몫
 function startGame(c, byPid) {
   const st = c.state, tm = st.timing;
+  if (battleMode(roomMode(st)) && (Object.keys(st.players).length!==2 || connectedCount(c)!==2)) return;
   const t0 = c.now + tm.prep;
   st.seed = c.live.seed != null ? c.live.seed : fallbackSeed(c.now, st.code);
   c.live.seed = null;
@@ -412,9 +430,10 @@ function startGame(c, byPid) {
     if (L) { L.lastBeat = c.now; L.hidden = false; L.sum = null; L.relayAt = null; L.watchRelayAt = null; }
   }
   st.game = { t0, timing: T.wireTiming(tm), mode: roomMode(st), endedAt: null, reason: null, ranking: null };
+  if (battleMode(roomMode(st))) st.game.battle=createBattle(roomMode(st),Object.keys(st.players),st.code+':'+t0+':'+st.seed,t0);
   st.phase = 'playing'; st.expireAt = null; st.reserveUntil = null;
   c.live.emptySince = anyConnected(c) ? null : c.now;
-  c.bcast({ t: 'start', seed: st.seed, t0, timing: st.game.timing, mode: roomMode(st), now: c.now });
+  c.bcast({ t: 'start', seed: st.seed, t0, timing: st.game.timing, mode: roomMode(st), now: c.now, ...(st.game.battle?{battle:JSON.parse(JSON.stringify(st.game.battle))}:{}) });
   c.bcast(c.room());
   c.persist = true;
   c.log('start', { pid: byPid, n: connectedCount(c), kind: st.kind });
@@ -426,7 +445,8 @@ const clampWave = (w, cw) => Math.max(0, Math.min(cw, w));
 function onSum(c, P, L, m) {
   const st = c.state;
   if (st.phase !== 'playing' || P.status !== ALIVE) return;
-  if (m.ds === 1 && roomMode(st) !== 'extreme') return c.err(P.pid, 'mode', '덱 전투 요약은 극한 경쟁에서만 보낼 수 있습니다');
+  if (m.ds === 1 && !deckMode(roomMode(st))) return c.err(P.pid, 'mode', '이 방에서는 덱 전투 요약을 보낼 수 없습니다');
+  if (st.game.battle && (m.sp!==1 || m.ds!==1)) return c.err(P.pid,'mode','대전과 협동은 덱 전투 1배속으로 진행합니다');
   const cw = waveLimit(st);
   const w = clampWave(m.w, cw), dw = Math.min(roomMode(st) === 'extreme' ? w : cw, clampWave(m.dw, cw));
   L.lastBeat = c.now; L.hidden = m.hid === 1;
@@ -481,6 +501,7 @@ function onDone(c, P, m) {
 function onDead(c, P, m) {
   const st = c.state;
   if (st.phase !== 'playing' || P.status !== ALIVE) return;
+  if (st.game.battle) {endBattle(st.game.battle,m.r,[P.pid],c.now);finishBattle(c);return;}
   const w = clampWave(m.w, waveLimit(st));
   P.status = 'dead'; P.wave = Math.max(P.wave, w); P.deathWave = roomMode(st) === 'extreme' ? P.dw || 0 : Math.max(0, w - 1); P.deathAt = c.now;
   P.kills = Math.max(P.kills, m.k); P.deathReason = m.r;
@@ -493,13 +514,36 @@ function onDead(c, P, m) {
 function onClear(c, P, m) {
   const st = c.state;
   if (st.phase !== 'playing' || P.status !== ALIVE) return;
-  if (roomMode(st) === 'extreme') return c.err(P.pid, 'mode', '극한 경쟁에는 웨이브 완주 승리가 없습니다');
+  if (deckMode(roomMode(st))) return c.err(P.pid, 'mode', '이 모드는 개인 웨이브 완주로 승리하지 않습니다');
   const cw = st.game.timing.clearWave;
   if (m.w < cw) return c.log('anomaly', { pid: P.pid, w: m.w, kind: 'clear-early', cw });
   P.status = 'cleared'; P.wave = cw; P.dw = cw; P.deathWave = cw; P.clearAt = c.now; P.deathAt = c.now; P.kills = Math.max(P.kills, m.k);
   c.bcast({ t: 'player', pid: P.pid, status: 'cleared', wave: P.wave, kills: P.kills, clearAt: P.clearAt });
   c.persist = true;
   c.log('clear', { pid: P.pid, w: cw });
+}
+
+function sendBattle(c,to='*') { c.send(to,{t:'battle',battle:JSON.parse(JSON.stringify(c.state.game.battle))}); }
+function finishBattle(c) {
+  const st=c.state,b=st.game.battle;
+  c.persist=true;sendBattle(c);
+  if (!b.result || st.phase!=='playing') return;
+  for (const p of Object.values(st.players)) {
+    const won=b.result.winners.includes(p.pid);
+    p.status=won?'cleared':'dead';p.kills=b.seats[p.pid].kills;p.deathWave=p.dw||0;p.deathAt=c.now;p.clearAt=won?c.now:null;
+  }
+  endGame(c,b.result.reason);
+}
+function onBattle(c,P,L,m) {
+  const b=c.state.game?.battle;
+  if(!b)return c.err(P.pid,'mode','공동 전투 방에서만 사용할 수 있습니다');
+  const r=battleReport(b,P.pid,m,c.now);L.lastBeat=c.now;
+  if(r.changed) {P.kills=b.seats[P.pid].kills;finishBattle(c);} else sendBattle(c,P.pid);
+  if(r.error)c.err(P.pid,r.error,'전투 요청을 반영하지 못했습니다: '+r.error);
+}
+function onBattleAck(c,P,m) {
+  const b=c.state.game?.battle;if(!b)return;
+  if(battleAck(b,P.pid,m.matchId,m.eventId)){c.persist=true;sendBattle(c,P.pid);}
 }
 
 function onChat(c, P, L, m) {
@@ -560,6 +604,18 @@ function reserveTick(c) {
 // ---- 플레이 중: 어떤 이벤트 뒤에도 한 번 돈다. 멱등 ----
 function tick(c) {
   const st = c.state, g = st.game, now = c.now;
+  if (g.battle) {
+    const b=g.battle,changed=advanceBattle(b,now);
+    const departed=Object.keys(b.seats).filter(pid=>{
+      const l=c.live.players[pid],at=b.seats[pid].disconnectedAt??l?.disconnectedAt;
+      return !l?.connected && at!=null && now>=at+T.RECONNECT_GRACE;
+    });
+    if(departed.length)endBattle(b,'disconnect',departed,now);
+    else if(now>=g.t0+T.GAME_CAP)endBattle(b,'timeout',Object.keys(b.seats),now);
+    else if(c.live.emptySince!=null&&now>=c.live.emptySince+T.EMPTY_END)endBattle(b,'empty',Object.keys(b.seats),now);
+    if(changed||b.result)finishBattle(c);
+    return;
+  }
   // 재접속 유예 만료 → left (alive 였을 때만)
   for (const p of Object.values(st.players)) {
     const L = c.live.players[p.pid];
@@ -597,7 +653,7 @@ function endGame(c, reason) {
   for (const r of rk) st.players[r.pid].rank = r.rank;
   g.endedAt = c.now; g.reason = reason; g.ranking = rk;
   st.phase = 'ended'; st.expireAt = c.now + T.END_TTL;
-  c.bcast({ t: 'end', reason, ranking: rk, seed: st.seed });
+  c.bcast({ t: 'end', reason, ranking: rk, seed: st.seed, ...(g.battle?{battle:JSON.parse(JSON.stringify(g.battle))}:{}) });
   c.persist = true;
   c.log('end', { reason, n: rk.length });
 }

@@ -13,6 +13,19 @@
   const num = (x, min, max) => Number.isFinite(x) && x >= min && x <= max;
   const int = (x, min, max) => Number.isSafeInteger(x) && x >= min && x <= max;
   const clone = x => JSON.parse(JSON.stringify(x));
+  const battleMode = mode => mode === 'duel' || mode === 'coop';
+  const id = (x, max) => typeof x === 'string' && x.length > 0 && x.length <= max && !/[\u0000-\u001f\u007f]/.test(x);
+  function battleTransportValid(value, matchId) {
+    if (!object(value) || value.matchId !== matchId || !int(value.seq, 0, 1e12) || !Array.isArray(value.outbox) || value.outbox.length > 256) return false;
+    let previous = 0;
+    return value.outbox.every(m => {
+      if (!object(m) || m.t !== 'battle' || m.matchId !== matchId || !int(m.seq, previous + 1, value.seq)
+        || !['kill', 'leak', 'assist'].includes(m.kind) || (m.attempted !== undefined && m.attempted !== true)) return false;
+      previous = m.seq;
+      if (m.kind === 'assist') return m.count === undefined && m.transferred === undefined && m.boss === undefined;
+      return int(m.count, 1, 100) && (m.kind === 'kill' ? typeof m.transferred === 'boolean' && m.boss === undefined : typeof m.boss === 'boolean' && m.transferred === undefined);
+    });
+  }
   function safeTree(x, depth = 0) {
     if (depth > 14) return false;
     if (x === null || typeof x === 'boolean') return true;
@@ -24,16 +37,26 @@
   function valid(p) {
     if (!object(p) || p.version !== VERSION || p.rules !== RULES || !safeTree(p)) return false;
     const s = p.state, inf = p.inf;
-    if (!object(s) || !object(inf) || !['build', 'extreme'].includes(inf.mode) || !inf.growthSnapshot?.growth || inf.settledResult) return false;
+    if (!object(s) || !object(inf) || !['build', 'extreme', 'duel', 'coop'].includes(inf.mode) || !inf.growthSnapshot?.growth || inf.settledResult) return false;
+    const battle = battleMode(inf.mode);
     if (typeof p.owner !== 'string' || !p.owner || p.owner.length > 128 || !num(p.savedAt, 0, 1e15) || !num(p.elapsed, 0, 1e12)) return false;
     if (typeof inf.runId !== 'string' || !inf.runId || inf.runId.length > 128 || !int(inf.doneW, 0, 1e6) || !int(s.wave, inf.doneW, 1e6)) return false;
-    if (inf.recordKey !== (p.match ? 'extremeMulti' : inf.mode) || inf.clearWave !== (inf.mode === 'build' ? 101 : 0) || (inf.mode === 'build' && s.wave > 101)) return false;
+    if (inf.recordKey !== (battle ? inf.mode : p.match ? 'extremeMulti' : inf.mode) || inf.clearWave !== (inf.mode === 'build' ? 101 : 0) || (inf.mode === 'build' && s.wave > 101)) return false;
+    if (battle) {
+      if (!object(p.match) || !id(p.match.matchId, 128) || inf.battleModeVersion !== 1 || !int(inf.battleBossRound, 0, 1e6)
+        || !Array.isArray(inf.battleApplied) || inf.battleApplied.length > 128 || new Set(inf.battleApplied).size !== inf.battleApplied.length
+        || !inf.battleApplied.every(eventId => id(eventId, 160) && eventId.startsWith(p.match.matchId + ':'))
+        || !battleTransportValid(p.match.transport, p.match.matchId) || inf.accountTicket !== null
+        || inf.growthSnapshot.mode !== inf.mode || inf.growthSnapshot.levelCap !== 20 || inf.growthSnapshot.deckSystem !== 1) return false;
+    }
     if (!int(inf.kills, 0, 1e9) || !object(inf.power) || ![1,2,3,4,5,6].every(f => int(inf.power[f], 0, 200)) || !num(inf.bossT, 0, 1e8)) return false;
     if (inf.accountTicket !== null && !(typeof inf.accountTicket === 'string' && /^[a-f0-9]{64}$/.test(inf.accountTicket))) return false;
     if (!num(s.gold, 0, 1e15) || !int(s.lives, 1, 20) || !int(s.heldDie, 0, 20) || typeof s.waveActive !== 'boolean' || !num(s.waveT, 0, 1e12) || !num(s.autoT, 0, 1e12)) return false;
     if (!Array.isArray(p.size) || p.size.length !== 2 || !p.size.every(n => num(n, 1, 100000)) || !Array.isArray(p.lanes) || !p.lanes.length || !p.lanes.every(n => num(n, 1, 1e7))) return false;
     if (!Array.isArray(p.towers) || p.towers.length > 512 || !Array.isArray(p.board) || p.board.length > 15 || new Set(p.board).size !== p.board.length) return false;
-    if (!p.towers.every(t => object(t) && int(t.face, 1, 20) && int(t.lvl, 1, 3) && int(t.spot, 0, 14) && num(t.cd, -100, 1e6) && (t.growthCarry === undefined || num(t.growthCarry, 1, 1e8)))) return false;
+    // Idle towers keep ticking below zero while no enemy is in range. Preserve
+    // that ready-to-fire state over long matches instead of rejecting the save.
+    if (!p.towers.every(t => object(t) && int(t.face, 1, 20) && int(t.lvl, 1, 3) && int(t.spot, 0, 14) && num(t.cd, -1e12, 1e6) && (t.growthCarry === undefined || num(t.growthCarry, 1, 1e8)))) return false;
     if (inf.growthSnapshot.deckSystem === 1) {
       const deck=inf.growthSnapshot.deck;
       if (!Array.isArray(deck) || deck.length!==5 || new Set(deck).size!==5 || !deck.every(id=>int(id,1,20))) return false;

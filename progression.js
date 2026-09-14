@@ -24,7 +24,8 @@
     if (typeof globalThis.crypto?.getRandomValues === 'function') globalThis.crypto.getRandomValues(words);
     return words[0] || 0x6d2b79f5;
   }
-  const MODES = Object.freeze(['clear', 'build', 'extreme', 'multi', 'extremeMulti']);
+  const MODES = Object.freeze(['clear', 'build', 'extreme', 'multi', 'extremeMulti', 'duel', 'coop']);
+  const trialMode = mode => mode === 'duel' || mode === 'coop';
   const MILESTONES = Object.freeze([10, 25, 50, 75, 100]);
   const GEM_MILESTONES = Object.freeze([10, 25, 50, 75, 100, 150, 200]);
   const isObject = value => !!value && typeof value === 'object' && !Array.isArray(value);
@@ -37,8 +38,8 @@
     const time = Date.parse(value);
     return Number.isFinite(time) && new Date(time).toISOString().slice(0, 10) === value.slice(0, 10);
   };
-  const growthMode = mode => mode === 'build' || mode === 'extreme' || mode === 'extremeMulti';
-  const levelCap = mode => mode === 'build' ? 20 : growthMode(mode) ? MAX_LEVEL : 0;
+  const growthMode = mode => mode === 'build' || mode === 'extreme' || mode === 'extremeMulti' || trialMode(mode);
+  const levelCap = mode => mode === 'build' || trialMode(mode) ? 20 : growthMode(mode) ? MAX_LEVEL : 0;
   const listValid = (list, allowed) => Array.isArray(list) && list.every(value => allowed.includes(value)) && new Set(list).size === list.length;
   const milestonesFrom = (value, allowed) => allowed.filter(item => Array.isArray(value) && value.includes(item));
   const emptyRecord = () => ({ best: 0, clears: 0, runs: [], milestones: [], gemMilestones: [] });
@@ -567,9 +568,12 @@
     if (!runValid(run)) return rejected('invalid-run');
     const record = profile.records[run.mode];
     if (profile.settled.includes(run.id)) return { ok: true, shards: 0, earnedShards: 0, capped: false, record, newly: [], collectionRewards: { gold: 0, packs: 0 }, duplicate: true };
-    const newly = MILESTONES.filter(wave => run.wave >= wave && !record.milestones.includes(wave));
+    // Trial multiplayer records are local observations. They do not certify an
+    // account reward, even when their kill/round counters exceed solo milestones.
+    const trial = trialMode(run.mode);
+    const newly = trial ? [] : MILESTONES.filter(wave => run.wave >= wave && !record.milestones.includes(wave));
     const clearBonus = run.won && run.wave >= 101 && ['clear', 'build', 'multi'].includes(run.mode) ? 20 : 0;
-    const earnedShards = Math.floor(Math.min(run.wave, 500) / 5) * 5 + newly.length * 10 + clearBonus;
+    const earnedShards = trial ? 0 : Math.floor(Math.min(run.wave, 500) / 5) * 5 + newly.length * 10 + clearBonus;
     const shards = Math.min(earnedShards, MAX_SHARDS - profile.shards);
     const next = {
       best: Math.max(record.best, run.wave),
@@ -582,7 +586,7 @@
     record.best = next.best; record.clears = next.clears; record.runs = next.runs; record.milestones = next.milestones;
     profile.settled = next.settled;
     const collectionRewards = { gold: 0, packs: 0 };
-    if (collectionValid(profile.collection)) {
+    if (!trial && collectionValid(profile.collection)) {
       const c = profile.collection;
       collectionRewards.gold = Math.min(Math.min(run.wave, 500) * 8 + newly.length * 40 + clearBonus * 5, MAX_GOLD - c.gold);
       collectionRewards.packs = profile.tree?.version === TREE_VERSION ? 0 : Math.min(Math.floor(Math.min(run.wave, 200) / 10), MAX_PACKS - c.packs);

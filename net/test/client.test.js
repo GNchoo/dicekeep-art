@@ -79,6 +79,14 @@ function makeEnv(opts = {}) {
 
 const CODE = 'ABC234';
 const OTHER = 'zz9other';
+async function connectBattle(env,mode='duel') {
+  const {N}=env;N.CFG.url='ws://test';const promise=N.create('테스트',mode),ws=env.lastSock();ws._open();
+  const pid=ws.last('hello').pid;ws._recv(welcomeMsg(pid,{room:{mode,ver:'115'}}));await promise;
+  const b={version:1,mode,matchId:CODE+':5000000:123',revision:0,t0:5000000,bossEveryMs:90000,bossRound:0,nextBossAt:5090000,goal:mode==='coop'?500:0,kills:0,teamLives:20,eventSerial:0,events:[],result:null,
+    seats:Object.fromEntries([pid,OTHER].map(id=>[id,{lives:20,kills:0,transferKills:0,lastSeq:0,lastAction:null,assistReadyAt:5000000}]))};
+  ws._recv({t:'start',mode,at:5000000,t0:5000000,seed:123,timing:{prep:20000,bossLimit:45000,clearWave:0},battle:b});
+  return {ws,pid,b};
+}
 function welcomeMsg(pid, extra = {}) {
   const room = Object.assign({
     code: CODE, phase: 'lobby', hostId: pid, ver: '78', now: 5000000,
@@ -105,6 +113,37 @@ async function connected(env, opts = {}) {
 
 test('node --check net.js', () => {
   execFileSync(process.execPath, ['--check', NET_JS], { stdio: 'pipe' });
+});
+
+test('battle client defers and batches reports, exports an atomic outbox, retries same seq, and removes acknowledged commands',async()=>{
+  const env=makeEnv({src:'net.js?v=115'}),{N}=env,{ws,pid,b}=await connectBattle(env);
+  for(let i=0;i<5;i++)assert.equal(N.battleReport('kill',{count:1,transferred:false}),true);
+  assert.equal(ws.last('battle'),undefined,'no network send before game checkpoint');
+  let transport=N.battleExport();assert.equal(transport.seq,1);assert.equal(transport.outbox[0].count,5);
+  env.advance(200);assert.equal(ws.last('battle').seq,1);assert.equal(ws.last('battle').count,5);
+  env.advance(400);assert.equal(ws.last('battle').seq,1,'lost ack retries original sequence');
+  assert.equal(N.battleReport('kill',{count:3,transferred:true}),true);transport=N.battleExport();assert.equal(transport.seq,2);
+  b.revision++;b.seats[pid].lastSeq=1;ws._recv({t:'battle',battle:b});assert.equal(N.battleExport().outbox[0].seq,2);
+  assert.equal(N.battleRestore(transport),true);assert.equal(N.battleExport().outbox.length,1,'snapshot restore filters server-acknowledged commands');
+  env.advance(200);assert.equal(ws.last('battle').seq,2);assert.equal(ws.last('battle').transferred,true);
+  assert.equal(N.battleRestore({...transport,outbox:[{...transport.outbox[0],count:101}]}),false);
+  assert.equal(N.battleReport('kill',{count:101}),false);
+  N.sum({ds:1,sp:3,tw:[[0,1,1,7]]});assert.equal(ws.last('sum').sp,1);same(ws.last('sum').tw,[[0,1,1,7]]);
+  assert.equal(N.clear(101,0),false);N.leave();
+});
+test('battle client exposes pending supply and authoritative result; ack is explicit and transport survives reconnect',async()=>{
+  const env=makeEnv({src:'net.js?v=115'}),{N}=env,{ws,pid,b}=await connectBattle(env,'coop'),seen=[];
+  N.on('battle',state=>seen.push(state));assert.equal(N.battleAssist(),true);
+  const checkpoint=N.battleExport();assert.equal(checkpoint.outbox[0].kind,'assist');
+  const event={id:b.matchId+':1',kind:'supply',from:OTHER,to:pid,sp:60};b.events=[event];b.revision++;
+  ws._recv({t:'battle',battle:b});assert.equal(seen.at(-1).events[0].id,event.id);assert.equal(ws.last('battleAck'),undefined,'game applies and checkpoints before ack');
+  assert.equal(N.battleAck(event.id),true);assert.equal(ws.last('battleAck').eventId,event.id);
+  ws._close(1006);env.advance(1000);const back=env.lastSock();back._open();
+  back._recv(welcomeMsg(pid,{room:{mode:'coop',phase:'playing',game:{mode:'coop',t0:b.t0,seed:123,timing:{clearWave:0},battle:b}}}));
+  assert.equal(N.battleRestore(checkpoint),true);env.advance(200);assert.equal(back.last('battle').seq,1);
+  b.result={reason:'goal',winners:[pid,OTHER],losers:[],at:5001000};b.revision++;
+  back._recv({t:'end',reason:'goal',ranking:[],battle:b});assert.equal(N.state,'ended');assert.equal(seen.at(-1).result.reason,'goal');
+  assert.equal(N.battleExport().outbox.length,0);assert.equal(N.battleAssist(),false);N.leave();
 });
 
 test('CFG: 버전은 스크립트 ?v=, 주소는 location 없으면 null', () => {
