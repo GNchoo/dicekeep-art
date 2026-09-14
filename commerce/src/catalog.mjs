@@ -1,5 +1,6 @@
 import { requireThat, list, unb64 } from './common.mjs';
 export const PRODUCTS = Object.freeze([
+  { sku: 'passFounders', kind: 'pass', passId: 'founders', shards: 0, amount: 2900, currency: 'KRW', playProductId: 'dicekeep.pass_founders' },
   { sku: 'shards200', kind: 'currency', shards: 200, amount: 1100, currency: 'KRW', playProductId: 'dicekeep.shards200' },
   { sku: 'shards60', available: false, kind: 'currency', shards: 60, amount: 1100, currency: 'KRW', playProductId: 'dicekeep.shards60' },
   { sku: 'shards600', kind: 'currency', shards: 600, amount: 3300, currency: 'KRW', playProductId: 'dicekeep.shards600' },

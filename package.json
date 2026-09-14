@@ -46,7 +46,11 @@
     "test:free-progression": "node tools/battle-reward-test.cjs && node tools/battle-persistence-test.cjs",
     "measure:economy": "node tools/economy-model.cjs",
     "measure:battle": "node tools/e2e/battle-matrix.cjs",
-    "test:battle-account": "node --test tools/e2e/battle-account.cjs"
+    "test:battle-account": "node --test tools/e2e/battle-account.cjs",
+    "test:liveops": "node tools/liveops-rules-test.cjs",
+    "test:rewards-ui": "node tools/e2e/rewards-ui.cjs",
+    "test:rewards-integration": "node tools/e2e/rewards-integration.cjs",
+    "test:mail-admin": "node tools/e2e/mail-admin.cjs"
   },
   "dependencies": {
     "@capacitor-community/safe-area": "^7.0.0",

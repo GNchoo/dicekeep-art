@@ -1,0 +1,130 @@
+# 출석과 영구 성장 패스
+
+출석은 쉬어도 초기화되지 않는 7회 순환 보상이다. 성장 패스는 20단계이며 구매와 관계없이 같은 XP를 쌓는다. 프리미엄은 2,900원 단건 구매이고 구독·만료·완주 기한이 없다. 이미 올린 단계도 구매 후 소급 수령할 수 있다. 캠페인 단계 보상은 이번 규칙에서 제외한다.
+
+## 출석
+
+한국 시간 00시에 날짜가 바뀌며 하루 한 번 직접 수령한다. 7일 연속 출석을 요구하지 않는다. 2회 수령한 뒤 한 달 쉬어도 다음 수령은 3회차다.
+
+| 순환 회차 | 연구 골드 | 무료 조각 | 패스 XP |
+| --- | ---: | ---: | ---: |
+| 1회 | 100 | 3 | 20 |
+| 2회 | 120 | 3 | 20 |
+| 3회 | 140 | 4 | 20 |
+| 4회 | 160 | 4 | 20 |
+| 5회 | 180 | 5 | 20 |
+| 6회 | 200 | 5 | 20 |
+| 7회 | 300 | 10 | 20 |
+| 한 주기 합계 | 1,200 | 34 | 140 |
+
+14회 출석은 2,400골드·68조각·280XP다. 이 XP로 수령 가능한 무료 패스 두 단계까지 합하면 2,600골드·72조각으로, 전체 20종 최대 연구 비용 1,440조각의 5%다. 출석만으로 14일에 전체 성장을 끝내는 규모가 아니다. 패스 XP가 최대치에 도달해도 출석 골드와 조각은 계속 받을 수 있다.
+
+화면이 표시한 날짜를 `expectedDay`로 전송하면 서버 날짜가 바뀐 오래된 요청은 `day-mismatch`로 거절한다. 전날 화면의 버튼을 눌렀는데 다음 날짜 보상을 실수로 수령하는 일을 막는다. 이미 수령한 날짜보다 시계가 과거라면 추가 지급하지 않는다.
+
+## 영구 성장 패스
+
+패스 ID는 `founders`, 표시 이름은 `창립자 성장 패스`다. 단계마다 100XP가 필요하므로 1단계는 누적 100XP, 20단계는 2,000XP에 열린다. 열린 단계는 순서에 관계없이 각 보상 트랙에서 한 번씩 수령할 수 있다.
+
+| 트랙 | 각 단계 | 10단계 추가 | 전체 20단계 합계 |
+| --- | --- | --- | --- |
+| 무료 | 100골드·2조각 | 없음 | 2,000골드·40조각 |
+| 프리미엄 | 10조각 | 왕실 외형 `royal` | 200조각·왕실 외형 |
+
+프리미엄 구매 자체는 XP를 지급하거나 단계 조건을 건너뛰지 않는다. 무료 트랙의 수령 여부와 프리미엄 수령 여부는 따로 저장한다. 프리미엄을 늦게 구매해도 이미 쌓은 XP와 열린 단계가 유지된다. 왕실 외형을 이미 보유한 계정에는 소유 권한을 그대로 유지하며 별도 중복 보상은 만들지 않는다.
+
+### XP 획득
+
+| 지급 원인 | 계산 | 한 번의 상한 |
+| --- | --- | ---: |
+| 기존 싱글·멀티 모드 정산 | `min(wave, 200) × 2` | 400XP |
+| 검증된 대전·협동 정산 | `floor(min(activeSeconds, 6000) × 15 / 60)` | 1,500XP |
+| 출석 수령 | 20XP | 하루 한 번 |
+
+기존 모드는 `clear`, `build`, `extreme`, `multi`, `extremeMulti`다. 새 대전·협동은 `rewardVersion: 1`의 유효 정산만 XP를 지급한다. 버전 표식이 없는 예전 대전·협동 결과는 0XP다. 검증된 대전 입력의 `activeSeconds` 범위는 기존 진행 규칙과 같은 0~6,000초이며 `elapsed`보다 클 수 없다.
+
+승리 여부, 개인 피해량과 처치 수는 XP에 영향을 주지 않는다. 60초 미만의 검증된 참여도 비례 XP를 받으며 4초에 1XP다. 457초 협동은 114XP다. 기존 101웨이브 완주 한 번은 202XP이므로 10회면 패스가 열린다. 대전·협동 참여만으로는 약 133분 20초가 필요하며, 매 경기 XP 내림 때문에 여러 경기로 나누면 조금 늘 수 있다. 출석 XP는 이 시간을 줄인다. 이 값은 유효 참여 기준이며 매칭 대기나 실제 이용자의 완료 시간을 보장하지 않는다.
+
+## 저장 구조와 순수 모듈
+
+`liveops-rules.js`는 브라우저 `window.DKLIVEOPS`와 CommonJS를 같은 구현으로 제공한다. 진행 프로필의 기존 형식은 바꾸지 않는다. 서버는 계정의 `a.liveops`, 게스트는 `SAVE.liveops`에 다음 상태를 별도로 저장한다.
+
+```js
+{
+  version: 1,
+  attendance: { lastDay: '', total: 0 },
+  pass: {
+    id: 'founders', xp: 0,
+    freeClaimed: [], premiumClaimed: []
+  },
+  xpRuns: []
+}
+```
+
+`lastDay`는 마지막 수령의 한국 날짜 `YYYY-MM-DD`, `total`은 영구 누적 수령 횟수다. `xpRuns`는 최근 64개 정산 ID의 보조 중복 방지 목록이며 최근 ID가 앞에 온다. 패스 XP는 2,000에서 멈춘다. 프리미엄 구매 권한은 이 상태 안에 넣지 않으며 서버의 검증된 구매 권한을 사용한다.
+
+### 변경 API
+
+모든 함수는 입력 상태와 PG 지갑을 변경하지 않는다. 성공한 결과를 지갑·외형 지급과 같은 트랜잭션에 저장해야 한다.
+
+| 함수 | 계약 |
+| --- | --- |
+| `defaultState()` | 독립된 기본 상태 반환 |
+| `stateValid(state)` | 버전·날짜·범위·수령 단계·중복 ID 검증 |
+| `sanitize(raw)` | 알려진 현재 버전의 필드만 정화, 없는 상태·알 수 없는 버전은 기본 상태 |
+| `dayKey(now)` | 한국 날짜 또는 `null`; epoch 밀리초·Date·시간대가 명시된 ISO 시각 허용 |
+| `claimAttendance(state, now, expectedDay?)` | 하루 보상과 최대 20XP, `nextState` 반환 |
+| `xpForRun(run)` | 정산 가능한 입력의 XP, 예전 대전은 0, 잘못된 입력은 `null` |
+| `awardRunXp(state, run, settlement)` | 실제 정산 결과의 `ok: true`, 불리언 `duplicate`를 요구하며 XP 상태만 변경 |
+| `tierReward(tier, track)` | 1~20단계의 `free` 또는 `premium` 보상 객체, 잘못된 값은 `null` |
+| `claimPass(state, {tier, track, premium})` | 열린 단계의 보상 수령; 프리미엄에는 정확히 `premium: true` 필요 |
+| `view(state, {now, premium})` | 표시용 복사본 반환; 상태·시간이 잘못되면 `null` |
+
+일반 성공 결과는 `{ok: true, nextState, reward: {gold, shards, skinId?}, xpAdded, ...}`다. 출석에는 `dayKey`, `cycleDay`, 패스 수령에는 `tier`, `track`이 추가된다. XP 지급에는 `duplicate`, 상한 적용 전 `earnedXp`가 추가된다. 실제 추가 XP는 `xpAdded`이며 XP 지급의 재화 보상은 0이다.
+
+오류는 `{ok: false, reason, reward: {gold: 0, shards: 0}}`이고 `nextState`가 없다. 오류 사유는 `invalid-state`, `invalid-time`, `day-mismatch`, `already-claimed`, `clock-before-last-claim`, `attendance-limit`, `unsettled-run`, `invalid-run`, `invalid-tier`, `tier-locked`, `premium-required`다. 정산 재전송은 오류 대신 `ok: true, duplicate: true, xpAdded: 0`과 원상태 복사본을 반환한다.
+
+### 표시 API 형태
+
+```js
+{
+  version: 1,
+  attendance: {
+    dayKey, lastDay, total, cycleDay, canClaim,
+    nextReward: {cycleDay, gold, shards, xp},
+    cycle: [/* 일곱 회차의 동일한 보상 형태 */]
+  },
+  pass: {
+    id, name, xpPerTier: 100, maxXp: 2000,
+    priceKRW: 2900, subscription: false, expiresAt: null,
+    free: {gold: 100, shards: 2}, premium: {gold: 0, shards: 10},
+    skinTier: 10, skinId: 'royal', owned,
+    xp, unlocked, xpInTier, nextTierXp,
+    tiers: [
+      {
+        tier, requiredXp, unlocked,
+        free: {reward, claimed, claimable},
+        premium: {reward, claimed, claimable}
+      }
+      // 총 20개
+    ]
+  }
+}
+```
+
+`PASS.tiers` 상수는 숫자 20이고 `view().pass.tiers`는 20개 행 배열이다. `owned`가 구매 권한을 나타낸다. `cycleDay`는 다음 수령 회차다. 마지막 단계에서는 `xpInTier: 100`, `nextTierXp: null`이며, 수령하지 않은 보상은 계속 표시된다. 표시 객체를 수정해도 저장 상태나 규칙 상수는 변하지 않는다.
+
+## 서버·게스트 연결 조건
+
+서버는 서버 시각, 영수증으로 확인한 프리미엄 권한, 확정한 정산 결과를 입력한다. 게스트는 로컬 정산 결과를 사용하며 로컬 시각과 저장은 서버 권한을 증명하지 않는다. `sanitize`는 구조와 범위를 정화하는 함수로, 정수 2,000XP처럼 형식이 맞는 위조 값을 인증하는 함수가 아니다. 서버 계정에 클라이언트 `liveops` 값을 덮어쓰는 API를 만들지 않는다.
+
+출석·패스 수령은 상태 갱신과 재화·외형 지급을 원자적으로 저장한다. 지급 검증이 실패하면 `nextState`도 저장하지 않는다. 정산 XP는 기존 정산의 내구성 있는 중복 방지와 같은 트랜잭션에 포함한다. 순수 규칙의 최근 64개 ID만으로 서버의 영구 중복 방지를 대체하지 않는다. 구매가 확인된 뒤의 소급 수령도 같은 클레임 경로를 사용한다.
+
+서버의 출석·우편·무료 패스 조각은 무료 원장에, 프리미엄 패스 조각은 유료 원장에 지급한다. 둘 다 같은 연구에 사용한다. 마지막 유효 패스 영수증이 환불되면 프리미엄 지급분만 유료 잔액과 부채로 회수하고 무료 보상은 유지한다. 왕실 외형도 `pass:founders` 소유 원천으로 지급하여 별도로 구매한 왕실 외형은 보존한다. 서버는 골드 상한 초과분을 `tree.reserveGold`에 보존하고 조각 상한 초과 시 수령 전체를 롤백한다. 게스트는 골드 또는 조각 상한을 넘으면 수령 자체를 보류하며, 상태와 보상을 원자적으로 저장한다. 서버의 API·미리보기 우편·영수증 회계 상세는 [commerce/LIVEOPS.md](../commerce/LIVEOPS.md)에 정리했다.
+
+## 검증
+
+```powershell
+node tools/liveops-rules-test.cjs
+```
+
+13개 테스트 그룹에서 한국 자정·연말·윤일, 쉬어도 유지되는 출석, 요청 날짜 경계, 시계 역행, 잘못된 상태 정화, 정산·클레임 중복, XP 상한, 지원 역할 동일 XP, 늦은 프리미엄 구매의 소급 수령, 왕실 외형 1회 지급, 브라우저/CommonJS 일치와 입력 비변이를 확인한다. 실제 PG 정산 결과를 연결해 기존 재화 계산이 바뀌지 않고 XP가 한 번만 추가되는 것도 확인한다. 서버 권한 검증·동시 요청·원장 지급·화면 연동은 각 통합 계층의 테스트 범위다.

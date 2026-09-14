@@ -37,6 +37,13 @@
     'skin-not-owned': '먼저 소유한 스킨을 선택해 주세요.', 'already-owned': '이미 소유한 스킨입니다.', 'run-time-invalid': '런 기록의 진행 시간을 확인하지 못했습니다.',
     'payment-pending': '결제 승인을 기다리고 있습니다.', 'purchase-already-used': '이 구매가 연결된 계정으로 다시 로그인해 주세요.',
     USER_CANCELED: '결제를 취소했습니다.', USER_CANCELLED: '결제를 취소했습니다.',
+    'already-claimed': '이미 받은 보상입니다. 목록을 새로 확인해 주세요.', 'day-mismatch': '출석 날짜가 바뀌었습니다. 새로고침 후 받아 주세요.',
+    'clock-before-last-claim': '마지막 출석보다 기기 시간이 이릅니다. 날짜와 시간을 확인해 주세요.',
+    'tier-locked': '아직 도달하지 않은 패스 단계입니다.', 'premium-required': '프리미엄 패스를 소유한 계정에서 받을 수 있습니다.',
+    'mail-expired': '수령 기간이 지난 우편입니다.', 'mail-unavailable': '수령할 수 없는 우편입니다.',
+    'forbidden': '운영자 권한이 없습니다.', 'preview-stale': '발송 미리보기가 만료되거나 변경되었습니다. 다시 확인해 주세요.',
+    'admin-required': '운영자 권한이 없습니다.', 'preview-required': '미리보기가 변경되거나 만료되었습니다. 다시 확인해 주세요.',
+    'request-id-conflict': '이 요청이 변경되었습니다. 목록을 새로 확인해 주세요.',
   };
   function errorText(error) { return reasons[error.code] || error.message || '요청을 완료하지 못했습니다. 다시 시도해 주세요.'; }
   async function api(path, data, anonymous) {
@@ -220,6 +227,21 @@
       }
     } finally { busy = false; emit(); }
   }
+  function requireAccount() { if (!session || !current) throw new Error('먼저 Google 계정으로 로그인해 주세요.'); }
+  async function loadLiveops() { requireAccount(); return adopt(await api('/liveops')); }
+  async function claimReward(kind, data = {}) {
+    requireAccount();
+    if (!['attendance', 'mail', 'pass'].includes(kind)) throw new Error('지원하지 않는 보상입니다.');
+    return adopt(await api('/' + kind + '/claim', { ...data, requestId: data.requestId || crypto.randomUUID() }));
+  }
+  async function adminMail(action, data = {}) {
+    requireAccount();
+    if (action === 'list') return api('/admin/mail/list');
+    if (action === 'get' && typeof data.id === 'string') return api('/admin/mail/' + encodeURIComponent(data.id));
+    if (action === 'preview') return api('/admin/mail/preview', {id:data.id});
+    if (!['draft', 'preview', 'publish', 'cancel'].includes(action)) throw new Error('지원하지 않는 운영 요청입니다.');
+    return api('/admin/mail/' + action, { ...data, requestId: data.requestId || crypto.randomUUID() });
+  }
   async function completeWebPayment() {
     if (paymentComplete) { message('이미 확인한 구매입니다. 성장 조각은 한 번만 지급됩니다.'); return; }
     const q = new URLSearchParams(location.search);
@@ -231,7 +253,7 @@
     const orders = read(ORDERS, []); write(ORDERS, (Array.isArray(orders) ? orders : []).filter(x => x.orderId !== orderId));
     paymentComplete = true;
     history.replaceState(null, '', location.pathname);
-    message(`결제 확인 완료 · ${result.duplicate ? '이미 확인한 구매입니다.' : result.shards ? '성장 조각 +' + result.shards : '스킨 소유권을 확인했습니다.'}`);
+    message(`결제 확인 완료 · ${result.duplicate ? '이미 확인한 구매입니다.' : result.shards ? '성장 조각 +' + result.shards : '구매 권한을 확인했습니다. 로비에서 외형 또는 패스 보상을 확인해 주세요.'}`);
   }
   function init() {
     if (initialized) return initialized;
@@ -254,7 +276,7 @@
     return initialized;
   }
   window.DKCOMMERCE = Object.freeze({
-    init, signIn, signOut, action, startRun, resumeRun, queueRun, finishRun, refresh, retryPending, restore, buy, completeWebPayment, errorText,
+    init, signIn, signOut, action, startRun, resumeRun, queueRun, finishRun, refresh, retryPending, restore, buy, completeWebPayment, errorText, loadLiveops, claimReward, adminMail,
     profile: () => current, linked: () => !!session,
     state: () => ({ configured: !!endpoint, config, accountId: session && session.accountId, wallet, cosmetics: { owned: cosmetics.owned.slice(), equipped: cosmetics.equipped }, busy, native: native(), platform: platform(), ready: !!current }),
     products: async ids => native() && billing() ? billing().products({ productIds: ids }) : { products: [] },

@@ -3,6 +3,8 @@ import { ApiError, requireThat, int, textId, random, sha, json, body, fields, li
 import { PRODUCTS, publicConfig, paymentGate, enabled } from './catalog.mjs';
 import { GoogleAuth, cryptToken } from './auth.mjs';
 import { Providers } from './providers.mjs';
+import { Liveops, ensureLiveops } from './liveops.mjs';
+import { premiumOwned, grantPass, revokePass } from './pass-economy.mjs';
 
 const SESSION_MS = 24 * 3600 * 1000;
 const validRequestId = id => typeof id === 'string' && /^[a-zA-Z0-9_-]{8,128}$/.test(id);
@@ -20,6 +22,7 @@ function credit(a, amount, kind) {
   a.wallet[kind] += amount - debtPaid; sync(a); return { debtPaid, credited: amount - debtPaid };
 }
 function migrateEconomy(a) {
+  ensureLiveops(a);
   // Existing accounts predate the trial record slots. Add only missing slots;
   // keep wallets, collection investments and active frozen run snapshots intact.
   if (a.profile.records) for (const mode of ['duel', 'coop']) {
@@ -43,10 +46,12 @@ function cosmetics(a) {
   if (!a.cosmetics.owned.includes(a.cosmetics.equipped)) a.cosmetics.equipped = 'base'; return a.cosmetics;
 }
 function grantProduct(a, p, key) {
+  if (p.kind === 'pass') return grantPass(a, p.passId, key, { credit, cosmetics });
   if (p.kind !== 'cosmetic') return credit(a, p.shards, 'paid');
   cosmetics(a); a.skinGrants[p.skinId] ||= {}; a.skinGrants[p.skinId][key] = true; cosmetics(a); return { credited: 0, debtPaid: 0 };
 }
 function revokeProduct(a, p, key, amount) {
+  if (p.kind === 'pass') return revokePass(a, p.passId, key, { revoke, cosmetics });
   if (p.kind !== 'cosmetic') return revoke(a, amount);
   cosmetics(a); delete a.skinGrants[p.skinId]?.[key]; cosmetics(a);
 }
@@ -56,8 +61,10 @@ export class CommerceLedger {
   constructor(ctx, env, deps = {}) {
     this.ctx = ctx; this.storage = ctx.storage; this.env = env; this.now = deps.now || Date.now;
     this.auth = new GoogleAuth(deps.fetch || fetch, this.now); this.providers = new Providers(env, this.auth, deps.fetch || fetch);
+    this.liveops = new Liveops(this, { credit, cosmetics });
     this.rates = new Map();
   }
+  accountView(a) { return { ...view(a), liveops: this.liveops.view(a) }; }
   rate(key, max = 120) {
     const now = this.now(); if (this.rates.size > 2000) for (const [k, v] of this.rates) if (v.until < now) this.rates.delete(k);
     requireThat(this.rates.size < 4000 || this.rates.has(key), 'busy', 429);
@@ -71,7 +78,7 @@ export class CommerceLedger {
     await this.storage.transaction(async tx => {
       const a = await tx.get('account:' + s.accountId);
       if (a && (a.profile.economyVersion !== PG.ECONOMY_VERSION || a.profile.collection?.version !== PG.COLLECTION_VERSION || a.profile.tree?.version !== PG.TREE_VERSION
-        || a.profile.records?.duel === undefined || a.profile.records?.coop === undefined)) {
+        || a.profile.records?.duel === undefined || a.profile.records?.coop === undefined || !a.liveops || !a.passGrants || !a.passBenefits || !a.mailClaims)) {
         migrateEconomy(a); await tx.put('account:' + s.accountId, a);
       }
     });
@@ -89,8 +96,13 @@ export class CommerceLedger {
       if (req.method === 'GET' && path === '/profile') return json((await this.storage.get('account:' + id)).profile);
       if (req.method === 'GET' && path === '/wallet') return json((await this.storage.get('account:' + id)).wallet);
       if (req.method === 'GET' && path === '/cosmetics') return json(await this.refreshCosmetics(id));
+      if (req.method === 'GET' && path === '/liveops') return json(await this.liveops.get(id));
+      if (req.method === 'GET' && path === '/admin/mail/list') return json(await this.liveops.adminList(id));
+      if (req.method === 'GET' && /^\/admin\/mail\/mail_[a-f0-9]{32}$/.test(path)) return json(await this.liveops.adminGet(id, path.split('/').at(-1)));
       if (req.method === 'POST' && path === '/auth/logout') { await this.storage.delete(identity.sessionKey); return json({ ok: true }); }
       requireThat(req.method === 'POST', 'not-found', 404); const b = await body(req);
+      if (['/attendance/claim', '/mail/claim', '/pass/claim'].includes(path)) return json(await this.liveops.claim(id, path.split('/')[1], b));
+      if (['/admin/mail/draft', '/admin/mail/preview', '/admin/mail/publish', '/admin/mail/cancel'].includes(path)) return json(await this.liveops.adminAction(id, path.split('/').at(-1), b));
       if (path === '/profile/action') return json(await this.action(id, b));
       if (path === '/runs/start') return json(await this.startRun(id, b));
       if (path === '/runs/resume') return json(await this.resumeRun(id, b));
@@ -108,12 +120,13 @@ export class CommerceLedger {
     return this.storage.transaction(async tx => {
       let id = await tx.get(subjectKey); if (!id) { id = random(16); await tx.put(subjectKey, id); }
       let a = await tx.get('account:' + id);
-      if (!a) { a = { id, createdAt: this.now(), profile: PG.defaultProfile(), wallet: { free: 0, paid: 0, debt: 0 }, activeRun: null, obfuscatedAccountId: await sha('dicekeep-account:' + id) }; await tx.put('account:' + id, a); }
+      if (!a) { const sequence = (await tx.get('account-sequence') || 0) + 1; requireThat(Number.isSafeInteger(sequence), 'account-limit', 503); await tx.put('account-sequence', sequence); a = { id, accountSequence: sequence, createdAt: this.now(), profile: PG.defaultProfile(), wallet: { free: 0, paid: 0, debt: 0 }, activeRun: null, obfuscatedAccountId: await sha('dicekeep-account:' + id) }; }
+      a.googleSubjectHash = subjectKey.slice(8);
       migrateEconomy(a);
       // One current session per account; re-login rotates and revokes the previous bearer.
       if (a.sessionKey) await tx.delete(a.sessionKey); a.sessionKey = sessionKey;
       await tx.put('account:' + id, a); await tx.put(sessionKey, { accountId: id, expiresAt });
-      return { token, accountId: id, expiresAt, obfuscatedAccountId: a.obfuscatedAccountId, ...view(a) };
+      return { token, accountId: id, expiresAt, obfuscatedAccountId: a.obfuscatedAccountId, ...this.accountView(a) };
     });
   }
   async action(id, b) {
@@ -125,7 +138,7 @@ export class CommerceLedger {
     const fingerprint = await sha(JSON.stringify(fingerprintFields));
     return this.storage.transaction(async tx => {
       const a = await tx.get('account:' + id), key = `action:${id}:${b.requestId}`, old = await tx.get(key);
-      if (old) { requireThat(old.fingerprint === fingerprint, 'request-id-conflict', 409); return { ...view(a), ...old.result, duplicate: true }; }
+      if (old) { requireThat(old.fingerprint === fingerprint, 'request-id-conflict', 409); return { ...this.accountView(a), ...old.result, duplicate: true }; }
       requireThat(a.wallet.debt === 0 || (b.type === 'skinEquip' && b.skinId === 'base'), 'refund-debt', 409);
       const before = a.profile.shards; let result;
       if (b.type === 'skinEquip') { requireThat(cosmetics(a).owned.includes(b.skinId), 'skin-not-owned', 409); a.cosmetics.equipped = b.skinId; result = { ok: true, skinId: b.skinId }; }
@@ -137,7 +150,7 @@ export class CommerceLedger {
       else result = b.type === 'deck' ? PG.setDeck(a.profile, b.deck) : PG[b.type](a.profile, b.face);
       requireThat(result.ok, result.reason, 409);
       const cost = before - a.profile.shards, freeSpent = Math.min(a.wallet.free, cost); a.wallet.free -= freeSpent; a.wallet.paid -= cost - freeSpent; sync(a);
-      await tx.put('account:' + id, a); await tx.put(key, { fingerprint, result, at: this.now() }); return { ...view(a), ...result, duplicate: false };
+      await tx.put('account:' + id, a); await tx.put(key, { fingerprint, result, at: this.now() }); return { ...this.accountView(a), ...result, duplicate: false };
     });
   }
   async startRun(id, b) {
@@ -150,7 +163,7 @@ export class CommerceLedger {
       if (a.activeRun) { const previous = await tx.get('run:' + a.activeRun); if (previous && !previous.status) { previous.status = 'abandoned'; await tx.put('run:' + a.activeRun, previous); } }
       const snapshot = PG.snapshot(a.profile, b.mode);
       await tx.put('run:' + ticket, { id: ticket, accountId: id, mode: b.mode, startedAt: this.now(), snapshot });
-      a.activeRun = ticket; await tx.put('account:' + id, a); return { ticket, ...view(a), snapshot, startedAt: this.now() };
+      a.activeRun = ticket; await tx.put('account:' + id, a); return { ticket, ...this.accountView(a), snapshot, startedAt: this.now() };
     });
   }
   async resumeRun(id, b) {
@@ -161,7 +174,7 @@ export class CommerceLedger {
       requireThat(run && run.accountId === id, 'run-not-found', 404);
       requireThat(!run.status && (battleMode(run.mode) || a.activeRun === b.ticket), 'run-inactive', 409);
       requireThat(!a.wallet.debt || ['clear', 'multi'].includes(run.mode), 'refund-debt', 409);
-      return { ticket: run.id, ...view(a), snapshot: run.snapshot, startedAt: run.startedAt, ...(run.battle?{battle:run.battle}:{}) };
+      return { ticket: run.id, ...this.accountView(a), snapshot: run.snapshot, startedAt: run.startedAt, ...(run.battle?{battle:run.battle}:{}) };
     });
   }
   async settleRun(id, b) {
@@ -174,19 +187,21 @@ export class CommerceLedger {
       const run = await tx.get('run:' + b.ticket); requireThat(run && run.accountId === id, 'run-not-found', 404);
       requireThat(!battleMode(run.mode), 'battle-proof-required', 409);
       const a = await tx.get('account:' + id);
-      if (run.status === 'settled') { requireThat(run.fingerprint === fingerprint, 'run-conflict', 409); return { ...view(a), shards: 0, collectionRewards: { gold: 0, packs: 0 }, duplicate: true }; }
+      if (run.status === 'settled') { requireThat(run.fingerprint === fingerprint, 'run-conflict', 409); return { ...this.accountView(a), shards: 0, collectionRewards: { gold: 0, packs: 0 }, duplicate: true }; }
       requireThat(!run.status && a.activeRun === b.ticket, 'run-inactive', 409);
       const elapsed = Math.floor((this.now() - run.startedAt) / 1000), minimum = Math.max(0, b.wave - 1) * 2;
       requireThat(int(elapsed, minimum, Number.MAX_SAFE_INTEGER) && b.kills <= elapsed * 100, 'run-time-invalid', 409);
       const endless = ['extreme', 'extremeMulti'].includes(run.mode);
       requireThat(endless ? !b.won : b.wave <= 101 && (!b.won || b.wave === 101), 'run-result-invalid', 409);
       const before = a.profile.shards;
-      const result = PG.settle(a.profile, { id: b.ticket, mode: run.mode, wave: b.wave, kills: b.kills, won: b.won, elapsed, date: new Date(this.now()).toISOString() });
+      const settledRun = { id: b.ticket, mode: run.mode, wave: b.wave, kills: b.kills, won: b.won, elapsed, date: new Date(this.now()).toISOString() };
+      const result = PG.settle(a.profile, settledRun);
       requireThat(result.ok && !result.duplicate, 'run-result-invalid', 409);
+      const xpAdded = this.liveops.awardXp(a, settledRun, result);
       const award = result.shards; a.profile.shards = before; const paid = credit(a, award, 'free');
       run.status = 'settled'; run.fingerprint = fingerprint; run.award = award; run.collectionRewards = result.collectionRewards; run.elapsed = elapsed; a.activeRun = null;
       await tx.put('account:' + id, a); await tx.put('run:' + b.ticket, run);
-      return { ...view(a), shards: paid.credited, earnedShards: award, collectionRewards: result.collectionRewards, debtPaid: paid.debtPaid, duplicate: false };
+      return { ...this.accountView(a), shards: paid.credited, earnedShards: award, collectionRewards: result.collectionRewards, debtPaid: paid.debtPaid, xpAdded, duplicate: false };
     });
   }
   async battleRoom(kind, run) {
@@ -216,7 +231,7 @@ export class CommerceLedger {
     });
     await this.battleRoom('bind', run);
     const a = await this.storage.get('account:' + id);
-    return { ticket:run.id, ...view(a), snapshot:run.snapshot, startedAt:run.startedAt, battle:proof };
+    return { ticket:run.id, ...this.accountView(a), snapshot:run.snapshot, startedAt:run.startedAt, battle:proof };
   }
   async settleBattleRun(id, b) {
     fields(b, ['ticket', 'battle']);
@@ -224,21 +239,22 @@ export class CommerceLedger {
     const proof = battleProof(b.battle), run = await this.storage.get('run:' + b.ticket);
     requireThat(run && run.accountId === id && battleMode(run.mode), 'run-not-found', 404);
     requireThat(JSON.stringify(proof) === JSON.stringify(run.battle), 'battle-proof-mismatch', 403);
-    if (run.status === 'settled') return { ...view(await this.storage.get('account:' + id)), shards:0, collectionRewards:{gold:0,packs:0}, duplicate:true };
+    if (run.status === 'settled') return { ...this.accountView(await this.storage.get('account:' + id)), shards:0, collectionRewards:{gold:0,packs:0}, duplicate:true };
     requireThat(!run.status, 'run-inactive', 409);
     const { result } = await this.battleRoom('claim', run);
     requireThat(result?.rewardVersion===1 && result.matchId===proof.matchId && result.pid===proof.pid && result.mode===run.mode && typeof result.won==='boolean' &&
       int(result.wave,0,1e6) && int(result.kills,0,1e9) && int(result.teamKills,0,1e9) && int(result.elapsed,0,1e7) && int(result.activeSeconds,0,result.elapsed) && typeof result.date==='string' && Number.isFinite(Date.parse(result.date)), 'battle-result-invalid', 503);
     return this.storage.transaction(async tx => {
       const current = await tx.get('run:' + b.ticket), a = await tx.get('account:' + id);
-      if (current.status === 'settled') return { ...view(a), shards:0, collectionRewards:{gold:0,packs:0}, duplicate:true };
+      if (current.status === 'settled') return { ...this.accountView(a), shards:0, collectionRewards:{gold:0,packs:0}, duplicate:true };
       requireThat(!current.status, 'run-inactive', 409);
       const before = a.profile.shards, settled = PG.settle(a.profile, { id:b.ticket, ...result });
       requireThat(settled.ok && !settled.duplicate, 'run-result-invalid', 409);
+      const xpAdded = this.liveops.awardXp(a, { id:b.ticket, ...result }, settled);
       a.profile.shards = before; const paid = credit(a, settled.shards, 'free');
       current.status='settled'; current.battleResult=result; current.award=settled.shards; current.collectionRewards=settled.collectionRewards;
       await tx.put('account:' + id,a); await tx.put('run:' + b.ticket,current);
-      return { ...view(a), shards:paid.credited, earnedShards:settled.shards, collectionRewards:settled.collectionRewards, debtPaid:paid.debtPaid, duplicate:false, battle:result };
+      return { ...this.accountView(a), shards:paid.credited, earnedShards:settled.shards, collectionRewards:settled.collectionRewards, debtPaid:paid.debtPaid, xpAdded, duplicate:false, battle:result };
     });
   }
   async order(id, b) {
@@ -248,18 +264,19 @@ export class CommerceLedger {
     const a = await this.storage.get('account:' + id);
     requireThat(a.profile.shards + product.shards <= PG.MAX_SHARDS, 'wallet-limit', 409);
     if (product.kind === 'cosmetic') requireThat(!cosmetics(a).owned.includes(product.skinId), 'already-owned', 409);
+    if (product.kind === 'pass') requireThat(!premiumOwned(a, product.passId), 'already-owned', 409);
     if (b.platform === 'android') return { productId: product.playProductId, obfuscatedAccountId: a.obfuscatedAccountId };
-    const newOrder = { id: 'dk_' + random(20), accountId: id, customerKey: id, sku: product.sku, kind: product.kind, ...(product.skinId ? { skinId: product.skinId } : {}), shards: product.shards, amount: product.amount, createdAt: this.now(), environment: this.env.PAYMENT_MODE };
+    const newOrder = { id: 'dk_' + random(20), accountId: id, customerKey: id, sku: product.sku, kind: product.kind, ...(product.skinId ? { skinId: product.skinId } : {}), ...(product.passId ? { passId: product.passId } : {}), shards: product.shards, amount: product.amount, createdAt: this.now(), environment: this.env.PAYMENT_MODE };
     const order = await this.storage.transaction(async tx => {
-      if (product.kind === 'cosmetic') {
-        const account = await tx.get('account:' + id); requireThat(!cosmetics(account).owned.includes(product.skinId), 'already-owned', 409);
-        const lockKey = `skin-order:${id}:${product.skinId}`, pendingId = await tx.get(lockKey), pending = pendingId && await tx.get('order:' + pendingId);
+      if (['cosmetic','pass'].includes(product.kind)) {
+        const account = await tx.get('account:' + id); requireThat(product.kind === 'pass' ? !premiumOwned(account, product.passId) : !cosmetics(account).owned.includes(product.skinId), 'already-owned', 409);
+        const lockKey = product.kind === 'pass' ? `pass-order:${id}:${product.passId}` : `skin-order:${id}:${product.skinId}`, pendingId = await tx.get(lockKey), pending = pendingId && await tx.get('order:' + pendingId);
         if (pending && !pending.granted && !pending.revoked && this.now() - pending.createdAt < 30 * 60000) return pending;
         await tx.put(lockKey, newOrder.id);
       }
       await tx.put('order:' + newOrder.id, newOrder); return newOrder;
     });
-    return { orderId: order.id, amount: order.amount, currency: 'KRW', orderName: product.kind === 'cosmetic' ? `Dicekeep ${product.skinId} cosmetic bundle` : `Dicekeep ${product.shards} shards`, customerKey: id, clientKey: this.env.TOSS_CLIENT_KEY };
+    return { orderId: order.id, amount: order.amount, currency: 'KRW', orderName: product.kind === 'pass' ? 'Dicekeep founders permanent pass' : product.kind === 'cosmetic' ? `Dicekeep ${product.skinId} cosmetic bundle` : `Dicekeep ${product.shards} shards`, customerKey: id, clientKey: this.env.TOSS_CLIENT_KEY };
   }
   async toss(id, b) {
     fields(b, ['orderId', 'paymentKey']); requireThat(textId(b.orderId, 64) && (b.paymentKey === undefined || textId(b.paymentKey, 200)), 'invalid-payment'); paymentGate(this.env, 'toss');
@@ -274,17 +291,17 @@ export class CommerceLedger {
     const payment = await this.providers.tossConfirm(order, b.paymentKey || order.paymentKey);
     if (payment.status !== 'DONE') {
       await this.applyTossRefund(order.id, payment);
-      const a = await this.storage.get('account:' + id); return { ...view(a), shards: 0, duplicate: true, refunded: true };
+      const a = await this.storage.get('account:' + id); return { ...this.accountView(a), shards: 0, duplicate: true, refunded: true };
     }
     return this.storage.transaction(async tx => {
       const o = await tx.get('order:' + order.id), a = await tx.get('account:' + id);
       const tokenKey = 'toss-key:' + await sha(payment.paymentKey), used = await tx.get(tokenKey);
       requireThat((!used || used === o.id) && (!o.paymentKey || o.paymentKey === payment.paymentKey), 'payment-already-used', 409);
       o.paymentKey = payment.paymentKey; await tx.put(tokenKey, o.id);
-      if (o.granted) return { ...view(a), shards: 0, duplicate: true };
+      if (o.granted) return { ...this.accountView(a), shards: 0, duplicate: true };
       requireThat(!o.revoked, 'purchase-refunded', 409);
       const paid = grantProduct(a, o, 'order:' + o.id); o.granted = true; o.grantedAt = this.now(); o.revoked = 0;
-      await tx.put('account:' + id, a); await tx.put('order:' + o.id, o); return { ...view(a), shards: paid.credited, debtPaid: paid.debtPaid, duplicate: false };
+      await tx.put('account:' + id, a); await tx.put('order:' + o.id, o); return { ...this.accountView(a), shards: paid.credited, debtPaid: paid.debtPaid, duplicate: false };
     });
   }
   async google(id, b) {
@@ -294,30 +311,31 @@ export class CommerceLedger {
     requireThat(!old || old.accountId === id, 'purchase-already-used', 409);
     const p = await this.providers.googleGet(b.purchaseToken), state = this.providers.validateGoogle(p, product.playProductId, a.obfuscatedAccountId, !!old);
     if (old) requireThat(old.orderId === p.orderId, 'purchase-mismatch', 409);
-    if (state.refunded) { await this.refundGoogle(key); return { ...view(await this.storage.get('account:' + id)), shards: 0, duplicate: true, refunded: true }; }
+    if (state.refunded) { await this.refundGoogle(key); return { ...this.accountView(await this.storage.get('account:' + id)), shards: 0, duplicate: true, refunded: true }; }
     const encryptedToken = await cryptToken(b.purchaseToken, this.env.TOKEN_ENCRYPTION_KEY);
     // Persist wake-up BEFORE the credit transaction. A crash immediately after committing the outbox cannot strand it.
     await this.storage.setAlarm(this.now() + 60000);
     const result = await this.storage.transaction(async tx => {
       const previous = await tx.get(key), account = await tx.get('account:' + id);
-      if (previous) { requireThat(previous.accountId === id && previous.productId === b.productId && previous.environment === this.env.PAYMENT_MODE, 'purchase-already-used', 409); requireThat(!previous.revoked, 'purchase-refunded', 409); return { ...view(account), shards: 0, duplicate: true }; }
+      if (previous) { requireThat(previous.accountId === id && previous.productId === b.productId && previous.environment === this.env.PAYMENT_MODE, 'purchase-already-used', 409); requireThat(!previous.revoked, 'purchase-refunded', 409); return { ...this.accountView(account), shards: 0, duplicate: true }; }
       // Tokens already consumed outside this authoritative ledger cannot be restored into a second ledger.
       requireThat(!state.consumed, 'purchase-already-consumed', 409);
       const orderKey = 'google-order:' + await sha(p.orderId), used = await tx.get(orderKey); requireThat(!used, 'purchase-already-used', 409);
-      // Purchase initiation rejects already-owned skins. A second actually charged, valid restore is retained as another entitlement source, not discarded.
+      // A second actually charged, valid restore is another entitlement source; it never repeats pass tier rewards.
       const paid = grantProduct(account, product, key);
-      await tx.put(key, { accountId: id, productId: b.productId, kind: product.kind, ...(product.skinId ? { skinId: product.skinId } : {}), shards: product.shards, orderId: p.orderId, encryptedToken, environment: this.env.PAYMENT_MODE, revoked: 0, completed: false, grantedAt: this.now() });
+      await tx.put(key, { accountId: id, productId: b.productId, kind: product.kind, ...(product.skinId ? { skinId: product.skinId } : {}), ...(product.passId ? { passId: product.passId } : {}), shards: product.shards, orderId: p.orderId, encryptedToken, environment: this.env.PAYMENT_MODE, revoked: 0, completed: false, grantedAt: this.now() });
       await tx.put(orderKey, key); await tx.put('account:' + id, account); await tx.put('consume:' + key.slice(9), { key, nextAttempt: this.now() });
-      return { ...view(account), shards: paid.credited, debtPaid: paid.debtPaid, duplicate: false };
+      return { ...this.accountView(account), shards: paid.credited, debtPaid: paid.debtPaid, duplicate: false };
     });
-    const completed = (product.kind === 'cosmetic' ? state.acknowledged : state.consumed) || await this.tryComplete(key, b.purchaseToken);
+    const completed = (['cosmetic','pass'].includes(product.kind) ? state.acknowledged : state.consumed) || await this.tryComplete(key, b.purchaseToken);
     if (completed) await this.markCompleted(key); else await this.storage.setAlarm(this.now() + 60000);
     if (product.kind === 'cosmetic') result.cosmetics = await this.refreshCosmetics(id);
-    return { ...result, ...(product.kind === 'cosmetic' ? { acknowledgePending: !completed } : { consumePending: !completed }) };
+    return { ...result, ...(['cosmetic','pass'].includes(product.kind) ? { acknowledgePending: !completed } : { consumePending: !completed }) };
   }
   async refreshCosmetics(id) {
-    const a = await this.storage.get('account:' + id); cosmetics(a);
-    for (const grants of Object.values(a.skinGrants)) for (const key of Object.keys(grants)) {
+    const a = ensureLiveops(await this.storage.get('account:' + id)); cosmetics(a);
+    const sources = new Set([...Object.values(a.skinGrants), ...Object.values(a.passGrants)].flatMap(grants => Object.keys(grants)));
+    for (const key of sources) {
       const p = await this.storage.get(key); if (!p || p.revoked) continue;
       if (key.startsWith('order:') && enabled(this.env, 'toss')) {
         const payment = await this.providers.tossGet(p.id); requireThat(payment, 'provider-unavailable', 503);
@@ -334,7 +352,7 @@ export class CommerceLedger {
   }
   async tryComplete(key, token) {
     const record = await this.storage.get(key); if (!record || record.revoked) return false;
-    try { return record.kind === 'cosmetic' ? await this.providers.acknowledge(token, record.productId) : await this.providers.consume(token, record.productId); } catch { return false; }
+    try { return ['cosmetic','pass'].includes(record.kind) ? await this.providers.acknowledge(token, record.productId) : await this.providers.consume(token, record.productId); } catch { return false; }
   }
   async markCompleted(key) {
     await this.storage.transaction(async tx => { const p = await tx.get(key); if (p) { p.completed = true; await tx.put(key, p); } await tx.delete('consume:' + key.slice(9)); });
@@ -351,7 +369,7 @@ export class CommerceLedger {
         const token = await cryptToken(p.encryptedToken, this.env.TOKEN_ENCRYPTION_KEY, true);
         const state = this.providers.validateGoogle(await this.providers.googleGet(token), p.productId, (await this.storage.get('account:' + p.accountId)).obfuscatedAccountId, true);
         if (state.refunded) await this.refundGoogle(job.key);
-        else if ((p.kind === 'cosmetic' ? state.acknowledged : state.consumed) || await this.tryComplete(job.key, token)) await this.markCompleted(job.key);
+        else if ((['cosmetic','pass'].includes(p.kind) ? state.acknowledged : state.consumed) || await this.tryComplete(job.key, token)) await this.markCompleted(job.key);
       } catch { /* keep the durable outbox for a later retry */ }
     }
     if ((await this.storage.list({ prefix: 'consume:', limit: 1 })).size) await this.storage.setAlarm(this.now() + 300000);
@@ -370,18 +388,20 @@ export class CommerceLedger {
   async applyTossRefund(id, p) {
     return this.storage.transaction(async tx => {
       const order = await tx.get('order:' + id), a = await tx.get('account:' + order.accountId);
-      const target = order.kind === 'cosmetic' ? 1 : Math.ceil(order.shards * (order.amount - p.balanceAmount) / order.amount);
-      const delta = Math.max(0, target - (order.revoked || 0)); if (order.granted && delta > 0) revokeProduct(a, order, 'order:' + id, delta);
+      const target = ['cosmetic','pass'].includes(order.kind) ? 1 : Math.ceil(order.shards * (order.amount - p.balanceAmount) / order.amount);
+      const delta = Math.max(0, target - (order.revoked || 0)); let revokedShards = order.kind === 'pass' ? 0 : delta;
+      if (order.granted && delta > 0) { const result = revokeProduct(a, order, 'order:' + id, delta); if (order.kind === 'pass') revokedShards = result.revokedShards; }
       order.revoked = Math.max(target, order.revoked || 0); await tx.put('order:' + id, order); await tx.put('account:' + a.id, a);
-      return { received: true, refunded: true, revokedShards: delta };
+      return { received: true, refunded: true, revokedShards };
     });
   }
   async refundGoogle(key) {
     return this.storage.transaction(async tx => {
       const p = await tx.get(key); if (!p) return { received: true, known: false };
-      const a = await tx.get('account:' + p.accountId), target = p.kind === 'cosmetic' ? 1 : p.shards, delta = target - p.revoked;
-      if (delta > 0) { revokeProduct(a, p, key, delta); p.revoked = target; await tx.put(key, p); await tx.put('account:' + a.id, a); }
-      await tx.delete('consume:' + key.slice(9)); return { received: true, refunded: true, revokedShards: delta };
+      const a = await tx.get('account:' + p.accountId), target = ['cosmetic','pass'].includes(p.kind) ? 1 : p.shards, delta = target - p.revoked;
+      let revokedShards = p.kind === 'pass' ? 0 : delta;
+      if (delta > 0) { const result = revokeProduct(a, p, key, delta); if (p.kind === 'pass') revokedShards = result.revokedShards; p.revoked = target; await tx.put(key, p); await tx.put('account:' + a.id, a); }
+      await tx.delete('consume:' + key.slice(9)); return { received: true, refunded: true, revokedShards };
     });
   }
   async googleWebhook(req, b) {

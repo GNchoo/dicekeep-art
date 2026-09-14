@@ -1,0 +1,16 @@
+#mail-admin{width:min(660px,calc(100vw - 24px));max-height:calc(100dvh - 32px);box-sizing:border-box;padding:20px;color:#f1e5c7;background:#211e29;border:1px solid #877147;border-radius:16px;font:14px/1.65 'Noto Sans KR',sans-serif;overflow:auto;overflow-wrap:anywhere}
+#mail-admin{margin:auto}
+#mail-admin::backdrop{background:#100f19c9}
+#mail-admin [hidden]{display:none!important}
+#mail-admin header{display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:-20px;z-index:1;background:#211e29;padding:12px 0;border-bottom:1px solid #6b5b44}
+#mail-admin h2{font-size:21px;margin:0}#mail-admin h3{font-size:18px}
+#mail-admin button{font:inherit;min-height:44px;padding:8px 12px;border:1px solid #806d46;border-radius:8px;background:#342e39;color:#f9e6b0;cursor:pointer}
+#mail-admin button:disabled{opacity:.5;cursor:wait}
+.mail-admin-actions,.mail-admin-fields{display:flex;gap:8px}.mail-admin-fields>*{min-width:0;flex:1}
+.mail-admin-list{display:grid;gap:8px;max-height:190px;overflow:auto;margin:16px 0}.mail-admin-list button{text-align:left}
+#mail-admin-form{display:grid;gap:14px}#mail-admin-form label{display:grid;gap:6px}
+#mail-admin input,#mail-admin textarea,#mail-admin select{box-sizing:border-box;width:100%;min-height:44px;padding:10px;border:1px solid #746347;border-radius:6px;font:inherit;color:#f4e8d0;background:#17151e}
+#mail-admin textarea{resize:vertical}.mail-admin-body{white-space:pre-wrap}.mail-admin-status{color:#f1ce8a}
+.mail-admin-preview:not(:empty){border-top:1px solid #6b5b44;margin-top:20px;padding-top:12px}
+#mail-admin-publish{background:#d1b36b;color:#1b1720;font-weight:bold}#mail-admin-cancel{color:#ffc0ae}
+#mail-admin :focus-visible{outline:2px solid #efd78a;outline-offset:2px}

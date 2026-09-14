@@ -12,6 +12,8 @@
 <link rel="preload" as="image" href="ui/title-keyart-p.jpg?v=91" media="(max-aspect-ratio: 3/4)" fetchpriority="high" />
 <link rel="preload" as="image" href="ui/title-keyart-l.jpg?v=91" media="(min-aspect-ratio: 3001/4000)" fetchpriority="high" />
 <link rel="stylesheet" href="style.css?v=116" />
+<link rel="stylesheet" href="rewards.css?v=117" />
+<link rel="stylesheet" href="mail-admin.css?v=117" />
 <link rel="icon" href="ui/gold.png" />
 </head>
 <body>
@@ -65,6 +67,7 @@
             <button id="hub-single" class="big-btn primary"><span class="bi" data-icon="dice">&#127922;</span>싱글플레이<small>인피니티 · 스테이지 50</small></button>
             <button id="hub-multi" class="big-btn"><span class="bi" data-icon="users">&#128101;</span>멀티플레이<small>2~4인 인피니티 · 먼저 완주하면 1위</small></button>
             <button id="btn-shop" class="big-btn"><span class="bi" data-icon="shop">&#128722;</span>상점<small>젬 상점</small></button>
+            <button id="btn-rewards-open" class="big-btn" type="button">출석 · 우편 · 성장 패스<small>누적 보상 · 기한 없는 무료 성장</small></button>
           </div>
           <div class="gem-chip big"><span class="gem-ico">&#128142;</span><b id="lobby-gems">0</b><span class="gem-lbl">젬</span></div>
         </div>
@@ -147,6 +150,7 @@
           <section id="commerce-shop" class="commerce-shop" aria-label="계정 상점">
             <h3>계정 상점</h3>
             <p id="commerce-account">게스트 · 이 기기에 무료 진행 저장</p>
+            <p id="commerce-account-id" class="commerce-policy" style="overflow-wrap:anywhere;user-select:text"></p>
             <div class="commerce-account-actions"><button id="commerce-signin" type="button">Google 계정 연결</button><button id="commerce-signout" type="button" hidden>로그아웃</button><button id="commerce-restore" type="button" disabled>구매·잔액 다시 확인</button></div>
             <div id="commerce-google"></div>
             <p class="commerce-policy">순수운빨의 확률과 전투에는 구매 효과가 적용되지 않습니다. 구매한 조각은 무료 플레이로 얻는 조각과 동일하며, 원하는 주사위를 확정 해금·강화할 때 사용합니다.</p>
@@ -325,16 +329,20 @@
 <script src="deck-rules.js?v=112"></script>
 <script src="tree-rules.js?v=112"></script>
 <script src="progression.js?v=116"></script>
+<script src="liveops-rules.js?v=117"></script>
 <script src="deck-ui.js?v=116"></script>
 <script src="run-save.js?v=116"></script>
 <script src="cosmetics.js?v=101"></script>
 <script src="commerce-config.js?v=101"></script>
-<script src="commerce-client.js?v=116"></script>
-<script src="commerce-ui.js?v=116"></script>
+<script src="commerce-client.js?v=117"></script>
+<script src="rewards-client.js?v=117"></script>
+<script src="mail-admin.js?v=117"></script>
+<script src="rewards-ui.js?v=117"></script>
+<script src="commerce-ui.js?v=117"></script>
 <script src="directional-art.js?v=110"></script>
 <script src="extreme-art.js?v=110"></script>
 <script src="infinity-art.js?v=107"></script>
 <script src="combat-motion.js?v=109"></script>
-<script src="game.js?v=116"></script>
+<script src="game.js?v=117"></script>
 </body>
 </html>

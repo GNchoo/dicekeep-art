@@ -100,12 +100,13 @@ for(const mode of ['duel','coop']) {
     const f=fixture(mode),P=require('../../progression.js');
     delete f.context.DKNET.room.game.battle.rewardVersion;delete f.context.DKNET.room.game.battle.ruleVersion;delete f.context.DKNET.room.game.battle.rules;
     const info=f.context.mpRunInfo(f.message);f.context.startInfinity(mode,info,null);f.context.S.inf.accountTicket=null;
-    f.context.PROGRESSION=P;f.context.SAVE={progression:P.defaultProfile()};f.context.SAVE_KEY='test-guest-save';
+    f.context.PROGRESSION=P;f.context.LIVEOPS=require('../../liveops-rules.js');f.context.SAVE={progression:P.defaultProfile(),liveops:f.context.LIVEOPS.defaultState()};f.context.SAVE_KEY='test-guest-save';
     const before=copy(f.context.SAVE.progression),stored=[];f.context.localStorage={setItem:(key,value)=>stored.push({key,value:JSON.parse(value)})};
     const latest=f.end();await flush();
     assert.equal(f.context.S.phase,'over');assert.equal(stored.length,1);assert.equal(f.calls.queue.length,0);assert.equal(f.calls.finish.length,0);
     assert.equal(f.context.S.inf.settledResult.shards,0);assert.equal(f.context.S.inf.settledResult.collectionRewards.gold,0);
     assert.equal(f.context.SAVE.progression.shards,before.shards);assert.deepEqual(f.context.SAVE.progression.collection,before.collection);
+    assert.equal(f.context.SAVE.liveops.pass.xp,0);assert.equal(stored[0].value.liveops.pass.xp,0);
     assert.equal(f.context.SAVE.progression.records[mode].runs.length,1);assert.equal(f.context.SAVE.progression.records[mode].clears,1);
     assert.ok(f.calls.overlay.at(-1).body.includes('이전 시범전'));f.context.battleFinish({battle:latest});assert.equal(stored.length,1);
     cases.push({mode,case:'legacy/no-rewards',pass:true});

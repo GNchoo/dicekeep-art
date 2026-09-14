@@ -2,6 +2,8 @@
 
 Google 로그인, 서버 성장 프로필, 서버 가격의 Toss 결제, Google Play 일회성 구매 검증을 구현합니다. 기본은 `PAYMENT_MODE=disabled`이며 설정되지 않은 결제는 차단합니다. 실제 서비스 계약·키·상품 등록·운영 공개 정보가 아직 제공되지 않아 **실결제 활성화와 배포는 완료되지 않았습니다**. 검증은 가짜 provider 응답 및 로컬 workerd/SQLite로 수행하며 실제 청구를 만들지 않습니다.
 
+출석·영구 무료/유료 패스·운영 우편의 API, 관리자 설정, 환불 회계와 검증 결과는 [LIVEOPS.md](LIVEOPS.md)에 정리했습니다.
+
 ## 실행과 파일
 
 저장소 루트에서:
@@ -13,7 +15,7 @@ npm test --prefix commerce
 npm run test:worker --prefix commerce
 ```
 
-`build.mjs`는 루트 `progression.js`를 LF로 정규화하고 SHA를 기록한 ESM wrapper `src/progression.mjs`를 만듭니다. `npm test`는 두 파일의 불일치를 먼저 거부합니다. 성장 규칙은 복제하여 별도 수정하지 않습니다. Worker 진입점은 `src/index.mjs`, 단일 권위 원장은 `src/ledger.mjs`, 공급자 API는 `src/providers.mjs`, 신원 검증은 `src/auth.mjs`입니다.
+`build.mjs`는 루트 성장 규칙과 `liveops-rules.js`를 LF로 정규화하고 SHA를 기록한 ESM wrapper `src/progression.mjs`, `src/liveops-rules.mjs`를 만듭니다. `npm test`는 원본과 wrapper 불일치를 먼저 거부합니다. `--liveops-only`는 출석·패스 wrapper만 생성합니다. Worker 진입점은 `src/index.mjs`, 원장은 `src/ledger.mjs`, 출석·우편 서비스는 `src/liveops.mjs`, 패스 영수증 회계는 `src/pass-economy.mjs`입니다.
 
 `wrangler.jsonc`는 SQLite Durable Object를 설정하며 공개 workers.dev 주소를 자동으로 열지 않습니다. Wrangler `deploy --dry-run`은 번들 확인 용도로만 사용했습니다. `test:worker`는 설치된 Wrangler의 Miniflare/workerd를 사용하고 **모든 provider 요청을 메모리 fixture로 가로챕니다**. 실제 로그인 키나 결제 키를 테스트에 넣지 마세요.
 
@@ -39,14 +41,14 @@ npm run test:worker --prefix commerce
 
 - `shards200`: 조각200, 웹 1,100 KRW, Play `dicekeep.shards200`.
 - `shards600`: 조각600, 웹 3,300 KRW, Play `dicekeep.shards600`.
-- `shards2000`: 조각2,000, 웹 9,900 KRW, Play `dicekeep.shards2000`.
+- `passFounders`: 영구 창립자 성장 패스, 웹 2,900 KRW, Play `dicekeep.pass_founders`, `kind:'pass'`, `passId:'founders'`. 구독·기간 만료가 없습니다.
 - `skinRoyal`, `skinFrost`, `skinEmber`: 각 웹 2,900 KRW. 각각 `royal`, `frost`, `ember` 주사위 재질+1~20성 타워 외형 묶음이며 Play ID는 `dicekeep.skin_royal`, `dicekeep.skin_frost`, `dicekeep.skin_ember`입니다.
 
-이전 `shards60` 상품은 신규 상점/운영 주문에서 제외하고 과거 영수증 검증·지급용으로 보존한다. 이전에 생성한 웹 주문은 주문에 저장된 금액과 지급량을 따른다.
+이전 `shards60`, `shards2000` 상품은 신규 상점/운영 주문에서 제외하고 과거 영수증 검증·지급용으로 보존한다. 이전에 생성한 웹 주문은 주문에 저장된 금액과 지급량을 따른다.
 
 경제 버전 2는 Lv20 이후 업그레이드 비용을 낮춘다. 로그인과 인증 요청에서 기존 투자 차액을 무료 잔액으로 한 번만 돌려주며 원장 트랜잭션에서 버전·레벨·잔액을 함께 저장한다. 원래 유료 잔액은 그대로이고 기존 환불 부채가 있으면 적립 규칙에 따라 먼저 상환한다.
 
-조각은 `kind:'currency'` 소모품, 스킨은 `kind:'cosmetic'` 비소모품입니다. Play의 실제 가격·상품/구매옵션은 Play Console 등록 결과가 기준입니다. 이 초안 가격은 상품 등록·사업자 승인 완료를 의미하지 않습니다.
+조각은 `kind:'currency'` 소모품, 스킨과 패스는 비소모품입니다. Play의 실제 가격·상품/구매옵션은 Play Console 등록 결과가 기준입니다. 이 초안 가격은 상품 등록·사업자 승인 완료를 의미하지 않습니다.
 
 ## 결제와 환불 무결성
 

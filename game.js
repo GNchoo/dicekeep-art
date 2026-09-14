@@ -1438,6 +1438,7 @@ const SAVE_KEY = 'DKSAVE';
 const PROGRESSION = window.DKPROGRESSION;
 const BATTLE = window.DKBATTLE;
 const COMMERCE = window.DKCOMMERCE;
+const LIVEOPS = window.DKLIVEOPS;
 const progressionProfile = () => (COMMERCE && COMMERCE.profile()) || SAVE.progression;
 const growthRun = () => S.mode === 'infinity' && !!(S.inf && S.inf.growthSnapshot && S.inf.growthSnapshot.growth);
 const DECK = window.DKDECKRULES;
@@ -1458,7 +1459,7 @@ function defaultSave() {
   const skins = {}, equip = {};
   for (let f = 1; f <= 6; f++) { skins[f] = ['a']; equip[f] = 'a'; }
   return { cleared: [], gems: 40, unlockedTowers: [1, 2, 3], unlockedSkins: skins, equippedSkin: equip, infBest: 0, infRuns: [], infMilestones: [], infClears: 0,
-           progression: PROGRESSION.defaultProfile(), accountGemRuns: [], name: '', mp: { games: 0, wins: 0, best: 0 }, audio: { music: 0.6, sfx: 0.8, muted: false } };
+           progression: PROGRESSION.defaultProfile(), liveops: LIVEOPS.defaultState(), accountGemRuns: [], name: '', mp: { games: 0, wins: 0, best: 0 }, audio: { music: 0.6, sfx: 0.8, muted: false } };
 }
 let SAVE = defaultSave();
 function loadSave() {
@@ -1481,6 +1482,7 @@ function loadSave() {
       mp: Object.assign(d.mp, (s.mp && typeof s.mp === 'object') ? s.mp : {}),
       audio: Object.assign(d.audio, (s.audio && typeof s.audio === 'object') ? s.audio : {}),
       progression: PROGRESSION.sanitize(s.progression, s),
+      liveops: LIVEOPS.sanitize(s.liveops),
       accountGemRuns: Array.isArray(s.accountGemRuns) ? s.accountGemRuns.filter(x => typeof x === 'string' && x.length <= 256).slice(-64) : [],
     };
     const cl = (v, dv) => (typeof v === 'number' && isFinite(v) ? Math.max(0, Math.min(1, v)) : dv);
@@ -2976,11 +2978,14 @@ function settleInfRun(won) {
     removeRunSave(inf.runId);
     return res;
   }
-  const settled = PROGRESSION.settle(profile, {
+  const run = {
     id: S.inf.runId, mode: S.inf.recordKey, wave, kills: S.inf.kills,
     won: !!won && !!S.inf.clearWave && wave >= S.inf.clearWave,
     date: new Date().toISOString(), elapsed: Math.max(0, (performance.now() - S.inf.startedAt) / 1000),
-  });
+  };
+  const settled = PROGRESSION.settle(profile, run);
+  const pass = LIVEOPS.awardRunXp(SAVE.liveops, run, settled);
+  if (pass.ok) SAVE.liveops = pass.nextState;
   const gems = settled.ok && !settled.duplicate ? r.gems + (won ? INF.clearGems : 0) : 0;
   if (settled.ok && !settled.duplicate) {
     SAVE.gems = Math.min(1e9, SAVE.gems + gems);
@@ -2989,6 +2994,7 @@ function settleInfRun(won) {
   const res = { wave, gems, shards: settled.shards || 0, collectionRewards:settled.collectionRewards||{gold:0,packs:0}, isBest, newly: r.newly, record };
   S.inf.settledResult = res;
   saveSave();
+  window.DKREWARDS?.changed();
   removeRunSave(S.inf.runId);
   return res;
 }
@@ -6068,6 +6074,7 @@ if (window.DKNET) {
 }
 
 document.addEventListener('keydown', ev => {
+  if (document.querySelector('dialog[open]')) return;
   if (document.activeElement === chatInput) return;                   // 채팅 입력 중에는 단축키를 막는다
   if (document.activeElement === $('mp-chat-input')) return;
   if (ev.key === 'Enter' && chatOpen()) { ev.preventDefault(); return; } // 멀티: Enter 로 채팅
@@ -6135,6 +6142,8 @@ window.DKAPP = {
   saveRun: () => { try { persistRun(); if (growthRun() && !S.net && S.phase === 'playing') openMenu(); } catch (_) {} },
   toast,
   back() {
+    const dialogs = document.querySelectorAll('dialog[open]');
+    if (dialogs.length) { dialogs[dialogs.length - 1].close(); return true; }
     if (settingsOpen()) { closeSettings(); return true; }
     const help = $('inf-help'); if (help && !help.classList.contains('hidden')) { closeInfHelp(); return true; }
     if (menuOpen()) { closeMenu(); return true; }
@@ -6513,8 +6522,11 @@ function battleFinish(m) {
         // Persist the new wallet before adopting it or deleting the checkpoint.
         const profile = structuredClone(SAVE.progression), settled = PROGRESSION.settle(profile,run);
         if (!settled.ok) throw new Error('전투 보상을 계산하지 못했습니다.');
-        localStorage.setItem(SAVE_KEY,JSON.stringify({...SAVE,progression:profile}));
-        SAVE.progression = profile; Object.assign(res,settled);
+        const pass = LIVEOPS.awardRunXp(SAVE.liveops,run,settled);
+        if (!pass.ok) throw new Error('패스 경험치를 계산하지 못했습니다.');
+        localStorage.setItem(SAVE_KEY,JSON.stringify({...SAVE,progression:profile,liveops:pass.nextState}));
+        SAVE.progression = profile; SAVE.liveops = pass.nextState; Object.assign(res,settled);
+        window.DKREWARDS?.changed();
       }
     } catch (error) {
       S.phase = 'over';
@@ -7437,6 +7449,20 @@ function drawLoading(pr) {
   window.DKsupporter=Object.freeze({state:supporterState,use:useSupporter,tick:updateSupporter});
   window.DKrange = towerRange;                     // 테스트 훅
   window.DKSAVE = SAVE;
+  window.DKREWARDS.configure({
+    canClaim: () => ['lobby','shop','title'].includes(S.phase) && !S.net,
+    readGuest: () => {
+      const raw = localStorage.getItem(SAVE_KEY);
+      const latest = raw ? JSON.parse(raw) : SAVE;
+      return {...SAVE,...latest,progression:PROGRESSION.sanitize(latest.progression,latest),liveops:LIVEOPS.sanitize(latest.liveops)};
+    },
+    commitGuest: next => {
+      try { localStorage.setItem(SAVE_KEY,JSON.stringify(next)); }
+      catch (_) { throw new Error('저장 공간이 부족합니다. 공간을 확보한 뒤 다시 받아 주세요. 보상은 아직 수령하지 않았습니다.'); }
+      Object.assign(SAVE,next);
+    },
+    changed: () => { if (S.phase === 'lobby') { renderLobby(); renderDeck(false); } }
+  });
   S.phase = 'title';
   const loadEl = $('ov-load');
   if (loadEl) loadEl.classList.add('hidden');

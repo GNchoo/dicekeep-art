@@ -14,7 +14,7 @@ console.log('VM tests use fake API/provider functions only; browser tests block 
 const copy = value => value === undefined ? undefined : JSON.parse(JSON.stringify(value));
 const profile = shards => Object.assign(P.defaultProfile(), { shards });
 const accountSession = { token: 'test-only-token', accountId: 'test-account-A', obfuscatedAccountId: 'test-obfuscated-A' };
-const products = [{ sku: 'shards600', shards: 600, amount: 9900, currency: 'KRW', playProductId: 'test.shards600' }];
+const products = [{ sku: 'shards600', kind: 'currency', shards: 600, amount: 9900, currency: 'KRW', playProductId: 'test.shards600' }];
 const config = { purchasesEnabled: true, paymentMode: 'test', googleClientId: 'test-google-client', products };
 const deferred = () => { let resolve; const promise = new Promise(r => { resolve = r; }); return { promise, resolve }; };
 
@@ -163,6 +163,49 @@ test('account run settlement waits for server, persists retry and removes it onl
   assert.deepEqual(JSON.parse(f.localStorage.getItem('dk_commerce_pending_v1')), []);
   f.C.signOut(); assert.equal(f.C.profile(), null); assert.equal(f.C.linked(), false);
   assert.equal(f.localStorage.getItem('DKSAVE'), guest);
+});
+
+function rewardBridge(f) {
+  const L=require('../liveops-rules.js');
+  Object.assign(f.sandbox,{DKLIVEOPS:L,structuredClone,navigator:{}});
+  vm.runInContext(fs.readFileSync(path.join(repo,'rewards-client.js'),'utf8'),f.sandbox,{filename:'rewards-client.js'});
+  const R=f.sandbox.DKREWARDS;
+  R.configure({canClaim:()=>f.sandbox.DK.phase==='lobby',readGuest:()=>({...JSON.parse(f.localStorage.getItem('DKSAVE')),liveops:L.defaultState()}),commitGuest:()=>{throw Error('account operation touched guest save');}});
+  return R;
+}
+function liveopsFixture() {
+  const L=require('../liveops-rules.js'),now=Date.parse('2030-01-02T03:00:00Z');
+  return {profile:profile(703),wallet:{free:703,paid:0,debt:0},cosmetics:{owned:['base'],equipped:'base'},liveops:L.view(L.defaultState(),{now}),inbox:[],canAdmin:false,serverNow:now};
+}
+test('reward bridge uses displayed server day, adopts only server balances, and leaves guest data untouched',async()=>{
+  const value=liveopsFixture();
+  const f=fixture({router:call=>['/liveops','/attendance/claim'].includes(call.path)?{body:value}:undefined});await f.C.init();const R=rewardBridge(f),saved=f.localStorage.getItem('DKSAVE');
+  await R.list();await R.claimAttendance();const call=f.calls.find(c=>c.path==='/attendance/claim');
+  assert.equal(call.data.day,'2030-01-02');assert.ok(call.data.requestId);assert.match(call.headers.Authorization,/Bearer /);
+  assert.equal(f.C.profile().shards,703);assert.equal(f.localStorage.getItem('DKSAVE'),saved);
+  await assert.rejects(R.buyPass(),/준비/);assert.equal(f.calls.filter(c=>c.path==='/orders').length,0);
+});
+test('logout or entering combat during reward lookup cannot redirect a claim to another context',async()=>{
+  for(const change of ['logout','combat']) {
+    const wait=deferred();const f=fixture({router:call=>call.path==='/liveops'?wait.promise:call.path==='/auth/logout'?{body:{ok:true}}:undefined});
+    await f.C.init();const R=rewardBridge(f),pending=R.claimAttendance();
+    if(change==='logout')f.C.signOut();else f.sandbox.DK.phase='playing';
+    wait.resolve({body:liveopsFixture()});await assert.rejects(pending);
+    assert.equal(f.calls.filter(c=>c.path==='/attendance/claim').length,0);
+  }
+});
+test('Android pass purchase stays disabled until actual store product price is available',async()=>{
+  const pass={sku:'passFounders',kind:'pass',passId:'founders',playProductId:'dicekeep.pass_founders',amount:2900,shards:0};
+  const f=fixture({native:true,router:call=>call.path==='/config'?{body:{...config,products:[pass]}}:call.path==='/liveops'?{body:liveopsFixture()}:undefined});
+  await f.C.init();const R=rewardBridge(f);assert.equal((await R.list()).pass.purchaseEnabled,false);await assert.rejects(R.buyPass(),/준비/);assert.equal(f.nativeCalls.length,0);
+});
+test('operator API sends only the preview id, keeps publish token, and cannot bypass server authorization',async()=>{
+  const f=fixture({router:call=>call.path.startsWith('/admin/mail/')?{status:403,body:{error:'admin-required'}}:undefined});await f.C.init();
+  await assert.rejects(f.C.adminMail('preview',{id:'mail_test',requestId:'ignored'}));
+  assert.deepEqual(f.calls.at(-1).data,{id:'mail_test'});
+  await assert.rejects(f.C.adminMail('publish',{id:'mail_test',previewToken:'server-token',requestId:'fixed-request'}));
+  assert.deepEqual(f.calls.at(-1).data,{id:'mail_test',previewToken:'server-token',requestId:'fixed-request'});
+  assert.equal(f.C.profile().shards,700);await assert.rejects(f.C.adminMail('delete',{}));
 });
 
 test('battle proofs persist before the board is cleared; pending service failures do not block the next match or lose old claims', async () => {

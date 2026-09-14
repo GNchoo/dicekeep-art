@@ -3,7 +3,7 @@
   "main": "src/index.mjs",
   "compatibility_date": "2026-09-08",
   "workers_dev": false,
-  "vars": { "PAYMENT_MODE": "disabled", "ENABLE_LIVE_PURCHASES": "false" },
+  "vars": { "PAYMENT_MODE": "disabled", "ENABLE_LIVE_PURCHASES": "false", "ADMIN_ACCOUNT_IDS": "" },
   "durable_objects": { "bindings": [{ "name": "COMMERCE", "class_name": "CommerceLedger" }, { "name": "GAME_ROOMS", "class_name": "Room", "script_name": "dicekeep-net" }] },
   "migrations": [{ "tag": "v1", "new_sqlite_classes": ["CommerceLedger"] }]
 }

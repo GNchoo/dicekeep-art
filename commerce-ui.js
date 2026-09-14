@@ -73,7 +73,7 @@
     $('commerce-signin').disabled = !state.configured || !cfg || !cfg.googleClientId;
     $('commerce-availability').textContent = !enabled ? '상점 준비 중 · 현재 실제 결제는 청구되지 않습니다.' : cfg.paymentMode === 'test' ? '테스트 결제 · 실제 판매 전 검증 환경' : '확정 수량 구매 · 결제 전 최종 금액을 확인해 주세요.';
     const container = $('commerce-products'); container.replaceChildren();
-    for (const product of list.filter(p => p.kind !== 'cosmetic')) {
+    for (const product of list.filter(p => p.kind === 'currency')) {
       const nativeProduct = playProducts && playProducts.find(p => p.productId === product.playProductId);
       const card = document.createElement('article'); card.className = 'commerce-product';
       const name = document.createElement('h4'); name.textContent = `성장 조각 ${product.shards.toLocaleString()}개`;
@@ -85,6 +85,15 @@
       button.addEventListener('click', () => reviewPurchase(product, price));
       card.append(name, detail, button); container.appendChild(card);
     }
+    if (window.DKREWARDSUI) {
+      const card = document.createElement('article'); card.className = 'commerce-product';
+      const name = document.createElement('h4'); name.textContent = '기한 없는 성장 패스';
+      const detail = document.createElement('p'); detail.textContent = '무료 20단계 · 선택 구매 2,900원 · 조각 200개와 왕실 외형 · 달성 후 수령 · 자동 갱신 없음';
+      const button = document.createElement('button'); button.type = 'button'; button.textContent = '무료 보상 · 패스 보기'; button.onclick = () => window.DKREWARDSUI.open('pass');
+      card.append(name,detail,button); container.append(card);
+    }
+    const accountInfo = $('commerce-account-id');
+    if (accountInfo) accountInfo.textContent = state.accountId ? '계정 ID: ' + state.accountId : '';
     renderCosmetics(list, state, enabled, profile);
     if (state.native && enabled && !playProducts && !querying) {
       querying = true;

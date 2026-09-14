@@ -42,6 +42,7 @@ test('trusted result settles once after room expiry, pays the same F2P formula a
   const updated=await f.storage.get('account:'+a.accountId);assert.equal(updated.wallet.paid,17);assert.equal(updated.wallet.free-account.wallet.free,rewards.shards);assert.equal(updated.activeRun,newer.ticket);
   assert.equal(updated.profile.records.coop.runs.length,1);assert.deepEqual(updated.profile.tree,expected.tree);
   assert.deepEqual(updated.profile.collection,expected.collection);
+  assert.equal(updated.liveops.pass.xp,30,'120 server active seconds grants 30 pass XP only once');
   f.env.GAME_ROOMS=undefined;assert.equal((await f.call('/runs/settle',{ticket,battle:f.proof},again.token)).body.duplicate,true,'durable commerce receipt no longer needs room service');
 });
 test('claim followed by a failed commerce write retries without losing rewards or paying twice',async()=>{
@@ -49,8 +50,10 @@ test('claim followed by a failed commerce write retries without losing rewards o
   await f.finish();const transaction=f.storage.transaction.bind(f.storage);let fail=true;
   f.storage.transaction=fn=>transaction(async tx=>{const result=await fn(tx);if(fail&&(await tx.get('run:'+ticket))?.status==='settled'){fail=false;throw Error('simulated ledger write failure');}return result;});
   const first=await f.call('/runs/settle',{ticket,battle:f.proof},a.token);assert.equal(first.status,500);assert.equal((await f.storage.get('run:'+ticket)).status,undefined);
+  assert.equal((await f.storage.get('account:'+a.accountId)).liveops.pass.xp,0,'failed durable write cannot retain XP');
   const retried=await f.call('/runs/settle',{ticket,battle:f.proof},a.token);assert.equal(retried.status,200);assert.equal(retried.body.duplicate,false);
   assert.equal((await f.call('/runs/settle',{ticket,battle:f.proof},a.token)).body.duplicate,true);
+  assert.equal((await f.storage.get('account:'+a.accountId)).liveops.pass.xp,30);
 });
 test('missing binding and old practice rooms fail without account or paid-wallet mutation',async()=>{
   const f=await fixture(),a=await f.login(),before=await f.storage.get('account:'+a.accountId);
