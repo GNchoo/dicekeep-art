@@ -10,7 +10,7 @@ const net = process.env.NET || 'ws://localhost:8788', base = process.env.E2E_BAS
       const p = await context.newPage(); pages.push(p); p.on('pageerror', e => errors.push(e.message));
       if (i === 2) await p.addInitScript(() => { window.Capacitor = { isNativePlatform: () => true, getPlatform: () => 'android' }; });
       await p.addInitScript(() => { localStorage.setItem('dk_coachDone', '1'); localStorage.setItem('dk_infHelpSeen', '1'); });
-      await p.route('**/game.js*', async route => { const r = await route.fetch(); await route.fulfill({ response: r, body: (await r.text()).replace('window.DK = S;', 'window.__mpRecovery={persistRun,readRunSave,saveSave,towerAwakened,withView,badgeLabels:t=>{const labels=[],original=ctx.fillText;ctx.fillText=txt=>labels.push(txt);try{drawStarBadge(t);}finally{ctx.fillText=original;}return labels;}};\nwindow.DK = S;') }); });
+      await p.route('**/game.js*', async route => { const r = await route.fetch(); await route.fulfill({ response: r, body: (await r.text()).replace('window.DK = S;', 'window.__mpRecovery={persistRun,readRunSave,saveSave,towerAwakened,drawAwakeningAura,withView,badgeLabels:t=>{const labels=[],original=ctx.fillText;ctx.fillText=txt=>labels.push(txt);try{drawStarBadge(t);}finally{ctx.fillText=original;}return labels;}};\nwindow.DK = S;') }); });
       await p.goto(new URL('index.html?net=' + encodeURIComponent(net), base).href);
       await p.waitForFunction(() => window.DK?.phase === 'title', null, { timeout: 120000 }); await p.click('#ov-btn');
       await p.evaluate(i => {
@@ -49,8 +49,8 @@ const net = process.env.NET || 'ws://localhost:8788', base = process.env.E2E_BAS
     await a.waitForFunction(()=>DKMP.viewState().towers.length===3&&DKMP.viewState().towers.some(t=>t.face===6&&t.pips===7));
     assert.deepEqual(await a.evaluate(()=>DKMP.viewState().towers.map(t=>[t.face,t.pips,t.deckSystem,t.def.name])),[[6,7,1,'축재 주사위'],[14,3,1,'새싹 주사위'],[19,2,1,'군집 주사위']]);
     assert.equal(before.tree.awakenings[6],false,'sender deliberately has no income awakening');
-    assert.deepEqual(await a.evaluate(()=>{let result;__mpRecovery.withView(()=>{const t=DK.towers.find(t=>t.face===6);result={localResearch:DK.inf.growthSnapshot.awakenings[6],awake:__mpRecovery.towerAwakened(t),labels:__mpRecovery.badgeLabels(t)};});return result;}),{localResearch:true,awake:false,labels:['7눈금']},'real spectator draw never infers a remote awakening from the local account');
-    report.checks.push('spectator with local income awakening renders an unresearched remote seven-pip income tower without a false awakening label or ring');
+    assert.deepEqual(await a.evaluate(()=>{let result;__mpRecovery.withView(()=>{const t=DK.towers.find(t=>t.face===6);result={localResearch:DK.inf.growthSnapshot.awakenings[6],awake:__mpRecovery.towerAwakened(t),aura:__mpRecovery.drawAwakeningAura(t),labels:__mpRecovery.badgeLabels(t)};});return result;}),{localResearch:true,awake:false,aura:false,labels:[]},'real spectator draw uses text-free pips and never infers a remote awakening aura from the local account');
+    report.checks.push('spectator renders text-free pips without an awakening aura for an unresearched remote seven-pip income tower despite local awakening research');
     assert.deepEqual(await a.evaluate(()=>{const t=DK.towers[0],gold=DK.gold,awake=__mpRecovery.towerAwakened(t);DKdeckTick(12);return{awake,income:DK.gold-gold,face:t.face,pips:t.pips};}),{awake:true,income:70,face:14,pips:7},'watching a remote board must not disable the local awakened growth income');
     report.checks.push('local seven-pip awakened growth continues its 12-second SP production while watching another player');
     await a.screenshot({path:path.join(out,'desktop-spectator-pips.png')});await a.evaluate(()=>DKMP.viewExit());

@@ -3773,10 +3773,56 @@ function drawTopper(t) {
   ctx.restore();
 }
 
-// 성 타워: 밴드색 오라 링 + 머리 위 ★n 배지 (19·20 은 무지개)
+// Awakening is a ground aura, separate from the unchanged tower sprite.
+let awakeningGlow = null;
+function drawAwakeningAura(t) {
+  if (!towerAwakened(t)) return false;
+  if (!awakeningGlow) {
+    awakeningGlow = document.createElement('canvas'); awakeningGlow.width = awakeningGlow.height = 128;
+    const g = awakeningGlow.getContext('2d'), light = g.createRadialGradient(64,64,8,64,64,64);
+    light.addColorStop(0,'rgba(255,243,171,0.64)'); light.addColorStop(.45,'rgba(255,193,66,0.38)'); light.addColorStop(1,'rgba(255,163,28,0)');
+    g.fillStyle=light; g.fillRect(0,0,128,128);
+  }
+  const phase = S.time * .65 + t.spot * .7;
+  ctx.save(); ctx.translate(t.x,t.y+3);
+  ctx.drawImage(awakeningGlow,-55,-29,110,58);
+  ctx.shadowColor='#ffc957'; ctx.shadowBlur=10;
+  ctx.strokeStyle='#ffe69a'; ctx.lineWidth=3;
+  ctx.beginPath(); ctx.ellipse(0,0,40,18,0,0,Math.PI*2); ctx.stroke();
+  ctx.strokeStyle='rgba(255,201,85,0.65)'; ctx.lineWidth=1.5;
+  ctx.beginPath(); ctx.ellipse(0,0,47,23,0,0,Math.PI*2); ctx.stroke();
+  // Slow orbiting sparks and rising motes carry motion; no body warp or scaling.
+  for (let i=0;i<4;i++) {
+    ctx.globalAlpha=1;
+    const a=phase+i*Math.PI/2, x=Math.cos(a)*43, y=Math.sin(a)*20;
+    ctx.fillStyle='#fff3bd'; ctx.beginPath(); ctx.moveTo(x,y-4); ctx.lineTo(x+3,y); ctx.lineTo(x,y+4); ctx.lineTo(x-3,y); ctx.closePath(); ctx.fill();
+    const life=(S.time*.28+i*.25+t.spot*.11)%1;
+    ctx.globalAlpha=Math.sin(life*Math.PI)*.8;
+    ctx.fillRect((i%2?1:-1)*(20+i*3),-8-life*54,2.5,6);
+  }
+  ctx.restore(); return true;
+}
+
+const DECK_PIP_MARKS = [[],[[0,0]],[[-12,-9],[12,9]],[[-12,-9],[0,0],[12,9]],
+  [[-12,-9],[12,-9],[-12,9],[12,9]],[[-12,-9],[12,-9],[0,0],[-12,9],[12,9]],
+  [[-12,-9],[12,-9],[-12,0],[12,0],[-12,9],[12,9]],
+  [[-12,-9],[12,-9],[-12,0],[0,0],[12,0],[-12,9],[12,9]]];
+function drawDeckPips(t, scale=1) {
+  const awake=towerAwakened(t);
+  ctx.save(); ctx.translate(t.x,t.y+19); ctx.scale(scale,scale);
+  ctx.beginPath(); ctx.roundRect(-22,-17,44,34,6);
+  ctx.fillStyle='rgba(16,19,27,0.94)'; ctx.fill();
+  ctx.strokeStyle=awake?'#ffdf80':'#abbccc'; ctx.lineWidth=awake?2.5:1.5; ctx.stroke();
+  ctx.fillStyle=awake?'#fff0ae':'#f4f7ff';
+  for (const [x,y] of DECK_PIP_MARKS[DECK.pips(t)]) { ctx.beginPath(); ctx.arc(x,y,3.3,0,Math.PI*2); ctx.fill(); }
+  ctx.restore();
+}
+
+// Legacy star modes retain their original star badge; deck modes use pip icons.
 function starColor(def) { return def.rainbow ? `hsl(${(S.time * 90) % 360},95%,65%)` : def.color; }
 function drawStarBadge(t) {
-  const awake=towerAwakened(t),col = awake?'#ffdf8a':starColor(t.def);
+  if (deckRun() || t.deckSystem) return;
+  const col = starColor(t.def);
   const pulse = 0.5 + 0.5 * Math.sin(S.time * 4 + t.x * 0.01);
   ctx.save();
   ctx.translate(t.x, t.y + 6);
@@ -3788,7 +3834,7 @@ function drawStarBadge(t) {
   ctx.restore();
   ctx.save();
   ctx.font = uiFont(13); ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-  const txt = deckRun() || t.deckSystem ? `${DECK.pips(t)}눈금${awake?' · 각성':''}` : `★${t.face}`;
+  const txt = `★${t.face}`;
   const w = ctx.measureText(txt).width + 12, y = t.y - 112;
   ctx.fillStyle = 'rgba(10,8,14,0.82)'; ctx.beginPath(); ctx.roundRect(t.x - w / 2, y - 9, w, 18, 9); ctx.fill();
   ctx.strokeStyle = col; ctx.lineWidth = 1.5; ctx.stroke();
@@ -4121,6 +4167,7 @@ function draw() {
         ctx.fillStyle = 'rgba(0,0,0,0.34)'; ctx.fill();
         ctx.restore();
       }
+      drawAwakeningAura(t);
       if (mergeable) {
         drawMergeHalo(t, sp, hovered);
       } else {
@@ -4271,7 +4318,9 @@ function draw() {
   // 합체 레벨 점 — 개체 정렬 뒤에 한 번에 그린다.
   // 예전에는 타워마다 제 몸과 같이 그려서, 앞줄 타워가 뒷줄 타워의 점을 가려 몇 강인지 보이지 않았다.
   // 어두운 알약 배경을 깔아 무엇 위에 얹혀도 읽히게 한다.
+  const deckMarkerScale=Math.min(1,30*W/(44*Math.max(1,canvas.clientWidth)));
   for (const t of S.towers) {
+    if (deckRun() || t.deckSystem) { drawDeckPips(t,deckMarkerScale); continue; }
     const px = t.x, py = t.y + 15, w = 12 * (MAX_LVL - 1) + 16, h = 12;
     ctx.save();
     ctx.beginPath();
