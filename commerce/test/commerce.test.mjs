@@ -22,7 +22,10 @@ test('Google JWT signature, audience, issuer, expiration, subject and algorithm 
   assert.equal((await f.call('/auth/google', { idToken: tampered.join('.') })).status, 401);
 });
 test('profile server-created; raw bearer never stored; rotate/logout/expiry reject old sessions', async () => {
-  const f = await fixture(), a = await f.login(); assert.deepEqual(a.profile, PG.defaultProfile());
+  const f = await fixture(), a = await f.login(), expected = PG.defaultProfile();
+  assert.ok(Number.isSafeInteger(a.profile.collection.rng) && a.profile.collection.rng > 0 && a.profile.collection.rng <= 0xffffffff);
+  expected.collection.rng = a.profile.collection.rng; // Each new account receives its own persisted free-pack seed.
+  assert.deepEqual(a.profile, expected);
   assert.equal(JSON.stringify([...f.storage.data]).includes(a.token), false);
   assert.equal((await f.call('/auth/google', { idToken: await jwt(), profile: { shards: 9999 } })).status, 400);
   assert.equal((await f.call('/profile', undefined, a.token)).status, 200);

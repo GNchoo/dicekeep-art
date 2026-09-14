@@ -8,7 +8,8 @@ const { launchBrowser } = require('./browser.cjs');
 
 const repo = path.resolve(__dirname, '../..');
 const out = path.resolve(process.env.E2E_OUTPUT_DIR || path.join(repo, 'gen/e2e/game-modes'));
-const url = new URL('index.html', (process.env.E2E_BASE_URL || 'http://localhost:8138/').replace(/\/?$/, '/'));
+const url = new URL('index.html', (process.env.E2E_BASE_URL || 'http://localhost:8137/').replace(/\/?$/, '/'));
+assert.ok(['localhost', '127.0.0.1'].includes(url.hostname), 'integration QA must use a local server');
 url.searchParams.set('net', 'off');
 url.searchParams.set('v', Date.now());
 fs.mkdirSync(out, { recursive: true });
@@ -16,8 +17,8 @@ const report = { scope: 'Actual local game/UI and saved progression. Determinist
 const sha = value => crypto.createHash('sha256').update(value).digest('hex');
 function check(row, name, actual, expected) { assert.deepEqual(actual, expected, name); row.checks.push({ name, pass: true }); }
 async function ready(page) {
-  await page.waitForFunction(() => window.__modeQAError || (window.DK && DK.phase === 'title' && window.DKPROGRESSION), null, { timeout: 120000 });
-  const error = await page.evaluate(() => window.__modeQAError);
+  await page.waitForFunction(() => window.__modeQAError || /준비하지 못했습니다/.test(document.querySelector('#ov-load-txt')?.textContent || '') || (window.DK && DK.phase === 'title' && window.DKPROGRESSION), null, { timeout: 120000 });
+  const error = await page.evaluate(() => window.__modeQAError || (/준비하지 못했습니다/.test(document.querySelector('#ov-load-txt')?.textContent || '') ? document.querySelector('#ov-load-txt').textContent : null));
   if (error) throw new Error(error);
 }
 
@@ -43,6 +44,9 @@ async function boot(browser, viewport, row) {
   const context = await browser.newContext({ viewport });
   const page = await context.newPage();
   page.on('pageerror', e => row.errors.push(e.message));
+  row.console = []; row.failedRequests = [];
+  page.on('console', message => { if (['error', 'warning'].includes(message.type())) row.console.push({ type: message.type(), text: message.text() }); });
+  page.on('requestfailed', request => row.failedRequests.push({ url: request.url(), error: request.failure()?.errorText }));
   page.on('dialog', d => d.accept());
   await page.addInitScript(() => {
     localStorage.setItem('dk_coachDone', '1'); localStorage.setItem('dk_infHelpSeen', '1');
@@ -79,38 +83,28 @@ async function collection(page, row, dir) {
   row.lobbyLayout = await layout(page, ['#btn-inf-clear', '#btn-inf-build', '#btn-infinity', '#btn-deck-open']);
   check(row, 'three mode buttons fit without overlap', row.lobbyLayout.issues, []);
   await page.screenshot({ path: path.join(dir, 'lobby-three-modes.png'), fullPage: true });
-  await page.click('#btn-deck-open');
-  check(row, 'collection has 20 unique existing tower cards', await page.locator('#deck-grid .deck-card').count(), 20);
-  check(row, 'no shards cannot unlock card 7', await page.locator('[data-grow="7"]').isDisabled(), true);
-  check(row, 'five selected cards prevent selecting a sixth', await page.locator('[data-face="6"]').isDisabled(), true);
-  await page.click('[data-face="1"]');
-  check(row, 'four-card draft cannot save', await page.locator('#deck-save').isDisabled(), true);
-  await page.click('[data-face="6"]'); await page.click('#deck-save');
-  check(row, 'UI saves exactly five selected unlocked cards', await page.evaluate(() => DKSAVE.progression.deck), [2, 3, 4, 5, 6]);
-  // Test wallet funding only: subsequent spending uses actual UI handlers.
-  await page.evaluate(() => { DKSAVE.progression.shards = 100; });
-  await page.click('#btn-deck-open'); await page.click('#btn-deck-open');
-  await page.click('[data-grow="7"]'); await page.click('[data-grow="7"]');
-  check(row, 'UI unlock 80 + upgrade 10 debits once and persists', await page.evaluate(() => ({ shards: DKSAVE.progression.shards, level: DKSAVE.progression.levels[7], saved: JSON.parse(localStorage.getItem('DKSAVE')).progression.levels[7] })), { shards: 10, level: 2, saved: 2 });
-  row.deckLayout = await layout(page, ['#deck-grid', '#deck-save'], { cards: true });
-  check(row, 'collection buttons fit their card and save remains in flow', row.deckLayout.issues, []);
-  // The lobby itself scrolls; a screenshot of the tall panel clips against that
-  // ancestor. Keep real viewport captures at three scroll positions instead.
-  for (const [index, name] of [[0, 'top'], [8, 'middle'], [19, 'bottom']]) {
-    await page.locator('#deck-grid .deck-card').nth(index).scrollIntoViewIfNeeded();
-    await page.screenshot({ path: path.join(dir, 'collection-' + name + '.png') });
-  }
-  await page.reload(); await ready(page);
-  check(row, 'deck, shard wallet and level survive reload', await page.evaluate(() => ({ deck: DKSAVE.progression.deck, shards: DKSAVE.progression.shards, level: DKSAVE.progression.levels[7] })), { deck: [2, 3, 4, 5, 6], shards: 10, level: 2 });
-  await page.click('#ov-btn'); await page.evaluate(() => { DK.muted = true; DKlobbyView('single'); });
+  // Full collection editing/filters/pack UI is covered by deck-collection.cjs.
+  check(row, 'legacy record import receives a valid six-card starter collection', await page.evaluate(() => ({
+    owned: Object.values(DKSAVE.progression.collection.cards).filter(c => c.owned).length,
+    packs: DKSAVE.progression.collection.packs, deck: DKSAVE.progression.deck,
+  })), { owned: 6, packs: 3, deck: [1, 2, 3, 4, 5] });
+}
+
+async function combatFixture(page, deck = [1, 4, 8, 13, 20]) {
+  await page.evaluate(deck => {
+    const p = DKPROGRESSION.defaultProfile(DKSAVE.progression.legacy);
+    for (const c of DKDECKRULES.catalog) {
+      p.levels[c.id] = 1;
+      p.collection.cards[c.id] = { owned: true, class: c.baseClass + 3, copies: 0 };
+    }
+    p.deck = deck.slice();
+    p.collection.presets.forEach(preset => { preset.faces = deck.slice(); });
+    DKSAVE.progression = p;
+  }, deck);
 }
 
 async function modeDraws(page, row, dir) {
-  await page.evaluate(() => {
-    const p = DKPROGRESSION.defaultProfile(DKSAVE.progression.legacy);
-    for (let f = 1; f <= 20; f++) p.levels[f] = 200;
-    p.deck = [1, 4, 8, 13, 20]; DKSAVE.progression = p;
-  });
+  await combatFixture(page);
   for (const [mode, selector] of [['clear', '#btn-inf-clear'], ['build', '#btn-inf-build'], ['extreme', '#btn-infinity']]) {
     // Each case starts a new fixture run; recovery itself has a separate end-to-end suite.
     await page.evaluate(() => { DKlobby(); localStorage.removeItem('dk_growth_run_v1:guest'); DKlobbyView('single'); });
@@ -118,15 +112,31 @@ async function modeDraws(page, row, dir) {
     row.modes ??= {};
     row.modes[mode] = await page.evaluate(() => {
       DK.gold = 900000; DK.paused = true;
-      const t = { face: 1, lvl: 1, def: DKTD[1] };
+      DK.heldDie = 1; DKplace(0);
+      const t = DK.towers[0];
       const snap = DK.inf.growthSnapshot;
-      return { mode: DK.inf.mode, recordKey: DK.inf.recordKey, clearWave: DK.inf.clearWave, growth: snap.growth, cap: snap.levelCap, deck: snap.deck, damage: (window.DKtowerDamage || __modeQA.towerDmg)(t) / t.def.dmg };
+      const damage = __modeQA.towerDmg(t), cls = snap.classes?.[1];
+      const old = DKSAVE.progression.collection.cards[1].class;
+      DKSAVE.progression.collection.cards[1].class = 20;
+      const snapshotStable = snap.classes?.[1] === cls && __modeQA.towerDmg(t) === damage;
+      DKSAVE.progression.collection.cards[1].class = old;
+      return { mode: DK.inf.mode, recordKey: DK.inf.recordKey, clearWave: DK.inf.clearWave, growth: snap.growth,
+        deck: snap.deck, deckSystem: snap.deckSystem || 0, damage, base: t.def.dmg,
+        class: cls ?? null, pips: t.pips ?? null, name: t.def.name, snapshotStable,
+        frozen: Object.isFrozen(snap) && Object.isFrozen(snap.deck) && Object.isFrozen(snap.levels) && (!snap.growth || Object.isFrozen(snap.classes)) };
     });
-    const expectedDamage = mode === 'clear' ? 1 : mode === 'build' ? 2.52 : 2.52 * Math.pow(1.08, 180);
     check(row, mode + ' record and finite boundary', { key: row.modes[mode].recordKey, line: row.modes[mode].clearWave }, { key: mode, line: mode === 'extreme' ? 0 : 101 });
-    assert.ok(Math.abs(row.modes[mode].damage / expectedDamage - 1) < 1e-12, mode + ' actual tower damage multiplier');
-    row.checks.push({ name: mode + ' actual tower damage obeys growth policy', pass: true });
-    check(row, mode + ' run snapshot is immutable', await page.evaluate(() => Object.isFrozen(DK.inf.growthSnapshot) && Object.isFrozen(DK.inf.growthSnapshot.deck) && Object.isFrozen(DK.inf.growthSnapshot.levels)), true);
+    const m = row.modes[mode];
+    check(row, mode + ' uses the correct independent collection and battle contract',
+      { growth: m.growth, ds: m.deckSystem, deck: m.deck, class: m.class, pips: m.pips },
+      mode === 'clear' ? { growth: false, ds: 0, deck: [1, 2, 3, 4, 5], class: null, pips: null }
+        : { growth: true, ds: 1, deck: [1, 4, 8, 13, 20], class: 4, pips: 1 });
+    if (mode === 'clear') check(row, 'pure tower uses unchanged base damage', m.damage, m.base);
+    else {
+      assert.ok(m.damage > m.base, 'owned class raises the selected card damage');
+      check(row, mode + ' tower uses the horizontal card definition', m.name, '속사 주사위');
+    }
+    check(row, mode + ' class and deck snapshot are frozen and ignore mid-run profile edits', [m.frozen, m.snapshotStable], [true, true]);
     const playLayout = await layout(page, ['#roll-btn', '#wave-btn', '#exit-btn']);
     check(row, mode + ' gameplay buttons do not overlap', playLayout.issues, []);
     await page.screenshot({ path: path.join(dir, mode + '-game.png') });
@@ -153,7 +163,7 @@ async function modeDraws(page, row, dir) {
         const kind = DKchest(), face = DKSLOT.final;
         __modeQA.finishSlot(); DKplace(0);
         const t = DK.towers[0];
-        if (!t || t.face !== face || t.def !== DKTD[face] || face < (ch.min[kind] || 1) || face > ch.sides[kind]) violations.push({ i, kind, face, tower: t && t.face });
+        if (!t || t.face !== face || t.pips !== 1 || t.lvl !== 1 || t.deckSystem !== 1 || t.def.name !== DKDECKRULES.get(face)?.name || kind !== 'd20') violations.push({ i, kind, face, tower: t && t.face, pips: t?.pips });
         counts[face] = (counts[face] || 0) + 1;
         if (i % 25 === 0) rows.push({ kind, face, tower: t && t.face });
       }
@@ -161,7 +171,7 @@ async function modeDraws(page, row, dir) {
     } finally { Math.random = rng; ch.draw = oldDraw; ch.roll = oldRoll; DK.towers = []; DK.heldDie = 0; DKSLOT.active = false; }
   });
   check(row, '125 stratified RNG positions allocate 25 to each selected card', row.deckDraws.counts, { 1: 25, 4: 25, 8: 25, 13: 25, 20: 25 });
-  check(row, 'forced faces match real renderer range and placed tower definition', row.deckDraws.violations, []);
+  check(row, 'all draws place the selected card definition at independent 1 pip', row.deckDraws.violations, []);
   check(row, 'deck summons bypass original chest probability and second face roll', [row.deckDraws.chestCalls, row.deckDraws.faceCalls], [0, 0]);
   row.naturalRolls = [];
   for (let index = 0; index < 5; index++) {
@@ -174,10 +184,11 @@ async function modeDraws(page, row, dir) {
     const sample = await page.evaluate(() => {
       const face = DK.heldDie, kind = DKSLOT.kind, final = DKSLOT.final;
       DKplace(0); const t = DK.towers[0];
-      return { face, kind, final, tower: t && t.face, name: t && t.def.name };
+      return { face, kind, final, tower: t && t.face, name: t && t.def.name, pips: t && t.pips, lvl: t && t.lvl };
     });
     row.naturalRolls.push(sample);
     check(row, 'natural roll/settlement/placement ' + sample.face, [sample.face, sample.final, sample.tower], Array(3).fill([1, 4, 8, 13, 20][index]));
+    check(row, 'natural roll card ' + sample.face + ' has one battle pip regardless of identity', [sample.pips, sample.lvl], [1, 1]);
     await page.screenshot({ path: path.join(dir, 'build-natural-face-' + sample.face + '.png') });
   }
 }
@@ -220,34 +231,62 @@ async function endings(page, row, dir) {
     return { first, duplicateUnchanged, repeat, zero: DK.inf.settledResult.shards, progression: DKSAVE.progression, gems: DKSAVE.gems };
   });
   check(row, 'loss during wave 26 settles completed 25 only', [row.rewards.first.result.wave, row.rewards.first.result.shards], [25, 45]);
+  check(row, 'completed waves award collection gold and free packs through real settlement', row.rewards.first.result.collectionRewards, { gold: 280, packs: 2 });
   check(row, 'duplicate end/settle cannot change wallet, gems or records', row.rewards.duplicateUnchanged, true);
   check(row, 'repeated run retains repeat shards and no repeated first milestone', row.rewards.repeat, { shards: 25, wallet: 70 });
   check(row, 'zero completed waves award zero shards', row.rewards.zero, 0);
+  check(row, 'duplicate and zero-wave settlement cannot add extra collection rewards',
+    { gold: row.rewards.progression.collection.gold, packs: row.rewards.progression.collection.packs }, { gold: 1080, packs: 7 });
   check(row, 'reward records are isolated and old records preserved', { clear: row.rewards.progression.records.clear.best, build: row.rewards.progression.records.build.best, extreme: row.rewards.progression.records.extreme.best, legacy: row.rewards.progression.legacy }, { clear: 25, build: 0, extreme: 0, legacy: { best: 77, clears: 3 } });
   await page.reload(); await ready(page);
   check(row, 'complete progression and gems survive a real reload after settlement', await page.evaluate(() => ({ progression: DKSAVE.progression, gems: DKSAVE.gems })), { progression: row.rewards.progression, gems: row.rewards.gems });
 }
 
 async function growthRegressions(page, row) {
+  await combatFixture(page);
   const r = await page.evaluate(() => {
-    const p = DKPROGRESSION.defaultProfile(); p.deck = [1,2,3,4,6]; p.levels[6] = 20; DKSAVE.progression = p;
     DKstartInf('build'); DK.paused = true; DK.gold = 100000;
-    DK.heldDie = 6; DKplace(0); const t = DK.towers[0]; DK.selTower = t;
-    const before = __modeQA.towerDmg(t), random = Math.random;
-    try { Math.random = () => 0; DKenhance(); DKenhance(); } finally { Math.random = random; }
-    const enhanced = { before, face: t.face, carry: t.growthCarry, after: __modeQA.towerDmg(t), expected: t.def.dmg * 2.52 };
+    const snapshot = JSON.stringify(DK.inf.growthSnapshot);
+    DK.heldDie = 1; DKplace(0); DK.heldDie = 1; DKplace(1);
+    const source = DK.towers[0], target = DK.towers[1], random = Math.random;
+    let merged;
+    try { Math.random = () => .99; merged = DKdeckMerge(source, target); } finally { Math.random = random; }
+    const merge = { ok: merged, count: DK.towers.length, face: target.face, pips: target.pips, lvl: target.lvl, spot: target.spot };
+    DK.heldDie = 20; DKplace(2);
+    const low = DK.towers.find(t => t.spot === 2), beforeInvalid = JSON.stringify(DK.towers);
+    const mismatched = { accepted: DKdeckMerge(low, target), unchanged: JSON.stringify(DK.towers) === beforeInvalid };
+    const damage = __modeQA.towerDmg(target), gold = DK.gold, powers = [];
+    for (let i = 0; i < 5; i++) powers.push(DKupgrade(20));
+    const power = { results: powers, spent: gold - DK.gold, level: DK.inf.deckPower[20], other: DK.inf.deckPower[1], pips: target.pips, damageBefore: damage, damageAfter: __modeQA.towerDmg(target), snapshotUnchanged: JSON.stringify(DK.inf.growthSnapshot) === snapshot };
+    DK.selTower = target; DKsync();
+    const beforeSell = DK.gold;
     document.getElementById('sell-btn').click();
-    const soldGrowth = DK.towers.length === 0;
+    const soldGrowth = !DK.towers.includes(target) && DK.gold - beforeSell === 20;
     DK.heldDie = 20; DKsync(); document.getElementById('held-sell').click();
     const soldHeld = !DK.heldDie;
+    DKstartInf('build'); DK.paused = true;
+    const reset = { towers: DK.towers.length, powers: Object.values(DK.inf.deckPower) };
     DKstartInf('clear'); DK.paused = true; DK.heldDie = 20; DKplace(0); DK.selTower = DK.towers[0];
     DKsync(); document.getElementById('sell-btn').click();
     const pureKept = DK.towers.length === 1;
-    return { enhanced, soldGrowth, soldHeld, pureKept };
+    DK.heldDie = 20; DKsync(); document.getElementById('held-sell').click();
+    const pureHeldKept = DK.heldDie === 20;
+    DK.heldDie = 1; DKplace(1); DK.selTower = DK.towers.find(t => t.spot === 1); DKsync();
+    const pureGold = DK.gold;
+    document.getElementById('sell-btn').click();
+    const pureBasicSold = !DK.towers.some(t => t.spot === 1) && DK.gold - pureGold === 11;
+    return { merge, mismatched, power, reset, soldGrowth, soldHeld, pureKept, pureHeldKept, pureBasicSold };
   });
-  assert.ok(r.enhanced.after > r.enhanced.before);
-  check(row, 'repeated evolution carries earned growth once without stacking', [r.enhanced.face,r.enhanced.carry,r.enhanced.after], [8,2.52,r.enhanced.expected]);
-  check(row, 'growth can free a high-star board/held reward; pure selling stays unchanged', [r.soldGrowth,r.soldHeld,r.pureKept], [true,true,true]);
+  row.deckCombat = r;
+  check(row, 'board merge consumes two equal types/pips and rolls one deck type with +1 pip', r.merge, { ok: true, count: 1, face: 20, pips: 2, lvl: 1, spot: 1 });
+  check(row, 'same type with mismatched pips cannot merge or mutate the board', r.mismatched, { accepted: false, unchanged: true });
+  check(row, 'SP power is per card, costs 100/200/400/700, caps at 5 and leaves pips/class intact',
+    { results: r.power.results, spent: r.power.spent, level: r.power.level, other: r.power.other, pips: r.power.pips, snapshotUnchanged: r.power.snapshotUnchanged },
+    { results: [true, true, true, true, false], spent: 1400, level: 5, other: 1, pips: 2, snapshotUnchanged: true });
+  assert.ok(r.power.damageAfter > r.power.damageBefore, 'SP power affects actual card damage');
+  check(row, 'new run resets board and all five SP powers', r.reset, { towers: 0, powers: [1, 1, 1, 1, 1] });
+  check(row, 'deck sells by battle pip; pure high-star restrictions and basic refund stay unchanged',
+    [r.soldGrowth, r.soldHeld, r.pureKept, r.pureHeldKept, r.pureBasicSold], [true, true, true, true, true]);
 }
 
 (async () => {

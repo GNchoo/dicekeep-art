@@ -524,9 +524,10 @@ window.DKNET = (function () {
   // 요약 — 서버 스키마 범위로 자르고(위반은 서버가 폐기한다) 타워는 최대 15개
   function sum(o) {
     o = o || {};
+    const deck = R.mode === 'extreme' && o.ds === 1;
     const tw = (Array.isArray(o.tw) ? o.tw : []).slice(0, 15)
       .filter((t) => Array.isArray(t) && t.length >= 3)
-      .map((t) => [int(t[0], 0, 14), int(t[1], 1, 20), int(t[2], 1, 3)]);
+      .map((t) => deck ? [int(t[0],0,14),int(t[1],1,20),1,int(t[3],1,7)] : [int(t[0], 0, 14), int(t[1], 1, 20), int(t[2], 1, 3)]);
     const m = {
       w: int(o.w, 0, waveLimit()), dw: int(o.dw, 0, waveLimit()), l: int(o.l, 0, 20), g: int(o.g, 0, 1e7), k: int(o.k, 0, 1e6), f: int(o.f, 0, 200),
       sp: int(o.sp == null ? 1 : o.sp, 1, 3),
@@ -534,6 +535,7 @@ window.DKNET = (function () {
       b: o.b == null ? null : num(o.b, 0, 1, 3),
       o: o.o === 'p' ? 'p' : 'l',
       tw,
+      ...(deck ? { ds:1 } : {}),
     };
     if (o.ll != null) m.ll = int(o.ll, 0, 100000);
     if (typeof o.en === 'string') m.en = o.en.replace(/[^0-9;,]/g, '').slice(0, EN_MAX);   // 적 스트림 "i,d,h;…" (보는 사람이 있을 때만)

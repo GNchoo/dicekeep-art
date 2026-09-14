@@ -244,7 +244,7 @@ test('phone/desktop shop UI is disabled offline; mock account profile never over
         assert.deepEqual(off, { configured: false, disabled: true, count: 3, signinDisabled: true, scripts: [] });
         assert.deepEqual(row.api, []); row.checks.push('unconfigured: all 3 purchase buttons/login disabled; API and provider SDK requests zero');
         await page.locator('#commerce-shop').scrollIntoViewIfNeeded(); await page.screenshot({ path: path.join(dir, 'shop-unconfigured.png') });
-        const guest = profile(35); guest.deck = [2, 3, 4, 5, 6];
+        const guest = profile(35); guest.deck = [2, 3, 4, 5, 6]; guest.collection.presets[0].faces = guest.deck.slice();
         await page.evaluate(({ guest, session }) => {
           DKSAVE.progression = guest; localStorage.setItem('DKSAVE', JSON.stringify(DKSAVE));
           localStorage.setItem('dk_commerce_session_v1', JSON.stringify(session));

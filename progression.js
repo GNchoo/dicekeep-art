@@ -1,15 +1,26 @@
 (function (root, factory) {
   'use strict';
-  const api = factory();
+  const rules = typeof module === 'object' && module.exports && typeof require === 'function'
+    ? require('./deck-rules.js') : root && root.DKDECKRULES;
+  const api = factory(rules);
   if (typeof module === 'object' && module.exports) module.exports = api;
   if (root && typeof root === 'object') root.DKPROGRESSION = api;
-})(typeof window !== 'undefined' ? window : null, function () {
+})(typeof window !== 'undefined' ? window : null, function (RULES) {
   'use strict';
 
   // Persistent progression is separate from in-run gold/power and cosmetic gems.
   // This module does not charge money, verify payments or certify combat results.
   const VERSION = 1, MAX_SHARDS = 1000000000, MAX_LEVEL = 200, ECONOMY_VERSION = 2;
   const MAX_COUNTER = Number.MAX_SAFE_INTEGER, DECK_SIZE = 5;
+  const COLLECTION_VERSION = 1, MAX_CLASS = 20, MAX_GOLD = 1000000000, MAX_COPIES = 1000000000, MAX_PACKS = 1000000;
+  const PACK_ODDS = Object.freeze({ common: 55, rare: 30, unique: 12, legendary: 3 }), PACK_PITY = 20, PACK_CARDS = 5, PACK_GOLD = 120;
+  const CRAFT_COPIES = Object.freeze({ common: 8, rare: 4, unique: 2, legendary: 1 });
+  const BASE_CLASSES = Object.freeze({ common: 1, rare: 3, unique: 5, legendary: 7 });
+  function collectionSeed() {
+    const words = new Uint32Array(1);
+    if (typeof globalThis.crypto?.getRandomValues === 'function') globalThis.crypto.getRandomValues(words);
+    return words[0] || 0x6d2b79f5;
+  }
   const MODES = Object.freeze(['clear', 'build', 'extreme', 'multi', 'extremeMulti']);
   const MILESTONES = Object.freeze([10, 25, 50, 75, 100]);
   const GEM_MILESTONES = Object.freeze([10, 25, 50, 75, 100, 150, 200]);
@@ -38,7 +49,9 @@
     const levels = {}, records = {};
     for (let face = 1; face <= 20; face++) levels[face] = face <= 6 ? 1 : 0;
     for (const mode of MODES) records[mode] = emptyRecord();
-    return { version: VERSION, economyVersion: ECONOMY_VERSION, shards: 0, levels, deck: [1, 2, 3, 4, 5], records, legacy: legacyFrom(legacySave), settled: [] };
+    const profile = { version: VERSION, economyVersion: ECONOMY_VERSION, shards: 0, levels, deck: [1, 2, 3, 4, 5], records, legacy: legacyFrom(legacySave), settled: [] };
+    profile.collection = makeCollection(profile, false);
+    return profile;
   }
 
   function runValid(run, mode) {
@@ -87,6 +100,8 @@
     out.deck = picked;
     for (const mode of MODES) out.records[mode] = normalizeRecord(source.records && source.records[mode], mode);
     if (Array.isArray(source.settled)) out.settled = [...new Set(source.settled.filter(idValid))].slice(0, 64);
+    out.collection = isObject(source.collection) ? sanitizeCollection(source.collection, out) : makeCollection(out, true);
+    out.deck = out.collection.presets[out.collection.activePreset].faces.slice();
     return out;
   }
 
@@ -104,7 +119,157 @@
       && profile.deck.every(face => faceValid(face) && profile.levels[face] > 0)
       && isObject(profile.records) && MODES.every(mode => recordValid(profile.records[mode], mode))
       && isObject(profile.legacy) && integer(profile.legacy.best, 0, MAX_COUNTER) && integer(profile.legacy.clears, 0, MAX_COUNTER)
-      && Array.isArray(profile.settled) && profile.settled.length <= 64 && profile.settled.every(idValid) && new Set(profile.settled).size === profile.settled.length;
+      && Array.isArray(profile.settled) && profile.settled.length <= 64 && profile.settled.every(idValid) && new Set(profile.settled).size === profile.settled.length
+      && (profile.collection === undefined || collectionValid(profile.collection));
+  }
+
+  function cardInfo(face) { return faceValid(face) && RULES && typeof RULES.get === 'function' ? RULES.get(face) : null; }
+  function baseClass(face) { const info = cardInfo(face); return info && (info.baseClass || BASE_CLASSES[info.rarity]) || 1; }
+  function craftCost(face) { const info = cardInfo(face); return info ? { shards: 20, copies: CRAFT_COPIES[info.rarity] || 1 } : null; }
+  function classUpgradeCost(face, level) {
+    if (!cardInfo(face) || !integer(level, baseClass(face), MAX_CLASS - 1)) return null;
+    const progress = level - baseClass(face);
+    return { copies: 2 + 2 * progress, gold: 60 + 40 * progress + 10 * progress * progress };
+  }
+  const collectionDeckValid = (faces, cards) => Array.isArray(faces) && faces.length === DECK_SIZE && new Set(faces).size === DECK_SIZE
+    && faces.every(face => faceValid(face) && cards[face] && cards[face].owned);
+  function collectionValid(value) {
+    return isObject(value) && value.version === COLLECTION_VERSION && integer(value.gold, 0, MAX_GOLD)
+      && integer(value.packs, 0, MAX_PACKS) && integer(value.opened, 0, MAX_COUNTER) && integer(value.pity, 0, PACK_PITY - 1)
+      && integer(value.rng, 1, 0xffffffff) && integer(value.activePreset, 0, 2) && isObject(value.cards) && Object.keys(value.cards).length === 20
+      && Array.from({ length: 20 }, (_, i) => i + 1).every(face => {
+        const card = value.cards[face];
+        return isObject(card) && typeof card.owned === 'boolean' && (face > 6 || card.owned)
+          && integer(card.copies, 0, MAX_COPIES) && (card.owned ? integer(card.class, baseClass(face), MAX_CLASS) : card.class === 0);
+      }) && Array.isArray(value.presets) && value.presets.length === 3
+      && value.presets.every((p, i) => isObject(p) && p.name === '덱 ' + (i + 1) && collectionDeckValid(p.faces, value.cards));
+  }
+  function validCollectionDeck(faces, cards) {
+    const picked = [];
+    for (const face of Array.isArray(faces) ? faces : []) if (faceValid(face) && cards[face].owned && !picked.includes(face) && picked.length < DECK_SIZE) picked.push(face);
+    for (let face = 1; picked.length < DECK_SIZE && face <= 20; face++) if (cards[face].owned && !picked.includes(face)) picked.push(face);
+    return picked;
+  }
+  // Existing upgrade investment becomes collection resources at explicit rates.
+  // It is spent once on that card's class, with every remainder retained. Legacy
+  // levels, shard wallet, receipts, records and active run snapshots are untouched.
+  function makeCollection(profile, migrated) {
+    const cards = {}, migration = { version: COLLECTION_VERSION, source: migrated ? 'legacy-levels-v1' : 'new-profile', spentShards: 0, convertedGold: 0, convertedCopies: 0 };
+    let gold = 600;
+    for (let face = 1; face <= 20; face++) {
+      const level = profile.levels[face] || 0, card = cards[face] = { owned: level > 0, copies: 0, class: level > 0 ? baseClass(face) : 0 };
+      if (!migrated || level < 2) continue;
+      let spent = 0; for (let prior = 1; prior < level; prior++) spent += upgradeCost(prior);
+      let cardGold = spent * 10;
+      card.copies = Math.floor(spent / 20) * (craftCost(face)?.copies || 1);
+      migration.spentShards += spent; migration.convertedGold += cardGold; migration.convertedCopies += card.copies;
+      while (card.class < MAX_CLASS) {
+        const cost = classUpgradeCost(face, card.class);
+        if (!cost || card.copies < cost.copies || cardGold < cost.gold) break;
+        card.copies -= cost.copies; cardGold -= cost.gold; card.class++;
+      }
+      gold += cardGold;
+    }
+    const faces = validCollectionDeck(profile.deck, cards);
+    return { version: COLLECTION_VERSION, gold: Math.min(gold, MAX_GOLD), cards,
+      presets: Array.from({ length: 3 }, (_, i) => ({ name: '덱 ' + (i + 1), faces: faces.slice() })), activePreset: 0,
+      packs: 3, opened: 0, pity: 0, rng: collectionSeed(), migration };
+  }
+  function sanitizeCollection(raw, profile) {
+    const cards = {};
+    for (let face = 1; face <= 20; face++) {
+      const source = isObject(raw.cards) && isObject(raw.cards[face]) ? raw.cards[face] : {};
+      const owned = face <= 6 || source.owned === true || profile.levels[face] > 0;
+      cards[face] = { owned, copies: count(source.copies, MAX_COPIES), class: owned ? Math.max(baseClass(face), count(source.class, MAX_CLASS, baseClass(face))) : 0 };
+      if (owned && !profile.levels[face]) profile.levels[face] = 1;
+    }
+    const activePreset = integer(raw.activePreset, 0, 2) ? raw.activePreset : 0;
+    const presets = Array.from({ length: 3 }, (_, i) => ({ name: '덱 ' + (i + 1), faces: validCollectionDeck(raw.presets?.[i]?.faces || profile.deck, cards) }));
+    // Numeric deck is the compatibility alias for old saves/actions. Repair a
+    // mismatching old writer by adopting its valid current deck into the preset.
+    if (collectionDeckValid(profile.deck, cards) && Array.isArray(raw.presets?.[activePreset]?.faces)
+      && profile.deck.some((face, i) => face !== presets[activePreset].faces[i])) presets[activePreset].faces = profile.deck.slice();
+    const m = isObject(raw.migration) ? raw.migration : {};
+    return { version: COLLECTION_VERSION, gold: count(raw.gold, MAX_GOLD), cards, presets, activePreset,
+      packs: count(raw.packs, MAX_PACKS), opened: count(raw.opened), pity: count(raw.pity, PACK_PITY - 1),
+      rng: integer(raw.rng, 1, 0xffffffff) ? raw.rng : 0x6d2b79f5,
+      migration: { version: COLLECTION_VERSION, source: m.source === 'legacy-levels-v1' ? m.source : 'new-profile',
+        spentShards: count(m.spentShards), convertedGold: count(m.convertedGold), convertedCopies: count(m.convertedCopies) } };
+  }
+  function migrateCollection(profile) {
+    if (!profileValid(profile)) return { ok: false, reason: 'invalid-profile' };
+    if (profile.collection !== undefined) return { ok: true, migrated: false, migration: profile.collection.migration };
+    profile.collection = makeCollection(profile, true);
+    profile.deck = profile.collection.presets[0].faces.slice();
+    return { ok: true, migrated: true, migration: { ...profile.collection.migration } };
+  }
+  function collectionSummary(profile) {
+    if (!profileValid(profile) || !collectionValid(profile.collection)) return null;
+    const c = profile.collection, values = Object.entries(c.cards), classProgress = values.reduce((sum, [face, card]) => sum + (card.owned ? card.class - baseClass(+face) : 0), 0);
+    return { owned: values.filter(([, card]) => card.owned).length, total: 20, gold: c.gold, packs: c.packs, opened: c.opened,
+      pity: c.pity, nextLegendaryIn: PACK_PITY - c.pity, activePreset: c.activePreset, classProgress,
+      critChance: .1, critDamage: 1.5 + Math.min(1, classProgress * .005) };
+  }
+  function classUp(profile, face) {
+    if (!profileValid(profile) || !collectionValid(profile.collection)) return { ok: false, reason: 'invalid-profile' };
+    if (!faceValid(face)) return { ok: false, reason: 'invalid-face' };
+    const c = profile.collection, card = c.cards[face];
+    if (!card.owned) return { ok: false, reason: 'locked' };
+    const cost = classUpgradeCost(face, card.class);
+    if (!cost) return { ok: false, reason: 'max-class' };
+    if (card.copies < cost.copies) return { ok: false, reason: 'insufficient-copies', cost };
+    if (c.gold < cost.gold) return { ok: false, reason: 'insufficient-gold', cost };
+    card.copies -= cost.copies; c.gold -= cost.gold; card.class++;
+    return { ok: true, face, class: card.class, cost };
+  }
+  function grantCards(profile, face, quantity) {
+    const card = profile.collection.cards[face], newlyOwned = !card.owned;
+    if (newlyOwned) { card.owned = true; card.class = baseClass(face); profile.levels[face] = Math.max(1, profile.levels[face]); quantity--; }
+    const copies = Math.min(quantity, MAX_COPIES - card.copies); card.copies += copies;
+    return { face, owned: true, newlyOwned, copies, class: card.class };
+  }
+  function craft(profile, face) {
+    if (!profileValid(profile) || !collectionValid(profile.collection)) return { ok: false, reason: 'invalid-profile' };
+    const cost = craftCost(face); if (!cost) return { ok: false, reason: 'invalid-face' };
+    if (profile.shards < cost.shards) return { ok: false, reason: 'insufficient-shards', cost };
+    if (profile.collection.cards[face].copies > MAX_COPIES - cost.copies) return { ok: false, reason: 'copy-limit' };
+    profile.shards -= cost.shards; const reward = grantCards(profile, face, cost.copies);
+    return { ok: true, face, cost, reward };
+  }
+  function setPreset(profile, index, faces) {
+    if (!profileValid(profile) || !collectionValid(profile.collection)) return { ok: false, reason: 'invalid-profile' };
+    if (!integer(index, 0, 2)) return { ok: false, reason: 'invalid-preset' };
+    if (!collectionDeckValid(faces, profile.collection.cards)) return { ok: false, reason: 'invalid-deck' };
+    profile.collection.presets[index].faces = faces.slice();
+    if (index === profile.collection.activePreset) profile.deck = faces.slice();
+    return { ok: true, index, deck: faces.slice() };
+  }
+  function activatePreset(profile, index) {
+    if (!profileValid(profile) || !collectionValid(profile.collection)) return { ok: false, reason: 'invalid-profile' };
+    if (!integer(index, 0, 2)) return { ok: false, reason: 'invalid-preset' };
+    profile.collection.activePreset = index; profile.deck = profile.collection.presets[index].faces.slice();
+    return { ok: true, index, deck: profile.deck.slice() };
+  }
+  // Free-only supply packs: xorshift32 state advances inside the profile. The
+  // caller cannot supply a roll, seed or reward. Server actions are serialized.
+  function openPack(profile) {
+    if (!profileValid(profile) || !collectionValid(profile.collection)) return { ok: false, reason: 'invalid-profile' };
+    const c = profile.collection;
+    if (!c.packs) return { ok: false, reason: 'no-packs' };
+    if (c.opened >= MAX_COUNTER) return { ok: false, reason: 'pack-limit' };
+    const random = () => { let x = c.rng; x ^= x << 13; x ^= x >>> 17; x ^= x << 5; c.rng = x >>> 0; return c.rng / 0x100000000; };
+    const rewards = []; let legendary = false;
+    for (let i = 0; i < PACK_CARDS; i++) {
+      const sample = random() * 100; let ceiling = 0, rarity = 'legendary';
+      for (const [key, chance] of Object.entries(PACK_ODDS)) { ceiling += chance; if (sample < ceiling) { rarity = key; break; } }
+      if (i === PACK_CARDS - 1 && c.pity >= PACK_PITY - 1 && !legendary) rarity = 'legendary';
+      const pool = Array.from({ length: 20 }, (_, n) => n + 1).filter(face => cardInfo(face)?.rarity === rarity);
+      if (!pool.length) throw new Error('Missing collection rarity ' + rarity);
+      const face = pool[Math.floor(random() * pool.length)]; rewards.push({ ...grantCards(profile, face, 1), rarity });
+      if (rarity === 'legendary') legendary = true;
+    }
+    const gold = Math.min(PACK_GOLD, MAX_GOLD - c.gold); c.gold += gold; c.packs--; c.opened++; c.pity = legendary ? 0 : c.pity + 1;
+    return { ok: true, rewards, cards: rewards.map(r => ({ face: r.face, copies: r.copies, isNew: r.newlyOwned, rarity: r.rarity })), gold, legendary, pity: c.pity, packs: c.packs };
   }
 
   function cardUnlockCost(face) {
@@ -141,6 +306,7 @@
     const cost = cardUnlockCost(face);
     if (profile.shards < cost) return { ok: false, reason: 'insufficient-shards', cost };
     profile.shards -= cost; profile.levels[face] = 1;
+    if (profile.collection) { profile.collection.cards[face].owned = true; profile.collection.cards[face].class = Math.max(baseClass(face), profile.collection.cards[face].class); }
     return { ok: true, face, level: 1, cost };
   }
 
@@ -153,7 +319,19 @@
     const cost = upgradeCost(level);
     if (profile.shards < cost) return { ok: false, reason: 'insufficient-shards', cost };
     profile.shards -= cost; profile.levels[face] = level + 1;
-    return { ok: true, face, level: level + 1, cost };
+    const collectionRewards = { gold: 0, copies: 0 };
+    if (profile.collection) {
+      // Older clients may still buy a legacy level after account migration.
+      // Preserve that level and credit its equivalent collection resources too,
+      // so switching clients never strands a subsequent old-style investment.
+      let spent = 0; for (let prior = 1; prior < level; prior++) spent += upgradeCost(prior);
+      const c = profile.collection, card = c.cards[face];
+      card.owned = true; card.class = Math.max(baseClass(face), card.class);
+      collectionRewards.gold = Math.min(cost * 10, MAX_GOLD - c.gold);
+      collectionRewards.copies = Math.min((Math.floor((spent + cost) / 20) - Math.floor(spent / 20)) * (craftCost(face)?.copies || 1), MAX_COPIES - card.copies);
+      c.gold += collectionRewards.gold; card.copies += collectionRewards.copies;
+    }
+    return { ok: true, face, level: level + 1, cost, collectionRewards };
   }
 
   function setDeck(profile, faces) {
@@ -161,6 +339,10 @@
     if (!Array.isArray(faces) || faces.length !== DECK_SIZE || new Set(faces).size !== DECK_SIZE || !faces.every(faceValid)) return { ok: false, reason: 'invalid-deck' };
     if (faces.some(face => profile.levels[face] === 0)) return { ok: false, reason: 'locked' };
     profile.deck = faces.slice();
+    if (profile.collection) {
+      for (const face of faces) if (!profile.collection.cards[face].owned) { profile.collection.cards[face].owned = true; profile.collection.cards[face].class = baseClass(face); }
+      profile.collection.presets[profile.collection.activePreset].faces = faces.slice();
+    }
     return { ok: true, deck: profile.deck.slice() };
   }
 
@@ -172,7 +354,13 @@
     if (!profileValid(profile) || !MODES.includes(mode)) return null;
     const growth = growthMode(mode), levels = {};
     for (let face = 1; face <= 20; face++) levels[face] = growth ? profile.levels[face] : face <= 6 ? 1 : 0;
-    return Object.freeze({ mode, growth, levelCap: levelCap(mode), deck: Object.freeze(growth ? profile.deck.slice() : PURE_DECK.slice()), levels: Object.freeze(levels) });
+    const result = { mode, growth, levelCap: levelCap(mode), deck: Object.freeze(growth ? profile.deck.slice() : PURE_DECK.slice()), levels: Object.freeze(levels) };
+    if (growth && collectionValid(profile.collection)) {
+      const summary = collectionSummary(profile), classes = {};
+      for (let face = 1; face <= 20; face++) classes[face] = profile.collection.cards[face].owned ? profile.collection.cards[face].class : profile.levels[face] > 0 ? baseClass(face) : 0;
+      Object.assign(result, { deckSystem: 1, classes: Object.freeze(classes), critChance: summary.critChance, critDamage: summary.critDamage });
+    }
+    return Object.freeze(result);
   }
 
   // Caller-side fail-safe. If the mode table and this module ever disagree about
@@ -186,11 +374,15 @@
   function snapshotValid(value) {
     return isObject(value) && MODES.includes(value.mode) && value.growth === growthMode(value.mode) && value.levelCap === levelCap(value.mode)
       && isObject(value.levels) && Array.isArray(value.deck) && value.deck.length === DECK_SIZE && new Set(value.deck).size === DECK_SIZE
-      && value.deck.every(face => faceValid(face) && integer(value.levels[face], 1, MAX_LEVEL));
+      && value.deck.every(face => faceValid(face) && integer(value.levels[face], 1, MAX_LEVEL))
+      && (value.deckSystem === undefined || value.deckSystem === 1 && value.growth && isObject(value.classes)
+        && value.deck.every(face => integer(value.classes[face], baseClass(face), MAX_CLASS))
+        && value.critChance === .1 && Number.isFinite(value.critDamage) && value.critDamage >= 1.5 && value.critDamage <= 2.5);
   }
 
   function damageMultiplier(value, face) {
     if (!snapshotValid(value) || !value.growth || !faceValid(face) || !value.deck.includes(face)) return 1;
+    if (value.deckSystem === 1) return 1 + .03 * (value.classes[face] - baseClass(face));
     const level = Math.min(value.levels[face], value.levelCap);
     const base = 1 + 0.08 * (Math.min(level, 20) - 1);
     const result = value.levelCap > 20 && level > 20 ? base * Math.pow(1.08, level - 20) : base;
@@ -228,7 +420,7 @@
     if (!profileValid(profile)) return rejected('invalid-profile');
     if (!runValid(run)) return rejected('invalid-run');
     const record = profile.records[run.mode];
-    if (profile.settled.includes(run.id)) return { ok: true, shards: 0, earnedShards: 0, capped: false, record, newly: [], duplicate: true };
+    if (profile.settled.includes(run.id)) return { ok: true, shards: 0, earnedShards: 0, capped: false, record, newly: [], collectionRewards: { gold: 0, packs: 0 }, duplicate: true };
     const newly = MILESTONES.filter(wave => run.wave >= wave && !record.milestones.includes(wave));
     const clearBonus = run.won && run.wave >= 101 && ['clear', 'build', 'multi'].includes(run.mode) ? 20 : 0;
     const earnedShards = Math.floor(Math.min(run.wave, 500) / 5) * 5 + newly.length * 10 + clearBonus;
@@ -243,9 +435,18 @@
     profile.shards += shards;
     record.best = next.best; record.clears = next.clears; record.runs = next.runs; record.milestones = next.milestones;
     profile.settled = next.settled;
-    return { ok: true, shards, earnedShards, capped: shards < earnedShards, record, newly, duplicate: false };
+    const collectionRewards = { gold: 0, packs: 0 };
+    if (collectionValid(profile.collection)) {
+      const c = profile.collection;
+      collectionRewards.gold = Math.min(Math.min(run.wave, 500) * 8 + newly.length * 40 + clearBonus * 5, MAX_GOLD - c.gold);
+      collectionRewards.packs = Math.min(Math.floor(Math.min(run.wave, 200) / 10), MAX_PACKS - c.packs);
+      c.gold += collectionRewards.gold; c.packs += collectionRewards.packs;
+    }
+    return { ok: true, shards, earnedShards, capped: shards < earnedShards, record, newly, collectionRewards, duplicate: false };
   }
 
   return Object.freeze({ VERSION, ECONOMY_VERSION, MAX_SHARDS, MAX_LEVEL, MAX_COUNTER, DECK_SIZE, MODES, MILESTONES, GEM_MILESTONES, migrateEconomy,
-    defaultProfile, sanitize, normalizeRecord, cardUnlockCost, upgradeCost, unlock, upgrade, setDeck, snapshot, snapshotValid, pureSnapshot, growsIn: growthMode, damageMultiplier, draw, settle });
+    defaultProfile, sanitize, normalizeRecord, cardUnlockCost, upgradeCost, unlock, upgrade, setDeck, snapshot, snapshotValid, pureSnapshot, growsIn: growthMode, damageMultiplier, draw, settle,
+    COLLECTION_VERSION, MAX_CLASS, MAX_GOLD, MAX_COPIES, MAX_PACKS, PACK_ODDS, PACK_PITY, PACK_CARDS, PACK_GOLD,
+    cardInfo, craftCost, classUpgradeCost, migrateCollection, collectionSummary, classUp, craft, openPack, setPreset, activatePreset });
 });

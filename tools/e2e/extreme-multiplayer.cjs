@@ -10,34 +10,52 @@ const net = process.env.NET || 'ws://localhost:8788', base = process.env.E2E_BAS
       const p = await context.newPage(); pages.push(p); p.on('pageerror', e => errors.push(e.message));
       if (i === 2) await p.addInitScript(() => { window.Capacitor = { isNativePlatform: () => true, getPlatform: () => 'android' }; });
       await p.addInitScript(() => { localStorage.setItem('dk_coachDone', '1'); localStorage.setItem('dk_infHelpSeen', '1'); });
-      await p.route('**/game.js*', async route => { const r = await route.fetch(); await route.fulfill({ response: r, body: (await r.text()).replace('window.DK = S;', 'window.__mpRecovery={persistRun,readRunSave};\nwindow.DK = S;') }); });
+      await p.route('**/game.js*', async route => { const r = await route.fetch(); await route.fulfill({ response: r, body: (await r.text()).replace('window.DK = S;', 'window.__mpRecovery={persistRun,readRunSave,saveSave};\nwindow.DK = S;') }); });
       await p.goto(new URL('index.html?net=' + encodeURIComponent(net), base).href);
       await p.waitForFunction(() => window.DK?.phase === 'title', null, { timeout: 120000 }); await p.click('#ov-btn');
-      await p.evaluate(() => { DK.muted = true; DKlobbyView('multi'); }); await p.selectOption('#mp-mode', 'extreme'); await p.fill('#mp-name', '복구' + i);
+      await p.evaluate(() => {
+        DK.muted = true;
+        const P=DKPROGRESSION.defaultProfile(),deck=[1,4,6,14,19];
+        for(const id of deck){P.levels[id]=1;Object.assign(P.collection.cards[id],{owned:true,class:DKDECKRULES.get(id).baseClass});}
+        P.deck=deck;DKSAVE.progression=P;__mpRecovery.saveSave(); DKlobbyView('multi');
+        window.__receivedSummaries=[];DKNET.on('sum',m=>window.__receivedSummaries.push(m));
+      }); await p.selectOption('#mp-mode', 'extreme'); await p.fill('#mp-name', '복구' + i);
     }
     let [a,b,c] = pages;
     await a.click('#mp-create'); await a.waitForFunction(() => DK.phase === 'mpRoom'); const code = await a.evaluate(() => DKNET.code);
     for (const p of [b,c]) { await p.click('#mp-join'); await p.fill('#mp-code', code); await p.click('#mp-join-go'); await p.waitForFunction(() => DK.phase === 'mpRoom'); }
     await a.waitForFunction(() => DKNET.members().length === 3); await a.click('#mp-start');
-    for (const p of pages) await p.waitForFunction(() => DK.phase === 'playing' && DK.net?.mode === 'extreme');
+    for (const p of pages) { await p.waitForFunction(() => DK.phase === 'playing' && DK.net?.mode === 'extreme'); await p.evaluate(()=>{DK.paused=true;}); }
     const before = await b.evaluate(() => {
       DK.paused = true; DK.wave = 205; DK.inf.doneW = DK.net.doneW = 204; DK.inf.kills = 70; DK.waveActive = false; DK.autoT = 500;
-      DK.heldDie = 6; DKplace(0); DK.towers[0].growthCarry = 2.52; DK.inf.power[6] = 8;
+      for(const [face,pips,spot,abilityT] of [[6,7,0,5.5],[14,3,1,17.25],[19,2,4,0]]){DK.heldDie=face;DKplace(spot);const t=DK.towers.find(t=>t.spot===spot);t.pips=pips;t.abilityT=abilityT;}
+      DK.inf.deckPower[6]=4;DK.inf.deckPower[14]=2;
       DKNET.done(204); DKNET.sum(DKMP.summary(false)); __mpRecovery.persistRun();
-      return { id: DK.inf.runId, t0: DK.net.t0, pid: DK.net.pid, gold: DK.gold, size: DK.towers.length };
+      return { id: DK.inf.runId, t0: DK.net.t0, pid: DK.net.pid, gold: DK.gold, size: DK.towers.length, powers:DK.inf.deckPower,
+        towers:DK.towers.map(t=>[t.face,t.pips,t.abilityT]), classes:DK.inf.growthSnapshot.classes, critDamage:DK.inf.growthSnapshot.critDamage };
     });
+    await a.waitForFunction(pid=>window.__receivedSummaries.some(m=>m.pid===pid&&m.ds===1&&m.tw?.length===3),before.pid);
+    const relayed=await a.evaluate(pid=>window.__receivedSummaries.filter(m=>m.pid===pid&&m.tw?.length===3).at(-1),before.pid);
+    assert.equal(relayed.ds,1);assert.deepEqual(relayed.tw,[[0,6,1,7],[1,14,1,3],[4,19,1,2]]);
+    report.checks.push('real DKNET client serializer and server relay preserve ds:1 and four-field 7/3/2 pip tuples');
+    await a.evaluate(pid=>DKMP.view(pid),before.pid);
+    await a.waitForFunction(()=>DKMP.viewState().towers.length===3&&DKMP.viewState().towers.some(t=>t.face===6&&t.pips===7));
+    assert.deepEqual(await a.evaluate(()=>DKMP.viewState().towers.map(t=>[t.face,t.pips,t.deckSystem,t.def.name])),[[6,7,1,'축재 주사위'],[14,3,1,'새싹 주사위'],[19,2,1,'군집 주사위']]);
+    await a.screenshot({path:path.join(out,'desktop-spectator-pips.png')});await a.evaluate(()=>DKMP.viewExit());
+    report.checks.push('desktop spectator of portrait sender reconstructs new card names and pips rather than legacy star levels');
     await b.reload(); await b.waitForFunction(() => window.DK?.phase === 'title' && DKNET.inRoom(), null, { timeout: 120000 }); await b.click('#ov-btn');
-    await b.waitForFunction(() => DK.phase === 'playing' && DK.towers.length === 1, null, { timeout: 20000 });
+    await b.waitForFunction(() => DK.phase === 'playing' && DK.towers.length === 3, null, { timeout: 20000 }); await b.evaluate(()=>{DK.paused=true;});
     const after = await b.evaluate(() => ({ id: DK.inf.runId, t0: DK.net.t0, pid: DK.net.pid, gold: DK.gold, size: DK.towers.length,
-      done: DK.inf.doneW, status: DK.net.status, power: DK.inf.power[6], carry: DK.towers[0].growthCarry, snapshot: DK.inf.growthSnapshot.growth }));
-    assert.deepEqual(after, { ...before, done: 204, status: 'alive', power: 8, carry: 2.52, snapshot: true });
+      done: DK.inf.doneW, status: DK.net.status, powers:DK.inf.deckPower,towers:DK.towers.map(t=>[t.face,t.pips,t.abilityT]),
+      classes:DK.inf.growthSnapshot.classes,critDamage:DK.inf.growthSnapshot.critDamage, snapshot: DK.inf.growthSnapshot.deckSystem }));
+    assert.deepEqual(after, { ...before, done: 204, status: 'alive', snapshot: 1 });
     assert.equal(await a.evaluate(pid => DKNET.members().find(p => p.pid === pid).status, before.pid), 'alive');
-    report.checks.push('three actual clients; phone reload restores board/power/growth/run ID and original room clock; no death report');
+    report.checks.push('three actual clients; phone reload restores pips, five card powers, ability timers, frozen classes/critical and original room/run identity without death report');
     await b.screenshot({ path: path.join(out, 'phone-restored.png') });
     const nativeBefore = await c.evaluate(() => {
       DK.paused=true; DK.wave=203; DK.inf.doneW=DK.net.doneW=202; DK.autoT=500; DK.waveActive=false;
-      DK.heldDie=6;DKplace(0);__mpRecovery.persistRun();DKNET.done(202);
-      return { id:DK.inf.runId,pid:DK.net.pid,t0:DK.net.t0 };
+      DK.heldDie=14;DKplace(0);DK.towers[0].pips=4;DK.towers[0].abilityT=23.5;DK.inf.deckPower[14]=3;__mpRecovery.persistRun();DKNET.done(202);
+      return { id:DK.inf.runId,pid:DK.net.pid,t0:DK.net.t0,pips:DK.towers[0].pips,abilityT:DK.towers[0].abilityT,power:DK.inf.deckPower[14] };
     });
     const storageState = await c.context().storageState(); await c.context().close();
     const restarted = await browser.newContext({ storageState, viewport:{width:1240,height:860} }); c=await restarted.newPage();
@@ -46,7 +64,8 @@ const net = process.env.NET || 'ws://localhost:8788', base = process.env.E2E_BAS
     await c.goto(new URL('index.html?net='+encodeURIComponent(net),base).href);
     await c.waitForFunction(()=>window.DK?.phase==='title'&&DKNET.inRoom(),null,{timeout:120000});await c.click('#ov-btn');
     await c.waitForFunction(()=>DK.phase==='playing'&&DK.towers.length===1);
-    assert.deepEqual(await c.evaluate(()=>({id:DK.inf.runId,pid:DK.net.pid,t0:DK.net.t0})),nativeBefore);
+    await c.evaluate(()=>{DK.paused=true;});
+    assert.deepEqual(await c.evaluate(()=>({id:DK.inf.runId,pid:DK.net.pid,t0:DK.net.t0,pips:DK.towers[0].pips,abilityT:DK.towers[0].abilityT,power:DK.inf.deckPower[14]})),nativeBefore);
     report.checks.push('native storage simulation: completely new browser context restores persistent room identity and board within grace period');
     for (const [i,p] of [[0,a],[1,b],[2,c]]) await p.evaluate(i => {
       DK.wave = 205 + i; DK.inf.doneW = DK.net.doneW = 204; DK.inf.kills = [50,70,60][i];

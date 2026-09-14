@@ -86,8 +86,12 @@ function playRun({ account, mode, seed, waves }) {
   const P = DKPROGRESSION;
   const profile = P.defaultProfile(DKSAVE.progression.legacy);
   if (account === 'paid') {
-    for (let face = 1; face <= 20; face++) profile.levels[face] = P.MAX_LEVEL;
-    profile.deck = [20, 19, 18, 17, 16];   // 가장 강한 다섯 종
+    for (let face = 1; face <= 20; face++) {
+      profile.levels[face] = P.MAX_LEVEL;
+      Object.assign(profile.collection.cards[face], {owned:true, class:P.MAX_CLASS});
+    }
+    profile.deck = [20, 19, 18, 17, 16];   // 별도의 고희귀도 조합, 전 카드 최대 클래스
+    profile.collection.presets[0].faces = profile.deck.slice();
     profile.shards = P.MAX_SHARDS;
     DKSAVE.gems = 99999;
     DKSAVE.unlockedTowers = [1, 2, 3, 4, 5, 6];

@@ -1555,8 +1555,8 @@ window.DKCONTENT = (function () {
     // 순수운빨은 기존 확률/전투 곡선 그대로. 계정 성장은 build/extreme에만 적용한다.
     modes: {
       clear: { key: 'clear', name: '순수운빨', sub: '101웨이브 · 계정 성장 미적용 · 기존 뽑기 확률', gauntlet: true, clearWave: 101, growth: false },
-      build: { key: 'build', name: '덱빌드', sub: '101웨이브 · 편성한 5종을 뽑기 · 성장 Lv20까지 적용', gauntlet: true, clearWave: 101, growth: true },
-      extreme: { key: 'extreme', name: '극한', sub: '끝없는 웨이브 · 편성 덱과 성장 Lv200까지 적용', gauntlet: false, clearWave: 0, growth: true },
+      build: { key: 'build', name: '덱빌드', sub: '101웨이브 · 5종 조합 · 눈금 합성과 전투 강화', gauntlet: true, clearWave: 101, growth: true },
+      extreme: { key: 'extreme', name: '극한', sub: '끝없는 웨이브 · 수집한 덱으로 도전', gauntlet: false, clearWave: 0, growth: true },
     },
     modeOf(key) { return this.modes[key === 'endless' ? 'extreme' : key] || this.modes.clear; },
     // Growth tuning belongs here, never in the protected pure-luck wave table.

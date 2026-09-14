@@ -34,6 +34,14 @@
     if (!Array.isArray(p.size) || p.size.length !== 2 || !p.size.every(n => num(n, 1, 100000)) || !Array.isArray(p.lanes) || !p.lanes.length || !p.lanes.every(n => num(n, 1, 1e7))) return false;
     if (!Array.isArray(p.towers) || p.towers.length > 512 || !Array.isArray(p.board) || p.board.length > 15 || new Set(p.board).size !== p.board.length) return false;
     if (!p.towers.every(t => object(t) && int(t.face, 1, 20) && int(t.lvl, 1, 3) && int(t.spot, 0, 14) && num(t.cd, -100, 1e6) && (t.growthCarry === undefined || num(t.growthCarry, 1, 1e8)))) return false;
+    if (inf.growthSnapshot.deckSystem === 1) {
+      const deck=inf.growthSnapshot.deck;
+      if (!Array.isArray(deck) || deck.length!==5 || new Set(deck).size!==5 || !deck.every(id=>int(id,1,20))) return false;
+      if (!object(inf.deckPower) || Object.keys(inf.deckPower).length!==5 || !deck.every(id=>int(inf.deckPower[id],1,5))) return false;
+      if (!p.towers.every(t=>t.deckSystem===1 && deck.includes(t.face) && t.lvl===1 && int(t.pips,1,7) && (t.abilityT===undefined || num(t.abilityT,0,1e12)) && (t.shotSerial===undefined || int(t.shotSerial,0,1e12)))) return false;
+      if (s.heldDie && !deck.includes(s.heldDie)) return false;
+      if (p.slot?.active && !deck.includes(p.slot.final)) return false;
+    }
     if (!p.board.every(i => int(i, 0, p.towers.length - 1)) || new Set(p.board.map(i => p.towers[i].spot)).size !== p.board.length) return false;
     if (!Array.isArray(p.enemies) || p.enemies.length > 512 || !Array.isArray(p.active) || p.active.length > 200 || !p.active.every(i => int(i, 0, p.enemies.length - 1))) return false;
     if (!p.enemies.every(e => object(e) && object(e.def) && num(e.hp, -1e200, 1e200) && num(e.max, 1e-20, 1e200) && num(e.dist, 0, 1e8) && int(e.lane, 0, p.lanes.length - 1))) return false;

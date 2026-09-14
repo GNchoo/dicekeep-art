@@ -14,6 +14,7 @@ const unchanged = (profile, operation, reason) => {
 
 test('browser and CommonJS share a side-effect-free API; defaults preserve legacy only', () => {
   const context = { window: {} };
+  vm.runInNewContext(fs.readFileSync(require.resolve('../deck-rules.js'), 'utf8'), context);
   vm.runInNewContext(fs.readFileSync(require.resolve('../progression.js'), 'utf8'), context);
   assert.equal(typeof context.window.DKPROGRESSION.draw, 'function');
   const p = P.defaultProfile({ infBest: 401, infClears: 4 });
@@ -92,8 +93,9 @@ test('deck selection is exactly five distinct unlocked faces and snapshots canno
   assert.equal(P.snapshot(p, 'endless'), null);
 });
 
-test('clear/multi never use growth or consume deck RNG; build caps at 20 while extreme supports 200', () => {
+test('legacy snapshots still cap build growth at20 and retain extreme levels200; pure never consumes deck RNG', () => {
   const p = funded(); p.levels[1] = 200; p.levels[6] = 200;
+  delete p.collection; // A run saved before distinct collections existed.
   for (const mode of ['clear', 'multi']) {
     const snap = P.snapshot(p, mode); assert.equal(snap.growth, false); assert.equal(P.damageMultiplier(snap, 1), 1);
     assert.equal(P.draw(snap, () => { throw Error('pure RNG must not be consumed'); }), null);
@@ -163,7 +165,7 @@ test('wallet saturation is explicit and invalid run data never partially mutates
 
 test('pure modes never carry account state into a run snapshot', () => {
   const rich = P.defaultProfile();
-  for (let face = 1; face <= 20; face++) rich.levels[face] = P.MAX_LEVEL;
+  for (let face = 1; face <= 20; face++) { rich.levels[face] = P.MAX_LEVEL; rich.collection.cards[face] = { owned: true, copies: 1000, class: P.MAX_CLASS }; }
   rich.deck = [20, 19, 18, 17, 16]; rich.shards = P.MAX_SHARDS;
   const poor = P.defaultProfile();
   for (const mode of ['clear', 'multi']) {

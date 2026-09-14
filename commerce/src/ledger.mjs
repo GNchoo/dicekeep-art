@@ -12,6 +12,8 @@ function credit(a, amount, kind) {
   a.wallet[kind] += amount - debtPaid; sync(a); return { debtPaid, credited: amount - debtPaid };
 }
 function migrateEconomy(a) {
+  const collection = PG.migrateCollection(a.profile);
+  requireThat(collection.ok, 'invalid-profile', 409);
   const before = a.profile.shards;
   const result = PG.migrateEconomy(a.profile);
   requireThat(result.ok, 'invalid-profile', 409);
@@ -54,7 +56,7 @@ export class CommerceLedger {
     requireThat(s && s.expiresAt > this.now(), 'session-expired', 401); this.rate('account:' + s.accountId);
     await this.storage.transaction(async tx => {
       const a = await tx.get('account:' + s.accountId);
-      if (a && a.profile.economyVersion !== PG.ECONOMY_VERSION) {
+      if (a && (a.profile.economyVersion !== PG.ECONOMY_VERSION || a.profile.collection?.version !== PG.COLLECTION_VERSION)) {
         migrateEconomy(a); await tx.put('account:' + s.accountId, a);
       }
     });
@@ -100,14 +102,20 @@ export class CommerceLedger {
     });
   }
   async action(id, b) {
-    fields(b, ['type', 'face', 'deck', 'skinId', 'requestId']); requireThat(validRequestId(b.requestId) && ['unlock', 'upgrade', 'deck', 'skinEquip'].includes(b.type), 'invalid-action');
-    const fingerprint = await sha(JSON.stringify([b.type, b.face ?? null, b.deck ?? null, b.skinId ?? null]));
+    fields(b, ['type', 'face', 'deck', 'skinId', 'index', 'requestId']); requireThat(validRequestId(b.requestId) && ['unlock', 'upgrade', 'deck', 'skinEquip', 'classUp', 'craft', 'openPack', 'setPreset', 'activatePreset'].includes(b.type), 'invalid-action');
+    const fingerprintFields = [b.type, b.face ?? null, b.deck ?? null, b.skinId ?? null];
+    // Preserve hashes of actions recorded by older clients before presets existed.
+    if (b.index !== undefined) fingerprintFields.push(b.index);
+    const fingerprint = await sha(JSON.stringify(fingerprintFields));
     return this.storage.transaction(async tx => {
       const a = await tx.get('account:' + id), key = `action:${id}:${b.requestId}`, old = await tx.get(key);
       if (old) { requireThat(old.fingerprint === fingerprint, 'request-id-conflict', 409); return { ...view(a), ...old.result, duplicate: true }; }
       requireThat(a.wallet.debt === 0 || (b.type === 'skinEquip' && b.skinId === 'base'), 'refund-debt', 409);
       const before = a.profile.shards; let result;
       if (b.type === 'skinEquip') { requireThat(cosmetics(a).owned.includes(b.skinId), 'skin-not-owned', 409); a.cosmetics.equipped = b.skinId; result = { ok: true, skinId: b.skinId }; }
+      else if (b.type === 'setPreset') result = PG.setPreset(a.profile, b.index, b.deck);
+      else if (b.type === 'activatePreset') result = PG.activatePreset(a.profile, b.index);
+      else if (b.type === 'openPack') result = PG.openPack(a.profile);
       else result = b.type === 'deck' ? PG.setDeck(a.profile, b.deck) : PG[b.type](a.profile, b.face);
       requireThat(result.ok, result.reason, 409);
       const cost = before - a.profile.shards, freeSpent = Math.min(a.wallet.free, cost); a.wallet.free -= freeSpent; a.wallet.paid -= cost - freeSpent; sync(a);
@@ -143,7 +151,7 @@ export class CommerceLedger {
     return this.storage.transaction(async tx => {
       const run = await tx.get('run:' + b.ticket); requireThat(run && run.accountId === id, 'run-not-found', 404);
       const a = await tx.get('account:' + id);
-      if (run.status === 'settled') { requireThat(run.fingerprint === fingerprint, 'run-conflict', 409); return { ...view(a), shards: 0, duplicate: true }; }
+      if (run.status === 'settled') { requireThat(run.fingerprint === fingerprint, 'run-conflict', 409); return { ...view(a), shards: 0, collectionRewards: { gold: 0, packs: 0 }, duplicate: true }; }
       requireThat(!run.status && a.activeRun === b.ticket, 'run-inactive', 409);
       const elapsed = Math.floor((this.now() - run.startedAt) / 1000), minimum = Math.max(0, b.wave - 1) * 2;
       requireThat(int(elapsed, minimum, Number.MAX_SAFE_INTEGER) && b.kills <= elapsed * 100, 'run-time-invalid', 409);
@@ -153,9 +161,9 @@ export class CommerceLedger {
       const result = PG.settle(a.profile, { id: b.ticket, mode: run.mode, wave: b.wave, kills: b.kills, won: b.won, elapsed, date: new Date(this.now()).toISOString() });
       requireThat(result.ok && !result.duplicate, 'run-result-invalid', 409);
       const award = result.shards; a.profile.shards = before; const paid = credit(a, award, 'free');
-      run.status = 'settled'; run.fingerprint = fingerprint; run.award = award; run.elapsed = elapsed; a.activeRun = null;
+      run.status = 'settled'; run.fingerprint = fingerprint; run.award = award; run.collectionRewards = result.collectionRewards; run.elapsed = elapsed; a.activeRun = null;
       await tx.put('account:' + id, a); await tx.put('run:' + b.ticket, run);
-      return { ...view(a), shards: paid.credited, earnedShards: award, debtPaid: paid.debtPaid, duplicate: false };
+      return { ...view(a), shards: paid.credited, earnedShards: award, collectionRewards: result.collectionRewards, debtPaid: paid.debtPaid, duplicate: false };
     });
   }
   async order(id, b) {

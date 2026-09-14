@@ -73,21 +73,27 @@ const SCHEMA = {
     return { t: 'hello', v: m.v, ver: cleanText(m.ver, VER_MAX), op: m.op, mode, pid: m.pid, key: m.key, name: sanitizeName(m.name, m.pid) };
   },
   start() { return { t: 'start' }; },
-  // sp 배속(1|2|3) · ll 레인 길이(선택) · en 적 스트림(선택, ≤ EN_MAX 자, [0-9;,] 만). lag 는 v3 에서 없어졌다
+  // sp 배속(1|2|3) · ll 레인 길이(선택) · en 적 스트림(선택, ≤ EN_MAX 자, [0-9;,] 만).
+  // ds:1 덱 전투는 [spot, face, 1, pips1..7], ds 생략은 기존 [spot, face, lvl1..3].
   sum(m) {
     if (!isInt(m.w, 0, MAX_WAVE) || !isInt(m.dw, 0, MAX_WAVE) || !isInt(m.l, 0, 20) || !isInt(m.g, 0, 1e7)) return null;
     if (!isInt(m.k, 0, 1e6) || !isInt(m.f, 0, 200) || !isInt(m.sp, 1, 3)) return null;
     if (m.hid !== 0 && m.hid !== 1) return null;
     if (m.b !== null && !isNum(m.b, 0, 1)) return null;
     if (m.o !== 'l' && m.o !== 'p') return null;
+    if (m.ds !== undefined && m.ds !== 1) return null;
+    const deck = m.ds === 1;
     if (!Array.isArray(m.tw) || m.tw.length > TOWERS_MAX) return null;
-    const tw = [];
+    const tw = [], spots = new Set();
     for (const it of m.tw) {
-      if (!Array.isArray(it) || it.length !== 3) return null;
-      if (!isInt(it[0], 0, 14) || !isInt(it[1], 1, 20) || !isInt(it[2], 1, 3)) return null;
-      tw.push([it[0], it[1], it[2]]);
+      if (!Array.isArray(it) || it.length !== (deck ? 4 : 3)) return null;
+      if (!isInt(it[0], 0, 14) || !isInt(it[1], 1, 20) || !isInt(it[2], 1, deck ? 1 : 3)) return null;
+      if (deck && (!isInt(it[3], 1, 7) || spots.has(it[0]))) return null;
+      spots.add(it[0]);
+      tw.push(deck ? [it[0], it[1], 1, it[3]] : [it[0], it[1], it[2]]);
     }
     const out = { t: 'sum', w: m.w, dw: m.dw, l: m.l, g: m.g, k: m.k, f: m.f, sp: m.sp, hid: m.hid, b: m.b, o: m.o, tw };
+    if (deck) out.ds = 1;
     if (m.ll !== undefined) { if (!isInt(m.ll, 0, LANE_MAX)) return null; out.ll = m.ll; }
     if (m.en !== undefined) { if (!isStr(m.en, EN_MAX) || !EN_RE.test(m.en)) return null; out.en = m.en; }
     return out;

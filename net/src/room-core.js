@@ -426,6 +426,7 @@ const clampWave = (w, cw) => Math.max(0, Math.min(cw, w));
 function onSum(c, P, L, m) {
   const st = c.state;
   if (st.phase !== 'playing' || P.status !== ALIVE) return;
+  if (m.ds === 1 && roomMode(st) !== 'extreme') return c.err(P.pid, 'mode', '덱 전투 요약은 극한 경쟁에서만 보낼 수 있습니다');
   const cw = waveLimit(st);
   const w = clampWave(m.w, cw), dw = Math.min(roomMode(st) === 'extreme' ? w : cw, clampWave(m.dw, cw));
   L.lastBeat = c.now; L.hidden = m.hid === 1;
