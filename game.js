@@ -3803,27 +3803,23 @@ function drawAwakeningAura(t) {
   ctx.restore(); return true;
 }
 
-const DECK_PIP_MARKS = [[],[[0,0]],[[-12,-9],[12,9]],[[-12,-9],[0,0],[12,9]],
-  [[-12,-9],[12,-9],[-12,9],[12,9]],[[-12,-9],[12,-9],[0,0],[-12,9],[12,9]],
-  [[-12,-9],[12,-9],[-12,0],[12,0],[-12,9],[12,9]],
-  [[-12,-9],[12,-9],[-12,0],[0,0],[12,0],[-12,9],[12,9]]];
-function drawDeckPips(t, scale=1) {
+function drawDeckPipNumber(t) {
   const awake=towerAwakened(t);
-  ctx.save(); ctx.translate(t.x,t.y+19); ctx.scale(scale,scale);
-  ctx.beginPath(); ctx.roundRect(-22,-17,44,34,6);
-  ctx.fillStyle='rgba(16,19,27,0.94)'; ctx.fill();
-  ctx.strokeStyle=awake?'#ffdf80':'#abbccc'; ctx.lineWidth=awake?2.5:1.5; ctx.stroke();
+  ctx.save(); ctx.translate(t.x,t.y+15);
+  ctx.beginPath(); ctx.roundRect(-10,-9,20,18,5);
+  ctx.fillStyle='rgba(16,19,27,0.86)'; ctx.fill();
+  ctx.font=uiFont(15); ctx.textAlign='center'; ctx.textBaseline='middle';
   ctx.fillStyle=awake?'#fff0ae':'#f4f7ff';
-  for (const [x,y] of DECK_PIP_MARKS[DECK.pips(t)]) { ctx.beginPath(); ctx.arc(x,y,3.3,0,Math.PI*2); ctx.fill(); }
+  ctx.fillText(String(DECK.pips(t)),0,.5);
   ctx.restore();
 }
 
-// Legacy star modes retain their original star badge; deck modes use pip icons.
+// Keep the original star number; awakening is communicated only by its aura.
 function starColor(def) { return def.rainbow ? `hsl(${(S.time * 90) % 360},95%,65%)` : def.color; }
 function drawStarBadge(t) {
-  if (deckRun() || t.deckSystem) return;
   const col = starColor(t.def);
   const pulse = 0.5 + 0.5 * Math.sin(S.time * 4 + t.x * 0.01);
+  if (!deckRun() && !t.deckSystem) {
   ctx.save();
   ctx.translate(t.x, t.y + 6);
   ctx.scale(1, 0.5);
@@ -3832,6 +3828,7 @@ function drawStarBadge(t) {
   ctx.shadowColor = col; ctx.shadowBlur = 16;
   ctx.stroke();
   ctx.restore();
+  }
   ctx.save();
   ctx.font = uiFont(13); ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
   const txt = `★${t.face}`;
@@ -4318,9 +4315,8 @@ function draw() {
   // 합체 레벨 점 — 개체 정렬 뒤에 한 번에 그린다.
   // 예전에는 타워마다 제 몸과 같이 그려서, 앞줄 타워가 뒷줄 타워의 점을 가려 몇 강인지 보이지 않았다.
   // 어두운 알약 배경을 깔아 무엇 위에 얹혀도 읽히게 한다.
-  const deckMarkerScale=Math.min(1,30*W/(44*Math.max(1,canvas.clientWidth)));
   for (const t of S.towers) {
-    if (deckRun() || t.deckSystem) { drawDeckPips(t,deckMarkerScale); continue; }
+    if (deckRun() || t.deckSystem) { drawDeckPipNumber(t); continue; }
     const px = t.x, py = t.y + 15, w = 12 * (MAX_LVL - 1) + 16, h = 12;
     ctx.save();
     ctx.beginPath();
