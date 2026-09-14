@@ -29,6 +29,7 @@
     tabBar = el('div', 'rw-tabs'); tabBar.setAttribute('role', 'tablist'); tabBar.setAttribute('aria-label', '보상 종류');
     tabs.forEach(([id, label], index) => {
       const tab = button(label, () => select(id), 'rw-tab'); tab.id = 'rewards-tab-' + id; tab.dataset.tab = id;
+      const dot=el('span','rewards-notification-dot');dot.hidden=true;dot.setAttribute('aria-hidden','true');tab.append(dot);
       tab.setAttribute('role', 'tab'); tab.setAttribute('aria-controls', 'rewards-panel-' + id);
       tab.addEventListener('keydown', event => {
         let next = index;
@@ -112,7 +113,12 @@
     if (view) state.view = view; create();
     const data = state.view;
     account.textContent = !data ? '계정 정보를 확인하는 중…' : data.account?.linked ? (data.account.label || '로그인 계정') + ' · 계정에 보관' : '게스트 · 이 기기에 무료 진행 저장';
-    for (const tab of tabBar.children) { const selected = tab.dataset.tab === state.tab; tab.setAttribute('aria-selected', String(selected)); tab.tabIndex = selected ? 0 : -1; }
+    const counts=state.error?{}:window.DKREWARDNOTIFICATIONS?.counts(data)||{};
+    for (const tab of tabBar.children) {
+      const selected = tab.dataset.tab === state.tab; tab.setAttribute('aria-selected', String(selected)); tab.tabIndex = selected ? 0 : -1;
+      const available=counts[tab.dataset.tab]||0;tab.querySelector('.rewards-notification-dot').hidden=!available;
+      const label=tabs.find(([id])=>id===tab.dataset.tab)[1];tab.setAttribute('aria-label',label+(available?' · 받을 보상 '+available+'개':''));
+    }
     status.replaceChildren(); status.classList.toggle('rw-error', !!state.error);
     if (state.error) { status.append(el('span', '', state.error), button('다시 불러오기', refresh, 'rw-retry')); }
     else status.textContent = state.busy ? '보상을 처리하고 있습니다…' : state.loading ? '보상을 불러오고 있습니다…' : state.notice;
@@ -153,15 +159,25 @@
     const actions = el('div', 'rw-review-actions'); actions.append(cancel, confirm);
     review.append(title, el('p', 'rw-review-price', data.pass.priceLabel || '2,900원'), el('p', '', '한 번 결제하며 기한과 자동 갱신이 없습니다. 20단계의 프리미엄 보상은 단계당 성장 조각 10개와 10단계 왕실 외형입니다.'), el('p', '', '이미 왕실 외형을 보유했다면 별도 중복 보상은 없습니다. 구매 이전에 달성한 단계도 받을 수 있습니다. 무료 보상은 구매 없이 이용할 수 있으며, 결제창에서 최종 금액을 확인합니다.'), actions); review.showModal(); cancel.focus();
   }
-  async function open(tab) { create(); if (!dialog.open) opener = document.activeElement; select(tab || state.tab); if (!dialog.open) dialog.showModal(); document.getElementById('rewards-tab-' + state.tab).focus(); await refresh(); }
+  async function open(tab, options={}) {
+    create();if(!dialog.open)opener=document.activeElement;
+    if(options.view){state.view=options.view;state.error='';state.notice='';state.loading=false;}
+    select(tab||state.tab);if(!dialog.open)dialog.showModal();document.getElementById('rewards-tab-'+state.tab).focus();
+    window.dispatchEvent(new CustomEvent('rewards:opened',{detail:{tab:state.tab,automatic:options.automatic===true}}));
+    if(!options.view)await refresh();
+  }
   function close() { if (dialog?.open) dialog.close(); }
   function configure(options) { state.generation++; state.context++; state.api = options?.api || null; state.view = options?.view || null; state.error = ''; state.notice = ''; state.loading = false; state.busy = false; if (dialog) render(); return window.DKREWARDSUI; }
   window.DKREWARDSUI = { open, close, render, configure };
-  const connect = () => document.getElementById('btn-rewards-open')?.addEventListener('click', () => open());
+  const connect = () => {
+    document.getElementById('btn-rewards-open')?.addEventListener('click', () => open('attendance'));
+    for(const node of document.querySelectorAll('[data-reward-tab]'))if(node.id!=='btn-rewards-open')node.addEventListener('click',()=>open(node.dataset.rewardTab));
+  };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', connect, { once: true }); else connect();
   window.addEventListener('rewards:change', () => {
     if (!dialog?.open) return;
     if (state.busy) { if (api()?.current) state.view = api().current(); render(); }
     else refresh();
   });
+  window.addEventListener('rewards:updated',()=>{if(dialog?.open&&!state.loading&&!state.busy){const view=api()?.current?.();if(view)render(view);}});
 })();

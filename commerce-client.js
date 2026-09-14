@@ -7,6 +7,8 @@
   const billing = () => window.Capacitor && Capacitor.Plugins && Capacitor.Plugins.DicekeepBilling;
   let session = null, current = null, config = null, wallet = null, cosmetics = { owned: ['base'], equipped: 'base' }, busy = false, initialized = null, paymentComplete = false, authGeneration = 0;
   const scripts = new Map();
+  let profileRevision = 0;
+  const profileWrites = new Set();
   const read = (key, fallback) => { try { return JSON.parse(localStorage.getItem(key)) || fallback; } catch (_) { return fallback; } };
   const write = (key, value) => { try { localStorage.setItem(key, JSON.stringify(value)); } catch (_) { throw new Error('저장 공간을 사용할 수 없습니다. 결제를 진행할 수 없습니다.'); } };
   const emit = () => window.dispatchEvent(new CustomEvent('commerce:change'));
@@ -67,13 +69,36 @@
     if (window.DKCOSMETICS) DKCOSMETICS.setAuthority(cosmetics);
     emit(); return result;
   }
+  async function updateAccount(path, data) {
+    // A background reward read must not restore a pre-purchase or pre-claim wallet.
+    profileRevision++;
+    let release;
+    const pending = new Promise(resolve => { release = resolve; });
+    profileWrites.add(pending);
+    try { return adopt(await api(path, data)); }
+    finally { profileRevision++; profileWrites.delete(pending); release(); }
+  }
+  async function readAccount(readResult) {
+    const token = session && session.token;
+    for (;;) {
+      await Promise.all([...profileWrites]);
+      if (token !== (session && session.token)) throw Error('계정이 바뀌었습니다. 다시 확인해 주세요.');
+      const revision = profileRevision;
+      const result = await readResult();
+      if (token !== (session && session.token)) throw Error('계정이 바뀌었습니다. 다시 확인해 주세요.');
+      if (revision !== profileRevision || profileWrites.size) continue;
+      return adopt(result);
+    }
+  }
   async function refresh() {
     if (!session) return null;
     // Entitlement reconciliation may revoke a missed refund before its view is adopted.
-    const nextCosmetics = await api('/cosmetics');
-    const [result, nextWallet] = await Promise.all([api('/profile'), api('/wallet')]);
-    current = window.DKPROGRESSION.sanitize(result.profile || result);
-    adopt({ wallet: nextWallet, cosmetics: nextCosmetics }); return current;
+    await readAccount(async () => {
+      const nextCosmetics = await api('/cosmetics');
+      const [result, nextWallet] = await Promise.all([api('/profile'), api('/wallet')]);
+      return { profile: result.profile || result, wallet: nextWallet, cosmetics: nextCosmetics };
+    });
+    return current;
   }
   function loadScript(url) {
     if (!scripts.has(url)) scripts.set(url, new Promise((resolve, reject) => {
@@ -134,19 +159,19 @@
       if (!DKCOSMETICS.canEquip()) throw new Error('굴림과 게임을 마친 뒤 스킨을 바꿀 수 있습니다.');
       if (value.skinId !== 'base') await DKCOSMETICS.load(value.skinId);
     }
-    const result = adopt(await api('/profile/action', Object.assign({ type, requestId: crypto.randomUUID() }, value)));
+    const result = await updateAccount('/profile/action', Object.assign({ type, requestId: crypto.randomUUID() }, value));
     if (type === 'skinEquip' && window.DKCOSMETICS) await DKCOSMETICS.sync(); return result;
   }
   async function startRun(mode, options = {}) {
     if (!session) return null;
     if (!current) await refresh();
     await retryPending(!['duel','coop'].includes(mode));
-    const result = adopt(await api('/runs/start', { mode, ...(options.battle?{battle:options.battle}:{}) }));
+    const result = await updateAccount('/runs/start', { mode, ...(options.battle?{battle:options.battle}:{}) });
     if (window.DKCOSMETICS) await DKCOSMETICS.sync().catch(() => false); return result;
   }
   async function resumeRun(ticket) {
     if (!session) throw new Error('저장한 계정으로 다시 로그인해 주세요.');
-    return adopt(await api('/runs/resume', { ticket }));
+    return updateAccount('/runs/resume', { ticket });
   }
   function pendingList() { const list = read(PENDING, []); return Array.isArray(list) ? list : []; }
   function queueRun(ticket, run) {
@@ -159,7 +184,7 @@
   async function finishRun(ticket, run) {
     const payload = queueRun(ticket, run);
     try {
-      const result = adopt(await api('/runs/settle', payload));
+      const result = await updateAccount('/runs/settle', payload);
       write(PENDING, pendingList().filter(x => x.ticket !== ticket)); return result;
     } catch (error) {
       if (error.status >= 400 && error.status < 500 && ![401, 408, 429].includes(error.status)) write(PENDING, pendingList().filter(x => x.ticket !== ticket));
@@ -175,7 +200,7 @@
   async function verifyAndroid(purchase) {
     if (!purchase.purchaseToken || !purchase.productId) return;
     if (purchase.state && !['PURCHASED', 1].includes(purchase.state)) { message('결제 승인을 기다리고 있습니다.'); return; }
-    const result = adopt(await api('/payments/google/verify', { purchaseToken: purchase.purchaseToken, productId: purchase.productId }));
+    const result = await updateAccount('/payments/google/verify', { purchaseToken: purchase.purchaseToken, productId: purchase.productId });
     message(result.consumePending || result.acknowledgePending ? '구매 지급 완료 · 스토어 처리 재확인 중' : `구매 확인 완료${result.shards ? ' · 성장 조각 +' + result.shards : ''}`);
   }
   async function restore() {
@@ -191,7 +216,7 @@
       const saved = read(ORDERS, []);
       for (const order of Array.isArray(saved) ? saved.filter(x => x.owner === session.accountId) : []) {
         try {
-          adopt(await api('/payments/toss/confirm', { orderId: order.orderId }));
+          await updateAccount('/payments/toss/confirm', { orderId: order.orderId });
           write(ORDERS, read(ORDERS, []).filter(x => x.orderId !== order.orderId));
         } catch (e) {
           if (['payment-not-complete', 'payment-not-confirmed', 'payment-pending'].includes(e.code)) awaiting++;
@@ -228,11 +253,11 @@
     } finally { busy = false; emit(); }
   }
   function requireAccount() { if (!session || !current) throw new Error('먼저 Google 계정으로 로그인해 주세요.'); }
-  async function loadLiveops() { requireAccount(); return adopt(await api('/liveops')); }
+  async function loadLiveops() { requireAccount(); return readAccount(() => api('/liveops')); }
   async function claimReward(kind, data = {}) {
     requireAccount();
     if (!['attendance', 'mail', 'pass'].includes(kind)) throw new Error('지원하지 않는 보상입니다.');
-    return adopt(await api('/' + kind + '/claim', { ...data, requestId: data.requestId || crypto.randomUUID() }));
+    return updateAccount('/' + kind + '/claim', { ...data, requestId: data.requestId || crypto.randomUUID() });
   }
   async function adminMail(action, data = {}) {
     requireAccount();
@@ -249,7 +274,7 @@
     const paymentKey = q.get('paymentKey'), orderId = q.get('orderId');
     // Never derive price or rewards from redirect query parameters.
     if (!paymentKey || !orderId || !session) throw new Error('결제 정보 또는 로그인이 없습니다. 구매한 계정으로 다시 로그인해 주세요.');
-    const result = adopt(await api('/payments/toss/confirm', { paymentKey, orderId }));
+    const result = await updateAccount('/payments/toss/confirm', { paymentKey, orderId });
     const orders = read(ORDERS, []); write(ORDERS, (Array.isArray(orders) ? orders : []).filter(x => x.orderId !== orderId));
     paymentComplete = true;
     history.replaceState(null, '', location.pathname);

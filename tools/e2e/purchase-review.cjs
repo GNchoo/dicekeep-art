@@ -2,6 +2,7 @@
 const fs = require('node:fs'), path = require('node:path'), assert = require('node:assert/strict');
 const { launchBrowser } = require('./browser.cjs');
 const PG = require('../../progression.js');
+const LR = require('../../liveops-rules.js');
 const base = process.env.E2E_BASE_URL || 'http://localhost:8137/';
 assert.ok(['localhost', '127.0.0.1'].includes(new URL(base).hostname));
 const out = path.resolve(process.env.E2E_OUTPUT_DIR || 'gen/e2e/purchase-review');
@@ -21,6 +22,7 @@ fs.mkdirSync(out, { recursive: true });
         const data = {
           '/config': { purchasesEnabled: true, providers: { web: true }, products: PRODUCTS.filter(p => p.available !== false), paymentMode: 'test' },
           '/profile': PG.defaultProfile(), '/wallet': { free: 0, paid: 0, debt: 0 }, '/cosmetics': { owned: ['base'], equipped: 'base' },
+          '/liveops': {profile:PG.defaultProfile(),wallet:{free:0,paid:0,debt:0},liveops:LR.view(LR.defaultState()),inbox:[],canAdmin:false,serverNow:Date.now()},
         };
         if (endpoint === '/orders') { orders++; return r.fulfill({ status: 409, json: { error: 'purchases-disabled' } }); }
         assert.ok(data[endpoint], 'unexpected fixture endpoint: ' + endpoint);

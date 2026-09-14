@@ -5188,6 +5188,7 @@ function showScreen(name) {
   bgmSync();
   wakeLockSync(name === 'playing');
   if (name === 'playing') fitStage();   // 💬 버튼 유무로 미니 버튼 폭이 바뀐다
+  window.DKHOME?.enter();
 }
 // 플레이 중 화면 꺼짐 방지 (지원 브라우저·앱 웹뷰에서만, 실패는 무시)
 let WAKE = null;
@@ -5208,6 +5209,7 @@ function lobbyShow(view) {
   const back = $('lobby-back'); if (back) back.classList.toggle('hidden', view === 'hub');
   const h = $('lobby-title'); if (h) h.textContent = view === 'single' ? '싱글플레이' : view === 'multi' ? '멀티플레이' : '주사위 성채';
   const box2 = document.querySelector('#lobby .screen-box'); if (box2) box2.scrollTop = 0;
+  window.DKHOME?.enter();
 }
 function gotoLobby(view) { S.phase = 'lobby'; showScreen('lobby'); lobbyShow(view || 'hub'); renderRunResume(); }
 function gotoMpRoom() { S.phase = 'mpRoom'; showScreen('mpRoom'); }
@@ -7415,7 +7417,7 @@ function drawLoading(pr) {
   window.DKAUTOSTART = qs.get('start');
   if (qs.get('name')) { SAVE.name = String(qs.get('name')).slice(0, 12); }   // 테스트용 이름 지정
   try { mpInit(); } catch (e) { console.warn('[mp] init', e); }
-  mpTryResume();                                    // 새로고침 전 방이 있으면 조용히 다시 붙는다
+  const homeResumeReady = mpTryResume();            // Rejoin checks finish before an attendance prompt is allowed.
   window.DKINF_OPEN = qs.get('inf') === '1';   // ?inf=1 → 인피니티만 임시 개방 (스테이지 진행·저장은 그대로)
   // 디버그 훅 (콘솔): DK 게임 상태, DKA 스프라이트, DKDIE/DKSLOT 주사위, DKthrow 던지기, DKLANES 레인
   window.DK = S; window.DKA = A; window.DKDIE = DIE; window.DKSLOT = SLOT;
@@ -7463,6 +7465,20 @@ function drawLoading(pr) {
     },
     changed: () => { if (S.phase === 'lobby') { renderLobby(); renderDeck(false); } }
   });
+  window.DKHOME.configure({
+    model:()=>({profile:progressionProfile(),name:SAVE.name,linked:COMMERCE.linked(),gems:SAVE.gems,theme:COMMERCE.state().cosmetics.equipped}),
+    icon:face=>thumbURL(towerSpr(face,0),96),
+    canRefresh:()=>['title','lobby','shop'].includes(S.phase)&&!S.net,
+    canAuto:()=> (S.phase==='title'||S.phase==='lobby'&&LOBBY_VIEW==='hub')&&!S.net&&!runResumeBusy&&!startingAccountRun&&!MP.resumeRoom&&!DKNET.inRoom()&&!window.DKAUTOSTART&&!menuOpen()&&!settingsOpen(),
+    navigate:kind=>{
+      if(S.phase!=='lobby'||S.net)return;
+      audio();
+      if(kind==='deck'){
+        lobbyShow('single');$('deck-panel').classList.remove('hidden');$('btn-deck-open').setAttribute('aria-expanded','true');renderDeck(true);
+        $('deck-panel').scrollIntoView({block:'start'});$('btn-deck-open').focus({preventScroll:true});
+      }else lobbyShow(kind==='battle'?'single':'hub');
+    }
+  });
   S.phase = 'title';
   const loadEl = $('ov-load');
   if (loadEl) loadEl.classList.add('hidden');
@@ -7471,6 +7487,7 @@ function drawLoading(pr) {
   $('ov-btn').disabled = false;
   $('ov-btn').textContent = '게임 시작';
   requestAnimationFrame(frame);
+  homeResumeReady.finally(()=>window.DKHOME.bootReady());
   if (window.DKAPP_NATIVE && DKAPP_NATIVE.ready) { try { DKAPP_NATIVE.ready(); } catch (e) { /* 무시 */ } }   // 앱: 스플래시 내림
 })();
 

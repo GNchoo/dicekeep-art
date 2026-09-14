@@ -50,7 +50,8 @@
     "test:liveops": "node tools/liveops-rules-test.cjs",
     "test:rewards-ui": "node tools/e2e/rewards-ui.cjs",
     "test:rewards-integration": "node tools/e2e/rewards-integration.cjs",
-    "test:mail-admin": "node tools/e2e/mail-admin.cjs"
+    "test:mail-admin": "node tools/e2e/mail-admin.cjs",
+    "test:home": "node tools/reward-notifications-test.cjs && node tools/reward-refresh-race-test.cjs && node tools/e2e/home-rewards.cjs"
   },
   "dependencies": {
     "@capacitor-community/safe-area": "^7.0.0",

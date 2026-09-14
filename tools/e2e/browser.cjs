@@ -1,7 +1,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 
-async function launchBrowser() {
+async function launchBrowser({ startupRewards = false } = {}) {
   const { chromium } = require('playwright-core');
   const explicit = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH;
   if (explicit && !fs.existsSync(explicit)) throw new Error(`Browser does not exist: ${explicit}`);
@@ -17,7 +17,16 @@ async function launchBrowser() {
   const executablePath = candidates.find(candidate => candidate && fs.existsSync(candidate));
   if (!executablePath) throw new Error('Chromium/Chrome/Edge not found. Set PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH or install a Playwright Chromium browser.');
   console.log('browser', executablePath);
-  return chromium.launch({ executablePath, args: process.platform === 'linux' ? ['--no-sandbox'] : [] });
+  const browser=await chromium.launch({ executablePath, args: process.platform === 'linux' ? ['--no-sandbox'] : [] });
+  if(!startupRewards){
+    // Combat/commerce suites dismiss the new startup panel like a player does.
+    // The dedicated home suite opts in to verify the complete automatic flow.
+    const dismiss=()=>window.addEventListener('rewards:opened',event=>{if(event.detail?.automatic)window.DKREWARDSUI?.close();});
+    const newContext=browser.newContext.bind(browser),newPage=browser.newPage.bind(browser);
+    browser.newContext=async(...args)=>{const context=await newContext(...args);await context.addInitScript(dismiss);return context;};
+    browser.newPage=async(...args)=>{const page=await newPage(...args);await page.addInitScript(dismiss);return page;};
+  }
+  return browser;
 }
 
 function gameUrl(unlock = true) {

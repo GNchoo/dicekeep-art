@@ -287,6 +287,7 @@ test('phone/desktop shop UI is disabled offline; mock account profile never over
           else if (u.pathname === '/profile') body = { profile: account };
           else if (u.pathname === '/wallet') body = { wallet: { free: account.shards, paid: 0, debt: 0 } };
           else if (u.pathname === '/cosmetics') body = { cosmetics: { owned: ['classic'], equipped: 'classic' } };
+          else if (u.pathname === '/liveops') { const L=require('../liveops-rules.js');body={profile:account,wallet:{free:account.shards,paid:0,debt:0},liveops:L.view(L.defaultState()),inbox:[],canAdmin:false,serverNow:Date.now()}; }
           else if (u.pathname === '/profile/action') { account = profile(690); account.tree.mastery[1] = 3; body = { profile: account }; }
           else { status = 500; body = { error: 'unexpected mock path' }; }
           return route.fulfill({ status, contentType: 'application/json', headers: { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Authorization, Content-Type' }, body: JSON.stringify(body) });

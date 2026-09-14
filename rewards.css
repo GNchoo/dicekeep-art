@@ -15,6 +15,8 @@
 .rw-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; padding: 0 18px; border-bottom: 1px solid #4b3c28; flex-shrink: 0; }
 .rw-tab { border: 0; border-bottom: 3px solid transparent; background: transparent; border-radius: 0; color: #c6b797; padding: 10px 4px; font-weight: 700 !important; }
 .rw-tab[aria-selected=true] { color: #f0cd81; border-bottom-color: #e4b65e; background: linear-gradient(transparent, #b8892320); }
+.rw-tab{position:relative}
+.rewards-notification-dot{display:inline-block;width:9px;height:9px;margin-left:6px;vertical-align:top;border-radius:50%;background:#ef5053;box-shadow:0 0 0 2px #281b17;pointer-events:none}
 .rw-status { margin: 12px 18px 0; padding: 10px 12px; border-radius: 8px; background: #24382d; color: #c9ebd6; font-size: 14px; overflow-wrap: anywhere; }
 .rw-status.rw-error { color: #f3c5b8; background: #41221d; }
 .rw-retry { display: inline-block; color: #ffe0bc; border: 1px solid #b78467; border-radius: 5px; background: transparent; padding: 3px 10px; margin: 8px 0 0; }
