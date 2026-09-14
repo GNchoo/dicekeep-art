@@ -165,6 +165,25 @@ test('account run settlement waits for server, persists retry and removes it onl
   assert.equal(f.localStorage.getItem('DKSAVE'), guest);
 });
 
+test('battle proofs persist before the board is cleared; pending service failures do not block the next match or lose old claims', async () => {
+  let ready=false;
+  const f=fixture({router(call){
+    if(call.path==='/runs/settle')return ready?{body:{profile:profile(750),shards:50}}:{status:503,body:{error:'battle-result-pending'}};
+    if(call.path==='/runs/start')return{body:{ticket:'next-ticket',profile:profile(700),snapshot:P.snapshot(profile(700),'coop')}};
+  }});
+  await f.C.init();const guest=f.localStorage.getItem('DKSAVE');
+  const battle={code:'ABC234',matchId:'ABC234:1:2',pid:'aaaa1111',key:'a'.repeat(32)};
+  for(let i=0;i<40;i++)f.C.queueRun('battle-ticket-'+i,{battle});
+  assert.equal(JSON.parse(f.localStorage.getItem('dk_commerce_pending_v1')).length,40,'no silent 32-run discard');
+  const started=await f.C.startRun('coop',{battle});assert.equal(started.ticket,'next-ticket');
+  assert.deepEqual(f.calls.find(x=>x.path==='/runs/start').data,{mode:'coop',battle});
+  assert.equal(JSON.parse(f.localStorage.getItem('dk_commerce_pending_v1')).length,40);
+  const setter=f.localStorage.setItem;f.localStorage.setItem=()=>{throw Error('quota');};
+  assert.throws(()=>f.C.queueRun('unqueued',{battle}),/저장 공간/,'synchronous failure lets game preserve its checkpoint');
+  f.localStorage.setItem=setter;ready=true;await f.C.retryPending();
+  assert.equal(JSON.parse(f.localStorage.getItem('dk_commerce_pending_v1')).length,0);assert.equal(f.C.profile().shards,750);assert.equal(f.localStorage.getItem('DKSAVE'),guest);
+});
+
 test('logout ignores a late account action response instead of resurrecting that profile', async () => {
   const gate = deferred();
   const f = fixture({ router(call) { if (call.path === '/profile/action') return gate.promise; } });
@@ -243,7 +262,7 @@ test('phone/desktop shop UI is disabled offline; mock account profile never over
       try {
         await page.goto(new URL('index.html?net=off&v=commerce-test', base).href); await readyShop();
         const off = await page.evaluate(() => ({ configured: DKCOMMERCE.state().configured, disabled: [...document.querySelectorAll('#commerce-products [data-sku]')].every(b => b.disabled), count: document.querySelectorAll('#commerce-products [data-sku]').length, signinDisabled: document.getElementById('commerce-signin').disabled, scripts: [...document.scripts].map(s => s.src).filter(s => /accounts\.google|tosspayments/.test(s)) }));
-        assert.deepEqual(off, { configured: false, disabled: true, count: 3, signinDisabled: true, scripts: [] });
+        assert.deepEqual(off, { configured: false, disabled: true, count: 2, signinDisabled: true, scripts: [] });
         assert.deepEqual(row.api, []); row.checks.push('unconfigured: all 3 purchase buttons/login disabled; API and provider SDK requests zero');
         await page.locator('#commerce-shop').scrollIntoViewIfNeeded(); await page.screenshot({ path: path.join(dir, 'shop-unconfigured.png') });
         const guest = profile(35); guest.deck = [2, 3, 4, 5, 6]; guest.collection.presets[0].faces = guest.deck.slice();

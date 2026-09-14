@@ -616,12 +616,16 @@ window.DKNET = (function () {
   const inQueue = () => R.state === 'queue';
   const inGame = () => R.state === 'playing';
   const members = () => (R.room && Array.isArray(R.room.players)) ? R.room.players : [];
+  function battleProof() {
+    const b=R.room?.game?.battle;
+    return R.code && R.id && b?.rewardVersion===1 && b.seats?.[R.id.pid] ? {code:R.code,matchId:b.matchId,pid:R.id.pid,key:R.id.key} : null;
+  }
 
   return {
     CFG, on, off, emit,
     create, join, quick, resume, start, leave,
     sum, watch, done, dead, clear, chat, log, send,
-    battleReport, battleAssist, battleAck, battleExport, battleRestore,
+    battleReport, battleAssist, battleAck, battleExport, battleRestore, battleProof,
     serverNow, offset: () => T.offset, rtt: () => T.rtt,
     get state() { return R.state; },
     get me() { return R.me; },

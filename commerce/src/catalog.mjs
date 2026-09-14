@@ -3,7 +3,7 @@ export const PRODUCTS = Object.freeze([
   { sku: 'shards200', kind: 'currency', shards: 200, amount: 1100, currency: 'KRW', playProductId: 'dicekeep.shards200' },
   { sku: 'shards60', available: false, kind: 'currency', shards: 60, amount: 1100, currency: 'KRW', playProductId: 'dicekeep.shards60' },
   { sku: 'shards600', kind: 'currency', shards: 600, amount: 3300, currency: 'KRW', playProductId: 'dicekeep.shards600' },
-  { sku: 'shards2000', kind: 'currency', shards: 2000, amount: 9900, currency: 'KRW', playProductId: 'dicekeep.shards2000' },
+  { sku: 'shards2000', available: false, kind: 'currency', shards: 2000, amount: 9900, currency: 'KRW', playProductId: 'dicekeep.shards2000' },
   { sku: 'skinRoyal', kind: 'cosmetic', skinId: 'royal', shards: 0, amount: 2900, currency: 'KRW', playProductId: 'dicekeep.skin_royal' },
   { sku: 'skinFrost', kind: 'cosmetic', skinId: 'frost', shards: 0, amount: 2900, currency: 'KRW', playProductId: 'dicekeep.skin_frost' },
   { sku: 'skinEmber', kind: 'cosmetic', skinId: 'ember', shards: 0, amount: 2900, currency: 'KRW', playProductId: 'dicekeep.skin_ember' }

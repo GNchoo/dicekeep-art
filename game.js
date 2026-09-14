@@ -1436,6 +1436,7 @@ const S = {
 // ==================== 저장 / 진행도 (localStorage) ====================
 const SAVE_KEY = 'DKSAVE';
 const PROGRESSION = window.DKPROGRESSION;
+const BATTLE = window.DKBATTLE;
 const COMMERCE = window.DKCOMMERCE;
 const progressionProfile = () => (COMMERCE && COMMERCE.profile()) || SAVE.progression;
 const growthRun = () => S.mode === 'infinity' && !!(S.inf && S.inf.growthSnapshot && S.inf.growthSnapshot.growth);
@@ -3108,7 +3109,7 @@ function spawnEnemy(item) {
   if (deckRun()) { const tuned = DECK.enemyStats(e.wave,e.isBoss,e.isElite,e.bossCount,S.inf.mode==='extreme'); e.hp=e.max=tuned.hp; e.armor=tuned.armor; e.gold=tuned.gold; }
   if (battleRun()) {
     const tuned = DECK.enemyStats(item.battleLevel || S.wave || 1, isBoss, e.isElite, 1, true);
-    e.hp = e.max = Math.round(tuned.hp * (isBoss ? .6 : .75)); e.armor = tuned.armor; e.gold = tuned.gold;
+    e.hp = e.max = Math.round(tuned.hp * (isBoss ? battleRules().bossHp : battleRules().normalHp)); e.armor = tuned.armor; e.gold = tuned.gold;
     e.transferred = !!item.transferred; e.battleDeadline = item.battleDeadline || 0;
     e.spdMult = 0.8 + Math.min(1.5, (item.battleLevel || S.wave || 1) / 100);
   }
@@ -6258,7 +6259,7 @@ function openMenu() {
   $('menu').classList.remove('hidden');
   const spec = S.phase === 'spectate';
   $('menu-note').innerHTML = spec ? '관전 중입니다. 기록·젬은 이미 저장됐습니다.' : S.net ? '<b>함께하기</b> 중에는 게임이 멈추지 않습니다. 포기하면 관전으로 넘어가고 기록·젬은 저장됩니다.' : (S.mode === 'infinity' ? '메뉴가 열려 있는 동안 게임이 멈춥니다. 포기하면 지금까지의 기록·젬이 저장됩니다.' : '메뉴가 열려 있는 동안 게임이 멈춥니다.');
-  if (battleRun()) $('menu-note').textContent = `${S.net.mode==='coop'?'포기하면 두 사람 모두 패배합니다.':'포기하면 상대가 승리합니다.'} 전투는 계속 진행됩니다. 시범전 결과는 기기에 저장되며 재화 보상은 없습니다.`;
+  if (battleRun()) $('menu-note').textContent = `${S.net.mode==='coop'?'포기하면 두 사람 모두 패배합니다.':'포기하면 상대가 승리합니다.'} 전투는 계속 진행됩니다. 패배해도 참여한 시간의 기본 보상을 받습니다.`;
   $('menu-quit-txt').textContent = spec ? '관전 끝내고 나가기' : S.mode === 'infinity' ? '포기하고 나가기 (기록 저장)' : '스테이지 선택으로 나가기';
   $('menu-help').classList.toggle('hidden', S.mode !== 'infinity');
   $('menu-save').classList.toggle('hidden', !growthRun() || !!S.net || spec);
@@ -6336,6 +6337,7 @@ function renderRunResume() {
 async function restoreRunSave(p, net) {
   if (!p || p.owner !== runOwner()) throw new Error('저장한 계정의 도전만 이어갈 수 있습니다.');
   const accountRun = p.inf.accountTicket ? await COMMERCE.resumeRun(p.inf.accountTicket) : null;
+  if (net && !mpSameMatch(net)) return false;
   if (accountRun && JSON.stringify(accountRun.snapshot) !== JSON.stringify(p.inf.growthSnapshot)) throw new Error('저장된 덱이 런 시작 기록과 일치하지 않습니다.');
   if (net && (net.code !== p.match?.code || net.pid !== p.match.pid || net.t0 !== p.match.t0 || net.seed !== p.match.seed)) throw new Error('다른 방의 전투는 복구할 수 없습니다.');
   const restored = RUNSAVE.hydrate(p, p.inf.growthSnapshot.deckSystem === 1 ? Object.fromEntries(DECK.catalog.map(c=>[c.id,deckDef(c.id)])) : TOWER_DEFS), { slot, ...state } = restored;
@@ -6359,8 +6361,11 @@ async function restoreRunSave(p, net) {
   S.paused = !net;
   if (net) { net.doneW = S.inf.doneW; mpStartSum(); mpRenderRivals(); mpLayoutCards(); }
   if (battleRun()) battleOnState(DKNET.room?.game?.battle || net.battle);
-  refreshDirectionalDemand(true); syncUI(); persistRun();
+  refreshDirectionalDemand(true); syncUI();
+  if (battleRun() && S.net.battle?.result) { battleFinish({battle:S.net.battle}); return true; }
+  persistRun();
   if (!net) openMenu();
+  return true;
 }
 async function resumeSavedRun(end) {
   if (runResumeBusy || S.phase !== 'lobby') return;
@@ -6389,10 +6394,13 @@ const MP = { sumTimer: 0, sumEvery: 0, tickAt: 0, resumeRoom: null, statsDone: f
 const VIEW = { pid: null, towers: [], enemies: [], projs: [], beams: [], fxs: [], sum: null, at: 0 };
 const PC = ['#7fd4ff', '#ffd452', '#8ef0b0', '#ff7ad9'];   // 좌석색 (입장 순)
 const MP_LOG_KINDS = ['sys', 'gacha', 'up', 'boom', 'boss', 'life'];
-// Dicekeep trial rules: score/lives are owned by the room; combat remains local.
-// These short matches deliberately use different numbers from Random Dice 2.
+// Score, lives and eligible participation time belong to the room.
 function isBattleMode(mode) { return mode === 'duel' || mode === 'coop'; }
 function battleRun() { return S.mode === 'infinity' && !!S.net && isBattleMode(S.net.mode); }
+function battleRules() {
+  const b = S.net?.battle;
+  return b?.rules || (b && b.rewardVersion !== 1 ? {...BATTLE,goal:500,normalHp:.75,bossHp:.6} : BATTLE);
+}
 function battleLeak(enemy) {
   DKNET.battleReport('leak', { count: 1, boss: !!enemy.isBoss });
   S.inf.battleDirty = true;
@@ -6400,12 +6408,13 @@ function battleLeak(enemy) {
   pushLog(`${enemy.name} 이탈 · ${enemy.isBoss ? '목숨 −5' : '목숨 −1'}${S.net.mode === 'coop' ? ' (공동 성채)' : ''}`, 'life');
 }
 function battleWaveItems(round, boss = false) {
+  const rules = battleRules(), bossSeconds = rules.bossMs / 1000;
   const slot = (Math.max(1, round) - 1) % 90;
   const artWave = boss ? ((round - 1) % 10 + 1) * 10 : slot + 1 + Math.floor(slot / 9);
-  return buildInfinityWave(artWave).slice(0, boss ? 1 : 12).map((item, i) => ({
-    ...item, t: boss ? round * 90 : (round - 1) * 15 + .5 + i,
+  return buildInfinityWave(artWave).slice(0, boss ? 1 : rules.spawnCount).map((item, i) => ({
+    ...item, t: boss ? round * bossSeconds : (round - 1) * rules.waveSeconds + .5 + i,
     wave: artWave, battleLevel: boss ? round * 10 : round * 2,
-    ...(boss ? { bossCount: 1, battleDeadline: S.net.t0 + (round * 90 + 45) * 1000 } : {}),
+    ...(boss ? { bossCount: 1, battleDeadline: S.net.t0 + (round * bossSeconds + rules.bossLimitSeconds) * 1000 } : {}),
   }));
 }
 function battleClock() {
@@ -6414,14 +6423,14 @@ function battleClock() {
   if (elapsed < 0) return false;
   S.speed = 1; S.waveT = elapsed; S.waveActive = true;
   // Catch up every missed spawn after reconnect instead of skipping pressure.
-  const round = Math.floor(elapsed / 15) + 1;
+  const rules = battleRules(), round = Math.floor(elapsed / rules.waveSeconds) + 1;
   for (let i = 0; S.wave < round && i < 5; i++) {
-    if (S.wave > 0) { S.inf.doneW = S.net.doneW = S.wave; S.gold += 20 + S.wave * 3; }
+    if (S.wave > 0) { S.inf.doneW = S.net.doneW = S.wave; S.gold += rules.waveGold + S.wave * rules.waveGoldStep; }
     S.wave++;
     S.spawnQ.push(...battleWaveItems(S.wave));
     S.inf.battleDirty = true;
   }
-  const bossRound = Math.floor(elapsed / 90);
+  const bossRound = Math.floor(elapsed * 1000 / rules.bossMs);
   for (let i = 0; S.inf.battleBossRound < bossRound && i < 5; i++) {
     S.inf.battleBossRound++;
     S.spawnQ.push(...battleWaveItems(S.inf.battleBossRound, true));
@@ -6473,7 +6482,7 @@ function syncBattleUI() {
   const bossIn = Math.max(0, Math.ceil(((liveBoss?.battleDeadline || b?.nextBossAt || S.net.t0 + 90000) - DKNET.serverNow()) / 1000));
   const bossText = `${liveBoss ? '보스 제한' : '다음 보스'} ${bossIn}초`;
   status.textContent = DKNET.state !== 'playing' ? '재연결 중 · 전투 복구를 기다립니다' : S.net.battleWaiting ? '서버 결과를 기다립니다' :
-    S.net.mode === 'coop' ? `공동 ♥${b?.teamLives ?? 20} · ${b?.kills || 0}/${b?.goal || 500}처치 · ${bossText}` : `내 ♥${me?.lives ?? 20} · 상대 ♥${other?.lives ?? 20} · ${bossText}`;
+    S.net.mode === 'coop' ? `공동 ♥${b?.teamLives ?? 20} · ${b?.kills || 0}/${b?.goal || BATTLE.goal}처치 · ${bossText}` : `내 ♥${me?.lives ?? 20} · 상대 ♥${other?.lives ?? 20} · ${bossText}`;
   const ready = Math.max(0, Math.ceil(((me?.assistReadyAt || 0) - DKNET.serverNow()) / 1000));
   assist.disabled = !b || ready > 0 || DKNET.state !== 'playing' || !!S.net.battleWaiting || DKNET.serverNow() < S.net.t0;
   assist.textContent = ready ? `아군 보급 · ${ready}초` : '아군 보급 +60 SP';
@@ -6486,14 +6495,45 @@ function battleFinish(m) {
   S.net.status = won ? 'cleared' : 'dead'; S.net.spectating = true;
   S.lives = S.net.mode === 'coop' ? b.teamLives : b.seats[S.net.pid]?.lives || 0;
   S.waveActive = false; S.paused = false; mpStopSum();
-  const runId = S.inf.runId;
+  const inf = S.inf, net = S.net, runId = inf.runId;
+  const firstResult = !inf.settledResult;
   if (!S.inf.settledResult) {
-    const settled = PROGRESSION.settle(SAVE.progression, { id:runId,mode:S.net.mode,wave:S.inf.doneW,kills:b.seats[S.net.pid]?.kills || 0,
-      won,date:new Date(result.at).toISOString(),elapsed:Math.max(0,(result.at-S.net.t0)/1000) });
-    // Trial modes record results only; no paid service or wallet is involved.
+    const elapsed = Math.max(0,(result.at-net.t0)/1000);
+    const run = { id:b.matchId+':'+net.pid, mode:net.mode, matchId:b.matchId, pid:net.pid,
+      wave:Math.floor(elapsed / battleRules().waveSeconds)+1, kills:b.seats[net.pid]?.kills || 0,
+      ...(b.rewardVersion === 1 ? {teamKills:b.kills,activeSeconds:b.seats[net.pid]?.activeSeconds || 0,rewardVersion:1} : {}),
+      won, date:new Date(result.at).toISOString(), elapsed, reason:result.reason };
+    const res = {wave:run.wave,gems:0,shards:0,collectionRewards:{gold:0,packs:0},newly:[],activeSeconds:run.activeSeconds || 0};
+    let proof;
+    try {
+      if (inf.accountTicket) {
+        proof = DKNET.battleProof();
+        COMMERCE.queueRun(inf.accountTicket,{battle:proof});
+      } else {
+        // Persist the new wallet before adopting it or deleting the checkpoint.
+        const profile = structuredClone(SAVE.progression), settled = PROGRESSION.settle(profile,run);
+        if (!settled.ok) throw new Error('전투 보상을 계산하지 못했습니다.');
+        localStorage.setItem(SAVE_KEY,JSON.stringify({...SAVE,progression:profile}));
+        SAVE.progression = profile; Object.assign(res,settled);
+      }
+    } catch (error) {
+      S.phase = 'over';
+      showOverlay('보상 저장 대기', '<p>저장 공간 또는 계정 연결을 확인한 뒤 다시 저장해 주세요. 이전 전투 저장은 유지했습니다.</p><button id="battle-reward-retry" type="button">보상 다시 저장</button>', '로비로');
+      $('battle-reward-retry').onclick = () => battleFinish(m);
+      syncBattleUI(); return;
+    }
+    inf.settledResult = res;
+    if (inf.accountTicket) {
+      res.pending = true;
+      COMMERCE.finishRun(inf.accountTicket,{battle:proof}).then(settled=>{
+        Object.assign(res,settled,{pending:false});
+        if (S.inf === inf && S.net === net && S.phase === 'over') battleFinish(m);
+      }).catch(error=>{
+        res.pending = false; res.error = COMMERCE.errorText(error);
+        if (S.inf === inf && S.net === net && S.phase === 'over') battleFinish(m);
+      });
+    }
     removeRunSave(runId);
-    S.inf.settledResult = {wave:S.inf.doneW,gems:0,shards:0,newly:[],record:settled.record};
-    saveSave();
   }
   S.phase = 'over'; S.selTower = null; S.heldDie = 0; SLOT.active = false;
   if (DRAG.active) stopPlaceDrag();
@@ -6501,8 +6541,11 @@ function battleFinish(m) {
   const reason = {goal:'공동 처치 목표 달성',lives:'성채 목숨 소진',quit:'플레이어 포기',afk:'자리 비움',reload:'전투 저장 없음',disconnect:'재접속 유예 종료',timeout:'제한시간 종료'}[result.reason] || '서버 전투 판정';
   const rows = Object.entries(b.seats).map(([pid, seat]) => `<tr><td>${escapeHtml(mpNameOf(pid))}${pid===S.net.pid?' (나)':''}</td><td>${seat.kills}처치</td><td>${result.winners.includes(pid)?'승리':'패배'}</td></tr>`).join('');
   const title = S.net.mode === 'coop' ? won ? '협동 성공!' : '협동 종료' : won ? '대전 승리!' : '대전 패배';
-  (won ? SFX.win : SFX.lose)();
-  showOverlay(title, `<p>${reason}${S.net.mode==='coop'?` · 공동 ${b.kills}/${b.goal}처치`:''}</p><table class="rank"><thead><tr><th>플레이어</th><th>기여</th><th>결과</th></tr></thead><tbody>${rows}</tbody></table><p>${mpDur(result.at-S.net.t0)} · 기기에 ${won?'승리':'패배'} 기록을 저장했습니다.</p><small>시범전 · 재화 보상 없음</small>`, '로비로');
+  if (firstResult) (won ? SFX.win : SFX.lose)();
+  const reward = inf.settledResult;
+  const rewardText = reward.pending ? '계정 보상을 저장하고 있습니다. 로비로 이동해도 정산은 계속됩니다.' : reward.error ? `${escapeHtml(reward.error)} 상점에서 보상을 다시 확인할 수 있습니다.` : b.rewardVersion !== 1 ? '이전 시범전은 승패 기록만 저장됩니다.' :
+    `<div class="stat-grid"><span>유효 참여 시간</span><b>${mpDur(reward.activeSeconds*1000)}</b><span>연구 골드</span><b>+${reward.collectionRewards?.gold||0}</b><span>성장 조각</span><b>+${reward.shards||0}</b></div><small>기본 보상은 승패·개인 처치 비중에 관계없이 같습니다. 달성한 첫 승리·누적 보너스도 포함됩니다.</small>`;
+  showOverlay(title, `<p>${reason}${S.net.mode==='coop'?` · 공동 ${b.kills}/${b.goal}처치`:''}</p><table class="rank"><thead><tr><th>플레이어</th><th>처치</th><th>결과</th></tr></thead><tbody>${rows}</tbody></table><p>${mpDur(result.at-S.net.t0)} · ${inf.accountTicket?'계정':'이 기기'}에 ${won?'승리':'패배'} 기록 저장</p>${rewardText}`, '로비로');
   syncBattleUI();
 }
 const mpOn = () => !!(window.DKNET && DKNET.CFG && DKNET.CFG.url);
@@ -6513,13 +6556,13 @@ function mpModeDescription(mode) {
   return {
     clear: '순수운빨 · 성장 미적용 · 각자 x1~x3 · 먼저 101웨이브 완주하면 1위',
     extreme: '극한 · 덱 성장 적용 · 100분 동안 완료 웨이브 경쟁 · 싱글 극한은 시간 제한 없음',
-    duel: '시범 대전 · 2인 · 목숨 20 · 5처치마다 상대에게 적 1마리 전송 · 먼저 목숨 0이면 패배 · x1 고정',
-    coop: '시범 협동 · 2인 · 공동 목숨 20 · 합계 500처치면 함께 승리 · 45초마다 아군 보급 60 SP · x1 고정',
+    duel: '1대1 대전 · 성장 수치 통일 · 목숨 20 · 5처치마다 적 1마리 전송 · 상대 목숨 0이면 승리 · x1 고정',
+    coop: `2인 협동 · 공동 목숨 20 · 합계 ${BATTLE.goal}처치면 함께 승리 · 45초마다 아군 보급 60 SP · x1 고정`,
   }[mode] || '';
 }
 $('mp-mode').addEventListener('change', () => {
   const mode = mpModeInput();
-  $('mp-mode-info').textContent = mpModeDescription(mode) + (isBattleMode(mode) ? ' · 현재 시범전은 기기 기록만 저장하며 재화 보상은 없습니다.' : '');
+  $('mp-mode-info').textContent = mpModeDescription(mode) + (isBattleMode(mode) ? ' · 유효 참여 1분당 연구 골드 300 + 조각 8. 패배해도 기본 보상 지급.' : '');
   const note = $('mp-quick').querySelector('small');
   if (note) note.textContent = isBattleMode(mode) ? '2명 모이면 시작' : '2명 이상 10초 · 4명 즉시';
 });
@@ -6582,7 +6625,7 @@ function renderMpRoom() {
   $('mp-code-wrap').classList.toggle('hidden', queue || MP.quick);
   $('mp-slots').classList.toggle('hidden', queue);
   $('mp-room-title').textContent = queue || MP.quick ? '빠른 매칭' : '대기실';
-  $('mp-note').textContent = mpModeDescription(mode) + (isBattleMode(mode) ? ' · 일반 적 이탈 −1, 보스 이탈/45초 초과 −5. 90초마다 보스가 등장합니다. 재화 보상 없는 시범전입니다.' : '');
+  $('mp-note').textContent = mpModeDescription(mode) + (isBattleMode(mode) ? ' · 일반 적 이탈 −1, 보스 이탈/45초 초과 −5. 90초마다 보스 등장. 타워 3개 이상 배치하고 접속한 전투 시간이 보상에 누적됩니다. 자리 비움 시간은 제외됩니다.' : '');
   if (queue) {   // 대기열: 방이 아직 없다
     const q = MP.queue || { n: 1, eta: null };
     $('mp-count').textContent = `${q.n || 1}/${capacity}`;
@@ -6618,20 +6661,34 @@ function mpRunInfo(m) {
   return { code: N.code, pid: mpMePid(), mode: ['extreme','duel','coop'].includes(m.mode) ? m.mode : 'clear', seed: m.seed, t0: m.t0, timing: m.timing, battle: m.battle || N.room?.game?.battle || null,
     rivals: {}, status: 'alive', doneW: 0, savedResult: null, spectating: false, forced: false, ended: null, watchers: 0 };
 }
+function mpSameMatch(net) {
+  const N = window.DKNET, game = N?.room?.game;
+  return !!(N?.inRoom() && N.code === net.code && mpMePid() === net.pid && game?.t0 === net.t0 && game.seed === net.seed &&
+    (!isBattleMode(net.mode) || game.battle?.matchId === net.battle?.matchId));
+}
 async function mpOnStart(m) {
   const net = mpRunInfo(m);
   if (VIEW.pid) mpViewExit(true);
   // 순수운빨 방은 과금 서비스가 막히더라도 시작한다 (계정 보상만 빠진다). 극한은 성장이 붙으므로 종전대로 중단.
   let run = null;
   try {
-    if (!isBattleMode(net.mode)) run = await startAccountRun(net.mode === 'extreme' ? 'extremeMulti' : 'multi', text => mpStatus(`${text} 계정 보상 없이 진행합니다.`, true));
-  } catch (error) { mpLeave(); gotoLobby('multi'); mpStatus(COMMERCE.errorText(error), true); return; }
+    if (isBattleMode(net.mode)) run = await COMMERCE.startRun(net.mode,{battle:DKNET.battleProof()});
+    else run = await startAccountRun(net.mode === 'extreme' ? 'extremeMulti' : 'multi', text => mpStatus(`${text} 계정 보상 없이 진행합니다.`, true));
+  } catch (error) { if (mpSameMatch(net)) { mpLeave(); gotoLobby('multi'); mpStatus(COMMERCE.errorText(error), true); } return false; }
+  // Authentication can finish after a peer ends the match or we leave the room.
+  if (!mpSameMatch(net)) return false;
+  if (isBattleMode(net.mode)) net.battle = DKNET.room.game.battle;
   startInfinity(net.mode, net, run);
   MP.statsDone = false;
-  if (battleRun()) { battleOnState(net.battle); persistRun(); }
+  if (battleRun()) {
+    battleOnState(net.battle);
+    if (net.battle?.result) { battleFinish({battle:net.battle}); return true; }
+    persistRun();
+  }
   mpStartSum();
   mpRenderRivals();
   mpLayoutCards();
+  return true;
 }
 // 0.5초마다: 카드 배지(자리 비움·응답 없음)·웨이브 버튼 갱신
 function mpTick() {
@@ -7164,9 +7221,11 @@ function mpResumeAfterTitle() {
     if (p && me?.status === 'alive' && p.match.code === room.code && p.match.pid === me.pid && p.match.t0 === m.t0 && p.match.seed === m.seed) {
       if (runResumeBusy) return true;
       runResumeBusy = true;
-      restoreRunSave(p, mpRunInfo(m)).then(() => {
+      restoreRunSave(p, mpRunInfo(m)).then(restored => {
+        if (!restored) return;
         const live = DKNET.room, seat = live?.players.find(p => p.pid === mpMePid());
-        if (live?.phase !== 'playing' || seat?.status !== 'alive') { S.inf.quit = true; endInfinity(false); }
+        if (battleRun() && live?.game?.battle?.result) battleFinish({battle:live.game.battle});
+        else if (live?.phase !== 'playing' || seat?.status !== 'alive') { S.inf.quit = true; endInfinity(false); }
         else toast('전투를 복구했습니다. 방의 제한시간은 계속 흐릅니다.');
       }).catch(error => {
         MP.resumeRoom = DKNET.room || room; gotoLobby('multi'); mpStatus(COMMERCE.errorText(error), true);
@@ -7176,8 +7235,9 @@ function mpResumeAfterTitle() {
     let last = { wave: 0, kills: 0 };
     try { last = JSON.parse(sessionStorage.getItem('dk_mp_run') || 'null') || last; } catch (_) {}
     // mpOnStart obtains an account ticket asynchronously: wait before using S.inf.
-    mpOnStart(m).then(() => {
-      if (!S.net || !S.inf) return;
+    mpOnStart(m).then(started => {
+      if (!started || !S.net || !S.inf) return;
+      if (battleRun() && DKNET.room?.game?.battle?.result) { battleFinish({battle:DKNET.room.game.battle}); return; }
       S.wave = Math.max(0, last.wave | 0); S.inf.doneW = Math.max(0, Math.min(S.wave, me?.dw || 0));
       S.inf.kills = last.kills | 0; S.inf.reload = true; endInfinity(false);
     });
@@ -7187,7 +7247,7 @@ function mpResumeAfterTitle() {
     const p = readRunSave(true);
     const m = {...room.game,mode:room.mode};
     if (p && p.match.code === room.code && p.match.t0 === m.t0) {
-      restoreRunSave(p, mpRunInfo(m)).then(() => battleFinish({battle:room.game.battle})).catch(e=>toast(e.message));
+      restoreRunSave(p, mpRunInfo(m)).then(restored => { if (restored) battleFinish({battle:DKNET.room.game.battle}); }).catch(e=>toast(e.message));
       return true;
     }
   }

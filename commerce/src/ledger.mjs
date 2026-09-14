@@ -6,6 +6,14 @@ import { Providers } from './providers.mjs';
 
 const SESSION_MS = 24 * 3600 * 1000;
 const validRequestId = id => typeof id === 'string' && /^[a-zA-Z0-9_-]{8,128}$/.test(id);
+const battleMode = mode => ['duel', 'coop'].includes(mode);
+function battleProof(value) {
+  requireThat(value && typeof value === 'object' && !Array.isArray(value), 'invalid-battle-proof');
+  fields(value, ['code', 'matchId', 'pid', 'key']);
+  requireThat(typeof value.code === 'string' && /^[A-Z0-9]{6}$/.test(value.code) && typeof value.matchId === 'string' && value.matchId.startsWith(value.code + ':') && value.matchId.length <= 128 &&
+    typeof value.pid === 'string' && /^[a-z0-9]{8,16}$/.test(value.pid) && typeof value.key === 'string' && /^[a-f0-9]{32}$/.test(value.key), 'invalid-battle-proof');
+  return { code:value.code, matchId:value.matchId, pid:value.pid, key:value.key };
+}
 function sync(a) { a.profile.shards = a.wallet.free + a.wallet.paid; requireThat(int(a.profile.shards, 0, PG.MAX_SHARDS), 'wallet-limit', 409); }
 function credit(a, amount, kind) {
   const debtPaid = Math.min(amount, a.wallet.debt); a.wallet.debt -= debtPaid;
@@ -133,10 +141,9 @@ export class CommerceLedger {
     });
   }
   async startRun(id, b) {
-    fields(b, ['mode']); requireThat(PG.MODES.includes(b.mode), 'invalid-mode');
-    // Trial co-op and duel use the multiplayer server, without account tickets
-    // or economic rewards. Reject before replacing an existing account run.
-    requireThat(!['duel', 'coop'].includes(b.mode), 'mode-not-account-enabled', 409);
+    fields(b, ['mode', 'battle']); requireThat(PG.MODES.includes(b.mode), 'invalid-mode');
+    if (battleMode(b.mode)) return this.startBattleRun(id, b);
+    requireThat(b.battle === undefined, 'unexpected-field');
     const ticket = random();
     return this.storage.transaction(async tx => {
       const a = await tx.get('account:' + id); requireThat(a.wallet.debt === 0 || ['clear', 'multi'].includes(b.mode), 'refund-debt', 409);
@@ -152,18 +159,20 @@ export class CommerceLedger {
     return this.storage.transaction(async tx => {
       const run = await tx.get('run:' + b.ticket), a = await tx.get('account:' + id);
       requireThat(run && run.accountId === id, 'run-not-found', 404);
-      requireThat(!run.status && a.activeRun === b.ticket, 'run-inactive', 409);
+      requireThat(!run.status && (battleMode(run.mode) || a.activeRun === b.ticket), 'run-inactive', 409);
       requireThat(!a.wallet.debt || ['clear', 'multi'].includes(run.mode), 'refund-debt', 409);
-      return { ticket: run.id, ...view(a), snapshot: run.snapshot, startedAt: run.startedAt };
+      return { ticket: run.id, ...view(a), snapshot: run.snapshot, startedAt: run.startedAt, ...(run.battle?{battle:run.battle}:{}) };
     });
   }
   async settleRun(id, b) {
+    if (b.battle !== undefined) return this.settleBattleRun(id, b);
     fields(b, ['ticket', 'wave', 'kills', 'won', 'elapsed', 'date']);
     requireThat(typeof b.ticket === 'string' && /^[a-f0-9]{64}$/.test(b.ticket) && int(b.wave, 0, 1e6) && int(b.kills, 0, 1e9) && typeof b.won === 'boolean' &&
       (b.elapsed === undefined || (Number.isFinite(b.elapsed) && b.elapsed >= 0)) && (b.date === undefined || (typeof b.date === 'string' && Number.isFinite(Date.parse(b.date)))), 'invalid-run');
     const fingerprint = await sha(JSON.stringify([b.wave, b.kills, b.won]));
     return this.storage.transaction(async tx => {
       const run = await tx.get('run:' + b.ticket); requireThat(run && run.accountId === id, 'run-not-found', 404);
+      requireThat(!battleMode(run.mode), 'battle-proof-required', 409);
       const a = await tx.get('account:' + id);
       if (run.status === 'settled') { requireThat(run.fingerprint === fingerprint, 'run-conflict', 409); return { ...view(a), shards: 0, collectionRewards: { gold: 0, packs: 0 }, duplicate: true }; }
       requireThat(!run.status && a.activeRun === b.ticket, 'run-inactive', 409);
@@ -178,6 +187,58 @@ export class CommerceLedger {
       run.status = 'settled'; run.fingerprint = fingerprint; run.award = award; run.collectionRewards = result.collectionRewards; run.elapsed = elapsed; a.activeRun = null;
       await tx.put('account:' + id, a); await tx.put('run:' + b.ticket, run);
       return { ...view(a), shards: paid.credited, earnedShards: award, collectionRewards: result.collectionRewards, debtPaid: paid.debtPaid, duplicate: false };
+    });
+  }
+  async battleRoom(kind, run) {
+    requireThat(this.env.GAME_ROOMS, 'battle-rewards-unavailable', 503);
+    const payload = { ...run.battle, mode:run.mode, accountId:run.accountId, ticket:run.id, environment:this.env.PAYMENT_MODE==='test'?'test':'production' };
+    let response, data;
+    try {
+      const room = this.env.GAME_ROOMS.get(this.env.GAME_ROOMS.idFromName(payload.code));
+      response = await room.fetch(new Request('https://room.internal/reward-' + kind, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload), signal:AbortSignal.timeout(10000) }));
+      data = await response.json();
+    } catch (_) { throw new ApiError('battle-rewards-unavailable', 503); }
+    requireThat(response.ok && data?.ok, data?.error || 'battle-rewards-unavailable', response.status >= 400 ? response.status : 503);
+    return data;
+  }
+  async startBattleRun(id, b) {
+    const proof = battleProof(b.battle), key = 'battle-run:' + id + ':' + await sha(proof.matchId + ':' + proof.pid);
+    requireThat(this.env.GAME_ROOMS, 'battle-rewards-unavailable', 503);
+    const run = await this.storage.transaction(async tx => {
+      const a = await tx.get('account:' + id); requireThat(!a.wallet.debt, 'refund-debt', 409);
+      const priorId = await tx.get(key), prior = priorId && await tx.get('run:' + priorId);
+      if (prior) {
+        requireThat(prior.mode === b.mode && JSON.stringify(prior.battle) === JSON.stringify(proof), 'battle-proof-mismatch', 403);
+        requireThat(!prior.status, 'run-inactive', 409); return prior;
+      }
+      const next = { id:random(), accountId:id, mode:b.mode, battle:proof, startedAt:this.now(), snapshot:PG.snapshot(a.profile,b.mode) };
+      await tx.put('run:' + next.id, next); await tx.put(key, next.id); return next;
+    });
+    await this.battleRoom('bind', run);
+    const a = await this.storage.get('account:' + id);
+    return { ticket:run.id, ...view(a), snapshot:run.snapshot, startedAt:run.startedAt, battle:proof };
+  }
+  async settleBattleRun(id, b) {
+    fields(b, ['ticket', 'battle']);
+    requireThat(typeof b.ticket === 'string' && /^[a-f0-9]{64}$/.test(b.ticket), 'invalid-run');
+    const proof = battleProof(b.battle), run = await this.storage.get('run:' + b.ticket);
+    requireThat(run && run.accountId === id && battleMode(run.mode), 'run-not-found', 404);
+    requireThat(JSON.stringify(proof) === JSON.stringify(run.battle), 'battle-proof-mismatch', 403);
+    if (run.status === 'settled') return { ...view(await this.storage.get('account:' + id)), shards:0, collectionRewards:{gold:0,packs:0}, duplicate:true };
+    requireThat(!run.status, 'run-inactive', 409);
+    const { result } = await this.battleRoom('claim', run);
+    requireThat(result?.rewardVersion===1 && result.matchId===proof.matchId && result.pid===proof.pid && result.mode===run.mode && typeof result.won==='boolean' &&
+      int(result.wave,0,1e6) && int(result.kills,0,1e9) && int(result.teamKills,0,1e9) && int(result.elapsed,0,1e7) && int(result.activeSeconds,0,result.elapsed) && typeof result.date==='string' && Number.isFinite(Date.parse(result.date)), 'battle-result-invalid', 503);
+    return this.storage.transaction(async tx => {
+      const current = await tx.get('run:' + b.ticket), a = await tx.get('account:' + id);
+      if (current.status === 'settled') return { ...view(a), shards:0, collectionRewards:{gold:0,packs:0}, duplicate:true };
+      requireThat(!current.status, 'run-inactive', 409);
+      const before = a.profile.shards, settled = PG.settle(a.profile, { id:b.ticket, ...result });
+      requireThat(settled.ok && !settled.duplicate, 'run-result-invalid', 409);
+      a.profile.shards = before; const paid = credit(a, settled.shards, 'free');
+      current.status='settled'; current.battleResult=result; current.award=settled.shards; current.collectionRewards=settled.collectionRewards;
+      await tx.put('account:' + id,a); await tx.put('run:' + b.ticket,current);
+      return { ...view(a), shards:paid.credited, earnedShards:settled.shards, collectionRewards:settled.collectionRewards, debtPaid:paid.debtPaid, duplicate:false, battle:result };
     });
   }
   async order(id, b) {

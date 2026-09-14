@@ -18,6 +18,13 @@
     'purchase-pending': '결제 승인을 기다리고 있습니다.', 'account-mismatch': '구매한 Google 계정으로 로그인해 주세요.',
     'run-inactive': '이미 종료되었거나 다른 기기에서 새로 시작한 런입니다.', 'run-not-found': '이 계정의 이어하기 기록을 찾지 못했습니다.',
     'run-too-fast': '런 기록을 확인하지 못했습니다. 이번 계정 보상은 지급되지 않았습니다.',
+    'battle-rewards-unavailable': '전투 보상 서버에 다시 연결하는 중입니다. 미지급 보상은 재시도 목록에 보관됩니다.',
+    'battle-result-pending': '공동 전투 결과를 확인하는 중입니다. 보상은 결과가 확정되면 다시 정산합니다.',
+    'battle-proof-mismatch': '이 전투의 참가 정보를 확인하지 못했습니다.',
+    'battle-already-claimed': '이 전투 보상은 이미 다른 계정에 연결되어 있습니다.',
+    'battle-account-already-bound': '한 계정은 같은 전투의 한 자리에서만 보상을 받을 수 있습니다.',
+    'battle-reward-unavailable': '보상 기록을 찾지 못했거나 보관 기간이 지났습니다.',
+    'battle-run-ended': '이미 끝난 전투에는 새 계정 보상을 연결할 수 없습니다.',
     'payment-not-complete': '결제 승인이 완료되지 않았습니다. 잠시 후 다시 확인해 주세요.',
     'payment-not-confirmed': '아직 승인된 결제가 없습니다. 구매 내역은 다음 확인을 위해 남겨 둡니다.',
     'purchases-disabled': '결제 서비스가 아직 열리지 않았습니다.', 'login-required': '다시 로그인해 주세요.', 'session-expired': '다시 로그인해 주세요.',
@@ -123,23 +130,27 @@
     const result = adopt(await api('/profile/action', Object.assign({ type, requestId: crypto.randomUUID() }, value)));
     if (type === 'skinEquip' && window.DKCOSMETICS) await DKCOSMETICS.sync(); return result;
   }
-  async function startRun(mode) {
+  async function startRun(mode, options = {}) {
     if (!session) return null;
     if (!current) await refresh();
-    await retryPending(true);
-    const result = adopt(await api('/runs/start', { mode }));
+    await retryPending(!['duel','coop'].includes(mode));
+    const result = adopt(await api('/runs/start', { mode, ...(options.battle?{battle:options.battle}:{}) }));
     if (window.DKCOSMETICS) await DKCOSMETICS.sync().catch(() => false); return result;
   }
   async function resumeRun(ticket) {
     if (!session) throw new Error('저장한 계정으로 다시 로그인해 주세요.');
     return adopt(await api('/runs/resume', { ticket }));
   }
-  function pendingList() { const list = read(PENDING, []); return Array.isArray(list) ? list.slice(-32) : []; }
-  async function finishRun(ticket, run) {
+  function pendingList() { const list = read(PENDING, []); return Array.isArray(list) ? list : []; }
+  function queueRun(ticket, run) {
     const owner = session && session.accountId;
     if (!owner) throw new Error('계정 보상을 받으려면 다시 로그인해 주세요.');
     const payload = Object.assign({ ticket }, run), list = pendingList().filter(x => x.ticket !== ticket);
-    list.push({ ticket, owner, payload }); write(PENDING, list.slice(-32));
+    list.push({ ticket, owner, payload }); write(PENDING, list);
+    return payload;
+  }
+  async function finishRun(ticket, run) {
+    const payload = queueRun(ticket, run);
     try {
       const result = adopt(await api('/runs/settle', payload));
       write(PENDING, pendingList().filter(x => x.ticket !== ticket)); return result;
@@ -243,7 +254,7 @@
     return initialized;
   }
   window.DKCOMMERCE = Object.freeze({
-    init, signIn, signOut, action, startRun, resumeRun, finishRun, refresh, retryPending, restore, buy, completeWebPayment, errorText,
+    init, signIn, signOut, action, startRun, resumeRun, queueRun, finishRun, refresh, retryPending, restore, buy, completeWebPayment, errorText,
     profile: () => current, linked: () => !!session,
     state: () => ({ configured: !!endpoint, config, accountId: session && session.accountId, wallet, cosmetics: { owned: cosmetics.owned.slice(), equipped: cosmetics.equipped }, busy, native: native(), platform: platform(), ready: !!current }),
     products: async ids => native() && billing() ? billing().products({ productIds: ids }) : { products: [] },

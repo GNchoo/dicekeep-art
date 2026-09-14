@@ -6,9 +6,9 @@ import { b64 } from '../src/common.mjs';
 function skinPurchase(a, skin = 'royal', orderId = 'GPA.skin-royal') {
   const p = googlePurchase(a, { orderId }); p.productLineItem[0].productId = 'dicekeep.skin_' + skin; return p;
 }
-test('six registered draft products separate currency from cosmetic; PG profile and combat snapshot remain unchanged', async () => {
+test('five available draft products separate currency from cosmetic; PG profile and combat snapshot remain unchanged', async () => {
   const f = await fixture(), a = await f.login(), products = (await f.call('/config')).body.products;
-  assert.equal(products.length, 6); const skins = products.filter(p => p.kind === 'cosmetic');
+  assert.equal(products.length, 5); const skins = products.filter(p => p.kind === 'cosmetic');
   assert.deepEqual(skins.map(p => [p.sku, p.skinId, p.amount, p.shards]), [['skinRoyal', 'royal', 2900, 0], ['skinFrost', 'frost', 2900, 0], ['skinEmber', 'ember', 2900, 0]]);
   assert.deepEqual(a.cosmetics, { owned: ['base'], equipped: 'base' });
   const before = structuredClone(a.profile), initial = (await f.call('/runs/start', { mode: 'clear' }, a.token)).body.snapshot;

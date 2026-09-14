@@ -9,6 +9,8 @@ import { RoomHost } from './host.js';
 import { timingFor } from './timing.js';
 import { CLOSE } from './proto.js';
 import { matchMode } from './modes.js';
+import { RewardStore } from './reward-store.js';
+import { nextAlarm } from './room-core.js';
 
 function attOf(ws) {
   try { return ws.deserializeAttachment() || null; } catch (e) { return null; }
@@ -22,6 +24,8 @@ function newSid() {
 export class Room extends DurableObject {
   constructor(ctx, env) {
     super(ctx, env);
+    this.rewards = new RewardStore(ctx.storage);
+    this.roomAlarm = null; this.rewardAlarm = null;
     this.socks = new Map();     // sid → WebSocket (송신용. 하이버네이션 복귀 시 getWebSockets 로 재구성)
     this.host = new RoomHost({
       now: () => Date.now(),
@@ -33,9 +37,13 @@ export class Room extends DurableObject {
         this.socks.delete(sid);
         try { ws.close(code, reason); } catch (e) { try { ws.close(CLOSE.BAD_REQUEST, reason); } catch (e2) { /* 무시 */ } }
       },
-      put: (state) => this.ctx.storage.put('room', state),
-      destroy: async () => { await this.ctx.storage.deleteAll(); await this.ctx.storage.deleteAlarm(); },
-      setAlarm: (ts) => { if (ts == null) this.ctx.storage.deleteAlarm(); else this.ctx.storage.setAlarm(ts); },
+      put: async (state) => {
+        const expiresAt = await this.rewards.putRoom(state);
+        if (expiresAt) this.rewardAlarm = Math.min(this.rewardAlarm ?? Infinity, expiresAt);
+        await this.syncRewardAlarm();
+      },
+      destroy: async () => { await this.ctx.storage.delete('room'); this.roomAlarm = null; await this.syncRewardAlarm(); },
+      setAlarm: (ts) => { this.roomAlarm = ts; return this.syncRewardAlarm(); },
       log: (o) => console.log(JSON.stringify(o)),
     });
     ctx.blockConcurrencyWhile(async () => {
@@ -47,12 +55,21 @@ export class Room extends DurableObject {
         else { try { ws.close(CLOSE.BAD_REQUEST, 'no-attachment'); } catch (e) { /* 무시 */ } }
       }
       this.host.load(state, atts);
+      this.roomAlarm = nextAlarm(state, this.host.live, Date.now());
+      this.rewardAlarm = await this.rewards.gc();
+      await this.syncRewardAlarm();
     });
     ctx.setWebSocketAutoResponse(new WebSocketRequestResponsePair('ping', 'pong'));
   }
 
   async fetch(req) {
     const url = new URL(req.url);
+    if (req.method === 'POST' && ['/reward-bind', '/reward-claim'].includes(url.pathname)) {
+      let body; try { body = await req.json(); } catch (_) { return Response.json({error:'invalid-battle-proof'},{status:400}); }
+      await this.host.battleWork;
+      const result = await this.rewards.request(url.pathname === '/reward-bind' ? 'bind' : 'claim', body);
+      return Response.json(result, {status:result.ok?200:result.status});
+    }
     if (req.method === 'POST' && url.pathname === '/claim') {
       const code = req.headers.get('X-DK-Code') || '';
       let body = {};
@@ -99,5 +116,12 @@ export class Room extends DurableObject {
 
   async alarm() {
     await this.host.alarm();
+    this.rewardAlarm = await this.rewards.gc();
+    await this.syncRewardAlarm();
+  }
+  async syncRewardAlarm() {
+    const at = Math.min(this.roomAlarm ?? Infinity, this.rewardAlarm ?? Infinity);
+    if (Number.isFinite(at)) await this.ctx.storage.setAlarm(at);
+    else await this.ctx.storage.deleteAlarm();
   }
 }

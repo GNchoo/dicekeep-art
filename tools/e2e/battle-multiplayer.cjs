@@ -12,7 +12,7 @@ const base=process.env.E2E_BASE_URL || 'http://127.0.0.1:8137/', net=process.env
       p.on('pageerror',e=>errors.push(e.message));
       p.on('console',m=>{if(m.type()==='warning' && m.text().startsWith('[net]'))errors.push(m.text());});
       await p.addInitScript(()=>{localStorage.setItem('dk_coachDone','1');localStorage.setItem('dk_infHelpSeen','1');});
-      await p.route('**/game.js*',async route=>{const r=await route.fetch();await route.fulfill({response:r,body:(await r.text()).replace('window.DK = S;','window.__battle={persistRun,readRunSave,update,spawnEnemy,damageEnemy,battleWaveItems,battleOnState,mpOnEnd,saveSave,lanes:()=>LANES};window.DK = S;')});});
+      await p.route('**/game.js*',async route=>{const r=await route.fetch();await route.fulfill({response:r,body:(await r.text()).replace('window.DK = S;','window.__battle={persistRun,readRunSave,update,spawnEnemy,damageEnemy,battleWaveItems,battleOnState,mpOnEnd,saveSave,createDeckTower,lanes:()=>LANES};window.DK = S;')});});
       await p.goto(new URL('index.html?net='+encodeURIComponent(net),base).href);
       await p.waitForFunction(()=>window.DK?.phase==='title',null,{timeout:120000});await p.click('#ov-btn');
       await p.evaluate(()=>DKlobbyView('multi'));await p.selectOption('#mp-mode',mode);await p.fill('#mp-name',mode+i);
@@ -28,6 +28,9 @@ const base=process.env.E2E_BASE_URL || 'http://127.0.0.1:8137/', net=process.env
   try{
     let [a,b]=await pair('coop');
     assert.deepEqual(await a.evaluate(()=>({mode:DK.inf.growthSnapshot.mode,deck:DK.inf.growthSnapshot.deckSystem,ticket:DK.inf.accountTicket,stored:!!__battle.readRunSave(true)})),{mode:'coop',deck:1,ticket:null,stored:true});
+    // Board fixtures isolate server participation accounting from combat outcome.
+    // No clock warp: the room must observe a full minute via actual summaries.
+    for (const p of [a,b]) await p.evaluate(()=>{for(let i=0;i<3;i++)DK.towers.push(__battle.createDeckTower(DK.inf.growthSnapshot.deck[i],1,i));__battle.persistRun();});
     await a.evaluate(()=>DKMP.speed(3));assert.equal(await a.evaluate(()=>DK.speed),1);
     const gold=await b.evaluate(()=>DK.gold);
     await b.evaluate(()=>{window.__lostBattleAck=DKNET.battleAck;DKNET.battleAck=()=>false;});
@@ -46,17 +49,28 @@ const base=process.env.E2E_BASE_URL || 'http://127.0.0.1:8137/', net=process.env
     assert.equal(await b.evaluate(()=>DK.net.pid),applied.pid);
     report.checks.push('phone reload restores the same match/run and acknowledged supply without duplicate SP');
     await b.screenshot({path:path.join(out,'coop-phone.png')});
-    await a.evaluate(()=>{for(let i=0;i<3;i++)DKNET.battleReport('kill',{count:100});__battle.persistRun();});
-    await b.evaluate(()=>{for(let i=0;i<2;i++)DKNET.battleReport('kill',{count:100});__battle.persistRun();});
+    const rewardAt=await b.evaluate(()=>DKNET.serverNow()+68000);
+    await a.waitForFunction(at=>DKNET.serverNow()>=at,rewardAt,{timeout:85000});
+    await b.evaluate(()=>{const original=Storage.prototype.setItem;Storage.prototype.setItem=function(key,value){if(this===localStorage&&key==='DKSAVE'){Storage.prototype.setItem=original;throw Error('test storage full');}return original.call(this,key,value);};});
+    const goal=await a.evaluate(()=>DK.net.battle.goal);
+    await a.evaluate(goal=>{let remaining=goal;while(remaining){const count=Math.min(100,remaining);DKNET.battleReport('kill',{count});remaining-=count;}__battle.persistRun();},goal);
     for(const p of [a,b])await p.waitForFunction(()=>DK.phase==='over'&&DK.net.battle?.result,null,{timeout:20000});
+    await b.waitForSelector('#battle-reward-retry');
+    assert.equal(await b.evaluate(()=>DKSAVE.progression.shards),0);assert.ok(await b.evaluate(()=>__battle.readRunSave(true)));
+    await b.click('#battle-reward-retry');
+    report.checks.push('failed guest wallet write retains the checkpoint and unchanged balance; visible retry credits once');
     for(const p of [a,b]){
       const before=await p.evaluate(()=>({runs:DKSAVE.progression.records.coop.runs.length,wins:DKSAVE.progression.records.coop.clears,shards:DKSAVE.progression.shards,saved:__battle.readRunSave(true)}));
-      assert.deepEqual(before,{runs:1,wins:1,shards:0,saved:null});
-      await p.evaluate(()=>__battle.mpOnEnd({battle:DK.net.battle}));assert.equal(await p.evaluate(()=>DKSAVE.progression.records.coop.runs.length),1);
+      assert.equal(before.runs,1);assert.equal(before.wins,1);assert.equal(before.saved,null);assert.ok(before.shards>=33,JSON.stringify(before));
+      const expected=await p.evaluate(()=>{const b=DK.net.battle,seat=b.seats[DK.net.pid];return Math.floor(seat.activeSeconds*8/60)+5+20;});assert.equal(before.shards,expected);
+      await p.evaluate(()=>__battle.mpOnEnd({battle:DK.net.battle}));assert.equal(await p.evaluate(()=>DKSAVE.progression.records.coop.runs.length),1);assert.equal(await p.evaluate(()=>DKSAVE.progression.shards),before.shards);
       assert.match(await p.locator('#ov-title').textContent(),/협동 성공/);
     }
     await a.screenshot({path:path.join(out,'coop-result.png')});
-    report.checks.push('two players reach one 500-kill goal, both win and settle one local record with zero currency; duplicate end is harmless');
+    assert.equal(await b.evaluate(()=>DK.net.battle.seats[DK.net.pid].kills),0);
+    report.checks.push('real server observes over one minute of participation; zero-kill support seat receives the same per-second formula and victory/first-win bonuses; repeated end cannot credit twice');
+    await b.click('#ov-btn');await b.evaluate(()=>DKlobbyView('single'));await b.click('#btn-deck-open');
+    assert.match(await b.locator('#free-progress').innerText(),/기한·연속 출석·구매 조건이 없습니다/);await b.screenshot({path:path.join(out,'free-progress-phone.png')});
     await a.context().close();await b.context().close();
     [a,b]=await pair('duel');
     await a.evaluate(()=>{for(let i=0;i<5;i++){__battle.spawnEnemy(__battle.battleWaveItems(1)[0]);const e=DK.enemies.at(-1);__battle.damageEnemy(e,e.hp*100);}__battle.persistRun();});

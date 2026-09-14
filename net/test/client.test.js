@@ -114,6 +114,14 @@ async function connected(env, opts = {}) {
 test('node --check net.js', () => {
   execFileSync(process.execPath, ['--check', NET_JS], { stdio: 'pipe' });
 });
+test('battleProof exposes only the current reward-enabled seat and survives result receipt before leaving',async()=>{
+  const env=makeEnv({src:'net.js?v=116'}),{N}=env,{ws,pid,b}=await connectBattle(env);
+  assert.equal(N.battleProof(),null,'legacy trial state cannot create reward tickets');
+  b.rewardVersion=1;ws._recv({t:'battle',battle:b});
+  same(N.battleProof(),{code:CODE,matchId:b.matchId,pid,key:ws.last('hello').key});
+  const proof=JSON.stringify(N.battleProof());b.result={reason:'goal',winners:[pid],losers:[],at:5062000};ws._recv({t:'end',reason:'goal',ranking:[],battle:b});
+  assert.equal(JSON.stringify(N.battleProof()),proof);N.leave();assert.equal(N.battleProof(),null);
+});
 
 test('battle client defers and batches reports, exports an atomic outbox, retries same seq, and removes acknowledged commands',async()=>{
   const env=makeEnv({src:'net.js?v=115'}),{N}=env,{ws,pid,b}=await connectBattle(env);

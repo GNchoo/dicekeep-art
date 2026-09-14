@@ -118,7 +118,7 @@ node test/ws-smoke.mjs [ws://localhost:8787] # TIMING=fast 서버 상대. 한 �
 | MAX_WAVE (`src/modes.js`) | 1,000,000 | extreme 모드 보고 웨이브 상한. 완주 목표가 아님 |
 | RECONNECT_GRACE | 180 s | 플레이 중 끊김 → left |
 | LOBBY_GRACE | 45 s | 대기실 끊김(새로고침·백그라운드) → 좌석·방장을 지키다 제거 (leave 는 즉시) |
-| LOBBY_TTL / END_TTL / GAME_CAP / EMPTY_END / CLAIM_TTL | 15 분 / 10 분 / 100 분 / 3 분 / 60 s | 만료 알람 → deleteAll |
+| LOBBY_TTL / END_TTL / GAME_CAP / EMPTY_END / CLAIM_TTL | 15 분 / 10 분 / 100 분 / 3 분 / 60 s | 만료 알람 → room 키 삭제; 보상 영수증은 별도 보존 |
 | RESERVE_TTL | 30 s | 빠른 매칭 예약 좌석 접속 마감 |
 | SUM_RELAY_MIN / SUM_WATCH_MIN | 1.5 s / 1 s | sum 중계 최소 간격(멤버당) — 일반 / 보는 사람(en·ll 포함) |
 | EN_MAX / LANE_MAX | 5,120자 / 100,000 | `sum.en` 길이 · `sum.ll` 상한; 200개 적의 외형·위상 포함 |
@@ -131,7 +131,7 @@ node test/ws-smoke.mjs [ws://localhost:8787] # TIMING=fast 서버 상대. 한 �
 
 ## 예산 메모 (무료 플랜)
 
-- `storage.put` 은 전이에서만(생성·참가·이탈·시작·사망·완주·종료·만료) — 한 판 ≈ 40회. sum/done/watch/chat/log/time 은 저장하지 않는다.
+- 기존 clear/extreme은 `storage.put`을 전이에서만 사용한다. v116 duel/coop은 전투 이벤트와 유효 참여 요약도 영속 저장하므로 아래 기존 모드의 예산 추정과 구분해야 한다.
 - sum 이 2초마다 오므로 판 중에는 DO 가 깨어 있다 → 한 판(4인 40분) ≈ 0.67 객체-시간. 개별 진행이라 3배속이면 판이 짧아진다. 대기실·관전·종료 후는 자동응답 ping 만이라 하이버네이션.
 - 관전(`watch`)은 보는 사람 수만큼 1 s 간격 `sum{en}`이 늘어난다. 최대 3명에게 각 5,120자 이하의 `en`과 나머지 JSON 필드를 중계하며, 클라이언트 수신 전송량은 실제 패킷 크기로 측정한다. 6,144 B 상한은 서버가 **수신하는** 프레임 제한이며 중계 JSON에는 `pid`·`at` 등이 추가된다.
 - Lobby DO 는 대기열이 비면 하이버네이션, 있으면 5 s 알람으로 깨어 있다. 대기열은 소켓 attachment 로, 방 생성 카운터는 storage 로 복원한다.
@@ -143,3 +143,15 @@ node test/ws-smoke.mjs [ws://localhost:8787] # TIMING=fast 서버 상대. 한 �
 극한 전투 저장은 루트 `run-save.js`/`game.js`가 맡는다. 웹은 탭별 좌석·저장, 네이티브 앱은 영구 기기 저장으로 같은 좌석을 복구한다. 새로고침만으로 탈락시키지 않으며 방·pid·t0·seed·alive를 확인한다. 끊김 유예와 운영 시간은 복구로 초기화되지 않는다. 계정 정산 티켓은 별도 commerce 서버가 확인한다.
 
 전송 필드 `dw`는 기존 protocol 4에 있었으므로 번호를 변경하지 않았다. 최신 `net` Worker를 먼저 배포한 뒤 웹·앱을 배포해야 모든 클라이언트 결과가 같은 완료 기준을 사용한다. Git main 푸시만으로 개별 Worker의 운영 배포가 완료되었다고 간주하지 않는다. 로컬 검증은 `test/dev-server.mjs`를 사용했다.
+
+## v116 대전·협동 보상
+
+새 duel/coop 방은 정확히 2명이고 protocol 4를 유지한다. `battle-rules.js`가 현재 규칙을 공유하며 새 방은 `ruleVersion:2`, `rules` 복사본, `rewardVersion:1`을 보존한다. 기존 시범 방은 이전 규칙과 무보상 상태를 유지한다. 참가자의 `activeSeconds`는 서버가 살아 있는 좌석의 접속·화면 표시(`hid:0`)·배치 타워 3개 이상을 확인한 연속 요약 사이에서만 누적한다. 3초 초과 공백, 숨긴 시간, 재접속과 하이버네이션 공백은 지급 시간에 포함하지 않는다. 개인 처치 수나 공격력은 참여 자격이 아니다.
+
+commerce의 `GAME_ROOMS` 외부 DO binding이 Room의 내부 `/reward-bind`와 `/reward-claim`을 호출한다. 공개 Worker는 이 경로를 전달하지 않는다. 새로운 HMAC 비밀이나 클라이언트 서명은 필요 없다. 로그인 계정과 서버 발급 ticket을 실제 `code/matchId/pid/key` 좌석에 묶으며 한 좌석에는 한 계정·ticket만, 한 계정에는 같은 전투의 한 좌석만 연결한다. 서버 결과와 영수증은 종료 패킷보다 먼저 같은 저장 transaction에서 확정한다. 계정 정산은 서버 결과만 사용하고 기존 solo `activeRun`이나 유료 잔액을 덮어쓰지 않는다.
+
+방 자체는 종료 10분 뒤 삭제하지만 좌석 증명 해시·바인드·불변 결과는 종료 후 30일 동안 보존하고 알람으로 정리한다. 지급된 결과는 commerce 원장에 계속 남아 영수증 만료 뒤 중복 요청도 다시 지급되지 않는다. 임시 조회/저장 장애는 재시도하며 클라이언트는 `COMMERCE.queueRun()`의 동기 저장 성공 후 전투 체크포인트를 지운다. 서버는 결과·시간·중복 지급을 검증하지만 현재 전투의 개별 처치/누수는 클라이언트 보고이므로 완전한 서버 전투 시뮬레이션은 아니다.
+
+검증: `npm test`(net), `npm test`(commerce), `npm run test:battle-worker`(commerce). 마지막 명령은 실제 로컬 workerd 두 Worker와 SQLite DO binding으로 로그인, 좌석 바인드, 62초 참여, 공동 결과, 동시 1회 지급, DO 재기동 뒤 재시도를 검증한다. 외부 로그인·결제·배포는 수행하지 않는다. `test/dev-server.mjs`는 메모리 WebSocket 전투용이며 계정 보상 binding 검증은 workerd 검사를 사용한다.
+
+배포 순서는 net Worker → 외부 `GAME_ROOMS` binding을 가진 commerce Worker → 정적 게임 클라이언트다. commerce 로그인·서비스 URL은 운영 구성 단계이며 저장소 수정만으로 서비스가 가동되었다고 간주하지 않는다. v116 로컬 검증에서 실제 참여 62초의 공동승리 계정 정산은 33조각·710골드를 1회 지급했다. `npx --no-install wrangler deploy --dry-run --outdir ../gen/net-worker-v116`도 공유 규칙을 포함해 번들 생성에 성공했다(실제 배포 없음).

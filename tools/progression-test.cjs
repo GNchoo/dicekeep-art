@@ -209,6 +209,8 @@ test('pure-mode entry never depends on the paid service', () => {
   const guard = game.match(/const startAccountRun = async \(mode, onPure\) => \{[\s\S]*?\n\};/);
   assert.ok(guard, 'startAccountRun 진입 가드가 있어야 한다');
   assert.match(guard[0], /if \(PROGRESSION\.growsIn\(mode\)\) throw error;/, '성장 모드만 실패 시 중단해야 한다');
-  assert.equal(game.match(/COMMERCE\.startRun\(/g).length, 1, 'startRun 호출은 가드 안 한 곳뿐이어야 한다');
+  const battleEntry = /if \(isBattleMode\(net\.mode\)\) run = await COMMERCE\.startRun\(net\.mode,\{battle:DKNET\.battleProof\(\)\}\);/;
+  assert.match(game, battleEntry, '새 대전·협동의 직접 입장은 모드 가드와 서버 경기 증명을 함께 사용해야 한다');
+  assert.equal(game.replace(battleEntry, '').match(/COMMERCE\.startRun\(/g).length, 1, '기존 모드의 startRun 호출은 순수운빨 대체 경로가 있는 가드 안 한 곳뿐이어야 한다');
   assert.equal(game.match(/await startAccountRun\(/g).length, 2, '싱글·멀티 두 진입점이 모두 가드를 지나야 한다');
 });

@@ -9,12 +9,12 @@ import {RECONNECT_GRACE} from '../src/timing.js';
 const A='aaaa1111',B='bbbb2222',C='cccc3333',D='dddd4444';
 const key=id=>id.repeat(4),clone=x=>JSON.parse(JSON.stringify(x));
 const messages=r=>r.effects.filter(e=>e.send).map(e=>e.send.m);
-function harness(mode='duel') {
+function harness(mode='duel', ver='115') {
   const h={now:1700000000000,state:null,live:null};
   h.state=createRoom({code:'ABC234',now:h.now,mode});h.live=emptyLive(h.now);
   h.step=ev=>{const r=reduce(h,ev,h.now);h.state=r.state;h.live=r.live;return r;};
   h.join=(id,op='join',sid=id)=>{
-    h.step({k:'open',sid,op});return h.step({k:'hello',sid,op,m:{t:'hello',v:PROTOCOL,ver:'115',mode,op,pid:id,key:key(id),name:id}});
+    h.step({k:'open',sid,op});return h.step({k:'hello',sid,op,m:{t:'hello',v:PROTOCOL,ver,mode,op,pid:id,key:key(id),name:id}});
   };
   h.msg=(id,m)=>{const p=parse(JSON.stringify(m));assert.equal(p.ok,true);return h.step({k:'msg',pid:id,sid:h.live.players[id].sid,m:p.m});};
   h.start=()=>{h.join(A,'create');h.join(B);h.msg(A,{t:'start'});h.now=h.state.game.t0;return h;};
@@ -108,4 +108,21 @@ test('RoomHost persists before battle ack, serializes concurrent reports, and ro
   fail=false;await Promise.all([host.message(A,att[A],JSON.stringify(report(1))),host.message(A,att[A],JSON.stringify(report(2)))]);
   assert.equal(host.state.game.battle.events.length,2);
   for(const item of sent.filter(x=>x.m.t==='battle'))assert.ok(item.persisted.game.battle.revision>=item.m.battle.revision,'durable state precedes ack');
+});
+
+test('v116 participation counts visible connected three-tower intervals, excluding gaps and reconnect time',()=>{
+  const h=harness('coop','116').start(),b=h.state.game.battle;
+  const sum=(patch={})=>h.msg(A,{t:'sum',w:1,dw:0,l:20,g:0,k:0,f:0,sp:1,hid:0,b:null,o:'p',ds:1,tw:[[0,3,1,1],[1,6,1,1],[2,16,1,1]],...patch});
+  assert.equal(b.rewardVersion,1);sum();
+  for(let i=0;i<60;i++){h.now+=1000;sum();}
+  assert.equal(b.seats[A].activeSeconds,60,'zero damage/support towers qualify equally');
+  h.now+=5000;sum();assert.equal(b.seats[A].activeSeconds,60,'missing intervals are not capped and awarded');
+  h.now+=1000;sum({hid:1});h.now+=10000;sum();assert.equal(b.seats[A].activeSeconds,60);
+  h.now+=1000;sum({tw:[[0,1,1,1]]});h.now+=1000;sum();assert.equal(b.seats[A].activeSeconds,60);
+  h.step({k:'close',sid:A});h.now+=10000;h.join(A,'join','a-new');sum();assert.equal(b.seats[A].activeSeconds,60);
+  h.now+=1000;sum();assert.equal(b.seats[A].activeSeconds,61);
+  h.state=clone(h.state);h.live=liveFromSockets(h.state,[{sid:'a-new',pid:A},{sid:B,pid:B}],h.now+1000);h.now+=1000;sum();
+  assert.equal(h.state.game.battle.seats[A].activeSeconds,61,'hibernation cannot add an unobserved interval');
+  h.report(B,'leak',{count:20});const ended=clone(h.state.game.battle);h.now+=1000;sum();assert.deepEqual(h.state.game.battle,ended);
+  assert.equal(harness('coop','115').start().state.game.battle.rewardVersion,undefined,'old client rooms never acquire rewards');
 });

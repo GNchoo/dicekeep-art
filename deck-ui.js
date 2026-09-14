@@ -81,6 +81,12 @@
     const c = collection(), t = tree(), unlocked = rules().catalog.filter(v=>owned(v.id)).length;
     $('deck-gold').textContent = number(c.gold); $('deck-shards').textContent = number(profile().shards);
     $('deck-count').textContent = `${unlocked} / 20종`; $('tree-progress').textContent = `${Object.values(t.awakenings).filter(Boolean).length} / 20`;
+    const rewards = PG().rewardView(profile()), next = rewards.nextMilestone;
+    $('free-progress').innerHTML = `<div><b>모든 주사위와 연구를 무료로</b><span>대전·협동 참여 1분당 ${rewards.perMinute.gold}골드 + ${rewards.perMinute.shards}조각 · 패배해도 지급</span></div>`+
+      `<p>대전·협동 누적 <b>${Math.floor(rewards.activeSeconds/60)}분</b>${next?` · 다음 ${next.minutes}분 보너스까지 ${Math.ceil(next.remainingSeconds/60)}분`:' · 모든 누적 보너스 달성'}</p>`+
+      (next?`<progress aria-label="다음 무료 보너스까지 누적 시간" value="${rewards.activeSeconds}" max="${next.seconds}"></progress><p>다음 보상 <b>${number(next.gold)}골드 + ${next.shards}조각</b></p>`:'')+
+      `<details><summary>승리·누적 보상 모두 보기</summary><p>1분 이상 참여한 승리 +100골드·5조각<br>모드별 첫 승리 추가 +300골드·20조각<br>대전 ${rewards.firstWins.duel?'달성':'미달성'} · 협동 ${rewards.firstWins.coop?'달성':'미달성'}</p><ul>${rewards.milestones.map(m=>`<li>${m.minutes}분 · ${number(m.gold)}골드 + ${m.shards}조각${m.claimed?' · 받음':''}</li>`).join('')}</ul></details>`+
+      '<small>기한·연속 출석·구매 조건이 없습니다. 타워 3개 이상 배치 후 접속한 전투 시간이 누적됩니다. 대전에서는 숙련·특성·각성을 적용하지 않습니다.</small>';
     const migrated = t.migration && !['new-profile','new'].includes(t.migration.source);
     $('deck-migration').hidden = !migrated;
     $('deck-migration').textContent = '기존 주사위와 덱을 이어받았습니다. 강화 투자와 남은 카드·보급은 숙련과 연구 골드로 환산됐습니다.';

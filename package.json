@@ -42,7 +42,11 @@
     "test:battle-persistence": "node tools/battle-persistence-test.cjs",
     "test:battle-multi": "node tools/e2e/battle-multiplayer.cjs",
     "measure:deck-ranking": "node tools/e2e/deck-ranking.cjs --stage=validate",
-    "report:deck-ranking": "node tools/e2e/deck-ranking-report.cjs"
+    "report:deck-ranking": "node tools/e2e/deck-ranking-report.cjs",
+    "test:free-progression": "node tools/battle-reward-test.cjs && node tools/battle-persistence-test.cjs",
+    "measure:economy": "node tools/economy-model.cjs",
+    "measure:battle": "node tools/e2e/battle-matrix.cjs",
+    "test:battle-account": "node --test tools/e2e/battle-account.cjs"
   },
   "dependencies": {
     "@capacitor-community/safe-area": "^7.0.0",

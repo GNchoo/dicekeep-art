@@ -6,7 +6,6 @@
   const draft = [
     { sku: 'shards200', kind: 'currency', shards: 200, amount: 1100, currency: 'KRW', playProductId: 'dicekeep.shards200' },
     { sku: 'shards600', kind: 'currency', shards: 600, amount: 3300, currency: 'KRW', playProductId: 'dicekeep.shards600' },
-    { sku: 'shards2000', kind: 'currency', shards: 2000, amount: 9900, currency: 'KRW', playProductId: 'dicekeep.shards2000' },
     ...['royal', 'frost', 'ember'].map(id => ({ sku: 'skin' + id[0].toUpperCase() + id.slice(1), kind: 'cosmetic', skinId: id, shards: 0, amount: 2900, playProductId: 'dicekeep.skin_' + id })),
   ];
   function reviewPurchase(product, price) {
@@ -21,7 +20,7 @@
     }
     $('purchase-review-item').textContent = product.kind === 'cosmetic' ? window.DKCOSMETICS.themes[product.skinId].name + ' · 6종 주사위와 20종 타워 외형' : `성장 조각 ${product.shards.toLocaleString()}개 · 확정 지급`;
     $('purchase-review-price').textContent = `표시 가격 ${price} · 결제창에서 최종 금액 확인`;
-    $('purchase-review-note').textContent = product.kind === 'cosmetic' ? '외형만 바뀝니다. 공격력과 뽑기 확률에는 영향이 없습니다.' : '무료 조각과 동일하게 다이스 트리의 해금·숙련·각성 연구에 사용합니다. 연구에는 플레이로 얻는 골드도 필요합니다. 모든 종류와 각성을 무료로 연구할 수 있고, 특성 변경과 서포터 선택은 무료입니다. 순수운빨 전투에는 영향이 없습니다.';
+    $('purchase-review-note').textContent = product.kind === 'cosmetic' ? '외형만 바뀝니다. 공격력과 뽑기 확률에는 영향이 없습니다.' : '무료 조각과 동일하게 다이스 트리의 해금·숙련·각성 연구에 사용합니다. 연구에는 플레이로 얻는 골드도 필요합니다. 모든 종류와 각성을 무료로 연구할 수 있고, 특성 변경과 서포터 선택은 무료입니다. 순수운빨과 1대1 대전에서는 구매한 성장 수치가 적용되지 않습니다.';
     $('purchase-review-confirm').onclick = () => { dialog.close(); C.buy(product.sku).catch(report); };
     dialog.showModal(); $('purchase-review-cancel').focus();
   }
@@ -78,7 +77,7 @@
       const nativeProduct = playProducts && playProducts.find(p => p.productId === product.playProductId);
       const card = document.createElement('article'); card.className = 'commerce-product';
       const name = document.createElement('h4'); name.textContent = `성장 조각 ${product.shards.toLocaleString()}개`;
-      const detail = document.createElement('p'); detail.textContent = '다이스 트리 해금·숙련·각성에 사용 · 무료 조각과 동일 · 연구 골드도 필요';
+      const detail = document.createElement('p'); detail.textContent = '무료 조각과 동일 · 대전·협동 기본 보상 1분당 8조각 · 연구 골드는 플레이로 획득';
       const button = document.createElement('button'); button.type = 'button'; button.dataset.sku = product.sku;
       const price = state.native ? nativeProduct && nativeProduct.formattedPrice : `${product.amount.toLocaleString()}원`;
       button.textContent = !enabled ? `${product.amount.toLocaleString()}원 · 준비 중` : state.native && !nativeProduct ? '스토어 가격 확인 중' : `${price} · 구매`;

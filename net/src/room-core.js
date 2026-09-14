@@ -21,7 +21,7 @@ import * as T from './timing.js';
 import { CLOSE, PROTOCOL, PID_RE, KEY_RE, sanitizeName } from './proto.js';
 import { take } from './ratelimit.js';
 import { matchMode, roomMode, waveLimit, battleMode, roomCapacity, deckMode } from './modes.js';
-import { createBattle, advanceBattle, endBattle, battleReport, battleAck } from './battle-core.js';
+import { createBattle, advanceBattle, endBattle, battleReport, battleAck, battleActivity } from './battle-core.js';
 
 const ALIVE = 'alive';
 
@@ -430,7 +430,7 @@ function startGame(c, byPid) {
     if (L) { L.lastBeat = c.now; L.hidden = false; L.sum = null; L.relayAt = null; L.watchRelayAt = null; }
   }
   st.game = { t0, timing: T.wireTiming(tm), mode: roomMode(st), endedAt: null, reason: null, ranking: null };
-  if (battleMode(roomMode(st))) st.game.battle=createBattle(roomMode(st),Object.keys(st.players),st.code+':'+t0+':'+st.seed,t0);
+  if (battleMode(roomMode(st))) st.game.battle=createBattle(roomMode(st),Object.keys(st.players),st.code+':'+t0+':'+st.seed,t0,Number(st.ver)>=116);
   st.phase = 'playing'; st.expireAt = null; st.reserveUntil = null;
   c.live.emptySince = anyConnected(c) ? null : c.now;
   c.bcast({ t: 'start', seed: st.seed, t0, timing: st.game.timing, mode: roomMode(st), now: c.now, ...(st.game.battle?{battle:JSON.parse(JSON.stringify(st.game.battle))}:{}) });
@@ -447,6 +447,11 @@ function onSum(c, P, L, m) {
   if (st.phase !== 'playing' || P.status !== ALIVE) return;
   if (m.ds === 1 && !deckMode(roomMode(st))) return c.err(P.pid, 'mode', '이 방에서는 덱 전투 요약을 보낼 수 없습니다');
   if (st.game.battle && (m.sp!==1 || m.ds!==1)) return c.err(P.pid,'mode','대전과 협동은 덱 전투 1배속으로 진행합니다');
+  if (st.game.battle) {
+    const eligible=L.connected && m.hid===0 && m.tw.length>=3;
+    if (battleActivity(st.game.battle,P.pid,eligible,L.rewardActivityAt,c.now)) c.persist=true;
+    L.rewardActivityAt=eligible?c.now:null;
+  }
   const cw = waveLimit(st);
   const w = clampWave(m.w, cw), dw = Math.min(roomMode(st) === 'extreme' ? w : cw, clampWave(m.dw, cw));
   L.lastBeat = c.now; L.hidden = m.hid === 1;

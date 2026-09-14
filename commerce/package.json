@@ -2,6 +2,6 @@
   "name": "dicekeep-commerce",
   "private": true,
   "type": "module",
-  "scripts": {"build": "node build.mjs", "test": "node build.mjs --check && node --test test/*.test.mjs", "test:worker": "node test/worker-check.mjs"},
+  "scripts": {"build": "node build.mjs", "test": "node build.mjs --check && node --test test/*.test.mjs", "test:worker": "node test/worker-check.mjs", "test:battle-worker": "node test/battle-worker-check.mjs"},
   "devDependencies": {"wrangler": "^4.0.0"}
 }

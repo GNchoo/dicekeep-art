@@ -2,14 +2,14 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { fixture } from './helpers.mjs';
 
-test('trial modes cannot issue account tickets or replace an existing reward-eligible run', async () => {
+test('battle modes require a seat proof before issuing tickets and preserve existing legacy runs', async () => {
   const f = await fixture(), a = await f.login();
   const started = await f.call('/runs/start', { mode: 'build' }, a.token);
   assert.equal(started.status, 200);
   const account = await f.storage.get('account:' + a.accountId), run = await f.storage.get('run:' + started.body.ticket);
   for (const mode of ['duel', 'coop']) {
     const denied = await f.call('/runs/start', { mode }, a.token);
-    assert.equal(denied.status, 409); assert.equal(denied.body.error, 'mode-not-account-enabled');
+    assert.equal(denied.status, 400); assert.equal(denied.body.error, 'invalid-battle-proof');
     assert.equal(denied.body.ticket, undefined); assert.deepEqual(await f.storage.get('account:' + a.accountId), account);
     assert.deepEqual(await f.storage.get('run:' + started.body.ticket), run);
   }

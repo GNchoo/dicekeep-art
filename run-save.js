@@ -46,7 +46,7 @@
       if (!object(p.match) || !id(p.match.matchId, 128) || inf.battleModeVersion !== 1 || !int(inf.battleBossRound, 0, 1e6)
         || !Array.isArray(inf.battleApplied) || inf.battleApplied.length > 128 || new Set(inf.battleApplied).size !== inf.battleApplied.length
         || !inf.battleApplied.every(eventId => id(eventId, 160) && eventId.startsWith(p.match.matchId + ':'))
-        || !battleTransportValid(p.match.transport, p.match.matchId) || inf.accountTicket !== null
+        || !battleTransportValid(p.match.transport, p.match.matchId)
         || inf.growthSnapshot.mode !== inf.mode || inf.growthSnapshot.levelCap !== 20 || inf.growthSnapshot.deckSystem !== 1) return false;
     }
     if (!int(inf.kills, 0, 1e9) || !object(inf.power) || ![1,2,3,4,5,6].every(f => int(inf.power[f], 0, 200)) || !num(inf.bossT, 0, 1e8)) return false;

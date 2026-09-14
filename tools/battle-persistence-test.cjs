@@ -35,19 +35,19 @@ function fixture(mode, multiplayer = modes.includes(mode)) {
 }
 const capture = mode => { const f = fixture(mode); return SAVE.capture(f.s, f.slot, f.meta); };
 
-test('trial modes freeze the selected tree deck and cap legacy growth at 20', () => {
+test('duel freezes normalized stats while coop preserves earned growth and both cap at 20', () => {
   const p = profile();
   for (const mode of modes) {
     const s = P.snapshot(p, mode);
     assert.equal(P.snapshotValid(s), true); assert.equal(P.growsIn(mode), true); assert.equal(s.levelCap, 20);
     assert.equal(s.treeVersion, 1); assert.equal(s.supporter, 'crusher'); assert.deepEqual(s.deck, [6, 5, 4, 3, 2]);
-    assert.equal(P.damageMultiplier(s, 6), 1.09 * 1.1);
+    assert.equal(P.damageMultiplier(s, 6), mode === 'duel' ? 1 : 1.09 * 1.1);
     const before = clone(s); p.tree.mastery[6] = 4;
     assert.deepEqual(clone(s), before); p.tree.mastery[6] = 3;
     for (const key of ['deck', 'mastery', 'talents', 'awakenings', 'levels']) assert.ok(Object.isFrozen(s[key]));
   }
   delete p.tree; delete p.collection; p.levels[6] = 200;
-  for (const mode of modes) assert.equal(P.damageMultiplier(P.snapshot(p, mode), 6), 2.52);
+  for (const mode of modes) assert.equal(P.damageMultiplier(P.snapshot(p, mode), 6), mode === 'duel' ? 1 : 2.52);
 });
 
 test('old profiles gain empty trial records without changing investments, records or snapshots', () => {
@@ -95,7 +95,7 @@ test('trial saves reject wrong matches, missing protocol state, duplicate action
     p => { p.inf.battleModeVersion = 2; }, p => { p.inf.recordKey = 'extremeMulti'; }, p => { p.inf.clearWave = 101; },
     p => { p.inf.battleBossRound = -.5; }, p => { p.inf.battleApplied.push(p.inf.battleApplied[0]); },
     p => { p.inf.battleApplied = ['another:1']; }, p => { p.inf.battleApplied = Array.from({ length: 129 }, (_, i) => p.match.matchId + ':' + i); },
-    p => { p.inf.accountTicket = 'a'.repeat(64); }, p => { p.inf.growthSnapshot.mode = 'build'; },
+    p => { p.inf.accountTicket = 'invalid-ticket'; }, p => { p.inf.growthSnapshot.mode = 'build'; },
     p => { p.match.transport.outbox[1].seq = 1; }, p => { p.match.transport.outbox[1].seq = 4; },
     p => { p.match.transport.outbox[0].matchId = 'another'; }, p => { p.match.transport.outbox[0].count = 101; },
     p => { delete p.match.transport.outbox[0].transferred; }, p => { p.match.transport.outbox[1].boss = 1; },
@@ -131,4 +131,9 @@ test('growth-105 solo and extreme multiplayer checkpoints remain valid without n
     const f = fixture(mode, multi), saved = SAVE.capture(f.s, f.slot, f.meta);
     assert.equal(saved.inf.battleModeVersion, undefined); assert.deepEqual(SAVE.decode(SAVE.encode(saved), 'local'), saved);
   }
+});
+
+test('account battle checkpoint retains its settlement ticket through reload', () => {
+  const p = capture('coop'); p.owner = 'account:reward-test'; p.inf.accountTicket = 'a'.repeat(64);
+  assert.equal(SAVE.valid(p), true); assert.equal(SAVE.decode(JSON.stringify(p), p.owner).inf.accountTicket, p.inf.accountTicket);
 });

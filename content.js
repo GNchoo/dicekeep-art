@@ -1558,7 +1558,7 @@ window.DKCONTENT = (function () {
       build: { key: 'build', name: '덱빌드', sub: '101웨이브 · 5종 조합 · 눈금 합성과 전투 강화', gauntlet: true, clearWave: 101, growth: true },
       extreme: { key: 'extreme', name: '극한', sub: '끝없는 웨이브 · 수집한 덱으로 도전', gauntlet: false, clearWave: 0, growth: true },
       duel: { key: 'duel', name: '1대1 대전', sub: '2인 · 5처치마다 적 전송 · 상대 성채를 먼저 무너뜨리기', gauntlet: false, clearWave: 0, growth: true },
-      coop: { key: 'coop', name: '2인 협동', sub: '공동 목숨 20 · 합계 500처치 · 아군에게 SP 보급', gauntlet: false, clearWave: 0, growth: true },
+      coop: { key: 'coop', name: '2인 협동', sub: '공동 목숨 20 · 합계 700처치 · 아군에게 SP 보급', gauntlet: false, clearWave: 0, growth: true },
     },
     modeOf(key) { return this.modes[key === 'endless' ? 'extreme' : key] || this.modes.clear; },
     // Growth tuning belongs here, never in the protected pure-luck wave table.

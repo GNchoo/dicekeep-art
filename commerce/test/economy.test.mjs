@@ -6,9 +6,9 @@ test('affordable catalog is explicit; old currency receipts retain their origina
   const f = await fixture(), a = await f.login();
   const { products } = (await f.call('/config')).body;
   assert.deepEqual(products.filter(p => p.kind === 'currency').map(p => [p.sku, p.shards, p.amount]), [
-    ['shards200', 200, 1100], ['shards600', 600, 3300], ['shards2000', 2000, 9900],
+    ['shards200', 200, 1100], ['shards600', 600, 3300],
   ]);
-  assert.ok(products.every(p => p.amount <= 9900));
+  assert.ok(products.every(p => p.amount <= 3300));
   const old = await paidToss(f, a, 'shards60'); // test-only retired SKU for restoration coverage
   assert.equal(old.result.body.shards, 60);
   const current = await paidToss(f, a, 'shards200');
