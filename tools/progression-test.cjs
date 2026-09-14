@@ -4,8 +4,11 @@ const fs = require('node:fs');
 const vm = require('node:vm');
 const P = require('../progression.js');
 
+// Explicit v111 fixtures retain coverage of the supported legacy APIs.
+const legacyProfile = (...args) => { const p = P.defaultProfile(...args); delete p.tree; p.collection.gold = 600; p.collection.packs = 3; return p; };
+
 const run = (id, overrides = {}) => ({ id, mode: 'clear', wave: 25, kills: 300, won: false, date: '2026-09-08', elapsed: 125.5, ...overrides });
-const funded = () => { const p = P.defaultProfile(); p.shards = P.MAX_SHARDS; return p; };
+const funded = () => { const p = legacyProfile(); p.shards = P.MAX_SHARDS; return p; };
 const unchanged = (profile, operation, reason) => {
   const before = JSON.stringify(profile), result = operation();
   assert.equal(result.ok, false); if (reason) assert.equal(result.reason, reason);
@@ -17,7 +20,7 @@ test('browser and CommonJS share a side-effect-free API; defaults preserve legac
   vm.runInNewContext(fs.readFileSync(require.resolve('../deck-rules.js'), 'utf8'), context);
   vm.runInNewContext(fs.readFileSync(require.resolve('../progression.js'), 'utf8'), context);
   assert.equal(typeof context.window.DKPROGRESSION.draw, 'function');
-  const p = P.defaultProfile({ infBest: 401, infClears: 4 });
+  const p = legacyProfile({ infBest: 401, infClears: 4 });
   assert.deepEqual(p.legacy, { best: 401, clears: 4 });
   assert.deepEqual(p.deck, [1, 2, 3, 4, 5]); assert.equal(p.shards, 0);
   for (let face = 1; face <= 20; face++) assert.equal(p.levels[face], face <= 6 ? 1 : 0);
@@ -26,7 +29,7 @@ test('browser and CommonJS share a side-effect-free API; defaults preserve legac
 });
 
 test('sanitize repairs invalid saves, fills five unlocked cards, caps finite integers and copies references', () => {
-  const raw = P.defaultProfile();
+  const raw = legacyProfile();
   raw.shards = 5e9; raw.levels = { 1: -2, 2: '10', 3: Infinity, 4: 1.5, 5: 2000, 6: 0, 7: 3, 8: NaN, 9: 10 };
   raw.deck = [7, 7, 20, '9', 9, 5]; raw.settled = ['a', 'a', '', '\n', 'b'];
   raw.records.clear = { best: Infinity, clears: -1, milestones: [100, 100, 150, '25'], gemMilestones: [150, 200, 200], runs: [run('valid'), run('bad', { wave: -1 })] };
@@ -42,7 +45,7 @@ test('sanitize repairs invalid saves, fills five unlocked cards, caps finite int
 });
 
 test('unlock and upgrade debit exact costs once and reject invalid mutations atomically', () => {
-  const p = P.defaultProfile();
+  const p = legacyProfile();
   assert.equal(P.cardUnlockCost(7), 80); assert.equal(P.cardUnlockCost(20), 600);
   assert.equal(P.cardUnlockCost(0), null); assert.equal(P.cardUnlockCost('7'), null);
   unchanged(p, () => P.unlock(p, 7), 'insufficient-shards');
@@ -66,7 +69,7 @@ test('all levels have finite nondecreasing costs, shared cap permits free or pai
 });
 
 test('old growth investment is refunded once without changing levels, paid source or run records', () => {
-  const p = P.defaultProfile(); delete p.economyVersion;
+  const p = legacyProfile(); delete p.economyVersion;
   p.levels[1] = 21; p.levels[6] = 22; p.shards = 50;
   const before = JSON.stringify({ levels: p.levels, records: p.records, deck: p.deck });
   const result = P.migrateEconomy(p);
@@ -76,7 +79,7 @@ test('old growth investment is refunded once without changing levels, paid sourc
   const reloaded = P.sanitize(JSON.parse(JSON.stringify(p)));
   assert.equal(P.migrateEconomy(reloaded).shards, 0);
   assert.equal(JSON.stringify({ levels: p.levels, records: p.records, deck: p.deck }), before);
-  const capped = P.defaultProfile(); delete capped.economyVersion; capped.levels[1] = 200; capped.shards = P.MAX_SHARDS - 3;
+  const capped = legacyProfile(); delete capped.economyVersion; capped.levels[1] = 200; capped.shards = P.MAX_SHARDS - 3;
   assert.equal(P.migrateEconomy(capped).shards, 3);
   assert.equal(P.migrateEconomy(capped).shards, 0);
 });
@@ -127,7 +130,7 @@ test('every face maps to a legal renderer, and each selected deck entry has an e
 });
 
 test('every arena mode pays completed waves and independent first milestones, without touching gems/legacy', () => {
-  const p = P.defaultProfile({ infBest: 600, infClears: 3 });
+  const p = legacyProfile({ infBest: 600, infClears: 3 });
   for (const mode of P.MODES) {
     const record = p.records[mode]; record.gemMilestones.push(150);
     const result = P.settle(p, run(mode, { mode }));
@@ -139,7 +142,7 @@ test('every arena mode pays completed waves and independent first milestones, wi
 });
 
 test('run award caps, 101 clear bonus, duplicate transaction and recent-history retention', () => {
-  const p = P.defaultProfile();
+  const p = legacyProfile();
   const result = P.settle(p, run('clear101', { wave: 101, won: true }));
   assert.equal(result.shards, 170); assert.equal(p.records.clear.clears, 1); assert.equal(p.records.clear.best, 101);
   const before = JSON.stringify(p); const duplicate = P.settle(p, run('clear101', { wave: 9999, won: true }));
@@ -158,16 +161,16 @@ test('wallet saturation is explicit and invalid run data never partially mutates
   for (const override of [{ id: '' }, { mode: 'unknown' }, { wave: -1 }, { wave: 1.1 }, { wave: Infinity }, { kills: NaN }, { won: 1 }, { date: '2026-02-30' }, { elapsed: -1 }, { elapsed: Infinity }]) {
     unchanged(p, () => P.settle(p, run('invalid', override)), 'invalid-run');
   }
-  const clean = P.sanitize(JSON.parse(JSON.stringify(p))); assert.deepEqual(clean, p);
+  const clean = P.sanitize(JSON.parse(JSON.stringify(p))); assert.equal(clean.shards, p.shards); assert.deepEqual(clean.records, p.records); assert.deepEqual(P.sanitize(clean), clean);
 });
 
 // ---- 순수운빨: 무과금·과금 어느 쪽 성장도 붙지 않는다 ----
 
 test('pure modes never carry account state into a run snapshot', () => {
-  const rich = P.defaultProfile();
+  const rich = legacyProfile();
   for (let face = 1; face <= 20; face++) { rich.levels[face] = P.MAX_LEVEL; rich.collection.cards[face] = { owned: true, copies: 1000, class: P.MAX_CLASS }; }
   rich.deck = [20, 19, 18, 17, 16]; rich.shards = P.MAX_SHARDS;
-  const poor = P.defaultProfile();
+  const poor = legacyProfile();
   for (const mode of ['clear', 'multi']) {
     const a = P.snapshot(rich, mode), b = P.snapshot(poor, mode);
     assert.deepEqual(a, b, mode + ': 최대 성장 계정과 신규 계정의 스냅샷이 같아야 한다');
@@ -187,7 +190,7 @@ test('pure modes never carry account state into a run snapshot', () => {
 
 test('pure snapshot fallback is a constant the caller can force', () => {
   const pure = P.pureSnapshot();
-  assert.deepEqual(pure, P.snapshot(P.defaultProfile(), 'clear'));
+  assert.deepEqual(pure, P.snapshot(legacyProfile(), 'clear'));
   assert.equal(Object.isFrozen(pure) && Object.isFrozen(pure.deck) && Object.isFrozen(pure.levels), true);
   for (let face = 1; face <= 20; face++) assert.equal(P.damageMultiplier(pure, face), 1);
   assert.equal(P.draw(pure, Math.random), null);

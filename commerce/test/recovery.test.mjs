@@ -48,11 +48,12 @@ test('live gate needs actual operator fields and policies; disabled and live use
 });
 test('existing paid growth is retained but free pure-play rewards settle refund debt before creating spendable shards', async () => {
   const f = await fixture(), a = await f.login(); const { order } = await paidToss(f, a);
-  await f.call('/profile/action', { type: 'upgrade', face: 1, requestId: 'debt-upgrade1' }, a.token);
+  const key = 'account:' + a.accountId, stored = await f.storage.get(key); stored.profile.tree.mastery[1] = 2; await f.storage.put(key, stored);
+  await f.call('/profile/action', { type: 'treeUpgrade', face: 1, requestId: 'debt-upgrade1' }, a.token);
   const p = f.state.toss.get(order.orderId); p.status = 'CANCELED'; p.balanceAmount = 0;
   await f.call('/webhooks/toss', { data: { paymentKey: p.paymentKey } });
   const ticket = (await f.call('/runs/start', { mode: 'clear' }, a.token)).body.ticket; f.state.now += 30000;
   const settled = await f.call('/runs/settle', { ticket, wave: 10, kills: 20, won: false }, a.token);
-  assert.equal(settled.body.debtPaid, 10); assert.equal(settled.body.shards, 10); assert.equal(settled.body.profile.levels[1], 2);
+  assert.equal(settled.body.debtPaid, 10); assert.equal(settled.body.shards, 10); assert.equal(settled.body.profile.tree.mastery[1], 3);
   assert.deepEqual(settled.body.wallet, { paid: 0, free: 10, debt: 0 });
 });

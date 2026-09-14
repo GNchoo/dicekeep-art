@@ -77,13 +77,13 @@ test('Toss pending and uncertain GET cannot grant or trigger blind approval', as
 });
 test('profile actions charge once, detect id reuse and block impossible deck/locked upgrade', async () => {
   const f = await fixture(), a = await f.login(); await paidToss(f, a, 'shards600');
-  const request = { type: 'unlock', face: 7, requestId: 'unlock-0001' };
+  const request = { type: 'treeUnlock', face: 7, requestId: 'unlock-0001' };
   const r = await Promise.all([f.call('/profile/action', request, a.token), f.call('/profile/action', request, a.token)]);
-  assert.ok(r.every(x => x.status === 200)); assert.equal((await f.call('/profile', undefined, a.token)).body.shards, 520);
+  assert.ok(r.every(x => x.status === 200)); assert.equal((await f.call('/profile', undefined, a.token)).body.shards, 600);
   assert.equal((await f.call('/profile/action', { ...request, face: 8 }, a.token)).body.error, 'request-id-conflict');
   assert.equal((await f.call('/profile/action', { type: 'deck', deck: [1, 2, 3, 4, 20], requestId: 'deck-0001' }, a.token)).status, 409);
-  assert.equal((await f.call('/profile/action', { type: 'upgrade', face: 20, requestId: 'upgrade-0001' }, a.token)).status, 409);
-  const upgraded = await f.call('/profile/action', { type: 'upgrade', face: 7, requestId: 'upgrade-0002' }, a.token); assert.equal(upgraded.body.profile.levels[7], 2); assert.equal(upgraded.body.profile.shards, 510);
+  assert.equal((await f.call('/profile/action', { type: 'treeUpgrade', face: 20, requestId: 'upgrade-0001' }, a.token)).status, 409);
+  const upgraded = await f.call('/profile/action', { type: 'treeUpgrade', face: 7, requestId: 'upgrade-0002' }, a.token); assert.equal(upgraded.body.profile.tree.mastery[7], 1); assert.equal(upgraded.body.profile.shards, 600);
 });
 test('server run tickets: active replacement, time/identity/mode checks, 500 base plus50 first milestones, durable duplicate protection', async () => {
   const f = await fixture(), a = await f.login(), other = await f.login('user2');
@@ -104,7 +104,8 @@ test('server run tickets: active replacement, time/identity/mode checks, 500 bas
 test('pure/build/multi results cap at101; extreme keeps going; snapshot freezes purchased levels', async () => {
   const f = await fixture(), a = await f.login(); await paidToss(f, a);
   const t = (await f.call('/runs/start', { mode: 'build' }, a.token)).body; assert.equal(t.snapshot.levels[1], 1);
-  await f.call('/profile/action', { type: 'upgrade', face: 1, requestId: 'upgrade-0001' }, a.token);
+  const key = 'account:' + a.accountId, stored = await f.storage.get(key); stored.profile.tree.mastery[1] = 2; await f.storage.put(key, stored);
+  await f.call('/profile/action', { type: 'treeUpgrade', face: 1, requestId: 'upgrade-0001' }, a.token);
   assert.equal((await f.storage.get('run:' + t.ticket)).snapshot.levels[1], 1);
   f.state.now += 1000000;
   assert.equal((await f.call('/runs/settle', { ticket: t.ticket, wave: 102, kills: 10, won: true }, a.token)).body.error, 'run-result-invalid');
@@ -144,7 +145,8 @@ test('Google lost consume response resolves on retry from provider consumed stat
 });
 test('Toss forged webhook status has no effect; provider partial/full refunds idempotently debit paid then debt', async () => {
   const f = await fixture(), a = await f.login(); const { order } = await paidToss(f, a);
-  await f.call('/profile/action', { type: 'upgrade', face: 1, requestId: 'upgrade-0001' }, a.token);
+  const key = 'account:' + a.accountId, stored = await f.storage.get(key); stored.profile.tree.mastery[1] = 2; await f.storage.put(key, stored);
+  await f.call('/profile/action', { type: 'treeUpgrade', face: 1, requestId: 'upgrade-0001' }, a.token);
   assert.equal((await f.call('/webhooks/toss', { data: { orderId: order.orderId, status: 'CANCELED' } })).body.refunded, false);
   let p = f.state.toss.get(order.orderId); p.status = 'PARTIAL_CANCELED'; p.balanceAmount = 550;
   assert.equal((await f.call('/webhooks/toss', { data: { orderId: order.orderId } })).body.revokedShards, 30);
@@ -152,8 +154,8 @@ test('Toss forged webhook status has no effect; provider partial/full refunds id
   assert.equal((await f.call('/webhooks/toss', { data: { orderId: order.orderId } })).body.revokedShards, 30);
   assert.equal((await f.call('/webhooks/toss', { data: { orderId: order.orderId } })).body.revokedShards, 0);
   assert.deepEqual((await f.call('/wallet', undefined, a.token)).body, { free: 0, paid: 0, debt: 10 });
-  assert.equal((await f.call('/profile', undefined, a.token)).body.levels[1], 2);
-  assert.equal((await f.call('/profile/action', { type: 'upgrade', face: 1, requestId: 'upgrade-0002' }, a.token)).body.error, 'refund-debt');
+  assert.equal((await f.call('/profile', undefined, a.token)).body.tree.mastery[1], 3);
+  assert.equal((await f.call('/profile/action', { type: 'treeUpgrade', face: 1, requestId: 'upgrade-0002' }, a.token)).body.error, 'refund-debt');
   assert.equal((await f.call('/runs/start', { mode: 'build' }, a.token)).body.error, 'refund-debt');
   assert.equal((await f.call('/runs/start', { mode: 'clear' }, a.token)).status, 200);
 });

@@ -41,18 +41,62 @@
   const powerCost = level => [0,100,200,400,700][Math.floor(clamp(level,1,5))] || Infinity;
   const summonCost = count => 30 + 5*Math.min(100,Math.max(0,Math.floor(count||0)));
   const adjacent = (a,b,cols=5) => a !== b && Number.isInteger(a.spot) && Number.isInteger(b.spot) && (Math.abs(a.spot-b.spot)===cols || (Math.floor(a.spot/cols)===Math.floor(b.spot/cols) && Math.abs(a.spot-b.spot)===1));
+  const treeSnapshot = s => s?.treeVersion===1;
+  const awakened = (t,s) => treeSnapshot(s) && pips(t)===7 && s.awakenings?.[t.face]===true;
+  const awakeningRows = [
+    ['과속','공격속도가 추가로 35% 증가합니다.'],['거포','폭발 범위가 66에서 105로 넓어집니다.'],
+    ['관통광','공격이 방어를 무시합니다.'],['영구빙','둔화가 15%p 강해지고 3초간 지속됩니다.'],
+    ['뇌우','연쇄 대상이 3명 늘어납니다.'],['황금샘','SP 생산 주기가 8초가 되고 생산량이 50% 증가합니다.'],
+    ['심장박동','인접 공격속도 지원 효과가 50% 강해집니다.'],['과충전','인접 피해 지원 효과가 50% 강해집니다.'],
+    ['맹독안개','중독 피해가 2배가 되고 5초간 지속됩니다.'],['거인사냥','보스 추가 피해가 80%에서 150%가 됩니다.'],
+    ['붕괴','적의 방어를 5초간 80% 낮춥니다.'],['빙하분쇄','둔화 대상 추가 피해가 65%에서 130%가 됩니다.'],
+    ['완전모사','7눈금 대상을 복제하면 복제한 타워의 공격속도가 영구히 25% 증가합니다.'],
+    ['세계수','7눈금을 유지하며 전투 중 12초마다 70 SP를 생산합니다.'],
+    ['집결지','전투 중 20초마다 빈 석단에 덱의 1눈금 타워를 소환합니다. 빈 칸이 없으면 기다립니다.'],
+    ['순환로','전투 중 15초마다 90 SP를 돌려줍니다.'],
+    ['대공명','인접 타워는 눈금과 관계없이 피해가 50% 증가합니다.'],
+    ['독무대','주변이 비어 있을 때 추가 피해가 70%에서 120%가 되고 사거리가 50 늘어납니다.'],
+    ['대군집','공격속도 상승에 필요한 같은 종류 수가 3·5·7에서 2·4·6으로 줄어듭니다.'],
+    ['진동파','강화 폭발이 네 번째 대신 세 번째 공격마다 발동합니다.'],
+  ];
+  const awakeningInfo = id => get(id) ? {name:awakeningRows[id-1][0],description:awakeningRows[id-1][1]} : null;
+  function talentInfo(id,choice) {
+    if (!get(id) || !['force','insight'].includes(choice)) return null;
+    const a=get(id).stats.ability;
+    return choice==='force' ? {name:'집중',description:'직접 공격과 중독 피해 +10%'} : {name:'통찰',description:['income','growth'].includes(a) ? '능력 발동 주기 10% 단축' : ['haste','amplify','resonance'].includes(a) ? '인접 지원 효과 +10%' : '공격속도 +10%'};
+  }
+  const supporterRows = Object.freeze({
+    supply:Object.freeze({id:'supply',name:'보급관',cooldown:45,description:'80 + 필드 총 눈금(최대 40) SP를 얻습니다.'}),
+    crusher:Object.freeze({id:'crusher',name:'분쇄관',cooldown:45,description:'선택한 타워를 덱의 무작위 1눈금으로 교체하고, 기존 눈금당 40 SP를 얻습니다.'}),
+    barrage:Object.freeze({id:'barrage',name:'포격관',cooldown:35,description:'선두의 적 최대 8명에게 80 + 필드 총 눈금 × 18 피해를 줍니다. 보스에게는 피해의 25%가 적용됩니다.'}),
+  });
+  const supporterInfo = id => supporterRows[id] || null;
   function stats(t,snapshot,power=1,board=[],cols=5) {
     const c=get(t.face); if (!c) return null;
     const neighbors=board.filter(n=>!n.moving && adjacent(t,n,cols));
     const boost = ability => Math.max(0,...neighbors.filter(n=>get(n.face)?.stats.ability===ability).map(n=>pips(n)));
     const cls = clamp(snapshot?.classes?.[t.face],c.baseClass,20), level=clamp(power,1,5), eyes=pips(t);
-    let dmg=c.stats.dmg*(1+0.03*(cls-c.baseClass))*(1+0.3*(level-1));
-    dmg *= 1 + (boost('amplify') ? 0.18+boost('amplify')*0.025 : 0);
-    if (neighbors.some(n=>get(n.face)?.stats.ability==='resonance' && pips(n)===eyes)) dmg*=1.35;
-    if (c.stats.ability==='isolate' && !neighbors.length) dmg*=1.7;
-    let speed=eyes*(1+(boost('haste') ? 0.14+boost('haste')*0.025 : 0));
-    if (c.stats.ability==='swarm') { const n=board.filter(n=>n.face===t.face).length; speed*=n>=7?1.9:n>=5?1.55:n>=3?1.25:1; }
-    return { ...c.stats,dmg,rate:c.stats.rate/speed,range:c.stats.range+4*(level-1),slowPct:Math.min(0.55,0.2+0.04*level+0.012*eyes),chain:3+Math.floor((eyes-1)/3),critChance:0.1,critDamage:clamp(snapshot?.critDamage,1.2,3) };
+    const tree=treeSnapshot(snapshot), awake=awakened(t,snapshot), talent=tree?snapshot.talents?.[t.face]:null;
+    let dmg=c.stats.dmg*(1+0.03*(tree?clamp(snapshot.mastery?.[t.face],0,5):cls-c.baseClass))*(1+0.3*(level-1));
+    const support = (ability,base) => Math.max(0,...neighbors.filter(n=>get(n.face)?.stats.ability===ability).map(n=>(base+pips(n)*0.025)*(awakened(n,snapshot)?1.5:1)*(tree&&snapshot.talents?.[n.face]==='insight'?1.1:1)));
+    dmg *= 1 + (tree ? support('amplify',0.18) : boost('amplify') ? 0.18+boost('amplify')*0.025 : 0);
+    const resonance=Math.max(0,...neighbors.filter(n=>get(n.face)?.stats.ability==='resonance'&&(pips(n)===eyes||awakened(n,snapshot))).map(n=>(awakened(n,snapshot)?0.5:0.35)*(tree&&snapshot.talents?.[n.face]==='insight'?1.1:1)));
+    dmg*=1+resonance;
+    if (c.stats.ability==='isolate' && !neighbors.length) dmg*=awake?2.2:1.7;
+    if (talent==='force') dmg*=1.1;
+    let speed=eyes*(1+(tree ? support('haste',0.14) : boost('haste') ? 0.14+boost('haste')*0.025 : 0));
+    if (talent==='insight'&&!['income','growth','haste','amplify','resonance'].includes(c.stats.ability)) speed*=1.1;
+    if (tree && t.copyHaste) speed*=1.25;
+    if (awake && t.face===1) speed*=1.35;
+    if (c.stats.ability==='swarm') { const n=board.filter(n=>n.face===t.face).length+(awake?1:0); speed*=n>=7?1.9:n>=5?1.55:n>=3?1.25:1; }
+    const insightClock=talent==='insight'&&['income','growth'].includes(c.stats.ability)?0.9:1;
+    return { ...c.stats,dmg,rate:c.stats.rate/speed,range:c.stats.range+4*(level-1)+(awake&&t.face===18&&!neighbors.length?50:0),
+      slowPct:Math.min(0.7,Math.min(0.55,0.2+0.04*level+0.012*eyes)+(awake&&t.face===4?0.15:0)),slowDur:awake&&t.face===4?3:1.8,
+      splash:awake&&t.face===2?105:c.stats.splash,chain:3+Math.floor((eyes-1)/3)+(awake&&t.face===5?3:0),
+      ignoreArmor:awake&&t.face===3,hunterMult:awake&&t.face===10?2.5:1.8,shatterMult:awake&&t.face===12?2.3:1.65,
+      fracturePct:awake&&t.face===11?0.8:0.5,fractureDur:awake&&t.face===11?5:3,poisonScale:awake&&t.face===9?1.3:0.65,poisonDur:awake&&t.face===9?5:3,
+      incomePeriod:(awake?8:12)*insightClock,incomeAmount:(8+eyes*5)*(awake?1.5:1),growthPeriod:28*insightClock,
+      pulseEvery:awake&&t.face===20?3:4,awakened:awake,critChance:0.1,critDamage:clamp(snapshot?.critDamage,1.2,3) };
   }
   function enemyStats(wave,isBoss,elite=false,count=1,extreme=false) {
     const w=Math.max(1,wave||1), cycle=Math.floor((w-1)/101), step=(w-1)%101+1;
@@ -60,5 +104,5 @@
     const hp=(isBoss ? 900+85*Math.pow(step,1.5) : 48+4.4*Math.pow(step,1.45))*scale*(elite?1.7:1)/(isBoss?Math.max(1,count):1);
     return { hp:Math.round(hp),armor:Math.min(50,Math.floor(step/12)+cycle*2),gold:isBoss?120:5+Math.floor(step/20) };
   }
-  return Object.freeze({ VERSION:1,catalog,get,rarities,validDeck,draw,summon,canMerge,canCopy,merge,pips,powerCost,summonCost,adjacent,stats,enemyStats });
+  return Object.freeze({ VERSION:1,catalog,get,rarities,validDeck,draw,summon,canMerge,canCopy,merge,pips,powerCost,summonCost,adjacent,stats,enemyStats,treeSnapshot,awakened,awakeningInfo,talentInfo,supporterInfo });
 });

@@ -83,11 +83,11 @@ async function collection(page, row, dir) {
   row.lobbyLayout = await layout(page, ['#btn-inf-clear', '#btn-inf-build', '#btn-infinity', '#btn-deck-open']);
   check(row, 'three mode buttons fit without overlap', row.lobbyLayout.issues, []);
   await page.screenshot({ path: path.join(dir, 'lobby-three-modes.png'), fullPage: true });
-  // Full collection editing/filters/pack UI is covered by deck-collection.cjs.
-  check(row, 'legacy record import receives a valid six-card starter collection', await page.evaluate(() => ({
+  // Full tree editing, deterministic unlocks and supporter UI are covered by tree-collection.cjs.
+  check(row, 'legacy record import receives six starters and deterministic tree research', await page.evaluate(() => ({
     owned: Object.values(DKSAVE.progression.collection.cards).filter(c => c.owned).length,
-    packs: DKSAVE.progression.collection.packs, deck: DKSAVE.progression.deck,
-  })), { owned: 6, packs: 3, deck: [1, 2, 3, 4, 5] });
+    packs: DKSAVE.progression.collection.packs, deck: DKSAVE.progression.deck, tree: DKSAVE.progression.tree.version,
+  })), { owned: 6, packs: 0, deck: [1, 2, 3, 4, 5], tree: 1 });
 }
 
 async function combatFixture(page, deck = [1, 4, 8, 13, 20]) {
@@ -96,6 +96,7 @@ async function combatFixture(page, deck = [1, 4, 8, 13, 20]) {
     for (const c of DKDECKRULES.catalog) {
       p.levels[c.id] = 1;
       p.collection.cards[c.id] = { owned: true, class: c.baseClass + 3, copies: 0 };
+      p.tree.mastery[c.id] = 3;
     }
     p.deck = deck.slice();
     p.collection.presets.forEach(preset => { preset.faces = deck.slice(); });
@@ -115,28 +116,28 @@ async function modeDraws(page, row, dir) {
       DK.heldDie = 1; DKplace(0);
       const t = DK.towers[0];
       const snap = DK.inf.growthSnapshot;
-      const damage = __modeQA.towerDmg(t), cls = snap.classes?.[1];
-      const old = DKSAVE.progression.collection.cards[1].class;
-      DKSAVE.progression.collection.cards[1].class = 20;
-      const snapshotStable = snap.classes?.[1] === cls && __modeQA.towerDmg(t) === damage;
-      DKSAVE.progression.collection.cards[1].class = old;
+      const damage = __modeQA.towerDmg(t), cls = snap.classes?.[1], mastery = snap.mastery?.[1];
+      const old = DKSAVE.progression.tree.mastery[1];
+      DKSAVE.progression.tree.mastery[1] = 5;
+      const snapshotStable = snap.mastery?.[1] === mastery && __modeQA.towerDmg(t) === damage;
+      DKSAVE.progression.tree.mastery[1] = old;
       return { mode: DK.inf.mode, recordKey: DK.inf.recordKey, clearWave: DK.inf.clearWave, growth: snap.growth,
         deck: snap.deck, deckSystem: snap.deckSystem || 0, damage, base: t.def.dmg,
-        class: cls ?? null, pips: t.pips ?? null, name: t.def.name, snapshotStable,
-        frozen: Object.isFrozen(snap) && Object.isFrozen(snap.deck) && Object.isFrozen(snap.levels) && (!snap.growth || Object.isFrozen(snap.classes)) };
+        class: cls ?? null, pips: t.pips ?? null, name: t.def.name, snapshotStable, treeVersion: snap.treeVersion || 0, mastery: mastery ?? null,
+        frozen: Object.isFrozen(snap) && Object.isFrozen(snap.deck) && Object.isFrozen(snap.levels) && (!snap.growth || Object.isFrozen(snap.classes)&&Object.isFrozen(snap.mastery)&&Object.isFrozen(snap.talents)&&Object.isFrozen(snap.awakenings)) };
     });
     check(row, mode + ' record and finite boundary', { key: row.modes[mode].recordKey, line: row.modes[mode].clearWave }, { key: mode, line: mode === 'extreme' ? 0 : 101 });
     const m = row.modes[mode];
     check(row, mode + ' uses the correct independent collection and battle contract',
-      { growth: m.growth, ds: m.deckSystem, deck: m.deck, class: m.class, pips: m.pips },
-      mode === 'clear' ? { growth: false, ds: 0, deck: [1, 2, 3, 4, 5], class: null, pips: null }
-        : { growth: true, ds: 1, deck: [1, 4, 8, 13, 20], class: 4, pips: 1 });
+      { growth: m.growth, ds: m.deckSystem, deck: m.deck, class: m.class, pips: m.pips, tree: m.treeVersion, mastery: m.mastery },
+      mode === 'clear' ? { growth: false, ds: 0, deck: [1, 2, 3, 4, 5], class: null, pips: null, tree: 0, mastery: null }
+        : { growth: true, ds: 1, deck: [1, 4, 8, 13, 20], class: 4, pips: 1, tree: 1, mastery: 3 });
     if (mode === 'clear') check(row, 'pure tower uses unchanged base damage', m.damage, m.base);
     else {
-      assert.ok(m.damage > m.base, 'owned class raises the selected card damage');
+      assert.ok(Math.abs(m.damage / m.base - 1.09) < 1e-12, 'tree mastery raises damage by exactly9%, without adding legacy class');
       check(row, mode + ' tower uses the horizontal card definition', m.name, '속사 주사위');
     }
-    check(row, mode + ' class and deck snapshot are frozen and ignore mid-run profile edits', [m.frozen, m.snapshotStable], [true, true]);
+    check(row, mode + ' tree and deck snapshot are frozen and ignore mid-run profile edits', [m.frozen, m.snapshotStable], [true, true]);
     const playLayout = await layout(page, ['#roll-btn', '#wave-btn', '#exit-btn']);
     check(row, mode + ' gameplay buttons do not overlap', playLayout.issues, []);
     await page.screenshot({ path: path.join(dir, mode + '-game.png') });
@@ -231,12 +232,12 @@ async function endings(page, row, dir) {
     return { first, duplicateUnchanged, repeat, zero: DK.inf.settledResult.shards, progression: DKSAVE.progression, gems: DKSAVE.gems };
   });
   check(row, 'loss during wave 26 settles completed 25 only', [row.rewards.first.result.wave, row.rewards.first.result.shards], [25, 45]);
-  check(row, 'completed waves award collection gold and free packs through real settlement', row.rewards.first.result.collectionRewards, { gold: 280, packs: 2 });
+  check(row, 'completed waves convert all former pack rewards into deterministic research gold', row.rewards.first.result.collectionRewards, { gold: 1120, packs: 0 });
   check(row, 'duplicate end/settle cannot change wallet, gems or records', row.rewards.duplicateUnchanged, true);
   check(row, 'repeated run retains repeat shards and no repeated first milestone', row.rewards.repeat, { shards: 25, wallet: 70 });
   check(row, 'zero completed waves award zero shards', row.rewards.zero, 0);
   check(row, 'duplicate and zero-wave settlement cannot add extra collection rewards',
-    { gold: row.rewards.progression.collection.gold, packs: row.rewards.progression.collection.packs }, { gold: 1080, packs: 7 });
+    { gold: row.rewards.progression.collection.gold, packs: row.rewards.progression.collection.packs }, { gold: 4020, packs: 0 });
   check(row, 'reward records are isolated and old records preserved', { clear: row.rewards.progression.records.clear.best, build: row.rewards.progression.records.build.best, extreme: row.rewards.progression.records.extreme.best, legacy: row.rewards.progression.legacy }, { clear: 25, build: 0, extreme: 0, legacy: { best: 77, clears: 3 } });
   await page.reload(); await ready(page);
   check(row, 'complete progression and gems survive a real reload after settlement', await page.evaluate(() => ({ progression: DKSAVE.progression, gems: DKSAVE.gems })), { progression: row.rewards.progression, gems: row.rewards.gems });
@@ -244,6 +245,14 @@ async function endings(page, row, dir) {
 
 async function growthRegressions(page, row) {
   await combatFixture(page);
+  const legacy = await page.evaluate(() => {
+    DKstartInf('build');DK.paused=true;
+    const {treeVersion,mastery,talents,awakenings,supporter,...v111}=DK.inf.growthSnapshot;
+    v111.classes={...v111.classes,1:20};DK.inf.growthSnapshot=Object.freeze(v111);
+    DK.heldDie=1;DKplace(0);const t=DK.towers[0];t.pips=7;
+    return {damageRatio:__modeQA.towerDmg(t)/t.def.dmg,tree:DK.inf.growthSnapshot.treeVersion||0,supporter:DKsupporter.state(),awake:DKDECKRULES.awakened(t,DK.inf.growthSnapshot)};
+  });
+  check(row,'explicit frozen v111 snapshot retains class20 and no tree/awakening/supporter',legacy,{damageRatio:1.5699999999999998,tree:0,supporter:null,awake:false});
   const r = await page.evaluate(() => {
     DKstartInf('build'); DK.paused = true; DK.gold = 100000;
     const snapshot = JSON.stringify(DK.inf.growthSnapshot);

@@ -14,6 +14,7 @@ function credit(a, amount, kind) {
 function migrateEconomy(a) {
   const collection = PG.migrateCollection(a.profile);
   requireThat(collection.ok, 'invalid-profile', 409);
+  const tree = PG.migrateTree(a.profile); requireThat(tree.ok, 'invalid-profile', 409);
   const before = a.profile.shards;
   const result = PG.migrateEconomy(a.profile);
   requireThat(result.ok, 'invalid-profile', 409);
@@ -56,7 +57,7 @@ export class CommerceLedger {
     requireThat(s && s.expiresAt > this.now(), 'session-expired', 401); this.rate('account:' + s.accountId);
     await this.storage.transaction(async tx => {
       const a = await tx.get('account:' + s.accountId);
-      if (a && (a.profile.economyVersion !== PG.ECONOMY_VERSION || a.profile.collection?.version !== PG.COLLECTION_VERSION)) {
+      if (a && (a.profile.economyVersion !== PG.ECONOMY_VERSION || a.profile.collection?.version !== PG.COLLECTION_VERSION || a.profile.tree?.version !== PG.TREE_VERSION)) {
         migrateEconomy(a); await tx.put('account:' + s.accountId, a);
       }
     });
@@ -102,10 +103,11 @@ export class CommerceLedger {
     });
   }
   async action(id, b) {
-    fields(b, ['type', 'face', 'deck', 'skinId', 'index', 'requestId']); requireThat(validRequestId(b.requestId) && ['unlock', 'upgrade', 'deck', 'skinEquip', 'classUp', 'craft', 'openPack', 'setPreset', 'activatePreset'].includes(b.type), 'invalid-action');
+    fields(b, ['type', 'face', 'deck', 'skinId', 'index', 'choice', 'id', 'requestId']); requireThat(validRequestId(b.requestId) && ['unlock', 'upgrade', 'deck', 'skinEquip', 'classUp', 'craft', 'openPack', 'setPreset', 'activatePreset', 'treeUnlock', 'treeUpgrade', 'treeTalent', 'treeAwaken', 'setSupporter'].includes(b.type), 'invalid-action');
     const fingerprintFields = [b.type, b.face ?? null, b.deck ?? null, b.skinId ?? null];
     // Preserve hashes of actions recorded by older clients before presets existed.
     if (b.index !== undefined) fingerprintFields.push(b.index);
+    if (b.choice !== undefined || b.id !== undefined) fingerprintFields.push({ choice: b.choice ?? null, id: b.id ?? null });
     const fingerprint = await sha(JSON.stringify(fingerprintFields));
     return this.storage.transaction(async tx => {
       const a = await tx.get('account:' + id), key = `action:${id}:${b.requestId}`, old = await tx.get(key);
@@ -116,6 +118,8 @@ export class CommerceLedger {
       else if (b.type === 'setPreset') result = PG.setPreset(a.profile, b.index, b.deck);
       else if (b.type === 'activatePreset') result = PG.activatePreset(a.profile, b.index);
       else if (b.type === 'openPack') result = PG.openPack(a.profile);
+      else if (b.type === 'treeTalent') result = PG.treeTalent(a.profile, b.face, b.choice);
+      else if (b.type === 'setSupporter') result = PG.setSupporter(a.profile, b.id);
       else result = b.type === 'deck' ? PG.setDeck(a.profile, b.deck) : PG[b.type](a.profile, b.face);
       requireThat(result.ok, result.reason, 409);
       const cost = before - a.profile.shards, freeSpent = Math.min(a.wallet.free, cost); a.wallet.free -= freeSpent; a.wallet.paid -= cost - freeSpent; sync(a);

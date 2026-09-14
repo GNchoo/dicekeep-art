@@ -89,8 +89,12 @@ function playRun({ account, mode, seed, waves }) {
     for (let face = 1; face <= 20; face++) {
       profile.levels[face] = P.MAX_LEVEL;
       Object.assign(profile.collection.cards[face], {owned:true, class:P.MAX_CLASS});
+      profile.tree.mastery[face] = 5;
+      profile.tree.talents[face] = face % 2 ? 'force' : 'insight';
+      profile.tree.awakenings[face] = true;
     }
-    profile.deck = [20, 19, 18, 17, 16];   // 별도의 고희귀도 조합, 전 카드 최대 클래스
+    profile.tree.supporter = 'barrage';
+    profile.deck = [20, 19, 18, 17, 16];   // 별도 조합, 전 카드 최대 클래스·숙련·각성
     profile.collection.presets[0].faces = profile.deck.slice();
     profile.shards = P.MAX_SHARDS;
     DKSAVE.gems = 99999;

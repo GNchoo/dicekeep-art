@@ -28,7 +28,7 @@ function fixture({ configured = true, linked = true, native = false, router, pur
   const location = new URL('https://game.invalid/payment.html');
   const listeners = {};
   const sandbox = {
-    DKCOMMERCE_CONFIG: { url: configured ? 'https://commerce.invalid' : '' }, DKPROGRESSION: P, DK: { phase: 'lobby' },
+    DKCOMMERCE_CONFIG: { url: configured ? 'https://commerce.invalid' : '' }, DK: { phase: 'lobby' },
     localStorage, location, URL, URLSearchParams, AbortController, setTimeout, clearTimeout, console,
     crypto: { randomUUID: () => 'test-' + crypto.randomUUID() },
     CustomEvent: class { constructor(type) { this.type = type; } },
@@ -53,7 +53,9 @@ function fixture({ configured = true, linked = true, native = false, router, pur
     async signIn() { return { idToken: 'test-id-token' }; },
   } } };
   sandbox.window = sandbox;
-  vm.createContext(sandbox); vm.runInContext(client, sandbox, { filename: 'commerce-client.js' });
+  vm.createContext(sandbox);
+  for (const filename of ['deck-rules.js', 'tree-rules.js', 'progression.js']) vm.runInContext(fs.readFileSync(path.join(repo, filename), 'utf8'), sandbox, { filename });
+  vm.runInContext(client, sandbox, { filename: 'commerce-client.js' });
   return { C: sandbox.DKCOMMERCE, sandbox, calls, loaded, payments, nativeCalls, elements, memory, localStorage, location, events };
 }
 
@@ -223,7 +225,7 @@ test('phone/desktop shop UI is disabled offline; mock account profile never over
           else if (u.pathname === '/profile') body = { profile: account };
           else if (u.pathname === '/wallet') body = { wallet: { free: account.shards, paid: 0, debt: 0 } };
           else if (u.pathname === '/cosmetics') body = { cosmetics: { owned: ['classic'], equipped: 'classic' } };
-          else if (u.pathname === '/profile/action') { account = profile(690); account.levels[1] = 2; body = { profile: account }; }
+          else if (u.pathname === '/profile/action') { account = profile(690); account.tree.mastery[1] = 3; body = { profile: account }; }
           else { status = 500; body = { error: 'unexpected mock path' }; }
           return route.fulfill({ status, contentType: 'application/json', headers: { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Authorization, Content-Type' }, body: JSON.stringify(body) });
         }
@@ -252,7 +254,7 @@ test('phone/desktop shop UI is disabled offline; mock account profile never over
         configured = true; await page.reload(); await readyShop();
         await page.waitForFunction(() => DKCOMMERCE.profile() && DKCOMMERCE.profile().shards === 700);
         assert.deepEqual(await page.evaluate(() => ({ account: DKCOMMERCE.profile().shards, guest: DKSAVE.progression.shards, saved: JSON.parse(localStorage.getItem('DKSAVE')).progression.shards })), { account: 700, guest: 35, saved: 35 });
-        await page.evaluate(() => DKCOMMERCE.action('upgrade', { face: 1 }));
+        await page.evaluate(() => DKCOMMERCE.action('treeUpgrade', { face: 1 }));
         assert.deepEqual(await page.evaluate(() => ({ account: DKCOMMERCE.profile().shards, guest: DKSAVE.progression.shards, saved: JSON.parse(localStorage.getItem('DKSAVE')).progression.shards })), { account: 690, guest: 35, saved: 35 });
         row.checks.push('server account profile and action remain separate from in-memory/localStorage guest SAVE');
         const boxes = await page.evaluate(() => [...document.querySelectorAll('#commerce-products [data-sku]')].map(button => {

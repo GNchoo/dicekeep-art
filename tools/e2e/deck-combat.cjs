@@ -16,6 +16,8 @@ const out=path.resolve('gen/e2e/deck-combat'); fs.mkdirSync(out,{recursive:true}
      const setRun=(deck,mode='build')=>{
       const P=DKPROGRESSION.defaultProfile(); for(const id of deck){P.levels[id]=1;Object.assign(P.collection.cards[id],{owned:true,class:DKDECKRULES.get(id).baseClass});} P.deck=deck;
       DKSAVE.progression=P; DKstartInf(mode); DK.paused=true; DK.muted=true; DK.gold=20000; DKSLOT.active=false; DK.heldDie=0;
+      // Continue testing the frozen v111 contract after new accounts adopt trees.
+      const {treeVersion,mastery,talents,awakenings,supporter,...legacy}=DK.inf.growthSnapshot;DK.inf.growthSnapshot=Object.freeze(legacy);
      };
      const put=(face,pips,spot)=>{DK.heldDie=face;check(DKplace(spot),'place '+face);const t=DK.towers.find(t=>t.spot===spot);t.pips=pips;return t;};
      setRun([1,4,7,13,14]); check(DK.inf.growthSnapshot.deckSystem===1,'new snapshot selects deck combat');
@@ -44,7 +46,7 @@ const out=path.resolve('gen/e2e/deck-combat'); fs.mkdirSync(out,{recursive:true}
      await __deckQA.restoreRunSave(saved,null);check(JSON.stringify(DK.towers.map(t=>[t.face,t.pips,t.abilityT]))===JSON.stringify(saved.board.map(i=>{const t=saved.towers[i];return[t.face,t.pips,t.abilityT]})),'pips and ability clocks survive restore');
      check(DK.towers.every(t=>t.def.name===DKDECKRULES.get(t.face).name),'restore resolves new card definitions');
      const bad=structuredClone(saved);bad.towers[0].pips=8;check(!DKRUNSAVE.valid(bad),'checkpoint rejects out of range pips');
-     const settled=__deckQA.settleInfRun(false),html=__deckQA.infResultHTML(false,settled);check(settled.collectionRewards.gold>0&&settled.collectionRewards.packs>0&&html.includes('보급팩')&&html.includes('주사위 수집 / 덱'),'result shows earned collection gold, packs and collection entry guidance');
+     const settled=__deckQA.settleInfRun(false),html=__deckQA.infResultHTML(false,settled);check(settled.collectionRewards.gold>0&&!settled.collectionRewards.packs&&html.includes('연구 골드')&&html.includes('다이스 트리 / 덱'),'legacy run settles into deterministic research gold with tree entry guidance');
      DKstartInf('clear');DK.paused=true;check(!DK.inf.growthSnapshot.deckSystem,'pure mode has no deck rules');DK.heldDie=20;DKplace(0);check(!DK.towers[0].pips&&DK.towers[0].def===DKTD[20],'pure star20 uses unchanged legacy definition');
      // Keep a reviewable five-card battlefield on the final screenshot.
      setRun([1,4,7,13,14]);[1,4,7,13,14].forEach((f,i)=>put(f,i%4+1,i));DKsync();

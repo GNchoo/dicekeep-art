@@ -41,6 +41,10 @@
       if (!p.towers.every(t=>t.deckSystem===1 && deck.includes(t.face) && t.lvl===1 && int(t.pips,1,7) && (t.abilityT===undefined || num(t.abilityT,0,1e12)) && (t.shotSerial===undefined || int(t.shotSerial,0,1e12)))) return false;
       if (s.heldDie && !deck.includes(s.heldDie)) return false;
       if (p.slot?.active && !deck.includes(p.slot.final)) return false;
+      if (inf.growthSnapshot.treeVersion===1) {
+        if (!['supply','crusher','barrage'].includes(inf.growthSnapshot.supporter) || !num(inf.supporterCooldown,0,45) || !int(inf.supporterUses,0,1e9)) return false;
+        if (!p.towers.every(t=>t.copyHaste===undefined||typeof t.copyHaste==='boolean')) return false;
+      }
     }
     if (!p.board.every(i => int(i, 0, p.towers.length - 1)) || new Set(p.board.map(i => p.towers[i].spot)).size !== p.board.length) return false;
     if (!Array.isArray(p.enemies) || p.enemies.length > 512 || !Array.isArray(p.active) || p.active.length > 200 || !p.active.every(i => int(i, 0, p.enemies.length - 1))) return false;

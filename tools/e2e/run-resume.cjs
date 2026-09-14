@@ -44,6 +44,9 @@ fs.mkdirSync(out, { recursive: true });
         await boot();
         const saved = await page.evaluate(schema => {
           const p = DKPROGRESSION.defaultProfile(), deck = schema === 'legacy' ? [1,2,3,4,6] : [1,6,11,14,20];
+          // Keep these pre-tree checkpoints explicit. Tree snapshots are covered
+          // independently so new defaults cannot erase old-save coverage.
+          delete p.tree;
           if (schema === 'legacy') {
             // Explicit pre-collection frozen run; never attach legacy carry to a new snapshot.
             delete p.collection; p.levels[6] = 20; p.deck = deck;

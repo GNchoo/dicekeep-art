@@ -1479,3 +1479,70 @@ body.ui-art .icon-btn[data-icon] { font-size: 0; background-position: center; ba
   #deck-selected { gap: 5px; }.deck-filters h3 { width: 100%; }.deck-rewards small { font-size: 8px; }
   .deck-detail-actions { display: grid; grid-template-columns: 1fr 1fr; }.deck-detail-actions button:last-child { grid-column: 1/-1; }
 }
+/* v112: deterministic research paths and separate card identity / battle pips. */
+#deck-panel [hidden] { display: none !important; }
+#deck-panel .deck-slot img { width: 54px; height: 64px; }
+.tree-support-section { margin: 16px 0 24px; padding-top: 14px; border-top: 1px solid #66553b; }
+.tree-support-section h3, .tree-heading h3 { margin: 0 0 7px; color: #f4ddaa; font-size: 15px; }
+.tree-support-section > p, .tree-heading > p { font-size: 11px; line-height: 1.7; color: #c3b7a2; margin: 0 0 12px; }
+#tree-supporters { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 7px; }
+#tree-supporters button { text-align: left; display: flex; flex-direction: column; gap: 7px; padding: 11px; min-width: 0; }
+#tree-supporters b { font-size: 12px; }
+#tree-supporters small { font-size: 10px; line-height: 1.6; color: #c4b8a7; }
+#tree-supporters span { margin-top: auto; font-size: 9px; color: #d5bd84; }
+#deck-panel .chosen { background: #453d2c; border-color: #e2c379; box-shadow: inset 0 0 0 1px #b9944a; }
+#tree-families { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 12px; }
+#tree-families button { flex: 1; padding: 6px 8px; white-space: nowrap; font-size: 11px; }
+#deck-detail { position: static; margin: 0 0 16px; padding: 14px; }
+.deck-detail-head > div { flex: 1; min-width: 0; }
+#deck-panel #deck-equip { padding: 8px; font-size: 11px; }
+.tree-research-path { display: flex; gap: 5px; flex-wrap: wrap; padding-top: 3px; }
+.tree-research-path span { border-bottom: 2px solid #564d45; padding: 4px 5px; font-size: 10px; color: #9d968d; }
+.tree-research-path .done { border-color: #bd9e5e; color: #f1d69b; }
+#deck-detail .tree-prerequisite { color: #c9bda9; font-size: 11px; }
+.tree-research-actions { display: flex; gap: 8px; }
+.tree-research-actions button { flex: 1; padding: 9px; font-size: 12px !important; }
+.tree-talents { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0; }
+.tree-talents button { display: flex; flex-direction: column; gap: 5px; text-align: left; padding: 10px; }
+.tree-talents b { font-size: 12px; }.tree-talents small { font-size: 10px; line-height: 1.6; color: #c8bda9; }
+.tree-awakening { background: #211e27; border-left: 3px solid #80708e; padding: 10px 12px; }
+.tree-awakening.researched { border-color: #edcd7c; }
+.tree-awakening small { font-size: 10px; color: #c1a6d6; }.tree-awakening h4 { margin: 5px 0; color: #edd9f9; font-size: 14px; }
+#deck-detail .tree-awakening p { margin: 5px 0 9px; font-size: 11px; }
+#deck-panel #tree-awaken { font-size: 11px; padding: 7px 10px; }
+.tree-branch { margin: 0 0 18px; padding: 10px 11px 13px; border: 1px solid #544a3d; border-left: 3px solid var(--branch); border-radius: 7px; background: #1b1920; }
+.tree-branch h4 { display: flex; justify-content: space-between; margin: 0 0 9px; font-size: 13px; color: var(--branch); }
+.tree-branch h4 small { font-size: 10px; color: #bdb4a6; font-weight: normal; }
+.tree-chain { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 12px; }
+#deck-panel .tree-node { position: relative; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 5px 2px 8px; min-width: 0; border-color: #6a6060; }
+.tree-node:not(:first-child)::before { content: ''; width: 12px; position: absolute; right: calc(100% + 1px); top: 50%; height: 2px; background: var(--branch); opacity: .6; }
+.tree-node img { width: 60px; height: 74px; max-width: 100%; object-fit: contain; }
+.tree-node b { font-size: 12px; }.tree-node span { color: #c1b5a3; font-size: 10px; }.tree-node small { font-size: 9px; line-height: 1.6; text-align: center; }
+#deck-panel .tree-node.unlocked { border-color: var(--branch); background: #29262b; }
+#deck-panel .tree-node.available { border-style: dashed; border-color: var(--branch); }
+.tree-node.locked img { opacity: .55; filter: grayscale(.8); }
+#deck-panel .tree-node.viewing { outline: 2px solid #f5d982; outline-offset: 2px; }
+#supporter-panel { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex: 1 0 100%; min-width: 0; max-width: 100%; border: 1px solid #9a8550; border-radius: 9px; padding: 6px 10px; background: #302c20; box-sizing: border-box; }
+#supporter-panel.hidden { display: none; }
+#hud.tree-hud #supporter-panel { order: 6; position: relative; z-index: 11; }
+#wrap.over #hud.tree-hud { flex-wrap: wrap; }
+/* Selected tower details must leave the support action available (crusher requires selection). */
+#wrap #hud.tree-hud #info-panel { top: 8px; bottom: 64px; min-height: 0; }
+#hud.tree-hud #info-body { min-height: 0; overflow: auto; }
+#supporter-panel > div { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+#supporter-name { font: 12px var(--font-display); color: #ffdf95; }
+#supporter-note { font-size: 10px; color: #d4cbb9; line-height: 1.5; }
+#supporter-use { flex-shrink: 0; min-height: 34px; padding: 5px 12px; color: #ffedc1; background: #564529; border: 1px solid #c7a665; border-radius: 7px; font: 12px var(--font-display); cursor: pointer; }
+#supporter-use:disabled { opacity: .5; cursor: default; }
+#wrap.side #supporter-panel { flex-basis: auto; flex-direction: column; align-items: stretch; }
+@media (max-width:600px) {
+  #deck-panel .deck-slot img { width: 39px; height: 50px; }
+  #tree-supporters { grid-template-columns: 1fr; }
+  #tree-supporters button { padding: 10px; gap: 5px; }
+  #tree-supporters small { font-size: 11px; }
+  #tree-families button { flex: 1 0 28%; }
+  .tree-branch { padding: 9px 7px 12px; }.tree-chain { gap: 8px; }
+  .tree-node:not(:first-child)::before { width: 8px; }.tree-node img { width: 45px; height: 61px; }
+  .tree-node b { font-size: 11px; }.tree-node small { font-size: 8px; }
+  #supporter-note { font-size: 9px; } #supporter-panel { padding: 5px 8px; }
+}

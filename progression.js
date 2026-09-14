@@ -2,16 +2,19 @@
   'use strict';
   const rules = typeof module === 'object' && module.exports && typeof require === 'function'
     ? require('./deck-rules.js') : root && root.DKDECKRULES;
-  const api = factory(rules);
+  const treeRules = typeof module === 'object' && module.exports && typeof require === 'function'
+    ? require('./tree-rules.js') : root && root.DKTREERULES;
+  const api = factory(rules, treeRules);
   if (typeof module === 'object' && module.exports) module.exports = api;
   if (root && typeof root === 'object') root.DKPROGRESSION = api;
-})(typeof window !== 'undefined' ? window : null, function (RULES) {
+})(typeof window !== 'undefined' ? window : null, function (RULES, TREE) {
   'use strict';
 
   // Persistent progression is separate from in-run gold/power and cosmetic gems.
   // This module does not charge money, verify payments or certify combat results.
   const VERSION = 1, MAX_SHARDS = 1000000000, MAX_LEVEL = 200, ECONOMY_VERSION = 2;
   const MAX_COUNTER = Number.MAX_SAFE_INTEGER, DECK_SIZE = 5;
+  const TREE_VERSION = 1, TREE_PACK_GOLD = 420;
   const COLLECTION_VERSION = 1, MAX_CLASS = 20, MAX_GOLD = 1000000000, MAX_COPIES = 1000000000, MAX_PACKS = 1000000;
   const PACK_ODDS = Object.freeze({ common: 55, rare: 30, unique: 12, legendary: 3 }), PACK_PITY = 20, PACK_CARDS = 5, PACK_GOLD = 120;
   const CRAFT_COPIES = Object.freeze({ common: 8, rare: 4, unique: 2, legendary: 1 });
@@ -51,6 +54,7 @@
     for (const mode of MODES) records[mode] = emptyRecord();
     const profile = { version: VERSION, economyVersion: ECONOMY_VERSION, shards: 0, levels, deck: [1, 2, 3, 4, 5], records, legacy: legacyFrom(legacySave), settled: [] };
     profile.collection = makeCollection(profile, false);
+    if (TREE) profile.tree = makeTree(profile, 'new-profile');
     return profile;
   }
 
@@ -102,6 +106,8 @@
     if (Array.isArray(source.settled)) out.settled = [...new Set(source.settled.filter(idValid))].slice(0, 64);
     out.collection = isObject(source.collection) ? sanitizeCollection(source.collection, out) : makeCollection(out, true);
     out.deck = out.collection.presets[out.collection.activePreset].faces.slice();
+    if (TREE) out.tree = isObject(source.tree) ? sanitizeTree(source.tree, out)
+      : makeTree(out, isObject(source.collection) || isObject(source.levels) ? 'collection-v111' : 'new-profile');
     return out;
   }
 
@@ -120,7 +126,8 @@
       && isObject(profile.records) && MODES.every(mode => recordValid(profile.records[mode], mode))
       && isObject(profile.legacy) && integer(profile.legacy.best, 0, MAX_COUNTER) && integer(profile.legacy.clears, 0, MAX_COUNTER)
       && Array.isArray(profile.settled) && profile.settled.length <= 64 && profile.settled.every(idValid) && new Set(profile.settled).size === profile.settled.length
-      && (profile.collection === undefined || collectionValid(profile.collection));
+      && (profile.collection === undefined || collectionValid(profile.collection))
+      && (profile.tree === undefined || treeValid(profile.tree, profile.collection));
   }
 
   function cardInfo(face) { return faceValid(face) && RULES && typeof RULES.get === 'function' ? RULES.get(face) : null; }
@@ -211,6 +218,7 @@
       critChance: .1, critDamage: 1.5 + Math.min(1, classProgress * .005) };
   }
   function classUp(profile, face) {
+    if (profile?.tree?.version === TREE_VERSION) return { ok: false, reason: 'tree-system' };
     if (!profileValid(profile) || !collectionValid(profile.collection)) return { ok: false, reason: 'invalid-profile' };
     if (!faceValid(face)) return { ok: false, reason: 'invalid-face' };
     const c = profile.collection, card = c.cards[face];
@@ -229,6 +237,7 @@
     return { face, owned: true, newlyOwned, copies, class: card.class };
   }
   function craft(profile, face) {
+    if (profile?.tree?.version === TREE_VERSION) return { ok: false, reason: 'tree-system' };
     if (!profileValid(profile) || !collectionValid(profile.collection)) return { ok: false, reason: 'invalid-profile' };
     const cost = craftCost(face); if (!cost) return { ok: false, reason: 'invalid-face' };
     if (profile.shards < cost.shards) return { ok: false, reason: 'insufficient-shards', cost };
@@ -253,6 +262,7 @@
   // Free-only supply packs: xorshift32 state advances inside the profile. The
   // caller cannot supply a roll, seed or reward. Server actions are serialized.
   function openPack(profile) {
+    if (profile?.tree?.version === TREE_VERSION) return { ok: false, reason: 'tree-system' };
     if (!profileValid(profile) || !collectionValid(profile.collection)) return { ok: false, reason: 'invalid-profile' };
     const c = profile.collection;
     if (!c.packs) return { ok: false, reason: 'no-packs' };
@@ -270,6 +280,132 @@
     }
     const gold = Math.min(PACK_GOLD, MAX_GOLD - c.gold); c.gold += gold; c.packs--; c.opened++; c.pity = legendary ? 0 : c.pity + 1;
     return { ok: true, rewards, cards: rewards.map(r => ({ face: r.face, copies: r.copies, isNew: r.newlyOwned, rarity: r.rarity })), gold, legendary, pity: c.pity, packs: c.packs };
+  }
+
+  function treeSnapshotMapsValid(value) {
+    return !!TREE && isObject(value.mastery) && isObject(value.talents) && isObject(value.awakenings)
+      && [value.mastery, value.talents, value.awakenings].every(m => Object.keys(m).length === 20)
+      && Array.from({ length: 20 }, (_, i) => i + 1).every(face => integer(value.mastery[face], 0, TREE.MAX_MASTERY)
+        && (value.talents[face] === null || ['force', 'insight'].includes(value.talents[face]) && value.mastery[face] >= 2)
+        && typeof value.awakenings[face] === 'boolean' && (!value.awakenings[face] || value.mastery[face] >= 3));
+  }
+  function treeValid(tree, collection) {
+    return isObject(tree) && tree.version === TREE_VERSION && collectionValid(collection) && treeSnapshotMapsValid(tree)
+      && TREE.supporters.some(s => s.id === tree.supporter) && integer(tree.reserveGold, 0, MAX_COUNTER)
+      && Array.from({ length: 20 }, (_, i) => i + 1).every(face => collection.cards[face].owned || tree.mastery[face] === 0)
+      && isObject(tree.migration);
+  }
+  const copyGold = face => 200 / (craftCost(face)?.copies || 1);
+  function makeTree(profile, source) {
+    const c = profile.collection, mastery = {}, talents = {}, awakenings = {};
+    const migration = { version: TREE_VERSION, source, oldPacks: c.packs, oldCopies: {}, oldClasses: {}, convertedCopiesGold: 0,
+      convertedPacksGold: c.packs * TREE_PACK_GOLD, classInvestmentGold: 0, masteryValue: 0, masteryGained: 0, creditedGold: 0 };
+    let credit = migration.convertedPacksGold;
+    for (let face = 1; face <= 20; face++) {
+      const card = c.cards[face]; mastery[face] = 0; talents[face] = null; awakenings[face] = false;
+      migration.oldCopies[face] = card.copies; migration.oldClasses[face] = card.class;
+      const duplicateValue = card.copies * copyGold(face); migration.convertedCopiesGold += duplicateValue; credit += duplicateValue;
+      let investment = 0;
+      if (card.owned) for (let level = baseClass(face); level < card.class; level++) {
+        const cost = classUpgradeCost(face, level); investment += cost.gold + cost.copies * copyGold(face);
+      }
+      migration.classInvestmentGold += investment;
+      while (mastery[face] < TREE.MAX_MASTERY) {
+        const cost = TREE.masteryCost(mastery[face]), value = cost.gold + cost.shards * 10;
+        if (investment < value) break;
+        investment -= value; migration.masteryValue += value; mastery[face]++; migration.masteryGained++;
+      }
+      credit += investment; card.copies = 0;
+    }
+    migration.creditedGold = credit;
+    const deposited = Math.min(credit, MAX_GOLD - c.gold); c.gold += deposited; c.packs = 0;
+    return { version: TREE_VERSION, mastery, talents, awakenings, supporter: 'supply', reserveGold: credit - deposited, migration };
+  }
+  function sanitizeTree(raw, profile) {
+    const mastery = {}, talents = {}, awakenings = {};
+    for (let face = 1; face <= 20; face++) {
+      mastery[face] = profile.collection.cards[face].owned ? count(raw.mastery?.[face], TREE.MAX_MASTERY) : 0;
+      talents[face] = mastery[face] >= 2 && ['force', 'insight'].includes(raw.talents?.[face]) ? raw.talents[face] : null;
+      awakenings[face] = mastery[face] >= 3 && raw.awakenings?.[face] === true;
+    }
+    const m = isObject(raw.migration) ? raw.migration : {}, migration = { version: TREE_VERSION,
+      source: ['new-profile', 'collection-v111'].includes(m.source) ? m.source : 'collection-v111',
+      oldPacks: count(m.oldPacks, MAX_PACKS), oldCopies: {}, oldClasses: {} };
+    for (let face = 1; face <= 20; face++) {
+      migration.oldCopies[face] = count(m.oldCopies?.[face], MAX_COPIES);
+      migration.oldClasses[face] = count(m.oldClasses?.[face], MAX_CLASS);
+    }
+    for (const field of ['convertedCopiesGold', 'convertedPacksGold', 'classInvestmentGold', 'masteryValue', 'masteryGained', 'creditedGold']) migration[field] = count(m[field]);
+    return { version: TREE_VERSION, mastery, talents, awakenings,
+      supporter: TREE.supporters.some(s => s.id === raw.supporter) ? raw.supporter : 'supply', reserveGold: count(raw.reserveGold), migration };
+  }
+  function migrateTree(profile) {
+    if (!TREE || !profileValid(profile)) return { ok: false, reason: 'invalid-profile' };
+    if (profile.tree !== undefined) return { ok: true, migrated: false, migration: structuredMigration(profile.tree.migration) };
+    const collection = migrateCollection(profile); if (!collection.ok) return collection;
+    profile.tree = makeTree(profile, 'collection-v111');
+    return { ok: true, migrated: true, migration: structuredMigration(profile.tree.migration) };
+  }
+  function structuredMigration(m) { return { ...m, oldCopies: { ...m.oldCopies }, oldClasses: { ...m.oldClasses } }; }
+  function treeSummary(profile) {
+    if (!profileValid(profile) || !treeValid(profile.tree, profile.collection)) return null;
+    const t = profile.tree;
+    return { owned: Object.values(profile.collection.cards).filter(c => c.owned).length, total: 20, gold: profile.collection.gold,
+      shards: profile.shards, reserveGold: t.reserveGold, mastery: Object.values(t.mastery).reduce((sum, n) => sum + n, 0),
+      awakened: Object.values(t.awakenings).filter(Boolean).length, supporter: t.supporter, critChance: .1, critDamage: 1.5,
+      activePreset: profile.collection.activePreset, migration: structuredMigration(t.migration) };
+  }
+  function treeReady(profile, face) {
+    if (!profileValid(profile) || !treeValid(profile.tree, profile.collection)) return { ok: false, reason: 'invalid-profile' };
+    if (face !== undefined && !faceValid(face)) return { ok: false, reason: 'invalid-face' };
+    return null;
+  }
+  function treePay(profile, cost) {
+    if (profile.collection.gold < cost.gold) return { ok: false, reason: 'insufficient-gold', cost };
+    if (profile.shards < cost.shards) return { ok: false, reason: 'insufficient-shards', cost };
+    profile.collection.gold -= cost.gold; profile.shards -= cost.shards;
+    const refill = Math.min(profile.tree.reserveGold, MAX_GOLD - profile.collection.gold);
+    profile.tree.reserveGold -= refill; profile.collection.gold += refill;
+    return null;
+  }
+  function treeUnlock(profile, face) {
+    const bad = treeReady(profile, face); if (bad) return bad;
+    if (profile.collection.cards[face].owned) return { ok: false, reason: 'already-unlocked' };
+    const node = TREE.get(face);
+    if (node.previous && !profile.collection.cards[node.previous].owned) return { ok: false, reason: 'prerequisite', previous: node.previous };
+    const cost = TREE.unlockCost(face), payment = treePay(profile, cost); if (payment) return payment;
+    profile.collection.cards[face].owned = true; profile.collection.cards[face].class = baseClass(face); profile.levels[face] = Math.max(1, profile.levels[face]);
+    return { ok: true, face, cost, owned: true };
+  }
+  function treeUpgrade(profile, face) {
+    const bad = treeReady(profile, face); if (bad) return bad;
+    if (!profile.collection.cards[face].owned) return { ok: false, reason: 'locked' };
+    const cost = TREE.masteryCost(profile.tree.mastery[face]); if (!cost) return { ok: false, reason: 'max-mastery' };
+    const payment = treePay(profile, cost); if (payment) return payment;
+    profile.tree.mastery[face]++;
+    return { ok: true, face, mastery: profile.tree.mastery[face], cost };
+  }
+  function treeTalent(profile, face, choice) {
+    const bad = treeReady(profile, face); if (bad) return bad;
+    if (!['force', 'insight'].includes(choice)) return { ok: false, reason: 'invalid-talent' };
+    if (!profile.collection.cards[face].owned) return { ok: false, reason: 'locked' };
+    if (profile.tree.mastery[face] < 2) return { ok: false, reason: 'mastery-required', required: 2 };
+    const changed = profile.tree.talents[face] !== choice; profile.tree.talents[face] = choice;
+    return { ok: true, face, choice, changed };
+  }
+  function treeAwaken(profile, face) {
+    const bad = treeReady(profile, face); if (bad) return bad;
+    if (!profile.collection.cards[face].owned) return { ok: false, reason: 'locked' };
+    if (profile.tree.mastery[face] < 3) return { ok: false, reason: 'mastery-required', required: 3 };
+    if (profile.tree.awakenings[face]) return { ok: false, reason: 'already-awakened' };
+    const cost = TREE.awakeningCost(face), payment = treePay(profile, cost); if (payment) return payment;
+    profile.tree.awakenings[face] = true; return { ok: true, face, awakened: true, cost };
+  }
+  function setSupporter(profile, id) {
+    const bad = treeReady(profile); if (bad) return bad;
+    if (!TREE.supporters.some(s => s.id === id)) return { ok: false, reason: 'invalid-supporter' };
+    const changed = profile.tree.supporter !== id; profile.tree.supporter = id;
+    return { ok: true, supporter: id, changed };
   }
 
   function cardUnlockCost(face) {
@@ -300,6 +436,7 @@
   }
 
   function unlock(profile, face) {
+    if (profile?.tree?.version === TREE_VERSION) return { ok: false, reason: 'tree-system' };
     if (!profileValid(profile)) return { ok: false, reason: 'invalid-profile' };
     if (!faceValid(face)) return { ok: false, reason: 'invalid-face' };
     if (profile.levels[face] > 0) return { ok: false, reason: 'already-unlocked' };
@@ -311,6 +448,7 @@
   }
 
   function upgrade(profile, face) {
+    if (profile?.tree?.version === TREE_VERSION) return { ok: false, reason: 'tree-system' };
     if (!profileValid(profile)) return { ok: false, reason: 'invalid-profile' };
     if (!faceValid(face)) return { ok: false, reason: 'invalid-face' };
     const level = profile.levels[face];
@@ -360,6 +498,11 @@
       for (let face = 1; face <= 20; face++) classes[face] = profile.collection.cards[face].owned ? profile.collection.cards[face].class : profile.levels[face] > 0 ? baseClass(face) : 0;
       Object.assign(result, { deckSystem: 1, classes: Object.freeze(classes), critChance: summary.critChance, critDamage: summary.critDamage });
     }
+    if (growth && treeValid(profile.tree, profile.collection)) {
+      const t = profile.tree;
+      Object.assign(result, { treeVersion: TREE_VERSION, mastery: Object.freeze({ ...t.mastery }), talents: Object.freeze({ ...t.talents }),
+        awakenings: Object.freeze({ ...t.awakenings }), supporter: t.supporter, critChance: .1, critDamage: 1.5 });
+    }
     return Object.freeze(result);
   }
 
@@ -377,11 +520,14 @@
       && value.deck.every(face => faceValid(face) && integer(value.levels[face], 1, MAX_LEVEL))
       && (value.deckSystem === undefined || value.deckSystem === 1 && value.growth && isObject(value.classes)
         && value.deck.every(face => integer(value.classes[face], baseClass(face), MAX_CLASS))
-        && value.critChance === .1 && Number.isFinite(value.critDamage) && value.critDamage >= 1.5 && value.critDamage <= 2.5);
+        && value.critChance === .1 && Number.isFinite(value.critDamage) && value.critDamage >= 1.5 && value.critDamage <= 2.5)
+      && (value.treeVersion === undefined || value.treeVersion === TREE_VERSION && value.deckSystem === 1 && value.growth
+        && treeSnapshotMapsValid(value) && TREE.supporters.some(s => s.id === value.supporter) && value.critDamage === 1.5);
   }
 
   function damageMultiplier(value, face) {
     if (!snapshotValid(value) || !value.growth || !faceValid(face) || !value.deck.includes(face)) return 1;
+    if (value.treeVersion === TREE_VERSION) return (1 + .03 * value.mastery[face]) * (value.talents[face] === 'force' ? 1.1 : 1);
     if (value.deckSystem === 1) return 1 + .03 * (value.classes[face] - baseClass(face));
     const level = Math.min(value.levels[face], value.levelCap);
     const base = 1 + 0.08 * (Math.min(level, 20) - 1);
@@ -439,7 +585,8 @@
     if (collectionValid(profile.collection)) {
       const c = profile.collection;
       collectionRewards.gold = Math.min(Math.min(run.wave, 500) * 8 + newly.length * 40 + clearBonus * 5, MAX_GOLD - c.gold);
-      collectionRewards.packs = Math.min(Math.floor(Math.min(run.wave, 200) / 10), MAX_PACKS - c.packs);
+      collectionRewards.packs = profile.tree?.version === TREE_VERSION ? 0 : Math.min(Math.floor(Math.min(run.wave, 200) / 10), MAX_PACKS - c.packs);
+      if (profile.tree?.version === TREE_VERSION) collectionRewards.gold = Math.min(collectionRewards.gold + Math.floor(Math.min(run.wave, 200) / 10) * TREE_PACK_GOLD, MAX_GOLD - c.gold);
       c.gold += collectionRewards.gold; c.packs += collectionRewards.packs;
     }
     return { ok: true, shards, earnedShards, capped: shards < earnedShards, record, newly, collectionRewards, duplicate: false };
@@ -447,6 +594,8 @@
 
   return Object.freeze({ VERSION, ECONOMY_VERSION, MAX_SHARDS, MAX_LEVEL, MAX_COUNTER, DECK_SIZE, MODES, MILESTONES, GEM_MILESTONES, migrateEconomy,
     defaultProfile, sanitize, normalizeRecord, cardUnlockCost, upgradeCost, unlock, upgrade, setDeck, snapshot, snapshotValid, pureSnapshot, growsIn: growthMode, damageMultiplier, draw, settle,
+    TREE_VERSION, TREE_PACK_GOLD, treeUnlock, treeUpgrade, treeTalent, treeAwaken, setSupporter, migrateTree, treeSummary,
+    treeUnlockCost: face => TREE?.unlockCost(face) || null, treeMasteryCost: level => TREE?.masteryCost(level) || null, treeAwakeningCost: face => TREE?.awakeningCost(face) || null,
     COLLECTION_VERSION, MAX_CLASS, MAX_GOLD, MAX_COPIES, MAX_PACKS, PACK_ODDS, PACK_PITY, PACK_CARDS, PACK_GOLD,
     cardInfo, craftCost, classUpgradeCost, migrateCollection, collectionSummary, classUp, craft, openPack, setPreset, activatePreset });
 });

@@ -13,26 +13,32 @@ const net = process.env.NET || 'ws://localhost:8788', base = process.env.E2E_BAS
       await p.route('**/game.js*', async route => { const r = await route.fetch(); await route.fulfill({ response: r, body: (await r.text()).replace('window.DK = S;', 'window.__mpRecovery={persistRun,readRunSave,saveSave};\nwindow.DK = S;') }); });
       await p.goto(new URL('index.html?net=' + encodeURIComponent(net), base).href);
       await p.waitForFunction(() => window.DK?.phase === 'title', null, { timeout: 120000 }); await p.click('#ov-btn');
-      await p.evaluate(() => {
+      await p.evaluate(i => {
         DK.muted = true;
         const P=DKPROGRESSION.defaultProfile(),deck=[1,4,6,14,19];
-        for(const id of deck){P.levels[id]=1;Object.assign(P.collection.cards[id],{owned:true,class:DKDECKRULES.get(id).baseClass});}
-        P.deck=deck;DKSAVE.progression=P;__mpRecovery.saveSave(); DKlobbyView('multi');
+        for(const id of deck){P.levels[id]=1;Object.assign(P.collection.cards[id],{owned:true,class:DKDECKRULES.get(id).baseClass});P.tree.mastery[id]=3;P.tree.talents[id]=id===6?'insight':'force';P.tree.awakenings[id]=true;}
+        P.tree.supporter=['barrage','supply','crusher'][i];
+        if(!DKPROGRESSION.setPreset(P,0,deck).ok)throw Error('tree multiplayer fixture deck rejected');
+        DKSAVE.progression=P;__mpRecovery.saveSave(); DKlobbyView('multi');
         window.__receivedSummaries=[];DKNET.on('sum',m=>window.__receivedSummaries.push(m));
-      }); await p.selectOption('#mp-mode', 'extreme'); await p.fill('#mp-name', '복구' + i);
+      },i); await p.selectOption('#mp-mode', 'extreme'); await p.fill('#mp-name', '복구' + i);
     }
     let [a,b,c] = pages;
     await a.click('#mp-create'); await a.waitForFunction(() => DK.phase === 'mpRoom'); const code = await a.evaluate(() => DKNET.code);
     for (const p of [b,c]) { await p.click('#mp-join'); await p.fill('#mp-code', code); await p.click('#mp-join-go'); await p.waitForFunction(() => DK.phase === 'mpRoom'); }
     await a.waitForFunction(() => DKNET.members().length === 3); await a.click('#mp-start');
-    for (const p of pages) { await p.waitForFunction(() => DK.phase === 'playing' && DK.net?.mode === 'extreme'); await p.evaluate(()=>{DK.paused=true;}); }
+    for (const p of pages) { await p.waitForFunction(() => DK.phase === 'playing' && DK.net?.mode === 'extreme'); await p.evaluate(()=>{DK.paused=true;});assert.equal(await p.evaluate(()=>DK.inf.growthSnapshot.treeVersion),1); }
+    report.checks.push('all three clients start an explicit tree-version run with mastery, chosen talents, researched awakening and a free supporter');
     const before = await b.evaluate(() => {
       DK.paused = true; DK.wave = 205; DK.inf.doneW = DK.net.doneW = 204; DK.inf.kills = 70; DK.waveActive = false; DK.autoT = 500;
       for(const [face,pips,spot,abilityT] of [[6,7,0,5.5],[14,3,1,17.25],[19,2,4,0]]){DK.heldDie=face;DKplace(spot);const t=DK.towers.find(t=>t.spot===spot);t.pips=pips;t.abilityT=abilityT;}
       DK.inf.deckPower[6]=4;DK.inf.deckPower[14]=2;
+      DK.inf.supporterCooldown=12.5;DK.inf.supporterUses=3;
       DKNET.done(204); DKNET.sum(DKMP.summary(false)); __mpRecovery.persistRun();
       return { id: DK.inf.runId, t0: DK.net.t0, pid: DK.net.pid, gold: DK.gold, size: DK.towers.length, powers:DK.inf.deckPower,
-        towers:DK.towers.map(t=>[t.face,t.pips,t.abilityT]), classes:DK.inf.growthSnapshot.classes, critDamage:DK.inf.growthSnapshot.critDamage };
+        towers:DK.towers.map(t=>[t.face,t.pips,t.abilityT]), classes:DK.inf.growthSnapshot.classes, critDamage:DK.inf.growthSnapshot.critDamage,
+        tree:{version:DK.inf.growthSnapshot.treeVersion,mastery:DK.inf.growthSnapshot.mastery,talents:DK.inf.growthSnapshot.talents,awakenings:DK.inf.growthSnapshot.awakenings,supporter:DK.inf.growthSnapshot.supporter,cooldown:DK.inf.supporterCooldown,uses:DK.inf.supporterUses},
+        frozen:['mastery','talents','awakenings'].every(key=>Object.isFrozen(DK.inf.growthSnapshot[key])) };
     });
     await a.waitForFunction(pid=>window.__receivedSummaries.some(m=>m.pid===pid&&m.ds===1&&m.tw?.length===3),before.pid);
     const relayed=await a.evaluate(pid=>window.__receivedSummaries.filter(m=>m.pid===pid&&m.tw?.length===3).at(-1),before.pid);
@@ -47,15 +53,21 @@ const net = process.env.NET || 'ws://localhost:8788', base = process.env.E2E_BAS
     await b.waitForFunction(() => DK.phase === 'playing' && DK.towers.length === 3, null, { timeout: 20000 }); await b.evaluate(()=>{DK.paused=true;});
     const after = await b.evaluate(() => ({ id: DK.inf.runId, t0: DK.net.t0, pid: DK.net.pid, gold: DK.gold, size: DK.towers.length,
       done: DK.inf.doneW, status: DK.net.status, powers:DK.inf.deckPower,towers:DK.towers.map(t=>[t.face,t.pips,t.abilityT]),
-      classes:DK.inf.growthSnapshot.classes,critDamage:DK.inf.growthSnapshot.critDamage, snapshot: DK.inf.growthSnapshot.deckSystem }));
+      classes:DK.inf.growthSnapshot.classes,critDamage:DK.inf.growthSnapshot.critDamage, snapshot: DK.inf.growthSnapshot.deckSystem,
+      tree:{version:DK.inf.growthSnapshot.treeVersion,mastery:DK.inf.growthSnapshot.mastery,talents:DK.inf.growthSnapshot.talents,awakenings:DK.inf.growthSnapshot.awakenings,supporter:DK.inf.growthSnapshot.supporter,cooldown:DK.inf.supporterCooldown,uses:DK.inf.supporterUses},
+      frozen:['mastery','talents','awakenings'].every(key=>Object.isFrozen(DK.inf.growthSnapshot[key])) }));
     assert.deepEqual(after, { ...before, done: 204, status: 'alive', snapshot: 1 });
+    assert.equal(after.frozen,true);assert.equal(after.tree.mastery[6],3);assert.equal(after.tree.talents[6],'insight');assert.equal(after.tree.awakenings[6],true);assert.equal(after.tree.supporter,'supply');
     assert.equal(await a.evaluate(pid => DKNET.members().find(p => p.pid === pid).status, before.pid), 'alive');
     report.checks.push('three actual clients; phone reload restores pips, five card powers, ability timers, frozen classes/critical and original room/run identity without death report');
+    report.checks.push('phone reconnect retains frozen tree mastery/talents/awakening and the chosen supporter with 12.5 seconds cooldown and three uses, without granting another skill use');
     await b.screenshot({ path: path.join(out, 'phone-restored.png') });
     const nativeBefore = await c.evaluate(() => {
       DK.paused=true; DK.wave=203; DK.inf.doneW=DK.net.doneW=202; DK.autoT=500; DK.waveActive=false;
-      DK.heldDie=14;DKplace(0);DK.towers[0].pips=4;DK.towers[0].abilityT=23.5;DK.inf.deckPower[14]=3;__mpRecovery.persistRun();DKNET.done(202);
-      return { id:DK.inf.runId,pid:DK.net.pid,t0:DK.net.t0,pips:DK.towers[0].pips,abilityT:DK.towers[0].abilityT,power:DK.inf.deckPower[14] };
+      DK.heldDie=14;DKplace(0);DK.towers[0].pips=4;DK.towers[0].abilityT=23.5;DK.inf.deckPower[14]=3;DKNET.done(202);
+      DK.inf.supporterCooldown=21.25;DK.inf.supporterUses=2;__mpRecovery.persistRun();
+      return { id:DK.inf.runId,pid:DK.net.pid,t0:DK.net.t0,pips:DK.towers[0].pips,abilityT:DK.towers[0].abilityT,power:DK.inf.deckPower[14],
+        tree:{version:DK.inf.growthSnapshot.treeVersion,mastery:DK.inf.growthSnapshot.mastery,talents:DK.inf.growthSnapshot.talents,awakenings:DK.inf.growthSnapshot.awakenings,supporter:DK.inf.growthSnapshot.supporter,cooldown:DK.inf.supporterCooldown,uses:DK.inf.supporterUses} };
     });
     const storageState = await c.context().storageState(); await c.context().close();
     const restarted = await browser.newContext({ storageState, viewport:{width:1240,height:860} }); c=await restarted.newPage();
@@ -65,8 +77,10 @@ const net = process.env.NET || 'ws://localhost:8788', base = process.env.E2E_BAS
     await c.waitForFunction(()=>window.DK?.phase==='title'&&DKNET.inRoom(),null,{timeout:120000});await c.click('#ov-btn');
     await c.waitForFunction(()=>DK.phase==='playing'&&DK.towers.length===1);
     await c.evaluate(()=>{DK.paused=true;});
-    assert.deepEqual(await c.evaluate(()=>({id:DK.inf.runId,pid:DK.net.pid,t0:DK.net.t0,pips:DK.towers[0].pips,abilityT:DK.towers[0].abilityT,power:DK.inf.deckPower[14]})),nativeBefore);
+    assert.deepEqual(await c.evaluate(()=>({id:DK.inf.runId,pid:DK.net.pid,t0:DK.net.t0,pips:DK.towers[0].pips,abilityT:DK.towers[0].abilityT,power:DK.inf.deckPower[14],
+      tree:{version:DK.inf.growthSnapshot.treeVersion,mastery:DK.inf.growthSnapshot.mastery,talents:DK.inf.growthSnapshot.talents,awakenings:DK.inf.growthSnapshot.awakenings,supporter:DK.inf.growthSnapshot.supporter,cooldown:DK.inf.supporterCooldown,uses:DK.inf.supporterUses}})),nativeBefore);
     report.checks.push('native storage simulation: completely new browser context restores persistent room identity and board within grace period');
+    report.checks.push('new native browser context also restores mastery/talent/awakening maps and crusher supporter with its partially elapsed cooldown and previous use count');
     for (const [i,p] of [[0,a],[1,b],[2,c]]) await p.evaluate(i => {
       DK.wave = 205 + i; DK.inf.doneW = DK.net.doneW = 204; DK.inf.kills = [50,70,60][i];
       DKNET.done(204); DKNET.sum(DKMP.summary(false)); DKMP.die('quit');
