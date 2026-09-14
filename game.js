@@ -1442,7 +1442,7 @@ const growthRun = () => S.mode === 'infinity' && !!(S.inf && S.inf.growthSnapsho
 const DECK = window.DKDECKRULES;
 const deckRun = () => growthRun() && !!DECK && S.inf.growthSnapshot.deckSystem === 1;
 const treeRun = () => deckRun() && S.inf.growthSnapshot.treeVersion === 1;
-const towerAwakened = t => treeRun() && !COSMETIC && DECK.awakened(t,S.inf.growthSnapshot);
+const towerAwakened = t => treeRun() && !COSMETIC && !(VIEW.pid && S.towers === VIEW.towers) && DECK.awakened(t,S.inf.growthSnapshot);
 const combatDef = face => deckRun() ? deckDef(face) : TOWER_DEFS[face];
 function deckDef(face) { const card = DECK.get(face); return card ? { ...card.stats, name:card.name, desc:card.description, color:TOWER_DEFS[face].color, topper:TOWER_DEFS[face].topper } : TOWER_DEFS[face]; }
 const deckPower = face => deckRun() ? (S.inf.deckPower?.[face] || 1) : 1;

@@ -10,13 +10,13 @@ const net = process.env.NET || 'ws://localhost:8788', base = process.env.E2E_BAS
       const p = await context.newPage(); pages.push(p); p.on('pageerror', e => errors.push(e.message));
       if (i === 2) await p.addInitScript(() => { window.Capacitor = { isNativePlatform: () => true, getPlatform: () => 'android' }; });
       await p.addInitScript(() => { localStorage.setItem('dk_coachDone', '1'); localStorage.setItem('dk_infHelpSeen', '1'); });
-      await p.route('**/game.js*', async route => { const r = await route.fetch(); await route.fulfill({ response: r, body: (await r.text()).replace('window.DK = S;', 'window.__mpRecovery={persistRun,readRunSave,saveSave};\nwindow.DK = S;') }); });
+      await p.route('**/game.js*', async route => { const r = await route.fetch(); await route.fulfill({ response: r, body: (await r.text()).replace('window.DK = S;', 'window.__mpRecovery={persistRun,readRunSave,saveSave,towerAwakened,withView,badgeLabels:t=>{const labels=[],original=ctx.fillText;ctx.fillText=txt=>labels.push(txt);try{drawStarBadge(t);}finally{ctx.fillText=original;}return labels;}};\nwindow.DK = S;') }); });
       await p.goto(new URL('index.html?net=' + encodeURIComponent(net), base).href);
       await p.waitForFunction(() => window.DK?.phase === 'title', null, { timeout: 120000 }); await p.click('#ov-btn');
       await p.evaluate(i => {
         DK.muted = true;
         const P=DKPROGRESSION.defaultProfile(),deck=[1,4,6,14,19];
-        for(const id of deck){P.levels[id]=1;Object.assign(P.collection.cards[id],{owned:true,class:DKDECKRULES.get(id).baseClass});P.tree.mastery[id]=3;P.tree.talents[id]=id===6?'insight':'force';P.tree.awakenings[id]=true;}
+        for(const id of deck){P.levels[id]=1;Object.assign(P.collection.cards[id],{owned:true,class:DKDECKRULES.get(id).baseClass});P.tree.mastery[id]=3;P.tree.talents[id]=id===6?'insight':'force';P.tree.awakenings[id]=!(i===1&&id===6);}
         P.tree.supporter=['barrage','supply','crusher'][i];
         if(!DKPROGRESSION.setPreset(P,0,deck).ok)throw Error('tree multiplayer fixture deck rejected');
         DKSAVE.progression=P;__mpRecovery.saveSave(); DKlobbyView('multi');
@@ -44,9 +44,15 @@ const net = process.env.NET || 'ws://localhost:8788', base = process.env.E2E_BAS
     const relayed=await a.evaluate(pid=>window.__receivedSummaries.filter(m=>m.pid===pid&&m.tw?.length===3).at(-1),before.pid);
     assert.equal(relayed.ds,1);assert.deepEqual(relayed.tw,[[0,6,1,7],[1,14,1,3],[4,19,1,2]]);
     report.checks.push('real DKNET client serializer and server relay preserve ds:1 and four-field 7/3/2 pip tuples');
+    await a.evaluate(()=>{DK.heldDie=14;if(!DKplace(0))throw Error('local awakened growth fixture rejected');DK.towers[0].pips=7;DK.towers[0].abilityT=0;});
     await a.evaluate(pid=>DKMP.view(pid),before.pid);
     await a.waitForFunction(()=>DKMP.viewState().towers.length===3&&DKMP.viewState().towers.some(t=>t.face===6&&t.pips===7));
     assert.deepEqual(await a.evaluate(()=>DKMP.viewState().towers.map(t=>[t.face,t.pips,t.deckSystem,t.def.name])),[[6,7,1,'축재 주사위'],[14,3,1,'새싹 주사위'],[19,2,1,'군집 주사위']]);
+    assert.equal(before.tree.awakenings[6],false,'sender deliberately has no income awakening');
+    assert.deepEqual(await a.evaluate(()=>{let result;__mpRecovery.withView(()=>{const t=DK.towers.find(t=>t.face===6);result={localResearch:DK.inf.growthSnapshot.awakenings[6],awake:__mpRecovery.towerAwakened(t),labels:__mpRecovery.badgeLabels(t)};});return result;}),{localResearch:true,awake:false,labels:['7눈금']},'real spectator draw never infers a remote awakening from the local account');
+    report.checks.push('spectator with local income awakening renders an unresearched remote seven-pip income tower without a false awakening label or ring');
+    assert.deepEqual(await a.evaluate(()=>{const t=DK.towers[0],gold=DK.gold,awake=__mpRecovery.towerAwakened(t);DKdeckTick(12);return{awake,income:DK.gold-gold,face:t.face,pips:t.pips};}),{awake:true,income:70,face:14,pips:7},'watching a remote board must not disable the local awakened growth income');
+    report.checks.push('local seven-pip awakened growth continues its 12-second SP production while watching another player');
     await a.screenshot({path:path.join(out,'desktop-spectator-pips.png')});await a.evaluate(()=>DKMP.viewExit());
     report.checks.push('desktop spectator of portrait sender reconstructs new card names and pips rather than legacy star levels');
     await b.reload(); await b.waitForFunction(() => window.DK?.phase === 'title' && DKNET.inRoom(), null, { timeout: 120000 }); await b.click('#ov-btn');
@@ -57,7 +63,7 @@ const net = process.env.NET || 'ws://localhost:8788', base = process.env.E2E_BAS
       tree:{version:DK.inf.growthSnapshot.treeVersion,mastery:DK.inf.growthSnapshot.mastery,talents:DK.inf.growthSnapshot.talents,awakenings:DK.inf.growthSnapshot.awakenings,supporter:DK.inf.growthSnapshot.supporter,cooldown:DK.inf.supporterCooldown,uses:DK.inf.supporterUses},
       frozen:['mastery','talents','awakenings'].every(key=>Object.isFrozen(DK.inf.growthSnapshot[key])) }));
     assert.deepEqual(after, { ...before, done: 204, status: 'alive', snapshot: 1 });
-    assert.equal(after.frozen,true);assert.equal(after.tree.mastery[6],3);assert.equal(after.tree.talents[6],'insight');assert.equal(after.tree.awakenings[6],true);assert.equal(after.tree.supporter,'supply');
+    assert.equal(after.frozen,true);assert.equal(after.tree.mastery[6],3);assert.equal(after.tree.talents[6],'insight');assert.equal(after.tree.awakenings[6],false);assert.equal(after.tree.awakenings[14],true);assert.equal(after.tree.supporter,'supply');
     assert.equal(await a.evaluate(pid => DKNET.members().find(p => p.pid === pid).status, before.pid), 'alive');
     report.checks.push('three actual clients; phone reload restores pips, five card powers, ability timers, frozen classes/critical and original room/run identity without death report');
     report.checks.push('phone reconnect retains frozen tree mastery/talents/awakening and the chosen supporter with 12.5 seconds cooldown and three uses, without granting another skill use');
