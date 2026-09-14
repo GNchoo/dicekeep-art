@@ -12,9 +12,9 @@
 <link rel="preload" as="image" href="ui/title-keyart-p.jpg?v=91" media="(max-aspect-ratio: 3/4)" fetchpriority="high" />
 <link rel="preload" as="image" href="ui/title-keyart-l.jpg?v=91" media="(min-aspect-ratio: 3001/4000)" fetchpriority="high" />
 <link rel="stylesheet" href="style.css?v=116" />
-<link rel="stylesheet" href="rewards.css?v=118" />
+<link rel="stylesheet" href="rewards.css?v=119" />
 <link rel="stylesheet" href="mail-admin.css?v=117" />
-<link rel="stylesheet" href="home.css?v=118" />
+<link rel="stylesheet" href="home.css?v=119" />
 <link rel="icon" href="ui/gold.png" />
 </head>
 <body>
@@ -71,19 +71,19 @@
           </header>
           <div class="home-wallet" aria-label="보유 재화">
             <div class="home-currency"><img src="ui/gold.png" alt=""><span><small>연구 골드</small><b id="home-gold">0</b></span></div>
-            <div class="home-currency"><svg class="home-shard-icon" viewBox="0 0 32 32" aria-hidden="true"><path d="m17 2 10 11-6 15-13-5-3-12Z"/><path d="m17 2-4 13 8 13M5 11l8 4 14-2M8 23l5-8"/></svg><span><small>성장 조각</small><b id="home-shards">0</b></span></div>
+            <div class="home-currency"><img src="ui/rewards/growth-shards.webp" alt=""><span><small>성장 조각</small><b id="home-shards">0</b></span></div>
             <div class="home-currency"><img src="ui/icon-gem.png" alt=""><span><small>젬</small><b id="lobby-gems">0</b></span></div>
           </div>
           <section class="home-citadel" aria-label="나의 주사위 성채">
             <div class="home-record"><img src="ui/icon-trophy.png" alt=""><span><small>나의 도전 기록</small><b id="home-record">첫 도전을 기다리는 중</b></span></div>
             <nav class="home-reward-shortcuts" aria-label="보상 바로가기">
-              <button id="btn-rewards-open" class="home-reward" type="button" data-reward-tab="attendance"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="7" width="22" height="22" rx="3"/><path d="M5 13h22M11 4v7M21 4v7m-10 9 4 4 7-8"/></svg><span>출석</span><i class="reward-dot" data-reward-dot="attendance" hidden aria-hidden="true"></i></button>
-              <button id="home-mail" class="home-reward" type="button" data-reward-tab="mail"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="7" width="26" height="19" rx="3"/><path d="m4 9 12 10L28 9M4 24l8-7m8 0 8 7"/></svg><span>우편</span><i class="reward-dot" data-reward-dot="mail" hidden aria-hidden="true"></i></button>
-              <button id="home-pass" class="home-reward" type="button" data-reward-tab="pass"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 3h18v25l-9-4-9 4Z"/><path d="m16 7 2.3 4.5 5 .7-3.6 3.5.9 4.9-4.6-2.3-4.6 2.3.9-4.9-3.6-3.5 5-.7Z"/></svg><span>성장 패스</span><i class="reward-dot" data-reward-dot="pass" hidden aria-hidden="true"></i></button>
+              <button id="btn-rewards-open" class="home-reward" type="button" data-reward-tab="attendance"><img src="ui/rewards/attendance-bag.webp" width="36" height="36" alt=""><span>출석</span><i class="reward-dot" data-reward-dot="attendance" hidden aria-hidden="true"></i></button>
+              <button id="home-mail" class="home-reward" type="button" data-reward-tab="mail"><img src="ui/rewards/mail.webp" width="36" height="36" alt=""><span>우편</span><i class="reward-dot" data-reward-dot="mail" hidden aria-hidden="true"></i></button>
+              <button id="home-pass" class="home-reward" type="button" data-reward-tab="pass"><img src="ui/rewards/growth-pass.webp" width="36" height="36" alt=""><span>성장 패스</span><i class="reward-dot" data-reward-dot="pass" hidden aria-hidden="true"></i></button>
             </nav>
             <div class="home-citadel-caption"><span>나의 성채</span><p>다섯 주사위로 지켜내는 성채</p></div>
           </section>
-          <button class="home-pass-status" type="button" data-reward-tab="pass"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 2h10v16l-5-3-5 3Z"/></svg><span>성장 패스</span><b id="home-pass-progress">무료 보상 확인</b><span class="home-chevron" aria-hidden="true">›</span></button>
+          <button class="home-pass-status" type="button" data-reward-tab="pass"><img src="ui/rewards/growth-pass.webp" width="24" height="24" alt=""><span>성장 패스</span><b id="home-pass-progress">무료 보상 확인</b><span class="home-chevron" aria-hidden="true">›</span></button>
           <section class="home-deck-section" aria-label="사용 중인 전투 덱">
             <div class="home-section-heading"><h2>나의 전투 덱</h2><button class="home-text-button" type="button" data-home-action="deck">덱 편성 <span aria-hidden="true">›</span></button></div>
             <div id="home-deck" class="home-deck" aria-label="선택한 다섯 주사위"><p class="home-deck-loading">전투 덱을 불러오는 중…</p></div>
@@ -366,7 +366,7 @@
 <script src="rewards-client.js?v=118"></script>
 <script src="reward-notifications.js?v=118"></script>
 <script src="mail-admin.js?v=117"></script>
-<script src="rewards-ui.js?v=118"></script>
+<script src="rewards-ui.js?v=119"></script>
 <script src="home-ui.js?v=118"></script>
 <script src="commerce-ui.js?v=117"></script>
 <script src="directional-art.js?v=110"></script>

@@ -55,9 +55,7 @@
 .home-profile-tag { color: #c9ae76; font-size: 10px; letter-spacing: .3px; flex-shrink: 0; border-left: 1px solid #564731; padding-left: 9px; }
 .home-wallet { display: grid; grid-template-columns: 1.2fr 1.1fr .85fr; gap: 6px; flex: 0 0 auto; }
 .home-currency { display: flex; align-items: center; gap: 6px; min-width: 0; min-height: 47px; padding: 5px 8px; border: 1px solid #584b36; border-radius: 6px; background: #252018; }
-.home-currency > img, .home-shard-icon { width: 27px; height: 29px; flex: 0 0 auto; object-fit: contain; }
-.home-shard-icon { fill: #c5a667; stroke: #f2d49d; stroke-width: 1.3; stroke-linejoin: round; }
-.home-shard-icon path + path { fill: none; stroke: #805e37; }
+.home-currency > img { width: 27px; height: 29px; flex: 0 0 auto; object-fit: contain; }
 .home-currency > span { display: flex; flex-direction: column; min-width: 0; }
 .home-currency small { color: #d0c1a6; font-size: 10px; line-height: 1.3; white-space: nowrap; }
 .home-currency b { font-variant-numeric: tabular-nums; font-size: 14px; line-height: 1.45; color: #f6e6c5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -71,7 +69,7 @@
 .home-reward-shortcuts { position: absolute; z-index: 1; top: 10px; right: 9px; display: grid; gap: 7px; }
 .home-reward { position: relative; display: flex; align-items: center; flex-direction: column; gap: 1px; width: 61px; height: 57px; padding: 4px 2px; background: #21190fef; border: 1px solid #a98b53; border-radius: 8px; color: #f4e3bd; box-shadow: 0 3px 8px #08070566, inset 0 1px #ead19e26; }
 .home-reward:hover { background: #3d2f1cf2; border-color: #f5d28b; }
-.home-reward svg { width: 27px; height: 29px; fill: #c5a36230; stroke: #e9c47b; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.home-reward > img { width: 35px; height: 33px; object-fit: contain; filter: drop-shadow(0 2px 2px #110b07); }
 .home-reward span { font-size: 11px; font-weight: 700; line-height: 1.4; }
 .reward-dot { position: absolute; width: 10px; height: 10px; right: -3px; top: -3px; border-radius: 50%; border: 2px solid #f9d5c4; background: #ed4a43; box-shadow: 0 1px 4px #49100b80; pointer-events: none; }
 .reward-dot[hidden] { display: none; }
@@ -79,7 +77,7 @@
 .home-citadel-caption > span { color: #f3d79d; font-family: var(--font-display); font-size: 22px; letter-spacing: 1px; }
 .home-citadel-caption p { color: #d6c5a9; font-size: 10px; margin-top: 2px; text-wrap: balance; }
 .home-pass-status { display: flex; align-items: center; gap: 7px; min-height: 36px; margin-top: -6px; padding: 6px 10px; color: #d8c39b; border: 1px solid #695234; border-radius: 4px 4px 8px 8px; background: #352719; font-size: 11px; }
-.home-pass-status > svg { width: 15px; height: 20px; fill: #b18b43; stroke: #eed397; stroke-width: 1.5; }
+.home-pass-status > img { width: 24px; height: 24px; object-fit: contain; margin-block: -3px; }
 .home-pass-status > b { margin-left: auto; color: #f2d598; font-size: 11px; font-weight: 500; font-variant-numeric: tabular-nums; }
 .home-pass-status:hover { border-color: #d3ab63; }
 .home-chevron { color: inherit; font-size: 24px; font-family: var(--font-ui); line-height: 1; font-weight: 400; opacity: .75; }
@@ -126,7 +124,7 @@
   #lobby-hub { gap: 8px; }
   .home-profile-tag { display: none; }
   .home-currency { padding: 5px; gap: 4px; }
-  .home-currency > img, .home-shard-icon { width: 23px; }
+  .home-currency > img { width: 23px; }
   .home-currency b { font-size: 12px; }
   .home-battle-button { gap: 3px; padding: 10px 4px; }
   .home-battle-button > img { width: 25px; }
@@ -145,7 +143,7 @@
   .home-citadel { flex-basis: 174px; min-height: 174px; }
   .home-reward-shortcuts { gap: 5px; top: 8px; }
   .home-reward { width: 57px; height: 48px; padding-top: 2px; }
-  .home-reward svg { width: 24px; height: 25px; }
+  .home-reward > img { width: 29px; height: 26px; }
   .home-citadel-caption { bottom: 9px; }
   .home-pass-status { min-height: 34px; margin-top: -3px; }
   .home-section-heading { margin-bottom: 5px; }
