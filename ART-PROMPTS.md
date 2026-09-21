@@ -2,10 +2,12 @@
 
 2026-09-02. 코드는 이미 이 파일들을 받을 준비가 되어 있다. **그대로 복사해 한 장씩 생성**하고, 지정한 파일명으로 저장하면 된다.
 
+> **아트 디렉션 통일 (2026-09-21)**: 목표는 랜덤다이스2처럼 **깔끔한 캐주얼** 한 가지다. 이전엔 배경·타워가 "semi-realistic / gritty painterly" 로, 몬스터가 "casual" 로 갈라져 톤이 어긋났다. 이제 모든 자산(배경·타워·몬스터·보스·키아트)은 하나의 캐주얼 지침을 쓴다: 밝고 채도 높은 색, 평면 셀 셰이딩+부드러운 그라데이션, 두껍고 깔끔한 외곽선, 둥근 치비 형태, glossy 실루엣, 3/4 아이소. **그리티/페인터리 질감·반실사·탁한 저채도 금지.** 생성기의 공통 STYLE(`tools/jobs/*.json`)도 이 방향으로 통일돼 있으니, 재생성 시 이 프롬프트 그대로 쓰면 톤이 맞는다.
+
 공통 규칙
 - 배경(맵)은 **16:9, 1280×720**. 나머지(시트·스킨)는 **연회색 단색 배경**, 로더가 배경을 지우고 크롭한다.
 - 2x2 시트는 **2열 2행**, 좌상→우상→좌하→우하 = 프레임 0,1,2,3. 모든 칸 같은 크기, 발밑 위치 동일.
-- 기존 아트와 같은 스타일: *Kingdom Rush + Random Dice, 캐주얼 치비, 두꺼운 외곽선, 3/4 아이소*.
+- **통일 아트 디렉션 (전 자산 동일)**: *깔끔한 캐주얼 — Random Dice 2 + Kingdom Rush*. 채도 높은 밝은 색, 부드러운 그라데이션의 **평면 셀 셰이딩**, 두껍고 깔끔한 외곽선, 둥글고 단순화한 치비 형태, 반질반질한(glossy) 읽기 쉬운 실루엣, 3/4 아이소. **금지: 그리티/페인터리 질감, 반실사 렌더, 탁하게 채도 낮은 어두운 톤.** 배경·타워·몬스터·보스·키아트가 한 게임처럼 보이도록 선 굵기·채도·명암을 통일.
 - 생성 후 `http://localhost:8137` 에서 확인 (file:// 금지).
 
 > **현재 상태 (2026-09-02 저녁)**: 세 묶음 모두 **납품 완료** (main 커밋 95644fc, 78장). 31~50 의 `path2`/`spots2` 는 납품 배경의 두 번째 길을 따라 다시 찍어 `MAP_LAYOUTS_HARD` 에 넣었다.
@@ -56,7 +58,7 @@ Grok 에게 그대로 붙여넣을 전체 메시지(공통 규칙 + 조각 15개
 ### 배경 공통 프롬프트 (앞에 붙일 것)
 
 ```text
-Hand-painted casual tower defense game map, Kingdom Rush and Random Dice style, 3/4 top-down isometric view, 16:9 landscape, full-bleed scene with no UI. TWO separate winding dirt roads: road A starts at a glowing purple portal gate at the TOP-LEFT, road B starts at a second glowing purple portal gate at the BOTTOM-LEFT; both roads wind across the map and MERGE in front of a large crystal castle shrine on the RIGHT side. Along both roads, on flat grass beside the road (never on the road, never on water or buildings), place 14 round flat stone tower pads of identical size, evenly spread. Roads are wide, clearly readable, with soft edges. Chibi cute proportions, thick clean outlines, saturated colors, crisp painterly details, no characters, no text, no watermark.
+Hand-painted casual tower defense game map, Kingdom Rush and Random Dice style, 3/4 top-down isometric view, 16:9 landscape, full-bleed scene with no UI. TWO separate winding dirt roads: road A starts at a glowing purple portal gate at the TOP-LEFT, road B starts at a second glowing purple portal gate at the BOTTOM-LEFT; both roads wind across the map and MERGE in front of a large crystal castle shrine on the RIGHT side. Along both roads, on flat grass beside the road (never on the road, never on water or buildings), place 14 round flat stone tower pads of identical size, evenly spread. Roads are wide, clearly readable, with soft edges. Chibi cute proportions, thick clean outlines, bright saturated colors, smooth flat cel shading with soft gradients, glossy polished cartoon look. No gritty or painterly texture, no semi-realistic rendering, no muddy desaturation. No characters, no text, no watermark.
 ```
 
 ### 맵별 꼬리 (공통 프롬프트 뒤에 이어 붙이기)

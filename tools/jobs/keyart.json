@@ -1,15 +1,15 @@
 {
-  "style": "Dark fantasy painted illustration, semi-realistic, moody desaturated palette of mossy greens, cold greys and umber with small warm ember accents, dramatic rim light, weathered medieval stone and iron, gritty painterly texture. No text, no letters, no numbers, no logo, no watermark, no border.",
+  "style": "Clean casual mobile tower-defense key art in the style of Random Dice 2 and Kingdom Rush: bright saturated palette, smooth flat cel shading with soft gradients, thick clean outlines, rounded simplified chibi shapes, glossy polished cartoon look, minimal surface texture, crisp readable forms. No gritty realism, no painterly grain, no semi-realistic rendering, no dark muddy desaturation. No text, no letters, no numbers, no logo, no watermark, no border.",
   "jobs": [
     {
       "id": "keyart-portrait",
       "size": "1024x1536", "quality": "high", "n": 2, "out": "gen/keyart/portrait",
-      "prompt": "Vertical key art for a dark fantasy tower-defense game. A giant weathered ivory stone die with dark hollow pips rests on top of the crumbling keep of a ruined medieval castle on a lonely mountain peak. Storm clouds, a few crows, faint cold moonlight from above, mossy cliffs and a winding stone path up the mountain, dark pine forest below. Composition: the die and castle fill the upper two thirds, centered; the lower third is a darker misty valley with calm empty space reserved for UI. Cinematic, high detail on the die and castle."
+      "prompt": "Vertical key art for a cheerful casual tower-defense game. A giant bright ivory die with bold red pips sits on top of a cute rounded stone castle keep with a red roof and a gold-trimmed blue banner, on a friendly green mountain peak. Sunny blue sky with soft fluffy clouds, warm golden glow, rolling green hills and a winding cobblestone path, a tidy pine forest below. Composition: the die and castle fill the upper two thirds, centered; the lower third is a soft bright valley with calm empty space reserved for UI. Bold simple shapes, high readability."
     },
     {
       "id": "keyart-landscape",
       "size": "1536x1024", "quality": "high", "n": 2, "out": "gen/keyart/landscape",
-      "prompt": "Wide key art for a dark fantasy tower-defense game. A giant weathered ivory stone die with dark hollow pips rests on top of the crumbling keep of a ruined medieval castle on a lonely mountain peak, exactly centered. Storm clouds and crows above, faint cold moonlight, jagged mountain ridges and dark pine forest stretching left and right, a winding stone path up the mountain. The lower quarter is darker mist with calm empty space reserved for UI. Cinematic, high detail on the die and castle."
+      "prompt": "Wide key art for a cheerful casual tower-defense game. A giant bright ivory die with bold red pips sits on top of a cute rounded stone castle keep with a red roof and a gold-trimmed blue banner, exactly centered, on a friendly green mountain peak. Sunny blue sky with soft fluffy clouds and a warm golden glow, rolling green ridges and a tidy pine forest stretching left and right, a winding cobblestone path up the mountain. The lower quarter is a soft bright valley with calm empty space reserved for UI. Bold simple shapes, high readability."
     }
   ]
 }
