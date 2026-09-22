@@ -2,6 +2,8 @@
 *.cjs text eol=lf
 *.mjs text eol=lf
 *.html text eol=lf
+# Generated manifest checks compare deterministic bytes; keep its checkout form canonical on Windows.
+art-manifest.json text eol=lf
 # Source-pinned generation prompts, rig inputs and evidence are byte-exact.
 # Preserve their original line endings across Windows and Unix checkouts.
 tools/art-review/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
