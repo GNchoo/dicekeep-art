@@ -36,7 +36,7 @@ Linux/macOS에서도 같은 `node` 명령을 사용하고 환경 변수는 `expo
 
 ```bash
 nohup python3 serve.py >/dev/null 2>&1 &          # 정적 서버 8137
-cd net && TIMING=fast PORT=8787 nohup node test/dev-server.mjs >/dev/null 2>&1 &   # 멀티 테스트용 (mp3-test, mp-resume-test)
+cd net && TIMING=fast PORT=8787 nohup node test/dev-server.mjs >/dev/null 2>&1 &   # 멀티 테스트용 (mp3-test, mp-resume-test, extreme-multiplayer)
 mkdir -p /tmp/e2e && cd /tmp/e2e
 export NODE_PATH=/opt/node22/lib/node_modules       # playwright-core · 크로미움 /opt/pw-browsers/chromium
 node /home/user/dicekeep-art/tools/e2e/single-smoke.js
