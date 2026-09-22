@@ -6052,23 +6052,60 @@ if (chatForm) {
   chatForm.addEventListener('submit', (ev) => { ev.preventDefault(); chatSend(); });
   chatInput.addEventListener('keydown', (ev) => { ev.stopPropagation(); if (ev.key === 'Escape') chatClose(); });
 }
+// 이 방에서 차단한 상대. pid 가 탭 수명(sessionStorage)이라 그 이상은 의미가 없고,
+// 사용자에게도 "이 방에서 차단" 이라고 정직하게 표기한다.
+const MP_MUTED = new Set();
 // 대기실 채팅 목록 (#mp-chat-lines, 최근 30줄). 게임 중 채팅도 여기 쌓여 대기실로 돌아와도 남는다
-function pushRoomChat(name, text, color) {
+function pushRoomChat(name, text, color, pid) {
   const box = $('mp-chat-lines'); if (!box) return;
   const el = document.createElement('div');
   el.className = 'mp-chat-line';
   el.innerHTML = `<span class="who" style="color:${color || '#7fd4ff'}">${escapeHtml(name)}</span> ${escapeHtml(text)}`;
+  // 이름표를 누르면 신고·차단. 게임 중 채팅도 이 목록에 쌓이므로 모든 메시지에 닿는다.
+  if (pid && pid !== (window.DKNET && DKNET.me && DKNET.me.pid)) {
+    const who = el.querySelector('.who');
+    who.style.cursor = 'pointer'; who.title = '신고하거나 이 방에서 차단합니다';
+    who.addEventListener('click', () => mpReportMenu(pid, name));
+  }
   box.appendChild(el);
   while (box.childElementCount > 30) box.removeChild(box.firstChild);
   box.scrollTop = box.scrollHeight;
 }
-function clearRoomChat() { const box = $('mp-chat-lines'); if (box) box.innerHTML = ''; }
+function clearRoomChat() { const box = $('mp-chat-lines'); if (box) box.innerHTML = ''; MP_MUTED.clear(); }
+// 신고·차단 메뉴. Play 의 이용자 제작 콘텐츠 정책이 둘 다 요구한다.
+const MP_REPORT_LABELS = { abuse: '욕설·괴롭힘', sexual: '음란·선정성', spam: '도배·광고', cheat: '부정행위', other: '기타' };
+function mpReportMenu(pid, name) {
+  const dlg = $('chat-report'); if (!dlg) return;
+  dlg.querySelector('.cr-who').textContent = name;
+  dlg.dataset.pid = pid; dlg.dataset.name = name;
+  dlg.querySelector('.cr-block').textContent = MP_MUTED.has(pid) ? '차단 해제' : '이 방에서 차단';
+  if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', '');
+}
+// 신고·차단 다이얼로그 배선. 신고는 서버로, 차단은 이 방에서만.
+(function wireChatReport() {
+  const dlg = document.getElementById('chat-report'); if (!dlg) return;
+  const close = () => { try { dlg.close(); } catch (e) { dlg.removeAttribute('open'); } };
+  dlg.querySelector('.cr-close').addEventListener('click', close);
+  dlg.querySelector('.cr-block').addEventListener('click', () => {
+    const pid = dlg.dataset.pid; if (!pid) return close();
+    if (MP_MUTED.has(pid)) { MP_MUTED.delete(pid); toast('차단을 해제했습니다.'); }
+    else { MP_MUTED.add(pid); toast(`${dlg.dataset.name} 님을 이 방에서 차단했습니다.`); }
+    close();
+  });
+  for (const b of dlg.querySelectorAll('.cr-reasons button')) b.addEventListener('click', () => {
+    const pid = dlg.dataset.pid;
+    if (pid && window.DKNET && DKNET.report(pid, b.dataset.reason)) toast('신고를 접수했습니다.');
+    else toast('신고를 보내지 못했습니다.');
+    close();
+  });
+})();
 if (window.DKNET) {
   const LOG_KINDS = ['sys', 'gacha', 'up', 'boom', 'boss', 'life'];
   DKNET.on('chat', (m) => {
     const name = String(m.name || '?').slice(0, 12), text = String(m.text || '').slice(0, 120);
+    if (m.pid && MP_MUTED.has(m.pid)) return;   // 차단: 그 사람 줄은 아예 뜨지 않는다
     const color = typeof PC !== 'undefined' && m.pid ? PC[mpSeat(m.pid)] : '';
-    pushRoomChat(name, text, color);
+    pushRoomChat(name, text, color, m.pid);
     if (S.phase !== 'mpRoom') pushLog(text, 'chat', name, color);
   });
   DKNET.on('log', (m) => pushLog(String(m.text || '').slice(0, 120), LOG_KINDS.includes(m.kind) ? m.kind : 'sys', String(m.name || '?').slice(0, 12)));

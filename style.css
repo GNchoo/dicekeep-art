@@ -1564,3 +1564,21 @@ body.ui-art .icon-btn[data-icon] { font-size: 0; background-position: center; ba
 .free-progress summary { cursor:pointer; padding:6px 0; }
 .free-progress ul { margin:4px 0 8px; padding-left:20px; }
 .free-progress > small { display:block; margin-top:6px; color:#bed0c9; font-size:13px; }
+
+/* ---- 채팅 신고·차단 다이얼로그 ---- */
+#chat-report { border: 1px solid var(--btn-stone-line); border-radius: var(--r-md); background: #17110b; color: #e8dcc5;
+  padding: 14px 16px; max-width: 320px; font-family: var(--font-display); box-shadow: var(--bevel-b), 0 8px 24px rgba(0,0,0,.6); }
+#chat-report::backdrop { background: rgba(0,0,0,.55); }
+#chat-report .cr-title { margin: 0 0 10px; font-size: 13px; }
+#chat-report .cr-who { color: var(--gold); }
+#chat-report .cr-reasons { display: flex; flex-direction: column; gap: 6px; }
+#chat-report .cr-reasons button { font-family: var(--font-display); font-size: 13px; padding: 7px 12px; min-height: 34px;
+  background: var(--btn-stone); color: #efe3c6; border: 1px solid var(--btn-stone-line); border-radius: var(--r-sm); cursor: pointer; }
+#chat-report .cr-reasons button:hover:not(:disabled) { filter: brightness(1.14); }
+#chat-report .cr-note { margin: 10px 0 12px; font-size: 11px; color: #b6a98c; line-height: 1.4; }
+#chat-report .cr-actions { display: flex; gap: 8px; }
+#chat-report .cr-actions button { flex: 1; font-family: var(--font-display); font-size: 13px; padding: 7px 12px; min-height: 34px;
+  border-radius: var(--r-sm); cursor: pointer; }
+#chat-report .cr-block { background: var(--btn-danger); color: #ffd7c9; border: 1px solid var(--btn-danger-line); }
+#chat-report .cr-close { background: var(--btn-stone); color: #efe3c6; border: 1px solid var(--btn-stone-line); }
+#mp-chat-lines .who { user-select: none; }

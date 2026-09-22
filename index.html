@@ -223,6 +223,22 @@
         <div id="mp-room-status" class="screen-sub"></div>
         <div id="mp-chat">
           <div id="mp-chat-lines"></div>
+          <!-- 신고·차단: Play 의 이용자 제작 콘텐츠 정책이 둘 다 요구한다. 채팅 이름표를 누르면 열린다 -->
+          <dialog id="chat-report">
+            <p class="cr-title"><b class="cr-who"></b> 님을 신고하거나 차단합니다</p>
+            <div class="cr-reasons">
+              <button type="button" data-reason="abuse">욕설·괴롭힘</button>
+              <button type="button" data-reason="sexual">음란·선정성</button>
+              <button type="button" data-reason="spam">도배·광고</button>
+              <button type="button" data-reason="cheat">부정행위</button>
+              <button type="button" data-reason="other">기타</button>
+            </div>
+            <p class="cr-note">신고는 운영에 접수되며 상대에게 알려지지 않습니다.</p>
+            <div class="cr-actions">
+              <button type="button" class="cr-block"></button>
+              <button type="button" class="cr-close">닫기</button>
+            </div>
+          </dialog>
           <form id="mp-chat-form" autocomplete="off"><input id="mp-chat-input" type="text" maxlength="120" placeholder="대기실 채팅 — 메시지를 입력하고 Enter" /><button class="back-btn" type="submit">보내기</button></form>
         </div>
       </div>
