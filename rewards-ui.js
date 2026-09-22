@@ -10,7 +10,7 @@
   const number = value => Math.max(0, Number(value) || 0).toLocaleString('ko-KR');
   const artwork = { attendance: 'attendance-bag', mail: 'mail', pass: 'growth-pass' };
   function art(name, className = '') {
-    const image = el('img', 'rw-art ' + className); image.src = 'ui/rewards/' + name + '.webp'; image.alt = ''; image.width = 512; image.height = 512; image.draggable = false; return image;
+    const image = el('img', 'rw-art ' + className); image.src = 'ui/rewards/' + name + '.webp' + (name === 'mail' ? '?v=casual1' : ''); image.alt = ''; image.width = 512; image.height = 512; image.draggable = false; return image;
   }
   function help(title, detail) {
     const key = state.tab + ':' + title, box = el('details', 'rw-help'); box.open = state.helpOpen.has(key);
