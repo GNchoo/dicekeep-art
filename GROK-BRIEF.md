@@ -180,7 +180,7 @@ Single closed treasure chest icon on a solid plain light gray #C8C8C8 background
 
 ## F. 인피니티 아레나 조각 9장 → `casual/tiles/arena/` — **납품 완료 (2026-09-03)**
 
-인피니티 맵(랜덤다이스식 보드 + 둘레 트랙)은 코드가 모양을 그리고, 아래 조각으로 표면과 장식을 입힙니다. 통일 테마: **어두운 보라빛 밤의 투기장, 닳은 회보라 석판, 금색 룬 상감, 횃불 빛** (`dark violet night coliseum, worn gray-violet flagstones, gold rune inlays, torchlight`).
+인피니티 맵(고정 보드 + 둘레 트랙)은 코드가 모양을 그리고, 아래 조각으로 표면과 장식을 입힙니다. 통일 테마: **어두운 보라빛 밤의 투기장, 닳은 회보라 석판, 금색 룬 상감, 횃불 빛** (`dark violet night coliseum, worn gray-violet flagstones, gold rune inlays, torchlight`).
 
 ### F-1. 질감 3장 (정사각 1024², 가장자리까지 가득, 이음새 없이 반복, 물체·테두리·글자 없음, 평평한 조명)
 

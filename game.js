@@ -65,7 +65,7 @@ const STAR_BANDS = [
 const starBand = (g) => STAR_BANDS.find((b) => g >= b.min && g <= b.max) || STAR_BANDS[STAR_BANDS.length - 1];
 for (let g = 7; g <= 20; g++) {
   const b = starBand(g), k = g - 6;
-  // 메운디 등급 특전(인피니티): 14~17★ 에픽 = 방어 무시 + 락다운, 18~19★ 신화 = 공속 ×1.5, 20★ 태초 = 트랙 전체 스플래시 (일반형)
+  // 등급 특전(인피니티): 14~17★ 에픽 = 방어 무시 + 락다운, 18~19★ 신화 = 공속 ×1.5, 20★ 태초 = 트랙 전체 스플래시 (일반형)
   const perk = g >= 20 ? 'primal' : g >= 18 ? 'myth' : g >= 14 ? 'epic' : null;
   const perkDesc = perk === 'primal' ? ' · 태초: 일반형, 트랙 전체 스플래시, 공속 ×1.25' : perk === 'myth' ? ' · 신화: 공속 ×1.5' : perk === 'epic' ? ' · 에픽: 방어 무시 + 락다운' : '';
   TOWER_DEFS[g] = {
@@ -2720,7 +2720,7 @@ function buildInfinityWave(w) {
   const C = window.DKCONTENT;
   const INF = C.INFINITY;
   const P = INF.waveForMode(w, S.inf && S.inf.mode);
-  const M = INF.monsterFor(w); // 메운디식 로스터: 웨이브 하나 = 몬스터 한 종류 (보스 웨이브는 보스만)
+  const M = INF.monsterFor(w); // 인피니티 로스터: 웨이브 하나 = 몬스터 한 종류 (보스 웨이브는 보스만)
   const q = [];
   let t = 0.45;
   const add = (type, extra) => { q.push(Object.assign({ type, t, hpMult: P.hpMult, goldMult: P.goldMult, spdMult: P.speedMult, sizeClass: M.cls, armor: M.armor, wave: w }, extra || {})); };
@@ -2822,7 +2822,7 @@ function startWave() {
   coachHit('wave');
   syncUI();
 }
-// 메운디: 크기·방어력 예고
+// 인피니티: 크기·방어력 예고
 function announceWave(n) {
   if (S.mode !== 'infinity') {
     const tip = n === 1 ? stageLesson(S.stage) : n === 3 ? '공중 적은 빠르게 이동합니다. 모든 주사위가 공중 적을 공격할 수 있습니다.' : n === 5 ? '땅굴 적은 숨었을 때 공격받지 않습니다. 모습을 드러내는 구간에 화력을 모으세요.' : '';
@@ -3129,7 +3129,7 @@ function spawnEnemy(item) {
   S.enemies.push(e);
   if (S.mode === 'infinity') enforceFieldCap();
   const p = epos(e);
-  if (isBoss && !battleRun() && S.mode === 'infinity' && S.inf && !(S.inf.bossT > 0)) S.inf.bossT = S.net ? (S.net.timing.bossLimit / 1000) : (DKCONTENT.INFINITY.bossTimeLimit || 320); // 메운디: 보스 제한시간 (멀티는 방 규칙)
+  if (isBoss && !battleRun() && S.mode === 'infinity' && S.inf && !(S.inf.bossT > 0)) S.inf.bossT = S.net ? (S.net.timing.bossLimit / 1000) : (DKCONTENT.INFINITY.bossTimeLimit || 320); // 인피니티: 보스 제한시간 (멀티는 방 규칙)
   if (isBoss) {
     // 보스 등장: 포탈 폭발 + 화면 흔들림 + 배너 + 포효
     S.shakeT = 0.7;
@@ -3163,7 +3163,7 @@ function damageEnemy(e, dmg, src) {
     dmg = Math.max(dmg*0.25,dmg-armor);
     if (ability === 'poison') { const active=e.poisonT>0; e.poisonT=Math.max(e.poisonT||0,st.poisonDur); e.poisonDps=Math.max(treeRun()&&!active?0:e.poisonDps||0,towerDmg(src)*st.poisonScale); }
   }
-  if (!deckRun() && S.mode === 'infinity' && S.inf && window.DKCONTENT) { // 메운디: 상성 · 방어력 · 에픽 락다운 (인피니티 전용)
+  if (!deckRun() && S.mode === 'infinity' && S.inf && window.DKCONTENT) { // 상성 · 방어력 · 에픽 락다운 (인피니티 전용)
     const INF = DKCONTENT.INFINITY, def = src && src.def;
     // 상성은 잡몹에만 건다. 보스는 어떤 공격형이든 1배로 받는다.
     // 순수운빨은 뽑은 눈이 전부인 모드라, 보스 크기와 공격형이 안 맞는다는 이유로 판이 통째로
@@ -3186,7 +3186,7 @@ function damageEnemy(e, dmg, src) {
     spawnDeath(e, p);
     if (e.isBoss || e.type === 'boss') {
       const ch = chestDef();
-      if (S.mode === 'infinity' && S.inf && ch && DKCONTENT.INFINITY.bossReward) { // 메운디 보스 보상 — 보스 한 마리마다 (주사위는 전부, 골드는 그 웨이브 보스 수로 나눈다)
+      if (S.mode === 'infinity' && S.inf && ch && DKCONTENT.INFINITY.bossReward) { // 보스 보상 — 보스 한 마리마다 (주사위는 전부, 골드는 그 웨이브 보스 수로 나눈다)
         const r = deckRun() ? { gold:180+Math.floor((e.wave||S.wave)*2),dice:['d20'] } : DKCONTENT.INFINITY.bossReward(e.wave || S.wave);
         const nBoss = Math.max(1, e.bossCount || 1);
         const gold = Math.round(r.gold / nBoss);
@@ -3437,7 +3437,7 @@ function upgradeFace(f) {
   const lv = S.inf.power[f] || 0;
   if (lv >= d.maxLv) { SFX.deny(); return false; }
   const cost = d.cost(lv);
-  if (S.gold < cost) { SFX.deny(); return false; } // 랜덤다이스식: 골드로 파워업
+  if (S.gold < cost) { SFX.deny(); return false; } // 골드로 파워업
   S.gold -= cost; S.inf.spent += cost;
   S.inf.power[f] = lv + 1;
   const def = TOWER_DEFS[f];
@@ -3710,7 +3710,7 @@ function update(dt) {
   updateVisuals(dt);
   if (battleRun()) return; // 공동 시계·목표가 기존 101웨이브 종료와 독립이다.
 
-  // 메운디 보스 제한시간: 보스가 살아있는 동안 카운트다운, 0이 되면 런 종료
+  // 보스 제한시간: 보스가 살아있는 동안 카운트다운, 0이 되면 런 종료
   if (S.mode === 'infinity' && S.inf && S.inf.bossT > 0) {
     const boss = S.enemies.find(x => !x.dead && x.isBoss);
     if (!boss) S.inf.bossT = 0;
@@ -3720,7 +3720,7 @@ function update(dt) {
     }
   }
   // 웨이브 종료 판정
-  // 인피니티: 스폰이 끝나면 완료 (남은 적은 계속 돈다). 단 보스 웨이브는 메운디 보스 라운드처럼 보스를 잡을 때까지 다음 웨이브를 막는다 (제한시간 5분 20초)
+  // 인피니티: 스폰이 끝나면 완료 (남은 적은 계속 돈다). 단 보스 웨이브는 보스를 잡을 때까지 다음 웨이브를 막는다 (제한시간 5분 20초)
   const infBossHold = S.mode === 'infinity' && DKCONTENT.INFINITY.isBossWave(S.wave) && S.enemies.some(e => e.isBoss && !e.dead);
   if (S.waveActive && S.spawnQ.length === 0 && (S.enemies.length === 0 || (S.mode === 'infinity' && !infBossHold))) {
     S.waveActive = false;
@@ -5998,7 +5998,7 @@ window.addEventListener('pointerup', ev => {
   if (DRAG.active && ev.pointerId === DRAG.pid) endPlaceDrag(ev);
 }, { passive: false });
 
-// ==================== 로그 · 채팅 (스타크래프트식) ====================
+// ==================== 로그 · 채팅 (화면 오버레이) ====================
 // 로그는 모드와 상관없이 뜬다. 채팅은 멀티(방 안)에서만 열린다.
 // 줄은 LOG.ttl 초 동안 남았다가 서서히 사라진다 — CSS 애니메이션이라 프레임 비용이 없다.
 const LOG = { ttl: 9, fade: 1.2, max: 8, nodes: [] };
@@ -7433,7 +7433,7 @@ function drawLoading(pr) {
   window.DKappearance = DIR_ART;
   window.DKTD = TOWER_DEFS;                        // 테스트 훅
   window.DKtowerDamage = towerDmg;
-  window.DKdamage = damageEnemy; window.DKenhance = enhanceTower; window.DKqueue = () => S.inf && S.inf.queue; window.DKhelp = openInfHelp; // 메운디 시스템 테스트 훅
+  window.DKdamage = damageEnemy; window.DKenhance = enhanceTower; window.DKqueue = () => S.inf && S.inf.queue; window.DKhelp = openInfHelp; // 인피니티 시스템 테스트 훅
   window.DKlog = pushLog; window.DKlogs = () => LOG.nodes.map(n => n.textContent); window.DKchatOpen = chatOpen; // 로그·채팅 훅
   window.DKNETLOG = window.DKNET && DKNET._debug;   // 멀티 소켓 로그
   window.DKplace = tryPlace;                      // 보유 주사위를 석단 idx 에 놓기

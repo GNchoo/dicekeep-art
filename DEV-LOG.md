@@ -33,7 +33,7 @@
 - `a78df5a` GNchoo — 드래그 고스트 축소, 오버레이 타워 정보, 속도 비례 던지기 피해.
 
 ### 2026-08-31 (선사)
-- `f462e70`..`2e49f4a` GNchoo — 캐주얼 KR/랜덤다이스 풍 아트 배치 1~12(맵·스킨·적·보스).
+- `f462e70`..`2e49f4a` GNchoo — 캐주얼 KR 풍 아트 배치 1~12(맵·스킨·적·보스).
 - `9efff45` GNchoo — 현재 Dicekeep 스펙·아트팩·게임 코드 스냅샷.
 - **PR #1** https://github.com/GNchoo/dicekeep-art/pull/1 "Add Cloud Agent dev environment config" (Cursor Agent, `e636a71`, 08:39Z 생성, **지금도 open**). `.cursor/environment.json` 1개 파일: `install` = `python3 --version`, `terminals` 의 `game-server` 에서 `python3 serve.py`, `ports` 8137. 커스텀 Dockerfile 없음(기본 이미지의 Python 3 로 충분, 외부 의존성 없음). 로컬 VM 엔드투엔드 확인(서버 기동, 정적 파일 200, 타이틀 렌더, 골드 130/목숨 20/웨이브 0/100/맵 cMap1, 타워 4기 배치, 웨이브 전투 골드 +95, 콘솔 에러 0, install 멱등). 코멘트·리뷰 없음.
 - **PR #2** https://github.com/GNchoo/dicekeep-art/pull/2 "주사위 성채 Phase 1: 맵별 경로·배치대 정렬 + 좌표 에디터" (Cursor Agent, 10:39Z 생성, 2026-09-01 03:43Z cursor[bot] 병합, base `9efff45`). 48개 맵이 공통 S커브(`PATH_S`/`SPOTS_S`)를 공유해 아트의 흙길·석단과 좌표가 어긋나던 문제를 맵별 `MAP_LAYOUTS`(50맵 전부, 1024×576 좌표계)로 교체. 좌표 에디터 `editor.html`+`editor.js` 신설(`bf4d6ad`), 캐시버스트 `?v=36`(`ebc9002`). 게임 로직은 안 건드리고 데이터만 정렬(`applyMapLayout` 이 이미 맵별 path/spots 를 읽음). 헤드리스 Chrome 으로 50맵 로드·대표 5맵 플레이스루 검증. 다음 단계로 Phase 2 를 별도 PR 로 분리.
@@ -43,7 +43,7 @@
 - PR #2 병합(03:43Z).
 - 세션 `session_01KkMPfUn6ufQ7ZjP4LkD4tu` "주사위 디펜스 게임 개발 준비"(03:54Z~10:09Z) — 사용자 PC 의 원격 제어 세션, main `8324ea5`. 커밋 없음. 이 세션 이후 PC 는 연결되지 않음.
 
-### 2026-09-02 (29 커밋 — 티어·인피니티·배포·그리드 맵·랜덤다이스식 아레나·갓챠)
+### 2026-09-02 (29 커밋 — 티어·인피니티·배포·그리드 맵·아레나·갓챠)
 아트 납품(main, GNchoo): `95644fc` 78장(타워 스킨 24·걷기 시트 34·두 갈래 하드 맵 20), `2bc0c76` 평원 타일셋 15조각.
 
 **PR #4** https://github.com/GNchoo/dicekeep-art/pull/4 "5단계 난이도 티어 + 인피니티 모드: 다중 동선·추가 석단·보스 연출·P3 폴리시·밸런스·에디터·아트 병합" — 01:09Z 생성, 06:20Z 병합(draft 상태에서 GNchoo 직접 병합), 33파일 +2102/−325, 커밋 16개. GAME-SPEC §8 의 남은 작업 전부.
@@ -82,15 +82,15 @@
 
 **PR #12** https://github.com/GNchoo/dicekeep-art/pull/12 "인피니티 임시 개방 플래그 ?inf=1" — 11:25Z. `282a895`. `window.DKINF_OPEN`, `infinityUnlocked()` 우선 확인, 저장 데이터 불변(`?unlock=all` 과 다름), v55. (이후 PR #25 `ac1acf9` 로 인피니티가 항상 열리며 하위호환 플래그가 됨.)
 
-**PR #13** https://github.com/GNchoo/dicekeep-art/pull/13 "인피니티 = 풀파워 무한 모드: 랜덤다이스식 보드 맵, 6눈 전부 해금, 난이도 재보정" — 15:45Z. `816e341`.
-- 방향(본문): "스테이지는 젬으로 타워를 하나씩 해금하며 성장하는 컨텐츠, 인피니티는 이미 전부 해금된 풀파워 상태로 얼마나 오래 버티느냐를 겨루는 컨텐츠로 분리했습니다. 랜덤다이스를 참고해 맵과 난이도를 다시 잡았습니다."
+**PR #13** https://github.com/GNchoo/dicekeep-art/pull/13 "인피니티 = 풀파워 무한 모드: 보드 맵, 6눈 전부 해금, 난이도 재보정" — 15:45Z. `816e341`.
+- 방향(본문): "스테이지는 젬으로 타워를 하나씩 해금하며 성장하는 컨텐츠, 인피니티는 이미 전부 해금된 풀파워 상태로 얼마나 오래 버티느냐를 겨루는 컨텐츠로 분리했습니다. 맵과 난이도를 다시 잡았습니다."
 - `unlockedFaces()` 인피니티 `[1..6]`, 석단 15·레인 4 를 1웨이브부터(`extraSpots` 0), 나선 아레나 → 3×5 보드(88px, 중심 512,300) + 둘레 둥근 사각 트랙(좌 222·우 802·상 132·하 468), 지름길·V자 하늘길(`map.airPts`)·땅굴, `drawArenaFloor` 돌 단, HP 지수 1.035→1.045(봇 1.035→75/69, 1.04→72/73, 1.045→69/67, 목표 50~70), v56.
 
-**PR #14** https://github.com/GNchoo/dicekeep-art/pull/14 "인피니티 단일 트랙 (랜덤다이스식): 지름길·하늘길·땅굴 제거" — 16:09Z. `391069c`. #13 의 4레인을 되돌려 `lanes=['ground']`, 공중·땅굴은 `laneFor()` 폴백으로 같은 트랙, 봇 59/59 로 곡선 유지, v57.
+**PR #14** https://github.com/GNchoo/dicekeep-art/pull/14 "인피니티 단일 트랙: 지름길·하늘길·땅굴 제거" — 16:09Z. `391069c`. #13 의 4레인을 되돌려 `lanes=['ground']`, 공중·땅굴은 `laneFor()` 폴백으로 같은 트랙, 봇 59/59 로 곡선 유지, v57.
 
 **PR #15** https://github.com/GNchoo/dicekeep-art/pull/15 "인피니티 갓챠: 보물상자·다면체 주사위·7~20성 히든 타워, 보드 밀착 트랙과 연출" — 16:45Z. `604c3c0`. "인피니티에 운 요소를 넣었습니다." 트랙 좌 250·우 774·상 150·하 450, 석단 3×5 가로 88·세로 72, `INFINITY.rangeBonus=24`, 룬 원·연석·화로·소켓; `STAR_BANDS` 로 `TOWER_DEFS[7..20]`(`dmg 40×1.28^(g−6)`, 4밴드 별빛 첨탑/성운 요새/천공 옥좌/차원 군주), `casual/towers/star-NN.png` 선택 로드(없으면 6눈 스킨+오라+★배지); 상자 `round10(250×1.10^n)`, 확률 d1 10%·d4 42%·d6 20%·d8 17%·d12 8%·d20 3%, 가방, `drawPolyDie`, 훅 `DKchest/DKbag/DKrollBag`, GROK-BRIEF §E, v58. 봇 69/69.
 
-### 2026-09-03 (19 커밋 — 아레나 비주얼·메운디 이식·로스터·상자 경제)
+### 2026-09-03 (19 커밋 — 아레나 비주얼·인피니티 시스템·로스터·상자 경제)
 아트 납품(main): `37323f2` 인피니티 아레나 타일셋 9조각(GROK-BRIEF §F).
 
 **PR #16** https://github.com/GNchoo/dicekeep-art/pull/16 "아레나 비주얼: 조각 질감(Grok) + 코드 구조 유지, 코드 폴백 고급화" — 00:43Z. `89a0030`. 반응(본문): "인피니티 아레나가 민무늬 트랙·납작한 보드·그라데이션 바닥이라 후졌습니다." `casual/tiles/arena/` 9장(floor·road·board·pad·start·end·prop-1 화로·prop-2 기둥·prop-3 잔해) 로드, 각각 코드 폴백(노이즈 바닥·석판 줄눈·베벨 보드·오목 소켓·경사 연석·기둥 5·화로 4), `drawRoad(bodyOnly)` 로 연석 뒤 본체 재도장, GROK-BRIEF §F, v59. 가짜 조각 6장은 확인 후 삭제.
@@ -101,9 +101,9 @@
 
 **PR #19** https://github.com/GNchoo/dicekeep-art/pull/19 "Infinity arena: enter left, lap the ring, exit right; boss leak ends run; all towers hit air" — 04:31Z 생성, 04:42Z 병합. `cf8e9dd` 시작/끝 제거, 왼쪽 진입 → `INFINITY.laps`(2)바퀴 + 반 바퀴 → 오른쪽 퇴장(4,474px), 보스 퇴장 즉시 종료(`S.inf.bossLeak`), `noGoal`, `roads`(entry/ring/exit) 반환, 레인 가장자리 페이드, v63. `d87187f` 캐논(2)·폭군(6) `canAir: true` — 공중 기믹은 스테이지의 포탈→크리스탈 직행뿐, 인피니티엔 공중 레인 없음. 봇 69 로 HP 유지.
 
-**PR #20** https://github.com/GNchoo/dicekeep-art/pull/20 "Infinity: endless loop + field cap, Maple Luck Defense gacha table, centre-covering range" — 06:30Z 생성, 07:40Z 병합, 커밋 5개. `7361465` #19 의 퇴장을 철회하고 무한 순환(`loopAt`), `fieldCap=200`(초과 시 가장 오래된 적 제거+목숨 1, 보스면 종료), 웨이브 완료 = 스폰 큐 소진, 칩 `필드 n/200`, v64. `0256b3b` HP 1.045→1.06(임시). `5582a58` 메운디 9등급 표(일반 50% d1 · 레어 33.1% d4 · 고대 10.2% d6 · 유물 5.1% d8 · 서사 0.8% d12 · 전설 0.5% d20 · 에픽 0.2% d20(14+) · 신화 0.08% d20(18+) · 태초 0.019% 20★), 상자 160G 고정(시작 400G = 2.5회), 라운드 잠금(웨이브 5 전 전설↑→d12), 보스 처치 d8/d12/d20, 희귀 가방 슬롯 3, `rangeBonus` 24→160(중앙 패드 295 ≥ 트랙 최원점 284), v65. `fbc4d33` `DKrange`. `84f9c08` HP 1.08 확정(1.06→83, 1.08→60, 1.10→50).
+**PR #20** https://github.com/GNchoo/dicekeep-art/pull/20 "Infinity: endless loop + field cap, gacha table, centre-covering range" — 06:30Z 생성, 07:40Z 병합, 커밋 5개. `7361465` #19 의 퇴장을 철회하고 무한 순환(`loopAt`), `fieldCap=200`(초과 시 가장 오래된 적 제거+목숨 1, 보스면 종료), 웨이브 완료 = 스폰 큐 소진, 칩 `필드 n/200`, v64. `0256b3b` HP 1.045→1.06(임시). `5582a58` 9등급 표(일반 50% d1 · 레어 33.1% d4 · 고대 10.2% d6 · 유물 5.1% d8 · 서사 0.8% d12 · 전설 0.5% d20 · 에픽 0.2% d20(14+) · 신화 0.08% d20(18+) · 태초 0.019% 20★), 상자 160G 고정(시작 400G = 2.5회), 라운드 잠금(웨이브 5 전 전설↑→d12), 보스 처치 d8/d12/d20, 희귀 가방 슬롯 3, `rangeBonus` 24→160(중앙 패드 295 ≥ 트랙 최원점 284), v65. `fbc4d33` `DKrange`. `84f9c08` HP 1.08 확정(1.06→83, 1.08→60, 1.10→50).
 
-**PR #21** https://github.com/GNchoo/dicekeep-art/pull/21 "Infinity: Maple Luck Defense systems (affinity, armor, boss schedule/timer, gamble, exchange, perks)" — 08:09Z 생성, 08:19Z 병합. `3ddf005` 나무위키 메운디 문서 전체와 대조해 이식, 모두 `S.mode==='infinity'` 게이트: 상성(`atk` vibration=궁수, explosive=대포/폭군/7~19★, normal=마법/서리/전격/20★ × 크기 S/M/L `sizeSeq`, 배율 100/50/25·50/75/100·100/100/100), 방어력 `⌊max(0,w−20)/4⌋`(33배수 ×8, `dmg=max(dmg·0.1, dmg−armor)`), 보스 보상 스케줄(10→800G+d8, 20/30→800G+d12, 40→1120G+d20, 50→1600G+d20, 60→2400G+d20, 70+→1600G+d20+d8/d12 교대, 1미네랄=16G), 보스 제한 320초, 랜덤 도박(20% 승급/80% 소실), 교환 도박(레전드 1600G/66%, 신화 4000G/50%, 실패 시 파괴), 7★+ 판매 불가, 퍽(에픽 방어 무시+12% 락다운, 신화 공속 ×1.5, 프라이멀 전체 타격), **라운드 잠금 제거**(원작 4.04 의 숨겨진 조작), v66. `8e8589a` 봇 55.
+**PR #21** https://github.com/GNchoo/dicekeep-art/pull/21 "Infinity systems (affinity, armor, boss schedule/timer, gamble, exchange, perks)" — 08:09Z 생성, 08:19Z 병합. `3ddf005` 인피니티 전용 시스템 일괄 도입, 모두 `S.mode==='infinity'` 게이트: 상성(`atk` vibration=궁수, explosive=대포/폭군/7~19★, normal=마법/서리/전격/20★ × 크기 S/M/L `sizeSeq`, 배율 100/50/25·50/75/100·100/100/100), 방어력 `⌊max(0,w−20)/4⌋`(33배수 ×8, `dmg=max(dmg·0.1, dmg−armor)`), 보스 보상 스케줄(10→800G+d8, 20/30→800G+d12, 40→1120G+d20, 50→1600G+d20, 60→2400G+d20, 70+→1600G+d20+d8/d12 교대, 1미네랄=16G), 보스 제한 320초, 랜덤 도박(20% 승급/80% 소실), 교환 도박(레전드 1600G/66%, 신화 4000G/50%, 실패 시 파괴), 7★+ 판매 불가, 퍽(에픽 방어 무시+12% 락다운, 신화 공속 ×1.5, 프라이멀 전체 타격), **라운드 잠금 제거**(표시 확률과 실제 확률이 달라지는 장치라 배제), v66. `8e8589a` 봇 55.
 
 **PR #22** https://github.com/GNchoo/dicekeep-art/pull/22 "Infinity: one monster type per wave from a designed 101-wave roster" — 09:02Z 생성, 09:20Z 병합. `f6244ca` `buildInfinityRoster(sizeSeq)`: 웨이브당 한 종(크기 S ≤42/M 44~48/L ≥50, 4배수 공중·7배수 땅굴, hp 정렬 풀, 주기 내 중복 없음), `ROSTER_OVERRIDES`, `TANK_IDS` hp ×1.25·방어 +2, 보스 웨이브 보스만, 엘리트 같은 종 3마리 ×3, 마릿수 계수 S 1.2/M 1.0/L 0.8, 101 이후 색조 변화+"N주기", 웨이브 텍스트에 이름·등급·방어, GAME-SPEC 101행 표, v67. `ee05d8e` 봇 60.
 
@@ -117,7 +117,7 @@
 **PR #25** https://github.com/GNchoo/dicekeep-art/pull/25 "인피니티 개편: 뽑기→즉시 배치·확률강화, 도전/무한 두 갈래, 세로 아레나·HUD, 멀티 M1(함께하기)" — 08:10Z 생성, **2026-09-06 12:58Z 병합**, 커밋 11개(09-04 ~ 09-06). 사람이 남긴 코멘트·리뷰 없음.
 - `b4e7ee8` §1 뽑기→즉시 배치: `buyChest()` 는 언제나 굴림, 주머니·보관 체크박스·팝오버·승급 도박·교환 도박 **제거**(#24 에서 만든 것을 하루 만에 철회), 손이 차면 `배치 후 가능`, 보스 보상은 `S.inf.queue`+`pumpQueue()`, 도박은 타워 **확률강화**(비용 `round10(160+90×face)`, 강화 `max(0.10, 0.72−0.035f)`, 소멸 `min(0.45, 0.03+0.022f)`, 20★ 비활성, 합체 레벨 유지), 하단 HUD `[슬롯+뽑기] | [타워 상태창] | [웨이브]` + 둘째 줄 파워업, `#info-panel` 인라인 카드·높이 고정, v70.
 - `9ec2e35` §2 도전(101 완주 = 클리어, 젬 +60, `SAVE.infClears`, 멀티가 쓸 쪽)/무한(클리어 없음, 2주기) 분리, 도전 전용 최종 관문 `lateFrom 90`·`lateExp 1.08`(w101 3,960×→9,232×), 보스 주기를 `w%10` 에서 `isBossWave`/`bossOrdinal` 로(2주기 w111 에서 `boss.base` 참조 오류 수정), 실제 봇 4판 59·89·59·49, Node 몬테카를로 20,000판(`scratchpad/sim.js`) 클리어 0.045%~0.42%, v71.
-- `b5e9a91` 멀티 준비 계층 — **서버 없는 P2P**(WebRTC DataChannel + 핑 기반 호스트 선출 `qualityScore`, `WebSocketSignal`/`LoopbackSignal`), `#log-panel` 스타크래프트식 로그(9초, 8줄, 종류별 색), 방 안 채팅(Enter). 
+- `b5e9a91` 멀티 준비 계층 — **서버 없는 P2P**(WebRTC DataChannel + 핑 기반 호스트 선출 `qualityScore`, `WebSocketSignal`/`LoopbackSignal`), `#log-panel` 오버레이 로그(9초, 8줄, 종류별 색), 방 안 채팅(Enter). 
 - `4195e7a` 모바일: `fitStage()` 가 `side`(가로 폰, HUD 오른쪽 세로 열)/`stacked`(세로·데스크톱, `#hud.roomy`) 선택, 칩·미니버튼 축소를 스테이지 폭 기준(`.small/.tiny`), 터치 판정 `stageScale()`/`touchExtra()`(탭 24px·드래그 50px), 도움말 카드 body 직속 fixed 3단, `buildStarSprite()` 코드 구움(`star-NN.png` 오면 자동 우선), ★공격 연출 `starImpact`, **멀티 문서 정정: "SDP 교환이 없어 채널이 열리지 않으므로 지금은 플레이 불가"**, 호스트 선출 `selfScore()` 수정, v72. 커밋 본문: "폰에서 켜 보니 가로는 플레이가 불가능했고 세로는 위아래가 크게 남았다."
 - `ac1acf9` 인피니티를 스테이지와 분리(`infinityUnlocked()` 항상 true, "50 스테이지 클리어 후 해금" 문구 8곳 정리), 로비 재구성(인피니티 두 버튼 맨 위), 첫 런 5단계 코치 `#coach`(`dk_coachDone`), 도움말 플래그를 닫을 때 저장(예전엔 열기 전 저장해 한 번 놓치면 영영 안 뜸), 손에 타워 있을 때 힌트 "빈 석단을 눌러 타워를 놓으세요", 파워업 라벨 `1 SP`→`150 G`, 젬 상향 `floor(w/5)×2`+신기록 10+마일스톤 7단계+도전 80(첫 런 12~29젬), v73.
 - `74c8e0d` 세로 전용 아레나 `cInfP`(720×1080, 3열×5행 150/118, 트랙 540×720, 세로 폰 스테이지 66% ← 25%), 맵이 캔버스 크기 결정(`canvas:[w,h]`, `--ar`), `relayoutArena` 회전 대응, 사거리 세로 280, 디자인 토큰(`:root` 색·반경·버튼 5종), 웹폰트 Do Hyeon+Noto Sans KR·`uiFont()`, 칩·슬롯·미니 버튼 SVG, 보스 배너 리본, v74.
@@ -178,7 +178,7 @@
 - 뽑기 = 즉시 타워: 기본 40G 주사위 없음(`canRoll` false), 뽑기 160G 고정, 주머니·보관 체크박스·굴리기/도박 팝오버 없음(#25 `b4e7ee8`). 손이 차거나 굴리는 중이면 `#roll-btn` 비활성(`배치 후 가능`), 보상 대기열은 `pumpQueue()` 가 손이 비는 대로 굴림. `canPlaceAnywhere()` 로 빈 칸도 합체 여지도 없으면 `석단이 가득 참` 으로 잠그고 큐 보류(#25 `0f61db4`).
 - 굴림 게이트는 `canStartRoll()` 하나. `finishSlot` 은 손이 차 있으면 절대 덮어쓰지 않음('완성 대기'). 큐는 굴림이 실제 시작됐을 때만 소비(#26 `641de0b`).
 - 주사위 포커스 `S.dieFocus`: 손에 든 주사위는 배치 모드, 슬롯 탭으로 해제 → 타워 선택·판매·확률강화 가능. 캔버스 클릭을 `if (S.heldDie) { tryPlace(idx); return; }` 로 삼키지 말 것(#25 `0f61db4`).
-- 갓챠 등급·확률·경제는 메운디 원작 그대로(9등급 표, #20). **라운드 락은 넣지 않는다** — 원작 4.04 의 숨겨진 조작이었으므로(#21). 보스 보상은 고정 스케줄(#21), 보스 n마리 웨이브는 보스마다 주사위 전부 + 골드 1/n(#26).
+- 갓챠 등급·확률·경제는 9등급 표로 고정(#20). **라운드 락은 넣지 않는다** — 표시 확률과 실제 확률이 달라지는 장치라 배제(#21). 보스 보상은 고정 스케줄(#21), 보스 n마리 웨이브는 보스마다 주사위 전부 + 골드 1/n(#26).
 - 확률강화(`INFINITY.enhance`): 강화/유지/소멸, 합체 레벨 유지, 소멸 시 타워 삭제, 20★ 비활성. 7★ 이상 판매 불가. 7★+ 히든 타워는 6눈 파워업을 따름, 합체 상한 Lv3 그대로. 파워업은 골드(`150+150·Lv`, Lv10), 웨이브 SP 는 없음(#23).
 - 인피니티 시스템(상성·방어력·특전·확률강화·판매 제한·갓챠)은 전부 `S.mode === 'infinity'` 분기 안. 스테이지 모드는 40G 굴리기와 판매만, 변경 없음(#21, GAME-SPEC §3).
 - 두 갈래: 도전 `clear`(101 완주 = 클리어, 멀티가 쓰는 쪽, 최종 관문 `lateFrom 90`·`lateExp 1.08`) / 무한 `endless`(싱글, 2주기). 로비(싱글 갈래)에서만 진입 — 스테이지 선택의 인피니티 배너는 제거(#28 `f480777`).

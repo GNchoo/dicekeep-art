@@ -278,7 +278,7 @@ body { touch-action: manipulation; }
 @media (max-height: 460px) { #overlay-box.title #ov-title { font-size: clamp(30px, 7.5vw, 48px); letter-spacing: 3px; } #overlay-box.title #ov-sub { margin-bottom: 8px; } #overlay-box.title { padding-bottom: 12px; } }
 
 
-/* ---- 스타크래프트식 로그·채팅 (스테이지 위 오버레이) ---- */
+/* ---- 로그·채팅 (스테이지 위 오버레이) ---- */
 #log-panel {
   position: absolute; left: max(10px, var(--sa-l)); bottom: calc(max(10px, var(--sa-b)) + var(--kb, 0px)); z-index: 6;
   width: min(46%, 460px);

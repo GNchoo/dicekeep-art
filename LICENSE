@@ -1,2 +1,58 @@
-This art pack is provided for the owner's game development use.
-You may copy, modify, and ship these images in your own games.
+Copyright (c) 2026 Fallman (github.com/GNchoo). All rights reserved.
+
+주사위 성채 / Dicekeep
+Contact: cgn3731@gmail.com
+
+
+PROPRIETARY — 독점 저작물
+
+This repository contains the source code, game data and art assets of
+Dicekeep. They are proprietary. No license is granted to copy, redistribute,
+sublicense, or create derivative works, in whole or in part.
+
+이 저장소의 소스 코드·게임 데이터·아트 자산은 독점 저작물입니다. 복제·재배포·
+2차적 저작물 작성에 대한 어떠한 허가도 부여하지 않습니다.
+
+(An earlier version of this file described an "art pack" that others could
+copy and ship. That wording is withdrawn and does not apply to this or any
+past revision of this repository.)
+
+
+ART ASSETS — AI 생성 고지
+
+The image assets under casual/, ui/, vfx/, dice/, props/, towers/, enemies/,
+map/, store/, resources/ and android/app/src/main/res/ were generated with
+OpenAI image models (gpt-image-*) from prompts authored by this project,
+then composited, rigged and reviewed by the authors.
+
+  Prompts            ART-PROMPTS.md, GROK-BRIEF.md
+  Generator          tools/img-gen.mjs
+  Palette source     content.js  INF_PALETTE / INFINITY.paletteOf(w)
+  Review record      tools/art-review/, ASSET-MANIFEST.md
+
+No third-party artwork, photography or scanned material was used as input.
+
+AUDIO
+
+No third-party audio is bundled. Background music is synthesised at runtime
+in code (music.js, WebAudio). The audio/ directory is absent by design; if
+licensed music files are added later, their source and licence must be
+recorded in ASSET-MANIFEST.md first.
+
+
+THIRD-PARTY COMPONENTS
+
+  Do Hyeon, Noto Sans KR (fonts/)
+      SIL Open Font License 1.1 — https://openfontlicense.org
+  Capacitor and its plugins
+      MIT — see package.json and android/app/build.gradle
+  Runtime and build dependencies
+      see package.json, net/package.json, commerce/package.json
+
+
+NOTE
+
+This repository is published for development purposes. Public visibility is
+not a grant of licence. The legal business name and registration details
+required for commercial sale are not part of this file; they must be added
+to the store listing and policy pages before in-app purchases are enabled.

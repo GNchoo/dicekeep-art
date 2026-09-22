@@ -1,4 +1,4 @@
-/* 캐주얼 킹덤러쉬/랜덤다이스 톤 — 아트팩 + 100스테이지 데이터 */
+/* 캐주얼 타워디펜스 톤 — 아트팩 + 100스테이지 데이터 */
 window.DKCONTENT = (function () {
   // ===== 테마 + 그리드 타일 맵 =====
   // 배경 그림에 좌표를 맞추던 방식은 폐기했다. 맵은 16×9 칸(64px) ASCII 템플릿으로 코드가 설계하고,
@@ -284,12 +284,12 @@ window.DKCONTENT = (function () {
   }
   // 인피니티 전용 아레나: 배경은 '바닥 그림'만 쓰고 순환 도로·석단·포탈은 코드가 만든다 (buildArenaLayout, game.js buildRoadLayer)
   maps.push({ key: 'cInf', name: '무한 투기장', infinity: true, arena: true, renderRoads: true, canvas: [1024, 576], rangeBonus: 160 });
-  // 세로 화면용 아레나 (랜덤다이스식): 같은 15칸을 3열×5행으로 세우고 트랙을 세로로 길게 두른다
+  // 세로 화면용 아레나: 같은 15칸을 3열×5행으로 세우고 트랙을 세로로 길게 두른다
   maps.push({ key: 'cInfP', name: '무한 투기장 (세로)', infinity: true, arena: true, arenaPortrait: true, renderRoads: true, canvas: [720, 1080], rangeBonus: 280 });
 
   // ===== 무한 투기장: 나선 순환 도로 생성기 =====
   // 왼쪽 가장자리 포탈에서 출발해 중심 크리스탈을 1.5바퀴 돌아 들어간다. 오른쪽 포탈은 두 번째 바퀴로 곧장 합류하는 지름길.
-  // ===== 무한 투기장: 랜덤다이스식 보드 + 둘레 트랙 =====
+  // ===== 무한 투기장: 고정 보드 + 둘레 트랙 =====
   // 가운데 3×5 석단 보드(15개, 처음부터 전부 개방), 둘레를 도는 둥근 사각형 트랙 하나. 왼쪽 변 가운데가 열려 있어
   // 아래쪽 포탈에서 출발한 적이 (종류와 상관없이 전부) 시계 반대 방향으로 한 바퀴 돌아 위쪽 크리스탈에 닿는다.
   // 인피니티 아레나: 시작·도착 지점이 없다. 적은 왼쪽 화면 밖에서 입구 길로 들어와 가운데 트랙을 영원히 돈다.
@@ -1250,7 +1250,7 @@ window.DKCONTENT = (function () {
 
   // ===== 인피니티 모드 =====
   // 50 스테이지를 모두 클리어하면 해금. 웨이브 상한 없음, 목숨 0 이면 런 종료. game.js 가 이 값을 그대로 읽는다.
-  // ===== 인피니티 로스터: 웨이브 하나 = 몬스터 한 종류 (메운디 라운드표 방식) =====
+  // ===== 인피니티 로스터: 웨이브 하나 = 몬스터 한 종류 =====
   // 101웨이브 한 사이클. 크기 클래스(sizeSeq)로 후보를 거르고, 이동형은 주기(4의 배수 공중, 7의 배수 땅굴, 나머지 땅),
   // hp 오름차순 풀에서 진행도(w/101) 위치의 아직 안 쓴 종을 뽑는다 → 초반 약한 종, 후반 튼튼한 종, 사이클 안 중복 없음.
   const TANK_IDS = new Set(['turtle', 'snail', 'pebblegolem', 'pillbug', 'porcupine', 'arma', 'pangolin', 'walrus', 'rhino', 'elephant', 'bison', 'yak', 'watermelon', 'chessrook', 'daruma', 'clam', 'oyster', 'seaurchin', 'saintbernard', 'newfoundland', 'greatdane', 'durian', 'hippo', 'crocodile', 'manatee', 'dugong']);
@@ -1462,17 +1462,19 @@ window.DKCONTENT = (function () {
 
   const INFINITY = {
     mapKey: 'cInf',
-    tier: { tier: 6, name: '무한', color: '#ff7ad9', lanes: ['ground'], extraSpots: 0, hpScale: 1, countBonus: 0, startGold: 400 }, // 랜덤다이스식: 트랙 하나(공중·땅굴 적도 같은 트랙), 석단 15개 처음부터 전부
+    tier: { tier: 6, name: '무한', color: '#ff7ad9', lanes: ['ground'], extraSpots: 0, hpScale: 1, countBonus: 0, startGold: 400 }, // 트랙 하나(공중·땅굴 적도 같은 트랙), 석단 15개 처음부터 전부
     startGold: 400, lives: 20, intermission: 6,
     rangeBonus: 160, // 인피니티는 사거리를 크게: 가운데 칸(512,300)에서 트랙 가장 먼 지점(모서리 호 바깥, 284px)까지 가장 짧은 타워(135)도 닿는다
     fieldCap: 200,   // 필드 한계선: 살아있는 적이 이 수를 넘는 순간 가장 먼저 스폰된 적이 사라지며 목숨 차감 (보스면 즉시 런 종료)
     capDmg: 1,       // 한계선으로 사라지는 적 1마리당 목숨
-    // 보물상자 갓챠 — 스타크래프트 유즈맵 '메이플 운빨 디펜스(메운디)'의 등급·확률·경제를 그대로 옮겼다.
-    //  등급 9개: 일반 50% · 레어 33.1% · 고대 10.2% · 유물 5.1% · 서사 0.8% · 전설 0.5% · 에픽 0.2% · 신화 0.08% · 태초 0.019% (합 100.099%, 원작 그대로)
+    // 보물상자 갓챠 — 9등급 확률표 + 다면체 주사위. 등급이 뽑을 수 있는 눈의 범위를 chest.sides(17/19)로
+    // 좁혀 우리 성(★) 곡선에 맞췄다. 클리어율 측정 경위는 GAME-SPEC §7.x.
+    //  등급 9개: 일반 50% · 레어 33.1% · 고대 10.2% · 유물 5.1% · 서사 0.8% · 전설 0.5% · 에픽 0.2% · 신화 0.08% · 태초 0.019%
+    //            (합 100.099% — 반올림 잔차를 그대로 둔다. 바꾸면 512런 기준선을 다시 재야 한다)
     //  등급 → 주사위: 일반 d1(1★ 확정) · 레어 d4 · 고대 d6 · 유물 d8 · 서사 d12 · 전설 d20 · 에픽 d20(14~17★) · 신화 d20(18~19★) · 태초 20★ 확정
     //  상자 1개에서 나올 확률: 7~13★ 0.025% · 14~17★ 0.075% · 18~19★ 0.065% · 20★ 0.044% (위로 갈수록 희귀)
-    //  경제: 원작 시작 25미네랄·뽑기 10(2.5회) → 시작 400G·상자 160G 고정(회차 상승 없음)
-    //  보스 처치 보상은 bossReward(w) 스케줄(원작 24/37/58/79/90/95/96~100R)
+    //  경제: 시작 400G · 상자 160G 고정(회차 상승 없음) = 시작 2.5회. 골드 곡선과 함께 튜닝한 값이다.
+    //  보스 처치 보상은 bossReward(w) 스케줄 — 장르 관습적인 보스 라운드 간격을 우리 웨이브 표로 재매핑했다.
     chest: {
       cost: () => 160,
       table: [['d1', 0.50], ['d4', 0.331], ['d6', 0.102], ['d8', 0.051], ['d12', 0.008], ['d20', 0.005], ['epic', 0.002], ['myth', 0.0008], ['primal', 0.00019]],
@@ -1491,17 +1493,17 @@ window.DKCONTENT = (function () {
       draw(wave) {
         let v = Math.random(), k = 'd4';
         for (const [kk, p] of this.table) { if (v < p) { k = kk; break; } v -= p; }
-        return k; // 라운드 락(5웨이브 전 전설 금지)은 원작에서 몰래 넣었다가 조작으로 밝혀진 요소라 넣지 않는다
+        return k; // 라운드 락(5웨이브 전 전설 금지)은 넣지 않는다 — 표시된 확률과 실제 확률이 달라지는 장치라 배제.
       },
     },
-    // ---- 메운디 상성: 타워 공격형(진동 vib / 폭발 exp / 일반 norm) × 몬스터 크기(소 S / 중 M / 대 L) ----
+    // ---- 상성: 타워 공격형(진동 vib / 폭발 exp / 일반 norm) × 몬스터 크기(소 S / 중 M / 대 L) ----
     sizeMult: { vib: { S: 1, M: 0.5, L: 0.25 }, exp: { S: 0.5, M: 0.75, L: 1 }, norm: { S: 1, M: 1, L: 1 } },
     sizeName: { S: '소형', M: '중형', L: '대형' },
     sizeScale: { S: 0.9, M: 1, L: 1.15 },
     // 새 그림(INF_ART_READY)은 base 의 크기와 무관하게 등급별 고정 높이(캔버스 px) — 1~10은 덩어리감 있는 게임 캐릭터 실루엣으로 가독성을 확보한다
     artSize: { S: 42, M: 50, L: 58 },
     artSizeBoss: { S: 96, M: 108, L: 120 },   // 새 보스 정지컷(casual/bosses/inf/bNNN.png), 받침 없이 캐릭터 전신만 — 구 보스 86~92px 보다 크게
-    // 원작 1~101R 몬스터 크기 표 그대로 (보스 라운드 포함). 웨이브 w 의 크기 = sizeSeq[(w-1)%101]
+    // 101웨이브 몬스터 크기 표 (보스 웨이브 포함). 웨이브 w 의 크기 = sizeSeq[(w-1)%101]
     sizeSeq: ('SSLSMLLSLL' + 'SLSLMLMSLL' + 'SLSSMSLLLS' + 'SSSLLLMSMS' + 'LMLLLSMLSL' + 'LSMSLLLSML' + 'MSSMLLSSLS' + 'LSLSSSSLMM' + 'SMLLSSLSLL' + 'SSLLMSLMLSM').split(''),
     sizeOf(w) { return this.sizeSeq[(Math.max(1, w) - 1) % this.sizeSeq.length]; },
     // ---- 로스터: 웨이브 w 에 나오는 단일 몬스터 ----
@@ -1567,7 +1569,7 @@ window.DKCONTENT = (function () {
       if (mode.growth) result.hpMult *= mode.hpScale || 1;
       return result;
     },
-    clearWave: 101,   // 도전 모드 클리어 선 (로스터 한 사이클 = 메운디 1~101R)
+    clearWave: 101,   // 도전 모드 클리어 선 (로스터 한 사이클 = 1~101웨이브)
     clearGems: 80,
     // 최종 관문(도전 모드): 61웨이브부터 체력 배율에 lateExp^(w-lateFrom) 이 한 번 더 곱해진다.
     // lateExp 가 1 미만이면 감산이다 — 초반 60웨이브는 한 톨도 바뀌지 않고 후반만 완만해진다.
@@ -1634,11 +1636,11 @@ window.DKCONTENT = (function () {
       return { gems: g, newly };
     },
   };
-  // 눈별 강화 (SP). 랜덤다이스의 '주사위 파워'.
+  // 눈별 강화 (SP) — 골드로 특정 눈의 화력을 올리는 인게임 강화.
   const DICE_POWER = {
     maxLv: 10,
     unit: 'G',
-    cost: (lv) => 150 + 150 * lv,                 // 랜덤다이스식 골드 파워업: Lv1 150G … Lv10 1,500G (눈당 총 8,250G), 강화할수록 비싸진다
+    cost: (lv) => 150 + 150 * lv,                 // 골드 파워업: Lv1 150G … Lv10 1,500G (눈당 총 8,250G), 강화할수록 비싸진다
     dmgMult: (lv) => 1 + 0.15 * lv,               // 최대 2.5×
     rangeAdd: (lv) => 3 * lv,
     tier: (lv) => Math.floor(lv / 3),             // 3레벨마다 특수 보너스 1단계 (최대 3)
