@@ -864,7 +864,7 @@ if (window.DKCONTENT) {
   if (DKCONTENT.INFINITY && DKCONTENT.INFINITY.artList) for (const a of DKCONTENT.INFINITY.artList()) SRCS[a.key] = BASE + a.src;
 }
 // Promoted art keeps its asset path; bypass the previous daily image cache.
-for (const key of ['t1', 'cT1a']) if (SRCS[key]) SRCS[key] += '?v=casual1';
+for (const key of ['t1', 'cT1a']) if (SRCS[key]) SRCS[key] += '?v=casual2';
 const A = {};
 let corsBlocked = false;
 
@@ -5218,11 +5218,23 @@ function lobbyShow(view) {
   view = view === 'single' || view === 'multi' ? view : 'hub';
   LOBBY_VIEW = view;
   for (const v of ['hub', 'single', 'multi']) { const el = $('lobby-' + v); if (el) el.classList.toggle('hidden', v !== view); }
-  const box = $('lobby-box'); if (box) box.dataset.view = view;
+  const box = $('lobby-box'); if (box) { box.dataset.view = view; delete box.dataset.section; }
+  $('deck-panel').classList.add('hidden');
+  $('btn-deck-open').setAttribute('aria-expanded', 'false');
   const back = $('lobby-back'); if (back) back.classList.toggle('hidden', view === 'hub');
   const h = $('lobby-title'); if (h) h.textContent = view === 'single' ? '싱글플레이' : view === 'multi' ? '멀티플레이' : '주사위 성채';
   const box2 = document.querySelector('#lobby .screen-box'); if (box2) box2.scrollTop = 0;
   window.DKHOME?.enter();
+}
+function openDeckMenu() {
+  lobbyShow('single');
+  $('lobby-box').dataset.section = 'deck';
+  $('lobby-title').textContent = '다이스';
+  $('deck-panel').classList.remove('hidden');
+  $('btn-deck-open').setAttribute('aria-expanded', 'true');
+  renderDeck(true);
+  $('deck-panel').setAttribute('tabindex', '-1');
+  $('deck-panel').focus({preventScroll:true});
 }
 function gotoLobby(view) { S.phase = 'lobby'; showScreen('lobby'); lobbyShow(view || 'hub'); renderRunResume(); }
 function gotoMpRoom() { S.phase = 'mpRoom'; showScreen('mpRoom'); }
@@ -6291,9 +6303,7 @@ $('btn-infinity').addEventListener('click', () => startInf('extreme'));
 if ($('btn-inf-clear')) $('btn-inf-clear').addEventListener('click', () => startInf('clear'));
 if ($('btn-inf-build')) $('btn-inf-build').addEventListener('click', () => startInf('build'));
 $('btn-deck-open').addEventListener('click', () => {
-  const closed = $('deck-panel').classList.toggle('hidden');
-  $('btn-deck-open').setAttribute('aria-expanded', String(!closed));
-  if (!closed) renderDeck(true);
+  openDeckMenu();
 });
 
 for (let f = 1; f <= 6; f++) { const b = $('inf-face-' + f); if (b) b.addEventListener('click', () => upgradeFace(deckRun() ? S.inf.growthSnapshot.deck[f-1] : f)); }
@@ -6316,6 +6326,17 @@ if ($('info-close')) $('info-close').addEventListener('click', () => { audio(); 
 $('btn-shop').addEventListener('click', () => { audio(); gotoShop(); });
 $('ss-back').addEventListener('click', () => gotoLobby('single'));
 $('shop-back').addEventListener('click', () => gotoLobby('hub'));
+// Keep the home navigation available throughout the player menus.
+for (const selector of ['#lobby-box', '#shop .screen-box', '#stage-select .screen-box']) {
+  const nav = document.createElement('nav'); nav.className = 'menu-navigation'; nav.setAttribute('aria-label', '주요 메뉴');
+  for (const [target, label, art] of [['home','홈','ui/title-keyart-p.jpg?v=casual1'], ['deck','다이스','ui/icon-dice.png'], ['battle','전투','ui/icon-trophy.png'], ['shop','상점','ui/icon-shop.png']]) {
+    const button = document.createElement('button'); button.type = 'button'; button.dataset.menuTarget = target;
+    button.innerHTML = (target === 'home' ? '<svg viewBox="0 0 28 28" aria-hidden="true"><path d="M4 11 14 3l10 8v14h-7v-8h-6v8H4Z"/></svg>' : `<img src="${art}" alt="">`) + `<span>${label}</span>`;
+    button.addEventListener('click', () => { audio(); if (target === 'shop') gotoShop(); else { gotoLobby(target === 'home' ? 'hub' : 'single'); if (target === 'deck') openDeckMenu(); } });
+    nav.append(button);
+  }
+  document.querySelector(selector).append(nav);
+}
 $('hub-single').addEventListener('click', () => { audio(); lobbyShow('single'); });
 $('hub-multi').addEventListener('click', () => { audio(); lobbyShow('multi'); });
 $('lobby-back').addEventListener('click', () => { audio(); lobbyShow('hub'); });
@@ -7548,8 +7569,7 @@ function drawLoading(pr) {
       if(S.phase!=='lobby'||S.net)return;
       audio();
       if(kind==='deck'){
-        lobbyShow('single');$('deck-panel').classList.remove('hidden');$('btn-deck-open').setAttribute('aria-expanded','true');renderDeck(true);
-        $('deck-panel').scrollIntoView({block:'start'});$('btn-deck-open').focus({preventScroll:true});
+        openDeckMenu();
       }else lobbyShow(kind==='battle'?'single':'hub');
     }
   });

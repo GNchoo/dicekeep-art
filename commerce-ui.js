@@ -3,6 +3,7 @@
   const C = window.DKCOMMERCE, $ = id => document.getElementById(id);
   let playProducts = null, querying = false, previewBusy = false, previewRevision = 0;
   const report = error => { if ($('commerce-status')) $('commerce-status').textContent = C.errorText(error); };
+  const productArt = (src) => { const img=document.createElement('img'); img.src=src; img.alt=''; img.loading='lazy'; img.className='shop-product-art'; return img; };
   const draft = [
     { sku: 'shards200', kind: 'currency', shards: 200, amount: 1100, currency: 'KRW', playProductId: 'dicekeep.shards200' },
     { sku: 'shards600', kind: 'currency', shards: 600, amount: 3300, currency: 'KRW', playProductId: 'dicekeep.shards600' },
@@ -44,7 +45,8 @@
     for (const product of [{ kind: 'cosmetic', skinId: 'base', amount: 0 }, ...list.filter(p => p.kind === 'cosmetic')]) {
       const id = product.skinId, base = id === 'base', owned = authority.owned.includes(id), equipped = authority.equipped === id;
       const card = document.createElement('article'); card.className = 'cosmetic-product cosmetic-' + id; card.dataset.theme = id;
-      const title = document.createElement('h4'); title.textContent = base ? '낡은 상아 성채' : P.themes[id].name;
+      card.append(productArt(base ? 'casual/towers/t1-a.png?v=casual2' : `casual/towers/skins/${id}/t01.png`));
+      const title = document.createElement('h4'); title.textContent = base ? '나의 상아 성채' : P.themes[id].name;
       const detail = document.createElement('p'); detail.textContent = base ? '기본 주사위와 성채 외형' : '주사위 재질 6종 + 고유 타워 1~20성';
       const status = document.createElement('p'); status.className = 'cosmetic-status'; status.textContent = art.loading.includes(id) ? '그림을 불러오는 중…' : art.failures[id] ? '그림 준비 중 · 기본 스킨 유지' : equipped ? (art.active === id ? '장착 중' : '장착 그림 준비 중') : owned ? '소유 중' : '외형 묶음 · 전투 효과 없음';
       card.append(title, detail, status);
@@ -78,6 +80,7 @@
       const nativeProduct = playProducts && playProducts.find(p => p.productId === product.playProductId);
       const card = document.createElement('article'); card.className = 'commerce-product';
       const name = document.createElement('h4'); name.textContent = `성장 조각 ${product.shards.toLocaleString()}개`;
+      card.append(productArt('ui/rewards/growth-shards.webp'));
       const detail = document.createElement('p'); detail.textContent = '무료 조각과 동일 · 대전·협동 기본 보상 1분당 8조각 · 연구 골드는 플레이로 획득';
       const button = document.createElement('button'); button.type = 'button'; button.dataset.sku = product.sku;
       const price = state.native ? nativeProduct && nativeProduct.formattedPrice : `${product.amount.toLocaleString()}원`;
@@ -89,6 +92,7 @@
     if (window.DKREWARDSUI) {
       const card = document.createElement('article'); card.className = 'commerce-product';
       const name = document.createElement('h4'); name.textContent = '기한 없는 성장 패스';
+      card.append(productArt('ui/rewards/growth-pass.webp'));
       const detail = document.createElement('p'); detail.textContent = '무료 20단계 · 선택 구매 2,900원 · 조각 200개와 왕실 외형 · 달성 후 수령 · 자동 갱신 없음';
       const button = document.createElement('button'); button.type = 'button'; button.textContent = '무료 보상 · 패스 보기'; button.onclick = () => window.DKREWARDSUI.open('pass');
       card.append(name,detail,button); container.append(card);

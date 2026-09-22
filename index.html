@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="rewards.css?v=119" />
 <link rel="stylesheet" href="mail-admin.css?v=117" />
 <link rel="stylesheet" href="home.css?v=119" />
+<link rel="stylesheet" href="menus.css?v=120" />
 <link rel="icon" href="ui/gold.png" />
 </head>
 <body>
@@ -100,6 +101,7 @@
           </nav>
         </div>
         <div id="lobby-single" class="lobby-view hidden">
+          <div class="menu-hero"><small>나의 다음 도전</small><h2>어떤 전투를 떠날까요?</h2><p>운을 시험하거나, 나만의 덱으로 성채를 지키세요.</p></div>
           <div class="lobby-btns inf-btns">
             <button id="btn-inf-clear" class="big-btn primary lobby-inf-btn">순수운빨<small>101웨이브 · 성장 미적용</small></button>
             <button id="btn-inf-build" class="big-btn lobby-inf-btn">덱빌드<small>101웨이브 · 덱과 성장</small></button>
@@ -109,16 +111,18 @@
           <div id="lobby-inf" class="screen-sub inf-sub"></div>
           <button id="btn-deck-open" class="big-btn deck-open" type="button" aria-expanded="false" aria-controls="deck-panel">다이스 트리 · 덱 편성</button>
           <section id="deck-panel" class="hidden" aria-label="주사위 컬렉션">
-            <div class="deck-heading"><div><small>성장 경로를 직접 고르세요</small><h2>나만의 다이스 트리</h2></div><b id="deck-count">6 / 20종</b></div>
+            <div class="deck-heading"><div><small>다섯 주사위, 나만의 전략</small><h2>나의 전투 덱</h2></div><b id="deck-count">6 / 20종</b></div>
             <div class="deck-wallet"><span>연구 골드 <b id="deck-gold">0</b></span><span>성장 조각 <b id="deck-shards">0</b></span><span>각성 연구 <b id="tree-progress">0 / 20</b></span></div>
-            <p class="deck-help">덱에는 서로 다른 능력의 5종을 넣습니다. 모든 종류가 전투에서 1~7눈금으로 성장하며, 연구한 주사위는 7눈금에서 각성합니다. 아래 숫자는 덱의 자리입니다.</p>
-            <section id="free-progress" class="free-progress" aria-label="무료 성장 보상"></section>
-            <p id="deck-migration" class="deck-help" hidden></p>
+            <p class="deck-help deck-intro">자리를 고르고, 원하는 주사위를 편성하세요.</p>
+
             <div id="deck-presets" class="deck-presets" aria-label="저장된 덱"></div>
             <div id="deck-selected" class="deck-selected"></div>
             <div id="deck-synergy" class="deck-synergy"></div>
             <div class="deck-actions"><button id="deck-save" class="big-btn primary" type="button">덱 저장</button><button id="deck-use" type="button">이 덱 사용</button><button id="deck-reset" type="button">변경 취소</button></div>
             <p id="deck-status" role="status" aria-live="polite"></p>
+            <details class="menu-help"><summary><img src="ui/rewards/attendance-bag.webp" alt="">플레이하며 받는 무료 성장 보상</summary><section id="free-progress" class="free-progress" aria-label="무료 성장 보상"></section>
+            <p id="deck-migration" class="deck-help" hidden></p></details>
+            <details class="menu-help"><summary>눈금과 연구는 어떻게 다른가요?</summary><p class="deck-help">덱에는 서로 다른 능력의 5종을 넣습니다. 모든 종류가 전투에서 1~7눈금으로 성장하며, 연구한 주사위는 7눈금에서 각성합니다. 아래 숫자는 덱의 자리입니다.</p></details>
             <section class="tree-support-section" aria-label="서포터 선택"><h3>함께할 서포터</h3><p>모두 무료로 선택할 수 있습니다. 다음 전투부터 적용되며, 전투 중 버튼으로 능력을 사용합니다.</p><div id="tree-supporters"></div></section>
             <div class="tree-heading"><h3>성장 경로</h3><p>선을 따라 주사위를 해금하고, 각 주사위의 숙련과 특성을 연구하세요. 획득과 연구 결과는 확정입니다.</p></div>
             <div id="tree-families" aria-label="계열 선택"></div>
@@ -132,6 +136,7 @@
           <div id="lobby-progress" class="screen-sub"></div>
         </div>
         <div id="lobby-multi" class="lobby-view hidden">
+          <div class="menu-hero menu-hero-multi"><small>친구와 함께</small><h2>함께 지키고, 실력을 겨루세요</h2><p>모드를 고른 뒤 빠른 매칭 또는 방 코드로 만나세요.</p></div>
           <!-- 함께하기: 각자 보드, 각자 속도. 서버(Cloudflare Worker + Durable Object)가 방·중계·순위만 맡는다 -->
           <div id="mp-block">
             <button id="mp-resume-run" class="big-btn hidden" type="button">진행 중인 방으로 돌아가기</button>
@@ -162,7 +167,7 @@
           <div class="gem-chip"><span class="gem-ico">&#128142;</span><b id="ss-gems">0</b></div>
         </div>
         <details class="campaign-help"><summary>캠페인 진행과 성장 안내</summary><p>1~50 스테이지를 차례로 클리어합니다. 뽑기는 40G, 같은 눈 합체는 최대 Lv3입니다. 클리어 젬으로 상점에서 4~6눈을 해금하세요. 계정 성장 조각과 유료 성장은 투기장에만 적용됩니다.</p><ol><li>1~10: 배치·합체·판매를 익힙니다.</li><li>11~20: 하늘길을 함께 지킵니다. 모든 타워가 공중을 공격합니다.</li><li>21~30: 땅굴에서 적이 나오는 구간을 지킵니다.</li><li>31~40: 두 번째 흙길까지 화력을 나눕니다.</li><li>41~50: 모든 길을 광역·둔화·합체로 방어합니다.</li></ol></details>
-        <div id="tier-legend" class="tier-legend"></div>
+        <details class="menu-help"><summary>지역과 길 안내</summary><div id="tier-legend" class="tier-legend"></div></details>
         <div id="stage-grid" class="stage-grid"></div>
       </div>
     </div>
@@ -176,7 +181,8 @@
         </div>
         <div class="shop-body">
           <section id="commerce-shop" class="commerce-shop" aria-label="계정 상점">
-            <h3>계정 상점</h3>
+            <div class="menu-shop-banner"><img src="ui/rewards/growth-pass.webp" alt=""><div><small>성채 상점</small><h3>취향대로 꾸미는 나의 성채</h3><p>모든 주사위와 연구는 무료 플레이로 얻을 수 있어요.</p></div></div>
+            <details class="menu-help shop-account"><summary>계정 연결 · 구매 복원</summary>
             <p id="commerce-account">게스트 · 이 기기에 무료 진행 저장</p>
             <p id="commerce-account-id" class="commerce-policy" style="overflow-wrap:anywhere;user-select:text"></p>
             <div class="commerce-account-actions"><button id="commerce-signin" type="button">Google 계정 연결</button><button id="commerce-signout" type="button" hidden>로그아웃</button><button id="commerce-restore" type="button" disabled>구매·잔액 다시 확인</button><button id="commerce-delete" type="button" hidden>계정 삭제</button></div>
@@ -184,6 +190,7 @@
             <div id="commerce-google"></div>
             <p class="commerce-policy">순수운빨의 확률과 전투에는 구매 효과가 적용되지 않습니다. 구매한 조각은 무료 플레이로 얻는 조각과 동일하며, 원하는 주사위를 확정 해금·강화할 때 사용합니다.</p>
             <p class="commerce-policy">계정 연결 후에는 온라인으로 성장과 구매를 저장합니다. 기존 기기의 게스트 진행은 별도로 남으며, 계정과 자동 합산되지 않습니다.</p>
+            </details>
             <p id="commerce-availability"></p><div id="commerce-products" class="commerce-products"></div>
             <section class="cosmetic-shop" aria-label="테마 스킨">
               <h3>주사위와 성채 테마 <small>외형만 변경 · 확률과 전투 수치 동일</small></h3>
@@ -198,10 +205,10 @@
             <p id="commerce-status" role="status" aria-live="polite"></p>
             <p class="commerce-policy"><a href="privacy.html" target="_blank" rel="noopener">개인정보처리방침</a> · 구매 문의 cgn3731@gmail.com</p>
           </section>
-          <h3>주사위 타워 해금 <small>해금한 눈만 굴리기에 등장</small></h3>
+          <details class="menu-help campaign-shop"><summary>스테이지 전용 · 주사위 해금과 스킨</summary><h3>주사위 타워 해금 <small>해금한 눈만 굴리기에 등장</small></h3>
           <div id="shop-towers" class="shop-row"></div>
           <h3>주사위 스킨 <small>눈별로 해금·장착</small></h3>
-          <div id="shop-skins" class="shop-skins"></div>
+          <div id="shop-skins" class="shop-skins"></div></details>
         </div>
       </div>
     </div>
@@ -325,7 +332,7 @@
     <label class="set-row"><span>음악</span><input id="set-music" type="range" min="0" max="1" step="0.05" value="0.6"></label>
     <label class="set-row"><span>효과음</span><input id="set-sfx" type="range" min="0" max="1" step="0.05" value="0.8"></label>
     <div class="set-btns"><button id="set-mute" class="back-btn" type="button">🔊 음소거</button><button id="settings-close" class="big-btn" type="button">닫기</button></div>
-    <p class="screen-sub">배경음악은 코드로 합성됩니다. <code>audio/bgm-*.ogg</code> 파일이 있으면 그 곡을 씁니다.</p>
+    <p class="screen-sub">편안한 소리로 즐겨보세요. 음량 설정은 이 기기에 저장됩니다.</p>
   </div>
 </div>
 <!-- 게임 메뉴 (우상단 ≡): 계속·일시정지·볼륨·게임 방법·포기. 싱글은 열리는 동안 멈추고, 멀티는 계속 돈다 -->
@@ -385,12 +392,12 @@
 <script src="mail-admin.js?v=117"></script>
 <script src="rewards-ui.js?v=119"></script>
 <script src="home-ui.js?v=118"></script>
-<script src="commerce-ui.js?v=117"></script>
+<script src="commerce-ui.js?v=120"></script>
 <script src="directional-art.js?v=110"></script>
 <script src="extreme-art.js?v=110"></script>
 <script src="infinity-art.js?v=107"></script>
 <script src="extreme-cache.js?v=1"></script>
 <script src="combat-motion.js?v=109"></script>
-<script src="game.js?v=118"></script>
+<script src="game.js?v=120"></script>
 </body>
 </html>
