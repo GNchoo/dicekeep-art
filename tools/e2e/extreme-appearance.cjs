@@ -77,7 +77,11 @@ async function logical(page){return page.evaluate(()=>{
   assert.deepEqual(report.concurrent.future,['w102','w103']);assert.equal(report.concurrent.corpse.id,'w102');assert.equal(report.concurrent.corpse.tier,1);
   await t.page.waitForFunction(()=>!DKART.state().running,null,{timeout:60000});
   report.cache=await t.page.evaluate(()=>DKART.state());assert.ok(report.cache.peakTrackedBytes<=96*1024*1024);assert.equal(report.cache.maxRunning,2);
-  assert.ok(report.cache.records.filter(r=>r.status==='ready'&&!r.key.endsWith(':fallback')).every(r=>/^(w101|w102|w103):/.test(r.key)));
+  // .every() 만 쓰면 아무것도 안 불러와도 참이 된다 — 극한 아트를 게이트 뒤로 옮긴 뒤로는
+  // 이 단언이 조용히 공허해질 수 있으므로, 실제로 불러온 것이 있는지를 함께 못 박는다.
+  const loadedSheets=report.cache.records.filter(r=>r.status==='ready'&&!r.key.endsWith(':fallback'));
+  assert.ok(loadedSheets.length>0,'극한 아트가 한 장도 로드되지 않았다 — 이 검사가 공허해졌다');
+  assert.ok(loadedSheets.every(r=>/^(w101|w102|w103):/.test(r.key)));
   await t.page.waitForFunction(()=>Object.keys(window.__evolutionDraws).some(k=>k.startsWith('1:')),null,{timeout:10000});
   report.evolutionCanvasDraws=await t.page.evaluate(()=>window.__evolutionDraws);
   await t.page.screenshot({path:path.join(out,'evolution-concurrent.png')});

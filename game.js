@@ -724,7 +724,18 @@ const BASE = (() => {
   return '/dicekeep/';
 })();
 const DIR_ART = window.DKDirectionalArt;
-const directionalArt = DIR_ART ? DIR_ART.create({ base: BASE, budget: 96 * 1024 * 1024, concurrency: 2 }) : null;
+// 극한 아트는 앱 번들에 없다 (build-www.mjs 가 뺀다). 로드 직전에 DKEXTREME 이 URL 을
+// 캐시된 로컬 파일이나 원격 주소로 바꾼다. 웹에서는 available() 이 false 라 그대로 통과한다.
+const artLoadUrl = (url) => (window.DKEXTREME ? DKEXTREME.resolve(url) : url);
+const directionalArt = DIR_ART ? DIR_ART.create({ base: BASE, budget: 96 * 1024 * 1024, concurrency: 2,
+  loadImage: (url, record) => new Promise((resolve, reject) => {
+    // record.mandatory 는 인라인 data URI 라 건드리면 안 된다 — 부팅 계약(네트워크 0건)이 걸려 있다.
+    const target = record && record.mandatory ? url : artLoadUrl(url);
+    const im = new Image(); let settled = false;
+    const finish = (error) => { if (settled) return; settled = true; clearTimeout(timer); im.onload = im.onerror = null; error ? reject(error) : resolve(im); };
+    const timer = setTimeout(() => finish(new Error('art load timeout')), 15000);
+    im.onload = () => finish(); im.onerror = () => finish(new Error('art load failed')); im.src = target;
+  }) }) : null;
 let directionalDemandAt = -Infinity;
 function resolvedDirectionalId(appearance) {
   if (!appearance) return null;
@@ -6237,6 +6248,27 @@ const startAccountRun = async (mode, onPure) => {
     return null;
   }
 };
+// 극한 첫 진입 — 아트 666장을 받아 둔다. 이미 받았으면 즉시 끝난다.
+// 진행 표시는 기존 로딩 오버레이(#ov-load)를 그대로 쓴다.
+async function prefetchExtremeArt() {
+  const X = window.DKEXTREME;
+  if (!X || !X.available()) return;                 // 웹이거나 Filesystem 이 없다 — 상대경로가 그대로 먹는다
+  const box = $('overlay-box'), load = $('ov-load'), txt = $('ov-load-txt');
+  let shown = false;
+  const show = (pr) => {
+    if (!shown && pr < 1) { shown = true; if (box) box.classList.add('loading'); if (load) load.classList.remove('hidden'); }
+    if (shown) { const bar = $('ov-load-bar'); const pct = Math.max(0, Math.min(100, Math.round(pr * 100)));
+      if (bar) bar.style.width = pct + '%'; if (txt) txt.textContent = '극한 아트 준비 중 ' + pct + '%'; }
+  };
+  try {
+    const r = await X.ensure(show);
+    if (r && r.failed) toast(`극한 아트 ${r.failed}장을 못 받았습니다. 저해상도로 진행합니다.`);
+  } catch (error) { toast('극한 아트를 준비하지 못했습니다. 저해상도로 진행합니다.'); }
+  finally {
+    if (shown) { if (load) load.classList.add('hidden'); if (box) box.classList.remove('loading'); if (txt) txt.textContent = '불러오는 중 0%'; }
+  }
+}
+
 const startInf = async (kind) => {
   if (!infinityUnlocked() || startingAccountRun) return;
   audio(); startingAccountRun = true;
@@ -6245,6 +6277,9 @@ const startInf = async (kind) => {
       if (kind === 'clear') { startInfinity('clear', null, null); toast('저장된 도전을 유지합니다. 이번 순수운빨 보상은 이 기기에 저장됩니다.'); return; }
       lobbyShow('single'); renderRunResume(); toast('저장된 도전을 이어가거나 보상을 받은 뒤 새로 시작하세요.'); return;
     }
+    // 극한 아트는 앱에 없다 — 첫 진입 때 받는다. 실패해도 막지 않는다:
+    // 인라인 64px fallback 으로 강등돼 플레이는 그대로 이어진다.
+    if (kind === 'extreme') await prefetchExtremeArt();
     const run = await startAccountRun(kind, text => toast(`${text} 순수운빨은 그대로 시작합니다 — 이 런은 계정 보상 없이 기록됩니다.`));
     startInfinity(kind, null, run);
   } catch (error) { toast(COMMERCE.errorText(error)); }
