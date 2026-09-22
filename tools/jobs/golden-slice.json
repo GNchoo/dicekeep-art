@@ -1,0 +1,778 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Dicekeep casual-art golden slice. Candidates only; runtime promotion is manual after visual approval.",
+  "styleProfile": "environment",
+  "candidatePolicy": {
+    "default": 1,
+    "maximum": 2,
+    "promotion": "manual-only"
+  },
+  "jobs": [
+    {
+      "id": "golden-arena-floor",
+      "category": "environment",
+      "styleProfile": "environment",
+      "runtimeTarget": "casual/tiles/arena/floor.jpg",
+      "runtimeSpec": {
+        "mode": "cover",
+        "width": 1280,
+        "height": 720,
+        "alpha": "opaque",
+        "anchor": "center"
+      },
+      "n": 1,
+      "outputFormat": "jpeg",
+      "out": "gen/golden-slice/environment/arena-floor",
+      "prompt": "Create one production-ready asset for the Dicekeep infinity arena. It must remain readable behind towers, enemies, projectiles and HTML interface elements at phone size. No characters, towers, interface, lettering, numbers, logo or watermark. A wide 3/4 top-down empty arena floor of broad violet-gray flagstones, subtle warm-gold seams and a restrained central dice-rune motif. Full-bleed landscape composition with calm low-contrast detail and an unobstructed center. Design the important floor area to survive a centered 16:9 crop; no wall, road, pad, portal or prop.",
+      "size": "1536x1024",
+      "background": "opaque"
+    },
+    {
+      "id": "golden-arena-board",
+      "category": "environment",
+      "styleProfile": "environment",
+      "runtimeTarget": "casual/tiles/arena/board.png",
+      "runtimeSpec": {
+        "mode": "fixed",
+        "width": 1024,
+        "height": 1024,
+        "alpha": "opaque",
+        "anchor": "center"
+      },
+      "n": 1,
+      "outputFormat": "png",
+      "out": "gen/golden-slice/environment/arena-board",
+      "prompt": "Create one production-ready asset for the Dicekeep infinity arena. It must remain readable behind towers, enemies, projectiles and HTML interface elements at phone size. No characters, towers, interface, lettering, numbers, logo or watermark. Redraw the referenced square arena board texture as broad violet-gray stone slabs with a thin warm-gold inset border. Perfectly square, full-bleed, quiet center, even lighting, no perspective-distorted outer scene. Preserve the functional border placement from the reference while simplifying surface noise.",
+      "size": "1024x1024",
+      "background": "opaque",
+      "refs": [
+        "casual/tiles/arena/board.png"
+      ],
+      "inputFidelity": "high"
+    },
+    {
+      "id": "golden-arena-road",
+      "category": "environment",
+      "styleProfile": "environment",
+      "runtimeTarget": "casual/tiles/arena/road.png",
+      "runtimeSpec": {
+        "mode": "fixed",
+        "width": 1024,
+        "height": 1024,
+        "alpha": "opaque",
+        "anchor": "center"
+      },
+      "n": 1,
+      "outputFormat": "png",
+      "out": "gen/golden-slice/environment/arena-road",
+      "prompt": "Create one production-ready asset for the Dicekeep infinity arena. It must remain readable behind towers, enemies, projectiles and HTML interface elements at phone size. No characters, towers, interface, lettering, numbers, logo or watermark. Redraw the referenced seamless road texture as broad rounded violet stone pavers with sparse warm-gold joint accents. It must tile seamlessly on all four edges and work when code bends, rotates and masks it into paths. Uniform scale, no painted turn, border, arrow or endpoint.",
+      "size": "1024x1024",
+      "background": "opaque",
+      "refs": [
+        "casual/tiles/arena/road.png"
+      ],
+      "inputFidelity": "high"
+    },
+    {
+      "id": "golden-arena-pad",
+      "category": "environment",
+      "styleProfile": "environment",
+      "runtimeTarget": "casual/tiles/arena/pad.png",
+      "runtimeSpec": {
+        "mode": "fixed",
+        "width": 1024,
+        "height": 1024,
+        "alpha": "preserve",
+        "anchor": "center"
+      },
+      "n": 1,
+      "outputFormat": "png",
+      "out": "gen/golden-slice/environment/arena-pad",
+      "prompt": "Create one production-ready asset for the Dicekeep infinity arena. It must remain readable behind towers, enemies, projectiles and HTML interface elements at phone size. No characters, towers, interface, lettering, numbers, logo or watermark. Redraw the referenced tower placement pad: one low circular violet-stone socket seen from 3/4 top-down, thin ivory-and-gold rim, six small pip-like studs and a calm empty center for a tower. Centered with generous transparent margin, grounded and symmetrical, no glow column or tower.",
+      "size": "1024x1024",
+      "background": "transparent",
+      "refs": [
+        "casual/tiles/arena/pad.png"
+      ],
+      "inputFidelity": "high"
+    },
+    {
+      "id": "golden-arena-start",
+      "category": "environment",
+      "styleProfile": "environment",
+      "runtimeTarget": "casual/tiles/arena/start.png",
+      "runtimeSpec": {
+        "mode": "fixed",
+        "width": 1024,
+        "height": 1024,
+        "alpha": "preserve",
+        "anchor": "center"
+      },
+      "n": 1,
+      "outputFormat": "png",
+      "out": "gen/golden-slice/environment/arena-start",
+      "prompt": "Create one production-ready asset for the Dicekeep infinity arena. It must remain readable behind towers, enemies, projectiles and HTML interface elements at phone size. No characters, towers, interface, lettering, numbers, logo or watermark. Redraw the referenced enemy entrance as one compact round violet-stone portal seen from 3/4 top-down. A dark blue-violet opening, ivory dice-stone arch and a restrained cyan-violet inner glow clearly mark START without any symbol or text. Centered, grounded, transparent surroundings.",
+      "size": "1024x1024",
+      "background": "transparent",
+      "refs": [
+        "casual/tiles/arena/start.png"
+      ],
+      "inputFidelity": "high"
+    },
+    {
+      "id": "golden-arena-end",
+      "category": "environment",
+      "styleProfile": "environment",
+      "runtimeTarget": "casual/tiles/arena/end.png",
+      "runtimeSpec": {
+        "mode": "fixed",
+        "width": 1024,
+        "height": 1024,
+        "alpha": "preserve",
+        "anchor": "center"
+      },
+      "n": 1,
+      "outputFormat": "png",
+      "out": "gen/golden-slice/environment/arena-end",
+      "prompt": "Create one production-ready asset for the Dicekeep infinity arena. It must remain readable behind towers, enemies, projectiles and HTML interface elements at phone size. No characters, towers, interface, lettering, numbers, logo or watermark. Redraw the referenced destination as one small friendly ivory die keep seen from 3/4 top-down, red pips, gold trim, blue-violet crystal beacon and a sturdy violet-stone base. Clear end-of-path silhouette at 64 pixels, centered, grounded, transparent surroundings.",
+      "size": "1024x1024",
+      "background": "transparent",
+      "refs": [
+        "casual/tiles/arena/end.png"
+      ],
+      "inputFidelity": "high"
+    },
+    {
+      "id": "golden-arena-prop-1",
+      "category": "environment",
+      "styleProfile": "environment",
+      "runtimeTarget": "casual/tiles/arena/prop-1.png",
+      "runtimeSpec": {
+        "mode": "fixed",
+        "width": 1024,
+        "height": 1024,
+        "alpha": "preserve",
+        "anchor": "center"
+      },
+      "n": 1,
+      "outputFormat": "png",
+      "out": "gen/golden-slice/environment/arena-prop-1",
+      "prompt": "Create one production-ready asset for the Dicekeep infinity arena. It must remain readable behind towers, enemies, projectiles and HTML interface elements at phone size. No characters, towers, interface, lettering, numbers, logo or watermark. Redraw the referenced arena decoration as one short violet-stone brazier with a compact warm-gold flame and one small ivory die ornament. Low silhouette, centered, grounded, transparent surroundings; it must never resemble a tower pad or enemy.",
+      "size": "1024x1024",
+      "background": "transparent",
+      "refs": [
+        "casual/tiles/arena/prop-1.png"
+      ],
+      "inputFidelity": "high"
+    },
+    {
+      "id": "golden-arena-prop-2",
+      "category": "environment",
+      "styleProfile": "environment",
+      "runtimeTarget": "casual/tiles/arena/prop-2.png",
+      "runtimeSpec": {
+        "mode": "fixed",
+        "width": 1024,
+        "height": 1024,
+        "alpha": "preserve",
+        "anchor": "center"
+      },
+      "n": 1,
+      "outputFormat": "png",
+      "out": "gen/golden-slice/environment/arena-prop-2",
+      "prompt": "Create one production-ready asset for the Dicekeep infinity arena. It must remain readable behind towers, enemies, projectiles and HTML interface elements at phone size. No characters, towers, interface, lettering, numbers, logo or watermark. Redraw the referenced arena decoration as a compact cluster of two rounded violet crystals and a small ivory die-stone shard on a low rubble base. Quiet blue-violet glow, low silhouette, centered, grounded, transparent surroundings.",
+      "size": "1024x1024",
+      "background": "transparent",
+      "refs": [
+        "casual/tiles/arena/prop-2.png"
+      ],
+      "inputFidelity": "high"
+    },
+    {
+      "id": "golden-arena-prop-3",
+      "category": "environment",
+      "styleProfile": "environment",
+      "runtimeTarget": "casual/tiles/arena/prop-3.png",
+      "runtimeSpec": {
+        "mode": "fixed",
+        "width": 1024,
+        "height": 1024,
+        "alpha": "preserve",
+        "anchor": "center"
+      },
+      "n": 1,
+      "outputFormat": "png",
+      "out": "gen/golden-slice/environment/arena-prop-3",
+      "prompt": "Create one production-ready asset for the Dicekeep infinity arena. It must remain readable behind towers, enemies, projectiles and HTML interface elements at phone size. No characters, towers, interface, lettering, numbers, logo or watermark. Redraw the referenced arena decoration as one squat violet-stone pillar capped by a small gold dice-rune ring. Broad simple forms, low contrast, centered, grounded, transparent surroundings; no flame, tower weapon or interface symbol.",
+      "size": "1024x1024",
+      "background": "transparent",
+      "refs": [
+        "casual/tiles/arena/prop-3.png"
+      ],
+      "inputFidelity": "high"
+    },
+    {
+      "id": "golden-tower-die-1",
+      "category": "tower",
+      "styleProfile": "tower",
+      "runtimeTarget": "towers/die-1.png",
+      "runtimeSpec": {
+        "mode": "trim-contain",
+        "maxWidth": 384,
+        "maxHeight": 384,
+        "alpha": "preserve",
+        "anchor": "bottom-center",
+        "trimAlphaThreshold": 8
+      },
+      "n": 1,
+      "outputFormat": "png",
+      "out": "gen/golden-slice/tower/tower-die-1",
+      "prompt": "Redraw the referenced Dicekeep tower as one stable freestanding defense building in 3/4 top-down view, facing slightly right, with the same flat integrated foundation. Preserve its role, footprint, ground pivot and tall readable silhouette. The body is completely still and rigid; no squash, stretch, firing pose, projectile, motion trail, baked glow aura, separate pedestal, text, number, star, logo or watermark. Centered with generous transparent margin. A slim ivory watchtower with one large crimson eye-lens in a brass iris, designed for a precise thin laser. Ivory die-stone, red pip accents, warm gold hardware and one blue-violet magic accent bind it to the Dicekeep set.",
+      "size": "1024x1024",
+      "background": "transparent",
+      "refs": [
+        "towers/die-1.png"
+      ],
+      "inputFidelity": "high"
+    },
+    {
+      "id": "golden-tower-die-2",
+      "category": "tower",
+      "styleProfile": "tower",
+      "runtimeTarget": "towers/die-2.png",
+      "runtimeSpec": {
+        "mode": "trim-contain",
+        "maxWidth": 384,
+        "maxHeight": 384,
+        "alpha": "preserve",
+        "anchor": "bottom-center",
+        "trimAlphaThreshold": 8
+      },
+      "n": 1,
+      "outputFormat": "png",
+      "out": "gen/golden-slice/tower/tower-die-2",
+      "prompt": "Redraw the referenced Dicekeep tower as one stable freestanding defense building in 3/4 top-down view, facing slightly right, with the same flat integrated foundation. Preserve its role, footprint, ground pivot and tall readable silhouette. The body is completely still and rigid; no squash, stretch, firing pose, projectile, motion trail, baked glow aura, separate pedestal, text, number, star, logo or watermark. Centered with generous transparent margin. A compact ivory artillery fort with two black iron cannon ports, bronze rims and small powder-keg shapes at its base. Ivory die-stone, red pip accents, warm gold hardware and one blue-violet magic accent bind it to the Dicekeep set.",
+      "size": "1024x1024",
+      "background": "transparent",
+      "refs": [
+        "towers/die-2.png"
+      ],
+      "inputFidelity": "high"
+    },
+    {
+      "id": "golden-tower-die-3",
+      "category": "tower",
+      "styleProfile": "tower",
+      "runtimeTarget": "towers/die-3.png",
+      "runtimeSpec": {
+        "mode": "trim-contain",
+        "maxWidth": 384,
+        "maxHeight": 384,
+        "alpha": "preserve",
+        "anchor": "bottom-center",
+        "trimAlphaThreshold": 8
+      },
+      "n": 1,
+      "outputFormat": "png",
+      "out": "gen/golden-slice/tower/tower-die-3",
+      "prompt": "Redraw the referenced Dicekeep tower as one stable freestanding defense building in 3/4 top-down view, facing slightly right, with the same flat integrated foundation. Preserve its role, footprint, ground pivot and tall readable silhouette. The body is completely still and rigid; no squash, stretch, firing pose, projectile, motion trail, baked glow aura, separate pedestal, text, number, star, logo or watermark. Centered with generous transparent margin. A tall ivory arcane obelisk with three amethyst rune-gems and a restrained violet crystal crown. Ivory die-stone, red pip accents, warm gold hardware and one blue-violet magic accent bind it to the Dicekeep set.",
+      "size": "1024x1024",
+      "background": "transparent",
+      "refs": [
+        "towers/die-3.png"
+      ],
+      "inputFidelity": "high"
+    },
+    {
+      "id": "golden-tower-die-4",
+      "category": "tower",
+      "styleProfile": "tower",
+      "runtimeTarget": "towers/die-4.png",
+      "runtimeSpec": {
+        "mode": "trim-contain",
+        "maxWidth": 384,
+        "maxHeight": 384,
+        "alpha": "preserve",
+        "anchor": "bottom-center",
+        "trimAlphaThreshold": 8
+      },
+      "n": 1,
+      "outputFormat": "png",
+      "out": "gen/golden-slice/tower/tower-die-4",
+      "prompt": "Redraw the referenced Dicekeep tower as one stable freestanding defense building in 3/4 top-down view, facing slightly right, with the same flat integrated foundation. Preserve its role, footprint, ground pivot and tall readable silhouette. The body is completely still and rigid; no squash, stretch, firing pose, projectile, motion trail, baked glow aura, separate pedestal, text, number, star, logo or watermark. Centered with generous transparent margin. A tapered ivory frost spire with four blue ice-crystal corner devices and a compact frozen crown. Ivory die-stone, red pip accents, warm gold hardware and one blue-violet magic accent bind it to the Dicekeep set.",
+      "size": "1024x1024",
+      "background": "transparent",
+      "refs": [
+        "towers/die-4.png"
+      ],
+      "inputFidelity": "high"
+    },
+    {
+      "id": "golden-tower-die-5",
+      "category": "tower",
+      "styleProfile": "tower",
+      "runtimeTarget": "towers/die-5.png",
+      "runtimeSpec": {
+        "mode": "trim-contain",
+        "maxWidth": 384,
+        "maxHeight": 384,
+        "alpha": "preserve",
+        "anchor": "bottom-center",
+        "trimAlphaThreshold": 8
+      },
+      "n": 1,
+      "outputFormat": "png",
+      "out": "gen/golden-slice/tower/tower-die-5",
+      "prompt": "Redraw the referenced Dicekeep tower as one stable freestanding defense building in 3/4 top-down view, facing slightly right, with the same flat integrated foundation. Preserve its role, footprint, ground pivot and tall readable silhouette. The body is completely still and rigid; no squash, stretch, firing pose, projectile, motion trail, baked glow aura, separate pedestal, text, number, star, logo or watermark. Centered with generous transparent margin. An ivory lightning tower with four copper rods around one central blue-white coil, cables contained inside its silhouette. Ivory die-stone, red pip accents, warm gold hardware and one blue-violet magic accent bind it to the Dicekeep set.",
+      "size": "1024x1024",
+      "background": "transparent",
+      "refs": [
+        "towers/die-5.png"
+      ],
+      "inputFidelity": "high"
+    },
+    {
+      "id": "golden-tower-die-6",
+      "category": "tower",
+      "styleProfile": "tower",
+      "runtimeTarget": "towers/die-6.png",
+      "runtimeSpec": {
+        "mode": "trim-contain",
+        "maxWidth": 384,
+        "maxHeight": 384,
+        "alpha": "preserve",
+        "anchor": "bottom-center",
+        "trimAlphaThreshold": 8
+      },
+      "n": 1,
+      "outputFormat": "png",
+      "out": "gen/golden-slice/tower/tower-die-6",
+      "prompt": "Redraw the referenced Dicekeep tower as one stable freestanding defense building in 3/4 top-down view, facing slightly right, with the same flat integrated foundation. Preserve its role, footprint, ground pivot and tall readable silhouette. The body is completely still and rigid; no squash, stretch, firing pose, projectile, motion trail, baked glow aura, separate pedestal, text, number, star, logo or watermark. Centered with generous transparent margin. A broad ivory fortress with six dark mortar ports, restrained gold crown trim and a short crimson banner. Ivory die-stone, red pip accents, warm gold hardware and one blue-violet magic accent bind it to the Dicekeep set.",
+      "size": "1024x1024",
+      "background": "transparent",
+      "refs": [
+        "towers/die-6.png"
+      ],
+      "inputFidelity": "high"
+    },
+    {
+      "id": "golden-tower-star-07",
+      "category": "tower",
+      "styleProfile": "tower",
+      "runtimeTarget": "casual/towers/star-07.png",
+      "runtimeSpec": {
+        "mode": "fixed",
+        "width": 384,
+        "height": 384,
+        "alpha": "preserve",
+        "anchor": "center"
+      },
+      "n": 1,
+      "outputFormat": "png",
+      "out": "gen/golden-slice/tower/tower-star-07",
+      "prompt": "Redraw the referenced Dicekeep tower as one stable freestanding defense building in 3/4 top-down view, facing slightly right, with the same flat integrated foundation. Preserve its role, footprint, ground pivot and tall readable silhouette. The body is completely still and rigid; no squash, stretch, firing pose, projectile, motion trail, baked glow aura, separate pedestal, text, number, star, logo or watermark. Centered with generous transparent margin. An early evolved ivory die keep: confident but compact, one small gold battlement tier, red pip windows and a restrained blue-violet focus crystal. It must look clearly stronger than the six-pip base tower while leaving room for many later upgrades.",
+      "size": "1024x1024",
+      "background": "transparent",
+      "refs": [
+        "casual/towers/star-07.png"
+      ],
+      "inputFidelity": "high"
+    },
+    {
+      "id": "golden-tower-star-20",
+      "category": "tower",
+      "styleProfile": "tower",
+      "runtimeTarget": "casual/towers/star-20.png",
+      "runtimeSpec": {
+        "mode": "fixed",
+        "width": 384,
+        "height": 384,
+        "alpha": "preserve",
+        "anchor": "center"
+      },
+      "n": 1,
+      "outputFormat": "png",
+      "out": "gen/golden-slice/tower/tower-star-20",
+      "prompt": "Redraw the referenced Dicekeep tower as one stable freestanding defense building in 3/4 top-down view, facing slightly right, with the same flat integrated foundation. Preserve its role, footprint, ground pivot and tall readable silhouette. The body is completely still and rigid; no squash, stretch, firing pose, projectile, motion trail, baked glow aura, separate pedestal, text, number, star, logo or watermark. Centered with generous transparent margin. The final evolved ivory die citadel: broad gold-trimmed battlements, six red pip ports, one large blue-violet crown crystal and a controlled royal silhouette. Powerful and premium in construction detail, yet clean at 96 pixels and never taller than the safe canvas margin.",
+      "size": "1024x1024",
+      "background": "transparent",
+      "refs": [
+        "casual/towers/star-20.png"
+      ],
+      "inputFidelity": "high"
+    },
+    {
+      "id": "golden-tower-premium-arcane",
+      "category": "tower",
+      "styleProfile": "tower",
+      "runtimeTarget": "casual/towers/t3-d.png",
+      "runtimeSpec": {
+        "mode": "trim-contain",
+        "maxWidth": 384,
+        "maxHeight": 384,
+        "alpha": "preserve",
+        "anchor": "bottom-center",
+        "trimAlphaThreshold": 8
+      },
+      "n": 1,
+      "outputFormat": "png",
+      "out": "gen/golden-slice/tower/tower-premium-arcane",
+      "prompt": "Redraw the referenced Dicekeep tower as one stable freestanding defense building in 3/4 top-down view, facing slightly right, with the same flat integrated foundation. Preserve its role, footprint, ground pivot and tall readable silhouette. The body is completely still and rigid; no squash, stretch, firing pose, projectile, motion trail, baked glow aura, separate pedestal, text, number, star, logo or watermark. Centered with generous transparent margin. Premium cosmetic version of the three-pip arcane obelisk. Keep the first reference's exact gameplay silhouette and pedestal; use polished ivory, restrained gold filigree, three ruby-amethyst rune gems and a short red velvet accent inspired by the second reference. Cosmetic richness only: no larger weapon, brighter attack cue or expanded footprint.",
+      "size": "1024x1024",
+      "background": "transparent",
+      "refs": [
+        "casual/towers/t3-a.png",
+        "casual/towers/t3-d.png"
+      ],
+      "inputFidelity": "high"
+    },
+    {
+      "id": "golden-enemy-ground-biped",
+      "category": "character",
+      "styleProfile": "character",
+      "runtimeTarget": "casual/enemies/pig.png",
+      "runtimeSpec": {
+        "mode": "trim-contain",
+        "maxWidth": 280,
+        "maxHeight": 280,
+        "alpha": "preserve",
+        "anchor": "bottom-center",
+        "trimAlphaThreshold": 8
+      },
+      "n": 1,
+      "outputFormat": "png",
+      "out": "gen/golden-slice/character/enemy-ground-biped",
+      "prompt": "One complete Dicekeep character, full body, 3/4 side view facing right, centered with at least 12% transparent margin. One consistent ground pivot, no floor, shadow, pedestal, scenery, motion sheet, text, logo or watermark. Preserve the referenced identity while simplifying noisy detail. Anatomically coherent limbs and joints; no body warp. A friendly but determined upright pig bandit in a brown leather vest, red scarf and small wooden buckler. True plantigrade two-legged stance: hips, forward-facing knees, shins and feet form a natural humanlike chain; both feet rest on the same baseline and the knees must never bend backward.",
+      "size": "1024x1024",
+      "background": "transparent",
+      "refs": [
+        "casual/enemies/pig.png"
+      ],
+      "inputFidelity": "high"
+    },
+    {
+      "id": "golden-enemy-ground-quadruped",
+      "category": "character",
+      "styleProfile": "character",
+      "runtimeTarget": "casual/enemies/rhino.png",
+      "runtimeSpec": {
+        "mode": "trim-contain",
+        "maxWidth": 280,
+        "maxHeight": 280,
+        "alpha": "preserve",
+        "anchor": "bottom-center",
+        "trimAlphaThreshold": 8
+      },
+      "n": 1,
+      "outputFormat": "png",
+      "out": "gen/golden-slice/character/enemy-ground-quadruped",
+      "prompt": "One complete Dicekeep character, full body, 3/4 side view facing right, centered with at least 12% transparent margin. One consistent ground pivot, no floor, shadow, pedestal, scenery, motion sheet, text, logo or watermark. Preserve the referenced identity while simplifying noisy detail. Anatomically coherent limbs and joints; no body warp. A sturdy baby gray rhinoceros scout wearing simple brown harness armor and one blue-violet dice charm. Clearly quadrupedal: four distinct weight-bearing legs under the body, natural knees and hocks, all hooves visible, horn and face unobstructed.",
+      "size": "1024x1024",
+      "background": "transparent",
+      "refs": [
+        "casual/enemies/rhino.png"
+      ],
+      "inputFidelity": "high"
+    },
+    {
+      "id": "golden-enemy-air",
+      "category": "character",
+      "styleProfile": "character",
+      "runtimeTarget": "casual/enemies/martin.png",
+      "runtimeSpec": {
+        "mode": "trim-contain",
+        "maxWidth": 280,
+        "maxHeight": 280,
+        "alpha": "preserve",
+        "anchor": "bottom-center",
+        "trimAlphaThreshold": 8
+      },
+      "n": 1,
+      "outputFormat": "png",
+      "out": "gen/golden-slice/character/enemy-air",
+      "prompt": "One complete Dicekeep character, full body, 3/4 side view facing right, centered with at least 12% transparent margin. One consistent ground pivot, no floor, shadow, pedestal, scenery, motion sheet, text, logo or watermark. Preserve the referenced identity while simplifying noisy detail. Anatomically coherent limbs and joints; no body warp. A small swift house-martin aerial scout with navy-and-cream feathers, a tiny red courier scarf and one gold dice clasp. Wings fully open and clearly support flight; feet tucked naturally, body visibly airborne and level, with no walking pose or invisible ground contact.",
+      "size": "1024x1024",
+      "background": "transparent",
+      "refs": [
+        "casual/enemies/martin.png"
+      ],
+      "inputFidelity": "high"
+    },
+    {
+      "id": "golden-enemy-burrow",
+      "category": "character",
+      "styleProfile": "character",
+      "runtimeTarget": "casual/enemies/fennel.png",
+      "runtimeSpec": {
+        "mode": "trim-contain",
+        "maxWidth": 280,
+        "maxHeight": 280,
+        "alpha": "preserve",
+        "anchor": "bottom-center",
+        "trimAlphaThreshold": 8
+      },
+      "n": 1,
+      "outputFormat": "png",
+      "out": "gen/golden-slice/character/enemy-burrow",
+      "prompt": "One complete Dicekeep character, full body, 3/4 side view facing right, centered with at least 12% transparent margin. One consistent ground pivot, no floor, shadow, pedestal, scenery, motion sheet, text, logo or watermark. Preserve the referenced identity while simplifying noisy detail. Anatomically coherent limbs and joints; no body warp. A compact fennel-root miner with a leafy helmet, round goggles, small brass hand drill and sturdy boots. A corkscrew root-tail and earth-colored tool shapes make the burrowing role clear, while the intact complete body and both correctly jointed legs remain visible and grounded.",
+      "size": "1024x1024",
+      "background": "transparent",
+      "refs": [
+        "casual/enemies/fennel.png"
+      ],
+      "inputFidelity": "high"
+    },
+    {
+      "id": "golden-boss-w010-rat-king",
+      "category": "character",
+      "styleProfile": "character",
+      "runtimeTarget": "casual/bosses/inf/b010.png",
+      "runtimeSpec": {
+        "mode": "fixed",
+        "width": 512,
+        "height": 512,
+        "alpha": "preserve",
+        "anchor": "center"
+      },
+      "n": 1,
+      "outputFormat": "png",
+      "out": "gen/golden-slice/character/boss-w010-rat-king",
+      "prompt": "One complete Dicekeep character, full body, 3/4 side view facing right, centered with at least 12% transparent margin. One consistent ground pivot, no floor, shadow, pedestal, scenery, motion sheet, text, logo or watermark. Preserve the referenced identity while simplifying noisy detail. Anatomically coherent limbs and joints; no body warp. Boss: the Plague Rat King, a large upright rat monarch with intact charcoal fur, rounded expressive face, simple gold crown, broad bracers and a wine-red cape. Exactly one curved tail and two sturdy plantigrade feet. Proud, imposing and approachable; forward-facing knees bend naturally and never backward.",
+      "size": "1024x1024",
+      "background": "transparent",
+      "refs": [
+        "casual/bosses/inf/b010.png"
+      ],
+      "inputFidelity": "high"
+    },
+    {
+      "id": "golden-boss-w100-doom-lord",
+      "category": "character",
+      "styleProfile": "character",
+      "runtimeTarget": "casual/bosses/inf/b100.png",
+      "runtimeSpec": {
+        "mode": "fixed",
+        "width": 512,
+        "height": 512,
+        "alpha": "preserve",
+        "anchor": "center"
+      },
+      "n": 1,
+      "outputFormat": "png",
+      "out": "gen/golden-slice/character/boss-w100-doom-lord",
+      "prompt": "One complete Dicekeep character, full body, 3/4 side view facing right, centered with at least 12% transparent margin. One consistent ground pivot, no floor, shadow, pedestal, scenery, motion sheet, text, logo or watermark. Preserve the referenced identity while simplifying noisy detail. Anatomically coherent limbs and joints; no body warp. Boss: the Doom Lord, an intact masked fantasy ruler in a closed deep-navy robe and broad black-violet plate armor, a crown of three floating violet crystal shards and two small star-like eye lights on a smooth hood mask. Holds one compact crescent scythe with restrained violet energy. Grounded biped stance with two solid armored boots and natural forward knees; powerful readable silhouette, no skull anatomy, torn flesh, void hole, rift or surrounding debris.",
+      "size": "1024x1024",
+      "background": "transparent"
+    },
+    {
+      "id": "golden-ui-home-stage",
+      "category": "ui",
+      "styleProfile": "icon",
+      "runtimeTarget": "ui/icon-stage.png",
+      "runtimeSpec": {
+        "mode": "fixed",
+        "width": 64,
+        "height": 64,
+        "alpha": "preserve",
+        "anchor": "center"
+      },
+      "n": 1,
+      "outputFormat": "png",
+      "out": "gen/golden-slice/ui/ui-home-stage",
+      "prompt": "One isolated Dicekeep mobile-game interface icon, bold simple silhouette readable at 36 pixels, centered on a transparent square with generous safe margin. Use ivory, warm gold, red pip and controlled blue-violet accents. Front or shallow 3/4 view, no panel, scenery, character, text, letter, number, notification dot, logo or watermark. Home stage-selection icon: a compact gold-edged violet route tile leading to a tiny ivory die keep and one simple red checkpoint pennant. One connected silhouette, no map labels or loose particles.",
+      "size": "1024x1024",
+      "background": "transparent",
+      "refs": [
+        "ui/icon-stage.png"
+      ],
+      "inputFidelity": "high"
+    },
+    {
+      "id": "golden-ui-deck",
+      "category": "ui",
+      "styleProfile": "icon",
+      "runtimeTarget": "ui/icon-dice.png",
+      "runtimeSpec": {
+        "mode": "fixed",
+        "width": 64,
+        "height": 64,
+        "alpha": "preserve",
+        "anchor": "center"
+      },
+      "n": 1,
+      "outputFormat": "png",
+      "out": "gen/golden-slice/ui/ui-deck",
+      "prompt": "One isolated Dicekeep mobile-game interface icon, bold simple silhouette readable at 36 pixels, centered on a transparent square with generous safe margin. Use ivory, warm gold, red pip and controlled blue-violet accents. Front or shallow 3/4 view, no panel, scenery, character, text, letter, number, notification dot, logo or watermark. Deck-building icon: three compact ivory dice cards fanned slightly, each with one to three red pips and one thin gold border. Exactly one connected icon silhouette, no loose particles.",
+      "size": "1024x1024",
+      "background": "transparent",
+      "refs": [
+        "ui/icon-dice.png"
+      ],
+      "inputFidelity": "high"
+    },
+    {
+      "id": "golden-ui-attendance",
+      "category": "ui",
+      "styleProfile": "icon",
+      "runtimeTarget": "ui/rewards/attendance-bag.webp",
+      "runtimeSpec": {
+        "mode": "fixed",
+        "width": 512,
+        "height": 512,
+        "alpha": "preserve",
+        "anchor": "center"
+      },
+      "n": 1,
+      "outputFormat": "webp",
+      "out": "gen/golden-slice/ui/ui-attendance",
+      "prompt": "One isolated Dicekeep mobile-game interface icon, bold simple silhouette readable at 36 pixels, centered on a transparent square with generous safe margin. Use ivory, warm gold, red pip and controlled blue-violet accents. Front or shallow 3/4 view, no panel, scenery, character, text, letter, number, notification dot, logo or watermark. Attendance reward icon: a plump red drawstring gift pouch with gold cord, an ivory die seal with red pips and one small blue-violet ticket tucked behind it. Warm, generous and immediately recognizable as a daily reward.",
+      "size": "1024x1024",
+      "background": "transparent",
+      "refs": [
+        "ui/rewards/attendance-bag.webp"
+      ],
+      "inputFidelity": "high"
+    },
+    {
+      "id": "golden-ui-mail",
+      "category": "ui",
+      "styleProfile": "icon",
+      "runtimeTarget": "ui/rewards/mail.webp",
+      "runtimeSpec": {
+        "mode": "fixed",
+        "width": 512,
+        "height": 512,
+        "alpha": "preserve",
+        "anchor": "center"
+      },
+      "n": 1,
+      "outputFormat": "webp",
+      "out": "gen/golden-slice/ui/ui-mail",
+      "prompt": "One isolated Dicekeep mobile-game interface icon, bold simple silhouette readable at 36 pixels, centered on a transparent square with generous safe margin. Use ivory, warm gold, red pip and controlled blue-violet accents. Front or shallow 3/4 view, no panel, scenery, character, text, letter, number, notification dot, logo or watermark. Mailbox reward icon: one cream envelope with a thick warm-gold rim and red wax die seal, resting in a compact violet stone mailbox slot. Clear envelope silhouette and closed seal, no written marks.",
+      "size": "1024x1024",
+      "background": "transparent",
+      "refs": [
+        "ui/rewards/mail.webp"
+      ],
+      "inputFidelity": "high"
+    },
+    {
+      "id": "golden-ui-growth-pass",
+      "category": "ui",
+      "styleProfile": "icon",
+      "runtimeTarget": "ui/rewards/growth-pass.webp",
+      "runtimeSpec": {
+        "mode": "fixed",
+        "width": 512,
+        "height": 512,
+        "alpha": "preserve",
+        "anchor": "center"
+      },
+      "n": 1,
+      "outputFormat": "webp",
+      "out": "gen/golden-slice/ui/ui-growth-pass",
+      "prompt": "One isolated Dicekeep mobile-game interface icon, bold simple silhouette readable at 36 pixels, centered on a transparent square with generous safe margin. Use ivory, warm gold, red pip and controlled blue-violet accents. Front or shallow 3/4 view, no panel, scenery, character, text, letter, number, notification dot, logo or watermark. Growth pass icon: one premium navy-violet ticket with rounded corners, gold trim, a central ivory die crest with red pips and a short red ribbon tab. Rich but compact, no crown, price mark or written label.",
+      "size": "1024x1024",
+      "background": "transparent",
+      "refs": [
+        "ui/rewards/growth-pass.webp"
+      ],
+      "inputFidelity": "high"
+    },
+    {
+      "id": "golden-vfx-muzzle-flash",
+      "category": "vfx",
+      "styleProfile": "vfx",
+      "runtimeTarget": "vfx/muzzle-flash.png",
+      "runtimeSpec": {
+        "mode": "trim-contain",
+        "maxWidth": 320,
+        "maxHeight": 320,
+        "alpha": "preserve",
+        "anchor": "center",
+        "trimAlphaThreshold": 8
+      },
+      "n": 1,
+      "outputFormat": "png",
+      "out": "gen/golden-slice/vfx/vfx-muzzle-flash",
+      "prompt": "One Dicekeep combat-effect asset on a transparent canvas. Bold compact shapes, clean warm-charcoal edge where needed, bright core with controlled bloom, readable at 24 to 64 pixels. Centered with generous empty margin; no tower, enemy, floor, scenery, text, logo or watermark. A single directional cannon muzzle flash pointing right: compact white-yellow diamond core, three warm-gold triangular flame petals and two tiny orange sparks. The origin point is exactly at canvas center and the effect extends mostly to the right.",
+      "size": "1024x1024",
+      "background": "transparent",
+      "refs": [
+        "vfx/muzzle-flash.png"
+      ],
+      "inputFidelity": "high"
+    },
+    {
+      "id": "golden-vfx-projectile-bolt",
+      "category": "vfx",
+      "styleProfile": "vfx",
+      "runtimeTarget": "vfx/bolt.png",
+      "runtimeSpec": {
+        "mode": "trim-contain",
+        "maxWidth": 320,
+        "maxHeight": 320,
+        "alpha": "preserve",
+        "anchor": "center",
+        "trimAlphaThreshold": 8
+      },
+      "n": 1,
+      "outputFormat": "png",
+      "out": "gen/golden-slice/vfx/vfx-projectile-bolt",
+      "prompt": "One Dicekeep combat-effect asset on a transparent canvas. Bold compact shapes, clean warm-charcoal edge where needed, bright core with controlled bloom, readable at 24 to 64 pixels. Centered with generous empty margin; no tower, enemy, floor, scenery, text, logo or watermark. A single blue-violet arcane bolt traveling right: short ivory-white core, rounded violet head, tapered cyan tail and one thin warm-gold rim accent. Horizontal axis, compact length, no detached fragments.",
+      "size": "1024x1024",
+      "background": "transparent",
+      "refs": [
+        "vfx/bolt.png"
+      ],
+      "inputFidelity": "high"
+    },
+    {
+      "id": "golden-vfx-laser-trail",
+      "category": "vfx",
+      "styleProfile": "vfx",
+      "runtimeTarget": "vfx/laser-beam.png",
+      "runtimeSpec": {
+        "mode": "trim-contain",
+        "maxWidth": 320,
+        "maxHeight": 64,
+        "alpha": "preserve",
+        "anchor": "center",
+        "trimAlphaThreshold": 8
+      },
+      "n": 1,
+      "outputFormat": "png",
+      "out": "gen/golden-slice/vfx/vfx-laser-trail",
+      "prompt": "One Dicekeep combat-effect asset on a transparent canvas. Bold compact shapes, clean warm-charcoal edge where needed, bright core with controlled bloom, readable at 24 to 64 pixels. Centered with generous empty margin; no tower, enemy, floor, scenery, text, logo or watermark. One perfectly straight horizontal laser trail from left to right across the center: narrow white core, crimson inner band and soft red outer glow. Uniform thickness through the middle 80%, cleanly tapered ends, large transparent space above and below.",
+      "size": "1536x1024",
+      "background": "transparent",
+      "refs": [
+        "vfx/laser-beam.png"
+      ],
+      "inputFidelity": "high"
+    },
+    {
+      "id": "golden-vfx-impact-sheet",
+      "category": "vfx",
+      "styleProfile": "vfx",
+      "runtimeTarget": "vfx/impact-2x2.png",
+      "runtimeSpec": {
+        "mode": "fixed",
+        "width": 512,
+        "height": 512,
+        "alpha": "preserve",
+        "anchor": "center"
+      },
+      "n": 1,
+      "outputFormat": "png",
+      "out": "gen/golden-slice/vfx/vfx-impact-sheet",
+      "prompt": "One Dicekeep combat-effect asset on a transparent canvas. Bold compact shapes, clean warm-charcoal edge where needed, bright core with controlled bloom, readable at 24 to 64 pixels. Centered with generous empty margin; no tower, enemy, floor, scenery, text, logo or watermark. A precise 2x2 sprite sheet of one golden-violet hit burst, four equal cells read left-to-right then top-to-bottom: 1 compact contact spark, 2 full six-ray burst, 3 expanding broken ring and dice-pip sparks, 4 three fading sparks. Same center and scale envelope in every cell, no grid lines, nothing crosses a cell boundary.",
+      "size": "1024x1024",
+      "background": "transparent",
+      "refs": [
+        "vfx/impact-2x2.png"
+      ],
+      "inputFidelity": "high"
+    }
+  ]
+}
