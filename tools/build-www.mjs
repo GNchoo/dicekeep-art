@@ -6,7 +6,7 @@
 //   고정 파일: 게임·성장·결제·아트 매니페스트 JS, index.html(app.js 주입), 결제 복귀·개인정보 페이지
 //   고정 폴더: fonts ui vfx dice props map towers enemies audio (있는 것만)
 //   casual/: game.js·content.js 안의 'casual/…' 경로 리터럴 + content.js 를 실행해 얻은 DKCONTENT 의 src/walkSrc
-//            + casual/tiles/** + casual/towers/star-*.png + casual/towers/skins/**
+//            + casual/tiles/** + casual/towers/star-*.{png,webp} + casual/towers/skins/**
 //            + casual/{enemies,bosses}/{inf,extreme}/** (PNG·무손실 WebP 모두 포함)
 //   제외: casual/maps/map-NN-*.jpg · casual/towers/*-attack-2x2.png · editor.* · *.md · net/ · serve.py · start.bat · wrangler.jsonc · tools · resources
 //   www/app.js = @capacitor/core UMD + 플러그인 UMD + 루트 app.js (번들러 없이 window.Capacitor.Plugins.* 를 쓰기 위해)
@@ -79,7 +79,7 @@ function casualPaths() {
   for (const p of walk(path.join(ROOT, 'casual', 'bosses', 'extreme'))) set.add(rel(p));
   for (const p of walk(path.join(ROOT, 'casual', 'towers', 'skins'))) set.add(rel(p));
   const towers = path.join(ROOT, 'casual', 'towers');
-  if (fs.existsSync(towers)) for (const f of fs.readdirSync(towers)) if (/^star-.*\.png$/i.test(f)) set.add('casual/towers/' + f);
+  if (fs.existsSync(towers)) for (const f of fs.readdirSync(towers)) if (/^star-.*\.(png|webp)$/i.test(f)) set.add('casual/towers/' + f);
   const list = [...set].filter((p) => !excluded(p));
   const missing = list.filter((p) => !fs.existsSync(path.join(ROOT, p)));
   if (missing.length) console.warn('참조하지만 없는 파일:', missing.join(', '));
