@@ -15,8 +15,12 @@ process.env.E2E_OUTPUT_DIR ||= 'gen/e2e/directional-real';
   const p=await context.newPage();report.errors=watchArtErrors(p);
   await p.addInitScript(()=>{localStorage.setItem('dk_coachDone','1');localStorage.setItem('dk_infHelpSeen','1');});
   await p.goto(gameUrl());await p.waitForFunction(()=>window.DK&&DK.phase==='title',null,{timeout:120000});
-  const manifest=await p.evaluate(()=>({ids:Object.keys(INF_DIRECTIONAL_ART.entries),state:DKART.state()}));
-  assert.equal(manifest.state.initialized,true);assert.equal(manifest.state.approvedEntries,manifest.ids.length);
+  const manifest=await p.evaluate(()=>({ids:Object.keys(INF_DIRECTIONAL_ART.entries),extremeIds:Object.keys((window.INF_EXTREME_ART||{}).entries||{}),state:DKART.state()}));
+  assert.equal(manifest.state.initialized,true);
+  // 런타임은 두 매니페스트를 합친다 (infinity-art.js:141). 방향별 110 + 극한 111 = 221 이
+  // 정상이며 ID 교집합은 공집합이다. 여기서 110 만 기대하면 extreme-art.js 가 들어온
+  // 시점부터 구조적으로 실패한다 — directional-production.cjs 와 같은 처방.
+  assert.equal(manifest.state.approvedEntries,manifest.ids.length+manifest.extremeIds.length);
   if(!pilot)assert.equal(manifest.ids.length,110,'Release requires all110 approved identities');
   report.boot=manifest.state;
   await p.click('#ov-btn');
