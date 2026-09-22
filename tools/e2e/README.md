@@ -17,8 +17,6 @@ $env:E2E_OUTPUT_DIR = '../e2e-results'
 $env:E2E_BASE_URL = 'http://localhost:8137/'
 # 필요한 경우에만 설치된 브라우저 경로를 직접 지정한다.
 # $env:PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH = 'C:\Program Files\Google\Chrome\Application\chrome.exe'
-node tools/e2e/ground-gait-check.cjs --self-test
-node tools/e2e/ground-gait-check.cjs
 node tools/e2e/walk-jitter.js --self-test
 node tools/e2e/walk-jitter.js
 node tools/e2e/inf-art-check.js 101
@@ -77,4 +75,4 @@ node /home/user/dicekeep-art/tools/e2e/single-smoke.js
 
 수치 안정화 통과는 올바른 시트 분할이나 적당한 아트 분위기를 보증하지 않는다. 프레임 잘림·옆 칸의 파편·심한 형태 변화·과도한 혐오감·작은 게임 크기에서의 가독성은 별도로 원본 시트와 게임 캡처를 눈으로 확인한다. W10 보스도 새 방향별 걷기 시트 검증 대상이다. 기존 선택적 아트의 404는 새 인피니티 아트 오류와 구별하며, `single-smoke.js`의 콘솔 진단은 기록하되 pageerror와 게임 진행 단언 실패는 종료 1로 처리한다.
 
-`ground-gait-check.cjs`, `walk-preview.cjs`, `walk-jitter.js`는 PR #29 당시의 1~9웨이브 측면 시트 회귀 검사다. 새 세 방향 리그의 분할·관절·접지는 `tools/check-directional-art.mjs`와 `tools/preview-directional-motion.mjs`로 검사한다. 제작 기록과 검수 도구는 [방향별 아트 작업 폴더](../art-review/directional-101/), 이전 측면 검사 기록은 [PR #29 보행 보고서](../art-review/pr29-gait/README.md)를 참고한다.
+`ground-gait-check.cjs`는 PR #29 당시의 1~9웨이브 측면 시트 회귀 검사였다. **현행 렌더러에서 구조적으로 통과할 수 없어 `legacy/` 로 옮겼다** — `game.js currentEnemyFrame()` 이 승인된 `artAssetId` 를 가진 적을 전부 방향별 아트로 보내고 실패해도 레거시로 떨어지지 않으므로(`return null`), 이 검사가 기다리는 레거시 시트는 화면에 그려지지 않는다. 경위와 대체 도구는 [legacy/README.md](legacy/README.md). 같은 세대인 `walk-jitter.js`·`walk-preview.cjs`는 로드된 시트 캔버스를 직접 읽어 렌더러와 무관하므로 **그대로 살아 있다**(실측 확인). 새 세 방향 리그의 분할·관절·접지는 `tools/check-directional-art.mjs`와 `tools/preview-directional-motion.mjs`로 검사한다. 제작 기록과 검수 도구는 [방향별 아트 작업 폴더](../art-review/directional-101/), 이전 측면 검사 기록은 [PR #29 보행 보고서](../art-review/pr29-gait/README.md)를 참고한다.

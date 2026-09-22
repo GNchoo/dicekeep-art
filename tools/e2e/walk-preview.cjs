@@ -1,4 +1,4 @@
-// 실제 DKA의 채색 프레임을 보여 주는 공간 보행 리뷰. 관절/접지 검증은 ground-gait-check.cjs 별도 실행.
+// 실제 DKA의 채색 프레임을 보여 주는 공간 보행 리뷰. 관절/접지 검증은 tools/check-directional-art.mjs.
 // 지상은 8자세 한 주기를 0.8초로 통일해 비교한다(게임 속도 재현이 아님). 비행은 기존 4프레임 5fps.
 const fs = require('node:fs');
 const sharp = require('sharp');

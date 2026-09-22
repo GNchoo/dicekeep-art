@@ -1,4 +1,7 @@
-// 로더 검사: 리깅 지상 8프레임 / 비행 4프레임. 리깅의 발·몸통·미끄러짐은 ground-gait-check.cjs가 별도 검사한다.
+// 로더 검사: 리깅 지상 8프레임 / 비행 4프레임 — 로드된 시트 캔버스(DKA)를 직접 읽는다.
+// 리깅의 발·몸통·미끄러짐은 tools/check-directional-art.mjs(기하)와
+// tools/preview-directional-motion.mjs(육안)가 본다. ground-gait-check.cjs 는 폐기됐다 —
+// 현행 렌더러가 레거시 시트를 그리지 않아 구조적으로 통과할 수 없다 (tools/e2e/legacy/README.md).
 const fs = require('node:fs');
 const { launchBrowser, gameUrl, outputPath, watchArtErrors } = require('./browser.cjs');
 
@@ -40,7 +43,7 @@ function inspectWalkSheets() {
     const air = mon.move === 'air';
     return {
       key, errors, expected, air, rigged, walkStride: mon.walkStride || 0,
-      anchorValidation: rigged ? 'excluded: silhouette centroid moves with articulated limbs; ground-gait-check.cjs validates body/sole anchors and world slip' : 'silhouette centroid/anchor threshold (not anatomical gait proof)',
+      anchorValidation: rigged ? 'excluded: silhouette centroid moves with articulated limbs; tools/check-directional-art.mjs validates body/sole anchors' : 'silhouette centroid/anchor threshold (not anatomical gait proof)',
       dims: valid[0].w + '×' + valid[0].h, fh: valid[0].h, frames: metrics,
       foot: span(valid.map(frame => air ? frame.my : frame.foot)), mx: span(valid.map(frame => frame.mx)),
       height: span(valid.map(frame => frame.height)), area: span(valid.map(frame => frame.n)) / Math.max(...valid.map(frame => frame.n)),
@@ -110,10 +113,10 @@ async function main() {
     for (const row of rows) {
       row.failures = rowFailures(row);
       const metrics = row.dims ? row.dims + ': ' + (row.air ? '중심 y' : '발 y') + ' ' + row.foot.toFixed(2) + 'px · 중심 x ' + row.mx.toFixed(2) + 'px · 높이 ' + row.height + 'px · 넓이 ' + (row.area * 100).toFixed(1) + '%' : 'invalid sheet';
-      console.log((row.failures.length ? 'FAIL ' : 'PASS ') + row.key + ' ' + row.expected + ' frames · ' + metrics + (row.rigged ? ' · LOADER ONLY: centroid threshold excluded; see ground-gait-check.json for gait' : ' · silhouette-anchor check') + (row.failures.length ? ' · ' + row.failures.join('; ') : ''));
+      console.log((row.failures.length ? 'FAIL ' : 'PASS ') + row.key + ' ' + row.expected + ' frames · ' + metrics + (row.rigged ? ' · LOADER ONLY: centroid threshold excluded; gait is checked by check-directional-art.mjs' : ' · silhouette-anchor check') + (row.failures.length ? ' · ' + row.failures.join('; ') : ''));
     }
     fs.writeFileSync(outputPath('walk-jitter.json'), JSON.stringify({ rows, errors }, null, 2) + '\n');
-    console.log('W10: infB10 정지컷 — 걷기 시트 검사 대상 아님. 리깅의 보행·접지 검증은 ground-gait-check.cjs 별도 실행.');
+    console.log('W10: infB10 정지컷 — 걷기 시트 검사 대상 아님. 리깅의 보행·접지 검증은 tools/check-directional-art.mjs.');
     if (errors.length || rows.some(row => row.failures.length)) throw new Error([...errors, 'Walking sheet validation failed; see walk-jitter.json'].join('\n'));
   } finally { await browser.close(); }
 }
