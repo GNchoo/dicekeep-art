@@ -2,7 +2,8 @@
 //
 //   node tools/transcode-approved-art.mjs --coverage-only               # 커버리지 증명만 (수초)
 //   node tools/transcode-approved-art.mjs --dry-run                     # 커버리지 증명 + 용량 측정
-//   node tools/transcode-approved-art.mjs --only=casual/enemies/,casual/bosses/
+//   node tools/transcode-approved-art.mjs --only=casual/enemies/,casual/bosses/ \\
+//        --exclude=casual/enemies/inf/directional/,casual/bosses/inf/directional/
 //   node tools/transcode-approved-art.mjs                               # 실제 변환 + 경로 재작성
 //
 // ── 왜 무손실인가
@@ -33,6 +34,7 @@ const DRY = process.argv.includes('--dry-run');
 const COVERAGE_ONLY = process.argv.includes('--coverage-only');
 const LIMIT = Number(arg('limit') || 0);
 const ONLY = (arg('only') || '').split(',').filter(Boolean);
+const EXCLUDE = (arg('exclude') || '').split(',').filter(Boolean);
 
 // 리터럴 경로를 들고 있는 파일들. cosmetics.js 는 스킨팩 60장을 템플릿으로 만들지만
 // 확장자 자체는 여기서 고쳐야 하므로 함께 연다.
@@ -117,13 +119,27 @@ const walk = (dir) => fs.existsSync(dir)
 const MiB = (n) => (n / 1048576).toFixed(2);
 const rel = (p) => path.relative(ROOT, p).split(path.sep).join('/');
 
+// 인코딩은 .webp 를 .png 옆에 내려놓고 마지막에 확정한다. 그래서 중간에 죽으면
+// 짝이 맞는 .webp 가 남는다. 정상 상태에선 한 아트가 .png 이거나 .webp 이지 둘 다일 수
+// 없으므로(저장소 전수 확인), 짝이 있는 .webp 는 예외 없이 중단된 회차의 잔재다.
+function sweepStaged() {
+  const stale = walk(path.join(ROOT, 'casual'))
+    .filter((p) => /\.webp$/i.test(p) && fs.existsSync(p.replace(/\.webp$/i, '.png')));
+  for (const p of stale) fs.unlinkSync(p);
+  if (stale.length) console.log(`중단된 회차가 남긴 스테이징 .webp ${stale.length}장을 지웠다 (.png 는 그대로).`);
+  return stale.length;
+}
+
 function main() {
+  sweepStaged();
   let targets = walk(path.join(ROOT, 'casual'))
     .filter((p) => /\.png$/i.test(p))
     .map(rel)
     .filter((p) => !PINNED.has(p) && !SKIP.some((re) => re.test(p)))
     .sort();
-  const scoped = ONLY.length ? targets.filter((p) => ONLY.some((o) => p.startsWith(o))) : targets;
+  const scoped = targets
+    .filter((p) => !ONLY.length || ONLY.some((o) => p.startsWith(o)))
+    .filter((p) => !EXCLUDE.some((o) => p.startsWith(o)));
   const work = LIMIT ? scoped.slice(0, LIMIT) : scoped;
 
   const sources = Object.fromEntries(REWRITE.map((f) => [f, fs.readFileSync(path.join(ROOT, f), 'utf8')]));
