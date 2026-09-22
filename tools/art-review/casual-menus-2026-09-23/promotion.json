@@ -1,0 +1,13 @@
+{
+  "source": "tools/art-review/casual-menus-2026-09-23/tower-1.png",
+  "generatedWith": "Codex built-in image_gen",
+  "apiKeyUsed": false,
+  "targets": [
+    "casual/towers/t1-a.png",
+    "towers/die-1.png"
+  ],
+  "width": 228,
+  "height": 384,
+  "hasAlpha": true,
+  "sha256": "5ac920dd633ebbab1cf071ce89679e7ffe2807fcd95fd95298e8cedd1ae2ca27"
+}
