@@ -834,7 +834,7 @@ const TILE_ASSET_FILES = Object.freeze([
 // END TILE_ASSET_FILES
 for (const file of TILE_ASSET_FILES) {
   const [theme, name] = file.split('/');
-  SRCS[`tl_${theme}_${name.replace(/\.(png|jpg)$/, '')}`] = BASE + `casual/tiles/${file}`;
+  SRCS[`tl_${theme}_${name.replace(/\.(png|jpg|webp)$/, '')}`] = BASE + `casual/tiles/${file}`;
 }
 if (window.DKCONTENT) {
   for (const m of DKCONTENT.maps) if (m.src) SRCS[m.key] = BASE + m.src;
@@ -1076,7 +1076,7 @@ async function loadAssets(onProgress) {
     if (DKCONTENT.INFINITY && DKCONTENT.INFINITY.artList) for (const a of DKCONTENT.INFINITY.artList()) if (a.sheet) { sheets.push(a.key); sheetOpt[a.key] = { stabilize: a.stabilize !== false, anchor: a.anchor || 'foot' }; }
   }
   // 격자는 파일명 -walk-<열>x<행> 에서 (없으면 2x2). 안정화는 인피니티 새 시트만 (content.js infArtList 의 stabilize)
-  for (const k of sheets) { const m = /-walk-(\d+)x(\d+)\.png/i.exec(SRCS[k] || ''); sheetOpt[k] = Object.assign({ cols: m ? +m[1] : 2, rows: m ? +m[2] : 2 }, sheetOpt[k] || {}); }
+  for (const k of sheets) { const m = /-walk-(\d+)x(\d+)\.(?:png|webp)/i.exec(SRCS[k] || ''); sheetOpt[k] = Object.assign({ cols: m ? +m[1] : 2, rows: m ? +m[2] : 2 }, sheetOpt[k] || {}); }
   const raw = ['map', ...Object.values(DICE_SKINS.skins).flatMap(skin => [skin.materialKey, skin.cubeMaterialKey].filter(Boolean))];
   if (window.DKCONTENT) for (const m of DKCONTENT.maps) if (m.src) raw.push(m.key);
   const isTexture = (k) => /^tl_.*_(floor|road|water|road-straight|board)$/.test(k); // 질감·바닥: 배경 제거 없이 그대로
