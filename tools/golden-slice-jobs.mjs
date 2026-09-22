@@ -81,7 +81,7 @@ add({
 add({
   id: 'arena-board', category: 'environment', runtimeTarget: 'casual/tiles/arena/board.png',
   size: '1024x1024', background: 'opaque', refs: ['casual/tiles/arena/board.png'],
-  prompt: `${TILE_COMMON} Redraw the referenced square arena board texture as broad violet-gray stone slabs with a thin warm-gold inset border. Perfectly square, full-bleed, quiet center, even lighting, no perspective-distorted outer scene. Preserve the functional border placement from the reference while simplifying surface noise.`,
+  prompt: `${TILE_COMMON} Redraw the referenced square arena board texture as broad violet-gray stone slabs with simplified joints and sparse warm highlights. This is a repeating surface pattern rendered at 256 pixels, so all four edges must join seamlessly. Perfectly square, full-bleed, quiet center, even lighting, no perspective-distorted outer scene. No inset border, frame, corner ornaments, sockets or runes; the game draws those separately.`,
 });
 add({
   id: 'arena-road', category: 'environment', runtimeTarget: 'casual/tiles/arena/road.png',
