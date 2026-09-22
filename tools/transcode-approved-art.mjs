@@ -25,10 +25,16 @@
 // 증명하고, 하나라도 빠지면 아무것도 건드리지 않고 실패한다.
 import fs from 'node:fs';
 import path from 'node:path';
+import os from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { encodeLossless, sha256 } from './lib/lossless-webp.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+// 인코딩 결과는 저장소 **밖**에 먼저 쌓는다. 안에 쌓으면 수십 분짜리 실행 내내
+// 작업트리가 더러워 보이고, 중간 커밋에 반쯤 변환된 자산이 딸려 들어갈 수 있다.
+const STAGE = fs.mkdtempSync(path.join(os.tmpdir(), 'dk-webp-'));
+// --coverage-only, 고아 가드 실패, 예외 — 어느 길로 나가든 스테이징은 남기지 않는다.
+process.on('exit', () => fs.rmSync(STAGE, { recursive: true, force: true }));
 const arg = (n) => (process.argv.find((a) => a.startsWith(`--${n}=`)) || '').split('=')[1];
 const DRY = process.argv.includes('--dry-run');
 const COVERAGE_ONLY = process.argv.includes('--coverage-only');
@@ -119,9 +125,9 @@ const walk = (dir) => fs.existsSync(dir)
 const MiB = (n) => (n / 1048576).toFixed(2);
 const rel = (p) => path.relative(ROOT, p).split(path.sep).join('/');
 
-// 인코딩은 .webp 를 .png 옆에 내려놓고 마지막에 확정한다. 그래서 중간에 죽으면
-// 짝이 맞는 .webp 가 남는다. 정상 상태에선 한 아트가 .png 이거나 .webp 이지 둘 다일 수
-// 없으므로(저장소 전수 확인), 짝이 있는 .webp 는 예외 없이 중단된 회차의 잔재다.
+// 지금은 저장소 밖(STAGE)에 쌓지만, 이전 버전이 저장소 안에 내려놓고 죽은 잔재가
+// 남아 있을 수 있다. 정상 상태에선 한 아트가 .png 이거나 .webp 이지 둘 다일 수
+// 없으므로(저장소 전수 확인), 짝이 있는 .webp 는 예외 없이 그 잔재다.
 function sweepStaged() {
   const stale = walk(path.join(ROOT, 'casual'))
     .filter((p) => /\.webp$/i.test(p) && fs.existsSync(p.replace(/\.webp$/i, '.png')));
@@ -227,7 +233,11 @@ async function run({ work, sources, templated }) {
     if (r.extension === '.webp') {
       const webp = p.replace(/\.png$/i, '.webp');
       candidate.set(p, webp);
-      if (!DRY) fs.writeFileSync(path.join(ROOT, webp), r.bytes);
+      if (!DRY) {
+        const at = path.join(STAGE, webp);
+        fs.mkdirSync(path.dirname(at), { recursive: true });
+        fs.writeFileSync(at, r.bytes);
+      }
     } else keptPng++;
     if (++done % 100 === 0) process.stderr.write(`  ${done}/${work.length}\r`);
   }
@@ -249,9 +259,13 @@ async function run({ work, sources, templated }) {
   const accepted = [...candidate].filter(([p]) => !held.has(p));
 
   // ── 3. 디스크 확정 ────────────────────────────────────────────────────────
+  // 확정된 것만 저장소로 옮긴다. 보류분은 STAGE 에 남겨둔 채 통째로 버리면 되므로
+  // 저장소는 이 순간까지 한 번도 중간 상태를 갖지 않는다.
   if (!DRY) {
-    for (const [png] of accepted) fs.unlinkSync(path.join(ROOT, png));      // webp 채택 → png 제거
-    for (const [png, webp] of candidate) if (held.has(png)) fs.unlinkSync(path.join(ROOT, webp)); // 보류 → webp 철회
+    for (const [png, webp] of accepted) {
+      fs.renameSync(path.join(STAGE, webp), path.join(ROOT, webp));
+      fs.unlinkSync(path.join(ROOT, png));
+    }
   }
 
   report.totals = { files: work.length, converted: accepted.length, keptAsPng: keptPng,
