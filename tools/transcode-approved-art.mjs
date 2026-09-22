@@ -138,11 +138,12 @@ function sweepStaged() {
 
 function main() {
   sweepStaged();
-  let targets = walk(path.join(ROOT, 'casual'))
-    .filter((p) => /\.png$/i.test(p))
-    .map(rel)
-    .filter((p) => !PINNED.has(p) && !SKIP.some((re) => re.test(p)))
-    .sort();
+  const allPng = walk(path.join(ROOT, 'casual')).filter((p) => /\.png$/i.test(p)).map(rel).sort();
+  // 얼려 둔 것 — 변환하지 않지만 템플릿 그룹의 **구성원이긴 하다**.
+  // 이걸 빼고 그룹을 세면 w004/w008 이 .png 로 남은 채 infWalk 템플릿이 .webp 로 넘어가
+  // 그 둘만 404 가 된다 (실제로 test:biped-knees 가 잡았다).
+  const frozen = new Set(allPng.filter((p) => PINNED.has(p) || SKIP.some((re) => re.test(p))));
+  const targets = allPng.filter((p) => !frozen.has(p));
   const scoped = targets
     .filter((p) => !ONLY.length || ONLY.some((o) => p.startsWith(o)))
     .filter((p) => !EXCLUDE.some((o) => p.startsWith(o)));
@@ -151,6 +152,13 @@ function main() {
   const sources = Object.fromEntries(REWRITE.map((f) => [f, fs.readFileSync(path.join(ROOT, f), 'utf8')]));
 
   // ── 1. 커버리지 증명 — 변환 전에 한다 ───────────────────────────────────
+  // 템플릿 그룹의 구성원 집계는 frozen 까지 포함한다 (원자성 판정에 필요).
+  const groupAll = new Map();
+  for (const p of allPng) {
+    const t = TEMPLATES.find((t) => typeof t.match === 'function' ? t.match(p, sources) : t.match.test(p));
+    if (t && !t.perFile) (groupAll.get(t.id) || groupAll.set(t.id, []).get(t.id)).push(p);
+  }
+
   const literal = [], templated = new Map(), unreferenced = [], orphans = [];
   for (const p of targets) {
     if (REWRITE.some((f) => sources[f].includes(p))) { literal.push(p); continue; }
@@ -206,10 +214,10 @@ function main() {
   if (COVERAGE_ONLY) return null;
   if (work.length !== targets.length) console.log(`이번 회차 변환 대상 ${work.length}장`);
   console.log('');
-  return { work, sources, templated };
+  return { work, sources, templated, groupAll, frozen };
 }
 
-async function run({ work, sources, templated }) {
+async function run({ work, sources, templated, groupAll, frozen }) {
   const TPL = new Map(TEMPLATES.map((t) => [t.id, t]));
   const inScope = new Set(work);
   const report = {
@@ -247,13 +255,13 @@ async function run({ work, sources, templated }) {
   // 그룹 안에 한 장이라도 PNG 로 남으면(webp 가 더 컸거나 --only 범위 밖) 그 장이 404 다.
   // 그래서 그런 그룹은 통째로 보류한다 — 내려놓은 .webp 를 지우고 .png 를 그대로 둔다.
   const acceptedGroups = new Set(), held = new Set();
-  for (const [id, list] of templated) {
-    if (TPL.get(id).perFile) continue;          // 항목마다 독립된 리터럴이라 제약 없음
+  for (const [id, list] of groupAll) {
     const out = list.filter((p) => !inScope.has(p) || !candidate.has(p));
     if (!out.length) { acceptedGroups.add(id); continue; }
     for (const p of list) held.add(p);
-    report.groupsHeldBack.push({ template: id, size: list.length, blockedBy: out.slice(0, 5),
-      reason: out.every((p) => !inScope.has(p)) ? 'out-of-scope' : 'png-smaller-or-out-of-scope' });
+    const why = out.every((p) => frozen.has(p)) ? 'frozen-member'
+      : out.every((p) => !inScope.has(p)) ? 'out-of-scope' : 'mixed';
+    report.groupsHeldBack.push({ template: id, size: list.length, blockedBy: out.slice(0, 5), reason: why });
   }
 
   const accepted = [...candidate].filter(([p]) => !held.has(p));
