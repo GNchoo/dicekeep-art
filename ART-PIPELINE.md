@@ -6,9 +6,10 @@ Dicekeep의 출시 아트 방향은 **밝은 장난감 성채 판타지**다. �
 
 | 파일 | 역할 |
 |---|---|
-| `tools/art-style.json` | 생성 모델, 출력 형식, 캐릭터·환경·키아트 공통 STYLE의 유일한 원본 |
+| `tools/art-style.json` | 생성 모델, 출력 형식, 캐릭터·환경·키아트·타워·아이콘·VFX 공통 STYLE의 유일한 원본 |
 | `tools/inf-roster.json` | 인피니티 몬스터의 정체성·장비·보행 방식 |
 | `tools/inf-jobs.mjs` | 로스터와 게임 데이터를 조합해 인피니티 생성 잡을 만드는 원본 |
+| `tools/golden-slice-jobs.mjs` | 첫 화면 품질 검증용 환경·타워·대표 적/보스·UI·VFX 잡 33개의 원본 |
 | `tools/jobs/*.json` | 실행 가능한 잡. STYLE 문장을 복사하지 않고 `styleProfile`만 참조 |
 | `art-manifest.json` | 현재 아트 파일의 경로·해시·크기·포맷·앱 포함 여부 |
 | `tools/art-manifest.mjs` | 매니페스트 생성 및 최신 상태 검사 |
@@ -31,12 +32,14 @@ Dicekeep의 출시 아트 방향은 **밝은 장난감 성채 판타지**다. �
 node tools/inf-jobs.mjs --waves=1-5 --out=tools/jobs/inf-w01-05.json
 node tools/inf-jobs.mjs --waves=1-5 --refs --out=tools/jobs/inf-w01-05-walk.json
 node tools/inf-jobs.mjs --waves=6-10 --mode=multi --out=tools/jobs/inf-w06-10.json
+npm run art:golden-jobs
 ```
 
 ### 2. 비용 없이 최종 요청 확인
 
 ```powershell
 node tools/img-gen.mjs tools/jobs/keyart.json --dry
+node tools/img-gen.mjs tools/jobs/golden-slice.json --dry
 node tools/img-gen.mjs tools/jobs/inf-w06-10.json --dry
 ```
 
@@ -47,12 +50,17 @@ node tools/img-gen.mjs tools/jobs/inf-w06-10.json --dry
 ```powershell
 $env:OPENAI_API_KEY='...'
 node tools/img-gen.mjs tools/jobs/keyart.json
+npm run art:golden-candidates
+node tools/img-gen.mjs gen/jobs/golden-slice-candidates.json
 ```
 
 - 기존 파일이 있으면 기본적으로 실패한다. 의도적으로 다시 생성할 때만 `--overwrite`를 사용한다.
 - 실행별 manifest에는 모델, 최종 프롬프트 해시, 참조 이미지 해시, 요청 옵션, 응답 파일 해시와 성공·실패 상태가 남는다.
 - 한 잡이라도 실패하거나 응답 수·이미지 검증이 맞지 않으면 프로세스가 실패 코드로 끝난다.
 - 생성 결과는 곧바로 런타임 폴더에 덮어쓰지 않는다. `gen/`에서 검수한 승인본만 별도 커밋으로 승격한다.
+- 골든 슬라이스 잡의 `runtimeTarget`은 승인 후 승격 위치를 기록하는 메타데이터다. 생성기는 이 경로에 쓰지 않으며 실행 manifest에 범주와 함께 보존한다.
+- `runtimeSpec`은 승인본의 최종 크기와 `fixed`·`cover`·`trim-contain` 처리, 알파와 중심축을 고정한다. 1024px 후보를 런타임 경로에 그대로 복사하지 않는다.
+- 기본 후보는 자산당 1개다. `npm run art:golden-candidates`는 첫 검수에서만 쓰는 2개 후보 잡을 추적 밖의 `gen/jobs/`에 만든다.
 
 ### 4. 실제 화면 검수
 
@@ -87,3 +95,9 @@ node tools/art-manifest.mjs --check
 ## 변경 승인 단위
 
 전체 자산을 한 번에 교체하지 않는다. 키아트 1세트, 아레나 타일 1세트, 기본 타워 6종, 대표 적·보스, 핵심 VFX와 UI를 한 화면에서 먼저 승인한다. 승인된 결과를 Dicekeep 자체 참조 세트로 고정한 뒤 같은 계열에 확장한다.
+
+## SRCS 일괄 로더 기준
+
+`npm run measure:asset-load`는 현재 `content.js`와 `game.js`의 실제 `loadAssets(SRCS)` 범위만 평가해 압축 전송량과 RGBA8 디코드 메모리를 계산한다. 2026-09-23 기준 일괄 로더는 770개 요청, 120,497,599 B(114.92 MiB) 전송, 456,974,188 B(435.80 MiB) 디코드다. 누락·중복·쿼리 변형·매니페스트 불일치·모바일 빌드 제외 참조는 0건이다.
+
+이 수치는 현재 SRCS 일괄 로더만 고정하는 회귀 상한이며 브라우저 전체 부팅량은 아니다. HTML 이미지, 아이콘 프리로드 23개, 방향 아트 초기화와 CSS 요청은 후속 브라우저 계측에 포함한다. 로비 상호작용 전 80요청·10 MiB 목표는 그 전체 계측으로 검사한다. 별도 변경에서 타이틀/홈 → 공통 전투 → 선택 스테이지 또는 현재·다음 웨이브 → 장착 스킨 순으로 로더를 분리하며, 기존 동기 전투 시작 계약, 타워 스킨 고정 인덱스와 방향 아트 캐시를 보존한다.

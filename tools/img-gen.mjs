@@ -293,9 +293,64 @@ function assemblePrompt(job, profile) {
   return [base, style].filter(Boolean).join('\n');
 }
 
+function jobMetadata(job) {
+  const category = job.category ?? null;
+  if (category != null && (typeof category !== 'string' || !/^[a-z][a-z0-9-]*$/.test(category))) {
+    throw new Error(`${job.id}: category는 소문자 식별자여야 합니다`);
+  }
+
+  const runtimeTarget = job.runtimeTarget ?? null;
+  if (runtimeTarget != null) {
+    if (typeof runtimeTarget !== 'string' || !runtimeTarget.trim()) {
+      throw new Error(`${job.id}: runtimeTarget이 비어 있습니다`);
+    }
+    if (
+      runtimeTarget.includes('\\')
+      || path.isAbsolute(runtimeTarget)
+      || path.posix.normalize(runtimeTarget) !== runtimeTarget
+      || runtimeTarget === '.'
+      || runtimeTarget.startsWith('../')
+      || runtimeTarget.startsWith('gen/')
+    ) {
+      throw new Error(`${job.id}: runtimeTarget은 gen/ 밖의 정규화된 저장소 상대 경로여야 합니다: ${runtimeTarget}`);
+    }
+  }
+
+  const runtimeSpec = job.runtimeSpec ?? null;
+  if (runtimeSpec != null) {
+    if (!runtimeTarget) throw new Error(`${job.id}: runtimeSpec에는 runtimeTarget이 필요합니다`);
+    if (!runtimeSpec || typeof runtimeSpec !== 'object' || Array.isArray(runtimeSpec)) {
+      throw new Error(`${job.id}: runtimeSpec은 객체여야 합니다`);
+    }
+    const positiveInteger = (value) => Number.isInteger(value) && value > 0;
+    if (!['fixed', 'cover', 'trim-contain'].includes(runtimeSpec.mode)) {
+      throw new Error(`${job.id}: 지원하지 않는 runtimeSpec.mode: ${runtimeSpec.mode}`);
+    }
+    if (!['preserve', 'opaque'].includes(runtimeSpec.alpha)) {
+      throw new Error(`${job.id}: runtimeSpec.alpha는 preserve 또는 opaque여야 합니다`);
+    }
+    if (!['center', 'bottom-center'].includes(runtimeSpec.anchor)) {
+      throw new Error(`${job.id}: 지원하지 않는 runtimeSpec.anchor: ${runtimeSpec.anchor}`);
+    }
+    if (runtimeSpec.mode === 'trim-contain') {
+      if (!positiveInteger(runtimeSpec.maxWidth) || !positiveInteger(runtimeSpec.maxHeight)) {
+        throw new Error(`${job.id}: trim-contain에는 양의 maxWidth와 maxHeight가 필요합니다`);
+      }
+      if (!Number.isInteger(runtimeSpec.trimAlphaThreshold) || runtimeSpec.trimAlphaThreshold < 0 || runtimeSpec.trimAlphaThreshold > 255) {
+        throw new Error(`${job.id}: trimAlphaThreshold는 0~255 정수여야 합니다`);
+      }
+    } else if (!positiveInteger(runtimeSpec.width) || !positiveInteger(runtimeSpec.height)) {
+      throw new Error(`${job.id}: ${runtimeSpec.mode}에는 양의 width와 height가 필요합니다`);
+    }
+  }
+
+  return { category, runtimeTarget, runtimeSpec };
+}
+
 function prepareJob(job) {
   if (!job || typeof job !== 'object') throw new Error('job 항목은 객체여야 합니다');
   if (!job.id || typeof job.id !== 'string') throw new Error('job.id가 필요합니다');
+  const { category, runtimeTarget, runtimeSpec } = jobMetadata(job);
   const { name: styleProfile, value: profile } = profileFor(job);
   const finalPrompt = assemblePrompt(job, profile);
   if (!finalPrompt) throw new Error(`${job.id}: prompt가 비어 있습니다`);
@@ -335,6 +390,9 @@ function prepareJob(job) {
   return {
     raw: job,
     id: job.id,
+    category,
+    runtimeTarget,
+    runtimeSpec,
     styleProfile,
     finalPrompt,
     promptSha256: sha256(finalPrompt),
@@ -409,6 +467,9 @@ if (preflightErrors.length) {
       model: job.model,
       modelSource: job.modelSource,
       styleProfile: job.styleProfile,
+      category: job.category,
+      runtimeTarget: job.runtimeTarget,
+      runtimeSpec: job.runtimeSpec,
       finalPrompt: job.finalPrompt,
       finalPromptSha256: job.promptSha256,
       refs: job.refs.map(({ path: refPath, bytes, sha256: hash }) => ({ path: refPath, bytes, sha256: hash })),
@@ -609,6 +670,9 @@ for (const job of preparedJobs) {
     model: job.model,
     modelSource: job.modelSource,
     styleProfile: job.styleProfile,
+    category: job.category,
+    runtimeTarget: job.runtimeTarget,
+    runtimeSpec: job.runtimeSpec,
     finalPrompt: job.finalPrompt,
     finalPromptSha256: job.promptSha256,
     refs: job.refs.map(({ path: refPath, bytes, sha256: hash }) => ({ path: refPath, bytes, sha256: hash })),
@@ -619,6 +683,7 @@ for (const job of preparedJobs) {
   manifest.jobs.push(entry);
   console.log(`\n== ${job.id}`);
   console.log(`model: ${job.model} (${job.modelSource})`);
+  if (job.runtimeTarget) console.log(`runtime target: ${job.runtimeTarget}`);
   console.log(`options: ${job.options.n}× ${job.options.size} ${job.options.quality} bg=${job.options.background} format=${job.options.outputFormat}${job.refs.length ? ` refs=${job.refs.length}` : ''}`);
   console.log(`prompt sha256: ${job.promptSha256}`);
   if (DRY) {

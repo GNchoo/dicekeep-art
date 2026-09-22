@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "generation": {
     "model": "gpt-image-2-2026-04-21",
     "outputFormat": "png"
@@ -27,6 +27,30 @@
       "generation": {
         "quality": "high",
         "background": "opaque"
+      }
+    },
+    "tower": {
+      "description": "Dicekeep towers, star evolutions and cosmetic tower skins",
+      "style": "Clean casual fantasy mobile-game tower art in a stable 3/4 top-down view. Build one compact toy-like defensive structure from broad rounded shapes with a thick smooth warm-charcoal outer contour and thinner internal lines. Use a bright but controlled palette, two-step matte cel shading, simplified materials, minimal microtexture and one consistent upper-left key light. Keep the base flat on the ground, the complete silhouette inside the canvas and the weapon, emitter or magical focus immediately readable at small tower-defense scale. Preserve rigid architecture without squash, stretch, body wobble or perspective drift. Avoid gritty realism, painterly grain, photorealistic surfaces, muddy darkness, excessive gloss and decorative clutter. No scenery, pedestal, interface frame, text, numbers, logo or watermark.",
+      "generation": {
+        "quality": "high",
+        "background": "transparent"
+      }
+    },
+    "icon": {
+      "description": "Dicekeep home, deck, reward and progression interface icons",
+      "style": "Clean casual fantasy mobile-game interface icon showing one immediately recognizable object with a chunky rounded silhouette, thick smooth warm-charcoal outer contour and a few purposeful internal lines. Use a bright but controlled palette, two-step matte cel shading, simplified materials, minimal microtexture and one consistent upper-left key light. Center the complete object with generous transparent padding and make it readable at 48 to 80 pixels. Keep reward value and function clear through shape and color rather than fine ornament. Avoid gritty realism, painterly grain, photorealistic rendering, tiny decorative noise, excessive gloss and surrounding glow haze. No panel, badge frame, scenery, text, letters, numbers, logo or watermark.",
+      "generation": {
+        "quality": "high",
+        "background": "transparent"
+      }
+    },
+    "vfx": {
+      "description": "Dicekeep projectiles, muzzle flashes, trails and impact effects",
+      "style": "Clean casual fantasy mobile-game combat effect on a genuinely transparent background. Use a bold compact silhouette, a bright controlled core, one clear secondary color and a restrained soft halo with crisp cel-shaped edges. Keep the effect readable at 24 to 64 pixels and make its travel direction or impact center obvious. Use minimal particles and preserve empty transparent space around the complete effect. Avoid photorealistic fire or smoke, painterly grain, muddy bloom, dense spark noise, scenery, ground plates and large opaque haze. No character, tower, interface frame, text, numbers, logo or watermark.",
+      "generation": {
+        "quality": "medium",
+        "background": "transparent"
       }
     }
   }
