@@ -7,6 +7,7 @@ import sharp from 'sharp';
 import browserTools from './e2e/browser.cjs';
 import { validateEntry, prepareView, rasterizeView, sha256, expandConfig, validatePreparedViews } from './lib/directional-rig.mjs';
 import { inspectAlpha } from './lib/directional-image.mjs';
+import { encodeLossless } from './lib/lossless-webp.mjs';
 
 const repo = path.resolve(fileURLToPath(new URL('../', import.meta.url)));
 const args = process.argv.slice(2);
@@ -59,11 +60,17 @@ try {
       }
       if (new Set(hashes).size < (rig.count === 8 ? 6 : 3)) throw new Error(entry.assetId + ' ' + name + ': repeated static poses');
       const prefix = `casual/${entry.role === 'normal' ? 'enemies' : 'bosses'}/inf/directional/${entry.assetId}-${name}`;
-      const sheetFile = prefix + `-walk-${cols}x${rows}.png`, stillFile = prefix + '.png';
-      const sheet = await sharp({ create: { width: entry.cell * cols, height: entry.cell * rows, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 0 } } }).composite(frames.map((input, i) => ({ input, left: i % cols * entry.cell, top: Math.floor(i / cols) * entry.cell }))).png({ compressionLevel: 9 }).toBuffer();
+      const sheetPng = await sharp({ create: { width: entry.cell * cols, height: entry.cell * rows, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 0 } } }).composite(frames.map((input, i) => ({ input, left: i % cols * entry.cell, top: Math.floor(i / cols) * entry.cell }))).png({ compressionLevel: 9 }).toBuffer();
       const still = await sharp(Buffer.from(rendered.still, 'base64')).resize(entry.cell, entry.cell).png({ compressionLevel: 9 }).toBuffer();
       const stillStats = await inspectAlpha(still, entry.assetId + ' ' + name + ' neutral');
-      await recordFile(sheetFile, sheet); await recordFile(stillFile, still);
+      // 런타임 자산은 무손실 WebP 로 굽는다. PNG 로 구우면 다음 승격이 .webp 로 바뀐
+      // casual/**/inf/directional/ 안에 .png 를 다시 심어 혼종이 되고, audit 의
+      // "런타임 == 방금 QA한 바이트" 사슬이 깨진다. encodeLossless 가 보이는 RGBA 를
+      // 전수 대조하므로 검수 대상 픽셀은 그대로다. 사람이 보는 review/*.png 는 PNG 유지.
+      const sheetOut = await encodeLossless(sheetPng, entry.assetId + ' ' + name + ' sheet');
+      const stillOut = await encodeLossless(still, entry.assetId + ' ' + name + ' still');
+      const sheetFile = prefix + `-walk-${cols}x${rows}` + sheetOut.extension, stillFile = prefix + stillOut.extension;
+      await recordFile(sheetFile, sheetOut.bytes); await recordFile(stillFile, stillOut.bytes);
       const board = await sharp({ create: { width: canonicalCell * cols, height: canonicalCell * rows, channels: 4, background: '#253438' } }).composite(rendered.preview.map((base64, i) => ({ input: Buffer.from(base64, 'base64'), left: i % cols * canonicalCell, top: Math.floor(i / cols) * canonicalCell }))).png().toBuffer();
       await recordFile(`review/${entry.assetId}-${name}.png`, board);
       const gifRaw = await sharp({ create: { width: entry.cell, height: entry.cell * rig.count, channels: 4, background: '#253438' } }).composite(frames.map((input, i) => ({ input, left: 0, top: i * entry.cell }))).raw().toBuffer();

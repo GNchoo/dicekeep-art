@@ -12,7 +12,7 @@ const target={version:93,entries:{...ctx.window.INF_DIRECTIONAL_ART.entries}};
 const pending=[];
 const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
 const safe=(base,rel)=>{
- if(typeof rel!=='string'||path.isAbsolute(rel)||rel.includes('..')||!/^casual\/(?:enemies|bosses)\/inf\/directional\/[\w-]+\.png$/.test(rel))throw new Error('Unsafe runtime path '+rel);
+ if(typeof rel!=='string'||path.isAbsolute(rel)||rel.includes('..')||!/^casual\/(?:enemies|bosses)\/inf\/directional\/[\w-]+\.(?:png|webp)$/.test(rel))throw new Error('Unsafe runtime path '+rel);
  const p=path.resolve(base,rel);if(!p.startsWith(base+path.sep))throw new Error('Outside output');return p;
 };
 for(const dir of dirs){
