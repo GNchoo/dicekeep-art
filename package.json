@@ -6,6 +6,8 @@
   "scripts": {
     "fonts": "node tools/copy-fonts.mjs",
     "build:www": "node tools/build-www.mjs",
+    "art:manifest": "node tools/art-manifest.mjs",
+    "test:art-pipeline": "node tools/art-pipeline-test.mjs && node tools/art-manifest.mjs --check",
     "cap:sync": "npm run build:www && npx cap sync",
     "android": "npx cap open android",
     "serve:www": "http-server www -p 8140 -c-1",

@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dicekeep.invalid/schemas/art-manifest.schema.json",
+  "title": "Dicekeep art manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schemaVersion",
+    "generator",
+    "buildRuleSource",
+    "scanRoots",
+    "summary",
+    "assets"
+  ],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "const": 1 },
+    "generator": { "const": "tools/art-manifest.mjs" },
+    "buildRuleSource": { "const": "tools/build-www.mjs" },
+    "scanRoots": {
+      "type": "array",
+      "items": { "type": "string" },
+      "uniqueItems": true
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "files",
+        "bytes",
+        "byCategory",
+        "byLifecycle",
+        "byFormat",
+        "byMobileBuild",
+        "byMobileReason"
+      ],
+      "properties": {
+        "files": { "type": "integer", "minimum": 0 },
+        "bytes": { "type": "integer", "minimum": 0 },
+        "byCategory": { "$ref": "#/$defs/summaryRows" },
+        "byLifecycle": { "$ref": "#/$defs/summaryRows" },
+        "byFormat": { "$ref": "#/$defs/summaryRows" },
+        "byMobileBuild": { "$ref": "#/$defs/summaryRows" },
+        "byMobileReason": { "$ref": "#/$defs/summaryRows" }
+      }
+    },
+    "assets": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/asset" }
+    }
+  },
+  "$defs": {
+    "summaryRows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "files", "bytes"],
+        "properties": {
+          "name": { "type": "string" },
+          "files": { "type": "integer", "minimum": 0 },
+          "bytes": { "type": "integer", "minimum": 0 }
+        }
+      }
+    },
+    "asset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "bytes",
+        "sha256",
+        "format",
+        "width",
+        "height",
+        "hasAlpha",
+        "lifecycle",
+        "category",
+        "role",
+        "mobileBuild"
+      ],
+      "properties": {
+        "path": { "type": "string" },
+        "bytes": { "type": "integer", "minimum": 0 },
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "format": { "enum": ["jpeg", "png", "webp"] },
+        "width": { "type": "integer", "minimum": 1 },
+        "height": { "type": "integer", "minimum": 1 },
+        "hasAlpha": { "type": "boolean" },
+        "lifecycle": { "enum": ["source", "derived", "runtime", "legacy"] },
+        "category": { "enum": ["map", "tower", "enemy", "boss", "tile", "ui", "vfx"] },
+        "role": { "type": "string" },
+        "mobileBuild": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "reason"],
+          "properties": {
+            "status": { "enum": ["included", "excluded"] },
+            "reason": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

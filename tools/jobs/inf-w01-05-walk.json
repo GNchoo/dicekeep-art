@@ -1,5 +1,5 @@
 {
-  "style": "Clean casual mobile-game creature in the style of Random Dice 2 and Kingdom Rush: bright saturated colors, smooth flat cel shading with soft gradients, thick clean dark outlines, rounded simplified chibi proportions, glossy readable shapes, minimal surface texture, cheerful polished cartoon look, readable at small tower-defense scale. No gritty realism, no painterly grain, no semi-realistic rendering, no muddy desaturation. ART DIRECTION OVERRIDE: these rules take precedence over any conflicting creature description, palette wording or reference detail. No gore, blood stains, open wounds, sores, exposed organs, rotting flesh, mutilation, grotesque fused anatomy or photorealistic body horror. Interpret disease, decay and corpse-themed names as costume motifs, muted colors and playful fantasy character design, never literal injury. Skeletons use clean simplified bones; skull motifs are small carved ornaments. Preserve complete bodies, friendly-readable faces and distinct equipment silhouettes.",
+  "styleProfile": "character",
   "jobs": [
     {
       "id": "w001-walk",
