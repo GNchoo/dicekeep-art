@@ -1,0 +1,33 @@
+{
+  "version": "1.0.0",
+  "generation": {
+    "model": "gpt-image-2-2026-04-21",
+    "outputFormat": "png"
+  },
+  "profiles": {
+    "character": {
+      "description": "Dicekeep characters, enemies, bosses and animation sheets",
+      "style": "Clean casual fantasy mobile-game character art with large rounded silhouettes, compact chibi proportions, thick smooth warm-charcoal outer contours and thinner internal lines. Use a bright but controlled palette with clear midtone-highlight separation, two-step matte cel shading with only restrained soft gradients, simplified materials, minimal microtexture and one consistent upper-left key light. Keep faces expressive, equipment shapes distinct and the complete body immediately readable at small tower-defense scale. Avoid gritty realism, painterly grain, photorealistic surfaces, cinematic grime, muddy darkness, excessive gloss and noisy detail. ART DIRECTION OVERRIDE: these rules take precedence over any conflicting creature description, palette wording or reference detail. No gore, blood stains, open wounds, sores, exposed organs, rotting flesh, mutilation, grotesque fused anatomy or photorealistic body horror. Interpret disease, decay and corpse-themed names as costume motifs, muted colors and playful fantasy character design, never literal injury. Skeletons use clean simplified bones; skull motifs are small carved ornaments. Preserve complete bodies, friendly-readable faces and distinct equipment silhouettes.",
+      "generation": {
+        "quality": "medium",
+        "background": "transparent"
+      }
+    },
+    "keyart": {
+      "description": "Dicekeep title, store and promotional key art",
+      "style": "Clean casual fantasy mobile-game key art built from large rounded shapes and a crisp readable silhouette. Use thick smooth warm-charcoal contours, a bright but controlled palette, two-step matte cel shading with restrained soft gradients, simplified materials, minimal microtexture and one consistent upper-left key light. Keep the ivory die fortress, red pips, gold trim and blue-violet magic accents as the visual focus, with cheerful open lighting and calm areas reserved for interface overlays. Avoid gritty realism, painterly grain, photorealistic surfaces, cinematic grime, muddy desaturation, excessive gloss and noisy background detail. No text, letters, numbers, logo, watermark or border.",
+      "generation": {
+        "quality": "high",
+        "background": "opaque"
+      }
+    },
+    "environment": {
+      "description": "Dicekeep arenas, terrain tiles, paths, pads and environment props",
+      "style": "Clean casual fantasy mobile-game environment art in a consistent 3/4 top-down view. Build scenes from broad rounded shapes with thick smooth warm-charcoal contours on interactive props and thinner, quieter contours in the ground. Use a bright but controlled palette, two-step matte cel shading with restrained soft gradients, simplified materials, minimal microtexture and one consistent upper-left key light. Keep playable paths, tower pads and unit silhouettes easy to distinguish at phone size; background detail stays lower-contrast than gameplay objects. Avoid gritty realism, painterly grain, photorealistic surfaces, cinematic grime, muddy darkness, excessive gloss and dense decorative noise. No text, logo or watermark.",
+      "generation": {
+        "quality": "high",
+        "background": "opaque"
+      }
+    }
+  }
+}
