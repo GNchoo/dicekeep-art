@@ -3,7 +3,10 @@
   "main": "src/index.mjs",
   "compatibility_date": "2026-09-08",
   "workers_dev": false,
-  "vars": { "PAYMENT_MODE": "disabled", "ENABLE_LIVE_PURCHASES": "false", "ADMIN_ACCOUNT_IDS": "" },
+  "vars": { "PAYMENT_MODE": "disabled", "ENABLE_LIVE_PURCHASES": "false", "ADMIN_ACCOUNT_IDS": "",
+      // 계정 삭제 안내 페이지. liveReady() 가 요구하는 정책 URL 넷 중 하나 —
+      // 결제는 계속 disabled 이지만 이 하나는 미리 채워 둔다.
+      "ACCOUNT_DELETION_URL": "https://dicekeep.cgn3731.workers.dev/account-deletion.html" },
   "durable_objects": { "bindings": [{ "name": "COMMERCE", "class_name": "CommerceLedger" }, { "name": "GAME_ROOMS", "class_name": "Room", "script_name": "dicekeep-net" }] },
   "migrations": [{ "tag": "v1", "new_sqlite_classes": ["CommerceLedger"] }]
 }
