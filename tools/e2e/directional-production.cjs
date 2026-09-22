@@ -1,6 +1,8 @@
 // Deployment verification; opt in with an explicit directory URL.
 // E2E_BASE_URL=https://example/ node tools/e2e/directional-production.cjs
-// Downloads all 674 final PNGs once (about 122 MB). Never replaces HTTP responses.
+// Downloads every directional PNG once plus the 14 star towers (about 122 MB).
+// The extreme manifest is pinned by source SHA only - fetching its 666 runtime images
+// would add ~74 MB per run for no extra deployment signal. Never replaces HTTP responses.
 const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
@@ -9,7 +11,10 @@ const { createHash } = require('node:crypto');
 const sharp = require('sharp');
 const { launchBrowser } = require('./browser.cjs');
 const repo = path.resolve(__dirname, '../..');
-const codeFiles = ['index.html', 'game.js', 'content.js', 'infinity-art.js', 'directional-art.js'];
+// extreme-art.js is here because the runtime merges it into the same approved map
+// (infinity-art.js builds `entries` from INF_DIRECTIONAL_ART + INF_EXTREME_ART).
+// Without it half the approved identities shipped unverified.
+const codeFiles = ['index.html', 'game.js', 'content.js', 'infinity-art.js', 'directional-art.js', 'extreme-art.js'];
 const waves = [1, 70, 100, 101];
 const expectedIds = ['w001', 'b070', 'b070-2', 'b100', 'b100-2', 'w101'];
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
@@ -66,12 +71,20 @@ async function main() {
     assert.ok(url, 'Actual index must load ' + file);
     const r = await fetchChecked(url, file); report.http.codes.push(r.row);
   }
-  const context = { window: {} }; vm.runInNewContext(fs.readFileSync(path.join(repo, 'directional-art.js'), 'utf8'), context);
+  // Expectations are derived from the manifests, never hardcoded: the previous literals
+  // (110 entries / 330 fallbacks / 660 PNGs) went stale the moment extreme art landed and
+  // this checker then failed for a year without anyone noticing.
+  const context = { window: {} };
+  for (const f of ['directional-art.js', 'extreme-art.js']) vm.runInNewContext(fs.readFileSync(path.join(repo, f), 'utf8'), context);
   const entries = context.window.INF_DIRECTIONAL_ART.entries;
-  assert.equal(Object.keys(entries).length, 110); assert.ok(Object.values(entries).every(e => e.ready));
+  const extremeEntries = context.window.INF_EXTREME_ART.entries;
+  const overlap = Object.keys(entries).filter(id => id in extremeEntries);
+  assert.deepEqual(overlap, [], 'Manifests must not share identity ids; the runtime would count them as duplicates');
+  const approvedEntries = Object.keys(entries).length + Object.keys(extremeEntries).length;
+  assert.ok(Object.values(entries).every(e => e.ready) && Object.values(extremeEntries).every(e => e.ready));
   for (const id of expectedIds) assert.ok(entries[id], 'Missing release identity ' + id);
   const directional = [...new Set(Object.values(entries).flatMap(e => Object.values(e.views).flatMap(v => [v.still, v.sheet])))];
-  assert.equal(directional.length, 660);
+  assert.equal(directional.length, Object.keys(entries).length * 3 * 2, 'Every identity contributes 3 views x (still, sheet)');
   const images = [...directional, ...Array.from({ length: 14 }, (_, i) => 'casual/towers/star-' + String(i + 7).padStart(2, '0') + '.png')];
   let next = 0, fetchError;
   // Drain in-flight requests before writing failure evidence, and stop assigning
@@ -85,9 +98,9 @@ async function main() {
   }));
   if (fetchError) throw fetchError;
   report.http.images.sort((a, b) => a.path.localeCompare(b.path));
-  assert.equal(report.http.images.length, 674); assert.ok(report.http.maxConcurrent <= 4);
+  assert.equal(report.http.images.length, images.length); assert.ok(report.http.maxConcurrent <= 4);
   report.http.pngBytes = report.http.images.reduce((n, r) => n + r.bytes, 0);
-  console.log('HTTP PASS 5 code files + 674 PNGs;', report.http.pngBytes, 'PNG bytes; max concurrent', report.http.maxConcurrent);
+  console.log('HTTP PASS ' + codeFiles.length + ' code files + ' + images.length + ' PNGs;', report.http.pngBytes, 'PNG bytes; max concurrent', report.http.maxConcurrent);
   const requiredPaths = new Set([...images, ...codeFiles].map(f => new URL(f, base).pathname));
   const browser = await launchBrowser();
   try {
@@ -114,7 +127,7 @@ async function main() {
       const url = new URL('index.html', base); url.searchParams.set('net', 'off'); url.searchParams.set('unlock', 'all'); url.searchParams.set('deploymentQA', report.startedAt);
       await page.goto(url.href); await page.waitForFunction(() => window.DK && DK.phase === 'title' && DKART.state().initialized, null, { timeout: 120000 });
       row.boot = compactCache(await page.evaluate(() => DKART.state()));
-      assert.equal(row.boot.approvedEntries, 110); assert.equal(row.boot.readyFallbacks, 330); assert.deepEqual(row.boot.invalidReady, []);
+      assert.equal(row.boot.approvedEntries, approvedEntries); assert.equal(row.boot.readyFallbacks, approvedEntries * 3); assert.deepEqual(row.boot.invalidReady, []);
       await screenshot(page, device + '-title'); await page.click('#ov-btn');
       await page.evaluate(() => { DK.muted = true; DKstartInf('endless'); DK.speed = 1; DK.gold = 90000; DK.lives = 99999; });
       await page.waitForFunction(() => DK.phase === 'playing');
@@ -180,7 +193,7 @@ async function main() {
     }
   } finally { await browser.close(); }
   assert.ok(codeFiles.every(f => sourcePins[f] === sha(fs.readFileSync(path.join(repo, f)))), 'Local expected code changed during validation');
-  report.summary = { matchedCodeFiles: 5, matchedDirectionalPngs: 660, matchedTowerPngs: 14, devices: 2, actorChecks: report.devices.reduce((n, r) => n + r.actors.length, 0), directionChecks: report.devices.reduce((n, r) => n + r.actors.reduce((s, a) => s + a.directions.length, 0), 0), actualTowerDraws: report.devices.reduce((n, r) => n + r.towersDrawn.length, 0) };
+  report.summary = { matchedCodeFiles: codeFiles.length, approvedEntries, matchedDirectionalPngs: directional.length, matchedTowerPngs: images.length - directional.length, devices: 2, actorChecks: report.devices.reduce((n, r) => n + r.actors.length, 0), directionChecks: report.devices.reduce((n, r) => n + r.actors.reduce((s, a) => s + a.directions.length, 0), 0), actualTowerDraws: report.devices.reduce((n, r) => n + r.towersDrawn.length, 0) };
   report.passed = true; delete report.current;
 }
 main().catch(e => { report.errors.push(e.stack || String(e)); process.exitCode = 1; }).finally(() => {

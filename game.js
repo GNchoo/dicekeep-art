@@ -65,7 +65,7 @@ const STAR_BANDS = [
 const starBand = (g) => STAR_BANDS.find((b) => g >= b.min && g <= b.max) || STAR_BANDS[STAR_BANDS.length - 1];
 for (let g = 7; g <= 20; g++) {
   const b = starBand(g), k = g - 6;
-  // 메운디 등급 특전(인피니티): 14~17★ 에픽 = 방어 무시 + 락다운, 18~19★ 신화 = 공속 ×1.5, 20★ 태초 = 트랙 전체 스플래시 (일반형)
+  // 등급 특전(인피니티): 14~17★ 에픽 = 방어 무시 + 락다운, 18~19★ 신화 = 공속 ×1.5, 20★ 태초 = 트랙 전체 스플래시 (일반형)
   const perk = g >= 20 ? 'primal' : g >= 18 ? 'myth' : g >= 14 ? 'epic' : null;
   const perkDesc = perk === 'primal' ? ' · 태초: 일반형, 트랙 전체 스플래시, 공속 ×1.25' : perk === 'myth' ? ' · 신화: 공속 ×1.5' : perk === 'epic' ? ' · 에픽: 방어 무시 + 락다운' : '';
   TOWER_DEFS[g] = {
@@ -724,7 +724,18 @@ const BASE = (() => {
   return '/dicekeep/';
 })();
 const DIR_ART = window.DKDirectionalArt;
-const directionalArt = DIR_ART ? DIR_ART.create({ base: BASE, budget: 96 * 1024 * 1024, concurrency: 2 }) : null;
+// 극한 아트는 앱 번들에 없다 (build-www.mjs 가 뺀다). 로드 직전에 DKEXTREME 이 URL 을
+// 캐시된 로컬 파일이나 원격 주소로 바꾼다. 웹에서는 available() 이 false 라 그대로 통과한다.
+const artLoadUrl = (url) => (window.DKEXTREME ? DKEXTREME.resolve(url) : url);
+const directionalArt = DIR_ART ? DIR_ART.create({ base: BASE, budget: 96 * 1024 * 1024, concurrency: 2,
+  loadImage: (url, record) => new Promise((resolve, reject) => {
+    // record.mandatory 는 인라인 data URI 라 건드리면 안 된다 — 부팅 계약(네트워크 0건)이 걸려 있다.
+    const target = record && record.mandatory ? url : artLoadUrl(url);
+    const im = new Image(); let settled = false;
+    const finish = (error) => { if (settled) return; settled = true; clearTimeout(timer); im.onload = im.onerror = null; error ? reject(error) : resolve(im); };
+    const timer = setTimeout(() => finish(new Error('art load timeout')), 15000);
+    im.onload = () => finish(); im.onerror = () => finish(new Error('art load failed')); im.src = target;
+  }) }) : null;
 let directionalDemandAt = -Infinity;
 function resolvedDirectionalId(appearance) {
   if (!appearance) return null;
@@ -834,7 +845,7 @@ const TILE_ASSET_FILES = Object.freeze([
 // END TILE_ASSET_FILES
 for (const file of TILE_ASSET_FILES) {
   const [theme, name] = file.split('/');
-  SRCS[`tl_${theme}_${name.replace(/\.(png|jpg)$/, '')}`] = BASE + `casual/tiles/${file}`;
+  SRCS[`tl_${theme}_${name.replace(/\.(png|jpg|webp)$/, '')}`] = BASE + `casual/tiles/${file}`;
 }
 if (window.DKCONTENT) {
   for (const m of DKCONTENT.maps) if (m.src) SRCS[m.key] = BASE + m.src;
@@ -1076,7 +1087,7 @@ async function loadAssets(onProgress) {
     if (DKCONTENT.INFINITY && DKCONTENT.INFINITY.artList) for (const a of DKCONTENT.INFINITY.artList()) if (a.sheet) { sheets.push(a.key); sheetOpt[a.key] = { stabilize: a.stabilize !== false, anchor: a.anchor || 'foot' }; }
   }
   // 격자는 파일명 -walk-<열>x<행> 에서 (없으면 2x2). 안정화는 인피니티 새 시트만 (content.js infArtList 의 stabilize)
-  for (const k of sheets) { const m = /-walk-(\d+)x(\d+)\.png/i.exec(SRCS[k] || ''); sheetOpt[k] = Object.assign({ cols: m ? +m[1] : 2, rows: m ? +m[2] : 2 }, sheetOpt[k] || {}); }
+  for (const k of sheets) { const m = /-walk-(\d+)x(\d+)\.(?:png|webp)/i.exec(SRCS[k] || ''); sheetOpt[k] = Object.assign({ cols: m ? +m[1] : 2, rows: m ? +m[2] : 2 }, sheetOpt[k] || {}); }
   const raw = ['map', ...Object.values(DICE_SKINS.skins).flatMap(skin => [skin.materialKey, skin.cubeMaterialKey].filter(Boolean))];
   if (window.DKCONTENT) for (const m of DKCONTENT.maps) if (m.src) raw.push(m.key);
   const isTexture = (k) => /^tl_.*_(floor|road|water|road-straight|board)$/.test(k); // 질감·바닥: 배경 제거 없이 그대로
@@ -2720,7 +2731,7 @@ function buildInfinityWave(w) {
   const C = window.DKCONTENT;
   const INF = C.INFINITY;
   const P = INF.waveForMode(w, S.inf && S.inf.mode);
-  const M = INF.monsterFor(w); // 메운디식 로스터: 웨이브 하나 = 몬스터 한 종류 (보스 웨이브는 보스만)
+  const M = INF.monsterFor(w); // 인피니티 로스터: 웨이브 하나 = 몬스터 한 종류 (보스 웨이브는 보스만)
   const q = [];
   let t = 0.45;
   const add = (type, extra) => { q.push(Object.assign({ type, t, hpMult: P.hpMult, goldMult: P.goldMult, spdMult: P.speedMult, sizeClass: M.cls, armor: M.armor, wave: w }, extra || {})); };
@@ -2822,7 +2833,7 @@ function startWave() {
   coachHit('wave');
   syncUI();
 }
-// 메운디: 크기·방어력 예고
+// 인피니티: 크기·방어력 예고
 function announceWave(n) {
   if (S.mode !== 'infinity') {
     const tip = n === 1 ? stageLesson(S.stage) : n === 3 ? '공중 적은 빠르게 이동합니다. 모든 주사위가 공중 적을 공격할 수 있습니다.' : n === 5 ? '땅굴 적은 숨었을 때 공격받지 않습니다. 모습을 드러내는 구간에 화력을 모으세요.' : '';
@@ -3129,7 +3140,7 @@ function spawnEnemy(item) {
   S.enemies.push(e);
   if (S.mode === 'infinity') enforceFieldCap();
   const p = epos(e);
-  if (isBoss && !battleRun() && S.mode === 'infinity' && S.inf && !(S.inf.bossT > 0)) S.inf.bossT = S.net ? (S.net.timing.bossLimit / 1000) : (DKCONTENT.INFINITY.bossTimeLimit || 320); // 메운디: 보스 제한시간 (멀티는 방 규칙)
+  if (isBoss && !battleRun() && S.mode === 'infinity' && S.inf && !(S.inf.bossT > 0)) S.inf.bossT = S.net ? (S.net.timing.bossLimit / 1000) : (DKCONTENT.INFINITY.bossTimeLimit || 320); // 인피니티: 보스 제한시간 (멀티는 방 규칙)
   if (isBoss) {
     // 보스 등장: 포탈 폭발 + 화면 흔들림 + 배너 + 포효
     S.shakeT = 0.7;
@@ -3163,7 +3174,7 @@ function damageEnemy(e, dmg, src) {
     dmg = Math.max(dmg*0.25,dmg-armor);
     if (ability === 'poison') { const active=e.poisonT>0; e.poisonT=Math.max(e.poisonT||0,st.poisonDur); e.poisonDps=Math.max(treeRun()&&!active?0:e.poisonDps||0,towerDmg(src)*st.poisonScale); }
   }
-  if (!deckRun() && S.mode === 'infinity' && S.inf && window.DKCONTENT) { // 메운디: 상성 · 방어력 · 에픽 락다운 (인피니티 전용)
+  if (!deckRun() && S.mode === 'infinity' && S.inf && window.DKCONTENT) { // 상성 · 방어력 · 에픽 락다운 (인피니티 전용)
     const INF = DKCONTENT.INFINITY, def = src && src.def;
     // 상성은 잡몹에만 건다. 보스는 어떤 공격형이든 1배로 받는다.
     // 순수운빨은 뽑은 눈이 전부인 모드라, 보스 크기와 공격형이 안 맞는다는 이유로 판이 통째로
@@ -3186,7 +3197,7 @@ function damageEnemy(e, dmg, src) {
     spawnDeath(e, p);
     if (e.isBoss || e.type === 'boss') {
       const ch = chestDef();
-      if (S.mode === 'infinity' && S.inf && ch && DKCONTENT.INFINITY.bossReward) { // 메운디 보스 보상 — 보스 한 마리마다 (주사위는 전부, 골드는 그 웨이브 보스 수로 나눈다)
+      if (S.mode === 'infinity' && S.inf && ch && DKCONTENT.INFINITY.bossReward) { // 보스 보상 — 보스 한 마리마다 (주사위는 전부, 골드는 그 웨이브 보스 수로 나눈다)
         const r = deckRun() ? { gold:180+Math.floor((e.wave||S.wave)*2),dice:['d20'] } : DKCONTENT.INFINITY.bossReward(e.wave || S.wave);
         const nBoss = Math.max(1, e.bossCount || 1);
         const gold = Math.round(r.gold / nBoss);
@@ -3437,7 +3448,7 @@ function upgradeFace(f) {
   const lv = S.inf.power[f] || 0;
   if (lv >= d.maxLv) { SFX.deny(); return false; }
   const cost = d.cost(lv);
-  if (S.gold < cost) { SFX.deny(); return false; } // 랜덤다이스식: 골드로 파워업
+  if (S.gold < cost) { SFX.deny(); return false; } // 골드로 파워업
   S.gold -= cost; S.inf.spent += cost;
   S.inf.power[f] = lv + 1;
   const def = TOWER_DEFS[f];
@@ -3710,7 +3721,7 @@ function update(dt) {
   updateVisuals(dt);
   if (battleRun()) return; // 공동 시계·목표가 기존 101웨이브 종료와 독립이다.
 
-  // 메운디 보스 제한시간: 보스가 살아있는 동안 카운트다운, 0이 되면 런 종료
+  // 보스 제한시간: 보스가 살아있는 동안 카운트다운, 0이 되면 런 종료
   if (S.mode === 'infinity' && S.inf && S.inf.bossT > 0) {
     const boss = S.enemies.find(x => !x.dead && x.isBoss);
     if (!boss) S.inf.bossT = 0;
@@ -3720,7 +3731,7 @@ function update(dt) {
     }
   }
   // 웨이브 종료 판정
-  // 인피니티: 스폰이 끝나면 완료 (남은 적은 계속 돈다). 단 보스 웨이브는 메운디 보스 라운드처럼 보스를 잡을 때까지 다음 웨이브를 막는다 (제한시간 5분 20초)
+  // 인피니티: 스폰이 끝나면 완료 (남은 적은 계속 돈다). 단 보스 웨이브는 보스를 잡을 때까지 다음 웨이브를 막는다 (제한시간 5분 20초)
   const infBossHold = S.mode === 'infinity' && DKCONTENT.INFINITY.isBossWave(S.wave) && S.enemies.some(e => e.isBoss && !e.dead);
   if (S.waveActive && S.spawnQ.length === 0 && (S.enemies.length === 0 || (S.mode === 'infinity' && !infBossHold))) {
     S.waveActive = false;
@@ -5998,7 +6009,7 @@ window.addEventListener('pointerup', ev => {
   if (DRAG.active && ev.pointerId === DRAG.pid) endPlaceDrag(ev);
 }, { passive: false });
 
-// ==================== 로그 · 채팅 (스타크래프트식) ====================
+// ==================== 로그 · 채팅 (화면 오버레이) ====================
 // 로그는 모드와 상관없이 뜬다. 채팅은 멀티(방 안)에서만 열린다.
 // 줄은 LOG.ttl 초 동안 남았다가 서서히 사라진다 — CSS 애니메이션이라 프레임 비용이 없다.
 const LOG = { ttl: 9, fade: 1.2, max: 8, nodes: [] };
@@ -6052,23 +6063,60 @@ if (chatForm) {
   chatForm.addEventListener('submit', (ev) => { ev.preventDefault(); chatSend(); });
   chatInput.addEventListener('keydown', (ev) => { ev.stopPropagation(); if (ev.key === 'Escape') chatClose(); });
 }
+// 이 방에서 차단한 상대. pid 가 탭 수명(sessionStorage)이라 그 이상은 의미가 없고,
+// 사용자에게도 "이 방에서 차단" 이라고 정직하게 표기한다.
+const MP_MUTED = new Set();
 // 대기실 채팅 목록 (#mp-chat-lines, 최근 30줄). 게임 중 채팅도 여기 쌓여 대기실로 돌아와도 남는다
-function pushRoomChat(name, text, color) {
+function pushRoomChat(name, text, color, pid) {
   const box = $('mp-chat-lines'); if (!box) return;
   const el = document.createElement('div');
   el.className = 'mp-chat-line';
   el.innerHTML = `<span class="who" style="color:${color || '#7fd4ff'}">${escapeHtml(name)}</span> ${escapeHtml(text)}`;
+  // 이름표를 누르면 신고·차단. 게임 중 채팅도 이 목록에 쌓이므로 모든 메시지에 닿는다.
+  if (pid && pid !== (window.DKNET && DKNET.me && DKNET.me.pid)) {
+    const who = el.querySelector('.who');
+    who.style.cursor = 'pointer'; who.title = '신고하거나 이 방에서 차단합니다';
+    who.addEventListener('click', () => mpReportMenu(pid, name));
+  }
   box.appendChild(el);
   while (box.childElementCount > 30) box.removeChild(box.firstChild);
   box.scrollTop = box.scrollHeight;
 }
-function clearRoomChat() { const box = $('mp-chat-lines'); if (box) box.innerHTML = ''; }
+function clearRoomChat() { const box = $('mp-chat-lines'); if (box) box.innerHTML = ''; MP_MUTED.clear(); }
+// 신고·차단 메뉴. Play 의 이용자 제작 콘텐츠 정책이 둘 다 요구한다.
+const MP_REPORT_LABELS = { abuse: '욕설·괴롭힘', sexual: '음란·선정성', spam: '도배·광고', cheat: '부정행위', other: '기타' };
+function mpReportMenu(pid, name) {
+  const dlg = $('chat-report'); if (!dlg) return;
+  dlg.querySelector('.cr-who').textContent = name;
+  dlg.dataset.pid = pid; dlg.dataset.name = name;
+  dlg.querySelector('.cr-block').textContent = MP_MUTED.has(pid) ? '차단 해제' : '이 방에서 차단';
+  if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', '');
+}
+// 신고·차단 다이얼로그 배선. 신고는 서버로, 차단은 이 방에서만.
+(function wireChatReport() {
+  const dlg = document.getElementById('chat-report'); if (!dlg) return;
+  const close = () => { try { dlg.close(); } catch (e) { dlg.removeAttribute('open'); } };
+  dlg.querySelector('.cr-close').addEventListener('click', close);
+  dlg.querySelector('.cr-block').addEventListener('click', () => {
+    const pid = dlg.dataset.pid; if (!pid) return close();
+    if (MP_MUTED.has(pid)) { MP_MUTED.delete(pid); toast('차단을 해제했습니다.'); }
+    else { MP_MUTED.add(pid); toast(`${dlg.dataset.name} 님을 이 방에서 차단했습니다.`); }
+    close();
+  });
+  for (const b of dlg.querySelectorAll('.cr-reasons button')) b.addEventListener('click', () => {
+    const pid = dlg.dataset.pid;
+    if (pid && window.DKNET && DKNET.report(pid, b.dataset.reason)) toast('신고를 접수했습니다.');
+    else toast('신고를 보내지 못했습니다.');
+    close();
+  });
+})();
 if (window.DKNET) {
   const LOG_KINDS = ['sys', 'gacha', 'up', 'boom', 'boss', 'life'];
   DKNET.on('chat', (m) => {
     const name = String(m.name || '?').slice(0, 12), text = String(m.text || '').slice(0, 120);
+    if (m.pid && MP_MUTED.has(m.pid)) return;   // 차단: 그 사람 줄은 아예 뜨지 않는다
     const color = typeof PC !== 'undefined' && m.pid ? PC[mpSeat(m.pid)] : '';
-    pushRoomChat(name, text, color);
+    pushRoomChat(name, text, color, m.pid);
     if (S.phase !== 'mpRoom') pushLog(text, 'chat', name, color);
   });
   DKNET.on('log', (m) => pushLog(String(m.text || '').slice(0, 120), LOG_KINDS.includes(m.kind) ? m.kind : 'sys', String(m.name || '?').slice(0, 12)));
@@ -6200,6 +6248,27 @@ const startAccountRun = async (mode, onPure) => {
     return null;
   }
 };
+// 극한 첫 진입 — 아트 666장을 받아 둔다. 이미 받았으면 즉시 끝난다.
+// 진행 표시는 기존 로딩 오버레이(#ov-load)를 그대로 쓴다.
+async function prefetchExtremeArt() {
+  const X = window.DKEXTREME;
+  if (!X || !X.available()) return;                 // 웹이거나 Filesystem 이 없다 — 상대경로가 그대로 먹는다
+  const box = $('overlay-box'), load = $('ov-load'), txt = $('ov-load-txt');
+  let shown = false;
+  const show = (pr) => {
+    if (!shown && pr < 1) { shown = true; if (box) box.classList.add('loading'); if (load) load.classList.remove('hidden'); }
+    if (shown) { const bar = $('ov-load-bar'); const pct = Math.max(0, Math.min(100, Math.round(pr * 100)));
+      if (bar) bar.style.width = pct + '%'; if (txt) txt.textContent = '극한 아트 준비 중 ' + pct + '%'; }
+  };
+  try {
+    const r = await X.ensure(show);
+    if (r && r.failed) toast(`극한 아트 ${r.failed}장을 못 받았습니다. 저해상도로 진행합니다.`);
+  } catch (error) { toast('극한 아트를 준비하지 못했습니다. 저해상도로 진행합니다.'); }
+  finally {
+    if (shown) { if (load) load.classList.add('hidden'); if (box) box.classList.remove('loading'); if (txt) txt.textContent = '불러오는 중 0%'; }
+  }
+}
+
 const startInf = async (kind) => {
   if (!infinityUnlocked() || startingAccountRun) return;
   audio(); startingAccountRun = true;
@@ -6208,6 +6277,9 @@ const startInf = async (kind) => {
       if (kind === 'clear') { startInfinity('clear', null, null); toast('저장된 도전을 유지합니다. 이번 순수운빨 보상은 이 기기에 저장됩니다.'); return; }
       lobbyShow('single'); renderRunResume(); toast('저장된 도전을 이어가거나 보상을 받은 뒤 새로 시작하세요.'); return;
     }
+    // 극한 아트는 앱에 없다 — 첫 진입 때 받는다. 실패해도 막지 않는다:
+    // 인라인 64px fallback 으로 강등돼 플레이는 그대로 이어진다.
+    if (kind === 'extreme') await prefetchExtremeArt();
     const run = await startAccountRun(kind, text => toast(`${text} 순수운빨은 그대로 시작합니다 — 이 런은 계정 보상 없이 기록됩니다.`));
     startInfinity(kind, null, run);
   } catch (error) { toast(COMMERCE.errorText(error)); }
@@ -7433,7 +7505,7 @@ function drawLoading(pr) {
   window.DKappearance = DIR_ART;
   window.DKTD = TOWER_DEFS;                        // 테스트 훅
   window.DKtowerDamage = towerDmg;
-  window.DKdamage = damageEnemy; window.DKenhance = enhanceTower; window.DKqueue = () => S.inf && S.inf.queue; window.DKhelp = openInfHelp; // 메운디 시스템 테스트 훅
+  window.DKdamage = damageEnemy; window.DKenhance = enhanceTower; window.DKqueue = () => S.inf && S.inf.queue; window.DKhelp = openInfHelp; // 인피니티 시스템 테스트 훅
   window.DKlog = pushLog; window.DKlogs = () => LOG.nodes.map(n => n.textContent); window.DKchatOpen = chatOpen; // 로그·채팅 훅
   window.DKNETLOG = window.DKNET && DKNET._debug;   // 멀티 소켓 로그
   window.DKplace = tryPlace;                      // 보유 주사위를 석단 idx 에 놓기

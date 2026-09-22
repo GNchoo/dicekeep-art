@@ -1,7 +1,10 @@
 const fs = require('node:fs'), path = require('node:path'), assert = require('node:assert/strict');
 const { launchBrowser } = require('./browser.cjs');
 const out = path.resolve(process.env.E2E_OUTPUT_DIR || 'gen/e2e/extreme-multiplayer'); fs.mkdirSync(out, { recursive: true });
-const net = process.env.NET || 'ws://localhost:8788', base = process.env.E2E_BASE_URL || 'http://localhost:8137/';
+// 멀티 dev-server 는 8787 에서 뜬다 (net/test/dev-server.mjs:16, README 의 기동 명령도 8787).
+// 기본값이 8788 이라 서버를 띄워도 연결이 안 돼 :27 에서 30초 타임아웃으로 죽고 있었다 —
+// 다른 멀티 테스트 5종은 전부 8787 을 쓴다.
+const net = process.env.NET || 'ws://localhost:8787', base = process.env.E2E_BASE_URL || 'http://localhost:8137/';
 (async () => {
   const browser = await launchBrowser(), pages = [], errors = [], report = { checks: [], pass: false };
   try {

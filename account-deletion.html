@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>계정 삭제 — 주사위 성채 (Dicekeep Account Deletion)</title>
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; padding: 24px 16px 48px; background: #0d0b09; color: #e8dcc5; font: 16px/1.65 "Noto Sans KR", system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 720px; margin: 0 auto; }
+  h1 { font-size: 1.6rem; color: #ffd452; margin: 0 0 4px; }
+  h2 { font-size: 1.15rem; color: #ffd452; margin: 28px 0 8px; border-bottom: 1px solid #3a2f22; padding-bottom: 4px; }
+  p, li { margin: 6px 0; }
+  ul { padding-left: 20px; }
+  code { background: #1a140d; padding: 1px 5px; border-radius: 4px; font-size: .92em; }
+  a { color: #ffd452; }
+  .meta { color: #a8977a; font-size: .9rem; }
+  hr { border: 0; border-top: 1px solid #3a2f22; margin: 40px 0; }
+  .en { color: #d9cfbb; }
+  table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+  th, td { border: 1px solid #3a2f22; padding: 7px 9px; text-align: left; vertical-align: top; font-size: .95rem; }
+  th { background: #1a140d; color: #ffd452; font-weight: 600; }
+  .warn { border: 1px solid #a3563f; background: rgba(125,58,44,.22); border-radius: 8px; padding: 12px 14px; margin: 16px 0; }
+</style>
+</head>
+<body>
+<main>
+
+<h1>계정 삭제</h1>
+<p class="meta">주사위 성채 (Dicekeep) · <code>com.fallman.dicekeep</code> · 시행일 2026-09-22</p>
+
+<div class="warn"><strong>계정 삭제는 되돌릴 수 없습니다.</strong> 삭제하면 진행·수집·덱·기록이 모두 사라지고, 같은 Google 계정으로 다시 로그인해도 복구되지 않습니다.</div>
+
+<h2>1. 삭제하는 방법</h2>
+<p><strong>앱에서</strong> — 게임 실행 → 상점 → 계정 영역 → <strong>계정 삭제</strong>. 확인 창에 <code>DELETE</code> 를 입력하면 즉시 처리됩니다.</p>
+<p><strong>앱 없이</strong> — 아래 <a href="#web">웹에서 삭제</a>에서 Google 계정으로 로그인한 뒤 같은 절차를 진행합니다.</p>
+<p><strong>이메일</strong> — 위 두 방법을 쓸 수 없으면 <a href="mailto:cgn3731@gmail.com">cgn3731@gmail.com</a> 으로 요청해 주세요. 본인 확인 후 처리합니다.</p>
+
+<h2>2. 무엇이 삭제되고 무엇이 남나</h2>
+<table>
+  <tr><th>항목</th><th>처리</th><th>시점</th></tr>
+  <tr><td>Google 계정 연결</td><td><strong>삭제</strong> — 계정을 되찾을 수 없게 됩니다</td><td>즉시</td></tr>
+  <tr><td>진행·수집·덱·기록·조각</td><td><strong>삭제</strong></td><td>즉시</td></tr>
+  <tr><td>로그인 세션</td><td><strong>삭제</strong> — 모든 기기에서 로그아웃</td><td>즉시</td></tr>
+  <tr><td>진행 중·종료된 런 기록</td><td><strong>삭제</strong></td><td>즉시</td></tr>
+  <tr><td>거래 기록 (주문번호·금액·일시)</td><td><strong>익명화 후 보존</strong> — 계정 연결과 구매 토큰을 지웁니다</td><td>전자상거래법상 5년</td></tr>
+  <tr><td>멀티 전투 영수증</td><td>자동 만료</td><td>최대 30일</td></tr>
+</table>
+<p class="meta">거래 기록을 남기는 이유는 법령상 보존 의무 때문이며, 남는 것은 “무엇이 얼마에 언제 팔렸는가” 뿐입니다. 누구의 거래인지로 이어지는 고리 — Google 계정 연결, 구매 토큰, 계정 번호 참조 — 는 모두 제거합니다.</p>
+<p class="meta">기기에만 저장된 게스트 진행(로그인 전 플레이)은 서버에 없으므로 이 절차로 지워지지 않습니다. 앱을 삭제하거나 기기의 앱 데이터를 지우면 함께 사라집니다.</p>
+
+<h2 id="web">3. 웹에서 삭제</h2>
+<p id="del-status" class="meta">계정 서비스 상태를 확인하는 중입니다…</p>
+<div id="del-ui" hidden>
+  <p><button id="del-signin" type="button">Google 계정으로 로그인</button></p>
+  <div id="del-account" hidden>
+    <p class="meta">로그인한 계정: <code id="del-id"></code></p>
+    <div id="del-preview" class="meta"></div>
+    <p>
+      <label for="del-confirm">삭제하려면 <code>DELETE</code> 를 입력하세요</label><br />
+      <input id="del-confirm" type="text" autocomplete="off" spellcheck="false" />
+      <button id="del-go" type="button" disabled>계정 영구 삭제</button>
+    </p>
+  </div>
+</div>
+<noscript><p class="meta">웹에서 삭제하려면 자바스크립트가 필요합니다. 앱 내 경로나 이메일을 이용해 주세요.</p></noscript>
+
+<hr />
+
+<h1 class="en">Account Deletion</h1>
+<p class="meta en">Dicekeep · <code>com.fallman.dicekeep</code> · Effective 2026-09-22</p>
+<p class="en"><strong>Deletion is permanent.</strong> Progress, collection, decks and records are removed and cannot be restored, even by signing in with the same Google account.</p>
+<p class="en"><strong>In the app</strong> — Shop → account section → <em>계정 삭제 (Delete account)</em>, then type <code>DELETE</code> to confirm. <strong>Without the app</strong> — use section 3 above. <strong>By email</strong> — <a href="mailto:cgn3731@gmail.com">cgn3731@gmail.com</a>.</p>
+<p class="en"><strong>Deleted immediately:</strong> Google account link, profile, progression, collection, decks, records, shards, sessions and run records. <strong>Retained but anonymised:</strong> transaction records (order id, amount, date) for 5 years as required by Korean e-commerce law — the account link, purchase token and account reference are stripped, so the remaining rows cannot be traced to a person. Multiplayer match receipts expire automatically within 30 days. Guest progress stored only on your device is not held on our servers.</p>
+
+<p class="meta"><a href="privacy.html">개인정보처리방침 / Privacy Policy</a> · <a href="index.html">주사위 성채</a></p>
+
+</main>
+
+<script src="commerce-config.js"></script>
+<script src="commerce-client.js"></script>
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const status = $('del-status'), ui = $('del-ui');
+  const C = window.DKCOMMERCE;
+
+  if (!C) { status.textContent = '계정 서비스를 불러오지 못했습니다. 이메일로 요청해 주세요.'; return; }
+  try { C.init(); } catch (e) { /* 아래 configured 검사가 처리한다 */ }
+
+  if (!C.state().configured) {
+    // 결제/계정 Worker 주소가 아직 비어 있다 (commerce-config.js). 계정 자체가 없으므로 지울 것도 없다.
+    status.textContent = '계정 기능이 아직 열리지 않았습니다. 서버에 저장된 계정이 없으므로 삭제할 항목도 없습니다. 문의는 cgn3731@gmail.com.';
+    return;
+  }
+  status.hidden = true; ui.hidden = false;
+
+  const show = (msg) => { status.hidden = false; status.textContent = msg; };
+
+  $('del-signin').addEventListener('click', async () => {
+    try {
+      await C.signIn();
+      const s = C.state();
+      $('del-id').textContent = s.accountId || '(알 수 없음)';
+      $('del-account').hidden = false;
+      $('del-signin').disabled = true;
+      const p = await C.deletionPreview();
+      $('del-preview').textContent = `삭제 대상: 진행·수집·덱·기록 · 런 ${p.runs}건 · 세션` +
+        (p.purchaseRecords ? ` / 익명화 후 보존: 거래 기록 ${p.purchaseRecords}건` : '');
+    } catch (e) { show(C.errorText ? C.errorText(e) : String(e && e.message || e)); }
+  });
+
+  $('del-confirm').addEventListener('input', (e) => { $('del-go').disabled = e.target.value !== 'DELETE'; });
+
+  $('del-go').addEventListener('click', async () => {
+    if ($('del-confirm').value !== 'DELETE') return;
+    if (!window.confirm('계정을 영구 삭제합니다. 되돌릴 수 없습니다. 계속할까요?')) return;
+    $('del-go').disabled = true;
+    try {
+      await C.deleteAccount('DELETE');
+      ui.hidden = true;
+      show('계정을 삭제했습니다. 같은 Google 계정으로 다시 로그인하면 새 계정으로 시작합니다.');
+    } catch (e) { $('del-go').disabled = false; show(C.errorText ? C.errorText(e) : String(e && e.message || e)); }
+  });
+})();
+</script>
+</body>
+</html>

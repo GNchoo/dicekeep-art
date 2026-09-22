@@ -25,6 +25,7 @@ export const EN_MAX = 5120;              // sum.en 적 스트림 문자열 최�
 export const LANE_MAX = 100000;          // sum.ll 레인 길이 최대값
 export const SOCKET_RATE = 20, SOCKET_BURST = 40;   // 소켓당 메시지 토큰 버킷
 export const CHAT_RATE = 1, CHAT_BURST = 5;
+export const REPORT_RATE = 0.1, REPORT_BURST = 3;   // 신고는 드문 조작이다. 도배를 막는다.
 export const LOG_RATE = 2, LOG_BURST = 4;
 export const IP_NEW_PER_MIN = 10, IP_ROOM_PER_MIN = 60, IP_QUICK_PER_MIN = 30;
 export const ROOMS_PER_HOUR = 120;       // 방 생성 상한(전역, Lobby DO 카운터) → 429

@@ -6,6 +6,31 @@
 
 2026-09-02 추가(아래 표에 미반영): 하드 배경 20 (`casual/maps/*-hard.jpg`), 걷기 시트 34 (`casual/enemies/*-walk-2x2.png` 24 + `casual/bosses/*-walk-2x2.png` 10), 타워 스킨 b~e 24 (재작업), `ART-PROMPTS.md`, `GROK-BRIEF.md`.
 
+## 권리 · 생성 고지
+
+전체 조건은 [LICENSE](LICENSE) 에 있다. 여기에는 자산별 출처를 적는다.
+
+**그림** — `casual/`, `ui/`, `vfx/`, `dice/`, `props/`, `towers/`, `enemies/`, `map/`,
+`store/`, `resources/`, `android/app/src/main/res/` 의 이미지는 전부 **OpenAI 이미지 모델
+(`gpt-image-*`)로 생성**한 뒤 이 프로젝트가 합성·리깅·검수했다.
+
+| 항목 | 위치 |
+|---|---|
+| 프롬프트 원본 | `ART-PROMPTS.md`, `GROK-BRIEF.md` |
+| 생성 도구 | `tools/img-gen.mjs` (`tools/jobs/*.json`) |
+| 단계 팔레트 | `content.js` `INF_PALETTE` / `INFINITY.paletteOf(w)` |
+| 검수 기록 | `tools/art-review/`, `tools/check-directional-art.mjs` |
+
+제3자 그림·사진·스캔 자료를 입력으로 쓴 것은 없다.
+
+**소리** — **번들된 제3자 음원이 0건이다.** 배경음악은 실행 중 코드로 합성한다
+(`music.js`, WebAudio). `audio/` 디렉터리는 의도적으로 비어 있고, `music.js` 가
+`.ogg` → `.mp3` → 코드 합성 순으로 3단 폴백하므로 파일이 없어도 동작한다.
+나중에 음원 파일을 넣는다면 `MUSIC-PROMPTS.md` 의 상용 라이선스 요건을 확인하고
+**출처·계정·생성일·라이선스를 이 문서에 먼저 기록해야 한다.**
+
+**글꼴** — `fonts/` 의 Do Hyeon, Noto Sans KR 은 SIL Open Font License 1.1.
+
 ## 폴더별 개수
 
 | 경로 | 파일 수 |

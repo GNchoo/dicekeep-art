@@ -57,7 +57,11 @@ const add = ({ id, category, profile = 'environment', runtimeTarget, prompt, ref
     runtimeTarget,
     runtimeSpec: runtimeSpecFor(id),
     n: candidates,
-    outputFormat: 'png',
+    // 후보 포맷은 runtimeTarget 의 확장자에서 **파생**시킨다. 'png' 로 고정해 두면
+    // 타깃이 무손실 WebP 로 바뀌었을 때 둘이 조용히 어긋나고,
+    // golden-slice-jobs.test.mjs:38 의 "candidate format must match runtime target
+    // extension" 계약이 깨진다. 파생시키면 어긋날 수가 없다.
+    outputFormat: (runtimeTarget.split('.').pop() || 'png').toLowerCase().replace('jpeg', 'jpg'),
     out: `gen/golden-slice/${category}/${id}`,
     prompt,
     ...(quality ? { quality } : {}),
@@ -152,29 +156,29 @@ add({
 
 const CHARACTER_COMMON = 'One complete Dicekeep character, full body, 3/4 side view facing right, centered with at least 12% transparent margin. One consistent ground pivot, no floor, shadow, pedestal, scenery, motion sheet, text, logo or watermark. Preserve the referenced identity while simplifying noisy detail. Anatomically coherent limbs and joints; no body warp.';
 add({
-  id: 'enemy-ground-biped', category: 'character', profile: 'character', runtimeTarget: 'casual/enemies/pig.png',
-  size: '1024x1024', background: 'transparent', refs: ['casual/enemies/pig.png'],
+  id: 'enemy-ground-biped', category: 'character', profile: 'character', runtimeTarget: 'casual/enemies/pig.webp',
+  size: '1024x1024', background: 'transparent', refs: ['casual/enemies/pig.webp'],
   prompt: `${CHARACTER_COMMON} A friendly but determined upright pig bandit in a brown leather vest, red scarf and small wooden buckler. True plantigrade two-legged stance: hips, forward-facing knees, shins and feet form a natural humanlike chain; both feet rest on the same baseline and the knees must never bend backward.`,
 });
 add({
-  id: 'enemy-ground-quadruped', category: 'character', profile: 'character', runtimeTarget: 'casual/enemies/rhino.png',
-  size: '1024x1024', background: 'transparent', refs: ['casual/enemies/rhino.png'],
+  id: 'enemy-ground-quadruped', category: 'character', profile: 'character', runtimeTarget: 'casual/enemies/rhino.webp',
+  size: '1024x1024', background: 'transparent', refs: ['casual/enemies/rhino.webp'],
   prompt: `${CHARACTER_COMMON} A sturdy baby gray rhinoceros scout wearing simple brown harness armor and one blue-violet dice charm. Clearly quadrupedal: four distinct weight-bearing legs under the body, natural knees and hocks, all hooves visible, horn and face unobstructed.`,
 });
 add({
-  id: 'enemy-air', category: 'character', profile: 'character', runtimeTarget: 'casual/enemies/martin.png',
-  size: '1024x1024', background: 'transparent', refs: ['casual/enemies/martin.png'],
+  id: 'enemy-air', category: 'character', profile: 'character', runtimeTarget: 'casual/enemies/martin.webp',
+  size: '1024x1024', background: 'transparent', refs: ['casual/enemies/martin.webp'],
   prompt: `${CHARACTER_COMMON} A small swift house-martin aerial scout with navy-and-cream feathers, a tiny red courier scarf and one gold dice clasp. Wings fully open and clearly support flight; feet tucked naturally, body visibly airborne and level, with no walking pose or invisible ground contact.`,
 });
 add({
-  id: 'enemy-burrow', category: 'character', profile: 'character', runtimeTarget: 'casual/enemies/fennel.png',
-  size: '1024x1024', background: 'transparent', refs: ['casual/enemies/fennel.png'],
+  id: 'enemy-burrow', category: 'character', profile: 'character', runtimeTarget: 'casual/enemies/fennel.webp',
+  size: '1024x1024', background: 'transparent', refs: ['casual/enemies/fennel.webp'],
   prompt: `${CHARACTER_COMMON} A compact fennel-root miner with a leafy helmet, round goggles, small brass hand drill and sturdy boots. A corkscrew root-tail and earth-colored tool shapes make the burrowing role clear, while the intact complete body and both correctly jointed legs remain visible and grounded.`,
 });
 
 add({
-  id: 'boss-w010-rat-king', category: 'character', profile: 'character', runtimeTarget: 'casual/bosses/inf/b010.png',
-  size: '1024x1024', background: 'transparent', refs: ['casual/bosses/inf/b010.png'],
+  id: 'boss-w010-rat-king', category: 'character', profile: 'character', runtimeTarget: 'casual/bosses/inf/b010.webp',
+  size: '1024x1024', background: 'transparent', refs: ['casual/bosses/inf/b010.webp'],
   prompt: `${CHARACTER_COMMON} Boss: the Plague Rat King, a large upright rat monarch with intact charcoal fur, rounded expressive face, simple gold crown, broad bracers and a wine-red cape. Exactly one curved tail and two sturdy plantigrade feet. Proud, imposing and approachable; forward-facing knees bend naturally and never backward.`,
 });
 add({

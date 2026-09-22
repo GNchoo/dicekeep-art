@@ -43,7 +43,7 @@
 방 코드를 나누거나 빠른 매칭으로 친구와 같은 맵을 각자 속도로 플레이합니다. 다른 사람의 필드를 보고, 채팅으로 응원하세요.
 
 📴 오프라인 싱글
-게스트 싱글 플레이는 인터넷 없이도 됩니다. 선택적인 Google 로그인과 계정 구매/성장은 인터넷 연결이 필요합니다. 광고·분석 SDK는 없습니다.
+게스트 싱글 플레이는 인터넷 없이도 됩니다. 선택적인 Google 로그인과 계정 구매/성장은 인터넷 연결이 필요합니다. 극한 모드는 첫 진입 때 한 번만 고화질 아트를 내려받습니다(이후에는 오프라인에서도 그대로 동작하며, 못 받아도 저화질로 플레이됩니다). 광고·분석 SDK는 없습니다.
 
 - 세로·가로 모두 지원
 - 게스트 진행은 기기, 로그인한 계정 진행과 구매는 서버에 저장
@@ -124,7 +124,7 @@ en: `tower defense, dice, casual, strategy, endless, co-op, multiplayer, offline
 1. 준비: Node LTS(22), Android Studio(최신, SDK 36 + Build-Tools 포함), JDK 는 Android Studio 내장(21+).
 2. `npm i` — Capacitor·sharp·글꼴 설치
 3. `npm run fonts` — `fonts/` 갱신 (Google Fonts 대신 로컬 글꼴)
-4. `npm run build:www -- --optimize` — `www/` 생성. 빌드 후 `www/manifest.json`의 bytes와 APK/AAB 파일을 각각 측정한다. 2026-09-09 검증한 재압축 없는 `npm run build:www` 결과는 2,241파일·349,769,506 B(333.57 MiB), 로컬 debug APK는 362,762,574 B(345.96 MiB)다. `--optimize`나 release AAB 크기는 별도 측정해야 한다. `--quantize`는 손실 변환이므로 승인 아트를 재검수하지 않고 사용하지 않는다.
+4. `npm run build:www -- --optimize` — `www/` 생성. 빌드 후 `www/manifest.json`의 bytes와 APK/AAB 파일을 각각 측정한다. 2026-09-22 기준 재압축 없는 `npm run build:www` 결과는 1,596파일·**188 MiB**다 — 2026-09-09 의 333.57 MiB 에서 줄어든 것은 ① `casual/` 아트 1,316장을 무손실 WebP 로 바꾸고(-79 MiB, 보이는 RGBA 무변경을 기계 검증) ② 극한 아트 666장(74 MiB)을 앱에서 빼 첫 진입 때 받도록 한 결과다. `--optimize`나 release AAB 크기는 **여전히 별도 측정이 필요하다** — Play 한도 200 MB 가 200×10^6 B(190.7 MiB)라면 여유가 2.7 MiB 뿐이므로 실측이 중요하다. `--quantize`는 손실 변환이므로 승인 아트를 재검수하지 않고 사용하지 않는다.
 5. `npx cap sync android` — www → `android/app/src/main/assets/public`, 플러그인 반영
 6. `npx cap open android` — Android Studio 열기 (첫 실행은 Gradle 동기화 수 분)
 7. USB 디버깅 켠 실기기 연결 → Run ▶ → 아래 "실기기 체크리스트" 확인
@@ -162,4 +162,5 @@ en: `tower defense, dice, casual, strategy, endless, co-op, multiplayer, offline
 - [ ] 저장: 앱 강제 종료 후 재실행해도 진행·설정 유지 (localStorage)
 - [ ] 백업·기기 이전: WebView 세션·로컬 진행이 복원되지 않는지 확인. `backup_rules.xml`(API 23–30)과 `data_extraction_rules.xml`(API 31+)은 기본 `app_webview` 저장소를 클라우드·기기 이전에서 제외한다. 새 기기에서는 다시 로그인하고 계정 진행·구매를 서버에서 복구한다. 게스트 진행은 기기 간 이전되지 않는다. [Android 공식 백업 규칙](https://developer.android.com/identity/data/autobackup)을 따른다.
 - [ ] 오프라인: 비행기 모드에서 싱글 플레이 정상, 함께하기는 안내 메시지
-- [ ] 저사양 기기(3~4년 전 보급형): 인피니티 후반 프레임 확인. 로컬 debug APK는 345.96 MiB이며, Play에서 전달하는 release AAB 다운로드 크기와 실기기 설치 후 저장 공간은 아직 별도 측정이 필요하다.
+- [ ] 극한 아트: 첫 진입 시 다운로드 진행 표시 → 앱 재실행 시 네트워크 없이 고화질 유지 → 비행기 모드 첫 진입 시 64px 저화질로 강등되지만 플레이는 계속됨
+- [ ] 저사양 기기(3~4년 전 보급형): 인피니티 후반 프레임 확인. `www/` 는 188 MiB 이며, Play에서 전달하는 release AAB 다운로드 크기와 실기기 설치 후 저장 공간은 아직 별도 측정이 필요하다. 극한 아트 74 MiB 는 앱 바깥에서 받아 기기 저장소에 쌓이므로, 설치 후 사용량은 극한 진입 여부에 따라 달라진다.

@@ -549,6 +549,36 @@ test('U9 sum 중계: 1.5초 간격 · 본인 제외 · en/ll 은 뗀다 · 보�
   assert.equal(s.length, 1); assert.deepEqual(s[0].except, [C]);
 });
 
+test('U9 신고: 접수는 신고자에게만, 상대에게는 알리지 않는다', () => {
+  const h = playing([A, B]);
+  const r = h.msg(A, { t: 'report', pid: B, reason: 'abuse', text: '욕설' });
+  // 브로드캐스트하면 보복으로 이어진다 — 신고자에게만 간다
+  const logs = sends(r, 'log');
+  assert.equal(logs.length, 1);
+  assert.equal(logs[0].to, A);
+  assert.equal(logs[0].m.kind, 'sys');
+  assert.equal(r.persist, false, '신고는 방 상태를 바꾸지 않는다');
+  assert.deepEqual(sends(r, 'report'), [], '신고 자체가 방에 퍼지면 안 된다');
+  assert.deepEqual(sends(r, 'chat'), []);
+});
+
+test('U9 신고: 자기 자신·없는 상대는 거절', () => {
+  const h = playing([A, B]);
+  assert.equal(errOf(h.msg(A, { t: 'report', pid: A, reason: 'spam' })), 'bad-request');
+  assert.equal(errOf(h.msg(A, { t: 'report', pid: 'zzzz9999', reason: 'spam' })), 'bad-request');
+});
+
+test('U9 신고 속도 제한 (0.1/s 버스트 3)', () => {
+  const h = playing([A, B]);
+  let r;
+  for (let i = 0; i < 3; i++) { r = h.msg(A, { t: 'report', pid: B, reason: 'spam' }); assert.equal(sends(r, 'log').length, 1, i + '번째가 막혔다'); }
+  r = h.msg(A, { t: 'report', pid: B, reason: 'spam' });
+  assert.equal(errOf(r), 'rate');
+  assert.equal(closes(r).length, 0, '신고 도배로 연결을 끊지는 않는다');
+  r = h.msg(A, { t: 'report', pid: B, reason: 'spam' }, h.now + 10000);   // 0.1/s → 10초면 1개 회복
+  assert.equal(sends(r, 'log').length, 1);
+});
+
 test('U9 채팅·로그 속도 제한 (1/s 버스트 5 · 2/s 버스트 4)', () => {
   const h = playing([A, B]);
   let r;

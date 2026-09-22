@@ -69,6 +69,7 @@
     $('commerce-signin').hidden = !!profile;
     $('commerce-signout').hidden = !C.linked();
     $('commerce-signout').disabled = state.busy;
+    if ($('commerce-delete')) { $('commerce-delete').hidden = !C.linked(); $('commerce-delete').disabled = state.busy; }
     $('commerce-restore').disabled = !profile || state.busy;
     $('commerce-signin').disabled = !state.configured || !cfg || !cfg.googleClientId;
     $('commerce-availability').textContent = !enabled ? '상점 준비 중 · 현재 실제 결제는 청구되지 않습니다.' : cfg.paymentMode === 'test' ? '테스트 결제 · 실제 판매 전 검증 환경' : '확정 수량 구매 · 결제 전 최종 금액을 확인해 주세요.';
@@ -102,6 +103,17 @@
   }
   if ($('commerce-signin')) $('commerce-signin').addEventListener('click', () => C.signIn().catch(report));
   if ($('commerce-signout')) $('commerce-signout').addEventListener('click', () => { try { C.signOut(); } catch (e) { report(e); } });
+  // 계정 삭제 — 되돌릴 수 없으므로 두 단계로 막는다: 안내를 보여 준 뒤 DELETE 를 직접 입력하게 한다.
+  if ($('commerce-delete')) $('commerce-delete').addEventListener('click', async () => {
+    try {
+      const p = await C.deletionPreview();
+      const summary = `삭제: 진행·수집·덱·기록 · 런 ${p.runs}건 · 세션` + (p.purchaseRecords ? `\n익명화 후 보존: 거래 기록 ${p.purchaseRecords}건` : '');
+      const typed = window.prompt(`계정을 영구 삭제합니다. 되돌릴 수 없습니다.\n\n${summary}\n\n계속하려면 DELETE 를 입력하세요.`);
+      if (typed !== 'DELETE') return;
+      await C.deleteAccount('DELETE');
+      window.alert('계정을 삭제했습니다. 같은 Google 계정으로 다시 로그인하면 새 계정으로 시작합니다.');
+    } catch (e) { report(e); }
+  });
   if ($('commerce-restore')) $('commerce-restore').addEventListener('click', () => C.restore().catch(report));
   if ($('cosmetic-preview-close')) $('cosmetic-preview-close').addEventListener('click', () => { previewRevision++; $('cosmetic-preview').hidden = true; });
   window.addEventListener('commerce:change', render);

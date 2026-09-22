@@ -99,10 +99,12 @@ export class CommerceLedger {
       if (req.method === 'GET' && path === '/liveops') return json(await this.liveops.get(id));
       if (req.method === 'GET' && path === '/admin/mail/list') return json(await this.liveops.adminList(id));
       if (req.method === 'GET' && /^\/admin\/mail\/mail_[a-f0-9]{32}$/.test(path)) return json(await this.liveops.adminGet(id, path.split('/').at(-1)));
+      if (req.method === 'GET' && path === '/account/deletion-preview') return json(await this.deletionPreview(id));
       if (req.method === 'POST' && path === '/auth/logout') { await this.storage.delete(identity.sessionKey); return json({ ok: true }); }
       requireThat(req.method === 'POST', 'not-found', 404); const b = await body(req);
       if (['/attendance/claim', '/mail/claim', '/pass/claim'].includes(path)) return json(await this.liveops.claim(id, path.split('/')[1], b));
       if (['/admin/mail/draft', '/admin/mail/preview', '/admin/mail/publish', '/admin/mail/cancel'].includes(path)) return json(await this.liveops.adminAction(id, path.split('/').at(-1), b));
+      if (path === '/account/delete') return json(await this.deleteAccount(id, b));
       if (path === '/profile/action') return json(await this.action(id, b));
       if (path === '/runs/start') return json(await this.startRun(id, b));
       if (path === '/runs/resume') return json(await this.resumeRun(id, b));
@@ -127,6 +129,63 @@ export class CommerceLedger {
       if (a.sessionKey) await tx.delete(a.sessionKey); a.sessionKey = sessionKey;
       await tx.put('account:' + id, a); await tx.put(sessionKey, { accountId: id, expiresAt });
       return { token, accountId: id, expiresAt, obfuscatedAccountId: a.obfuscatedAccountId, ...this.accountView(a) };
+    });
+  }
+  // ---- 계정 삭제 ----------------------------------------------------------
+  // Google Play 는 앱 내 경로와 앱을 설치하지 않고도 닿는 웹 주소를 둘 다 요구한다.
+  // 동기 삭제로 한다: alarm() 은 이미 Google 구매 소비 아웃박스 전용으로 커서 페이징을
+  // 돌고 있어 두 번째 잡 종류를 얹으면 재시도 의미론이 복잡해지고, 심사에서도
+  // "요청 → 즉시 처리 + 되돌릴 수 없음" 이 가장 명확하다.
+  //
+  // 개인정보와 거래 기록을 나눈다. 전자상거래법상 보존해야 하는 것은 orderId·금액·시각
+  // 이지 "누가" 가 아니다. 식별로 이어지는 고리는 셋뿐이고 전부 끊는다:
+  //   (1) subject:<hash>   Google sub → 계정. 이걸 지우면 역추적이 불가능해진다.
+  //   (2) encryptedToken   Play 구매 토큰 = 이용자 Play 계정과의 연결 고리.
+  //   (3) accountId 역참조
+  // obfuscatedAccountId 는 무작위 계정 id 의 해시라 고리가 끊긴 뒤에는 식별자가 아니다.
+  // 소모품(샤드) 구매는 grantProduct() 가 지갑에 넣고 끝이라 계정에 키 흔적을 남기지 않는다.
+  // 그래서 grant 목록만 보면 놓친다 — order:/purchase: 를 훑어 accountId 로 거른다.
+  // 구매 행은 런과 달리 구매당 하나뿐이고 삭제는 드문 조작이라 이 비용은 받아들인다.
+  async purchaseRowsOf(store, id) {
+    const rows = [];
+    for (const prefix of ['order:', 'purchase:']) {
+      for (const [k, v] of await store.list({ prefix })) if (v && v.accountId === id) rows.push([k, v]);
+    }
+    return rows;
+  }
+  async deletionPreview(id) {
+    const a = await this.storage.get('account:' + id); requireThat(a, 'not-found', 404);
+    const runs = await this.storage.list({ prefix: `run-of:${id}:` });
+    const purchases = await this.purchaseRowsOf(this.storage, id);
+    return {
+      accountId: id, createdAt: a.createdAt, wallet: a.wallet, runs: runs.size, purchaseRecords: purchases.length,
+      willDelete: ['profile', 'progression', 'collection', 'deck', 'records', 'session', 'runs', 'google-link'],
+      willRetain: purchases.length ? ['transaction-ledger (anonymised: account link and purchase token removed)'] : [],
+      irreversible: true,
+    };
+  }
+  async deleteAccount(id, b) {
+    fields(b, ['confirm']); requireThat(b.confirm === 'DELETE', 'invalid-confirmation');
+    return this.storage.transaction(async tx => {
+      const a = await tx.get('account:' + id); requireThat(a, 'not-found', 404);
+
+      if (a.googleSubjectHash) await tx.delete('subject:' + a.googleSubjectHash);   // (1)
+      if (a.sessionKey) await tx.delete(a.sessionKey);   // 계정당 세션은 하나다 (login 이 회전시킨다)
+
+      for (const [k] of await tx.list({ prefix: `run-of:${id}:` })) { await tx.delete('run:' + k.split(':').at(-1)); await tx.delete(k); }
+      if (a.activeRun) await tx.delete('run:' + a.activeRun);   // 색인 도입 전에 생긴 런
+      for (const prefix of [`action:${id}:`, `skin-order:${id}:`, `pass-order:${id}:`]) for (const [k] of await tx.list({ prefix })) await tx.delete(k);
+
+      let anonymisedPurchases = 0;
+      for (const [key, row] of await this.purchaseRowsOf(tx, id)) {
+        row.accountId = null; row.accountDeletedAt = this.now(); delete row.encryptedToken;   // (2)(3)
+        await tx.put(key, row); anonymisedPurchases++;
+      }
+
+      await tx.delete('account:' + id);
+      // 계정 일련번호가 재사용되지 않도록 묘비를 남긴다. 개인정보는 들어 있지 않다.
+      await tx.put('deleted:' + id, { deletedAt: this.now(), accountSequence: a.accountSequence });
+      return { ok: true, anonymisedPurchases };
     });
   }
   async action(id, b) {
@@ -163,6 +222,8 @@ export class CommerceLedger {
       if (a.activeRun) { const previous = await tx.get('run:' + a.activeRun); if (previous && !previous.status) { previous.status = 'abandoned'; await tx.put('run:' + a.activeRun, previous); } }
       const snapshot = PG.snapshot(a.profile, b.mode);
       await tx.put('run:' + ticket, { id: ticket, accountId: id, mode: b.mode, startedAt: this.now(), snapshot });
+      // 계정 삭제가 이 계정의 런만 찾아 지울 수 있게 하는 색인. 없으면 run: 전체를 훑어야 한다.
+      await tx.put(`run-of:${id}:${ticket}`, 1);
       a.activeRun = ticket; await tx.put('account:' + id, a); return { ticket, ...this.accountView(a), snapshot, startedAt: this.now() };
     });
   }

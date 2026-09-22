@@ -1,5 +1,5 @@
 // 순수운빨에서 "우리가 일부러 바꾼 것 말고는 아무것도 안 바뀌었다" 를 기준 리비전과 대조해 확인한다.
-// 메운디에서 옮겨 온 표(뽑기 확률·타워·경제·로스터·상성표)는 한 톨도 달라지면 안 되고,
+// 고정 표(뽑기 확률·타워·경제·로스터·상성표)는 한 톨도 달라지면 안 되고,
 // 의도한 변경들(후반 체력 곡선, 보스 상성 면제, 상자 밴드, 태초 공속)은 정확히 그만큼만 달라야 한다.
 //
 // 뽑기 '순서' 는 더 이상 대조하지 않는다. 광역 명중 부호 수정(9b64b15) 으로 1~9웨이브에서
@@ -29,10 +29,10 @@ const SEEDS = [20260909, 777, 31337, 4242, 99999];
 if (WAVES > TRACE_LIMIT) throw new Error(`--waves 는 ${TRACE_LIMIT} 이하여야 한다: 보스 웨이브부터는 기준 리비전과 일부러 다르다`);
 fs.mkdirSync(out, { recursive: true });
 
-const report = { scope: '메운디 이식분은 그대로인지, 의도한 변경만 갈리는지 기준 리비전과 대조. 절대 클리어율 측정이 아니다.', current: CURRENT, baseline: BASELINE, waves: WAVES, seeds: SEEDS, started: new Date().toISOString(), rows: [], pass: false };
+const report = { scope: '고정 표는 그대로인지, 의도한 변경만 갈리는지 기준 리비전과 대조. 절대 클리어율 측정이 아니다.', current: CURRENT, baseline: BASELINE, waves: WAVES, seeds: SEEDS, started: new Date().toISOString(), rows: [], pass: false };
 
 
-// 메운디에서 옮겨 온 표들. 두 리비전에서 한 톨도 달라지면 안 된다.
+// 기준 리비전과 한 톨도 달라지면 안 되는 표들.
 // (상성표 자체도 여기 포함된다 — 바꾼 것은 "보스에게 적용하지 않는다" 이지 표가 아니다.)
 function portedTables() {
   const INF = DKCONTENT.INFINITY, C = INF.chest, DP = DKCONTENT.DICE_POWER;
@@ -224,14 +224,14 @@ async function openGame(browser, base, rows) {
         a.curveLate.forEach((hp, i) => assert.ok(hp < b.curveLate[i],
           `씨앗 ${seed}: ${LATE_WAVES[i]}웨이브 체력이 기준(${b.curveLate[i]})보다 가벼워야 한다 — 현재 ${hp}`));
       }
-      // ── 메운디 이식분: 두 리비전에서 완전히 같아야 한다 ─────────────────────
+      // ── 고정 표: 두 리비전에서 완전히 같아야 한다 ─────────────────────────
       const curTables = await cur.page.evaluate(portedTables);
       const baseTables = await base.page.evaluate(portedTables);
       report.tables = { current: curTables, baseline: baseTables };
       const keys = Object.keys(curTables).filter(k => curTables[k] !== null && baseTables[k] !== null);
       report.tableKeys = keys;
       assert.ok(keys.length >= 10, `대조한 표가 너무 적다 (${keys.length}종) — 훅이 빠졌는지 확인하라`);
-      for (const k of keys) assert.deepEqual(curTables[k], baseTables[k], `메운디 이식분 "${k}" 가 기준 리비전과 달라졌다`);
+      for (const k of keys) assert.deepEqual(curTables[k], baseTables[k], `고정 표 "${k}" 가 기준 리비전과 달라졌다`);
       console.log(`이식분 ${keys.length}종 동일: ${keys.join(' · ')}`);
 
       // ── 의도한 변경 ①: 보스는 상성을 받지 않는다 (기준 리비전은 받는다) ──────

@@ -28,7 +28,7 @@
       <span class="chip"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#ffd452" stroke-width="2.2" stroke-linecap="round"><path d="M4 12c0-2.2 1.6-3.6 3.4-3.6 2.6 0 3.6 3.6 6.2 3.6 1.8 0 3.4-1.4 3.4-3.6M4 12c0 2.2 1.6 3.6 3.4 3.6 2.6 0 3.6-3.6 6.2-3.6 1.8 0 3.4 1.4 3.4 3.6"/></svg></span><b id="wave-val">웨이브 0 / 10</b></span>
     </div>
 
-    <!-- 스타크래프트식 로그·채팅: 화면에 잠깐 남았다 사라진다. 로그는 싱글에서도, 채팅은 멀티에서만 -->
+    <!-- 로그·채팅 오버레이: 화면에 잠깐 남았다 사라진다. 로그는 싱글에서도, 채팅은 멀티에서만 -->
     <div id="log-panel">
       <div id="log-lines"></div>
       <form id="chat-form" class="hidden" autocomplete="off">
@@ -179,7 +179,8 @@
             <h3>계정 상점</h3>
             <p id="commerce-account">게스트 · 이 기기에 무료 진행 저장</p>
             <p id="commerce-account-id" class="commerce-policy" style="overflow-wrap:anywhere;user-select:text"></p>
-            <div class="commerce-account-actions"><button id="commerce-signin" type="button">Google 계정 연결</button><button id="commerce-signout" type="button" hidden>로그아웃</button><button id="commerce-restore" type="button" disabled>구매·잔액 다시 확인</button></div>
+            <div class="commerce-account-actions"><button id="commerce-signin" type="button">Google 계정 연결</button><button id="commerce-signout" type="button" hidden>로그아웃</button><button id="commerce-restore" type="button" disabled>구매·잔액 다시 확인</button><button id="commerce-delete" type="button" hidden>계정 삭제</button></div>
+            <p class="commerce-policy">계정 삭제는 되돌릴 수 없습니다. 무엇이 지워지고 무엇이 남는지는 <a href="account-deletion.html" target="_blank" rel="noopener">계정 삭제 안내</a>.</p>
             <div id="commerce-google"></div>
             <p class="commerce-policy">순수운빨의 확률과 전투에는 구매 효과가 적용되지 않습니다. 구매한 조각은 무료 플레이로 얻는 조각과 동일하며, 원하는 주사위를 확정 해금·강화할 때 사용합니다.</p>
             <p class="commerce-policy">계정 연결 후에는 온라인으로 성장과 구매를 저장합니다. 기존 기기의 게스트 진행은 별도로 남으며, 계정과 자동 합산되지 않습니다.</p>
@@ -222,6 +223,22 @@
         <div id="mp-room-status" class="screen-sub"></div>
         <div id="mp-chat">
           <div id="mp-chat-lines"></div>
+          <!-- 신고·차단: Play 의 이용자 제작 콘텐츠 정책이 둘 다 요구한다. 채팅 이름표를 누르면 열린다 -->
+          <dialog id="chat-report">
+            <p class="cr-title"><b class="cr-who"></b> 님을 신고하거나 차단합니다</p>
+            <div class="cr-reasons">
+              <button type="button" data-reason="abuse">욕설·괴롭힘</button>
+              <button type="button" data-reason="sexual">음란·선정성</button>
+              <button type="button" data-reason="spam">도배·광고</button>
+              <button type="button" data-reason="cheat">부정행위</button>
+              <button type="button" data-reason="other">기타</button>
+            </div>
+            <p class="cr-note">신고는 운영에 접수되며 상대에게 알려지지 않습니다.</p>
+            <div class="cr-actions">
+              <button type="button" class="cr-block"></button>
+              <button type="button" class="cr-close">닫기</button>
+            </div>
+          </dialog>
           <form id="mp-chat-form" autocomplete="off"><input id="mp-chat-input" type="text" maxlength="120" placeholder="대기실 채팅 — 메시지를 입력하고 Enter" /><button class="back-btn" type="submit">보내기</button></form>
         </div>
       </div>
@@ -372,6 +389,7 @@
 <script src="directional-art.js?v=110"></script>
 <script src="extreme-art.js?v=110"></script>
 <script src="infinity-art.js?v=107"></script>
+<script src="extreme-cache.js?v=1"></script>
 <script src="combat-motion.js?v=109"></script>
 <script src="game.js?v=118"></script>
 </body>

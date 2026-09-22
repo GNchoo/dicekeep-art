@@ -4,10 +4,12 @@ const fs = require('node:fs'), path = require('node:path'), vm = require('node:v
 const assert = require('node:assert/strict'), crypto = require('node:crypto');
 const { execFileSync } = require('node:child_process');
 const { launchBrowser, gameUrl, watchArtErrors } = require('./browser.cjs');
+const sharp = require('sharp');
 const repo = path.resolve(__dirname, '../..'), baseline = '5630cdd';
 const out = path.resolve(process.env.E2E_OUTPUT_DIR || path.join(repo, 'gen/e2e/biped-knees-runtime'));
 const read = file => fs.readFileSync(path.join(repo, file));
 const git = args => execFileSync('git', args, { cwd: repo, encoding: 'utf8', maxBuffer: 24 * 1024 * 1024 });
+const gitBytes = args => execFileSync('git', args, { cwd: repo, maxBuffer: 96 * 1024 * 1024 });
 const sha256 = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
 const manifest = text => { const context = { window: {} }; vm.runInNewContext(text, context, { timeout: 1000 }); return JSON.parse(JSON.stringify(Object.values(context.window)[0])); };
 const fullRigEntries = JSON.parse(read('tools/art-review/biped-knees-110/rigs.json')).entries;
@@ -21,7 +23,16 @@ for (const id of preservedAvianIds) assert.equal(changedIds.has(id), false, id +
 const report = { baseline, scope: 'Real game spawn/direction/placement and served image integrity in desktop Chrome viewports; not native device performance or visual anatomy approval.', passed: false };
 fs.mkdirSync(out, { recursive: true });
 
-function metadataAndFiles() {
+// still/sheet 의 끝 확장자만 지운다. geometry() 가 :47 에서 이미 쓰는 관용구와 같은 것으로,
+// 무손실 WebP 변환이 파일명을 바꿔도 "해부학·메타데이터가 그대로인가" 라는 이 단언의
+// 본래 취지는 유지된다 — stem 과 assetVersion 은 그대로 대조된다.
+const formatAgnostic = (entry) => {
+  const copy = structuredClone(entry);
+  for (const view of Object.values(copy.views)) for (const key of ['still', 'sheet']) view[key] = view[key].replace(/\.(png|webp)$/, '.image');
+  return copy;
+};
+
+async function metadataAndFiles() {
   const previous = {}, current = {}, previousVersions = {};
   for (const file of ['directional-art.js', 'extreme-art.js']) {
     const oldManifest = manifest(git(['show', baseline + ':' + file]));
@@ -33,24 +44,22 @@ function metadataAndFiles() {
   assert.equal(Object.keys(current).length, 221);
   for (const id of preservedAvianIds) {
     assert.ok(previous[id] && current[id], id + ': preserved avian must exist in both rosters');
-    assert.deepEqual(current[id], previous[id], id + ': avian hock metadata/fallback changed');
+    assert.deepEqual(formatAgnostic(current[id]), formatAgnostic(previous[id]), id + ': avian hock metadata/fallback changed');
   }
   const tree = new Map(git(['ls-tree', '-r', '-z', baseline]).split('\0').filter(Boolean).map(row => {
     const [head, file] = row.split('\t'); return [file, head.split(' ')[2]];
   }));
   const sameFiles = new Set(), downloads = [];
   const geometry = (entry, views) => {
-    const copy = structuredClone(entry);
-    for (const name of views) {
-      const view = copy.views[name];
-      delete view.assetVersion; delete view.fallback;
-      for (const key of ['still', 'sheet']) view[key] = view[key].replace(/\.(png|webp)$/, '.image');
-    }
+    // 확장자는 **모든** view 에서 지운다 — 보정 대상이 아닌 방향(레거시 side 등)도
+    // 무손실 변환으로 파일명이 바뀌므로, 선택된 view 만 정규화하면 거기서 어긋난다.
+    const copy = formatAgnostic(entry);
+    for (const name of views) { const view = copy.views[name]; delete view.assetVersion; delete view.fallback; }
     return copy;
   };
   for (const [id, entry] of Object.entries(current)) {
     if (!changedIds.has(id)) {
-      assert.deepEqual(entry, previous[id], id + ': unrelated metadata changed');
+      assert.deepEqual(formatAgnostic(entry), formatAgnostic(previous[id]), id + ': unrelated metadata changed');
       for (const view of Object.values(entry.views)) for (const key of ['still', 'sheet']) sameFiles.add(view[key]);
       continue;
     }
@@ -58,7 +67,7 @@ function metadataAndFiles() {
     assert.deepEqual(geometry(entry, selectedViews), geometry(previous[id], selectedViews), id + ': identity/scale/pivot/gait metadata changed');
     for (const [name, view] of Object.entries(entry.views)) {
       if (!selectedViews.includes(name)) {
-        assert.deepEqual(view, previous[id].views[name], id + ':' + name + ': untouched legacy direction changed');
+        assert.deepEqual(formatAgnostic({ views: { v: view } }), formatAgnostic({ views: { v: previous[id].views[name] } }), id + ':' + name + ': untouched legacy direction changed');
         for (const key of ['still', 'sheet']) sameFiles.add(view[key]);
         continue;
       }
@@ -67,12 +76,34 @@ function metadataAndFiles() {
         fallback: view.fallback, files: ['still', 'sheet'].map(kind => ({ kind, path: view[kind], sha256: sha256(read(view[kind])) })) });
     }
   }
+  // 이 단언의 취지는 "무릎 보정이 건드리지 않은 아트는 그대로다" 이다. 무손실 WebP 변환은
+  // 바이트를 바꾸되 보이는 픽셀은 바꾸지 않으므로, 바이트가 다르면 baseline 의 .png 를 꺼내
+  // **디코드한 RGBA 를 직접 대조**한다. 바이트 대조보다 약한 검사가 아니라, 같은 성질을
+  // 인코딩 방식과 무관하게 재는 검사다.
+  let reencoded = 0;
   for (const file of sameFiles) {
     const bytes = read(file), blob = crypto.createHash('sha1').update('blob ' + bytes.length + '\0').update(bytes).digest('hex');
-    assert.equal(blob, tree.get(file), file + ': unrelated image bytes changed');
+    if (blob === tree.get(file)) continue;                      // 바이트까지 동일 — 대다수
+    const from = tree.has(file) ? file : file.replace(/\.webp$/, '.png');
+    assert.ok(tree.has(from), file + ': baseline 에 대응하는 파일이 없다');
+    assert.notEqual(from, file, file + ': unrelated image bytes changed');   // 같은 이름인데 내용이 다르면 진짜 변경이다
+    const before = sharp(gitBytes(['show', baseline + ':' + from])).ensureAlpha().raw();
+    const after = sharp(bytes).ensureAlpha().raw();
+    const [a, b] = await Promise.all([before.toBuffer({ resolveWithObject: true }), after.toBuffer({ resolveWithObject: true })]);
+    assert.equal(`${a.info.width}x${a.info.height}`, `${b.info.width}x${b.info.height}`, file + ': 재인코딩이 크기를 바꿨다');
+    // tools/lib/lossless-webp.mjs 와 **같은 규칙**으로 센다: 알파는 한 바이트도 달라지면 안 되고,
+    // RGB 는 알파가 0 인 픽셀(= 화면에 안 보임)에서만 달라도 된다. 그냥 buffer.equals() 로 재면
+    // 완전 투명 픽셀의 RGB 때문에 무손실인데도 실패한다.
+    let visible = 0;
+    for (let i = 0; i < a.data.length; i++) {
+      if (a.data[i] === b.data[i]) continue;
+      if (i % 4 === 3 || a.data[i - (i % 4) + 3] !== 0) visible++;
+    }
+    assert.equal(visible, 0, file + ': 재인코딩이 보이는 RGBA 를 바꿨다 (' + visible + ' 바이트)');
+    reencoded++;
   }
   report.integrity = { changedIdentities: changedIds.size, unchangedIdentities: Object.keys(current).length - changedIds.size,
-    unchangedImageFiles: sameFiles.size, changedViews: downloads.length,
+    unchangedImageFiles: sameFiles.size, losslesslyReencoded: reencoded, changedViews: downloads.length,
     preservedLegacySides: legacyEntries.map(e => e.assetId), preservedAvianIds, stableGeometry: true };
   assert.equal(report.integrity.unchangedIdentities, Object.keys(previous).length - changed.length);
   assert.equal(downloads.length, expectedViews);
@@ -88,7 +119,7 @@ function metadataAndFiles() {
 (async () => {
   let browser;
   try {
-    const { downloads, spawns } = metadataAndFiles();
+    const { downloads, spawns } = await metadataAndFiles();
     browser = await launchBrowser(); report.viewports = [];
     const source = read('game.js').toString('utf8'), marker = 'window.DK = S;';
     assert.equal(source.split(marker).length, 2, 'game closure hook must be unique');

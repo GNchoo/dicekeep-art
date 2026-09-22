@@ -3,7 +3,24 @@ const fs = require('node:fs');
 const path = require('node:path');
 const assert = require('node:assert/strict');
 const { launchBrowser, gameUrl } = require('./browser.cjs');
+const vm = require('node:vm');
 const repo=path.resolve(__dirname,'../..'),pilot=process.argv.includes('--pilot');
+// The runtime merges both manifests (infinity-art.js: INF_DIRECTIONAL_ART + INF_EXTREME_ART),
+// so derive the expected count instead of hardcoding it — the old literal 110 went stale
+// the moment extreme art landed.
+// Evolution marks (infinity-art.js: MAX_EVOLUTION x VIEWS 64px overlays) are baked once at
+// init and counted in residentBytes, but only when an entry with wave >= 102 is present.
+// They carry no cache record because they must never be evicted, so residentBytes is
+// fallbacks + overlays, not fallbacks alone.
+const MANIFEST = (() => {
+  const ctx = { window: {} };
+  for (const f of ['directional-art.js', 'extreme-art.js']) vm.runInNewContext(fs.readFileSync(path.join(repo, f), 'utf8'), ctx);
+  const all = [...Object.values(ctx.window.INF_DIRECTIONAL_ART.entries), ...Object.values(ctx.window.INF_EXTREME_ART.entries)];
+  const MAX_EVOLUTION = 3, VIEWS = 3, CELL = 64 * 64 * 4;
+  return { approvedEntries: all.length, cell: CELL,
+           overlayBytes: all.some(e => e.wave >= 102) ? MAX_EVOLUTION * VIEWS * CELL : 0 };
+})();
+const approvedEntries = MANIFEST.approvedEntries;
 const out = path.join(repo, 'gen/e2e/directional-runtime');
 fs.mkdirSync(out, { recursive: true });
 async function open(browser, {empty=false,offline=false}={}) {
@@ -46,8 +63,8 @@ async function collectLogical(page) {
     const logical=await collectLogical(baseline.page);await baseline.page.close();
     const test=await open(browser);
     report.boot=await test.page.evaluate(()=>DKART.state());
-    const count=report.boot.approvedEntries;if(!pilot)assert.equal(count,110);assert.equal(report.boot.initialized,true);assert.equal(report.boot.loads,count*3);assert.equal(report.boot.maxRunning,2);assert.equal(test.requests.length,0);
-    assert.equal(report.boot.residentBytes,count*3*64*64*4);report.checks.push(count+' real identities/'+count*3+' inline direction stills decoded before boot; no optional art preload');
+    const count=report.boot.approvedEntries;if(!pilot)assert.equal(count,approvedEntries);assert.equal(report.boot.initialized,true);assert.equal(report.boot.loads,count*3);assert.equal(report.boot.maxRunning,2);assert.equal(test.requests.length,0);
+    assert.equal(report.boot.residentBytes,count*3*MANIFEST.cell+MANIFEST.overlayBytes);report.checks.push(count+' real identities/'+count*3+' inline direction stills decoded before boot; no optional art preload');
     assert.deepEqual(await collectLogical(test.page),logical);report.checks.push('101 wave roster physics/hp/size/speed/gold/armor unchanged by approved directional manifest');
     const own=await test.page.evaluate(()=>{
       DK.wave=20;DK.enemies=[];for(const item of buildInfinityWave(20))spawnEnemy(item);

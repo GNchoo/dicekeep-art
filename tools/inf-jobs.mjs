@@ -66,8 +66,11 @@ if (mode === 'single') {
   const g = gridOf(frames);
   for (const { w, m, r } of normal) {
     const gait = r.gait || (m.move === 'air' ? 'fly' : 'biped');
-    const ref = `casual/enemies/inf/w${pad3(w)}.png`;
-    const useRef = has('refs') && fs.existsSync(new URL('../' + ref, import.meta.url));
+    // 무손실 WebP 변환 이후 이 정지컷은 .webp 다. .png 만 찾으면 useRef 가 조용히
+    // false 가 되어 --refs 가 throw 없이 죽고, 프롬프트에서 "같은 캐릭터 유지" 가 빠진다.
+    const ref = ['.webp', '.png'].map((e) => `casual/enemies/inf/w${pad3(w)}${e}`)
+      .find((p) => fs.existsSync(new URL('../' + p, import.meta.url)));
+    const useRef = has('refs') && !!ref;
     const prompt = `${useRef ? 'Keep exactly the same creature, colors and gear as the reference image. ' : ''}${r.desc} (${bulk(m)}). Walk cycle — ${GAIT[gait][frames]}. ${RULES(g.cols, g.rows, frames)} ${palette(w)}`;
     const job = { id: `w${pad3(w)}-walk`, n, size: g.size, quality, background: 'transparent', out: `gen/inf/w${pad3(w)}-walk`, prompt };
     if (useRef) { job.refs = [ref]; job.inputFidelity = 'high'; }

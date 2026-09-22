@@ -25,6 +25,7 @@ export const ERR = ['bad-code', 'full', 'started', 'bad-key', 'version', 'mode',
 export const DEAD_REASONS = ['lives', 'bossLeak', 'bossTimeout', 'quit', 'reload', 'afk'];
 export const LOG_KINDS = ['sys', 'gacha', 'up', 'boom', 'boss', 'life'];
 export const NAME_MAX = 12, TEXT_MAX = 120, VER_MAX = 16, TOWERS_MAX = 15;
+export const REPORT_REASONS = ['abuse', 'sexual', 'spam', 'cheat', 'other'];
 export const HELLO_OPS = ['create', 'join', 'quick'];
 const EN_RE = /^[0-9;,]*$/;   // 적 스트림: 숫자·세미콜론·쉼표만. v4 외형1000~2938도 불투명 숫자 열로 중계한다.
 
@@ -121,6 +122,15 @@ const SCHEMA = {
     if (!isStr(m.text, 2048)) return null;
     const text = cleanText(m.text, TEXT_MAX);
     return text ? { t: 'chat', text } : null;
+  },
+  // 채팅 신고. Google Play 의 이용자 제작 콘텐츠 정책이 신고·차단 수단을 요구한다.
+  // 차단은 서버가 할 일이 없다 — pid 가 탭 수명(sessionStorage)이라 영구 차단 대상
+  // 식별자가 없고, 방은 코드 기반 일회성이다. 클라이언트가 그 방에서 숨긴다.
+  report(m) {
+    if (!isStr(m.pid, 32) || !PID_RE.test(m.pid)) return null;
+    if (!REPORT_REASONS.includes(m.reason)) return null;
+    if (m.text !== undefined && !isStr(m.text, 2048)) return null;
+    return { t: 'report', pid: m.pid, reason: m.reason, text: cleanText(m.text || '', TEXT_MAX) };
   },
   log(m) {
     if (!isStr(m.text, 2048) || !LOG_KINDS.includes(m.kind)) return null;

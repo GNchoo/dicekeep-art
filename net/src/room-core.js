@@ -64,7 +64,7 @@ export function emptyLive(now) {
 }
 
 function liveEntry(sid, now) {
-  return { sid, connected: true, lastBeat: now, hidden: false, sum: null, disconnectedAt: null, relayAt: null, watchRelayAt: null, watching: null, chatB: null, logB: null };
+  return { sid, connected: true, lastBeat: now, hidden: false, sum: null, disconnectedAt: null, relayAt: null, watchRelayAt: null, watching: null, chatB: null, logB: null, reportB: null };
 }
 
 function offlineEntry(now) {
@@ -295,7 +295,7 @@ function resume(c, sid, m, P) {
   const old = c.live.players[P.pid];
   if (old && old.connected && old.sid && old.sid !== sid) c.close(old.sid, CLOSE.REPLACED, 'replaced');
   const L = liveEntry(sid, c.now);
-  if (old) { L.chatB = old.chatB; L.logB = old.logB; L.watching = old.watching; }
+  if (old) { L.chatB = old.chatB; L.logB = old.logB; L.reportB = old.reportB; L.watching = old.watching; }
   c.live.players[P.pid] = L;
   c.live.emptySince = null;
   const first = !!P.reserved;
@@ -395,6 +395,7 @@ function onMsg(c, ev) {
     case 'battle': return onBattle(c,P,L,m);
     case 'battleAck': return onBattleAck(c,P,m);
     case 'chat': return onChat(c, P, L, m);
+    case 'report': return onReport(c, P, L, m);
     case 'log': return onLog(c, P, L, m);
     case 'time': return c.send(P.pid, { t: 'time', c: m.c, s: c.now });
     case 'leave': return onLeave(c, P, L);
@@ -549,6 +550,21 @@ function onBattle(c,P,L,m) {
 function onBattleAck(c,P,m) {
   const b=c.state.game?.battle;if(!b)return;
   if(battleAck(b,P.pid,m.matchId,m.eventId)){c.persist=true;sendBattle(c,P.pid);}
+}
+
+// 신고는 저장하지 않는다. 방 DO 상태는 방 만료와 함께 사라져 운영자가 볼 수 없고,
+// 따로 저장소를 만들면 보존 기간·개인정보 항목·데이터 보안 설문이 전부 늘어난다.
+// 운영 로그(Cloudflare Workers Logs)로만 흘린다 — Play 가 요구하는 것은 신고 수단이지
+// 저장소의 형태가 아니다. 신고 사실은 상대에게 알리지 않는다(보복 방지).
+function onReport(c, P, L, m) {
+  const r = take(L.reportB, c.now, T.REPORT_RATE, T.REPORT_BURST);
+  L.reportB = r.bucket;
+  if (!r.ok) return c.err(P.pid, 'rate', '신고가 너무 잦습니다');
+  const target = c.state.players[m.pid];
+  if (!target || m.pid === P.pid) return c.err(P.pid, 'bad-request', '신고할 수 없는 상대입니다');
+  console.log(JSON.stringify({ kind: 'chat-report', code: c.state.code, at: c.now,
+    by: P.pid, byName: P.name, target: m.pid, targetName: target.name, reason: m.reason, note: m.text }));
+  return c.send(P.pid, { t: 'log', kind: 'sys', text: '신고를 접수했습니다.' });
 }
 
 function onChat(c, P, L, m) {

@@ -607,6 +607,14 @@ window.DKNET = (function () {
     const s = String(text == null ? '' : text).replace(/[\u0000-\u001f\u007f-\u009f]/g, '').trim().slice(0, 120);
     return s ? send('chat', { text: s }) : false;
   }
+  // 신고 — Google Play 이용자 제작 콘텐츠 정책. 서버는 운영 로그로만 남기고
+  // 상대에게는 알리지 않는다(보복 방지). 차단은 클라이언트가 그 방에서 숨긴다.
+  const REPORT_REASONS = ['abuse', 'sexual', 'spam', 'cheat', 'other'];
+  function report(pid, reason, text) {
+    if (typeof pid !== 'string' || !pid || REPORT_REASONS.indexOf(reason) < 0) return false;
+    const note = String(text == null ? '' : text).replace(/[\u0000-\u001f\u007f-\u009f]/g, '').trim().slice(0, 120);
+    return send('report', { pid, reason, text: note });
+  }
   function log(text, kind) {
     const s = String(text == null ? '' : text).replace(/[\u0000-\u001f\u007f-\u009f]/g, '').trim().slice(0, 120);
     return s ? send('log', { text: s, kind: LOG_KINDS.indexOf(kind) >= 0 ? kind : 'sys' }) : false;
@@ -624,7 +632,7 @@ window.DKNET = (function () {
   return {
     CFG, on, off, emit,
     create, join, quick, resume, start, leave,
-    sum, watch, done, dead, clear, chat, log, send,
+    sum, watch, done, dead, clear, chat, log, report, REPORT_REASONS, send,
     battleReport, battleAssist, battleAck, battleExport, battleRestore, battleProof,
     serverNow, offset: () => T.offset, rtt: () => T.rtt,
     get state() { return R.state; },

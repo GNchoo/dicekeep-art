@@ -37,8 +37,10 @@ function gameUrl(unlock = true) {
   return url.href;
 }
 
+// Default to gen/e2e (gitignored), not cwd — running a checker from the repo root used to
+// drop its report next to the source and it got committed by accident.
 function outputPath(name) {
-  const dir = path.resolve(process.env.E2E_OUTPUT_DIR || process.cwd());
+  const dir = path.resolve(process.env.E2E_OUTPUT_DIR || path.join(__dirname, '../../gen/e2e'));
   fs.mkdirSync(dir, { recursive: true });
   return path.join(dir, name);
 }

@@ -300,8 +300,19 @@
     })().catch(error => { initialized = null; message(errorText(error)); throw error; });
     return initialized;
   }
+  // 계정 삭제 — Google Play 필수 요건. 되돌릴 수 없으므로 서버가 confirm: 'DELETE' 를 요구하고,
+  // 여기서도 확인 문자열을 그대로 넘긴다 (클라이언트가 임의로 채우지 않는다).
+  async function deletionPreview() { requireAccount(); return api('/account/deletion-preview'); }
+  async function deleteAccount(confirm) {
+    requireAccount();
+    const result = await api('/account/delete', { confirm });
+    signOut();            // 서버가 세션을 지웠다 — 로컬 상태도 같이 버린다
+    return result;
+  }
+
   window.DKCOMMERCE = Object.freeze({
     init, signIn, signOut, action, startRun, resumeRun, queueRun, finishRun, refresh, retryPending, restore, buy, completeWebPayment, errorText, loadLiveops, claimReward, adminMail,
+    deletionPreview, deleteAccount,
     profile: () => current, linked: () => !!session,
     state: () => ({ configured: !!endpoint, config, accountId: session && session.accountId, wallet, cosmetics: { owned: cosmetics.owned.slice(), equipped: cosmetics.equipped }, busy, native: native(), platform: platform(), ready: !!current }),
     products: async ids => native() && billing() ? billing().products({ productIds: ids }) : { products: [] },

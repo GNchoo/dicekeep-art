@@ -1,0 +1,159 @@
+# 1단계 CI — 브라우저 없이 도는 것만. 이 저장소에는 지금까지 CI 가 하나도 없었고,
+# npm script 47개가 전부 수동이었다. 그래서 두 개의 체커가 오래 깨진 채 방치됐다.
+#
+# 여기 모은 테스트는 전부 node 빌트인만 쓴다 (require 확인 완료) — npm ci 가 필요 없어서
+# 체크아웃만 끝나면 바로 돈다. 브라우저·정적 서버가 필요한 나머지 약 30개는 2단계에서 붙인다.
+#
+# 체크아웃 비용: 저장소 트리가 1.2 GiB 다 (tools/art-review 659M · casual 338M · devices 181M).
+# sparse-checkout 으로 셋을 빼면 ~60 MiB 로 떨어진다. 이 잡은 그 셋을 하나도 읽지 않는다.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  node:
+    name: 브라우저 불필요 테스트
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0          # git grep 가드가 추적 파일 전체를 봐야 한다
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /*
+            !/tools/art-review
+            !/casual
+            !/devices
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # ── 배포물에 외부 작품 언급이 다시 들어오는 것을 막는다 ────────────────────
+      # 근거: build-www.mjs 에 minify·주석 제거 단계가 없고 .assetsignore 도
+      # content.js·game.js 를 막지 않는다. 즉 여기 들어간 주석은 판매되는 APK 안과
+      # 공개 웹에서 평문으로 읽힌다. tools/ 와 테스트는 배포되지 않으므로 제외한다.
+      - name: 배포물에 외부 작품 언급이 없는지
+        run: |
+          if git grep -nE '메운디|메이플|운빨 디펜스|유즈맵|스타크래프트|랜덤다이스|킹덤러쉬|Maple Luck' \
+               -- '*.js' '*.html' '*.css' ':!tools/' ':!net/test/' ':!commerce/test/'; then
+            echo "::error::배포되는 파일에 외부 작품 언급이 있다. 위 줄을 고칠 것 (LICENSE·GAME-SPEC 참고)."
+            exit 1
+          fi
+          echo "OK — 배포물 0건"
+
+      - name: 라이선스 문구가 상업 판매와 어긋나지 않는지
+        run: |
+          if git grep -nF '개인 게임 개발에 자유롭게 사용' -- README.md LICENSE; then
+            echo "::error::철회된 라이선스 문구가 되살아났다."
+            exit 1
+          fi
+          echo "OK"
+
+      # ── 순수 node 테스트 (node 빌트인만 사용 — 설치 불필요) ────────────────────
+      - name: net (Worker·넷코드 유닛)
+        run: npm run test:net
+      - name: commerce (빌드 검증 + 결제 원장 유닛)
+        run: npm run test:commerce
+      - name: progression (진행도·수집·트리 성장)
+        run: npm run test:progression
+      - name: deck-rules
+        run: npm run test:deck-rules
+      - name: tree-combat-rules
+        run: npm run test:tree-combat-rules
+      - name: battle-persistence
+        run: npm run test:battle-persistence
+      - name: battle-account (game.js 를 node:vm 에서 구동)
+        run: npm run test:battle-account
+      - name: liveops
+        run: npm run test:liveops
+      - name: free-progression
+        run: npm run test:free-progression
+      - name: economy 모델
+        run: npm run measure:economy
+
+      # 문법만이라도 전부 본다 — 배포되는 JS 가 파싱은 되는지.
+      - name: 배포 JS 문법
+        run: |
+          for f in game.js content.js app.js net.js music.js progression.js \
+                   deck-rules.js tree-rules.js run-save.js directional-art.js \
+                   extreme-art.js infinity-art.js cosmetics.js commerce-client.js; do
+            [ -f "$f" ] && node --check "$f" && echo "  ok $f"
+          done
+
+  # ── 2단계: 실제 브라우저가 필요한 것 ────────────────────────────────────────
+  # 1단계와 달리 npm ci 가 필요하다 (playwright-core · sharp). 브라우저는 따로 안 받는다 —
+  # browser.cjs 후보 목록에 /usr/bin/google-chrome 이 있고 ubuntu-latest 에 사전 설치돼 있다.
+  # playwright-core 의 executablePath() 는 브라우저가 없어도 throw 하지 않고 없는 경로를
+  # 돌려줄 뿐이라(실측 확인) fs.existsSync 에서 걸러지고 Chrome 으로 넘어간다.
+  #
+  # PR 마다 돌리지 않는 이유: casual/ 까지 받아야 해서 체크아웃이 ~185 MiB 이고 실행도 길다.
+  # main 푸시와 수동 실행에서만 돈다.
+  browser:
+    name: 브라우저 필요 테스트
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    if: github.event_name != 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /*
+            !/tools/art-review
+            !/devices
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # serve.py 의 기본 포트 8137 = browser.cjs gameUrl() 의 기본값.
+      # 저장소 루트를 올린다 — www/ 가 아니다. 극한 아트가 www 에 없으므로
+      # www 를 올리면 watchArtErrors 가 101웨이브 초과 테스트를 전부 깨뜨린다.
+      - name: 정적 서버
+        run: |
+          python3 serve.py &
+          for i in $(seq 1 40); do curl -sf -o /dev/null http://localhost:8137/index.html && exit 0; sleep 0.5; done
+          echo "::error::정적 서버가 8137 에서 안 떴다"; exit 1
+
+      # 아트 파이프라인 계약 — 실행 1초라 무거운 브라우저 테스트보다 먼저 둔다.
+      # 1단계에 못 넣는 이유: asset-load-budget 이 eager 자산 770개 중 730개를
+      # casual/ 아래에서 stat·디코드하는데, 1단계 sparse-checkout 은 /casual 을 제외한다.
+      # sharp 도 필요하므로 npm ci 가 있는 이 잡이 유일한 자리다.
+      - name: art-pipeline (매니페스트·골든슬라이스·자산 예산)
+        run: npm run test:art-pipeline
+
+      - name: game-modes
+        run: npm run test:game-modes
+      - name: pure-luck
+        run: npm run test:pure-luck
+      - name: campaign
+        run: npm run test:campaign
+      - name: rewards-integration
+        run: npm run test:rewards-integration
+      - name: home
+        run: npm run test:home
+
+      # 실기기 없이 원인을 볼 수 있는 유일한 수단이다.
+      - name: 실패 증거
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-${{ github.run_id }}
+          path: gen/e2e/**
+          retention-days: 7
+          if-no-files-found: ignore

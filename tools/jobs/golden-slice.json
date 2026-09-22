@@ -430,7 +430,7 @@
       "id": "golden-enemy-ground-biped",
       "category": "character",
       "styleProfile": "character",
-      "runtimeTarget": "casual/enemies/pig.png",
+      "runtimeTarget": "casual/enemies/pig.webp",
       "runtimeSpec": {
         "mode": "trim-contain",
         "maxWidth": 280,
@@ -440,13 +440,13 @@
         "trimAlphaThreshold": 8
       },
       "n": 1,
-      "outputFormat": "png",
+      "outputFormat": "webp",
       "out": "gen/golden-slice/character/enemy-ground-biped",
       "prompt": "One complete Dicekeep character, full body, 3/4 side view facing right, centered with at least 12% transparent margin. One consistent ground pivot, no floor, shadow, pedestal, scenery, motion sheet, text, logo or watermark. Preserve the referenced identity while simplifying noisy detail. Anatomically coherent limbs and joints; no body warp. A friendly but determined upright pig bandit in a brown leather vest, red scarf and small wooden buckler. True plantigrade two-legged stance: hips, forward-facing knees, shins and feet form a natural humanlike chain; both feet rest on the same baseline and the knees must never bend backward.",
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "casual/enemies/pig.png"
+        "casual/enemies/pig.webp"
       ],
       "inputFidelity": "high"
     },
@@ -454,7 +454,7 @@
       "id": "golden-enemy-ground-quadruped",
       "category": "character",
       "styleProfile": "character",
-      "runtimeTarget": "casual/enemies/rhino.png",
+      "runtimeTarget": "casual/enemies/rhino.webp",
       "runtimeSpec": {
         "mode": "trim-contain",
         "maxWidth": 280,
@@ -464,13 +464,13 @@
         "trimAlphaThreshold": 8
       },
       "n": 1,
-      "outputFormat": "png",
+      "outputFormat": "webp",
       "out": "gen/golden-slice/character/enemy-ground-quadruped",
       "prompt": "One complete Dicekeep character, full body, 3/4 side view facing right, centered with at least 12% transparent margin. One consistent ground pivot, no floor, shadow, pedestal, scenery, motion sheet, text, logo or watermark. Preserve the referenced identity while simplifying noisy detail. Anatomically coherent limbs and joints; no body warp. A sturdy baby gray rhinoceros scout wearing simple brown harness armor and one blue-violet dice charm. Clearly quadrupedal: four distinct weight-bearing legs under the body, natural knees and hocks, all hooves visible, horn and face unobstructed.",
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "casual/enemies/rhino.png"
+        "casual/enemies/rhino.webp"
       ],
       "inputFidelity": "high"
     },
@@ -478,7 +478,7 @@
       "id": "golden-enemy-air",
       "category": "character",
       "styleProfile": "character",
-      "runtimeTarget": "casual/enemies/martin.png",
+      "runtimeTarget": "casual/enemies/martin.webp",
       "runtimeSpec": {
         "mode": "trim-contain",
         "maxWidth": 280,
@@ -488,13 +488,13 @@
         "trimAlphaThreshold": 8
       },
       "n": 1,
-      "outputFormat": "png",
+      "outputFormat": "webp",
       "out": "gen/golden-slice/character/enemy-air",
       "prompt": "One complete Dicekeep character, full body, 3/4 side view facing right, centered with at least 12% transparent margin. One consistent ground pivot, no floor, shadow, pedestal, scenery, motion sheet, text, logo or watermark. Preserve the referenced identity while simplifying noisy detail. Anatomically coherent limbs and joints; no body warp. A small swift house-martin aerial scout with navy-and-cream feathers, a tiny red courier scarf and one gold dice clasp. Wings fully open and clearly support flight; feet tucked naturally, body visibly airborne and level, with no walking pose or invisible ground contact.",
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "casual/enemies/martin.png"
+        "casual/enemies/martin.webp"
       ],
       "inputFidelity": "high"
     },
@@ -502,7 +502,7 @@
       "id": "golden-enemy-burrow",
       "category": "character",
       "styleProfile": "character",
-      "runtimeTarget": "casual/enemies/fennel.png",
+      "runtimeTarget": "casual/enemies/fennel.webp",
       "runtimeSpec": {
         "mode": "trim-contain",
         "maxWidth": 280,
@@ -512,13 +512,13 @@
         "trimAlphaThreshold": 8
       },
       "n": 1,
-      "outputFormat": "png",
+      "outputFormat": "webp",
       "out": "gen/golden-slice/character/enemy-burrow",
       "prompt": "One complete Dicekeep character, full body, 3/4 side view facing right, centered with at least 12% transparent margin. One consistent ground pivot, no floor, shadow, pedestal, scenery, motion sheet, text, logo or watermark. Preserve the referenced identity while simplifying noisy detail. Anatomically coherent limbs and joints; no body warp. A compact fennel-root miner with a leafy helmet, round goggles, small brass hand drill and sturdy boots. A corkscrew root-tail and earth-colored tool shapes make the burrowing role clear, while the intact complete body and both correctly jointed legs remain visible and grounded.",
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "casual/enemies/fennel.png"
+        "casual/enemies/fennel.webp"
       ],
       "inputFidelity": "high"
     },
@@ -526,7 +526,7 @@
       "id": "golden-boss-w010-rat-king",
       "category": "character",
       "styleProfile": "character",
-      "runtimeTarget": "casual/bosses/inf/b010.png",
+      "runtimeTarget": "casual/bosses/inf/b010.webp",
       "runtimeSpec": {
         "mode": "fixed",
         "width": 512,
@@ -535,13 +535,13 @@
         "anchor": "center"
       },
       "n": 1,
-      "outputFormat": "png",
+      "outputFormat": "webp",
       "out": "gen/golden-slice/character/boss-w010-rat-king",
       "prompt": "One complete Dicekeep character, full body, 3/4 side view facing right, centered with at least 12% transparent margin. One consistent ground pivot, no floor, shadow, pedestal, scenery, motion sheet, text, logo or watermark. Preserve the referenced identity while simplifying noisy detail. Anatomically coherent limbs and joints; no body warp. Boss: the Plague Rat King, a large upright rat monarch with intact charcoal fur, rounded expressive face, simple gold crown, broad bracers and a wine-red cape. Exactly one curved tail and two sturdy plantigrade feet. Proud, imposing and approachable; forward-facing knees bend naturally and never backward.",
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "casual/bosses/inf/b010.png"
+        "casual/bosses/inf/b010.webp"
       ],
       "inputFidelity": "high"
     },

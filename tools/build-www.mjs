@@ -6,9 +6,10 @@
 //   고정 파일: 게임·성장·결제·아트 매니페스트 JS, index.html(app.js 주입), 결제 복귀·개인정보 페이지
 //   고정 폴더: fonts ui vfx dice props map towers enemies audio (있는 것만)
 //   casual/: game.js·content.js 안의 'casual/…' 경로 리터럴 + content.js 를 실행해 얻은 DKCONTENT 의 src/walkSrc
-//            + casual/tiles/** + casual/towers/star-*.png + casual/towers/skins/**
-//            + casual/{enemies,bosses}/{inf,extreme}/** (PNG·무손실 WebP 모두 포함)
-//   제외: casual/maps/map-NN-*.jpg · casual/towers/*-attack-2x2.png · editor.* · *.md · net/ · serve.py · start.bat · wrangler.jsonc · tools · resources
+//            + casual/tiles/** + casual/towers/star-*.{png,webp} + casual/towers/skins/**
+//            + casual/{enemies,bosses}/inf/** (무손실 WebP)
+//   극한 아트 casual/{enemies,bosses}/extreme/** 는 **넣지 않는다** — 첫 진입 때 내려받는다
+//   제외: casual/maps/map-NN-*.jpg · casual/towers/*-attack-2x2.png · casual/**/extreme/** · editor.* · *.md · net/ · serve.py · start.bat · wrangler.jsonc · tools · resources
 //   www/app.js = @capacitor/core UMD + 플러그인 UMD + 루트 app.js (번들러 없이 window.Capacitor.Plugins.* 를 쓰기 위해)
 import fs from 'node:fs';
 import path from 'node:path';
@@ -21,7 +22,7 @@ const ARGS = new Set(process.argv.slice(2));
 const OPTIMIZE = ARGS.has('--optimize') || ARGS.has('--quantize');
 const QUANTIZE = ARGS.has('--quantize');
 
-const FIXED_FILES = ['index.html', 'game.js', 'content.js', 'deck-rules.js', 'tree-rules.js', 'deck-ui.js', 'progression.js', 'run-save.js', 'combat-motion.js', 'commerce-config.js', 'commerce-client.js', 'commerce-ui.js', 'cosmetics.js', 'payment.html', 'payment-return.js', 'directional-art.js', 'extreme-art.js', 'infinity-art.js', 'net.js', 'music.js', 'style.css', 'privacy.html'];
+const FIXED_FILES = ['index.html', 'game.js', 'content.js', 'deck-rules.js', 'tree-rules.js', 'deck-ui.js', 'progression.js', 'run-save.js', 'combat-motion.js', 'commerce-config.js', 'commerce-client.js', 'commerce-ui.js', 'cosmetics.js', 'payment.html', 'payment-return.js', 'directional-art.js', 'extreme-art.js', 'infinity-art.js', 'net.js', 'music.js', 'style.css', 'privacy.html', 'account-deletion.html'];
 FIXED_FILES.push('battle-rules.js');
 FIXED_FILES.push('liveops-rules.js', 'rewards-client.js', 'rewards-ui.js', 'rewards.css', 'mail-admin.js', 'mail-admin.css');
 FIXED_FILES.push('reward-notifications.js', 'home-ui.js', 'home.css');
@@ -29,6 +30,7 @@ const FIXED_DIRS = ['fonts', 'ui', 'vfx', 'dice', 'props', 'map', 'towers', 'ene
 const CAP_UMD = [
   '@capacitor/core/dist/capacitor.js',
   '@capacitor/app/dist/plugin.js',
+  '@capacitor/filesystem/dist/plugin.js',
   '@capacitor/splash-screen/dist/plugin.js',
   '@capacitor/status-bar/dist/plugin.js',
   '@capacitor-community/safe-area/dist/plugin.js',
@@ -36,6 +38,7 @@ const CAP_UMD = [
 const EXCLUDE = [
   /^casual\/maps\/map-[0-9][0-9]-[^/]*\.jpg$/i,
   /^casual\/towers\/[^/]*-attack-2x2\.png$/i,
+  /^casual\/(?:enemies|bosses)\/extreme\//i,   // 첫 진입 때 내려받는다 (extreme-cache.js)
   /^editor\./i, /\.md$/i, /^net\//, /^serve\.py$/, /^start\.bat$/, /^wrangler\.jsonc$/, /^tools\//, /^resources\//, /^store\//, /^ui\/icons-sheet\.png$/,
 ];
 const excluded = (rel) => EXCLUDE.some((re) => re.test(rel));
@@ -75,11 +78,14 @@ function casualPaths() {
   for (const p of walk(path.join(ROOT, 'casual', 'tiles'))) set.add(rel(p));
   for (const p of walk(path.join(ROOT, 'casual', 'enemies', 'inf'))) set.add(rel(p));
   for (const p of walk(path.join(ROOT, 'casual', 'bosses', 'inf'))) set.add(rel(p));
-  for (const p of walk(path.join(ROOT, 'casual', 'enemies', 'extreme'))) set.add(rel(p));
-  for (const p of walk(path.join(ROOT, 'casual', 'bosses', 'extreme'))) set.add(rel(p));
+  // 극한 아트 666장(74 MiB)은 앱에 넣지 않는다 — Play 초기 다운로드 한도 200 MB 를 넘기는
+  // 가장 큰 덩어리이고, 101웨이브 이후 콘텐츠라 대부분의 이용자는 닿지도 않는다.
+  // 극한 첫 진입 때 extreme-cache.js 가 받아서 Filesystem 에 캐시한다.
+  // 웹 배포는 영향 없다 — Cloudflare 는 www/ 가 아니라 저장소 루트를 올리고
+  // .assetsignore 도 이 경로를 막지 않으므로 같은 URL 이 그대로 서비스된다.
   for (const p of walk(path.join(ROOT, 'casual', 'towers', 'skins'))) set.add(rel(p));
   const towers = path.join(ROOT, 'casual', 'towers');
-  if (fs.existsSync(towers)) for (const f of fs.readdirSync(towers)) if (/^star-.*\.png$/i.test(f)) set.add('casual/towers/' + f);
+  if (fs.existsSync(towers)) for (const f of fs.readdirSync(towers)) if (/^star-.*\.(png|webp)$/i.test(f)) set.add('casual/towers/' + f);
   const list = [...set].filter((p) => !excluded(p));
   const missing = list.filter((p) => !fs.existsSync(path.join(ROOT, p)));
   if (missing.length) console.warn('참조하지만 없는 파일:', missing.join(', '));

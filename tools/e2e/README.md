@@ -17,8 +17,6 @@ $env:E2E_OUTPUT_DIR = '../e2e-results'
 $env:E2E_BASE_URL = 'http://localhost:8137/'
 # 필요한 경우에만 설치된 브라우저 경로를 직접 지정한다.
 # $env:PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH = 'C:\Program Files\Google\Chrome\Application\chrome.exe'
-node tools/e2e/ground-gait-check.cjs --self-test
-node tools/e2e/ground-gait-check.cjs
 node tools/e2e/walk-jitter.js --self-test
 node tools/e2e/walk-jitter.js
 node tools/e2e/inf-art-check.js 101
@@ -38,7 +36,7 @@ Linux/macOS에서도 같은 `node` 명령을 사용하고 환경 변수는 `expo
 
 ```bash
 nohup python3 serve.py >/dev/null 2>&1 &          # 정적 서버 8137
-cd net && TIMING=fast PORT=8787 nohup node test/dev-server.mjs >/dev/null 2>&1 &   # 멀티 테스트용 (mp3-test, mp-resume-test)
+cd net && TIMING=fast PORT=8787 nohup node test/dev-server.mjs >/dev/null 2>&1 &   # 멀티 테스트용 (mp3-test, mp-resume-test, extreme-multiplayer)
 mkdir -p /tmp/e2e && cd /tmp/e2e
 export NODE_PATH=/opt/node22/lib/node_modules       # playwright-core · 크로미움 /opt/pw-browsers/chromium
 node /home/user/dicekeep-art/tools/e2e/single-smoke.js
@@ -77,4 +75,16 @@ node /home/user/dicekeep-art/tools/e2e/single-smoke.js
 
 수치 안정화 통과는 올바른 시트 분할이나 적당한 아트 분위기를 보증하지 않는다. 프레임 잘림·옆 칸의 파편·심한 형태 변화·과도한 혐오감·작은 게임 크기에서의 가독성은 별도로 원본 시트와 게임 캡처를 눈으로 확인한다. W10 보스도 새 방향별 걷기 시트 검증 대상이다. 기존 선택적 아트의 404는 새 인피니티 아트 오류와 구별하며, `single-smoke.js`의 콘솔 진단은 기록하되 pageerror와 게임 진행 단언 실패는 종료 1로 처리한다.
 
-`ground-gait-check.cjs`, `walk-preview.cjs`, `walk-jitter.js`는 PR #29 당시의 1~9웨이브 측면 시트 회귀 검사다. 새 세 방향 리그의 분할·관절·접지는 `tools/check-directional-art.mjs`와 `tools/preview-directional-motion.mjs`로 검사한다. 제작 기록과 검수 도구는 [방향별 아트 작업 폴더](../art-review/directional-101/), 이전 측면 검사 기록은 [PR #29 보행 보고서](../art-review/pr29-gait/README.md)를 참고한다.
+`ground-gait-check.cjs`는 PR #29 당시의 1~9웨이브 측면 시트 회귀 검사였다. **현행 렌더러에서 구조적으로 통과할 수 없어 `legacy/` 로 옮겼다** — `game.js currentEnemyFrame()` 이 승인된 `artAssetId` 를 가진 적을 전부 방향별 아트로 보내고 실패해도 레거시로 떨어지지 않으므로(`return null`), 이 검사가 기다리는 레거시 시트는 화면에 그려지지 않는다. 경위와 대체 도구는 [legacy/README.md](legacy/README.md). 같은 세대인 `walk-jitter.js`·`walk-preview.cjs`는 로드된 시트 캔버스를 직접 읽어 렌더러와 무관하므로 **그대로 살아 있다**(실측 확인). 새 세 방향 리그의 분할·관절·접지는 `tools/check-directional-art.mjs`와 `tools/preview-directional-motion.mjs`로 검사한다. 제작 기록과 검수 도구는 [방향별 아트 작업 폴더](../art-review/directional-101/), 이전 측면 검사 기록은 [PR #29 보행 보고서](../art-review/pr29-gait/README.md)를 참고한다.
+
+## 극한 아트는 `www/` 에 없다 (2026-09-22)
+
+`tools/build-www.mjs` 가 `casual/{enemies,bosses}/extreme/**` 666장을 앱 번들에서 뺀다.
+앱은 첫 진입 때 `extreme-cache.js` 로 내려받고, 웹은 Cloudflare 가 저장소 루트를 그대로
+올리므로 영향이 없다.
+
+**그래서 `E2E_BASE_URL` 을 `npm run serve:www`(8140)로 돌리면 안 된다.**
+`browser.cjs` 의 `watchArtErrors` 는 `/casual/(enemies|bosses)/(inf|extreme)/` 의 404 를
+하드 실패로 보기 때문에, 웨이브 101 을 넘는 테스트가 전부 깨진다
+(특히 `directional-cache-pressure.cjs --extreme`). 기본값인 `localhost:8137`(저장소 루트)은
+파일이 그대로 있으므로 안전하다.

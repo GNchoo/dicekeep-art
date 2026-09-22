@@ -164,12 +164,12 @@ async function audit(dirs, partial, checkOnly, extraLedgers = []) {
           if (provenance.body?.source) source(provenance.body.source, provenance.body.sourceSha256, provenance.body.sourceSize, id + '/' + name + ' body');
           for (const kind of ['still', 'sheet']) {
             const relative = view[kind];
-            requireThat(/^casual\/(?:enemies|bosses)\/inf\/directional\/[\w-]+\.png$/.test(relative), 'unsafe/nonproduction PNG: ' + relative);
+            requireThat(/^casual\/(?:enemies|bosses)\/inf\/directional\/[\w-]+\.(?:png|webp)$/.test(relative), 'unsafe/nonproduction runtime image: ' + relative);
             requireThat(files.has(relative), 'PNG lacks QA hash: ' + relative);
             const bytes = fs.readFileSync(contained(repo, relative)); verifyHash(bytes, files.get(relative).sha256, 'production ' + relative);
             requireThat(!runtimeFiles.has(relative), 'runtime PNG shared across views/entries: ' + relative);
             const image = sharp(bytes), meta = await image.metadata(); await image.ensureAlpha().raw().toBuffer();
-            requireThat(meta.format === 'png' && meta.width === view.cell * (kind === 'sheet' ? view.cols : 1) && meta.height === view.cell * (kind === 'sheet' ? view.rows : 1), 'decoded PNG grid mismatch: ' + relative);
+            requireThat((meta.format === 'png' || meta.format === 'webp') && meta.width === view.cell * (kind === 'sheet' ? view.cols : 1) && meta.height === view.cell * (kind === 'sheet' ? view.rows : 1), 'decoded runtime grid mismatch: ' + relative);
             const rgbaBytes = meta.width * meta.height * 4;
             if (rgbaBytes > largestDecode.rgbaBytes) largestDecode = { path: relative, width: meta.width, height: meta.height, rgbaBytes };
             const file = { ...bytesRecord(relative, bytes), width: meta.width, height: meta.height, rgbaBytes };
