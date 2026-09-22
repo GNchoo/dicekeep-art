@@ -130,6 +130,13 @@ jobs:
           for i in $(seq 1 40); do curl -sf -o /dev/null http://localhost:8137/index.html && exit 0; sleep 0.5; done
           echo "::error::정적 서버가 8137 에서 안 떴다"; exit 1
 
+      # 아트 파이프라인 계약 — 실행 1초라 무거운 브라우저 테스트보다 먼저 둔다.
+      # 1단계에 못 넣는 이유: asset-load-budget 이 eager 자산 770개 중 730개를
+      # casual/ 아래에서 stat·디코드하는데, 1단계 sparse-checkout 은 /casual 을 제외한다.
+      # sharp 도 필요하므로 npm ci 가 있는 이 잡이 유일한 자리다.
+      - name: art-pipeline (매니페스트·골든슬라이스·자산 예산)
+        run: npm run test:art-pipeline
+
       - name: game-modes
         run: npm run test:game-modes
       - name: pure-luck
