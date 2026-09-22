@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "generatedWith": "Codex built-in image_gen",
+  "apiKeyUsed": false,
+  "modelSnapshot": null,
+  "promptRecord": "Built-in tool prompts and reference paths are recorded in this Codex task; directionSource names the corresponding job.",
+  "runtimeAssetsModified": false,
+  "candidates": [
+    {
+      "id": "keyart-portrait",
+      "file": "keyart/portrait-candidate-1.png",
+      "directionSource": "tools/jobs/keyart.json#keyart-portrait",
+      "status": "needs-review",
+      "note": "New bright title composition; test with phone UI.",
+      "sha256": "0ae85cd369954fd69f50934580f4f4f35f798008ee137e9c48bc8706e65fd817",
+      "bytes": 1865469,
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": false,
+      "preview": "assets/keyart/portrait-candidate-1.webp"
+    },
+    {
+      "id": "keyart-landscape",
+      "file": "keyart/landscape-candidate-1.png",
+      "directionSource": "tools/jobs/keyart.json#keyart-landscape",
+      "status": "needs-review",
+      "note": "Recomposed from the portrait candidate.",
+      "sha256": "0fd3e7758cedaa42fd2a703b4a6c2fad6f43cb2fd9a9c27f8e0a901044022376",
+      "bytes": 1830929,
+      "width": 1672,
+      "height": 941,
+      "hasAlpha": false,
+      "preview": "assets/keyart/landscape-candidate-1.webp"
+    },
+    {
+      "id": "golden-arena-board",
+      "file": "environment/arena-board-candidate-1.png",
+      "directionSource": "tools/jobs/golden-slice.json#golden-arena-board",
+      "status": "rejected-seams",
+      "note": "Repeated edges are visible; do not promote.",
+      "sha256": "c7af2ebd659a8f874ba09a7eb3a5e6397c31f56d5cbd79377a92dfac8f29325c",
+      "bytes": 1934719,
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": false,
+      "preview": "assets/environment/arena-board-candidate-1.webp"
+    },
+    {
+      "id": "golden-tower-die-1",
+      "file": "tower/die-1-candidate-1.png",
+      "directionSource": "tools/jobs/golden-slice.json#golden-tower-die-1",
+      "status": "needs-review",
+      "note": "May contain too much roof and banner detail at 48 px.",
+      "sha256": "9630633fe675d7bd3056d0ec0fbeec5353b737073b075ace8a835e7ce7e542de",
+      "bytes": 1091928,
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": true,
+      "preview": "assets/tower/die-1-candidate-1.webp"
+    },
+    {
+      "id": "golden-enemy-ground-biped",
+      "file": "character/ground-biped-candidate-1.png",
+      "directionSource": "tools/jobs/golden-slice.json#golden-enemy-ground-biped",
+      "status": "needs-review",
+      "note": "Forward knees; normalize top margin and foot pivot before use.",
+      "sha256": "48cec0f07964871d03a07880d3c755dcfe9d89593c2f4e92735b84f6108dad6e",
+      "bytes": 1145496,
+      "width": 1211,
+      "height": 1299,
+      "hasAlpha": true,
+      "preview": "assets/character/ground-biped-candidate-1.webp"
+    },
+    {
+      "id": "golden-ui-mail",
+      "file": "ui/mail-candidate-1.png",
+      "directionSource": "tools/jobs/golden-slice.json#golden-ui-mail",
+      "status": "needs-review",
+      "note": "Check readability at the actual 36 px home-button size.",
+      "sha256": "d0db0e7e458620e059711d02f92c47d15b9c3565a733f3921b62e04be3b3ac9a",
+      "bytes": 1281907,
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": true,
+      "preview": "assets/ui/mail-candidate-1.webp"
+    },
+    {
+      "id": "golden-vfx-muzzle-flash",
+      "file": "vfx/muzzle-flash-candidate-1.png",
+      "directionSource": "tools/jobs/golden-slice.json#golden-vfx-muzzle-flash",
+      "status": "needs-review",
+      "note": "Check 32 px shot direction and alignment with the current muzzle.",
+      "sha256": "5f3e8b000966639a4fdc13ec27948711aae61c89588d259e14c9484bec8e1972",
+      "bytes": 446170,
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": true,
+      "preview": "assets/vfx/muzzle-flash-candidate-1.webp"
+    }
+  ]
+}
