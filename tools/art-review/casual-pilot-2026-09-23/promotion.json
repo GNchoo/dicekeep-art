@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "generatedWith": "Codex built-in image_gen",
+  "apiKeyUsed": false,
+  "outputs": [
+    {
+      "source": "keyart/portrait-candidate-1.png",
+      "target": "ui/title-keyart-p.jpg",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": false,
+      "sha256": "e5cd907ed9071f4d477efec09fea6a0d414f4cf30babbfb7b2f9c604883a3994"
+    },
+    {
+      "source": "keyart/landscape-candidate-1.png",
+      "target": "ui/title-keyart-l.jpg",
+      "width": 1600,
+      "height": 900,
+      "hasAlpha": false,
+      "sha256": "fb6b84474bce9430ed4618df1041fbd7c7971f60946a6185f4025bc0472ed6dc"
+    },
+    {
+      "source": "keyart/landscape-candidate-1.png",
+      "target": "ui/title-keyart-l-blur.jpg",
+      "width": 480,
+      "height": 270,
+      "hasAlpha": false,
+      "sha256": "c37e7464d5a14afd4a287c754e903b1b23227671ce252f40a7862c8697198335"
+    },
+    {
+      "source": "tower/die-1-candidate-1.png",
+      "target": "towers/die-1.png",
+      "width": 214,
+      "height": 384,
+      "hasAlpha": true,
+      "sha256": "8d61468170207e94f1bb39f99394e886b6784735a6e5fe11d1eb0cffe8952a8f"
+    },
+    {
+      "source": "tower/die-1-candidate-1.png",
+      "target": "casual/towers/t1-a.png",
+      "width": 214,
+      "height": 384,
+      "hasAlpha": true,
+      "sha256": "8d61468170207e94f1bb39f99394e886b6784735a6e5fe11d1eb0cffe8952a8f"
+    },
+    {
+      "source": "ui/mail-candidate-1.png",
+      "target": "ui/rewards/mail.webp",
+      "width": 512,
+      "height": 512,
+      "hasAlpha": true,
+      "sha256": "585f13a16003acb44f95afb2e8c7020e8a3595a448d329e7caa9e3f041688abd"
+    }
+  ],
+  "deferred": [
+    {
+      "file": "character/ground-biped-candidate-1.png",
+      "reason": "Matching walk frames and foot pivot validation required; preserve current animated enemy."
+    },
+    {
+      "file": "vfx/muzzle-flash-candidate-1.png",
+      "reason": "Directional origin and renderer rotation need validation."
+    },
+    {
+      "file": "environment/arena-board-candidate-1.png",
+      "reason": "Rejected: visible repeating seams."
+    }
+  ]
+}

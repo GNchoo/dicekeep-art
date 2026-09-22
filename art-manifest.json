@@ -14,7 +14,7 @@
   ],
   "summary": {
     "files": 2283,
-    "bytes": 278224518,
+    "bytes": 278144268,
     "byCategory": [
       {
         "name": "boss",
@@ -39,12 +39,12 @@
       {
         "name": "tower",
         "files": 110,
-        "bytes": 20299905
+        "bytes": 20174372
       },
       {
         "name": "ui",
         "files": 46,
-        "bytes": 4010324
+        "bytes": 4055607
       },
       {
         "name": "vfx",
@@ -66,7 +66,7 @@
       {
         "name": "runtime",
         "files": 797,
-        "bytes": 87075331
+        "bytes": 86995081
       },
       {
         "name": "source",
@@ -78,17 +78,17 @@
       {
         "name": "jpeg",
         "files": 95,
-        "bytes": 27457852
+        "bytes": 27515657
       },
       {
         "name": "png",
         "files": 201,
-        "bytes": 51870942
+        "bytes": 51745409
       },
       {
         "name": "webp",
         "files": 1987,
-        "bytes": 198895724
+        "bytes": 198883202
       }
     ],
     "byMobileBuild": [
@@ -100,7 +100,7 @@
       {
         "name": "included",
         "files": 2186,
-        "bytes": 248004215
+        "bytes": 247923965
       }
     ],
     "byMobileReason": [
@@ -112,7 +112,7 @@
       {
         "name": "fixed-directory",
         "files": 67,
-        "bytes": 7700659
+        "bytes": 7745942
       },
       {
         "name": "legacy-map-background",
@@ -127,7 +127,7 @@
       {
         "name": "runtime-reference",
         "files": 676,
-        "bytes": 58410578
+        "bytes": 58285045
       },
       {
         "name": "star-tower-rule",
@@ -35018,10 +35018,10 @@
     },
     {
       "path": "casual/towers/t1-a.png",
-      "bytes": 167221,
-      "sha256": "0157f2e9c21599bf35dabce21e84eca8d188dd428052f4075f44f972fcdffb8b",
+      "bytes": 41688,
+      "sha256": "8d61468170207e94f1bb39f99394e886b6784735a6e5fe11d1eb0cffe8952a8f",
       "format": "png",
-      "width": 242,
+      "width": 214,
       "height": 384,
       "hasAlpha": true,
       "lifecycle": "runtime",
@@ -36234,8 +36234,8 @@
     },
     {
       "path": "ui/rewards/mail.webp",
-      "bytes": 66688,
-      "sha256": "2455dfe337efaa63dafe6e634a9c6c1b9f8fd911f70b83f60b55de7047c570bf",
+      "bytes": 54166,
+      "sha256": "585f13a16003acb44f95afb2e8c7020e8a3595a448d329e7caa9e3f041688abd",
       "format": "webp",
       "width": 512,
       "height": 512,
@@ -36282,11 +36282,11 @@
     },
     {
       "path": "ui/title-keyart-l-blur.jpg",
-      "bytes": 2812,
-      "sha256": "94f7fabb2458d13becc239d55aa0d1fb6c2047143b992aeb0be3c780d8da24d5",
+      "bytes": 4959,
+      "sha256": "c37e7464d5a14afd4a287c754e903b1b23227671ce252f40a7862c8697198335",
       "format": "jpeg",
       "width": 480,
-      "height": 200,
+      "height": 270,
       "hasAlpha": false,
       "lifecycle": "runtime",
       "category": "ui",
@@ -36298,11 +36298,11 @@
     },
     {
       "path": "ui/title-keyart-l.jpg",
-      "bytes": 134067,
-      "sha256": "10eefca1484eb2d47fcf012b0ec94a51055874439fa92875bd802e5bc4ac19d7",
+      "bytes": 165973,
+      "sha256": "fb6b84474bce9430ed4618df1041fbd7c7971f60946a6185f4025bc0472ed6dc",
       "format": "jpeg",
-      "width": 2400,
-      "height": 1000,
+      "width": 1600,
+      "height": 900,
       "hasAlpha": false,
       "lifecycle": "runtime",
       "category": "ui",
@@ -36314,11 +36314,11 @@
     },
     {
       "path": "ui/title-keyart-p.jpg",
-      "bytes": 145999,
-      "sha256": "31ad026c1fa1675bb027df0d57791a47a819f3fe70ae291006401ab4229349df",
+      "bytes": 169751,
+      "sha256": "e5cd907ed9071f4d477efec09fea6a0d414f4cf30babbfb7b2f9c604883a3994",
       "format": "jpeg",
-      "width": 1400,
-      "height": 2100,
+      "width": 1024,
+      "height": 1536,
       "hasAlpha": false,
       "lifecycle": "runtime",
       "category": "ui",
