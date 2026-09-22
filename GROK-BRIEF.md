@@ -16,7 +16,7 @@
 
 ## 반드시 지킬 공통 규칙
 
-1. **스타일**: Kingdom Rush + Random Dice. 손그림 캐주얼, 두꺼운 깔끔한 외곽선, 채도 높은 색, **3/4 탑다운(살짝 기울여 내려다본) 시점**. 글자·워터마크·UI 금지. 6테마가 한 게임처럼 보여야 하므로 선 굵기·채도·명암 처리를 통일하세요.
+1. **스타일**: `tools/art-style.json`의 `environment` 프로필을 기준으로 합니다. 큰 둥근 형태, 따뜻한 암갈색 외곽선, 밝지만 통제된 색, 2단 무광 셀 명암, 최소한의 미세 질감, 좌상단 단일 광원, **3/4 탑다운(살짝 기울여 내려다본) 시점**을 유지하세요. 거친 페인터리 입자·사진 같은 재질·진흙처럼 탁한 암부·과도한 광택은 금지하며, 글자·워터마크·UI를 넣지 않습니다. 6테마가 한 게임처럼 보이도록 선 굵기·채도·명암 처리를 통일하세요.
 2. **도로 질감(`road.png`)과 물 질감(`water.png`)** 은 **정사각형 1024×1024 를 가장자리까지 가득 채우는 표면 재질**입니다. 게임이 이걸 반복 패턴으로 깔아 길과 물의 모양을 채웁니다. 그러므로
    - **이음새 없이 반복**되어야 합니다: 네 변이 서로 이어지게, 테두리·비네팅·큰 물체·글자 없이 고른 재질만.
    - 조명은 **정수리에서 내리쬐는 평평한 조명**, 한쪽으로 늘어지는 그림자 금지.
@@ -30,18 +30,18 @@
 
 | 파일 | 프롬프트 |
 |---|---|
-| `floor.jpg` (1280×720) | `Hand-painted casual tower defense game ground texture, Kingdom Rush and Random Dice style, 3/4 top-down view, 16:9 landscape, full-bleed. An EMPTY expanse of {THEME_FLOOR}. Gentle color variation, subtle grass/soil strokes, a few tiny pebbles. NO roads, NO paths, NO tower pads, NO buildings, NO trees, NO large objects, NO characters, NO text, NO watermark. Thick clean outlines where applicable, saturated colors, flat overhead lighting.` |
-| `road.png` (1024²) | `Seamless square game texture 1:1, hand-painted casual tower defense style, 3/4 top-down view, filling the WHOLE square edge to edge with the SURFACE of {THEME_ROAD}. Must tile seamlessly when repeated in a grid: no borders, no edges of the road, no shoulders, no grass, no objects, no vignette, no text. Even flat overhead lighting, medium detail so it still reads when shrunk.` |
-| `water.png` | `Seamless square game texture 1:1, hand-painted casual style, 3/4 top-down view, filling the WHOLE square edge to edge with {THEME_WATER}. Must tile seamlessly when repeated in a grid: no borders, no shore, no rocks, no objects, no vignette. Flat overhead lighting, no text.` |
-| `pad.png` | `Single game object on a solid plain light gray #C8C8C8 background, centered, generous margins. A round flat stone tower foundation pad seen from a 3/4 top-down view (an ellipse about twice as wide as tall), {THEME_PAD}. Empty on top so a tower can be placed on it. Thick clean outlines, hand-painted casual style, no cast shadow beyond the rim, no text.` |
-| `start.png` | `Single game object on a solid plain light gray #C8C8C8 background, centered. The ENEMY SPAWN GATE: {THEME_START}, with a swirling glowing purple magic portal inside the opening. 3/4 top-down view, hand-painted casual Kingdom Rush style, thick clean outlines, the base sits flat on the ground, no text.` |
-| `end.png` | `Single game object on a solid plain light gray #C8C8C8 background, centered. The PLAYER'S STRONGHOLD to defend: {THEME_END}, with a large glowing crystal on top. Roughly twice as tall as wide, 3/4 top-down view, hand-painted casual Kingdom Rush style, chibi-cute proportions, thick clean outlines, the base sits flat on the ground, no text.` |
-| `prop-1.png` | `Single game object on a solid plain light gray #C8C8C8 background, centered. A large {THEME_TREE1}, 3/4 top-down view, hand-painted casual style, thick clean outlines, rounded chibi-cute shapes, base flat on the ground, no text.` |
+| `floor.jpg` (1280×720) | `Clean casual fantasy tower-defense ground texture, 3/4 top-down view, 16:9 landscape, full-bleed. An EMPTY expanse of {THEME_FLOOR}. Broad rounded forms, gentle color variation, minimal grass or soil marks and a few tiny pebbles. NO roads, NO paths, NO tower pads, NO buildings, NO trees, NO large objects, NO characters, NO text, NO watermark. Quiet background contrast and flat overhead lighting.` |
+| `road.png` (1024²) | `Seamless square clean-casual game texture, 1:1, 3/4 top-down view, filling the WHOLE square edge to edge with the SURFACE of {THEME_ROAD}. Must tile seamlessly when repeated in a grid: no borders, no edges of the road, no shoulders, no grass, no objects, no vignette, no text. Even flat overhead lighting, simplified materials and low detail that remains readable when shrunk.` |
+| `water.png` | `Seamless square clean-casual game texture, 1:1, 3/4 top-down view, filling the WHOLE square edge to edge with {THEME_WATER}. Must tile seamlessly when repeated in a grid: no borders, no shore, no rocks, no objects, no vignette. Simplified broad ripples, flat overhead lighting, no text.` |
+| `pad.png` | `Single game object on a solid plain light gray #C8C8C8 background, centered, generous margins. A round flat stone tower foundation pad seen from a 3/4 top-down view (an ellipse about twice as wide as tall), {THEME_PAD}. Empty on top so a tower can be placed on it. Broad rounded forms, thick smooth warm-charcoal outlines, two-step matte cel shading, no cast shadow beyond the rim, no text.` |
+| `start.png` | `Single game object on a solid plain light gray #C8C8C8 background, centered. The ENEMY SPAWN GATE: {THEME_START}, with a swirling glowing purple magic portal inside the opening. 3/4 top-down view, broad rounded forms, thick smooth warm-charcoal outlines, two-step matte cel shading, the base sits flat on the ground, no text.` |
+| `end.png` | `Single game object on a solid plain light gray #C8C8C8 background, centered. The PLAYER'S STRONGHOLD to defend: {THEME_END}, with a large glowing crystal on top. Roughly twice as tall as wide, 3/4 top-down view, compact friendly proportions, thick smooth warm-charcoal outlines, two-step matte cel shading, the base sits flat on the ground, no text.` |
+| `prop-1.png` | `Single game object on a solid plain light gray #C8C8C8 background, centered. A large {THEME_TREE1}, 3/4 top-down view, broad rounded shapes, thick smooth warm-charcoal outlines, two-step matte cel shading, base flat on the ground, no text.` |
 | `prop-2.png` | `Single game object on a solid plain light gray #C8C8C8 background, centered. A medium {THEME_TREE2}, same style as prop-1 but clearly a different silhouette, no text.` |
-| `prop-3.png` | `Single game object on a solid plain light gray #C8C8C8 background, centered. A small {THEME_ROCK}, 3/4 top-down view, hand-painted casual style, thick clean outlines, no text.` |
-| `prop-4.png` | `Single game object on a solid plain light gray #C8C8C8 background, centered. A low round {THEME_BUSH}, 3/4 top-down view, hand-painted casual style, thick clean outlines, no text.` |
-| `prop-5.png` | `Single game object on a solid plain light gray #C8C8C8 background, centered. A tiny ground detail cluster: {THEME_SMALL}, seen from above, hand-painted casual style, no text.` |
-| `prop-6.png` | `Single game object on a solid plain light gray #C8C8C8 background, centered. A landmark prop: {THEME_ARTIFACT}, 3/4 top-down view, hand-painted casual Kingdom Rush style, thick clean outlines, base flat on the ground, no text.` |
+| `prop-3.png` | `Single game object on a solid plain light gray #C8C8C8 background, centered. A small {THEME_ROCK}, 3/4 top-down view, broad rounded shapes, thick smooth warm-charcoal outlines, two-step matte cel shading, no text.` |
+| `prop-4.png` | `Single game object on a solid plain light gray #C8C8C8 background, centered. A low round {THEME_BUSH}, 3/4 top-down view, broad rounded shapes, thick smooth warm-charcoal outlines, two-step matte cel shading, no text.` |
+| `prop-5.png` | `Single game object on a solid plain light gray #C8C8C8 background, centered. A tiny ground detail cluster: {THEME_SMALL}, seen from above, broad simplified shapes, two-step matte cel shading, no text.` |
+| `prop-6.png` | `Single game object on a solid plain light gray #C8C8C8 background, centered. A landmark prop: {THEME_ARTIFACT}, 3/4 top-down view, broad rounded forms, thick smooth warm-charcoal outlines, two-step matte cel shading, base flat on the ground, no text.` |
 
 ## 테마 6종 (위 `{THEME_…}` 자리에 넣을 문단)
 
@@ -180,13 +180,13 @@ Single closed treasure chest icon on a solid plain light gray #C8C8C8 background
 
 ## F. 인피니티 아레나 조각 9장 → `casual/tiles/arena/` — **납품 완료 (2026-09-03)**
 
-인피니티 맵(고정 보드 + 둘레 트랙)은 코드가 모양을 그리고, 아래 조각으로 표면과 장식을 입힙니다. 통일 테마: **어두운 보라빛 밤의 투기장, 닳은 회보라 석판, 금색 룬 상감, 횃불 빛** (`dark violet night coliseum, worn gray-violet flagstones, gold rune inlays, torchlight`).
+인피니티 맵의 보드와 둘레 트랙은 코드가 모양을 그리고, 아래 조각으로 표면과 장식을 입힙니다. 모든 조각은 `tools/art-style.json`의 `environment` 프로필을 적용합니다. 통일 테마: **어두운 보라빛 밤의 투기장, 단순화한 회보라 석판, 금색 룬 상감, 횃불 빛** (`dark violet night coliseum, simplified gray-violet flagstones, gold rune inlays, torchlight`).
 
 ### F-1. 질감 3장 (정사각 1024², 가장자리까지 가득, 이음새 없이 반복, 물체·테두리·글자 없음, 평평한 조명)
 
 | 파일 | 프롬프트 |
 |---|---|
-| `floor.jpg` (1280×720 만 예외) | `Hand-painted casual tower defense arena FLOOR ONLY, 16:9, full-bleed: a dark violet night coliseum ground of large worn gray-violet flagstones with faint gold rune inlays and torchlight falling from outside the frame. EMPTY: no track, no roads, no board, no pads, no pillars, no braziers, no characters, no text.` |
+| `floor.jpg` (1280×720 만 예외) | `Clean casual fantasy tower-defense arena FLOOR ONLY, 16:9, full-bleed: a dark violet night coliseum ground of large simplified gray-violet flagstones with faint gold rune inlays and restrained torchlight falling from outside the frame. Broad shapes, low background contrast, two-step matte cel shading and minimal microtexture. EMPTY: no track, no roads, no board, no pads, no pillars, no braziers, no characters, no text.` |
 | `road.png` | `Seamless square game texture 1:1, filling the whole square edge to edge with the SURFACE of a worn pale sandstone racing track: fitted flagstones with thin dark joints, small chips and dust. Must tile seamlessly, no borders, no edges, no objects, flat overhead lighting, no text.` |
 | `board.png` | `Seamless square game texture 1:1, filling the whole square edge to edge with the SURFACE of a dark violet-gray polished stone slab with faint gold rune engravings and subtle cracks. Must tile seamlessly, no borders, no objects, flat overhead lighting, no text.` |
 
@@ -201,7 +201,7 @@ Single closed treasure chest icon on a solid plain light gray #C8C8C8 background
 | `prop-2.png` | 높이 84 | `a tall violet stone pillar with a gold cap and a floating purple crystal on top, small purple banner` |
 | `prop-3.png` | 높이 40 | `a small pile of broken stone rubble with a cracked dice fragment` |
 
-공통 문구를 앞에 붙이세요: `Hand-painted casual Kingdom Rush and Random Dice style, chibi-cute proportions, thick clean outlines, saturated colors, dark violet coliseum theme with gold accents.`
+공통 문구를 앞에 붙이세요: `Clean casual fantasy mobile-game environment art, compact friendly proportions, broad rounded forms, thick smooth warm-charcoal outlines, bright but controlled colors, two-step matte cel shading, minimal microtexture, one upper-left key light, dark violet coliseum theme with gold accents. No gritty painterly grain, photorealistic materials, muddy darkness, excessive gloss or dense decorative noise.`
 
 ## 납품 순서
 

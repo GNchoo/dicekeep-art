@@ -6,6 +6,12 @@
   "scripts": {
     "fonts": "node tools/copy-fonts.mjs",
     "build:www": "node tools/build-www.mjs",
+    "art:manifest": "node tools/art-manifest.mjs",
+    "art:golden-jobs": "node tools/golden-slice-jobs.mjs --out=tools/jobs/golden-slice.json",
+    "art:golden-candidates": "node tools/golden-slice-jobs.mjs --candidates=2 --out=gen/jobs/golden-slice-candidates.json",
+    "measure:asset-load": "node tools/asset-load-budget.mjs",
+    "test:asset-load": "node --test tools/asset-load-budget.test.mjs",
+    "test:art-pipeline": "node tools/art-pipeline-test.mjs && node tools/golden-slice-jobs.test.mjs && node --test tools/asset-load-budget.test.mjs && node tools/art-manifest.mjs --check",
     "cap:sync": "npm run build:www && npx cap sync",
     "android": "npx cap open android",
     "serve:www": "http-server www -p 8140 -c-1",

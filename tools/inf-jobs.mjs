@@ -24,8 +24,11 @@ const INF = ctx.window.DKCONTENT.INFINITY;
 const roster = JSON.parse(fs.readFileSync(new URL('./inf-roster.json', import.meta.url), 'utf8'));
 const pad3 = (w) => String(w).padStart(3, '0');
 
-// 이 공통 제한은 이전 로스터 묘사·팔레트 문구·참조 이미지보다 우선한다. 11~101도 재생성할 때 적용한다.
-const STYLE = 'Stylized hand-painted fantasy game character with chunky proportions, simplified shapes, clean readable contours, soft painted shading and lightly weathered equipment. Moderately dark adventure mood, expressive and characterful, readable at small tower-defense game scale. ART DIRECTION OVERRIDE: these rules take precedence over any conflicting creature description, palette wording or reference detail. No gore, blood stains, open wounds, sores, exposed organs, rotting flesh, mutilation, grotesque fused anatomy or photorealistic body horror. Interpret disease, decay and corpse-themed names as costume motifs, muted colors and playful fantasy character design, never literal injury. Skeletons use clean simplified bones; skull motifs are small carved ornaments. Preserve complete bodies, friendly-readable faces and distinct equipment silhouettes.';
+// 스타일·고어 방지 제한은 tools/art-style.json 의 character 프로필에서 한 번만 관리한다.
+// 잡 파일은 프로필 이름만 참조하므로 11~101을 다시 생성해도 같은 아트 방향을 유지한다.
+const STYLE_PROFILE = 'character';
+const styleSource = JSON.parse(fs.readFileSync(new URL('./art-style.json', import.meta.url), 'utf8'));
+if (!styleSource.profiles?.[STYLE_PROFILE]?.style) throw new Error(`tools/art-style.json 에 ${STYLE_PROFILE} 프로필이 없다`);
 const palette = (w) => { const p = INF.paletteOf(w); return `Palette of this tier: ${p.en}. Treat palette terms as color cues only: blood means muted wine-red cloth or rust, and skin cracks mean decorative armor or magical markings, never wounds. Use controlled midtone colors and clear light-dark separation so the character remains readable against the arena; avoid muddy all-black shading, pastel washes and neon saturation; any glow is small and restrained.`; };
 const GAIT = {
   biped: {
@@ -89,7 +92,7 @@ for (const { w, m, r } of bosses) {
   add('', m.name, r.bossDesc);
   if (m.second) add('-2', m.second, r.secondDesc);
 }
-const spec = { style: STYLE, jobs };
+const spec = { styleProfile: STYLE_PROFILE, jobs };
 const out = opt('out');
 const json = JSON.stringify(spec, null, 2) + '\n';
 if (out) { fs.writeFileSync(out, json); console.log(`→ ${out} (${jobs.length} jobs, mode ${mode}, ${frames} frames)`); } else process.stdout.write(json);

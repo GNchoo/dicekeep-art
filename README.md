@@ -131,11 +131,11 @@ npm run test:pure-luck-baseline                      # 두 리비전을 같은 �
 | UI·아이콘·스플래시 | 앱 아이콘·스플래시·HUD 프레임·버튼·아이콘 23·로고 (ART-PROMPTS §7, 납품 전엔 CSS) | `resources/`, `ui/` |
 | BGM | 로비·전투·보스 3곡 (코드 합성이 기본, 파일은 `MUSIC-PROMPTS.md`) | `audio/` |
 
-스타일: Kingdom Rush + Random Dice, 2D 아이소메트릭. 추가 배치 프롬프트는 `ART-PROMPTS.md`.
+스타일: Dicekeep 밝은 장난감 성채 판타지, 2D 아이소메트릭. 실행 STYLE의 원본은 `tools/art-style.json`, 안전한 생성·승인 절차는 `ART-PIPELINE.md`, 수동 추가 배치 프롬프트는 `ART-PROMPTS.md`.
 
 ## AI 그림 생성 (OpenAI 이미지 API)
 
-키아트·인피니티 몬스터는 `tools/img-gen.mjs` 로 뽑는다. 키는 **환경변수로만** 준다(파일·커밋 금지).
+키아트·인피니티 몬스터는 `tools/img-gen.mjs` 로 뽑는다. 키는 **환경변수로만** 준다(파일·커밋 금지). 먼저 `--dry`로 고정 모델·스타일 버전·최종 프롬프트를 확인하고, 생성 결과와 실행 manifest를 검수한 뒤 승인 자산만 런타임 경로로 승격한다. 전체 절차는 `ART-PIPELINE.md`를 따른다.
 
 ```bash
 OPENAI_API_KEY=… node tools/img-gen.mjs tools/jobs/keyart.json            # gen/keyart/portrait-*.png, landscape-*.png

@@ -2,10 +2,12 @@
 
 2026-09-02. 코드는 이미 이 파일들을 받을 준비가 되어 있다. **그대로 복사해 한 장씩 생성**하고, 지정한 파일명으로 저장하면 된다.
 
+> **아트 디렉션 기준 (2026-09-23)**: 실행 가능한 공통 STYLE의 원본은 `tools/art-style.json`이다. 목표는 Dicekeep 고유의 밝은 장난감 성채 판타지이며, 관찰 가능한 형태·명암·팔레트 규칙으로 관리한다. `tools/jobs/*.json`은 STYLE 문장을 복사하지 않고 `styleProfile`을 참조한다. 현재 자동 생성 잡의 범위는 키아트와 인피니티 W1~10이며, 나머지 항목은 아래의 수동 브리프 또는 향후 잡 생성기 대상이다.
+
 공통 규칙
 - 배경(맵)은 **16:9, 1280×720**. 나머지(시트·스킨)는 **연회색 단색 배경**, 로더가 배경을 지우고 크롭한다.
 - 2x2 시트는 **2열 2행**, 좌상→우상→좌하→우하 = 프레임 0,1,2,3. 모든 칸 같은 크기, 발밑 위치 동일.
-- 기존 아트와 같은 스타일: *Kingdom Rush + Random Dice, 캐주얼 치비, 두꺼운 외곽선, 3/4 아이소*.
+- Dicekeep 스타일: 밝은 색 덩어리, 3단 셀 명암, 따뜻한 암갈색 외곽선, 둥글고 단순한 실루엣, 3/4 아이소. 포토 텍스처·붓 결·반실사 표면·탁한 전체 색보정 금지.
 - 생성 후 `http://localhost:8137` 에서 확인 (file:// 금지).
 
 > **현재 상태 (2026-09-02 저녁)**: 세 묶음 모두 **납품 완료** (main 커밋 95644fc, 78장). 31~50 의 `path2`/`spots2` 는 납품 배경의 두 번째 길을 따라 다시 찍어 `MAP_LAYOUTS_HARD` 에 넣었다.
@@ -56,7 +58,7 @@ Grok 에게 그대로 붙여넣을 전체 메시지(공통 규칙 + 조각 15개
 ### 배경 공통 프롬프트 (앞에 붙일 것)
 
 ```text
-Hand-painted casual tower defense game map, Kingdom Rush and Random Dice style, 3/4 top-down isometric view, 16:9 landscape, full-bleed scene with no UI. TWO separate winding dirt roads: road A starts at a glowing purple portal gate at the TOP-LEFT, road B starts at a second glowing purple portal gate at the BOTTOM-LEFT; both roads wind across the map and MERGE in front of a large crystal castle shrine on the RIGHT side. Along both roads, on flat grass beside the road (never on the road, never on water or buildings), place 14 round flat stone tower pads of identical size, evenly spread. Roads are wide, clearly readable, with soft edges. Chibi cute proportions, thick clean outlines, saturated colors, crisp painterly details, no characters, no text, no watermark.
+Hand-painted casual tower defense game map, Kingdom Rush and Random Dice style, 3/4 top-down isometric view, 16:9 landscape, full-bleed scene with no UI. TWO separate winding dirt roads: road A starts at a glowing purple portal gate at the TOP-LEFT, road B starts at a second glowing purple portal gate at the BOTTOM-LEFT; both roads wind across the map and MERGE in front of a large crystal castle shrine on the RIGHT side. Along both roads, on flat grass beside the road (never on the road, never on water or buildings), place 14 round flat stone tower pads of identical size, evenly spread. Roads are wide, clearly readable, with soft edges. Chibi cute proportions, thick clean outlines, bright saturated colors, smooth flat cel shading with soft gradients, glossy polished cartoon look. No gritty or painterly texture, no semi-realistic rendering, no muddy desaturation. No characters, no text, no watermark.
 ```
 
 ### 맵별 꼬리 (공통 프롬프트 뒤에 이어 붙이기)

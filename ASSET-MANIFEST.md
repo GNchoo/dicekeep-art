@@ -1,5 +1,7 @@
 # 에셋 매니페스트
 
+> **보존 문서**: 아래 표는 2026-08-31 당시의 수기 목록이라 현재 개수와 맞지 않는다. 최신 기계 판독 목록과 모바일 포함 여부는 루트 `art-manifest.json`이 기준이며, `node tools/art-manifest.mjs --check`로 검증한다.
+
 생성: 2026-08-31. 이 목록은 디스크 기준이다. content.js와 대조할 것.
 
 2026-09-02 추가(아래 표에 미반영): 하드 배경 20 (`casual/maps/*-hard.jpg`), 걷기 시트 34 (`casual/enemies/*-walk-2x2.png` 24 + `casual/bosses/*-walk-2x2.png` 10), 타워 스킨 b~e 24 (재작업), `ART-PROMPTS.md`, `GROK-BRIEF.md`.
