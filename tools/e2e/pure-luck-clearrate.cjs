@@ -133,9 +133,28 @@ function playRun({ seed, policy, clearWave, tune, lateExp, bossLimit, hpExp, lat
   };
 
   let ticks = 0, sold = 0, stuck = 0;
+  const settleRoll = () => {
+    if (!DKSLOT.active || DK.heldDie) return;
+    if (DKSLOT.phase === -1) {
+      const gold = DK.gold;
+      DKthrow(900, -300);
+      if (DKDIE.state !== 'throw' || DK.gold !== gold) throw new Error('수동 상자 투척 실패 또는 이중 결제');
+    }
+    // Combat keeps advancing while a player physically throws. Count these
+    // frames in the clear-rate simulation instead of awarding an instant die.
+    let rollTicks = 0;
+    while (DK.phase === 'playing' && !DK.heldDie && rollTicks++ < 900 && ticks < MAX_TICKS) {
+      __pureQA.updateDie(DT);
+      __pureQA.updateSlot(DT * DK.speed);
+      __pureQA.update(DT);
+      ticks++;
+    }
+    if (DK.phase === 'playing' && !DK.heldDie && ticks < MAX_TICKS) throw new Error('상자 주사위가 정착하지 않았습니다: ' + DKSLOT.kind);
+  };
   const goldBefore = () => DK.gold;
   while (DK.phase === 'playing' && !DK.inf.cleared && DK.inf.doneW < clearWave && ticks < MAX_TICKS) {
-    if (!DK.heldDie && DKSLOT.active) __pureQA.finishSlot();   // 보스 보상 대기열도 여기서 손에 온다
+    if (!DK.heldDie && DKSLOT.active) settleRoll();   // 보스 보상 대기열도 직접 던진다
+    if (DK.phase !== 'playing') break;
     if (DK.heldDie && !resolveHeld()) stuck++;
     makeRoom();
     investGold();
@@ -143,7 +162,8 @@ function playRun({ seed, policy, clearWave, tune, lateExp, bossLimit, hpExp, lat
     while (DK.phase === 'playing' && !DK.heldDie && DK.gold >= __pureQA.chestCost() && guard++ < 60) {
       const before = goldBefore();
       if (!DKchest()) break;
-      __pureQA.finishSlot();
+      settleRoll();
+      if (DK.phase !== 'playing') break;
       if (!resolveHeld()) { stuck++; break; }
       if (DK.gold >= before) break;                            // 안전장치: 골드가 안 줄면 무한루프
       sold++;
@@ -186,7 +206,7 @@ async function openGame(browser, errors) {
     const response = await route.fetch(), original = await response.text();
     const anchor = 'window.DK = S;';
     assert.equal(original.split(anchor).length, 2, '테스트 훅 삽입 지점');
-    const hook = 'window.__pureQA={update,finishSlot,startWave,chestCost,towerAt,SPOTS:()=>SPOTS};\n';
+    const hook = 'window.__pureQA={update,updateDie,updateSlot,startWave,chestCost,towerAt,SPOTS:()=>SPOTS};\n';
     await route.fulfill({ response, body: original.replace(anchor, hook + anchor) });
   });
   const url = new URL('index.html', base);

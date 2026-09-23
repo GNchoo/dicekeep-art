@@ -151,15 +151,21 @@ async function modeDraws(page, row, dir) {
     await page.screenshot({ path: path.join(dir, mode + '-game.png') });
   }
   row.pureDraw = await page.evaluate(() => {
-    DKstartInf('clear'); DK.paused = true; DK.gold = 90000;
+    DKstartInf('clear'); DK.paused = false; DK.gold = 90000;
     const ch = DKCONTENT.INFINITY.chest, oldDraw = ch.draw, oldRoll = ch.roll;
     let draws = 0, rolls = 0;
-    try {
-      ch.draw = () => { draws++; return 'd8'; }; ch.roll = () => { rolls++; return 7; };
-      DKchest(); return { draws, rolls, kind: DKSLOT.kind, final: DKSLOT.final };
-    } finally { ch.draw = oldDraw; ch.roll = oldRoll; DKSLOT.active = false; DK.heldDie = 0; }
+    ch.draw = () => { draws++; return 'd8'; }; ch.roll = () => { rolls++; return 7; };
+    window.__pureChestRestore = () => { ch.draw = oldDraw; ch.roll = oldRoll; return { draws, rolls }; };
+    DKchest();
+    return { draws, kind: DKSLOT.kind, phase: DKSLOT.phase, held: DK.heldDie, die: DKDIE.state };
   });
-  check(row, 'pure mode delegates to original chest kind and face roll', row.pureDraw, { draws: 1, rolls: 1, kind: 'd8', final: 7 });
+  check(row, 'six-plus chest waits for a player throw without revealing its face', row.pureDraw,
+    { draws: 1, kind: 'd8', phase: -1, held: 0, die: 'tray' });
+  await page.evaluate(() => DKthrow(900, -300));
+  await page.waitForFunction(() => DK.heldDie === 7 && !DKSLOT.active, null, { timeout: 12000 });
+  check(row, 'player throw delegates to the original face roll and awards that die',
+    await page.evaluate(() => ({ ...__pureChestRestore(), face: DK.heldDie, final: DKSLOT.final })),
+    { draws: 1, rolls: 1, face: 7, final: 7 });
   row.deckDraws = await page.evaluate(() => {
     DKstartInf('build'); DK.paused = true; DK.gold = 900000;
     const rng = Math.random, ch = DKCONTENT.INFINITY.chest, oldDraw = ch.draw, oldRoll = ch.roll;

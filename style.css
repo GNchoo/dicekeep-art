@@ -1194,6 +1194,7 @@ body.ui-art .mini button[data-icon] svg { display: none; }
 body.ui-art .bi[data-icon] { font-size: 0; background-position: center; background-size: contain; background-repeat: no-repeat; }
 body.ui-art #help-btn { font-size: 0; background: url(ui/icon-help.png) center / 22px 22px no-repeat; border: 0; box-shadow: none; }
 body.ui-art #roll-btn::before { content: ''; display: inline-block; width: 22px; height: 22px; margin-right: 4px; vertical-align: -5px; background: url(ui/icon-chest.png) center / contain no-repeat; }
+body.ui-art #roll-btn.manual-roll::before { background-image: url(ui/icon-dice.png); }
 body.ui-art [data-icon=wave] { background-image: url(ui/icon-wave.png); }
 body.ui-art [data-icon=speed1] { background-image: url(ui/icon-speed1.png); }
 body.ui-art [data-icon=speed2] { background-image: url(ui/icon-speed2.png); }

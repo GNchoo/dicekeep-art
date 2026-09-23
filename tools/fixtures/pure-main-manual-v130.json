@@ -1,0 +1,68 @@
+{
+  "ref": "manual-chest-v130",
+  "source": "tools/e2e/pure-luck-parity.cjs --waves=12, desktop and phone, with physical throwing for chests of six or more sides",
+  "gameSha256": "860dd766054a892edd74197429a732cd79a9f04d3dc092178ebfed3776863a7d",
+  "waves": 12,
+  "rows": [
+    {
+      "tag": "desktop",
+      "seed": 20260909,
+      "traceHash": "c8fa39ad955d1e61:26478",
+      "drawHash": "fe57b3ddd61eade9:188",
+      "drawCount": 17,
+      "waveReached": 12,
+      "canvas": "831x576",
+      "mapKey": "cInf"
+    },
+    {
+      "tag": "desktop",
+      "seed": 777,
+      "traceHash": "86f8ef799d3dfef1:20830",
+      "drawHash": "db81453fe61299ed:199",
+      "drawCount": 18,
+      "waveReached": 12,
+      "canvas": "831x576",
+      "mapKey": "cInf"
+    },
+    {
+      "tag": "desktop",
+      "seed": 31337,
+      "traceHash": "24b43348451fd8f8:16673",
+      "drawHash": "f4b9c6654a05bd37:199",
+      "drawCount": 18,
+      "waveReached": 12,
+      "canvas": "831x576",
+      "mapKey": "cInf"
+    },
+    {
+      "tag": "phone",
+      "seed": 20260909,
+      "traceHash": "7894ce65bd24fb37:23408",
+      "drawHash": "f7e2f09253bf4226:177",
+      "drawCount": 16,
+      "waveReached": 12,
+      "canvas": "720x1381",
+      "mapKey": "cInfP"
+    },
+    {
+      "tag": "phone",
+      "seed": 777,
+      "traceHash": "fb3f125fc91d82ad:18607",
+      "drawHash": "c438fd61ae7dd865:188",
+      "drawCount": 17,
+      "waveReached": 12,
+      "canvas": "720x1381",
+      "mapKey": "cInfP"
+    },
+    {
+      "tag": "phone",
+      "seed": 31337,
+      "traceHash": "45a7fe044ae2be7e:15109",
+      "drawHash": "eb70209c5c79950c:203",
+      "drawCount": 18,
+      "waveReached": 12,
+      "canvas": "720x1381",
+      "mapKey": "cInfP"
+    }
+  ]
+}

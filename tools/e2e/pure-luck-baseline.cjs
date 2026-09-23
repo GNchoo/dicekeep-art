@@ -109,11 +109,27 @@ function playRun({ seed, waves }) {
   const trace = [], draws = [];
   const DT = 1 / 60, MAX_TICKS = 400000;
   let ticks = 0;
+  const settleRoll = () => {
+    // Older baseline builds have only automatic slot rolls. Current 6+-sided
+    // chests wait for a real throw; advance that same physical state machine.
+    if (DKSLOT.phase === -1) {
+      const paid = DK.gold;
+      DKthrow(900, -300);
+      if (DKDIE.state !== 'throw' || DK.gold !== paid) throw new Error('수동 상자 투척 실패 또는 이중 결제');
+    }
+    if (!__pureQA.updateSlot) { __pureQA.finishSlot(); return; }
+    let n = 0;
+    while (!DK.heldDie && n++ < 900) {
+      if (__pureQA.updateDie) __pureQA.updateDie(DT);
+      __pureQA.updateSlot(DT);
+    }
+    if (!DK.heldDie) throw new Error('상자 주사위가 정착하지 않았습니다: ' + DKSLOT.kind);
+  };
   const spend = () => {
     let guard = 0;
     while (DK.phase === 'playing' && !DK.heldDie && DK.gold >= __pureQA.chestCost() && guard++ < 40) {
       if (!DKchest()) break;
-      __pureQA.finishSlot();
+      settleRoll();
       const face = DK.heldDie;
       draws.push([DKSLOT.kind, DKSLOT.final, face]);
       const spots = __pureQA.SPOTS();
@@ -172,7 +188,7 @@ async function openGame(browser, base, rows) {
     const response = await route.fetch(), original = await response.text();
     const anchor = 'window.DK = S;';
     assert.equal(original.split(anchor).length, 2, base + ': 테스트 훅 삽입 지점');
-    const hook = 'window.__pureQA={update,finishSlot,startWave,chestCost,towerAt,towerDmg,towerRate,SPOTS:()=>SPOTS};\n';
+    const hook = 'window.__pureQA={update,finishSlot,updateDie:typeof updateDie===\'function\'?updateDie:null,updateSlot:typeof updateSlot===\'function\'?updateSlot:null,startWave,chestCost,towerAt,towerDmg,towerRate,SPOTS:()=>SPOTS};\n';
     await route.fulfill({ response, body: original.replace(anchor, hook + anchor) });
   });
   const url = new URL('index.html', base);

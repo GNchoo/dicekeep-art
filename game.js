@@ -1971,6 +1971,12 @@ const SLOT = {
   R: m3id(), w: [0, 0, 0], final: 1,
   from: null, axis: [0, 0, 1], ang: 0, sndT: 0,
 };
+// 6면체 이상 상자는 뽑힌 뒤 손으로 던진다. -1은 대기, -2는 스토리 물리로 이동 중.
+// 덱의 d20은 카드 종류 표기일 뿐 다면체 보상이 아니므로 기존 즉시 소환을 유지한다.
+const manualChestRoll = () => S.mode === 'infinity' && !!S.inf && !deckRun() && SLOT.active && SLOT.phase < 0;
+const manualChestReady = () => manualChestRoll() && SLOT.phase === -1 && DIE.state === 'tray' && !S.heldDie && S.phase === 'playing';
+// 인피니티 HUD는 스토리 HUD보다 높다. 캔버스 안에서 버튼에 가리지 않는 자리.
+const activeTray = () => manualChestRoll() ? { x: TRAY.x, y: Math.min(TRAY.y, H - 125) } : TRAY;
 // 굴림이 끝난 뒤 화면 중앙에 잠깐 남는 주사위 (획득 연출과 겹쳐 '이게 나왔다'를 보여준다). drawCenterRoll 이 그린다
 const ROLL_SHOW = { t: 0, dur: 0.45, R: null, kind: 'd6' };
 
@@ -1980,12 +1986,13 @@ function canStartRoll() {
   return S.phase === 'playing' && !S.heldDie && !SLOT.active && (S.mode === 'infinity' || DIE.state === 'tray');
 }
 function canRoll() {
-  if (S.mode === 'infinity') return false; // 인피니티는 기본 주사위 없음 — 뽑기(보물상자)만
+  if (S.mode === 'infinity') return manualChestReady();
   return canStartRoll() && S.gold >= ROLL_COST;
 }
 
 function throwDie(vx, vy) {
-  S.gold -= ROLL_COST;
+  if (manualChestRoll()) SLOT.phase = -2; // 상자값은 구매 시 이미 지불했다
+  else S.gold -= ROLL_COST;
   DIE.state = 'throw';
   DIE.vx = vx; DIE.vy = vy;
   const spd = Math.hypot(vx, vy);
@@ -2007,7 +2014,11 @@ function throwDie(vx, vy) {
 
 function rollByButton() {
   if (VIEW.pid) return;
-  if (S.mode === 'infinity') { buyChest(); return; } // 인피니티: 뽑기 버튼
+  if (S.mode === 'infinity') {
+    if (manualChestReady()) throwDie(920, -300); // 드래그가 어려운 입력 장치도 물리 투척 가능
+    else buyChest();
+    return;
+  }
   if (!canRoll()) return;
   S.gold -= ROLL_COST;
   SLOT.active = true; SLOT.kind = 'd6';
@@ -2023,7 +2034,7 @@ function rollByButton() {
   syncUI();
 }
 
-// 인피니티 보물상자: 골드 → 다면체 주사위 1개. 그 자리에서 굴려 나온 숫자 = 타워 성.
+// 인피니티 보물상자: 골드 → 다면체 주사위 1개. 6면체 이상은 직접 던져 숫자를 확인한다.
 let legacyInfHelpHTML = null;
 function openInfHelp() {
   const h = $('inf-help'); if (!h) return;
@@ -2075,17 +2086,26 @@ function buyChest() {
 const DIE_KIND_COLORS = { d1: '#9a9a9a', d4: '#d9c9a0', d6: '#e9dfc4', d8: '#7fd4ff', d12: '#c78bff', d20: '#ffd452', epic: '#ff8a5c', myth: '#ff5fa8', primal: '#ffffff' };
 const dieKindColor = k => DIE_KIND_COLORS[k] || '#e9dfc4';
 const dieShape = k => { const ch = chestDef(); return (ch && ch.shape && ch.shape[k]) || k; };
-// 뽑기 결과를 바로 굴린다 (주머니 없음). 손이 차 있으면 대기열에 넣고, 배치해서 손이 비면 자동으로 이어 굴린다.
+// 손이 차 있으면 대기열에 넣고, 배치해서 손이 비면 다음 주사위를 준비한다.
 function rollDie(kind, forcedFinal) {
   const ch = chestDef();
   if (!ch || S.mode !== 'infinity' || !S.inf || S.phase !== 'playing') return false;
   if (!canStartRoll()) return false;            // 손이 차 있으면 굴리지 않는다 — 큐는 호출자(pumpQueue)가 든다
   SLOT.active = true; SLOT.kind = kind;
-  SLOT.t = 0; SLOT.t2 = 0; SLOT.phase = 0; SLOT.sndT = 0;
+  SLOT.t = 0; SLOT.t2 = 0; SLOT.phase = !deckRun() && ch.sides[kind] >= 6 ? -1 : 0; SLOT.sndT = 0;
   SLOT.final = Number.isInteger(forcedFinal) && forcedFinal >= (ch.min[kind] || 1) && forcedFinal <= ch.sides[kind] ? forcedFinal : ch.roll(kind);
-  SLOT.R = m3mul(m3axisAngle(Math.random(), Math.random(), Math.random() * 0.5 + 0.1, Math.random() * 6), TRAY_TILT);
-  SLOT.w = [14 + Math.random() * 8, 12 + Math.random() * 8, 9 + Math.random() * 6];
-  SFX.throwDie();
+  if (SLOT.phase === -1) {
+    const shape = dieShape(kind), startR = shape === 'd6' ? faceTopR(6) : alignR(POLY[shape].faces[0].n);
+    const tray = activeTray();
+    DIE.state = 'tray'; DIE.x = tray.x; DIE.y = tray.y; DIE.z = 0;
+    DIE.vx = 0; DIE.vy = 0; DIE.vz = 0; DIE.final = 0; DIE.face = 6; DIE.R = m3mul(TRAY_TILT, startR); DIE.w = [0, 0, 0];
+    SLOT.R = DIE.R; SLOT.w = [0, 0, 0];
+    pushLog(`${ch.grade[kind]} ${ch.label[kind]} 획득 · 주사위를 끌어 던지거나 던지기 버튼을 누르세요`, 'gacha');
+  } else {
+    SLOT.R = m3mul(m3axisAngle(Math.random(), Math.random(), Math.random() * 0.5 + 0.1, Math.random() * 6), TRAY_TILT);
+    SLOT.w = [14 + Math.random() * 8, 12 + Math.random() * 8, 9 + Math.random() * 6];
+    SFX.throwDie();
+  }
   syncUI();
   return true;
 }
@@ -2174,6 +2194,7 @@ function spawnBurst(x, y, color, n, speed, dur) {
 
 function updateSlot(dt) {
   if (!SLOT.active || S.phase !== 'playing') return;
+  if (SLOT.phase < 0) return; // 실제 주사위는 updateDie의 물리로만 진행
   SLOT.t += dt;
   const poly = SLOT.kind && SLOT.kind !== 'd6';
   if (SLOT.phase === 0) {
@@ -2519,7 +2540,7 @@ function drawSlot() {
 // 상대 필드를 보는 중(VIEW)에는 내 굴림을 그리지 않는다
 function drawCenterRoll() {
   if (VIEW.pid || S.phase !== 'playing') return;
-  const live = SLOT.active, linger = !live && ROLL_SHOW.t > 0 && ROLL_SHOW.R;
+  const live = SLOT.active && SLOT.phase >= 0, linger = !SLOT.active && ROLL_SHOW.t > 0 && ROLL_SHOW.R;
   if (!live && !linger) return;
   if (deckRun()) { ctx.save(); ctx.globalAlpha=live?1:Math.min(1,ROLL_SHOW.t/ROLL_SHOW.dur); drawDeckReveal(ctx,W/2,H/2,Math.min(W,H)*0.09); ctx.restore(); return; }
   const cx = W / 2, cy = H / 2;
@@ -2692,13 +2713,21 @@ function updateDie(dt) {
     }
     integrateRot(dt);
 
-    strikeEnemiesWithDie();
+    if (S.mode !== 'infinity') strikeEnemiesWithDie(); // 상자 주사위는 전투 피해를 주지 않는다
 
     // 정지 판정 → 위를 향한 면이 결과
     if (spd < 26 && DIE.z <= 0 && Math.abs(DIE.vz) < 40) {
-      DIE.final = nearestUnlockedFace(DIE.forceFinal || topFace(DIE.R));
+      if (manualChestRoll()) {
+        const ch = chestDef();
+        if (DIE.forceFinal) SLOT.final = Math.max(ch.min[SLOT.kind] || 1, Math.min(ch.sides[SLOT.kind], DIE.forceFinal));
+        DIE.final = SLOT.final; // 구매 때 뽑힌 눈·희귀도 범위를 보존한다
+      } else DIE.final = nearestUnlockedFace(DIE.forceFinal || topFace(DIE.R));
       DIE.forceFinal = 0;
-      computeSettleTarget(DIE.final);
+      if (manualChestRoll() && dieShape(SLOT.kind) !== 'd6') {
+        const delta = m3mul(slotTargetR(), m3transpose(DIE.R));
+        const aa = m3toAxisAngle(delta);
+        DIE.settleFrom = DIE.R; DIE.settleAxis = aa.axis; DIE.settleAng = aa.ang;
+      } else computeSettleTarget(DIE.final);
       DIE.state = 'settle';
       DIE.settleT = 0;
       DIE.face = DIE.final;
@@ -2735,30 +2764,36 @@ function updateDie(dt) {
     DIE.flyT += dt;
     const p = Math.min(1, DIE.flyT / 0.38);
     const e = 1 - Math.pow(1 - p, 3);
-    DIE.x = DIE.fromX + (TRAY.x - DIE.fromX) * e;
-    DIE.y = DIE.fromY + (TRAY.y - DIE.fromY) * e;
+    const tray = activeTray();
+    DIE.x = DIE.fromX + (tray.x - DIE.fromX) * e;
+    DIE.y = DIE.fromY + (tray.y - DIE.fromY) * e;
     DIE.z = 0;
     if (p >= 1) {
-      S.heldDie = DIE.final;
       DIE.state = 'tray';
       DIE.face = DIE.final;
-      DIE.R = m3mul(TRAY_TILT, faceTopR(DIE.face));
-      SFX.coin();
-      diceSlot.classList.add('pop');
-      setTimeout(() => diceSlot.classList.remove('pop'), 350);
-      syncUI();
+      if (manualChestRoll()) { SLOT.R = DIE.R; finishSlot(); }
+      else {
+        S.heldDie = DIE.final;
+        DIE.R = m3mul(TRAY_TILT, faceTopR(DIE.face));
+        SFX.coin();
+        diceSlot.classList.add('pop');
+        setTimeout(() => diceSlot.classList.remove('pop'), 350);
+        syncUI();
+      }
     }
   }
 }
 
 function drawDie() {
   if (S.phase !== 'playing') return;
-  if (S.mode === 'infinity') return; // 인피니티는 트레이 주사위를 쓰지 않는다
+  const manual = manualChestRoll();
+  if (S.mode === 'infinity' && !manual) return;
+  const tray = activeTray();
   const hidden = S.heldDie > 0 && DIE.state === 'tray';
 
   // 트레이 (항상 표시)
   ctx.save();
-  ctx.translate(TRAY.x, TRAY.y + 12);
+  ctx.translate(tray.x, tray.y + 12);
   ctx.scale(1, 0.45);
   ctx.beginPath(); ctx.arc(0, 0, 34, 0, Math.PI * 2);
   ctx.fillStyle = 'rgba(20,14,8,0.55)';
@@ -2771,7 +2806,7 @@ function drawDie() {
 
   const grabbing = DIE.state === 'grab';
   const size = (DIE.state === 'fly' ? 24 * (1 - Math.min(1, DIE.flyT / 0.38) * 0.4) : 24)
-    * (1 + DIE.z / 300) * (grabbing ? 1.14 : 1);
+    * (1 + DIE.z / 300) * (grabbing ? 1.14 : 1) * (manual ? 1.45 : 1);
   const gy = DIE.y - DIE.z * 0.62 - (grabbing ? 10 : 0);
 
   // 그림자
@@ -2786,7 +2821,7 @@ function drawDie() {
     ctx.restore();
   }
 
-  // 본체: 텍스처 입힌 3D 큐브
+  // 본체: 스토리 주사위와 같은 3D 물리 자세를 다면체 외형에도 적용
   let glowColor = null, glowStr = 0;
   if (DIE.state === 'settle') {
     glowColor = TOWER_DEFS[DIE.final].color;
@@ -2795,18 +2830,33 @@ function drawDie() {
     glowColor = '#ffe9a0';
     glowStr = 0.55;
   }
-  drawCube(ctx, DIE.x, gy, size, DIE.R, glowColor, glowStr);
+  if (manual && dieShape(SLOT.kind) !== 'd6') {
+    if (glowColor) {
+      ctx.save(); ctx.fillStyle = hexA(glowColor, 0.2 + glowStr * 0.18);
+      ctx.beginPath(); ctx.arc(DIE.x, gy, size * 1.65, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+    }
+    drawPolyDie(ctx, DIE.x, gy, size * 1.25, SLOT.kind, DIE.R);
+  } else drawCube(ctx, DIE.x, gy, size, DIE.R, glowColor, glowStr);
 
   // 트레이 대기 중 안내
   if (DIE.state === 'tray' && canRoll()) {
     ctx.save();
-    ctx.font = uiFont(11);
-    ctx.textAlign = 'center';
-    ctx.fillStyle = `rgba(255,233,160,${0.6 + 0.3 * Math.sin(S.time * 4)})`;
-    ctx.strokeStyle = 'rgba(0,0,0,0.7)';
-    ctx.lineWidth = 3;
-    ctx.strokeText('잡아서 던지기!', TRAY.x, TRAY.y - 38);
-    ctx.fillText('잡아서 던지기!', TRAY.x, TRAY.y - 38);
+    if (manual) {
+      const ch = chestDef(), label = `${ch.grade[SLOT.kind]} ${ch.label[SLOT.kind]}`;
+      ctx.fillStyle = 'rgba(20,15,12,0.88)'; ctx.strokeStyle = hexA(dieKindColor(SLOT.kind), 0.8); ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.roundRect(tray.x + 53, tray.y - 87, 242, 60, 10); ctx.fill(); ctx.stroke();
+      ctx.textAlign = 'left'; ctx.font = uiFont(17); ctx.fillStyle = dieKindColor(SLOT.kind);
+      ctx.fillText(label, tray.x + 65, tray.y - 62);
+      ctx.font = uiFont(12); ctx.fillStyle = '#ffe9bb';
+      ctx.fillText('끌어 던지거나 아래 던지기 버튼', tray.x + 65, tray.y - 41);
+    } else {
+      ctx.font = uiFont(11); ctx.textAlign = 'center';
+      ctx.fillStyle = `rgba(255,233,160,${0.6 + 0.3 * Math.sin(S.time * 4)})`;
+      ctx.strokeStyle = 'rgba(0,0,0,0.7)';
+      ctx.lineWidth = 3;
+      ctx.strokeText('잡아서 던지기!', tray.x, tray.y - 38);
+      ctx.fillText('잡아서 던지기!', tray.x, tray.y - 38);
+    }
     ctx.restore();
   }
 }
@@ -2969,7 +3019,7 @@ function startStage(n) {
   S.enemies = []; S.towers = []; S.projs = []; S.beams = []; S.fxs = []; S.texts = []; S.corpses = [];
   S.spawnQ = []; S.waveActive = false; S.autoT = 0; S.waveT = 0;
   S.heldDie = 0; S.dieFocus = true; S.selTower = null; S.shakeT = 0; S.bannerT = 0;
-  DIE.state = 'tray'; DIE.z = 0; DIE.final = 0;
+  DIE.state = 'tray'; DIE.x = TRAY.x; DIE.y = TRAY.y; DIE.z = 0; DIE.final = 0; DIE.face = 6; DIE.R = m3mul(TRAY_TILT, faceTopR(6));
   SLOT.active = false;
   applyMapLayout(sd.mapKey, sd.tier || 1);
   S.phase = 'playing';
@@ -3015,7 +3065,7 @@ function startInfinity(kind, net, accountRun) {
   S.enemies = []; S.towers = []; S.projs = []; S.beams = []; S.fxs = []; S.texts = []; S.corpses = [];
   S.spawnQ = []; S.waveActive = false; S.autoT = 0; S.waveT = 0;
   S.heldDie = 0; S.dieFocus = true; S.selTower = null; S.shakeT = 0; S.bannerT = 0;
-  DIE.state = 'tray'; DIE.z = 0; DIE.final = 0;
+  DIE.state = 'tray'; DIE.x = TRAY.x; DIE.y = TRAY.y; DIE.z = 0; DIE.final = 0; DIE.face = 6; DIE.R = m3mul(TRAY_TILT, faceTopR(6));
   SLOT.active = false; SLOT.final = 0;
   applyMapLayout(S.mapKey, INF.tier);
   S.phase = 'playing';
@@ -5109,22 +5159,26 @@ function syncUIRest() {
     diceSlot.classList.remove('unfocused');
     diceImg.classList.add('hidden');
     diceQ.classList.toggle('hidden', SLOT.active);
-    diceSlot.title = SLOT.active ? '굴리는 중…' : '보유 주사위';
+    diceSlot.title = manualChestReady() ? '상자 주사위를 끌어 던지거나 던지기 버튼을 누르세요' : SLOT.active ? '굴리는 중…' : '보유 주사위';
     heldInfo.classList.add('hidden');
   }
   diceSlot.classList.toggle('rolling', SLOT.active);
   if (S.mode === 'infinity') { // 인피니티: 뽑기 버튼 (보물상자)
     const cost = chestCost();
+    const manualReady = manualChestReady();
     rollBtn.childNodes[0].nodeValue = document.body.classList.contains('ui-art') ? '뽑기' : '🎁 뽑기';   // 그림 아이콘(::before 상자)이 있으면 이모지는 뺀다 (아이콘 두 개 방지)
-    rollBtn.title = '골드로 주사위를 뽑습니다. 등급이 정해지고 바로 굴러 타워가 되니 먼저 석단에 배치하세요 (굴려 나온 숫자 = 성★)\n일반 50% · 레어 33.1% · 고대 10.2% · 유물 5.1% · 서사 0.8% · 전설 0.5% · 에픽 0.2% · 신화 0.08% · 태초 0.019%';
+    rollBtn.title = '골드로 주사위를 뽑습니다. 6면체 이상은 직접 던져 결과를 확인하세요 (굴려 나온 숫자 = 성★)\n일반 50% · 레어 33.1% · 고대 10.2% · 유물 5.1% · 서사 0.8% · 전설 0.5% · 에픽 0.2% · 신화 0.08% · 태초 0.019%';
     if (deckRun()) { rollBtn.childNodes[0].nodeValue='소환'; rollBtn.title='덱의 다섯 종류가 각각 20% 확률로 1눈금 소환됩니다. 소환할 때마다 비용이 5 SP씩 증가합니다.'; }
+    if (manualReady) { rollBtn.childNodes[0].nodeValue='던지기'; rollBtn.title='상자 주사위를 직접 끌어 던지거나 이 버튼으로 물리 투척합니다. 추가 비용은 없습니다.'; }
+    rollBtn.classList.toggle('manual-roll', manualReady);
     const busy = SLOT.active || !!S.heldDie;
     const full = !busy && !canPlaceAnywhere();   // 빈 칸도 합체 여지도 없다
-    $('roll-cost').textContent = SLOT.active ? '굴리는 중…' : S.heldDie ? (S.dieFocus ? '배치 후 가능' : '주사위 보류 중') : full ? '석단이 가득 참' : `${cost} ${deckRun()?'SP':'G'}`;
-    rollBtn.disabled = busy || full || !(S.inf && S.phase === 'playing' && S.gold >= cost);
+    $('roll-cost').textContent = manualReady ? `${chestDef().grade[SLOT.kind]} ${chestDef().label[SLOT.kind]} · 추가 비용 0G` : SLOT.active ? '굴리는 중…' : S.heldDie ? (S.dieFocus ? '배치 후 가능' : '주사위 보류 중') : full ? '석단이 가득 참' : `${cost} ${deckRun()?'SP':'G'}`;
+    rollBtn.disabled = !manualReady && (busy || full || !(S.inf && S.phase === 'playing' && S.gold >= cost));
     const q = $('queue-chip');
     if (q) { const n = (S.inf && S.inf.queue) ? S.inf.queue.length : 0; q.classList.toggle('hidden', n === 0); q.querySelector('b').textContent = n; }
   } else {
+    rollBtn.classList.remove('manual-roll');
     rollBtn.childNodes[0].nodeValue = '주사위 굴리기';
     $('roll-cost').textContent = `${ROLL_COST} G`;
     rollBtn.title = '';
@@ -6061,7 +6115,7 @@ canvas.addEventListener('pointerdown', ev => {
   const p = canvasPos(ev);
   S.mouse = p;
   // 트레이의 주사위 잡기
-  if (canRoll() && Math.hypot(p.x - DIE.x, p.y - DIE.y) < 42) {
+  if (canRoll() && Math.hypot(p.x - DIE.x, p.y - DIE.y) < (manualChestReady() ? 55 : 42)) {
     DIE.state = 'grab';
     DIE.grabDX = DIE.x - p.x;
     DIE.grabDY = DIE.y - p.y;
@@ -6112,14 +6166,14 @@ function endGrab(ev) {
   const moved = Math.hypot(last.x - hist[0].x, last.y - hist[0].y);
   if (moved > 12) suppressClick = true;
 
-  if (spd > 330 * stageScale() && S.gold >= ROLL_COST) { // 던지기 속도도 화면 기준
+  if (spd > 330 * stageScale() && (manualChestRoll() || S.gold >= ROLL_COST)) { // 상자 주사위는 추가 비용 없이 던진다
     const cap = Math.min(1, 1500 / Math.max(1, spd));
     throwDie(vx * 0.95 * cap, vy * 0.95 * cap);
   } else {
     // 너무 약하게 놓으면 트레이로 반환 (비용 없음)
     DIE.state = 'tray';
-    DIE.x = TRAY.x; DIE.y = TRAY.y;
-    DIE.R = m3mul(TRAY_TILT, faceTopR(DIE.face));
+    const tray = activeTray(); DIE.x = tray.x; DIE.y = tray.y;
+    DIE.R = manualChestRoll() ? SLOT.R : m3mul(TRAY_TILT, faceTopR(DIE.face));
     DIE.w = [0, 0, 0];
     if (spd > 120) { SFX.deny(); S.texts.push({ str: '더 세게 던지세요!', x: DIE.x, y: DIE.y - 46, t: 0, color: '#ffd0a0' }); }
   }
@@ -6172,9 +6226,25 @@ window.addEventListener('pointerup', ev => {
 
 // ==================== 로그 · 채팅 (화면 오버레이) ====================
 // 로그는 모드와 상관없이 뜬다. 채팅은 멀티(방 안)에서만 열린다.
-// 줄은 LOG.ttl 초 동안 남았다가 서서히 사라진다 — CSS 애니메이션이라 프레임 비용이 없다.
-const LOG = { ttl: 9, fade: 1.2, max: 8, nodes: [] };
+// 최근 3줄은 읽을 시간을 충분히 준다. 앞선 줄은 기존 9초 뒤 정리한다.
+const LOG = { ttl: 9, recentTtl: 24, recent: 3, fade: 1.2, max: 8, nodes: [] };
 const LOG_KIND = { sys: 'sys', gacha: 'gacha', up: 'up', boom: 'boom', boss: 'boss', life: 'life', chat: 'chat' };
+function removeLog(el) {
+  clearTimeout(el._fadeT); clearTimeout(el._killT);
+  const i = LOG.nodes.indexOf(el); if (i >= 0) LOG.nodes.splice(i, 1);
+  if (el.parentNode) el.parentNode.removeChild(el);
+}
+function scheduleLog(el, ttl) {
+  clearTimeout(el._fadeT); clearTimeout(el._killT);
+  const remaining = el._born + ttl * 1000 - Date.now();
+  if (remaining <= 0) {
+    el.classList.add('fade');
+    el._killT = setTimeout(() => removeLog(el), LOG.fade * 1000);
+    return;
+  }
+  el._fadeT = setTimeout(() => el.classList.add('fade'), Math.max(0, remaining - LOG.fade * 1000));
+  el._killT = setTimeout(() => removeLog(el), remaining);
+}
 function pushLog(text, kind, who, color) {
   const box = $('log-lines');
   if (!box) return;
@@ -6185,14 +6255,11 @@ function pushLog(text, kind, who, color) {
   el.innerHTML = who
     ? (asPlayer ? `${whoTag} 플레이어가 ${escapeHtml(text)}` : `${whoTag}: ${escapeHtml(text)}`)
     : escapeHtml(text);
+  el._born = Date.now();
   box.appendChild(el);
   LOG.nodes.push(el);
-  while (LOG.nodes.length > LOG.max) { const old = LOG.nodes.shift(); if (old.parentNode) old.parentNode.removeChild(old); }
-  el._fadeT = setTimeout(() => el.classList.add('fade'), (LOG.ttl - LOG.fade) * 1000);
-  el._killT = setTimeout(() => {
-    const i = LOG.nodes.indexOf(el); if (i >= 0) LOG.nodes.splice(i, 1);
-    if (el.parentNode) el.parentNode.removeChild(el);
-  }, LOG.ttl * 1000);
+  while (LOG.nodes.length > LOG.max) removeLog(LOG.nodes[0]);
+  LOG.nodes.forEach((node, i) => scheduleLog(node, i >= LOG.nodes.length - LOG.recent ? LOG.recentTtl : LOG.ttl));
 }
 function escapeHtml(s) { return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
 function clearLog() { for (const el of LOG.nodes) { clearTimeout(el._fadeT); clearTimeout(el._killT); if (el.parentNode) el.parentNode.removeChild(el); } LOG.nodes.length = 0; }
