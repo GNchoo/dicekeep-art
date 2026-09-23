@@ -1,16 +1,22 @@
-// 주사위 손실 회귀: ① 굴리는 중 손패 보존 ② 보스 2마리 → 보상 2회 ③ 손에 든 채 보상 → 유지·배치 후 자동 굴림 ④ 굴리는 중 R 연타 → 골드 불변 ⑤ 큐는 굴림 성공 시에만 소비
-const { chromium } = require('playwright-core');
+// 주사위 손실 회귀: 자동 굴림 보존, 6면체 이상 보상 대기·수동 던지기, 중복 구매 차단.
+const { launchBrowser, gameUrl } = require('./browser.cjs');
 const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 (async () => {
-  const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium', args: ['--no-sandbox'] });
+  const b = await launchBrowser();
   const p = await (await b.newContext({ viewport: { width: 1240, height: 860 } })).newPage();
   const errs = []; const check = (c, m) => { console.log((c ? 'ok   ' : 'FAIL ') + m); if (!c) errs.push(m); };
   p.on('pageerror', e => check(false, 'pageerror ' + e.message));
-  await p.goto('http://localhost:8137/index.html?unlock=all&net=off&v=' + Date.now());
+  await p.goto(gameUrl());
   await p.waitForFunction(() => window.DK && window.DK.phase === 'title', null, { timeout: 120000 });
   await p.evaluate(() => { localStorage.setItem('dk_coachDone', '1'); localStorage.setItem('dk_infHelpSeen', '1'); });
   await p.click('#ov-btn'); await sleep(300);
-  await p.evaluate(() => { DKstartInf('endless'); DK.muted = true; DK.gold = 1e9; });
+  await p.evaluate(() => {
+    DKstartInf('clear'); DK.muted = true; DK.gold = 1e9;
+    // The first few scenarios exercise the unchanged small-die automatic path.
+    const chest = DKCONTENT.INFINITY.chest;
+    window.__diceLossDraw = chest.draw;
+    chest.draw = () => 'd4';
+  });
   await sleep(300);
   // ① 굴리는 중 다른 경로로 손패가 들어와도 덮어쓰지 않는다
   await p.evaluate(() => { DKchest(); DK.heldDie = 8; });
@@ -30,7 +36,7 @@ const sleep = (ms) => new Promise(r => setTimeout(r, ms));
   });
   check(r4.dg === 0 && r4.dq === 0 && r4.slot, '④ 굴리는 중 뽑기 차단 ' + JSON.stringify(r4));
   await sleep(1500); await p.evaluate(() => DKplace(2)); await sleep(300);
-  // ③ 손에 든 채 보상 큐 → 손패 유지, 배치하면 자동 굴림
+  // ③ 손에 든 채 보상 큐 → 손패 유지, 배치 후 20면체 직접 던지기
   await p.evaluate(() => { DKchest(); });
   await sleep(1500);
   const held3 = await p.evaluate(() => DK.heldDie);
@@ -38,9 +44,18 @@ const sleep = (ms) => new Promise(r => setTimeout(r, ms));
   await sleep(600);
   const r3 = await p.evaluate(() => ({ held: DK.heldDie, slot: DKSLOT.active, q: DKqueue().length }));
   check(r3.held === held3 && !r3.slot && r3.q === 1, '③ 손패 유지·큐 대기 ' + JSON.stringify(r3));
-  await p.evaluate(() => DKplace(3)); await sleep(1600);
+  const drop3 = await p.evaluate(() => DKplace(3));
+  check(drop3 !== false, '③ 손패를 빈 석단에 배치');
+  await p.waitForFunction(() => DKSLOT.active && DKSLOT.phase === -1 && DKDIE.state === 'tray', null, { timeout: 6000 }).catch(async error => {
+    throw new Error(error.message + ' ' + JSON.stringify(await p.evaluate(() => ({ phase: DK.phase, paused: DK.paused, held: DK.heldDie, slot: { active: DKSLOT.active, phase: DKSLOT.phase, kind: DKSLOT.kind }, die: DKDIE.state, queue: DKqueue().slice(), spots: DK.towers.map(t => t.spot) }))));
+  });
+  const ready3 = await p.evaluate(() => ({ held: DK.heldDie, slot: DKSLOT.active, phase: DKSLOT.phase, q: DKqueue().length }));
+  check(ready3.held === 0 && ready3.slot && ready3.phase === -1 && ready3.q === 0,
+    '③ 보상 큐가 20면체 던지기 대기로 이동 ' + JSON.stringify(ready3));
+  await p.evaluate(() => DKthrow(900, -300));
+  await p.waitForFunction(() => DK.heldDie > 0 && !DKSLOT.active, null, { timeout: 12000 });
   const r3b = await p.evaluate(() => ({ held: DK.heldDie, slot: DKSLOT.active, q: DKqueue().length }));
-  check(r3b.held > 0 && r3b.q === 0, '③ 배치 후 큐가 굴러 손에 옴 ' + JSON.stringify(r3b));
+  check(r3b.held > 0 && r3b.q === 0, '③ 직접 던진 보상이 손에 옴 ' + JSON.stringify(r3b));
   await p.evaluate(() => DKplace(4)); await sleep(300);
   // ⑤ 굴림이 실패하면 큐를 소비하지 않는다
   const r5 = await p.evaluate(async () => {
@@ -49,7 +64,10 @@ const sleep = (ms) => new Promise(r => setTimeout(r, ms));
     const q = DKqueue().length; DKCONTENT.INFINITY.chest = c; return q;
   });
   check(r5 === 1, '⑤ 실패 시 큐 보존 (' + r5 + ')');
-  await sleep(1600); await p.evaluate(() => { if (DK.heldDie) DKplace(5); }); await sleep(300);
+  await p.waitForFunction(() => DKSLOT.active && DKSLOT.phase === -1 && DKqueue().length === 0, null, { timeout: 6000 });
+  await p.evaluate(() => DKthrow(900, -300));
+  await p.waitForFunction(() => DK.heldDie > 0 && !DKSLOT.active, null, { timeout: 12000 });
+  await p.evaluate(() => DKplace(5)); await sleep(300);
   // ② 웨이브 20 보스 2마리 → 보상 2회
   await p.evaluate(() => { DK.wave = 19; DK.autoT = 0.01; DK.waveActive = false; });
   await p.waitForFunction(() => DK.wave === 20 && DK.enemies.filter(e => e.isBoss).length >= 2, null, { timeout: 30000 }).catch(() => check(false, '② 보스 2마리 스폰 안 됨'));

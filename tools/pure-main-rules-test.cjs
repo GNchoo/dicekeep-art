@@ -20,5 +20,25 @@ function inspect(reference) {
   return JSON.parse(reference ? json : json.replace(/\.webp(?=["?])/g, '.png'));
 }
 if (process.argv.includes('--capture-reference')) fs.writeFileSync(fixture, JSON.stringify(inspect(true), null, 2) + '\n');
-assert.deepEqual(inspect(false), JSON.parse(fs.readFileSync(fixture, 'utf8')));
-console.log('PASS main 55204fe pure-luck: full 101-wave roster/curve, shared economy/odds, 20 towers and power table');
+// The frozen 55204fe file predates character art, ten-wave theme names and
+// player-facing tower copy. Keep it immutable, and compare combat mechanics
+// instead of treating those presentation fields as balance changes.
+function mechanical(table) {
+  const config = { ...table.config };
+  for (const key of ['themeChapters', 'extremeThemeChapters', 'monsters', 'tiers', 'palette', 'artReady', 'artSize', 'artSizeBoss', 'roster']) delete config[key];
+  const towers = { ...table.towers, TOWER_DEFS: Object.fromEntries(
+    Object.entries(table.towers.TOWER_DEFS).map(([face, original]) => {
+      const tower = { ...original };
+      for (const key of ['name', 'desc', 'color', 'topper', 'rainbow']) delete tower[key];
+      return [face, tower];
+    })) };
+  const waves = table.waves.map(({ wave, values, monster }) => {
+    const base = monster.base && Object.fromEntries(['id', 'hp', 'speed', 'gold', 'dmg', 'size', 'move'].map(key => [key, monster.base[key] ?? null]));
+    return { wave, values, monster: { boss: !!monster.boss, base, cls: monster.cls, move: monster.move ?? null,
+      tank: !!monster.tank, count: monster.count, armor: monster.armor, hpMult: monster.hpMult ?? null } };
+  });
+  return { config, power: table.power, towers, waves };
+}
+const current = mechanical(inspect(false)), reference = mechanical(JSON.parse(fs.readFileSync(fixture, 'utf8')));
+assert.deepEqual(current, reference);
+console.log('PASS main 55204fe pure-luck combat: 101-wave stats, economy/odds, 20 tower rules and power table');

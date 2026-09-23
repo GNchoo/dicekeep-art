@@ -81,6 +81,8 @@ jobs:
         run: npm run test:free-progression
       - name: wave-themes (10웨이브 편성·보스·전투 수치)
         run: npm run test:wave-themes
+      - name: log-dwell (최근 3줄 표시 시간)
+        run: npm run test:log-dwell
       - name: economy 모델
         run: npm run measure:economy
 
@@ -141,6 +143,10 @@ jobs:
 
       - name: game-modes
         run: npm run test:game-modes
+      - name: manual-chest-roll (다면체 직접 투척·보상 큐)
+        run: npm run test:manual-chest-roll
+      - name: story-physical-throw (기존 스토리 주사위 타격)
+        run: npm run test:story-physical-throw
       - name: casual-world (아트 로딩·알파·발사 위치·지역별 렌더)
         run: npm run test:casual-world
       - name: pure-luck
