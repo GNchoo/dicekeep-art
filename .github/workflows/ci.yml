@@ -79,6 +79,8 @@ jobs:
         run: npm run test:liveops
       - name: free-progression
         run: npm run test:free-progression
+      - name: wave-themes (10웨이브 편성·보스·전투 수치)
+        run: npm run test:wave-themes
       - name: economy 모델
         run: npm run measure:economy
 
