@@ -30,6 +30,9 @@ if (quality != null && !['low', 'medium', 'high'].includes(quality)) {
 }
 
 const jobs = [];
+// Keep future regeneration aligned with the reviewed original-design repaints.
+const refreshJobs = JSON.parse(fs.readFileSync(new URL('./casual-world-jobs.json', import.meta.url), 'utf8'));
+const refreshByTarget = new Map(refreshJobs.flatMap(job => [job.target, ...(job.extraTargets || [])].map(target => [target, job])));
 const fixed = (width, height, alpha = 'preserve') => ({ mode: 'fixed', width, height, alpha, anchor: 'center' });
 const cover = (width, height) => ({ mode: 'cover', width, height, alpha: 'opaque', anchor: 'center' });
 const trimContain = (maxWidth, maxHeight, anchor = 'center') => ({ mode: 'trim-contain', maxWidth, maxHeight, alpha: 'preserve', anchor, trimAlphaThreshold: 8 });
@@ -50,6 +53,8 @@ function runtimeSpecFor(id) {
 }
 
 const add = ({ id, category, profile = 'environment', runtimeTarget, prompt, refs = [], ...options }) => {
+  const refreshed = refreshByTarget.get(runtimeTarget);
+  if (refreshed) { prompt = refreshed.prompt; refs = [runtimeTarget, 'towers/die-1.png']; }
   const job = {
     id: `golden-${id}`,
     category,
@@ -125,7 +130,7 @@ add({
 
 const TOWER_COMMON = 'Redraw the referenced Dicekeep tower as one stable freestanding defense building in 3/4 top-down view, facing slightly right, with the same flat integrated foundation. Preserve its role, footprint, ground pivot and tall readable silhouette. The body is completely still and rigid; no squash, stretch, firing pose, projectile, motion trail, baked glow aura, separate pedestal, text, number, star, logo or watermark. Centered with generous transparent margin.';
 const towerRoles = [
-  ['tower-die-1', 'towers/die-1.png', 'A slim ivory watchtower with one large crimson eye-lens in a brass iris, designed for a precise thin laser.'],
+  ['tower-die-1', 'towers/die-1.png', 'Preserve the approved brown wooden watchtower: brown shingle pyramid roof, open timber balcony and railings, cream lower wall with one red front lens, side timber braces and torch, low stone-grass base. The lens releases compact red shots. Do not redesign it as an ivory or gold tower.'],
   ['tower-die-2', 'towers/die-2.png', 'A compact ivory artillery fort with two black iron cannon ports, bronze rims and small powder-keg shapes at its base.'],
   ['tower-die-3', 'towers/die-3.png', 'A tall ivory arcane obelisk with three amethyst rune-gems and a restrained violet crystal crown.'],
   ['tower-die-4', 'towers/die-4.png', 'A tapered ivory frost spire with four blue ice-crystal corner devices and a compact frozen crown.'],
@@ -135,7 +140,7 @@ const towerRoles = [
 for (const [id, target, role] of towerRoles) {
   add({
     id, category: 'tower', profile: 'tower', runtimeTarget: target, size: '1024x1024', background: 'transparent', refs: [target],
-    prompt: `${TOWER_COMMON} ${role} Ivory die-stone, red pip accents, warm gold hardware and one blue-violet magic accent bind it to the Dicekeep set.`,
+    prompt: `${TOWER_COMMON} ${role} Preserve the referenced materials and colors while simplifying the surface into clean casual shading.`,
   });
 }
 add({

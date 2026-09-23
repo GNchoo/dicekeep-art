@@ -23,9 +23,14 @@
       "n": 1,
       "outputFormat": "jpeg",
       "out": "gen/golden-slice/environment/arena-floor",
-      "prompt": "Create one production-ready asset for the Dicekeep infinity arena. It must remain readable behind towers, enemies, projectiles and HTML interface elements at phone size. No characters, towers, interface, lettering, numbers, logo or watermark. A wide 3/4 top-down empty arena floor of broad violet-gray flagstones, subtle warm-gold seams and a restrained central dice-rune motif. Full-bleed landscape composition with calm low-contrast detail and an unobstructed center. Design the important floor area to survive a centered 16:9 crop; no wall, road, pad, portal or prop.",
+      "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. Full bleed landscape 16:9 flat empty violet-gray flagstone arena floor. No vignette. Large low-contrast slabs, even soft light. No props, center emblem, paths, frames or towers.",
       "size": "1536x1024",
-      "background": "opaque"
+      "background": "opaque",
+      "refs": [
+        "casual/tiles/arena/floor.jpg",
+        "towers/die-1.png"
+      ],
+      "inputFidelity": "high"
     },
     {
       "id": "golden-arena-board",
@@ -42,11 +47,12 @@
       "n": 1,
       "outputFormat": "png",
       "out": "gen/golden-slice/environment/arena-board",
-      "prompt": "Create one production-ready asset for the Dicekeep infinity arena. It must remain readable behind towers, enemies, projectiles and HTML interface elements at phone size. No characters, towers, interface, lettering, numbers, logo or watermark. Redraw the referenced square arena board texture as broad violet-gray stone slabs with simplified joints and sparse warm highlights. This is a repeating surface pattern rendered at 256 pixels, so all four edges must join seamlessly. Perfectly square, full-bleed, quiet center, even lighting, no perspective-distorted outer scene. No inset border, frame, corner ornaments, sockets or runes; the game draws those separately.",
+      "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. Square full-bleed seamless repeating muted slate-violet stone surface, very low contrast with broad simple slabs. Identical lighting everywhere including edges. All four edges must tile without visible joins. No border, no frame, no central motif, no vignette, no object.",
       "size": "1024x1024",
       "background": "opaque",
       "refs": [
-        "casual/tiles/arena/board.png"
+        "casual/tiles/arena/board.png",
+        "towers/die-1.png"
       ],
       "inputFidelity": "high"
     },
@@ -65,11 +71,12 @@
       "n": 1,
       "outputFormat": "png",
       "out": "gen/golden-slice/environment/arena-road",
-      "prompt": "Create one production-ready asset for the Dicekeep infinity arena. It must remain readable behind towers, enemies, projectiles and HTML interface elements at phone size. No characters, towers, interface, lettering, numbers, logo or watermark. Redraw the referenced seamless road texture as broad rounded violet stone pavers with sparse warm-gold joint accents. It must tile seamlessly on all four edges and work when code bends, rotates and masks it into paths. Uniform scale, no painted turn, border, arrow or endpoint.",
+      "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. Square full-bleed seamless repeating warm cream beige stone pavers, large rounded irregular slabs and thin muted tan joints. All four edges tile, uniform light, NO border, NO frame, NO vignette, no moss or dirt speckles. This fills winding paths as a repeated texture.",
       "size": "1024x1024",
       "background": "opaque",
       "refs": [
-        "casual/tiles/arena/road.png"
+        "casual/tiles/arena/road.png",
+        "towers/die-1.png"
       ],
       "inputFidelity": "high"
     },
@@ -88,11 +95,12 @@
       "n": 1,
       "outputFormat": "png",
       "out": "gen/golden-slice/environment/arena-pad",
-      "prompt": "Create one production-ready asset for the Dicekeep infinity arena. It must remain readable behind towers, enemies, projectiles and HTML interface elements at phone size. No characters, towers, interface, lettering, numbers, logo or watermark. Redraw the referenced tower placement pad: one low circular violet-stone socket seen from 3/4 top-down, thin ivory-and-gold rim, six small pip-like studs and a calm empty center for a tower. Centered with generous transparent margin, grounded and symmetrical, no glow column or tower.",
+      "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. Single low oval purple stone placement socket with slender gold ring and a calm dark-violet empty center. Keep low flat elliptical projection and original proportions. No tower. Actual transparent background.",
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "casual/tiles/arena/pad.png"
+        "casual/tiles/arena/pad.png",
+        "towers/die-1.png"
       ],
       "inputFidelity": "high"
     },
@@ -111,11 +119,12 @@
       "n": 1,
       "outputFormat": "png",
       "out": "gen/golden-slice/environment/arena-start",
-      "prompt": "Create one production-ready asset for the Dicekeep infinity arena. It must remain readable behind towers, enemies, projectiles and HTML interface elements at phone size. No characters, towers, interface, lettering, numbers, logo or watermark. Redraw the referenced enemy entrance as one compact round violet-stone portal seen from 3/4 top-down. A dark blue-violet opening, ivory dice-stone arch and a restrained cyan-violet inner glow clearly mark START without any symbol or text. Centered, grounded, transparent surroundings.",
+      "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. Small purple stone archway with purple swirling portal, gold trim, two side torches, stepped stone platform. Preserve original structure and front-right perspective. Compact controlled magical spiral, no bloom halo. Transparent background.",
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "casual/tiles/arena/start.png"
+        "casual/tiles/arena/start.png",
+        "towers/die-1.png"
       ],
       "inputFidelity": "high"
     },
@@ -134,11 +143,12 @@
       "n": 1,
       "outputFormat": "png",
       "out": "gen/golden-slice/environment/arena-end",
-      "prompt": "Create one production-ready asset for the Dicekeep infinity arena. It must remain readable behind towers, enemies, projectiles and HTML interface elements at phone size. No characters, towers, interface, lettering, numbers, logo or watermark. Redraw the referenced destination as one small friendly ivory die keep seen from 3/4 top-down, red pips, gold trim, blue-violet crystal beacon and a sturdy violet-stone base. Clear end-of-path silhouette at 64 pixels, centered, grounded, transparent surroundings.",
+      "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. Cyan crystal goal monument within a purple stone frame with gold corner trims, low circular purple stone base. Preserve silhouette, focus crystal. Transparent background.",
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "casual/tiles/arena/end.png"
+        "casual/tiles/arena/end.png",
+        "towers/die-1.png"
       ],
       "inputFidelity": "high"
     },
@@ -157,11 +167,12 @@
       "n": 1,
       "outputFormat": "png",
       "out": "gen/golden-slice/environment/arena-prop-1",
-      "prompt": "Create one production-ready asset for the Dicekeep infinity arena. It must remain readable behind towers, enemies, projectiles and HTML interface elements at phone size. No characters, towers, interface, lettering, numbers, logo or watermark. Redraw the referenced arena decoration as one short violet-stone brazier with a compact warm-gold flame and one small ivory die ornament. Low silhouette, centered, grounded, transparent surroundings; it must never resemble a tower pad or enemy.",
+      "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. Single purple-gray stone brazier pedestal with gold bands, dark empty bowl and small gold diamond on front. Preserve shape and dimensions. NO flame: flame is animated separately by game. Transparent background.",
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "casual/tiles/arena/prop-1.png"
+        "casual/tiles/arena/prop-1.png",
+        "towers/die-1.png"
       ],
       "inputFidelity": "high"
     },
@@ -180,11 +191,12 @@
       "n": 1,
       "outputFormat": "png",
       "out": "gen/golden-slice/environment/arena-prop-2",
-      "prompt": "Create one production-ready asset for the Dicekeep infinity arena. It must remain readable behind towers, enemies, projectiles and HTML interface elements at phone size. No characters, towers, interface, lettering, numbers, logo or watermark. Redraw the referenced arena decoration as a compact cluster of two rounded violet crystals and a small ivory die-stone shard on a low rubble base. Quiet blue-violet glow, low silhouette, centered, grounded, transparent surroundings.",
+      "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. Single short purple stone pillar with golden bands, small violet crystal top, side purple banner and circular stone base. Preserve silhouette. Transparent background.",
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "casual/tiles/arena/prop-2.png"
+        "casual/tiles/arena/prop-2.png",
+        "towers/die-1.png"
       ],
       "inputFidelity": "high"
     },
@@ -203,11 +215,12 @@
       "n": 1,
       "outputFormat": "png",
       "out": "gen/golden-slice/environment/arena-prop-3",
-      "prompt": "Create one production-ready asset for the Dicekeep infinity arena. It must remain readable behind towers, enemies, projectiles and HTML interface elements at phone size. No characters, towers, interface, lettering, numbers, logo or watermark. Redraw the referenced arena decoration as one squat violet-stone pillar capped by a small gold dice-rune ring. Broad simple forms, low contrast, centered, grounded, transparent surroundings; no flame, tower weapon or interface symbol.",
+      "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. Small decorative ancient purple stone die among a few broad broken purple stone slabs with gold inlay. Keep original composition, simplify rubble. Transparent background.",
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "casual/tiles/arena/prop-3.png"
+        "casual/tiles/arena/prop-3.png",
+        "towers/die-1.png"
       ],
       "inputFidelity": "high"
     },
@@ -227,7 +240,7 @@
       "n": 1,
       "outputFormat": "png",
       "out": "gen/golden-slice/tower/tower-die-1",
-      "prompt": "Redraw the referenced Dicekeep tower as one stable freestanding defense building in 3/4 top-down view, facing slightly right, with the same flat integrated foundation. Preserve its role, footprint, ground pivot and tall readable silhouette. The body is completely still and rigid; no squash, stretch, firing pose, projectile, motion trail, baked glow aura, separate pedestal, text, number, star, logo or watermark. Centered with generous transparent margin. A slim ivory watchtower with one large crimson eye-lens in a brass iris, designed for a precise thin laser. Ivory die-stone, red pip accents, warm gold hardware and one blue-violet magic accent bind it to the Dicekeep set.",
+      "prompt": "Redraw the referenced Dicekeep tower as one stable freestanding defense building in 3/4 top-down view, facing slightly right, with the same flat integrated foundation. Preserve its role, footprint, ground pivot and tall readable silhouette. The body is completely still and rigid; no squash, stretch, firing pose, projectile, motion trail, baked glow aura, separate pedestal, text, number, star, logo or watermark. Centered with generous transparent margin. Preserve the approved brown wooden watchtower: brown shingle pyramid roof, open timber balcony and railings, cream lower wall with one red front lens, side timber braces and torch, low stone-grass base. The lens releases compact red shots. Do not redesign it as an ivory or gold tower. Preserve the referenced materials and colors while simplifying the surface into clean casual shading.",
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
@@ -251,11 +264,12 @@
       "n": 1,
       "outputFormat": "png",
       "out": "gen/golden-slice/tower/tower-die-2",
-      "prompt": "Redraw the referenced Dicekeep tower as one stable freestanding defense building in 3/4 top-down view, facing slightly right, with the same flat integrated foundation. Preserve its role, footprint, ground pivot and tall readable silhouette. The body is completely still and rigid; no squash, stretch, firing pose, projectile, motion trail, baked glow aura, separate pedestal, text, number, star, logo or watermark. Centered with generous transparent margin. A compact ivory artillery fort with two black iron cannon ports, bronze rims and small powder-keg shapes at its base. Ivory die-stone, red pip accents, warm gold hardware and one blue-violet magic accent bind it to the Dicekeep set.",
+      "prompt": "Style-transfer edit for Dicekeep mobile tower defense. Image 1 is the ORIGINAL tower to repaint; image 2 is ONLY the APPROVED visual style reference. Preserve image 1's exact architecture, overall silhouette, width-to-height ratio, camera angle and all functional parts: compact gray stone fort, steep dark slate pyramidal roof and square cap, moss tufts, front cream inset panel with TWO projecting black cannon barrels with dark red rims at their existing locations, small brown barrels along the right wall, low stone-and-grass base. Repaint in the clean cheerful casual fantasy finish of image 2: broad smooth color planes, simplified rounded stone edges, crisp soft cel shading, sparse large material marks. Keep gray slate roof, cream panel, black cannons and muted red rims. No gritty texture, photoreal grain, tiny scratches, cinematic lighting, redesign, extra weapons, text or labels. One complete freestanding tower, generous transparent padding, genuine transparent background, no scene, no external glow. Stable upright body. Front barrel mouths clearly readable at 70x96 pixels.",
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "towers/die-2.png"
+        "towers/die-2.png",
+        "towers/die-1.png"
       ],
       "inputFidelity": "high"
     },
@@ -275,11 +289,12 @@
       "n": 1,
       "outputFormat": "png",
       "out": "gen/golden-slice/tower/tower-die-3",
-      "prompt": "Redraw the referenced Dicekeep tower as one stable freestanding defense building in 3/4 top-down view, facing slightly right, with the same flat integrated foundation. Preserve its role, footprint, ground pivot and tall readable silhouette. The body is completely still and rigid; no squash, stretch, firing pose, projectile, motion trail, baked glow aura, separate pedestal, text, number, star, logo or watermark. Centered with generous transparent margin. A tall ivory arcane obelisk with three amethyst rune-gems and a restrained violet crystal crown. Ivory die-stone, red pip accents, warm gold hardware and one blue-violet magic accent bind it to the Dicekeep set.",
+      "prompt": "Style-transfer edit of the FIRST reference asset for Dicekeep. The SECOND reference is ONLY the approved painting style, not the subject. Keep first reference's identity, architecture, silhouette, relative proportions, camera view, color family and functional parts. Paint as clean cheerful casual fantasy mobile-game art: broad smooth color planes, gently rounded edges, crisp soft cel shading, restrained large details, clear at tiny gameplay size. No photoreal surface noise, gritty grain, scratches, dirt speckles, excessive bloom, redesign, added ornament, labels, text, watermark. Tall tapered gray stone wizard obelisk, three purple diamond gems vertically on its cream front face, thin dark rim crown with small gold points, tiny floating purple diamonds at sides, mossy round stone base. Keep tall slim proportion. Purple magic emits from the large upper front diamond, keep it clearly visible. One complete object with transparent background and transparent openings, generous margin. No firing pose, projectile, shadow outside base or aura.",
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "towers/die-3.png"
+        "towers/die-3.png",
+        "towers/die-1.png"
       ],
       "inputFidelity": "high"
     },
@@ -299,11 +314,12 @@
       "n": 1,
       "outputFormat": "png",
       "out": "gen/golden-slice/tower/tower-die-4",
-      "prompt": "Redraw the referenced Dicekeep tower as one stable freestanding defense building in 3/4 top-down view, facing slightly right, with the same flat integrated foundation. Preserve its role, footprint, ground pivot and tall readable silhouette. The body is completely still and rigid; no squash, stretch, firing pose, projectile, motion trail, baked glow aura, separate pedestal, text, number, star, logo or watermark. Centered with generous transparent margin. A tapered ivory frost spire with four blue ice-crystal corner devices and a compact frozen crown. Ivory die-stone, red pip accents, warm gold hardware and one blue-violet magic accent bind it to the Dicekeep set.",
+      "prompt": "Style-transfer edit of the FIRST reference asset for Dicekeep. The SECOND reference is ONLY the approved painting style, not the subject. Keep first reference's identity, architecture, silhouette, relative proportions, camera view, color family and functional parts. Paint as clean cheerful casual fantasy mobile-game art: broad smooth color planes, gently rounded edges, crisp soft cel shading, restrained large details, clear at tiny gameplay size. No photoreal surface noise, gritty grain, scratches, dirt speckles, excessive bloom, redesign, added ornament, labels, text, watermark. Tall asymmetric tapered icy blue spire with sharp frozen crown and four red diamond focuses on its front and right faces, snowy blue ice ledges and mossy round stone base. Preserve icy silhouette; simplify facets into large clean planes. No snowstorm, no surrounding glow. One complete object with transparent background and transparent openings, generous margin. No firing pose, projectile, shadow outside base or aura.",
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "towers/die-4.png"
+        "towers/die-4.png",
+        "towers/die-1.png"
       ],
       "inputFidelity": "high"
     },
@@ -323,11 +339,12 @@
       "n": 1,
       "outputFormat": "png",
       "out": "gen/golden-slice/tower/tower-die-5",
-      "prompt": "Redraw the referenced Dicekeep tower as one stable freestanding defense building in 3/4 top-down view, facing slightly right, with the same flat integrated foundation. Preserve its role, footprint, ground pivot and tall readable silhouette. The body is completely still and rigid; no squash, stretch, firing pose, projectile, motion trail, baked glow aura, separate pedestal, text, number, star, logo or watermark. Centered with generous transparent margin. An ivory lightning tower with four copper rods around one central blue-white coil, cables contained inside its silhouette. Ivory die-stone, red pip accents, warm gold hardware and one blue-violet magic accent bind it to the Dicekeep set.",
+      "prompt": "Style-transfer edit of the FIRST reference asset for Dicekeep. The SECOND reference is ONLY the approved painting style, not the subject. Keep first reference's identity, architecture, silhouette, relative proportions, camera view, color family and functional parts. Paint as clean cheerful casual fantasy mobile-game art: broad smooth color planes, gently rounded edges, crisp soft cel shading, restrained large details, clear at tiny gameplay size. No photoreal surface noise, gritty grain, scratches, dirt speckles, excessive bloom, redesign, added ornament, labels, text, watermark. Bronze-and-cream electrical tower on low mossy round stone base. Preserve the cream dice face with red circular pips, copper coils at corners, central upright coil stalk, brass domed terminal on top with a small blue electric arc, side wiring. Simplify metal to warm clean shaded shapes. One complete object with transparent background and transparent openings, generous margin. No firing pose, projectile, shadow outside base or aura.",
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "towers/die-5.png"
+        "towers/die-5.png",
+        "towers/die-1.png"
       ],
       "inputFidelity": "high"
     },
@@ -347,11 +364,12 @@
       "n": 1,
       "outputFormat": "png",
       "out": "gen/golden-slice/tower/tower-die-6",
-      "prompt": "Redraw the referenced Dicekeep tower as one stable freestanding defense building in 3/4 top-down view, facing slightly right, with the same flat integrated foundation. Preserve its role, footprint, ground pivot and tall readable silhouette. The body is completely still and rigid; no squash, stretch, firing pose, projectile, motion trail, baked glow aura, separate pedestal, text, number, star, logo or watermark. Centered with generous transparent margin. A broad ivory fortress with six dark mortar ports, restrained gold crown trim and a short crimson banner. Ivory die-stone, red pip accents, warm gold hardware and one blue-violet magic accent bind it to the Dicekeep set.",
+      "prompt": "Style-transfer edit of the FIRST reference asset for Dicekeep. The SECOND reference is ONLY the approved painting style, not the subject. Keep first reference's identity, architecture, silhouette, relative proportions, camera view, color family and functional parts. Paint as clean cheerful casual fantasy mobile-game art: broad smooth color planes, gently rounded edges, crisp soft cel shading, restrained large details, clear at tiny gameplay size. No photoreal surface noise, gritty grain, scratches, dirt speckles, excessive bloom, redesign, added ornament, labels, text, watermark. Dark gray stone royal fortress with tall round tower, gold crown battlements, red-and-gold hanging banners, cream six-red-pip front panel and mossy stone base. Preserve silhouette and banners. The original magenta is a chroma key, remove it to real transparent background; do not turn the tower magenta. One complete object with transparent background and transparent openings, generous margin. No firing pose, projectile, shadow outside base or aura.",
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "towers/die-6.png"
+        "towers/die-6.png",
+        "towers/die-1.png"
       ],
       "inputFidelity": "high"
     },
@@ -695,11 +713,12 @@
       "n": 1,
       "outputFormat": "png",
       "out": "gen/golden-slice/vfx/vfx-muzzle-flash",
-      "prompt": "One Dicekeep combat-effect asset on a transparent canvas. Bold compact shapes, clean warm-charcoal edge where needed, bright core with controlled bloom, readable at 24 to 64 pixels. Centered with generous empty margin; no tower, enemy, floor, scenery, text, logo or watermark. A single directional cannon muzzle flash pointing right: compact white-yellow diamond core, three warm-gold triangular flame petals and two tiny orange sparks. The origin point is exactly at canvas center and the effect extends mostly to the right.",
+      "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. One compact stylized golden-orange cannon firing flash with cream core and two tiny warm smoke puffs, centered radial burst. Effect ONLY, remove the cannon barrel from original. No barrel, metal, tower, projectiles or trails. One isolated effect on genuine transparent background. Clean bold compact shapes readable at 22-32px, controlled glow no background halo. Generous margin.",
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "vfx/muzzle-flash.png"
+        "vfx/muzzle-flash.png",
+        "towers/die-1.png"
       ],
       "inputFidelity": "high"
     },
@@ -719,11 +738,12 @@
       "n": 1,
       "outputFormat": "png",
       "out": "gen/golden-slice/vfx/vfx-projectile-bolt",
-      "prompt": "One Dicekeep combat-effect asset on a transparent canvas. Bold compact shapes, clean warm-charcoal edge where needed, bright core with controlled bloom, readable at 24 to 64 pixels. Centered with generous empty margin; no tower, enemy, floor, scenery, text, logo or watermark. A single blue-violet arcane bolt traveling right: short ivory-white core, rounded violet head, tapered cyan tail and one thin warm-gold rim accent. Horizontal axis, compact length, no detached fragments.",
+      "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. One compact PURPLE arcane magic projectile, faceted amethyst diamond spearhead pointing horizontally RIGHT with a short curling violet energy tail extending LEFT. White-violet core. Change original blue to purple to match the purple wizard tower. No writing or rune text. One isolated effect on genuine transparent background. Clean bold compact shapes readable at 22-32px, controlled glow no background halo. Generous margin.",
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "vfx/bolt.png"
+        "vfx/bolt.png",
+        "towers/die-1.png"
       ],
       "inputFidelity": "high"
     },

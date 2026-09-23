@@ -27,15 +27,15 @@ test('reports the current eager SRCS loader deterministically and passes its cei
   assert.equal(report.loadAssets.loadEntries, 770);
   assert.equal(report.loadAssets.uniqueRequests, 770);
   assert.equal(report.loadAssets.uniqueFiles, 770);
-  // Measured baseline after WebP conversion and the first casual art promotion.
-  assert.equal(report.loadAssets.transferBytes, 93_518_375);
-  assert.equal(report.loadAssets.decodeBytes, 456_946_540);
+  // Measured after the 38-source casual tower/world/VFX promotion.
+  assert.equal(report.loadAssets.transferBytes, 77_977_924);
+  assert.equal(report.loadAssets.decodeBytes, 455_743_252);
   assert.equal(report.startupScenarios.portrait.uniqueRequests, 771);
-  assert.equal(report.startupScenarios.portrait.transferBytes, 93_688_126);   // 캐주얼 파일럿 적용 후 실측
-  assert.equal(report.startupScenarios.portrait.decodeBytes, 463_237_996);
+  assert.equal(report.startupScenarios.portrait.transferBytes, 78_147_675);   // 캐주얼 파일럿 적용 후 실측
+  assert.equal(report.startupScenarios.portrait.decodeBytes, 462_034_708);
   assert.equal(report.startupScenarios.landscape.uniqueRequests, 772);
-  assert.equal(report.startupScenarios.landscape.transferBytes, 93_689_307);  // 캐주얼 파일럿 적용 후 실측
-  assert.equal(report.startupScenarios.landscape.decodeBytes, 463_224_940);
+  assert.equal(report.startupScenarios.landscape.transferBytes, 78_148_856);  // 캐주얼 파일럿 적용 후 실측
+  assert.equal(report.startupScenarios.landscape.decodeBytes, 462_021_652);
   assert.equal(report.integrity.manifestLinkedFiles, 756);
   assert.equal(report.integrity.notInArtManifest.length, 14);
 

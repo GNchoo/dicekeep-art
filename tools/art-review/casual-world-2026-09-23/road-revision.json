@@ -1,0 +1,6 @@
+{
+  "prompt": "Edit this terrain texture for a game. It is NOT a sprite. Output a completely OPAQUE full-bleed square seamless tiling texture of these warm beige cream broad stone pavers. Remove the faded WHITE BAND around all four edges. The edges must be exactly as detailed, colored and equally lit as the center. No transparency anywhere, no white fade, no border, no frame, no vignette, no shadow along edges, no gradient, no lighting hotspot. Continue complete paver pattern right up to and THROUGH every edge, with stone scale uniform everywhere. Opposite edges must match perfectly when repeated horizontally and vertically. Calm even tan/cream cel-painted shading, thin muted brown joints. Preserve the clean casual stone surface style, no grain or gritty detail.",
+  "reason": "Remove edge fade visible in repeated-road preview",
+  "input": "arena-road first candidate (initial job prompt)",
+  "tool": "Codex built-in image_gen"
+}

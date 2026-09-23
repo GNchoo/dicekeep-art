@@ -13,9 +13,12 @@
       : face <= 10 ? 'star' : face <= 13 ? 'nebula' : face <= 17 ? 'epic' : face <= 19 ? 'myth' : 'primal';
   }
   const COLORS = { laser: '#ff6652', cannon: '#ffb752', arcane: '#bc8bff', frost: '#94efff', lightning: '#ffe976', dice: '#ff7560', star: '#80dfff', nebula: '#c39aff', epic: '#ddd0ff', myth: '#ffda75', primal: '#ff98e1' };
-  const PORTS = { 1: [[.34, .66]], 2: [[.24, .65], [.43, .71]], 3: [[.53, .39]], 4: [[.51, .23]], 5: [[.49, .28]], 6: [[.51, .22]] };
+  // Anchors on trimmed default art: lens, barrel mouths, amethyst focus,
+  // ice tip, brass terminal and open crown mortar.
+  const PORTS = { 1: [[.34, .66]], 2: [[.20, .66], [.40, .71]], 3: [[.55, .39]], 4: [[.52, .07]], 5: [[.51, .06]], 6: [[.52, .15]] };
+  const SKIN_PORTS = { 2: [[.24, .65], [.43, .71]], 3: [[.53, .39]], 4: [[.51, .23]], 5: [[.49, .28]], 6: [[.51, .22]] };
   function port(t, starPort) {
-    const ports = PORTS[t.face] || [starPort || [.5, .2]];
+    const ports = (t.skin > 0 && SKIN_PORTS[t.face]) || PORTS[t.face] || [starPort || [.5, .2]];
     return ports[Math.max(0, (t.shotSerial || 1) - 1) % ports.length];
   }
   // Add light at release only. Never cut, repaint, rotate or move any tower pixels.
