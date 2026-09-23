@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "generator": "Codex built-in image_gen",
+  "createdAt": "2026-09-23",
+  "styleOnlyReference": {
+    "path": "casual/towers/star-07-casual.png",
+    "sha256": "0b262e3f0cacc65f937a5dba5b99b9ad5fe0a81c7a44846a8f04896ae8f6f322",
+    "role": "Style-only reference for clean cel shading; no tower motifs or objects are copied."
+  },
+  "candidates": [
+    {
+      "id": "outer-floor",
+      "editTarget": "casual/tiles/arena/floor.jpg",
+      "editTargetSha256": "a901c3c1f90f8173cbc1e1497e0085aeeec82b468a4c4a4b8eccefb936cd2a69",
+      "referenceOrder": ["editTarget", "styleOnlyReference"],
+      "output": "tools/art-review/arena-clean-2026-09-23/source-floor.png",
+      "outputSize": [1672, 941],
+      "outputSha256": "637246d4fd65e28cc69379013353c2e712a3512c3e55fd06abc0ec6e37ebdd9a",
+      "prompt": "Use case: style-transfer. Asset type: full-bleed 16:9 ground texture behind a mobile fantasy tower-defense arena. Input images: Image 1 is the EDIT TARGET, the existing purple-gray outer arena floor; Image 2 is STYLE-ONLY reference for clean, polished, broad cel-shaded shapes and restrained finish. Primary request: edit Image 1 into a noticeably simpler and quieter purple/indigo stone floor. Make the stone planes dramatically larger with far fewer seams, broad two-tone cel shading, soft low-contrast joins, and generous calm surfaces that keep gameplay elements readable. Keep the target's landscape 16:9 frame, near-overhead view, full-bleed ground coverage, purple/indigo family and functional role as the OUTER ground beyond the road. Preserve uniform quiet visual weight across the whole frame; edges should be usable after scaling/cropping. Do not copy the tower or add blue crystals. Avoid roads, center board, sockets, pillars, braziers, props, characters, text, runes, vignettes, grids, tiny stones, brick microdetail, scratch/noise texture, bright highlights, visible repetitive motifs. Deliver one finished raster image, no presentation mockup."
+    },
+    {
+      "id": "inner-board",
+      "editTarget": "casual/tiles/arena/board.png",
+      "editTargetSha256": "9162ae4e51ee1f2e5d1d6fe63618fc1c46d53cd8634ca87840029402b7626d00",
+      "referenceOrder": ["editTarget", "styleOnlyReference"],
+      "output": "tools/art-review/arena-clean-2026-09-23/source-board.png",
+      "outputSize": [1254, 1254],
+      "outputSha256": "6d0fb2a849b9066e8209a62a38d106016217a07bb63e72ab2849550ae209b5c5",
+      "runtimeDecision": "The candidate repeated visibly at 256px, so the final game renderer paints it once with a centered cover crop. The prompt below records the original generation request.",
+      "prompt": "Use case: style-transfer. Asset type: square REPEATING surface texture for the inner tower-placement board of a mobile fantasy tower-defense arena. Input images: Image 1 is the EDIT TARGET, existing dark purple inner-board stone texture; Image 2 is STYLE-ONLY reference for clean, polished broad cel shading. Primary request: edit Image 1 into a much quieter, simpler inner-board texture: very large, broad dark indigo-violet stone planes, only sparse faint organic boundaries, nearly flat two-tone cel shading, no grit. Keep it recognizably darker and calmer than the outer purple floor, so towers and purple-gold sockets read clearly above it. Preserve a square, full-bleed, straight overhead texture with consistent color and lighting everywhere. Crucial repeat requirement: this image will be shrunk to a 256×256 tile and repeated across a 444×244 board; make opposite edges meet visually, avoid cropped high-contrast shapes or line endings at image borders, avoid center spotlight, gradient, frame or corners. Image 2 does not contribute objects: do not add tower, crystals, gold trim, or gameplay objects. Avoid cracks, brick grids, small stones, noise/microtexture, runes, sockets, road, border, text, characters, props, watermark. Deliver one finished raster square tile, no presentation mockup."
+    }
+  ]
+}
