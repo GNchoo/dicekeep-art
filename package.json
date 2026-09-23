@@ -28,6 +28,7 @@
     "test:commerce": "cd commerce && npm test",
     "test:game-modes": "node tools/e2e/game-modes.cjs",
     "test:manual-chest-roll": "node tools/e2e/manual-chest-roll.cjs",
+    "test:dice-rest-pose": "node tools/e2e/dice-rest-pose.cjs",
     "test:story-physical-throw": "node tools/e2e/story-physical-throw.cjs",
     "test:log-dwell": "node tools/log-dwell-test.cjs",
     "test:wave-themes": "node tools/wave-themes-test.cjs",
