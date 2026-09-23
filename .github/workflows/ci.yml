@@ -139,6 +139,8 @@ jobs:
 
       - name: game-modes
         run: npm run test:game-modes
+      - name: casual-world (아트 로딩·알파·발사 위치·지역별 렌더)
+        run: npm run test:casual-world
       - name: pure-luck
         run: npm run test:pure-luck
       - name: campaign

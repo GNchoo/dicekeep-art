@@ -1,0 +1,397 @@
+[
+  {
+    "id": "tower-2",
+    "prompt": "Style-transfer edit for Dicekeep mobile tower defense. Image 1 is the ORIGINAL tower to repaint; image 2 is ONLY the APPROVED visual style reference. Preserve image 1's exact architecture, overall silhouette, width-to-height ratio, camera angle and all functional parts: compact gray stone fort, steep dark slate pyramidal roof and square cap, moss tufts, front cream inset panel with TWO projecting black cannon barrels with dark red rims at their existing locations, small brown barrels along the right wall, low stone-and-grass base. Repaint in the clean cheerful casual fantasy finish of image 2: broad smooth color planes, simplified rounded stone edges, crisp soft cel shading, sparse large material marks. Keep gray slate roof, cream panel, black cannons and muted red rims. No gritty texture, photoreal grain, tiny scratches, cinematic lighting, redesign, extra weapons, text or labels. One complete freestanding tower, generous transparent padding, genuine transparent background, no scene, no external glow. Stable upright body. Front barrel mouths clearly readable at 70x96 pixels.",
+    "target": "casual/towers/t2-a.png",
+    "extraTargets": [
+      "towers/die-2.png"
+    ],
+    "kind": "tower",
+    "refs": [
+      "casual/towers/t2-a.png",
+      "tools/art-review/wooden-tower-2026-09-23/casual.png"
+    ]
+  },
+  {
+    "id": "tower-3",
+    "target": "casual/towers/t3-a.png",
+    "extraTargets": [
+      "towers/die-3.png"
+    ],
+    "kind": "tower",
+    "refs": [
+      "casual/towers/t3-a.png",
+      "tools/art-review/wooden-tower-2026-09-23/casual.png"
+    ],
+    "prompt": "Style-transfer edit of the FIRST reference asset for Dicekeep. The SECOND reference is ONLY the approved painting style, not the subject. Keep first reference's identity, architecture, silhouette, relative proportions, camera view, color family and functional parts. Paint as clean cheerful casual fantasy mobile-game art: broad smooth color planes, gently rounded edges, crisp soft cel shading, restrained large details, clear at tiny gameplay size. No photoreal surface noise, gritty grain, scratches, dirt speckles, excessive bloom, redesign, added ornament, labels, text, watermark. Tall tapered gray stone wizard obelisk, three purple diamond gems vertically on its cream front face, thin dark rim crown with small gold points, tiny floating purple diamonds at sides, mossy round stone base. Keep tall slim proportion. Purple magic emits from the large upper front diamond, keep it clearly visible. One complete object with transparent background and transparent openings, generous margin. No firing pose, projectile, shadow outside base or aura."
+  },
+  {
+    "id": "tower-4",
+    "target": "casual/towers/t4-a.png",
+    "extraTargets": [
+      "towers/die-4.png"
+    ],
+    "kind": "tower",
+    "refs": [
+      "casual/towers/t4-a.png",
+      "tools/art-review/wooden-tower-2026-09-23/casual.png"
+    ],
+    "prompt": "Style-transfer edit of the FIRST reference asset for Dicekeep. The SECOND reference is ONLY the approved painting style, not the subject. Keep first reference's identity, architecture, silhouette, relative proportions, camera view, color family and functional parts. Paint as clean cheerful casual fantasy mobile-game art: broad smooth color planes, gently rounded edges, crisp soft cel shading, restrained large details, clear at tiny gameplay size. No photoreal surface noise, gritty grain, scratches, dirt speckles, excessive bloom, redesign, added ornament, labels, text, watermark. Tall asymmetric tapered icy blue spire with sharp frozen crown and four red diamond focuses on its front and right faces, snowy blue ice ledges and mossy round stone base. Preserve icy silhouette; simplify facets into large clean planes. No snowstorm, no surrounding glow. One complete object with transparent background and transparent openings, generous margin. No firing pose, projectile, shadow outside base or aura."
+  },
+  {
+    "id": "tower-5",
+    "target": "casual/towers/t5-a.png",
+    "extraTargets": [
+      "towers/die-5.png"
+    ],
+    "kind": "tower",
+    "refs": [
+      "casual/towers/t5-a.png",
+      "tools/art-review/wooden-tower-2026-09-23/casual.png"
+    ],
+    "prompt": "Style-transfer edit of the FIRST reference asset for Dicekeep. The SECOND reference is ONLY the approved painting style, not the subject. Keep first reference's identity, architecture, silhouette, relative proportions, camera view, color family and functional parts. Paint as clean cheerful casual fantasy mobile-game art: broad smooth color planes, gently rounded edges, crisp soft cel shading, restrained large details, clear at tiny gameplay size. No photoreal surface noise, gritty grain, scratches, dirt speckles, excessive bloom, redesign, added ornament, labels, text, watermark. Bronze-and-cream electrical tower on low mossy round stone base. Preserve the cream dice face with red circular pips, copper coils at corners, central upright coil stalk, brass domed terminal on top with a small blue electric arc, side wiring. Simplify metal to warm clean shaded shapes. One complete object with transparent background and transparent openings, generous margin. No firing pose, projectile, shadow outside base or aura."
+  },
+  {
+    "id": "tower-6",
+    "target": "casual/towers/t6-a.png",
+    "extraTargets": [
+      "towers/die-6.png"
+    ],
+    "kind": "tower",
+    "refs": [
+      "casual/towers/t6-a.png",
+      "tools/art-review/wooden-tower-2026-09-23/casual.png"
+    ],
+    "prompt": "Style-transfer edit of the FIRST reference asset for Dicekeep. The SECOND reference is ONLY the approved painting style, not the subject. Keep first reference's identity, architecture, silhouette, relative proportions, camera view, color family and functional parts. Paint as clean cheerful casual fantasy mobile-game art: broad smooth color planes, gently rounded edges, crisp soft cel shading, restrained large details, clear at tiny gameplay size. No photoreal surface noise, gritty grain, scratches, dirt speckles, excessive bloom, redesign, added ornament, labels, text, watermark. Dark gray stone royal fortress with tall round tower, gold crown battlements, red-and-gold hanging banners, cream six-red-pip front panel and mossy stone base. Preserve silhouette and banners. The original magenta is a chroma key, remove it to real transparent background; do not turn the tower magenta. One complete object with transparent background and transparent openings, generous margin. No firing pose, projectile, shadow outside base or aura."
+  },
+  {
+    "id": "arena-floor",
+    "target": "casual/tiles/arena/floor.jpg",
+    "kind": "floor",
+    "refs": [
+      "casual/tiles/arena/floor.jpg",
+      "tools/art-review/wooden-tower-2026-09-23/casual.png"
+    ],
+    "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. Full bleed landscape 16:9 flat empty violet-gray flagstone arena floor. No vignette. Large low-contrast slabs, even soft light. No props, center emblem, paths, frames or towers."
+  },
+  {
+    "id": "arena-board",
+    "target": "casual/tiles/arena/board.png",
+    "kind": "texture",
+    "refs": [
+      "casual/tiles/arena/board.png",
+      "tools/art-review/wooden-tower-2026-09-23/casual.png"
+    ],
+    "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. Square full-bleed seamless repeating muted slate-violet stone surface, very low contrast with broad simple slabs. Identical lighting everywhere including edges. All four edges must tile without visible joins. No border, no frame, no central motif, no vignette, no object."
+  },
+  {
+    "id": "arena-road",
+    "target": "casual/tiles/arena/road.png",
+    "kind": "texture",
+    "refs": [
+      "casual/tiles/arena/road.png",
+      "tools/art-review/wooden-tower-2026-09-23/casual.png"
+    ],
+    "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. Square full-bleed seamless repeating warm cream beige stone pavers, large rounded irregular slabs and thin muted tan joints. All four edges tile, uniform light, NO border, NO frame, NO vignette, no moss or dirt speckles. This fills winding paths as a repeated texture."
+  },
+  {
+    "id": "arena-pad",
+    "target": "casual/tiles/arena/pad.png",
+    "kind": "prop",
+    "refs": [
+      "casual/tiles/arena/pad.png",
+      "tools/art-review/wooden-tower-2026-09-23/casual.png"
+    ],
+    "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. Single low oval purple stone placement socket with slender gold ring and a calm dark-violet empty center. Keep low flat elliptical projection and original proportions. No tower. Actual transparent background."
+  },
+  {
+    "id": "arena-start",
+    "target": "casual/tiles/arena/start.png",
+    "kind": "prop",
+    "refs": [
+      "casual/tiles/arena/start.png",
+      "tools/art-review/wooden-tower-2026-09-23/casual.png"
+    ],
+    "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. Small purple stone archway with purple swirling portal, gold trim, two side torches, stepped stone platform. Preserve original structure and front-right perspective. Compact controlled magical spiral, no bloom halo. Transparent background."
+  },
+  {
+    "id": "arena-end",
+    "target": "casual/tiles/arena/end.png",
+    "kind": "prop",
+    "refs": [
+      "casual/tiles/arena/end.png",
+      "tools/art-review/wooden-tower-2026-09-23/casual.png"
+    ],
+    "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. Cyan crystal goal monument within a purple stone frame with gold corner trims, low circular purple stone base. Preserve silhouette, focus crystal. Transparent background."
+  },
+  {
+    "id": "arena-prop-1",
+    "target": "casual/tiles/arena/prop-1.png",
+    "kind": "prop",
+    "refs": [
+      "casual/tiles/arena/prop-1.png",
+      "tools/art-review/wooden-tower-2026-09-23/casual.png"
+    ],
+    "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. Single purple-gray stone brazier pedestal with gold bands, dark empty bowl and small gold diamond on front. Preserve shape and dimensions. NO flame: flame is animated separately by game. Transparent background."
+  },
+  {
+    "id": "arena-prop-2",
+    "target": "casual/tiles/arena/prop-2.png",
+    "kind": "prop",
+    "refs": [
+      "casual/tiles/arena/prop-2.png",
+      "tools/art-review/wooden-tower-2026-09-23/casual.png"
+    ],
+    "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. Single short purple stone pillar with golden bands, small violet crystal top, side purple banner and circular stone base. Preserve silhouette. Transparent background."
+  },
+  {
+    "id": "arena-prop-3",
+    "target": "casual/tiles/arena/prop-3.png",
+    "kind": "prop",
+    "refs": [
+      "casual/tiles/arena/prop-3.png",
+      "tools/art-review/wooden-tower-2026-09-23/casual.png"
+    ],
+    "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. Small decorative ancient purple stone die among a few broad broken purple stone slabs with gold inlay. Keep original composition, simplify rubble. Transparent background."
+  },
+  {
+    "id": "plains-floor",
+    "target": "casual/tiles/plains/floor.jpg",
+    "kind": "floor",
+    "refs": [
+      "casual/tiles/plains/floor.jpg",
+      "tools/art-review/wooden-tower-2026-09-23/casual.png"
+    ],
+    "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. Full bleed landscape 16:9 empty cheerful soft green meadow ground seen overhead. Broad blended grass color patches with very sparse broad grass strokes. Quiet and low contrast, no trees, flowers, paths, rocks, horizon, gradients at edges or vignette."
+  },
+  {
+    "id": "plains-pad",
+    "target": "casual/tiles/plains/pad.png",
+    "kind": "prop",
+    "refs": [
+      "casual/tiles/plains/pad.png",
+      "tools/art-review/wooden-tower-2026-09-23/casual.png"
+    ],
+    "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. One flat low oval cream-gray cobblestone platform with a few moss tufts at rim, empty center, same top-down ellipse and thin height. Transparent background."
+  },
+  {
+    "id": "plains-start",
+    "target": "casual/tiles/plains/start.png",
+    "kind": "prop",
+    "refs": [
+      "casual/tiles/plains/start.png",
+      "tools/art-review/wooden-tower-2026-09-23/casual.png"
+    ],
+    "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. Short mossy gray stone arch with compact purple swirling portal and rustic wooden fence on sides, grassy low oval base. Keep original composition. Clean simple shapes, no glow halo. Transparent background."
+  },
+  {
+    "id": "plains-end",
+    "target": "casual/tiles/plains/end.png",
+    "kind": "prop",
+    "refs": [
+      "casual/tiles/plains/end.png",
+      "tools/art-review/wooden-tower-2026-09-23/casual.png"
+    ],
+    "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. Small gray stone keep with warm red tile roofs, wooden front door, blue-gold banners and blue crystal on roof, low oval stone foundation. Original structure and proportions. Transparent background."
+  },
+  {
+    "id": "plains-prop-1",
+    "target": "casual/tiles/plains/prop-1.png",
+    "kind": "prop",
+    "refs": [
+      "casual/tiles/plains/prop-1.png",
+      "tools/art-review/wooden-tower-2026-09-23/casual.png"
+    ],
+    "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. One cheerful round apple tree, rich green crown with a few red apples, short branching warm brown trunk and visible roots. Same round silhouette, simplify foliage into broad clusters. Transparent background."
+  },
+  {
+    "id": "plains-prop-2",
+    "target": "casual/tiles/plains/prop-2.png",
+    "kind": "prop",
+    "refs": [
+      "casual/tiles/plains/prop-2.png",
+      "tools/art-review/wooden-tower-2026-09-23/casual.png"
+    ],
+    "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. One slim white-trunk birch tree with lime-green foliage clusters and exposed root foot, original tall light airy silhouette, fewer broader leaf clusters. Transparent background."
+  },
+  {
+    "id": "plains-prop-3",
+    "target": "casual/tiles/plains/prop-3.png",
+    "kind": "prop",
+    "refs": [
+      "casual/tiles/plains/prop-3.png",
+      "tools/art-review/wooden-tower-2026-09-23/casual.png"
+    ],
+    "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. One rounded faceted gray rock with a few broad soft green moss patches. Same outline. Transparent background."
+  },
+  {
+    "id": "plains-prop-4",
+    "target": "casual/tiles/plains/prop-4.png",
+    "kind": "prop",
+    "refs": [
+      "casual/tiles/plains/prop-4.png",
+      "tools/art-review/wooden-tower-2026-09-23/casual.png"
+    ],
+    "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. One round soft green flowering bush with sparse pink blossoms. Same silhouette. Broad clean leaf groups, avoid hundreds of tiny leaves. Transparent background."
+  },
+  {
+    "id": "plains-prop-5",
+    "target": "casual/tiles/plains/prop-5.png",
+    "kind": "prop",
+    "refs": [
+      "casual/tiles/plains/prop-5.png",
+      "tools/art-review/wooden-tower-2026-09-23/casual.png"
+    ],
+    "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. Small grass clump with three white daisies and yellow centers. Simple broad leaves and readable petals. Transparent background."
+  },
+  {
+    "id": "plains-prop-6",
+    "target": "casual/tiles/plains/prop-6.png",
+    "kind": "prop",
+    "refs": [
+      "casual/tiles/plains/prop-6.png",
+      "tools/art-review/wooden-tower-2026-09-23/casual.png"
+    ],
+    "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. Rustic wooden direction signpost with two opposite blank arrow boards and small golden hay bale on low stone-grass footing. Preserve all original parts. Broad clean wood shapes, no writing. Transparent background."
+  },
+  {
+    "id": "plains-road-straight",
+    "target": "casual/tiles/plains/road-straight.png",
+    "kind": "texture",
+    "refs": [
+      "casual/tiles/plains/road-straight.png",
+      "tools/art-review/wooden-tower-2026-09-23/casual.png"
+    ],
+    "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. Square full-bleed seamless warm golden tan dirt path surface with a few broad subtle sandy strokes. IMPORTANT fill the entire square with path texture; remove reference's transparent margins, no outline or path edge. Game itself masks this texture into roads. All four edges seamless, evenly lit, no pebbles or noisy detail."
+  },
+  {
+    "id": "plains-water",
+    "target": "casual/tiles/plains/water.png",
+    "kind": "texture",
+    "refs": [
+      "casual/tiles/plains/water.png",
+      "tools/art-review/wooden-tower-2026-09-23/casual.png"
+    ],
+    "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. Square full-bleed seamless repeating soft turquoise-blue water, broad gentle wave shapes, very sparse bright curved ripple marks. Remove isolated lily pads for non-repetitive calm gameplay texture. No border, shore, vignette. Even light, matched edges."
+  },
+  {
+    "id": "vfx-shell",
+    "target": "vfx/shell.png",
+    "kind": "vfx",
+    "refs": [
+      "vfx/shell.png",
+      "tools/art-review/wooden-tower-2026-09-23/casual.png"
+    ],
+    "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. A single smooth dark charcoal iron cannonball with one broad gray highlight and tiny warm reflected edge; round compact silhouette, no gritty pitting, no flame or trail. One isolated effect on genuine transparent background. Clean bold compact shapes readable at 22-32px, controlled glow no background halo. Generous margin."
+  },
+  {
+    "id": "vfx-bolt",
+    "target": "vfx/bolt.png",
+    "kind": "vfx",
+    "refs": [
+      "vfx/bolt.png",
+      "tools/art-review/wooden-tower-2026-09-23/casual.png"
+    ],
+    "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. One compact PURPLE arcane magic projectile, faceted amethyst diamond spearhead pointing horizontally RIGHT with a short curling violet energy tail extending LEFT. White-violet core. Change original blue to purple to match the purple wizard tower. No writing or rune text. One isolated effect on genuine transparent background. Clean bold compact shapes readable at 22-32px, controlled glow no background halo. Generous margin."
+  },
+  {
+    "id": "vfx-frost-shard",
+    "target": "vfx/frost-shard.png",
+    "kind": "vfx",
+    "refs": [
+      "vfx/frost-shard.png",
+      "tools/art-review/wooden-tower-2026-09-23/casual.png"
+    ],
+    "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. One tapered cyan ice shard projectile pointing horizontally RIGHT, broad clean blue facets and white tip, short pale blue frost tail extending LEFT. No diagonal orientation. One isolated effect on genuine transparent background. Clean bold compact shapes readable at 22-32px, controlled glow no background halo. Generous margin."
+  },
+  {
+    "id": "vfx-lightning-arc",
+    "target": "vfx/lightning-arc.png",
+    "kind": "vfx",
+    "refs": [
+      "vfx/lightning-arc.png",
+      "tools/art-review/wooden-tower-2026-09-23/casual.png"
+    ],
+    "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. One thin horizontal blue-white lightning strand extending LEFT to RIGHT with 4 gentle angular zigzags, short branches, white core cyan edge. Wide 5:1 aspect ratio, aligned endpoints centered vertically. No arch/U-shape, no circular ring, no diagonal orientation. One isolated effect on genuine transparent background. Clean bold compact shapes readable at 22-32px, controlled glow no background halo. Generous margin."
+  },
+  {
+    "id": "vfx-die-bomb",
+    "target": "vfx/die-bomb.png",
+    "kind": "vfx",
+    "refs": [
+      "vfx/die-bomb.png",
+      "tools/art-review/wooden-tower-2026-09-23/casual.png"
+    ],
+    "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. One cream dice-shaped bomb in 3/4 view, black pips, short curved dark fuse with small golden spark at upper right. Same original dice identity, broad smooth shading. Remove long flame trail; keep compact square silhouette. One isolated effect on genuine transparent background. Clean bold compact shapes readable at 22-32px, controlled glow no background halo. Generous margin."
+  },
+  {
+    "id": "vfx-muzzle-flash",
+    "target": "vfx/muzzle-flash.png",
+    "kind": "vfx",
+    "refs": [
+      "vfx/muzzle-flash.png",
+      "tools/art-review/wooden-tower-2026-09-23/casual.png"
+    ],
+    "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. One compact stylized golden-orange cannon firing flash with cream core and two tiny warm smoke puffs, centered radial burst. Effect ONLY, remove the cannon barrel from original. No barrel, metal, tower, projectiles or trails. One isolated effect on genuine transparent background. Clean bold compact shapes readable at 22-32px, controlled glow no background halo. Generous margin."
+  },
+  {
+    "id": "vfx-cannon-blast-2x2",
+    "target": "vfx/cannon-blast-2x2.png",
+    "kind": "sheet",
+    "refs": [
+      "vfx/cannon-blast-2x2.png",
+      "tools/art-review/wooden-tower-2026-09-23/casual.png"
+    ],
+    "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. Create ONE 2x2 sprite sheet of a single impact animation. EXACT four equal square cells on square transparent canvas; no borders or dividers. Order top-left then top-right then bottom-left then bottom-right. Four frames depict orange-gold cannon impact: small cream ignition, rounded orange burst, broad warm smoke puff, faded small smoke wisps. Effects centered exactly at 25%/25%,75%/25%,25%/75%,75%/75% of sheet. Each fits INSIDE its own cell with at least 15% empty margin, no overlap, aligned same pivot. Clean simple cartoon effects no gritty fire/smoke. Transparent background."
+  },
+  {
+    "id": "vfx-arcane-burst-2x2",
+    "target": "vfx/arcane-burst-2x2.png",
+    "kind": "sheet",
+    "refs": [
+      "vfx/arcane-burst-2x2.png",
+      "tools/art-review/wooden-tower-2026-09-23/casual.png"
+    ],
+    "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. Create ONE 2x2 sprite sheet of a single impact animation. EXACT four equal square cells on square transparent canvas; no borders or dividers. Order top-left then top-right then bottom-left then bottom-right. Four frames depict purple magic impact: tiny violet diamond flash, short clean purple crystal burst, soft violet expanding ring with a few shards, pale fading sparkles. Effects centered exactly at 25%/25%,75%/25%,25%/75%,75%/75% of sheet. Each fits INSIDE its own cell with at least 15% empty margin, no overlap, aligned same pivot. Clean simple cartoon effects no gritty fire/smoke. Transparent background."
+  },
+  {
+    "id": "vfx-frost-burst-2x2",
+    "target": "vfx/frost-burst-2x2.png",
+    "kind": "sheet",
+    "refs": [
+      "vfx/frost-burst-2x2.png",
+      "tools/art-review/wooden-tower-2026-09-23/casual.png"
+    ],
+    "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. Create ONE 2x2 sprite sheet of a single impact animation. EXACT four equal square cells on square transparent canvas; no borders or dividers. Order top-left then top-right then bottom-left then bottom-right. Four frames depict cyan frost impact: tiny white icy flash, compact cyan shard burst, expanding thin pale blue icy ring, sparse fading snow flecks. Effects centered exactly at 25%/25%,75%/25%,25%/75%,75%/75% of sheet. Each fits INSIDE its own cell with at least 15% empty margin, no overlap, aligned same pivot. Clean simple cartoon effects no gritty fire/smoke. Transparent background."
+  },
+  {
+    "id": "vfx-die-explode-2x2",
+    "target": "vfx/die-explode-2x2.png",
+    "kind": "sheet",
+    "refs": [
+      "vfx/die-explode-2x2.png",
+      "tools/art-review/wooden-tower-2026-09-23/casual.png"
+    ],
+    "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. Create ONE 2x2 sprite sheet of a single impact animation. EXACT four equal square cells on square transparent canvas; no borders or dividers. Order top-left then top-right then bottom-left then bottom-right. Four frames depict dice bomb impact: cream dice with black pips and small crack glow, clean coral orange starburst, rounded warm orange explosion puff, small pale smoke wisps. Effects centered exactly at 25%/25%,75%/25%,25%/75%,75%/75% of sheet. Each fits INSIDE its own cell with at least 15% empty margin, no overlap, aligned same pivot. Clean simple cartoon effects no gritty fire/smoke. Transparent background."
+  },
+  {
+    "id": "props-portal",
+    "target": "props/portal.png",
+    "kind": "prop",
+    "refs": [
+      "props/portal.png",
+      "tools/art-review/wooden-tower-2026-09-23/casual.png"
+    ],
+    "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. Upright round gray stone ring with ivory dice ornaments and blue-violet swirling portal, a few moss patches, low foot. Preserve original outline. One complete prop on genuine transparent background."
+  },
+  {
+    "id": "props-crystal",
+    "target": "props/crystal.png",
+    "kind": "prop",
+    "refs": [
+      "props/crystal.png",
+      "tools/art-review/wooden-tower-2026-09-23/casual.png"
+    ],
+    "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. Tall bright turquoise crystal cluster on round cream stone pedestal inset with ivory dice. Preserve original silhouette, use broad clear crystal facets. One complete prop on genuine transparent background."
+  }
+]

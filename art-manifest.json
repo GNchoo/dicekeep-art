@@ -14,7 +14,7 @@
   ],
   "summary": {
     "files": 2283,
-    "bytes": 278146159,
+    "bytes": 265282975,
     "byCategory": [
       {
         "name": "boss",
@@ -34,12 +34,12 @@
       {
         "name": "tile",
         "files": 24,
-        "bytes": 17056467
+        "bytes": 6254672
       },
       {
         "name": "tower",
         "files": 110,
-        "bytes": 20176263
+        "bytes": 19430425
       },
       {
         "name": "ui",
@@ -49,14 +49,14 @@
       {
         "name": "vfx",
         "files": 22,
-        "bytes": 4957607
+        "bytes": 3642056
       }
     ],
     "byLifecycle": [
       {
         "name": "derived",
         "files": 1389,
-        "bytes": 160928884
+        "bytes": 160152528
       },
       {
         "name": "legacy",
@@ -66,7 +66,7 @@
       {
         "name": "runtime",
         "files": 797,
-        "bytes": 86996972
+        "bytes": 74910144
       },
       {
         "name": "source",
@@ -78,12 +78,12 @@
       {
         "name": "jpeg",
         "files": 95,
-        "bytes": 27515657
+        "bytes": 27329127
       },
       {
         "name": "png",
         "files": 201,
-        "bytes": 51747300
+        "bytes": 39070646
       },
       {
         "name": "webp",
@@ -100,19 +100,19 @@
       {
         "name": "included",
         "files": 2186,
-        "bytes": 247925856
+        "bytes": 235062672
       }
     ],
     "byMobileReason": [
       {
         "name": "casual-tiles-directory",
         "files": 24,
-        "bytes": 17056467
+        "bytes": 6254672
       },
       {
         "name": "fixed-directory",
         "files": 67,
-        "bytes": 7745942
+        "bytes": 6430391
       },
       {
         "name": "legacy-map-background",
@@ -127,7 +127,7 @@
       {
         "name": "runtime-reference",
         "files": 676,
-        "bytes": 58286936
+        "bytes": 57541098
       },
       {
         "name": "star-tower-rule",
@@ -33450,8 +33450,8 @@
     },
     {
       "path": "casual/tiles/arena/board.png",
-      "bytes": 1720626,
-      "sha256": "a694b54f73110c6fe0510466e82c9dcb15144579c80a1a4bd28e2f3935da99a8",
+      "bytes": 219998,
+      "sha256": "9162ae4e51ee1f2e5d1d6fe63618fc1c46d53cd8634ca87840029402b7626d00",
       "format": "png",
       "width": 1024,
       "height": 1024,
@@ -33466,8 +33466,8 @@
     },
     {
       "path": "casual/tiles/arena/end.png",
-      "bytes": 598101,
-      "sha256": "56035fed70f15ddd0929589d619e3b67c1e441a52b08a9f1f46911be84fd4956",
+      "bytes": 217065,
+      "sha256": "1178b33bc88c74f11501cbb24f5e2e13a0feacf3c53addad9921c29fb713a16e",
       "format": "png",
       "width": 1024,
       "height": 1024,
@@ -33482,8 +33482,8 @@
     },
     {
       "path": "casual/tiles/arena/floor.jpg",
-      "bytes": 148299,
-      "sha256": "9e90a57317ae78e1f5be7c4de3cd8800c7f323c264aed2b8a965d50cf681e099",
+      "bytes": 66162,
+      "sha256": "a901c3c1f90f8173cbc1e1497e0085aeeec82b468a4c4a4b8eccefb936cd2a69",
       "format": "jpeg",
       "width": 1280,
       "height": 720,
@@ -33498,8 +33498,8 @@
     },
     {
       "path": "casual/tiles/arena/pad.png",
-      "bytes": 581470,
-      "sha256": "508e746712dfcdcdb1a0654044f69f513f163ec89075cce4eeec6dc244403039",
+      "bytes": 178825,
+      "sha256": "4ad25ce9298c7b7c03b74016ba79e1ff46ee2db09db3849781b58b90b282df16",
       "format": "png",
       "width": 1024,
       "height": 1024,
@@ -33514,8 +33514,8 @@
     },
     {
       "path": "casual/tiles/arena/prop-1.png",
-      "bytes": 459327,
-      "sha256": "d9da8704a9c5d567b2d2678062bb9432910c031bc9e7476d18cdc99ff0335362",
+      "bytes": 190074,
+      "sha256": "0bbae1d19352e01b8d3f0f8dc806be5a47c934ba94100ce9f07dd6b4f7fbac05",
       "format": "png",
       "width": 1024,
       "height": 1024,
@@ -33530,8 +33530,8 @@
     },
     {
       "path": "casual/tiles/arena/prop-2.png",
-      "bytes": 468514,
-      "sha256": "27a232b50b37ea2cb5f7044f575a17cd6d810c52c0a8f2c4cd5484382155404e",
+      "bytes": 155653,
+      "sha256": "3b96293b471445c12a58888f9c0cc46fc89eb00980cb939394235a9e94230668",
       "format": "png",
       "width": 1024,
       "height": 1024,
@@ -33546,8 +33546,8 @@
     },
     {
       "path": "casual/tiles/arena/prop-3.png",
-      "bytes": 661936,
-      "sha256": "c3be3742c586957556c721ab05f417b8689a98fb03822bcb83b682a7bce8b634",
+      "bytes": 234240,
+      "sha256": "bdf0a7562b87c66b4bdc4ce10771bd8869d7e0c8ecf87881a8700f22da7aaea0",
       "format": "png",
       "width": 1024,
       "height": 1024,
@@ -33562,8 +33562,8 @@
     },
     {
       "path": "casual/tiles/arena/road.png",
-      "bytes": 1960456,
-      "sha256": "2b43d6a6d8abf0a71e040868f865587fcf506fb4b1c1a0471fba12c5dc23c494",
+      "bytes": 339147,
+      "sha256": "4415dfc69e48344c5125d5bf67c7c34809fe89ff13b3d22416d3183f84d08eed",
       "format": "png",
       "width": 1024,
       "height": 1024,
@@ -33578,8 +33578,8 @@
     },
     {
       "path": "casual/tiles/arena/start.png",
-      "bytes": 950623,
-      "sha256": "d88bf221cfacb10525846581347c829865219131c3395350cad606b9f604a839",
+      "bytes": 303838,
+      "sha256": "e2e6938ed073163056e9b80471314e466dbf9103423c6f902cf82cc52d5b727e",
       "format": "png",
       "width": 1024,
       "height": 1024,
@@ -33594,8 +33594,8 @@
     },
     {
       "path": "casual/tiles/plains/end.png",
-      "bytes": 903026,
-      "sha256": "4724b9ecb29df5230b34a1c74081cd04da9e91a15b45472d64ed2cfa819adeaf",
+      "bytes": 210917,
+      "sha256": "01d120d5a195e07d28ae710930cd8b6db9d0489fb09993481a6bf87d1508a2bc",
       "format": "png",
       "width": 1024,
       "height": 1024,
@@ -33610,8 +33610,8 @@
     },
     {
       "path": "casual/tiles/plains/floor.jpg",
-      "bytes": 195455,
-      "sha256": "ec7ef56fe658c7a6db7ed96a736b94c92f5120a1e61b33b762657c1a92c4e5e1",
+      "bytes": 91062,
+      "sha256": "6f85284a742cd1864a7e5db06d98c6b19a9943b77ac9c503d8727fa7f2f51a56",
       "format": "jpeg",
       "width": 1280,
       "height": 720,
@@ -33626,8 +33626,8 @@
     },
     {
       "path": "casual/tiles/plains/pad.png",
-      "bytes": 840655,
-      "sha256": "2f18a478fa6eea0ec8dd4111879164edc4347bc143ac6fa93ecb19e069a96715",
+      "bytes": 227042,
+      "sha256": "28c5a05e6fa9dd7785600917094cbb767c950dfdec375186c24bffd27d253530",
       "format": "png",
       "width": 1024,
       "height": 1024,
@@ -33642,8 +33642,8 @@
     },
     {
       "path": "casual/tiles/plains/prop-1.png",
-      "bytes": 710165,
-      "sha256": "b9f6c58c06350a8f69f3aef3e228912b371cbc380b0ed4c36b03a3e8950fc792",
+      "bytes": 231071,
+      "sha256": "154a4a70ce970beddcbb5262de8bab7c983ca698023bd20ba4fcb7e0519a028a",
       "format": "png",
       "width": 1024,
       "height": 1024,
@@ -33658,8 +33658,8 @@
     },
     {
       "path": "casual/tiles/plains/prop-2.png",
-      "bytes": 487645,
-      "sha256": "4e7b41246f1abf4c835c20a62948fbd440b12bee9c17c188559c0f743b3c9a8d",
+      "bytes": 162895,
+      "sha256": "871c689cf7f93b1a4cf9253d8657cff6ca9b60b2ee3d229ec75d7ea9c615daed",
       "format": "png",
       "width": 1024,
       "height": 1024,
@@ -33674,8 +33674,8 @@
     },
     {
       "path": "casual/tiles/plains/prop-3.png",
-      "bytes": 391667,
-      "sha256": "73ba7ff62660792edd282374b188f1068da469a782854a4013e6e0908ce086b0",
+      "bytes": 184481,
+      "sha256": "32448287041b8a2f6b9d69d73e187d85109612c227754a7ef8af704887c5dbb9",
       "format": "png",
       "width": 1024,
       "height": 1024,
@@ -33690,8 +33690,8 @@
     },
     {
       "path": "casual/tiles/plains/prop-4.png",
-      "bytes": 877139,
-      "sha256": "03089ca3c7b759c960d8e214b22a4da924762d242544965be8cea86702b664b7",
+      "bytes": 320640,
+      "sha256": "5e50cbb35032ec9c1d3d6d9288b82edab40d187acbbf30c9e3f4fa0d47fd702f",
       "format": "png",
       "width": 1024,
       "height": 1024,
@@ -33706,8 +33706,8 @@
     },
     {
       "path": "casual/tiles/plains/prop-5.png",
-      "bytes": 319054,
-      "sha256": "9bcb2be27c16630e365f768bfb3283bfc12beaa14355127949274e445bed8002",
+      "bytes": 187811,
+      "sha256": "576375c024f5b4d3a6e66aab8ace8de1b9699fdf28a4328c8fb7bcb6a9bf33d1",
       "format": "png",
       "width": 1024,
       "height": 1024,
@@ -33722,8 +33722,8 @@
     },
     {
       "path": "casual/tiles/plains/prop-6.png",
-      "bytes": 487959,
-      "sha256": "b23b847c3935e8c334db7b2b5a761ac619b3454ef9c3b12d30cc8d245bd67339",
+      "bytes": 172814,
+      "sha256": "7c63ec825f7288da01b53ce77e8c5362c35b231278b5e464c5b0ae595a7e3dcf",
       "format": "png",
       "width": 1024,
       "height": 1024,
@@ -33770,12 +33770,12 @@
     },
     {
       "path": "casual/tiles/plains/road-straight.png",
-      "bytes": 395877,
-      "sha256": "c998b27826661841a401d2e967c4aee20125cacd896240e99f69cbbffbaee252",
+      "bytes": 163393,
+      "sha256": "d469e94125d6cad954779a95daf421061aa617203d288e921058f9d0bbe8f69d",
       "format": "png",
       "width": 1024,
       "height": 1024,
-      "hasAlpha": true,
+      "hasAlpha": false,
       "lifecycle": "runtime",
       "category": "tile",
       "role": "road-straight",
@@ -33802,8 +33802,8 @@
     },
     {
       "path": "casual/tiles/plains/start.png",
-      "bytes": 798489,
-      "sha256": "32a6f2fde8289e2d1895e36df9894ae21d9b25f8c9acf28472128bf1d8dad008",
+      "bytes": 173952,
+      "sha256": "ba52bf6156d0327375b666b34c7c7cfdb0210bb2831b9b66700e5fee6fcfb894",
       "format": "png",
       "width": 1024,
       "height": 1024,
@@ -33818,8 +33818,8 @@
     },
     {
       "path": "casual/tiles/plains/water.png",
-      "bytes": 1073730,
-      "sha256": "226b091c28b3c9296e4ceba311a3f50cf13d5a493e4d663086282cedaab5833e",
+      "bytes": 197338,
+      "sha256": "68c8402cd6465b6a69a237c5d4de90c6aea6e5191e19a91c0876879d1c0d7b0b",
       "format": "png",
       "width": 1024,
       "height": 1024,
@@ -35114,11 +35114,11 @@
     },
     {
       "path": "casual/towers/t2-a.png",
-      "bytes": 206366,
-      "sha256": "b8eda6c83268f1260fe9c9185216ef9aa63eac8018875740e577da1977d05672",
+      "bytes": 52903,
+      "sha256": "d960582e87d2748922e5b3046f13c07d0b25eee7d6d458afc7e5e07a2916c97a",
       "format": "png",
       "width": 299,
-      "height": 384,
+      "height": 383,
       "hasAlpha": true,
       "lifecycle": "runtime",
       "category": "tower",
@@ -35210,10 +35210,10 @@
     },
     {
       "path": "casual/towers/t3-a.png",
-      "bytes": 168742,
-      "sha256": "63d34e0e859d693f858d5226577d91cb12ed0097a35c782fe2829801383e2b13",
+      "bytes": 39723,
+      "sha256": "d99d63c08bc45e1bcd79e23ee22477e4e7a47aaacaa90b0d38635d17a120ba73",
       "format": "png",
-      "width": 227,
+      "width": 223,
       "height": 384,
       "hasAlpha": true,
       "lifecycle": "runtime",
@@ -35306,10 +35306,10 @@
     },
     {
       "path": "casual/towers/t4-a.png",
-      "bytes": 162887,
-      "sha256": "f33c96c90fb765d08ec342e1b0b705ecaad34ea475e9b41f9dac55f119b01e64",
+      "bytes": 41179,
+      "sha256": "cee18b00d00b180d303893821bf802d1d61a5d786adabeb2b24830f83a10fc17",
       "format": "png",
-      "width": 232,
+      "width": 231,
       "height": 384,
       "hasAlpha": true,
       "lifecycle": "runtime",
@@ -35402,10 +35402,10 @@
     },
     {
       "path": "casual/towers/t5-a.png",
-      "bytes": 198660,
-      "sha256": "da2d684aa792ef459f01ee0d4d5db94084afce35c8e237e2d5c712b3370f0ba5",
+      "bytes": 46872,
+      "sha256": "7334aab04ed132968f6d5fa10283b70bece20b797f000d731edd26c4191277be",
       "format": "png",
-      "width": 292,
+      "width": 291,
       "height": 384,
       "hasAlpha": true,
       "lifecycle": "runtime",
@@ -35498,10 +35498,10 @@
     },
     {
       "path": "casual/towers/t6-a.png",
-      "bytes": 240460,
-      "sha256": "61b91ddcbaf0a292f204892b05fbfc12ec0ea6491ebf73febe93129c43f94ac5",
+      "bytes": 50600,
+      "sha256": "00d2570a49f059dfa05750ec9c2771867fb1a406bc744d124e94920e02f96b57",
       "format": "png",
-      "width": 384,
+      "width": 292,
       "height": 384,
       "hasAlpha": true,
       "lifecycle": "runtime",
@@ -36394,8 +36394,8 @@
     },
     {
       "path": "vfx/arcane-burst-2x2.png",
-      "bytes": 244684,
-      "sha256": "1bb3fa02e2bf126aa3a33ff67bf19a795ac598850dced6d5bbd6f4f44a8ed1c4",
+      "bytes": 57395,
+      "sha256": "0deb117d9c846c0388bfd00d4068bbd6713072a007d7bcc5520a55d1eeb16ab1",
       "format": "png",
       "width": 512,
       "height": 512,
@@ -36426,11 +36426,11 @@
     },
     {
       "path": "vfx/bolt.png",
-      "bytes": 140323,
-      "sha256": "0f297c292fc918a500ecdbe83831d2dfa489947d83165adbd91b04d378cfd6bf",
+      "bytes": 19118,
+      "sha256": "6af8e5d313d85b702aa6b2dc5dee895b97f38e1ad68feedca75e980cd62c4536",
       "format": "png",
-      "width": 298,
-      "height": 320,
+      "width": 320,
+      "height": 123,
       "hasAlpha": true,
       "lifecycle": "runtime",
       "category": "vfx",
@@ -36442,8 +36442,8 @@
     },
     {
       "path": "vfx/cannon-blast-2x2.png",
-      "bytes": 165233,
-      "sha256": "377084d9e64cda96dbdb7efbb1b5a38e410fe7cadda925bce1382fe058607fa0",
+      "bytes": 32941,
+      "sha256": "9aa29d34f6fbd1045247ca137b52dd2942aa7da0a534d342b78b64b418ac9da1",
       "format": "png",
       "width": 512,
       "height": 512,
@@ -36490,11 +36490,11 @@
     },
     {
       "path": "vfx/die-bomb.png",
-      "bytes": 102718,
-      "sha256": "85f24e80a3f7c5265653c84b2497fe2dbe268a9b20f95a564eb8963daa0a4d7d",
+      "bytes": 29596,
+      "sha256": "68bd010f9389f65ca79c760e11bcbefe1723703e271aa6a054daea3c4190adb9",
       "format": "png",
-      "width": 320,
-      "height": 298,
+      "width": 290,
+      "height": 320,
       "hasAlpha": true,
       "lifecycle": "runtime",
       "category": "vfx",
@@ -36506,8 +36506,8 @@
     },
     {
       "path": "vfx/die-explode-2x2.png",
-      "bytes": 320865,
-      "sha256": "715bcb90d7fecfa81aec44ec842aec25b62725ba4074daca910411c3e221df4d",
+      "bytes": 63019,
+      "sha256": "e9b8b7ea983dfdd96d881c2e464a33644def29b94366b471af268f22f3a09afb",
       "format": "png",
       "width": 512,
       "height": 512,
@@ -36522,8 +36522,8 @@
     },
     {
       "path": "vfx/frost-burst-2x2.png",
-      "bytes": 242251,
-      "sha256": "c7b734d67d6bb7affbb507912df62596666539548fece110cd04c0e1b47753ef",
+      "bytes": 43322,
+      "sha256": "b6961c932d1deb04d9ce0cb04adbee83f64b58aab7d028583aba5c5e96a97bb5",
       "format": "png",
       "width": 512,
       "height": 512,
@@ -36538,11 +36538,11 @@
     },
     {
       "path": "vfx/frost-shard.png",
-      "bytes": 67760,
-      "sha256": "32c602ccbebf57c567ea68f4f50176612d162b1c4b886be329391924bfba2a6c",
+      "bytes": 11685,
+      "sha256": "39ab9c2afa62feb1daf7305abc89c205e85bafc7ec7ef62165a36e5b85ab622c",
       "format": "png",
-      "width": 290,
-      "height": 320,
+      "width": 320,
+      "height": 72,
       "hasAlpha": true,
       "lifecycle": "runtime",
       "category": "vfx",
@@ -36602,11 +36602,11 @@
     },
     {
       "path": "vfx/lightning-arc.png",
-      "bytes": 95887,
-      "sha256": "02984bfb59c0c38dddced2a513296bb0ab9be63364f6e8530092e4b520b36718",
+      "bytes": 5637,
+      "sha256": "f6ca77dd02c6e54535cc593edfa79ecd091f17daab413230d19e96297a6235ff",
       "format": "png",
       "width": 320,
-      "height": 310,
+      "height": 39,
       "hasAlpha": true,
       "lifecycle": "runtime",
       "category": "vfx",
@@ -36618,10 +36618,10 @@
     },
     {
       "path": "vfx/muzzle-flash.png",
-      "bytes": 134388,
-      "sha256": "c7460aa323babcabea951bd74f65d9606caf2c1b23f95ccba4d8e085bb507676",
+      "bytes": 35882,
+      "sha256": "2cc741999ccbbe0ecdc0d592840ec4d0ab9ad1c5a4fced03a715fd4b808ddf85",
       "format": "png",
-      "width": 300,
+      "width": 267,
       "height": 320,
       "hasAlpha": true,
       "lifecycle": "runtime",
@@ -36634,11 +36634,11 @@
     },
     {
       "path": "vfx/shell.png",
-      "bytes": 138889,
-      "sha256": "22944c36132ce4ad1cbc728549f8f9a36307c969d97873685cf88f213aa776d4",
+      "bytes": 38852,
+      "sha256": "161940484f9e02ca99e61fa25da877f3e4ab428b539352c6f12c4d653b691518",
       "format": "png",
-      "width": 316,
-      "height": 320,
+      "width": 320,
+      "height": 318,
       "hasAlpha": true,
       "lifecycle": "runtime",
       "category": "vfx",

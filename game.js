@@ -403,7 +403,34 @@ function drawRoad(g, pts, seed, color, tex, bodyOnly) {
 // ==================== 타일 맵 레이어 (테마 타일 + 코드 폴백) ====================
 const TILE = 64;
 function mulberry(seed) { let a = seed >>> 0; return () => { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
-const tileArt = (th, name) => { const a = A[`tl_${th.id}_${name}`]; return (a && a.cv && a.h > 8) ? a : null; };
+// Regions without a dedicated pack share the reviewed tiles, graded once when
+// a map is baked. Keep only the active region's surfaces; no per-frame filters
+// or duplicate network requests. A future authored regional asset takes priority.
+let sharedTileTheme = '';
+const sharedTileCache = new Map();
+function themeTileAsset(th, name) {
+  const own = A[`tl_${th.id}_${name}`];
+  if (own && !own.missing) return own;
+  if (th.id === 'plains') return null;
+  if (sharedTileTheme !== th.id) { sharedTileCache.clear(); sharedTileTheme = th.id; }
+  if (sharedTileCache.has(name)) return sharedTileCache.get(name);
+  const stone = ['castle', 'hell'].includes(th.id) && ['floor', 'road', 'pad', 'start', 'end'].includes(name);
+  const sourceName = name === 'road' && !stone ? 'road-straight' : name;
+  const source = A[`tl_${stone ? 'arena' : 'plains'}_${sourceName}`];
+  if (!source || source.missing) return null;
+  const img = source.cv || source;
+  const cv = document.createElement('canvas'); cv.width = img.width; cv.height = img.height;
+  const g = cv.getContext('2d');
+  const grade = { forest: 'saturate(.9) brightness(.82)', lake: 'hue-rotate(8deg) saturate(.85) brightness(.98)',
+    darkforest: 'hue-rotate(10deg) saturate(.65) brightness(.58)',
+    castle: stone ? 'saturate(.35) brightness(1.18)' : 'saturate(.65) brightness(.9)',
+    hell: name === 'water' ? 'hue-rotate(170deg) saturate(1.5)' : 'sepia(.7) saturate(.8) brightness(.65)' };
+  g.filter = grade[th.id] || 'none'; g.drawImage(img, 0, 0); g.filter = 'none';
+  const result = source.cv ? { cv, w: source.w, h: source.h } : cv;
+  sharedTileCache.set(name, result);
+  return result;
+}
+const tileArt = (th, name) => { const a = themeTileAsset(th, name); return (a && a.cv && a.h > 8) ? a : null; };
 // 질감 이미지를 repeatPx 정사각으로 줄여 반복 패턴으로 (1024 원본을 64px 로 줄이면 디테일이 사라지므로 칸보다 크게 반복)
 function makePattern(g, img, repeatPx) {
   if (!img || img.missing || !(img.width > 8)) return null;
@@ -580,12 +607,12 @@ function buildTileLayer(m) {
   let seed = 7; for (const ch of m.key) seed = (seed * 31 + ch.charCodeAt(0)) >>> 0;
   const rnd = mulberry(seed);
   // 1. 바닥
-  const floor = A[`tl_${th.id}_floor`];
+  const floor = themeTileAsset(th, 'floor');
   if (floor && !floor.missing && floor.width > 8) g.drawImage(floor, 0, 0, W, H); else drawCodeFloor(g, th, rnd);
   // 2. 물: 질감(water.png)이 있으면 패턴으로 채우고, 모양은 코드
-  if (L.water.length) drawCodeWater(g, th, L.water, makePattern(g, A[`tl_${th.id}_water`], 256));
+  if (L.water.length) drawCodeWater(g, th, L.water, makePattern(g, themeTileAsset(th, 'water'), 256));
   // 3. 도로: 모양·폭·코너·합류는 코드 브러시, 표면은 질감(road.png; 없으면 직선 타일에서 잘라낸 질감; 그것도 없으면 테마색)
-  let roadImg = A[`tl_${th.id}_road`];
+  let roadImg = themeTileAsset(th, 'road');
   if (!roadImg || roadImg.missing || !(roadImg.width > 8)) roadImg = roadTextureFromStraight(A[`tl_${th.id}_road-straight`]);
   const roadTex = makePattern(g, roadImg, 160);
   for (const lane of LANES) if (lane.kind === 'ground' || lane.kind === 'ground2') drawRoad(g, lane.pts, lane.kind === 'ground2' ? 7 : 3, th.road, roadTex);
@@ -865,6 +892,14 @@ if (window.DKCONTENT) {
 }
 // Promoted art keeps its asset path; bypass the previous daily image cache.
 for (const key of ['t1', 'cT1a']) if (SRCS[key]) SRCS[key] += '?v=casual3';
+// Authored alpha keeps pale stone and white magic cores intact at the edges.
+const CASUAL_WORLD_KEYS = new Set([
+  't2', 't3', 't4', 't5', 't6', 'cT2a', 'cT3a', 'cT4a', 'cT5a', 'cT6a',
+  'shell', 'bolt', 'frostShard', 'lightningArc', 'dieBomb', 'muzzleFlash',
+  'cannonBlast', 'arcaneBurst', 'frostBurst', 'dieExplode', 'portal', 'crystal',
+  ...Object.keys(SRCS).filter(key => key.startsWith('tl_')),
+]);
+for (const key of CASUAL_WORLD_KEYS) if (SRCS[key]) SRCS[key] += '?v=casual-world1';
 const A = {};
 let corsBlocked = false;
 
@@ -941,13 +976,13 @@ function toCanvas(img) {
   return cv;
 }
 
-function processSprite(img) {
+function processSprite(img, preserveAlpha = false) {
   if (img.missing) return null;
   const cv = toCanvas(img);
   const g = cv.getContext('2d');
   try {
     const id = g.getImageData(0, 0, cv.width, cv.height);
-    keyImageData(id, cv.width, cv.height);
+    if (!preserveAlpha) keyImageData(id, cv.width, cv.height);
     const b = bbox(id, cv.width, cv.height, 0, 0, cv.width, cv.height);
     g.putImageData(id, 0, 0);
     const out = document.createElement('canvas');
@@ -975,7 +1010,7 @@ function processSheet(img, opt) {
   for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) cells.push([c * fw, r * fh]);
   try {
     const id = g.getImageData(0, 0, cv.width, cv.height);
-    keyImageData(id, cv.width, cv.height);
+    if (!(opt && opt.preserveAlpha)) keyImageData(id, cv.width, cv.height);
     if (opt && opt.stabilize) for (const [cx, cy] of cells) dropEdgeFragments(id, cv.width, cx, cy, fw, fh);
     g.putImageData(id, 0, 0);
     const stats = cells.map(([cx, cy]) => cellStats(id, cv.width, cx, cy, fw, fh));
@@ -1096,8 +1131,8 @@ async function loadAssets(onProgress) {
   let pi = 0;
   for (const k of keys) {
     if (raw.includes(k) || isTexture(k)) A[k] = imgs[k];
-    else if (sheets.includes(k)) A[k] = processSheet(imgs[k], sheetOpt[k]);
-    else A[k] = processSprite(imgs[k]);
+    else if (sheets.includes(k)) A[k] = processSheet(imgs[k], { ...sheetOpt[k], preserveAlpha: CASUAL_WORLD_KEYS.has(k) });
+    else A[k] = processSprite(imgs[k], CASUAL_WORLD_KEYS.has(k));
     onProgress(0.6 + (++pi / keys.length) * 0.4);
     await new Promise(r => setTimeout(r, 0));
   }
@@ -1328,7 +1363,7 @@ function paintTowerBody(t, sp) {
   MOTION.paintMuzzle(ctx, t, sp, DKCONTENT.STAR_TOWER_EMITTERS[t.face]);
 }
 function towerVisualEmitter(t) {
-  const xy = t.face <= 2 ? MOTION.port(t) : window.DKCONTENT && DKCONTENT.STAR_TOWER_EMITTERS && DKCONTENT.STAR_TOWER_EMITTERS[t.face];
+  const xy = t.face <= 6 ? MOTION.port(t) : window.DKCONTENT && DKCONTENT.STAR_TOWER_EMITTERS && DKCONTENT.STAR_TOWER_EMITTERS[t.face];
   const sp = xy && towerSpr(t.face, t.skin);
   if (!xy || !sp || !sp.dedicated) return { x: t.x, y: t.y - 64 };
   const recoil = (t.kick || 0) ** 2;
@@ -3513,7 +3548,7 @@ function towerFire(t, dt) {
       if (!next) break;
       hitList.push(next); cur = next;
     }
-    const pts = [from];
+    const pts = [visualFrom];
     let dd = dmg;
     for (const e of hitList) {
       const p = epos(e);
@@ -4321,7 +4356,7 @@ function draw() {
   }
 
   if (DRAG.active && S.heldDie && DRAG.overCanvas) {
-    const sp = towerSpr(S.heldDie, S.wave);
+    const sp = towerSpr(S.heldDie, equippedSkinIndex(S.heldDie));
     if (sp) {
       const idx = DRAG.overSpot;
       let gx = S.mouse.x, gy = S.mouse.y;

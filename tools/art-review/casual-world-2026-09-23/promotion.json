@@ -1,0 +1,583 @@
+{
+  "generatedWith": "Codex built-in image_gen",
+  "apiKeyUsed": false,
+  "baseCommit": "9a69b7a",
+  "jobs": "tools/casual-world-jobs.json",
+  "records": [
+    {
+      "id": "tower-2",
+      "source": "tools/art-review/casual-world-2026-09-23/tower-2.png",
+      "sourceSha256": "5837b5bb8f2d79772bfe2859cd412a301e74fc4035532012777837d297572649",
+      "original": "tools/art-review/casual-world-2026-09-23/originals/tower-2.png",
+      "originalSha256": "b8eda6c83268f1260fe9c9185216ef9aa63eac8018875740e577da1977d05672",
+      "targets": [
+        "casual/towers/t2-a.png",
+        "towers/die-2.png"
+      ],
+      "width": 299,
+      "height": 383,
+      "hasAlpha": true,
+      "bytes": 52903,
+      "sha256": "d960582e87d2748922e5b3046f13c07d0b25eee7d6d458afc7e5e07a2916c97a"
+    },
+    {
+      "id": "tower-3",
+      "source": "tools/art-review/casual-world-2026-09-23/tower-3.png",
+      "sourceSha256": "9075e8629fa217d11c78b28cd371b3f08eec137aad646f26a8e7685a3b8f261f",
+      "original": "tools/art-review/casual-world-2026-09-23/originals/tower-3.png",
+      "originalSha256": "63d34e0e859d693f858d5226577d91cb12ed0097a35c782fe2829801383e2b13",
+      "targets": [
+        "casual/towers/t3-a.png",
+        "towers/die-3.png"
+      ],
+      "width": 223,
+      "height": 384,
+      "hasAlpha": true,
+      "bytes": 39723,
+      "sha256": "d99d63c08bc45e1bcd79e23ee22477e4e7a47aaacaa90b0d38635d17a120ba73"
+    },
+    {
+      "id": "tower-4",
+      "source": "tools/art-review/casual-world-2026-09-23/tower-4.png",
+      "sourceSha256": "8b5a9bdc393cd1e6dff143e77af20c94b2e99e33d0a87ae208248d748e41aa07",
+      "original": "tools/art-review/casual-world-2026-09-23/originals/tower-4.png",
+      "originalSha256": "f33c96c90fb765d08ec342e1b0b705ecaad34ea475e9b41f9dac55f119b01e64",
+      "targets": [
+        "casual/towers/t4-a.png",
+        "towers/die-4.png"
+      ],
+      "width": 231,
+      "height": 384,
+      "hasAlpha": true,
+      "bytes": 41179,
+      "sha256": "cee18b00d00b180d303893821bf802d1d61a5d786adabeb2b24830f83a10fc17"
+    },
+    {
+      "id": "tower-5",
+      "source": "tools/art-review/casual-world-2026-09-23/tower-5.png",
+      "sourceSha256": "58de399dd7c59e51ec8a93c87c297416ebc9fbcf602a6a825c005bacea387ce2",
+      "original": "tools/art-review/casual-world-2026-09-23/originals/tower-5.png",
+      "originalSha256": "da2d684aa792ef459f01ee0d4d5db94084afce35c8e237e2d5c712b3370f0ba5",
+      "targets": [
+        "casual/towers/t5-a.png",
+        "towers/die-5.png"
+      ],
+      "width": 291,
+      "height": 384,
+      "hasAlpha": true,
+      "bytes": 46872,
+      "sha256": "7334aab04ed132968f6d5fa10283b70bece20b797f000d731edd26c4191277be"
+    },
+    {
+      "id": "tower-6",
+      "source": "tools/art-review/casual-world-2026-09-23/tower-6.png",
+      "sourceSha256": "b16e3e8032654e59d49dae16abb1107d16e89469b40582e2421330b737af58b0",
+      "original": "tools/art-review/casual-world-2026-09-23/originals/tower-6.png",
+      "originalSha256": "61b91ddcbaf0a292f204892b05fbfc12ec0ea6491ebf73febe93129c43f94ac5",
+      "targets": [
+        "casual/towers/t6-a.png",
+        "towers/die-6.png"
+      ],
+      "width": 292,
+      "height": 384,
+      "hasAlpha": true,
+      "bytes": 50600,
+      "sha256": "00d2570a49f059dfa05750ec9c2771867fb1a406bc744d124e94920e02f96b57"
+    },
+    {
+      "id": "arena-floor",
+      "source": "tools/art-review/casual-world-2026-09-23/arena-floor.png",
+      "sourceSha256": "482663cc07ec76b22118c607aa249d4844e407648515c1c8623600d8ba29fea0",
+      "original": "tools/art-review/casual-world-2026-09-23/originals/arena-floor.jpg",
+      "originalSha256": "9e90a57317ae78e1f5be7c4de3cd8800c7f323c264aed2b8a965d50cf681e099",
+      "targets": [
+        "casual/tiles/arena/floor.jpg"
+      ],
+      "width": 1280,
+      "height": 720,
+      "hasAlpha": false,
+      "bytes": 66162,
+      "sha256": "a901c3c1f90f8173cbc1e1497e0085aeeec82b468a4c4a4b8eccefb936cd2a69"
+    },
+    {
+      "id": "arena-board",
+      "source": "tools/art-review/casual-world-2026-09-23/arena-board.png",
+      "sourceSha256": "576fae1ae4a376ab85c4806800add8fdc79496916590c097c356625bb71b5b78",
+      "original": "tools/art-review/casual-world-2026-09-23/originals/arena-board.png",
+      "originalSha256": "a694b54f73110c6fe0510466e82c9dcb15144579c80a1a4bd28e2f3935da99a8",
+      "targets": [
+        "casual/tiles/arena/board.png"
+      ],
+      "width": 1024,
+      "height": 1024,
+      "hasAlpha": false,
+      "bytes": 219998,
+      "sha256": "9162ae4e51ee1f2e5d1d6fe63618fc1c46d53cd8634ca87840029402b7626d00"
+    },
+    {
+      "id": "arena-road",
+      "source": "tools/art-review/casual-world-2026-09-23/arena-road.png",
+      "sourceSha256": "333f17dea6909b05bd3f82247e8a84ae6adb98d55ae883081cd129e25cba0dfb",
+      "original": "tools/art-review/casual-world-2026-09-23/originals/arena-road.png",
+      "originalSha256": "2b43d6a6d8abf0a71e040868f865587fcf506fb4b1c1a0471fba12c5dc23c494",
+      "targets": [
+        "casual/tiles/arena/road.png"
+      ],
+      "width": 1024,
+      "height": 1024,
+      "hasAlpha": false,
+      "bytes": 339147,
+      "sha256": "4415dfc69e48344c5125d5bf67c7c34809fe89ff13b3d22416d3183f84d08eed"
+    },
+    {
+      "id": "arena-pad",
+      "source": "tools/art-review/casual-world-2026-09-23/arena-pad.png",
+      "sourceSha256": "6ef942b78031d3657761cd716eb4c998d8de3856d915f5d9e3a9875fb0e003c6",
+      "original": "tools/art-review/casual-world-2026-09-23/originals/arena-pad.png",
+      "originalSha256": "508e746712dfcdcdb1a0654044f69f513f163ec89075cce4eeec6dc244403039",
+      "targets": [
+        "casual/tiles/arena/pad.png"
+      ],
+      "width": 1024,
+      "height": 1024,
+      "hasAlpha": true,
+      "bytes": 178825,
+      "sha256": "4ad25ce9298c7b7c03b74016ba79e1ff46ee2db09db3849781b58b90b282df16"
+    },
+    {
+      "id": "arena-start",
+      "source": "tools/art-review/casual-world-2026-09-23/arena-start.png",
+      "sourceSha256": "87acf5215081bf035242f09883ab8a35d02d68b805130f4238fc1a3e8e9536c9",
+      "original": "tools/art-review/casual-world-2026-09-23/originals/arena-start.png",
+      "originalSha256": "d88bf221cfacb10525846581347c829865219131c3395350cad606b9f604a839",
+      "targets": [
+        "casual/tiles/arena/start.png"
+      ],
+      "width": 1024,
+      "height": 1024,
+      "hasAlpha": true,
+      "bytes": 303838,
+      "sha256": "e2e6938ed073163056e9b80471314e466dbf9103423c6f902cf82cc52d5b727e"
+    },
+    {
+      "id": "arena-end",
+      "source": "tools/art-review/casual-world-2026-09-23/arena-end.png",
+      "sourceSha256": "5bc5d94c2508816cc8c3ec43def024293ec77fdeb1c7528be0ff39c602324564",
+      "original": "tools/art-review/casual-world-2026-09-23/originals/arena-end.png",
+      "originalSha256": "56035fed70f15ddd0929589d619e3b67c1e441a52b08a9f1f46911be84fd4956",
+      "targets": [
+        "casual/tiles/arena/end.png"
+      ],
+      "width": 1024,
+      "height": 1024,
+      "hasAlpha": true,
+      "bytes": 217065,
+      "sha256": "1178b33bc88c74f11501cbb24f5e2e13a0feacf3c53addad9921c29fb713a16e"
+    },
+    {
+      "id": "arena-prop-1",
+      "source": "tools/art-review/casual-world-2026-09-23/arena-prop-1.png",
+      "sourceSha256": "e38e939d3b376657b23c73d9e8b07524e0067ab25f9826d8a27590a39e155623",
+      "original": "tools/art-review/casual-world-2026-09-23/originals/arena-prop-1.png",
+      "originalSha256": "d9da8704a9c5d567b2d2678062bb9432910c031bc9e7476d18cdc99ff0335362",
+      "targets": [
+        "casual/tiles/arena/prop-1.png"
+      ],
+      "width": 1024,
+      "height": 1024,
+      "hasAlpha": true,
+      "bytes": 190074,
+      "sha256": "0bbae1d19352e01b8d3f0f8dc806be5a47c934ba94100ce9f07dd6b4f7fbac05"
+    },
+    {
+      "id": "arena-prop-2",
+      "source": "tools/art-review/casual-world-2026-09-23/arena-prop-2.png",
+      "sourceSha256": "b0e5bd63ecb6063f4f4b8121848ee9f767659fc87e73bede40b12c6b21fdcc80",
+      "original": "tools/art-review/casual-world-2026-09-23/originals/arena-prop-2.png",
+      "originalSha256": "27a232b50b37ea2cb5f7044f575a17cd6d810c52c0a8f2c4cd5484382155404e",
+      "targets": [
+        "casual/tiles/arena/prop-2.png"
+      ],
+      "width": 1024,
+      "height": 1024,
+      "hasAlpha": true,
+      "bytes": 155653,
+      "sha256": "3b96293b471445c12a58888f9c0cc46fc89eb00980cb939394235a9e94230668"
+    },
+    {
+      "id": "arena-prop-3",
+      "source": "tools/art-review/casual-world-2026-09-23/arena-prop-3.png",
+      "sourceSha256": "2ac459b2658f13f4d87ee3bb46d96ee44114d8059307995000fccbbf920dbde3",
+      "original": "tools/art-review/casual-world-2026-09-23/originals/arena-prop-3.png",
+      "originalSha256": "c3be3742c586957556c721ab05f417b8689a98fb03822bcb83b682a7bce8b634",
+      "targets": [
+        "casual/tiles/arena/prop-3.png"
+      ],
+      "width": 1024,
+      "height": 1024,
+      "hasAlpha": true,
+      "bytes": 234240,
+      "sha256": "bdf0a7562b87c66b4bdc4ce10771bd8869d7e0c8ecf87881a8700f22da7aaea0"
+    },
+    {
+      "id": "plains-floor",
+      "source": "tools/art-review/casual-world-2026-09-23/plains-floor.png",
+      "sourceSha256": "9fe5b0e51528e73fc95ab0550488cedd0d5f02444fd074ecc68b60b80f08caa9",
+      "original": "tools/art-review/casual-world-2026-09-23/originals/plains-floor.jpg",
+      "originalSha256": "ec7ef56fe658c7a6db7ed96a736b94c92f5120a1e61b33b762657c1a92c4e5e1",
+      "targets": [
+        "casual/tiles/plains/floor.jpg"
+      ],
+      "width": 1280,
+      "height": 720,
+      "hasAlpha": false,
+      "bytes": 91062,
+      "sha256": "6f85284a742cd1864a7e5db06d98c6b19a9943b77ac9c503d8727fa7f2f51a56"
+    },
+    {
+      "id": "plains-pad",
+      "source": "tools/art-review/casual-world-2026-09-23/plains-pad.png",
+      "sourceSha256": "857dceb802bc6ca6e05e014413d16a9ca545a907c73dcb9ef08db01816dc10d9",
+      "original": "tools/art-review/casual-world-2026-09-23/originals/plains-pad.png",
+      "originalSha256": "2f18a478fa6eea0ec8dd4111879164edc4347bc143ac6fa93ecb19e069a96715",
+      "targets": [
+        "casual/tiles/plains/pad.png"
+      ],
+      "width": 1024,
+      "height": 1024,
+      "hasAlpha": true,
+      "bytes": 227042,
+      "sha256": "28c5a05e6fa9dd7785600917094cbb767c950dfdec375186c24bffd27d253530"
+    },
+    {
+      "id": "plains-start",
+      "source": "tools/art-review/casual-world-2026-09-23/plains-start.png",
+      "sourceSha256": "91acaa19a3cd78e1b131c168e1d474f91d8151feaa43c915472a3c9eca73fb8a",
+      "original": "tools/art-review/casual-world-2026-09-23/originals/plains-start.png",
+      "originalSha256": "32a6f2fde8289e2d1895e36df9894ae21d9b25f8c9acf28472128bf1d8dad008",
+      "targets": [
+        "casual/tiles/plains/start.png"
+      ],
+      "width": 1024,
+      "height": 1024,
+      "hasAlpha": true,
+      "bytes": 173952,
+      "sha256": "ba52bf6156d0327375b666b34c7c7cfdb0210bb2831b9b66700e5fee6fcfb894"
+    },
+    {
+      "id": "plains-end",
+      "source": "tools/art-review/casual-world-2026-09-23/plains-end.png",
+      "sourceSha256": "da8367f93cdbe10de77fd1332355078db2dd3a4798970d397dd6a004594e16bc",
+      "original": "tools/art-review/casual-world-2026-09-23/originals/plains-end.png",
+      "originalSha256": "4724b9ecb29df5230b34a1c74081cd04da9e91a15b45472d64ed2cfa819adeaf",
+      "targets": [
+        "casual/tiles/plains/end.png"
+      ],
+      "width": 1024,
+      "height": 1024,
+      "hasAlpha": true,
+      "bytes": 210917,
+      "sha256": "01d120d5a195e07d28ae710930cd8b6db9d0489fb09993481a6bf87d1508a2bc"
+    },
+    {
+      "id": "plains-prop-1",
+      "source": "tools/art-review/casual-world-2026-09-23/plains-prop-1.png",
+      "sourceSha256": "56204ba28624bd8bbb920d4ee183310edff5ec5248dd112a5eed50467e947216",
+      "original": "tools/art-review/casual-world-2026-09-23/originals/plains-prop-1.png",
+      "originalSha256": "b9f6c58c06350a8f69f3aef3e228912b371cbc380b0ed4c36b03a3e8950fc792",
+      "targets": [
+        "casual/tiles/plains/prop-1.png"
+      ],
+      "width": 1024,
+      "height": 1024,
+      "hasAlpha": true,
+      "bytes": 231071,
+      "sha256": "154a4a70ce970beddcbb5262de8bab7c983ca698023bd20ba4fcb7e0519a028a"
+    },
+    {
+      "id": "plains-prop-2",
+      "source": "tools/art-review/casual-world-2026-09-23/plains-prop-2.png",
+      "sourceSha256": "f2877447e7f95a20ba4da48fcdc800eca430a0b40d9bdf2d13e566e5b5fdba01",
+      "original": "tools/art-review/casual-world-2026-09-23/originals/plains-prop-2.png",
+      "originalSha256": "4e7b41246f1abf4c835c20a62948fbd440b12bee9c17c188559c0f743b3c9a8d",
+      "targets": [
+        "casual/tiles/plains/prop-2.png"
+      ],
+      "width": 1024,
+      "height": 1024,
+      "hasAlpha": true,
+      "bytes": 162895,
+      "sha256": "871c689cf7f93b1a4cf9253d8657cff6ca9b60b2ee3d229ec75d7ea9c615daed"
+    },
+    {
+      "id": "plains-prop-3",
+      "source": "tools/art-review/casual-world-2026-09-23/plains-prop-3.png",
+      "sourceSha256": "71db33a8973596812aee1df4f36e26b6454ec54c4d2602923b6a5113ef55b306",
+      "original": "tools/art-review/casual-world-2026-09-23/originals/plains-prop-3.png",
+      "originalSha256": "73ba7ff62660792edd282374b188f1068da469a782854a4013e6e0908ce086b0",
+      "targets": [
+        "casual/tiles/plains/prop-3.png"
+      ],
+      "width": 1024,
+      "height": 1024,
+      "hasAlpha": true,
+      "bytes": 184481,
+      "sha256": "32448287041b8a2f6b9d69d73e187d85109612c227754a7ef8af704887c5dbb9"
+    },
+    {
+      "id": "plains-prop-4",
+      "source": "tools/art-review/casual-world-2026-09-23/plains-prop-4.png",
+      "sourceSha256": "1e97615c75b02e4399bcfc8c782a1e624dec950b1a61beeab753bfe7b6bdd5e7",
+      "original": "tools/art-review/casual-world-2026-09-23/originals/plains-prop-4.png",
+      "originalSha256": "03089ca3c7b759c960d8e214b22a4da924762d242544965be8cea86702b664b7",
+      "targets": [
+        "casual/tiles/plains/prop-4.png"
+      ],
+      "width": 1024,
+      "height": 1024,
+      "hasAlpha": true,
+      "bytes": 320640,
+      "sha256": "5e50cbb35032ec9c1d3d6d9288b82edab40d187acbbf30c9e3f4fa0d47fd702f"
+    },
+    {
+      "id": "plains-prop-5",
+      "source": "tools/art-review/casual-world-2026-09-23/plains-prop-5.png",
+      "sourceSha256": "8fafbb727e4429ca229241627fd06857c5db4e7f4568fffc5a13fd5c73707eb8",
+      "original": "tools/art-review/casual-world-2026-09-23/originals/plains-prop-5.png",
+      "originalSha256": "9bcb2be27c16630e365f768bfb3283bfc12beaa14355127949274e445bed8002",
+      "targets": [
+        "casual/tiles/plains/prop-5.png"
+      ],
+      "width": 1024,
+      "height": 1024,
+      "hasAlpha": true,
+      "bytes": 187811,
+      "sha256": "576375c024f5b4d3a6e66aab8ace8de1b9699fdf28a4328c8fb7bcb6a9bf33d1"
+    },
+    {
+      "id": "plains-prop-6",
+      "source": "tools/art-review/casual-world-2026-09-23/plains-prop-6.png",
+      "sourceSha256": "461bf9a6131ae882ee8c1c1f2ca4c0e9409e975b5ec4428b08b031f61a59772d",
+      "original": "tools/art-review/casual-world-2026-09-23/originals/plains-prop-6.png",
+      "originalSha256": "b23b847c3935e8c334db7b2b5a761ac619b3454ef9c3b12d30cc8d245bd67339",
+      "targets": [
+        "casual/tiles/plains/prop-6.png"
+      ],
+      "width": 1024,
+      "height": 1024,
+      "hasAlpha": true,
+      "bytes": 172814,
+      "sha256": "7c63ec825f7288da01b53ce77e8c5362c35b231278b5e464c5b0ae595a7e3dcf"
+    },
+    {
+      "id": "plains-road-straight",
+      "source": "tools/art-review/casual-world-2026-09-23/plains-road-straight.png",
+      "sourceSha256": "f15faacbfacbdec02787e3b4c2aabe285f8fd3e20895291ed0cc48fd0ec7825a",
+      "original": "tools/art-review/casual-world-2026-09-23/originals/plains-road-straight.png",
+      "originalSha256": "c998b27826661841a401d2e967c4aee20125cacd896240e99f69cbbffbaee252",
+      "targets": [
+        "casual/tiles/plains/road-straight.png"
+      ],
+      "width": 1024,
+      "height": 1024,
+      "hasAlpha": false,
+      "bytes": 163393,
+      "sha256": "d469e94125d6cad954779a95daf421061aa617203d288e921058f9d0bbe8f69d"
+    },
+    {
+      "id": "plains-water",
+      "source": "tools/art-review/casual-world-2026-09-23/plains-water.png",
+      "sourceSha256": "8fb05dfdbf57200f925c851e133495d200f36e7de1a472149605e48b2f1c9039",
+      "original": "tools/art-review/casual-world-2026-09-23/originals/plains-water.png",
+      "originalSha256": "226b091c28b3c9296e4ceba311a3f50cf13d5a493e4d663086282cedaab5833e",
+      "targets": [
+        "casual/tiles/plains/water.png"
+      ],
+      "width": 1024,
+      "height": 1024,
+      "hasAlpha": false,
+      "bytes": 197338,
+      "sha256": "68c8402cd6465b6a69a237c5d4de90c6aea6e5191e19a91c0876879d1c0d7b0b"
+    },
+    {
+      "id": "vfx-shell",
+      "source": "tools/art-review/casual-world-2026-09-23/vfx-shell.png",
+      "sourceSha256": "5df030c310251cc5fb6aa64dd2d6d1fdad4eb1745fdc50ccea5f8f34348be5ba",
+      "original": "tools/art-review/casual-world-2026-09-23/originals/vfx-shell.png",
+      "originalSha256": "22944c36132ce4ad1cbc728549f8f9a36307c969d97873685cf88f213aa776d4",
+      "targets": [
+        "vfx/shell.png"
+      ],
+      "width": 320,
+      "height": 318,
+      "hasAlpha": true,
+      "bytes": 38852,
+      "sha256": "161940484f9e02ca99e61fa25da877f3e4ab428b539352c6f12c4d653b691518"
+    },
+    {
+      "id": "vfx-bolt",
+      "source": "tools/art-review/casual-world-2026-09-23/vfx-bolt.png",
+      "sourceSha256": "d7c02309d87cc08002c949dfa7e90a980882f8c9079b2ad0b76fe98ceece0198",
+      "original": "tools/art-review/casual-world-2026-09-23/originals/vfx-bolt.png",
+      "originalSha256": "0f297c292fc918a500ecdbe83831d2dfa489947d83165adbd91b04d378cfd6bf",
+      "targets": [
+        "vfx/bolt.png"
+      ],
+      "width": 320,
+      "height": 123,
+      "hasAlpha": true,
+      "bytes": 19118,
+      "sha256": "6af8e5d313d85b702aa6b2dc5dee895b97f38e1ad68feedca75e980cd62c4536"
+    },
+    {
+      "id": "vfx-frost-shard",
+      "source": "tools/art-review/casual-world-2026-09-23/vfx-frost-shard.png",
+      "sourceSha256": "40bcc8be683ba48a4d5932ddc108570f8da181e7d662b435e096d76b3873a478",
+      "original": "tools/art-review/casual-world-2026-09-23/originals/vfx-frost-shard.png",
+      "originalSha256": "32c602ccbebf57c567ea68f4f50176612d162b1c4b886be329391924bfba2a6c",
+      "targets": [
+        "vfx/frost-shard.png"
+      ],
+      "width": 320,
+      "height": 72,
+      "hasAlpha": true,
+      "bytes": 11685,
+      "sha256": "39ab9c2afa62feb1daf7305abc89c205e85bafc7ec7ef62165a36e5b85ab622c"
+    },
+    {
+      "id": "vfx-lightning-arc",
+      "source": "tools/art-review/casual-world-2026-09-23/vfx-lightning-arc.png",
+      "sourceSha256": "443fe30050baf555d055610591ce54d304cff9d6ab1398c2e368ecaa54b86fa3",
+      "original": "tools/art-review/casual-world-2026-09-23/originals/vfx-lightning-arc.png",
+      "originalSha256": "02984bfb59c0c38dddced2a513296bb0ab9be63364f6e8530092e4b520b36718",
+      "targets": [
+        "vfx/lightning-arc.png"
+      ],
+      "width": 320,
+      "height": 39,
+      "hasAlpha": true,
+      "bytes": 5637,
+      "sha256": "f6ca77dd02c6e54535cc593edfa79ecd091f17daab413230d19e96297a6235ff"
+    },
+    {
+      "id": "vfx-die-bomb",
+      "source": "tools/art-review/casual-world-2026-09-23/vfx-die-bomb.png",
+      "sourceSha256": "d1c95c26d799c15b348cfd883ad3abbf4919f62441fba8e5b26a44c8bbf050dd",
+      "original": "tools/art-review/casual-world-2026-09-23/originals/vfx-die-bomb.png",
+      "originalSha256": "85f24e80a3f7c5265653c84b2497fe2dbe268a9b20f95a564eb8963daa0a4d7d",
+      "targets": [
+        "vfx/die-bomb.png"
+      ],
+      "width": 290,
+      "height": 320,
+      "hasAlpha": true,
+      "bytes": 29596,
+      "sha256": "68bd010f9389f65ca79c760e11bcbefe1723703e271aa6a054daea3c4190adb9"
+    },
+    {
+      "id": "vfx-muzzle-flash",
+      "source": "tools/art-review/casual-world-2026-09-23/vfx-muzzle-flash.png",
+      "sourceSha256": "c33dcd2f37215dc66883ee403623fe16e0ee41da537116d54b4e6b9345b609f5",
+      "original": "tools/art-review/casual-world-2026-09-23/originals/vfx-muzzle-flash.png",
+      "originalSha256": "c7460aa323babcabea951bd74f65d9606caf2c1b23f95ccba4d8e085bb507676",
+      "targets": [
+        "vfx/muzzle-flash.png"
+      ],
+      "width": 267,
+      "height": 320,
+      "hasAlpha": true,
+      "bytes": 35882,
+      "sha256": "2cc741999ccbbe0ecdc0d592840ec4d0ab9ad1c5a4fced03a715fd4b808ddf85"
+    },
+    {
+      "id": "vfx-cannon-blast-2x2",
+      "source": "tools/art-review/casual-world-2026-09-23/vfx-cannon-blast-2x2.png",
+      "sourceSha256": "0e0e90aa78851830cc71c0ff9d9d71c5fe32600b30d6ca0bef914225baff82e6",
+      "original": "tools/art-review/casual-world-2026-09-23/originals/vfx-cannon-blast-2x2.png",
+      "originalSha256": "377084d9e64cda96dbdb7efbb1b5a38e410fe7cadda925bce1382fe058607fa0",
+      "targets": [
+        "vfx/cannon-blast-2x2.png"
+      ],
+      "width": 512,
+      "height": 512,
+      "hasAlpha": true,
+      "bytes": 32941,
+      "sha256": "9aa29d34f6fbd1045247ca137b52dd2942aa7da0a534d342b78b64b418ac9da1"
+    },
+    {
+      "id": "vfx-arcane-burst-2x2",
+      "source": "tools/art-review/casual-world-2026-09-23/vfx-arcane-burst-2x2.png",
+      "sourceSha256": "564943ca79628f9b2230d416bc6a32d651fbc1310ebf5ed352a4e2e04fec0d0c",
+      "original": "tools/art-review/casual-world-2026-09-23/originals/vfx-arcane-burst-2x2.png",
+      "originalSha256": "1bb3fa02e2bf126aa3a33ff67bf19a795ac598850dced6d5bbd6f4f44a8ed1c4",
+      "targets": [
+        "vfx/arcane-burst-2x2.png"
+      ],
+      "width": 512,
+      "height": 512,
+      "hasAlpha": true,
+      "bytes": 57395,
+      "sha256": "0deb117d9c846c0388bfd00d4068bbd6713072a007d7bcc5520a55d1eeb16ab1"
+    },
+    {
+      "id": "vfx-frost-burst-2x2",
+      "source": "tools/art-review/casual-world-2026-09-23/vfx-frost-burst-2x2.png",
+      "sourceSha256": "75c2951ca82164f2a429e3482615274ceeae25aca5bb034be85a629d43b350ff",
+      "original": "tools/art-review/casual-world-2026-09-23/originals/vfx-frost-burst-2x2.png",
+      "originalSha256": "c7b734d67d6bb7affbb507912df62596666539548fece110cd04c0e1b47753ef",
+      "targets": [
+        "vfx/frost-burst-2x2.png"
+      ],
+      "width": 512,
+      "height": 512,
+      "hasAlpha": true,
+      "bytes": 43322,
+      "sha256": "b6961c932d1deb04d9ce0cb04adbee83f64b58aab7d028583aba5c5e96a97bb5"
+    },
+    {
+      "id": "vfx-die-explode-2x2",
+      "source": "tools/art-review/casual-world-2026-09-23/vfx-die-explode-2x2.png",
+      "sourceSha256": "8e9dc4af2c54d80086af34a5a0aab7c933cd3d6e4567d4d4f3c272b52bf898dd",
+      "original": "tools/art-review/casual-world-2026-09-23/originals/vfx-die-explode-2x2.png",
+      "originalSha256": "715bcb90d7fecfa81aec44ec842aec25b62725ba4074daca910411c3e221df4d",
+      "targets": [
+        "vfx/die-explode-2x2.png"
+      ],
+      "width": 512,
+      "height": 512,
+      "hasAlpha": true,
+      "bytes": 63019,
+      "sha256": "e9b8b7ea983dfdd96d881c2e464a33644def29b94366b471af268f22f3a09afb"
+    },
+    {
+      "id": "props-portal",
+      "source": "tools/art-review/casual-world-2026-09-23/props-portal.png",
+      "sourceSha256": "2ee8a6728915794776d69ca62772cacd181866904194f2a1580c02180e3ac132",
+      "original": "tools/art-review/casual-world-2026-09-23/originals/props-portal.png",
+      "originalSha256": "7205b423ccaeb3bb8c1bd0efc0abdcaed8f3429aafb8239261e448e598f00a15",
+      "targets": [
+        "props/portal.png"
+      ],
+      "width": 899,
+      "height": 1024,
+      "hasAlpha": true,
+      "bytes": 336443,
+      "sha256": "fdaf72192be00eecc15f50651d3284fb6c5f908ae2c6684d1b42a8815fb91212"
+    },
+    {
+      "id": "props-crystal",
+      "source": "tools/art-review/casual-world-2026-09-23/props-crystal.png",
+      "sourceSha256": "11936bd1be5e42eea8681805c04dd0b4413bc82f88c68c493dd05db256ee7457",
+      "original": "tools/art-review/casual-world-2026-09-23/originals/props-crystal.png",
+      "originalSha256": "870a56967f5ee323396a92f110b280bed8e8cacde5a7f23dc9ca541721b17bb3",
+      "targets": [
+        "props/crystal.png"
+      ],
+      "width": 682,
+      "height": 1024,
+      "hasAlpha": true,
+      "bytes": 172593,
+      "sha256": "f1eb709d5fbf395453b470a88571f5c31ffe74a79edfcb9bdb61591c64a407e9"
+    }
+  ]
+}
