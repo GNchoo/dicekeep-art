@@ -2931,9 +2931,15 @@ function announceWave(n) {
   }
   if (!window.DKCONTENT) return;
   const INF = DKCONTENT.INFINITY, M = INF.monsterFor(n), hi = INF.highArmor(n);
+  const theme = INF.themeFor && INF.themeFor(n);
   const who = M.boss ? '보스' : `${M.name} ×${M.count}`;
+  if (theme && (n === theme.start || theme.finale)) {
+    const range = theme.finale ? `웨이브 ${n}` : `웨이브 ${theme.start}~${theme.end}`;
+    S.texts.push({ str: `${range} · ${theme.name}`, x: W / 2, y: H / 2 - 112, t: 0, big: true, color: theme.accent });
+    pushLog(`새 몬스터 테마 · ${range} · ${theme.name} — ${theme.summary}`, 'sys');
+  }
   S.texts.push({ str: `웨이브 ${n} · ${who} · ${INF.sizeName[M.cls]}${M.armor ? ` · 방어 ${M.armor}` : ''}${hi ? ' · 고방어!' : ''}`, x: W / 2, y: H / 2 - 70, t: 0, color: hi ? '#ff7a7a' : M.boss ? '#ffd452' : '#ffe6b0' });
-  if (M.boss || hi || n % 10 === 1) pushLog(`웨이브 ${n} — ${who}${hi ? ' · 고방어!' : ''}`, M.boss ? 'boss' : 'sys'); // 굵직한 웨이브만
+  if (M.boss || hi) pushLog(`웨이브 ${n} — ${who}${hi ? ' · 고방어!' : ''}`, M.boss ? 'boss' : 'sys'); // 굵직한 웨이브만
 }
 
 function stageLesson(n) {
@@ -4766,11 +4772,13 @@ function draw() {
     ctx.textAlign = 'center';
     const cd = waveCountdown();
     const urgent = bossT > 0 && bossT < 30;
+    const currentTheme = S.mode === 'infinity' && !battleRun() && DKCONTENT.INFINITY.themeFor
+      ? DKCONTENT.INFINITY.themeFor(Math.max(1, S.wave)) : null;
     // 자리를 고르는 동안에는 그 안내가 가장 위다 — 떴다 사라지는 글자만으로는 놓치기 쉽다.
     let msg = picking
       ? '타워를 놓을 곳을 선택해 주세요 — 빈 석단을 누르면 옮겨집니다'
       : bossT > 0
-      ? `보스 웨이브 ${S.wave} · 남은 시간 ${Math.floor(bossT / 60)}:${String(Math.floor(bossT % 60)).padStart(2, '0')}`
+      ? `보스 웨이브 ${S.wave} · ${currentTheme ? currentTheme.name + ' · ' : ''}남은 시간 ${Math.floor(bossT / 60)}:${String(Math.floor(bossT % 60)).padStart(2, '0')}`
       : S.net
         ? (S.wave === 0 ? `첫 웨이브까지 ${cd}초 — 뽑기(160G)로 타워를 놓으세요` : `다음 웨이브까지 ${cd}초`)
         : S.wave === 0
@@ -4779,6 +4787,13 @@ function draw() {
     if (deckRun() && !bossT) {
       if (picking) msg='빈 칸은 이동 · 같은 종류·눈금은 합성';
       else if (S.wave===0) msg=`소환 ${chestCost()} SP · 5종 중 무작위 1눈금으로 시작하세요`;
+    }
+    if (S.mode === 'infinity' && !battleRun() && !picking && !bossT && S.wave > 0 && DKCONTENT.INFINITY.themeFor) {
+      const next = S.wave + 1, theme = DKCONTENT.INFINITY.themeFor(next);
+      const chapter = next === theme.start || theme.finale
+        ? `${theme.finale ? next : theme.start + '~' + theme.end} · ${theme.name}`
+        : `${next} · ${theme.name}`;
+      msg = `다음 웨이브 ${chapter} (${cd}초)`;
     }
     // 화면에서 항상 같은 크기로 읽히게 한다 (세로 아레나는 캔버스가 커서 그냥 비례시키면 깨알같이 작다)
     const sc = stageScale() || 1;
@@ -5041,8 +5056,7 @@ function syncStats() {
   const sd = S.stageData;
   if (S.mode === 'infinity') {
     const INF = DKCONTENT.INFINITY, cap = INF.fieldCap || 200, n = S.enemies.length;
-    const M = S.wave > 0 && INF.monsterFor ? INF.monsterFor(S.wave) : null;
-    const sz = M ? ` · ${M.boss ? '보스' : M.name}(${INF.sizeName[M.cls]})` : '';
+    const theme = INF.themeFor && INF.themeFor(Math.max(1, S.wave));
     // 보스 남은 시간은 칩에 넣지 않는다 — 칩이 길어져 우상단 미니 버튼이 둘째 줄로 밀렸다. 캔버스 말풍선(draw)이 보여준다
     const line = S.inf ? S.inf.clearWave : 0, cyc = Math.floor(Math.max(0, S.wave - 1) / 101);
     const wtxt = line > 0
@@ -5054,14 +5068,18 @@ function syncStats() {
     $('wave-val').textContent = tight
       ? `${S.wave}${line ? '/' + line : ''} · ${n}/${cap}`
       : mid
-        ? `웨이브 ${wtxt} · 필드 ${n}/${cap}${roomTxt}`
-        : `∞ 웨이브 ${wtxt}${sz} · 최고 ${S.inf ? progressionProfile().records[S.inf.recordKey]?.best || 0 : 0} · 필드 ${n}/${cap}${roomTxt}`;
+        ? `웨이브 ${wtxt} · ${theme ? theme.name + ' · ' : ''}필드 ${n}/${cap}${roomTxt}`
+        : `∞ 웨이브 ${wtxt} · ${theme ? theme.name + ' · ' : ''}최고 ${S.inf ? progressionProfile().records[S.inf.recordKey]?.best || 0 : 0} · 필드 ${n}/${cap}${roomTxt}`;
     if (battleRun()) $('wave-val').textContent = `${S.net.mode==='coop'?'협동':'대전'} · ${S.wave}구간`;
+    $('wave-val').title = battleRun() || !theme ? '' : `${theme.name} · ${theme.start}~${theme.end}웨이브 · ${theme.summary}`;
     $('wave-val').classList.toggle('hot', n >= cap * 0.9);
   }
-  else $('wave-val').textContent = stageEl.classList.contains('tiny')
-    ? `S${S.stage} · ${S.wave}/${S.stageWaves}`
-    : `S${S.stage}${sd && sd.tierName ? ' ' + sd.tierName : ''} · 웨이브 ${S.wave} / ${S.stageWaves}`;
+  else {
+    $('wave-val').textContent = stageEl.classList.contains('tiny')
+      ? `S${S.stage} · ${S.wave}/${S.stageWaves}`
+      : `S${S.stage}${sd && sd.tierName ? ' ' + sd.tierName : ''} · 웨이브 ${S.wave} / ${S.stageWaves}`;
+    $('wave-val').title = '';
+  }
   $('wave-val').style.color = sd && sd.tierColor ? sd.tierColor : '';
   if (S.phase === 'playing' && typeof fitTopRow === 'function') fitTopRow();   // 칩 글자 길이가 바뀌면 미니 버튼 줄도 다시 판정
 }
@@ -5512,6 +5530,21 @@ function syncInfButtons() {
       `<br>모든 투기장 모드에서 성장 조각 획득 · 현재 <b>${P.shards}</b>개` +
       `<br><small>극한 다음 목표 ${Math.max(25, (Math.floor(P.records.extreme.best / 25) + 1) * 25)}웨이브 · 102부터 새 로스터 · 203부터 진화</small>` +
       (P.legacy.best ? `<br><small>이전 버전 통합 최고 ${P.legacy.best} · 새 모드 기록과 별도 보관</small>` : '');
+  }
+  const guide = $('theme-guide-list');
+  if (guide && INF.themeChapters && INF.extremeThemeChapters) {
+    const groups = [
+      { heading: '순수운빨·덱빌드 · 1~100', first: 1, chapters: INF.themeChapters, finale: '101 · 종말의 사자' },
+      { heading: '극한 · 102~201', first: 102, chapters: INF.extremeThemeChapters, finale: '202 · 새벽 등대사자' },
+    ];
+    guide.innerHTML = groups.map(group => {
+      const cards = group.chapters.map((theme, i) => {
+        const start = group.first + i * 10, end = start + 9;
+        const boss = theme.boss || INF.directionalArt(end, 0)?.name || '보스';
+        return `<div class="theme-guide-card" style="--theme-accent:${theme.accent}"><span class="theme-guide-range">${start}~${end}웨이브</span><b class="theme-guide-name">${theme.name}</b><span class="theme-guide-members">${theme.foes}</span><span class="theme-guide-boss">보스 · ${boss}</span></div>`;
+      }).join('');
+      return `<h3 class="theme-guide-group">${group.heading}<small> · ${group.finale}는 별도 관문</small></h3>${cards}`;
+    }).join('');
   }
 }
 

@@ -1296,6 +1296,49 @@ window.DKCONTENT = (function () {
   // ---- 101웨이브 몬스터 설계 (ART-PROMPTS.md §6): 10단계 테마 × 10웨이브 + 보스 ----
   // 그림이 들어온 웨이브만 INF_ART_READY 에 적는다 (보스 부관은 '20-2' 처럼). 적힌 웨이브는 새 그림·새 이름을 쓰고, 나머지는 기존 로스터 그림으로 돈다.
   const INF_TIERS = ['', '폐허의 잡졸', '숲의 야수', '늪과 동굴', '산적과 고블린', '왕국의 병사와 기사', '언데드', '마법 생물과 정령', '용족과 거대 야수', '악마', '심연과 파멸'];
+  // 화면에 보이는 방향별 아트의 9종+보스 편성이다. 전투 수치용 donor 로스터와
+  // 분리해 두어 테마 표기가 순수운빨의 체력·속도·보상 곡선을 바꾸지 않도록 한다.
+  const INF_THEME_CHAPTERS = [
+    { key: 'plague', name: '역병 폐허', accent: '#d9bd82', summary: '폐허에 모인 쥐·언데드·고블린의 습격', foes: '역병쥐 · 해골 잡졸 · 묘지 오우거', boss: '역병 쥐왕' },
+    { key: 'forest', name: '숲의 야수', accent: '#a9d994', summary: '숲의 작은 동물에서 큰 야수까지', foes: '다람쥐 · 여우 · 늑대 · 불곰', boss: '고목 정령 · 거대 수사슴' },
+    { key: 'marsh', name: '늪과 동굴', accent: '#9dd5ca', summary: '늪의 양서류와 동굴의 벌레', foes: '왕두꺼비 · 왕모기 · 늪악어', boss: '두꺼비 마녀 · 박쥐 군주' },
+    { key: 'orc', name: '고블린·오크 군단', accent: '#c8d078', summary: '정찰병과 방패병, 오크 전사의 진군', foes: '고블린 · 오크 · 트롤', boss: '고블린 왕 · 오우거 장사' },
+    { key: 'kingdom', name: '왕국 수비대', accent: '#a9cbed', summary: '기사와 공병이 지키는 왕국의 성문', foes: '방패병 · 창기병 · 석궁병', boss: '강철 성주 · 공성 골렘' },
+    { key: 'undead', name: '언데드 군단', accent: '#c2b6e9', summary: '무덤에서 일어난 병사와 망령', foes: '좀비 · 해골 병사 · 구울', boss: '리치 · 뼈 용' },
+    { key: 'arcane', name: '원소와 마법', accent: '#d8aef2', summary: '정령과 골렘이 뒤섞인 마법 폭풍', foes: '불 정령 · 바위 골렘 · 수정 정령', boss: '대마법사 · 폭풍 정령' },
+    { key: 'dragon', name: '용족과 거대 야수', accent: '#efb98c', summary: '드레이크와 거대 야수가 몰려오는 하늘', foes: '드레이크 · 와이번 · 베히모스', boss: '화룡 · 히드라' },
+    { key: 'demon', name: '악마 군단', accent: '#ef9d9c', summary: '임프와 지옥 기사가 이끄는 침공', foes: '임프 · 헬하운드 · 지옥 기사', boss: '마왕 · 구덩이 악마' },
+    { key: 'abyss', name: '심연 군단', accent: '#c2a8ee', summary: '공허의 생물과 파멸 기사가 모인 최후의 군단', foes: '심연 거인 · 파멸 기사 · 공허 골렘', boss: '파멸의 군주 · 공허 용' },
+  ];
+  // 극한 102~201의 실제 승인 원화는 20웨이브 테마 다섯 개가 각각
+  // 두 군단으로 나뉜다. 10칸 끝의 보스까지 한 챕터로 표시한다.
+  const EXTREME_THEME_CHAPTERS = [
+    { key: 'crown-guard', name: '왕관 유적 수비대', accent: '#e7c98d', summary: '왕관 보관고의 서기관과 문지기', foes: '왕관 운반다람쥐 · 유적 서기관 · 왕관 철갑병' },
+    { key: 'royal-beasts', name: '왕실 숲의 야수', accent: '#bed69b', summary: '왕실 문장을 단 숲의 동물들', foes: '인장 여우 · 문장 독수리 · 문지기 큰곰' },
+    { key: 'frost-machines', name: '서리 기계생물', accent: '#a8d9ea', summary: '얼음과 톱니로 움직이는 생물들', foes: '서리 압력두꺼비 · 기계 침벌 · 청빙 관절뱀' },
+    { key: 'frost-legion', name: '서리 기술병', accent: '#a8d9ea', summary: '제설 방패병과 기관실 작업반', foes: '냉각수 정찰병 · 빙철 도끼병 · 기관실 작업반장' },
+    { key: 'coral-guard', name: '심연 정원 기사단', accent: '#b1d8c5', summary: '산호 갑옷과 씨앗 장비를 든 수비대', foes: '산호 방패병 · 진주 석궁병 · 정원 굴착노움' },
+    { key: 'sea-spirits', name: '수중 서고 정령', accent: '#b1d8c5', summary: '진주와 해초를 품은 정원 정령들', foes: '이끼 수호인형 · 해파리 정령등 · 수련 노래정령' },
+    { key: 'ember-craft', name: '잿불 공방 정령', accent: '#edae87', summary: '불씨와 황동에서 태어난 공방 생물', foes: '용광로 불씨정령 · 모루 골렘 · 유리 용접정령' },
+    { key: 'furnace-legion', name: '용광로 군단', accent: '#edae87', summary: '황동 장갑과 증기 날개를 단 용광로 병력', foes: '가마 앞치마장인 · 구리날개 와이번 · 용광로 용기사' },
+    { key: 'starlight-patrol', name: '별빛 순찰대', accent: '#c9b9ef', summary: '천문대와 별길을 순찰하는 파수대', foes: '별가루 심부름꾼 · 천문 관측사 · 별길 관문기사' },
+    { key: 'constellation-guard', name: '성좌 수비대', accent: '#c9b9ef', summary: '성좌 갑옷과 별핵을 지키는 최후의 수비대', foes: '별판 거인 · 성좌 중갑기사 · 운석 방패거상' },
+  ];
+  function infThemeFor(w) {
+    const wave = Math.max(1, Math.floor(Number(w) || 1));
+    const cycle = Math.floor((wave - 1) / 101);
+    const slot = (wave - 1) % 101 + 1;
+    if (slot === 101) {
+      const last = cycle >= 1
+        ? { key: 'dawn-gate', name: '새벽의 관문', accent: '#e6d5a4', summary: '새벽 등대사자와 마주하는 연결 관문', foes: '새벽 등대사자' }
+        : { key: 'final-gate', name: '종말의 관문', accent: '#dac5ef', summary: '열 군단을 지난 뒤 만나는 최종 관문', foes: '종말의 사자' };
+      return { ...last, index: 0, start: wave, end: wave, cycle: cycle + 1, finale: true, bossWave: null };
+    }
+    const index = Math.floor((slot - 1) / 10);
+    const chapter = (cycle >= 1 ? EXTREME_THEME_CHAPTERS : INF_THEME_CHAPTERS)[index];
+    const start = cycle * 101 + index * 10 + 1;
+    return { ...chapter, index: index + 1, start, end: start + 9, cycle: cycle + 1, finale: false, bossWave: start + 9 };
+  }
   // 단계 팔레트 (10웨이브마다 색이 조금씩 바뀐다). tools/inf-jobs.mjs 는 피·살갗 등 기존 명칭을 의상·장비 색으로 해석하고 고어 금지·명암 가독성 규칙을 우선한다.
   const INF_PALETTE = ['',
     { ko: '핏빛 녹 · 마른 피 · 잿빛 살갗', en: 'rust red, dried blood, ash-grey skin, small ember accents' },
@@ -1608,8 +1651,9 @@ window.DKCONTENT = (function () {
       return flies ? 'air' : 'ground';
     },
     monsters: INF_MONSTERS, tiers: INF_TIERS, palette: INF_PALETTE, artReady: INF_ART_READY, art: infArt, artList: infArtList, directionalArt: infDirectionalArt,
+    themeChapters: INF_THEME_CHAPTERS, extremeThemeChapters: EXTREME_THEME_CHAPTERS, themeFor: infThemeFor,
     tierIndex(w) { return Math.min(10, Math.floor(((Math.max(1, w) - 1) % 101) / 10) + 1); },
-    tierOf(w) { return INF_TIERS[this.tierIndex(w)]; },
+    tierOf(w) { return this.themeFor(w).name; },
     paletteOf(w) { return INF_PALETTE[this.tierIndex(w)]; },
     bossOrdinal(w) { const c = Math.floor((Math.max(1, w) - 1) / 101), i = (Math.max(1, w) - 1) % 101 + 1; return c * 10 + Math.round(i / this.bossEvery); },
     wave(w, gauntlet) {
