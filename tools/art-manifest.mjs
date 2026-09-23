@@ -147,9 +147,6 @@ function mobileDisposition(assetPath) {
   if (/^casual\/towers\/skins\//.test(assetPath)) {
     return { status: 'included', reason: 'tower-skins-directory' };
   }
-  if (/^casual\/towers\/star-[^/]*\.png$/i.test(assetPath)) {
-    return { status: 'included', reason: 'star-tower-rule' };
-  }
   if (runtimeReferences.has(assetPath)) {
     return { status: 'included', reason: 'runtime-reference' };
   }

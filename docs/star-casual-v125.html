@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>주사위 성채 · 7~20성 캐주얼 타워 비교</title>
+  <style>
+    :root { color-scheme: dark; --ink:#f8f0dd; --muted:#b8c6cc; --gold:#e9c473; --line:#425365; --panel:#1e2b38; }
+    * { box-sizing:border-box; }
+    body { margin:0; min-width:320px; color:var(--ink); background:radial-gradient(circle at 65% -15%,#284d69 0,#172633 37%,#111b26 75%); font:16px/1.5 system-ui,"Noto Sans KR",sans-serif; }
+    main { max-width:1220px; margin:auto; padding:30px 22px 72px; }
+    a { color:#b8e8f2; }
+    a:focus-visible, button:focus-visible { outline:3px solid #9beaff; outline-offset:3px; }
+    header { display:flex; flex-wrap:wrap; align-items:end; justify-content:space-between; gap:16px; padding-bottom:25px; border-bottom:1px solid var(--line); }
+    .eyebrow { margin:0 0 7px; color:#83d5e4; font-size:12px; font-weight:800; letter-spacing:.14em; }
+    h1 { margin:0; font-size:clamp(29px,4.3vw,48px); line-height:1.15; letter-spacing:-.035em; }
+    .intro { max-width:800px; margin:17px 0 30px; color:var(--muted); }
+    .links { display:flex; flex-wrap:wrap; gap:10px 18px; padding-bottom:4px; font-weight:700; }
+    .links a { text-decoration:none; border-bottom:1px solid currentColor; }
+    .panel { background:var(--panel); border:1px solid var(--line); border-radius:18px; padding:22px; }
+    .panelhead { display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; margin-bottom:16px; }
+    .panelhead h2 { margin:0; font-size:21px; }
+    .mode { display:flex; gap:4px; padding:4px; background:#14202a; border:1px solid #405163; border-radius:12px; }
+    button { border:0; border-radius:9px; padding:8px 13px; background:transparent; color:#cad6db; font:inherit; font-weight:700; cursor:pointer; }
+    button[aria-pressed="true"] { background:#e5bc67; color:#211e1c; }
+    .boardscroll { overflow-x:auto; border-radius:13px; scrollbar-color:#829aaa #243440; }
+    .board { position:relative; min-width:1080px; min-height:190px; padding:18px 12px 17px; display:grid; grid-template-columns:repeat(14,minmax(70px,1fr)); gap:4px; background:linear-gradient(#15203299,#15203299),#444456 url('../casual/tiles/arena/board.png') center / 420px auto repeat; border:1px solid #84745e; border-radius:13px; }
+    .slot { position:relative; display:flex; align-items:center; flex-direction:column; justify-content:end; gap:7px; min-width:0; }
+    .slot::before { content:""; position:absolute; z-index:0; bottom:25px; width:66px; height:22px; border:2px solid #d5b56d9c; border-radius:50%; background:#473c5080; }
+    .slot img { position:relative; z-index:1; display:block; width:auto; height:auto; max-width:70px; max-height:96px; object-fit:contain; filter:drop-shadow(0 5px 4px #0d1019bd); }
+    .slot span { position:relative; z-index:1; padding:1px 7px; border-radius:7px; background:#16222edf; color:#ffe6ad; font-size:12px; font-weight:800; }
+    .board-note { margin:11px 0 0; font-size:13px; color:var(--muted); }
+    .band { margin-top:36px; }
+    .bandhead { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:13px; border-bottom:1px solid var(--line); padding-bottom:10px; }
+    .bandhead h2 { margin:0; font-size:23px; }
+    .bandhead span { color:var(--muted); font-size:14px; }
+    .band[data-band="blue"] { --accent:#83d8f5; }
+    .band[data-band="purple"] { --accent:#ceadff; }
+    .band[data-band="gold"] { --accent:#f0cc77; }
+    .band[data-band="cosmic"] { --accent:#f6a7d7; }
+    .bandhead h2, .card h3 { color:var(--accent); }
+    .cards { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+    .card { padding:17px; background:#21303f; border:1px solid #435365; border-radius:15px; }
+    .card h3 { margin:0 0 12px; font-size:17px; }
+    .pair { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+    figure { min-width:0; margin:0; padding:12px 8px 9px; border-radius:11px; background:#2e3e4d; text-align:center; }
+    figure.new { background:#34434b; box-shadow:inset 0 0 0 1px #b9a0684d; }
+    figure img { display:block; width:auto; max-width:100%; height:180px; margin:auto; object-fit:contain; }
+    figcaption { margin-top:7px; font-size:13px; color:#e6e1d4; }
+    .missing { display:none; align-items:center; justify-content:center; height:180px; color:#aebbc2; font-size:13px; }
+    figure.unavailable img { display:none; }
+    figure.unavailable .missing { display:flex; }
+    @media(max-width:760px) { main{padding:23px 14px 55px} .panel{padding:16px} .cards{grid-template-columns:1fr} .band{margin-top:30px} }
+    @media(max-width:390px) { .pair{gap:7px} .card{padding:12px} figure{padding:9px 4px 7px} figure img,.missing{height:150px} }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div><p class="eyebrow">DICEKEEP · ART REVIEW 125</p><h1>7~20성 타워, 더 간결하게</h1></div>
+    <nav class="links"><a href="../?v=125">게임 열기</a><a href="tower-clean-v124.html">1~6성 비교</a></nav>
+  </header>
+  <p class="intro">원본 타워의 단계별 실루엣을 유지하면서 풀·이끼를 걷어내고, 벽돌과 장식 선을 줄인 캐주얼 버전입니다. 아래에서 실제 게임에 가까운 크기와 확대 이미지를 함께 볼 수 있습니다.</p>
+  <section class="panel" aria-label="게임 크기 타워 미리보기">
+    <div class="panelhead"><h2>게임 크기 미리보기</h2><div class="mode" role="group" aria-label="타워 그림 선택"><button id="newMode" type="button" aria-pressed="true">새 캐주얼</button><button id="oldMode" type="button" aria-pressed="false">기존 원본</button></div></div>
+    <div class="boardscroll"><div class="board" id="board"></div></div>
+    <p class="board-note">가로로 밀어서 14종을 확인하세요. 각 타워는 최대 70 × 96px로 표시됩니다.</p>
+  </section>
+  <div id="bands"></div>
+</main>
+<script>
+  const groups = [
+    {id:'blue',title:'별빛 첨탑',range:'★7–10',start:7,end:10},
+    {id:'purple',title:'성운 요새',range:'★11–14',start:11,end:14},
+    {id:'gold',title:'천공 옥좌',range:'★15–18',start:15,end:18},
+    {id:'cosmic',title:'차원 군주',range:'★19–20',start:19,end:20},
+  ];
+  const original = n => `../casual/towers/star-${String(n).padStart(2,'0')}.png?v=125`;
+  const casual = n => `../casual/towers/star-${String(n).padStart(2,'0')}-casual.png?v=125`;
+  const board = document.querySelector('#board');
+  const bands = document.querySelector('#bands');
+  for (const group of groups) {
+    const section = document.createElement('section');
+    section.className = 'band'; section.dataset.band = group.id;
+    section.innerHTML = `<div class="bandhead"><h2>${group.title}</h2><span>${group.range}</span></div><div class="cards"></div>`;
+    const cards = section.querySelector('.cards');
+    for (let n=group.start; n<=group.end; n++) {
+      cards.insertAdjacentHTML('beforeend',`<article class="card"><h3>★${n} · ${group.title}</h3><div class="pair"><figure><img src="${original(n)}" alt="${n}성 ${group.title} 원본"><span class="missing">이미지 준비 중</span><figcaption>기존 원본</figcaption></figure><figure class="new"><img src="${casual(n)}" alt="${n}성 ${group.title} 캐주얼 버전"><span class="missing">이미지 준비 중</span><figcaption>새 캐주얼</figcaption></figure></div></article>`);
+    }
+    bands.append(section);
+  }
+  bands.querySelectorAll('figure img').forEach(img => img.addEventListener('error', () => img.closest('figure').classList.add('unavailable')));
+  const setBoard = showCasual => {
+    board.innerHTML = Array.from({length:14},(_,i) => { const n=i+7; return `<div class="slot"><img src="${showCasual?casual(n):original(n)}" alt="★${n} 타워"><span>★${n}</span></div>`; }).join('');
+    document.querySelector('#newMode').setAttribute('aria-pressed',String(showCasual));
+    document.querySelector('#oldMode').setAttribute('aria-pressed',String(!showCasual));
+  };
+  document.querySelector('#newMode').addEventListener('click',()=>setBoard(true));
+  document.querySelector('#oldMode').addEventListener('click',()=>setBoard(false));
+  setBoard(true);
+</script>
+</body>
+</html>

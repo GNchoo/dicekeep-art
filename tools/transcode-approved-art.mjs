@@ -88,9 +88,6 @@ const TEMPLATES = [
   { id: 'skinPacks', match: /^casual\/towers\/skins\/[^/]+\/t\d\d\.png$/i, edits: [
     { file: 'cosmetics.js', from: '`casual/towers/skins/${id}/t${String(i + 1).padStart(2, \'0\')}.png`', to: '`casual/towers/skins/${id}/t${String(i + 1).padStart(2, \'0\')}.webp`' },
   ] },
-  { id: 'starTowers', match: /^casual\/towers\/star-\d\d\.png$/i, edits: [
-    { file: 'game.js', from: 'casual/towers/star-${String(g).padStart(2, \'0\')}.png?v=', to: 'casual/towers/star-${String(g).padStart(2, \'0\')}.webp?v=' },
-  ] },
   { id: 'infBoss', match: /^casual\/bosses\/inf\/b\d{3}(-2)?\.png$/i, edits: [
     { file: 'content.js', from: 'src: `casual/bosses/inf/b${pad3(w)}${k ? \'-2\' : \'\'}.png${revision}`', to: 'src: `casual/bosses/inf/b${pad3(w)}${k ? \'-2\' : \'\'}.webp${revision}`' },
   ] },

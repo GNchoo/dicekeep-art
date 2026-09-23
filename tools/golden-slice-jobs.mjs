@@ -41,7 +41,7 @@ function runtimeSpecFor(id) {
   if (id === 'arena-board' || id === 'arena-road') return fixed(1024, 1024, 'opaque');
   if (id.startsWith('arena-')) return fixed(1024, 1024);
   if (/^tower-(?:die-[1-6]|premium-)/.test(id)) return trimContain(384, 384, 'bottom-center');
-  if (id.startsWith('tower-star-')) return fixed(384, 384);
+  if (id.startsWith('tower-star-')) return trimContain(140, 192, 'bottom-center');
   if (id.startsWith('enemy-')) return trimContain(280, 280, 'bottom-center');
   if (id.startsWith('boss-')) return fixed(512, 512);
   if (id === 'ui-home-stage' || id === 'ui-deck') return fixed(64, 64);
@@ -144,14 +144,14 @@ for (const [id, target, role] of towerRoles) {
   });
 }
 add({
-  id: 'tower-star-07', category: 'tower', profile: 'tower', runtimeTarget: 'casual/towers/star-07.png',
-  size: '1024x1024', background: 'transparent', refs: ['casual/towers/star-07.png'],
-  prompt: `${TOWER_COMMON} An early evolved ivory die keep: confident but compact, one small gold battlement tier, red pip windows and a restrained blue-violet focus crystal. It must look clearly stronger than the six-pip base tower while leaving room for many later upgrades.`,
+  id: 'tower-star-07', category: 'tower', profile: 'tower', runtimeTarget: 'casual/towers/star-07-casual.png',
+  size: '1024x1024', background: 'transparent', refs: ['casual/towers/star-07.png', 'casual/towers/star-07-casual.png'],
+  prompt: `${TOWER_COMMON} Preserve the original twin blue crystal spires, blue focus core, upright keep silhouette and small five-pip die plaque. Remove all plants and simplify tiny stone seams and gold lines into broad two-tone casual color planes. Clear at 70×96 gameplay pixels.`,
 });
 add({
-  id: 'tower-star-20', category: 'tower', profile: 'tower', runtimeTarget: 'casual/towers/star-20.png',
-  size: '1024x1024', background: 'transparent', refs: ['casual/towers/star-20.png'],
-  prompt: `${TOWER_COMMON} The final evolved ivory die citadel: broad gold-trimmed battlements, six red pip ports, one large blue-violet crown crystal and a controlled royal silhouette. Powerful and premium in construction detail, yet clean at 96 pixels and never taller than the safe canvas margin.`,
+  id: 'tower-star-20', category: 'tower', profile: 'tower', runtimeTarget: 'casual/towers/star-20-casual.png',
+  size: '1024x1024', background: 'transparent', refs: ['casual/towers/star-20.png', 'casual/towers/star-20-casual.png'],
+  prompt: `${TOWER_COMMON} Preserve the original cosmic-ring core, purple vertical focus crystal, twin lower turrets, stone base and five-pip die plaque. Remove plants and merge tiny brickwork and gold filigree into broad smooth casual shapes. The final star tower should feel powerful while remaining legible at 70×96 gameplay pixels.`,
 });
 add({
   id: 'tower-premium-arcane', category: 'tower', profile: 'tower', runtimeTarget: 'casual/towers/t3-d.png',
