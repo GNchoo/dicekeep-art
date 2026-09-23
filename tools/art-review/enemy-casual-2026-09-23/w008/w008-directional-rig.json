@@ -1,0 +1,552 @@
+{
+  "version": 1,
+  "canonicalCell": 512,
+  "assetVersion": 93,
+  "entries": [
+    {
+      "assetId": "w008",
+      "wave": 8,
+      "role": "normal",
+      "locomotion": "flight",
+      "cell": 256,
+      "referenceHeight": 288,
+      "cycleStride": 0,
+      "cycleSeconds": 0.8,
+      "reviewApproved": true,
+      "views": {
+        "side": {
+          "source": "tools/art-review/enemy-casual-2026-09-23/w008/w008-side-puppet-casual-atlas.png",
+          "sourceSha256": "ffd1eef3f57af15b75f5e4374fd70c808b86430730c7a45c41b45a31f3195d3c",
+          "background": "alpha",
+          "pivot": [
+            256,
+            400
+          ],
+          "assetVersion": 127,
+          "body": {
+            "roi": [
+              0.033203125,
+              0.251953125,
+              0.48046875,
+              0.6259765625
+            ],
+            "target": {
+              "height": 170,
+              "top": 200,
+              "centerX": 256
+            },
+            "layer": 0,
+            "componentCount": 3
+          },
+          "parts": [
+            {
+              "id": "leaderLeftWing",
+              "type": "wing",
+              "roi": [
+                0.58154296875,
+                0.0107421875,
+                0.1865234375,
+                0.447265625
+              ],
+              "socketNormalized": [
+                0.51,
+                0.2
+              ],
+              "sourcePivot": [
+                0.96,
+                0.96
+              ],
+              "scale": 0.26,
+              "angleDeg": [
+                -20,
+                42
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "leaderRightWing",
+              "type": "wing",
+              "roi": [
+                0.58154296875,
+                0.513671875,
+                0.1865234375,
+                0.3974609375
+              ],
+              "socketNormalized": [
+                0.58,
+                0.21
+              ],
+              "sourcePivot": [
+                0.04,
+                0.96
+              ],
+              "scale": 0.29,
+              "angleDeg": [
+                20,
+                -42
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "followerLowLeftWing",
+              "type": "wing",
+              "roi": [
+                0.58154296875,
+                0.0107421875,
+                0.1865234375,
+                0.447265625
+              ],
+              "socketNormalized": [
+                0.09,
+                0.7
+              ],
+              "sourcePivot": [
+                0.96,
+                0.96
+              ],
+              "scale": 0.1,
+              "angleDeg": [
+                -20,
+                42
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "followerLowRightWing",
+              "type": "wing",
+              "roi": [
+                0.58154296875,
+                0.513671875,
+                0.1865234375,
+                0.3974609375
+              ],
+              "socketNormalized": [
+                0.23,
+                0.7
+              ],
+              "sourcePivot": [
+                0.04,
+                0.96
+              ],
+              "scale": 0.11,
+              "angleDeg": [
+                20,
+                -42
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "followerHighLeftWing",
+              "type": "wing",
+              "roi": [
+                0.58154296875,
+                0.0107421875,
+                0.1865234375,
+                0.447265625
+              ],
+              "socketNormalized": [
+                0.79,
+                0.04
+              ],
+              "sourcePivot": [
+                0.96,
+                0.96
+              ],
+              "scale": 0.1,
+              "angleDeg": [
+                -20,
+                42
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "followerHighRightWing",
+              "type": "wing",
+              "roi": [
+                0.58154296875,
+                0.513671875,
+                0.1865234375,
+                0.3974609375
+              ],
+              "socketNormalized": [
+                0.89,
+                0.04
+              ],
+              "sourcePivot": [
+                0.04,
+                0.96
+              ],
+              "scale": 0.11,
+              "angleDeg": [
+                20,
+                -42
+              ],
+              "phase": 0,
+              "layer": -1
+            }
+          ]
+        },
+        "front": {
+          "source": "tools/art-review/enemy-casual-2026-09-23/w008/w008-front-puppet-casual-atlas.png",
+          "sourceSha256": "91165757c83100240db2448a736fe8f5e8714a1c64b9df8db47ef1dea3e301d1",
+          "background": "alpha",
+          "pivot": [
+            256,
+            400
+          ],
+          "assetVersion": 127,
+          "body": {
+            "roi": [
+              0.04296875,
+              0.2197265625,
+              0.47021484375,
+              0.556640625
+            ],
+            "target": {
+              "height": 170,
+              "top": 200,
+              "centerX": 256
+            },
+            "layer": 0,
+            "componentCount": 3
+          },
+          "parts": [
+            {
+              "id": "leaderLeftWing",
+              "type": "wing",
+              "roi": [
+                0.58154296875,
+                0.0107421875,
+                0.20068359375,
+                0.4609375
+              ],
+              "socketNormalized": [
+                0.4,
+                0.22
+              ],
+              "sourcePivot": [
+                0.96,
+                0.96
+              ],
+              "scale": 0.29,
+              "angleDeg": [
+                -20,
+                42
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "leaderRightWing",
+              "type": "wing",
+              "roi": [
+                0.58154296875,
+                0.513671875,
+                0.19775390625,
+                0.447265625
+              ],
+              "socketNormalized": [
+                0.65,
+                0.22
+              ],
+              "sourcePivot": [
+                0.04,
+                0.96
+              ],
+              "scale": 0.3,
+              "angleDeg": [
+                20,
+                -42
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "followerLowLeftWing",
+              "type": "wing",
+              "roi": [
+                0.58154296875,
+                0.0107421875,
+                0.20068359375,
+                0.4609375
+              ],
+              "socketNormalized": [
+                0.07,
+                0.56
+              ],
+              "sourcePivot": [
+                0.96,
+                0.96
+              ],
+              "scale": 0.11,
+              "angleDeg": [
+                -20,
+                42
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "followerLowRightWing",
+              "type": "wing",
+              "roi": [
+                0.58154296875,
+                0.513671875,
+                0.19775390625,
+                0.447265625
+              ],
+              "socketNormalized": [
+                0.23,
+                0.56
+              ],
+              "sourcePivot": [
+                0.04,
+                0.96
+              ],
+              "scale": 0.115,
+              "angleDeg": [
+                20,
+                -42
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "followerHighLeftWing",
+              "type": "wing",
+              "roi": [
+                0.58154296875,
+                0.0107421875,
+                0.20068359375,
+                0.4609375
+              ],
+              "socketNormalized": [
+                0.78,
+                0.08
+              ],
+              "sourcePivot": [
+                0.96,
+                0.96
+              ],
+              "scale": 0.11,
+              "angleDeg": [
+                -20,
+                42
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "followerHighRightWing",
+              "type": "wing",
+              "roi": [
+                0.58154296875,
+                0.513671875,
+                0.19775390625,
+                0.447265625
+              ],
+              "socketNormalized": [
+                0.94,
+                0.08
+              ],
+              "sourcePivot": [
+                0.04,
+                0.96
+              ],
+              "scale": 0.115,
+              "angleDeg": [
+                20,
+                -42
+              ],
+              "phase": 0,
+              "layer": -1
+            }
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/enemy-casual-2026-09-23/w008/w008-back-puppet-casual-atlas.png",
+          "sourceSha256": "311732a586c4c24415c3faee0938b79de3c5ed57ca628e4586941f74fffa6d21",
+          "background": "alpha",
+          "pivot": [
+            256,
+            400
+          ],
+          "assetVersion": 127,
+          "body": {
+            "roi": [
+              0.0419921875,
+              0.25390625,
+              0.4560546875,
+              0.5048828125
+            ],
+            "target": {
+              "height": 170,
+              "top": 200,
+              "centerX": 256
+            },
+            "layer": 0,
+            "componentCount": 3
+          },
+          "parts": [
+            {
+              "id": "leaderLeftWing",
+              "type": "wing",
+              "roi": [
+                0.58154296875,
+                0.0107421875,
+                0.12060546875,
+                0.3798828125
+              ],
+              "socketNormalized": [
+                0.4,
+                0.17
+              ],
+              "sourcePivot": [
+                0.96,
+                0.96
+              ],
+              "scale": 0.35,
+              "angleDeg": [
+                -20,
+                42
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "leaderRightWing",
+              "type": "wing",
+              "roi": [
+                0.58154296875,
+                0.513671875,
+                0.119140625,
+                0.380859375
+              ],
+              "socketNormalized": [
+                0.65,
+                0.17
+              ],
+              "sourcePivot": [
+                0.04,
+                0.96
+              ],
+              "scale": 0.35,
+              "angleDeg": [
+                20,
+                -42
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "followerLowLeftWing",
+              "type": "wing",
+              "roi": [
+                0.58154296875,
+                0.0107421875,
+                0.12060546875,
+                0.3798828125
+              ],
+              "socketNormalized": [
+                0.07,
+                0.56
+              ],
+              "sourcePivot": [
+                0.96,
+                0.96
+              ],
+              "scale": 0.135,
+              "angleDeg": [
+                -20,
+                42
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "followerLowRightWing",
+              "type": "wing",
+              "roi": [
+                0.58154296875,
+                0.513671875,
+                0.119140625,
+                0.380859375
+              ],
+              "socketNormalized": [
+                0.22,
+                0.56
+              ],
+              "sourcePivot": [
+                0.04,
+                0.96
+              ],
+              "scale": 0.135,
+              "angleDeg": [
+                20,
+                -42
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "followerHighLeftWing",
+              "type": "wing",
+              "roi": [
+                0.58154296875,
+                0.0107421875,
+                0.12060546875,
+                0.3798828125
+              ],
+              "socketNormalized": [
+                0.79,
+                0.06
+              ],
+              "sourcePivot": [
+                0.96,
+                0.96
+              ],
+              "scale": 0.135,
+              "angleDeg": [
+                -20,
+                42
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "followerHighRightWing",
+              "type": "wing",
+              "roi": [
+                0.58154296875,
+                0.513671875,
+                0.119140625,
+                0.380859375
+              ],
+              "socketNormalized": [
+                0.94,
+                0.06
+              ],
+              "sourcePivot": [
+                0.04,
+                0.96
+              ],
+              "scale": 0.135,
+              "angleDeg": [
+                20,
+                -42
+              ],
+              "phase": 0,
+              "layer": -1
+            }
+          ]
+        }
+      },
+      "reviewNotes": "New transparent flat-cel W008 three-bee swarm in side/front/back; one leader and two smaller followers, six independently flapping wings; runtime promotion only after game-size review."
+    }
+  ]
+}

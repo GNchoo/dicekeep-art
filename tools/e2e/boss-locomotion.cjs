@@ -13,7 +13,7 @@ const game = fs.readFileSync(path.join(repo, 'game.js'), 'utf8');
       const page = await browser.newPage({ viewport }), errors = [];
       page.on('pageerror', e => errors.push(e.message));
       await page.route('**/game.js*', r => r.fulfill({ contentType: 'application/javascript', body: game.replace('window.DK = S;',
-        'Object.assign(window,{buildInfinityWave,spawnEnemy,epos,currentEnemyFrame,enemyAirHeight,refreshDirectionalDemand,persistRun,readRunSave,restoreRunSave,mpViewBuild,VIEW}); Object.defineProperty(window,"LANES",{get:()=>LANES}); window.DK = S;') }));
+        'Object.assign(window,{buildInfinityWave,spawnEnemy,epos,currentEnemyFrame,enemyAirHeight,refreshDirectionalDemand,persistRun,readRunSave,restoreRunSave,mpViewBuild,VIEW,draw,update,bossFootstepIndex,directionalPhase,SFX}); Object.defineProperty(window,"LANES",{get:()=>LANES}); window.DK = S;') }));
       await page.addInitScript(() => { localStorage.setItem('dk_coachDone', '1'); localStorage.setItem('dk_infHelpSeen', '1'); });
       await page.goto(gameUrl()); await page.waitForFunction(() => window.DK?.phase === 'title', null, { timeout: 120000 });
       const audit = await page.evaluate(() => {
@@ -49,6 +49,56 @@ const game = fs.readFileSync(path.join(repo, 'game.js'), 'utf8');
           assert.equal(e.hp, e.expectedHp); assert.equal(e.speed, e.expectedSpeed); assert.equal(e.gold, e.expectedGold);
         }
         assert.equal(visible[0].altitude, 0); assert.equal(visible[1].move, 'air'); assert.ok(visible[1].altitude > 0);
+        row.contactShadow = await page.evaluate(() => {
+          const original = CanvasRenderingContext2D.prototype.ellipse, found = [];
+          CanvasRenderingContext2D.prototype.ellipse = function (...args) {
+            if (this.canvas.id === 'game' && this.fillStyle === 'rgba(18, 19, 30, 0.18)') found.push(args.slice(0, 4));
+            return original.apply(this, args);
+          };
+          try {
+            const [ground, air] = DK.enemies, before = epos(ground);
+            draw(); const first = found.splice(0);
+            ground.artWalkDistance += 40; draw(); const nextPose = found.splice(0);
+            ground.hidden = true; draw(); const hidden = found.splice(0); ground.hidden = false;
+            DK.enemies = [air]; draw(); const airOnly = found.splice(0); DK.enemies = [ground, air];
+            return { expected: [before.x, before.y + 5], first, nextPose, hidden, airOnly };
+          } finally { CanvasRenderingContext2D.prototype.ellipse = original; }
+        });
+        assert.equal(row.contactShadow.first.length, 1, 'ground boss has one drawn contact shadow');
+        assert.deepEqual(row.contactShadow.first, row.contactShadow.nextPose, 'shadow stays planted when walk pose changes');
+        assert.deepEqual(row.contactShadow.first[0].slice(0, 2), row.contactShadow.expected);
+        assert.ok(row.contactShadow.first[0][2] > 7 && row.contactShadow.first[0][3] >= 3);
+        assert.deepEqual(row.contactShadow.hidden, [], 'hidden ground monster has no contact shadow');
+        assert.deepEqual(row.contactShadow.airOnly, [], 'flyer has no ground-contact shadow');
+        row.footstep = await page.evaluate(() => {
+          const savedEnemies = DK.enemies, originalStomp = SFX.stomp;
+          const e = savedEnemies[0], entry = DKART.entry(e.artAssetId), stride = entry.cycleStride * e.drawHeight / entry.referenceHeight;
+          const speed = e.def.speed * (e.spdMult || 1), beats = [];
+          DK.enemies = [e]; DK.spawnQ = []; DK.waveActive = false; DK.fxs = [];
+          e.dist = LANES[0].loopAt + 80; e.artWalkDistance = stride * .49; e.stompPhase = 0;
+          e.animT = .01; e.stunT = 0; e.slowT = 0; e.entranceT = -1; e.hp = e.max = 1e12;
+          SFX.stomp = () => beats.push({ walk: e.artWalkDistance, framePhase: directionalPhase(e), footstep: bossFootstepIndex(e) });
+          try {
+            const initial = { phase: directionalPhase(e), beat: bossFootstepIndex(e) };
+            update(stride * .005 / speed);
+            const approach = { phase: directionalPhase(e), beat: bossFootstepIndex(e), count: beats.length };
+            update(stride * .02 / speed);
+            const planted = { phase: directionalPhase(e), beat: bossFootstepIndex(e), count: beats.length, dust: DK.fxs.filter(f => f.kind === 'dust').length };
+            const frozenDistance = e.artWalkDistance; e.stunT = 1; update(.15);
+            const stunned = { distance: e.artWalkDistance, count: beats.length };
+            e.stunT = 0;
+            const nonwalking = bossFootstepIndex({ ...e, move: 'burrow', animT: 3.7 });
+            return { gait: entry.locomotion, stride, initial, approach, planted, stunned, frozenDistance, nonwalking, beats };
+          } finally { SFX.stomp = originalStomp; DK.enemies = savedEnemies; }
+        });
+        assert.equal(row.footstep.gait, 'legged'); assert.ok(row.footstep.stride > 0);
+        assert.equal(row.footstep.initial.beat, 0); assert.equal(row.footstep.approach.count, 0);
+        assert.equal(row.footstep.planted.beat, 1); assert.equal(row.footstep.planted.count, 1);
+        assert.equal(row.footstep.beats[0].footstep, 1); assert.ok(row.footstep.beats[0].framePhase >= .5);
+        assert.ok(row.footstep.planted.dust >= 5, 'dust fires with the planted step');
+        assert.equal(row.footstep.stunned.distance, row.footstep.frozenDistance);
+        assert.equal(row.footstep.stunned.count, 1, 'stun does not trigger another footstep');
+        assert.equal(row.footstep.nonwalking, 7, 'nonwalking boss retains legacy timing');
         row.spectator = await page.evaluate(() => {
           DK.net = { rivals: { peer: {} }, status: 'alive' }; VIEW.pid = 'peer'; VIEW.enemies = [];
           const en = DK.enemies.map(e => `${1000 + DKCONTENT.bossBases.findIndex(b => b.id === e.type)},${Math.round(e.dist)},9,${e.appearanceCode},64`).join(';');

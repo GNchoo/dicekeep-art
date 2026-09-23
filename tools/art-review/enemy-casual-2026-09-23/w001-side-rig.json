@@ -1,0 +1,114 @@
+{
+  "cell": 512,
+  "frames": 8,
+  "waves": [
+    {
+      "wave": 1,
+      "type": "quad",
+      "regions": {
+        "body": [
+          0.025,
+          0.2,
+          0.79,
+          0.35
+        ],
+        "fore": [
+          0.82,
+          0.23,
+          0.18,
+          0.33
+        ],
+        "hind": [
+          0.78,
+          0.56,
+          0.22,
+          0.32
+        ]
+      },
+      "bodyHeight": 150,
+      "bodyTop": 123,
+      "foreHip": [
+        0.67,
+        0.65
+      ],
+      "hindHip": [
+        0.34,
+        0.56
+      ],
+      "amplitude": 28,
+      "lift": 13,
+      "groundY": 315,
+      "legScales": {
+        "fore": 0.35,
+        "hind": 0.34
+      },
+      "source": "tools/art-review/enemy-casual-2026-09-23/w001-side-puppet-casual-source.png",
+      "sourceJoints": {
+        "fore": {
+          "hip": [
+            0.49,
+            0.06
+          ],
+          "knee": [
+            0.42,
+            0.5
+          ],
+          "ankle": [
+            0.48,
+            0.78
+          ]
+        },
+        "hind": {
+          "hip": [
+            0.42,
+            0.05
+          ],
+          "knee": [
+            0.72,
+            0.5
+          ],
+          "hock": [
+            0.3,
+            0.8
+          ]
+        }
+      },
+      "sourceSha256": "1ca04204f6fb8d8aacbda3c8b2198094c5b5efb871794a250aebfdb19d1fa4ea",
+      "master": "tools/art-review/pr29-gait/sources/w001-anatomy-master.png",
+      "bodyLayer": "near-limbs-over-body",
+      "proximalFeather": 0.18,
+      "ankleCentered": true,
+      "stanceDuty": 0.65,
+      "limbPhases": {
+        "nearHind": 0,
+        "nearFore": 0.75,
+        "farHind": 0.5,
+        "farFore": 0.25
+      },
+      "farForeHip": [
+        0.682,
+        0.64
+      ],
+      "farHindHip": [
+        0.352,
+        0.55
+      ],
+      "socketRegions": {
+        "fore": [
+          0.58,
+          0.48,
+          0.18,
+          0.28
+        ],
+        "hind": [
+          0.25,
+          0.36,
+          0.2,
+          0.32
+        ]
+      },
+      "proximalEdgeFeather": 0.07,
+      "background": "alpha"
+    }
+  ]
+}

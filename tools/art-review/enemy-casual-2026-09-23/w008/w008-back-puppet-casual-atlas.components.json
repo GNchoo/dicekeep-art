@@ -1,0 +1,91 @@
+{
+  "source": "w008-back-puppet-casual-source.png",
+  "alphaCutoff": 28,
+  "pieces": [
+    {
+      "label": 2,
+      "count": 140745,
+      "sourceBounds": [
+        369,
+        305,
+        406,
+        444
+      ],
+      "outputBounds": [
+        369,
+        305,
+        406,
+        444
+      ],
+      "mirror": false
+    },
+    {
+      "label": 5,
+      "count": 43945,
+      "sourceBounds": [
+        100,
+        517,
+        226,
+        246
+      ],
+      "outputBounds": [
+        100,
+        517,
+        226,
+        246
+      ],
+      "mirror": false
+    },
+    {
+      "label": 1,
+      "count": 43789,
+      "sourceBounds": [
+        781,
+        274,
+        225,
+        249
+      ],
+      "outputBounds": [
+        781,
+        274,
+        225,
+        249
+      ],
+      "mirror": false
+    },
+    {
+      "label": 3,
+      "count": 53358,
+      "sourceBounds": [
+        1034,
+        345,
+        229,
+        371
+      ],
+      "outputBounds": [
+        1200,
+        20,
+        229,
+        371
+      ],
+      "mirror": false
+    },
+    {
+      "label": 4,
+      "count": 52860,
+      "sourceBounds": [
+        1285,
+        345,
+        226,
+        372
+      ],
+      "outputBounds": [
+        1200,
+        535,
+        226,
+        372
+      ],
+      "mirror": false
+    }
+  ]
+}

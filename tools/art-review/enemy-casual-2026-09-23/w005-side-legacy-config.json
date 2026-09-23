@@ -1,0 +1,76 @@
+{
+  "cell": 512,
+  "frames": 8,
+  "waves": [
+    {
+      "wave": 5,
+      "type": "biped",
+      "regions": {
+        "body": [
+          0,
+          0,
+          0.67,
+          1
+        ],
+        "near": [
+          0.69,
+          0,
+          0.31,
+          0.5
+        ],
+        "far": [
+          0.69,
+          0.5,
+          0.31,
+          0.5
+        ]
+      },
+      "bodyHeight": 280,
+      "bodyTop": 60,
+      "hip": [
+        0.43,
+        0.9
+      ],
+      "amplitude": 40.275,
+      "lift": 20.138,
+      "groundY": 460,
+      "legScale": 0.36,
+      "source": "tools/art-review/enemy-casual-2026-09-23/w005-side-puppet-casual-source.png",
+      "sourceJoints": {
+        "near": {
+          "hip": [
+            0.35,
+            0.1
+          ],
+          "knee": [
+            0.35,
+            0.48
+          ],
+          "ankle": [
+            0.38,
+            0.84
+          ]
+        },
+        "far": {
+          "hip": [
+            0.35,
+            0.1
+          ],
+          "knee": [
+            0.35,
+            0.48
+          ],
+          "ankle": [
+            0.38,
+            0.84
+          ]
+        }
+      },
+      "sourceSha256": "94fd1145b34b093cac43350d8b6c95677ae394861002898816a8d4d965890082",
+      "supportKneeAngle": 168,
+      "ankleCentered": true,
+      "bodyLayer": "full-alpha-overlay",
+      "background": "alpha"
+    }
+  ]
+}

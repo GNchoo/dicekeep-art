@@ -13,14 +13,23 @@ const config=p=>{if(!cache.has(p))cache.set(p,expandConfig(read(p)));return cach
 const rows=[];
 const avianHocks=new Set(['w075','w176']);
 const earlyBipeds=new Set(['w002','w003','w005','w007','w009']);
+const reviewedCasualRigs=new Map([
+  ['w002','tools/art-review/enemy-casual-2026-09-23/w002-directional-rig.json'],
+  ['w003','tools/art-review/enemy-casual-2026-09-23/w003-directional-rig.json'],
+  ['w005','tools/art-review/enemy-casual-2026-09-23/w005-directional-rig.json'],
+]);
 for(const [kind,items] of [['original',catalog.entries],['extreme',newer.entries]])for(const item of items){
   if(item.family!=='biped'||item.locomotion!=='legged')continue;
   const originalSource=kind==='original'?releases.builds.find(b=>b.assetIds.includes(item.assetId))?.config.path:'tools/art-review/extreme-202/all-rigs.json';
   const row={id:item.assetId,name:item.name,kind,sources:{},views:{},viewStatus:{}};
   for(const name of ['side','front','back']){
-    const corrected=current[item.assetId]?.views[name]?.assetVersion===110;
-    const source=corrected?'tools/art-review/biped-knees-110/'+(earlyBipeds.has(item.assetId)?'legacy-front-back-rigs.json':'rigs.json'):originalSource;
+    const selectedVersion=current[item.assetId]?.views[name]?.assetVersion;
+    const corrected=selectedVersion===110;
+    const casualRig=selectedVersion===128?reviewedCasualRigs.get(item.assetId):undefined;
+    if(selectedVersion===128&&!casualRig)throw Error(`No reviewed casual biped rig for ${item.assetId}/${name}`);
+    const source=casualRig??(corrected?'tools/art-review/biped-knees-110/'+(earlyBipeds.has(item.assetId)?'legacy-front-back-rigs.json':'rigs.json'):originalSource);
     const entry=source&&config(source).entries.find(e=>e.assetId===item.assetId),v=entry?.views[name];row.sources[name]=source;
+    if(casualRig&&(!entry?.reviewApproved||v?.assetVersion!==selectedVersion))throw Error(`Casual biped rig is not the reviewed release selection: ${item.assetId}/${name}`);
     if(!v){row.viewStatus[name]='unresolved';continue;}
     let limbs=(v.parts||[]).filter(p=>p.type==='leg').map(p=>({id:p.id,bend:p.bend}));
     if(v.legacyRig){const p=v.legacyRig,base=read(p.config).waves.find(w=>w.wave===p.wave),wave={...base,...p.overrides};
@@ -37,4 +46,4 @@ const out=path.join(root,'gen/e2e/biped-knees');fs.mkdirSync(out,{recursive:true
 fs.writeFileSync(path.join(out,'audit.json'),JSON.stringify({scope:'Every side/front/back view of release-selected biped family; sagittal +X is forward. Identity is forward only when all three views are forward. Two avian hocks are explicit exceptions.',summary,viewSummary,rows},null,2));
 console.log(JSON.stringify(summary));
 for(const status of statuses)console.log(status,rows.filter(r=>r.status===status).map(r=>r.id).join(','));
-if(process.argv.includes('--check')&&(rows.length!==105||rows.some(r=>!['forward','avianHock'].includes(r.status))||viewSummary.forward!==309||viewSummary.avianHock!==6))throw Error('Biped audit failed: inspect every side/front/back view, including early legacy bipeds.');
+if(process.argv.includes('--check')&&(rows.length!==105||rows.some(r=>!['forward','avianHock'].includes(r.status))||viewSummary.forward!==309||viewSummary.avianHock!==6||['w002','w003','w005'].some(id=>['side','front','back'].some(name=>rows.find(r=>r.id===id&&r.kind==='original')?.viewStatus[name]!=='forward'))))throw Error('Biped audit failed: inspect every side/front/back view, including reviewed casual W002/W003/W005 and early legacy bipeds.');

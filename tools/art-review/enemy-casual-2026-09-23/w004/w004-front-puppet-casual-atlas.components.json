@@ -1,0 +1,57 @@
+{
+  "source": "w004-front-puppet-casual-source.png",
+  "alphaCutoff": 28,
+  "pieces": [
+    {
+      "label": 2,
+      "count": 297315,
+      "sourceBounds": [
+        203,
+        121,
+        539,
+        769
+      ],
+      "outputBounds": [
+        203,
+        121,
+        539,
+        769
+      ],
+      "mirror": false
+    },
+    {
+      "label": 1,
+      "count": 183515,
+      "sourceBounds": [
+        866,
+        23,
+        600,
+        532
+      ],
+      "outputBounds": [
+        1050,
+        20,
+        600,
+        532
+      ],
+      "mirror": false
+    },
+    {
+      "label": 3,
+      "count": 151794,
+      "sourceBounds": [
+        910,
+        551,
+        558,
+        460
+      ],
+      "outputBounds": [
+        1050,
+        620,
+        558,
+        460
+      ],
+      "mirror": true
+    }
+  ]
+}
