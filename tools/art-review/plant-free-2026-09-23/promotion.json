@@ -1,0 +1,79 @@
+{
+  "generatedWith": "Codex built-in image_gen",
+  "apiKeyUsed": false,
+  "styleDirection": "plant-free, fewer seams, broad two-tone casual planes",
+  "records": [
+    {
+      "face": 1,
+      "source": "tools/art-review/plant-free-2026-09-23/tower-1.png",
+      "sourceSha256": "56c143a86f883faad5d5f9c82f226251bd144b77db21808483eeb40182529b56",
+      "reference": "casual/towers/t1-a.png",
+      "referenceSha256": "24b70825a6dacf846d541877df63c3e32873e07c8d9afe033e9eacc428ff623e",
+      "target": "casual/towers/t1-clean.png",
+      "targetSha256": "3be9d832d3b21eb0232f0d1ebd5a9beee6ddcfa4f58d0eb0677c60d7ecc1ae23",
+      "width": 114,
+      "height": 192,
+      "bytes": 13855
+    },
+    {
+      "face": 2,
+      "source": "tools/art-review/plant-free-2026-09-23/tower-2.png",
+      "sourceSha256": "e1912bac32476c4a0f4666cf647f7a6ac0244832d2c7e3e448ce567a8e9d3eeb",
+      "reference": "casual/towers/t2-a.png",
+      "referenceSha256": "d960582e87d2748922e5b3046f13c07d0b25eee7d6d458afc7e5e07a2916c97a",
+      "target": "casual/towers/t2-clean.png",
+      "targetSha256": "18689e81096bcbeba2458ce3bc03fd79cf301c67a2f0dd8262b0323edd0a1d5e",
+      "width": 134,
+      "height": 192,
+      "bytes": 15096
+    },
+    {
+      "face": 3,
+      "source": "tools/art-review/plant-free-2026-09-23/tower-3.png",
+      "sourceSha256": "90ff26a5f997e4f7ec3649ae61a43ea6d752b522e8e83fd4f34fb780f177ce9a",
+      "reference": "casual/towers/t3-a.png",
+      "referenceSha256": "d99d63c08bc45e1bcd79e23ee22477e4e7a47aaacaa90b0d38635d17a120ba73",
+      "target": "casual/towers/t3-clean.png",
+      "targetSha256": "f19282d020cd689f45a984cd8323be7c30046aeb886ef07d8130b9e6870b8bb5",
+      "width": 110,
+      "height": 192,
+      "bytes": 12838
+    },
+    {
+      "face": 4,
+      "source": "tools/art-review/plant-free-2026-09-23/tower-4.png",
+      "sourceSha256": "959ed3ee36761f179696025c484419facb6283545980cea9646eaaa197025c76",
+      "reference": "casual/towers/t4-a.png",
+      "referenceSha256": "cee18b00d00b180d303893821bf802d1d61a5d786adabeb2b24830f83a10fc17",
+      "target": "casual/towers/t4-clean.png",
+      "targetSha256": "12e02e86ba6a9d3a61124673954d0245d435dadaaf7cc0488156e134b82c7125",
+      "width": 114,
+      "height": 192,
+      "bytes": 12738
+    },
+    {
+      "face": 5,
+      "source": "tools/art-review/plant-free-2026-09-23/tower-5.png",
+      "sourceSha256": "85df9bd239ea849dc6020460007d7d5d1626076207004080a0a27b6f392ccd30",
+      "reference": "casual/towers/t5-a.png",
+      "referenceSha256": "7334aab04ed132968f6d5fa10283b70bece20b797f000d731edd26c4191277be",
+      "target": "casual/towers/t5-clean.png",
+      "targetSha256": "22009efad9ad658eab92fedefdfcdb3d9f647a88294fb3132557d050d714ea60",
+      "width": 140,
+      "height": 185,
+      "bytes": 14888
+    },
+    {
+      "face": 6,
+      "source": "tools/art-review/plant-free-2026-09-23/tower-6.png",
+      "sourceSha256": "b0760e55bdd145e303c5f8e2c6244a9d3d5f81776b02d349fe06c07466fbf7e1",
+      "reference": "casual/towers/t6-a.png",
+      "referenceSha256": "00d2570a49f059dfa05750ec9c2771867fb1a406bc744d124e94920e02f96b57",
+      "target": "casual/towers/t6-clean.png",
+      "targetSha256": "55b03bcbe71044542613465d2c382ade0bd6f32cad00c59997c7e5de28d370dc",
+      "width": 140,
+      "height": 191,
+      "bytes": 14874
+    }
+  ]
+}

@@ -13,8 +13,8 @@
     "vfx"
   ],
   "summary": {
-    "files": 2283,
-    "bytes": 265282975,
+    "files": 2289,
+    "bytes": 265367264,
     "byCategory": [
       {
         "name": "boss",
@@ -38,8 +38,8 @@
       },
       {
         "name": "tower",
-        "files": 110,
-        "bytes": 19430425
+        "files": 116,
+        "bytes": 19514714
       },
       {
         "name": "ui",
@@ -65,8 +65,8 @@
       },
       {
         "name": "runtime",
-        "files": 797,
-        "bytes": 74910144
+        "files": 803,
+        "bytes": 74994433
       },
       {
         "name": "source",
@@ -82,8 +82,8 @@
       },
       {
         "name": "png",
-        "files": 201,
-        "bytes": 39070646
+        "files": 207,
+        "bytes": 39154935
       },
       {
         "name": "webp",
@@ -99,8 +99,8 @@
       },
       {
         "name": "included",
-        "files": 2186,
-        "bytes": 235062672
+        "files": 2192,
+        "bytes": 235146961
       }
     ],
     "byMobileReason": [
@@ -126,8 +126,8 @@
       },
       {
         "name": "runtime-reference",
-        "files": 676,
-        "bytes": 57541098
+        "files": 682,
+        "bytes": 57625387
       },
       {
         "name": "star-tower-rule",
@@ -35081,6 +35081,22 @@
       }
     },
     {
+      "path": "casual/towers/t1-clean.png",
+      "bytes": 13855,
+      "sha256": "3be9d832d3b21eb0232f0d1ebd5a9beee6ddcfa4f58d0eb0677c60d7ecc1ae23",
+      "format": "png",
+      "width": 114,
+      "height": 192,
+      "hasAlpha": true,
+      "lifecycle": "runtime",
+      "category": "tower",
+      "role": "base-skin",
+      "mobileBuild": {
+        "status": "included",
+        "reason": "runtime-reference"
+      }
+    },
+    {
       "path": "casual/towers/t1-d.png",
       "bytes": 163484,
       "sha256": "8440528b6099b7d7b59f499050e069c76d3afb766c0609dd3e8a019c4267089d",
@@ -35167,6 +35183,22 @@
       "format": "png",
       "width": 300,
       "height": 383,
+      "hasAlpha": true,
+      "lifecycle": "runtime",
+      "category": "tower",
+      "role": "base-skin",
+      "mobileBuild": {
+        "status": "included",
+        "reason": "runtime-reference"
+      }
+    },
+    {
+      "path": "casual/towers/t2-clean.png",
+      "bytes": 15096,
+      "sha256": "18689e81096bcbeba2458ce3bc03fd79cf301c67a2f0dd8262b0323edd0a1d5e",
+      "format": "png",
+      "width": 134,
+      "height": 192,
       "hasAlpha": true,
       "lifecycle": "runtime",
       "category": "tower",
@@ -35273,6 +35305,22 @@
       }
     },
     {
+      "path": "casual/towers/t3-clean.png",
+      "bytes": 12838,
+      "sha256": "f19282d020cd689f45a984cd8323be7c30046aeb886ef07d8130b9e6870b8bb5",
+      "format": "png",
+      "width": 110,
+      "height": 192,
+      "hasAlpha": true,
+      "lifecycle": "runtime",
+      "category": "tower",
+      "role": "base-skin",
+      "mobileBuild": {
+        "status": "included",
+        "reason": "runtime-reference"
+      }
+    },
+    {
       "path": "casual/towers/t3-d.png",
       "bytes": 155769,
       "sha256": "f3bcdeebe3c6ac0e7c0e974f452ccb7dae62e73ba25659f2c585f53de36fafc5",
@@ -35359,6 +35407,22 @@
       "format": "png",
       "width": 227,
       "height": 384,
+      "hasAlpha": true,
+      "lifecycle": "runtime",
+      "category": "tower",
+      "role": "base-skin",
+      "mobileBuild": {
+        "status": "included",
+        "reason": "runtime-reference"
+      }
+    },
+    {
+      "path": "casual/towers/t4-clean.png",
+      "bytes": 12738,
+      "sha256": "12e02e86ba6a9d3a61124673954d0245d435dadaaf7cc0488156e134b82c7125",
+      "format": "png",
+      "width": 114,
+      "height": 192,
       "hasAlpha": true,
       "lifecycle": "runtime",
       "category": "tower",
@@ -35465,6 +35529,22 @@
       }
     },
     {
+      "path": "casual/towers/t5-clean.png",
+      "bytes": 14888,
+      "sha256": "22009efad9ad658eab92fedefdfcdb3d9f647a88294fb3132557d050d714ea60",
+      "format": "png",
+      "width": 140,
+      "height": 185,
+      "hasAlpha": true,
+      "lifecycle": "runtime",
+      "category": "tower",
+      "role": "base-skin",
+      "mobileBuild": {
+        "status": "included",
+        "reason": "runtime-reference"
+      }
+    },
+    {
       "path": "casual/towers/t5-d.png",
       "bytes": 225034,
       "sha256": "634392f9068e808f0004716017275abda481491c0b8b2ed8d51e7078d4809cf0",
@@ -35551,6 +35631,22 @@
       "format": "png",
       "width": 292,
       "height": 384,
+      "hasAlpha": true,
+      "lifecycle": "runtime",
+      "category": "tower",
+      "role": "base-skin",
+      "mobileBuild": {
+        "status": "included",
+        "reason": "runtime-reference"
+      }
+    },
+    {
+      "path": "casual/towers/t6-clean.png",
+      "bytes": 14874,
+      "sha256": "55b03bcbe71044542613465d2c382ade0bd6f32cad00c59997c7e5de28d370dc",
+      "format": "png",
+      "width": 140,
+      "height": 191,
       "hasAlpha": true,
       "lifecycle": "runtime",
       "category": "tower",
