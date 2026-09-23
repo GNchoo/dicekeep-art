@@ -12,17 +12,20 @@
     return face <= 6 ? ['laser', 'cannon', 'arcane', 'frost', 'lightning', 'dice'][face - 1]
       : face <= 10 ? 'star' : face <= 13 ? 'nebula' : face <= 17 ? 'epic' : face <= 19 ? 'myth' : 'primal';
   }
-  const COLORS = { laser: '#baff83', cannon: '#ffb752', arcane: '#bc8bff', frost: '#94efff', lightning: '#ffe976', dice: '#ff7560', star: '#80dfff', nebula: '#c39aff', epic: '#ddd0ff', myth: '#ffda75', primal: '#ff98e1' };
+  const COLORS = { laser: '#ff6652', cannon: '#ffb752', arcane: '#bc8bff', frost: '#94efff', lightning: '#ffe976', dice: '#ff7560', star: '#80dfff', nebula: '#c39aff', epic: '#ddd0ff', myth: '#ffda75', primal: '#ff98e1' };
   const PORTS = { 1: [[.34, .66]], 2: [[.24, .65], [.43, .71]], 3: [[.53, .39]], 4: [[.51, .23]], 5: [[.49, .28]], 6: [[.51, .22]] };
+  function port(t, starPort) {
+    const ports = PORTS[t.face] || [starPort || [.5, .2]];
+    return ports[Math.max(0, (t.shotSerial || 1) - 1) % ports.length];
+  }
   // Add light at release only. Never cut, repaint, rotate or move any tower pixels.
   // The existing game renderer owns the original whole-tower recoil and glow.
   function paintMuzzle(g, t, sp, starPort) {
     const age = t.muzzleAge, duration = t.face === 2 ? .14 : .18;
     if (!Number.isFinite(age) || age < 0 || age >= duration) return;
     const u = age / duration, fade = (1 - u) ** 2;
-    const ports = PORTS[t.face] || [starPort || [.5, .2]];
-    const port = ports[Math.max(0, (t.shotSerial || 1) - 1) % ports.length], k = (t.kick || 0) ** 2;
-    const x = port[0] * sp.w - sp.cx, y = port[1] * sp.h - sp.baseY;
+    const xy = port(t, starPort), k = (t.kick || 0) ** 2;
+    const x = xy[0] * sp.w - sp.cx, y = xy[1] * sp.h - sp.baseY;
     const type = family(t.face), r = (t.face === 2 ? 8 : 6) * (1 + u * .6);
     g.save(); g.scale(1 + k * .07, 1 - k * .09); g.translate(x, y);
     g.globalCompositeOperation = 'lighter'; g.globalAlpha *= fade;
@@ -41,5 +44,5 @@
     g.fillStyle = '#fff7de'; g.beginPath(); g.arc(0, 0, 1.4 + fade, 0, TAU); g.fill();
     g.restore();
   }
-  return Object.freeze({ paintEnemy, paintMuzzle, family, COLORS });
+  return Object.freeze({ paintEnemy, paintMuzzle, port, family, COLORS });
 });

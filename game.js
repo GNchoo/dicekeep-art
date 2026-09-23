@@ -48,7 +48,7 @@ const BOSS_ENTRANCE = 1.25; // 보스 등장 연출 시간(초)
 // 주사위 눈(1~6) = 타워 종류. 눈이 높을수록 강력!
 // 모든 타워는 공중 적을 때릴 수 있다 (canAir 는 전부 true — 공중 적의 기믹은 '동선 무시 직행'뿐)
 const TOWER_DEFS = {
-  1: { name: '궁수 주사위', desc: '속사 레이저',        dmg: 8,  rate: 0.50, range: 150, laser: true,                 canAir: true,  color: '#9fd463', topper: 'laserMuzzle', atk: 'vib' },
+  1: { name: '궁수 주사위', desc: '붉은 렌즈 속사',        dmg: 8,  rate: 0.50, range: 150, laser: true,                 canAir: true,  color: '#9fd463', topper: 'laserMuzzle', atk: 'vib' },
   2: { name: '대포 주사위', desc: '쌍포 광역 포격',     dmg: 22, rate: 1.60, range: 135, proj: 'shell',      pspd: 300, splash: 60, canAir: true,  color: '#e0862c', topper: 'muzzleFlash', atk: 'exp' },
   3: { name: '마법 주사위', desc: '자수정 마력탄',      dmg: 24, rate: 0.95, range: 165, proj: 'bolt',       pspd: 430, canAir: true,  color: '#b78bff', topper: 'bolt', atk: 'norm' },
   4: { name: '서리 주사위', desc: '사방 냉기 둔화',     dmg: 8,  rate: 0.80, range: 140, proj: 'frostShard', pspd: 400, slow: true, canAir: true, color: '#7fd4ff', topper: 'frostShard', atk: 'norm' },
@@ -1328,7 +1328,7 @@ function paintTowerBody(t, sp) {
   MOTION.paintMuzzle(ctx, t, sp, DKCONTENT.STAR_TOWER_EMITTERS[t.face]);
 }
 function towerVisualEmitter(t) {
-  const xy = window.DKCONTENT && DKCONTENT.STAR_TOWER_EMITTERS && DKCONTENT.STAR_TOWER_EMITTERS[t.face];
+  const xy = t.face <= 2 ? MOTION.port(t) : window.DKCONTENT && DKCONTENT.STAR_TOWER_EMITTERS && DKCONTENT.STAR_TOWER_EMITTERS[t.face];
   const sp = xy && towerSpr(t.face, t.skin);
   if (!xy || !sp || !sp.dedicated) return { x: t.x, y: t.y - 64 };
   const recoil = (t.kick || 0) ** 2;
@@ -3492,8 +3492,9 @@ function towerFire(t, dt) {
     const tp = epos(best);
     const to = { x: tp.x, y: tp.y - best.def.size * 0.45 - (best.move === 'air' ? 42 : 0) };
     damageEnemy(best, dmg, t);
-    S.beams.push({ pts: [from, to], t: 0, dur: 0.11, style: 'laser' });
-    S.fxs.push({ kind: 'laserMuzzle', x: from.x, y: from.y, t: 0, dur: 0.1, size: 28 });
+    S.beams.push({ pts: [visualFrom, to], t: 0, dur: 0.11, style: t.face === 1 ? 'rubyShot' : 'laser', sourceTower: t });
+    // Tower 1's release light is painted on the lens by paintMuzzle.
+    if (t.face !== 1) S.fxs.push({ kind: 'laserMuzzle', x: visualFrom.x, y: visualFrom.y, t: 0, dur: 0.1, size: 28 });
     SFX.t1();
   } else if (t.def.chain) {
     const maxChain = towerChain(t);
@@ -3533,7 +3534,7 @@ function towerFire(t, dt) {
       rot: 0, spin: 0, src: t,
     });
     if (t.face === 2) {
-      S.fxs.push({ kind: 'muzzleFlash', x: from.x, y: from.y, t: 0, dur: 0.12, size: 38 });
+      S.fxs.push({ kind: 'muzzleFlash', x: visualFrom.x, y: visualFrom.y, t: 0, dur: 0.12, size: 38 });
     }
     if (t.def.star) { // ★ 타워: 밴드색 발사 섬광 + 링 — 성이 높을수록 크다
       const sc = starColor(t.def), k = t.def.star - 6;
@@ -4407,7 +4408,19 @@ function draw() {
   // 레이저 / 전격 빔
   for (const b of S.beams) {
     const alpha = 1 - b.t / b.dur;
-    if (b.style === 'laser' && A.laserBeam) {
+    if (b.style === 'rubyShot') {
+      const a = b.sourceTower ? towerVisualEmitter(b.sourceTower) : b.pts[0], c = b.pts[b.pts.length - 1];
+      const dx = c.x-a.x, dy = c.y-a.y, len = Math.hypot(dx,dy) || 1;
+      const u = Math.min(1, b.t / b.dur), head = len * u, tail = Math.max(0, head - 24);
+      ctx.save(); ctx.translate(a.x,a.y); ctx.rotate(Math.atan2(dy,dx));
+      ctx.globalAlpha = Math.min(1, alpha * 3); ctx.lineCap = 'round';
+      ctx.strokeStyle = '#ff624d'; ctx.lineWidth = 5;
+      ctx.beginPath(); ctx.moveTo(tail,0); ctx.lineTo(head,0); ctx.stroke();
+      ctx.strokeStyle = '#fff0b7'; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(tail,0); ctx.lineTo(head,0); ctx.stroke();
+      ctx.fillStyle = '#fff4cf'; ctx.beginPath(); ctx.arc(head,0,2.5,0,Math.PI*2); ctx.fill();
+      ctx.restore();
+    } else if (b.style === 'laser' && A.laserBeam) {
       const a = b.pts[0], c = b.pts[b.pts.length - 1];
       const dx = c.x - a.x, dy = c.y - a.y;
       const len = Math.hypot(dx, dy) || 1;
