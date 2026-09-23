@@ -1,0 +1,57 @@
+{
+  "source": "w004-back-puppet-casual-source.png",
+  "alphaCutoff": 28,
+  "pieces": [
+    {
+      "label": 2,
+      "count": 258580,
+      "sourceBounds": [
+        240,
+        124,
+        473,
+        798
+      ],
+      "outputBounds": [
+        240,
+        124,
+        473,
+        798
+      ],
+      "mirror": false
+    },
+    {
+      "label": 1,
+      "count": 149316,
+      "sourceBounds": [
+        900,
+        47,
+        522,
+        511
+      ],
+      "outputBounds": [
+        1050,
+        20,
+        522,
+        511
+      ],
+      "mirror": false
+    },
+    {
+      "label": 3,
+      "count": 119393,
+      "sourceBounds": [
+        926,
+        566,
+        501,
+        420
+      ],
+      "outputBounds": [
+        1050,
+        620,
+        501,
+        420
+      ],
+      "mirror": true
+    }
+  ]
+}

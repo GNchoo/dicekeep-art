@@ -1,0 +1,289 @@
+{
+  "version": 1,
+  "canonicalCell": 512,
+  "assetVersion": 93,
+  "entries": [
+    {
+      "assetId": "w005",
+      "wave": 5,
+      "role": "normal",
+      "locomotion": "legged",
+      "cell": 256,
+      "referenceHeight": 440,
+      "cycleStride": 241.64999999999998,
+      "reviewApproved": true,
+      "views": {
+        "side": {
+          "pivot": [
+            256,
+            460
+          ],
+          "legacyRig": {
+            "config": "tools/art-review/enemy-casual-2026-09-23/w005-side-legacy-config.json",
+            "wave": 5,
+            "strideMultiplier": 1.5,
+            "overrides": {
+              "supportCurve": "constraint-envelope"
+            },
+            "limbIds": {
+              "near": "rightLeg",
+              "far": "leftLeg"
+            }
+          },
+          "assetVersion": 128
+        },
+        "front": {
+          "source": "tools/art-review/enemy-casual-2026-09-23/w005-front-back-puppet-casual-source.png",
+          "sourceSha256": "dfb478ebd3bf7a7cd4fdc2bdc3a175f0a3a4df3b655ced8daadbf0ae60dc4a1b",
+          "background": "alpha",
+          "pivot": [
+            256,
+            430
+          ],
+          "body": {
+            "roi": [
+              0,
+              0.12,
+              0.27,
+              0.76
+            ],
+            "target": {
+              "height": 280,
+              "top": 28,
+              "centerX": 256
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.27,
+                0.3,
+                0.11,
+                0.6
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.5625,
+                  0.1
+                ],
+                "knee": [
+                  0.53125,
+                  0.4
+                ],
+                "ankle": [
+                  0.48125,
+                  0.8
+                ],
+                "sole": [
+                  0.3584025679758308,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.31,
+                0.83
+              ],
+              "socketRoiNormalized": [
+                0.22999999999999998,
+                0.75,
+                0.16,
+                0.16
+              ],
+              "phase": 0,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 430,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.41,
+                0.3,
+                0.11,
+                0.6
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.4107142857142857,
+                  0.1
+                ],
+                "knee": [
+                  0.44047619047619047,
+                  0.4
+                ],
+                "ankle": [
+                  0.47619047619047616,
+                  0.8
+                ],
+                "sole": [
+                  0.6363006396588486,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.69,
+                0.83
+              ],
+              "socketRoiNormalized": [
+                0.61,
+                0.75,
+                0.16,
+                0.16
+              ],
+              "phase": 0.5,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 430,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            }
+          ],
+          "assetVersion": 128
+        },
+        "back": {
+          "source": "tools/art-review/enemy-casual-2026-09-23/w005-front-back-puppet-casual-source.png",
+          "sourceSha256": "dfb478ebd3bf7a7cd4fdc2bdc3a175f0a3a4df3b655ced8daadbf0ae60dc4a1b",
+          "background": "alpha",
+          "pivot": [
+            256,
+            430
+          ],
+          "body": {
+            "roi": [
+              0.53,
+              0.12,
+              0.22,
+              0.76
+            ],
+            "target": {
+              "height": 280,
+              "top": 28,
+              "centerX": 256
+            },
+            "layer": 10
+          },
+          "parts": [
+            {
+              "id": "leftLeg",
+              "type": "leg",
+              "roi": [
+                0.75,
+                0.3,
+                0.1,
+                0.6
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.564935064935065,
+                  0.1
+                ],
+                "knee": [
+                  0.538961038961039,
+                  0.4
+                ],
+                "ankle": [
+                  0.461038961038961,
+                  0.8
+                ],
+                "sole": [
+                  0.5110853432282003,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.4065040650406504,
+                0.856687898089172
+              ],
+              "socketRoiNormalized": [
+                0.3465040650406504,
+                0.7966878980891721,
+                0.12,
+                0.12
+              ],
+              "phase": 0.5,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 430,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            },
+            {
+              "id": "rightLeg",
+              "type": "leg",
+              "roi": [
+                0.88,
+                0.3,
+                0.1,
+                0.6
+              ],
+              "sourceJoints": {
+                "hip": [
+                  0.43125,
+                  0.1
+                ],
+                "knee": [
+                  0.45,
+                  0.4
+                ],
+                "ankle": [
+                  0.54375,
+                  0.8
+                ],
+                "sole": [
+                  0.456342936802974,
+                  0.998
+                ]
+              },
+              "socketNormalized": [
+                0.6531165311653117,
+                0.856687898089172
+              ],
+              "socketRoiNormalized": [
+                0.5931165311653117,
+                0.7966878980891721,
+                0.12,
+                0.12
+              ],
+              "phase": 0,
+              "bend": -1,
+              "calibrate": {
+                "groundY": 430,
+                "maximumStanceAngle": 168
+              },
+              "layer": 1,
+              "upperLayer": -3,
+              "proximalFeather": 0.6,
+              "proximalEdgeFeather": 0.14
+            }
+          ],
+          "assetVersion": 128
+        }
+      },
+      "referenceHeightEvidence": "tools/art-review/pr29-gait/evidence/walk-jitter.json",
+      "gait": {
+        "stanceDuty": 0.5,
+        "lift": 20,
+        "pelvis": "support"
+      },
+      "reviewNote": "All three eight-pose boards visually inspected: upright biped or quadruped silhouette, physical limb phases, torso occlusion and equipment continuity. W2/W5/W9 rear equipment uses root-reviewed correction source with separately measured sockets; only reviewed enclosed background pockets are cleared. No clipped alpha or detached projected strips. Root delegated readiness after review; final gameplay/corners remain root-owned."
+    }
+  ]
+}

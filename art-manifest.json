@@ -14,7 +14,7 @@
   ],
   "summary": {
     "files": 2303,
-    "bytes": 265310125,
+    "bytes": 265049135,
     "byCategory": [
       {
         "name": "boss",
@@ -24,7 +24,7 @@
       {
         "name": "enemy",
         "files": 1646,
-        "bytes": 124772243
+        "bytes": 124511253
       },
       {
         "name": "map",
@@ -56,7 +56,7 @@
       {
         "name": "derived",
         "files": 1389,
-        "bytes": 160152528
+        "bytes": 159891538
       },
       {
         "name": "legacy",
@@ -88,7 +88,7 @@
       {
         "name": "webp",
         "files": 1987,
-        "bytes": 198883202
+        "bytes": 198622212
       }
     ],
     "byMobileBuild": [
@@ -100,7 +100,7 @@
       {
         "name": "included",
         "files": 2192,
-        "bytes": 232857542
+        "bytes": 232596552
       }
     ],
     "byMobileReason": [
@@ -122,7 +122,7 @@
       {
         "name": "mode-art-directory",
         "files": 1345,
-        "bytes": 152377495
+        "bytes": 152116505
       },
       {
         "name": "not-referenced-by-mobile-build",
@@ -18138,8 +18138,8 @@
     },
     {
       "path": "casual/enemies/inf/directional/w001-back-walk-4x2.webp",
-      "bytes": 26436,
-      "sha256": "50a355582bc5b69159e6fcbb6fd29f13d92b5242373cba185e22aefbcb79ae6a",
+      "bytes": 39230,
+      "sha256": "fd8586e29a78dffed1853e506705458aee7a2aa7ac5ab503698d17826ca77fff",
       "format": "webp",
       "width": 1024,
       "height": 512,
@@ -18154,8 +18154,8 @@
     },
     {
       "path": "casual/enemies/inf/directional/w001-back.webp",
-      "bytes": 9082,
-      "sha256": "4e01d5c36bbed3855c547a609a8c2de9ac2de51193f78b2c4e6d1f7cfc295373",
+      "bytes": 8800,
+      "sha256": "3a05633d470f54861636637f8e7d16cc59256ff1903907d9c6712060626fbac2",
       "format": "webp",
       "width": 256,
       "height": 256,
@@ -18170,8 +18170,8 @@
     },
     {
       "path": "casual/enemies/inf/directional/w001-front-walk-4x2.webp",
-      "bytes": 32524,
-      "sha256": "3bd5ad3a615f4bd0fe5de1f0a3e84b19e54df5021247060c406e87072770ca04",
+      "bytes": 38636,
+      "sha256": "41dba197608ce7895ddc8e4c10099e8edeb6e60b3ba22a03a6b7d7fc44422460",
       "format": "webp",
       "width": 1024,
       "height": 512,
@@ -18186,8 +18186,8 @@
     },
     {
       "path": "casual/enemies/inf/directional/w001-front.webp",
-      "bytes": 10100,
-      "sha256": "84e35f32740dc218f90c9fed074a445f9c5d025c477eefe2e6e42c72dd16aa01",
+      "bytes": 9846,
+      "sha256": "8537613cb166c2134c1ffeed1f0b8f40cab69db1541dd02b4974878f3ca046e6",
       "format": "webp",
       "width": 256,
       "height": 256,
@@ -18202,8 +18202,8 @@
     },
     {
       "path": "casual/enemies/inf/directional/w001-side-walk-4x2.webp",
-      "bytes": 90002,
-      "sha256": "d3787285b83d9efcb5eca67bfa215d3ca66b44cbaf544d0e84bdae93ea48edd8",
+      "bytes": 78672,
+      "sha256": "83545215242aa31d98c7d728bb69c32307e9cbdf0f2f1b36e3436e225f2b20c9",
       "format": "webp",
       "width": 1024,
       "height": 512,
@@ -18218,8 +18218,8 @@
     },
     {
       "path": "casual/enemies/inf/directional/w001-side.webp",
-      "bytes": 22426,
-      "sha256": "79d771d3286c49d21c86a25e27e04af0c51b92533dd2447347f2f195c3313566",
+      "bytes": 17352,
+      "sha256": "5642c4975bbf47a218dbb67d4633a1bb511764bd32e78810b2b2ad01cfa503bf",
       "format": "webp",
       "width": 256,
       "height": 256,
@@ -18234,8 +18234,8 @@
     },
     {
       "path": "casual/enemies/inf/directional/w002-back-walk-4x2.webp",
-      "bytes": 145620,
-      "sha256": "17465e34cd36f0767114ac4fc6a50cc83dd6b79ebdd198c4709863933182272e",
+      "bytes": 145148,
+      "sha256": "cc3d1483c941ca2fbedde82fced50b5ba9e07ad620e00b98f4dfb9d8f3df8411",
       "format": "webp",
       "width": 1024,
       "height": 512,
@@ -18250,8 +18250,8 @@
     },
     {
       "path": "casual/enemies/inf/directional/w002-back.webp",
-      "bytes": 29540,
-      "sha256": "ead1e46a26af01b50dc282b974fc1294b71e96e9d0a563414706a47efdc5c32d",
+      "bytes": 25350,
+      "sha256": "820585366cbe6273d185ecf7d1555bed8d469371e1a0d7621174aeab97539347",
       "format": "webp",
       "width": 256,
       "height": 256,
@@ -18266,8 +18266,8 @@
     },
     {
       "path": "casual/enemies/inf/directional/w002-front-walk-4x2.webp",
-      "bytes": 146458,
-      "sha256": "1906da083230a6da41453bb3346c325ef8f179fb7846ae7847c6fc540d0e373c",
+      "bytes": 149574,
+      "sha256": "c421c221b200ad8bf1a8faa4f01301451696a1eb83e67e82cf0528eaba97341e",
       "format": "webp",
       "width": 1024,
       "height": 512,
@@ -18282,8 +18282,8 @@
     },
     {
       "path": "casual/enemies/inf/directional/w002-front.webp",
-      "bytes": 28634,
-      "sha256": "2f090aa52d2408a58ffcf414501ec24161a97760ae65fb79aeb5899ed4faf4d6",
+      "bytes": 27526,
+      "sha256": "65fee2591c67646c667b1ee52ba9e6b84057f17eb3f2428fa8263d91e3c83487",
       "format": "webp",
       "width": 256,
       "height": 256,
@@ -18298,8 +18298,8 @@
     },
     {
       "path": "casual/enemies/inf/directional/w002-side-walk-4x2.webp",
-      "bytes": 142594,
-      "sha256": "aa99fe5c445992594f1702fcb832b36bb68041d2c3927b996391d41d96e222e9",
+      "bytes": 150388,
+      "sha256": "bb04e27d957e680058f8da2e3416cb940480133b72a1bfdf737d7100dc2e867a",
       "format": "webp",
       "width": 1024,
       "height": 512,
@@ -18314,8 +18314,8 @@
     },
     {
       "path": "casual/enemies/inf/directional/w002-side.webp",
-      "bytes": 25196,
-      "sha256": "2696de0cdd9777d4435086d365c50368f610fd61a4ff12a8be9d194b0cac2d58",
+      "bytes": 24916,
+      "sha256": "02bdf09f50302db664218f1ec5e63969daf1807fe52387a86c7e266fa95a489a",
       "format": "webp",
       "width": 256,
       "height": 256,
@@ -18330,8 +18330,8 @@
     },
     {
       "path": "casual/enemies/inf/directional/w003-back-walk-4x2.webp",
-      "bytes": 162862,
-      "sha256": "12cf865d2bd8b7266553f3d9c72233cde955b95c816cdb84a072b30d3e442752",
+      "bytes": 150118,
+      "sha256": "4dd2e7d1a5a588164543af65385fc1f797304d52a8e5393d06c686559838a452",
       "format": "webp",
       "width": 1024,
       "height": 512,
@@ -18346,8 +18346,8 @@
     },
     {
       "path": "casual/enemies/inf/directional/w003-back.webp",
-      "bytes": 32232,
-      "sha256": "e7e7bef2f5b46d2dac77aeb5ed340f3ae429290f6f638f14e28078fbd6a2021c",
+      "bytes": 28638,
+      "sha256": "2ca0e22d3295a19e8ef704b86fbedf53b53e34dd196ad4672503a463c75c6439",
       "format": "webp",
       "width": 256,
       "height": 256,
@@ -18362,8 +18362,8 @@
     },
     {
       "path": "casual/enemies/inf/directional/w003-front-walk-4x2.webp",
-      "bytes": 184590,
-      "sha256": "d28bcb038219ce720806ca5c338e95056ddfce88c09706c40c275fc246641dd9",
+      "bytes": 159310,
+      "sha256": "c7374208a25cf092cddfd1fbfa9805efb845a81626034df63430be59468af138",
       "format": "webp",
       "width": 1024,
       "height": 512,
@@ -18378,8 +18378,8 @@
     },
     {
       "path": "casual/enemies/inf/directional/w003-front.webp",
-      "bytes": 36686,
-      "sha256": "30138f5769f9e4e92c0112cc8bad9eba9d74a22905d8211cae56735943746c0e",
+      "bytes": 31606,
+      "sha256": "abf0796b858cc1336cb7c2a6a3bddc46b87ee0d43698998a5159b47c90759ca0",
       "format": "webp",
       "width": 256,
       "height": 256,
@@ -18394,8 +18394,8 @@
     },
     {
       "path": "casual/enemies/inf/directional/w003-side-walk-4x2.webp",
-      "bytes": 147804,
-      "sha256": "749c6ace9622418e3219b3c98360861d63bd0c1be38db5ee598f11b3ef2d4019",
+      "bytes": 132438,
+      "sha256": "23e98215faedfc30f9350622129ceba22daf2e69cd70620dd307021ac7ee6055",
       "format": "webp",
       "width": 1024,
       "height": 512,
@@ -18410,8 +18410,8 @@
     },
     {
       "path": "casual/enemies/inf/directional/w003-side.webp",
-      "bytes": 26498,
-      "sha256": "669d8309a5c1a176cb7c4b0b6bfea96bf4032cfd525c4e549926165dc1af3b93",
+      "bytes": 24714,
+      "sha256": "985ae76b9f85386d33606078ca25cc30be7e55b79b8b8e0c87b62bd58ab5b87f",
       "format": "webp",
       "width": 256,
       "height": 256,
@@ -18426,8 +18426,8 @@
     },
     {
       "path": "casual/enemies/inf/directional/w004-back-walk-2x2.webp",
-      "bytes": 47526,
-      "sha256": "181a5e0e1c8ccb23ce910dbc0a9c0434559b29c93217527e002bf4afdc8ca867",
+      "bytes": 49354,
+      "sha256": "ee59e53c0dd3f703bad4642df309e735d5ea5bad6fcf601fd137edc08904b68d",
       "format": "webp",
       "width": 512,
       "height": 512,
@@ -18442,8 +18442,8 @@
     },
     {
       "path": "casual/enemies/inf/directional/w004-back.webp",
-      "bytes": 19134,
-      "sha256": "669b926e9df1759c4019f244b4f61334f9b6182056d9cc6d7b85c738cb49db09",
+      "bytes": 20262,
+      "sha256": "07e0cb7c5e19b9b314d38ef2549eb9e6743e24f0e4fdbfb052f885988e0ea99c",
       "format": "webp",
       "width": 256,
       "height": 256,
@@ -18458,8 +18458,8 @@
     },
     {
       "path": "casual/enemies/inf/directional/w004-front-walk-2x2.webp",
-      "bytes": 48878,
-      "sha256": "9eeb9cec4e656226792e278ca6bd4bcf7956f70597e092b781a0a861dd3b5045",
+      "bytes": 53906,
+      "sha256": "e843dc0a1ad335a4012ea5590f83479e888137c2d66c5abd1cfef73ac5d39b76",
       "format": "webp",
       "width": 512,
       "height": 512,
@@ -18474,8 +18474,8 @@
     },
     {
       "path": "casual/enemies/inf/directional/w004-front.webp",
-      "bytes": 19940,
-      "sha256": "50ac76ad9fac70708d1a5a244a78a20f04db49f5641777abb0de6ba67747fb8b",
+      "bytes": 22710,
+      "sha256": "a7c24ee3fc9db4d5f3e89659bbe07f032d71d6b0be4ad5277682e59833dc33dc",
       "format": "webp",
       "width": 256,
       "height": 256,
@@ -18490,8 +18490,8 @@
     },
     {
       "path": "casual/enemies/inf/directional/w004-side-walk-2x2.webp",
-      "bytes": 90520,
-      "sha256": "839705353dcd25cac27b2c373c31a555cd19285f47f1eebf91bc82c9622a52c4",
+      "bytes": 53748,
+      "sha256": "80b03b93b1bb5c84376010153528297e76a485f771d2e844f61de0ef00dcb736",
       "format": "webp",
       "width": 512,
       "height": 512,
@@ -18506,8 +18506,8 @@
     },
     {
       "path": "casual/enemies/inf/directional/w004-side.webp",
-      "bytes": 23228,
-      "sha256": "fa4f2bf503112056dfae265fe9cfbcc56801e7f6f5a252a6150deeeed02e6a59",
+      "bytes": 21220,
+      "sha256": "250c9abdd6b7b106ceac2f3f2359f3e465b8ebaedccf42d608dec1a9bb94349d",
       "format": "webp",
       "width": 256,
       "height": 256,
@@ -18522,8 +18522,8 @@
     },
     {
       "path": "casual/enemies/inf/directional/w005-back-walk-4x2.webp",
-      "bytes": 208948,
-      "sha256": "18e2c8b8b62572d398800ec7121293897972310f4614befe285adb75755d87be",
+      "bytes": 165412,
+      "sha256": "099b5f4f49ea3afdf098d3557eaa298d1e89b681314baa0d83dfcf98ecf571c4",
       "format": "webp",
       "width": 1024,
       "height": 512,
@@ -18538,8 +18538,8 @@
     },
     {
       "path": "casual/enemies/inf/directional/w005-back.webp",
-      "bytes": 39448,
-      "sha256": "066b7438b1ab8def2017baf9e49e99f9aaf863d263c382204b148aba26e59820",
+      "bytes": 29220,
+      "sha256": "d38da06b6044f695931f286c463f9275c70fe07c8825e3fb77ba2731ea395280",
       "format": "webp",
       "width": 256,
       "height": 256,
@@ -18554,8 +18554,8 @@
     },
     {
       "path": "casual/enemies/inf/directional/w005-front-walk-4x2.webp",
-      "bytes": 236516,
-      "sha256": "af3a67de767f950ab44bb090074cab82825c86883091a7eb26dbe7f9afadcf49",
+      "bytes": 214004,
+      "sha256": "8327c6e673052a9de441e8f570c5f2cdb2d2fad48086e38d3c925884d2f6a6ca",
       "format": "webp",
       "width": 1024,
       "height": 512,
@@ -18570,8 +18570,8 @@
     },
     {
       "path": "casual/enemies/inf/directional/w005-front.webp",
-      "bytes": 42508,
-      "sha256": "7de480f1bccf1e6d09f7ca308b9a266c64ff9dfa571c9c2249929660557f46fd",
+      "bytes": 37908,
+      "sha256": "c4f0af6be992144e869be61119c393fa7c8d308fe85c7bcf62f5cc57951f78ce",
       "format": "webp",
       "width": 256,
       "height": 256,
@@ -18586,8 +18586,8 @@
     },
     {
       "path": "casual/enemies/inf/directional/w005-side-walk-4x2.webp",
-      "bytes": 179400,
-      "sha256": "59879f18b1873aa219e530603bcaaef2d1a6c9f5827d93af028e71b84579a4b4",
+      "bytes": 166868,
+      "sha256": "9949426d5b66bb87a3cf780620af8148707c7a89dab23635dd7d332c0ba76dec",
       "format": "webp",
       "width": 1024,
       "height": 512,
@@ -18602,8 +18602,8 @@
     },
     {
       "path": "casual/enemies/inf/directional/w005-side.webp",
-      "bytes": 33764,
-      "sha256": "7f134e5691b422b3bb00b390cb20baa9069bd576f248e901adf307f4943cbf60",
+      "bytes": 31406,
+      "sha256": "6ada9c098395975f599e514c2adb3fa7d9c5af917f3fdb6a981f42c478961236",
       "format": "webp",
       "width": 256,
       "height": 256,
@@ -18810,8 +18810,8 @@
     },
     {
       "path": "casual/enemies/inf/directional/w008-back-walk-2x2.webp",
-      "bytes": 57972,
-      "sha256": "a3fd554e75d4022cc9d007b6589a4d77a556aae51a026a712b89a9384492b686",
+      "bytes": 55934,
+      "sha256": "5f4a427214a9557f2fddeb3524b1ea0c79be16a1dc08c72e2a3bf49761195d1c",
       "format": "webp",
       "width": 512,
       "height": 512,
@@ -18826,8 +18826,8 @@
     },
     {
       "path": "casual/enemies/inf/directional/w008-back.webp",
-      "bytes": 23540,
-      "sha256": "ba0c2dccfc7602bb72ca4c99e653fbb28d0d109a042cac24cd7f19ab3b948158",
+      "bytes": 23814,
+      "sha256": "19d4d2be1ce0f8fbcea8b328ab713c0781defdafe0e48a5fbc2521fdf9d923d0",
       "format": "webp",
       "width": 256,
       "height": 256,
@@ -18842,8 +18842,8 @@
     },
     {
       "path": "casual/enemies/inf/directional/w008-front-walk-2x2.webp",
-      "bytes": 62618,
-      "sha256": "ca24fb05041c4884c025810be4c12bdc8c48fe7167e27232ffd1e359e60064f7",
+      "bytes": 63462,
+      "sha256": "4cc485c5cedd9b60df6d94e89227365db920d11be9fe69385c34de25900534cb",
       "format": "webp",
       "width": 512,
       "height": 512,
@@ -18858,8 +18858,8 @@
     },
     {
       "path": "casual/enemies/inf/directional/w008-front.webp",
-      "bytes": 26514,
-      "sha256": "9d174bd945949083ae67753cb70ad00b7a4b5dd87371c259d165b611f24e5034",
+      "bytes": 26444,
+      "sha256": "409cdafcaf5916acd5ca32514ec3814ff49697122f1ca3d92af3873e326dbe10",
       "format": "webp",
       "width": 256,
       "height": 256,
@@ -18874,8 +18874,8 @@
     },
     {
       "path": "casual/enemies/inf/directional/w008-side-walk-2x2.webp",
-      "bytes": 120106,
-      "sha256": "9fe322cd9c0b4f7d0171836775f4c92132975498dbe3abb7d2c5070459fc3bdf",
+      "bytes": 51920,
+      "sha256": "bf11e4771405a78e5ea6a6e217e9cc37bdc67c658c2fb27ddc4b369b19104066",
       "format": "webp",
       "width": 512,
       "height": 512,
@@ -18890,8 +18890,8 @@
     },
     {
       "path": "casual/enemies/inf/directional/w008-side.webp",
-      "bytes": 30636,
-      "sha256": "e0378fd58b1a9a423fd8fc8085ba8685248116ebee7c77de4ce10ff4ab5a3182",
+      "bytes": 19636,
+      "sha256": "18413bd3f662942fadb4c2ca554a0733807f46e25c9e2cf3156f7c4ace5bad0a",
       "format": "webp",
       "width": 256,
       "height": 256,

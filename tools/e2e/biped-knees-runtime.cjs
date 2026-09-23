@@ -17,7 +17,16 @@ const legacyEntries = JSON.parse(read('tools/art-review/biped-knees-110/legacy-f
 const changed = [...fullRigEntries, ...legacyEntries];
 const changedIds = new Set(changed.map(e => e.assetId));
 const changedViews = new Map([...fullRigEntries.map(e => [e.assetId, ['side', 'front', 'back']]), ...legacyEntries.map(e => [e.assetId, ['front', 'back']])]);
-const preservedAvianIds = ['w075', 'w176'], expectedViews = [...changedViews.values()].reduce((n, views) => n + views.length, 0);
+// These reviewed repaints changed actual sprites and inline fallbacks after
+// the v110 knee-only baseline. Keep this list explicit: any other art change
+// must still fail the strict historical comparison below.
+const reviewedCasualVersions = new Map([
+  ['w001', 127], ['w002', 128], ['w003', 128], ['w004', 128], ['w005', 128], ['w008', 127],
+]);
+for (const id of reviewedCasualVersions.keys()) if (changedIds.has(id)) changedViews.set(id, ['side', 'front', 'back']);
+const preservedAvianIds = ['w075', 'w176'];
+const expectedViews = [...changedViews.values()].reduce((n, views) => n + views.length, 0)
+  + [...reviewedCasualVersions.keys()].filter(id => !changedIds.has(id)).length * 3;
 assert.ok(changed.length > 0); assert.equal(changedIds.size, changed.length, 'duplicate correction identity');
 for (const id of preservedAvianIds) assert.equal(changedIds.has(id), false, id + ': authored bird hock must remain unchanged');
 const report = { baseline, scope: 'Real game spawn/direction/placement and served image integrity in desktop Chrome viewports; not native device performance or visual anatomy approval.', passed: false };
@@ -57,7 +66,31 @@ async function metadataAndFiles() {
     for (const name of views) { const view = copy.views[name]; delete view.assetVersion; delete view.fallback; }
     return copy;
   };
+  const collectReviewed = (id, entry) => {
+    const expectedVersion = reviewedCasualVersions.get(id);
+    const now = structuredClone(entry), before = structuredClone(previous[id]);
+    delete now.views; delete before.views;
+    assert.deepEqual(now, before, id + ': identity, role, locomotion, or cadence changed during art review');
+    assert.deepEqual(Object.keys(entry.views).sort(), ['back', 'front', 'side']);
+    for (const [name, view] of Object.entries(entry.views)) {
+      assert.equal(view.assetVersion, expectedVersion, id + ':' + name + ': unexpected reviewed art version');
+      assert.equal(view.frames, previous[id].views[name].frames, id + ':' + name + ': animation cadence changed');
+      assert.equal(view.cols * view.rows, view.frames, id + ':' + name + ': incomplete walk sheet');
+      assert.ok(Number.isInteger(view.cell) && view.cell > 0);
+      assert.ok(Array.isArray(view.pivot) && view.pivot.length === 2 && view.pivot.every(n => Number.isFinite(n) && n >= 0 && n <= view.cell));
+      assert.ok(Number.isFinite(view.scale) && view.scale > 0);
+      assert.ok(view.fallback.startsWith('data:image/webp;base64,'), id + ':' + name + ': inline fallback missing');
+      for (const kind of ['still', 'sheet']) {
+        const suffix = kind === 'sheet' ? `-walk-${view.cols}x${view.rows}` : '';
+        assert.equal(view[kind], `casual/enemies/inf/directional/${id}-${name}${suffix}.webp`);
+      }
+      downloads.push({ id, view: name, cell: view.cell, cols: view.cols, rows: view.rows,
+        fallback: view.fallback, version: expectedVersion,
+        files: ['still', 'sheet'].map(kind => ({ kind, path: view[kind], sha256: sha256(read(view[kind])) })) });
+    }
+  };
   for (const [id, entry] of Object.entries(current)) {
+    if (reviewedCasualVersions.has(id)) { collectReviewed(id, entry); continue; }
     if (!changedIds.has(id)) {
       assert.deepEqual(formatAgnostic(entry), formatAgnostic(previous[id]), id + ': unrelated metadata changed');
       for (const view of Object.values(entry.views)) for (const key of ['still', 'sheet']) sameFiles.add(view[key]);
@@ -102,17 +135,18 @@ async function metadataAndFiles() {
     assert.equal(visible, 0, file + ': 재인코딩이 보이는 RGBA 를 바꿨다 (' + visible + ' 바이트)');
     reencoded++;
   }
-  report.integrity = { changedIdentities: changedIds.size, unchangedIdentities: Object.keys(current).length - changedIds.size,
+  const reviewedOnly = [...reviewedCasualVersions.keys()].filter(id => !changedIds.has(id));
+  report.integrity = { changedIdentities: changedIds.size + reviewedOnly.length, unchangedIdentities: Object.keys(current).length - changedIds.size - reviewedOnly.length,
     unchangedImageFiles: sameFiles.size, losslesslyReencoded: reencoded, changedViews: downloads.length,
-    preservedLegacySides: legacyEntries.map(e => e.assetId), preservedAvianIds, stableGeometry: true };
-  assert.equal(report.integrity.unchangedIdentities, Object.keys(previous).length - changed.length);
+    preservedLegacySides: legacyEntries.map(e => e.assetId).filter(id => !reviewedCasualVersions.has(id)), preservedAvianIds, stableGeometry: true };
+  assert.equal(report.integrity.unchangedIdentities, Object.keys(previous).length - changed.length - reviewedOnly.length);
   assert.equal(downloads.length, expectedViews);
   for (const id of preservedAvianIds) for (const view of Object.values(current[id].views)) for (const key of ['still', 'sheet']) {
     assert.ok(sameFiles.has(view[key]), id + ': avian image was not covered by baseline Git blob verification');
   }
-  for (const entry of legacyEntries) for (const kind of ['still', 'sheet']) assert.ok(sameFiles.has(current[entry.assetId].views.side[kind]), entry.assetId + ': unchanged legacy side must be byte verified');
+  for (const entry of legacyEntries.filter(e => !reviewedCasualVersions.has(e.assetId))) for (const kind of ['still', 'sheet']) assert.ok(sameFiles.has(current[entry.assetId].views.side[kind]), entry.assetId + ': unchanged legacy side must be byte verified');
   const spawns = changed.map(e => ({ assetId: e.assetId, wave: e.wave, role: e.role,
-    viewVersions: Object.fromEntries(['side', 'front', 'back'].map(view => [view, changedViews.get(e.assetId).includes(view) ? 110 : previousVersions[e.assetId][view]])) }));
+    viewVersions: Object.fromEntries(['side', 'front', 'back'].map(view => [view, changedViews.get(e.assetId).includes(view) ? reviewedCasualVersions.get(e.assetId) ?? 110 : previousVersions[e.assetId][view]])) }));
   return { downloads, spawns };
 }
 

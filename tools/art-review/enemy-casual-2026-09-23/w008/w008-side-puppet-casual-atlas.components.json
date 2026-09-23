@@ -1,0 +1,91 @@
+{
+  "source": "w008-side-puppet-casual-source.png",
+  "alphaCutoff": 28,
+  "pieces": [
+    {
+      "label": 3,
+      "count": 144354,
+      "sourceBounds": [
+        383,
+        391,
+        484,
+        414
+      ],
+      "outputBounds": [
+        383,
+        391,
+        484,
+        414
+      ],
+      "mirror": false
+    },
+    {
+      "label": 5,
+      "count": 51522,
+      "sourceBounds": [
+        82,
+        644,
+        299,
+        241
+      ],
+      "outputBounds": [
+        82,
+        644,
+        299,
+        241
+      ],
+      "mirror": false
+    },
+    {
+      "label": 2,
+      "count": 43893,
+      "sourceBounds": [
+        770,
+        272,
+        268,
+        223
+      ],
+      "outputBounds": [
+        770,
+        272,
+        268,
+        223
+      ],
+      "mirror": false
+    },
+    {
+      "label": 1,
+      "count": 85432,
+      "sourceBounds": [
+        1112,
+        107,
+        364,
+        440
+      ],
+      "outputBounds": [
+        1200,
+        20,
+        364,
+        440
+      ],
+      "mirror": false
+    },
+    {
+      "label": 4,
+      "count": 74371,
+      "sourceBounds": [
+        1112,
+        542,
+        364,
+        389
+      ],
+      "outputBounds": [
+        1200,
+        535,
+        364,
+        389
+      ],
+      "mirror": true
+    }
+  ]
+}

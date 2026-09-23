@@ -76,7 +76,10 @@ try {
       const gifRaw = await sharp({ create: { width: entry.cell, height: entry.cell * rig.count, channels: 4, background: '#253438' } }).composite(frames.map((input, i) => ({ input, left: 0, top: i * entry.cell }))).raw().toBuffer();
       const gif = await sharp(gifRaw, { raw: { width: entry.cell, height: entry.cell * rig.count, channels: 4, pageHeight: entry.cell } }).gif({ delay: Array(rig.count).fill(entry.frameDelayMs ?? (rig.count === 8 ? 150 : 200)), loop: 0, effort: 7 }).toBuffer();
       await recordFile(`review/${entry.assetId}-${name}.gif`, gif);
-      const fallback = await sharp(still).resize(64, 64).webp({ lossless: true, effort: 6 }).toBuffer();
+      // Derive the inline fallback from the encoded runtime still. WebP can
+      // normalize fully transparent pixels; the fallback must match the exact
+      // promoted image rather than the intermediate PNG.
+      const fallback = await sharp(stillOut.bytes).resize(64, 64).webp({ lossless: true, effort: 6 }).toBuffer();
       const fallbackStats = await inspectAlpha(fallback, entry.assetId + ' ' + name + ' inline fallback');
       runtime.views[name] = { still: stillFile, sheet: sheetFile, frames: rig.count, cols, rows, cell: entry.cell, pivot: rig.pivot.map(n => n * scale), scale, fallback: 'data:image/webp;base64,' + fallback.toString('base64') };
       if (entry.views[name].assetVersion != null) runtime.views[name].assetVersion = entry.views[name].assetVersion;

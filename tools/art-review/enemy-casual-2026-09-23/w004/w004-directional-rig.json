@@ -1,0 +1,249 @@
+{
+  "version": 1,
+  "canonicalCell": 512,
+  "assetVersion": 93,
+  "entries": [
+    {
+      "assetId": "w004",
+      "wave": 4,
+      "role": "normal",
+      "locomotion": "flight",
+      "cell": 256,
+      "referenceHeight": 328,
+      "cycleStride": 0,
+      "cycleSeconds": 0.8,
+      "reviewApproved": true,
+      "views": {
+        "side": {
+          "source": "tools/art-review/enemy-casual-2026-09-23/w004/w004-side-puppet-casual-atlas.png",
+          "sourceSha256": "15179a50589f1184a103479208dafe7de49f34e59060cc9410e47449ae722f8f",
+          "background": "alpha",
+          "pivot": [
+            255.5,
+            420
+          ],
+          "assetVersion": 128,
+          "body": {
+            "roi": [
+              0.02001953125,
+              0.215,
+              0.41748046875,
+              0.5416666666666666
+            ],
+            "target": {
+              "height": 205,
+              "top": 185,
+              "centerX": 256
+            },
+            "layer": 0
+          },
+          "parts": [
+            {
+              "id": "ravenLeftWing",
+              "type": "wing",
+              "roi": [
+                0.50830078125,
+                0.5091666666666667,
+                0.2490234375,
+                0.38333333333333336
+              ],
+              "socketNormalized": [
+                0.43,
+                0.22
+              ],
+              "sourcePivot": [
+                0.94,
+                0.72
+              ],
+              "scale": 0.32805429864253394,
+              "angleDeg": [
+                -6,
+                43
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "ravenRightWing",
+              "type": "wing",
+              "roi": [
+                0.50830078125,
+                0.009166666666666667,
+                0.25341796875,
+                0.38416666666666666
+              ],
+              "socketNormalized": [
+                0.53,
+                0.22
+              ],
+              "sourcePivot": [
+                0.06,
+                0.72
+              ],
+              "scale": 0.327313769751693,
+              "angleDeg": [
+                6,
+                -43
+              ],
+              "phase": 0,
+              "layer": -1
+            }
+          ]
+        },
+        "front": {
+          "source": "tools/art-review/enemy-casual-2026-09-23/w004/w004-front-puppet-casual-atlas.png",
+          "sourceSha256": "5c659895df953d29d93d4d697a510010be028847a60ed4a3ed0fb41d7c7dd865",
+          "background": "alpha",
+          "pivot": [
+            255.5,
+            420
+          ],
+          "assetVersion": 128,
+          "body": {
+            "roi": [
+              0.09228515625,
+              0.08916666666666667,
+              0.27685546875,
+              0.6641666666666667
+            ],
+            "target": {
+              "height": 205,
+              "top": 185,
+              "centerX": 256
+            },
+            "layer": 0
+          },
+          "parts": [
+            {
+              "id": "ravenLeftWing",
+              "type": "wing",
+              "roi": [
+                0.50830078125,
+                0.5091666666666667,
+                0.28125,
+                0.3983333333333333
+              ],
+              "socketNormalized": [
+                0.13,
+                0.29
+              ],
+              "sourcePivot": [
+                0.94,
+                0.72
+              ],
+              "scale": 0.31521739130434784,
+              "angleDeg": [
+                -6,
+                43
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "ravenRightWing",
+              "type": "wing",
+              "roi": [
+                0.50830078125,
+                0.009166666666666667,
+                0.3017578125,
+                0.4583333333333333
+              ],
+              "socketNormalized": [
+                0.87,
+                0.29
+              ],
+              "sourcePivot": [
+                0.06,
+                0.72
+              ],
+              "scale": 0.2725563909774436,
+              "angleDeg": [
+                6,
+                -43
+              ],
+              "phase": 0,
+              "layer": -1
+            }
+          ]
+        },
+        "back": {
+          "source": "tools/art-review/enemy-casual-2026-09-23/w004/w004-back-puppet-casual-atlas.png",
+          "sourceSha256": "dd7828de277cea5f9491bf779a0fc36a02de8daa7b4859c5fcfc8901fe6e3d71",
+          "background": "alpha",
+          "pivot": [
+            255.5,
+            420
+          ],
+          "assetVersion": 128,
+          "body": {
+            "roi": [
+              0.1103515625,
+              0.09166666666666666,
+              0.24462890625,
+              0.6883333333333334
+            ],
+            "target": {
+              "height": 205,
+              "top": 185,
+              "centerX": 256
+            },
+            "layer": 0
+          },
+          "parts": [
+            {
+              "id": "ravenLeftWing",
+              "type": "wing",
+              "roi": [
+                0.50830078125,
+                0.5091666666666667,
+                0.25341796875,
+                0.365
+              ],
+              "socketNormalized": [
+                0.13,
+                0.29
+              ],
+              "sourcePivot": [
+                0.94,
+                0.72
+              ],
+              "scale": 0.34523809523809523,
+              "angleDeg": [
+                -6,
+                43
+              ],
+              "phase": 0,
+              "layer": -1
+            },
+            {
+              "id": "ravenRightWing",
+              "type": "wing",
+              "roi": [
+                0.50830078125,
+                0.009166666666666667,
+                0.263671875,
+                0.44083333333333335
+              ],
+              "socketNormalized": [
+                0.87,
+                0.29
+              ],
+              "sourcePivot": [
+                0.06,
+                0.72
+              ],
+              "scale": 0.2837573385518591,
+              "angleDeg": [
+                6,
+                -43
+              ],
+              "phase": 0,
+              "layer": -1
+            }
+          ]
+        }
+      },
+      "reviewNotes": "W004 raven scout in clean flat-cel style; amber eye, brown harness and lantern preserved; separate two-wing flight in three views."
+    }
+  ]
+}

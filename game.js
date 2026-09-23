@@ -796,7 +796,8 @@ function directionalDrawHeight(e, baseHeight) {
   // A long-bodied rat should not be as tall as a humanoid in the same combat class.
   // Share this presentation scale with spectators; drawHeight also sets the visual stride.
   const entry = directionalArt && directionalArt.entry(e.artAssetId);
-  const characterScale = e.artAssetId === 'w001' || (entry && entry.legacyAssetId === 'w001') ? 0.5 : 1;
+  const characterScale = e.artAssetId === 'w001' || (entry && entry.legacyAssetId === 'w001') ? 0.8
+    : e.artAssetId === 'w008' || (entry && entry.legacyAssetId === 'w008') ? 1.3 : 1;
   return baseHeight * characterScale * (e.bossRole === 1 ? 0.7 : 1) * (e.isElite ? 1.2 : 1);
 }
 function directionalPhase(e) {
@@ -805,6 +806,16 @@ function directionalPhase(e) {
   const stride = entry && entry.cycleStride * e.drawHeight / entry.referenceHeight;
   if (stride > 0) return DIR_ART.phase(e.artWalkDistance || 0, stride);
   return entry ? DIR_ART.phase(e.animT || 0, entry.cycleSeconds || entry.views.side.frames / 5) : ((e.animT || 0) * 5 % 8) / 8;
+}
+function bossFootstepIndex(e) {
+  const entry = directionalArt && e.artAssetId && directionalArt.entry(e.artAssetId);
+  if (e.move === 'ground' && entry?.locomotion === 'legged') {
+    // Two planted-foot exchanges per baked walk cycle. Keep the unwrapped
+    // distance here so the sound also advances cleanly across lane loops.
+    const stride = entry.cycleStride * e.drawHeight / entry.referenceHeight;
+    if (stride > 0) return Math.floor(2 * (e.artWalkDistance || 0) / stride);
+  }
+  return Math.floor(e.animT * 2); // Preserve legacy and nonwalking boss timing.
 }
 function refreshDirectionalDemand(force) {
   if (!directionalArt) return;
@@ -3759,9 +3770,9 @@ function update(dt) {
     } else e.hidden = false;
     const p = epos(e);
     if (Math.abs(p.dx) > 0.3) e.face = Math.sign(p.dx);
-    // 보스 쿵쿵 걷기: 발을 디딜 때마다 먼지 + 소리
+    // 보스 쿵쿵 걷기: 방향별 보행 시트의 발 교체 시점에 먼지 + 소리
     if (e.isBoss && e.move !== 'air') {
-      const ph = Math.floor(e.animT * 2);
+      const ph = bossFootstepIndex(e);
       if (ph !== e.stompPhase) {
         e.stompPhase = ph;
         for (let i = 0; i < 5; i++) {
@@ -4033,10 +4044,9 @@ function flashCanvas(fr, drawW, drawH) {
 }
 function enemyFramePlacement(fr, height) {
   if (fr.directional) {
-    // Keep the rat readable head-on without changing its side size or gait phase.
-    // Scale around the authored ground pivot, including stills and death frames.
-    const viewScale = (fr.assetId === 'w001' || fr.legacyAssetId === 'w001') && (fr.view === 'front' || fr.view === 'back') ? 1.6 : 1;
-    const scale = height * viewScale / fr.referenceHeight;
+    // Scale every view around the authored ground pivot. W001's presentation
+    // height already keeps its side and front/back silhouettes readable.
+    const scale = height / fr.referenceHeight;
     return { w: fr.w * scale, h: fr.h * scale, x: -fr.pivot[0] * scale, y: -fr.pivot[1] * scale };
   }
   const w = height * fr.w / fr.h;
@@ -4045,6 +4055,19 @@ function enemyFramePlacement(fr, height) {
 function drawEnemyEvolution(tier, fr, height) {
   const mark = tier && fr.directional && directionalArt && directionalArt.evolutionMark(tier, fr.view);
   if (mark) ctx.drawImage(mark, -height * .62, -height * 1.05, height * 1.24, height * 1.24);
+}
+function drawEnemyGroundShadow(e, p, fr) {
+  if (e.move !== 'ground' || e.hidden) return;
+  // The fixed authored foot pivot sits at p.y + 4. Never vary this shadow
+  // with frame index: moving it would make planted feet look airborne. In
+  // front/back views the stride projects into screen Y, so cover that depth.
+  const radius = Math.max(7, Math.min(42, (e.drawHeight || e.def.size) * .35));
+  const depth = fr?.directional && fr.view !== 'side' ? .65 : .27;
+  ctx.save();
+  if (depth > .27) ctx.globalAlpha *= .72;
+  ctx.fillStyle = 'rgba(18, 19, 30, 0.18)';
+  ctx.beginPath(); ctx.ellipse(p.x, p.y + 5, radius, Math.max(3, radius * depth), 0, 0, Math.PI * 2); ctx.fill();
+  ctx.restore();
 }
 
 // 코드 생성 레인(하늘길·땅굴)과 추가 포탈을 배경 위에 그린다
@@ -4321,6 +4344,7 @@ function draw() {
       const fr = currentEnemyFrame(e);
       const airY = enemyAirHeight(e, p, fr);
       const drawY = p.y + 4 - airY;
+      drawEnemyGroundShadow(e, p, fr);
       if (e.slowT > 0) {
         ctx.save();
         ctx.translate(p.x, p.y - airY);
