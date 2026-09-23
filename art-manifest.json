@@ -13,8 +13,8 @@
     "vfx"
   ],
   "summary": {
-    "files": 2289,
-    "bytes": 265367264,
+    "files": 2303,
+    "bytes": 265555757,
     "byCategory": [
       {
         "name": "boss",
@@ -38,8 +38,8 @@
       },
       {
         "name": "tower",
-        "files": 116,
-        "bytes": 19514714
+        "files": 130,
+        "bytes": 19703207
       },
       {
         "name": "ui",
@@ -66,12 +66,12 @@
       {
         "name": "runtime",
         "files": 803,
-        "bytes": 74994433
+        "bytes": 72950646
       },
       {
         "name": "source",
-        "files": 1,
-        "bytes": 1267272
+        "files": 15,
+        "bytes": 3499552
       }
     ],
     "byFormat": [
@@ -82,8 +82,8 @@
       },
       {
         "name": "png",
-        "files": 207,
-        "bytes": 39154935
+        "files": 221,
+        "bytes": 39343428
       },
       {
         "name": "webp",
@@ -94,13 +94,13 @@
     "byMobileBuild": [
       {
         "name": "excluded",
-        "files": 97,
-        "bytes": 30220303
+        "files": 111,
+        "bytes": 32452583
       },
       {
         "name": "included",
         "files": 2192,
-        "bytes": 235146961
+        "bytes": 233103174
       }
     ],
     "byMobileReason": [
@@ -125,14 +125,14 @@
         "bytes": 152377495
       },
       {
-        "name": "runtime-reference",
-        "files": 682,
-        "bytes": 57625387
-      },
-      {
-        "name": "star-tower-rule",
+        "name": "not-referenced-by-mobile-build",
         "files": 14,
         "bytes": 2232280
+      },
+      {
+        "name": "runtime-reference",
+        "files": 696,
+        "bytes": 57813880
       },
       {
         "name": "tower-skins-directory",
@@ -34793,6 +34793,22 @@
       }
     },
     {
+      "path": "casual/towers/star-07-casual.png",
+      "bytes": 12187,
+      "sha256": "0b262e3f0cacc65f937a5dba5b99b9ad5fe0a81c7a44846a8f04896ae8f6f322",
+      "format": "png",
+      "width": 97,
+      "height": 192,
+      "hasAlpha": true,
+      "lifecycle": "runtime",
+      "category": "tower",
+      "role": "star-progression",
+      "mobileBuild": {
+        "status": "included",
+        "reason": "runtime-reference"
+      }
+    },
+    {
       "path": "casual/towers/star-07.png",
       "bytes": 147634,
       "sha256": "47cf680c7f00c219c3b06ece46c431625b1e487e62c91fbfd744c279064241e2",
@@ -34800,12 +34816,28 @@
       "width": 384,
       "height": 384,
       "hasAlpha": true,
+      "lifecycle": "source",
+      "category": "tower",
+      "role": "star-progression",
+      "mobileBuild": {
+        "status": "excluded",
+        "reason": "not-referenced-by-mobile-build"
+      }
+    },
+    {
+      "path": "casual/towers/star-08-casual.png",
+      "bytes": 12168,
+      "sha256": "5c89ea08647e9653655d67f2a04d66748fb1846457cefdca50f529ac96aed5e9",
+      "format": "png",
+      "width": 88,
+      "height": 192,
+      "hasAlpha": true,
       "lifecycle": "runtime",
       "category": "tower",
       "role": "star-progression",
       "mobileBuild": {
         "status": "included",
-        "reason": "star-tower-rule"
+        "reason": "runtime-reference"
       }
     },
     {
@@ -34816,12 +34848,28 @@
       "width": 384,
       "height": 384,
       "hasAlpha": true,
+      "lifecycle": "source",
+      "category": "tower",
+      "role": "star-progression",
+      "mobileBuild": {
+        "status": "excluded",
+        "reason": "not-referenced-by-mobile-build"
+      }
+    },
+    {
+      "path": "casual/towers/star-09-casual.png",
+      "bytes": 12660,
+      "sha256": "5eed024005d6aebbf5aba10946ef3a5f3387f6d09aeeacc23eec98dcb172eef1",
+      "format": "png",
+      "width": 92,
+      "height": 192,
+      "hasAlpha": true,
       "lifecycle": "runtime",
       "category": "tower",
       "role": "star-progression",
       "mobileBuild": {
         "status": "included",
-        "reason": "star-tower-rule"
+        "reason": "runtime-reference"
       }
     },
     {
@@ -34832,12 +34880,28 @@
       "width": 384,
       "height": 384,
       "hasAlpha": true,
+      "lifecycle": "source",
+      "category": "tower",
+      "role": "star-progression",
+      "mobileBuild": {
+        "status": "excluded",
+        "reason": "not-referenced-by-mobile-build"
+      }
+    },
+    {
+      "path": "casual/towers/star-10-casual.png",
+      "bytes": 16399,
+      "sha256": "0266028e2f25518bbd4242aa85da10b4584d6e02647b76b1265d3c936839ba28",
+      "format": "png",
+      "width": 132,
+      "height": 192,
+      "hasAlpha": true,
       "lifecycle": "runtime",
       "category": "tower",
       "role": "star-progression",
       "mobileBuild": {
         "status": "included",
-        "reason": "star-tower-rule"
+        "reason": "runtime-reference"
       }
     },
     {
@@ -34848,12 +34912,28 @@
       "width": 384,
       "height": 384,
       "hasAlpha": true,
+      "lifecycle": "source",
+      "category": "tower",
+      "role": "star-progression",
+      "mobileBuild": {
+        "status": "excluded",
+        "reason": "not-referenced-by-mobile-build"
+      }
+    },
+    {
+      "path": "casual/towers/star-11-casual.png",
+      "bytes": 13885,
+      "sha256": "3f037eb27430b634baa3f293f0539461a24675d085816fab2091af4a0b729407",
+      "format": "png",
+      "width": 103,
+      "height": 192,
+      "hasAlpha": true,
       "lifecycle": "runtime",
       "category": "tower",
       "role": "star-progression",
       "mobileBuild": {
         "status": "included",
-        "reason": "star-tower-rule"
+        "reason": "runtime-reference"
       }
     },
     {
@@ -34864,12 +34944,28 @@
       "width": 384,
       "height": 384,
       "hasAlpha": true,
+      "lifecycle": "source",
+      "category": "tower",
+      "role": "star-progression",
+      "mobileBuild": {
+        "status": "excluded",
+        "reason": "not-referenced-by-mobile-build"
+      }
+    },
+    {
+      "path": "casual/towers/star-12-casual.png",
+      "bytes": 12168,
+      "sha256": "c7763a1f6166e2609cdbccdb8dbe2c0bc35a93ff63e93b94a8450d485bb69210",
+      "format": "png",
+      "width": 88,
+      "height": 192,
+      "hasAlpha": true,
       "lifecycle": "runtime",
       "category": "tower",
       "role": "star-progression",
       "mobileBuild": {
         "status": "included",
-        "reason": "star-tower-rule"
+        "reason": "runtime-reference"
       }
     },
     {
@@ -34880,12 +34976,28 @@
       "width": 384,
       "height": 384,
       "hasAlpha": true,
+      "lifecycle": "source",
+      "category": "tower",
+      "role": "star-progression",
+      "mobileBuild": {
+        "status": "excluded",
+        "reason": "not-referenced-by-mobile-build"
+      }
+    },
+    {
+      "path": "casual/towers/star-13-casual.png",
+      "bytes": 14464,
+      "sha256": "db92f6d0f101c4148f282bb70c53b51e13e26c99affb051910a50115c65bf496",
+      "format": "png",
+      "width": 117,
+      "height": 192,
+      "hasAlpha": true,
       "lifecycle": "runtime",
       "category": "tower",
       "role": "star-progression",
       "mobileBuild": {
         "status": "included",
-        "reason": "star-tower-rule"
+        "reason": "runtime-reference"
       }
     },
     {
@@ -34896,12 +35008,28 @@
       "width": 384,
       "height": 384,
       "hasAlpha": true,
+      "lifecycle": "source",
+      "category": "tower",
+      "role": "star-progression",
+      "mobileBuild": {
+        "status": "excluded",
+        "reason": "not-referenced-by-mobile-build"
+      }
+    },
+    {
+      "path": "casual/towers/star-14-casual.png",
+      "bytes": 12512,
+      "sha256": "133a45fc6a81dcdc2093a4d9497a3571a5cec6b11bd32c64d796739ee5a870d4",
+      "format": "png",
+      "width": 106,
+      "height": 192,
+      "hasAlpha": true,
       "lifecycle": "runtime",
       "category": "tower",
       "role": "star-progression",
       "mobileBuild": {
         "status": "included",
-        "reason": "star-tower-rule"
+        "reason": "runtime-reference"
       }
     },
     {
@@ -34912,12 +35040,28 @@
       "width": 384,
       "height": 384,
       "hasAlpha": true,
+      "lifecycle": "source",
+      "category": "tower",
+      "role": "star-progression",
+      "mobileBuild": {
+        "status": "excluded",
+        "reason": "not-referenced-by-mobile-build"
+      }
+    },
+    {
+      "path": "casual/towers/star-15-casual.png",
+      "bytes": 11743,
+      "sha256": "222328706040038704bed610fa3efc6756d069800c0453e40ceafdddcb51d3f1",
+      "format": "png",
+      "width": 91,
+      "height": 192,
+      "hasAlpha": true,
       "lifecycle": "runtime",
       "category": "tower",
       "role": "star-progression",
       "mobileBuild": {
         "status": "included",
-        "reason": "star-tower-rule"
+        "reason": "runtime-reference"
       }
     },
     {
@@ -34928,12 +35072,28 @@
       "width": 384,
       "height": 384,
       "hasAlpha": true,
+      "lifecycle": "source",
+      "category": "tower",
+      "role": "star-progression",
+      "mobileBuild": {
+        "status": "excluded",
+        "reason": "not-referenced-by-mobile-build"
+      }
+    },
+    {
+      "path": "casual/towers/star-16-casual.png",
+      "bytes": 15829,
+      "sha256": "068eaaf6d33fa1bc9eb8ff85072aaf7ef10ce06cbb344a55614a38b73f7c579b",
+      "format": "png",
+      "width": 130,
+      "height": 192,
+      "hasAlpha": true,
       "lifecycle": "runtime",
       "category": "tower",
       "role": "star-progression",
       "mobileBuild": {
         "status": "included",
-        "reason": "star-tower-rule"
+        "reason": "runtime-reference"
       }
     },
     {
@@ -34944,12 +35104,28 @@
       "width": 384,
       "height": 384,
       "hasAlpha": true,
+      "lifecycle": "source",
+      "category": "tower",
+      "role": "star-progression",
+      "mobileBuild": {
+        "status": "excluded",
+        "reason": "not-referenced-by-mobile-build"
+      }
+    },
+    {
+      "path": "casual/towers/star-17-casual.png",
+      "bytes": 13334,
+      "sha256": "c97ee2185281e09963cbead803c683a5f3d39464673609ae09c9a8367fa454e5",
+      "format": "png",
+      "width": 109,
+      "height": 192,
+      "hasAlpha": true,
       "lifecycle": "runtime",
       "category": "tower",
       "role": "star-progression",
       "mobileBuild": {
         "status": "included",
-        "reason": "star-tower-rule"
+        "reason": "runtime-reference"
       }
     },
     {
@@ -34960,12 +35136,28 @@
       "width": 384,
       "height": 384,
       "hasAlpha": true,
+      "lifecycle": "source",
+      "category": "tower",
+      "role": "star-progression",
+      "mobileBuild": {
+        "status": "excluded",
+        "reason": "not-referenced-by-mobile-build"
+      }
+    },
+    {
+      "path": "casual/towers/star-18-casual.png",
+      "bytes": 15795,
+      "sha256": "6bcf817ef584ffe14226237112e16803f45952c7a5aba16b2e0afafe9840326c",
+      "format": "png",
+      "width": 129,
+      "height": 192,
+      "hasAlpha": true,
       "lifecycle": "runtime",
       "category": "tower",
       "role": "star-progression",
       "mobileBuild": {
         "status": "included",
-        "reason": "star-tower-rule"
+        "reason": "runtime-reference"
       }
     },
     {
@@ -34976,12 +35168,28 @@
       "width": 384,
       "height": 384,
       "hasAlpha": true,
+      "lifecycle": "source",
+      "category": "tower",
+      "role": "star-progression",
+      "mobileBuild": {
+        "status": "excluded",
+        "reason": "not-referenced-by-mobile-build"
+      }
+    },
+    {
+      "path": "casual/towers/star-19-casual.png",
+      "bytes": 11717,
+      "sha256": "26e289ad1b976cf5a9fa7712ef42b35a79681e51e1dac30f13a65a41f1ada814",
+      "format": "png",
+      "width": 93,
+      "height": 192,
+      "hasAlpha": true,
       "lifecycle": "runtime",
       "category": "tower",
       "role": "star-progression",
       "mobileBuild": {
         "status": "included",
-        "reason": "star-tower-rule"
+        "reason": "runtime-reference"
       }
     },
     {
@@ -34992,12 +35200,28 @@
       "width": 384,
       "height": 384,
       "hasAlpha": true,
+      "lifecycle": "source",
+      "category": "tower",
+      "role": "star-progression",
+      "mobileBuild": {
+        "status": "excluded",
+        "reason": "not-referenced-by-mobile-build"
+      }
+    },
+    {
+      "path": "casual/towers/star-20-casual.png",
+      "bytes": 13632,
+      "sha256": "3113f659b4d560cf6a43291ad634a218bcebdf3231db6f9818e8d04875710a65",
+      "format": "png",
+      "width": 110,
+      "height": 192,
+      "hasAlpha": true,
       "lifecycle": "runtime",
       "category": "tower",
       "role": "star-progression",
       "mobileBuild": {
         "status": "included",
-        "reason": "star-tower-rule"
+        "reason": "runtime-reference"
       }
     },
     {
@@ -35008,12 +35232,12 @@
       "width": 384,
       "height": 384,
       "hasAlpha": true,
-      "lifecycle": "runtime",
+      "lifecycle": "source",
       "category": "tower",
       "role": "star-progression",
       "mobileBuild": {
-        "status": "included",
-        "reason": "star-tower-rule"
+        "status": "excluded",
+        "reason": "not-referenced-by-mobile-build"
       }
     },
     {

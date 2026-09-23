@@ -843,7 +843,18 @@ const SRCS = {
   crystal: BASE + 'props/crystal.png',
   chest: BASE + 'ui/chest.png',
 };
-for (let g = 7; g <= 20; g++) SRCS['tStar' + g] = BASE + `casual/towers/star-${String(g).padStart(2, '0')}.png?v=93`; // 없으면 6눈 스킨으로 폴백
+// The original star sprites remain as reviewed source art. These are the simpler
+// plant-free gameplay sprites; literal paths also keep the mobile asset list exact.
+const STAR_CASUAL_FILES = [
+  'casual/towers/star-07-casual.png', 'casual/towers/star-08-casual.png',
+  'casual/towers/star-09-casual.png', 'casual/towers/star-10-casual.png',
+  'casual/towers/star-11-casual.png', 'casual/towers/star-12-casual.png',
+  'casual/towers/star-13-casual.png', 'casual/towers/star-14-casual.png',
+  'casual/towers/star-15-casual.png', 'casual/towers/star-16-casual.png',
+  'casual/towers/star-17-casual.png', 'casual/towers/star-18-casual.png',
+  'casual/towers/star-19-casual.png', 'casual/towers/star-20-casual.png',
+];
+for (let g = 7; g <= 20; g++) SRCS['tStar' + g] = BASE + STAR_CASUAL_FILES[g - 7];
 const DICE_SKINS = window.DKCONTENT.DICE_SKINS;
 for (const skin of Object.values(DICE_SKINS.skins)) {
   if (skin.lazy) continue; // Paid previews/packs load only on explicit selection.
@@ -901,6 +912,7 @@ for (const key of ['t1', 'cT1a']) if (SRCS[key]) SRCS[key] += '?v=casual3';
 // Authored alpha keeps pale stone and white magic cores intact at the edges.
 const CASUAL_WORLD_KEYS = new Set([
   'tClean1', 'tClean2', 'tClean3', 'tClean4', 'tClean5', 'tClean6',
+  ...Object.keys(SRCS).filter(key => key.startsWith('tStar')),
   't2', 't3', 't4', 't5', 't6', 'cT2a', 'cT3a', 'cT4a', 'cT5a', 'cT6a',
   'shell', 'bolt', 'frostShard', 'lightningArc', 'dieBomb', 'muzzleFlash',
   'cannonBlast', 'arcaneBurst', 'frostBurst', 'dieExplode', 'portal', 'crystal',

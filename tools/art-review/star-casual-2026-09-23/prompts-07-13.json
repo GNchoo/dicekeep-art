@@ -1,0 +1,56 @@
+{
+  "generatedWith": "Codex built-in image_gen",
+  "apiKeyUsed": false,
+  "notes": "One generation per star, original used for structure and tower-3 for style only. Original runtime assets unchanged.",
+  "assets": [
+    {
+      "star": 7,
+      "original": "casual/towers/star-07.png",
+      "styleReference": "tools/art-review/plant-free-2026-09-23/tower-3.png",
+      "selected": "tools/art-review/star-casual-2026-09-23/clean-07.png",
+      "prompt": "Edit Image 1 as the exact character/design source for a collectible tower-defense game sprite. Image 2 is a STYLE-ONLY guide for the approved clean casual linework: thick readable dark contour, broad two-tone cel-shaded planes, chunky simple stone shapes, ivory/cream masonry, restrained gold trim, saturated blue crystal. Preserve Image 1's distinct silhouette and architecture: narrow blue-and-cream stone tower with EXACTLY TWO tall pointed blue crystal spires rising left and right, central bright blue circular lens near top, centered five-pip WHITE DICE PLAQUE on front middle, blue arched door low, modest rock plinth. Preserve location and approximate proportions of the twin spires, lens, plaque, and door. Simplify tiny bricks, scratches, gilded filigree, scattered fragments, moss and plants into large clean shapes. No flora whatsoever. No extra spikes, protrusions, banners, towers, dice, or text. Readable at 70x96 pixels. Single centered full-body sprite, straight-on three-quarter isometric game icon view matching Image 1, generous transparent padding, true transparent alpha background, no floor plane, no shadow blob, no lighting vignette. Keep rich blue/cream/gold palette and a blue energy crystal glow only, not photorealistic."
+    },
+    {
+      "star": 8,
+      "original": "casual/towers/star-08.png",
+      "styleReference": "tools/art-review/plant-free-2026-09-23/tower-3.png",
+      "selected": "tools/art-review/star-casual-2026-09-23/clean-08.png",
+      "prompt": "Edit Image 1 as the exact architectural source. Image 2 is STYLE-ONLY: approved clean casual tower with chunky readable dark contours, large broad two-tone cel-shaded planes, simplified cream stone and restrained gold trim. Preserve Image 1's unique identity, silhouette, tower massing, weapon/crystal placement, and deep blue/gold palette. Preserve the centered white die plaque with EXACTLY FIVE dark pips on its visible face. Delete every trace of moss, foliage, vines, grass, and loose tiny gravel. Simplify tiny bricks, linework, filigree, ornate tracery, and texture into broad clean shapes. Do NOT change the count of major architectural protrusions or change the tower concept. Readable at 70x96 pixels. Single centered full-body game sprite with generous padding on TRUE transparent alpha, no floor/background/shadow, no text, no photorealism. Star 8: same tall straight slim tower with THREE angular blue crystal protrusions at top, the CENTRAL giant blue HEXAGONAL PRISM FACE looking toward camera, two smaller triangular blue crystals behind left and right. Hexagonal blue face must remain the clear top focal point; gold hexagonal frame. Dark blue vertical hanging cloth panels, arched door at foot."
+    },
+    {
+      "star": 9,
+      "original": "casual/towers/star-09.png",
+      "styleReference": "tools/art-review/plant-free-2026-09-23/tower-3.png",
+      "selected": "tools/art-review/star-casual-2026-09-23/clean-09.png",
+      "prompt": "Edit Image 1 as the exact architectural source. Image 2 is STYLE-ONLY: approved clean casual tower with chunky readable dark contours, large broad two-tone cel-shaded planes, simplified cream stone and restrained gold trim. Preserve Image 1's unique identity, silhouette, tower massing, weapon/crystal placement, and deep blue/gold palette. Preserve the centered white die plaque with EXACTLY FIVE dark pips on its visible face. Delete every trace of moss, foliage, vines, grass, and loose tiny gravel. Simplify tiny bricks, linework, filigree, ornate tracery, and texture into broad clean shapes. Do NOT change the count of major architectural protrusions or change the tower concept. Readable at 70x96 pixels. Single centered full-body game sprite with generous padding on TRUE transparent alpha, no floor/background/shadow, no text, no photorealism. Star 9: same OBSERVATORY tower with large dark-blue domed roof. A prominent brass and blue telescope CANNON sticks OUT TO THE RIGHT with its round blue lens at the end; preserve its orientation and exact location, roof's simple orbital ring and central circular blue energy lens on front wall. Do not move cannon to front/left. Arched blue door below."
+    },
+    {
+      "star": 10,
+      "original": "casual/towers/star-10.png",
+      "styleReference": "tools/art-review/plant-free-2026-09-23/tower-3.png",
+      "selected": "tools/art-review/star-casual-2026-09-23/clean-10.png",
+      "prompt": "Edit Image 1 as the exact architectural source. Image 2 is STYLE-ONLY: approved clean casual tower with chunky readable dark contours, large broad two-tone cel-shaded planes, simplified cream stone and restrained gold trim. Preserve Image 1's unique identity, silhouette, tower massing, weapon/crystal placement, and deep blue/gold palette. Preserve the centered white die plaque with EXACTLY FIVE dark pips on its visible face. Delete every trace of moss, foliage, vines, grass, and loose tiny gravel. Simplify tiny bricks, linework, filigree, ornate tracery, and texture into broad clean shapes. Do NOT change the count of major architectural protrusions or change the tower concept. Readable at 70x96 pixels. Single centered full-body game sprite with generous padding on TRUE transparent alpha, no floor/background/shadow, no text, no photorealism. Star 10: same wide royal stronghold with GRAND FIVE-POINT GOLD STAR CROWN around the large glowing BLUE DIAMOND at the top; preserve the crown's outward rising points and flanking two shorter blue-crystal tipped stone turrets. Royal blue banners on front and central arched doorway. Do not simplify the unique crown away."
+    },
+    {
+      "star": 11,
+      "original": "casual/towers/star-11.png",
+      "styleReference": "tools/art-review/plant-free-2026-09-23/tower-3.png",
+      "selected": "tools/art-review/star-casual-2026-09-23/clean-11.png",
+      "prompt": "Edit Image 1 as the exact architectural source for a collectible game tower sprite. Image 2 is STYLE ONLY: approved clean casual construction, chunky dark outlines, large broad two-tone cel-shaded planes, simplified ivory and gray stone, restrained gold framing. Preserve Image 1's unique architectural identity, silhouette, turret and weapon positions and its deep VIOLET/PURPLE glowing crystals and dark royal-purple accents. Preserve centered white die plaque with EXACTLY FIVE dark pips. Remove every trace of moss, grass, vines, flowers and foliage. Simplify tiny bricks, scratches, filigree, ornate tracery and gravel into broad clean shapes, bold silhouette and large color blocks. Do not add or remove major protrusions. Readable at 70x96 pixels. Single centered full-body game sprite, generous transparent padding on TRUE transparent alpha, no floor/background/shadow blob, no text, no photorealism. Star 11 has a TALL KEYHOLE-SHAPED PURPLE MAGIC PORTAL as the entire upper crown, large bright violet circular center surrounded by one stone arch ring, and a long narrow luminous violet channel descending from the orb. Keep the two narrow flanking stone pillars and purple banners, and little purple doorway low. PORTAL stays dominant; do not turn it into a mere gem or roof."
+    },
+    {
+      "star": 12,
+      "original": "casual/towers/star-12.png",
+      "styleReference": "tools/art-review/plant-free-2026-09-23/tower-3.png",
+      "selected": "tools/art-review/star-casual-2026-09-23/clean-12.png",
+      "prompt": "Edit Image 1 as the exact architectural source for a collectible game tower sprite. Image 2 is STYLE ONLY: approved clean casual construction, chunky dark outlines, large broad two-tone cel-shaded planes, simplified ivory and gray stone, restrained gold framing. Preserve Image 1's unique architectural identity, silhouette, turret and weapon positions and its deep VIOLET/PURPLE glowing crystals and dark royal-purple accents. Preserve centered white die plaque with EXACTLY FIVE dark pips. Remove every trace of moss, grass, vines, flowers and foliage. Simplify tiny bricks, scratches, filigree, ornate tracery and gravel into broad clean shapes, bold silhouette and large color blocks. Do not add or remove major protrusions. Readable at 70x96 pixels. Single centered full-body game sprite, generous transparent padding on TRUE transparent alpha, no floor/background/shadow blob, no text, no photorealism. Star 12 is a LEVITATING CASTLE, a floating cream castle chunk above a SEPARATE SMALL CIRCULAR STONE PAD. Preserve the visible transparent gap between castle's long jagged downward-pointing violet crystal/rock underside and the circular plinth below, with two thin violet light tethers at the sides. Castle has THREE slender cone-roof turrets on top (left, middle-rear, right) and a front centered violet energy orb. Keep the die plaque centered at front and arched doorway. Do not attach castle to pad or add a normal tower base."
+    },
+    {
+      "star": 13,
+      "original": "casual/towers/star-13.png",
+      "styleReference": "tools/art-review/plant-free-2026-09-23/tower-3.png",
+      "selected": "tools/art-review/star-casual-2026-09-23/clean-13.png",
+      "prompt": "Edit Image 1 as the exact architectural source for a collectible game tower sprite. Image 2 is STYLE ONLY: approved clean casual construction, chunky dark outlines, large broad two-tone cel-shaded planes, simplified ivory and gray stone, restrained gold framing. Preserve Image 1's unique architectural identity, silhouette, turret and weapon positions and its deep VIOLET/PURPLE glowing crystals and dark royal-purple accents. Preserve centered white die plaque with EXACTLY FIVE dark pips. Remove every trace of moss, grass, vines, flowers and foliage. Simplify tiny bricks, scratches, filigree, ornate tracery and gravel into broad clean shapes, bold silhouette and large color blocks. Do not add or remove major protrusions. Readable at 70x96 pixels. Single centered full-body game sprite, generous transparent padding on TRUE transparent alpha, no floor/background/shadow blob, no text, no photorealism. Star 13 is a broad flared dark stone GRAVITY OBSERVATORY. At top is one enormous round black and violet GRAVITY ORB with bright purple center, surrounded by its metal ring and four radial gold pin arms reaching outward to left/right/top/bottom. Preserve the orb as circular dominant crown. Below: tapering stone buttresses spreading to a broad base, centered five-pip die plaque and small purple arched door, little violet crystals at base. Do not replace the orb with a portal arch."
+    }
+  ]
+}

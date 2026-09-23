@@ -27,15 +27,15 @@ test('reports the current eager SRCS loader deterministically and passes its cei
   assert.equal(report.loadAssets.loadEntries, 776);
   assert.equal(report.loadAssets.uniqueRequests, 776);
   assert.equal(report.loadAssets.uniqueFiles, 776);
-  // Six extra plant-free sprites are stored at twice their displayed size.
-  assert.equal(report.loadAssets.transferBytes, 78_062_213);
-  assert.equal(report.loadAssets.decodeBytes, 456_316_308);
+  // Plant-free star sprites replace the fourteen larger, detailed originals.
+  assert.equal(report.loadAssets.transferBytes, 76_018_426);
+  assert.equal(report.loadAssets.decodeBytes, 449_199_252);
   assert.equal(report.startupScenarios.portrait.uniqueRequests, 777);
-  assert.equal(report.startupScenarios.portrait.transferBytes, 78_231_964);
-  assert.equal(report.startupScenarios.portrait.decodeBytes, 462_607_764);
+  assert.equal(report.startupScenarios.portrait.transferBytes, 76_188_177);
+  assert.equal(report.startupScenarios.portrait.decodeBytes, 455_490_708);
   assert.equal(report.startupScenarios.landscape.uniqueRequests, 778);
-  assert.equal(report.startupScenarios.landscape.transferBytes, 78_233_145);
-  assert.equal(report.startupScenarios.landscape.decodeBytes, 462_594_708);
+  assert.equal(report.startupScenarios.landscape.transferBytes, 76_189_358);
+  assert.equal(report.startupScenarios.landscape.decodeBytes, 455_477_652);
   assert.equal(report.integrity.manifestLinkedFiles, 762);
   assert.equal(report.integrity.notInArtManifest.length, 14);
 

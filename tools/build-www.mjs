@@ -6,7 +6,7 @@
 //   고정 파일: 게임·성장·결제·아트 매니페스트 JS, index.html(app.js 주입), 결제 복귀·개인정보 페이지
 //   고정 폴더: fonts ui vfx dice props map towers enemies audio (있는 것만)
 //   casual/: game.js·content.js 안의 'casual/…' 경로 리터럴 + content.js 를 실행해 얻은 DKCONTENT 의 src/walkSrc
-//            + casual/tiles/** + casual/towers/star-*.{png,webp} + casual/towers/skins/**
+//            + casual/tiles/** + game.js 에 명시된 별 타워 + casual/towers/skins/**
 //            + casual/{enemies,bosses}/inf/** (무손실 WebP)
 //   극한 아트 casual/{enemies,bosses}/extreme/** 는 **넣지 않는다** — 첫 진입 때 내려받는다
 //   제외: casual/maps/map-NN-*.jpg · casual/towers/*-attack-2x2.png · casual/**/extreme/** · editor.* · *.md · net/ · serve.py · start.bat · wrangler.jsonc · tools · resources
@@ -84,8 +84,6 @@ function casualPaths() {
   // 웹 배포는 영향 없다 — Cloudflare 는 www/ 가 아니라 저장소 루트를 올리고
   // .assetsignore 도 이 경로를 막지 않으므로 같은 URL 이 그대로 서비스된다.
   for (const p of walk(path.join(ROOT, 'casual', 'towers', 'skins'))) set.add(rel(p));
-  const towers = path.join(ROOT, 'casual', 'towers');
-  if (fs.existsSync(towers)) for (const f of fs.readdirSync(towers)) if (/^star-.*\.(png|webp)$/i.test(f)) set.add('casual/towers/' + f);
   const list = [...set].filter((p) => !excluded(p));
   const missing = list.filter((p) => !fs.existsSync(path.join(ROOT, p)));
   if (missing.length) console.warn('참조하지만 없는 파일:', missing.join(', '));

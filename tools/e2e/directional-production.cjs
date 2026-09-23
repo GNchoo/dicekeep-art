@@ -85,7 +85,7 @@ async function main() {
   for (const id of expectedIds) assert.ok(entries[id], 'Missing release identity ' + id);
   const directional = [...new Set(Object.values(entries).flatMap(e => Object.values(e.views).flatMap(v => [v.still, v.sheet])))];
   assert.equal(directional.length, Object.keys(entries).length * 3 * 2, 'Every identity contributes 3 views x (still, sheet)');
-  const images = [...directional, ...Array.from({ length: 14 }, (_, i) => 'casual/towers/star-' + String(i + 7).padStart(2, '0') + '.png')];
+  const images = [...directional, ...Array.from({ length: 14 }, (_, i) => 'casual/towers/star-' + String(i + 7).padStart(2, '0') + '-casual.png')];
   let next = 0, fetchError;
   // Drain in-flight requests before writing failure evidence, and stop assigning
   // work after the first bad deployment asset.

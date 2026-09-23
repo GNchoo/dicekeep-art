@@ -1657,9 +1657,9 @@ window.DKCONTENT = (function () {
   // Visual emitter centers measured in each star PNG's foreground bounding box.
   // They affect muzzle/travel drawing only; targeting and projectile physics retain their origin.
   const STAR_TOWER_EMITTERS = {
-    7: [.476015, .367673], 8: [.486486, .284946], 9: [.831461, .323024], 10: [.501253, .196491],
+    7: [.476015, .367673], 8: [.486486, .284946], 9: [.920000, .322000], 10: [.501253, .196491],
     11: [.493506, .253311], 12: [.490706, .269841], 13: [.498452, .227740], 14: [.493865, .346218],
-    15: [.503571, .340604], 16: [.438776, .391231], 17: [.504373, .263699], 18: [.491358, .226131],
+    15: [.503571, .340604], 16: [.400000, .375000], 17: [.504373, .263699], 18: [.491358, .226131],
     19: [.488950, .263094], 20: [.497706, .243990],
   };
   // Appearance only: kind/shape, odds and rewards remain in INFINITY.chest.

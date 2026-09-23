@@ -377,22 +377,24 @@
       "id": "golden-tower-star-07",
       "category": "tower",
       "styleProfile": "tower",
-      "runtimeTarget": "casual/towers/star-07.png",
+      "runtimeTarget": "casual/towers/star-07-casual.png",
       "runtimeSpec": {
-        "mode": "fixed",
-        "width": 384,
-        "height": 384,
+        "mode": "trim-contain",
+        "maxWidth": 140,
+        "maxHeight": 192,
         "alpha": "preserve",
-        "anchor": "center"
+        "anchor": "bottom-center",
+        "trimAlphaThreshold": 8
       },
       "n": 1,
       "outputFormat": "png",
       "out": "gen/golden-slice/tower/tower-star-07",
-      "prompt": "Redraw the referenced Dicekeep tower as one stable freestanding defense building in 3/4 top-down view, facing slightly right, with the same flat integrated foundation. Preserve its role, footprint, ground pivot and tall readable silhouette. The body is completely still and rigid; no squash, stretch, firing pose, projectile, motion trail, baked glow aura, separate pedestal, text, number, star, logo or watermark. Centered with generous transparent margin. An early evolved ivory die keep: confident but compact, one small gold battlement tier, red pip windows and a restrained blue-violet focus crystal. It must look clearly stronger than the six-pip base tower while leaving room for many later upgrades.",
+      "prompt": "Redraw the referenced Dicekeep tower as one stable freestanding defense building in 3/4 top-down view, facing slightly right, with the same flat integrated foundation. Preserve its role, footprint, ground pivot and tall readable silhouette. The body is completely still and rigid; no squash, stretch, firing pose, projectile, motion trail, baked glow aura, separate pedestal, text, number, star, logo or watermark. Centered with generous transparent margin. Preserve the original twin blue crystal spires, blue focus core, upright keep silhouette and small five-pip die plaque. Remove all plants and simplify tiny stone seams and gold lines into broad two-tone casual color planes. Clear at 70×96 gameplay pixels.",
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "casual/towers/star-07.png"
+        "casual/towers/star-07.png",
+        "casual/towers/star-07-casual.png"
       ],
       "inputFidelity": "high"
     },
@@ -400,22 +402,24 @@
       "id": "golden-tower-star-20",
       "category": "tower",
       "styleProfile": "tower",
-      "runtimeTarget": "casual/towers/star-20.png",
+      "runtimeTarget": "casual/towers/star-20-casual.png",
       "runtimeSpec": {
-        "mode": "fixed",
-        "width": 384,
-        "height": 384,
+        "mode": "trim-contain",
+        "maxWidth": 140,
+        "maxHeight": 192,
         "alpha": "preserve",
-        "anchor": "center"
+        "anchor": "bottom-center",
+        "trimAlphaThreshold": 8
       },
       "n": 1,
       "outputFormat": "png",
       "out": "gen/golden-slice/tower/tower-star-20",
-      "prompt": "Redraw the referenced Dicekeep tower as one stable freestanding defense building in 3/4 top-down view, facing slightly right, with the same flat integrated foundation. Preserve its role, footprint, ground pivot and tall readable silhouette. The body is completely still and rigid; no squash, stretch, firing pose, projectile, motion trail, baked glow aura, separate pedestal, text, number, star, logo or watermark. Centered with generous transparent margin. The final evolved ivory die citadel: broad gold-trimmed battlements, six red pip ports, one large blue-violet crown crystal and a controlled royal silhouette. Powerful and premium in construction detail, yet clean at 96 pixels and never taller than the safe canvas margin.",
+      "prompt": "Redraw the referenced Dicekeep tower as one stable freestanding defense building in 3/4 top-down view, facing slightly right, with the same flat integrated foundation. Preserve its role, footprint, ground pivot and tall readable silhouette. The body is completely still and rigid; no squash, stretch, firing pose, projectile, motion trail, baked glow aura, separate pedestal, text, number, star, logo or watermark. Centered with generous transparent margin. Preserve the original cosmic-ring core, purple vertical focus crystal, twin lower turrets, stone base and five-pip die plaque. Remove plants and merge tiny brickwork and gold filigree into broad smooth casual shapes. The final star tower should feel powerful while remaining legible at 70×96 gameplay pixels.",
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "casual/towers/star-20.png"
+        "casual/towers/star-20.png",
+        "casual/towers/star-20-casual.png"
       ],
       "inputFidelity": "high"
     },
