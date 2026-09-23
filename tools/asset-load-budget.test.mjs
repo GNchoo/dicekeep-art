@@ -24,19 +24,19 @@ test('reports the current eager SRCS loader deterministically and passes its cei
   assert.equal(second.stdout, first.stdout);
 
   const report = JSON.parse(first.stdout);
-  assert.equal(report.loadAssets.loadEntries, 770);
-  assert.equal(report.loadAssets.uniqueRequests, 770);
-  assert.equal(report.loadAssets.uniqueFiles, 770);
-  // Measured after the 38-source casual tower/world/VFX promotion.
-  assert.equal(report.loadAssets.transferBytes, 77_977_924);
-  assert.equal(report.loadAssets.decodeBytes, 455_743_252);
-  assert.equal(report.startupScenarios.portrait.uniqueRequests, 771);
-  assert.equal(report.startupScenarios.portrait.transferBytes, 78_147_675);   // 캐주얼 파일럿 적용 후 실측
-  assert.equal(report.startupScenarios.portrait.decodeBytes, 462_034_708);
-  assert.equal(report.startupScenarios.landscape.uniqueRequests, 772);
-  assert.equal(report.startupScenarios.landscape.transferBytes, 78_148_856);  // 캐주얼 파일럿 적용 후 실측
-  assert.equal(report.startupScenarios.landscape.decodeBytes, 462_021_652);
-  assert.equal(report.integrity.manifestLinkedFiles, 756);
+  assert.equal(report.loadAssets.loadEntries, 776);
+  assert.equal(report.loadAssets.uniqueRequests, 776);
+  assert.equal(report.loadAssets.uniqueFiles, 776);
+  // Six extra plant-free sprites are stored at twice their displayed size.
+  assert.equal(report.loadAssets.transferBytes, 78_062_213);
+  assert.equal(report.loadAssets.decodeBytes, 456_316_308);
+  assert.equal(report.startupScenarios.portrait.uniqueRequests, 777);
+  assert.equal(report.startupScenarios.portrait.transferBytes, 78_231_964);
+  assert.equal(report.startupScenarios.portrait.decodeBytes, 462_607_764);
+  assert.equal(report.startupScenarios.landscape.uniqueRequests, 778);
+  assert.equal(report.startupScenarios.landscape.transferBytes, 78_233_145);
+  assert.equal(report.startupScenarios.landscape.decodeBytes, 462_594_708);
+  assert.equal(report.integrity.manifestLinkedFiles, 762);
   assert.equal(report.integrity.notInArtManifest.length, 14);
 
   for (const field of [
@@ -50,7 +50,7 @@ test('reports the current eager SRCS loader deterministically and passes its cei
 });
 
 test('rejects a caller-supplied budget below the measured request count', () => {
-  const result = run(['--check', '--max-requests', '769']);
+  const result = run(['--check', '--max-requests', '775']);
   assert.equal(result.status, 1, result.stderr || result.stdout);
-  assert.match(`${result.stdout}\n${result.stderr}`, /uniqueRequests 770 exceeds budget 769/);
+  assert.match(`${result.stdout}\n${result.stderr}`, /uniqueRequests 776 exceeds budget 775/);
 });

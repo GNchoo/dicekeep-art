@@ -820,6 +820,12 @@ const SRCS = {
   gold: BASE + 'ui/gold.png', heart: BASE + 'ui/heart.png',
   t1: BASE + 'towers/die-1.png', t2: BASE + 'towers/die-2.png', t3: BASE + 'towers/die-3.png',
   t4: BASE + 'towers/die-4.png', t5: BASE + 'towers/die-5.png', t6: BASE + 'towers/die-6.png',
+  tClean1: BASE + 'casual/towers/t1-clean.png',
+  tClean2: BASE + 'casual/towers/t2-clean.png',
+  tClean3: BASE + 'casual/towers/t3-clean.png',
+  tClean4: BASE + 'casual/towers/t4-clean.png',
+  tClean5: BASE + 'casual/towers/t5-clean.png',
+  tClean6: BASE + 'casual/towers/t6-clean.png',
   miteWalk: BASE + 'enemies/mite-walk-2x2.png', runnerWalk: BASE + 'enemies/runner-walk-2x2.png',
   huskWalk: BASE + 'enemies/husk-walk-2x2.png', bossWalk: BASE + 'enemies/boss-walk-2x2.png',
   arrow: BASE + 'vfx/arrow.png', shell: BASE + 'vfx/shell.png', bolt: BASE + 'vfx/bolt.png',
@@ -894,6 +900,7 @@ if (window.DKCONTENT) {
 for (const key of ['t1', 'cT1a']) if (SRCS[key]) SRCS[key] += '?v=casual3';
 // Authored alpha keeps pale stone and white magic cores intact at the edges.
 const CASUAL_WORLD_KEYS = new Set([
+  'tClean1', 'tClean2', 'tClean3', 'tClean4', 'tClean5', 'tClean6',
   't2', 't3', 't4', 't5', 't6', 'cT2a', 'cT3a', 'cT4a', 'cT5a', 'cT6a',
   'shell', 'bolt', 'frostShard', 'lightningArc', 'dieBomb', 'muzzleFlash',
   'cannonBlast', 'arcaneBurst', 'frostBurst', 'dieExplode', 'portal', 'crystal',
@@ -1151,6 +1158,13 @@ async function loadAssets(onProgress) {
 // "주사위가 변신한 타워" — 돌 받침 위에 원소 기운을 두른 주사위
 
 const towerSprites = {};
+const towerCleanSprites = {};
+const CLEAN_TOWER_MAPS = new Set([
+  'cInf', 'cInfP',
+  ...((window.DKCONTENT && DKCONTENT.maps) || [])
+    .filter(map => map.themeId === 'castle' || map.themeId === 'hell')
+    .map(map => map.key),
+]);
 const TS_W = 116, TS_H = 126, TS_CX = 58, TS_BASE_Y = 104; // 받침 중심 위치
 const TOWER_DRAW_H = 118;
 
@@ -1218,6 +1232,8 @@ function buildTowerSprites() {
     }
     if (!pack.length) pack.push(compositeFallback(f));
     towerSprites[f] = pack;
+    const cleanArt = A['tClean' + f];
+    towerCleanSprites[f] = cleanArt && cleanArt.cv && cleanArt.h > 16 ? scaleTowerArt(cleanArt) : null;
   }
   for (let g = 7; g <= 20; g++) { const art = A['tStar' + g]; if (art && art.cv && art.h > 16) towerSprites[g] = [scaleTowerArt(art)]; }
   for (const k of Object.keys(starSpriteCache)) delete starSpriteCache[k]; // 에셋이 바뀌면 구워둔 성 타워도 다시 만든다
@@ -1341,6 +1357,7 @@ function starPoly(c, x, y, r) {                     // 작은 4갈래 별 조각
 function towerSpr(face, skin) {
   const cosmetic = window.DKCOSMETICS && DKCOSMETICS.pack(DKCOSMETICS.current());
   if (cosmetic && cosmetic.scaledTowers && cosmetic.scaledTowers[face - 1]) return cosmetic.scaledTowers[face - 1];
+  if ((skin || 0) === 0 && CLEAN_TOWER_MAPS.has(S.mapKey) && towerCleanSprites[face]) return towerCleanSprites[face];
   if (face > 6 && !towerSprites[face]) return buildStarSprite(face, skin); // 전용 PNG 가 없으면 코드로 구운 성 타워
   const pack = towerSprites[face] || [];
   if (!pack.length) return compositeFallback(face);
