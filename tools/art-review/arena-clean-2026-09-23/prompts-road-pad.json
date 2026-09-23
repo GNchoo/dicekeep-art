@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "generator": "Codex built-in image_gen",
+  "createdAt": "2026-09-23",
+  "styleOnlyReference": {
+    "path": "casual/towers/star-07-casual.png",
+    "sha256": "0b262e3f0cacc65f937a5dba5b99b9ad5fe0a81c7a44846a8f04896ae8f6f322",
+    "role": "Style-only reference for broad clean cel shading and thick outline; no tower motifs or objects are copied."
+  },
+  "candidates": [
+    {
+      "id": "road",
+      "editTarget": "casual/tiles/arena/road.png",
+      "editTargetSha256": "4415dfc69e48344c5125d5bf67c7c34809fe89ff13b3d22416d3183f84d08eed",
+      "referenceOrder": [
+        "editTarget",
+        "styleOnlyReference"
+      ],
+      "output": "tools/art-review/arena-clean-2026-09-23/source-road.png",
+      "outputSize": [
+        1254,
+        1254
+      ],
+      "outputMode": "RGB",
+      "outputSha256": "a23df59a3e419b1325bd1cdcc4043012bb530b83d776a02901d8d5c03036e1ec",
+      "runtimeDecision": "The promoted 1024px road has its outer 32 pixels feathered together so the 160px repeated runtime pattern joins cleanly.",
+      "prompt": "Use case: style-transfer\nAsset type: Dicekeep infinity arena repeated road surface texture, painted onto a winding path by code at 160 gameplay pixels per full tile.\nInput images: Image 1 is the exact EDIT TARGET, the existing cream arena road texture. Image 2 is STYLE REFERENCE ONLY, the simplified plant-free 7-star tower; do not insert any tower, blue crystal, or purple architecture into the road.\nPrimary request: Repaint Image 1's material as a very simple, clean, casual-fantasy cream stone paving texture. Preserve its warm ivory/cream color identity and square full-bleed surface. Replace the many small cobblestones with very few much larger broad smooth paving sections, using generous flat color planes, soft two-tone shading, and only sparse low-contrast warm-tan seams. The source should still unmistakably be a stone paved road.\nComposition: flat overhead square texture, even scale and even lighting across entire image. All four edges must join seamlessly when repeated side by side. A 160px downsized copy must show broad calm paving masses, not a busy grid.\nConstraints: texture ONLY. No complete road shape, no borders, curbs, rounded rectangle, turn, corner, arrow, endpoint, inset frame, vignette, dark spots, glitter, dirt, moss, plants, shadows cast by objects, characters, towers, lettering or watermark. Do not import the style reference subject."
+    },
+    {
+      "id": "pad",
+      "editTarget": "casual/tiles/arena/pad.png",
+      "editTargetSha256": "4ad25ce9298c7b7c03b74016ba79e1ff46ee2db09db3849781b58b90b282df16",
+      "referenceOrder": [
+        "editTarget",
+        "styleOnlyReference"
+      ],
+      "output": "tools/art-review/arena-clean-2026-09-23/source-pad.png",
+      "outputSize": [
+        1254,
+        1254
+      ],
+      "outputMode": "RGBA",
+      "outputSha256": "da0ded2c29ed1d6b82cc139fed6fd01fd227dd94b1c921ca6aae1a64ab035929",
+      "prompt": "Use case: style-transfer\nAsset type: Dicekeep infinity arena tower placement pad sprite, displayed only about 40 gameplay pixels high.\nInput images: Image 1 is the exact EDIT TARGET, the existing purple and gold arena placement pad. Image 2 is STYLE REFERENCE ONLY, the simplified plant-free 7-star tower; do not add a tower, die, crystal, door, character, or architecture to this pad.\nPrimary request: Repaint Image 1 as the same low, wide, horizontal oval stone socket viewed from the same three-quarter top-down angle. Preserve its overall footprint, thin height, centered position, dark purple hollow center, purple stone outer ring and restrained warm gold highlights. Simplify the dozens of tiny rim blocks into SIX TO EIGHT broad, clean segments with large smooth two-tone color planes, confident thick dark outer outline, minimal internal seams and simple gold accents. Make the ring read clearly as one calm placement marker at tiny phone size.\nComposition: one complete centered low oval sprite, generous actual transparent PNG background on all sides, no shadow halo or environment. Keep the original orientation and proportions.\nConstraints: dark purple central void must remain empty for a tower. No extra concentric rings, runic lettering, ornament clutter, tiny masonry, plants, moss, grass, glowing effects, raised pedestal, arrow, text, watermark or color-background fill. Do not import the style reference subject."
+    }
+  ]
+}

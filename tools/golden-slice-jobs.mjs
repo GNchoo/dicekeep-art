@@ -85,22 +85,23 @@ const transparentTile = { size: '1024x1024', background: 'transparent' };
 add({
   id: 'arena-floor', category: 'environment', runtimeTarget: 'casual/tiles/arena/floor.jpg',
   size: '1536x1024', background: 'opaque', outputFormat: 'jpeg',
-  prompt: `${TILE_COMMON} A wide 3/4 top-down empty arena floor of broad violet-gray flagstones, subtle warm-gold seams and a restrained central dice-rune motif. Full-bleed landscape composition with calm low-contrast detail and an unobstructed center. Design the important floor area to survive a centered 16:9 crop; no wall, road, pad, portal or prop.`,
+  refs: ['tools/art-review/arena-clean-2026-09-23/originals/floor.jpg', 'casual/tiles/arena/floor.jpg'],
+  prompt: `${TILE_COMMON} Use the original floor only for purple palette and straight top-down ground orientation. Use the current clean floor for broad two-tone shape language. Make very large low-contrast violet flagstone planes with only a few quiet seams. Full-bleed landscape texture; no rune, wall, road, socket, portal, vegetation or prop.`,
 });
 add({
   id: 'arena-board', category: 'environment', runtimeTarget: 'casual/tiles/arena/board.png',
-  size: '1024x1024', background: 'opaque', refs: ['casual/tiles/arena/board.png'],
-  prompt: `${TILE_COMMON} Redraw the referenced square arena board texture as broad violet-gray stone slabs with simplified joints and sparse warm highlights. This is a repeating surface pattern rendered at 256 pixels, so all four edges must join seamlessly. Perfectly square, full-bleed, quiet center, even lighting, no perspective-distorted outer scene. No inset border, frame, corner ornaments, sockets or runes; the game draws those separately.`,
+  size: '1024x1024', background: 'opaque', refs: ['tools/art-review/arena-clean-2026-09-23/originals/board.png', 'casual/tiles/arena/board.png'],
+  prompt: `${TILE_COMMON} Preserve the original board's dark indigo color but simplify it into a few very broad stone planes with calm two-tone shading. The game paints this texture once, cropped to a rounded board; it must be full-bleed with no seams, frame, socket, rune, lettering or central ornament.`,
 });
 add({
   id: 'arena-road', category: 'environment', runtimeTarget: 'casual/tiles/arena/road.png',
-  size: '1024x1024', background: 'opaque', refs: ['casual/tiles/arena/road.png'],
-  prompt: `${TILE_COMMON} Redraw the referenced seamless road texture as broad rounded violet stone pavers with sparse warm-gold joint accents. It must tile seamlessly on all four edges and work when code bends, rotates and masks it into paths. Uniform scale, no painted turn, border, arrow or endpoint.`,
+  size: '1024x1024', background: 'opaque', refs: ['tools/art-review/arena-clean-2026-09-23/originals/road.png', 'casual/tiles/arena/road.png'],
+  prompt: `${TILE_COMMON} Preserve the original warm cream path palette. Replace the numerous cobbles with a few very large rounded paving planes and low-contrast warm joints, using clean two-tone shading. This texture repeats at 160 pixels in a code-drawn track: all four edges must join; no path shape, border, turn, arrow or endpoint.`,
 });
 add({
   id: 'arena-pad', category: 'environment', runtimeTarget: 'casual/tiles/arena/pad.png',
-  ...transparentTile, refs: ['casual/tiles/arena/pad.png'],
-  prompt: `${TILE_COMMON} Redraw the referenced tower placement pad: one low circular violet-stone socket seen from 3/4 top-down, thin ivory-and-gold rim, six small pip-like studs and a calm empty center for a tower. Centered with generous transparent margin, grounded and symmetrical, no glow column or tower.`,
+  ...transparentTile, refs: ['tools/art-review/arena-clean-2026-09-23/originals/pad.png', 'casual/tiles/arena/pad.png'],
+  prompt: `${TILE_COMMON} Preserve the original low oval footprint and empty dark center for a tower. Simplify the purple stone rim into six to eight broad sections and restrained thick gold accents with clean outlines. True transparent background, centered 3/4 top-down sprite; no tiny bricks, glow column, plants or tower.`,
 });
 add({
   id: 'arena-start', category: 'environment', runtimeTarget: 'casual/tiles/arena/start.png',

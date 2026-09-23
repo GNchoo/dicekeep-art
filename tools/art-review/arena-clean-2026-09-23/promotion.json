@@ -1,0 +1,55 @@
+{
+  "generatedWith": "Codex built-in image_gen",
+  "apiKeyUsed": false,
+  "seamFeatherSourcePixels": 32,
+  "records": [
+    {
+      "source": "tools/art-review/arena-clean-2026-09-23/source-floor.png",
+      "sourceSha256": "637246d4fd65e28cc69379013353c2e712a3512c3e55fd06abc0ec6e37ebdd9a",
+      "original": "tools/art-review/arena-clean-2026-09-23/originals/floor.jpg",
+      "originalSha256": "a901c3c1f90f8173cbc1e1497e0085aeeec82b468a4c4a4b8eccefb936cd2a69",
+      "target": "casual/tiles/arena/floor.jpg",
+      "targetSha256": "32daaa4a757d50dc18247863c8800758f7af46d799731117c352b01dac795aef",
+      "width": 1280,
+      "height": 720,
+      "hasAlpha": false,
+      "bytes": 29399
+    },
+    {
+      "source": "tools/art-review/arena-clean-2026-09-23/source-board.png",
+      "sourceSha256": "6d0fb2a849b9066e8209a62a38d106016217a07bb63e72ab2849550ae209b5c5",
+      "original": "tools/art-review/arena-clean-2026-09-23/originals/board.png",
+      "originalSha256": "9162ae4e51ee1f2e5d1d6fe63618fc1c46d53cd8634ca87840029402b7626d00",
+      "target": "casual/tiles/arena/board.png",
+      "targetSha256": "b56a389c32871ed1335c56e493feb26d51b25baedfbe9345c889a21ce4ff1b88",
+      "width": 1024,
+      "height": 1024,
+      "hasAlpha": false,
+      "bytes": 115027
+    },
+    {
+      "source": "tools/art-review/arena-clean-2026-09-23/source-road.png",
+      "sourceSha256": "a23df59a3e419b1325bd1cdcc4043012bb530b83d776a02901d8d5c03036e1ec",
+      "original": "tools/art-review/arena-clean-2026-09-23/originals/road.png",
+      "originalSha256": "4415dfc69e48344c5125d5bf67c7c34809fe89ff13b3d22416d3183f84d08eed",
+      "target": "casual/tiles/arena/road.png",
+      "targetSha256": "50cbc9bc8af299d2e0862b59ca6432b99282606085846c44ee5921fad84bf4a9",
+      "width": 1024,
+      "height": 1024,
+      "hasAlpha": false,
+      "bytes": 193343
+    },
+    {
+      "source": "tools/art-review/arena-clean-2026-09-23/source-pad.png",
+      "sourceSha256": "da0ded2c29ed1d6b82cc139fed6fd01fd227dd94b1c921ca6aae1a64ab035929",
+      "original": "tools/art-review/arena-clean-2026-09-23/originals/pad.png",
+      "originalSha256": "4ad25ce9298c7b7c03b74016ba79e1ff46ee2db09db3849781b58b90b282df16",
+      "target": "casual/tiles/arena/pad.png",
+      "targetSha256": "cc234a7ef60271b1d737a5b2e22c03a6d2ded85f4422ea9fb0bf775ae0a410b1",
+      "width": 1024,
+      "height": 1024,
+      "hasAlpha": true,
+      "bytes": 220731
+    }
+  ]
+}

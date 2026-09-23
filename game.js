@@ -164,14 +164,14 @@ function buildRoadLayer(m) {
   if (bg && !bg.missing && bg.width > 8) g.drawImage(bg, 0, 0, W, H);
   else if (tex('floor')) g.drawImage(tex('floor'), 0, 0, W, H);
   else drawArenaFloor(g, m, rnd);
-  // 2. 보드 (돌 단): 질감 패턴 or 코드 돌 + 베벨 + 소켓
-  drawArenaBoard(g, m, makePattern(g, tex('board'), 256), art('pad'), rnd);
+  // 2. 보드 (돌 단): 넓은 석판 그림 or 코드 돌 + 베벨 + 소켓
+  drawArenaBoard(g, m, tex('board'), art('pad'), rnd);
   // 3. 트랙: 모양은 코드, 표면은 질감(road.png) 패턴, 없으면 코드 석판
   const roadTex = makePattern(g, tex('road'), 160);
   // 아레나는 그리기용 폴리라인(m.roads: 입구·닫힌 트랙·출구)을 따로 쓴다 — 적 경로(path)는 트랙을 여러 바퀴 돌아 겹치기 때문
   const roadLanes = m.roads ? m.roads.map(pts => ({ kind: 'ground', pts })) : LANES;
   for (const lane of roadLanes) if (lane.kind === 'ground' || lane.kind === 'ground2') {
-    drawRoad(g, lane.pts, lane.kind === 'ground2' ? 7 : 3, [150, 132, 112], roadTex);
+    drawRoad(g, lane.pts, lane.kind === 'ground2' ? 7 : 3, [150, 132, 112], roadTex, false, true);
     if (!roadTex) drawSlabJoints(g, lane.pts, rnd);
     // 경사 연석: 바깥 밝은 띠(46~50) + 안쪽 어두운 띠(40~46)
     const pts = lane.pts;
@@ -186,7 +186,7 @@ function buildRoadLayer(m) {
   }
   // 연석은 본체(0~43)를 덮었으므로 본체를 다시 그린다 (질감/석판 포함). 모든 연석 뒤에 그려야 입구·출구가 트랙에 매끈하게 붙는다
   for (const lane of roadLanes) if (lane.kind === 'ground' || lane.kind === 'ground2') {
-    drawRoad(g, lane.pts, lane.kind === 'ground2' ? 7 : 3, [150, 132, 112], roadTex, true);
+    drawRoad(g, lane.pts, lane.kind === 'ground2' ? 7 : 3, [150, 132, 112], roadTex, true, true);
     if (!roadTex) drawSlabJoints(g, lane.pts, mulberry(0x5eed + 1));
   }
   // 4. 화로·기둥·잔해: 그림이 있으면 오브젝트, 없으면 코드
@@ -264,7 +264,15 @@ function drawArenaBoard(g, m, boardTex, padArt, rnd) {
   g.fillStyle = 'rgba(0,0,0,0.45)'; g.beginPath(); g.roundRect(bd.x - 8, bd.y + 10, bd.w + 16, bd.h + 10, r + 4); g.fill();
   g.fillStyle = '#2a2236'; g.beginPath(); g.roundRect(bd.x, bd.y + 8, bd.w, bd.h, r); g.fill();          // 옆면
   g.fillStyle = '#3a3048'; g.beginPath(); g.roundRect(bd.x, bd.y + 4, bd.w, bd.h, r); g.fill();
-  if (boardTex) { g.fillStyle = boardTex; g.beginPath(); g.roundRect(bd.x, bd.y, bd.w, bd.h, r); g.fill(); }
+  if (boardTex) {
+    // One broad board painting is calmer than repeating its stone joints every
+    // 256px. Cover preserves the stones' aspect ratio on both arena layouts.
+    const scale = Math.max(bd.w / boardTex.width, bd.h / boardTex.height);
+    const sw = bd.w / scale, sh = bd.h / scale;
+    g.save(); g.beginPath(); g.roundRect(bd.x, bd.y, bd.w, bd.h, r); g.clip();
+    g.drawImage(boardTex, (boardTex.width - sw) / 2, (boardTex.height - sh) / 2, sw, sh, bd.x, bd.y, bd.w, bd.h);
+    g.restore();
+  }
   else {
     const gr = g.createLinearGradient(0, bd.y, 0, bd.y + bd.h);
     gr.addColorStop(0, '#5c5074'); gr.addColorStop(1, '#43395a');
@@ -372,7 +380,7 @@ function drawArenaFloor(g, m, rnd) {
 }
 // 흙길 브러시: 그림자 → 어두운 테두리 → 본체 → 밝은 띠 → 점·돌 (결정적 의사난수)
 // tex: 이음새 없는 도로 질감 패턴(CanvasPattern). 있으면 본체를 질감으로 채우고 점·밝은 띠는 줄인다.
-function drawRoad(g, pts, seed, color, tex, bodyOnly) {
+function drawRoad(g, pts, seed, color, tex, bodyOnly, quiet = false) {
   const base = color || [178, 140, 92];
   const rgba = (mul, a) => `rgba(${Math.round(base[0] * mul)},${Math.round(base[1] * mul)},${Math.round(base[2] * mul)},${a})`;
   const stroke = (w, style) => { g.strokeStyle = style; g.lineWidth = w; g.beginPath(); g.moveTo(pts[0][0], pts[0][1]); for (let i = 1; i < pts.length; i++) g.lineTo(pts[i][0], pts[i][1]); g.stroke(); };
@@ -385,7 +393,7 @@ function drawRoad(g, pts, seed, color, tex, bodyOnly) {
   const rnd = () => { s = (s * 1103515245 + 12345) & 0x7fffffff; return s / 0x7fffffff; };
   const C = window.DKCONTENT;
   const len = C.pathLength(pts);
-  for (let d = 0; d < len; d += tex ? 18 : 6) {
+  for (let d = 0; !quiet && d < len; d += tex ? 18 : 6) {
     const p = C.pathAt(pts, d);
     const off = (rnd() - 0.5) * 30;
     const x = p.x - p.dy * off, y = p.y + p.dx * off;
@@ -919,6 +927,11 @@ const CASUAL_WORLD_KEYS = new Set([
   ...Object.keys(SRCS).filter(key => key.startsWith('tl_')),
 ]);
 for (const key of CASUAL_WORLD_KEYS) if (SRCS[key]) SRCS[key] += '?v=casual-world1';
+// Refresh only the four repainted arena surfaces; the other promoted assets
+// retain their cache keys so a returning player does not re-download them.
+for (const key of ['tl_arena_floor', 'tl_arena_board', 'tl_arena_road', 'tl_arena_pad']) {
+  if (SRCS[key]) SRCS[key] = SRCS[key].replace('?v=casual-world1', '?v=arena-clean1');
+}
 const A = {};
 let corsBlocked = false;
 

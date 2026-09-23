@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>주사위 성채 · 투기장 바닥 비교 v126</title>
+  <style>
+    :root { color-scheme:dark; --bg:#111521; --panel:#20283a; --line:#47506a; --text:#f7f0df; --muted:#c4c9d3; --gold:#efd08f; }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--text); background:radial-gradient(ellipse at 70% -15%,#343354 0,#1b2132 42%,var(--bg) 78%); font:16px/1.55 system-ui,"Noto Sans KR",sans-serif; }
+    a { color:var(--gold); }
+    a:focus-visible { outline:3px solid var(--gold); outline-offset:4px; }
+    main { width:min(1200px,calc(100% - 40px)); margin:auto; padding:34px 0 76px; }
+    header { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:end; gap:18px; padding-bottom:26px; border-bottom:1px solid var(--line); }
+    .eyebrow { margin:0 0 7px; color:var(--gold); font-size:12px; font-weight:800; letter-spacing:.15em; }
+    h1 { margin:0; font-size:clamp(29px,4.6vw,51px); line-height:1.12; letter-spacing:-.035em; }
+    h2 { margin:0; font-size:clamp(23px,2.8vw,30px); letter-spacing:-.025em; }
+    h3 { margin:0; font-size:18px; }
+    p { margin:0; }
+    .links { display:flex; flex-wrap:wrap; gap:8px 19px; padding-bottom:3px; font-weight:700; }
+    .links a { text-decoration:none; border-bottom:1px solid currentColor; }
+    .intro { max-width:800px; margin:24px 0 33px; color:var(--muted); }
+    section + section { margin-top:42px; }
+    .sectionhead { display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:8px 18px; margin-bottom:17px; }
+    .sectionhead p { color:var(--muted); font-size:14px; }
+    .screens { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+    figure { min-width:0; margin:0; }
+    .screen, .surface, .star { overflow:hidden; background:var(--panel); border:1px solid var(--line); border-radius:16px; }
+    .screen img, .star img { display:block; width:100%; height:auto; }
+    .screen figcaption { display:flex; justify-content:space-between; gap:12px; padding:13px 16px 15px; font-weight:700; }
+    .screen figcaption span:last-child { color:var(--muted); font-size:13px; font-weight:500; }
+    .surface-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:15px; }
+    .surface { padding:17px; }
+    .surface-head { display:flex; align-items:center; gap:10px; margin-bottom:14px; }
+    .number { display:grid; place-items:center; flex:none; width:28px; height:28px; border-radius:9px; background:#514a63; color:var(--gold); font-size:13px; font-weight:800; }
+    .surface-pair { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+    .surface-pair figure { overflow:hidden; border:1px solid #62647a; border-radius:10px; background:#343a4e; }
+    .surface-pair canvas { display:block; width:100%; height:auto; background:#343a4e; }
+    .surface-pair figcaption { padding:7px 9px; color:var(--muted); font-size:12px; font-weight:700; }
+    .surface p { margin-top:11px; color:var(--muted); font-size:13px; }
+    .star { max-width:930px; }
+    .star figcaption { padding:12px 17px 15px; color:var(--muted); font-size:14px; }
+    .star strong { color:var(--text); }
+    @media (max-width:760px) { main{width:min(100% - 28px,620px);padding:22px 0 56px} .screens,.surface-grid{grid-template-columns:1fr} section + section{margin-top:33px} .intro{margin:18px 0 26px} }
+    @media (max-width:390px) { .surface{padding:12px} .surface-pair{gap:7px} .screen figcaption{padding:10px 12px} .screen figcaption span:last-child{font-size:12px} }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div><p class="eyebrow">DICEKEEP · ART REVIEW 126</p><h1>투기장, 더 넓고 조용한 바닥</h1></div>
+    <nav class="links" aria-label="관련 페이지"><a href="../?v=126">게임 열기</a><a href="casual-world-v123.html">v123 검수 화면</a></nav>
+  </header>
+  <p class="intro">바깥 바닥, 안쪽 보드, 둘레 길, 타워 석단의 잔선을 줄였습니다. 아래 가로 화면은 같은 크기의 실제 게임 캡처입니다.</p>
+
+  <section aria-labelledby="whole-title">
+    <div class="sectionhead"><h2 id="whole-title">전체 화면 비교</h2><p>가로 화면 · 1100 × 800</p></div>
+    <div class="screens">
+      <figure class="screen"><img id="oldScene" src="casual-world/desktop-arena.webp" width="1100" height="800" alt="v123 투기장: 자잘한 바닥 석판과 길, 기존 석단"><figcaption><span>이전 · v123</span><span>캐주얼 월드 검수 화면</span></figcaption></figure>
+      <figure class="screen"><img id="newScene" src="arena-clean/desktop-arena.webp" width="1100" height="800" alt="v126 투기장: 큰 돌 면으로 단순해진 바닥과 보드, 길, 석단"><figcaption><span>현재 · v126</span><span>실제 게임 캡처</span></figcaption></figure>
+    </div>
+  </section>
+
+  <section aria-labelledby="surface-title">
+    <div class="sectionhead"><h2 id="surface-title">네 영역을 같은 위치에서 확대</h2><p>위 두 게임 화면의 동일 좌표를 잘랐습니다.</p></div>
+    <div id="surfaces" class="surface-grid"></div>
+  </section>
+
+  <section aria-labelledby="star-title">
+    <div class="sectionhead"><h2 id="star-title">새 보드 위의 ★7</h2><p>1~6성 타워와 함께 배치한 실제 화면</p></div>
+    <figure class="star"><img src="arena-clean/desktop-arena-star7.webp" width="1100" height="800" alt="새 투기장 보드 아래쪽에 7성 별빛 첨탑을 놓은 게임 화면"><figcaption><strong>★7 별빛 첨탑</strong>의 석단과 주변 바닥이 새 아레나에서 어떻게 읽히는지 확인할 수 있습니다.</figcaption></figure>
+  </section>
+</main>
+<script>
+  // Each pair is cropped from the two complete gameplay screenshots above.
+  const regions = [
+    { title:'바깥 바닥', note:'큰 보라색 돌 면과 줄눈의 밀도', crop:[330,625,340,77] },
+    { title:'둘레 길', note:'밝은 길의 석판 크기와 반복감', crop:[355,550,330,72] },
+    { title:'안쪽 보드', note:'타워 뒤에 남는 어두운 돌 질감', crop:[460,402,330,76] },
+    { title:'타워 석단', note:'보드 위 빈 석단의 테두리', crop:[494,334,116,93] },
+  ];
+  const container = document.querySelector('#surfaces');
+  regions.forEach((region, index) => {
+    const card = document.createElement('article');
+    card.className = 'surface';
+    card.innerHTML = `<div class="surface-head"><span class="number">${index+1}</span><h3>${region.title}</h3></div><div class="surface-pair"><figure><canvas role="img" aria-label="기존 ${region.title} 확대"></canvas><figcaption>이전 · v123</figcaption></figure><figure><canvas role="img" aria-label="새 ${region.title} 확대"></canvas><figcaption>현재 · v126</figcaption></figure></div><p>${region.note}</p>`;
+    container.append(card);
+  });
+  Promise.all(['oldScene','newScene'].map(id => document.getElementById(id).decode())).then(() => {
+    document.querySelectorAll('.surface').forEach((card,index) => {
+      const [x,y,w,h] = regions[index].crop;
+      card.querySelectorAll('canvas').forEach((canvas,side) => {
+        canvas.width=w; canvas.height=h;
+        canvas.getContext('2d').drawImage(document.getElementById(side ? 'newScene' : 'oldScene'),x,y,w,h,0,0,w,h);
+      });
+    });
+  }).catch(() => { container.insertAdjacentHTML('beforeend','<p>화면 이미지를 불러오지 못했습니다.</p>'); });
+</script>
+</body>
+</html>
