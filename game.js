@@ -2095,10 +2095,10 @@ function rollDie(kind, forcedFinal) {
   SLOT.t = 0; SLOT.t2 = 0; SLOT.phase = !deckRun() && ch.sides[kind] >= 6 ? -1 : 0; SLOT.sndT = 0;
   SLOT.final = Number.isInteger(forcedFinal) && forcedFinal >= (ch.min[kind] || 1) && forcedFinal <= ch.sides[kind] ? forcedFinal : ch.roll(kind);
   if (SLOT.phase === -1) {
-    const shape = dieShape(kind), startR = shape === 'd6' ? faceTopR(6) : alignR(POLY[shape].faces[0].n);
+    const shape = dieShape(kind), restR = shape === 'd6' ? m3mul(TRAY_TILT, faceTopR(6)) : polyRestR(shape);
     const tray = activeTray();
     DIE.state = 'tray'; DIE.x = tray.x; DIE.y = tray.y; DIE.z = 0;
-    DIE.vx = 0; DIE.vy = 0; DIE.vz = 0; DIE.final = 0; DIE.face = 6; DIE.R = m3mul(TRAY_TILT, startR); DIE.w = [0, 0, 0];
+    DIE.vx = 0; DIE.vy = 0; DIE.vz = 0; DIE.final = 0; DIE.face = 6; DIE.R = restR; DIE.w = [0, 0, 0];
     SLOT.R = DIE.R; SLOT.w = [0, 0, 0];
     pushLog(`${ch.grade[kind]} ${ch.label[kind]} 획득 · 주사위를 끌어 던지거나 던지기 버튼을 누르세요`, 'gacha');
   } else {
@@ -2268,11 +2268,27 @@ function alignR(n) {
   if (l < 1e-6) return n[2] > 0 ? m3id() : m3axisAngle(1, 0, 0, Math.PI);
   return m3axisAngle(n[1] / l, -n[0] / l, 0, Math.acos(Math.max(-1, Math.min(1, n[2]))));
 }
-// 최종 눈이 정면을 보는 자세 (d6 은 기존 faceTopR)
+// 정팔면체는 면 정면 자세에서 사면체처럼 읽힌다. 꼭짓점을 정면에 두어 네 삼각면과 마름모 윤곽을 모두 보여 준다.
+function polyRestR(shape) {
+  if (shape === 'd8') return m3id();
+  if (shape === 'd4') return alignR(POLY.d4.faces[0].n); // 상점 미리보기에서도 삼각형 윤곽
+  return m3mul(TRAY_TILT, alignR(POLY[shape].faces[0].n));
+}
+// 정착 후에도 d8을 삼각면 정면으로 돌리면 사면체처럼 보인다. 결과 면에 가장 가까운 꼭짓점을 정면으로 두되
+// 결과 면 쪽으로 조금 기울여 숫자를 읽을 수 있게 한다.
+function d8TargetR(faceIndex) {
+  const solid = POLY.d8, face = solid.faces[faceIndex - 1];
+  const apex = solid.verts[face.idx.find(i => Math.abs(solid.verts[i][2]) > 0.9)];
+  const direction = apex.map((v, i) => v + face.n[i] * 0.4);
+  const length = Math.hypot(...direction);
+  return alignR(direction.map(v => v / length));
+}
+// 최종 눈을 식별할 수 있는 정착 자세 (d6 은 기존 faceTopR)
 function slotTargetR() {
   if (SLOT.kind === 'd6' || !POLY[dieShape(SLOT.kind)]) return faceTopR(Math.max(1, Math.min(6, SLOT.final)));
   const P = POLY[dieShape(SLOT.kind)];
-  return alignR(P.faces[Math.max(1, Math.min(P.faces.length, SLOT.final)) - 1].n);
+  const faceIndex = Math.max(1, Math.min(P.faces.length, SLOT.final));
+  return dieShape(SLOT.kind) === 'd8' ? d8TargetR(faceIndex) : alignR(P.faces[faceIndex - 1].n);
 }
 // Face-local textures: the engraved value and grain rotate with the face.
 // Two cached appearance sets at most (~15 MiB); rarity kinds share the d20 set.
@@ -2333,7 +2349,7 @@ function buildDiceMaterial(skin) {
   const out = { faces: {}, orb: null, cube: [], cubeSurface: null }, T = DICE_MAT_TEX, dot = (a, b) => a.reduce((n, v, i) => n + v * b[i], 0);
   out.cubeSurface = diceMaterialTile(skin, T, T, skin.cubeMaterialKey || skin.materialKey);
   for (const [kind, P] of Object.entries(POLY)) out.faces[kind] = P.faces.map((f, i) => {
-    // Use the same final alignment as slotTargetR: the winning marking is upright.
+    // Face-local basis keeps the marking upright; the d8 final pose only tilts this basis toward an apex.
     const inv = m3transpose(alignR(f.n)), u = m3apply(inv, [1, 0, 0]), v = m3apply(inv, [0, 1, 0]);
     const offsets = f.idx.map(vi => P.verts[vi].map((n, j) => n - f.c[j]));
     const scale = T * .455 / Math.max(...offsets.map(o => Math.hypot(...o)));
@@ -2418,7 +2434,7 @@ function attachCosmeticRenderer() {
       const kinds = ['d1', 'd4', 'd6', 'd8', 'd12', 'd20']; canvas.width = 600; canvas.height = 340;
       const g = canvas.getContext('2d'); g.clearRect(0, 0, canvas.width, canvas.height);
       for (let i = 0; i < kinds.length; i++) {
-        const kind = kinds[i], R = kind === 'd6' ? m3mul(TRAY_TILT, faceTopR(5)) : kind === 'd1' ? m3id() : m3mul(TRAY_TILT, alignR(POLY[kind].faces[0].n));
+        const kind = kinds[i], R = kind === 'd6' ? m3mul(TRAY_TILT, faceTopR(5)) : kind === 'd1' ? m3id() : polyRestR(kind);
         const x = i % 3 * 200 + 100, y = Math.floor(i / 3) * 170 + 76;
         if (kind === 'd6') drawCube(g, x, y, 36, R, null, 0, id);
         else drawPolyDie(g, x, y, 46, kind, R, id);

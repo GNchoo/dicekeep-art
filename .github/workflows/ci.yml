@@ -145,6 +145,8 @@ jobs:
         run: npm run test:game-modes
       - name: manual-chest-roll (다면체 직접 투척·보상 큐)
         run: npm run test:manual-chest-roll
+      - name: dice-rest-pose (면체별 대기·결과 자세)
+        run: npm run test:dice-rest-pose
       - name: story-physical-throw (기존 스토리 주사위 타격)
         run: npm run test:story-physical-throw
       - name: casual-world (아트 로딩·알파·발사 위치·지역별 렌더)
