@@ -57,7 +57,7 @@ node /home/user/dicekeep-art/tools/e2e/single-smoke.js
 | `walk-jitter.js [--self-test]` | 준비된 1~9웨이브 시트 필수, 지상 8개·비행 4개의 유효한 비어 있지 않은 프레임, 같은 캔버스 치수·유한한 수치 확인. 비행 중심 편차를 검사하며 지상 중심·실루엣 변화는 진단만 기록한다. 실제 지상 접지는 ground-gait-check.cjs로 별도 검사한다. JSON에 높이·넓이 편차도 기록 |
 | `inf-art-check.js [maxWave=101] [--phone] [--pilot]` | `directional-real-art.cjs` 실행 진입점. 기본 110종의 승인된 실제 PNG를 필수로 요구한다. 실제 웨이브 버튼으로 일반·보스·부관을 생성하고 네 방향의 모든 포즈가 실제 게임 `drawImage`에 사용되는지, 기절 시 위상 보존, 96 MiB/동시 2개 캐시 제한과 아트 HTTP 오류를 확인한다. `--pilot`은 제작 중 일부만 검사하며 출시 검증을 대신하지 않는다. |
 
-훅(`game.js` 끝): `DK`, `DKstartInf('clear')`, `DKchest()`, `DKsync()`, `DKend()`, `DKlobby()`, `DKlobbyView('hub'|'single'|'multi')`, `DKLANES()`, `DKacquire(face)`, `DKDIE.forceFinal`.
+훅(`game.js` 끝): `DK`, `DKstartInf('clear')`, `DKchest()`, `DKsync()`, `DKend()`, `DKlobby()`, `DKlobbyView('hub'|'single'|'multi')`, `DKLANES()`, `DKacquire(face)`.
 
 `directional-real-art-{desktop|phone}.json`은 실제 프레임 식별자, 방향, 누적 거리, 캐시 측정값과 실패 목록을 남긴다. 모든 포즈가 실제로 관측될 때까지 기다리므로 고정 간격 캡처의 프레임 누락을 피한다. 직선 구간 시작 위치만 준비하고, 포즈 선택과 이동은 정상 게임 업데이트가 수행한다.
 

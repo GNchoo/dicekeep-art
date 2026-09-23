@@ -2,18 +2,19 @@
 'use strict';
 
 // Real-browser coverage for the pure-luck chest's manual physical roll.
-// Chosen chest grades/faces are deterministic fixtures; combat and UI code are not mocked.
+// Only the chest grade is fixed: the thrown physical die determines its own face.
 const fs = require('node:fs');
 const path = require('node:path');
 const assert = require('node:assert/strict');
 const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
+const { screenTopDieResult } = require('./screen-top-die.cjs');
 
 const reportPath = outputPath('manual-chest-roll.json');
 const report = { scope: 'Local pure-luck chest input, settlement, enemy isolation, reward queue, and responsive controls', cases: [], pass: false };
 const fixtures = [
-  ['d1', 1, false], ['d4', 3, false],
-  ['d6', 5, true], ['d8', 7, true], ['d12', 11, true], ['d20', 16, true],
-  ['epic', 17, true], ['myth', 19, true], ['primal', 20, true],
+  ['d1', false], ['d4', true],
+  ['d6', true], ['d8', true], ['d12', true], ['d20', true],
+  ['epic', true], ['myth', true], ['primal', true],
 ];
 
 function save() { fs.writeFileSync(reportPath, JSON.stringify(report, null, 2)); }
@@ -33,7 +34,9 @@ async function boot(browser, name, viewport, touch) {
     assert.equal(source.split(anchor).length, 2, 'single browser test hook');
     assert.equal(source.split('function strikeEnemiesWithDie() {').length, 2, 'enemy strike observer hook exists');
     source = source.replace('function strikeEnemiesWithDie() {', 'function strikeEnemiesWithDie() { window.__manualDieStrikes=(window.__manualDieStrikes||0)+1;');
-    source = source.replace(anchor, 'window.__manualQA={updateDie,updateSlot,pumpQueue,spawnEnemy,buildInfinityWave,TRAY,LOG,clearLog,finishSlot,readRunSave};\n' + anchor);
+    source = source.replace(anchor,
+      'window.__manualQA={updateDie,updateSlot,pumpQueue,spawnEnemy,buildInfinityWave,TRAY,LOG,clearLog,finishSlot,readRunSave,ROLL_SHOW,dieFaceLabels,physicalFaceValue,dieShape,POLY,FACES,m3apply};\n' +
+      'window.__manualQA.visualTop=' + screenTopDieResult.toString() + ';\n' + anchor);
     await route.fulfill({ response, body: source });
   });
   await page.goto(gameUrl());
@@ -50,8 +53,8 @@ async function boot(browser, name, viewport, touch) {
   return { page, context, errors, name };
 }
 
-async function prepare(page, kind, result) {
-  return page.evaluate(({ kind, result }) => {
+async function prepare(page, kind) {
+  return page.evaluate(kind => {
     DKstartInf('clear');
     DK.paused = true;
     DK.gold = 10000;
@@ -61,7 +64,7 @@ async function prepare(page, kind, result) {
     let draws = 0, rolls = 0;
     try {
       ch.draw = () => { draws++; return kind; };
-      ch.roll = () => { rolls++; return result; };
+      ch.roll = () => { rolls++; if (kind !== 'd1') throw Error('A physical die face was selected before it landed'); return 1; };
       const goldBefore = DK.gold;
       const bought = DKchest();
       return {
@@ -74,19 +77,26 @@ async function prepare(page, kind, result) {
         dieCanvasVisible: !!document.querySelector('#game')?.getBoundingClientRect().width,
       };
     } finally { ch.draw = draw; ch.roll = roll; }
-  }, { kind, result });
+  }, kind);
 }
 
 async function stepUntilHeld(page, maxFrames = 540) {
   return page.evaluate(maxFrames => {
-    const q = window.__manualQA;
+    const q = window.__manualQA, kind = DKSLOT.kind;
+    let landing = null;
     for (let i = 0; i < maxFrames && !DK.heldDie; i++) {
+      const priorState = DKDIE.state;
       q.updateDie(1 / 60);
       q.updateSlot(1 / 60);
+      if (!landing && priorState === 'throw' && DKDIE.state === 'settle') {
+        const visual = q.visualTop(kind, DKDIE.R, q.dieFaceLabels(kind), q);
+        landing = { visual: visual.value, physical: q.physicalFaceValue(kind, DKDIE.R),
+          final: DKDIE.final, slot: DKSLOT.final };
+      }
     }
     return { held: DK.heldDie, active: DKSLOT.active, phase: DKSLOT.phase, final: DKSLOT.final,
       dieState: DKDIE.state, strikes: window.__manualDieStrikes || 0, gold: DK.gold,
-      enemyHp: DK.enemies.map(e => e.hp) };
+      enemyHp: DK.enemies.map(e => e.hp), landing };
   }, maxFrames);
 }
 
@@ -98,17 +108,17 @@ async function stepSlot(page, frames) {
 }
 
 async function runKinds(page, row) {
-  for (const [kind, face, manual] of fixtures) {
-    const before = await prepare(page, kind, face);
+  for (const [kind, manual] of fixtures) {
+    const before = await prepare(page, kind);
     assert.equal(before.bought, kind, kind + ': correct purchased grade');
     assert.equal(before.draws, 1, kind + ': grade drawn once');
-    assert.equal(before.rolls, 1, kind + ': face sampled once');
+    assert.equal(before.rolls, 0, kind + ': the chest grade does not secretly sample a face');
     assert.equal(before.goldBefore - before.goldAfter, 160, kind + ': chest charged once');
     assert.equal(before.chests, 1, kind + ': chest count increments once');
     assert.equal(before.slot.kind, kind);
-    assert.equal(before.slot.final, face);
     if (manual) {
       assert.deepEqual([before.slot.active, before.slot.phase, before.dieState, before.held], [true, -1, 'tray', 0], kind + ': waits for a physical throw');
+      assert.ok(!before.slot.final, kind + ': the physical result is still unknown');
       assert.equal(before.drawButtonDisabled, false, kind + ': accessible throw button remains available');
       assert.match(before.drawButtonText, /던지기/, kind + ': purchase button becomes a throw control');
       assert.equal(before.dieCanvasVisible, true, kind + ': playfield is visible');
@@ -136,26 +146,29 @@ async function runKinds(page, row) {
       await page.evaluate(() => DKthrow(1200, -250));
       assert.equal(await page.evaluate(() => DKDIE.state), 'throw', kind + ': actual physics throw begins');
       const after = await stepUntilHeld(page);
-      assert.equal(after.held, face, kind + ': purchased face reaches the hand');
-      assert.equal(after.final, face, kind + ': purchase cannot change its rolled face');
+      const chest = await page.evaluate(k => ({ min: DKCONTENT.INFINITY.chest.min[k], max: DKCONTENT.INFINITY.chest.sides[k] }), kind);
+      assert.ok(after.held >= chest.min && after.held <= chest.max, kind + ': physical reward remains within its visibly marked grade');
+      assert.equal(after.final, after.held, kind + ': physical result reaches the hand');
+      assert.deepEqual(after.landing, { visual: after.held, physical: after.held, final: after.held, slot: after.held },
+        kind + ': the rendered upper face, physical result, slot, and reward agree');
       assert.equal(after.active, false, kind + ': roll no longer busy after settling');
       assert.equal(after.gold, before.goldAfter, kind + ': throw does not charge again');
       assert.equal(after.strikes, 0, kind + ': chest die never calls enemy strike');
       assert.deepEqual(after.enemyHp, [enemy], kind + ': enemy HP is unchanged');
-      row.cases.push({ kind, manual, face, result: after });
+      row.cases.push({ kind, manual, face: after.held, result: after });
     } else {
       assert.equal(before.slot.active, true, kind + ': automatic slot animation starts');
       assert.notEqual(before.slot.phase, -1, kind + ': no user throw is required');
       const after = await stepSlot(page, 120);
-      assert.equal(after.held, face, kind + ': automatic result reaches the hand');
+      assert.equal(after.held, 1, kind + ': the single-sided automatic result reaches the hand');
       assert.equal(after.active, false, kind + ': automatic slot finishes');
-      row.cases.push({ kind, manual, face, result: after });
+      row.cases.push({ kind, manual, face: after.held, result: after });
     }
   }
 }
 
 async function runQueue(page, row) {
-  await prepare(page, 'd8', 7);
+  await prepare(page, 'd8');
   const pending = await page.evaluate(() => {
     DK.inf.queue.push('d12');
     window.__manualQA.pumpQueue();
@@ -164,7 +177,7 @@ async function runQueue(page, row) {
   assert.deepEqual(pending, { queue: ['d12'], kind: 'd8', phase: -1, chests: 1 }, 'boss reward cannot overwrite a pending throw');
   await page.evaluate(() => DKthrow(1200, -250));
   const settled = await stepUntilHeld(page);
-  assert.equal(settled.held, 7);
+  assert.ok(settled.held >= 1 && settled.held <= 8, 'queued d8 physically settles within 1–8');
   const after = await page.evaluate(() => {
     window.__manualQA.pumpQueue();
     const held = DK.heldDie, queueBeforePlace = DK.inf.queue.slice();
@@ -173,11 +186,11 @@ async function runQueue(page, row) {
     return { held, queueBeforePlace, placed, queueAfterPlace: DK.inf.queue.slice(),
       nextKind: DKSLOT.kind, nextPhase: DKSLOT.phase, nextActive: DKSLOT.active, tower: DK.towers[0]?.face };
   });
-  assert.equal(after.held, 7);
+  assert.equal(after.held, settled.held);
   assert.deepEqual(after.queueBeforePlace, ['d12'], 'held die blocks queued reward');
   assert.equal(after.placed, true, 'first die can be placed');
   assert.deepEqual(after.queueAfterPlace, [], 'queued reward begins after placement');
-  assert.deepEqual([after.nextKind, after.nextPhase, after.nextActive, after.tower], ['d12', -1, true, 7], 'queued d12 also waits for throw');
+  assert.deepEqual([after.nextKind, after.nextPhase, after.nextActive, after.tower], ['d12', -1, true, settled.held], 'queued d12 also waits for throw');
   row.queue = { pending, after };
 }
 
@@ -198,8 +211,49 @@ async function runDeck(page, row) {
   row.deck = { result, done };
 }
 
+async function runLegacyDeck(page, row) {
+  const deck = [1, 4, 7, 13, 20];
+  const kinds = ['d1', 'd4', 'd8', 'd20', 'primal'];
+  row.legacyDeck = [];
+  for (let index = 0; index < deck.length; index++) {
+    const result = await page.evaluate(({ deck, index }) => {
+      DKstartInf('build'); DK.paused = true; DK.muted = true; DK.gold = 1000;
+      const legacy = JSON.parse(JSON.stringify(DK.inf.growthSnapshot));
+      delete legacy.deckSystem; delete legacy.treeVersion;
+      delete legacy.duelRules; delete legacy.mastery; delete legacy.talents;
+      delete legacy.awakenings; delete legacy.supporter;
+      legacy.deck = deck.slice();
+      for (const face of deck) legacy.levels[face] = Math.max(1, legacy.levels[face] || 0);
+      if (!DKPROGRESSION.snapshotValid(legacy)) throw Error('legacy five-card snapshot is invalid');
+      DK.inf.growthSnapshot = legacy;
+      const chest = DKCONTENT.INFINITY.chest;
+      const oldRandom = Math.random, oldDraw = chest.draw, oldRoll = chest.roll;
+      let bought;
+      try {
+        Math.random = () => (index + .5) / deck.length;
+        chest.draw = () => { throw Error('legacy deck unexpectedly drew a chest grade'); };
+        chest.roll = () => { throw Error('legacy deck unexpectedly rolled a different face'); };
+        bought = DKchest();
+      } finally { Math.random = oldRandom; chest.draw = oldDraw; chest.roll = oldRoll; }
+      const awarded = DK.heldDie, slotActive = DKSLOT.active,
+        reveal = __manualQA.ROLL_SHOW.t, dieState = DKDIE.state, focus = DK.dieFocus,
+        chests = DK.inf.chests, gold = DK.gold;
+      const placed = DKplace(0), tower = DK.towers[0]?.face;
+      return { bought, awarded, slotActive, reveal, dieState, focus, chests, gold, placed, tower };
+    }, { deck, index });
+    assert.equal(result.bought, kinds[index], `legacy card ${index + 1}: advertised grade`);
+    assert.equal(result.awarded, deck[index], `legacy card ${index + 1}: exact saved-deck face is granted`);
+    assert.equal(result.slotActive, false, `legacy card ${index + 1}: no rotating chest die`);
+    assert.equal(result.reveal, 0, `legacy card ${index + 1}: no physical die result reveal`);
+    assert.equal(result.dieState, 'tray', `legacy card ${index + 1}: field die is not thrown`);
+    assert.deepEqual([result.focus, result.chests, result.gold, result.placed, result.tower],
+      [true, 1, 840, true, deck[index]], `legacy card ${index + 1}: direct reward places the intended tower`);
+    row.legacyDeck.push({ face: deck[index], ...result });
+  }
+}
+
 async function runGesture(page, context, touch, row) {
-  await prepare(page, 'd6', 5);
+  await prepare(page, 'd6');
   const p = await page.evaluate(() => {
     const c = document.querySelector('#game'), r = c.getBoundingClientRect();
     const x = r.left + DKDIE.x * r.width / c.width, y = r.top + DKDIE.y * r.height / c.height;
@@ -230,17 +284,17 @@ async function runGesture(page, context, touch, row) {
   }
   assert.equal(await page.evaluate(() => DKDIE.state), 'throw', 'flick starts physical movement');
   const settled = await stepUntilHeld(page);
-  assert.equal(settled.held, 5, 'gesture reaches the selected face');
+  assert.ok(settled.held >= 1 && settled.held <= 6, 'gesture resolves a real d6 face');
   assert.equal(settled.gold, 9840, 'gesture does not charge a second time');
   row.gesture = { touch, settled };
 }
 
 async function runButton(page, row) {
-  await prepare(page, 'd8', 7);
+  await prepare(page, 'd8');
   await page.click('#roll-btn');
   assert.equal(await page.evaluate(() => DKDIE.state), 'throw', 'on-screen throw button starts the same physical die');
   const settled = await stepUntilHeld(page);
-  assert.equal(settled.held, 7, 'button throw resolves selected face');
+  assert.ok(settled.held >= 1 && settled.held <= 8, 'button throw resolves a real d8 face');
   assert.equal(settled.gold, 9840, 'button throw is free after buying the chest');
   assert.equal(settled.strikes, 0, 'button throw cannot damage enemies');
   row.button = settled;
@@ -273,6 +327,7 @@ async function run(browser, name, viewport, touch) {
     await runKinds(page, row);
     await runQueue(page, row);
     await runDeck(page, row);
+    await runLegacyDeck(page, row);
     await runLog(page, row);
     await runButton(page, row);
     await runGesture(page, context, touch, row);

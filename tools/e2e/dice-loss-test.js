@@ -1,4 +1,4 @@
-// 주사위 손실 회귀: 자동 굴림 보존, 6면체 이상 보상 대기·수동 던지기, 중복 구매 차단.
+// 주사위 손실 회귀: 자동 굴림 보존, 4면체 이상 보상 대기·수동 던지기, 중복 구매 차단.
 const { launchBrowser, gameUrl } = require('./browser.cjs');
 const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 (async () => {

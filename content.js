@@ -1510,10 +1510,11 @@ window.DKCONTENT = (function () {
     rangeBonus: 160, // 인피니티는 사거리를 크게: 가운데 칸(512,300)에서 트랙 가장 먼 지점(모서리 호 바깥, 284px)까지 가장 짧은 타워(135)도 닿는다
     fieldCap: 200,   // 필드 한계선: 살아있는 적이 이 수를 넘는 순간 가장 먼저 스폰된 적이 사라지며 목숨 차감 (보스면 즉시 런 종료)
     capDmg: 1,       // 한계선으로 사라지는 적 1마리당 목숨
-    // 보물상자 갓챠 — 9등급 확률표 + 다면체 주사위. 등급이 뽑을 수 있는 눈의 범위를 chest.sides(17/19)로
-    // 좁혀 우리 성(★) 곡선에 맞췄다. 클리어율 측정 경위는 GAME-SPEC §7.x.
+    // 보물상자 갓챠 — 9등급 확률표 + 다면체 주사위. 등급은 구매 때 정하지만
+    // 결과 눈은 실제로 멈춘 면의 고정 표식에서 읽는다. 에픽/신화/태초의 반복 표식은
+    // 아래 min/sides 밴드와 일치한다. 클리어율 측정 경위는 GAME-SPEC §7.x.
     //  등급 9개: 일반 50% · 레어 33.1% · 고대 10.2% · 유물 5.1% · 서사 0.8% · 전설 0.5% · 에픽 0.2% · 신화 0.08% · 태초 0.019%
-    //            (합 100.099% — 반올림 잔차를 그대로 둔다. 바꾸면 512런 기준선을 다시 재야 한다)
+    //            (표시값 합 99.999%; 추첨 때 합으로 정규화해 남는 0.001%가 특정 등급으로 몰리지 않게 한다)
     //  등급 → 주사위: 일반 d1(1★ 확정) · 레어 d4 · 고대 d6 · 유물 d8 · 서사 d12 · 전설 d20 · 에픽 d20(14~17★) · 신화 d20(18~19★) · 태초 20★ 확정
     //  상자 1개에서 나올 확률: 7~13★ 0.025% · 14~17★ 0.075% · 18~19★ 0.065% · 20★ 0.044% (위로 갈수록 희귀)
     //  경제: 시작 400G · 상자 160G 고정(회차 상승 없음) = 시작 2.5회. 골드 곡선과 함께 튜닝한 값이다.
@@ -1532,11 +1533,11 @@ window.DKCONTENT = (function () {
       shape: { d1: 'd1', d4: 'd4', d6: 'd6', d8: 'd8', d12: 'd12', d20: 'd20', epic: 'd20', myth: 'd20', primal: 'd20' },
       bossPick: ['d8', 'd12', 'd20'], // (구) 무작위 보스 보상 — 이제 INFINITY.bossReward 스케줄을 쓴다
       rank(k) { return this.kinds.indexOf(k); },
-      roll(kind) { const lo = this.min[kind] || 1, hi = this.sides[kind] || 6; return lo + Math.floor(Math.random() * (hi - lo + 1)); },
       draw(wave) {
-        let v = Math.random(), k = 'd4';
-        for (const [kk, p] of this.table) { if (v < p) { k = kk; break; } v -= p; }
-        return k; // 라운드 락(5웨이브 전 전설 금지)은 넣지 않는다 — 표시된 확률과 실제 확률이 달라지는 장치라 배제.
+        const total = this.table.reduce((sum, [, p]) => sum + p, 0);
+        let v = Math.random() * total;
+        for (const [kind, p] of this.table) { if (v < p) return kind; v -= p; }
+        return this.table[this.table.length - 1][0]; // 반올림 오차만 보정. 라운드 락은 없다.
       },
     },
     // ---- 상성: 타워 공격형(진동 vib / 폭발 exp / 일반 norm) × 몬스터 크기(소 S / 중 M / 대 L) ----
