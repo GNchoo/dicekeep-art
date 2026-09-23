@@ -864,7 +864,7 @@ if (window.DKCONTENT) {
   if (DKCONTENT.INFINITY && DKCONTENT.INFINITY.artList) for (const a of DKCONTENT.INFINITY.artList()) SRCS[a.key] = BASE + a.src;
 }
 // Promoted art keeps its asset path; bypass the previous daily image cache.
-for (const key of ['t1', 'cT1a']) if (SRCS[key]) SRCS[key] += '?v=casual2';
+for (const key of ['t1', 'cT1a']) if (SRCS[key]) SRCS[key] += '?v=casual3';
 const A = {};
 let corsBlocked = false;
 

@@ -14,7 +14,7 @@
   ],
   "summary": {
     "files": 2283,
-    "bytes": 278136873,
+    "bytes": 278146159,
     "byCategory": [
       {
         "name": "boss",
@@ -39,7 +39,7 @@
       {
         "name": "tower",
         "files": 110,
-        "bytes": 20166977
+        "bytes": 20176263
       },
       {
         "name": "ui",
@@ -66,7 +66,7 @@
       {
         "name": "runtime",
         "files": 797,
-        "bytes": 86987686
+        "bytes": 86996972
       },
       {
         "name": "source",
@@ -83,7 +83,7 @@
       {
         "name": "png",
         "files": 201,
-        "bytes": 51738014
+        "bytes": 51747300
       },
       {
         "name": "webp",
@@ -100,7 +100,7 @@
       {
         "name": "included",
         "files": 2186,
-        "bytes": 247916570
+        "bytes": 247925856
       }
     ],
     "byMobileReason": [
@@ -127,7 +127,7 @@
       {
         "name": "runtime-reference",
         "files": 676,
-        "bytes": 58277650
+        "bytes": 58286936
       },
       {
         "name": "star-tower-rule",
@@ -35018,10 +35018,10 @@
     },
     {
       "path": "casual/towers/t1-a.png",
-      "bytes": 34293,
-      "sha256": "5ac920dd633ebbab1cf071ce89679e7ffe2807fcd95fd95298e8cedd1ae2ca27",
+      "bytes": 43579,
+      "sha256": "24b70825a6dacf846d541877df63c3e32873e07c8d9afe033e9eacc428ff623e",
       "format": "png",
-      "width": 228,
+      "width": 233,
       "height": 384,
       "hasAlpha": true,
       "lifecycle": "runtime",

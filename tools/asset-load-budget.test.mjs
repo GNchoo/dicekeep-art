@@ -28,14 +28,14 @@ test('reports the current eager SRCS loader deterministically and passes its cei
   assert.equal(report.loadAssets.uniqueRequests, 770);
   assert.equal(report.loadAssets.uniqueFiles, 770);
   // Measured baseline after WebP conversion and the first casual art promotion.
-  assert.equal(report.loadAssets.transferBytes, 93_499_803);
-  assert.equal(report.loadAssets.decodeBytes, 456_931_180);
+  assert.equal(report.loadAssets.transferBytes, 93_518_375);
+  assert.equal(report.loadAssets.decodeBytes, 456_946_540);
   assert.equal(report.startupScenarios.portrait.uniqueRequests, 771);
-  assert.equal(report.startupScenarios.portrait.transferBytes, 93_669_554);   // 캐주얼 파일럿 적용 후 실측
-  assert.equal(report.startupScenarios.portrait.decodeBytes, 463_222_636);
+  assert.equal(report.startupScenarios.portrait.transferBytes, 93_688_126);   // 캐주얼 파일럿 적용 후 실측
+  assert.equal(report.startupScenarios.portrait.decodeBytes, 463_237_996);
   assert.equal(report.startupScenarios.landscape.uniqueRequests, 772);
-  assert.equal(report.startupScenarios.landscape.transferBytes, 93_670_735);  // 캐주얼 파일럿 적용 후 실측
-  assert.equal(report.startupScenarios.landscape.decodeBytes, 463_209_580);
+  assert.equal(report.startupScenarios.landscape.transferBytes, 93_689_307);  // 캐주얼 파일럿 적용 후 실측
+  assert.equal(report.startupScenarios.landscape.decodeBytes, 463_224_940);
   assert.equal(report.integrity.manifestLinkedFiles, 756);
   assert.equal(report.integrity.notInArtManifest.length, 14);
 

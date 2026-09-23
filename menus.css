@@ -37,7 +37,7 @@
 #lobby-single .lobby-inf-btn::before { content:''; position:absolute; left:17px; top:18px; width:48px; height:48px; background:center/contain no-repeat; }
 #lobby-single #btn-inf-clear { background:linear-gradient(110deg,#947032,#5b411e); border-color:#d8ad58; }
 #btn-inf-clear::before { background-image:url('ui/icon-trophy.png')!important; }
-#btn-inf-build::before { background-image:url('casual/towers/t1-a.png?v=casual2')!important; }
+#btn-inf-build::before { background-image:url('casual/towers/t1-a.png?v=casual3')!important; }
 #btn-infinity::before { background-image:url('ui/icon-dice.png')!important; }
 #btn-stage-select::before { background-image:url('ui/icon-dice.png')!important; }
 #lobby-single #btn-stage-select .bi { display:none; }
