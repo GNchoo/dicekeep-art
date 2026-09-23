@@ -45,7 +45,7 @@
     for (const product of [{ kind: 'cosmetic', skinId: 'base', amount: 0 }, ...list.filter(p => p.kind === 'cosmetic')]) {
       const id = product.skinId, base = id === 'base', owned = authority.owned.includes(id), equipped = authority.equipped === id;
       const card = document.createElement('article'); card.className = 'cosmetic-product cosmetic-' + id; card.dataset.theme = id;
-      card.append(productArt(base ? 'casual/towers/t1-a.png?v=casual2' : `casual/towers/skins/${id}/t01.png`));
+      card.append(productArt(base ? 'casual/towers/t1-a.png?v=casual3' : `casual/towers/skins/${id}/t01.png`));
       const title = document.createElement('h4'); title.textContent = base ? '나의 상아 성채' : P.themes[id].name;
       const detail = document.createElement('p'); detail.textContent = base ? '기본 주사위와 성채 외형' : '주사위 재질 6종 + 고유 타워 1~20성';
       const status = document.createElement('p'); status.className = 'cosmetic-status'; status.textContent = art.loading.includes(id) ? '그림을 불러오는 중…' : art.failures[id] ? '그림 준비 중 · 기본 스킨 유지' : equipped ? (art.active === id ? '장착 중' : '장착 그림 준비 중') : owned ? '소유 중' : '외형 묶음 · 전투 효과 없음';
