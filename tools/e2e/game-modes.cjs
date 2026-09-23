@@ -154,18 +154,20 @@ async function modeDraws(page, row, dir) {
     DKstartInf('clear'); DK.paused = false; DK.gold = 90000;
     const ch = DKCONTENT.INFINITY.chest, oldDraw = ch.draw, oldRoll = ch.roll;
     let draws = 0, rolls = 0;
-    ch.draw = () => { draws++; return 'd8'; }; ch.roll = () => { rolls++; return 7; };
+    ch.draw = () => { draws++; return 'd8'; }; ch.roll = () => { rolls++; throw new Error('face must come from the landed die'); };
     window.__pureChestRestore = () => { ch.draw = oldDraw; ch.roll = oldRoll; return { draws, rolls }; };
     DKchest();
     return { draws, kind: DKSLOT.kind, phase: DKSLOT.phase, held: DK.heldDie, die: DKDIE.state };
   });
-  check(row, 'six-plus chest waits for a player throw without revealing its face', row.pureDraw,
+  check(row, 'four-plus chest waits for a player throw without revealing its face', row.pureDraw,
     { draws: 1, kind: 'd8', phase: -1, held: 0, die: 'tray' });
   await page.evaluate(() => DKthrow(900, -300));
-  await page.waitForFunction(() => DK.heldDie === 7 && !DKSLOT.active, null, { timeout: 12000 });
-  check(row, 'player throw delegates to the original face roll and awards that die',
-    await page.evaluate(() => ({ ...__pureChestRestore(), face: DK.heldDie, final: DKSLOT.final })),
-    { draws: 1, rolls: 1, face: 7, final: 7 });
+  await page.waitForFunction(() => DK.heldDie > 0 && !DKSLOT.active, null, { timeout: 12000 });
+  const physicalOutcome = await page.evaluate(() => ({ ...__pureChestRestore(), face: DK.heldDie, final: DKSLOT.final }));
+  check(row, 'player throw awards the physical d8 result without sampling a hidden face',
+    [physicalOutcome.draws, physicalOutcome.rolls, physicalOutcome.face === physicalOutcome.final,
+      physicalOutcome.face >= 1 && physicalOutcome.face <= 8],
+    [1, 0, true, true]);
   row.deckDraws = await page.evaluate(() => {
     DKstartInf('build'); DK.paused = true; DK.gold = 900000;
     const rng = Math.random, ch = DKCONTENT.INFINITY.chest, oldDraw = ch.draw, oldRoll = ch.roll;

@@ -145,14 +145,20 @@ jobs:
         run: npm run test:game-modes
       - name: manual-chest-roll (다면체 직접 투척·보상 큐)
         run: npm run test:manual-chest-roll
+      - name: physical-dice-outcomes (실제 착지 면·지급 결과 일치)
+        run: npm run test:physical-dice-outcomes
+      - name: dice-rotation (면체 회전 대칭)
+        run: node tools/dice-rotation-test.cjs
       - name: dice-rest-pose (면체별 대기·결과 자세)
         run: npm run test:dice-rest-pose
       - name: story-physical-throw (기존 스토리 주사위 타격)
         run: npm run test:story-physical-throw
+      - name: run-resume (구매한 주사위 중단 복원)
+        run: npm run test:run-resume
       - name: casual-world (아트 로딩·알파·발사 위치·지역별 렌더)
         run: npm run test:casual-world
-      - name: pure-luck
-        run: npm run test:pure-luck
+      - name: pure-main (순수운빨 계정 독립성·물리 굴림 기준)
+        run: npm run test:pure-main
       - name: campaign
         run: npm run test:campaign
       - name: rewards-integration

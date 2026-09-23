@@ -8,17 +8,19 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
+const { screenTopDieResult } = require('./screen-top-die.cjs');
 
 const reportPath = outputPath('dice-rest-pose.json');
 const report = { cases: [], pass: false };
 const fixtures = [
-  { kind: 'd6', face: 5, shape: 'd6' },
-  { kind: 'd8', face: 7, shape: 'd8' },
-  { kind: 'd12', face: 11, shape: 'd12' },
-  { kind: 'd20', face: 16, shape: 'd20' },
-  { kind: 'epic', face: 17, shape: 'd20' },
-  { kind: 'myth', face: 19, shape: 'd20' },
-  { kind: 'primal', face: 20, shape: 'd20' },
+  { kind: 'd4', shape: 'd4' },
+  { kind: 'd6', shape: 'd6' },
+  { kind: 'd8', shape: 'd8' },
+  { kind: 'd12', shape: 'd12' },
+  { kind: 'd20', shape: 'd20' },
+  { kind: 'epic', shape: 'd20' },
+  { kind: 'myth', shape: 'd20' },
+  { kind: 'primal', shape: 'd20' },
 ];
 
 function projectPose(model, matrix) {
@@ -62,7 +64,8 @@ async function boot(browser, name, viewport, mobile) {
     const anchor = 'window.DK = S;';
     assert.equal(source.split(anchor).length, 2, 'one test hook insertion point');
     await route.fulfill({ response, body: source.replace(anchor,
-      'window.__diceRestQA = { poseFor: shape => shape === "d6" ? m3mul(TRAY_TILT, faceTopR(6)) : polyRestR(shape), dieShape, POLY, m3apply, d8TargetR, slotTargetR, updateDie };\n  ' + anchor) });
+      'window.__diceRestQA = { poseFor: shape => shape === "d6" ? m3mul(TRAY_TILT, faceTopR(6)) : polyRestR(shape), dieShape, POLY, FACES, DIE_SYMMETRIES, m3apply, m3mul, dieFaceLabels, physicalFaceValue, updateDie };\n  ' +
+      'window.__diceRestQA.visualTop=' + screenTopDieResult.toString() + ';\n' + anchor) });
   });
   await page.goto(gameUrl());
   await page.waitForFunction(() => window.DK?.phase === 'title' && window.__diceRestQA, null, { timeout: 120000 });
@@ -72,7 +75,7 @@ async function boot(browser, name, viewport, mobile) {
 }
 
 async function inspect(page, fixture) {
-  return page.evaluate(({ kind, face }) => {
+  return page.evaluate(({ kind }) => {
     DKstartInf('clear');
     DK.paused = true;
     DK.gold = 10000;
@@ -80,10 +83,13 @@ async function inspect(page, fixture) {
     const originalDraw = chest.draw, originalRoll = chest.roll;
     try {
       chest.draw = () => kind;
-      chest.roll = () => face;
+      chest.roll = () => { throw Error('The visible die must not preselect a reward face'); };
       const bought = DKchest();
       const { dieShape, poseFor, POLY, m3apply } = window.__diceRestQA;
       const shape = dieShape(kind), actual = DKDIE.R.slice(), expected = poseFor(shape);
+      const symmetryCount = window.__diceRestQA.DIE_SYMMETRIES[shape].length;
+      const matchesSymmetry = window.__diceRestQA.DIE_SYMMETRIES[shape].some(G =>
+        window.__diceRestQA.m3mul(expected, G).every((v, i) => Math.abs(v - actual[i]) < 1e-6));
       const model = shape === 'd6'
         ? { verts: [-1, 1].flatMap(x => [-1, 1].flatMap(y => [-1, 1].map(z => [x, y, z]))), faces: [] }
         : POLY[shape];
@@ -108,13 +114,12 @@ async function inspect(page, fixture) {
       const dieY = rect.top + DKDIE.y * rect.height / canvas.height;
       return {
         bought, shape, phase: DKSLOT.phase, state: DKDIE.state, held: DK.heldDie,
-        actual, expected, projected, hull, visibleFaces,
+        actual, expected, matchesSymmetry, symmetryCount, projected, hull, visibleFaces,
         mesh: { vertices: model.verts.length, faces: model.faces.length, sides: [...new Set(model.faces.map(f => f.idx.length))] },
         dieTarget: document.elementFromPoint(dieX, dieY)?.id || null,
       };
     } finally {
-      chest.draw = originalDraw;
-      chest.roll = originalRoll;
+      chest.draw = originalDraw; chest.roll = originalRoll;
     }
   }, fixture);
 }
@@ -128,15 +133,9 @@ async function inspectD8Results(page) {
     const originalDraw = chest.draw, originalRoll = chest.roll;
     try {
       chest.draw = () => 'd8';
-      chest.roll = () => 7;
+      chest.roll = () => { throw Error('The d8 must not preselect a reward face'); };
       const bought = DKchest();
       const qa = window.__diceRestQA;
-      const poses = [];
-      for (let face = 1; face <= 8; face++) {
-        DKSLOT.final = face;
-        poses.push({ face, matrix: qa.slotTargetR(), direct: qa.d8TargetR(face) });
-      }
-      DKSLOT.final = 7;
       DKthrow(1200, -250);
       let frames = 0;
       for (; frames < 600; frames++) {
@@ -144,9 +143,13 @@ async function inspectD8Results(page) {
         if (DKDIE.state === 'settle' && DKDIE.settleT >= .5) break;
       }
       return {
-        bought, model: qa.POLY.d8, poses, frames,
-        actual: DKDIE.R.slice(), target: qa.slotTargetR(),
-        dieState: DKDIE.state, settleT: DKDIE.settleT, final: DKDIE.final,
+        bought, model: qa.POLY.d8, frames,
+        actual: DKDIE.R.slice(), landing: DKDIE.settleFrom?.slice(),
+        dieState: DKDIE.state, settleT: DKDIE.settleT, final: DKDIE.final, slotFinal: DKSLOT.final,
+        physicalAtLanding: qa.physicalFaceValue('d8', DKDIE.settleFrom || DKDIE.R),
+        physicalAfterSettle: qa.physicalFaceValue('d8', DKDIE.R),
+        visualAtLanding: qa.visualTop('d8', DKDIE.settleFrom || DKDIE.R, qa.dieFaceLabels('d8'), qa).value,
+        visualAfterSettle: qa.visualTop('d8', DKDIE.R, qa.dieFaceLabels('d8'), qa).value,
       };
     } finally {
       chest.draw = originalDraw;
@@ -160,15 +163,16 @@ async function run(browser, name, viewport, mobile) {
   report.cases.push(row);
   const { page, context, errors } = await boot(browser, name, viewport, mobile);
   try {
-    const firstByShape = new Map();
     for (const fixture of fixtures) {
       const result = await inspect(page, fixture);
       assert.equal(result.bought, fixture.kind, fixture.kind + ': correct chest reward');
       assert.equal(result.shape, fixture.shape, fixture.kind + ': expected real solid');
       assert.deepEqual([result.phase, result.state, result.held], [-1, 'tray', 0], fixture.kind + ': awaits player input');
       assert.equal(result.dieTarget, 'game', fixture.kind + ': waiting die is on the interactive canvas');
-      assert.ok(result.actual.every((v, i) => Math.abs(v - result.expected[i]) < 1e-6), fixture.kind + ': canonical resting pose is used');
-      const expectedMesh = { d8: [6, 8, 3], d12: [20, 12, 5], d20: [12, 20, 3] }[fixture.shape];
+      assert.equal(result.matchesSymmetry, true, fixture.kind + ': its visible initial orientation is a valid solid symmetry of the canonical pose');
+      assert.equal(result.symmetryCount, { d4: 12, d6: 24, d8: 24, d12: 60, d20: 60 }[fixture.shape],
+        fixture.kind + ': full rotational symmetry group randomizes numbered faces fairly');
+      const expectedMesh = { d4: [4, 4, 3], d8: [6, 8, 3], d12: [20, 12, 5], d20: [12, 20, 3] }[fixture.shape];
       if (expectedMesh) assert.deepEqual([result.mesh.vertices, result.mesh.faces, ...result.mesh.sides], expectedMesh, fixture.kind + ': renderer uses the correct mesh');
       if (fixture.shape === 'd8') {
         assert.ok(result.hull.length >= 4, 'd8 rests with at least a diamond silhouette, never a tetrahedron-like triangle');
@@ -177,11 +181,6 @@ async function run(browser, name, viewport, mobile) {
       if (fixture.shape === 'd12' || fixture.shape === 'd20') {
         assert.ok(result.hull.length >= 5, fixture.kind + ': many-sided projected silhouette');
         assert.ok(result.visibleFaces >= 4, fixture.kind + ': multiple visible faces show its volume');
-      }
-      if (fixture.shape === 'd20') {
-        const base = firstByShape.get('d20');
-        if (base) assert.deepEqual(result.actual, base, fixture.kind + ': rarity aliases keep the same d20 resting geometry');
-        else firstByShape.set('d20', result.actual);
       }
       row.cases.push({ kind: fixture.kind, shape: result.shape, hull: result.hull.length,
         visibleFaces: result.visibleFaces, mesh: result.mesh });
@@ -200,22 +199,15 @@ async function run(browser, name, viewport, mobile) {
     row.previewHulls = previewHulls;
     const outcomes = await inspectD8Results(page);
     assert.equal(outcomes.bought, 'd8', 'physical d8 fixture was purchased');
-    row.d8Outcomes = [];
-    for (const { face, matrix, direct } of outcomes.poses) {
-      assert.ok(matrix.every((v, i) => Math.abs(v - direct[i]) < 1e-6), `d8 face ${face}: actual result uses the shape-specific target`);
-      const pose = projectPose(outcomes.model, matrix);
-      assert.ok(pose.hull >= 4, `d8 face ${face}: result keeps a diamond rather than triangular silhouette`);
-      assert.ok(pose.visibleFaces >= 4, `d8 face ${face}: result shows four triangular facets`);
-      const selected = pose.normals[face - 1];
-      const other = Math.max(...pose.normals.filter((_, i) => i !== face - 1));
-      assert.ok(selected > other + 1e-5, `d8 face ${face}: result number is on the uniquely foremost face`);
-      row.d8Outcomes.push({ face, hull: pose.hull, visibleFaces: pose.visibleFaces, frontLead: selected - other });
-    }
     assert.equal(outcomes.dieState, 'settle', 'representative d8 completes actual throw physics');
-    assert.equal(outcomes.final, 7, 'physical d8 preserves selected reward face');
-    assert.ok(outcomes.actual.every((v, i) => Math.abs(v - outcomes.target[i]) < 1e-5), 'actual settled d8 orientation matches the readable diamond target');
+    assert.ok(outcomes.final >= 1 && outcomes.final <= 8, 'physical d8 awards a valid landed face');
+    assert.deepEqual([outcomes.physicalAtLanding, outcomes.physicalAfterSettle,
+      outcomes.visualAtLanding, outcomes.visualAfterSettle, outcomes.slotFinal],
+    [outcomes.final, outcomes.final, outcomes.final, outcomes.final, outcomes.final],
+    'd8 awards the screen-top face without switching it during settle');
     const settled = projectPose(outcomes.model, outcomes.actual);
-    assert.ok(settled.hull >= 4 && settled.visibleFaces >= 4, 'actual settled d8 stays volumetric');
+    assert.ok(settled.hull >= 4 && settled.visibleFaces >= 3,
+      `actual settled d8 stays volumetric (hull=${settled.hull}, visible=${settled.visibleFaces}, final=${outcomes.final})`);
     row.d8Physical = { frames: outcomes.frames, final: outcomes.final, hull: settled.hull, visibleFaces: settled.visibleFaces };
     assert.deepEqual(errors, [], name + ': no uncaught browser errors');
   } finally {

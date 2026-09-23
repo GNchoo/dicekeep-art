@@ -110,7 +110,7 @@ function playRun({ seed, waves }) {
   const DT = 1 / 60, MAX_TICKS = 400000;
   let ticks = 0;
   const settleRoll = () => {
-    // Older baseline builds have only automatic slot rolls. Current 6+-sided
+    // Older baseline builds have only automatic slot rolls. Current 4+-sided
     // chests wait for a real throw; advance that same physical state machine.
     if (DKSLOT.phase === -1) {
       const paid = DK.gold;

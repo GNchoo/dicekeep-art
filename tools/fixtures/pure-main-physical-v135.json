@@ -1,0 +1,68 @@
+{
+  "ref": "physical-dice-v135",
+  "source": "tools/e2e/pure-luck-parity.cjs --waves=12, desktop and phone; visible physical landing decides every d4+ chest result",
+  "gameSha256": "40f57a24d81bf8e7ea132dceb56ffc3d481a28def8012f313ff28c6dcf2b0931",
+  "waves": 12,
+  "rows": [
+    {
+      "tag": "desktop",
+      "seed": 20260909,
+      "traceHash": "f927b29a08fc6d3a:18092",
+      "drawHash": "feb908843ca46040:199",
+      "drawCount": 18,
+      "waveReached": 12,
+      "canvas": "831x576",
+      "mapKey": "cInf"
+    },
+    {
+      "tag": "desktop",
+      "seed": 777,
+      "traceHash": "daf669541f6ae780:15778",
+      "drawHash": "f569685490a54b60:204",
+      "drawCount": 18,
+      "waveReached": 12,
+      "canvas": "831x576",
+      "mapKey": "cInf"
+    },
+    {
+      "tag": "desktop",
+      "seed": 31337,
+      "traceHash": "b18ba0e8bee3d23a:16986",
+      "drawHash": "6ffe4a70da8d6d7a:199",
+      "drawCount": 18,
+      "waveReached": 12,
+      "canvas": "831x576",
+      "mapKey": "cInf"
+    },
+    {
+      "tag": "phone",
+      "seed": 20260909,
+      "traceHash": "8640f9a367cee93d:17400",
+      "drawHash": "a2d6749b7073ac89:180",
+      "drawCount": 16,
+      "waveReached": 12,
+      "canvas": "720x1381",
+      "mapKey": "cInfP"
+    },
+    {
+      "tag": "phone",
+      "seed": 777,
+      "traceHash": "f9e179c5f57a1171:17443",
+      "drawHash": "d51a96b32041baa9:199",
+      "drawCount": 18,
+      "waveReached": 12,
+      "canvas": "720x1381",
+      "mapKey": "cInfP"
+    },
+    {
+      "tag": "phone",
+      "seed": 31337,
+      "traceHash": "7729e31ddead9a3b:20496",
+      "drawHash": "560acad4e1fc7c68:199",
+      "drawCount": 18,
+      "waveReached": 12,
+      "canvas": "720x1381",
+      "mapKey": "cInfP"
+    }
+  ]
+}

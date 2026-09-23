@@ -13,7 +13,7 @@ fs.mkdirSync(out, { recursive: true });
       await page.route('**/game.js*', async route => {
         const r = await route.fetch(), s = await r.text();
         assert.ok(s.includes('window.DK = S;'), 'run-resume closure hook exists');
-        const hook = 'window.__resumeQA={persistRun,readRunSave,restoreRunSave,spawnEnemy,buildInfinityWave,towerDmg,relayoutArena,update,laneLen}; window.DK = S;';
+        const hook = 'window.__resumeQA={persistRun,readRunSave,restoreRunSave,spawnEnemy,buildInfinityWave,towerDmg,relayoutArena,update,laneLen,manualChestReady}; window.DK = S;';
         await route.fulfill({ response: r, body: s.replace('window.DK = S;', hook) });
       });
       async function boot() {
@@ -57,7 +57,9 @@ fs.mkdirSync(out, { recursive: true });
           } else {
             deck.forEach((id,i) => { p.levels[id]=1; Object.assign(p.collection.cards[id],{owned:true,class:DKDECKRULES.get(id).baseClass+i+1}); });
             if (!DKPROGRESSION.setPreset(p,0,deck).ok) throw Error('collection fixture deck invalid');
-            DKSAVE.progression=p; DKstartInf('extreme');
+            // Exercise the old collection payload through the real profile
+            // migration before the lobby reads its tree summary.
+            DKSAVE.progression=DKPROGRESSION.sanitize(p); DKstartInf('extreme');
             if (DK.inf.growthSnapshot.deckSystem!==1) throw Error('collection fixture uses old combat');
           }
           DK.paused=true; DK.gold=20000;
@@ -83,12 +85,15 @@ fs.mkdirSync(out, { recursive: true });
           if (schema==='collection') { e.poisonT=2.25; e.poisonDps=17.5; e.fractureT=1.75; }
           DK.projs.push({kind:'dieBomb',x:t.x,y:t.y,tgt:e,src:t,spd:350,dmg:100,splash:50,trail:[],rot:.3,spin:.2});
           DK.inf.queue=[schema==='legacy'?'primal':'d20'];
-          Object.assign(DKSLOT,{active:true,final:6,kind:schema==='legacy'?'d6':'d20',phase:0,t:.17,t2:.11,sndT:.03});
+          // Legacy pure-style chest may be interrupted mid-throw. Its grade is
+          // already purchased but its face must still be unknown on disk.
+          Object.assign(DKSLOT,{active:true,final:schema==='legacy'?0:6,kind:schema==='legacy'?'d6':'d20',phase:schema==='legacy'?-2:0,t:.17,t2:.11,sndT:.03});
           if (!__resumeQA.persistRun()) throw Error('checkpoint not persisted');
           return __resumeQA.readRunSave(false);
         }, schema);
         assert.ok(saved && saved.enemies.length && saved.projs.length);
         const expected=await inspect(), initialGeometry=await geometry();
+        if (schema==='legacy') { Object.assign(expected.slot,{phase:-1,final:0,t:0,t2:0,sndT:0}); }
         assert.equal(saved.inf.growthSnapshot.deckSystem,schema==='collection'?1:undefined);
         assert.equal(expected.frozen,true);
         if (schema==='legacy') assert.equal(saved.towers[0].growthCarry,2.52);
@@ -107,6 +112,7 @@ fs.mkdirSync(out, { recursive: true });
         await boot(); await page.evaluate(()=>DKlobbyView('single'));
         await page.click('#run-resume-play'); await page.waitForFunction(()=>DK.phase==='playing');
         assert.deepEqual(await inspect(),expected,'logical combat state survives reload and UI resume');
+        if (schema==='legacy') assert.equal(await page.evaluate(()=>__resumeQA.manualChestReady()),true,'interrupted chest can be thrown again after resume');
         const restoredGeometry=await geometry();
         assert.ok(restoredGeometry.finite && restoredGeometry.definitions);
         restoredGeometry.progress.forEach((n,i)=>assert.ok(Math.abs(n-initialGeometry.progress[i])<1e-10,'path progress survives restore'));
@@ -119,7 +125,24 @@ fs.mkdirSync(out, { recursive: true });
         const resaved=await page.evaluate(()=>{__resumeQA.persistRun();return __resumeQA.readRunSave(false);});
         assert.deepEqual(resaved.inf.growthSnapshot,saved.inf.growthSnapshot);
         assert.deepEqual(resaved.inf.deckPower,saved.inf.deckPower);
-        assert.deepEqual(resaved.slot,saved.slot,'active roll clocks survive a second checkpoint');
+        if (schema==='legacy') {
+          assert.equal(resaved.slot.phase,-1,'interrupted physical roll resumes at a new throw prompt');
+          assert.equal(resaved.slot.final,0,'no face is silently selected while offline');
+          assert.deepEqual(await page.evaluate(()=>{
+            const gold=DK.gold; DKthrow(900,-300);
+            return {state:DKDIE.state,phase:DKSLOT.phase,final:DKSLOT.final,charged:gold-DK.gold};
+          }),{state:'throw',phase:-2,final:0,charged:0},'rethrowing the purchased grade is free and still has no chosen face');
+          for (const old of [{kind:'d4',phase:1,face:4},{kind:'d6',phase:-2,face:6}]) {
+            const direct=await page.evaluate(async ({saved,old})=>{
+              const checkpoint=structuredClone(saved);
+              Object.assign(checkpoint.slot,{active:true,kind:old.kind,phase:old.phase,final:old.face});
+              await __resumeQA.restoreRunSave(checkpoint,null);
+              return {held:DK.heldDie,active:DKSLOT.active,ready:__resumeQA.manualChestReady(),die:DKDIE.state};
+            },{saved,old});
+            assert.deepEqual(direct,{held:old.face,active:false,ready:false,die:'tray'},
+              `old ${old.kind} with a preselected deck card resumes without a fake physical roll`);
+          }
+        } else assert.deepEqual(resaved.slot,saved.slot,'active roll clocks survive a second checkpoint');
         await page.screenshot({path:path.join(out,name+'.png')});
         await page.click('#menu-quit'); await page.waitForFunction(()=>DK.phase==='over');
         const settlement=await page.evaluate(()=>({saved:__resumeQA.readRunSave(false),shards:DKSAVE.progression.shards,count:DKSAVE.progression.records.extreme.runs.length}));

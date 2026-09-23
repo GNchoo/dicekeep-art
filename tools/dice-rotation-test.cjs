@@ -21,6 +21,7 @@ const targetStart = source.indexOf('function slotTargetR()');
 const targetEnd = source.indexOf('\n}', targetStart) + 2;
 assert.ok(targetStart >= 0 && targetEnd > targetStart, 'slotTargetR source missing');
 const code = fragment('function m3id()', '// 큐브 면 정의') + '\n' +
+  fragment('// 큐브 면 정의', 'const LIGHT =') + '\n' +
   source.slice(source.indexOf('const POLY ='), targetEnd) + `
   const SLOT = {kind: 'd20', final: 1};
   const dieShape = kind => kind;

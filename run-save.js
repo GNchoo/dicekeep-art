@@ -5,7 +5,7 @@
 })(typeof window === 'undefined' ? null : window, function () {
   'use strict';
   // Device-local recovery, not an authoritative combat proof. Account rewards
-  // still require the original server ticket. Bump RULES when combat changes.
+  // still require the original server ticket. Bump RULES for incompatible combat state changes.
   const VERSION = 1, RULES = 'growth-105', MAX_BYTES = 2000000;
   const kinds = ['d1', 'd4', 'd6', 'd8', 'd12', 'd20', 'epic', 'myth', 'primal'];
   const fields = ['gold', 'lives', 'wave', 'waveActive', 'autoT', 'waveT', 'heldDie', 'time'];
@@ -74,7 +74,10 @@
     if (!p.enemies.every(e => object(e) && object(e.def) && num(e.hp, -1e200, 1e200) && num(e.max, 1e-20, 1e200) && num(e.dist, 0, 1e8) && int(e.lane, 0, p.lanes.length - 1))) return false;
     if (!Array.isArray(p.projs) || p.projs.length > 2048 || !p.projs.every(q => object(q) && int(q.target, 0, p.enemies.length - 1) && int(q.source, 0, p.towers.length - 1))) return false;
     if (!Array.isArray(p.spawnQ) || p.spawnQ.length > 512 || !Array.isArray(inf.queue) || inf.queue.length > 512 || !inf.queue.every(k => kinds.includes(k)) || !object(p.slot) || !kinds.includes(p.slot.kind)) return false;
-    if (p.slot.active && !int(p.slot.final, 1, 20)) return false;
+    // Pending non-deck chests may have no result yet (physical throw), or may
+    // carry an exact card selected by an older growth run. Restore handles both.
+    const pendingNonDeck = inf.growthSnapshot.deckSystem !== 1 && [-1, -2].includes(p.slot.phase) && p.slot.kind !== 'd1';
+    if (p.slot.active && !(pendingNonDeck ? int(p.slot.final, 0, 20) : int(p.slot.final, 1, 20))) return false;
     return !p.match || (object(p.match) && typeof p.match.code === 'string' && typeof p.match.pid === 'string' && num(p.match.t0, 0, 1e15));
   }
   function capture(s, slot, meta) {
