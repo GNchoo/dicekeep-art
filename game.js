@@ -2061,6 +2061,20 @@ function closeInfHelp() {
 function helpSeen() { try { return localStorage.getItem('dk_infHelpSeen') === '1'; } catch (e) { return false; } }
 function chestDef() { const C = window.DKCONTENT; return C && C.INFINITY && C.INFINITY.chest; }
 function chestCost() { if (deckRun()) return DECK.summonCost(S.inf.chests); const ch = chestDef(); return ch && S.inf ? ch.cost(S.inf.chests || 0) : Infinity; }
+function stageNotice(id, message, tag, ms) {
+  const el = $(id); if (!el) return;
+  el.textContent = message;
+  if (id === 'chest-reveal') el.dataset.tier = tag;
+  else el.dataset.result = tag;
+  el.classList.remove('hidden');
+  clearTimeout(el.hideTimer);
+  el.hideTimer = setTimeout(() => el.classList.add('hidden'), ms || 2200);
+}
+// 중요한 획득·강화 연출은 전투 x1/x3와 무관한 실제 시간으로 재생한다.
+function presentationFx(fromFx, fromText, scale = 1) {
+  for (let i = fromFx; i < S.fxs.length; i++) { S.fxs[i].realtime = true; S.fxs[i].dur *= scale; }
+  for (let i = fromText; i < S.texts.length; i++) { S.texts[i].realtime = true; S.texts[i].dur = (S.texts[i].dur || 1.1) * scale; }
+}
 function buyChest() {
   const ch = chestDef();
   if (!ch || S.mode !== 'infinity' || !S.inf || S.phase !== 'playing') return null;
@@ -2075,13 +2089,17 @@ function buyChest() {
   if (deckRun()) { S.inf.spent+=cost; rollDie('d20',drawn.face); S.texts.push({ str:`${combatDef(drawn.face).name} · 1눈금`,x:W/2,y:topTextY(),t:0,color:combatDef(drawn.face).color }); coachHit('roll'); syncUI(); return 'd20'; }
   const rare = rk >= 5 ? 3 : rk === 4 ? 2 : rk === 3 ? 1 : 0;
   const col = dieKindColor(kind);
+  const fxStart = S.fxs.length, textStart = S.texts.length;
   // 글자는 위쪽 HUD 바로 아래, 상자 열림·링·버스트는 주사위가 크게 뜨는 화면 중앙(drawCenterRoll)과 같은 자리
   S.texts.push({ str: drawn ? `덱 소환 · ★${drawn.face} ${combatDef(drawn.face).name}` : kind === 'd1' ? '꽝… 일반: 외눈 주사위' : `보물상자: ${ch.grade[kind]} — ${ch.label[kind]} 획득!`, x: W / 2, y: topTextY(), t: 0, color: col });
   const fx = W / 2, fy = H / 2;
-  S.fxs.push({ kind: 'ring', x: fx, y: fy, t: 0, dur: 0.6 + rare * 0.2, size: 140 + rare * 50, color: col });
+  S.fxs.push({ kind: 'ring', x: fx, y: fy, t: 0, dur: 0.95 + rare * 0.2, size: 175 + rare * 55, color: col });
   if (rk >= 3) spawnBurst(fx, fy, col, 6 + rk * 3, 100 + rk * 24, 0.6);
   if (rk >= 6) { S.shakeT = Math.max(S.shakeT || 0, 0.3); S.fxs.push({ kind: 'circle', x: fx, y: fy, t: 0, dur: 1.2, size: 260, color: col }); }
-  if (rk >= 3 && hasArt('chestOpen')) S.fxs.push({ kind: 'chestOpen', x: fx, y: fy, t: 0, dur: 0.6 + rare * 0.15, size: 260 + rare * 50, add: true });
+  if (rk >= 3 && hasArt('chestOpen')) S.fxs.push({ kind: 'chestOpen', x: fx, y: fy, t: 0, dur: 1.35 + rare * 0.15, size: 340 + rare * 45 });
+  if (rk >= 3 && hasArt('acquireColumn')) S.fxs.push({ kind: 'column', x: fx, y: fy + 105, t: 0, dur: 1.25, size: 270 + rare * 55 });
+  if (rk >= 3) stageNotice('chest-reveal', `${ch.grade[kind]} 상자 개봉 · ${ch.label[kind]}!`, rk >= 5 ? 'mythic' : 'rare', 2400);
+  presentationFx(fxStart, textStart, rk >= 3 ? 1.25 : 1);
   if (rare >= 2) SFX.win(); else if (kind === 'd1') SFX.deny(); else SFX.coin();
   if (rk >= 3) netLog(`${ch.grade[kind]} ${ch.label[kind]}를 뽑았습니다`, 'gacha'); // 유물 이상은 방에 알린다
   if (drawn) {
@@ -2164,12 +2182,15 @@ const hasArt = (k) => { const a = A[k]; return !!(a && !a.missing && (Array.isAr
 function acquireFx(face) {
   if (deckRun()) { acquireFxCode(1,0,combatDef(face).color,W/2,H/2); return; }
   const def = TOWER_DEFS[face]; if (!def) return;
+  const fxStart = S.fxs.length, textStart = S.texts.length;
   const col = def.color, cx = W / 2, cy = H / 2;
   const name = def.name.replace(/ ★\d+$/, '');
   const tier = face <= 6 ? 0 : face >= 19 ? 4 : face >= 15 ? 3 : face >= 11 ? 2 : 1;   // ★7~10 · ★11~14 · ★15~18 · ★19~20
   if (hasArt('acquireBurst')) acquireFxArt(face, tier, col, cx, cy); else acquireFxCode(face, tier, col, cx, cy);
   if (!tier) return;
   S.texts.push({ str: `★${face}성 ${name} 획득!`, x: cx, y: topTextY() + 34, t: 0, color: col, big: true });
+  stageNotice('chest-reveal', `★${face} ${name} 획득!`, tier >= 3 ? 'mythic' : 'rare', 2400);
+  presentationFx(fxStart, textStart, 1.4);
   if (tier >= 3) { S.glowT = 0.9; S.glowColor = col; }        // 화면 가장자리 빛 (★15+)
   S.shakeT = Math.max(S.shakeT || 0, [0, 0.2, 0.3, 0.5, 0.7][tier]);
   if (tier >= 4) SFX.jackpot(); else if (tier >= 3) SFX.win(); else SFX.merge();
@@ -3794,12 +3815,30 @@ const towerSlowPct = t => deckRun() ? deckStats(t).slowPct : 0.26 + 0.06 * t.lvl
 const towerChain = t => deckRun() ? deckStats(t).chain : 2 + t.lvl + ((powerSpecial(t.face, 'chain') || 0) * powerTier(t.face));
 
 // SP 로 눈 강화 (인피니티 전용)
+function towerPresentationFx(t, fx) {
+  fx.anchorTower = t; fx.anchorSpot = t.spot;
+  fx.anchorDx = fx.x - t.x; fx.anchorDy = fx.y - t.y;
+  S.fxs.push(fx);
+}
+function towerPresentationText(t, label) {
+  label.anchorTower = t; label.anchorSpot = t.spot;
+  label.anchorDx = label.x - t.x; label.anchorDy = label.y - t.y;
+  S.texts.push(label);
+}
+function powerTowerFx(t, color) {
+  towerPresentationFx(t, { kind: 'towerHalo', status: 'power', x: t.x, y: t.y - 32, t: 0, dur: 1.85, size: 116, color, realtime: true });
+  towerPresentationFx(t, { kind: 'circle', x: t.x, y: t.y + 6, t: 0, dur: 1.35, size: 138, color, pips: 6, realtime: true });
+  towerPresentationFx(t, { kind: 'ring', x: t.x, y: t.y - 35, t: 0, dur: 1.25, size: 94, color, realtime: true });
+}
 function upgradeFace(f) {
   if (deckRun()) {
     if (!S.inf.growthSnapshot.deck.includes(f) || S.phase !== 'playing') return false;
     const lv=deckPower(f),cost=DECK.powerCost(lv); if (lv>=5 || S.gold<cost) { SFX.deny(); return false; }
     S.gold-=cost; S.inf.spent+=cost; S.inf.deckPower[f]=lv+1;
-    S.texts.push({ str:`${combatDef(f).name} 파워업 ${lv+1}/5`,x:W/2,y:topTextY(),t:0,color:combatDef(f).color }); SFX.merge(); syncUI(); return true;
+    const col = combatDef(f).color;
+    for (const t of S.towers) if (t.face === f) powerTowerFx(t, col);
+    S.texts.push({ str:`${combatDef(f).name} 파워업 ${lv+1}/5`,x:W/2,y:topTextY(),t:0,color:col,big:true,realtime:true,dur:2 });
+    SFX.merge(); syncUI(); return true;
   }
   const d = DP();
   if (S.mode !== 'infinity' || !S.inf || !d) return false;
@@ -3810,11 +3849,8 @@ function upgradeFace(f) {
   S.gold -= cost; S.inf.spent += cost;
   S.inf.power[f] = lv + 1;
   const def = TOWER_DEFS[f];
-  for (const t of S.towers) if (t.face === f) {
-    S.fxs.push({ kind: 'circle', x: t.x, y: t.y + 4, t: 0, dur: 0.7, size: 110, color: def.color, pips: f });
-    S.fxs.push({ kind: 'ring', x: t.x, y: t.y - 40, t: 0, dur: 0.45, size: 70, color: def.color });
-  }
-  S.texts.push({ str: `${def.name} 파워업 Lv${lv + 1}!`, x: W / 2, y: H / 2 - 70, t: 0, color: def.color, big: true });
+  for (const t of S.towers) if (t.face === f || (f === 6 && t.face > 6)) powerTowerFx(t, t.def.color || def.color);
+  S.texts.push({ str: `${def.name} 파워업 Lv${lv + 1}!`, x: W / 2, y: H / 2 - 70, t: 0, color: def.color, big: true, realtime: true, dur: 2 });
   coachHit('power');
   SFX.merge();
   syncUI();
@@ -3923,14 +3959,21 @@ function updateVisuals(dt) {
 
   // 이펙트
   for (const f of S.fxs) {
+    if (f.realtime) continue;
     f.t += dt;
     if (f.vx !== undefined) { f.x += f.vx * dt; f.y += f.vy * dt; f.vy += 160 * dt; }
   }
   S.fxs = S.fxs.filter(f => f.t < f.dur);
   for (const b of S.beams) b.t += dt;
   S.beams = S.beams.filter(b => b.t < b.dur);
-  for (const tx of S.texts) tx.t += dt;
-  S.texts = S.texts.filter(tx => tx.t < 1.1);
+  for (const tx of S.texts) if (!tx.realtime) tx.t += dt;
+  S.texts = S.texts.filter(tx => tx.t < (tx.dur || 1.1));
+}
+function advancePresentation(dt) {
+  for (const f of S.fxs) if (f.realtime) f.t += dt;
+  for (const tx of S.texts) if (tx.realtime) tx.t += dt;
+  S.fxs = S.fxs.filter(f => f.t < f.dur);
+  S.texts = S.texts.filter(tx => tx.t < (tx.dur || 1.1));
 }
 
 function sheetHit(kind, x, y, size, dur) {
@@ -4838,6 +4881,7 @@ function draw() {
 
   // 이펙트
   for (const f of S.fxs) {
+    if (f.anchorTower) { f.x = f.anchorTower.x + f.anchorDx; f.y = f.anchorTower.y + f.anchorDy; }
     const pr = f.t / f.dur;
     const sheetMap = {
       impact: A.impact, cannonBlast: A.cannonBlast, arcaneBurst: A.arcaneBurst,
@@ -4850,7 +4894,16 @@ function draw() {
       const fr = frames[Math.min(3, Math.floor(pr * 4))];
       const s = f.size / Math.max(fr.w, fr.h);
       ctx.save();
-      ctx.globalAlpha = 1 - pr * 0.4;
+      if (f.kind === 'chestOpen') {
+        const halo = ctx.createRadialGradient(f.x, f.y, 4, f.x, f.y, f.size * 0.47);
+        halo.addColorStop(0, 'rgba(31,20,32,.86)');
+        halo.addColorStop(.7, 'rgba(31,20,32,.56)');
+        halo.addColorStop(1, 'rgba(31,20,32,0)');
+        ctx.globalAlpha = Math.min(1, (1 - pr) * 2.8);
+        ctx.fillStyle = halo;
+        ctx.beginPath(); ctx.arc(f.x, f.y, f.size * 0.47, 0, Math.PI * 2); ctx.fill();
+      }
+      ctx.globalAlpha = f.kind === 'chestOpen' ? Math.min(1, (1 - pr) * 2.5) : 1 - pr * 0.4;
       if (f.add) ctx.globalCompositeOperation = 'lighter';
       ctx.drawImage(fr.cv, f.x - fr.w * s / 2, f.y - fr.h * s / 2, fr.w * s, fr.h * s);
       ctx.restore();
@@ -4920,6 +4973,42 @@ function draw() {
       ctx.strokeStyle = f.color || '#ffe9a0';
       ctx.lineWidth = 3 * (1 - pr) + 1;
       ctx.beginPath(); ctx.arc(f.x, f.y, 8 + pr * f.size, 0, Math.PI * 2); ctx.stroke();
+      ctx.restore();
+    } else if (f.kind === 'towerHalo') {
+      const col = f.color || '#ffd452';
+      const fade = Math.min(1, pr * 5, (1 - pr) * 3);
+      const pulse = 1 + Math.sin(f.t * 15) * 0.06;
+      const radius = f.size * (0.42 + pr * 0.12) * pulse;
+      ctx.save();
+      if (f.status !== 'keep') {
+        const beam = ctx.createLinearGradient(f.x, f.y - 105, f.x, f.y + 44);
+        beam.addColorStop(0, hexA(col, 0));
+        beam.addColorStop(.35, hexA(col, 0.2 * fade));
+        beam.addColorStop(1, hexA(col, 0.05 * fade));
+        ctx.fillStyle = beam;
+        ctx.fillRect(f.x - radius * 0.6, f.y - 105, radius * 1.2, 149);
+      }
+      ctx.globalAlpha = Math.max(0, fade);
+      ctx.strokeStyle = col; ctx.shadowColor = col; ctx.shadowBlur = f.status === 'keep' ? 10 : 26;
+      ctx.lineWidth = f.status === 'keep' ? 3 : 6;
+      ctx.beginPath(); ctx.arc(f.x, f.y - 16, radius, 0, Math.PI * 2); ctx.stroke();
+      ctx.globalAlpha *= 0.68;
+      ctx.lineWidth = 2;
+      for (let i = 0; i < 8; i++) {
+        const a = Math.PI * 2 * i / 8 + (f.status === 'power' ? f.t : 0);
+        const inner = radius + 6, outer = radius + 18 + Math.sin(f.t * 12 + i) * 4;
+        ctx.beginPath(); ctx.moveTo(f.x + Math.cos(a) * inner, f.y - 16 + Math.sin(a) * inner);
+        ctx.lineTo(f.x + Math.cos(a) * outer, f.y - 16 + Math.sin(a) * outer); ctx.stroke();
+      }
+      if (f.status !== 'keep') {
+        ctx.globalAlpha = fade * .9;
+        for (const dx of [-25, 25]) {
+          const sx = f.x + dx, sy = f.y - 79 + Math.sin(f.t * 11 + dx) * 4;
+          ctx.lineWidth = 3;
+          ctx.beginPath(); ctx.moveTo(sx - 9, sy); ctx.lineTo(sx + 9, sy);
+          ctx.moveTo(sx, sy - 9); ctx.lineTo(sx, sy + 9); ctx.stroke();
+        }
+      }
       ctx.restore();
     } else if (f.kind === 'circle') {
       // 배치/합체 마법진: 바닥에 눕힌 이중 원 + 회전하는 룬 눈금 + 별
@@ -4991,11 +5080,12 @@ function draw() {
 
   // 플로팅 텍스트
   for (const t of S.texts) {
-    const pr = t.t / 1.1;
+    if (t.anchorTower) { t.x = t.anchorTower.x + t.anchorDx; t.y = t.anchorTower.y + t.anchorDy; }
+    const pr = t.t / (t.dur || 1.1);
     ctx.save();
     ctx.globalAlpha = 1 - pr;
     ctx.fillStyle = t.color;
-    ctx.font = uiFont(t.big ? 26 : 15);
+    ctx.font = uiFont(t.realtime ? Math.max(t.big ? 26 : 15, Math.ceil((t.big ? 19 : 14) / Math.max(.25, stageScale()))) : (t.big ? 26 : 15));
     ctx.textAlign = 'center';
     ctx.strokeStyle = 'rgba(0,0,0,0.7)';
     ctx.lineWidth = t.big ? 5 : 3;
@@ -5278,6 +5368,7 @@ const diceSlot = $('dice-slot'), diceImg = $('dice-img'), diceQ = $('dice-q');
 const slotCanvas = $('slot-canvas'), sctx = slotCanvas.getContext('2d');
 const rollBtn = $('roll-btn'), waveBtn = $('wave-btn');
 const infoPanel = $('info-panel');
+let ENHANCE_NOTICE = null;
 let diceURLs = [];
 const starIconCache = {};
 function thumbURL(sprite, size, fallback = '') {
@@ -5457,6 +5548,7 @@ function syncInfo() {
   const hint = $('hud-hint');
   if (!S.selTower) {
     infoPanel.classList.add('hidden');
+    $('enhance-result').classList.add('hidden');
     if (hint) {
       // 손에 타워가 있는 그 순간이 "어떻게 놓지?" 인 순간이다 — 이때 숨기지 않는다
       hint.textContent = S.heldDie
@@ -5474,6 +5566,12 @@ function syncInfo() {
     return;
   }
   const t = S.selTower, inf = S.mode === 'infinity';
+  const er = $('enhance-result');
+  if (er) {
+    const same = ENHANCE_NOTICE && ENHANCE_NOTICE.tower === t;
+    er.classList.toggle('hidden', !same);
+    if (same) { er.textContent = ENHANCE_NOTICE.message; er.dataset.result = ENHANCE_NOTICE.result; }
+  }
   const mv = $('move-btn');
   if (mv) {
     const picking = MOVE.picking === t;
@@ -5524,32 +5622,41 @@ function enhanceDef(t) {
   const o = INF.enhance.odds(t.face);
   return { cost: INF.enhance.cost(t.face), up: o.up, keep: o.keep, boom: o.boom, next: t.face + 1 };
 }
+function enhanceResult(t, result, message) {
+  ENHANCE_NOTICE = { tower: t, result, message };
+  stageNotice('enhance-toast', message, result, 2600);
+}
 function enhanceTower() {
   const t = S.selTower, en = enhanceDef(t);
-  if (!t || !en || S.gold < en.cost || S.phase !== 'playing') { SFX.deny(); return null; }
+  if (!t || !S.towers.includes(t) || !en || S.gold < en.cost || S.phase !== 'playing') { SFX.deny(); return null; }
   S.gold -= en.cost;
   S.inf.spent = (S.inf.spent || 0) + en.cost;
-  const x = t.x, y = t.y - 40, r = Math.random();
+  const x = t.x, y = t.y - 70, oldFace = t.face, r = Math.random();
   if (r < en.up) {
     if (growthRun()) t.growthCarry = towerGrowth(t); // Keep the earned multiplier once; never multiply it again.
     t.face = en.next; t.def = TOWER_DEFS[en.next]; t.skin = equippedSkinIndex(t.face);
     const col = t.def.color || '#ffd452';
-    S.texts.push({ str: `강화 성공! ${t.def.name}`, x, y, t: 0, color: col, big: t.face >= 14 });
-    S.fxs.push({ kind: 'ring', x: t.x, y: t.y - 20, t: 0, dur: 0.8, size: 130, color: col });
-    S.fxs.push({ kind: 'circle', x: t.x, y: t.y + 4, t: 0, dur: 0.8, size: 120, color: col, pips: t.face <= 6 ? t.face : 4 + Math.min(8, t.face - 6) });
+    towerPresentationText(t, { str: `★${oldFace} → ★${t.face} 강화 성공!`, x, y, t: 0, color: col, big: true, realtime: true, dur: 2 });
+    towerPresentationFx(t, { kind: 'towerHalo', status: 'up', x: t.x, y: t.y - 34, t: 0, dur: 1.9, size: 100, color: col, realtime: true });
+    towerPresentationFx(t, { kind: 'ring', x: t.x, y: t.y - 30, t: 0, dur: 1.5, size: 135, color: col, realtime: true });
+    towerPresentationFx(t, { kind: 'circle', x: t.x, y: t.y + 4, t: 0, dur: 1.6, size: 150, color: col, pips: t.face <= 6 ? t.face : 4 + Math.min(8, t.face - 6), realtime: true });
+    if (hasArt('acquireBurst')) towerPresentationFx(t, { kind: 'acquireBurst', x: t.x, y: t.y - 30, t: 0, dur: 1.1, size: 150, add: true, realtime: true });
+    enhanceResult(t, 'up', `강화 성공 · ★${oldFace} → ★${t.face}`);
     if (t.face >= 14) S.shakeT = Math.max(S.shakeT || 0, 0.3);
     netLog(`${t.def.name} 확률강화에 성공했습니다`, 'up');
     SFX.win(); syncUI(); return 'up';
   }
   if (r < en.up + en.keep) {
-    S.texts.push({ str: '강화 실패 — 타워는 그대로', x, y, t: 0, color: '#d9c9a0' });
-    S.fxs.push({ kind: 'ring', x: t.x, y: t.y - 20, t: 0, dur: 0.5, size: 80, color: '#9a9a9a' });
+    towerPresentationText(t, { str: `★${oldFace} 유지`, x, y, t: 0, color: '#e7d6b8', big: true, realtime: true, dur: 1.8 });
+    towerPresentationFx(t, { kind: 'towerHalo', status: 'keep', x: t.x, y: t.y - 34, t: 0, dur: 1.5, size: 76, color: '#c8b89f', realtime: true });
+    enhanceResult(t, 'keep', `강화 유지 · ★${oldFace} 그대로`);
     pushLog('확률강화 실패 — 타워는 그대로', 'sys');
     SFX.deny(); syncUI(); return 'keep';
   }
-  S.texts.push({ str: '강화 실패 — 타워 소멸!', x, y, t: 0, color: '#ff7a7a', big: true });
-  S.fxs.push({ kind: 'impact', x: t.x, y: t.y - 20, t: 0, dur: 0.45, size: 120 });
-  S.fxs.push({ kind: 'ring', x: t.x, y: t.y - 20, t: 0, dur: 0.6, size: 140, color: '#ff7a7a' });
+  towerPresentationText(t, { str: `★${oldFace} 소멸!`, x, y, t: 0, color: '#ff9494', big: true, realtime: true, dur: 2 });
+  towerPresentationFx(t, { kind: 'impact', x: t.x, y: t.y - 20, t: 0, dur: 1, size: 140, realtime: true });
+  towerPresentationFx(t, { kind: 'towerHalo', status: 'boom', x: t.x, y: t.y - 34, t: 0, dur: 1.7, size: 114, color: '#ff7272', realtime: true });
+  enhanceResult(t, 'boom', `강화 실패 · ★${oldFace} 타워 소멸`);
   const lost = t.def.name;
   S.towers = S.towers.filter(o => o !== t);
   S.selTower = null;
@@ -5754,6 +5861,9 @@ function relayoutArena(key, force) {
   if (!INF || S.mode !== 'infinity' || (S.mapKey === key && !force)) return false;
   // 좌표는 버리고 '어느 칸', '경로의 몇 %' 만 남긴다
   const from = S.mapKey, keepCombat = growthRun(), oldW = W, oldH = H;
+  const lastingFx = S.fxs.filter(f => f.realtime);
+  const lastingText = S.texts.filter(t => t.realtime);
+  const noticeSelected = !!(ENHANCE_NOTICE && ENHANCE_NOTICE.tower === S.selTower);
   const selectedSpot = S.selTower ? S.selTower.spot : -1;
   const towers = S.towers.map(t => keepCombat ? Object.assign(t, { spot: remapSpot(from, key, t.spot) }) : ({ spot: remapSpot(from, key, t.spot), face: t.face, def: t.def, lvl: t.lvl, skin: t.skin, cd: t.cd, ...(t.growthCarry ? { growthCarry: t.growthCarry } : {}), ...(t.deckSystem ? { deckSystem:1,pips:t.pips,abilityT:t.abilityT||0,shotSerial:t.shotSerial||0,...(t.copyHaste?{copyHaste:true}:{}) } : {}) }));
   const selSpot = selectedSpot >= 0 ? remapSpot(from, key, selectedSpot) : -1;
@@ -5765,10 +5875,21 @@ function relayoutArena(key, force) {
   S.towers = towers.filter(t => SPOTS[t.spot]).map(t => Object.assign(t, { kick: 0 }));
   for (const { e, ratio } of enemies) e.dist = Math.min(laneLen(e) - 1, ratio * laneLen(e));
   S.selTower = selSpot >= 0 ? (S.towers.find(t => t.spot === selSpot) || null) : null;
+  if (noticeSelected) ENHANCE_NOTICE.tower = S.selTower;
   if (keepCombat) {
     for (const p of S.projs) { p.x *= W / oldW; p.y *= H / oldH; p.trail = []; const sp = SPOTS[p.src.spot]; if (sp) { p.src.x = sp[0]; p.src.y = sp[1]; } }
   } else S.projs = [];
-  S.beams = []; S.fxs = []; S.texts = [];   // 이미 판정한 시각 효과만 비운다
+  // 화면 방향·HUD 높이가 바뀌어도 중요한 보상/강화 연출은 남겨 두고 새 좌표에 붙인다.
+  const reanchor = item => {
+    if (item.anchorSpot !== undefined) {
+      item.anchorSpot = remapSpot(from, key, item.anchorSpot);
+      item.anchorTower = S.towers.find(t => t.spot === item.anchorSpot) || null;
+      const sp = SPOTS[item.anchorSpot];
+      if (sp) { item.x = sp[0] + item.anchorDx; item.y = sp[1] + item.anchorDy; }
+    } else { item.x *= W / oldW; item.y *= H / oldH; }
+    return item;
+  };
+  S.beams = []; S.fxs = lastingFx.map(reanchor); S.texts = lastingText.map(reanchor);
   if (DRAG.active) stopPlaceDrag();
   if (MOVE.tower || MOVE.armed) moveAbort();
   fitStage();
@@ -6091,8 +6212,8 @@ function moveCancelArm() {
   MOVE.armed = null;
 }
 function moveArm(ev, p) {
-  // 손에 주사위를 든 동안에는 배치가 우선이라 이동을 시작하지 않는다.
-  if (S.phase !== 'playing' || VIEW.pid || S.heldDie || MOVE.tower || MOVE.picking || DRAG.active) return false;
+  // 보유 주사위가 있어도 점유된 석단은 길게 눌러 이동할 수 있다. 짧은 탭 배치는 그대로 둔다.
+  if (S.phase !== 'playing' || VIEW.pid || MOVE.tower || MOVE.picking || DRAG.active) return false;
   const idx = spotAt(p.x, p.y, touchExtra(24));
   if (idx < 0) return false;
   const t = towerAt(idx);
@@ -6744,9 +6865,33 @@ if ($('rotate-hint')) $('rotate-hint').addEventListener('click', () => {
 });
 if ($('help-close')) $('help-close').addEventListener('click', () => { audio(); closeInfHelp(); });
 if ($('inf-help')) $('inf-help').addEventListener('click', (ev) => { if (ev.target === $('inf-help')) closeInfHelp(); }); // 배경 클릭으로 닫기
+let PENDING_ENHANCE = null;
+const enhanceConfirm = $('enhance-confirm');
+if (enhanceConfirm) enhanceConfirm.addEventListener('close', () => { PENDING_ENHANCE = null; });
+if ($('enhance-confirm-cancel')) $('enhance-confirm-cancel').addEventListener('click', () => enhanceConfirm.close());
+if ($('enhance-confirm-accept')) $('enhance-confirm-accept').addEventListener('click', () => {
+  const pending = PENDING_ENHANCE;
+  enhanceConfirm.close();
+  if (!pending) return;
+  const en = enhanceDef(pending.tower);
+  // 확인 사이에 타워·비용·상태가 바뀐 경우 오래된 결정을 집행하지 않는다.
+  if (S.selTower !== pending.tower || !S.towers.includes(pending.tower) ||
+      pending.tower.face !== pending.face || !en || en.cost !== pending.cost ||
+      S.gold < en.cost || S.phase !== 'playing') { SFX.deny(); syncUI(); return; }
+  enhanceTower();
+});
 if ($('enhance-btn')) $('enhance-btn').addEventListener('click', () => {
   audio();
-  if (enhanceTower()) { S.selTower = null; syncUI(); }   // 강화하면 카드를 닫아 다시 뽑기·파워업 칸이 보인다
+  const t = S.selTower, en = enhanceDef(t);
+  if (!t || !en || S.gold < en.cost || S.phase !== 'playing') { SFX.deny(); return; }
+  if (en.up < en.boom) {
+    PENDING_ENHANCE = { tower: t, face: t.face, cost: en.cost };
+    $('enhance-confirm-desc').textContent = `★${t.face} ${t.def.name}을 ★${en.next}로 강화할까요?\n강화 ${ (en.up * 100).toFixed(1) }% · 유지 ${ (en.keep * 100).toFixed(1) }% · 소멸 ${ (en.boom * 100).toFixed(1) }%\n비용 ${en.cost.toLocaleString()}G · 소멸하면 타워가 사라집니다.`;
+    enhanceConfirm.showModal();
+    $('enhance-confirm-cancel').focus();
+    return;
+  }
+  enhanceTower(); // 성공·유지는 같은 카드를 계속 열어 둔다. 소멸할 때만 선택이 해제된다.
 });
 if ($('info-close')) $('info-close').addEventListener('click', () => { audio(); S.selTower = null; syncUI(); });
 $('btn-shop').addEventListener('click', () => { audio(); gotoShop(); });
@@ -7868,6 +8013,7 @@ function frame(ts) {
       updateDie(dt);
       updateSlot(dt * S.speed);
     }
+    advancePresentation(dt);
     if (battleRun() && S.inf.battleDirty && S.phase === 'playing') {
       delete S.inf.battleDirty;
       try { persistRun(); } catch (error) { toast(error.message); }

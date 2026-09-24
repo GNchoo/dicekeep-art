@@ -98,17 +98,29 @@ async function longPress(page, from, opts = {}) {
     const moved = st.towers.find(t => t.face === 4);
     check('점유된 곳에 놓으면 제자리로 돌아온다', [moved.spot, moved.moving], [5, false]);
 
-    // ── 5. 손에 주사위를 들고 있으면 이동이 시작되지 않는다 (배치 우선) ─────
+    // ── 5. 주사위 배치 대기 중에도 길게 누르면 기존 타워를 옮긴다 ────────
     await page.evaluate(() => { DK.heldDie = 6; DK.dieFocus = true; DKsync(); });
     await longPress(page, s5b);
-    check('주사위를 든 동안에는 떠오르지 않는다', (await state()).lifted, false);
+    check('주사위 배치 대기 중에도 길게 누르면 떠오른다',
+      [!!(await state()).lifted, await page.evaluate(() => DK.heldDie)], [true, 6]);
+    const s6 = await at(6);
+    await page.mouse.move(s6.x, s6.y, { steps: 12 });
+    check('보유 주사위 이동의 빈 석단 목표', (await state()).over, 6);
     await page.mouse.up();
-    await page.evaluate(() => { DK.heldDie = 0; DKsync(); });
+    st = await state();
+    check('타워는 5→6으로 옮겨지고 주사위는 그대로 대기한다',
+      [st.towers.find(t => t.face === 4).spot, st.towers.length, st.lifted, await page.evaluate(() => DK.heldDie)],
+      [6, 2, false, 6]);
+    await page.mouse.click(s0.x, s0.y);
+    st = await state();
+    check('이동 후 빈 석단 짧은 탭은 보유 주사위를 배치한다',
+      [st.towers.find(t => t.face === 6)?.spot, st.towers.length, await page.evaluate(() => DK.heldDie)],
+      [0, 3, 0]);
 
     // ── 6. 떠오르기 전에 손이 크게 움직이면 이동이 아니다 ──────────────────
-    await page.mouse.move(s5b.x, s5b.y); await page.mouse.down();
+    await page.mouse.move(s6.x, s6.y); await page.mouse.down();
     await page.waitForTimeout(90);
-    await page.mouse.move(s5b.x + 90, s5b.y + 60, { steps: 8 });
+    await page.mouse.move(s6.x + 90, s6.y + 60, { steps: 8 });
     await page.waitForTimeout(500);
     check('떠오르기 전에 끌면 이동이 아니다', (await state()).lifted, false);
     await page.mouse.up();
@@ -117,7 +129,7 @@ async function longPress(page, from, opts = {}) {
     const power = await page.evaluate(() => { const t = DK.towers.find(x => x.face === 4);
       return { dmg: Math.round(DKtowerDamage(t)), range: Math.round(DKrange(t)), lvl: t.lvl, face: t.face }; });
     const s3 = await at(3);
-    await longPress(page, await at(5));
+    await longPress(page, await at(6));
     await page.mouse.move(s3.x, s3.y, { steps: 12 });
     await page.mouse.up();
     await page.waitForTimeout(120);
@@ -160,6 +172,27 @@ async function longPress(page, from, opts = {}) {
     // 다시 누르면 취소
     await page.click('#move-btn');
     check('이동 버튼을 다시 누르면 취소된다', await page.evaluate(() => !!DKMOVE.picking), false);
+
+    // ── 9. 상자 주사위가 투척 대기 중이어도 타워 이동은 가능하다 ──────────────
+    const pending = await page.evaluate(() => {
+      const chest = DKCONTENT.INFINITY.chest, oldDraw = chest.draw;
+      DK.gold = 99999;
+      let kind;
+      try { chest.draw = () => 'd6'; kind = DKchest(); }
+      finally { chest.draw = oldDraw; }
+      return { kind, active: DKSLOT.active, phase: DKSLOT.phase, held: DK.heldDie, die: DKDIE.state };
+    });
+    check('상자 주사위가 물리 투척을 기다린다', pending,
+      { kind: 'd6', active: true, phase: -1, held: 0, die: 'tray' });
+    await longPress(page, await at(7));
+    check('상자 주사위 대기 중에도 기존 타워가 떠오른다', (await state()).lifted, true);
+    await page.mouse.move(s6.x, s6.y, { steps: 12 });
+    await page.mouse.up();
+    st = await state();
+    check('타워 이동 후에도 상자 주사위는 투척 대기 상태를 유지한다',
+      [st.towers.find(t => t.face === 4).spot, st.lifted,
+        await page.evaluate(() => [DKSLOT.active, DKSLOT.phase, DK.heldDie, DKDIE.state])],
+      [6, false, [true, -1, 0, 'tray']]);
 
     assert.deepEqual(errors, [], '브라우저 오류');
     report.pass = true;
