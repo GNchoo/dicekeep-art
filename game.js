@@ -8355,7 +8355,7 @@ function drawLoading(pr) {
     model:()=>({profile:progressionProfile(),name:SAVE.name,linked:COMMERCE.linked(),gems:SAVE.gems,theme:COMMERCE.state().cosmetics.equipped}),
     icon:face=>thumbURL(towerSpr(face,0),96),
     canRefresh:()=>['title','lobby','shop'].includes(S.phase)&&!S.net,
-    canAuto:()=> (S.phase==='title'||S.phase==='lobby'&&LOBBY_VIEW==='hub')&&!S.net&&!runResumeBusy&&!startingAccountRun&&!MP.resumeRoom&&!DKNET.inRoom()&&!window.DKAUTOSTART&&!menuOpen()&&!settingsOpen(),
+    canAuto:()=> S.phase==='lobby'&&LOBBY_VIEW==='hub'&&!S.net&&!runResumeBusy&&!startingAccountRun&&!MP.resumeRoom&&!DKNET.inRoom()&&!window.DKAUTOSTART&&!menuOpen()&&!settingsOpen(),
     navigate:kind=>{
       if(S.phase!=='lobby'||S.net)return;
       audio();

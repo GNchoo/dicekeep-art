@@ -188,11 +188,14 @@ async function actualGuest(browser) {
     const page = await context.newPage(); observe(page);
     const url = new URL('index.html', base); url.searchParams.set('net', 'off'); url.searchParams.set('v', Date.now());
     await page.goto(url.href);
-    await page.waitForFunction(() => window.DK?.phase === 'title' && document.getElementById('rewards-dialog')?.open && !document.getElementById('rewards-attendance-claim')?.disabled, null, { timeout: 120000 });
-    check('Real guest connection still automatically opens attendance', await page.locator('#rewards-tab-attendance').getAttribute('aria-selected') === 'true');
+    await page.waitForFunction(() => window.DK?.phase === 'title' && !!window.DKREWARDS?.current(), null, { timeout: 120000 });
+    check('Real guest sees the title before the attendance panel', await page.evaluate(() => !document.getElementById('rewards-dialog')?.open));
+    await page.click('#ov-btn');
+    await page.waitForFunction(() => window.DK?.phase === 'lobby' && document.getElementById('rewards-dialog')?.open && !document.getElementById('rewards-attendance-claim')?.disabled);
+    check('Real guest connection automatically opens attendance after Start', await page.locator('#rewards-tab-attendance').getAttribute('aria-selected') === 'true');
     check('Visual redesign does not automatically claim rewards', await page.evaluate(() => DKSAVE.liveops.attendance.total === 0 && DKSAVE.liveops.pass.xp === 0));
     await capture(page, 'actual-guest-startup');
-    await page.click('#rewards-close'); await page.click('#ov-btn'); await page.waitForFunction(() => DK.phase === 'lobby');
+    await page.click('#rewards-close');
     const images = await artReady(page, '#lobby-hub');
     const rewardImages = images.filter(img => /ui\/rewards\//.test(img.src));
     check('Home shortcuts use the same loaded illustrated reward icons', rewardImages.length >= 3 && rewardImages.every(img => img.loaded && img.rendered));

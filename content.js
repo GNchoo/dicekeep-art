@@ -282,14 +282,14 @@ window.DKCONTENT = (function () {
       center: L.end, portals: [L.start].concat(L.start2 ? [L.start2] : []),
     });
   }
-  // 인피니티 전용 아레나: 바닥 그림 위에 코드로 순환 도로와 석단을 놓고 시작 포탈 그림을 표시한다.
+  // 인피니티 전용 아레나: 바닥 그림 위에 코드로 순환 도로와 석단을 놓는다.
   maps.push({ key: 'cInf', name: '무한 투기장', infinity: true, arena: true, renderRoads: true, canvas: [1024, 576], rangeBonus: 160 });
   // 세로 화면은 같은 전장을 시계 방향으로 돌려 표시한다. 사거리 수치는 두 방향에서 같다.
   maps.push({ key: 'cInfP', name: '무한 투기장 (세로)', infinity: true, arena: true, arenaPortrait: true, renderRoads: true, canvas: [720, 1080], rangeBonus: 160 });
 
   // ===== 무한 투기장: 고정 보드 + 둘레 트랙 =====
   // 가운데 5×3 석단 보드(15개)와 둘레의 둥근 사각형 트랙 하나.
-  // 적은 왼쪽 포탈의 고정 길이 입구를 지나 트랙을 영원히 돈다. 도착 지점은 없다.
+  // 적은 왼쪽의 고정 길이 입구를 지나 트랙을 영원히 돈다. 도착 지점은 없다.
   // 목숨은 '도착'이 아니라 필드 한계선(INFINITY.fieldCap)으로 깎인다 — game.js spawnEnemy.
   // W×H 는 화면 비율에 맞춰 game.js 가 정한다(arenaCanvasForScreen). 트랙·보드 치수는 고정이고 중심만 옮긴다.
   // inset: 화면 위(자원 칩)·아래(겹침 HUD)가 가리는 만큼 트랙을 그 사이 가운데에 세운다.
@@ -311,10 +311,9 @@ window.DKCONTENT = (function () {
     // 석단 보드 3×5
     const spots = [];
     for (let r = 0; r < 3; r++) for (let c = 0; c < 5; c++) spots.push([cx + (c - 2) * 88, cy + (r - 1) * 72]);
-    // The spawn point may be off-screen on narrow viewports. Keep the combat
-    // path fixed, but place its decorative entrance marker on the visible road.
-    const portal = [Math.max(48, entry[0][0]), MID];
-    return { path, path2: null, airPts: null, spots, spots2: [], portals: [portal], center: null, noGoal: true, loopAt,
+    // The fixed approach can begin off-screen. A decorative portal shifted
+    // onto the visible road would misrepresent where monsters spawn.
+    return { path, path2: null, airPts: null, spots, spots2: [], portals: [], center: null, noGoal: true, loopAt,
              roads: [entry, ring], board: { x: cx - 222, y: cy - 122, w: 444, h: 244, cols: 5, rows: 3, gapX: 88, gapY: 72 }, track: { L, R, T, B, rad, mid: MID } };
   }
 
@@ -1149,11 +1148,9 @@ window.DKCONTENT = (function () {
       gapX: base.board.gapY * scale, gapY: base.board.gapX * scale };
     const track = { L: cx - 150 * scale, R: cx + 150 * scale, T: cy - 262 * scale,
       B: cy + 262 * scale, rad: base.track.rad * scale, mid: cy };
-    // On a short portrait canvas the visible approach is entirely under the
-    // HUD. Tuck only the decorative prop into the ring entrance there; the
-    // enemy path and its off-screen spawn stay at their rotated coordinates.
-    const portal = [cx, Math.max(110, Math.min(track.T - 16, Math.max(148, entry[0][1])))];
-    return { path, path2: null, airPts: null, spots, spots2: [], portals: [portal], center: null,
+    // The real spawn is above the visible approach. Do not place a false
+    // entrance portal inside the ring just to keep it on screen.
+    return { path, path2: null, airPts: null, spots, spots2: [], portals: [], center: null,
       noGoal: true, loopAt: base.loopAt * scale, roads: [entry, ring], board, track, arenaScale: scale };
   }
 
