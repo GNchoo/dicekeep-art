@@ -1,6 +1,17 @@
 'use strict';
 (() => {
 
+// Presentation randomness has its own stream so sounds, particles and draw
+// frequency cannot change chest, die or combat outcomes.
+let fxState = Date.now() >>> 0;
+function fxRandom() {
+  fxState = (fxState + 0x6d2b79f5) >>> 0;
+  let n = fxState;
+  n = Math.imul(n ^ (n >>> 15), n | 1);
+  n ^= n + Math.imul(n ^ (n >>> 7), n | 61);
+  return ((n ^ (n >>> 14)) >>> 0) / 4294967296;
+}
+
 // 캔버스 크기는 맵이 정한다 (가로 아레나 1024×576 / 세로 아레나 720×1080 / 스테이지 1024×576).
 // 그리기·좌표 변환이 전부 W·H 파라메트릭이라 값만 바꾸면 따라온다.
 let W = 1024, H = 576;
@@ -1483,7 +1494,7 @@ function noise(dur, vol = 0.2, lp = 1200) {
     const n = Math.floor(ac.sampleRate * dur);
     const buf = ac.createBuffer(1, n, ac.sampleRate);
     const ch = buf.getChannelData(0);
-    for (let i = 0; i < n; i++) ch[i] = (Math.random() * 2 - 1) * (1 - i / n);
+    for (let i = 0; i < n; i++) ch[i] = (fxRandom() * 2 - 1) * (1 - i / n);
     const src = ac.createBufferSource(); src.buffer = buf;
     const f = ac.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = lp;
     const g = ac.createGain(); g.gain.value = vol;
@@ -1493,7 +1504,7 @@ function noise(dur, vol = 0.2, lp = 1200) {
 }
 const SFX = {
   throwDie: () => noise(0.18, 0.15, 5000),
-  bounce:   (v) => { noise(0.05, Math.min(0.3, 0.1 + v * 0.25), 2600); tone(140 + Math.random() * 60, 0.06, 'sine', Math.min(0.2, v * 0.18), -50); },
+  bounce:   (v) => { noise(0.05, Math.min(0.3, 0.1 + v * 0.25), 2600); tone(140 + fxRandom() * 60, 0.06, 'sine', Math.min(0.2, v * 0.18), -50); },
   settle:   () => { tone(660, 0.15, 'triangle', 0.2, 220); setTimeout(() => tone(990, 0.2, 'triangle', 0.16, 120), 100); },
   place:    () => { noise(0.12, 0.25, 500); tone(120, 0.15, 'sine', 0.2, -40); },
   merge:    () => { tone(520, 0.1, 'triangle', 0.18, 200); setTimeout(() => tone(780, 0.16, 'triangle', 0.18, 260), 90); },
@@ -2146,8 +2157,8 @@ function rollDie(kind, forcedFinal) {
     SLOT.R = DIE.R; SLOT.w = [0, 0, 0];
     pushLog(`${ch.grade[kind]} ${ch.label[kind]} 획득 · 주사위를 끌어 던지거나 던지기 버튼을 누르세요`, 'gacha');
   } else {
-    SLOT.R = m3mul(m3axisAngle(Math.random(), Math.random(), Math.random() * 0.5 + 0.1, Math.random() * 6), TRAY_TILT);
-    SLOT.w = [14 + Math.random() * 8, 12 + Math.random() * 8, 9 + Math.random() * 6];
+    SLOT.R = m3mul(m3axisAngle(fxRandom(), fxRandom(), fxRandom() * 0.5 + 0.1, fxRandom() * 6), TRAY_TILT);
+    SLOT.w = [14 + fxRandom() * 8, 12 + fxRandom() * 8, 9 + fxRandom() * 6];
     SFX.throwDie();
   }
   syncUI();
@@ -2216,7 +2227,7 @@ function acquireFxCode(face, tier, col, cx, cy) {
   if (tier >= 4) { S.fxs.push({ kind: 'ring', x: cx, y: cy, t: -0.18, dur: 1.2, size: 340, color: '#ffd452' }); spawnBurst(cx, cy, '#ffffff', 10, 260, 1.1); }
 }
 function acquireFxArt(face, tier, col, cx, cy) {
-  const sparks = (n, spread, sz) => { for (let i = 0; i < n; i++) { const a = Math.random() * Math.PI * 2, v = spread * (0.4 + Math.random() * 0.8); S.fxs.push({ kind: 'sprite', img: 'starSpark', x: cx, y: cy, vx: Math.cos(a) * v, vy: Math.sin(a) * v - spread * 0.3, t: -Math.random() * 0.15, dur: 0.6 + Math.random() * 0.4, size: sz * (0.6 + Math.random() * 0.8), phase: Math.random() * 6 }); } };
+  const sparks = (n, spread, sz) => { for (let i = 0; i < n; i++) { const a = fxRandom() * Math.PI * 2, v = spread * (0.4 + fxRandom() * 0.8); S.fxs.push({ kind: 'sprite', img: 'starSpark', x: cx, y: cy, vx: Math.cos(a) * v, vy: Math.sin(a) * v - spread * 0.3, t: -fxRandom() * 0.15, dur: 0.6 + fxRandom() * 0.4, size: sz * (0.6 + fxRandom() * 0.8), phase: fxRandom() * 6 }); } };
   if (!tier) { S.fxs.push({ kind: 'ring', x: cx, y: cy, t: 0, dur: 0.5, size: 120, color: col }); if (hasArt('starSpark')) sparks(4, 90, 26); else spawnBurst(cx, cy, col, 6, 90, 0.45); return; }
   S.fxs.push({ kind: 'acquireBurst', x: cx, y: cy, t: 0, dur: 0.6 + tier * 0.1, size: 230 + tier * 30, add: true });
   const ringImg = tier >= 4 && hasArt('acquireRingRainbow') ? 'acquireRingRainbow' : 'acquireRing';
@@ -2235,8 +2246,8 @@ function hexA(hex, a) { const m = /^#?([0-9a-f]{6})$/i.exec(String(hex || '')); 
 // 색 파티클 다발 (burst): 중심에서 퍼지며 중력으로 떨어진다
 function spawnBurst(x, y, color, n, speed, dur) {
   for (let i = 0; i < n; i++) {
-    const a = Math.random() * Math.PI * 2, v = speed * (0.5 + Math.random() * 0.7);
-    S.fxs.push({ kind: 'burst', x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v * 0.6 - speed * 0.35, t: 0, dur: dur * (0.7 + Math.random() * 0.5), size: 3 + Math.random() * 4, color });
+    const a = fxRandom() * Math.PI * 2, v = speed * (0.5 + fxRandom() * 0.7);
+    S.fxs.push({ kind: 'burst', x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v * 0.6 - speed * 0.35, t: 0, dur: dur * (0.7 + fxRandom() * 0.5), size: 3 + fxRandom() * 4, color });
   }
 }
 
@@ -2860,10 +2871,10 @@ function updateDie(dt) {
         DIE.w[2] = DIE.w[2] * 0.7 + (Math.random() - 0.5) * 8 * impact;
         SFX.bounce(impact);
         for (let i = 0; i < 4 + impact * 5; i++) {
-          const a = Math.random() * Math.PI * 2, r = 6 + Math.random() * 14 * (0.5 + impact);
+          const a = fxRandom() * Math.PI * 2, r = 6 + fxRandom() * 14 * (0.5 + impact);
           S.fxs.push({ kind: 'dust', x: DIE.x + Math.cos(a) * r * 0.4, y: DIE.y + Math.sin(a) * r * 0.2,
                        vx: Math.cos(a) * (26 + impact * 60), vy: Math.sin(a) * (13 + impact * 26) - 12,
-                       t: 0, dur: 0.35 + Math.random() * 0.25, size: 3 + Math.random() * 4 });
+                       t: 0, dur: 0.35 + fxRandom() * 0.25, size: 3 + fxRandom() * 4 });
         }
       } else DIE.vz = 0;
     }
@@ -2910,10 +2921,10 @@ function updateDie(dt) {
       S.texts.push({ str: DIE.final + '!', x: DIE.x, y: DIE.y - 44, t: 0, color: '#ffe9a0', big: true });
       S.fxs.push({ kind: 'ring', x: DIE.x, y: DIE.y - 14, t: 0, dur: 0.5, size: 60, color: TOWER_DEFS[DIE.final].color });
       for (let i = 0; i < 10; i++) {
-        const a = Math.PI * 2 * i / 10 + Math.random() * 0.4;
+        const a = Math.PI * 2 * i / 10 + fxRandom() * 0.4;
         S.fxs.push({ kind: 'sparkle', x: DIE.x, y: DIE.y - 16,
-                     vx: Math.cos(a) * (60 + Math.random() * 70), vy: Math.sin(a) * (40 + Math.random() * 50) - 40,
-                     t: 0, dur: 0.55, size: 2.5 + Math.random() * 2 });
+                     vx: Math.cos(a) * (60 + fxRandom() * 70), vy: Math.sin(a) * (40 + fxRandom() * 50) - 40,
+                     t: 0, dur: 0.55, size: 2.5 + fxRandom() * 2 });
       }
     }
   } else if (DIE.state === 'settle') {
@@ -3438,7 +3449,7 @@ function spawnEnemy(item) {
     hp: def.hp * (item.hpMult || 1), max: def.hp * (item.hpMult || 1),
     gold: Math.round(def.gold * (item.goldMult || 1)),
     dist: 0, slowT: 0, slowPct: 0,
-    animT: Math.random(), face: 1, dead: false,
+    animT: fxRandom(), face: 1, dead: false,
     move, sprite, hue, name: name || def.name,
     hidden: false, burrowT: Math.random() * 2,
     isBoss, bossCount: item.bossCount || 1, bossRole: item.bossRole || 0, lane, flashT: 0,
@@ -3476,7 +3487,7 @@ function spawnEnemy(item) {
     S.fxs.push({ kind: 'impact', x: p.x, y: p.y - 30, t: 0, dur: 0.5, size: 140 });
     for (let i = 0; i < 16; i++) {
       const a = Math.PI * 2 * i / 16;
-      S.fxs.push({ kind: 'dust', x: p.x, y: p.y, vx: Math.cos(a) * 110, vy: Math.sin(a) * 50 - 30, t: 0, dur: 0.7, size: 5 + Math.random() * 4 });
+      S.fxs.push({ kind: 'dust', x: p.x, y: p.y, vx: Math.cos(a) * 110, vy: Math.sin(a) * 50 - 30, t: 0, dur: 0.7, size: 5 + fxRandom() * 4 });
     }
     SFX.bossRoar();
     if (window.DKBGM) { try { DKBGM.set('boss'); DKBGM.duck(0.4, 1.0); } catch (err) { /* 무시 */ } }
@@ -3574,10 +3585,10 @@ function spawnDeath(e, p) {
   }
   const n = e.isBoss ? 18 : 7;
   for (let i = 0; i < n; i++) {
-    const a = Math.PI * 2 * i / n + Math.random() * 0.5;
-    const spd = (e.isBoss ? 70 : 40) + Math.random() * 40;
+    const a = Math.PI * 2 * i / n + fxRandom() * 0.5;
+    const spd = (e.isBoss ? 70 : 40) + fxRandom() * 40;
     S.fxs.push({ kind: 'dust', x: p.x, y: p.y - airY + 2, vx: Math.cos(a) * spd, vy: Math.sin(a) * spd * 0.45 - 30,
-                 t: 0, dur: 0.4 + Math.random() * 0.3, size: (e.isBoss ? 5 : 3) + Math.random() * 3, color: e.move === 'air' ? '#e8f4ff' : undefined });
+                 t: 0, dur: 0.4 + fxRandom() * 0.3, size: (e.isBoss ? 5 : 3) + fxRandom() * 3, color: e.move === 'air' ? '#e8f4ff' : undefined });
   }
 }
 
@@ -3832,7 +3843,7 @@ function towerFire(t, dt) {
   t.kick = 1; t.muzzleAge = 0; t.shotSerial = (t.shotSerial || 0) + 1;
   let dmg = towerDmg(t);
   const pulse = deckRun() && t.def.ability==='pulse' && t.shotSerial%deckStats(t).pulseEvery===0;
-  if (deckRun()) { const st=deckStats(t); if (Math.random()<st.critChance) dmg*=st.critDamage; if (pulse) dmg*=2; }
+  if (deckRun()) { const st=deckStats(t); if ((COSMETIC ? fxRandom() : Math.random())<st.critChance) dmg*=st.critDamage; if (pulse) dmg*=2; }
   const from = { x: t.x, y: t.y - 64 };
   const visualFrom = towerVisualEmitter(t);
 
@@ -3942,7 +3953,7 @@ function starImpact(p, hx, hy) {
   S.fxs.push({ kind: 'ring', x: hx, y: hy, t: 0, dur: 0.3 + k * 0.012, size: p.splash * 2 + k * 8, color: col });
   const shards = Math.min(10, 3 + Math.floor(k / 2));
   for (let i = 0; i < shards; i++) {
-    const a = Math.random() * Math.PI * 2, v = 90 + Math.random() * 110;
+    const a = fxRandom() * Math.PI * 2, v = 90 + fxRandom() * 110;
     S.fxs.push({ kind: 'spark', x: hx, y: hy, vx: Math.cos(a) * v, vy: Math.sin(a) * v * 0.6, t: 0, dur: 0.3, size: 12 + k, color: col });
   }
   const perk = p.src && p.src.def.perk;
@@ -4043,8 +4054,8 @@ function update(dt) {
       if (ph !== e.stompPhase) {
         e.stompPhase = ph;
         for (let i = 0; i < 5; i++) {
-          const a = Math.random() * Math.PI * 2;
-          S.fxs.push({ kind: 'dust', x: p.x + (Math.random() - 0.5) * 30, y: p.y + 4, vx: Math.cos(a) * 45, vy: -20 - Math.random() * 25, t: 0, dur: 0.35, size: 3 + Math.random() * 3 });
+          const a = fxRandom() * Math.PI * 2;
+          S.fxs.push({ kind: 'dust', x: p.x + (fxRandom() - 0.5) * 30, y: p.y + 4, vx: Math.cos(a) * 45, vy: -20 - fxRandom() * 25, t: 0, dur: 0.35, size: 3 + fxRandom() * 3 });
         }
         S.shakeT = Math.max(S.shakeT, 0.12);
         SFX.stomp();
@@ -4444,7 +4455,7 @@ function draw() {
   ctx.save();
   if (S.shakeT > 0) {
     const k = Math.min(1, S.shakeT / 0.4) * 5;
-    ctx.translate((Math.random() - 0.5) * k * 2, (Math.random() - 0.5) * k * 2);
+    ctx.translate((fxRandom() - 0.5) * k * 2, (fxRandom() - 0.5) * k * 2);
   }
   if (ROAD_LAYER) ctx.drawImage(ROAD_LAYER, -3, -3, W + 6, H + 6);
   else {
@@ -4809,8 +4820,8 @@ function draw() {
         for (let i = 0; i < b.pts.length - 1; i++) {
           const a = b.pts[i], c = b.pts[i + 1];
           ctx.moveTo(a.x, a.y);
-          const midx = (a.x + c.x) / 2 + (Math.random() - 0.5) * 14;
-          const midy = (a.y + c.y) / 2 + (Math.random() - 0.5) * 14;
+          const midx = (a.x + c.x) / 2 + (fxRandom() - 0.5) * 14;
+          const midy = (a.y + c.y) / 2 + (fxRandom() - 0.5) * 14;
           ctx.lineTo(midx, midy);
           ctx.lineTo(c.x, c.y);
         }
@@ -7486,7 +7497,7 @@ function mpViewBuild(sum) {
     if (spot < 0 || spot > 14 || face < 1 || face > 20 || lvl < 1 || lvl > 3) continue;
     const idx = remapSpot(fromKey, myKey, spot), def = sum.ds===1 ? deckDef(face) : TOWER_DEFS[face];
     if (!def || idx < 0 || !SPOTS[idx]) continue;
-    towers.push(prevT.get(viewKey(idx,face,lvl,sum.ds,sum.ds===1?t[3]:0)) || { face, def, lvl, spot: idx, x: SPOTS[idx][0], y: SPOTS[idx][1], cd: Math.random() * 0.5, kick: 0, skin: 0, ...(sum.ds===1 ? { deckSystem:1,pips:Math.max(1,Math.min(7,t[3]|0)) } : {}) });
+    towers.push(prevT.get(viewKey(idx,face,lvl,sum.ds,sum.ds===1?t[3]:0)) || { face, def, lvl, spot: idx, x: SPOTS[idx][0], y: SPOTS[idx][1], cd: fxRandom() * 0.5, kick: 0, skin: 0, ...(sum.ds===1 ? { deckSystem:1,pips:Math.max(1,Math.min(7,t[3]|0)) } : {}) });
     if (sum.ds===1) { const viewed=towers[towers.length-1]; viewed.def=def; viewed.deckSystem=1; viewed.pips=Math.max(1,Math.min(7,t[3]|0)); }
   }
   VIEW.towers = towers;
@@ -7502,7 +7513,7 @@ function mpViewBuild(sum) {
       if (!base) continue;
       const appearance = row.appearance, isBoss = appearance ? appearance.role !== 'normal' : baseBoss;
       const key = i + ':' + (row.a || 0) + ':' + n, old = prev.get(key);
-      const e = old || { type: base.id, def: base, sprite: base.sprite, move: base.move, name: base.name, lane: laneFor(base.move, 0), animT: Math.random(), face: 1, dead: false, hidden: false, hue: 0, slowT: 0, stunT: 0, flashT: 0, isElite: false, isBoss, entranceT: -1, stompPhase: 0, key, view: true };
+      const e = old || { type: base.id, def: base, sprite: base.sprite, move: base.move, name: base.name, lane: laneFor(base.move, 0), animT: fxRandom(), face: 1, dead: false, hidden: false, hue: 0, slowT: 0, stunT: 0, flashT: 0, isElite: false, isBoss, entranceT: -1, stompPhase: 0, key, view: true };
       if (appearance) {
         const inf = C.INFINITY, baseWave = appearance.baseWave || appearance.wave, mon = inf.monsters[baseWave], cls = inf.monsterFor(appearance.wave).cls;
         const legacy = inf.art(baseWave, appearance.role === 'secondary' ? 1 : 0);

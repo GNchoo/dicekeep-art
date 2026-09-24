@@ -89,7 +89,7 @@ async function boot(browser, viewport) {
     const source = await response.text();
     const anchor = 'window.DK = S;';
     assert.equal(source.split(anchor).length, 2, 'one presentation test hook anchor');
-    await route.fulfill({ response, body: source.replace(anchor, 'window.__presentationQA={update,advancePresentation,draw,relayoutArena};\n' + anchor) });
+    await route.fulfill({ response, body: source.replace(anchor, 'window.__presentationQA={update,advancePresentation,draw,relayoutArena,spawnBurst,acquireFxArt};\n' + anchor) });
   });
   await page.goto(gameUrl());
   await page.waitForFunction(() => window.DK?.phase === 'title' && window.__presentationQA, null, { timeout: 120000 });
@@ -369,6 +369,24 @@ async function highDie(page, row) {
   await screenshotStage(page, `acquire-d20-late-${row.name}.png`);
 }
 
+async function cosmeticRandomIsolation(page, row) {
+  const calls = await page.evaluate(() => {
+    DKstartInf('clear'); DK.paused = true; DK.fxs = []; DK.texts = [];
+    const random = Math.random;
+    let gameplayRandomCalls = 0;
+    Math.random = () => { gameplayRandomCalls++; return 0.5; };
+    try {
+      __presentationQA.spawnBurst(240, 240, '#ffd452', 20, 120, 0.8);
+      __presentationQA.acquireFxArt(20, 4, '#ffd452', 300, 300);
+      DK.shakeT = 0.3;
+      __presentationQA.draw();
+    } finally { Math.random = random; }
+    return gameplayRandomCalls;
+  });
+  check(calls === 0, `reward particles and screen shake never advance gameplay RNG (${calls} calls)`);
+  row.checks.push('cosmetic-rng-isolation');
+}
+
 async function deckPower(page, row) {
   await clearNotices(page);
   const state = await page.evaluate(() => {
@@ -422,6 +440,7 @@ async function deckPower(page, row) {
         await legendaryChest(page, row);
         await enhancementSuccess(page, row);
         await highDie(page, row);
+        await cosmeticRandomIsolation(page, row);
         await deckPower(page, row);
         assert.deepEqual(errors, [], `${name} has no browser errors`);
         console.log('PASS', name, row.checks.join(', '));
