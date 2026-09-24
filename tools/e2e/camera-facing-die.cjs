@@ -1,23 +1,16 @@
 'use strict';
 
-// Independent screen-space reading of a die. The renderer projects every
-// engraved face vertex with w=10/(10-z), and only front-facing faces are drawn.
-// Keep this outside game.js so browser tests can catch a reward/visible-face
-// mismatch instead of echoing the production face picker.
-function screenTopDieResult(kind, R, labels, api) {
+// Independent camera-facing reading of a die. The game camera looks along +Z:
+// the face whose outward normal points most toward the player is the result.
+// This deliberately ignores which numeral happens to be highest on the 2D
+// screen. Keep the oracle outside game.js so a reward/visible-face mismatch
+// cannot be hidden by reusing the production face picker.
+function cameraFacingDieResult(kind, R, labels, api) {
   const shape = kind === 'story' ? 'd6' : api.dieShape(kind);
   const project = v => {
     const p = api.m3apply(R, v), w = 10 / (10 - p[2]);
     return [p[0] * w, p[1] * w];
   };
-  if (shape === 'd4') {
-    let index = 0, top = Infinity;
-    api.POLY.d4.verts.forEach((v, i) => {
-      const y = project(v)[1];
-      if (y < top) { top = y; index = i; }
-    });
-    return { index, value: labels[index], y: top };
-  }
   const candidates = shape === 'd6'
     ? api.FACES.map(f => ({
       normal: f.n, labelIndex: f.val - 1,
@@ -43,9 +36,11 @@ function screenTopDieResult(kind, R, labels, api) {
   });
   if (!visible.length) throw Error(shape + ': no visible numbered face');
   const totalArea = visible.reduce((sum, face) => sum + face.area, 0);
-  const readable = visible.filter(face => face.area >= totalArea * .05);
-  readable.sort((a, b) => a.y - b.y || b.area - a.area || b.z - a.z);
-  return { ...(readable[0] || visible[0]), totalArea };
+  // An exact edge/vertex-on tie has no single skyward face. Keep the first
+  // mesh face deterministically, as the game's strict-greater scan does;
+  // choosing the larger projected area here would create a false mismatch.
+  visible.sort((a, b) => b.z - a.z || a.index - b.index);
+  return { ...visible[0], totalArea };
 }
 
-module.exports = { screenTopDieResult };
+module.exports = { cameraFacingDieResult };

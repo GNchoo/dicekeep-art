@@ -4,7 +4,7 @@
 // Story dice still use the original mouse-flick physics, charge, enemy hit, and face settlement.
 const assert = require('node:assert/strict');
 const { launchBrowser, gameUrl } = require('./browser.cjs');
-const { screenTopDieResult } = require('./screen-top-die.cjs');
+const { cameraFacingDieResult } = require('./camera-facing-die.cjs');
 
 (async () => {
   const browser = await launchBrowser();
@@ -30,7 +30,7 @@ const { screenTopDieResult } = require('./screen-top-die.cjs');
         spawnEnemy({type:'slime',lane:0});
         const enemy=S.enemies.at(-1);enemy.dist=80;enemy.hp=enemy.max=1000000;
         return enemy;
-      }};\nwindow.__storyQA.visualTop=${screenTopDieResult.toString()};\n` + anchor);
+      }};\nwindow.__storyQA.cameraFace=${cameraFacingDieResult.toString()};\n` + anchor);
       await route.fulfill({ response, body: source });
     });
     await page.goto(gameUrl());
@@ -92,11 +92,11 @@ const { screenTopDieResult } = require('./screen-top-die.cjs');
         __storyQA.updateDie(dt);
         if (!landing && state === 'throw' && d.state === 'settle')
           landing = { visible: __storyQA.physicalFaceValue('story', d.R, d.labels),
-            screenTop: __storyQA.visualTop('story', d.R, d.labels, __storyQA).value,
+            cameraFace: __storyQA.cameraFace('story', d.R, d.labels, __storyQA).value,
             final: d.final, R: d.R.slice() };
         if (settledVisible === null && state === 'settle' && d.state === 'fly')
           settledVisible = { physical: __storyQA.physicalFaceValue('story', d.R, d.labels),
-            screenTop: __storyQA.visualTop('story', d.R, d.labels, __storyQA).value };
+            cameraFace: __storyQA.cameraFace('story', d.R, d.labels, __storyQA).value };
       }
       return { hit, held: DK.heldDie, final: d.final, face: d.face, dieState: d.state,
         gold: DK.gold, slotActive: DKSLOT.active, landing,
@@ -107,10 +107,10 @@ const { screenTopDieResult } = require('./screen-top-die.cjs');
     assert.ok(result.held >= 1 && result.held <= 6, 'physical landing awards an unlocked story face');
     assert.equal(result.held, result.final, 'held face matches physical settlement');
     assert.ok(result.landing, 'story die visibly landed before its reward was awarded');
-    assert.deepEqual([result.landing.visible, result.landing.screenTop, result.landing.final,
-      result.settledVisible.physical, result.settledVisible.screenTop],
+    assert.deepEqual([result.landing.visible, result.landing.cameraFace, result.landing.final,
+      result.settledVisible.physical, result.settledVisible.cameraFace],
     [result.held, result.held, result.held, result.held, result.held],
-    'story reward and final visible pips match the actual screen-top landing face');
+    'story reward and final visible pips match the camera-facing landing face');
     assert.equal(result.dieState, 'tray', 'die flies back to its tray after settlement');
     assert.equal(result.gold, 460, 'enemy hit and settlement do not charge the throw again');
     assert.equal(result.slotActive, false, 'story throw never occupies chest animation slot');

@@ -2347,8 +2347,8 @@ function randomDieSymmetry(shape) {
   const group = DIE_SYMMETRIES[shape];
   return group[Math.floor(Math.random() * group.length)];
 }
-// A printed marking belongs to a physical face (or, for a tetrahedron, a
-// vertex). Rarity is expressed by repeated markings on a real d20, not by
+// A printed marking belongs to a physical face. Rarity is expressed by
+// repeated markings on a real d20, not by
 // changing its result after the player has seen it land.
 function dieFaceLabels(kind) {
   if (kind === 'story') return DIE.labels || [1, 2, 3, 4, 5, 6];
@@ -2359,7 +2359,6 @@ function dieFaceLabels(kind) {
   return Array.from({ length: count }, (_, i) => i + 1);
 }
 // Exactly the polygon that carries a face's printed number in the renderer.
-// Its mean projected height is what the player reads as the upper visible face.
 function projectedFacePolygon(shape, face, R) {
   const points = shape === 'd6'
     ? [[-1, -1], [1, -1], [1, 1], [-1, 1]].map(([u, v]) => face.n.map((n, i) => n + .82 * (u * face.u[i] + v * face.v[i])))
@@ -2371,7 +2370,7 @@ function projectedFacePolygon(shape, face, R) {
 }
 function drawPhysicalFaceOutline(g, cx, cy, size, kind, R, faceIndex) {
   const shape = kind === 'story' ? 'd6' : dieShape(kind);
-  if (!faceIndex || shape === 'd4') return;
+  if (!faceIndex) return;
   const face = shape === 'd6' ? FACES.find(f => f.val === faceIndex) : POLY[shape]?.faces[faceIndex - 1];
   if (!face) return;
   const polygon = projectedFacePolygon(shape, face, R);
@@ -2382,44 +2381,9 @@ function drawPhysicalFaceOutline(g, cx, cy, size, kind, R, faceIndex) {
   g.shadowColor = '#ffbb4b'; g.shadowBlur = Math.max(6, size * .2);
   g.stroke(); g.restore();
 }
-function physicalFaceIndex(kind, R) {
-  const shape = kind === 'story' ? 'd6' : dieShape(kind), P = POLY[shape];
-  if (shape === 'd4') {
-    // The tetrahedron is read at the visually highest apex, as on a real d4.
-    // Use the same perspective as drawPoly3D, not the camera-facing +Z vertex.
-    let top = Infinity, index = 0;
-    for (let i = 0; i < P.verts.length; i++) {
-      const p = m3apply(R, P.verts[i]), y = p[1] * 10 / (10 - p[2]);
-      if (y < top) { top = y; index = i; }
-    }
-    return index + 1;
-  }
-  // Read the highest *visible* printed face, rather than the face pointing
-  // most directly at the camera. The latter can leave another numbered face
-  // visibly above it (especially on an octahedron). Exclude edge-on slivers:
-  // a number occupying less than 5% of the visible hull cannot be read.
-  const faces = kind === 'story' || shape === 'd6' ? FACES : P.faces;
-  const visible = [];
-  for (let i = 0; i < faces.length; i++) {
-    const f = faces[i], n = m3apply(R, f.n);
-    if (n[2] <= (shape === 'd6' ? .1 : .02)) continue;
-    const polygon = projectedFacePolygon(shape, f, R);
-    const y = shape === 'd6' ? n[1] * 10 / (10 - n[2])
-      : polygon.reduce((sum, p) => sum + p[1], 0) / polygon.length;
-    let area = 0;
-    for (let j = 0; j < polygon.length; j++) {
-      const a = polygon[j], b = polygon[(j + 1) % polygon.length];
-      area += a[0] * b[1] - a[1] * b[0];
-    }
-    visible.push({ index: kind === 'story' || shape === 'd6' ? f.val : i + 1, y, area: Math.abs(area), z: n[2] });
-  }
-  const totalArea = visible.reduce((sum, f) => sum + f.area, 0);
-  const readable = visible.filter(f => f.area >= totalArea * .05);
-  readable.sort((a, b) => a.y - b.y || b.area - a.area || b.z - a.z);
-  return readable[0]?.index || visible[0]?.index || 1;
-}
-// Support is a separate geometric question. Rocking the screen-top *read*
-// face forward could expose a still higher face and never settle.
+// The reward comes from the face pointing toward the overhead camera (+Z),
+// regardless of which numeral happens to sit highest in the 2D image.
+function physicalFaceIndex(kind, R) { return supportFaceIndex(kind, R); }
 function supportFaceIndex(kind, R) {
   if (kind === 'story' || dieShape(kind) === 'd6') return topFace(R);
   const P = POLY[dieShape(kind)];
@@ -2434,38 +2398,37 @@ function physicalFaceValue(kind, R, labels = dieFaceLabels(kind)) {
   return labels[physicalFaceIndex(kind, R) - 1];
 }
 function physicalTopVector(kind, R) {
-  const shape = dieShape(kind), index = shape === 'd4' ? physicalFaceIndex(kind, R) : supportFaceIndex(kind, R);
+  const shape = dieShape(kind), index = supportFaceIndex(kind, R);
   if (kind === 'story' || shape === 'd6') return m3apply(R, FACES.find(f => f.val === index).n);
-  return m3apply(R, shape === 'd4' ? POLY.d4.verts[index - 1] : POLY[shape].faces[index - 1].n);
+  return m3apply(R, POLY[shape].faces[index - 1].n);
 }
 // Tilt the supporting front face down slightly so its upper neighbouring
 // printed face opens toward the camera instead of becoming an unreadable rim.
 function supportRestDirection(kind) {
-  // Icosahedral face normals are only ~42° apart; a 27° lean would cross
-  // their front-face boundary. Keep that solid within its ~21° half-angle.
-  const y = dieShape(kind) === 'd20' ? .28 : .45;
+  // Keep each lean inside the face's nearest-normal region: the same printed
+  // face remains camera-facing throughout the final rock. A d4 needs a
+  // stronger lean so an adjacent side stays visible instead of looking flat.
+  const shape = dieShape(kind);
+  const y = shape === 'd20' ? .28 : shape === 'd4' ? .7 : .45;
   return [0, y, Math.sqrt(1 - y * y)];
 }
 function physicalRestAlignment(kind, R) {
   const n = physicalTopVector(kind, R);
-  if (dieShape(kind) === 'd4') return -n[1];
   const t = supportRestDirection(kind);
   return n[1] * t[1] + n[2] * t[2];
 }
 function restThreshold(kind) {
-  const shape = dieShape(kind);
-  return shape === 'd4' ? .95 : .997;
+  return .997;
 }
-// A slow die rocks toward whichever face/vertex is already uppermost. The
+// A slow die rocks toward whichever camera-facing face is already uppermost. The
 // physical winner may change naturally while it is still moving; once it is
 // stationary no rotation or value substitution happens.
 function stabilizeRestPose(kind, R, dt) {
-  const n = physicalTopVector(kind, R), target = restThreshold(kind), d4 = dieShape(kind) === 'd4';
+  const n = physicalTopVector(kind, R), target = restThreshold(kind);
   const alignment = physicalRestAlignment(kind, R);
   if (alignment >= target) return R;
-  const t = d4 ? null : supportRestDirection(kind);
-  const cross = d4 ? [n[2], 0, -n[0]]
-    : [n[1] * t[2] - n[2] * t[1], -n[0] * t[2], n[0] * t[1]];
+  const t = supportRestDirection(kind);
+  const cross = [n[1] * t[2] - n[2] * t[1], -n[0] * t[2], n[0] * t[1]];
   const length = Math.hypot(...cross);
   if (length < 1e-7) return R;
   const step = Math.min(Math.acos(Math.max(-1, Math.min(1, alignment))) - Math.acos(target), dt * 1.8);
@@ -2480,7 +2443,9 @@ function alignR(n) {
 // 정팔면체는 면 정면 자세에서 사면체처럼 읽힌다. 꼭짓점을 정면에 두어 네 삼각면과 마름모 윤곽을 모두 보여 준다.
 function polyRestR(shape) {
   if (shape === 'd8') return m3id();
-  if (shape === 'd4') return alignR(POLY.d4.verts[0]); // 꼭짓점의 동일한 숫자가 세 면에 보인다
+  // Keep an apex above the board, with two sloped faces visible. Pointing a
+  // vertex straight at the camera makes the solid look like a flat shard.
+  if (shape === 'd4') return m3mul(m3axisAngle(1, 0, 0, 1.42), alignR(POLY.d4.verts[0]));
   return m3mul(TRAY_TILT, alignR(POLY[shape].faces[0].n));
 }
 // 정착 후에도 d8을 삼각면 정면으로 돌리면 사면체처럼 보인다. 결과 면에 가장 가까운 꼭짓점을 정면으로 두되
@@ -2579,17 +2544,7 @@ function buildDiceMaterial(skin) {
     const rim = g.createLinearGradient(0, 0, T, T);
     rim.addColorStop(0, 'rgba(255,243,211,.85)'); rim.addColorStop(.45, 'rgba(238,220,181,.4)'); rim.addColorStop(1, 'rgba(129,93,52,.38)');
     path(.97); g.strokeStyle = rim; g.lineWidth = 2.7; g.stroke();
-    if (kind === 'd4') {
-      // A tetrahedral die is read at the upper vertex. Repeat each vertex's
-      // number on its three adjoining facets so the one result is legible.
-      f.idx.forEach((vertex, corner) => {
-        const x = T / 2 + (uv[corner][0] - T / 2) * .62;
-        const y = T / 2 + (uv[corner][1] - T / 2) * .62;
-        engraveDiceValue(g, vertex + 1, x, y, T * .22, skin.mark || '#542b30');
-      });
-    } else {
-      engraveDiceValue(g, dieFaceLabels(kind)[i], T / 2, T / 2, T * (f.idx.length === 5 ? .36 : i < 9 ? .32 : .27), skin.mark || '#542b30');
-    }
+    engraveDiceValue(g, dieFaceLabels(kind)[i], T / 2, T / 2, T * (f.idx.length === 5 ? .36 : i < 9 ? .32 : .27), skin.mark || '#542b30');
     g.restore();
     return { cv, uv };
   });
@@ -2812,7 +2767,7 @@ function drawCenterRoll() {
     if (linger && ROLL_SHOW.physical) drawPhysicalFaceOutline(ctx, cx, dy, size, kind, R, ROLL_SHOW.faceIndex);
   }
   if (linger && ROLL_SHOW.physical && ROLL_SHOW.face) {
-    const caption = dieShape(kind) === 'd4' ? `위쪽 꼭짓점 ${ROLL_SHOW.face} · ★${ROLL_SHOW.face}` : `금색 표시 면 ${ROLL_SHOW.face} · ★${ROLL_SHOW.face}`;
+    const caption = `하늘을 향한 면 ${ROLL_SHOW.face} · ★${ROLL_SHOW.face}`;
     ctx.font = uiFont(Math.max(17, base * .29)); ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     ctx.lineJoin = 'round'; ctx.lineWidth = 6; ctx.strokeStyle = 'rgba(22,16,14,.95)';
     ctx.strokeText(caption, cx, cy + base * 2.05); ctx.fillStyle = '#fff1c7'; ctx.fillText(caption, cx, cy + base * 2.05);
@@ -2830,7 +2785,7 @@ function drawDeckReveal(g,x,y,size) {
   g.fillStyle='#fff';g.font=uiFont(Math.max(9,size*.19));g.textAlign='center';g.fillText(card.name.replace(' 주사위','')+' · 1눈금',x,y+size*.95);g.restore();
 }
 
-// 현재 자세에서 화면(위)을 향한 눈
+// 현재 자세에서 플레이어 쪽 카메라(+Z)를 향한 눈
 function topFace(R) {
   let best = -2, bf = 1;
   for (const f of FACES) {
@@ -3062,15 +3017,6 @@ function drawDie() {
     }
     drawPolyDie(ctx, DIE.x, gy, size * 1.25, SLOT.kind, DIE.R);
     if (DIE.state === 'settle') drawPhysicalFaceOutline(ctx, DIE.x, gy, size * 1.25, SLOT.kind, DIE.R, DIE.faceIndex);
-    if (dieShape(SLOT.kind) === 'd4' && DIE.state === 'settle' && DIE.faceIndex) {
-      const v = m3apply(DIE.R, POLY.d4.verts[DIE.faceIndex - 1]);
-      const depth = 10 / (10 - v[2]), r = size * 1.25 * depth;
-      const px = DIE.x + v[0] * r, py = gy + v[1] * r;
-      ctx.save(); ctx.strokeStyle = '#ffe28a'; ctx.lineWidth = 2.2;
-      ctx.shadowColor = '#ffcb55'; ctx.shadowBlur = 10;
-      ctx.beginPath(); ctx.arc(px, py, 7 + Math.sin(DIE.settleT * 12) * 1.4, 0, Math.PI * 2); ctx.stroke();
-      ctx.restore();
-    }
   } else {
     drawCube(ctx, DIE.x, gy, size, DIE.R, glowColor, glowStr, undefined, 'full', manual ? null : DIE.labels);
     if (DIE.state === 'settle') drawPhysicalFaceOutline(ctx, DIE.x, gy, size, manual ? SLOT.kind : 'story', DIE.R, DIE.faceIndex);
