@@ -60,23 +60,27 @@ async function setup(browser,name,viewport,fixture) {
 async function guestCase(browser,name,viewport) {
  const t=await setup(browser,name,viewport),{page,check,row}=t;
  try {
-  await t.ready();await t.automatic();
-  check('Unclaimed attendance automatically opens above the title',await page.evaluate(()=>DK.phase==='title'&&document.getElementById('rewards-tab-attendance').getAttribute('aria-selected')==='true'));
+  await t.ready();await page.waitForFunction(()=>!!DKREWARDS.current());
+  check('Unclaimed attendance waits while the title Start is visible',await page.evaluate(()=>DK.phase==='title'&&!document.getElementById('rewards-dialog')?.open&&!__homeOpened.some(e=>e.automatic)));
+  await t.home();await t.automatic();
+  check('Unclaimed attendance automatically opens over the home after Start',await page.evaluate(()=>DK.phase==='lobby'&&document.getElementById('rewards-tab-attendance').getAttribute('aria-selected')==='true'));
   check('Opening does not automatically grant attendance or XP',await page.evaluate(()=>[DKSAVE.liveops.attendance.total,DKSAVE.liveops.pass.xp]),[0,0]);
   check('Only one automatic open event is emitted',await page.evaluate(()=>__homeOpened.filter(e=>e.automatic).length),1);
   await t.noOverflow('Automatic attendance fits viewport','#rewards-dialog');await page.screenshot({path:path.join(out,name+'-attendance.png')});
-  await page.click('#rewards-close');await t.home();await page.evaluate(async()=>{await DKHOME.enter();await DKHOME.refresh();await DKHOME.enter();});
+  await page.click('#rewards-close');await page.evaluate(async()=>{await DKHOME.enter();await DKHOME.refresh();await DKHOME.enter();});
   check('Closing and revisiting home do not reopen in the same visit',await page.evaluate(()=>!document.getElementById('rewards-dialog').open&&__homeOpened.filter(e=>e.automatic).length===1));
   check('Home exposes mailbox, pass, deck and battle entries',await page.locator('#home-mail').isVisible()&&await page.locator('#home-pass').isVisible()&&await page.locator('[data-home-action="deck"]').first().isVisible()&&await page.locator('[data-home-action="battle"]').first().isVisible());
   check('Home wallet uses the current guest balances',await page.evaluate(()=>[Number(document.getElementById('home-gold').textContent.replace(/[^0-9]/g,'')),Number(document.getElementById('home-shards').textContent.replace(/[^0-9]/g,''))]),await page.evaluate(()=>[DKSAVE.progression.collection.gold,DKSAVE.progression.shards]));
   check('Unclaimed attendance has a dot; guest mail and unearned pass do not',await dot(page,'attendance').isVisible()&&!await dot(page,'mail').isVisible()&&!await dot(page,'pass').isVisible());
   await t.noOverflow('Home fits viewport','#lobby .screen-box');await page.screenshot({path:path.join(out,name+'-home.png')});
-  await page.reload();await page.waitForFunction(()=>window.DK?.phase==='title',null,{timeout:120000});await t.automatic();
+  await page.reload();await page.waitForFunction(()=>window.DK?.phase==='title'&&!!DKREWARDS.current(),null,{timeout:120000});
+  check('A new visit also preserves the title before showing attendance',await page.evaluate(()=>!document.getElementById('rewards-dialog')?.open&&!__homeOpened.some(e=>e.automatic)));
+  await t.home();await t.automatic();
   check('A new visit reminds again while attendance remains unclaimed',await page.evaluate(()=>__homeOpened.filter(e=>e.automatic).length),1);
   await page.click('#rewards-attendance-claim');await page.waitForFunction(()=>document.getElementById('rewards-attendance-claim')?.disabled&&DKSAVE.liveops.attendance.total===1);
   check('Claim grants one attendance and twenty XP',await page.evaluate(()=>[DKSAVE.liveops.attendance.total,DKSAVE.liveops.pass.xp]),[1,20]);
-  await page.click('#rewards-close');await t.home();await page.evaluate(()=>DKHOME.refresh());check('Attendance dot clears after claim',await dot(page,'attendance').isVisible(),false);
-  await page.reload();await page.waitForFunction(()=>window.DK?.phase==='title'&&window.DKHOME,null,{timeout:120000});await page.evaluate(()=>DKHOME.refresh());
+  await page.click('#rewards-close');await page.evaluate(()=>DKHOME.refresh());check('Attendance dot clears after claim',await dot(page,'attendance').isVisible(),false);
+  await page.reload();await page.waitForFunction(()=>window.DK?.phase==='title'&&!!DKREWARDS.current(),null,{timeout:120000});await t.home();await page.evaluate(()=>DKHOME.refresh());
   check('Claimed attendance does not open on reload',await page.evaluate(()=>!document.getElementById('rewards-dialog')?.open&&!__homeOpened.some(e=>e.automatic)));
   check('No uncaught script errors',row.errors,[]);check('No external or account mutations',row.blocked,[]);row.pass=true;
  }catch(error){row.failure=error.stack;await page.screenshot({path:path.join(out,name+'-failure.png')}).catch(()=>{});throw error;}finally{await t.context.close();}
