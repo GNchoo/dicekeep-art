@@ -155,6 +155,8 @@ jobs:
         run: npm run test:story-physical-throw
       - name: run-resume (구매한 주사위 중단 복원)
         run: npm run test:run-resume
+      - name: arena-orientation (가로·세로 배치와 공격 범위)
+        run: npm run test:arena-orientation
       - name: casual-world (아트 로딩·알파·발사 위치·지역별 렌더)
         run: npm run test:casual-world
       - name: pure-main (순수운빨 계정 독립성·물리 굴림 기준)
