@@ -1,0 +1,238 @@
+/* Casual castle UI. Loaded after home.css and menus.css; battle HUD has its own layer. */
+:root {
+  --menu-bg: var(--dk-ui-frame);
+  --menu-card: var(--dk-ui-panel);
+  --menu-edge: var(--dk-ui-line);
+  --menu-ink: var(--dk-ui-cream);
+  --menu-muted: var(--dk-ui-muted);
+  --menu-gold: var(--dk-ui-gold);
+}
+
+/* The approved castle art remains the backdrop; panels use broad, quiet color blocks. */
+.screen {
+  background-color: #1b2543a8;
+  background-blend-mode: multiply;
+}
+.screen .screen-box,
+#overlay-box:not(.title) {
+  color: var(--dk-ui-cream);
+  background: var(--dk-ui-frame);
+  border: 1px solid #a58a6e;
+  border-radius: 20px;
+  box-shadow: 0 12px 0 #17182c4d, 0 24px 64px #1013229c;
+  scrollbar-color: var(--dk-ui-raised) var(--dk-ui-frame);
+}
+.screen-box h1,
+.screen-box h2,
+.screen-box h3,
+#overlay-box:not(.title) #ov-title { color: var(--dk-ui-cream); text-shadow: none; }
+.screen-sub,
+#ov-desc { color: var(--dk-ui-muted); }
+.screen-head { border-bottom-color: #a99a8b66; }
+.screen .back-btn,
+.screen .big-btn,
+#overlay-box:not(.title) .big-btn {
+  color: var(--dk-ui-cream);
+  background: var(--dk-ui-panel);
+  border: 1px solid #8e8ca4;
+  border-radius: 12px;
+  box-shadow: 0 3px 0 var(--dk-ui-shadow);
+  text-shadow: none;
+  font-weight: 700;
+}
+.screen .big-btn.primary,
+#overlay-box:not(.title) .big-btn.primary {
+  color: #302a36;
+  background: var(--dk-ui-gold);
+  border-color: #ffe0a1;
+  box-shadow: 0 3px 0 #9f6935;
+}
+.screen .big-btn:disabled,
+.screen .back-btn:disabled { opacity: .55; box-shadow: none; }
+.screen :is(button, input, select, summary):focus-visible,
+#overlay-box :is(button, input):focus-visible {
+  outline: 3px solid var(--dk-ui-blue);
+  outline-offset: 2px;
+}
+.gem-chip { color: var(--dk-ui-cream); background: #2a4463; border-color: var(--dk-ui-blue); }
+.gem-chip b { color: #bce9ff; }
+
+/* Home: retain its content order and castle key art, but match the simplified scenery. */
+#lobby #lobby-box[data-view="hub"] { background: var(--dk-ui-frame); border-color: #a58a6e; box-shadow: 0 12px 0 #17182c4d, 0 24px 64px #1013229c; }
+#lobby #lobby-box[data-view="hub"] #lobby-title { color: var(--dk-ui-cream); text-shadow: none; }
+#lobby-box[data-view="hub"] #lobby-settings,
+.home-emblem { color: var(--dk-ui-cream); background: var(--dk-ui-panel); border-color: var(--dk-ui-line); box-shadow: none; }
+#lobby-box[data-view="hub"] #lobby-settings { background-color: var(--dk-ui-panel); background-image: url('ui/icon-gear.png'); background-position: center; background-size: 22px 22px; background-repeat: no-repeat; }
+#lobby-hub { --home-gold: var(--dk-ui-gold); --home-muted: var(--dk-ui-muted); }
+#home-name,
+#lobby-hub .home-section-heading h2 { color: var(--dk-ui-cream); }
+#home-account { font-size: 12px; }
+.home-profile-tag { color: var(--dk-ui-gold); border-left-color: var(--dk-ui-line); }
+.home-currency { background: var(--dk-ui-panel); border-color: var(--dk-ui-line); border-radius: 11px; }
+.home-currency small { color: var(--dk-ui-muted); font-size: 11px; }
+.home-currency b { color: var(--dk-ui-cream); font-size: 15px; }
+.home-citadel { border-color: #c4a574; border-radius: 15px 15px 6px 6px; box-shadow: none; }
+.home-citadel::before { background: linear-gradient(180deg, #18264072, transparent 46%, #1c223ae6); }
+.home-record small { font-size: 10px; }
+.home-record b { font-size: 12px; }
+.home-reward { background: #29314fe8; border-color: #c9a979; border-radius: 12px; color: var(--dk-ui-cream); box-shadow: 0 3px 0 #1a1d34a6; }
+.home-reward:hover { background: #424c70f2; border-color: var(--dk-ui-gold); }
+.home-reward span { font-size: 12px; }
+.home-citadel-caption > span { color: var(--dk-ui-cream); }
+.home-citadel-caption p { color: #f7e8cb; font-size: 11px; }
+.home-pass-status { color: var(--dk-ui-cream); background: #3b405d; border-color: #9e8d78; border-radius: 6px 6px 11px 11px; font-size: 12px; }
+.home-pass-status > b { color: var(--dk-ui-gold); font-size: 12px; }
+.home-text-button { color: var(--dk-ui-gold); font-size: 12px; }
+.home-deck-loading,
+.home-deck > button,
+.home-deck-card,
+.home-deck-slot { color: var(--dk-ui-cream); background: var(--dk-ui-panel); border-color: #958c89; border-radius: 11px; }
+.home-deck > button:hover { border-color: var(--dk-ui-gold); background: var(--dk-ui-raised); }
+.home-deck b { font-size: 11px; }
+.home-deck small { color: #f0cc83; font-size: 10px; }
+.home-battle-button { color: var(--dk-ui-cream); background: var(--dk-ui-panel); border-color: #9b91a0; border-radius: 13px; box-shadow: 0 3px 0 var(--dk-ui-shadow); }
+.home-battle-button.home-battle-primary { color: #302a36; background: var(--dk-ui-gold); border-color: #ffe0a1; box-shadow: 0 3px 0 #9f6935; }
+.home-battle-button b { text-shadow: none; }
+.home-battle-button small { color: inherit; font-size: 10px; opacity: .88; }
+.home-nav { background: #20243a; border-top-color: #8c8290; }
+.home-nav-item { color: var(--dk-ui-muted); font-size: 12px; }
+.home-nav-item.is-active,
+.home-nav-item[aria-current="page"] { color: var(--dk-ui-gold); background: #5d59722e; border-top-color: var(--dk-ui-gold); }
+
+/* The other player menus share the home's cards and stronger primary path. */
+#lobby #lobby-box:not([data-view="hub"]) #lobby-title { color: var(--dk-ui-cream); text-shadow: none; }
+.menu-navigation { background: #20243a; border-top-color: #8c8290; }
+.menu-navigation button { color: var(--dk-ui-muted); font-size: 12px; }
+#lobby-box[data-section="deck"] .menu-navigation [data-menu-target="deck"],
+#lobby-box:not([data-section="deck"]) .menu-navigation [data-menu-target="battle"],
+#shop .menu-navigation [data-menu-target="shop"],
+#stage-select .menu-navigation [data-menu-target="battle"] { color: var(--dk-ui-gold); background: #5d59724d; box-shadow: inset 0 3px var(--dk-ui-gold); }
+.menu-hero { background-image: linear-gradient(90deg,#29354eea,#34465f55), url('ui/title-keyart-l.jpg?v=casual1'); border-color: #a7a2a0; border-radius: 15px; }
+.menu-hero h2 { color: var(--dk-ui-cream); }
+.menu-hero p { color: #f0e6d1; font-size: 14px; }
+#lobby-single .lobby-inf-btn { color: var(--dk-ui-cream); background: var(--dk-ui-panel); border-color: #9690a4; border-radius: 13px; box-shadow: 0 3px 0 var(--dk-ui-shadow); }
+#lobby-single #btn-inf-clear { color: #302a36; background: var(--dk-ui-gold); border-color: #ffe0a1; box-shadow: 0 3px 0 #9f6935; }
+#lobby-single .lobby-inf-btn small { color: inherit; opacity: .88; font-size: 13px; }
+#lobby-single .lobby-inf-btn::after { color: inherit; }
+#lobby-inf { font-size: 13px; }
+.theme-guide,
+.menu-help { color: var(--dk-ui-muted); background: var(--dk-ui-panel); border-color: #8c8a9b; border-radius: 12px; }
+.theme-guide-heading strong,
+.menu-help > summary { color: var(--dk-ui-cream); }
+.theme-guide-heading small,
+.theme-guide-members,
+.theme-guide-boss { color: var(--dk-ui-muted); font-size: 12px; }
+.theme-guide-card { background: #424964; border-color: #8a8b9d; border-radius: 10px; }
+.theme-guide-name { color: var(--dk-ui-cream); }
+.theme-guide-range { color: #bde3f4; }
+#deck-count,
+.deck-wallet > span,
+#deck-panel .deck-presets,
+#deck-detail,
+.tree-branch,
+.tree-awakening,
+.deck-synergy,
+.tree-support-section { color: var(--dk-ui-cream); background: var(--dk-ui-panel); border-color: #8f8da0; border-radius: 12px; }
+.deck-wallet > span { color: var(--dk-ui-muted); font-size: 12px; }
+.deck-wallet b { color: var(--dk-ui-cream); }
+#deck-panel button,
+#tree-supporters button,
+.tree-talents button { color: var(--dk-ui-cream); background: #424963; border-color: #9693a0; border-radius: 11px; }
+#deck-panel .deck-presets button { color: var(--dk-ui-muted); background: transparent; }
+#deck-panel .deck-presets .active,
+#deck-panel .deck-slot.active,
+#tree-supporters .chosen,
+#deck-panel .chosen { color: var(--dk-ui-cream); background: #596481; border-color: var(--dk-ui-gold); box-shadow: inset 0 0 0 1px var(--dk-ui-gold); }
+#deck-panel .deck-slot,
+#deck-panel .tree-node.unlocked,
+#deck-panel .tree-node.locked { color: var(--dk-ui-cream); background: #424963; border-color: #8f8da0; }
+#deck-panel .deck-slot small,
+#deck-panel .deck-slot span { color: var(--dk-ui-muted); font-size: 11px; }
+#deck-panel .deck-slot b { font-size: 14px; }
+#deck-panel .deck-actions .primary { color: #302a36; background: var(--dk-ui-gold); border-color: #ffe0a1; }
+.tree-awakening h4,
+.tree-awakening small { color: #f8d58f; }
+
+/* Shop, stage map and multiplayer room use the same soft blocks. */
+.menu-shop-banner { background: #424963; border-color: #a19aa1; border-radius: 14px; }
+.menu-shop-banner h3,
+.shop-body h3 { color: var(--dk-ui-gold); }
+.menu-shop-banner p { color: var(--dk-ui-muted); font-size: 13px; }
+#commerce-availability,
+.commerce-product,
+.cosmetic-product,
+.shop-tower,
+.skin-face,
+.skin-cell { color: var(--dk-ui-cream); background: var(--dk-ui-panel); border-color: #908d9d; border-radius: 12px; }
+.commerce-product:last-child { background: #424963; }
+.commerce-product p,
+.cosmetic-product p,
+.commerce-policy,
+.shop-tower .t-name { color: var(--dk-ui-muted); font-size: 12px; }
+.commerce-shop button,
+.shop-tower button,
+.skin-cell button,
+.cosmetic-product button { color: var(--dk-ui-cream); background: var(--dk-ui-raised); border-color: #aaa6b1; border-radius: 10px; min-height: 44px; font-size: 13px; }
+.skin-cell.equipped { border-color: var(--dk-ui-gold); box-shadow: inset 0 0 0 1px var(--dk-ui-gold); }
+.stage-grid .stage-cell { color: var(--dk-ui-cream); background: var(--dk-ui-panel); border-color: #9692a2; border-radius: 13px; }
+.stage-grid .stage-cell.cleared { background: #365866; border-color: var(--dk-ui-blue); }
+.stage-grid .stage-cell.current { color: #302a36; background: var(--dk-ui-gold); border-color: #ffe0a1; box-shadow: 0 0 0 2px #ffe0a1; }
+.stage-grid .stage-cell.locked { color: var(--dk-ui-muted); background: #2a2d43; }
+.stage-grid .stage-cell .cell-name { color: inherit; font-size: 12px; }
+.stage-grid .stage-cell .clear-mark { color: #bdeecb; }
+.tier-legend { background: var(--dk-ui-panel); }
+.tier-pill { background: #424963; color: var(--dk-ui-cream); }
+#mp-block { color: var(--dk-ui-cream); }
+.mp-head { color: var(--dk-ui-gold); }
+.mp-head small { color: var(--dk-ui-muted); }
+.mp-row,
+#mp-code-wrap,
+#mp-slots > div { color: var(--dk-ui-cream); background: var(--dk-ui-panel); border-color: #9692a2; border-radius: 12px; }
+.mp-row label { color: var(--dk-ui-cream); }
+#mp-name,
+#mp-mode,
+#mp-code { color: var(--dk-ui-cream); background: #252b43; border-color: #929bb3; }
+#lobby-multi .mp-btns .big-btn { color: var(--dk-ui-cream); background: var(--dk-ui-panel); border-color: #9692a2; }
+#lobby-multi #mp-quick { color: #302a36; background: var(--dk-ui-gold); border-color: #ffe0a1; }
+
+/* Results get a real card. The key-art title/loading composition stays intact. */
+#overlay:not(.title) { background-color: #1b2543a8; background-blend-mode: multiply; }
+#overlay-box:not(.title) #ov-desc { font-size: 14px; }
+#overlay-box:not(.title) #ov-desc b { color: var(--dk-ui-gold); }
+#overlay-box:not(.title) #ov-load-track { background: #353a55; border-color: #91899a; }
+#overlay-box:not(.title) #ov-load-bar { background: var(--dk-ui-gold); }
+#overlay-box:not(.title) #ov-load-txt { color: var(--dk-ui-gold); }
+#overlay-box:not(.title) .stat-grid span { color: var(--dk-ui-muted); }
+#overlay-box:not(.title) .stat-grid b { color: var(--dk-ui-cream); }
+
+@media (max-width: 540px) {
+  #lobby #lobby-box[data-view="hub"] { border: 0; border-radius: 0; box-shadow: none; }
+  .home-nav-item,
+  .menu-navigation button { min-height: 48px; }
+  .home-currency small { font-size: 10px; }
+  .home-deck b { font-size: 10px; }
+  #deck-panel .deck-slot b { font-size: 12px; }
+  #deck-panel .deck-slot small,
+  #deck-panel .deck-slot span { font-size: 10px; }
+  .menu-shop-banner p,
+  .commerce-product p { font-size: 12px; }
+}
+@media (max-width: 359px) {
+  #stage-select .screen-head h2 { font-size: 17px; letter-spacing: -.04em; }
+  .home-wallet { gap: 4px; }
+  .home-currency { gap: 3px; padding: 4px; }
+  .home-currency small { font-size: 9px; }
+  .home-currency b { font-size: 12px; }
+  .home-reward { width: 54px; }
+  .home-deck b { font-size: 10px; }
+  .home-battle-button b { font-size: 17px; }
+  .home-battle-button small { white-space: normal; line-height: 1.2; }
+  #deck-panel .deck-wallet > span { padding: 7px 4px; font-size: 10px; }
+  .commerce-products,
+  .cosmetic-products { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .screen button,
+  .screen summary,
+  #overlay-box button { animation: none !important; transition: none !important; }
+}

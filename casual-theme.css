@@ -1,0 +1,29 @@
+/* Shared toy-castle UI materials. Keep the illustrated world as the focal point. */
+:root {
+  --dk-ui-frame: #24273d;
+  --dk-ui-panel: #353a55;
+  --dk-ui-raised: #4b5271;
+  --dk-ui-line: #756b67;
+  --dk-ui-cream: #fff1d5;
+  --dk-ui-muted: #d5c7ab;
+  --dk-ui-gold: #efbc5b;
+  --dk-ui-blue: #74b9dc;
+  --dk-ui-red: #ec786b;
+  --dk-ui-shadow: #18182b;
+  --dk-ui-ink: #382f38;
+  --dk-ui-parchment: #f8eac8;
+  --dk-ui-outline: #443b48;
+}
+
+button, input, select, textarea { -webkit-tap-highlight-color: transparent; }
+button:focus-visible, a:focus-visible, summary:focus-visible,
+input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 3px solid var(--dk-ui-blue);
+  outline-offset: 2px;
+}
+button:active:not(:disabled) { filter: brightness(.94); }
+#wrap, .rw-dialog, #mail-admin { font-variant-numeric: tabular-nums; }
+
+@media (prefers-reduced-motion: reduce) {
+  button, a, .rw-dialog *, #wrap * { scroll-behavior: auto; }
+}

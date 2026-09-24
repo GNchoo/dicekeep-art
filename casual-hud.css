@@ -1,0 +1,429 @@
+/* Dicekeep combat chrome. Loaded after the base sheets; geometry stays in style.css.
+   The shared --dk-ui-* colors are defined by the main casual theme. */
+
+/* Separate, readable resource counters and utility buttons. */
+#stats .chip,
+#rivals .rival {
+  color: var(--dk-ui-cream);
+  background: linear-gradient(180deg, var(--dk-ui-raised) 0 46%, var(--dk-ui-panel) 46% 100%);
+  border: 1px solid var(--dk-ui-line);
+  box-shadow: 0 2px 0 var(--dk-ui-shadow), 0 3px 8px #16152466;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+#stats .chip { flex: 0 0 auto; border-radius: 12px; }
+#stats .chip:first-child { border-bottom-color: var(--dk-ui-gold); }
+#stats .chip:nth-child(2) { border-bottom-color: var(--dk-ui-red); }
+#stats .chip:last-child { border-bottom-color: var(--dk-ui-blue); }
+#stats .chip img,
+#stats .chip .ico {
+  background: var(--dk-ui-frame);
+  border: 1px solid var(--dk-ui-line);
+  box-shadow: none;
+}
+#stats .chip b { color: var(--dk-ui-cream); text-shadow: 0 1px var(--dk-ui-shadow); }
+#stats #gold-val { color: var(--dk-ui-gold); }
+#stats #lives-val,
+#stats .chip.low b { color: #ffb3a8; }
+#stats #wave-val { color: var(--dk-ui-cream); }
+#stats #wave-val.hot { color: #ffb3a8; }
+#mini-top button {
+  color: var(--dk-ui-cream);
+  background: linear-gradient(180deg, var(--dk-ui-raised) 0 46%, var(--dk-ui-panel) 46% 100%);
+  background-color: var(--dk-ui-panel);
+  border: 1px solid var(--dk-ui-line);
+  border-radius: 10px;
+  box-shadow: 0 2px 0 var(--dk-ui-shadow), 0 3px 8px #16152466;
+}
+/* Image-only controls hide their fallback glyphs. Keep their active icon layer. */
+body.ui-art #mini-top button[data-icon] {
+  background-position: center;
+  background-size: 22px 22px;
+  background-repeat: no-repeat;
+}
+body.ui-art #mini-top button[data-icon="chat"] { background-image: url(ui/icon-chat.png); }
+body.ui-art #mini-top button[data-icon="speed1"] { background-image: url(ui/icon-speed1.png); }
+body.ui-art #mini-top button[data-icon="speed2"] { background-image: url(ui/icon-speed2.png); }
+body.ui-art #mini-top button[data-icon="speed3"] { background-image: url(ui/icon-speed3.png); }
+body.ui-art #mini-top button[data-icon="sound"] { background-image: url(ui/icon-sound.png); }
+body.ui-art #mini-top button[data-icon="mute"] { background-image: url(ui/icon-mute.png); }
+body.ui-art #mini-top button[data-icon="menu"] { background-image: url(ui/icon-menu.png); }
+#mini-top button.off { color: var(--dk-ui-muted); opacity: .7; }
+#mini-top button:hover:not(:disabled) { filter: brightness(1.12); }
+#mini-top button:active:not(:disabled) { box-shadow: inset 0 2px 0 var(--dk-ui-shadow); }
+
+/* The bottom bar follows the simplified architecture in the board artwork. */
+#hud {
+  color: var(--dk-ui-cream);
+  background: linear-gradient(180deg, var(--dk-ui-panel) 0 52%, var(--dk-ui-frame) 52% 100%);
+  border-color: var(--dk-ui-line);
+  border-top-color: var(--dk-ui-gold);
+  border-radius: 14px;
+  box-shadow: 0 3px 0 var(--dk-ui-shadow), 0 8px 22px #16152466;
+}
+#wrap.bleed #hud { border-top: 2px solid var(--dk-ui-gold); }
+#wrap.over #hud {
+  background: linear-gradient(180deg, #353a55ed 0 52%, #24273df5 52% 100%);
+  border-top: 2px solid var(--dk-ui-gold);
+  box-shadow: 0 -4px 18px #16152466;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+#dice-panel {
+  background: var(--dk-ui-panel);
+  border: 1px solid var(--dk-ui-line);
+  border-radius: 12px;
+  box-shadow: inset 0 1px 0 #ffffff16;
+}
+#dice-slot {
+  background: var(--dk-ui-frame);
+  border-color: var(--dk-ui-line);
+  border-radius: 12px;
+  box-shadow: inset 0 2px 0 var(--dk-ui-shadow), 0 2px 0 #ffffff16;
+}
+#dice-slot.has-die,
+#dice-slot.rolling {
+  border-color: var(--dk-ui-gold);
+  box-shadow: inset 0 2px 0 var(--dk-ui-shadow), 0 0 0 2px #efbc5b4d;
+}
+#dice-slot.unfocused {
+  border-color: var(--dk-ui-muted);
+  box-shadow: inset 0 2px 0 var(--dk-ui-shadow);
+}
+#dice-slot.unfocused::after {
+  color: var(--dk-ui-cream);
+  background: var(--dk-ui-frame);
+  border-color: var(--dk-ui-line);
+}
+#dice-q { color: var(--dk-ui-muted); }
+#queue-chip {
+  color: var(--dk-ui-cream);
+  background: var(--dk-ui-panel);
+  border-color: var(--dk-ui-blue);
+  box-shadow: 0 2px 0 var(--dk-ui-shadow);
+}
+#queue-chip b { color: var(--dk-ui-gold); }
+
+/* Two-step cel buttons, with no metallic bevel or competing green/purple CTAs. */
+#hud button,
+#mini-top button,
+#info-close,
+#enhance-confirm button,
+#help-close,
+#menu button,
+#settings button {
+  text-shadow: none;
+  transition: transform .1s ease, filter .12s ease, box-shadow .12s ease;
+}
+#roll-btn,
+#wave-btn,
+#enhance-btn,
+#supporter-use {
+  color: #292536;
+  background: linear-gradient(180deg, #ffdd91 0 48%, var(--dk-ui-gold) 48% 100%);
+  border: 1px solid #8c633f;
+  border-bottom: 2px solid var(--dk-ui-shadow);
+  border-radius: 11px;
+  box-shadow: 0 2px 0 var(--dk-ui-shadow);
+  text-shadow: none;
+}
+#roll-btn small { color: #463c38; font-weight: 700; }
+#wave-btn:not(:disabled) { animation: none; }
+#move-btn,
+#battle-assist,
+#help-btn {
+  color: var(--dk-ui-cream);
+  background: linear-gradient(180deg, #587e9b 0 48%, #3d6886 48% 100%);
+  border: 1px solid var(--dk-ui-blue);
+  border-bottom: 2px solid var(--dk-ui-shadow);
+  border-radius: 9px;
+  box-shadow: 0 2px 0 var(--dk-ui-shadow);
+}
+#sell-btn {
+  color: var(--dk-ui-cream);
+  background: linear-gradient(180deg, #9d565a 0 48%, #79414a 48% 100%);
+  border: 1px solid var(--dk-ui-red);
+  border-bottom: 2px solid var(--dk-ui-shadow);
+  border-radius: 9px;
+  box-shadow: 0 2px 0 var(--dk-ui-shadow);
+}
+#held-sell {
+  color: var(--dk-ui-cream);
+  background: #79414a;
+  border-color: var(--dk-ui-red);
+  box-shadow: 0 2px 0 var(--dk-ui-shadow);
+}
+#hud button:disabled { opacity: .6; filter: none; }
+#hud button:hover:not(:disabled),
+#mini-top button:hover:not(:disabled),
+#help-close:hover:not(:disabled) { filter: brightness(1.1); }
+#hud button:active:not(:disabled),
+#mini-top button:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: inset 0 2px 0 var(--dk-ui-shadow);
+}
+#rotate-hint {
+  color: var(--dk-ui-cream);
+  background: var(--dk-ui-panel);
+  border: 1px solid var(--dk-ui-blue);
+  border-radius: 10px;
+}
+#rotate-hint span { color: var(--dk-ui-blue); }
+
+/* Held die, tower actions, and repeat enhancement status. */
+#tower-panel { border-left-color: var(--dk-ui-line); border-right-color: var(--dk-ui-line); }
+#hud-hint { color: var(--dk-ui-muted); }
+#held-info {
+  background: var(--dk-ui-frame);
+  border-left-width: 4px;
+  border-radius: 0 10px 10px 0;
+}
+#held-info b { color: var(--elem, var(--dk-ui-gold)); }
+#held-info span,
+#held-info.parked b { color: var(--dk-ui-muted); }
+#info-panel {
+  color: var(--dk-ui-cream);
+  background: linear-gradient(180deg, var(--dk-ui-raised) 0 12%, var(--dk-ui-panel) 12% 100%);
+  border: 1px solid var(--dk-ui-gold);
+  border-radius: 12px;
+  box-shadow: 0 3px 0 var(--dk-ui-shadow), 0 9px 22px #16152477;
+}
+#info-close {
+  color: var(--dk-ui-cream);
+  background: var(--dk-ui-frame);
+  border-color: var(--dk-ui-line);
+  border-radius: 8px;
+}
+#info-head b { color: var(--dk-ui-cream); }
+#info-atk {
+  color: var(--dk-ui-cream);
+  background: #396789;
+  border-color: var(--dk-ui-blue);
+}
+#info-body,
+#enhance-odds { color: var(--dk-ui-muted); }
+#enhance-odds .up { color: #a7ebc7; }
+#enhance-odds .boom { color: #ffada3; }
+#enhance-result {
+  color: #332b38;
+  background: var(--dk-ui-gold);
+  border-color: #8c633f;
+  border-radius: 9px;
+}
+#enhance-result[data-result="keep"] {
+  color: var(--dk-ui-cream);
+  background: var(--dk-ui-raised);
+  border-color: var(--dk-ui-muted);
+}
+#enhance-result[data-result="boom"] {
+  color: var(--dk-ui-cream);
+  background: #79414a;
+  border-color: var(--dk-ui-red);
+}
+
+/* Power slots remain individual readable controls in every layout. */
+#inf-panel {
+  background: var(--dk-ui-frame);
+  border: 1px solid var(--dk-ui-line);
+  border-radius: 11px;
+  box-shadow: 0 2px 0 var(--dk-ui-shadow);
+}
+.inf-sp-chip,
+.inf-sp-chip b { color: var(--dk-ui-gold); }
+.inf-face {
+  color: var(--dk-ui-cream);
+  background: linear-gradient(180deg, #587e9b 0 48%, #3d6886 48% 100%);
+  border: 1px solid var(--dk-ui-blue);
+  border-bottom: 2px solid var(--dk-ui-shadow);
+  border-radius: 8px;
+  box-shadow: 0 2px 0 var(--dk-ui-shadow);
+}
+.inf-face .inf-pip {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--dk-ui-cream);
+  text-shadow: 0 1px var(--dk-ui-shadow);
+}
+.inf-face .inf-lv { color: var(--dk-ui-cream); }
+.inf-face .inf-cost { color: #ffe0a3; }
+.inf-face.maxed {
+  opacity: 1;
+  border-color: var(--dk-ui-gold);
+  background: linear-gradient(180deg, var(--dk-ui-raised) 0 48%, var(--dk-ui-panel) 48% 100%);
+}
+.inf-face:disabled:not(.maxed) { opacity: .63; filter: saturate(.58); }
+body.ui-art #help-btn {
+  background: var(--dk-ui-panel) url(ui/icon-help.png) center / 22px 22px no-repeat;
+  border: 1px solid var(--dk-ui-blue);
+  box-shadow: 0 2px 0 var(--dk-ui-shadow);
+}
+
+/* In-game notices and multiplayer overlays use the same visual family. */
+#log-panel .log-line {
+  width: fit-content;
+  max-width: 100%;
+  padding: 3px 7px;
+  color: var(--dk-ui-cream);
+  background: #24273de8;
+  border-left: 3px solid var(--dk-ui-line);
+  border-radius: 5px 8px 8px 5px;
+  text-shadow: 0 1px var(--dk-ui-shadow);
+}
+#log-panel .log-line.sys { color: var(--dk-ui-muted); }
+#log-panel .log-line.gacha { color: #ffdc96; border-left-color: var(--dk-ui-gold); }
+#log-panel .log-line.up { color: #b7f1d4; border-left-color: #a7ebc7; }
+#log-panel .log-line.boom,
+#log-panel .log-line.life { color: #ffb6ae; border-left-color: var(--dk-ui-red); }
+#log-panel .log-line.boss { color: #ffd4a5; border-left-color: #eea66b; }
+#log-panel .log-line .who { color: var(--dk-ui-blue); }
+#chat-tag { color: var(--dk-ui-gold); }
+#chat-input {
+  color: var(--dk-ui-cream);
+  background: var(--dk-ui-frame);
+  border-color: var(--dk-ui-line);
+  border-radius: 9px;
+}
+#rivals .rival { border-radius: 11px; }
+#rivals .rival.done { border-color: var(--dk-ui-gold); }
+#rivals .rv-stats,
+#rivals .rv-name { color: var(--dk-ui-cream); }
+#rivals .rv-badge,
+#rivals .rv-stats b { color: var(--dk-ui-gold); }
+#view-bar,
+#spec-pill {
+  color: var(--dk-ui-cream);
+  background: var(--dk-ui-frame);
+  border-color: var(--dk-ui-line);
+  box-shadow: 0 2px 0 var(--dk-ui-shadow);
+}
+.spec-card {
+  color: var(--dk-ui-cream);
+  background: var(--dk-ui-panel);
+  border-color: var(--dk-ui-gold);
+  box-shadow: 0 4px 0 var(--dk-ui-shadow), 0 10px 25px #16152477;
+}
+.spec-card h3,
+#view-txt b { color: var(--dk-ui-gold); }
+#supporter-panel {
+  background: var(--dk-ui-panel);
+  border-color: var(--dk-ui-line);
+  border-radius: 10px;
+}
+#supporter-name,
+#battle-status { color: var(--dk-ui-cream); }
+#supporter-note { color: var(--dk-ui-muted); }
+
+/* Help, pause/settings, confirmation, and reward feedback. */
+#inf-help .help-card,
+#settings .help-card,
+#menu .help-card,
+#chat-report,
+#enhance-confirm {
+  color: var(--dk-ui-cream);
+  background: var(--dk-ui-panel);
+  border-color: var(--dk-ui-gold);
+  border-radius: 14px;
+  box-shadow: 0 4px 0 var(--dk-ui-shadow), 0 12px 34px #16152488;
+}
+#inf-help .help-card h3,
+#settings .help-card h3,
+#menu .help-card h3,
+#enhance-confirm-title,
+#chat-report .cr-who { color: var(--dk-ui-cream); }
+.help-card b,
+#menu-note b { color: var(--dk-ui-gold); }
+.help-card li small,
+#enhance-confirm-desc,
+#chat-report .cr-note { color: var(--dk-ui-muted); }
+.help-scroll::after { background: linear-gradient(#353a5500, var(--dk-ui-panel)); }
+#coach-tip {
+  color: var(--dk-ui-cream);
+  background: var(--dk-ui-panel);
+  border-color: var(--dk-ui-gold);
+  box-shadow: 0 4px 0 var(--dk-ui-shadow), 0 9px 20px #16152488;
+}
+#coach-step { color: var(--dk-ui-gold); }
+#coach-skip,
+#menu .back-btn,
+#settings .back-btn,
+#enhance-confirm-cancel,
+#chat-report .cr-close {
+  color: var(--dk-ui-cream);
+  background: var(--dk-ui-raised);
+  border: 1px solid var(--dk-ui-line);
+  box-shadow: 0 2px 0 var(--dk-ui-shadow);
+}
+#menu .big-btn.primary,
+#settings .big-btn,
+#help-close,
+#enhance-confirm-accept {
+  color: #292536;
+  background: linear-gradient(180deg, #ffdd91 0 48%, var(--dk-ui-gold) 48% 100%);
+  border: 1px solid #8c633f;
+  border-bottom: 2px solid var(--dk-ui-shadow);
+  box-shadow: 0 2px 0 var(--dk-ui-shadow);
+}
+#menu .back-btn.danger,
+#chat-report .cr-block {
+  color: var(--dk-ui-cream);
+  background: #79414a;
+  border-color: var(--dk-ui-red);
+}
+#enhance-confirm-icon { color: var(--dk-ui-red); }
+#chest-reveal,
+#enhance-toast,
+#toast {
+  color: var(--dk-ui-cream);
+  background: var(--dk-ui-panel);
+  border-color: var(--result-line, var(--dk-ui-gold));
+  border-radius: 12px;
+  box-shadow: 0 3px 0 var(--dk-ui-shadow), 0 0 20px var(--result-glow, #efbc5b66);
+  text-shadow: 0 1px var(--dk-ui-shadow);
+}
+#chest-reveal[data-tier="rare"] { --result-line: var(--dk-ui-blue); --result-glow: #74b9dc88; }
+#chest-reveal[data-tier="mythic"],
+#enhance-toast[data-result="up"] { --result-line: var(--dk-ui-gold); --result-glow: #efbc5b99; }
+#enhance-toast[data-result="boom"] { --result-line: var(--dk-ui-red); --result-glow: #ec786b88; }
+#enhance-toast[data-result="keep"] { --result-line: var(--dk-ui-muted); --result-glow: #d5c7ab55; }
+
+/* Keep the smallest layouts compact, but do not let essential state fade away. */
+@media (max-width: 720px), (max-height: 520px) {
+  #hud-hint,
+  #info-body { color: var(--dk-ui-muted); font-size: 12px; }
+  #log-panel .log-line { font-size: 11px; padding: 3px 6px; }
+}
+#stage.tiny .chip { font-size: 11px; padding: 2px 4px 2px 2px; gap: 2px; letter-spacing: 0; }
+#stage.tiny .chip img,
+#stage.tiny .chip .ico { width: 13px; height: 13px; padding: 1px; }
+#stage.tiny .chip .ico svg { width: 10px; height: 10px; }
+#stage.tiny .chip b { font-size: 11px; letter-spacing: 0; }
+#stage.tiny #wave-val { font-size: 10px; }
+#stage.tiny .mini button { width: 29px; height: 30px; }
+#wrap.over.narrow #hud-hint { font-size: 11px; }
+#wrap.over.narrow .inf-face .inf-cost { font-size: 9px; }
+#wrap.over.narrow .inf-face .inf-lv { font-size: 9px; }
+#wrap.over.narrow #help-btn { width: 24px; height: 24px; }
+
+/* Strong keyboard feedback and quiet motion on accessibility devices. */
+#hud button:focus-visible,
+#mini-top button:focus-visible,
+#stats .chip:focus-visible,
+#enhance-confirm button:focus-visible,
+#menu button:focus-visible,
+#settings button:focus-visible,
+#inf-help button:focus-visible,
+#chat-report button:focus-visible {
+  outline: 3px solid var(--dk-ui-gold);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  #hud button,
+  #mini-top button,
+  #stats .chip,
+  #coach-ring,
+  #chest-reveal,
+  #enhance-toast,
+  #toast { animation: none !important; transition: none !important; }
+}

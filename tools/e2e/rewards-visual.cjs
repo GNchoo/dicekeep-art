@@ -41,7 +41,7 @@ async function protect(context, fixturePage = false) {
       report.blocked.push({ url: request.url(), method: request.method() }); return route.abort();
     }
     if (fixturePage && url.pathname === '/__rewards_visual__') {
-      return route.fulfill({ contentType: 'text/html', body: `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/rewards.css"></head><body><button id="btn-rewards-open">성채 보상</button><script src="/reward-notifications.js"></script><script src="/rewards-ui.js"></script></body></html>` });
+      return route.fulfill({ contentType: 'text/html', body: `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/rewards.css"><link rel="stylesheet" href="/casual-theme.css"><link rel="stylesheet" href="/casual-rewards.css"></head><body><button id="btn-rewards-open">성채 보상</button><script src="/reward-notifications.js"></script><script src="/rewards-ui.js"></script></body></html>` });
     }
     return route.continue();
   });

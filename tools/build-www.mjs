@@ -26,6 +26,7 @@ const FIXED_FILES = ['index.html', 'game.js', 'content.js', 'deck-rules.js', 'tr
 FIXED_FILES.push('battle-rules.js');
 FIXED_FILES.push('liveops-rules.js', 'rewards-client.js', 'rewards-ui.js', 'rewards.css', 'mail-admin.js', 'mail-admin.css');
 FIXED_FILES.push('reward-notifications.js', 'home-ui.js', 'home.css', 'menus.css');
+FIXED_FILES.push('casual-theme.css', 'casual-menus.css', 'casual-rewards.css', 'casual-hud.css');
 const FIXED_DIRS = ['fonts', 'ui', 'vfx', 'dice', 'props', 'map', 'towers', 'enemies', 'audio'];
 const CAP_UMD = [
   '@capacitor/core/dist/capacitor.js',
