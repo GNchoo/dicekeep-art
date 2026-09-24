@@ -311,7 +311,10 @@ window.DKCONTENT = (function () {
     // 석단 보드 3×5
     const spots = [];
     for (let r = 0; r < 3; r++) for (let c = 0; c < 5; c++) spots.push([cx + (c - 2) * 88, cy + (r - 1) * 72]);
-    return { path, path2: null, airPts: null, spots, spots2: [], portals: [entry[0]], center: null, noGoal: true, loopAt,
+    // The spawn point may be off-screen on narrow viewports. Keep the combat
+    // path fixed, but place its decorative entrance marker on the visible road.
+    const portal = [Math.max(48, entry[0][0]), MID];
+    return { path, path2: null, airPts: null, spots, spots2: [], portals: [portal], center: null, noGoal: true, loopAt,
              roads: [entry, ring], board: { x: cx - 222, y: cy - 122, w: 444, h: 244, cols: 5, rows: 3, gapX: 88, gapY: 72 }, track: { L, R, T, B, rad, mid: MID } };
   }
 
@@ -1146,7 +1149,11 @@ window.DKCONTENT = (function () {
       gapX: base.board.gapY * scale, gapY: base.board.gapX * scale };
     const track = { L: cx - 150 * scale, R: cx + 150 * scale, T: cy - 262 * scale,
       B: cy + 262 * scale, rad: base.track.rad * scale, mid: cy };
-    return { path, path2: null, airPts: null, spots, spots2: [], portals: [entry[0]], center: null,
+    // On a short portrait canvas the visible approach is entirely under the
+    // HUD. Tuck only the decorative prop into the ring entrance there; the
+    // enemy path and its off-screen spawn stay at their rotated coordinates.
+    const portal = [cx, Math.max(110, Math.min(track.T - 16, Math.max(148, entry[0][1])))];
+    return { path, path2: null, airPts: null, spots, spots2: [], portals: [portal], center: null,
       noGoal: true, loopAt: base.loopAt * scale, roads: [entry, ring], board, track, arenaScale: scale };
   }
 

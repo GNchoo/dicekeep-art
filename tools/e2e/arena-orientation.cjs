@@ -24,8 +24,17 @@ function checkGeometry(name, land, portrait) {
   assert.equal(land.ring.length, portrait.ring.length, `${name} ring vertex count`);
   near(land.loopAt, 290, `${name} landscape entry length`);
   near(portrait.loopAt, 290 * SCALE, `${name} portrait entry length`);
-  assert.deepEqual(land.portals, [land.entry[0]], `${name} landscape entrance marker`);
-  assert.deepEqual(portrait.portals, [portrait.entry[0]], `${name} portrait entrance marker`);
+  // A fixed-length approach can start outside the canvas. Its art marker must
+  // remain visible on that same approach without moving the enemy spawn.
+  assert.deepEqual(land.portals, [[Math.max(48, land.entry[0][0]), land.entry[0][1]]],
+    `${name} landscape entrance marker`);
+  assert.deepEqual(portrait.portals, [[portrait.entry[0][0],
+    Math.max(110, Math.min(portrait.track.T - 16, Math.max(148, portrait.entry[0][1])))]],
+    `${name} portrait entrance marker`);
+  assert.ok(land.portals[0][0] >= 48 && land.portals[0][0] < land.track.L,
+    `${name} landscape portal is visible before the ring`);
+  assert.ok(portrait.portals[0][1] >= 110 && portrait.portals[0][1] < portrait.track.T + 45,
+    `${name} portrait portal is visible near the ring entrance`);
   for (let i = 0; i < 2; i++) {
     const expected = rotate(land.entry[i], lc, pc), actual = portrait.entry[i];
     near(actual[0], expected[0], `${name} entry ${i} x`);
@@ -78,10 +87,18 @@ function checkGeometry(name, land, portrait) {
       return [
         pair(1024, 576, {}, 720, 1080, {}),
         pair(1440, 576, { top: 40, bottom: 0 }, 900, 1200, { top: 92, bottom: 24 }),
+        pair(680, 576, {}, 720, 880, {}),
       ];
     });
     checkGeometry('default', ...pairs[0]);
     checkGeometry('shifted canvas', ...pairs[1]);
+    checkGeometry('compact canvas', ...pairs[2]);
+    assert.ok(pairs[0][1].portals[0][1] >= 148,
+      '720×1080 portrait entrance art stays clear of the top HUD');
+    assert.ok(pairs[2][1].portals[0][1] >= 110,
+      '720×880 portrait entrance art remains visible below the top HUD');
+    assert.ok(pairs[2][0].portals[0][0] >= 48,
+      '680×576 landscape entrance art stays inside the left edge');
     assert.notDeepEqual(center(pairs[0][0].spots), center(pairs[1][0].spots), 'landscape center actually shifts');
     assert.notDeepEqual(center(pairs[0][1].spots), center(pairs[1][1].spots), 'portrait center actually shifts');
 
