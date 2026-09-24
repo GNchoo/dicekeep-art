@@ -28,7 +28,7 @@
       "background": "opaque",
       "refs": [
         "casual/tiles/arena/floor.jpg",
-        "tools/art-review/wooden-tower-2026-09-23/casual.png"
+        "towers/die-1.png"
       ],
       "inputFidelity": "high"
     },
@@ -52,7 +52,7 @@
       "background": "opaque",
       "refs": [
         "casual/tiles/arena/board.png",
-        "tools/art-review/wooden-tower-2026-09-23/casual.png"
+        "towers/die-1.png"
       ],
       "inputFidelity": "high"
     },
@@ -76,7 +76,7 @@
       "background": "opaque",
       "refs": [
         "casual/tiles/arena/road.png",
-        "tools/art-review/wooden-tower-2026-09-23/casual.png"
+        "towers/die-1.png"
       ],
       "inputFidelity": "high"
     },
@@ -99,7 +99,7 @@
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "tools/art-review/arena-props-v142/originals/pad.png",
+        "casual/tiles/arena/pad.png",
         "casual/tiles/arena/board.png",
         "casual/tiles/arena/road.png"
       ],
@@ -124,7 +124,7 @@
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "tools/art-review/arena-portals-v142/originals/start.png",
+        "casual/tiles/arena/start.png",
         "casual/towers/t1-clean.png",
         "casual/tiles/arena/road.png"
       ],
@@ -149,8 +149,8 @@
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "tools/art-review/arena-portals-v142/originals/end.png",
-        "tools/art-review/arena-portals-v142/source-start.png",
+        "casual/tiles/arena/end.png",
+        "casual/tiles/arena/start.png",
         "casual/towers/t1-clean.png"
       ],
       "inputFidelity": "high"
@@ -174,8 +174,8 @@
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "tools/art-review/arena-props-v142/originals/prop-1.png",
-        "tools/art-review/arena-props-v142/source-pad.png",
+        "casual/tiles/arena/prop-1.png",
+        "casual/tiles/arena/pad.png",
         "casual/tiles/arena/road.png"
       ],
       "inputFidelity": "high"
@@ -199,8 +199,8 @@
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "tools/art-review/arena-props-v142/originals/prop-2.png",
-        "tools/art-review/arena-props-v142/source-prop-1.png",
+        "casual/tiles/arena/prop-2.png",
+        "casual/tiles/arena/prop-1.png",
         "casual/tiles/arena/board.png"
       ],
       "inputFidelity": "high"
@@ -224,8 +224,8 @@
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "tools/art-review/arena-props-v142/originals/prop-3.png",
-        "tools/art-review/arena-props-v142/source-pad.png",
+        "casual/tiles/arena/prop-3.png",
+        "casual/tiles/arena/pad.png",
         "casual/tiles/arena/road.png"
       ],
       "inputFidelity": "high"
@@ -274,8 +274,8 @@
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "casual/towers/t2-a.png",
-        "tools/art-review/wooden-tower-2026-09-23/casual.png"
+        "towers/die-2.png",
+        "towers/die-1.png"
       ],
       "inputFidelity": "high"
     },
@@ -299,8 +299,8 @@
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "casual/towers/t3-a.png",
-        "tools/art-review/wooden-tower-2026-09-23/casual.png"
+        "towers/die-3.png",
+        "towers/die-1.png"
       ],
       "inputFidelity": "high"
     },
@@ -324,8 +324,8 @@
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "casual/towers/t4-a.png",
-        "tools/art-review/wooden-tower-2026-09-23/casual.png"
+        "towers/die-4.png",
+        "towers/die-1.png"
       ],
       "inputFidelity": "high"
     },
@@ -349,8 +349,8 @@
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "casual/towers/t5-a.png",
-        "tools/art-review/wooden-tower-2026-09-23/casual.png"
+        "towers/die-5.png",
+        "towers/die-1.png"
       ],
       "inputFidelity": "high"
     },
@@ -374,8 +374,8 @@
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "casual/towers/t6-a.png",
-        "tools/art-review/wooden-tower-2026-09-23/casual.png"
+        "towers/die-6.png",
+        "towers/die-1.png"
       ],
       "inputFidelity": "high"
     },
@@ -728,7 +728,7 @@
       "background": "transparent",
       "refs": [
         "vfx/muzzle-flash.png",
-        "tools/art-review/wooden-tower-2026-09-23/casual.png"
+        "towers/die-1.png"
       ],
       "inputFidelity": "high"
     },
@@ -753,7 +753,7 @@
       "background": "transparent",
       "refs": [
         "vfx/bolt.png",
-        "tools/art-review/wooden-tower-2026-09-23/casual.png"
+        "towers/die-1.png"
       ],
       "inputFidelity": "high"
     },

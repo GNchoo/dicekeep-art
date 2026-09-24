@@ -33,6 +33,17 @@ const jobs = [];
 // Keep future regeneration aligned with the reviewed original-design repaints.
 const refreshJobs = JSON.parse(fs.readFileSync(new URL('./casual-world-jobs.json', import.meta.url), 'utf8'));
 const refreshByTarget = new Map(refreshJobs.flatMap(job => [job.target, ...(job.extraTargets || [])].map(target => [target, job])));
+// CI checks out casual/ but omits the large historical art-review/ archive.
+// Golden candidates use current runtime art as their subject. Exact generation
+// inputs for the approved v142 assets remain in each art-review README.
+const arenaCandidateRefs = new Map([
+  ['casual/tiles/arena/pad.png', ['casual/tiles/arena/pad.png', 'casual/tiles/arena/board.png', 'casual/tiles/arena/road.png']],
+  ['casual/tiles/arena/start.png', ['casual/tiles/arena/start.png', 'casual/towers/t1-clean.png', 'casual/tiles/arena/road.png']],
+  ['casual/tiles/arena/end.png', ['casual/tiles/arena/end.png', 'casual/tiles/arena/start.png', 'casual/towers/t1-clean.png']],
+  ['casual/tiles/arena/prop-1.png', ['casual/tiles/arena/prop-1.png', 'casual/tiles/arena/pad.png', 'casual/tiles/arena/road.png']],
+  ['casual/tiles/arena/prop-2.png', ['casual/tiles/arena/prop-2.png', 'casual/tiles/arena/prop-1.png', 'casual/tiles/arena/board.png']],
+  ['casual/tiles/arena/prop-3.png', ['casual/tiles/arena/prop-3.png', 'casual/tiles/arena/pad.png', 'casual/tiles/arena/road.png']],
+]);
 const fixed = (width, height, alpha = 'preserve') => ({ mode: 'fixed', width, height, alpha, anchor: 'center' });
 const cover = (width, height) => ({ mode: 'cover', width, height, alpha: 'opaque', anchor: 'center' });
 const trimContain = (maxWidth, maxHeight, anchor = 'center') => ({ mode: 'trim-contain', maxWidth, maxHeight, alpha: 'preserve', anchor, trimAlphaThreshold: 8 });
@@ -54,7 +65,7 @@ function runtimeSpecFor(id) {
 
 const add = ({ id, category, profile = 'environment', runtimeTarget, prompt, refs = [], ...options }) => {
   const refreshed = refreshByTarget.get(runtimeTarget);
-  if (refreshed) { prompt = refreshed.prompt; refs = refreshed.refs || refs; }
+  if (refreshed) { prompt = refreshed.prompt; refs = arenaCandidateRefs.get(runtimeTarget) || [runtimeTarget, 'towers/die-1.png']; }
   const job = {
     id: `golden-${id}`,
     category,
