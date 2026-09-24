@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 'use strict';
 
-// A thrown chest die must award the number printed on the visible screen-top
-// face (or d4 apex). In particular, buying a rare
-// die may choose its set of printed numbers, but not its landing result.
+// A thrown chest die must award the center number on the face pointed most
+// toward the player (+Z), including d4. The topmost numeral in 2D screen
+// coordinates can belong to another face. Buying a rare die chooses its set
+// of printed numbers, not its landing result.
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
-const { screenTopDieResult } = require('./screen-top-die.cjs');
+const { cameraFacingDieResult } = require('./camera-facing-die.cjs');
 
 const reportPath = outputPath('physical-dice-outcomes.json');
 const report = { cases: [], pass: false };
@@ -43,7 +44,7 @@ async function boot(browser, name, viewport, mobile) {
     assert.equal(source.split(anchor).length, 2, 'unique private-test hook');
     await route.fulfill({ response, body: source.replace(anchor,
       'window.__physicalQA={dieFaceLabels,physicalFaceValue,dieShape,POLY,FACES,DIE_SYMMETRIES,m3apply,m3mul,updateDie,updateSlot};\n' +
-      'window.__physicalQA.visualTop=' + screenTopDieResult.toString() + ';\n' + anchor) });
+      'window.__physicalQA.cameraFace=' + cameraFacingDieResult.toString() + ';\n' + anchor) });
   });
   await page.goto(gameUrl());
   await page.waitForFunction(() => window.DK?.phase === 'title' && window.__physicalQA, null, { timeout: 120000 });
@@ -55,17 +56,17 @@ async function boot(browser, name, viewport, mobile) {
 async function inspectLabels(page, kind, basePose) {
   return page.evaluate(({ kind, basePose }) => {
     const q = __physicalQA, shape = q.dieShape(kind), labels = q.dieFaceLabels(kind);
-    const normals = shape === 'd4' ? q.POLY.d4.verts : shape === 'd6' ? q.FACES.map(f => f.n) : q.POLY[shape].faces.map(f => f.n);
+    const normals = shape === 'd6' ? q.FACES.map(f => f.n) : q.POLY[shape].faces.map(f => f.n);
     const printedAt = i => shape === 'd6' ? labels[q.FACES[i].val - 1] : labels[i];
     const samples = normals.map((normal, i) => {
       // Right-multiplication by a solid symmetry permutes its engraved faces
       // without changing the world-space silhouette or the settled support.
       // Every controlled pose therefore stays physically at rest while a
-      // different printed face occupies the same visible screen-top position.
+      // different printed face occupies the same camera-facing position.
       const pose = q.DIE_SYMMETRIES[shape].map(G => q.m3mul(basePose, G))
-        .find(R => q.visualTop(kind, R, labels, q).index === i);
-      if (!pose) throw Error(`${kind} face ${i + 1}: cannot expose it at screen top`);
-      const visible = q.visualTop(kind, pose, labels, q);
+        .find(R => q.cameraFace(kind, R, labels, q).index === i);
+      if (!pose) throw Error(`${kind} face ${i + 1}: cannot expose it toward the camera`);
+      const visible = q.cameraFace(kind, pose, labels, q);
       return { face: i, R: pose, expected: printedAt(i), visible: visible.value,
         physical: q.physicalFaceValue(kind, pose) };
     });
@@ -162,23 +163,23 @@ async function sampleButtonThrows(page, kind, sampleCount = 200) {
         return sum + a[0] * b[1] - b[0] * a[1];
       }, 0)) / 2;
       const hullArea = area(hull), labels = q.dieFaceLabels(kind);
-      const winner = q.visualTop(kind, R, labels, q);
+      const winner = q.cameraFace(kind, R, labels, q);
       const candidates = q.POLY.d8.faces.map((face, i) => {
         const z = q.m3apply(R, face.n)[2];
         if (z <= .02) return null;
         const polygon = face.idx.map(vi => project(q.POLY.d8.verts[vi]));
-        return { face: labels[i], z,
-          y: polygon.reduce((sum, point) => sum + point[1], 0) / polygon.length,
-          ratio: area(polygon) / hullArea };
+        return { face: labels[i], z, ratio: area(polygon) / hullArea };
       }).filter(Boolean);
       const visibleAreaRatio = candidates.reduce((sum, candidate) => sum + candidate.ratio, 0);
-      const eligible = candidates.filter(candidate => candidate.ratio >= visibleAreaRatio * .05)
-        .sort((a, b) => a.y - b.y || b.ratio - a.ratio || b.z - a.z);
+      // Independent geometric read of the projected mesh. The normal with
+      // greatest camera depth is the skyward face, regardless of its 2D y.
+      const cameraFace = candidates.reduce((best, candidate) =>
+        !best || candidate.z > best.z ? candidate : best, null);
       return { face: winner.value, ratio: winner.area / hullArea, R: R.slice(),
-        visibleAreaRatio, eligibleMatchesWinner: eligible[0]?.face === winner.value,
+        visibleAreaRatio, cameraMatchesWinner: cameraFace?.face === winner.value,
         hullVertices: hull.length, visibleFaces: candidates.length,
-        eligibleCount: eligible.length, thresholdFace: eligible[0]?.face || null,
-        thresholdRatio: eligible[0]?.ratio || null };
+        cameraFace: cameraFace?.face || null, cameraZ: cameraFace?.z || null,
+        cameraRatio: cameraFace?.ratio || null };
     };
     try {
       for (let i = 0; i < sampleCount; i++) {
@@ -198,16 +199,17 @@ async function sampleButtonThrows(page, kind, sampleCount = 200) {
         counts[DK.heldDie] = (counts[DK.heldDie] || 0) + 1;
       }
       d8Areas.sort((a, b) => a.ratio - b.ratio);
-      const thresholded = d8Areas.filter(item => item.thresholdFace).sort((a, b) => a.thresholdRatio - b.thresholdRatio);
-      const thresholdCounts = {};
-      for (const item of thresholded) thresholdCounts[item.thresholdFace] = (thresholdCounts[item.thresholdFace] || 0) + 1;
+      const cameraSamples = d8Areas.filter(item => item.cameraFace);
+      const cameraCounts = {};
+      for (const item of cameraSamples) cameraCounts[item.cameraFace] = (cameraCounts[item.cameraFace] || 0) + 1;
       return { kind, sampleCount, counts, maxFrames,
         d8Area: kind === 'd8' ? { samples: d8Areas.length, min: d8Areas[0],
           p5: d8Areas[Math.floor(d8Areas.length * .05)], smallest: d8Areas.slice(0, 10),
-          threshold: { minAreaRatio: .05, withCandidate: thresholded.length,
-            independentlyMatched: thresholded.filter(item => item.eligibleMatchesWinner).length,
-            counts: thresholdCounts, min: thresholded[0] || null,
-            p5: thresholded[Math.floor(thresholded.length * .05)] || null },
+          cameraFace: { withCandidate: cameraSamples.length,
+            independentlyMatched: cameraSamples.filter(item => item.cameraMatchesWinner).length,
+            counts: cameraCounts,
+            minZ: Math.min(...cameraSamples.map(item => item.cameraZ)),
+            minAreaRatio: Math.min(...cameraSamples.map(item => item.cameraRatio)) },
           silhouette: { minHull: Math.min(...d8Areas.map(item => item.hullVertices)),
             minVisible: Math.min(...d8Areas.map(item => item.visibleFaces)),
             triangular: d8Areas.filter(item => item.hullVertices < 4).length,
@@ -223,7 +225,7 @@ async function throwAndObserve(page, kind, chosenIndex = null, chosenPose = null
     const q = __physicalQA, ch = DKCONTENT.INFINITY.chest;
     const oldDraw = ch.draw, oldRoll = ch.roll;
     let faceRollCalls = 0;
-    const geometryValue = R => q.visualTop(kind, R, q.dieFaceLabels(kind), q).value;
+    const geometryValue = R => q.cameraFace(kind, R, q.dieFaceLabels(kind), q).value;
     try {
       ch.draw = () => kind;
       ch.roll = () => { faceRollCalls++; throw new Error('Manual die face was preselected before landing'); };
@@ -261,7 +263,7 @@ function checkRoll(result, kind, index) {
   assert.equal(result.goldSpent, 160, `${kind} ${label}: one chest cost`);
   assert.deepEqual([result.awaiting.state, result.awaiting.phase, result.awaiting.held], ['tray', -1, 0], `${kind} ${label}: waits for the player`);
   assert.ok(result.landing && result.finalPose, `${kind} ${label}: traverses throw, landing, settle and fly`);
-  assert.equal(result.landing.physical, result.landing.geometry, `${kind} ${label}: physics reads the printed upper number`);
+  assert.equal(result.landing.physical, result.landing.geometry, `${kind} ${label}: physics reads the camera-facing printed number`);
   assert.equal(result.landing.awarded, result.landing.geometry, `${kind} ${label}: no hidden reward substitution at landing`);
   assert.equal(result.landing.slot, result.landing.geometry, `${kind} ${label}: slot records the same landed number`);
   assert.equal(result.finalPose.geometry, result.landing.geometry, `${kind} ${label}: settle never flips to a different face`);
@@ -292,7 +294,7 @@ async function run(browser, name, viewport, mobile) {
       const info = await inspectLabels(page, kind, realResult.landing.R), actual = new Map();
       for (const value of info.labels) actual.set(value, (actual.get(value) || 0) + 1);
       assert.deepEqual([...actual].sort((a, b) => a[0] - b[0]), expectedLabels[kind], `${kind}: every physical side has the promised printed grade label`);
-      assert.ok(info.samples.every(s => s.expected === s.visible && s.visible === s.physical), `${kind}: face/vertex geometry and value mapping agree`);
+      assert.ok(info.samples.every(s => s.expected === s.visible && s.visible === s.physical), `${kind}: face-center geometry and value mapping agree`);
       const odds = await sampleOrientationOdds(page, kind);
       const expected = odds.sampleCount / expectedLabels[kind].length;
       for (const [value] of expectedLabels[kind]) {
@@ -324,11 +326,11 @@ async function run(browser, name, viewport, mobile) {
         assert.ok(chiSquare < values.length + 5 * Math.sqrt(2 * values.length),
           `${kind}: fixed button impulse severely favors some faces (${JSON.stringify(sample.counts)}; chi²=${chiSquare.toFixed(2)})`);
         if (kind === 'd8') assert.equal(sample.d8Area.samples, sample.sampleCount,
-          'each actual d8 button throw provides a visible winning-face area');
+          'each actual d8 button throw provides a projected winning-face area');
         if (kind === 'd8') assert.deepEqual(
-          [sample.d8Area.threshold.withCandidate, sample.d8Area.threshold.independentlyMatched],
+          [sample.d8Area.cameraFace.withCandidate, sample.d8Area.cameraFace.independentlyMatched],
           [sample.sampleCount, sample.sampleCount],
-          'every physical d8 has a readable face and the independent 5% filter agrees with the award');
+          'every physical d8 has a camera-facing face and its projected normal agrees with the award');
         row.buttonSamples.push({ ...sample, chiSquare: +chiSquare.toFixed(2) });
       }
     }

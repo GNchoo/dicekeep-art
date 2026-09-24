@@ -7,7 +7,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const assert = require('node:assert/strict');
 const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
-const { screenTopDieResult } = require('./screen-top-die.cjs');
+const { cameraFacingDieResult } = require('./camera-facing-die.cjs');
 
 const reportPath = outputPath('manual-chest-roll.json');
 const report = { scope: 'Local pure-luck chest input, settlement, enemy isolation, reward queue, and responsive controls', cases: [], pass: false };
@@ -36,7 +36,7 @@ async function boot(browser, name, viewport, touch) {
     source = source.replace('function strikeEnemiesWithDie() {', 'function strikeEnemiesWithDie() { window.__manualDieStrikes=(window.__manualDieStrikes||0)+1;');
     source = source.replace(anchor,
       'window.__manualQA={updateDie,updateSlot,pumpQueue,spawnEnemy,buildInfinityWave,TRAY,LOG,clearLog,finishSlot,readRunSave,ROLL_SHOW,dieFaceLabels,physicalFaceValue,dieShape,POLY,FACES,m3apply};\n' +
-      'window.__manualQA.visualTop=' + screenTopDieResult.toString() + ';\n' + anchor);
+      'window.__manualQA.cameraFace=' + cameraFacingDieResult.toString() + ';\n' + anchor);
     await route.fulfill({ response, body: source });
   });
   await page.goto(gameUrl());
@@ -89,7 +89,7 @@ async function stepUntilHeld(page, maxFrames = 540) {
       q.updateDie(1 / 60);
       q.updateSlot(1 / 60);
       if (!landing && priorState === 'throw' && DKDIE.state === 'settle') {
-        const visual = q.visualTop(kind, DKDIE.R, q.dieFaceLabels(kind), q);
+        const visual = q.cameraFace(kind, DKDIE.R, q.dieFaceLabels(kind), q);
         landing = { visual: visual.value, physical: q.physicalFaceValue(kind, DKDIE.R),
           final: DKDIE.final, slot: DKSLOT.final };
       }
