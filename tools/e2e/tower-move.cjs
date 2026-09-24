@@ -178,12 +178,12 @@ async function longPress(page, from, opts = {}) {
       const chest = DKCONTENT.INFINITY.chest, oldDraw = chest.draw;
       DK.gold = 99999;
       let kind;
-      try { chest.draw = () => 'd6'; kind = DKchest(); }
+      try { chest.draw = () => 'd8'; kind = DKchest(); }
       finally { chest.draw = oldDraw; }
       return { kind, active: DKSLOT.active, phase: DKSLOT.phase, held: DK.heldDie, die: DKDIE.state };
     });
     check('상자 주사위가 물리 투척을 기다린다', pending,
-      { kind: 'd6', active: true, phase: -1, held: 0, die: 'tray' });
+      { kind: 'd8', active: true, phase: -1, held: 0, die: 'tray' });
     await longPress(page, await at(7));
     check('상자 주사위 대기 중에도 기존 타워가 떠오른다', (await state()).lifted, true);
     await page.mouse.move(s6.x, s6.y, { steps: 12 });

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 
-// A chest die must look like its advertised solid before the player touches it.
+// A manual chest die must look like its advertised solid before the player touches it.
 // This inspects the actual resting matrix and the renderer's projected mesh;
 // pixel screenshots are saved for human review but are not the sole assertion.
 const assert = require('node:assert/strict');
@@ -13,8 +13,6 @@ const { cameraFacingDieResult } = require('./camera-facing-die.cjs');
 const reportPath = outputPath('dice-rest-pose.json');
 const report = { cases: [], pass: false };
 const fixtures = [
-  { kind: 'd4', shape: 'd4' },
-  { kind: 'd6', shape: 'd6' },
   { kind: 'd8', shape: 'd8' },
   { kind: 'd12', shape: 'd12' },
   { kind: 'd20', shape: 'd20' },
@@ -275,21 +273,17 @@ async function run(browser, name, viewport, mobile) {
       assert.ok(row.d4Stabilization.faces.every(n => n > 0),
         'deterministic d4 settle samples include all four physical result faces');
     }
-    for (const kind of ['d4', 'd8']) {
+    for (const kind of ['d8']) {
       const outcomes = await inspectPhysicalResults(page, kind);
       assert.equal(outcomes.bought, kind, `physical ${kind} fixture was purchased`);
       assert.equal(outcomes.dieState, 'settle', `representative ${kind} completes actual throw physics`);
-      assert.ok(outcomes.final >= 1 && outcomes.final <= (kind === 'd4' ? 4 : 8), `physical ${kind} awards a valid landed face`);
+      assert.ok(outcomes.final >= 1 && outcomes.final <= 8, `physical ${kind} awards a valid landed face`);
       assert.deepEqual([outcomes.physicalAtLanding, outcomes.physicalAfterSettle,
         outcomes.visualAtLanding, outcomes.visualAfterSettle, outcomes.slotFinal],
       [outcomes.final, outcomes.final, outcomes.final, outcomes.final, outcomes.final],
       `${kind} awards the camera-facing face without switching it during settle`);
       const settled = projectPose(outcomes.model, outcomes.actual);
-      // A real tetrahedron can stop with one face exactly toward the camera;
-      // do not twist it after landing merely to expose a second face.
-      assert.ok(kind === 'd4'
-        ? settled.hull >= 3 && settled.area > .3 && settled.visibleFaces >= 1
-        : settled.hull >= 6 && settled.visibleFaces >= 4,
+      assert.ok(settled.hull >= 6 && settled.visibleFaces >= 4,
       `actual settled ${kind} keeps a readable solid silhouette (hull=${settled.hull}, area=${settled.area}, visible=${settled.visibleFaces}, final=${outcomes.final})`);
       row[`${kind}Physical`] = { frames: outcomes.frames, final: outcomes.final, hull: settled.hull, visibleFaces: settled.visibleFaces };
     }

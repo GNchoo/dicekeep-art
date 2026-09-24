@@ -954,6 +954,9 @@ for (const key of CASUAL_WORLD_KEYS) if (SRCS[key]) SRCS[key] += '?v=casual-worl
 for (const key of ['tl_arena_floor', 'tl_arena_board', 'tl_arena_road', 'tl_arena_pad']) {
   if (SRCS[key]) SRCS[key] = SRCS[key].replace('?v=casual-world1', '?v=arena-clean1');
 }
+for (const key of ['tl_arena_pad', 'tl_arena_start', 'tl_arena_end', 'tl_arena_prop-1', 'tl_arena_prop-2', 'tl_arena_prop-3']) {
+  if (SRCS[key]) SRCS[key] = SRCS[key].replace(/\?v=[^#]*/, '?v=arena-props-142');
+}
 const A = {};
 let corsBlocked = false;
 
@@ -1989,8 +1992,9 @@ const SLOT = {
   labels: null, faceIndex: 6,
   from: null, axis: [0, 0, 1], ang: 0, sndT: 0,
 };
-// 4면체 이상 상자는 뽑힌 뒤 손으로 던진다. -1은 대기, -2는 스토리 물리로 이동 중.
+// d8 이상 상자는 뽑힌 뒤 손으로 던진다. -1은 대기, -2는 물리 투척 중.
 // 덱의 d20은 카드 종류 표기일 뿐 다면체 보상이 아니므로 기존 즉시 소환을 유지한다.
+const autoChestKind = kind => kind === 'd4' || kind === 'd6';
 const manualChestRoll = () => S.mode === 'infinity' && !!S.inf && !deckRun() && SLOT.active && SLOT.phase < 0;
 const manualChestReady = () => manualChestRoll() && SLOT.phase === -1 && DIE.state === 'tray' && !S.heldDie && S.phase === 'playing';
 // 짧은 가로 화면에서는 HUD가 캔버스 위로 겹친다. 실제 아레나 하단 여백을 따라
@@ -2056,7 +2060,7 @@ function rollByButton() {
   syncUI();
 }
 
-// 인피니티 보물상자: 골드 → 다면체 주사위 1개. 4면체 이상은 직접 던져 실제 착지한 눈을 확인한다.
+// 인피니티 보물상자: 골드 → 다면체 주사위 1개. d4·d6은 자동으로 굴리고 d8 이상은 직접 던진다.
 let legacyInfHelpHTML = null;
 function openInfHelp() {
   const h = $('inf-help'); if (!h) return;
@@ -2138,13 +2142,21 @@ function buyChest() {
 const DIE_KIND_COLORS = { d1: '#9a9a9a', d4: '#d9c9a0', d6: '#e9dfc4', d8: '#7fd4ff', d12: '#c78bff', d20: '#ffd452', epic: '#ff8a5c', myth: '#ff5fa8', primal: '#ffffff' };
 const dieKindColor = k => DIE_KIND_COLORS[k] || '#e9dfc4';
 const dieShape = k => { const ch = chestDef(); return (ch && ch.shape && ch.shape[k]) || k; };
+function startSlotSpin(kind) {
+  // The low-sided chest outcome comes from this pose, so gameplay randomness
+  // must initialize it. A random solid symmetry keeps all printed faces fair.
+  const random = !deckRun() && autoChestKind(kind) ? Math.random : fxRandom;
+  SLOT.R = m3mul(m3axisAngle(random(), random(), random() * 0.5 + 0.1, random() * 6), TRAY_TILT);
+  if (!deckRun() && autoChestKind(kind)) SLOT.R = m3mul(SLOT.R, randomDieSymmetry(dieShape(kind)));
+  SLOT.w = [14 + random() * 8, 12 + random() * 8, 9 + random() * 6];
+}
 // 손이 차 있으면 대기열에 넣고, 배치해서 손이 비면 다음 주사위를 준비한다.
 function rollDie(kind, forcedFinal) {
   const ch = chestDef();
   if (!ch || S.mode !== 'infinity' || !S.inf || S.phase !== 'playing') return false;
   if (!canStartRoll()) return false;            // 손이 차 있으면 굴리지 않는다 — 큐는 호출자(pumpQueue)가 든다
   SLOT.active = true; SLOT.kind = kind;
-  SLOT.t = 0; SLOT.t2 = 0; SLOT.phase = !deckRun() && ch.sides[kind] >= 4 ? -1 : 0; SLOT.sndT = 0;
+  SLOT.t = 0; SLOT.t2 = 0; SLOT.phase = !deckRun() && ch.sides[kind] >= 8 ? -1 : 0; SLOT.sndT = 0;
   // The chest chooses a grade here; its printed die and eventual landing choose the star.
   SLOT.final = deckRun() ? forcedFinal : kind === 'd1' ? 1 : 0;
   SLOT.labels = null; SLOT.faceIndex = 0;
@@ -2157,8 +2169,7 @@ function rollDie(kind, forcedFinal) {
     SLOT.R = DIE.R; SLOT.w = [0, 0, 0];
     pushLog(`${ch.grade[kind]} ${ch.label[kind]} 획득 · 주사위를 끌어 던지거나 던지기 버튼을 누르세요`, 'gacha');
   } else {
-    SLOT.R = m3mul(m3axisAngle(fxRandom(), fxRandom(), fxRandom() * 0.5 + 0.1, fxRandom() * 6), TRAY_TILT);
-    SLOT.w = [14 + fxRandom() * 8, 12 + fxRandom() * 8, 9 + fxRandom() * 6];
+    startSlotSpin(kind);
     SFX.throwDie();
   }
   syncUI();
@@ -2179,7 +2190,7 @@ function pumpQueue() {
 }
 function finishSlot() {
   if (S.heldDie) return;             // 손이 차 있으면 절대 덮어쓰지 않는다 — 슬롯은 '완성 대기'로 남아 손이 빌 때 온다
-  const physical = manualChestRoll();
+  const physical = manualChestRoll() || (S.mode === 'infinity' && !deckRun() && autoChestKind(SLOT.kind));
   SLOT.active = false;
   ROLL_SHOW.dur = physical ? 1.8 : 0.45;
   ROLL_SHOW.t = ROLL_SHOW.dur; ROLL_SHOW.R = SLOT.R; ROLL_SHOW.kind = SLOT.kind || 'd6';
@@ -2256,25 +2267,27 @@ function updateSlot(dt) {
   if (SLOT.phase < 0) return; // 실제 주사위는 updateDie의 물리로만 진행
   SLOT.t += dt;
   const poly = SLOT.kind && SLOT.kind !== 'd6';
+  const physical = S.mode === 'stage' || (S.mode === 'infinity' && !deckRun() && autoChestKind(SLOT.kind));
+  const physicalKind = S.mode === 'stage' ? 'story' : SLOT.kind;
   if (SLOT.phase === 0) {
     // 빠른 회전 (덜그럭 소리)
     const wl = Math.hypot(...SLOT.w);
     if (wl > 1e-4) {
       SLOT.R = m3orthonormalize(m3mul(m3axisAngle(SLOT.w[0] / wl, SLOT.w[1] / wl, SLOT.w[2] / wl, wl * dt), SLOT.R));
     }
-    SLOT.w = SLOT.w.map(v => v * Math.pow(S.mode === 'stage' && SLOT.t > .48 ? .0001 : .3, dt));
-    if (S.mode === 'stage' && SLOT.t > .48) SLOT.R = stabilizeRestPose('story', SLOT.R, dt);
+    SLOT.w = SLOT.w.map(v => v * Math.pow(physical && SLOT.t > .48 ? .0001 : .3, dt));
+    if (physical && SLOT.t > .48) SLOT.R = stabilizeRestPose(physicalKind, SLOT.R, dt);
     SLOT.sndT -= dt;
     if (SLOT.sndT <= 0) { SFX.bounce(0.3); SLOT.sndT = 0.11; }
     if (SLOT.t >= (S.mode === 'stage' ? 1.05 : poly ? 0.7 : 0.55) &&
-        (S.mode !== 'stage' || physicalRestAlignment('story', SLOT.R) >= restThreshold('story') - 1e-6)) {
+        (!physical || physicalRestAlignment(physicalKind, SLOT.R) >= restThreshold(physicalKind) - 1e-6)) {
       SLOT.phase = 1;
-      if (S.mode === 'stage') {
-        SLOT.faceIndex = physicalFaceIndex('story', SLOT.R);
-        SLOT.final = physicalFaceValue('story', SLOT.R, SLOT.labels);
+      if (physical) {
+        SLOT.faceIndex = physicalFaceIndex(physicalKind, SLOT.R);
+        SLOT.final = physicalFaceValue(physicalKind, SLOT.R, S.mode === 'stage' ? SLOT.labels : dieFaceLabels(physicalKind));
         SLOT.from = SLOT.R; SLOT.axis = [0, 0, 1]; SLOT.ang = 0;
       }
-      if (S.mode !== 'stage') {
+      if (!physical) {
         const Rt = slotTargetR();
         const aa = m3toAxisAngle(m3mul(Rt, m3transpose(SLOT.R)));
         SLOT.from = SLOT.R; SLOT.axis = aa.axis; SLOT.ang = aa.ang;
@@ -5456,7 +5469,7 @@ function syncUIRest() {
     const cost = chestCost();
     const manualReady = manualChestReady();
     rollBtn.childNodes[0].nodeValue = document.body.classList.contains('ui-art') ? '뽑기' : '🎁 뽑기';   // 그림 아이콘(::before 상자)이 있으면 이모지는 뺀다 (아이콘 두 개 방지)
-    rollBtn.title = '골드로 주사위를 뽑습니다. 4면체 이상은 직접 던지며, 위를 향해 멈춘 숫자가 성★입니다.\n일반 50% · 레어 33.1% · 고대 10.2% · 유물 5.1% · 서사 0.8% · 전설 0.5% · 에픽 0.2% · 신화 0.08% · 태초 0.019%';
+    rollBtn.title = '골드로 주사위를 뽑습니다. d4·d6은 자동으로 굴리고 d8 이상은 직접 던집니다. 보이는 윗면 숫자가 성★입니다.\n일반 50% · 레어 33.1% · 고대 10.2% · 유물 5.1% · 서사 0.8% · 전설 0.5% · 에픽 0.2% · 신화 0.08% · 태초 0.019%';
     if (deckRun()) { rollBtn.childNodes[0].nodeValue='소환'; rollBtn.title='덱의 다섯 종류가 각각 20% 확률로 1눈금 소환됩니다. 소환할 때마다 비용이 5 SP씩 증가합니다.'; }
     if (manualReady) { rollBtn.childNodes[0].nodeValue='던지기'; rollBtn.title='상자 주사위를 직접 끌어 던지거나 이 버튼으로 물리 투척합니다. 추가 비용은 없습니다.'; }
     rollBtn.classList.toggle('manual-roll', manualReady);
@@ -7032,6 +7045,16 @@ async function restoreRunSave(p, net) {
       S.heldDie = SLOT.final; S.dieFocus = true; SLOT.active = false;
       SLOT.labels = null; SLOT.faceIndex = 0; ROLL_SHOW.t = 0;
       DIE.final = 0; DIE.faceIndex = 0; DIE.labels = null;
+    } else if (autoChestKind(SLOT.kind)) {
+      // Old checkpoints may have been waiting for a hand throw, or may carry
+      // a pre-physical result. Resume those as an unpaid automatic roll.
+      const resolved = SLOT.phase === 1 && SLOT.faceIndex > 0 &&
+        SLOT.final === physicalFaceValue(SLOT.kind, SLOT.R);
+      if (SLOT.phase !== 0 && !resolved || SLOT.phase === 0 && SLOT.final !== 0) {
+        SLOT.phase = 0; SLOT.final = 0; SLOT.faceIndex = 0; SLOT.labels = null;
+        SLOT.t = 0; SLOT.t2 = 0; SLOT.sndT = 0;
+        startSlotSpin(SLOT.kind);
+      }
     } else {
       // A purchased physical chest has a grade but no result. Pre-physical
       // checkpoints may still have phase 0/1: give those a fresh throw too.

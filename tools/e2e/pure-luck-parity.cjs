@@ -118,8 +118,8 @@ function playRun({ account, mode, seed, waves }) {
   let ticks = 0;
 
   const spend = () => {
-    // 실제 주사위 상태 기계를 고정 시간 간격으로 전진시킨다. 4면체 이상은
-    // 플레이어가 던진 뒤 물리적으로 구르고 정착하며, 작은 주사위는 자동 굴림한다.
+    // 실제 주사위 상태 기계를 고정 시간 간격으로 전진시킨다. d8 이상은
+    // 플레이어가 던진 뒤 물리적으로 구르고 정착하며, d1·d4·d6은 자동 굴림한다.
     let guard = 0;
     while (DK.phase === 'playing' && !DK.heldDie && DK.gold >= __pureQA.chestCost() && guard++ < 40) {
       if (!DKchest()) break;

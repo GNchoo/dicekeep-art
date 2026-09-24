@@ -1,0 +1,28 @@
+[
+  {
+    "name": "pad",
+    "mode": "edit",
+    "references": ["originals/pad.png (footprint only)", "casual/tiles/arena/board.png (palette)", "casual/tiles/arena/road.png (paving style)"],
+    "prompt": "Create ONE finished transparent PNG game sprite: a tower placement foundation for a clean casual dice tower defense arena. The first reference supplies ONLY the low, wide oval footprint and the empty middle; completely redesign its materials and ornament. The dark desaturated blue-violet board and broad warm ivory paving in references 2 and 3 define the exact palette and simplification. Make a very low elliptical ivory sandstone socket, seen from a 3/4 overhead game camera, with only four broad smooth stone sections around a dark muted violet empty center. At most two restrained warm-brass joining clips; no saturated purple rim, no ornate golden circle, no runes, no etched brick lines, no glow, no grass, no tower, no icon. Crisp bold silhouette, a thin dark-plum outline, large flat cel-shaded planes with only two or three values per material. Readable at 40 pixels wide. Asset centered and occupying about 80% of a square canvas, true fully transparent background (not a gray or checkerboard background), no words or watermark."
+  },
+  {
+    "name": "prop-1",
+    "mode": "edit",
+    "references": ["originals/prop-1.png (unlit bowl function)", "source-pad.png (simplified style)", "casual/tiles/arena/road.png (paving palette)"],
+    "prompt": "Create ONE production-ready transparent PNG sprite for a casual tower-defense arena: an UNLIT freestanding stone brazier/pedestal. Reference 1 shows the role, broad silhouette and upward-facing EMPTY DARK BOWL. The new socket in reference 2 and warm cream paving in reference 3 define the much simpler visual style. Redesign the pedestal in warm ivory sandstone and quiet slate-lavender, with one restrained brass band, a wide dark bowl at the top and a short sturdy tapered column. Big rounded blocks, two- or three-tone flat cel shading, thin dark-plum outline, no small masonry lines, no jewels, no rune, no plants. CRITICAL: no flame, sparks, smoke or glow baked in; the game animates an orange fire separately above the center of the empty bowl. Readable at 56 gameplay pixels tall. 3/4 overhead view, centered and grounded in a square canvas, true transparent background with generous margin, no text or watermark."
+  },
+  {
+    "name": "prop-2",
+    "mode": "edit",
+    "references": ["originals/prop-2.png (pillar function)", "source-prop-1.png (simplified style)", "casual/tiles/arena/board.png (board palette)"],
+    "prompt": "Create ONE transparent PNG environment sprite for the same casual dice tower defense arena: a quiet decorative CORNER PILLAR, not a playable tower. Reference 1 supplies the tall narrow silhouette, stone pillar function, purple identity and side hanging banner; simplify it radically to match the large, clean flat-cel shapes in reference 2 and subdued dark board of reference 3. Make a short sturdy lavender-stone column with a simple smooth ivory cap, ONE large faceted amethyst firmly mounted on top (not floating), and ONE small plain deep violet hanging pennant from a short side arm. A few broad shapes only; no tiny brick joints, engraved gold runes, complicated gold banding, floating shards, aura, weapons or plants. Muted violet with warm ivory, tiny brass fastening. Distinct readable outline at 80 gameplay pixels tall, 3/4 overhead game view, grounded foot with wide stable base, centered in square canvas with fully transparent surroundings. No text, number, icon or watermark."
+  },
+  {
+    "name": "prop-3",
+    "mode": "edit",
+    "references": ["originals/prop-3.png (broken die identity)", "source-pad.png (simplified style)", "casual/tiles/arena/road.png (paving palette)"],
+    "prompt": "Create ONE finished transparent PNG sprite for a clean casual dice tower defense arena: a small BROKEN DIE rubble decoration. Reference 1 gives the dice-rubble identity, but replace its dense purple ruin and ornate golden symbols. Match the simple broad ivory stone forms, dark-plum contour and warm/cool palette of references 2 and 3. Show one chunky warm-ivory six-sided die split into TWO big pieces with visible red pips, resting among ONLY two or three low muted lavender stones. Make the broken seam obvious, no repeated tiny dice, no scattered pebbles, no gold rune plates, no glowing particles, no grass. Compact low silhouette, reads clearly at 48 gameplay pixels tall, 3/4 overhead game view, grounded and centered, true transparent background, no words or watermark.",
+    "revisionSource": "candidate-prop-3-before-fracture.png",
+    "revisionPrompt": "Edit this existing game prop sprite. It must read as ONE six-sided die that has snapped into two jagged halves, not two separate intact dice. Keep its simple warm ivory, red recessed pips, dark plum outline, muted lavender support stones, 3/4 overhead camera, transparent background and clean flat-cel style. Carve an unmistakable irregular fracture line through the original die: the left half keeps the left/top faces, the right half keeps the right/front faces, with matching broken exposed interior surfaces facing each other across a small gap. Remove the appearance of two complete cubes. Keep only a few large simple parts and no tiny debris. Compact low silhouette legible at 48 pixels. No text, symbols, numbers, gold ornaments, grass or watermark."
+  }
+]

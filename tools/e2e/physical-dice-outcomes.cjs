@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 'use strict';
 
-// A thrown chest die must award the center number on the face pointed most
-// toward the player (+Z), including d4. The topmost numeral in 2D screen
+// A chest die must award the center number on the face pointed most
+// toward the player (+Z), including automatically rolled d4/d6. The topmost numeral in 2D screen
 // coordinates can belong to another face. Buying a rare die chooses its set
 // of printed numbers, not its landing result.
 const assert = require('node:assert/strict');
@@ -23,6 +23,7 @@ const expectedLabels = {
   primal: [[20, 20]],
 };
 const kinds = Object.keys(expectedLabels);
+const automatic = kind => kind === 'd4' || kind === 'd6';
 const save = () => fs.writeFileSync(reportPath, JSON.stringify(report, null, 2));
 
 function deltaAngle(a, b) {
@@ -130,6 +131,7 @@ async function sampleOrientationOdds(page, kind, sampleCount = 10000) {
 async function sampleButtonThrows(page, kind, sampleCount = 200) {
   return page.evaluate(({ kind, sampleCount }) => {
     DKstartInf('clear'); DK.paused = true; DK.gold = 1000000;
+    const automatic = kind => kind === 'd4' || kind === 'd6';
     const ch = DKCONTENT.INFINITY.chest, oldDraw = ch.draw, oldRoll = ch.roll, oldRandom = Math.random;
     let seed = 0x456709ab;
     Math.random = () => {
@@ -139,7 +141,7 @@ async function sampleButtonThrows(page, kind, sampleCount = 200) {
       return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
     };
     ch.draw = () => kind;
-    ch.roll = () => { throw Error('A button throw must not preselect a die face'); };
+    ch.roll = () => { throw Error('A chest roll must not preselect a die face'); };
     const counts = {}, d8Areas = [], landedFaceDepths = [];
     let maxFrames = 0;
     const d8AreaRatio = R => {
@@ -186,15 +188,16 @@ async function sampleButtonThrows(page, kind, sampleCount = 200) {
         DK.gold = 1000000; DK.heldDie = 0; DKSLOT.active = false; DKDIE.state = 'tray';
         DK.enemies.length = 0; DK.fxs.length = 0; DK.texts.length = 0;
         if (DKchest() !== kind) throw Error(kind + ': button sample could not buy chest ' + i);
-        DKthrow(920, -300); // exactly the on-screen button's impulse
+        if (!automatic(kind)) DKthrow(920, -300); // exactly the on-screen button's impulse
         let frames = 0;
         while (!DK.heldDie && frames++ < 900) {
-          const priorState = DKDIE.state;
+          const priorState = automatic(kind) ? DKSLOT.phase : DKDIE.state;
           __physicalQA.updateDie(1 / 60); __physicalQA.updateSlot(1 / 60);
-          if (priorState === 'throw' && DKDIE.state === 'settle') {
-            landedFaceDepths.push(__physicalQA.cameraFace(kind, DKDIE.R,
+          if (automatic(kind) ? priorState === 0 && DKSLOT.phase === 1 : priorState === 'throw' && DKDIE.state === 'settle') {
+            const pose = automatic(kind) ? DKSLOT.R : DKDIE.R;
+            landedFaceDepths.push(__physicalQA.cameraFace(kind, pose,
               __physicalQA.dieFaceLabels(kind), __physicalQA).z);
-            if (kind === 'd8') d8Areas.push(d8AreaRatio(DKDIE.R));
+            if (kind === 'd8') d8Areas.push(d8AreaRatio(pose));
           }
         }
         if (!DK.heldDie) throw Error(kind + ': button sample did not settle ' + i);
@@ -227,49 +230,54 @@ async function sampleButtonThrows(page, kind, sampleCount = 200) {
 async function throwAndObserve(page, kind, chosenIndex = null, chosenPose = null) {
   return page.evaluate(({ kind, chosenIndex, chosenPose }) => {
     DKstartInf('clear'); DK.paused = true; DK.gold = 10000;
+    const automatic = kind => kind === 'd4' || kind === 'd6';
     const q = __physicalQA, ch = DKCONTENT.INFINITY.chest;
     const oldDraw = ch.draw, oldRoll = ch.roll;
     let faceRollCalls = 0;
     const geometryValue = R => q.cameraFace(kind, R, q.dieFaceLabels(kind), q).value;
     try {
       ch.draw = () => kind;
-      ch.roll = () => { faceRollCalls++; throw new Error('Manual die face was preselected before landing'); };
+      ch.roll = () => { faceRollCalls++; throw new Error('Die face was preselected before landing'); };
       const goldBefore = DK.gold, bought = DKchest();
       const awaiting = { state: DKDIE.state, phase: DKSLOT.phase, held: DK.heldDie, final: DKSLOT.final };
-      DKthrow(900, -300);
+      if (!automatic(kind)) DKthrow(900, -300);
       if (chosenPose) {
-        DKDIE.R = chosenPose.slice();
-        DKDIE.w = [0, 0, 0]; DKDIE.vx = 0; DKDIE.vy = 0; DKDIE.vz = 0; DKDIE.z = 0;
+        if (automatic(kind)) { DKSLOT.R = chosenPose.slice(); DKSLOT.w = [0, 0, 0]; DKSLOT.t = .48; }
+        else { DKDIE.R = chosenPose.slice();
+          DKDIE.w = [0, 0, 0]; DKDIE.vx = 0; DKDIE.vy = 0; DKDIE.vz = 0; DKDIE.z = 0; }
       }
       let landing = null, finalPose = null, frames = 0;
       for (; frames < 900 && !DK.heldDie; frames++) {
-        const priorState = DKDIE.state;
+        const priorState = automatic(kind) ? DKSLOT.phase : DKDIE.state;
         q.updateDie(1 / 60); q.updateSlot(1 / 60);
-        if (!landing && priorState === 'throw' && DKDIE.state === 'settle') {
-          const R = DKDIE.R.slice();
+        if (!landing && (automatic(kind) ? priorState === 0 && DKSLOT.phase === 1 : priorState === 'throw' && DKDIE.state === 'settle')) {
+          const R = (automatic(kind) ? DKSLOT.R : DKDIE.R).slice();
           landing = { R, geometry: geometryValue(R), physical: q.physicalFaceValue(kind, R),
             cameraZ: q.cameraFace(kind, R, q.dieFaceLabels(kind), q).z,
-            awarded: DKDIE.final, slot: DKSLOT.final };
+            awarded: automatic(kind) ? DKSLOT.final : DKDIE.final, slot: DKSLOT.final };
         }
-        if (!finalPose && priorState === 'settle' && DKDIE.state === 'fly') {
-          const R = DKDIE.R.slice();
+        if (!finalPose && (automatic(kind) ? priorState === 1 && !DKSLOT.active : priorState === 'settle' && DKDIE.state === 'fly')) {
+          const R = (automatic(kind) ? DKSLOT.R : DKDIE.R).slice();
           finalPose = { R, geometry: geometryValue(R), physical: q.physicalFaceValue(kind, R),
             cameraZ: q.cameraFace(kind, R, q.dieFaceLabels(kind), q).z };
         }
       }
       return { bought, goldSpent: goldBefore - DK.gold, faceRollCalls, awaiting, frames,
-        landing, finalPose, held: DK.heldDie, final: DKDIE.final, slotFinal: DKSLOT.final, state: DKDIE.state };
+        landing, finalPose, held: DK.heldDie, final: automatic(kind) ? DKSLOT.final : DKDIE.final,
+        slotFinal: DKSLOT.final, state: DKDIE.state };
     } finally { ch.draw = oldDraw; ch.roll = oldRoll; }
   }, { kind, chosenIndex, chosenPose });
 }
 
 function checkRoll(result, kind, index) {
-  const label = index === null ? 'real throw' : `face ${index + 1} landing`;
+  const label = index === null ? (automatic(kind) ? 'automatic roll' : 'real throw') : `face ${index + 1} landing`;
   assert.equal(result.bought, kind, `${kind} ${label}: chest grade`);
   assert.equal(result.faceRollCalls, 0, `${kind} ${label}: no hidden preselected face`);
   assert.equal(result.goldSpent, 160, `${kind} ${label}: one chest cost`);
-  assert.deepEqual([result.awaiting.state, result.awaiting.phase, result.awaiting.held], ['tray', -1, 0], `${kind} ${label}: waits for the player`);
-  assert.ok(result.landing && result.finalPose, `${kind} ${label}: traverses throw, landing, settle and fly`);
+  assert.deepEqual([result.awaiting.state, result.awaiting.phase, result.awaiting.held],
+    ['tray', automatic(kind) ? 0 : -1, 0], `${kind} ${label}: correct automatic/manual start`);
+  assert.equal(result.awaiting.final, 0, `${kind} ${label}: no result before the roll`);
+  assert.ok(result.landing && result.finalPose, `${kind} ${label}: traverses roll and settle`);
   assert.equal(result.landing.physical, result.landing.geometry, `${kind} ${label}: physics reads the camera-facing printed number`);
   assert.equal(result.landing.awarded, result.landing.geometry, `${kind} ${label}: no hidden reward substitution at landing`);
   assert.equal(result.landing.slot, result.landing.geometry, `${kind} ${label}: slot records the same landed number`);
@@ -278,7 +286,7 @@ function checkRoll(result, kind, index) {
   assert.equal(result.held, result.landing.geometry, `${kind} ${label}: award matches the die on screen`);
   assert.equal(result.final, result.held, `${kind} ${label}: die state matches the hand`);
   assert.equal(result.slotFinal, result.held, `${kind} ${label}: slot matches the hand`);
-  assert.equal(result.state, 'tray', `${kind} ${label}: physical die returns to its tray`);
+  assert.equal(result.state, 'tray', `${kind} ${label}: field die remains in its tray`);
   if (kind !== 'd4') {
     assert.ok(result.landing.cameraZ >= .999,
       `${kind} ${label}: awarded face points squarely skyward at landing (normal z=${result.landing.cameraZ})`);
