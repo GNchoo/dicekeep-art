@@ -2632,9 +2632,9 @@ function buildDiceMaterial(skin) {
       // the raised apex therefore agree with the physical result.
       for (let j = 0; j < f.idx.length; j++) {
         const dx = uv[j][0] - T / 2, dy = uv[j][1] - T / 2;
-        g.save(); g.translate(T / 2 + dx * .52, T / 2 + dy * .52);
+        g.save(); g.translate(T / 2 + dx * .39, T / 2 + dy * .39);
         g.rotate(Math.atan2(dx, -dy));
-        engraveDiceValue(g, f.idx[j] + 1, 0, 0, T * .17, skin.mark || '#542b30');
+        engraveDiceValue(g, f.idx[j] + 1, 0, 0, T * .28, skin.mark || '#542b30');
         g.restore();
       }
     } else {
