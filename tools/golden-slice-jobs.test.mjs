@@ -63,6 +63,7 @@ for (const job of committed.jobs) {
   }
   assert.equal(job.n, 1, `${job.id}: committed golden slice must default to one candidate`);
   for (const ref of job.refs || []) {
+    assert.equal(ref.startsWith('tools/art-review/'), false, `${job.id}: browser CI omits the historical art-review archive`);
     assert.equal(fs.existsSync(path.join(ROOT, ref)), true, `${job.id}: missing reference ${ref}`);
   }
 }
