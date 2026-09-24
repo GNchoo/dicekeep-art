@@ -88,6 +88,27 @@ body { touch-action: manipulation; }
 
 #game { width: 100%; height: 100%; display: block; cursor: crosshair; touch-action: none; }
 
+/* 결과는 캔버스 해상도와 전투 배속에 영향을 받지 않는 UI 글자로 보여준다. */
+#chest-reveal, #enhance-toast {
+  position: absolute; left: 50%; z-index: 8; pointer-events: none;
+  transform: translateX(-50%);
+  width: max-content; max-width: min(88%, 420px);
+  padding: 10px 18px; border: 2px solid var(--result-line, #e8b64a);
+  border-radius: 12px; background: rgba(19, 14, 24, .95);
+  box-shadow: 0 3px 0 #1b1110, 0 0 24px var(--result-glow, rgba(232, 182, 74, .65));
+  color: #fff5d9; font: 18px/1.25 var(--font-display); text-align: center;
+  text-shadow: 0 2px 2px #130b0b;
+  animation: resultAppear .22s ease-out both;
+}
+#chest-reveal { top: 22%; }
+#wrap.over #chest-reveal { top: 8%; }
+#enhance-toast { top: 17%; }
+#chest-reveal[data-tier="mythic"], #enhance-toast[data-result="up"] { --result-line: #ffd65c; --result-glow: rgba(255, 208, 82, .7); }
+#chest-reveal[data-tier="rare"] { --result-line: #8bd8ff; --result-glow: rgba(106, 201, 255, .6); }
+#enhance-toast[data-result="keep"] { --result-line: #b9b0a1; --result-glow: rgba(195, 183, 159, .45); }
+#enhance-toast[data-result="boom"] { --result-line: #ff8888; --result-glow: rgba(255, 80, 80, .68); }
+@keyframes resultAppear { from { opacity: 0; transform: translate(-50%, 8px) scale(.94); } to { opacity: 1; transform: translate(-50%, 0) scale(1); } }
+
 /* ---- 좌상단 자원 표시 ---- */
 /* ---- 버튼: 한 벌로 통일. 상단 하이라이트 + 하단 베벨 + 바깥 두께로 '찍히는' 느낌 ---- */
 .btn, #roll-btn, #wave-btn, #sell-btn, #move-btn, #enhance-btn, #help-btn, .big-btn, #ov-btn, #help-close, .back-btn {
@@ -549,6 +570,13 @@ body { touch-action: manipulation; }
 #info-head b { color: var(--gold); font-size: 13px; }
 #info-atk { font-size: 10px; color: #cfe4ff; background: rgba(80,120,190,.28); border: 1px solid #5b7fb8; border-radius: 999px; padding: 1px 7px; }
 #info-body { color: #cfc3a5; line-height: 1.4; }
+#enhance-result {
+  flex-shrink: 0; padding: 6px 9px; border-radius: 7px;
+  border: 1px solid #d6ae59; background: rgba(91, 66, 23, .65);
+  color: #fff1c8; font: 13px/1.25 var(--font-display);
+}
+#enhance-result[data-result="keep"] { border-color: #a49b8e; background: rgba(80, 75, 69, .75); color: #e6ddd0; }
+#enhance-result[data-result="boom"] { border-color: #df7373; background: rgba(101, 34, 33, .85); color: #ffe0dc; }
 #info-actions { display: flex; align-items: center; gap: 8px; margin-top: 0; flex-shrink: 0; flex-wrap: wrap; }
 /* 타워 이동 버튼: 판매·확률 강화와 완전히 같은 한 벌. 치수·테두리·모서리가 동일하고 색만 기본 돌색이다 */
 #move-btn {
@@ -578,6 +606,23 @@ body { touch-action: manipulation; }
 #enhance-odds { font-size: 11px; color: #b6a98c; }
 #enhance-odds .up { color: #8ef0b0; }
 #enhance-odds .boom { color: #ff8f8f; }
+
+#enhance-confirm {
+  border: 1px solid #e8a269; border-radius: 16px;
+  padding: 0; width: min(420px, calc(100vw - 32px)); max-height: calc(100dvh - 32px);
+  color: #f7e9d4; background: linear-gradient(#37261d, #211713);
+  box-shadow: 0 16px 60px rgba(0,0,0,.75), 0 0 30px rgba(255, 105, 75, .18);
+  font-family: var(--font-ui);
+}
+#enhance-confirm::backdrop { background: rgba(7, 5, 7, .75); }
+.enhance-confirm-card { padding: 24px 22px 20px; text-align: center; }
+.enhance-confirm-icon { color: #ffac6f; font-size: 32px; line-height: 1; }
+#enhance-confirm-title { color: #ffe0b2; font: 23px/1.3 var(--font-display); margin: 9px 0; }
+#enhance-confirm-desc { font-size: 14px; line-height: 1.55; white-space: pre-line; color: #e1d2bd; }
+.enhance-confirm-actions { display: flex; gap: 9px; margin-top: 20px; }
+.enhance-confirm-actions button { flex: 1; min-height: 46px; border-radius: 9px; font: 16px var(--font-display); cursor: pointer; }
+#enhance-confirm-cancel { border: 1px solid #897b67; background: #40352b; color: #f4e8d3; }
+#enhance-confirm-accept { border: 1px solid #eea577; background: linear-gradient(#9e5041, #703225); color: #fff5e8; }
 #wave-btn {
   font-size: 17px;
   letter-spacing: .5px;

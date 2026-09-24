@@ -11,7 +11,7 @@
 <!-- 키아트를 스크립트보다 먼저 받기 시작한다 (세로/가로 중 화면에 맞는 한 장). game.js 는 이 그림이 뜬 뒤에 에셋 로딩을 시작한다 -->
 <link rel="preload" as="image" href="ui/title-keyart-p.jpg?v=casual1" media="(max-aspect-ratio: 3/4)" fetchpriority="high" />
 <link rel="preload" as="image" href="ui/title-keyart-l.jpg?v=casual1" media="(min-aspect-ratio: 3001/4000)" fetchpriority="high" />
-<link rel="stylesheet" href="style.css?v=130" />
+<link rel="stylesheet" href="style.css?v=136" />
 <link rel="stylesheet" href="rewards.css?v=119" />
 <link rel="stylesheet" href="mail-admin.css?v=117" />
 <link rel="stylesheet" href="home.css?v=119" />
@@ -22,6 +22,8 @@
 <div id="wrap">
   <div id="stage">
     <canvas id="game" width="1024" height="576"></canvas>
+    <div id="chest-reveal" class="hidden" role="status" aria-live="polite"></div>
+    <div id="enhance-toast" class="hidden" role="status" aria-live="polite"></div>
 
     <div id="stats" class="hidden">
       <span class="chip"><img id="icon-gold" src="ui/gold.png" alt="골드"><b id="gold-val">0</b></span>
@@ -290,6 +292,7 @@
         <button id="info-close" type="button" title="닫기" aria-label="타워 정보 닫기">&#10005;</button>
         <div id="info-head"><img id="info-dice" alt=""><b id="info-name"></b><span id="info-atk" class="hidden"></span></div>
         <div id="info-body"></div>
+        <div id="enhance-result" class="hidden" role="status" aria-live="polite"></div>
         <div id="info-actions">
           <button id="move-btn" type="button" title="이 타워를 다른 빈 석단으로 옮깁니다">이동</button>
           <button id="sell-btn">판매</button>
@@ -320,6 +323,17 @@
     <div id="supporter-panel" class="hidden" aria-label="전투 서포터"><div><b id="supporter-name"></b><small id="supporter-note"></small></div><button id="supporter-use" type="button">능력 사용</button></div>
   </div>
 </div>
+<dialog id="enhance-confirm" aria-labelledby="enhance-confirm-title" aria-describedby="enhance-confirm-desc">
+  <div class="enhance-confirm-card">
+    <span class="enhance-confirm-icon" aria-hidden="true">⚠</span>
+    <h2 id="enhance-confirm-title">소멸 위험이 더 높습니다</h2>
+    <p id="enhance-confirm-desc"></p>
+    <div class="enhance-confirm-actions">
+      <button id="enhance-confirm-cancel" type="button">취소</button>
+      <button id="enhance-confirm-accept" type="button">강화하기</button>
+    </div>
+  </div>
+</dialog>
 <!-- 첫 런 단계별 안내: 대상 요소 위에 링 + 말풍선. 진행을 막지 않는다(pointer-events:none) -->
 <div id="coach" class="hidden" aria-live="polite">
   <div id="coach-ring"></div>
@@ -402,6 +416,6 @@
 <script src="infinity-art.js?v=107"></script>
 <script src="extreme-cache.js?v=1"></script>
 <script src="combat-motion.js?v=123"></script>
-<script src="game.js?v=135"></script>
+<script src="game.js?v=136"></script>
 </body>
 </html>
