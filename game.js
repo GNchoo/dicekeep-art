@@ -2010,7 +2010,8 @@ const SLOT = {
 // 덱의 d20은 카드 종류 표기일 뿐 다면체 보상이 아니므로 기존 즉시 소환을 유지한다.
 const autoChestKind = kind => kind === 'd4' || kind === 'd6';
 const manualChestRoll = () => S.mode === 'infinity' && !!S.inf && !deckRun() && SLOT.active && SLOT.phase < 0;
-const manualChestReady = () => manualChestRoll() && SLOT.phase === -1 && DIE.state === 'tray' && !S.heldDie && S.phase === 'playing';
+const chestReveal = () => manualChestRoll() && SLOT.phase === -1 && S.fxs.find(f => f.kind === 'chestOpen' && f.dieKind === SLOT.kind && f.t < f.dur);
+const manualChestReady = () => manualChestRoll() && SLOT.phase === -1 && DIE.state === 'tray' && !chestReveal() && !S.heldDie && S.phase === 'playing';
 // 짧은 가로 화면에서는 HUD가 캔버스 위로 겹친다. 실제 아레나 하단 여백을 따라
 // 대기·투척 주사위를 조작창 위에 둔다.
 const activeTray = () => {
@@ -2018,7 +2019,7 @@ const activeTray = () => {
   const inset = (DKCONTENT.maps.find(m => m.key === S.mapKey) || {}).inset || {};
   return { x: TRAY.x, y: Math.min(TRAY.y, H - 125, H - (inset.bottom || 0) - 55) };
 };
-// 굴림이 끝난 뒤 화면 중앙에 잠깐 남는 주사위 (획득 연출과 겹쳐 '이게 나왔다'를 보여준다). drawCenterRoll 이 그린다
+// Keep the landed pose/value as a record; only deck cards use a second center reveal.
 const ROLL_SHOW = { t: 0, dur: 0.45, R: null, kind: 'd6', face: 0, faceIndex: 0, physical: false };
 
 // 새 굴림을 시작해도 되는가 — 손이 비어 있고 슬롯이 놀고 있을 때만. 뽑기·보상 큐·캐주얼 굴림이 전부 이 하나를 본다
@@ -2123,14 +2124,6 @@ function buyChest() {
   if (deckRun()) { S.inf.spent+=cost; rollDie('d20',drawn.face); S.texts.push({ str:`${combatDef(drawn.face).name} · 1눈금`,x:W/2,y:topTextY(),t:0,color:combatDef(drawn.face).color }); coachHit('roll'); syncUI(); return 'd20'; }
   const rare = rk >= 5 ? 3 : rk === 4 ? 2 : rk === 3 ? 1 : 0;
   const col = dieKindColor(kind);
-  // A single articulated chest owns its interior light and foreground occlusion.
-  // Do not stack unrelated full-board rings, columns or text on its front panel.
-  if (rk >= 3) {
-    S.fxs = S.fxs.filter(f => f.kind !== 'chestOpen');
-    S.fxs.push({ kind: 'chestOpen', x: W / 2, y: H / 2, t: 0, dur: 1.5,
-      size: Math.min(260, Math.max(190, Math.min(W, H) * 0.32) + rare * 10), color: col, rank: rk, realtime: true });
-  }
-  if (rk >= 3) stageNotice('chest-reveal', `${ch.grade[kind]} 상자 개봉 · ${ch.label[kind]}!`, rk >= 5 ? 'mythic' : 'rare', 2400);
   if (rare >= 2) SFX.win(); else if (kind === 'd1') SFX.deny(); else SFX.coin();
   if (rk >= 3) netLog(`${ch.grade[kind]} ${ch.label[kind]}를 뽑았습니다`, 'gacha'); // 유물 이상은 방에 알린다
   if (drawn) {
@@ -2145,6 +2138,13 @@ function buyChest() {
     return kind;
   }
   rollDie(kind);
+  if (rk >= 3) {
+    S.fxs = S.fxs.filter(f => f.kind !== 'chestOpen');
+    S.fxs.push({ kind: 'chestOpen', dieKind: kind, dieR: DIE.R.slice(),
+      x: W / 2, y: H / 2, t: 0, dur: 2.2,
+      size: Math.min(260, Math.max(190, Math.min(W, H) * 0.32) + rare * 10),
+      color: col, rank: rk, realtime: true });
+  }
   coachHit('roll');
   syncUI();
   return kind;
@@ -2215,31 +2215,14 @@ function finishSlot() {
 }
 // 그림 에셋이 실제로 로드됐는가 (없으면 코드 그림으로 폴백)
 const hasArt = (k) => { const a = A[k]; return !!(a && !a.missing && (Array.isArray(a) ? a.length && a[0] && a[0].cv : a.cv && a.w > 8)); };
-// 굴려 나온 눈(1~20)에 따라 단계별 획득 연출. 뽑기·보스 보상·큐 재개가 전부 finishSlot 으로 수렴하므로 여기 한 곳
-// 그림(vfx/acquire-*, ART-PROMPTS §7.8)이 있으면 그림 연출, 없으면 코드 프리미티브(링·마법진·파티클)
+// Outcomes remain visible on the physical die. Keep only the existing reward
+// log and sound; no second giant die, result caption, rays or number popup.
 function acquireFx(face) {
-  if (deckRun()) { acquireFxCode(1,0,combatDef(face).color,W/2,H/2); return; }
-  const def = TOWER_DEFS[face]; if (!def) return;
-  const col = def.color;
-  const cx = W / 2, cy = H / 2;
+  if (deckRun()) return;
+  const def = TOWER_DEFS[face]; if (!def || face <= 6) return;
   const name = def.name.replace(/ ★\d+$/, '');
-  const tier = face <= 6 ? 0 : face >= 19 ? 4 : face >= 15 ? 3 : face >= 11 ? 2 : 1;   // ★7~10 · ★11~14 · ★15~18 · ★19~20
-  if (hasArt('acquireBurst')) acquireFxArt(face, tier, col, cx, cy); else acquireFxCode(face, tier, col, cx, cy);
-  if (!tier) return;
-  stageNotice('chest-reveal', `★${face} ${name} 획득!`, tier >= 3 ? 'mythic' : 'rare', 2400);
-  // The landed die stays still and readable; the celebration surrounds it.
-  if (tier >= 4) SFX.jackpot(); else if (tier >= 3) SFX.win(); else SFX.merge();
-  if (tier >= 3 && window.DKBGM) { try { DKBGM.duck(0.45, 1.4); } catch (e) { /* 무시 */ } }
-  netLog(`★${face}성 ${name} 타워를 획득하였습니다`, 'gacha');   // ★7 이상만 방에 알린다
-}
-function acquireFxCode(face, tier, col, cx, cy) {
-  acquireFxArt(face, tier, col, cx, cy);
-}
-function acquireFxArt(face, tier, col, cx, cy) {
-  // One continuous, bounded composition; the real die is drawn above it.
-  S.fxs = S.fxs.filter(f => f.kind !== 'dieReward');
-  S.fxs.push({ kind: 'dieReward', x: cx, y: cy, t: 0, dur: tier ? 1.68 : 0.48,
-    size: tier ? 250 + tier * 18 : 72, face, tier, color: col, realtime: true });
+  if (face >= 19) SFX.jackpot(); else if (face >= 15) SFX.win(); else SFX.merge();
+  netLog(`★${face}성 ${name} 타워를 획득하였습니다`, 'gacha');
 }
 // '#rrggbb' → 'rgba(r,g,b,a)'
 function hexA(hex, a) { const m = /^#?([0-9a-f]{6})$/i.exec(String(hex || '')); if (!m) return `rgba(255,212,82,${a})`; const n = parseInt(m[1], 16); return `rgba(${n >> 16},${(n >> 8) & 255},${n & 255},${a})`; }
@@ -2381,32 +2364,88 @@ function projectedFacePolygon(shape, face, R) {
     return [p[0] * w, p[1] * w];
   });
 }
-function drawPhysicalFaceOutline(g, cx, cy, size, kind, R, faceIndex) {
+// Illuminate only the marking that was already printed on the physical die.
+// Its perspective and twist come from R, exactly like the underlying texture;
+// no face border or screen-facing result number is added.
+function drawPhysicalResultGlow(g, cx, cy, size, kind, R, faceIndex, labels = null) {
   const shape = kind === 'story' ? 'd6' : dieShape(kind);
-  if (!faceIndex) return;
-  if (shape === 'd4') {
-    // A top-read tetrahedron is numbered at its vertices, on all three
-    // adjoining faces. Highlight the winning apex rather than an unrelated
-    // triangular face.
-    const p = m3apply(R, POLY.d4.verts[faceIndex - 1]);
-    const perspective = 10 / (10 - p[2]);
-    g.save(); g.beginPath();
-    g.arc(cx + p[0] * size * perspective, cy + p[1] * size * perspective,
-      Math.max(9, size * .28), 0, Math.PI * 2);
-    g.strokeStyle = '#ffe08a'; g.lineWidth = Math.max(1.8, size * .035);
-    g.shadowColor = '#ffbb4b'; g.shadowBlur = Math.max(6, size * .2);
-    g.stroke(); g.restore();
+  if (!faceIndex || !R) return;
+  const project = point => {
+    const p = m3apply(R, point), w = 10 / (10 - p[2]);
+    return [cx + p[0] * size * w, cy + p[1] * size * w];
+  };
+  const add = (a, b, amount) => a.map((v, i) => v + b[i] * amount);
+  if (shape === 'd6') {
+    const face = FACES.find(f => f.val === faceIndex);
+    const value = labels ? labels[faceIndex - 1] : faceIndex;
+    if (!face || !CUBE_PIPS[value - 1]) return;
+    for (const [u, v] of CUBE_PIPS[value - 1]) {
+      // Texture UV .245 maps to .49 world units on the rounded cube's flat
+      // face. The small ellipse uses both projected face axes, so side pips
+      // foreshorten with the landed face instead of floating on the screen.
+      const center = face.n.map((n, i) => n + .49 * (u * face.u[i] + v * face.v[i]));
+      const [x, y] = project(center), [ux, uy] = project(add(center, face.u, .16));
+      const [vx, vy] = project(add(center, face.v, .16));
+      g.save();
+      const radius = Math.max(5, size * .27);
+      const light = g.createRadialGradient(x, y, 0, x, y, radius);
+      light.addColorStop(0, 'rgba(255,250,194,.72)');
+      light.addColorStop(.36, 'rgba(255,190,51,.44)');
+      light.addColorStop(1, 'rgba(255,163,31,0)');
+      g.fillStyle = light; g.fillRect(x - radius, y - radius, radius * 2, radius * 2);
+      g.transform(ux - x, uy - y, vx - x, vy - y, x, y);
+      g.beginPath(); g.arc(0, 0, 1, 0, Math.PI * 2);
+      g.fillStyle = '#fff5b8'; g.fill();
+      g.restore();
+    }
     return;
   }
-  const face = shape === 'd6' ? FACES.find(f => f.val === faceIndex) : POLY[shape]?.faces[faceIndex - 1];
-  if (!face) return;
-  const polygon = projectedFacePolygon(shape, face, R);
-  g.save(); g.beginPath();
-  polygon.forEach(([x, y], i) => i ? g.lineTo(cx + x * size, cy + y * size) : g.moveTo(cx + x * size, cy + y * size));
-  g.closePath(); g.lineJoin = 'round';
-  g.strokeStyle = '#ffe08a'; g.lineWidth = Math.max(1.8, size * .035);
-  g.shadowColor = '#ffbb4b'; g.shadowBlur = Math.max(6, size * .2);
-  g.stroke(); g.restore();
+  const P = POLY[shape];
+  if (!P) return;
+  const faces = shape === 'd4'
+    ? P.faces.filter(f => f.idx.includes(faceIndex - 1) && m3apply(R, f.n)[2] > .02)
+    : [P.faces[faceIndex - 1]].filter(Boolean);
+  for (const face of faces) {
+    const inv = m3transpose(alignR(face.n));
+    const u = m3apply(inv, [1, 0, 0]), v = m3apply(inv, [0, 1, 0]);
+    const offsets = face.idx.map(vi => P.verts[vi].map((n, i) => n - face.c[i]));
+    const texScale = DICE_MAT_TEX * .455 / Math.max(...offsets.map(o => Math.hypot(...o)));
+    let center = face.c, axisU = u, axisV = v, fontFraction;
+    if (shape === 'd4') {
+      const vertex = P.verts[faceIndex - 1];
+      center = face.c.map((n, i) => n + (vertex[i] - n) * .39);
+      const delta = vertex.map((n, i) => n - face.c[i]);
+      const angle = Math.atan2(delta.reduce((sum, n, i) => sum + n * u[i], 0),
+        -delta.reduce((sum, n, i) => sum + n * v[i], 0));
+      const c = Math.cos(angle), s = Math.sin(angle);
+      axisU = u.map((n, i) => n * c + v[i] * s);
+      axisV = v.map((n, i) => n * c - u[i] * s);
+      fontFraction = .28;
+    } else {
+      fontFraction = face.idx.length === 5 ? .36 : faceIndex <= 9 ? .32 : .27;
+    }
+    const [x, y] = project(center);
+    // One texture pixel corresponds to 1/texScale local world units. A short
+    // projected step gives a stable affine tangent basis for the glyph.
+    const step = .06, pu = project(add(center, axisU, step)), pv = project(add(center, axisV, step));
+    const basis = [
+      (pu[0] - x) / (step * texScale), (pu[1] - y) / (step * texScale),
+      (pv[0] - x) / (step * texScale), (pv[1] - y) / (step * texScale),
+    ];
+    const fontSize = DICE_MAT_TEX * fontFraction;
+    const value = shape === 'd4' ? faceIndex : labels ? labels[faceIndex - 1] : dieFaceLabels(kind)[faceIndex - 1];
+    g.save();
+    const outline = projectedFacePolygon(shape, face, R);
+    g.beginPath(); outline.forEach(([px, py], i) => i ? g.lineTo(cx + px * size, cy + py * size) : g.moveTo(cx + px * size, cy + py * size));
+    g.closePath(); g.clip();
+    g.transform(...basis, x, y);
+    g.font = uiFont(fontSize); g.textAlign = 'center'; g.textBaseline = 'middle'; g.lineJoin = 'round';
+    g.lineWidth = fontSize * .20; g.strokeStyle = 'rgba(255,177,42,.93)';
+    g.shadowColor = '#ffb321'; g.shadowBlur = Math.max(6, size * .18);
+    g.strokeText(String(value), 0, 0); g.shadowBlur = 0;
+    g.fillStyle = '#fff8cb'; g.fillText(String(value), 0, 0);
+    g.restore();
+  }
 }
 // The reward comes from the face pointing toward the overhead camera (+Z),
 // regardless of which numeral happens to sit highest in the 2D image.
@@ -2780,7 +2819,7 @@ function drawPolyDie(g, cx, cy, size, kind, R, skinId) {
 }
 
 function drawSlot() {
-  if (!SLOT.active) {
+  if (!SLOT.active || chestReveal()) {
     if (!slotCanvas.classList.contains('hidden')) slotCanvas.classList.add('hidden');
     return;
   }
@@ -2795,50 +2834,55 @@ function drawSlot() {
   drawCube(sctx, 37, 40 - bounce, 17, SLOT.R, null, 0, undefined, 'slot', SLOT.labels);
 }
 
-// 굴리는 동안 아레나 한가운데에 큰 주사위. 획득 연출(acquireFx)이 같은 자리(W/2,H/2)에서 터지므로 굴림→결과가 한 곳에서 이어진다.
-// 상대 필드를 보는 중(VIEW)에는 내 굴림을 그리지 않는다
+// Auto-rolls are shown once, including their actual resting pose. Manually
+// thrown dice stay at their landing point instead of reappearing in the center.
 function drawCenterRoll() {
   if (VIEW.pid || S.phase !== 'playing') return;
-  const live = SLOT.active && SLOT.phase >= 0, linger = !SLOT.active && ROLL_SHOW.t > 0 && ROLL_SHOW.R;
-  if (!live && !linger) return;
-  if (deckRun()) { ctx.save(); ctx.globalAlpha=live?1:Math.min(1,ROLL_SHOW.t/ROLL_SHOW.dur); drawDeckReveal(ctx,W/2,H/2,Math.min(W,H)*0.09); ctx.restore(); return; }
-  const cx = W / 2, cy = H / 2;
-  const base = Math.round(Math.min(W, H) * 0.085);   // 큐브 반변 — 세로 아레나(720 폭)에서 61 → 주사위가 화면 폭의 1/5 쯤
-  const kind = live ? (SLOT.kind || 'd6') : ROLL_SHOW.kind, R = live ? SLOT.R : ROLL_SHOW.R;
-  const poly = kind !== 'd6';
-  let scale = 1, alpha = 1, bounce = 0, glow = 0;
-  if (live) {
-    if (SLOT.t < 0.16) scale = 0.55 + 0.45 * (SLOT.t / 0.16);                      // 팝인
-    bounce = SLOT.phase === 0 ? Math.abs(Math.sin(SLOT.t * 16)) * base * 0.35 : 0; // 튀기
-    if (SLOT.phase === 1) glow = Math.min(1, SLOT.t2 / 0.25);                     // 멈추면서 금빛
-  } else {
-    const p = ROLL_SHOW.t / ROLL_SHOW.dur;                                          // 여운: 살짝 커지며 사라진다
-    alpha = Math.min(1, p * 1.6); scale = 1 + (1 - p) * 0.3; glow = p;
+  const live = SLOT.active && SLOT.phase >= 0;
+  if (deckRun()) {
+    if (!live && !(ROLL_SHOW.t > 0 && ROLL_SHOW.R)) return;
+    ctx.save(); ctx.globalAlpha=live?1:Math.min(1,ROLL_SHOW.t/ROLL_SHOW.dur);
+    drawDeckReveal(ctx,W/2,H/2,Math.min(W,H)*0.09); ctx.restore(); return;
   }
-  ctx.save();
-  ctx.globalAlpha = alpha;
-  const halo = ctx.createRadialGradient(cx, cy, base * 0.5, cx, cy, base * 2.8);   // 어두운 원반 — 배경 위에서 주사위가 읽히게
-  halo.addColorStop(0, 'rgba(0,0,0,0.46)'); halo.addColorStop(1, 'rgba(0,0,0,0)');
-  ctx.fillStyle = halo; ctx.beginPath(); ctx.arc(cx, cy, base * 2.8, 0, Math.PI * 2); ctx.fill();
-  ctx.fillStyle = 'rgba(0,0,0,0.38)';                                               // 바닥 그림자 (튀어오르면 작아진다)
-  const sh = 1 - bounce / (base * 0.35) * 0.3;
-  ctx.beginPath(); ctx.ellipse(cx, cy + base * 1.35, base * 1.15 * scale * sh, base * 0.4 * scale * sh, 0, 0, Math.PI * 2); ctx.fill();
+  if (!live) return;
+  const cx = W / 2, cy = H / 2, base = Math.round(Math.min(W, H) * 0.085);
+  const kind = SLOT.kind || 'd6', scale = SLOT.t < .16 ? .55 + .45 * SLOT.t / .16 : 1;
+  const bounce = SLOT.phase === 0 ? Math.abs(Math.sin(SLOT.t * 16)) * base * .35 : 0;
   const size = base * scale, dy = cy - bounce;
-  if (poly) {
-    if (glow > 0) { const g = ctx.createRadialGradient(cx, dy, size * 0.3, cx, dy, size * 2.4); g.addColorStop(0, hexA('#ffd452', 0.4 * glow)); g.addColorStop(1, hexA('#ffd452', 0)); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, dy, size * 2.4, 0, Math.PI * 2); ctx.fill(); }
-    drawPolyDie(ctx, cx, dy, size * 1.24, kind, R);
-    if (linger && ROLL_SHOW.physical) drawPhysicalFaceOutline(ctx, cx, dy, size * 1.24, kind, R, ROLL_SHOW.faceIndex);
-  } else {
-    drawCube(ctx, cx, dy, size, R, glow > 0 ? '#ffd452' : null, glow * 0.6, undefined, 'center', SLOT.labels);
-    if (linger && ROLL_SHOW.physical) drawPhysicalFaceOutline(ctx, cx, dy, size, kind, R, ROLL_SHOW.faceIndex);
-  }
-  if (linger && ROLL_SHOW.physical && ROLL_SHOW.face) {
-    const caption = `${dieShape(kind) === 'd4' ? '위 꼭짓점' : '하늘을 향한 면'} ${ROLL_SHOW.face} · ★${ROLL_SHOW.face}`;
-    ctx.font = uiFont(Math.max(17, base * .29)); ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    ctx.lineJoin = 'round'; ctx.lineWidth = 6; ctx.strokeStyle = 'rgba(22,16,14,.95)';
-    ctx.strokeText(caption, cx, cy + base * 2.05); ctx.fillStyle = '#fff1c7'; ctx.fillText(caption, cx, cy + base * 2.05);
+  ctx.save();
+  ctx.fillStyle = 'rgba(0,0,0,.28)';
+  ctx.beginPath(); ctx.ellipse(cx,cy+base*1.35,base*1.15*scale,base*.4*scale,0,0,Math.PI*2);ctx.fill();
+  if (kind !== 'd6') drawPolyDie(ctx,cx,dy,size*1.24,kind,SLOT.R);
+  else drawCube(ctx,cx,dy,size,SLOT.R,null,0,undefined,'center',SLOT.labels);
+  if (SLOT.phase === 1 && SLOT.final && kind !== 'd1' && !deckRun()) {
+    drawPhysicalResultGlow(ctx,cx,dy,kind === 'd6' ? size : size*1.24,
+      S.mode === 'stage' ? 'story' : kind,SLOT.R,SLOT.faceIndex,SLOT.labels);
   }
   ctx.restore();
+}
+
+// Uses exactly the pending die's model and pose, without sampling its result.
+function drawChestReveal(effect) {
+  if (VIEW.pid || !effect.dieKind) return;
+  const f = { ...effect, x: W/2, y: H/2 }, tray = activeTray();
+  const p = window.DKFX.chestDiePose(f,tray);
+  const R = p.turn ? m3mul(m3axisAngle(0,0,1,p.turn),f.dieR) : f.dieR;
+  const paintDie = (g,x,y,size) => drawPolyDie(g,x,y,size,f.dieKind,R);
+  // Fade the chest while the die travels; the die itself stays fully opaque.
+  const chest = { ...f, dur: 1.94 };
+  window.DKFX.drawChest(ctx,chest,g => {
+    if (p.visible && !p.flight) paintDie(g,p.localX,p.localY,p.localSize);
+  });
+  if (p.visible && p.flight) paintDie(ctx,p.x,p.y,p.size);
+  if (f.t >= .95 && f.t < 1.65) {
+    const ch=chestDef(), label=`${ch.grade[f.dieKind]} · ${ch.label[f.dieKind]}`;
+    ctx.save(); ctx.globalAlpha=Math.min(1,(f.t-.95)/.12,(1.65-f.t)/.1);
+    ctx.font=uiFont(18); ctx.textAlign='center'; ctx.textBaseline='middle';
+    const width=ctx.measureText(label).width+28, y=p.y+p.size+26;
+    ctx.fillStyle='#25273c'; ctx.strokeStyle=f.color; ctx.lineWidth=2;
+    ctx.beginPath();ctx.roundRect(p.x-width/2,y-16,width,32,10);ctx.fill();ctx.stroke();
+    ctx.fillStyle='#fff4d6';ctx.fillText(label,p.x,y);ctx.restore();
+  }
 }
 
 function drawDeckReveal(g,x,y,size) {
@@ -2977,14 +3021,6 @@ function updateDie(dt) {
       DIE.face = DIE.final;
       DIE.w = [0, 0, 0];
       SFX.settle();
-      S.texts.push({ str: DIE.final + '!', x: DIE.x, y: DIE.y - 44, t: 0, color: '#ffe9a0', big: true });
-      S.fxs.push({ kind: 'ring', x: DIE.x, y: DIE.y - 14, t: 0, dur: 0.5, size: 60, color: TOWER_DEFS[DIE.final].color });
-      for (let i = 0; i < 10; i++) {
-        const a = Math.PI * 2 * i / 10 + fxRandom() * 0.4;
-        S.fxs.push({ kind: 'sparkle', x: DIE.x, y: DIE.y - 16,
-                     vx: Math.cos(a) * (60 + fxRandom() * 70), vy: Math.sin(a) * (40 + fxRandom() * 50) - 40,
-                     t: 0, dur: 0.55, size: 2.5 + fxRandom() * 2 });
-      }
     }
   } else if (DIE.state === 'settle') {
     DIE.settleT += dt;
@@ -3033,7 +3069,7 @@ function updateDie(dt) {
 function drawDie() {
   if (S.phase !== 'playing') return;
   const manual = manualChestRoll();
-  if (S.mode === 'infinity' && !manual) return;
+  if (chestReveal() || (S.mode === 'infinity' && !manual)) return;
   const tray = activeTray();
   const hidden = S.heldDie > 0 && DIE.state === 'tray';
 
@@ -3069,10 +3105,7 @@ function drawDie() {
 
   // 본체: 스토리 주사위와 같은 3D 물리 자세를 다면체 외형에도 적용
   let glowColor = null, glowStr = 0;
-  if (DIE.state === 'settle') {
-    glowColor = TOWER_DEFS[DIE.final].color;
-    glowStr = 0.5 + 0.5 * Math.sin(DIE.settleT * 18);
-  } else if (grabbing) {
+  if (grabbing) {
     glowColor = '#ffe9a0';
     glowStr = 0.55;
   }
@@ -3082,10 +3115,10 @@ function drawDie() {
       ctx.beginPath(); ctx.arc(DIE.x, gy, size * 1.65, 0, Math.PI * 2); ctx.fill(); ctx.restore();
     }
     drawPolyDie(ctx, DIE.x, gy, size * 1.25, SLOT.kind, DIE.R);
-    if (DIE.state === 'settle') drawPhysicalFaceOutline(ctx, DIE.x, gy, size * 1.25, SLOT.kind, DIE.R, DIE.faceIndex);
+    if (DIE.state === 'settle') drawPhysicalResultGlow(ctx, DIE.x, gy, size * 1.25, SLOT.kind, DIE.R, DIE.faceIndex);
   } else {
     drawCube(ctx, DIE.x, gy, size, DIE.R, glowColor, glowStr, undefined, 'full', manual ? null : DIE.labels);
-    if (DIE.state === 'settle') drawPhysicalFaceOutline(ctx, DIE.x, gy, size, manual ? SLOT.kind : 'story', DIE.R, DIE.faceIndex);
+    if (DIE.state === 'settle') drawPhysicalResultGlow(ctx, DIE.x, gy, size, manual ? SLOT.kind : 'story', DIE.R, DIE.faceIndex, DIE.labels);
   }
 
   // 트레이 대기 중 안내
@@ -3998,6 +4031,7 @@ function updateVisuals(dt) {
   S.texts = S.texts.filter(tx => tx.t < (tx.dur || 1.1));
 }
 function advancePresentation(dt) {
+  const revealing = chestReveal();
   if (ROLL_SHOW.t > 0) ROLL_SHOW.t = Math.max(0, ROLL_SHOW.t - dt);
   for (const t of S.towers) if (t.kick > 0) t.kick = Math.max(0, t.kick - dt * 2.7);
   for (const t of VIEW.towers) if (t.kick > 0) t.kick = Math.max(0, t.kick - dt * 2.7);
@@ -4005,6 +4039,10 @@ function advancePresentation(dt) {
   for (const tx of S.texts) if (tx.realtime) tx.t += dt;
   S.fxs = S.fxs.filter(f => f.t < f.dur);
   S.texts = S.texts.filter(tx => tx.t < (tx.dur || 1.1));
+  if (revealing && !chestReveal()) {
+    const tray = activeTray(); DIE.x = tray.x; DIE.y = tray.y;
+    syncUI();
+  }
 }
 
 function sheetHit(kind, x, y, size, dur) {
@@ -4581,15 +4619,13 @@ function drawEffects(layer) {
   };
   for (const f of S.fxs) {
     const effectLayer = f.kind === 'circle' || f.kind === 'towerHalo' ? 'ground'
-      : f.kind === 'chestOpen' || f.kind === 'dieReward' ? 'reward' : 'world';
+      : f.kind === 'chestOpen' ? 'reward' : 'world';
     if (effectLayer !== layer) continue;
     if (f.anchorTower) { f.x = f.anchorTower.x + f.anchorDx; f.y = f.anchorTower.y + f.anchorDy; }
     const pr = f.t / f.dur;
     if (pr < 0) continue;                                       // 지연 시작 (t 가 음수)
     if (f.kind === 'chestOpen') {
-      window.DKFX.drawChest(ctx, f);
-    } else if (f.kind === 'dieReward') {
-      window.DKFX.drawReward(ctx, f);
+      drawChestReveal(f);
     } else if (sheetMap[f.kind]) {
       const frames = sheetMap[f.kind];
       const frame = frames[Math.min(frames.length - 1, Math.floor(pr * frames.length))];
@@ -5537,7 +5573,7 @@ function syncUIRest() {
     diceSlot.classList.remove('unfocused');
     diceImg.classList.add('hidden');
     diceQ.classList.toggle('hidden', SLOT.active);
-    diceSlot.title = manualChestReady() ? '상자 주사위를 끌어 던지거나 던지기 버튼을 누르세요' : SLOT.active ? '굴리는 중…' : '보유 주사위';
+    diceSlot.title = chestReveal() ? '상자에서 주사위가 나오는 중입니다' : manualChestReady() ? '상자 주사위를 끌어 던지거나 던지기 버튼을 누르세요' : SLOT.active ? '굴리는 중…' : '보유 주사위';
     heldInfo.classList.add('hidden');
   }
   diceSlot.classList.toggle('rolling', SLOT.active);
@@ -5547,11 +5583,12 @@ function syncUIRest() {
     rollBtn.childNodes[0].nodeValue = document.body.classList.contains('ui-art') ? '뽑기' : '🎁 뽑기';   // 그림 아이콘(::before 상자)이 있으면 이모지는 뺀다 (아이콘 두 개 방지)
     rollBtn.title = '골드로 주사위를 뽑습니다. d4·d6은 자동으로 굴리고 d8 이상은 직접 던집니다. 보이는 윗면 숫자가 성★입니다.\n일반 50% · 레어 33.1% · 고대 10.2% · 유물 5.1% · 서사 0.8% · 전설 0.5% · 에픽 0.2% · 신화 0.08% · 태초 0.019%';
     if (deckRun()) { rollBtn.childNodes[0].nodeValue='소환'; rollBtn.title='덱의 다섯 종류가 각각 20% 확률로 1눈금 소환됩니다. 소환할 때마다 비용이 5 SP씩 증가합니다.'; }
+    if (chestReveal()) rollBtn.childNodes[0].nodeValue='개봉 중';
     if (manualReady) { rollBtn.childNodes[0].nodeValue='던지기'; rollBtn.title='상자 주사위를 직접 끌어 던지거나 이 버튼으로 물리 투척합니다. 추가 비용은 없습니다.'; }
     rollBtn.classList.toggle('manual-roll', manualReady);
     const busy = SLOT.active || !!S.heldDie;
     const full = !busy && !canPlaceAnywhere();   // 빈 칸도 합체 여지도 없다
-    $('roll-cost').textContent = manualReady ? `${chestDef().grade[SLOT.kind]} ${chestDef().label[SLOT.kind]} · 추가 비용 0G` : SLOT.active ? '굴리는 중…' : S.heldDie ? (S.dieFocus ? '배치 후 가능' : '주사위 보류 중') : full ? '석단이 가득 참' : `${cost} ${deckRun()?'SP':'G'}`;
+    $('roll-cost').textContent = manualReady ? `${chestDef().grade[SLOT.kind]} ${chestDef().label[SLOT.kind]} · 추가 비용 0G` : chestReveal() ? `${chestDef().grade[SLOT.kind]} ${chestDef().label[SLOT.kind]}` : SLOT.active ? '굴리는 중…' : S.heldDie ? (S.dieFocus ? '배치 후 가능' : '주사위 보류 중') : full ? '석단이 가득 참' : `${cost} ${deckRun()?'SP':'G'}`;
     rollBtn.disabled = !manualReady && (busy || full || !(S.inf && S.phase === 'playing' && S.gold >= cost));
     const q = $('queue-chip');
     if (q) { const n = (S.inf && S.inf.queue) ? S.inf.queue.length : 0; q.classList.toggle('hidden', n === 0); q.querySelector('b').textContent = n; }
@@ -8183,7 +8220,7 @@ function frame(ts) {
     if (!S.paused) {
       for (let i = 0; i < S.speed; i++) update(dt);
       updateDie(dt);
-      updateSlot(dt * S.speed);
+      updateSlot(dt); // Printed results must remain readable at every battle speed.
     }
     advancePresentation(dt);
     if (battleRun() && S.inf.battleDirty && S.phase === 'playing') {

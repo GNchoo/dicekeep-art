@@ -45,7 +45,7 @@ async function boot(browser, name, viewport, mobile) {
     const response = await route.fetch(), source = await response.text(), anchor = 'window.DK = S;';
     assert.equal(source.split(anchor).length, 2, 'unique private-test hook');
     await route.fulfill({ response, body: source.replace(anchor,
-      'window.__physicalQA={dieFaceLabels,physicalFaceValue,dieShape,POLY,FACES,DIE_SYMMETRIES,m3apply,m3mul,updateDie,updateSlot,buildDiceMaterial,diceSkin,drawPolyDie,polyRestR};\n' +
+      'window.__physicalQA={dieFaceLabels,physicalFaceValue,dieShape,POLY,FACES,DIE_SYMMETRIES,m3apply,m3mul,updateDie,updateSlot,advancePresentation,manualChestReady,buildDiceMaterial,diceSkin,drawPolyDie,polyRestR};\n' +
       'window.__physicalQA.cameraFace=' + cameraFacingDieResult.toString() + ';\n' + anchor) });
   });
   await page.goto(gameUrl());
@@ -222,7 +222,13 @@ async function sampleButtonThrows(page, kind, sampleCount = 200) {
         DK.gold = 1000000; DK.heldDie = 0; DKSLOT.active = false; DKDIE.state = 'tray';
         DK.enemies.length = 0; DK.fxs.length = 0; DK.texts.length = 0;
         if (DKchest() !== kind) throw Error(kind + ': button sample could not buy chest ' + i);
-        if (!automatic(kind)) DKthrow(920, -300); // exactly the on-screen button's impulse
+        if (!automatic(kind)) {
+          if (__physicalQA.manualChestReady() || DKSLOT.final || DKDIE.final)
+            throw Error(kind + ': reward was playable or preselected before reveal ' + i);
+          __physicalQA.advancePresentation(2.3);
+          if (!__physicalQA.manualChestReady()) throw Error(kind + ': reveal did not unlock the die ' + i);
+          DKthrow(920, -300); // exactly the on-screen button's impulse
+        }
         let frames = 0;
         while (!DK.heldDie && frames++ < 900) {
           const priorState = automatic(kind) ? DKSLOT.phase : DKDIE.state;
@@ -274,7 +280,16 @@ async function throwAndObserve(page, kind, chosenIndex = null, chosenPose = null
       ch.roll = () => { faceRollCalls++; throw new Error('Die face was preselected before landing'); };
       const goldBefore = DK.gold, bought = DKchest();
       const awaiting = { state: DKDIE.state, phase: DKSLOT.phase, held: DK.heldDie, final: DKSLOT.final };
-      if (!automatic(kind)) DKthrow(900, -300);
+      let revealGate = null;
+      if (!automatic(kind)) {
+        revealGate = { readyBefore: q.manualChestReady(), dieFinalBefore: DKDIE.final };
+        DKthrow(900, -300);
+        revealGate.stateDuring = DKDIE.state;
+        revealGate.phaseDuring = DKSLOT.phase;
+        q.advancePresentation(2.3);
+        revealGate.readyAfter = q.manualChestReady();
+        DKthrow(900, -300);
+      }
       if (chosenPose) {
         if (automatic(kind)) { DKSLOT.R = chosenPose.slice(); DKSLOT.w = [0, 0, 0]; DKSLOT.t = .48; }
         else { DKDIE.R = chosenPose.slice();
@@ -296,7 +311,7 @@ async function throwAndObserve(page, kind, chosenIndex = null, chosenPose = null
             cameraZ: q.cameraFace(kind, R, q.dieFaceLabels(kind), q).z };
         }
       }
-      return { bought, goldSpent: goldBefore - DK.gold, faceRollCalls, awaiting, frames,
+      return { bought, goldSpent: goldBefore - DK.gold, faceRollCalls, awaiting, revealGate, frames,
         landing, finalPose, held: DK.heldDie, final: automatic(kind) ? DKSLOT.final : DKDIE.final,
         slotFinal: DKSLOT.final, state: DKDIE.state };
     } finally { ch.draw = oldDraw; ch.roll = oldRoll; }
@@ -311,6 +326,9 @@ function checkRoll(result, kind, index) {
   assert.deepEqual([result.awaiting.state, result.awaiting.phase, result.awaiting.held],
     ['tray', automatic(kind) ? 0 : -1, 0], `${kind} ${label}: correct automatic/manual start`);
   assert.equal(result.awaiting.final, 0, `${kind} ${label}: no result before the roll`);
+  if (!automatic(kind)) assert.deepEqual(result.revealGate,
+    { readyBefore: false, dieFinalBefore: 0, stateDuring: 'tray', phaseDuring: -1, readyAfter: true },
+    `${kind} ${label}: reveal blocks throws without selecting a result, then unlocks the die`);
   assert.ok(result.landing && result.finalPose, `${kind} ${label}: traverses roll and settle`);
   assert.equal(result.landing.physical, result.landing.geometry, `${kind} ${label}: physics reads the camera-facing printed number`);
   assert.equal(result.landing.awarded, result.landing.geometry, `${kind} ${label}: no hidden reward substitution at landing`);

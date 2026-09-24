@@ -137,6 +137,7 @@ function playRun({ seed, policy, clearWave, tune, lateExp, bossLimit, hpExp, lat
     if (!DKSLOT.active || DK.heldDie) return;
     if (DKSLOT.phase === -1) {
       const gold = DK.gold;
+      __pureQA.advancePresentation(2.3); // Let the purchased die reach the input tray.
       DKthrow(900, -300);
       if (DKDIE.state !== 'throw' || DK.gold !== gold) throw new Error('수동 상자 투척 실패 또는 이중 결제');
     }
@@ -145,7 +146,7 @@ function playRun({ seed, policy, clearWave, tune, lateExp, bossLimit, hpExp, lat
     let rollTicks = 0;
     while (DK.phase === 'playing' && !DK.heldDie && rollTicks++ < 900 && ticks < MAX_TICKS) {
       __pureQA.updateDie(DT);
-      __pureQA.updateSlot(DT * DK.speed);
+      __pureQA.updateSlot(DT);
       __pureQA.update(DT);
       ticks++;
     }
@@ -206,7 +207,7 @@ async function openGame(browser, errors) {
     const response = await route.fetch(), original = await response.text();
     const anchor = 'window.DK = S;';
     assert.equal(original.split(anchor).length, 2, '테스트 훅 삽입 지점');
-    const hook = 'window.__pureQA={update,updateDie,updateSlot,startWave,chestCost,towerAt,SPOTS:()=>SPOTS};\n';
+    const hook = 'window.__pureQA={update,advancePresentation,updateDie,updateSlot,startWave,chestCost,towerAt,SPOTS:()=>SPOTS};\n';
     await route.fulfill({ response, body: original.replace(anchor, hook + anchor) });
   });
   const url = new URL('index.html', base);

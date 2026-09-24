@@ -64,7 +64,7 @@ async function boot(browser, viewport, row) {
       row.gameSha256 = hash;
       const anchor = 'window.DK = S;';
       assert.equal(original.split(anchor).length, 2, '테스트 훅 삽입 지점은 하나여야 한다');
-      const hook = 'window.__pureQA={update,updateDie,updateSlot,startWave,towerDmg,chestCost,towerAt,SPOTS:()=>SPOTS};\n';
+      const hook = 'window.__pureQA={update,advancePresentation,updateDie,updateSlot,startWave,towerDmg,chestCost,towerAt,SPOTS:()=>SPOTS};\n';
       await route.fulfill({ response, body: original.replace(anchor, hook + anchor) });
     } catch (error) {
       row.errors.push('test route: ' + error.message);
@@ -125,6 +125,7 @@ function playRun({ account, mode, seed, waves }) {
       if (!DKchest()) break;
       if (DKSLOT.active && DKSLOT.phase === -1) {
         const gold = DK.gold;
+        __pureQA.advancePresentation(2.3); // Let the purchased die reach the input tray.
         DKthrow(900, -300);
         if (DKDIE.state !== 'throw' || DK.gold !== gold) throw new Error('수동 던지기 실패 또는 상자값 이중 차감');
       }

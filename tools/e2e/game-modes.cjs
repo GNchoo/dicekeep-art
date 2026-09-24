@@ -63,7 +63,7 @@ async function boot(browser, viewport, row) {
       row.gameSha256 = hash;
       const anchor = 'window.DK = S;';
       assert.equal(original.split(anchor).length, 2, 'unique test hook anchor');
-      const hook = 'window.__modeQA={finishSlot,update,startWave,settleInfRun,checkInfClear,saveSave,towerDmg};\n';
+      const hook = 'window.__modeQA={finishSlot,update,advancePresentation,startWave,settleInfRun,checkInfClear,saveSave,towerDmg};\n';
       await route.fulfill({ response, body: original.replace(anchor, hook + anchor) });
     } catch (error) {
       row.errors.push('test route: ' + error.message);
@@ -161,6 +161,13 @@ async function modeDraws(page, row, dir) {
   });
   check(row, 'four-plus chest waits for a player throw without revealing its face', row.pureDraw,
     { draws: 1, kind: 'd8', phase: -1, held: 0, die: 'tray' });
+  const beforeReveal = await page.evaluate(() => {
+    DKthrow(900, -300);
+    return { phase: DKSLOT.phase, held: DK.heldDie, die: DKDIE.state };
+  });
+  check(row, 'a throw cannot skip the visible chest opening', beforeReveal,
+    { phase: -1, held: 0, die: 'tray' });
+  await page.evaluate(() => __modeQA.advancePresentation(2.3));
   await page.evaluate(() => DKthrow(900, -300));
   await page.waitForFunction(() => DK.heldDie > 0 && !DKSLOT.active, null, { timeout: 12000 });
   const physicalOutcome = await page.evaluate(() => ({ ...__pureChestRestore(), face: DK.heldDie, final: DKSLOT.final }));

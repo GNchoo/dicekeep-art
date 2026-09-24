@@ -66,7 +66,7 @@ async function boot(browser, name, viewport, mobile) {
     const anchor = 'window.DK = S;';
     assert.equal(source.split(anchor).length, 2, 'one test hook insertion point');
     await route.fulfill({ response, body: source.replace(anchor,
-      'window.__diceRestQA = { poseFor: shape => shape === "d6" ? faceTopR(6) : polyRestR(shape), dieShape, POLY, FACES, DIE_SYMMETRIES, m3apply, m3mul, alignR, dieFaceLabels, physicalFaceValue, physicalRestAlignment, restThreshold, stabilizeRestPose, updateDie };\n  ' +
+      'window.__diceRestQA = { poseFor: shape => shape === "d6" ? faceTopR(6) : polyRestR(shape), dieShape, POLY, FACES, DIE_SYMMETRIES, m3apply, m3mul, alignR, dieFaceLabels, physicalFaceValue, physicalRestAlignment, restThreshold, stabilizeRestPose, updateDie, advancePresentation, manualChestReady };\n  ' +
       'window.__diceRestQA.cameraFace=' + cameraFacingDieResult.toString() + ';\n' + anchor) });
   });
   await page.goto(gameUrl());
@@ -118,6 +118,7 @@ async function inspect(page, fixture) {
       const cameraFace = window.__diceRestQA.cameraFace(kind, actual, window.__diceRestQA.dieFaceLabels(kind), window.__diceRestQA);
       return {
         bought, shape, phase: DKSLOT.phase, state: DKDIE.state, held: DK.heldDie,
+        slotFinal: DKSLOT.final, dieFinal: DKDIE.final, readyDuringReveal: window.__diceRestQA.manualChestReady(),
         actual, expected, matchesSymmetry, symmetryCount, projected, hull, visibleFaces, maxVertexDepth,
         cameraFace: cameraFace.value, cameraDepth: cameraFace.z,
         awardedFace: window.__diceRestQA.physicalFaceValue(kind, actual),
@@ -142,6 +143,9 @@ async function inspectPhysicalResults(page, kind) {
       chest.roll = () => { throw Error('The visible die must not preselect a reward face'); };
       const bought = DKchest();
       const qa = window.__diceRestQA;
+      const readyDuringReveal = qa.manualChestReady();
+      qa.advancePresentation(2.3);
+      const readyAfterReveal = qa.manualChestReady();
       DKthrow(1200, -250);
       let frames = 0;
       for (; frames < 600; frames++) {
@@ -149,7 +153,7 @@ async function inspectPhysicalResults(page, kind) {
         if (DKDIE.state === 'settle' && DKDIE.settleT >= .5) break;
       }
       return {
-        bought, model: qa.POLY[qa.dieShape(kind)], frames,
+        bought, readyDuringReveal, readyAfterReveal, model: qa.POLY[qa.dieShape(kind)], frames,
         actual: DKDIE.R.slice(), landing: DKDIE.settleFrom?.slice(),
         dieState: DKDIE.state, settleT: DKDIE.settleT, final: DKDIE.final, slotFinal: DKSLOT.final,
         physicalAtLanding: qa.physicalFaceValue(kind, DKDIE.settleFrom || DKDIE.R),
@@ -224,6 +228,8 @@ async function run(browser, name, viewport, mobile) {
       assert.equal(result.bought, fixture.kind, fixture.kind + ': correct chest reward');
       assert.equal(result.shape, fixture.shape, fixture.kind + ': expected real solid');
       assert.deepEqual([result.phase, result.state, result.held], [-1, 'tray', 0], fixture.kind + ': awaits player input');
+      assert.deepEqual([result.slotFinal, result.dieFinal, result.readyDuringReveal], [0, 0, false],
+        fixture.kind + ': opening chest shows an unresolved die before input is available');
       assert.equal(result.dieTarget, 'game', fixture.kind + ': waiting die is on the interactive canvas');
       assert.equal(result.matchesSymmetry, true, fixture.kind + ': its visible initial orientation is a valid solid symmetry of the canonical pose');
       assert.equal(result.symmetryCount, { d4: 12, d6: 24, d8: 24, d12: 60, d20: 60 }[fixture.shape],
@@ -260,6 +266,8 @@ async function run(browser, name, viewport, mobile) {
     for (const kind of ['d8']) {
       const outcomes = await inspectPhysicalResults(page, kind);
       assert.equal(outcomes.bought, kind, `physical ${kind} fixture was purchased`);
+      assert.deepEqual([outcomes.readyDuringReveal, outcomes.readyAfterReveal], [false, true],
+        `${kind}: physical throw becomes available after the chest reveal`);
       assert.equal(outcomes.dieState, 'settle', `representative ${kind} completes actual throw physics`);
       assert.ok(outcomes.final >= 1 && outcomes.final <= 8, `physical ${kind} awards a valid landed face`);
       assert.deepEqual([outcomes.physicalAtLanding, outcomes.physicalAfterSettle,

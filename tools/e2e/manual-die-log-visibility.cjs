@@ -32,7 +32,7 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
         DKlog('뽑기 완료 · 던지기 전에 주사위를 확인하세요', 'sys');
         DKlog('8면체 획득 · 주사위를 끌어 던지세요', 'gacha');
       });
-      await page.waitForTimeout(150);
+      await page.waitForFunction(() => document.querySelector('#roll-btn')?.classList.contains('manual-roll'), null, { timeout: 10000 });
       const measure = () => page.evaluate(() => {
         const canvas = document.getElementById('game');
         const rect = canvas.getBoundingClientRect();
@@ -105,7 +105,7 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
         });
         await page.setViewportSize({ width: 568, height: 320 });
         await page.waitForFunction(() => document.getElementById('wrap').classList.contains('xnarrow'));
-        await page.waitForTimeout(150);
+        await page.waitForFunction(() => document.querySelector('#roll-btn')?.classList.contains('manual-roll'), null, { timeout: 10000 });
         visible(await measure(), 'pending die after landscape resize');
       }
       assert.deepEqual(errors, [], `${name}: no browser errors`);

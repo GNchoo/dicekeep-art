@@ -22,14 +22,21 @@ async function boot(browser, viewport) {
     const anchor = 'window.DK = S;';
     check(source.split(anchor).length === 2, 'one QA hook anchor');
     await route.fulfill({ response, body: source.replace(anchor, `
-      const qaDrawEffects = drawEffects, qaBody = paintTowerBody;
+      const qaDrawEffects = drawEffects, qaBody = paintTowerBody, qaAdvancePresentation = advancePresentation;
       drawEffects = layer => { window.__paintOrder?.push(layer); return qaDrawEffects(layer); };
       paintTowerBody = (...args) => { window.__paintOrder?.push('tower'); return qaBody(...args); };
-      window.__presentationQA={update,advancePresentation,draw,drawEffects,relayoutArena,spawnBurst,acquireFxArt,rollShow:ROLL_SHOW};
+      advancePresentation = dt => { if (!window.__qaFreezePresentation) return qaAdvancePresentation(dt); };
+      window.__presentationQA={update,advancePresentation:qaAdvancePresentation,draw,drawEffects,relayoutArena,spawnBurst,
+        chestReveal,manualChestReady,activeTray,drawChestReveal,drawCenterRoll,rollShow:ROLL_SHOW};
       ` + anchor) });
   });
   await page.goto(gameUrl());
-  await page.waitForFunction(() => window.DK?.phase === 'title' && window.DKFX, null, { timeout: 120000 });
+  try { await page.waitForFunction(() => window.DK?.phase === 'title' && window.DKFX, null, { timeout: 30000 }); }
+  catch (error) {
+    const state=await page.evaluate(() => ({phase:window.DK?.phase,fx:!!window.DKFX,
+      loading:document.getElementById('ov-load-txt')?.textContent}));
+    throw new Error(`presentation boot failed: ${JSON.stringify({state,errors})}`,{cause:error});
+  }
   await page.click('#ov-btn');
   await page.evaluate(() => { DK.muted=true; DKstartInf('clear'); DK.paused=true; DK.gold=1000000; });
   await page.waitForTimeout(300);
@@ -38,10 +45,12 @@ async function boot(browser, viewport) {
 async function capture(page,name,time=.35) {
   await page.evaluate(time => {
     DK.paused=true; DK.waveActive=true;
-    for (const f of DK.fxs) { f.realtime=false; f.t=time; }
+    window.__qaFreezePresentation=true;
+    for (const f of DK.fxs) f.t=time;
     __presentationQA.draw();
   },time);
-  await page.screenshot({path:path.join(out,name+'.png')});
+  try { await page.screenshot({path:path.join(out,name+'.png')}); }
+  finally { await page.evaluate(() => {window.__qaFreezePresentation=false;}); }
 }
 async function power(page,row,deck=false) {
   const state = await page.evaluate(deck => {
@@ -98,6 +107,9 @@ async function chest(page,row,kind) {
     const ch=DKCONTENT.INFINITY.chest,original=ch.draw;let got;
     try{ch.draw=()=>kind;got=DKchest();}finally{ch.draw=original;}
     const f=DK.fxs.find(f=>f.kind==='chestOpen');
+    const tray=__presentationQA.activeTray(), poseAt=t=>DKFX.chestDiePose({...f,t},tray);
+    const poses=[.2,.7,1.08,1.55,1.9,2.2].map(poseAt);
+    const rolledPose=DKDIE.R.slice(), awardedFace=DKSLOT.final;
     const pictures=[];
     const c=document.createElement('canvas');c.width=420;c.height=400;const g=c.getContext('2d');
     for(let i=0;i<24;i++){g.clearRect(0,0,420,400);DKFX.drawChest(g,{...f,x:210,y:220,t:.2+i/60});pictures.push(c.toDataURL());}
@@ -108,18 +120,28 @@ async function chest(page,row,kind) {
       frontPixels.push(Array.from(g.getImageData(165,252,85,15).data));
     }
     return {got,kinds:DK.fxs.map(f=>f.kind),realtime:f.realtime,size:f.size,dur:f.dur,
+      dieKind:f.dieKind,matchingR:f.dieR.every((v,i)=>v===rolledPose[i]),awardedFace,
+      pendingKind:DKSLOT.kind,pendingPhase:DKSLOT.phase,ready:__presentationQA.manualChestReady(),poses,tray,
       unique:new Set(pictures).size,maxStep:Math.max(...angles.slice(1).map((a,i)=>Math.abs(a-angles[i]))),
       frontOpaque:frontPixels[0].filter((_,i)=>i%4===3).every(a=>a===255),
       frontUnaffected:JSON.stringify(frontPixels[0])===JSON.stringify(frontPixels[1]),
-      notice:document.getElementById('chest-reveal').textContent};
+      noticeVisible:!document.getElementById('chest-reveal').classList.contains('hidden')};
   },kind);
   assert.equal(state.got,kind);assert.deepEqual(state.kinds,['chestOpen'],'chest contains its own occluded light without a foreground column');
-  check(state.realtime&&state.size<=270&&state.dur<=1.6,'bounded real-time chest');
+  check(state.realtime&&state.size<=270&&state.dur>=2.1&&state.dur<=2.5,'bounded real-time chest with readable die reveal');
+  check(state.dieKind===kind&&state.pendingKind===kind&&state.matchingR,'the actual pending die and its original pose are inside the chest');
+  check(state.pendingPhase===-1&&!state.ready&&state.awardedFace===0,'opening neither awards a face nor enables the throw');
   check(state.unique===24&&state.maxStep<.1,'every 60Hz opening sample moves with bounded hinge angle');
   check(state.frontOpaque&&state.frontUnaffected,'colored interior light cannot tint or ghost through the opaque chest front');
-  check(state.notice.includes('상자 개봉'),'visible grade notice');
-  await capture(page,`chest-${kind}-${row.name}`,.72);
-  row.checks.push(kind+'-continuous-chest');
+  const [closed,emerging,readable,departing,travelling,landed]=state.poses;
+  check(!closed.visible&&emerging.visible&&readable.visible,'die rises visibly from inside the opening chest');
+  check(readable.y<emerging.y&&departing.y<=readable.y,'die rises smoothly without teleporting');
+  check(departing.flight===0&&travelling.flight>0&&landed.flight===1,'one continuous flight begins after readable hold');
+  check(Math.hypot(landed.x-state.tray.x,landed.y-state.tray.y)<.01,'same die arrives at actual manual-roll tray');
+  check(!state.noticeVisible,'no duplicate DOM popup over the wave banner');
+  for (const [label,t] of [['emerge',.72],['read',1.2],['fly',1.85],['land',2.18]])
+    await capture(page,`chest-${kind}-${row.name}-${label}`,t);
+  row.checks.push(kind+'-physical-die-chest-to-tray');
 }
 async function enhancement(page,row) {
   const state=await page.evaluate(()=>{
@@ -136,15 +158,18 @@ async function enhancement(page,row) {
 }
 async function highDie(page,row) {
   const state=await page.evaluate(()=>{
-    DKstartInf('clear');DK.paused=true;DK.fxs=[];DK.texts=[];DKacquire(20);
-    const f=DK.fxs[0];
+    DKstartInf('clear');DK.paused=true;DK.fxs=[];DK.texts=[];
+    const before=[...document.querySelectorAll('#chest-reveal,#enhance-toast')].map(el=>[el.textContent,el.classList.contains('hidden')]);
+    DKacquire(20);
     const random=Math.random;let calls=0;
     try{Math.random=()=>{calls++;return .5};__presentationQA.draw();}finally{Math.random=random;}
-    return{kinds:DK.fxs.map(f=>f.kind),size:f.size,tier:f.tier,calls};
+    return{kinds:DK.fxs.map(f=>f.kind),calls,
+      before,after:[...document.querySelectorAll('#chest-reveal,#enhance-toast')].map(el=>[el.textContent,el.classList.contains('hidden')])};
   });
-  assert.deepEqual(state.kinds,['dieReward'],'one coherent high-result composition');check(state.size<=330&&state.tier===4,'bounded highest-tier celebration');assert.equal(state.calls,0,'rendering never consumes gameplay RNG');
-  await capture(page,`high-die-${row.name}`,.42);
-  row.checks.push('high-die-and-rng-isolation');
+  assert.deepEqual(state.kinds,[],'high-result reward does not spawn a second giant die');
+  assert.deepEqual(state.after,state.before,'high-result reward adds no new DOM caption');
+  assert.equal(state.calls,0,'rendering never consumes gameplay RNG');
+  row.checks.push('no-second-high-die-and-rng-isolation');
 }
 async function relayout(page,row) {
   const state=await page.evaluate(()=>{
