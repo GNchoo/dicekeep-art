@@ -7167,8 +7167,8 @@ async function restoreRunSave(p, net) {
   const snap = S.inf.growthSnapshot;
   S.inf.growthSnapshot = Object.freeze({ ...snap, deck: Object.freeze(snap.deck), levels: Object.freeze(snap.levels), ...Object.fromEntries(['classes','mastery','talents','awakenings'].filter(key=>snap[key]).map(key=>[key,Object.freeze(snap[key])])) });
   const sx = W / p.size[0], sy = H / p.size[1];
-  const newCenter = arenaBoardCenter(boardOf(S.mapKey));
   const oldCenter = p.arenaCenter ? { x: p.arenaCenter[0], y: p.arenaCenter[1] } : null;
+  const newCenter = oldCenter ? arenaBoardCenter(boardOf(S.mapKey)) : null;
   const scaleRatio = p.arenaScale ? arenaWorldScale() / p.arenaScale : 1;
   const allTowers = new Set([...S.towers, ...S.projs.map(q => q.src)]);
   for (const t of allTowers) { t.spot = remapSpot(p.mapKey, S.mapKey, t.spot); t.x = SPOTS[t.spot][0]; t.y = SPOTS[t.spot][1]; }
