@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 'use strict';
 
-// Real-browser coverage for the pure-luck chest's manual physical roll.
-// Only the chest grade is fixed: the thrown physical die determines its own face.
+// Real-browser coverage for automatic low dice and manual high dice.
+// Only the chest grade is fixed: the visible die determines its own face.
 const fs = require('node:fs');
 const path = require('node:path');
 const assert = require('node:assert/strict');
@@ -10,10 +10,10 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
 const { cameraFacingDieResult } = require('./camera-facing-die.cjs');
 
 const reportPath = outputPath('manual-chest-roll.json');
-const report = { scope: 'Local pure-luck chest input, settlement, enemy isolation, reward queue, and responsive controls', cases: [], pass: false };
+const report = { scope: 'Pure-luck low die auto-roll, high die manual input, settlement, enemy isolation, reward queue, and responsive controls', cases: [], pass: false };
 const fixtures = [
-  ['d1', false], ['d4', true],
-  ['d6', true], ['d8', true], ['d12', true], ['d20', true],
+  ['d1', false], ['d4', false],
+  ['d6', false], ['d8', true], ['d12', true], ['d20', true],
   ['epic', true], ['myth', true], ['primal', true],
 ];
 
@@ -158,11 +158,25 @@ async function runKinds(page, row) {
       row.cases.push({ kind, manual, face: after.held, result: after });
     } else {
       assert.equal(before.slot.active, true, kind + ': automatic slot animation starts');
-      assert.notEqual(before.slot.phase, -1, kind + ': no user throw is required');
-      const after = await stepSlot(page, 120);
-      assert.equal(after.held, 1, kind + ': the single-sided automatic result reaches the hand');
+      assert.equal(before.slot.phase, 0, kind + ': no user throw is required');
+      assert.equal(before.slot.final, kind === 'd1' ? 1 : 0, kind + ': multi-sided face is unknown until the visible roll settles');
+      assert.equal(before.dieState, 'tray', kind + ': no field throw begins');
+      assert.equal(before.drawButtonDisabled, true, kind + ': purchase stays busy during automatic roll');
+      const after = await stepSlot(page, 300);
+      const visible = await page.evaluate(kind => {
+        const q = __manualQA, show = q.ROLL_SHOW;
+        return { final: DKSLOT.final, faceIndex: DKSLOT.faceIndex, physical: show.physical,
+          shown: show.face, camera: kind === 'd1' ? 1 : q.cameraFace(kind, show.R, q.dieFaceLabels(kind), q).value,
+          landed: kind === 'd1' ? 1 : q.physicalFaceValue(kind, show.R) };
+      }, kind);
+      const max = kind === 'd1' ? 1 : kind === 'd4' ? 4 : 6;
+      assert.ok(after.held >= 1 && after.held <= max, kind + ': automatic result reaches the hand');
+      assert.deepEqual([visible.final, visible.shown, visible.camera, visible.landed],
+        Array(4).fill(after.held), kind + ': awarded value matches the visible upper face');
+      assert.equal(visible.physical, kind !== 'd1', kind + ': settled multi-sided face is identified as physical');
+      assert.equal(visible.faceIndex > 0, kind !== 'd1', kind + ': multi-sided roll records a face index');
       assert.equal(after.active, false, kind + ': automatic slot finishes');
-      row.cases.push({ kind, manual, face: after.held, result: after });
+      row.cases.push({ kind, manual, face: after.held, result: after, visible });
     }
   }
 }
@@ -192,6 +206,28 @@ async function runQueue(page, row) {
   assert.deepEqual(after.queueAfterPlace, [], 'queued reward begins after placement');
   assert.deepEqual([after.nextKind, after.nextPhase, after.nextActive, after.tower], ['d12', -1, true, settled.held], 'queued d12 also waits for throw');
   row.queue = { pending, after };
+}
+
+async function runAutoQueue(page, row) {
+  await prepare(page, 'd1');
+  const pending = await page.evaluate(() => {
+    DK.inf.queue.push('d4');
+    __manualQA.pumpQueue();
+    return { queue: DK.inf.queue.slice(), kind: DKSLOT.kind, phase: DKSLOT.phase };
+  });
+  assert.deepEqual(pending, { queue: ['d4'], kind: 'd1', phase: 0 }, 'automatic d1 keeps queued d4 until the hand is free');
+  assert.equal((await stepSlot(page, 120)).held, 1, 'd1 finishes before queued d4 begins');
+  const next = await page.evaluate(() => {
+    const gold = DK.gold, placed = DKplace(0);
+    __manualQA.pumpQueue();
+    return { placed, goldDelta: gold - DK.gold, queue: DK.inf.queue.slice(),
+      kind: DKSLOT.kind, phase: DKSLOT.phase, final: DKSLOT.final, active: DKSLOT.active };
+  });
+  assert.deepEqual(next, { placed: true, goldDelta: 0, queue: [], kind: 'd4', phase: 0, final: 0, active: true },
+    'queued d4 starts an unpaid automatic roll with no preselected face');
+  const result = await stepSlot(page, 300);
+  assert.ok(result.held >= 1 && result.held <= 4, 'queued d4 reaches the hand automatically');
+  row.autoQueue = { pending, next, result };
 }
 
 async function runDeck(page, row) {
@@ -253,7 +289,7 @@ async function runLegacyDeck(page, row) {
 }
 
 async function runGesture(page, context, touch, row) {
-  await prepare(page, 'd6');
+  await prepare(page, 'd8');
   const p = await page.evaluate(() => {
     const c = document.querySelector('#game'), r = c.getBoundingClientRect();
     const x = r.left + DKDIE.x * r.width / c.width, y = r.top + DKDIE.y * r.height / c.height;
@@ -284,7 +320,7 @@ async function runGesture(page, context, touch, row) {
   }
   assert.equal(await page.evaluate(() => DKDIE.state), 'throw', 'flick starts physical movement');
   const settled = await stepUntilHeld(page);
-  assert.ok(settled.held >= 1 && settled.held <= 6, 'gesture resolves a real d6 face');
+  assert.ok(settled.held >= 1 && settled.held <= 8, 'gesture resolves a real d8 face');
   assert.equal(settled.gold, 9840, 'gesture does not charge a second time');
   row.gesture = { touch, settled };
 }
@@ -326,6 +362,7 @@ async function run(browser, name, viewport, touch) {
   try {
     await runKinds(page, row);
     await runQueue(page, row);
+    await runAutoQueue(page, row);
     await runDeck(page, row);
     await runLegacyDeck(page, row);
     await runLog(page, row);

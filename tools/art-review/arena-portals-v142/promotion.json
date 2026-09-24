@@ -1,0 +1,30 @@
+{
+  "generatedWith": "Codex built-in image_gen",
+  "apiKeyUsed": false,
+  "records": [
+    {
+      "source": "tools/art-review/arena-portals-v142/source-start.png",
+      "sourceSha256": "e8a38da7d5b1321a14a3149ba5d2463a38200df0198ad64e1c2c7d557cf5b8f6",
+      "original": "tools/art-review/arena-portals-v142/originals/start.png",
+      "originalSha256": "e2e6938ed073163056e9b80471314e466dbf9103423c6f902cf82cc52d5b727e",
+      "target": "casual/tiles/arena/start.png",
+      "targetSha256": "5d7b0c6cff99fddd8f8a2c99aa74dd0dea5ce47138082353f6bed381bb5936da",
+      "width": 1024,
+      "height": 1024,
+      "hasAlpha": true,
+      "bytes": 196807
+    },
+    {
+      "source": "tools/art-review/arena-portals-v142/source-end.png",
+      "sourceSha256": "ac7602c7f5f78b167aee5b64cb1c488218ec04277cffa699dbc8f420e9c10564",
+      "original": "tools/art-review/arena-portals-v142/originals/end.png",
+      "originalSha256": "1178b33bc88c74f11501cbb24f5e2e13a0feacf3c53addad9921c29fb713a16e",
+      "target": "casual/tiles/arena/end.png",
+      "targetSha256": "de10f7e3bd28d47227e429bfcbf76ffc9cd84312c363b28f05af68e2bf7c646c",
+      "width": 1024,
+      "height": 1024,
+      "hasAlpha": true,
+      "bytes": 139007
+    }
+  ]
+}

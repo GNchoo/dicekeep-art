@@ -1,0 +1,58 @@
+{
+  "generatedWith": "Codex built-in image_gen",
+  "apiKeyUsed": false,
+  "records": [
+    {
+      "name": "pad",
+      "source": "tools/art-review/arena-props-v142/source-pad.png",
+      "sourceSha256": "9ebdad27dc416b27cc7fe6b54acb0502ddad83a362c5384fdf474c44ef5e5705",
+      "original": "tools/art-review/arena-props-v142/originals/pad.png",
+      "originalSha256": "cc234a7ef60271b1d737a5b2e22c03a6d2ded85f4422ea9fb0bf775ae0a410b1",
+      "target": "casual/tiles/arena/pad.png",
+      "targetSha256": "f3ba637a7f248f04fed1668f08e97d17803c37732b0681f9e5deba2a4ae99f29",
+      "width": 1024,
+      "height": 1024,
+      "hasAlpha": true,
+      "bytes": 166982
+    },
+    {
+      "name": "prop-1",
+      "source": "tools/art-review/arena-props-v142/source-prop-1.png",
+      "sourceSha256": "1fa5fe9ac42063a0859ee034120e232afbfbb0e273df4f1210fbf6c02510a1c5",
+      "original": "tools/art-review/arena-props-v142/originals/prop-1.png",
+      "originalSha256": "0bbae1d19352e01b8d3f0f8dc806be5a47c934ba94100ce9f07dd6b4f7fbac05",
+      "target": "casual/tiles/arena/prop-1.png",
+      "targetSha256": "e9ca108049bb311e1088a44a46012f8b3196541e2c60d4acb163836bd518f8a2",
+      "width": 1024,
+      "height": 1024,
+      "hasAlpha": true,
+      "bytes": 219892
+    },
+    {
+      "name": "prop-2",
+      "source": "tools/art-review/arena-props-v142/source-prop-2.png",
+      "sourceSha256": "177a7a569b800cc8762ffac496268d218e7865cfac853f03a39f3e13fa7ab334",
+      "original": "tools/art-review/arena-props-v142/originals/prop-2.png",
+      "originalSha256": "3b96293b471445c12a58888f9c0cc46fc89eb00980cb939394235a9e94230668",
+      "target": "casual/tiles/arena/prop-2.png",
+      "targetSha256": "7c3a73eea3d74ed4a673b5a3bbad849365a445dfbc440dc20e2bff5dccebd3ba",
+      "width": 1024,
+      "height": 1024,
+      "hasAlpha": true,
+      "bytes": 164837
+    },
+    {
+      "name": "prop-3",
+      "source": "tools/art-review/arena-props-v142/source-prop-3.png",
+      "sourceSha256": "cd3ef379265ebf95f4fba259955d722f18218eb093687e644b2e44aa10a141a6",
+      "original": "tools/art-review/arena-props-v142/originals/prop-3.png",
+      "originalSha256": "bdf0a7562b87c66b4bdc4ce10771bd8869d7e0c8ecf87881a8700f22da7aaea0",
+      "target": "casual/tiles/arena/prop-3.png",
+      "targetSha256": "d4f735d1604f88ee7836d6860ef6aae05e7d2a087eba6f1e83a015c0dd66bfbe",
+      "width": 1024,
+      "height": 1024,
+      "hasAlpha": true,
+      "bytes": 218522
+    }
+  ]
+}

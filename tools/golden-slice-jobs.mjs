@@ -54,7 +54,7 @@ function runtimeSpecFor(id) {
 
 const add = ({ id, category, profile = 'environment', runtimeTarget, prompt, refs = [], ...options }) => {
   const refreshed = refreshByTarget.get(runtimeTarget);
-  if (refreshed) { prompt = refreshed.prompt; refs = [runtimeTarget, 'towers/die-1.png']; }
+  if (refreshed) { prompt = refreshed.prompt; refs = refreshed.refs || refs; }
   const job = {
     id: `golden-${id}`,
     category,
@@ -100,33 +100,33 @@ add({
 });
 add({
   id: 'arena-pad', category: 'environment', runtimeTarget: 'casual/tiles/arena/pad.png',
-  ...transparentTile, refs: ['tools/art-review/arena-clean-2026-09-23/originals/pad.png', 'casual/tiles/arena/pad.png'],
-  prompt: `${TILE_COMMON} Preserve the original low oval footprint and empty dark center for a tower. Simplify the purple stone rim into six to eight broad sections and restrained thick gold accents with clean outlines. True transparent background, centered 3/4 top-down sprite; no tiny bricks, glow column, plants or tower.`,
+  ...transparentTile, refs: ['tools/art-review/arena-props-v142/originals/pad.png', 'casual/tiles/arena/board.png', 'casual/tiles/arena/road.png'],
+  prompt: `${TILE_COMMON} Keep only the original low oval footprint and empty center. Redesign as four broad smooth ivory sandstone sections around a dark muted violet center, with at most two restrained brass joining clips. True transparent background, centered 3/4 top-down sprite; no ornate gold ring, saturated purple rim, tiny bricks, runes, glow column, plants or tower.`,
 });
 add({
   id: 'arena-start', category: 'environment', runtimeTarget: 'casual/tiles/arena/start.png',
-  ...transparentTile, refs: ['casual/tiles/arena/start.png'],
-  prompt: `${TILE_COMMON} Redraw the referenced enemy entrance as one compact round violet-stone portal seen from 3/4 top-down. A dark blue-violet opening, ivory dice-stone arch and a restrained cyan-violet inner glow clearly mark START without any symbol or text. Centered, grounded, transparent surroundings.`,
+  ...transparentTile, refs: ['tools/art-review/arena-portals-v142/originals/start.png', 'casual/towers/t1-clean.png', 'casual/tiles/arena/road.png'],
+  prompt: `${TILE_COMMON} Redraw the referenced enemy entrance as one compact upright warm-ivory die-stone arch seen from 3/4 top-down. Keep a large vivid deep-violet portal opening, one broad gold accent and a low sturdy foot; the lower edge faces the viewer. Large clean planes and firm outlines must read at 84 gameplay pixels. Centered, grounded, truly transparent surroundings; no tiny masonry, torches, flames or lettering.`,
 });
 add({
   id: 'arena-end', category: 'environment', runtimeTarget: 'casual/tiles/arena/end.png',
-  ...transparentTile, refs: ['casual/tiles/arena/end.png'],
-  prompt: `${TILE_COMMON} Redraw the referenced destination as one small friendly ivory die keep seen from 3/4 top-down, red pips, gold trim, blue-violet crystal beacon and a sturdy violet-stone base. Clear end-of-path silhouette at 64 pixels, centered, grounded, transparent surroundings.`,
+  ...transparentTile, refs: ['tools/art-review/arena-portals-v142/originals/end.png', 'tools/art-review/arena-portals-v142/source-start.png', 'casual/towers/t1-clean.png'],
+  prompt: `${TILE_COMMON} Redraw the referenced destination as one large cyan-blue crystal above a short sturdy ivory-stone pedestal with one broad gold band and low violet-gray base, seen from 3/4 top-down. The crystal dominates the simple goal silhouette at 128 gameplay pixels. Match the entrance's clean planes and firm outlines, but make cyan clearly distinct from its violet portal. Centered, grounded, truly transparent surroundings; no tiny masonry, runes, sparks, flames, plants or lettering.`,
 });
 add({
   id: 'arena-prop-1', category: 'environment', runtimeTarget: 'casual/tiles/arena/prop-1.png',
-  ...transparentTile, refs: ['casual/tiles/arena/prop-1.png'],
-  prompt: `${TILE_COMMON} Redraw the referenced arena decoration as one short violet-stone brazier with a compact warm-gold flame and one small ivory die ornament. Low silhouette, centered, grounded, transparent surroundings; it must never resemble a tower pad or enemy.`,
+  ...transparentTile, refs: ['tools/art-review/arena-props-v142/originals/prop-1.png', 'casual/tiles/arena/pad.png', 'casual/tiles/arena/road.png'],
+  prompt: `${TILE_COMMON} Redraw the referenced arena decoration as one short ivory and slate-lavender stone brazier with an EMPTY dark bowl, a restrained brass band and broad clean cel-shaded shapes. The game paints a live flame separately, so bake NO flame, glow, sparks or smoke into the sprite. Centered, grounded, true transparent surroundings.`,
 });
 add({
   id: 'arena-prop-2', category: 'environment', runtimeTarget: 'casual/tiles/arena/prop-2.png',
-  ...transparentTile, refs: ['casual/tiles/arena/prop-2.png'],
-  prompt: `${TILE_COMMON} Redraw the referenced arena decoration as a compact cluster of two rounded violet crystals and a small ivory die-stone shard on a low rubble base. Quiet blue-violet glow, low silhouette, centered, grounded, transparent surroundings.`,
+  ...transparentTile, refs: ['tools/art-review/arena-props-v142/originals/prop-2.png', 'casual/tiles/arena/prop-1.png', 'casual/tiles/arena/board.png'],
+  prompt: `${TILE_COMMON} Redraw the referenced decorative corner pillar, not a playable tower: a sturdy muted-lavender stone column with a smooth ivory cap, ONE amethyst firmly mounted at the top and ONE small plain violet hanging pennant. Few broad cel-shaded forms, no tiny brickwork, floating crystals, glow, weapons or plants. Centered, grounded, true transparent surroundings.`,
 });
 add({
   id: 'arena-prop-3', category: 'environment', runtimeTarget: 'casual/tiles/arena/prop-3.png',
-  ...transparentTile, refs: ['casual/tiles/arena/prop-3.png'],
-  prompt: `${TILE_COMMON} Redraw the referenced arena decoration as one squat violet-stone pillar capped by a small gold dice-rune ring. Broad simple forms, low contrast, centered, grounded, transparent surroundings; no flame, tower weapon or interface symbol.`,
+  ...transparentTile, refs: ['tools/art-review/arena-props-v142/originals/prop-3.png', 'casual/tiles/arena/pad.png', 'casual/tiles/arena/road.png'],
+  prompt: `${TILE_COMMON} Redraw the referenced broken-die rubble as ONE warm ivory die cracked into two jagged matching halves with red pips, resting on just a few muted-lavender rocks. Wide low silhouette and few broad cel-shaded planes. No separate intact dice, tiny rubble, ornate gold rune plates, glow or plants. Centered, grounded, true transparent surroundings.`,
 });
 
 const TOWER_COMMON = 'Redraw the referenced Dicekeep tower as one stable freestanding defense building in 3/4 top-down view, facing slightly right, with the same flat integrated foundation. Preserve its role, footprint, ground pivot and tall readable silhouette. The body is completely still and rigid; no squash, stretch, firing pose, projectile, motion trail, baked glow aura, separate pedestal, text, number, star, logo or watermark. Centered with generous transparent margin.';

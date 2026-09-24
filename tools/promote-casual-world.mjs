@@ -6,9 +6,13 @@ import sharp from 'sharp';
 const root='tools/art-review/casual-world-2026-09-23';
 const jobs=JSON.parse(await fs.readFile('tools/casual-world-jobs.json','utf8'));
 const partial=process.argv.includes('--partial');
+// These arena sprites were reviewed again in v142. Keep historical v123 source
+// images here, but never let an old batch promotion overwrite the current art.
+const supersededArena=new Set(['arena-pad','arena-start','arena-end','arena-prop-1','arena-prop-2','arena-prop-3']);
 const hash=b=>crypto.createHash('sha256').update(b).digest('hex');
 const records=[];
 for(const job of jobs){
+  if(supersededArena.has(job.id))continue;
   const source=`${root}/${job.id}.png`;
   let input;
   try { input=await fs.readFile(source); } catch(error) { if(partial&&error.code==='ENOENT')continue;throw error; }

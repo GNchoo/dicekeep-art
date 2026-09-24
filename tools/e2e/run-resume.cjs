@@ -13,7 +13,7 @@ fs.mkdirSync(out, { recursive: true });
       await page.route('**/game.js*', async route => {
         const r = await route.fetch(), s = await r.text();
         assert.ok(s.includes('window.DK = S;'), 'run-resume closure hook exists');
-        const hook = 'window.__resumeQA={persistRun,readRunSave,restoreRunSave,spawnEnemy,buildInfinityWave,towerDmg,relayoutArena,update,laneLen,manualChestReady}; window.DK = S;';
+        const hook = 'window.__resumeQA={persistRun,readRunSave,restoreRunSave,spawnEnemy,buildInfinityWave,towerDmg,relayoutArena,update,updateSlot,laneLen,manualChestReady}; window.DK = S;';
         await route.fulfill({ response: r, body: s.replace('window.DK = S;', hook) });
       });
       async function boot() {
@@ -93,7 +93,7 @@ fs.mkdirSync(out, { recursive: true });
         }, schema);
         assert.ok(saved && saved.enemies.length && saved.projs.length);
         const expected=await inspect(), initialGeometry=await geometry();
-        if (schema==='legacy') { Object.assign(expected.slot,{phase:-1,final:0,t:0,t2:0,sndT:0}); }
+        if (schema==='legacy') { Object.assign(expected.slot,{phase:0,final:0,t:0,t2:0,sndT:0}); }
         assert.equal(saved.inf.growthSnapshot.deckSystem,schema==='collection'?1:undefined);
         assert.equal(expected.frozen,true);
         if (schema==='legacy') assert.equal(saved.towers[0].growthCarry,2.52);
@@ -112,7 +112,7 @@ fs.mkdirSync(out, { recursive: true });
         await boot(); await page.evaluate(()=>DKlobbyView('single'));
         await page.click('#run-resume-play'); await page.waitForFunction(()=>DK.phase==='playing');
         assert.deepEqual(await inspect(),expected,'logical combat state survives reload and UI resume');
-        if (schema==='legacy') assert.equal(await page.evaluate(()=>__resumeQA.manualChestReady()),true,'interrupted chest can be thrown again after resume');
+        if (schema==='legacy') assert.equal(await page.evaluate(()=>__resumeQA.manualChestReady()),false,'interrupted d6 resumes as an automatic roll');
         const restoredGeometry=await geometry();
         assert.ok(restoredGeometry.finite && restoredGeometry.definitions);
         restoredGeometry.progress.forEach((n,i)=>assert.ok(Math.abs(n-initialGeometry.progress[i])<1e-10,'path progress survives restore'));
@@ -126,12 +126,22 @@ fs.mkdirSync(out, { recursive: true });
         assert.deepEqual(resaved.inf.growthSnapshot,saved.inf.growthSnapshot);
         assert.deepEqual(resaved.inf.deckPower,saved.inf.deckPower);
         if (schema==='legacy') {
-          assert.equal(resaved.slot.phase,-1,'interrupted physical roll resumes at a new throw prompt');
+          assert.equal(resaved.slot.phase,0,'interrupted d6 resumes as an automatic roll');
           assert.equal(resaved.slot.final,0,'no face is silently selected while offline');
-          assert.deepEqual(await page.evaluate(()=>{
-            const gold=DK.gold; DKthrow(900,-300);
-            return {state:DKDIE.state,phase:DKSLOT.phase,final:DKSLOT.final,charged:gold-DK.gold};
-          }),{state:'throw',phase:-2,final:0,charged:0},'rethrowing the purchased grade is free and still has no chosen face');
+          const roundTrip = await page.evaluate(() => {
+            const p = __resumeQA.readRunSave(false);
+            return {valid:DKRUNSAVE.valid(p),slot:DKRUNSAVE.decode(DKRUNSAVE.encode(p),p.owner)?.slot};
+          });
+          assert.equal(roundTrip.valid,true,'unresolved automatic d6 slot validates on disk');
+          assert.deepEqual(roundTrip.slot,resaved.slot,'unresolved automatic d6 slot round-trips with its pose and zero final');
+          const auto = await page.evaluate(()=>{
+            const gold=DK.gold;
+            for (let i=0;i<900&&!DK.heldDie;i++) __resumeQA.updateSlot(1/60);
+            return {state:DKDIE.state,held:DK.heldDie,final:DKSLOT.final,charged:gold-DK.gold};
+          });
+          assert.ok(auto.held>=1&&auto.held<=6,'restored d6 settles to a valid face');
+          assert.deepEqual(auto,{state:'tray',held:auto.held,final:auto.held,charged:0},
+            'resumed automatic roll finishes without paying twice');
           for (const old of [{kind:'d4',phase:1,face:4},{kind:'d6',phase:-2,face:6}]) {
             const direct=await page.evaluate(async ({saved,old})=>{
               const checkpoint=structuredClone(saved);

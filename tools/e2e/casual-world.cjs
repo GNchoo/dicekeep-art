@@ -25,11 +25,12 @@ const out='gen/e2e/casual-world';fs.mkdirSync(out,{recursive:true});
     const sample=document.createElement('canvas');sample.width=sample.height=64;sample.getContext('2d').drawImage(img,0,0,64,64);
     return {name,url:SRCS[key],loaded:true,w,h,...fingerprint({cv:sample,w:64,h:64})};
    });
+   const arenaProps=['pad','start','end','prop-1','prop-2','prop-3'].map(name=>{const key='tl_arena_'+name,a=A[key];return {name,url:SRCS[key],loaded:!!a?.cv&&a.w>8&&a.h>8,transparent:!!a?.cv&&fingerprint(a).transparent>0};});
    const road=A.tl_arena_road,edge=document.createElement('canvas');edge.width=road.width;edge.height=road.height;const eg=edge.getContext('2d');eg.drawImage(road,0,0);
    const l=eg.getImageData(0,0,1,road.height).data,r=eg.getImageData(road.width-1,0,1,road.height).data;
    const top=eg.getImageData(0,0,road.width,1).data,bottom=eg.getImageData(0,road.height-1,road.width,1).data;
    const seam=(a,b)=>{let delta=0;for(let i=0;i<a.length;i+=4)for(let j=0;j<3;j++)delta+=Math.abs(a[i+j]-b[i+j]);return delta/(a.length/4*3);};
-   return {sizes,cleanSizes,loaded,starTowers,arenaTiles,roadSeam:{horizontal:seam(l,r),vertical:seam(top,bottom)},paleAlpha:pixel[3]};
+   return {sizes,cleanSizes,loaded,starTowers,arenaTiles,arenaProps,roadSeam:{horizontal:seam(l,r),vertical:seam(top,bottom)},paleAlpha:pixel[3]};
   });
   assert.ok(art.loaded.every(a=>a.loaded),'Every promoted asset loads');assert.equal(art.paleAlpha,255);
   assert.ok(art.sizes.every(s=>s.w<=70&&s.h<=96&&s.w>30&&s.h>65),'Original gameplay size envelope');
@@ -52,17 +53,22 @@ const out='gen/e2e/casual-world';fs.mkdirSync(out,{recursive:true});
   }
   assert.equal(new Set(art.arenaTiles.map(t=>t.hash)).size,4,'The four arena surfaces have distinct pixels');
   assert.ok(art.arenaTiles.find(t=>t.name==='pad').transparent>0,'Arena pad retains transparent surroundings');
+  for(const prop of art.arenaProps){
+   assert.ok(prop.loaded&&prop.transparent,`${prop.name} keeps visible transparent artwork`);
+   assert.equal(new URL(prop.url,gameUrl()).searchParams.get('v'),'arena-props-142',`${prop.name} refreshes in an existing browser`);
+  }
   assert.ok(art.roadSeam.horizontal<3&&art.roadSeam.vertical<3,'The repeated road meets at both tile edges');
   const tag=viewport.width<500?'phone':'desktop';
   const arenaDraws=await page.evaluate(()=>{
-   const assets={floor:A.tl_arena_floor,board:A.tl_arena_board,road:A.tl_arena_road,pad:A.tl_arena_pad.cv};
-   const counts={floor:0,board:0,road:0,pad:0},original=CanvasRenderingContext2D.prototype.drawImage;
+   const assets={floor:A.tl_arena_floor,board:A.tl_arena_board,road:A.tl_arena_road,pad:A.tl_arena_pad.cv,
+    brazier:A['tl_arena_prop-1'].cv,pillar:A['tl_arena_prop-2'].cv,rubble:A['tl_arena_prop-3'].cv};
+   const counts=Object.fromEntries(Object.keys(assets).map(name=>[name,0])),original=CanvasRenderingContext2D.prototype.drawImage;
    CanvasRenderingContext2D.prototype.drawImage=function(img,...args){for(const [name,asset]of Object.entries(assets))if(img===asset)counts[name]++;return original.call(this,img,...args);};
    try{DKstartInf('clear');}finally{CanvasRenderingContext2D.prototype.drawImage=original;}
    DK.paused=true;DK.muted=true;DK.gold=99999;for(let i=0;i<6;i++){DK.heldDie=i+1;DK.dieFocus=true;DKplace(i);}DK.fxs=[];DK.texts=[];for(const t of DK.towers)t.kick=0;DKsync();draw();
    return counts;
   });
-  assert.ok(Object.values(arenaDraws).every(count=>count>0),`${tag} arena renderer uses all four paintings: ${JSON.stringify(arenaDraws)}`);
+  assert.ok(Object.values(arenaDraws).every(count=>count>0),`${tag} arena renderer uses its surfaces and three decorations: ${JSON.stringify(arenaDraws)}`);
   assert.deepEqual(await page.evaluate(()=>Array.from({length:6},(_,i)=>towerSpr(i+1,0)===towerCleanSprites[i+1])),[true,true,true,true,true,true],'Arena uses plant-free base towers');
   assert.equal(await page.evaluate(()=>towerSpr(1,1)===towerCleanSprites[1]),false,'Alternate skins remain independent');
   await page.screenshot({path:`${out}/${tag}-arena.png`});

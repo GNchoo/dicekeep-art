@@ -28,7 +28,7 @@
       "background": "opaque",
       "refs": [
         "casual/tiles/arena/floor.jpg",
-        "towers/die-1.png"
+        "tools/art-review/wooden-tower-2026-09-23/casual.png"
       ],
       "inputFidelity": "high"
     },
@@ -52,7 +52,7 @@
       "background": "opaque",
       "refs": [
         "casual/tiles/arena/board.png",
-        "towers/die-1.png"
+        "tools/art-review/wooden-tower-2026-09-23/casual.png"
       ],
       "inputFidelity": "high"
     },
@@ -76,7 +76,7 @@
       "background": "opaque",
       "refs": [
         "casual/tiles/arena/road.png",
-        "towers/die-1.png"
+        "tools/art-review/wooden-tower-2026-09-23/casual.png"
       ],
       "inputFidelity": "high"
     },
@@ -95,12 +95,13 @@
       "n": 1,
       "outputFormat": "png",
       "out": "gen/golden-slice/environment/arena-pad",
-      "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. Single low oval purple stone placement socket with slender gold ring and a calm dark-violet empty center. Keep low flat elliptical projection and original proportions. No tower. Actual transparent background.",
+      "prompt": "Redraw the first reference as a very low elliptical tower placement socket. Keep only its wide low footprint and empty center. Match the dark desaturated blue-violet board and broad warm ivory paving in the other references. Use four broad smooth ivory sandstone sections, a dark muted violet center and at most two small brass joining clips. Thin dark-plum outline and two-tone flat cel shading, legible at 40 gameplay pixels. No ornate golden ring, saturated purple rim, tiny brick lines, rune, glow, plants, tower, text or watermark. Centered 3/4 overhead sprite on a true transparent background.",
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "casual/tiles/arena/pad.png",
-        "towers/die-1.png"
+        "tools/art-review/arena-props-v142/originals/pad.png",
+        "casual/tiles/arena/board.png",
+        "casual/tiles/arena/road.png"
       ],
       "inputFidelity": "high"
     },
@@ -119,12 +120,13 @@
       "n": 1,
       "outputFormat": "png",
       "out": "gen/golden-slice/environment/arena-start",
-      "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. Small purple stone archway with purple swirling portal, gold trim, two side torches, stepped stone platform. Preserve original structure and front-right perspective. Compact controlled magical spiral, no bloom halo. Transparent background.",
+      "prompt": "Use case: style-transfer. Asset: compact enemy entrance sprite, shown at 84 gameplay pixels. Use the original arena/start.png for the upright arch and violet portal subject; use the approved clean wooden tower and warm ivory arena path only as style and color references. Redraw as one simple warm ivory die-stone arch with a large vivid deep-violet portal, one broad gold accent and a low sturdy foot. Match the tower's firm dark outlines, broad matte color planes and restrained two-tone cel shading. Centered three-quarter top-down view, full object visible, lower gateway edge open toward the viewer. True transparent background. No tiny masonry, cracks, runes, lamps, torches, flames, plants, realistic texture, glow halo, lettering or watermark.",
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "casual/tiles/arena/start.png",
-        "towers/die-1.png"
+        "tools/art-review/arena-portals-v142/originals/start.png",
+        "casual/towers/t1-clean.png",
+        "casual/tiles/arena/road.png"
       ],
       "inputFidelity": "high"
     },
@@ -143,12 +145,13 @@
       "n": 1,
       "outputFormat": "png",
       "out": "gen/golden-slice/environment/arena-end",
-      "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. Cyan crystal goal monument within a purple stone frame with gold corner trims, low circular purple stone base. Preserve silhouette, focus crystal. Transparent background.",
+      "prompt": "Use case: style-transfer. Asset: destination beacon sprite, shown at 128 gameplay pixels. Use the original arena/end.png only for its cyan crystal goal identity; use the simplified ivory-stone entry portal and approved clean wooden tower as companion style references. Redraw as one large cyan-blue crystal above a short sturdy ivory-stone pedestal, one broad gold band and a low violet-gray base. Crystal dominates the clear goal silhouette. Match the entry portal's firm dark outlines, few broad matte color planes and two-tone cel shading. Centered three-quarter top-down view, full object visible. True transparent background. No tiny masonry, segmented rings, runes, sparks, particles, flames, plants, realism, grit, glow halo, lettering or watermark.",
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "casual/tiles/arena/end.png",
-        "towers/die-1.png"
+        "tools/art-review/arena-portals-v142/originals/end.png",
+        "tools/art-review/arena-portals-v142/source-start.png",
+        "casual/towers/t1-clean.png"
       ],
       "inputFidelity": "high"
     },
@@ -167,12 +170,13 @@
       "n": 1,
       "outputFormat": "png",
       "out": "gen/golden-slice/environment/arena-prop-1",
-      "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. Single purple-gray stone brazier pedestal with gold bands, dark empty bowl and small gold diamond on front. Preserve shape and dimensions. NO flame: flame is animated separately by game. Transparent background.",
+      "prompt": "Redraw the first reference as an unlit freestanding arena brazier at 56 gameplay pixels tall. Keep the upward-facing EMPTY DARK BOWL and short sturdy silhouette. Match the simplified ivory socket and warm paving with broad warm-ivory sandstone blocks, quiet slate-lavender, one restrained brass band, two-tone flat cel shading and a thin dark-plum outline. NO flame, sparks, smoke or glow baked into the art: the game animates fire separately. No tiny masonry, jewel, rune, plants, text or watermark. 3/4 overhead view on a true transparent background.",
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "casual/tiles/arena/prop-1.png",
-        "towers/die-1.png"
+        "tools/art-review/arena-props-v142/originals/prop-1.png",
+        "tools/art-review/arena-props-v142/source-pad.png",
+        "casual/tiles/arena/road.png"
       ],
       "inputFidelity": "high"
     },
@@ -191,12 +195,13 @@
       "n": 1,
       "outputFormat": "png",
       "out": "gen/golden-slice/environment/arena-prop-2",
-      "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. Single short purple stone pillar with golden bands, small violet crystal top, side purple banner and circular stone base. Preserve silhouette. Transparent background.",
+      "prompt": "Redraw the first reference as one quiet decorative arena corner pillar, not a playable tower, at 80 gameplay pixels tall. Keep a tall narrow lavender-stone post, one mounted faceted amethyst, a plain deep-violet hanging pennant and a stable foot. Match the simplified ivory brazier and subdued dark board. Use only a few broad rounded shapes, a smooth ivory cap, tiny brass fastening and two-tone flat cel shading. No tiny brick joints, ornate gold, engraved rune, floating shard, aura, weapon, plants, text or watermark. 3/4 overhead view on a true transparent background.",
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "casual/tiles/arena/prop-2.png",
-        "towers/die-1.png"
+        "tools/art-review/arena-props-v142/originals/prop-2.png",
+        "tools/art-review/arena-props-v142/source-prop-1.png",
+        "casual/tiles/arena/board.png"
       ],
       "inputFidelity": "high"
     },
@@ -215,12 +220,13 @@
       "n": 1,
       "outputFormat": "png",
       "out": "gen/golden-slice/environment/arena-prop-3",
-      "prompt": "Style-transfer edit for Dicekeep. First reference is the original asset; second is ONLY the approved clean casual painting style. Preserve the original subject, silhouette, camera angle, color identity and functional shape. Use broad smooth planes, simplified soft edges, clear restrained cel shading, minimal material texture. No gritty grain, realistic tiny detail, scratches, speckles, redesign, text, letters, watermark. Small decorative ancient purple stone die among a few broad broken purple stone slabs with gold inlay. Keep original composition, simplify rubble. Transparent background.",
+      "prompt": "Redraw the first reference as one warm-ivory six-sided die broken into two jagged matching halves with red recessed pips, resting on only two or three low muted-lavender stones. The fracture surfaces must face one another so this clearly reads as one broken die, not two intact dice. Match the simplified ivory socket and broad warm paving with large clean two-tone cel-shaded planes and a dark-plum contour. Low silhouette legible at 48 gameplay pixels. No small pebbles, gold rune plates, glow, grass, text or watermark. 3/4 overhead view on a true transparent background.",
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "casual/tiles/arena/prop-3.png",
-        "towers/die-1.png"
+        "tools/art-review/arena-props-v142/originals/prop-3.png",
+        "tools/art-review/arena-props-v142/source-pad.png",
+        "casual/tiles/arena/road.png"
       ],
       "inputFidelity": "high"
     },
@@ -268,8 +274,8 @@
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "towers/die-2.png",
-        "towers/die-1.png"
+        "casual/towers/t2-a.png",
+        "tools/art-review/wooden-tower-2026-09-23/casual.png"
       ],
       "inputFidelity": "high"
     },
@@ -293,8 +299,8 @@
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "towers/die-3.png",
-        "towers/die-1.png"
+        "casual/towers/t3-a.png",
+        "tools/art-review/wooden-tower-2026-09-23/casual.png"
       ],
       "inputFidelity": "high"
     },
@@ -318,8 +324,8 @@
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "towers/die-4.png",
-        "towers/die-1.png"
+        "casual/towers/t4-a.png",
+        "tools/art-review/wooden-tower-2026-09-23/casual.png"
       ],
       "inputFidelity": "high"
     },
@@ -343,8 +349,8 @@
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "towers/die-5.png",
-        "towers/die-1.png"
+        "casual/towers/t5-a.png",
+        "tools/art-review/wooden-tower-2026-09-23/casual.png"
       ],
       "inputFidelity": "high"
     },
@@ -368,8 +374,8 @@
       "size": "1024x1024",
       "background": "transparent",
       "refs": [
-        "towers/die-6.png",
-        "towers/die-1.png"
+        "casual/towers/t6-a.png",
+        "tools/art-review/wooden-tower-2026-09-23/casual.png"
       ],
       "inputFidelity": "high"
     },
@@ -722,7 +728,7 @@
       "background": "transparent",
       "refs": [
         "vfx/muzzle-flash.png",
-        "towers/die-1.png"
+        "tools/art-review/wooden-tower-2026-09-23/casual.png"
       ],
       "inputFidelity": "high"
     },
@@ -747,7 +753,7 @@
       "background": "transparent",
       "refs": [
         "vfx/bolt.png",
-        "towers/die-1.png"
+        "tools/art-review/wooden-tower-2026-09-23/casual.png"
       ],
       "inputFidelity": "high"
     },

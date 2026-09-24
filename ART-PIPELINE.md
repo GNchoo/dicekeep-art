@@ -21,7 +21,8 @@ Dicekeep의 출시 아트 방향은 **밝은 장난감 성채 판타지**다. �
 - v123 기본 2~6성·환경·투사체 리페인트 기록: [프롬프트·원본·승격 절차](tools/art-review/casual-world-2026-09-23/README.md). 향후 골든 슬라이스도 이 잡의 원본 보존 프롬프트를 재사용한다. 기본 타워를 일괄 상아 성채로 재설계하지 않는다.
 - v124 무식물 기본 타워 1~6성: [선택 원본·승격 기록](tools/art-review/plant-free-2026-09-23/README.md). 큰 면과 단순한 명암으로 벽돌·지붕 선을 줄였으며, `node tools/promote-clean-towers.mjs`로 런타임 2배 해상도를 재생성한다. 투기장·성·지옥에서만 이 버전을 사용한다.
 - v125 무식물 별 타워 7~20성: [14종 프롬프트·선택 원본·승격 기록](tools/art-review/star-casual-2026-09-23/README.md). 원래 타워별 실루엣과 무기를 유지하고 식물 및 잔벽돌선을 줄였다. `node tools/promote-casual-stars.mjs`로 최대 140×192px 런타임 이미지를 재생성하며, 현재는 모든 맵에서 이 버전을 사용한다. 테마별 변형은 추후 작업이다.
-- v126 인피니티 아레나 바닥·보드·길·타워 받침: [선택 원본·프롬프트·승격 기록](tools/art-review/arena-clean-2026-09-23/README.md). 큰 2톤 석판으로 줄눈을 줄이고, 보드 그림은 반복하지 않고 한 번만 잘라 그린다. `node tools/promote-clean-arena.mjs`로 재생성한다. 성·지옥 지역의 돌 바닥/길/받침 대체 그림도 이 자산을 공유한다.
+- v126 인피니티 아레나 바닥·보드·길: [선택 원본·프롬프트·승격 기록](tools/art-review/arena-clean-2026-09-23/README.md). 큰 2톤 석판으로 줄눈을 줄이고, 보드 그림은 반복하지 않고 한 번만 잘라 그린다. 성·지옥 지역의 돌 바닥/길도 이 자산을 공유한다.
+- v142 배치석·화로·수정 기둥·부서진 주사위: [새 원본·프롬프트·승격 기록](tools/art-review/arena-props-v142/README.md), `node tools/promote-arena-props-v142.mjs`. 입구·출구 장식: [새 원본·프롬프트·승격 기록](tools/art-review/arena-portals-v142/README.md), `node tools/promote-arena-portals.mjs`. 현재 아레나 받침은 v142 이미지이며 화로 불꽃은 코드로 움직인다.
 - v128 인피니티 몬스터 첫 묶음: [방향별 원본·리그·검수 기록](tools/art-review/enemy-casual-2026-09-23/README.md). W001 쥐, W002 해골 병사, W003 후드 오우거, W004 까마귀, W005 고블린 창병, W008 시체파리 떼를 새 투기장에 맞는 큰 색면과 굵은 윤곽으로 다시 그려 측면·정면·후면 걷기/비행 시트까지 승격했다. 걷는 네 종은 발을 딛는 위치를 기준으로 8프레임 보행을, 나는 두 종은 4프레임 날갯짓을 사용한다. 이 여섯 종류가 첫 묶음이며 다른 웨이브와 극한·스테이지 몬스터는 아직 기존 원화를 사용한다. 각 종을 `tools/build-directional-art.mjs`로 빌드하고 `tools/check-directional-art.mjs --require-ready`, `tools/preview-directional-motion.mjs` 검수 뒤 `tools/promote-directional-art.mjs`로 승격한다.
 
 - 현재 전장은 `casual/tiles/**`와 코드 레이아웃으로 조립된다.

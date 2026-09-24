@@ -28,9 +28,9 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
         DK.gold = 1000;
         const chest = DKCONTENT.INFINITY.chest;
         const draw = chest.draw;
-        try { chest.draw = () => 'd4'; DKchest(); } finally { chest.draw = draw; }
+        try { chest.draw = () => 'd8'; DKchest(); } finally { chest.draw = draw; }
         DKlog('뽑기 완료 · 던지기 전에 주사위를 확인하세요', 'sys');
-        DKlog('레어 4면체 획득 · 주사위를 끌어 던지세요', 'gacha');
+        DKlog('8면체 획득 · 주사위를 끌어 던지세요', 'gacha');
       });
       await page.waitForTimeout(150);
       const measure = () => page.evaluate(() => {

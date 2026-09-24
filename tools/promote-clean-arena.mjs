@@ -1,4 +1,5 @@
-// Rebuild the reviewed, quieter Infinity arena surfaces from saved imagegen edits.
+// Rebuild the reviewed v126 arena surfaces. The placement pad was superseded
+// in v142 and is promoted separately by promote-arena-props-v142.mjs.
 // The original v123 runtime art is kept in the review folder. No API call is made.
 import fs from 'node:fs/promises';
 import crypto from 'node:crypto';
@@ -9,7 +10,6 @@ const jobs = [
   { name: 'floor', ext: 'jpg', width: 1280, height: 720, background: '#514968' },
   { name: 'board', ext: 'png', width: 1024, height: 1024, background: '#433c58' },
   { name: 'road', ext: 'png', width: 1024, height: 1024, background: '#efe1c7', repeat: true },
-  { name: 'pad', ext: 'png', width: 1024, height: 1024, alpha: true },
 ];
 const sha256 = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
 
