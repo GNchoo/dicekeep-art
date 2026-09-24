@@ -140,7 +140,7 @@ async function sampleButtonThrows(page, kind, sampleCount = 200) {
     };
     ch.draw = () => kind;
     ch.roll = () => { throw Error('A button throw must not preselect a die face'); };
-    const counts = {}, d8Areas = [];
+    const counts = {}, d8Areas = [], landedFaceDepths = [];
     let maxFrames = 0;
     const d8AreaRatio = R => {
       const q = __physicalQA, project = v => {
@@ -191,8 +191,11 @@ async function sampleButtonThrows(page, kind, sampleCount = 200) {
         while (!DK.heldDie && frames++ < 900) {
           const priorState = DKDIE.state;
           __physicalQA.updateDie(1 / 60); __physicalQA.updateSlot(1 / 60);
-          if (kind === 'd8' && priorState === 'throw' && DKDIE.state === 'settle')
-            d8Areas.push(d8AreaRatio(DKDIE.R));
+          if (priorState === 'throw' && DKDIE.state === 'settle') {
+            landedFaceDepths.push(__physicalQA.cameraFace(kind, DKDIE.R,
+              __physicalQA.dieFaceLabels(kind), __physicalQA).z);
+            if (kind === 'd8') d8Areas.push(d8AreaRatio(DKDIE.R));
+          }
         }
         if (!DK.heldDie) throw Error(kind + ': button sample did not settle ' + i);
         maxFrames = Math.max(maxFrames, frames);
@@ -203,6 +206,8 @@ async function sampleButtonThrows(page, kind, sampleCount = 200) {
       const cameraCounts = {};
       for (const item of cameraSamples) cameraCounts[item.cameraFace] = (cameraCounts[item.cameraFace] || 0) + 1;
       return { kind, sampleCount, counts, maxFrames,
+        landedFaceDepth: { samples: landedFaceDepths.length, minZ: Math.min(...landedFaceDepths),
+          below999: landedFaceDepths.filter(z => z < .999).length },
         d8Area: kind === 'd8' ? { samples: d8Areas.length, min: d8Areas[0],
           p5: d8Areas[Math.floor(d8Areas.length * .05)], smallest: d8Areas.slice(0, 10),
           cameraFace: { withCandidate: cameraSamples.length,
@@ -243,11 +248,13 @@ async function throwAndObserve(page, kind, chosenIndex = null, chosenPose = null
         if (!landing && priorState === 'throw' && DKDIE.state === 'settle') {
           const R = DKDIE.R.slice();
           landing = { R, geometry: geometryValue(R), physical: q.physicalFaceValue(kind, R),
+            cameraZ: q.cameraFace(kind, R, q.dieFaceLabels(kind), q).z,
             awarded: DKDIE.final, slot: DKSLOT.final };
         }
         if (!finalPose && priorState === 'settle' && DKDIE.state === 'fly') {
           const R = DKDIE.R.slice();
-          finalPose = { R, geometry: geometryValue(R), physical: q.physicalFaceValue(kind, R) };
+          finalPose = { R, geometry: geometryValue(R), physical: q.physicalFaceValue(kind, R),
+            cameraZ: q.cameraFace(kind, R, q.dieFaceLabels(kind), q).z };
         }
       }
       return { bought, goldSpent: goldBefore - DK.gold, faceRollCalls, awaiting, frames,
@@ -272,6 +279,12 @@ function checkRoll(result, kind, index) {
   assert.equal(result.final, result.held, `${kind} ${label}: die state matches the hand`);
   assert.equal(result.slotFinal, result.held, `${kind} ${label}: slot matches the hand`);
   assert.equal(result.state, 'tray', `${kind} ${label}: physical die returns to its tray`);
+  if (kind !== 'd4') {
+    assert.ok(result.landing.cameraZ >= .999,
+      `${kind} ${label}: awarded face points squarely skyward at landing (normal z=${result.landing.cameraZ})`);
+    assert.ok(result.finalPose.cameraZ >= .999,
+      `${kind} ${label}: awarded face stays skyward through the result display (normal z=${result.finalPose.cameraZ})`);
+  }
   const angle = deltaAngle(result.landing.R, result.finalPose.R);
   assert.ok(angle < 0.02, `${kind} ${label}: the die holds its landed orientation without a late correction (${angle})`);
   return { label, face: result.held, frames: result.frames, settleAngle: +angle.toFixed(3) };
@@ -325,12 +338,21 @@ async function run(browser, name, viewport, mobile) {
         assert.equal(values.reduce((sum, observed) => sum + observed, 0), sample.sampleCount, `${kind}: every button throw yields a valid face`);
         assert.ok(chiSquare < values.length + 5 * Math.sqrt(2 * values.length),
           `${kind}: fixed button impulse severely favors some faces (${JSON.stringify(sample.counts)}; chi²=${chiSquare.toFixed(2)})`);
+        assert.equal(sample.landedFaceDepth.samples, sample.sampleCount,
+          `${kind}: every button throw records its final camera-facing face normal`);
+        if (kind !== 'd4') assert.ok(sample.landedFaceDepth.minZ >= .999,
+          `${kind}: all ${sample.sampleCount} settled faces point squarely skyward ` +
+          `(min z=${sample.landedFaceDepth.minZ}; ${sample.landedFaceDepth.below999} ambiguous landings)`);
         if (kind === 'd8') assert.equal(sample.d8Area.samples, sample.sampleCount,
           'each actual d8 button throw provides a projected winning-face area');
         if (kind === 'd8') assert.deepEqual(
           [sample.d8Area.cameraFace.withCandidate, sample.d8Area.cameraFace.independentlyMatched],
           [sample.sampleCount, sample.sampleCount],
           'every physical d8 has a camera-facing face and its projected normal agrees with the award');
+        if (kind === 'd8') assert.ok(
+          sample.d8Area.silhouette.minHull >= 6 && sample.d8Area.silhouette.minVisible >= 4,
+          `all landed d8 keep a six-corner octahedral silhouette with four visible triangles ` +
+          `(min hull=${sample.d8Area.silhouette.minHull}, min faces=${sample.d8Area.silhouette.minVisible})`);
         row.buttonSamples.push({ ...sample, chiSquare: +chiSquare.toFixed(2) });
       }
     }

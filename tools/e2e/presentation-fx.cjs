@@ -236,7 +236,7 @@ async function rareChest(page, row) {
     };
   });
   check(state.kind === 'd8' && state.slotKind === 'd8', 'forced d8 chest enters the real roll flow');
-  check(state.fx?.realtime && state.fx.dur >= 1.5 && state.fx.size >= 340 && state.fx.add !== true, 'd8 chest produces a prominent source-over real-time sprite');
+  check(state.fx?.realtime && state.fx.dur >= 1.1 && state.fx.size <= 280 && state.fx.add !== true, 'd8 chest uses a readable, board-sized real-time sprite');
   check(state.notice.visible && state.notice.text.includes('상자 개봉') && state.notice.tier === 'rare', 'd8 chest has a visible stage result notice');
   check(state.artFrames === 4, 'four chest animation frames loaded');
 
@@ -256,8 +256,61 @@ async function rareChest(page, row) {
     return seen;
   });
   check(composites.includes('source-over'), `chest art is actually painted source-over (${composites.join(', ')})`);
+  const chestMotion = await sheetMotion(page, 'chestOpen', [0.10, 0.13, 0.68]);
+  check(Math.abs(chestMotion[1].width - chestMotion[0].width) > 0.2, 'chest changes scale between adjacent animation frames');
+  check(chestMotion[2].frame === 3, 'chest reaches its open frame within the first 0.7 seconds');
   row.checks.push('rare-chest');
   await screenshotStage(page, `chest-d8-${row.name}.png`);
+}
+
+async function legendaryChest(page, row) {
+  await clearNotices(page);
+  const state = await page.evaluate(() => {
+    DKstartInf('clear');
+    DK.paused = true; DK.gold = 100000; DK.fxs = []; DK.texts = []; DK.towers = [];
+    DK.heldDie = 0; DKSLOT.active = false;
+    const chest = DKCONTENT.INFINITY.chest;
+    const original = chest.draw;
+    let kind;
+    try { chest.draw = () => 'd20'; kind = DKchest(); }
+    finally { chest.draw = original; }
+    const fx = DK.fxs.find(f => f.kind === 'chestOpen');
+    return { kind, size: fx?.size, dur: fx?.dur, realtime: fx?.realtime,
+      burstCount: DK.fxs.filter(f => f.kind === 'burst').length };
+  });
+  check(state.kind === 'd20' && state.realtime, 'legendary chest uses the real physical-die roll');
+  check(state.size <= 270 && state.size >= 180, `legendary chest does not obscure the board (${state.size}px)`);
+  check(state.dur <= 1.6 && state.burstCount <= 20, 'legendary chest stays brisk with a bounded particle count');
+  const motion = await sheetMotion(page, 'chestOpen', [0.10, 0.13, 0.68]);
+  check(Math.abs(motion[1].width - motion[0].width) > 0.2 && motion[2].frame === 3, 'legendary chest opens with continuous motion between illustration frames');
+  row.checks.push('legendary-chest');
+  await screenshotStage(page, `chest-d20-${row.name}.png`);
+}
+
+async function sheetMotion(page, kind, times) {
+  return page.evaluate(({ kind, times }) => {
+    const fx = DK.fxs.find(f => f.kind === kind);
+    if (!fx) throw Error(`missing ${kind} effect`);
+    const frames = DKA[kind];
+    const canvas = document.querySelector('#game');
+    const ctx = canvas.getContext('2d');
+    const source = ctx.drawImage;
+    const seen = [];
+    for (const t of times) {
+      fx.t = t;
+      const draws = [];
+      ctx.drawImage = function(image, ...args) {
+        const frame = frames.findIndex(item => item.cv === image);
+        if (frame >= 0) draws.push({ frame, width: args[2], alpha: this.globalAlpha });
+        return source.call(this, image, ...args);
+      };
+      try { __presentationQA.draw(); }
+      finally { ctx.drawImage = source; }
+      if (!draws.length) throw Error(`${kind} was not painted at ${t}`);
+      seen.push(draws.reduce((a, b) => a.width >= b.width ? a : b));
+    }
+    return seen;
+  }, { kind, times });
 }
 
 async function enhancementSuccess(page, row) {
@@ -285,9 +338,35 @@ async function enhancementSuccess(page, row) {
   check(state.result === 'up' && state.face === 8 && state.selected, 'successful enhancement upgrades the same selected tower');
   check(state.halo?.realtime && state.halo.dur >= 1.8, 'successful enhancement creates a lasting tower halo');
   check(state.notice.visible && state.notice.result === 'up' && state.notice.text.includes('★7 → ★8'), 'success is visible outside the log');
+  const upgradeMotion = await sheetMotion(page, 'acquireBurst', [0.10, 0.13]);
+  check(Math.abs(upgradeMotion[1].width - upgradeMotion[0].width) > 0.2, 'enhancement sparkle expands smoothly between sheet frames');
+  const upgradeStars = await page.evaluate(() => DK.fxs.filter(f => f.kind === 'sprite' && f.img === 'starSpark' && f.anchorTower).length);
+  check(upgradeStars >= 6, 'successful enhancement has several short tower-attached star accents');
   row.checks.push('enhancement-success');
   await page.evaluate(() => { __presentationQA.advancePresentation(0.3); __presentationQA.draw(); });
   await screenshotStage(page, `enhance-success-${row.name}.png`);
+}
+
+async function highDie(page, row) {
+  await clearNotices(page);
+  const state = await page.evaluate(() => {
+    DKstartInf('clear'); DK.paused = true;
+    DK.fxs = []; DK.texts = [];
+    DKacquire(20);
+    return { bursts: DK.fxs.filter(f => f.kind === 'burst').length, sparks: DK.fxs.filter(f => f.kind === 'sprite' && f.img === 'starSpark').length,
+      rings: DK.fxs.filter(f => f.kind === 'ringImg').map(f => f.size), columns: DK.fxs.filter(f => f.kind === 'column').length,
+      confetti: DK.fxs.filter(f => f.kind === 'confetti').length };
+  });
+  check(state.bursts <= 36 && state.sparks <= 16, `high die avoids an excessive number of blurred particles (${JSON.stringify(state)})`);
+  check(state.rings.length === 1 && state.rings[0] <= 370 && state.columns <= 1 && state.confetti <= 1,
+    `high die has one bounded primary ring, beam and confetti layer (${JSON.stringify(state)})`);
+  const motion = await sheetMotion(page, 'acquireBurst', [0.10, 0.13, 0.56]);
+  check(Math.abs(motion[1].width - motion[0].width) > 0.2, 'high-die reward burst expands smoothly');
+  check(motion[2].frame === 3, 'high-die burst reaches its final illustration promptly');
+  row.checks.push('high-die');
+  await screenshotStage(page, `acquire-d20-${row.name}.png`);
+  await page.evaluate(() => { for (const fx of DK.fxs) if (fx.realtime) fx.t = Math.min(0.9, fx.dur * 0.65); __presentationQA.draw(); });
+  await screenshotStage(page, `acquire-d20-late-${row.name}.png`);
 }
 
 async function deckPower(page, row) {
@@ -340,7 +419,9 @@ async function deckPower(page, row) {
         if (name === 'phone') await portraitPowerRelayout(page, row);
         await realtimeAtTripleSpeed(page, row);
         await rareChest(page, row);
+        await legendaryChest(page, row);
         await enhancementSuccess(page, row);
+        await highDie(page, row);
         await deckPower(page, row);
         assert.deepEqual(errors, [], `${name} has no browser errors`);
         console.log('PASS', name, row.checks.join(', '));

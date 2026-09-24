@@ -68,7 +68,7 @@ async function boot(browser, name, viewport, mobile) {
     const anchor = 'window.DK = S;';
     assert.equal(source.split(anchor).length, 2, 'one test hook insertion point');
     await route.fulfill({ response, body: source.replace(anchor,
-      'window.__diceRestQA = { poseFor: shape => shape === "d6" ? m3mul(TRAY_TILT, faceTopR(6)) : polyRestR(shape), dieShape, POLY, FACES, DIE_SYMMETRIES, m3apply, m3mul, alignR, dieFaceLabels, physicalFaceValue, physicalRestAlignment, restThreshold, stabilizeRestPose, updateDie };\n  ' +
+      'window.__diceRestQA = { poseFor: shape => shape === "d6" ? faceTopR(6) : polyRestR(shape), dieShape, POLY, FACES, DIE_SYMMETRIES, m3apply, m3mul, alignR, dieFaceLabels, physicalFaceValue, physicalRestAlignment, restThreshold, stabilizeRestPose, updateDie };\n  ' +
       'window.__diceRestQA.cameraFace=' + cameraFacingDieResult.toString() + ';\n' + anchor) });
   });
   await page.goto(gameUrl());
@@ -127,7 +127,8 @@ async function inspect(page, fixture) {
       return {
         bought, shape, phase: DKSLOT.phase, state: DKDIE.state, held: DK.heldDie,
         actual, expected, matchesSymmetry, symmetryCount, projected, hull, visibleFaces, maxVertexDepth,
-        cameraFace: cameraFace.value, awardedFace: window.__diceRestQA.physicalFaceValue(kind, actual), faceChecks,
+        cameraFace: cameraFace.value, cameraDepth: cameraFace.z,
+        awardedFace: window.__diceRestQA.physicalFaceValue(kind, actual), faceChecks,
         mesh: { vertices: model.verts.length, faces: model.faces.length, sides: [...new Set(model.faces.map(f => f.idx.length))] },
         dieTarget: document.elementFromPoint(dieX, dieY)?.id || null,
       };
@@ -245,9 +246,12 @@ async function run(browser, name, viewport, mobile) {
         assert.ok(result.faceChecks.every(check => check.camera === check.face && check.award === check.camera),
           'all four d4 face-center labels, not screen-highest vertices, determine the result: ' + JSON.stringify(result.faceChecks));
       }
+      if (fixture.shape !== 'd4') {
+        assert.ok(result.cameraDepth >= .999, `${fixture.kind}: waiting die rests with one face toward the player (z=${result.cameraDepth})`);
+      }
       if (fixture.shape === 'd8') {
-        assert.ok(result.hull.length >= 4, 'd8 rests with at least a diamond silhouette, never a tetrahedron-like triangle');
-        assert.ok(result.visibleFaces >= 4, 'd8 shows both pyramids rather than one flat triangular face');
+        assert.ok(result.hull.length >= 6, 'face-up d8 keeps a hexagonal silhouette, never a tetrahedron-like triangle');
+        assert.ok(result.visibleFaces >= 4, 'd8 shows its winning triangle and three neighbouring faces');
       }
       if (fixture.shape === 'd12' || fixture.shape === 'd20') {
         assert.ok(result.hull.length >= 5, fixture.kind + ': many-sided projected silhouette');
@@ -263,7 +267,7 @@ async function run(browser, name, viewport, mobile) {
       [shape, projectPose(model, matrix).hull]));
     assert.ok(previewHulls.d4 >= 3 && previewHulls.d4 <= 4,
       'cosmetic d4 preview preserves the four-vertex tetrahedral silhouette');
-    assert.equal(previewHulls.d8, 4, 'cosmetic d8 preview has a clear diamond silhouette');
+    assert.equal(previewHulls.d8, 6, 'face-up d8 preview has a clear hexagonal silhouette');
     assert.ok(previewHulls.d12 >= 5 && previewHulls.d20 >= 5, 'larger dice previews keep many-sided silhouettes');
     row.previewHulls = previewHulls;
     if (name === 'desktop') {
@@ -285,7 +289,7 @@ async function run(browser, name, viewport, mobile) {
       // do not twist it after landing merely to expose a second face.
       assert.ok(kind === 'd4'
         ? settled.hull >= 3 && settled.area > .3 && settled.visibleFaces >= 1
-        : settled.hull >= 4 && settled.visibleFaces >= 3,
+        : settled.hull >= 6 && settled.visibleFaces >= 4,
       `actual settled ${kind} keeps a readable solid silhouette (hull=${settled.hull}, area=${settled.area}, visible=${settled.visibleFaces}, final=${outcomes.final})`);
       row[`${kind}Physical`] = { frames: outcomes.frames, final: outcomes.final, hull: settled.hull, visibleFaces: settled.visibleFaces };
     }

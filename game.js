@@ -1961,7 +1961,7 @@ const DIE = {
   state: 'tray', // tray | grab | throw | settle | fly
   x: TRAY.x, y: TRAY.y, z: 0,
   vx: 0, vy: 0, vz: 0,
-  R: m3mul(TRAY_TILT, faceTopR(6)), w: [0, 0, 0], // 자세 행렬 + 각속도 벡터
+  R: faceTopR(6), w: [0, 0, 0], // 자세 행렬 + 각속도 벡터
   face: 6, final: 6,
   settleT: 0, flyT: 0,
   settleFrom: null, settleAxis: [0, 0, 1], settleAng: 0,
@@ -2099,9 +2099,10 @@ function buyChest() {
   S.texts.push({ str: drawn ? `덱 소환 · ★${drawn.face} ${combatDef(drawn.face).name}` : kind === 'd1' ? '꽝… 일반: 외눈 주사위' : `보물상자: ${ch.grade[kind]} — ${ch.label[kind]} 획득!`, x: W / 2, y: topTextY(), t: 0, color: col });
   const fx = W / 2, fy = H / 2;
   S.fxs.push({ kind: 'ring', x: fx, y: fy, t: 0, dur: 0.95 + rare * 0.2, size: 175 + rare * 55, color: col });
-  if (rk >= 3) spawnBurst(fx, fy, col, 6 + rk * 3, 100 + rk * 24, 0.6);
+  if (rk >= 3) spawnBurst(fx, fy, col, 6 + rk * 2, 100 + rk * 24, 0.6);
   if (rk >= 6) { S.shakeT = Math.max(S.shakeT || 0, 0.3); S.fxs.push({ kind: 'circle', x: fx, y: fy, t: 0, dur: 1.2, size: 260, color: col }); }
-  if (rk >= 3 && hasArt('chestOpen')) S.fxs.push({ kind: 'chestOpen', x: fx, y: fy, t: 0, dur: 1.35 + rare * 0.15, size: 340 + rare * 45 });
+  if (rk >= 3 && hasArt('chestOpen')) S.fxs.push({ kind: 'chestOpen', x: fx, y: fy, t: 0, dur: 0.92 + rare * 0.07,
+    size: Math.min(270, Math.max(180, Math.min(W, H) * 0.36) + rare * 12) });
   if (rk >= 3 && hasArt('acquireColumn')) S.fxs.push({ kind: 'column', x: fx, y: fy + 105, t: 0, dur: 1.25, size: 270 + rare * 55 });
   if (rk >= 3) stageNotice('chest-reveal', `${ch.grade[kind]} 상자 개봉 · ${ch.label[kind]}!`, rk >= 5 ? 'mythic' : 'rare', 2400);
   presentationFx(fxStart, textStart, rk >= 3 ? 1.25 : 1);
@@ -2137,7 +2138,7 @@ function rollDie(kind, forcedFinal) {
   SLOT.final = deckRun() ? forcedFinal : kind === 'd1' ? 1 : 0;
   SLOT.labels = null; SLOT.faceIndex = 0;
   if (SLOT.phase === -1) {
-    const shape = dieShape(kind), restR = shape === 'd6' ? m3mul(TRAY_TILT, faceTopR(6)) : polyRestR(shape);
+    const shape = dieShape(kind), restR = shape === 'd6' ? faceTopR(6) : polyRestR(shape);
     const tray = activeTray();
     DIE.state = 'tray'; DIE.x = tray.x; DIE.y = tray.y; DIE.z = 0;
     DIE.vx = 0; DIE.vy = 0; DIE.vz = 0; DIE.final = 0; DIE.face = 6; DIE.faceIndex = 0; DIE.labels = null;
@@ -2210,25 +2211,23 @@ function acquireFxCode(face, tier, col, cx, cy) {
   }
   S.fxs.push({ kind: 'ring', x: cx, y: cy, t: 0, dur: 0.9, size: 260 + tier * 60, color: col });
   S.fxs.push({ kind: 'circle', x: cx, y: cy + 40, t: 0, dur: 1.1 + tier * 0.15, size: 180 + tier * 40, color: col, pips: Math.min(12, face - 6) });
-  spawnBurst(cx, cy, col, 12 + tier * 10, 140 + tier * 40, 0.7 + tier * 0.1);
-  if (tier >= 2) { S.fxs.push({ kind: 'ring', x: cx, y: cy, t: 0, dur: 1.3, size: 420, color: '#ffffff' }); }
-  if (tier >= 4) { for (let i = 0; i < 3; i++) S.fxs.push({ kind: 'ring', x: cx, y: cy, t: -i * 0.18, dur: 1.2, size: 520, color: ['#ff7ad9', '#ffd452', '#7fd4ff'][i] }); spawnBurst(cx, cy, '#ffffff', 24, 260, 1.1); }
+  spawnBurst(cx, cy, col, 10 + tier * 5, 140 + tier * 40, 0.7 + tier * 0.1);
+  if (tier >= 2) { S.fxs.push({ kind: 'ring', x: cx, y: cy, t: 0, dur: 1.3, size: 300, color: '#ffffff' }); }
+  if (tier >= 4) { S.fxs.push({ kind: 'ring', x: cx, y: cy, t: -0.18, dur: 1.2, size: 340, color: '#ffd452' }); spawnBurst(cx, cy, '#ffffff', 10, 260, 1.1); }
 }
 function acquireFxArt(face, tier, col, cx, cy) {
   const sparks = (n, spread, sz) => { for (let i = 0; i < n; i++) { const a = Math.random() * Math.PI * 2, v = spread * (0.4 + Math.random() * 0.8); S.fxs.push({ kind: 'sprite', img: 'starSpark', x: cx, y: cy, vx: Math.cos(a) * v, vy: Math.sin(a) * v - spread * 0.3, t: -Math.random() * 0.15, dur: 0.6 + Math.random() * 0.4, size: sz * (0.6 + Math.random() * 0.8), phase: Math.random() * 6 }); } };
   if (!tier) { S.fxs.push({ kind: 'ring', x: cx, y: cy, t: 0, dur: 0.5, size: 120, color: col }); if (hasArt('starSpark')) sparks(4, 90, 26); else spawnBurst(cx, cy, col, 6, 90, 0.45); return; }
-  S.fxs.push({ kind: 'acquireBurst', x: cx, y: cy, t: 0, dur: 0.6 + tier * 0.1, size: 240 + tier * 40, add: true });
-  if (hasArt('acquireRing')) S.fxs.push({ kind: 'ringImg', img: 'acquireRing', x: cx, y: cy, t: 0, dur: 0.9, size: 320 + tier * 40 });
-  else S.fxs.push({ kind: 'ring', x: cx, y: cy, t: 0, dur: 0.9, size: 260 + tier * 60, color: col });
-  spawnBurst(cx, cy, col, 8 + tier * 6, 120 + tier * 30, 0.6 + tier * 0.1);
-  if (hasArt('starSpark')) sparks(6 + tier * 4, 160 + tier * 40, 30);
-  if (tier >= 2) { if (hasArt('acquireColumn')) S.fxs.push({ kind: 'column', x: cx, y: cy + 40, t: 0, dur: 0.8, size: 420 + tier * 40 }); S.fxs.push({ kind: 'ring', x: cx, y: cy, t: 0, dur: 1.3, size: 420, color: '#ffffff' }); }
-  if (tier >= 3) { if (hasArt('confetti')) S.fxs.push({ kind: 'confetti', x: cx, y: cy - 40, t: 0, dur: 1.1, size: 380 + tier * 30 }); if (hasArt('acquireColumn')) S.fxs.push({ kind: 'column', x: cx, y: cy + 40, t: -0.15, dur: 0.9, size: 520 }); }
+  S.fxs.push({ kind: 'acquireBurst', x: cx, y: cy, t: 0, dur: 0.6 + tier * 0.1, size: 230 + tier * 30, add: true });
+  const ringImg = tier >= 4 && hasArt('acquireRingRainbow') ? 'acquireRingRainbow' : 'acquireRing';
+  if (hasArt(ringImg)) S.fxs.push({ kind: 'ringImg', img: ringImg, x: cx, y: cy, t: 0, dur: 1.1, size: 250 + tier * 28 });
+  else S.fxs.push({ kind: 'ring', x: cx, y: cy, t: 0, dur: 0.9, size: 260 + tier * 28, color: col });
+  spawnBurst(cx, cy, col, 8 + tier * 4, 120 + tier * 30, 0.6 + tier * 0.1);
+  if (hasArt('starSpark')) sparks(6 + tier * 2, 160 + tier * 40, 30);
+  if (tier >= 2) { if (hasArt('acquireColumn')) S.fxs.push({ kind: 'column', x: cx, y: cy + 40, t: 0, dur: 0.8, size: 235 + tier * 16 }); S.fxs.push({ kind: 'ring', x: cx, y: cy, t: 0, dur: 1.3, size: 300, color: '#ffffff' }); }
+  if (tier >= 3 && hasArt('confetti')) S.fxs.push({ kind: 'confetti', x: cx, y: cy - 40, t: 0, dur: 1.1, size: 230 + tier * 18 });
   if (tier >= 4) {
-    const img = hasArt('acquireRingRainbow') ? 'acquireRingRainbow' : 'acquireRing';
-    for (let i = 0; i < 3; i++) { if (hasArt(img)) S.fxs.push({ kind: 'ringImg', img, x: cx, y: cy, t: -i * 0.18, dur: 1.2, size: 560, spin: 0.8 + i * 0.4, phase: i * 2 }); else S.fxs.push({ kind: 'ring', x: cx, y: cy, t: -i * 0.18, dur: 1.2, size: 520, color: ['#ff7ad9', '#ffd452', '#7fd4ff'][i] }); }
-    if (hasArt('confetti')) S.fxs.push({ kind: 'confetti', x: cx, y: cy - 60, t: -0.35, dur: 1.2, size: 460 });
-    spawnBurst(cx, cy, '#ffffff', 24, 260, 1.1);
+    spawnBurst(cx, cy, '#ffffff', 10, 260, 1.1);
   }
 }
 // '#rrggbb' → 'rgba(r,g,b,a)'
@@ -2256,7 +2255,8 @@ function updateSlot(dt) {
     if (S.mode === 'stage' && SLOT.t > .48) SLOT.R = stabilizeRestPose('story', SLOT.R, dt);
     SLOT.sndT -= dt;
     if (SLOT.sndT <= 0) { SFX.bounce(0.3); SLOT.sndT = 0.11; }
-    if (SLOT.t >= (S.mode === 'stage' ? 1.05 : poly ? 0.7 : 0.55)) {
+    if (SLOT.t >= (S.mode === 'stage' ? 1.05 : poly ? 0.7 : 0.55) &&
+        (S.mode !== 'stage' || physicalRestAlignment('story', SLOT.R) >= restThreshold('story') - 1e-6)) {
       SLOT.phase = 1;
       if (S.mode === 'stage') {
         SLOT.faceIndex = physicalFaceIndex('story', SLOT.R);
@@ -2402,15 +2402,11 @@ function physicalTopVector(kind, R) {
   if (kind === 'story' || shape === 'd6') return m3apply(R, FACES.find(f => f.val === index).n);
   return m3apply(R, POLY[shape].faces[index - 1].n);
 }
-// Tilt the supporting front face down slightly so its upper neighbouring
-// printed face opens toward the camera instead of becoming an unreadable rim.
+// Finished dice show the winning face toward the player. A tetrahedron is the
+// exception: it naturally rests on a triangular face with its apex raised.
 function supportRestDirection(kind) {
-  // Keep each lean inside the face's nearest-normal region: the same printed
-  // face remains camera-facing throughout the final rock. A d4 needs a
-  // stronger lean so an adjacent side stays visible instead of looking flat.
   const shape = dieShape(kind);
-  const y = shape === 'd20' ? .28 : shape === 'd4' ? .7 : .45;
-  return [0, y, Math.sqrt(1 - y * y)];
+  return shape === 'd4' ? [0, .7, Math.sqrt(1 - .7 * .7)] : [0, 0, 1];
 }
 function physicalRestAlignment(kind, R) {
   const n = physicalTopVector(kind, R);
@@ -2418,7 +2414,7 @@ function physicalRestAlignment(kind, R) {
   return n[1] * t[1] + n[2] * t[2];
 }
 function restThreshold(kind) {
-  return .997;
+  return dieShape(kind) === 'd4' ? .997 : .99995;
 }
 // A slow die rocks toward whichever camera-facing face is already uppermost. The
 // physical winner may change naturally while it is still moving; once it is
@@ -2440,16 +2436,16 @@ function alignR(n) {
   if (l < 1e-6) return n[2] > 0 ? m3id() : m3axisAngle(1, 0, 0, Math.PI);
   return m3axisAngle(n[1] / l, -n[0] / l, 0, Math.acos(Math.max(-1, Math.min(1, n[2]))));
 }
-// 정팔면체는 면 정면 자세에서 사면체처럼 읽힌다. 꼭짓점을 정면에 두어 네 삼각면과 마름모 윤곽을 모두 보여 준다.
+// 대기 중인 주사위는 결과와 무관하게 한 면이 카메라를 향하도록 놓는다.
 function polyRestR(shape) {
-  if (shape === 'd8') return m3id();
-  // Keep an apex above the board, with two sloped faces visible. Pointing a
-  // vertex straight at the camera makes the solid look like a flat shard.
+  // A d4 rests with an apex up rather than presenting a flat triangular face.
   if (shape === 'd4') return m3mul(m3axisAngle(1, 0, 0, 1.42), alignR(POLY.d4.verts[0]));
-  return m3mul(TRAY_TILT, alignR(POLY[shape].faces[0].n));
+  // Waiting dice also sit on a face; their number is only a visible marking,
+  // and the awarded result is still determined by the later physical throw.
+  return alignR(POLY[shape].faces[0].n);
 }
-// 정착 후에도 d8을 삼각면 정면으로 돌리면 사면체처럼 보인다. 결과 면에 가장 가까운 꼭짓점을 정면으로 두되
-// 결과 면 쪽으로 조금 기울여 숫자를 읽을 수 있게 한다.
+// 덱 모드의 자동 소환은 미리 정해진 카드를 보여 준다. d8은 육각 윤곽이
+// 드러나도록 결과 면 쪽 꼭짓점을 카메라에 조금 더 가까이 둔다.
 function d8TargetR(faceIndex) {
   const solid = POLY.d8, face = solid.faces[faceIndex - 1];
   const apex = solid.verts[face.idx.find(i => Math.abs(solid.verts[i][2]) > 0.9)];
@@ -2900,7 +2896,7 @@ function updateDie(dt) {
 
     // 정지 판정 → 위를 향한 면이 결과
     if (spd < 26 && DIE.z <= 0 && Math.abs(DIE.vz) < 40 && Math.hypot(...DIE.w) < .45 &&
-        physicalRestAlignment(manualChestRoll() ? SLOT.kind : 'story', DIE.R) >= restThreshold(manualChestRoll() ? SLOT.kind : 'story') - .002) {
+        physicalRestAlignment(manualChestRoll() ? SLOT.kind : 'story', DIE.R) >= restThreshold(manualChestRoll() ? SLOT.kind : 'story') - 1e-6) {
       const kind = manualChestRoll() ? SLOT.kind : 'story';
       DIE.faceIndex = physicalFaceIndex(kind, DIE.R);
       DIE.final = physicalFaceValue(kind, DIE.R, kind === 'story' ? DIE.labels : dieFaceLabels(kind));
@@ -2953,7 +2949,7 @@ function updateDie(dt) {
       else {
         S.heldDie = DIE.final;
         DIE.labels = storyDieLabels(); DIE.faceIndex = 6; DIE.face = 6;
-        DIE.R = m3mul(TRAY_TILT, faceTopR(6));
+        DIE.R = faceTopR(6);
         SFX.coin();
         diceSlot.classList.add('pop');
         setTimeout(() => diceSlot.classList.remove('pop'), 350);
@@ -3032,7 +3028,7 @@ function drawDie() {
       ctx.textAlign = 'left'; ctx.font = uiFont(17); ctx.fillStyle = dieKindColor(SLOT.kind);
       ctx.fillText(label, tray.x + 65, tray.y - 62);
       ctx.font = uiFont(12); ctx.fillStyle = '#ffe9bb';
-      ctx.fillText('끌어 던지거나 아래 던지기 버튼', tray.x + 65, tray.y - 41);
+      ctx.fillText('결과 미정 · 끌어 던지거나 아래 버튼', tray.x + 65, tray.y - 41);
     } else {
       ctx.font = uiFont(11); ctx.textAlign = 'center';
       ctx.fillStyle = `rgba(255,233,160,${0.6 + 0.3 * Math.sin(S.time * 4)})`;
@@ -3203,7 +3199,7 @@ function startStage(n) {
   S.enemies = []; S.towers = []; S.projs = []; S.beams = []; S.fxs = []; S.texts = []; S.corpses = [];
   S.spawnQ = []; S.waveActive = false; S.autoT = 0; S.waveT = 0;
   S.heldDie = 0; S.dieFocus = true; S.selTower = null; S.shakeT = 0; S.bannerT = 0;
-  DIE.state = 'tray'; DIE.x = TRAY.x; DIE.y = TRAY.y; DIE.z = 0; DIE.final = 0; DIE.face = 6; DIE.faceIndex = 6; DIE.labels = storyDieLabels(); DIE.R = m3mul(TRAY_TILT, faceTopR(6));
+  DIE.state = 'tray'; DIE.x = TRAY.x; DIE.y = TRAY.y; DIE.z = 0; DIE.final = 0; DIE.face = 6; DIE.faceIndex = 6; DIE.labels = storyDieLabels(); DIE.R = faceTopR(6);
   SLOT.active = false; SLOT.labels = null; ROLL_SHOW.t = 0;
   applyMapLayout(sd.mapKey, sd.tier || 1);
   S.phase = 'playing';
@@ -3249,7 +3245,7 @@ function startInfinity(kind, net, accountRun) {
   S.enemies = []; S.towers = []; S.projs = []; S.beams = []; S.fxs = []; S.texts = []; S.corpses = [];
   S.spawnQ = []; S.waveActive = false; S.autoT = 0; S.waveT = 0;
   S.heldDie = 0; S.dieFocus = true; S.selTower = null; S.shakeT = 0; S.bannerT = 0;
-  DIE.state = 'tray'; DIE.x = TRAY.x; DIE.y = TRAY.y; DIE.z = 0; DIE.final = 0; DIE.face = 6; DIE.faceIndex = 6; DIE.labels = null; DIE.R = m3mul(TRAY_TILT, faceTopR(6));
+  DIE.state = 'tray'; DIE.x = TRAY.x; DIE.y = TRAY.y; DIE.z = 0; DIE.final = 0; DIE.face = 6; DIE.faceIndex = 6; DIE.labels = null; DIE.R = faceTopR(6);
   SLOT.active = false; SLOT.final = 0; SLOT.labels = null; ROLL_SHOW.t = 0;
   applyMapLayout(S.mapKey, INF.tier);
   S.phase = 'playing';
@@ -3775,6 +3771,15 @@ function towerPresentationText(t, label) {
   label.anchorTower = t; label.anchorSpot = t.spot;
   label.anchorDx = label.x - t.x; label.anchorDy = label.y - t.y;
   S.texts.push(label);
+}
+function towerUpgradeStars(t) {
+  if (!hasArt('starSpark')) return;
+  for (let i = 0; i < 8; i++) {
+    const a = i * Math.PI * 2 / 8;
+    towerPresentationFx(t, { kind: 'sprite', img: 'starSpark', x: t.x, y: t.y - 34,
+      vx: Math.cos(a) * 54, vy: Math.sin(a) * 35 - 28, t: -i * 0.025,
+      dur: 0.65 + i * 0.03, size: 13 + (i % 3) * 3, phase: a, realtime: true });
+  }
 }
 function powerTowerFx(t, color) {
   towerPresentationFx(t, { kind: 'towerHalo', status: 'power', x: t.x, y: t.y - 32, t: 0, dur: 1.85, size: 116, color, realtime: true });
@@ -4831,39 +4836,56 @@ function draw() {
   }
 
   // 이펙트
+  const sheetMap = {
+    impact: A.impact, cannonBlast: A.cannonBlast, arcaneBurst: A.arcaneBurst,
+    frostBurst: A.frostBurst, dieExplode: A.dieExplode,
+    acquireBurst: A.acquireBurst, confetti: A.confetti, chestOpen: A.chestOpen,
+  };
   for (const f of S.fxs) {
     if (f.anchorTower) { f.x = f.anchorTower.x + f.anchorDx; f.y = f.anchorTower.y + f.anchorDy; }
     const pr = f.t / f.dur;
-    const sheetMap = {
-      impact: A.impact, cannonBlast: A.cannonBlast, arcaneBurst: A.arcaneBurst,
-      frostBurst: A.frostBurst, dieExplode: A.dieExplode,
-      acquireBurst: A.acquireBurst, confetti: A.confetti, chestOpen: A.chestOpen,
-    };
     if (pr < 0) continue;                                       // 지연 시작 (t 가 음수)
     if (sheetMap[f.kind]) {
       const frames = sheetMap[f.kind];
-      const fr = frames[Math.min(3, Math.floor(pr * 4))];
-      const s = f.size / Math.max(fr.w, fr.h);
+      const rewardSheet = f.realtime && (f.kind === 'chestOpen' || f.kind === 'acquireBurst' || f.kind === 'confetti');
+      // Four illustrations stretched across a two-second reward looked like a 2 fps slideshow.
+      // Complete the opening promptly; continuous scale, lift and crossfade fill the display frames.
+      const span = f.kind === 'chestOpen' ? 0.62 : f.kind === 'confetti' ? 0.65 : 0.48;
+      const frameAt = rewardSheet ? Math.min(3, Math.max(0, f.t) / span * 3) : Math.min(3, Math.floor(pr * 4));
+      const first = Math.floor(frameAt), blend = rewardSheet ? (frameAt - first) ** 2 * (3 - 2 * (frameAt - first)) : 0;
+      const pop = rewardSheet ? Math.min(1, Math.max(0, f.t) / 0.3) : 1;
+      const ease = 1 - (1 - pop) ** 3;
+      const scale = rewardSheet ? 0.78 + 0.22 * ease + 0.012 * Math.sin(f.t * 8) : 1;
+      const lift = f.kind === 'chestOpen' ? 12 * (1 - ease) : 0;
+      const alpha = rewardSheet ? Math.max(0, Math.min(1, f.t / 0.09, (f.dur - f.t) / 0.25)) : 1 - pr * 0.4;
       ctx.save();
       if (f.kind === 'chestOpen') {
-        const halo = ctx.createRadialGradient(f.x, f.y, 4, f.x, f.y, f.size * 0.47);
+        const halo = ctx.createRadialGradient(f.x, f.y, 4, f.x, f.y, f.size * 0.47 * scale);
         halo.addColorStop(0, 'rgba(31,20,32,.86)');
         halo.addColorStop(.7, 'rgba(31,20,32,.56)');
         halo.addColorStop(1, 'rgba(31,20,32,0)');
-        ctx.globalAlpha = Math.min(1, (1 - pr) * 2.8);
+        ctx.globalAlpha = alpha * 0.8;
         ctx.fillStyle = halo;
-        ctx.beginPath(); ctx.arc(f.x, f.y, f.size * 0.47, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.arc(f.x, f.y, f.size * 0.47 * scale, 0, Math.PI * 2); ctx.fill();
       }
-      ctx.globalAlpha = f.kind === 'chestOpen' ? Math.min(1, (1 - pr) * 2.5) : 1 - pr * 0.4;
       if (f.add) ctx.globalCompositeOperation = 'lighter';
-      ctx.drawImage(fr.cv, f.x - fr.w * s / 2, f.y - fr.h * s / 2, fr.w * s, fr.h * s);
+      const paint = (fr, opacity) => {
+        if (!fr || opacity <= 0) return;
+        const s = f.size * scale / Math.max(fr.w, fr.h);
+        ctx.globalAlpha = alpha * opacity;
+        ctx.drawImage(fr.cv, f.x - fr.w * s / 2, f.y + lift - fr.h * s / 2, fr.w * s, fr.h * s);
+      };
+      // Keep the underlying drawing opaque while the next sheet frame fades in;
+      // fading both source-over layers would make the reward pulse darker mid-transition.
+      paint(frames[first], 1);
+      if (rewardSheet && first < 3) paint(frames[first + 1], blend);
       ctx.restore();
     } else if (f.kind === 'ringImg') {                          // 그림 링: 회전하며 커지고 사라진다
       const im = A[f.img]; if (!im || !im.cv) continue;
       const sz = f.size * (0.3 + 0.9 * pr);
       ctx.save();
       ctx.globalAlpha = Math.max(0, 1 - pr) * 0.95; ctx.globalCompositeOperation = 'lighter';
-      ctx.translate(f.x, f.y); ctx.rotate(S.time * (f.spin || 1.2) + (f.phase || 0));
+      ctx.translate(f.x, f.y); ctx.rotate((f.realtime ? f.t : S.time) * (f.spin || 1.2) + (f.phase || 0));
       ctx.drawImage(im.cv, -sz / 2, -sz / 2, sz, sz);
       ctx.restore();
     } else if (f.kind === 'column') {                           // 빛기둥: 아래에서 위로 뻗는다
@@ -4878,7 +4900,7 @@ function draw() {
       const tt = Math.max(0, f.t), sz = f.size * (1 + pr * 0.4);
       ctx.save();
       ctx.globalAlpha = Math.max(0, 1 - pr); ctx.globalCompositeOperation = 'lighter';
-      ctx.translate(f.x + (f.vx || 0) * tt, f.y + (f.vy || 0) * tt); ctx.rotate(S.time * 3 + (f.phase || 0));
+      ctx.translate(f.x + (f.vx || 0) * tt, f.y + (f.vy || 0) * tt); ctx.rotate((f.realtime ? f.t : S.time) * 3 + (f.phase || 0));
       ctx.drawImage(im.cv, -sz / 2, -sz / 2, sz, sz);
       ctx.restore();
     } else if (f.kind === 'burst') {
@@ -4888,7 +4910,7 @@ function draw() {
       ctx.save();
       ctx.globalAlpha = Math.max(0, 1 - pr) * 0.95;
       ctx.fillStyle = f.color || '#ffe9a0';
-      ctx.shadowColor = f.color || '#ffe9a0'; ctx.shadowBlur = 8;
+      if (!f.realtime) { ctx.shadowColor = f.color || '#ffe9a0'; ctx.shadowBlur = 8; }
       ctx.beginPath(); ctx.arc(bx, by, f.size * (1 - pr * 0.5), 0, Math.PI * 2); ctx.fill();
       ctx.restore();
     } else if (f.kind === 'spark') {
@@ -4975,7 +4997,7 @@ function draw() {
       ctx.beginPath(); ctx.arc(0, 0, R, 0, Math.PI * 2); ctx.stroke();
       ctx.lineWidth = 1.2;
       ctx.beginPath(); ctx.arc(0, 0, R * 0.72, 0, Math.PI * 2); ctx.stroke();
-      ctx.rotate(S.time * 1.8 + (f.spin || 0));
+      ctx.rotate((f.realtime ? f.t : S.time) * 1.8 + (f.spin || 0));
       const n = f.pips || 6;
       for (let i = 0; i < n; i++) {
         const a = Math.PI * 2 * i / n;
@@ -4986,7 +5008,7 @@ function draw() {
         ctx.beginPath(); ctx.arc(Math.cos(a) * R * 0.86, Math.sin(a) * R * 0.86, 2.6, 0, Math.PI * 2);
         ctx.fillStyle = col; ctx.fill();
       }
-      ctx.rotate(-S.time * 3);
+      ctx.rotate(-(f.realtime ? f.t : S.time) * 3);
       ctx.beginPath();
       const k = f.merge ? 6 : 5;
       for (let i = 0; i < k * 2; i++) {
@@ -5594,6 +5616,7 @@ function enhanceTower() {
     towerPresentationFx(t, { kind: 'ring', x: t.x, y: t.y - 30, t: 0, dur: 1.5, size: 135, color: col, realtime: true });
     towerPresentationFx(t, { kind: 'circle', x: t.x, y: t.y + 4, t: 0, dur: 1.6, size: 150, color: col, pips: t.face <= 6 ? t.face : 4 + Math.min(8, t.face - 6), realtime: true });
     if (hasArt('acquireBurst')) towerPresentationFx(t, { kind: 'acquireBurst', x: t.x, y: t.y - 30, t: 0, dur: 1.1, size: 150, add: true, realtime: true });
+    towerUpgradeStars(t);
     enhanceResult(t, 'up', `강화 성공 · ★${oldFace} → ★${t.face}`);
     if (t.face >= 14) S.shakeT = Math.max(S.shakeT || 0, 0.3);
     netLog(`${t.def.name} 확률강화에 성공했습니다`, 'up');
@@ -6459,7 +6482,7 @@ function endGrab(ev) {
     // 너무 약하게 놓으면 트레이로 반환 (비용 없음)
     DIE.state = 'tray';
     const tray = activeTray(); DIE.x = tray.x; DIE.y = tray.y;
-    DIE.R = manualChestRoll() ? SLOT.R : m3mul(TRAY_TILT, faceTopR(DIE.face));
+    DIE.R = manualChestRoll() ? SLOT.R : faceTopR(DIE.face);
     DIE.w = [0, 0, 0];
     if (spd > 120) { SFX.deny(); S.texts.push({ str: '더 세게 던지세요!', x: DIE.x, y: DIE.y - 46, t: 0, color: '#ffd0a0' }); }
   }
@@ -7005,7 +7028,7 @@ async function restoreRunSave(p, net) {
       SLOT.t = 0; SLOT.t2 = 0; SLOT.sndT = 0;
       DIE.x = activeTray().x; DIE.y = activeTray().y; DIE.z = 0;
       DIE.vx = DIE.vy = DIE.vz = 0; DIE.w = [0, 0, 0]; DIE.final = 0; DIE.faceIndex = 0; DIE.labels = null;
-      const shape = dieShape(SLOT.kind), restR = shape === 'd6' ? m3mul(TRAY_TILT, faceTopR(6)) : polyRestR(shape);
+      const shape = dieShape(SLOT.kind), restR = shape === 'd6' ? faceTopR(6) : polyRestR(shape);
       DIE.R = m3mul(restR, randomDieSymmetry(shape));
       SLOT.R = DIE.R;
     }

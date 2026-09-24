@@ -25,7 +25,7 @@ const { cameraFacingDieResult } = require('./camera-facing-die.cjs');
       assert.equal(source.split(strike).length, 2, 'enemy strike hook is unique');
       assert.equal(source.split(anchor).length, 2, 'game hook is unique');
       source = source.replace(strike, strike + ' window.__storyStrikes=(window.__storyStrikes||0)+1;');
-      source = source.replace(anchor, `window.__storyQA={updateDie,physicalFaceValue,dieShape,POLY,FACES,m3apply,spawnEnemy,putTarget(x,y){
+      source = source.replace(anchor, `window.__storyQA={updateDie,updateSlot,rollByButton,physicalFaceValue,dieShape,POLY,FACES,m3apply,spawnEnemy,putTarget(x,y){
         LANES=[buildLane('ground',[[x-80,y],[x+80,y]],'test target')];
         spawnEnemy({type:'slime',lane:0});
         const enemy=S.enemies.at(-1);enemy.dist=80;enemy.hp=enemy.max=1000000;
@@ -93,10 +93,12 @@ const { cameraFacingDieResult } = require('./camera-facing-die.cjs');
         if (!landing && state === 'throw' && d.state === 'settle')
           landing = { visible: __storyQA.physicalFaceValue('story', d.R, d.labels),
             cameraFace: __storyQA.cameraFace('story', d.R, d.labels, __storyQA).value,
+            cameraZ: __storyQA.cameraFace('story', d.R, d.labels, __storyQA).z,
             final: d.final, R: d.R.slice() };
         if (settledVisible === null && state === 'settle' && d.state === 'fly')
           settledVisible = { physical: __storyQA.physicalFaceValue('story', d.R, d.labels),
-            cameraFace: __storyQA.cameraFace('story', d.R, d.labels, __storyQA).value };
+            cameraFace: __storyQA.cameraFace('story', d.R, d.labels, __storyQA).value,
+            cameraZ: __storyQA.cameraFace('story', d.R, d.labels, __storyQA).z };
       }
       return { hit, held: DK.heldDie, final: d.final, face: d.face, dieState: d.state,
         gold: DK.gold, slotActive: DKSLOT.active, landing,
@@ -111,9 +113,33 @@ const { cameraFacingDieResult } = require('./camera-facing-die.cjs');
       result.settledVisible.physical, result.settledVisible.cameraFace],
     [result.held, result.held, result.held, result.held, result.held],
     'story reward and final visible pips match the camera-facing landing face');
+    assert.ok(result.landing.cameraZ >= .999 && result.settledVisible.cameraZ >= .999,
+      `story die holds its awarded face squarely skyward (landed z=${result.landing.cameraZ}, ` +
+      `displayed z=${result.settledVisible.cameraZ})`);
     assert.equal(result.dieState, 'tray', 'die flies back to its tray after settlement');
     assert.equal(result.gold, 460, 'enemy hit and settlement do not charge the throw again');
     assert.equal(result.slotActive, false, 'story throw never occupies chest animation slot');
+    const quickRoll = await page.evaluate(() => {
+      DKstart(1); DK.paused = true; DK.muted = true; DK.gold = 500;
+      __storyQA.rollByButton();
+      let locked = null, frames = 0;
+      for (; frames < 180 && DKSLOT.active; frames++) {
+        const before = DKSLOT.phase;
+        __storyQA.updateSlot(1 / 60);
+        if (!locked && before === 0 && DKSLOT.phase === 1) {
+          const visible = __storyQA.cameraFace('story', DKSLOT.R, DKSLOT.labels, __storyQA);
+          locked = { value: visible.value, cameraZ: visible.z, final: DKSLOT.final };
+        }
+      }
+      return { locked, frames, held: DK.heldDie, active: DKSLOT.active };
+    });
+    assert.ok(quickRoll.locked, 'quick story d6 locks a result through updateSlot');
+    assert.equal(quickRoll.locked.value, quickRoll.locked.final,
+      'quick story d6 awards the camera-facing number');
+    assert.ok(quickRoll.locked.cameraZ >= .999,
+      `quick story d6 face points squarely skyward when locked (normal z=${quickRoll.locked.cameraZ})`);
+    assert.equal(quickRoll.held, quickRoll.locked.final,
+      'quick story d6 displays the locked result in the hand');
     assert.deepEqual(errors, [], 'no uncaught browser errors');
     console.log('PASS story physical throw', JSON.stringify({ thrown, result }));
   } finally {
