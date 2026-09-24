@@ -35,7 +35,7 @@ async function boot(browser, name, viewport, touch) {
     assert.equal(source.split('function strikeEnemiesWithDie() {').length, 2, 'enemy strike observer hook exists');
     source = source.replace('function strikeEnemiesWithDie() {', 'function strikeEnemiesWithDie() { window.__manualDieStrikes=(window.__manualDieStrikes||0)+1;');
     source = source.replace(anchor,
-      'window.__manualQA={updateDie,updateSlot,pumpQueue,spawnEnemy,buildInfinityWave,TRAY,LOG,clearLog,finishSlot,readRunSave,ROLL_SHOW,dieFaceLabels,physicalFaceValue,dieShape,POLY,FACES,m3apply};\n' +
+      'window.__manualQA={updateDie,updateSlot,advancePresentation,pumpQueue,spawnEnemy,buildInfinityWave,TRAY,activeTray,chestReveal,manualChestReady,LOG,clearLog,finishSlot,readRunSave,ROLL_SHOW,dieFaceLabels,physicalFaceValue,dieShape,POLY,FACES,m3apply};\n' +
       'window.__manualQA.cameraFace=' + cameraFacingDieResult.toString() + ';\n' + anchor);
     await route.fulfill({ response, body: source });
   });
@@ -74,10 +74,44 @@ async function prepare(page, kind) {
         dieState: DKDIE.state, held: DK.heldDie,
         drawButtonDisabled: document.querySelector('#roll-btn').disabled,
         drawButtonText: document.querySelector('#roll-btn').textContent,
+        reveal: (() => { const f = __manualQA.chestReveal(); return f && { kind: f.dieKind, dur: f.dur, t: f.t, hasPose: Array.isArray(f.dieR) }; })(),
+        ready: __manualQA.manualChestReady(),
         dieCanvasVisible: !!document.querySelector('#game')?.getBoundingClientRect().width,
       };
     } finally { ch.draw = draw; ch.roll = roll; }
   }, kind);
+}
+
+async function finishReveal(page, realtime = false) {
+  const before = await page.evaluate(() => ({
+    active: !!__manualQA.chestReveal(), ready: __manualQA.manualChestReady(),
+    slot: [DKSLOT.phase, DKSLOT.final], held: DK.heldDie,
+    buttonDisabled: document.querySelector('#roll-btn').disabled,
+  }));
+  assert.deepEqual([before.active, before.ready, before.buttonDisabled], [true, false, true],
+    'emerging chest die cannot be thrown before it reaches the tray');
+  assert.deepEqual([before.slot, before.held], [[-1, 0], 0], 'chest reveal has no preselected result');
+  if (realtime) {
+    await page.evaluate(() => { DK.paused = false; });
+    try { await page.waitForFunction(() => !__manualQA.chestReveal(), null, { timeout: 10000 }); }
+    finally { await page.evaluate(() => { DK.paused = true; }); }
+  } else {
+    await page.evaluate(() => __manualQA.advancePresentation(2.3));
+  }
+  const after = await page.evaluate(() => {
+    const tray = __manualQA.activeTray();
+    return { active: !!__manualQA.chestReveal(), ready: __manualQA.manualChestReady(),
+      slot: [DKSLOT.phase, DKSLOT.final], held: DK.heldDie,
+      buttonDisabled: document.querySelector('#roll-btn').disabled,
+      buttonText: document.querySelector('#roll-btn').textContent,
+      atTray: Math.hypot(DKDIE.x - tray.x, DKDIE.y - tray.y) < 1,
+    };
+  });
+  assert.deepEqual([after.active, after.ready, after.buttonDisabled, after.atTray], [false, true, false, true],
+    'same die becomes available at the input tray when reveal finishes');
+  assert.deepEqual([after.slot, after.held], [[-1, 0], 0], 'arrival does not roll or award the die');
+  assert.match(after.buttonText, /던지기/, 'arrival reveals the manual throw control');
+  return { before, after };
 }
 
 async function stepUntilHeld(page, maxFrames = 540) {
@@ -119,17 +153,18 @@ async function runKinds(page, row) {
     if (manual) {
       assert.deepEqual([before.slot.active, before.slot.phase, before.dieState, before.held], [true, -1, 'tray', 0], kind + ': waits for a physical throw');
       assert.ok(!before.slot.final, kind + ': the physical result is still unknown');
-      assert.equal(before.drawButtonDisabled, false, kind + ': accessible throw button remains available');
-      assert.match(before.drawButtonText, /던지기/, kind + ': purchase button becomes a throw control');
+      assert.equal(before.drawButtonDisabled, true, kind + ': throw control waits for the chest die to arrive');
+      assert.equal(before.reveal.kind, kind, kind + ': chest contains the purchased die kind');
+      assert.ok(before.reveal.dur >= 2.1 && before.reveal.dur <= 2.5 && before.reveal.t >= 0 && before.reveal.t < .2 && before.reveal.hasPose,
+        kind + ': chest holds the exact pending die pose for a readable reveal');
+      assert.equal(before.ready, false, kind + ': input is gated during reveal');
       assert.equal(before.dieCanvasVisible, true, kind + ': playfield is visible');
       if (kind === 'd20') {
         await page.screenshot({ path: path.join(path.dirname(reportPath), row.name + '-d20-pending.png') });
-        await page.evaluate(() => { DK.paused = false; });
-        await page.waitForTimeout(2300);
-        await page.evaluate(() => { DK.paused = true; });
+        row.d20Reveal = await finishReveal(page, true);
         assert.deepEqual(await page.evaluate(() => [DKSLOT.phase, DK.heldDie]), [-1, 0], 'real-time effects do not auto-throw d20');
         await page.screenshot({ path: path.join(path.dirname(reportPath), row.name + '-d20-pending-after-fx.png') });
-      }
+      } else await finishReveal(page);
       const waiting = await stepSlot(page, 180);
       assert.deepEqual(waiting, { active: true, phase: -1, held: 0 }, kind + ': time alone never resolves purchase');
       const blocked = await page.evaluate(() => {
@@ -183,6 +218,7 @@ async function runKinds(page, row) {
 
 async function runQueue(page, row) {
   await prepare(page, 'd8');
+  await finishReveal(page);
   const pending = await page.evaluate(() => {
     DK.inf.queue.push('d12');
     window.__manualQA.pumpQueue();
@@ -290,6 +326,7 @@ async function runLegacyDeck(page, row) {
 
 async function runGesture(page, context, touch, row) {
   await prepare(page, 'd8');
+  await finishReveal(page);
   const p = await page.evaluate(() => {
     const c = document.querySelector('#game'), r = c.getBoundingClientRect();
     const x = r.left + DKDIE.x * r.width / c.width, y = r.top + DKDIE.y * r.height / c.height;
@@ -327,6 +364,7 @@ async function runGesture(page, context, touch, row) {
 
 async function runButton(page, row) {
   await prepare(page, 'd8');
+  await finishReveal(page);
   await page.click('#roll-btn');
   assert.equal(await page.evaluate(() => DKDIE.state), 'throw', 'on-screen throw button starts the same physical die');
   const settled = await stepUntilHeld(page);

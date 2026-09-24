@@ -36,6 +36,25 @@
     };
   }
 
+  // The awarded die rises through the mouth, holds where its shape is readable,
+  // then follows one continuous arc into the actual input tray.
+  function chestDiePose(f, tray) {
+    const t = Math.max(0, f.t || 0), scale = clamp(f.size || 230, 100, 270) / 230;
+    const rise = 1 - Math.pow(1 - clamp((t - 0.48) / 0.60, 0, 1), 3);
+    const flight = smooth(1.55, 2.2, t);
+    const localY = 25 - 174 * rise;
+    const localSize = 18 + 29 * rise;
+    const startX = f.x + 8 * scale;
+    const startY = f.y + (localY + chestPose(t, f.dur).bodyDip) * scale;
+    return {
+      visible: t >= 0.48, flight, localX: 8, localY, localSize,
+      x: startX + (tray.x - startX) * flight,
+      y: startY + (tray.y - startY) * flight - Math.sin(Math.PI * flight) * 42,
+      size: localSize * scale + (43.5 - localSize * scale) * flight,
+      turn: -0.65 * (1 - rise),
+    };
+  }
+
   function polygon(g, fill, stroke, width, x0, y0, x1, y1, x2, y2, x3, y3) {
     g.beginPath();
     g.moveTo(x0, y0); g.lineTo(x1, y1); g.lineTo(x2, y2); g.lineTo(x3, y3);
@@ -58,7 +77,7 @@
     g.closePath(); g.fillStyle = color; g.fill();
   }
 
-  function drawChest(g, f) {
+  function drawChest(g, f, drawContents) {
     if (!g || !f) return;
     const p = chestPose(f.t, f.dur);
     if (p.alpha <= 0) return;
@@ -184,6 +203,10 @@
       g.restore();
     }
 
+    // The emerging die shares the cavity's depth: the opaque front below clips
+    // its lower half until it has actually risen above the rim.
+    if (drawContents) drawContents(g);
+
     // Opaque side and front. Broad cel-shaded planes keep a sharp silhouette
     // when the entire chest is shrunk to roughly 230 mobile pixels.
     polygon(g, '#69402b', '#452c29', 3, -93, -21, -64, -5, -65, 63, -93, 43);
@@ -245,65 +268,7 @@
     g.restore();
   }
 
-  // Draw behind the actual rolled die. The empty middle preserves the printed
-  // face while narrow rays and outward-moving stars make high outcomes legible.
-  function drawReward(g, f) {
-    if (!g || !f) return;
-    const t = Math.max(0, Number.isFinite(f.t) ? f.t : 0);
-    const dur = Math.max(0.25, Number.isFinite(f.dur) ? f.dur : 0.95);
-    const p = clamp(t / dur, 0, 1);
-    const fade = smooth(0, 0.09, p) * (1 - smooth(0.67, 1, p));
-    if (fade <= 0) return;
-    const size = clamp(Number.isFinite(f.size) ? f.size : 240, 90, 360);
-    const color = /^#[0-9a-f]{6}$/i.test(f.color || '') ? f.color : '#ffe19a';
-    const tier = Number.isFinite(f.tier) ? f.tier : Number.isFinite(f.rank) ? f.rank : 1;
-    const stars = clamp(8 + Math.floor(tier), 8, 14);
-    g.save();
-    g.translate(f.x || 0, f.y || 0);
-    g.scale(size / 240, size / 240);
-    g.globalAlpha *= fade;
-    const baseAlpha = g.globalAlpha;
-    const glow = g.createRadialGradient(0, 0, 18, 0, 0, 108);
-    glow.addColorStop(0, rgba(color, 0.21));
-    glow.addColorStop(0.38, rgba(color, 0.11));
-    glow.addColorStop(1, rgba(color, 0));
-    g.fillStyle = glow; g.fillRect(-109, -109, 218, 218);
-
-    // Tapered rays begin outside the die silhouette and do not form a ring.
-    for (let i = 0; i < 9; i++) {
-      const a = (i / 9) * TAU - 0.25;
-      const ca = Math.cos(a), sa = Math.sin(a);
-      const inner = 46 + 3 * (i % 3), outer = 92 + 9 * ((i * 3) % 4);
-      g.globalAlpha = baseAlpha * (0.085 + 0.03 * (i % 3));
-      g.fillStyle = color; g.beginPath();
-      g.moveTo(ca * inner - sa * 2.2, sa * inner + ca * 2.2);
-      g.lineTo(ca * outer, sa * outer);
-      g.lineTo(ca * inner + sa * 2.2, sa * inner - ca * 2.2);
-      g.closePath(); g.fill();
-    }
-
-    for (let i = 0; i < stars; i++) {
-      const phase = i / stars * TAU - Math.PI / 2;
-      const delay = (i % 4) * 0.055;
-      const age = (t - 0.035 - delay) / Math.max(0.25, dur * 0.72);
-      if (age <= 0 || age >= 1) continue;
-      const e = 1 - (1 - age) * (1 - age);
-      const radius = 49 + e * (42 + (i % 3) * 7);
-      const x = Math.cos(phase) * radius;
-      const y = Math.sin(phase) * radius * 0.84 - age * 14;
-      const tailR = radius - 13;
-      const tailX = Math.cos(phase) * tailR, tailY = Math.sin(phase) * tailR * 0.84 - Math.max(0, age - 0.12) * 14;
-      const life = Math.sin(Math.PI * age);
-      g.globalAlpha = baseAlpha * life * 0.3;
-      g.strokeStyle = color; g.lineWidth = 1.5;
-      g.beginPath(); g.moveTo(tailX, tailY); g.lineTo(x, y); g.stroke();
-      g.globalAlpha = baseAlpha * life * 0.82;
-      fourStar(g, x, y, 3 + (i % 3) * 1.1, i % 4 === 0 ? '#ffffff' : color);
-    }
-    g.restore();
-  }
-
-  const api = Object.freeze({ chestPose, drawChest, drawReward });
+  const api = Object.freeze({ chestPose, chestDiePose, drawChest });
   if (root) root.DKFX = api;
   if (typeof module === 'object' && module.exports) module.exports = api;
 })(typeof window === 'undefined' ? null : window);
