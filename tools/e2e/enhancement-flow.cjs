@@ -34,6 +34,56 @@ const snapshot = page => page.evaluate(() => ({
 const setRoll = (page, value) => page.evaluate(v => { Math.random = () => v; }, value);
 const confirmOpen = page => page.locator('#enhance-confirm').evaluate(dialog => dialog.open);
 
+// A selector click follows a moving button and used to miss the sell-under-finger
+// regression. Keep one physical screen coordinate through every result instead.
+async function sameCoordinateRepeat(page, name, viewport) {
+  await page.setViewportSize(viewport);
+  await page.waitForTimeout(250);
+  await page.evaluate(() => {
+    DK.muted = true; DKstartInf('clear'); DK.paused = true; DK.gold = 100000;
+    DK.heldDie = 4; DK.dieFocus = true; DKplace(0);
+    DK.selTower = DK.towers[0]; DKsync();
+  });
+  const rects = () => page.evaluate(() => Object.fromEntries(['move-btn', 'sell-btn', 'enhance-btn'].map(id => {
+    const r = document.getElementById(id).getBoundingClientRect();
+    return [id, { x: r.x, y: r.y, width: r.width, height: r.height }];
+  })));
+  const initial = await rects();
+  const button = initial['enhance-btn'], point = { x: button.x + button.width / 2, y: button.y + button.height / 2 };
+  check(`${name} 첫 선택부터 강화 버튼이 화면 안에 있다`,
+    button.width >= 44 && button.height >= 44 && point.x < viewport.width && point.y < viewport.height, true);
+  const stable = async label => {
+    const current = await rects();
+    for (const id of Object.keys(initial)) for (const key of ['x', 'y', 'width', 'height']) {
+      assert.ok(Math.abs(current[id][key] - initial[id][key]) < 0.6,
+        `${name} ${label} ${id}.${key} moved: ${initial[id][key]} → ${current[id][key]}`);
+    }
+    check(`${name} ${label} 기존 클릭 위치에는 여전히 강화 버튼이 있다`,
+      await page.evaluate(p => document.elementFromPoint(p.x, p.y)?.closest('button')?.id, point), 'enhance-btn');
+  };
+  for (const [roll, nextFace, label] of [[0.75, 4, '유지'], [0, 5, '성공'], [0, 6, '다음 성공'], [0, 7, '판매 불가 전환']]) {
+    const before = await snapshot(page);
+    await setRoll(page, roll);
+    await page.mouse.click(point.x, point.y);
+    const after = await snapshot(page);
+    check(`${name} 같은 좌표로 ${label}했을 때 타워가 팔리지 않는다`,
+      [after.face, after.count, after.selected, after.gold < before.gold], [nextFace, 1, true, true]);
+    await stable(label);
+  }
+  await page.screenshot({ path: path.join(out, `stable-actions-${name}.png`) });
+  await page.evaluate(() => {
+    const tower = DK.selTower; tower.face = 19; tower.def = DKTD[19]; DKsync();
+  });
+  await stable('긴 고등급 이름');
+  await setRoll(page, 0);
+  await page.mouse.click(point.x, point.y);
+  check(`${name} 고등급도 동일한 좌표로 확인창을 연다`, await confirmOpen(page), true);
+  await page.click('#enhance-confirm-accept');
+  check(`${name} 최고 등급까지 강화된다`, (await snapshot(page)).face, 20);
+  await stable('최대 등급');
+  check(`${name} 최대 등급 버튼은 같은 자리에 비활성화된다`, await page.locator('#enhance-btn').isDisabled(), true);
+}
+
 (async () => {
   const browser = await launchBrowser();
   const errors = [];
@@ -51,6 +101,14 @@ const confirmOpen = page => page.locator('#enhance-confirm').evaluate(dialog => 
     await page.goto(url.href);
     await page.waitForFunction(() => window.DK && DK.phase === 'title' && window.DKstartInf, null, { timeout: 120000 });
     await page.click('#ov-btn');
+
+    for (const [name, viewport] of [
+      ['desktop', { width: 1240, height: 860 }],
+      ['phone-landscape', { width: 844, height: 390 }],
+      ['phone-portrait', { width: 390, height: 844 }],
+    ]) await sameCoordinateRepeat(page, name, viewport);
+    await page.setViewportSize({ width: 1240, height: 860 });
+    await page.waitForTimeout(250);
 
     // 배치 경로를 거쳐 타워를 만든 뒤 12★에서 시작한다.
     const costs = await page.evaluate(() => {

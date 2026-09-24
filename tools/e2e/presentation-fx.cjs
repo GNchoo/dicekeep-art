@@ -1,454 +1,168 @@
 #!/usr/bin/env node
 'use strict';
-
-// Browser regression coverage for the visible results of power-ups, chests,
-// and probabilistic enhancement. The injected hook only exposes frame helpers;
-// actions still use the game's public controls and test hooks.
+// Behavioral and rendered-output contracts for rewards and tower feedback.
+// Performance/filmstrips live in fx-performance.cjs; this suite checks occlusion,
+// continuous time, stable actions, cosmetic RNG separation and attachment.
 const fs = require('node:fs');
 const path = require('node:path');
 const assert = require('node:assert/strict');
 const { launchBrowser, gameUrl } = require('./browser.cjs');
-
 const out = path.resolve(__dirname, '../../gen/e2e/presentation-fx');
 fs.mkdirSync(out, { recursive: true });
-const report = { scope: 'Presentation effects in the real game at desktop and phone sizes', pass: false, cases: [] };
-
-function check(value, message) { assert.ok(value, message); }
-
-async function clearNotices(page) {
-  await page.evaluate(() => {
-    for (const id of ['chest-reveal', 'enhance-toast']) {
-      const notice = document.getElementById(id);
-      if (!notice) continue;
-      clearTimeout(notice.hideTimer);
-      notice.classList.add('hidden');
-    }
-  });
-}
-
-async function powerSnapshot(page) {
-  return page.evaluate(() => {
-    const canvas = document.querySelector('#game');
-    const rect = canvas.getBoundingClientRect();
-    const w = canvas.width, h = canvas.height;
-    const screen = (x, y) => ({ x: +(rect.left + x * rect.width / w).toFixed(1), y: +(rect.top + y * rect.height / h).toFixed(1) });
-    const entry = fx => ({ kind: fx.kind, status: fx.status, x: fx.x, y: fx.y, t: +fx.t.toFixed(3), dur: fx.dur,
-      realtime: !!fx.realtime, active: DK.fxs.includes(fx), screen: screen(fx.x, fx.y) });
-    return {
-      mapKey: DK.mapKey, canvas: { w, h }, rect: { x: rect.x, y: rect.y, width: rect.width, height: rect.height },
-      stage: { paused: DK.paused, waveActive: DK.waveActive },
-      saved: (window.__powerShotFx || []).map(entry),
-      active: DK.fxs.filter(fx => fx.kind === 'towerHalo' || (fx.realtime && ['circle', 'ring'].includes(fx.kind))).map(entry),
-      towers: DK.towers.map(tower => ({ face: tower.face, x: tower.x, y: tower.y, screen: screen(tower.x, tower.y - 32) })),
-    };
-  });
-}
-
-async function screenshotStage(page, name, { freezePower = false } = {}) {
-  const diagnostic = freezePower && name.startsWith('power-pure-');
-  const before = diagnostic ? await powerSnapshot(page) : null;
-  const frozen = await page.evaluate(({ freezePower }) => {
-    DK.waveActive = true;
-    let count = 0;
-    if (freezePower) {
-      // Screenshot capture can outlive the short real-time FX. Freeze only the
-      // power-up's visual particles after their timing assertions have passed.
-      for (const fx of window.__powerShotFx || []) {
-        if (!['towerHalo', 'circle', 'ring'].includes(fx.kind)) continue;
-        if (!DK.fxs.includes(fx)) DK.fxs.push(fx);
-        fx.realtime = false;
-        fx.t = 0.45;
-        fx.dur = Math.max(fx.dur, 1.5);
-        count++;
-      }
-    }
-    __presentationQA.draw();
-    return count;
-  }, { freezePower });
-  if (freezePower) check(frozen >= 3, `power-up screenshot has its own frozen particles (${frozen})`);
-  const during = diagnostic ? await powerSnapshot(page) : null;
-  await page.screenshot({ path: path.join(out, name) });
-  if (diagnostic) {
-    const after = await powerSnapshot(page);
-    fs.writeFileSync(path.join(out, name.replace('.png', '-debug.json')), JSON.stringify({ before, during, after }, null, 2));
-  }
-  await page.evaluate(() => { DK.waveActive = false; });
-}
+const report = { pass: false, cases: [] };
+const check = (v, message) => assert.ok(v, message);
 
 async function boot(browser, viewport) {
   const context = await browser.newContext({ viewport, deviceScaleFactor: viewport.width < 500 ? 2 : 1 });
-  const page = await context.newPage();
-  const errors = [];
-  page.on('pageerror', error => errors.push(error.message));
-  await page.addInitScript(() => {
-    localStorage.setItem('dk_coachDone', '1');
-    localStorage.setItem('dk_infHelpSeen', '1');
-  });
+  const page = await context.newPage(), errors = [];
+  page.on('pageerror', e => errors.push(e.message));
+  await page.addInitScript(() => { localStorage.setItem('dk_coachDone','1'); localStorage.setItem('dk_infHelpSeen','1'); });
   await page.route('**/game.js*', async route => {
-    const response = await route.fetch();
-    const source = await response.text();
+    const response = await route.fetch(), source = await response.text();
     const anchor = 'window.DK = S;';
-    assert.equal(source.split(anchor).length, 2, 'one presentation test hook anchor');
-    await route.fulfill({ response, body: source.replace(anchor, 'window.__presentationQA={update,advancePresentation,draw,relayoutArena,spawnBurst,acquireFxArt};\n' + anchor) });
+    check(source.split(anchor).length === 2, 'one QA hook anchor');
+    await route.fulfill({ response, body: source.replace(anchor, `
+      const qaDrawEffects = drawEffects, qaBody = paintTowerBody;
+      drawEffects = layer => { window.__paintOrder?.push(layer); return qaDrawEffects(layer); };
+      paintTowerBody = (...args) => { window.__paintOrder?.push('tower'); return qaBody(...args); };
+      window.__presentationQA={update,advancePresentation,draw,drawEffects,relayoutArena,spawnBurst,acquireFxArt,rollShow:ROLL_SHOW};
+      ` + anchor) });
   });
   await page.goto(gameUrl());
-  await page.waitForFunction(() => window.DK?.phase === 'title' && window.__presentationQA, null, { timeout: 120000 });
+  await page.waitForFunction(() => window.DK?.phase === 'title' && window.DKFX, null, { timeout: 120000 });
   await page.click('#ov-btn');
-  await page.evaluate(() => { DK.muted = true; });
-  return { context, page, errors };
-}
-
-async function purePower(page, row) {
-  await clearNotices(page);
-  await page.evaluate(() => { DKstartInf('clear'); DK.paused = true; DK.gold = 100000; });
-  // The portrait arena is rebuilt after the HUD first appears. A player cannot
-  // power up before that paint; wait for the test viewport to finish relayout.
+  await page.evaluate(() => { DK.muted=true; DKstartInf('clear'); DK.paused=true; DK.gold=1000000; });
   await page.waitForTimeout(300);
-  const state = await page.evaluate(() => {
-    DK.towers = []; DK.fxs = []; DK.texts = [];
-    const put = (face, spot) => {
-      DK.heldDie = face;
-      if (!DKplace(spot)) throw Error(`could not place ★${face} at ${spot}`);
-      return DK.towers.find(t => t.spot === spot);
-    };
-    const towers = [put(6, 4), put(7, 5), put(14, 7), put(20, 8), put(5, 0)];
-    DK.fxs = []; DK.texts = [];
-    const upgraded = DKupgrade(6);
-    window.__powerShotFx = DK.fxs.filter(f => f.realtime);
-    const halos = DK.fxs.filter(f => f.kind === 'towerHalo' && f.status === 'power');
-    return {
-      upgraded,
-      towers: towers.map(t => ({ face: t.face, x: t.x, y: t.y })),
-      halos: halos.map(f => ({ x: f.x, y: f.y, realtime: f.realtime, dur: f.dur })),
-      notice: DK.texts.find(t => t.str.includes('파워업 Lv'))?.str,
-    };
-  });
-  check(state.upgraded, 'six-pip power-up succeeds');
-  check(state.halos.length === 4, 'six-pip power-up lights ★6 and every ★7+ tower');
-  for (const tower of state.towers.filter(t => t.face === 6 || t.face > 6)) {
-    check(state.halos.some(f => f.x === tower.x && f.y === tower.y - 32 && f.realtime && f.dur >= 1.8), `★${tower.face} gets a real-time tower halo`);
-  }
-  check(!state.halos.some(f => f.x === state.towers[4].x && f.y === state.towers[4].y - 32), 'unrelated ★5 tower stays unlit');
-  check(state.notice?.includes('파워업'), 'power-up has a readable result line');
-  row.checks.push('pure-power');
-  await screenshotStage(page, `power-pure-${row.name}.png`, { freezePower: true });
+  return {context,page,errors};
 }
-
-async function realtimeAtTripleSpeed(page, row) {
-  const deterministic = await page.evaluate(() => {
-    DK.paused = true; DK.speed = 3; DK.gold = 100000;
-    DK.fxs = []; DK.texts = [];
-    if (!DKupgrade(6)) throw Error('could not create a fresh power effect');
-    const fx = DK.fxs.find(f => f.kind === 'towerHalo' && f.status === 'power');
-    const label = DK.texts.find(t => t.str.includes('파워업 Lv'));
-    if (!fx || !label) throw Error('power effect and result text are required');
-    const start = [fx.t, label.t];
-    for (let i = 0; i < DK.speed; i++) __presentationQA.update(0.1);
-    const afterCombat = [fx.t, label.t];
-    __presentationQA.advancePresentation(0.1);
-    return { start, afterCombat, afterPresentation: [fx.t, label.t] };
-  });
-  for (let i = 0; i < 2; i++) {
-    check(Math.abs(deterministic.afterCombat[i] - deterministic.start[i]) < 1e-6, 'x3 combat steps do not advance important presentation clocks');
-    check(Math.abs(deterministic.afterPresentation[i] - deterministic.start[i] - 0.1) < 1e-6, 'one real-time step advances the presentation clock once');
-  }
-
-  const liveStart = await page.evaluate(() => {
-    DK.fxs = []; DK.texts = []; DK.gold = 100000;
-    DK.speed = 3; DK.paused = false;
-    if (!DKupgrade(6)) throw Error('could not create live x3 effect');
-    const fx = DK.fxs.find(f => f.kind === 'towerHalo' && f.status === 'power');
-    const label = DK.texts.find(t => t.str.includes('파워업 Lv'));
-    window.__presentationWatch = { fx, label, at: performance.now(), fxT: fx.t, textT: label.t };
-    return { fxT: fx.t, textT: label.t };
-  });
-  await page.waitForTimeout(350);
-  const live = await page.evaluate(() => {
-    const w = window.__presentationWatch;
-    DK.paused = true;
-    return { elapsed: (performance.now() - w.at) / 1000, fx: w.fx.t - w.fxT, text: w.label.t - w.textT };
-  });
-  check(liveStart.fxT < 0.1 && liveStart.textT < 0.1, 'fresh x3 effects begin at time zero');
-  check(live.fx > 0.05 && live.fx / live.elapsed < 1.65, `x3 halo follows wall time (${JSON.stringify(live)})`);
-  check(live.text > 0.05 && live.text / live.elapsed < 1.65, `x3 result line follows wall time (${JSON.stringify(live)})`);
-  row.checks.push('x3-realtime');
+async function capture(page,name,time=.35) {
+  await page.evaluate(time => {
+    DK.paused=true; DK.waveActive=true;
+    for (const f of DK.fxs) { f.realtime=false; f.t=time; }
+    __presentationQA.draw();
+  },time);
+  await page.screenshot({path:path.join(out,name+'.png')});
 }
-
-async function portraitPowerRelayout(page, row) {
-  const sample = await page.evaluate(() => {
-    DK.paused = true; DK.gold = 100000;
-    DK.fxs = []; DK.texts = [];
-    if (!DKupgrade(6)) throw Error('could not create halo for portrait relayout');
-    const canvas = document.querySelector('#game');
-    const hud = document.querySelector('#hud');
-    const previousHudHeight = hud.style.height;
-    const mapKey = DK.mapKey;
-    const view = () => ({
-      mapKey: DK.mapKey, width: canvas.width, height: canvas.height,
-      towers: DK.towers.map(t => ({ spot: t.spot, face: t.face, x: t.x, y: t.y })),
-      halos: DK.fxs.filter(f => f.kind === 'towerHalo' && f.status === 'power').map(f => ({
-        spot: f.anchorSpot, x: f.x, y: f.y, t: f.t, dur: f.dur, realtime: f.realtime,
-      })),
-    });
-    const before = view();
-    let after;
-    try {
-      hud.style.height = `${hud.offsetHeight + 80}px`;
-      __presentationQA.relayoutArena(mapKey, true);
-      after = view();
-    } finally {
-      hud.style.height = previousHudHeight;
-      __presentationQA.relayoutArena(mapKey, true);
+async function power(page,row,deck=false) {
+  const state = await page.evaluate(deck => {
+    if (deck) {
+      const profile=DKPROGRESSION.defaultProfile(), cards=[1,4,7,13,14];
+      for(const face of cards){profile.levels[face]=1;Object.assign(profile.collection.cards[face],{owned:true,class:DKDECKRULES.get(face).baseClass});}
+      profile.deck=cards; DKSAVE.progression=profile; DKstartInf('build');
+    } else DKstartInf('clear');
+    DK.paused=true;DK.gold=1000000;DK.towers=[];DK.fxs=[];DK.texts=[];
+    const faces=deck?[1,1,4,7]:[6,7,14,20,5];
+    for(let i=0;i<faces.length;i++){DK.heldDie=faces[i];if(!DKplace(i))throw Error('placement');}
+    DK.fxs=[];DK.texts=[];
+    const ok=DKupgrade(deck?1:6), halos=DK.fxs.filter(f=>f.kind==='towerHalo');
+    const at=t=>({x:t.x,y:t.y-32});
+    window.__paintOrder=[];__presentationQA.draw();const order=__paintOrder;delete window.__paintOrder;
+    return {ok,halos:halos.map(f=>({x:f.x,y:f.y,realtime:f.realtime,size:f.size})),
+      targets:DK.towers.filter(t=>deck?t.face===1:t.face>=6).map(at),
+      unrelated:DK.towers.filter(t=>deck?t.face!==1:t.face<6).map(at),
+      kinds:DK.fxs.map(f=>f.kind),texts:DK.texts.map(t=>t.str),
+      notice:document.getElementById('enhance-toast').textContent,order};
+  },deck);
+  check(state.ok,'power-up succeeds');
+  assert.equal(state.halos.length,deck?2:4,'only matching towers receive feedback');
+  for(const t of state.targets)check(state.halos.some(f=>f.x===t.x&&f.y===t.y&&f.realtime&&f.size<=90),'compact attached feedback');
+  for(const t of state.unrelated)check(!state.halos.some(f=>f.x===t.x&&f.y===t.y),'unrelated tower stays clear');
+  check(state.kinds.every(k=>k==='towerHalo'),'power-up uses one bounded composition per tower');
+  check(state.notice.includes('파워업')&&!state.texts.some(t=>t.includes('파워업')),'result stays in notice, not across board');
+  check(state.order.indexOf('ground')<state.order.indexOf('tower')&&state.order.lastIndexOf('tower')<state.order.indexOf('world')&&state.order.indexOf('world')<state.order.indexOf('reward'),'ground / opaque tower / combat / reward paint order');
+  await capture(page,`power-${deck?'deck':'pure'}-${row.name}`);
+  row.checks.push(deck?'deck-targets':'power-targets-and-layer-order');
+}
+async function clocks(page,row) {
+  const state=await page.evaluate(()=>{
+    DKstartInf('clear');DK.paused=true;DK.gold=1000000;DK.heldDie=6;DKplace(4);DK.fxs=[];DK.texts=[];DKupgrade(6);
+    const f=DK.fxs.find(f=>f.kind==='towerHalo');DK.speed=3;
+    __presentationQA.rollShow.t=1.8;
+    const before=f.t;for(let i=0;i<3;i++)__presentationQA.update(.1);const afterCombat=f.t;
+    const resultAfterCombat=__presentationQA.rollShow.t;
+    DK.towers[0].kick=1;__presentationQA.draw();__presentationQA.draw();const kickAfterDraw=DK.towers[0].kick;
+    __presentationQA.advancePresentation(.1);
+    return {before,afterCombat,after:f.t,kickAfterDraw,kickAfterTime:DK.towers[0].kick,resultAfterCombat,resultAfterTime:__presentationQA.rollShow.t};
+  });
+  assert.equal(state.before,state.afterCombat,'x3 simulation does not advance reward clock');
+  check(Math.abs(state.after-state.before-.1)<1e-6,'reward clock advances once');
+  assert.equal(state.kickAfterDraw,1,'drawing never changes recoil');
+  check(Math.abs(state.kickAfterTime-.73)<1e-6,'recoil follows elapsed seconds');
+  assert.equal(state.resultAfterCombat,1.8,'x3 does not shorten landed result display');
+  check(Math.abs(state.resultAfterTime-1.7)<1e-6,'landed die and reward follow the same presentation clock');
+  row.checks.push('clock-and-draw-purity');
+}
+async function chest(page,row,kind) {
+  const state=await page.evaluate(kind=>{
+    DKstartInf('clear');DK.paused=true;DK.gold=1000000;DK.fxs=[];DK.texts=[];
+    const ch=DKCONTENT.INFINITY.chest,original=ch.draw;let got;
+    try{ch.draw=()=>kind;got=DKchest();}finally{ch.draw=original;}
+    const f=DK.fxs.find(f=>f.kind==='chestOpen');
+    const pictures=[];
+    const c=document.createElement('canvas');c.width=420;c.height=400;const g=c.getContext('2d');
+    for(let i=0;i<24;i++){g.clearRect(0,0,420,400);DKFX.drawChest(g,{...f,x:210,y:220,t:.2+i/60});pictures.push(c.toDataURL());}
+    const angles=Array.from({length:25},(_,i)=>DKFX.chestPose(.2+i/60,f.dur).lidAngle);
+    const frontPixels=[];
+    for(const color of ['#00ffff','#ff00ff']){
+      g.clearRect(0,0,420,400); DKFX.drawChest(g,{...f,x:210,y:220,t:.72,color});
+      frontPixels.push(Array.from(g.getImageData(165,252,85,15).data));
     }
-    return { before, after };
-  });
-  check(sample.before.mapKey === 'cInfP' && sample.after.mapKey === 'cInfP', 'portrait relayout keeps the same arena orientation');
-  check(sample.after.height !== sample.before.height, 'changed HUD height rebuilds portrait canvas coordinates');
-  check(sample.before.halos.length === 4 && sample.after.halos.length === 4, 'all four power halos survive same-direction relayout');
-  for (const halo of sample.after.halos) {
-    const tower = sample.after.towers.find(t => t.spot === halo.spot);
-    check(tower && halo.x === tower.x && halo.y === tower.y - 32 && halo.realtime, `power halo stays on its new tower spot ${halo.spot}`);
-  }
-  row.relayout = sample;
-  row.checks.push('portrait-power-relayout');
+    return {got,kinds:DK.fxs.map(f=>f.kind),realtime:f.realtime,size:f.size,dur:f.dur,
+      unique:new Set(pictures).size,maxStep:Math.max(...angles.slice(1).map((a,i)=>Math.abs(a-angles[i]))),
+      frontOpaque:frontPixels[0].filter((_,i)=>i%4===3).every(a=>a===255),
+      frontUnaffected:JSON.stringify(frontPixels[0])===JSON.stringify(frontPixels[1]),
+      notice:document.getElementById('chest-reveal').textContent};
+  },kind);
+  assert.equal(state.got,kind);assert.deepEqual(state.kinds,['chestOpen'],'chest contains its own occluded light without a foreground column');
+  check(state.realtime&&state.size<=270&&state.dur<=1.6,'bounded real-time chest');
+  check(state.unique===24&&state.maxStep<.1,'every 60Hz opening sample moves with bounded hinge angle');
+  check(state.frontOpaque&&state.frontUnaffected,'colored interior light cannot tint or ghost through the opaque chest front');
+  check(state.notice.includes('상자 개봉'),'visible grade notice');
+  await capture(page,`chest-${kind}-${row.name}`,.72);
+  row.checks.push(kind+'-continuous-chest');
 }
-
-async function rareChest(page, row) {
-  await clearNotices(page);
-  const state = await page.evaluate(() => {
-    DKstartInf('clear');
-    DK.paused = true; DK.gold = 100000;
-    DK.fxs = []; DK.texts = []; DK.towers = [];
-    DK.heldDie = 0; DKSLOT.active = false;
-    const chest = DKCONTENT.INFINITY.chest;
-    const original = chest.draw;
-    let kind;
-    try { chest.draw = () => 'd8'; kind = DKchest(); }
-    finally { chest.draw = original; }
-    const fx = DK.fxs.find(f => f.kind === 'chestOpen');
-    const notice = document.querySelector('#chest-reveal');
-    return {
-      kind,
-      slotKind: DKSLOT.kind,
-      fx: fx && { realtime: fx.realtime, dur: fx.dur, size: fx.size, add: fx.add },
-      notice: { visible: !notice.classList.contains('hidden'), text: notice.textContent, tier: notice.dataset.tier },
-      artFrames: DKA.chestOpen?.length || 0,
-    };
+async function enhancement(page,row) {
+  const state=await page.evaluate(()=>{
+    DKstartInf('clear');DK.paused=true;DK.gold=1000000;DK.heldDie=7;DKplace(5);DK.fxs=[];DK.texts=[];DK.selTower=DK.towers[0];
+    const random=Math.random;let result;try{Math.random=()=>0;result=DKenhance();}finally{Math.random=random;}
+    const f=DK.fxs.find(f=>f.kind==='towerHalo');
+    return{result,face:DK.selTower.face,status:f.status,realtime:f.realtime,kinds:DK.fxs.map(f=>f.kind),notice:document.getElementById('enhance-toast').textContent};
   });
-  check(state.kind === 'd8' && state.slotKind === 'd8', 'forced d8 chest enters the real roll flow');
-  check(state.fx?.realtime && state.fx.dur >= 1.1 && state.fx.size <= 280 && state.fx.add !== true, 'd8 chest uses a readable, board-sized real-time sprite');
-  check(state.notice.visible && state.notice.text.includes('상자 개봉') && state.notice.tier === 'rare', 'd8 chest has a visible stage result notice');
-  check(state.artFrames === 4, 'four chest animation frames loaded');
-
-  const composites = await page.evaluate(() => {
-    __presentationQA.advancePresentation(0.92);
-    const canvas = document.querySelector('#game');
-    const context = canvas.getContext('2d');
-    const original = context.drawImage;
-    const chestFrames = new Set(DKA.chestOpen.map(frame => frame.cv));
-    const seen = [];
-    context.drawImage = function(image, ...args) {
-      if (chestFrames.has(image)) seen.push(this.globalCompositeOperation);
-      return original.call(this, image, ...args);
-    };
-    try { __presentationQA.draw(); }
-    finally { context.drawImage = original; }
-    return seen;
-  });
-  check(composites.includes('source-over'), `chest art is actually painted source-over (${composites.join(', ')})`);
-  const chestMotion = await sheetMotion(page, 'chestOpen', [0.10, 0.13, 0.68]);
-  check(Math.abs(chestMotion[1].width - chestMotion[0].width) > 0.2, 'chest changes scale between adjacent animation frames');
-  check(chestMotion[2].frame === 3, 'chest reaches its open frame within the first 0.7 seconds');
-  row.checks.push('rare-chest');
-  await screenshotStage(page, `chest-d8-${row.name}.png`);
-}
-
-async function legendaryChest(page, row) {
-  await clearNotices(page);
-  const state = await page.evaluate(() => {
-    DKstartInf('clear');
-    DK.paused = true; DK.gold = 100000; DK.fxs = []; DK.texts = []; DK.towers = [];
-    DK.heldDie = 0; DKSLOT.active = false;
-    const chest = DKCONTENT.INFINITY.chest;
-    const original = chest.draw;
-    let kind;
-    try { chest.draw = () => 'd20'; kind = DKchest(); }
-    finally { chest.draw = original; }
-    const fx = DK.fxs.find(f => f.kind === 'chestOpen');
-    return { kind, size: fx?.size, dur: fx?.dur, realtime: fx?.realtime,
-      burstCount: DK.fxs.filter(f => f.kind === 'burst').length };
-  });
-  check(state.kind === 'd20' && state.realtime, 'legendary chest uses the real physical-die roll');
-  check(state.size <= 270 && state.size >= 180, `legendary chest does not obscure the board (${state.size}px)`);
-  check(state.dur <= 1.6 && state.burstCount <= 20, 'legendary chest stays brisk with a bounded particle count');
-  const motion = await sheetMotion(page, 'chestOpen', [0.10, 0.13, 0.68]);
-  check(Math.abs(motion[1].width - motion[0].width) > 0.2 && motion[2].frame === 3, 'legendary chest opens with continuous motion between illustration frames');
-  row.checks.push('legendary-chest');
-  await screenshotStage(page, `chest-d20-${row.name}.png`);
-}
-
-async function sheetMotion(page, kind, times) {
-  return page.evaluate(({ kind, times }) => {
-    const fx = DK.fxs.find(f => f.kind === kind);
-    if (!fx) throw Error(`missing ${kind} effect`);
-    const frames = DKA[kind];
-    const canvas = document.querySelector('#game');
-    const ctx = canvas.getContext('2d');
-    const source = ctx.drawImage;
-    const seen = [];
-    for (const t of times) {
-      fx.t = t;
-      const draws = [];
-      ctx.drawImage = function(image, ...args) {
-        const frame = frames.findIndex(item => item.cv === image);
-        if (frame >= 0) draws.push({ frame, width: args[2], alpha: this.globalAlpha });
-        return source.call(this, image, ...args);
-      };
-      try { __presentationQA.draw(); }
-      finally { ctx.drawImage = source; }
-      if (!draws.length) throw Error(`${kind} was not painted at ${t}`);
-      seen.push(draws.reduce((a, b) => a.width >= b.width ? a : b));
-    }
-    return seen;
-  }, { kind, times });
-}
-
-async function enhancementSuccess(page, row) {
-  await clearNotices(page);
-  const state = await page.evaluate(() => {
-    DKstartInf('clear');
-    DK.paused = true; DK.gold = 100000;
-    DK.heldDie = 7;
-    if (!DKplace(5)) throw Error('could not place enhancement tower');
-    DK.fxs = []; DK.texts = [];
-    const tower = DK.towers[0];
-    DK.selTower = tower;
-    const random = Math.random;
-    let result;
-    try { Math.random = () => 0; result = DKenhance(); }
-    finally { Math.random = random; }
-    const notice = document.querySelector('#enhance-toast');
-    const halo = DK.fxs.find(f => f.kind === 'towerHalo' && f.status === 'up');
-    return {
-      result, face: tower.face, selected: DK.selTower === tower,
-      halo: halo && { realtime: halo.realtime, dur: halo.dur, x: halo.x, y: halo.y },
-      notice: { visible: !notice.classList.contains('hidden'), text: notice.textContent, result: notice.dataset.result },
-    };
-  });
-  check(state.result === 'up' && state.face === 8 && state.selected, 'successful enhancement upgrades the same selected tower');
-  check(state.halo?.realtime && state.halo.dur >= 1.8, 'successful enhancement creates a lasting tower halo');
-  check(state.notice.visible && state.notice.result === 'up' && state.notice.text.includes('★7 → ★8'), 'success is visible outside the log');
-  const upgradeMotion = await sheetMotion(page, 'acquireBurst', [0.10, 0.13]);
-  check(Math.abs(upgradeMotion[1].width - upgradeMotion[0].width) > 0.2, 'enhancement sparkle expands smoothly between sheet frames');
-  const upgradeStars = await page.evaluate(() => DK.fxs.filter(f => f.kind === 'sprite' && f.img === 'starSpark' && f.anchorTower).length);
-  check(upgradeStars >= 6, 'successful enhancement has several short tower-attached star accents');
+  check(state.result==='up'&&state.face===8&&state.status==='up'&&state.realtime,'success upgrades selected tower with attached feedback');
+  assert.deepEqual(state.kinds,['towerHalo'],'success does not stack competing sheet/ring/column effects');
+  check(state.notice.includes('★7 → ★8'),'result explains upgrade');
+  await capture(page,`enhance-success-${row.name}`,.32);
   row.checks.push('enhancement-success');
-  await page.evaluate(() => { __presentationQA.advancePresentation(0.3); __presentationQA.draw(); });
-  await screenshotStage(page, `enhance-success-${row.name}.png`);
 }
-
-async function highDie(page, row) {
-  await clearNotices(page);
-  const state = await page.evaluate(() => {
-    DKstartInf('clear'); DK.paused = true;
-    DK.fxs = []; DK.texts = [];
-    DKacquire(20);
-    return { bursts: DK.fxs.filter(f => f.kind === 'burst').length, sparks: DK.fxs.filter(f => f.kind === 'sprite' && f.img === 'starSpark').length,
-      rings: DK.fxs.filter(f => f.kind === 'ringImg').map(f => f.size), columns: DK.fxs.filter(f => f.kind === 'column').length,
-      confetti: DK.fxs.filter(f => f.kind === 'confetti').length };
+async function highDie(page,row) {
+  const state=await page.evaluate(()=>{
+    DKstartInf('clear');DK.paused=true;DK.fxs=[];DK.texts=[];DKacquire(20);
+    const f=DK.fxs[0];
+    const random=Math.random;let calls=0;
+    try{Math.random=()=>{calls++;return .5};__presentationQA.draw();}finally{Math.random=random;}
+    return{kinds:DK.fxs.map(f=>f.kind),size:f.size,tier:f.tier,calls};
   });
-  check(state.bursts <= 36 && state.sparks <= 16, `high die avoids an excessive number of blurred particles (${JSON.stringify(state)})`);
-  check(state.rings.length === 1 && state.rings[0] <= 370 && state.columns <= 1 && state.confetti <= 1,
-    `high die has one bounded primary ring, beam and confetti layer (${JSON.stringify(state)})`);
-  const motion = await sheetMotion(page, 'acquireBurst', [0.10, 0.13, 0.56]);
-  check(Math.abs(motion[1].width - motion[0].width) > 0.2, 'high-die reward burst expands smoothly');
-  check(motion[2].frame === 3, 'high-die burst reaches its final illustration promptly');
-  row.checks.push('high-die');
-  await screenshotStage(page, `acquire-d20-${row.name}.png`);
-  await page.evaluate(() => { for (const fx of DK.fxs) if (fx.realtime) fx.t = Math.min(0.9, fx.dur * 0.65); __presentationQA.draw(); });
-  await screenshotStage(page, `acquire-d20-late-${row.name}.png`);
+  assert.deepEqual(state.kinds,['dieReward'],'one coherent high-result composition');check(state.size<=330&&state.tier===4,'bounded highest-tier celebration');assert.equal(state.calls,0,'rendering never consumes gameplay RNG');
+  await capture(page,`high-die-${row.name}`,.42);
+  row.checks.push('high-die-and-rng-isolation');
 }
-
-async function cosmeticRandomIsolation(page, row) {
-  const calls = await page.evaluate(() => {
-    DKstartInf('clear'); DK.paused = true; DK.fxs = []; DK.texts = [];
-    const random = Math.random;
-    let gameplayRandomCalls = 0;
-    Math.random = () => { gameplayRandomCalls++; return 0.5; };
-    try {
-      __presentationQA.spawnBurst(240, 240, '#ffd452', 20, 120, 0.8);
-      __presentationQA.acquireFxArt(20, 4, '#ffd452', 300, 300);
-      DK.shakeT = 0.3;
-      __presentationQA.draw();
-    } finally { Math.random = random; }
-    return gameplayRandomCalls;
+async function relayout(page,row) {
+  const state=await page.evaluate(()=>{
+    DKstartInf('clear');DK.paused=true;DK.gold=1000000;DK.heldDie=6;DKplace(4);DK.fxs=[];DKupgrade(6);
+    const hud=document.getElementById('hud'),height=hud.style.height;const key=DK.mapKey;let result;
+    try{hud.style.height=`${hud.offsetHeight+70}px`;__presentationQA.relayoutArena(key,true);
+      const f=DK.fxs.find(f=>f.kind==='towerHalo'),t=DK.towers[0];result=[f.x===t.x,f.y===t.y-32,f.anchorTower===t,f.realtime];
+    }finally{hud.style.height=height;__presentationQA.relayoutArena(key,true);}return result;
   });
-  check(calls === 0, `reward particles and screen shake never advance gameplay RNG (${calls} calls)`);
-  row.checks.push('cosmetic-rng-isolation');
+  check(state.every(Boolean),'feedback follows tower when phone HUD layout changes');row.checks.push('portrait-reanchor');
 }
-
-async function deckPower(page, row) {
-  await clearNotices(page);
-  const state = await page.evaluate(() => {
-    const profile = DKPROGRESSION.defaultProfile();
-    const deck = [1, 4, 7, 13, 14];
-    for (const face of deck) {
-      profile.levels[face] = 1;
-      Object.assign(profile.collection.cards[face], { owned: true, class: DKDECKRULES.get(face).baseClass });
+(async()=>{
+  const browser=await launchBrowser();
+  try{
+    for(const [name,viewport] of [['desktop',{width:1240,height:860}],['phone',{width:390,height:844}]]){
+      const row={name,checks:[]};report.cases.push(row);const {context,page,errors}=await boot(browser,viewport);
+      try{await power(page,row);await clocks(page,row);await chest(page,row,'d8');await chest(page,row,'d20');await enhancement(page,row);await highDie(page,row);await power(page,row,true);if(name==='phone')await relayout(page,row);assert.deepEqual(errors,[]);console.log('PASS',name,row.checks.join(', '));}finally{await context.close();}
     }
-    profile.deck = deck;
-    DKSAVE.progression = profile;
-    DKstartInf('build');
-    DK.paused = true; DK.gold = 100000;
-    DK.towers = []; DK.fxs = []; DK.texts = [];
-    const put = (face, spot) => {
-      DK.heldDie = face;
-      if (!DKplace(spot)) throw Error(`could not place deck card ${face}`);
-      return DK.towers.find(t => t.spot === spot);
-    };
-    const towers = [put(1, 4), put(1, 7), put(4, 2), put(7, 3)];
-    DK.fxs = []; DK.texts = [];
-    const upgraded = DKupgrade(1);
-    window.__powerShotFx = DK.fxs.filter(f => f.realtime);
-    return {
-      deckSystem: DK.inf.growthSnapshot.deckSystem,
-      upgraded,
-      towers: towers.map(t => ({ face: t.face, x: t.x, y: t.y })),
-      halos: DK.fxs.filter(f => f.kind === 'towerHalo' && f.status === 'power').map(f => ({ x: f.x, y: f.y, realtime: f.realtime })),
-    };
-  });
-  check(state.deckSystem === 1 && state.upgraded, 'deck-specific power-up succeeds');
-  check(state.halos.length === 2, 'each matching deck tower gets its own halo');
-  for (const tower of state.towers.filter(t => t.face === 1)) check(state.halos.some(f => f.x === tower.x && f.y === tower.y - 32 && f.realtime), 'matching deck tower is lit');
-  for (const tower of state.towers.filter(t => t.face !== 1)) check(!state.halos.some(f => f.x === tower.x && f.y === tower.y - 32), 'unrelated deck tower stays unlit');
-  row.checks.push('deck-power');
-  await screenshotStage(page, `power-deck-${row.name}.png`, { freezePower: true });
-}
-
-(async () => {
-  const browser = await launchBrowser();
-  try {
-    for (const [name, viewport] of [['desktop', { width: 1240, height: 860 }], ['phone', { width: 390, height: 844 }]]) {
-      const row = { name, viewport, checks: [], errors: [] };
-      report.cases.push(row);
-      const { context, page, errors } = await boot(browser, viewport);
-      try {
-        await purePower(page, row);
-        if (name === 'phone') await portraitPowerRelayout(page, row);
-        await realtimeAtTripleSpeed(page, row);
-        await rareChest(page, row);
-        await legendaryChest(page, row);
-        await enhancementSuccess(page, row);
-        await highDie(page, row);
-        await cosmeticRandomIsolation(page, row);
-        await deckPower(page, row);
-        assert.deepEqual(errors, [], `${name} has no browser errors`);
-        console.log('PASS', name, row.checks.join(', '));
-      } finally { row.errors.push(...errors); await context.close(); }
-    }
-    report.pass = true;
-  } finally {
-    fs.writeFileSync(path.join(out, 'report.json'), JSON.stringify(report, null, 2));
-    await browser.close();
-  }
-})().catch(error => { console.error(error); process.exitCode = 1; });
+    report.pass=true;
+  }finally{fs.writeFileSync(path.join(out,'report.json'),JSON.stringify(report,null,2));await browser.close();}
+})().catch(e=>{console.error(e);process.exitCode=1;});

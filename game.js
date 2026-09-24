@@ -1428,10 +1428,6 @@ function paintTowerBody(t, sp) {
   const k = kick * kick; // 발사 직후 가장 강하고 빠르게 풀린다
   ctx.save();
   ctx.scale(1 + k * 0.07, 1 - k * 0.09);
-  if (kick > 0.05) {
-    ctx.shadowColor = (t.def && t.def.color) || '#ffd452';
-    ctx.shadowBlur = 6 + 22 * kick;
-  }
   ctx.drawImage(sp.cv, -cx, -by);
   ctx.restore();
   MOTION.paintMuzzle(ctx, t, sp, DKCONTENT.STAR_TOWER_EMITTERS[t.face]);
@@ -2101,17 +2097,17 @@ function chestDef() { const C = window.DKCONTENT; return C && C.INFINITY && C.IN
 function chestCost() { if (deckRun()) return DECK.summonCost(S.inf.chests); const ch = chestDef(); return ch && S.inf ? ch.cost(S.inf.chests || 0) : Infinity; }
 function stageNotice(id, message, tag, ms) {
   const el = $(id); if (!el) return;
+  for (const otherId of ['chest-reveal', 'enhance-toast']) {
+    if (otherId === id) continue;
+    const other = $(otherId);
+    if (other) { clearTimeout(other.hideTimer); other.classList.add('hidden'); }
+  }
   el.textContent = message;
   if (id === 'chest-reveal') el.dataset.tier = tag;
   else el.dataset.result = tag;
   el.classList.remove('hidden');
   clearTimeout(el.hideTimer);
   el.hideTimer = setTimeout(() => el.classList.add('hidden'), ms || 2200);
-}
-// 중요한 획득·강화 연출은 전투 x1/x3와 무관한 실제 시간으로 재생한다.
-function presentationFx(fromFx, fromText, scale = 1) {
-  for (let i = fromFx; i < S.fxs.length; i++) { S.fxs[i].realtime = true; S.fxs[i].dur *= scale; }
-  for (let i = fromText; i < S.texts.length; i++) { S.texts[i].realtime = true; S.texts[i].dur = (S.texts[i].dur || 1.1) * scale; }
 }
 function buyChest() {
   const ch = chestDef();
@@ -2127,18 +2123,14 @@ function buyChest() {
   if (deckRun()) { S.inf.spent+=cost; rollDie('d20',drawn.face); S.texts.push({ str:`${combatDef(drawn.face).name} · 1눈금`,x:W/2,y:topTextY(),t:0,color:combatDef(drawn.face).color }); coachHit('roll'); syncUI(); return 'd20'; }
   const rare = rk >= 5 ? 3 : rk === 4 ? 2 : rk === 3 ? 1 : 0;
   const col = dieKindColor(kind);
-  const fxStart = S.fxs.length, textStart = S.texts.length;
-  // 글자는 위쪽 HUD 바로 아래, 상자 열림·링·버스트는 주사위가 크게 뜨는 화면 중앙(drawCenterRoll)과 같은 자리
-  S.texts.push({ str: drawn ? `덱 소환 · ★${drawn.face} ${combatDef(drawn.face).name}` : kind === 'd1' ? '꽝… 일반: 외눈 주사위' : `보물상자: ${ch.grade[kind]} — ${ch.label[kind]} 획득!`, x: W / 2, y: topTextY(), t: 0, color: col });
-  const fx = W / 2, fy = H / 2;
-  S.fxs.push({ kind: 'ring', x: fx, y: fy, t: 0, dur: 0.95 + rare * 0.2, size: 175 + rare * 55, color: col });
-  if (rk >= 3) spawnBurst(fx, fy, col, 6 + rk * 2, 100 + rk * 24, 0.6);
-  if (rk >= 6) { S.shakeT = Math.max(S.shakeT || 0, 0.3); S.fxs.push({ kind: 'circle', x: fx, y: fy, t: 0, dur: 1.2, size: 260, color: col }); }
-  if (rk >= 3 && hasArt('chestOpen')) S.fxs.push({ kind: 'chestOpen', x: fx, y: fy, t: 0, dur: 0.92 + rare * 0.07,
-    size: Math.min(270, Math.max(180, Math.min(W, H) * 0.36) + rare * 12) });
-  if (rk >= 3 && hasArt('acquireColumn')) S.fxs.push({ kind: 'column', x: fx, y: fy + 105, t: 0, dur: 1.25, size: 270 + rare * 55 });
+  // A single articulated chest owns its interior light and foreground occlusion.
+  // Do not stack unrelated full-board rings, columns or text on its front panel.
+  if (rk >= 3) {
+    S.fxs = S.fxs.filter(f => f.kind !== 'chestOpen');
+    S.fxs.push({ kind: 'chestOpen', x: W / 2, y: H / 2, t: 0, dur: 1.5,
+      size: Math.min(260, Math.max(190, Math.min(W, H) * 0.32) + rare * 10), color: col, rank: rk, realtime: true });
+  }
   if (rk >= 3) stageNotice('chest-reveal', `${ch.grade[kind]} 상자 개봉 · ${ch.label[kind]}!`, rk >= 5 ? 'mythic' : 'rare', 2400);
-  presentationFx(fxStart, textStart, rk >= 3 ? 1.25 : 1);
   if (rare >= 2) SFX.win(); else if (kind === 'd1') SFX.deny(); else SFX.coin();
   if (rk >= 3) netLog(`${ch.grade[kind]} ${ch.label[kind]}를 뽑았습니다`, 'gacha'); // 유물 이상은 방에 알린다
   if (drawn) {
@@ -2228,47 +2220,26 @@ const hasArt = (k) => { const a = A[k]; return !!(a && !a.missing && (Array.isAr
 function acquireFx(face) {
   if (deckRun()) { acquireFxCode(1,0,combatDef(face).color,W/2,H/2); return; }
   const def = TOWER_DEFS[face]; if (!def) return;
-  const fxStart = S.fxs.length, textStart = S.texts.length;
-  const col = def.color, cx = W / 2, cy = H / 2;
+  const col = def.color;
+  const cx = W / 2, cy = H / 2;
   const name = def.name.replace(/ ★\d+$/, '');
   const tier = face <= 6 ? 0 : face >= 19 ? 4 : face >= 15 ? 3 : face >= 11 ? 2 : 1;   // ★7~10 · ★11~14 · ★15~18 · ★19~20
   if (hasArt('acquireBurst')) acquireFxArt(face, tier, col, cx, cy); else acquireFxCode(face, tier, col, cx, cy);
   if (!tier) return;
-  S.texts.push({ str: `★${face}성 ${name} 획득!`, x: cx, y: topTextY() + 34, t: 0, color: col, big: true });
   stageNotice('chest-reveal', `★${face} ${name} 획득!`, tier >= 3 ? 'mythic' : 'rare', 2400);
-  presentationFx(fxStart, textStart, 1.4);
-  if (tier >= 3) { S.glowT = 0.9; S.glowColor = col; }        // 화면 가장자리 빛 (★15+)
-  S.shakeT = Math.max(S.shakeT || 0, [0, 0.2, 0.3, 0.5, 0.7][tier]);
+  // The landed die stays still and readable; the celebration surrounds it.
   if (tier >= 4) SFX.jackpot(); else if (tier >= 3) SFX.win(); else SFX.merge();
   if (tier >= 3 && window.DKBGM) { try { DKBGM.duck(0.45, 1.4); } catch (e) { /* 무시 */ } }
   netLog(`★${face}성 ${name} 타워를 획득하였습니다`, 'gacha');   // ★7 이상만 방에 알린다
 }
 function acquireFxCode(face, tier, col, cx, cy) {
-  if (!tier) {                                                // 1~6눈: 작은 링 + 눈 색
-    S.fxs.push({ kind: 'ring', x: cx, y: cy, t: 0, dur: 0.5, size: 120, color: col });
-    spawnBurst(cx, cy, col, 6, 90, 0.45);
-    return;
-  }
-  S.fxs.push({ kind: 'ring', x: cx, y: cy, t: 0, dur: 0.9, size: 260 + tier * 60, color: col });
-  S.fxs.push({ kind: 'circle', x: cx, y: cy + 40, t: 0, dur: 1.1 + tier * 0.15, size: 180 + tier * 40, color: col, pips: Math.min(12, face - 6) });
-  spawnBurst(cx, cy, col, 10 + tier * 5, 140 + tier * 40, 0.7 + tier * 0.1);
-  if (tier >= 2) { S.fxs.push({ kind: 'ring', x: cx, y: cy, t: 0, dur: 1.3, size: 300, color: '#ffffff' }); }
-  if (tier >= 4) { S.fxs.push({ kind: 'ring', x: cx, y: cy, t: -0.18, dur: 1.2, size: 340, color: '#ffd452' }); spawnBurst(cx, cy, '#ffffff', 10, 260, 1.1); }
+  acquireFxArt(face, tier, col, cx, cy);
 }
 function acquireFxArt(face, tier, col, cx, cy) {
-  const sparks = (n, spread, sz) => { for (let i = 0; i < n; i++) { const a = fxRandom() * Math.PI * 2, v = spread * (0.4 + fxRandom() * 0.8); S.fxs.push({ kind: 'sprite', img: 'starSpark', x: cx, y: cy, vx: Math.cos(a) * v, vy: Math.sin(a) * v - spread * 0.3, t: -fxRandom() * 0.15, dur: 0.6 + fxRandom() * 0.4, size: sz * (0.6 + fxRandom() * 0.8), phase: fxRandom() * 6 }); } };
-  if (!tier) { S.fxs.push({ kind: 'ring', x: cx, y: cy, t: 0, dur: 0.5, size: 120, color: col }); if (hasArt('starSpark')) sparks(4, 90, 26); else spawnBurst(cx, cy, col, 6, 90, 0.45); return; }
-  S.fxs.push({ kind: 'acquireBurst', x: cx, y: cy, t: 0, dur: 0.6 + tier * 0.1, size: 230 + tier * 30, add: true });
-  const ringImg = tier >= 4 && hasArt('acquireRingRainbow') ? 'acquireRingRainbow' : 'acquireRing';
-  if (hasArt(ringImg)) S.fxs.push({ kind: 'ringImg', img: ringImg, x: cx, y: cy, t: 0, dur: 1.1, size: 250 + tier * 28 });
-  else S.fxs.push({ kind: 'ring', x: cx, y: cy, t: 0, dur: 0.9, size: 260 + tier * 28, color: col });
-  spawnBurst(cx, cy, col, 8 + tier * 4, 120 + tier * 30, 0.6 + tier * 0.1);
-  if (hasArt('starSpark')) sparks(6 + tier * 2, 160 + tier * 40, 30);
-  if (tier >= 2) { if (hasArt('acquireColumn')) S.fxs.push({ kind: 'column', x: cx, y: cy + 40, t: 0, dur: 0.8, size: 235 + tier * 16 }); S.fxs.push({ kind: 'ring', x: cx, y: cy, t: 0, dur: 1.3, size: 300, color: '#ffffff' }); }
-  if (tier >= 3 && hasArt('confetti')) S.fxs.push({ kind: 'confetti', x: cx, y: cy - 40, t: 0, dur: 1.1, size: 230 + tier * 18 });
-  if (tier >= 4) {
-    spawnBurst(cx, cy, '#ffffff', 10, 260, 1.1);
-  }
+  // One continuous, bounded composition; the real die is drawn above it.
+  S.fxs = S.fxs.filter(f => f.kind !== 'dieReward');
+  S.fxs.push({ kind: 'dieReward', x: cx, y: cy, t: 0, dur: tier ? 1.68 : 0.48,
+    size: tier ? 250 + tier * 18 : 72, face, tier, color: col, realtime: true });
 }
 // '#rrggbb' → 'rgba(r,g,b,a)'
 function hexA(hex, a) { const m = /^#?([0-9a-f]{6})$/i.exec(String(hex || '')); if (!m) return `rgba(255,212,82,${a})`; const n = parseInt(m[1], 16); return `rgba(${n >> 16},${(n >> 8) & 255},${n & 255},${a})`; }
@@ -3871,24 +3842,10 @@ function towerPresentationFx(t, fx) {
   fx.anchorDx = fx.x - t.x; fx.anchorDy = fx.y - t.y;
   S.fxs.push(fx);
 }
-function towerPresentationText(t, label) {
-  label.anchorTower = t; label.anchorSpot = t.spot;
-  label.anchorDx = label.x - t.x; label.anchorDy = label.y - t.y;
-  S.texts.push(label);
-}
-function towerUpgradeStars(t) {
-  if (!hasArt('starSpark')) return;
-  for (let i = 0; i < 8; i++) {
-    const a = i * Math.PI * 2 / 8;
-    towerPresentationFx(t, { kind: 'sprite', img: 'starSpark', x: t.x, y: t.y - 34,
-      vx: Math.cos(a) * 54, vy: Math.sin(a) * 35 - 28, t: -i * 0.025,
-      dur: 0.65 + i * 0.03, size: 13 + (i % 3) * 3, phase: a, realtime: true });
-  }
-}
-function powerTowerFx(t, color) {
-  towerPresentationFx(t, { kind: 'towerHalo', status: 'power', x: t.x, y: t.y - 32, t: 0, dur: 1.85, size: 116, color, realtime: true });
-  towerPresentationFx(t, { kind: 'circle', x: t.x, y: t.y + 6, t: 0, dur: 1.35, size: 138, color, pips: 6, realtime: true });
-  towerPresentationFx(t, { kind: 'ring', x: t.x, y: t.y - 35, t: 0, dur: 1.25, size: 94, color, realtime: true });
+function powerTowerFx(t) {
+  S.fxs = S.fxs.filter(f => !(f.kind === 'towerHalo' && f.anchorTower === t && f.status === 'power'));
+  towerPresentationFx(t, { kind: 'towerHalo', status: 'power', x: t.x, y: t.y - 32,
+    t: 0, dur: 1.85, size: 74, color: '#86dcff', realtime: true });
 }
 function upgradeFace(f) {
   if (deckRun()) {
@@ -3897,7 +3854,7 @@ function upgradeFace(f) {
     S.gold-=cost; S.inf.spent+=cost; S.inf.deckPower[f]=lv+1;
     const col = combatDef(f).color;
     for (const t of S.towers) if (t.face === f) powerTowerFx(t, col);
-    S.texts.push({ str:`${combatDef(f).name} 파워업 ${lv+1}/5`,x:W/2,y:topTextY(),t:0,color:col,big:true,realtime:true,dur:2 });
+    stageNotice('enhance-toast', `${combatDef(f).name} · 파워업 ${lv+1}/5`, 'power', 1800);
     SFX.merge(); syncUI(); return true;
   }
   const d = DP();
@@ -3910,7 +3867,7 @@ function upgradeFace(f) {
   S.inf.power[f] = lv + 1;
   const def = TOWER_DEFS[f];
   for (const t of S.towers) if (t.face === f || (f === 6 && t.face > 6)) powerTowerFx(t, t.def.color || def.color);
-  S.texts.push({ str: `${def.name} 파워업 Lv${lv + 1}!`, x: W / 2, y: H / 2 - 70, t: 0, color: def.color, big: true, realtime: true, dur: 2 });
+  stageNotice('enhance-toast', `${def.name} · 파워업 Lv${lv + 1}`, 'power', 1800);
   coachHit('power');
   SFX.merge();
   syncUI();
@@ -4023,8 +3980,16 @@ function updateVisuals(dt) {
   // 이펙트
   for (const f of S.fxs) {
     if (f.realtime) continue;
+    const previousTime = f.t;
     f.t += dt;
-    if (f.vx !== undefined) { f.x += f.vx * dt; f.y += f.vy * dt; f.vy += 160 * dt; }
+    // Sprite/burst renderers derive travel from their original position and age.
+    // Integrating those origins here as well doubled their travel and gravity.
+    if (f.vx !== undefined && f.kind !== 'sprite' && f.kind !== 'burst') {
+      const activeDt = Math.max(0, f.t) - Math.max(0, previousTime);
+      f.x += f.vx * activeDt;
+      f.y += f.vy * activeDt + 80 * activeDt * activeDt;
+      f.vy += 160 * activeDt;
+    }
   }
   S.fxs = S.fxs.filter(f => f.t < f.dur);
   for (const b of S.beams) b.t += dt;
@@ -4033,6 +3998,9 @@ function updateVisuals(dt) {
   S.texts = S.texts.filter(tx => tx.t < (tx.dur || 1.1));
 }
 function advancePresentation(dt) {
+  if (ROLL_SHOW.t > 0) ROLL_SHOW.t = Math.max(0, ROLL_SHOW.t - dt);
+  for (const t of S.towers) if (t.kick > 0) t.kick = Math.max(0, t.kick - dt * 2.7);
+  for (const t of VIEW.towers) if (t.kick > 0) t.kick = Math.max(0, t.kick - dt * 2.7);
   for (const f of S.fxs) if (f.realtime) f.t += dt;
   for (const tx of S.texts) if (tx.realtime) tx.t += dt;
   S.fxs = S.fxs.filter(f => f.t < f.dur);
@@ -4176,7 +4144,6 @@ function update(dt) {
   S.corpses = S.corpses.filter(c => c.t < c.dur);
   if (S.shakeT > 0) S.shakeT -= dt;
   if (S.bannerT > 0) S.bannerT -= dt;
-  if (ROLL_SHOW.t > 0) ROLL_SHOW.t -= dt;
 
   if (deckRun() && S.waveActive) updateDeckAbilities(dt);
   updateSupporter(dt);
@@ -4326,7 +4293,6 @@ function drawStarBadge(t) {
   ctx.scale(1, 0.5);
   ctx.beginPath(); ctx.arc(0, 0, SPOT_R + 6 + pulse * 4, 0, Math.PI * 2);
   ctx.strokeStyle = col; ctx.lineWidth = 3; ctx.globalAlpha = 0.6 + pulse * 0.3;
-  ctx.shadowColor = col; ctx.shadowBlur = 16;
   ctx.stroke();
   ctx.restore();
   }
@@ -4356,21 +4322,14 @@ function drawMergeHalo(t, sp, hovered) {
   ctx.arc(0, 0, SPOT_R + 10 + pulse * 8, 0, Math.PI * 2);
   ctx.strokeStyle = hovered ? `rgba(255,236,140,0.98)` : `rgba(255,214,90,${0.55 + pulse * 0.4})`;
   ctx.lineWidth = hovered ? 8 : 5.5;
-  ctx.shadowColor = col;
-  ctx.shadowBlur = hovered ? 28 : 16;
   ctx.stroke();
   ctx.beginPath();
   ctx.arc(0, 0, SPOT_R + 1, 0, Math.PI * 2);
   ctx.strokeStyle = col;
   ctx.lineWidth = 3;
-  ctx.shadowBlur = 8;
   ctx.stroke();
   ctx.restore();
-  ctx.shadowColor = hovered ? '#ffe27a' : col;
-  ctx.shadowBlur = 20 + pulse * 18;
-  ctx.drawImage(sp.cv, -cx, -by);
-  ctx.shadowBlur = 7;
-  ctx.drawImage(sp.cv, -cx, -by);
+  paintTowerBody(t, sp);
   ctx.restore();
 
   const label = hovered ? '놓으면 강화!' : `합체 → Lv${t.lvl + 1}`;
@@ -4394,9 +4353,11 @@ function flashCanvas(fr, drawW, drawH) {
   if (fr.directional) {
     // One small presentation scratch surface, not a second copy of every cached animation frame.
     if (!directionalFlash) directionalFlash = document.createElement('canvas');
-    directionalFlash.width = Math.max(1, Math.min(512, Math.ceil(drawW || fr.w)));
-    directionalFlash.height = Math.max(1, Math.min(512, Math.ceil(drawH || fr.h)));
+    const width = Math.max(1, Math.min(512, Math.ceil(drawW || fr.w)));
+    const height = Math.max(1, Math.min(512, Math.ceil(drawH || fr.h)));
+    if (directionalFlash.width !== width || directionalFlash.height !== height) { directionalFlash.width = width; directionalFlash.height = height; }
     const c = directionalFlash.getContext('2d');
+    c.clearRect(0, 0, width, height);
     c.drawImage(fr.cv, 0, 0, directionalFlash.width, directionalFlash.height);
     c.globalCompositeOperation = 'source-in'; c.fillStyle = '#fff'; c.fillRect(0, 0, directionalFlash.width, directionalFlash.height);
     c.globalCompositeOperation = 'source-over';
@@ -4545,6 +4506,233 @@ function drawPortal(x, y, lane) {
   }
 }
 
+// Compact feedback belongs to the tower, with the floor light behind its body.
+function drawTowerFeedback(f, foreground) {
+  const t = Math.max(0, f.t), p = Math.min(1, t / f.dur);
+  const fade = Math.min(1, t / .12, (f.dur - t) / .45);
+  if (fade <= 0) return;
+  const power = f.status === 'power', keep = f.status === 'keep', broken = f.status === 'boom';
+  const col = keep ? '#c3cfdf' : broken ? '#ff9a81' : power ? '#86dcff' : '#ffd570';
+  const x = f.x, ground = f.anchorTower ? f.anchorTower.y + 6 : f.y + 38;
+  const radius = keep ? 29 : power ? 34 : 39;
+  ctx.save();
+  if (!foreground) {
+    const ease = 1 - Math.pow(1 - Math.min(1, t / .38), 3);
+    const light = ctx.createRadialGradient(x, ground, 2, x, ground, radius * 1.5);
+    light.addColorStop(0, hexA(col, .34 * fade)); light.addColorStop(1, hexA(col, 0));
+    ctx.save(); ctx.translate(x, ground); ctx.scale(1, .4); ctx.translate(-x, -ground);
+    ctx.fillStyle = light; ctx.fillRect(x - radius * 1.5, ground - radius * 1.5, radius * 3, radius * 3); ctx.restore();
+    ctx.globalAlpha = fade * .8; ctx.lineWidth = 2; ctx.strokeStyle = col;
+    ctx.beginPath(); ctx.ellipse(x, ground, radius * (.65 + .35 * ease), radius * .33, 0, 0, Math.PI * 2); ctx.stroke();
+    if (!keep) {
+      // Narrow side ribbons rise from the base; the tower is painted over them.
+      const lift = 75 * ease;
+      const ribbon = ctx.createLinearGradient(0, ground - lift, 0, ground);
+      ribbon.addColorStop(0, hexA(col, 0)); ribbon.addColorStop(.65, hexA(col, .48)); ribbon.addColorStop(1, hexA(col, 0));
+      ctx.fillStyle = ribbon;
+      for (const side of [-1, 1]) {
+        ctx.beginPath(); ctx.moveTo(x + side * 25, ground); ctx.lineTo(x + side * 37, ground - lift);
+        ctx.lineTo(x + side * 31, ground - lift); ctx.lineTo(x + side * 20, ground); ctx.closePath(); ctx.fill();
+      }
+    }
+    if (broken) {
+      for (let i = 0; i < 8; i++) {
+        const a = i * Math.PI / 4, d = 13 + t * 30;
+        const px = x + Math.cos(a) * d, py = ground - 26 + Math.sin(a) * d * .5 + t * t * 22;
+        ctx.save(); ctx.translate(px, py); ctx.rotate(a + t); ctx.fillStyle = i % 2 ? '#a1a9bb' : col;
+        ctx.globalAlpha = fade * (1 - p); ctx.fillRect(-2, -3, 4, 6); ctx.restore();
+      }
+    }
+  } else {
+    const tower = f.anchorTower;
+    if (tower && !keep && !broken && t < .4) {
+      const sp = towerSpr(tower.face, tower.skin), silhouette = flashCanvas(sp);
+      if (silhouette) {
+        ctx.globalAlpha = Math.sin(Math.min(1, t / .4) * Math.PI) * .24;
+        ctx.drawImage(silhouette, x - (sp.cx ?? TS_CX), ground - (sp.baseY ?? TS_BASE_Y));
+      }
+    }
+    if (!broken) {
+      // Sparse diamond glints travel beside the silhouette, never across its face.
+      const count = keep ? 2 : power ? 4 : 7;
+      for (let i = 0; i < count; i++) {
+        const age = (t - i * .065) / .9;
+        if (age < 0 || age > 1) continue;
+        const side = i % 2 ? -1 : 1, sx = x + side * (28 + (i % 3) * 4 + Math.sin(age * Math.PI) * 7);
+        const sy = ground - 12 - age * (power ? 66 : 88), r = (keep ? 2.3 : 3.3) * Math.sin(age * Math.PI);
+        ctx.globalAlpha = fade * Math.sin(age * Math.PI); ctx.fillStyle = i % 3 ? '#fff4d0' : col;
+        ctx.beginPath(); ctx.moveTo(sx, sy-r*1.6); ctx.lineTo(sx+r, sy); ctx.lineTo(sx, sy+r*1.6); ctx.lineTo(sx-r, sy); ctx.closePath(); ctx.fill();
+      }
+      if (!keep) {
+        const y = ground - 112 - 7 * Math.min(1, t / .5);
+        ctx.globalAlpha = fade; ctx.strokeStyle = col; ctx.lineWidth = 2.5; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+        ctx.beginPath(); ctx.moveTo(x-5,y+3); ctx.lineTo(x,y-2); ctx.lineTo(x+5,y+3); ctx.stroke();
+      }
+    }
+  }
+  ctx.restore();
+}
+
+function drawEffects(layer) {
+  const sheetMap = {
+    impact: A.impact, cannonBlast: A.cannonBlast, arcaneBurst: A.arcaneBurst,
+    frostBurst: A.frostBurst, dieExplode: A.dieExplode,
+    acquireBurst: A.acquireBurst, confetti: A.confetti, chestOpen: A.chestOpen,
+  };
+  for (const f of S.fxs) {
+    const effectLayer = f.kind === 'circle' || f.kind === 'towerHalo' ? 'ground'
+      : f.kind === 'chestOpen' || f.kind === 'dieReward' ? 'reward' : 'world';
+    if (effectLayer !== layer) continue;
+    if (f.anchorTower) { f.x = f.anchorTower.x + f.anchorDx; f.y = f.anchorTower.y + f.anchorDy; }
+    const pr = f.t / f.dur;
+    if (pr < 0) continue;                                       // 지연 시작 (t 가 음수)
+    if (f.kind === 'chestOpen') {
+      window.DKFX.drawChest(ctx, f);
+    } else if (f.kind === 'dieReward') {
+      window.DKFX.drawReward(ctx, f);
+    } else if (sheetMap[f.kind]) {
+      const frames = sheetMap[f.kind];
+      const frame = frames[Math.min(frames.length - 1, Math.floor(pr * frames.length))];
+      if (!frame) continue;
+      const scale = f.size * (.84 + .24 * (1 - (1 - pr) ** 3)) / Math.max(frame.w, frame.h);
+      ctx.save();
+      ctx.globalAlpha = Math.min(1, (1 - pr) * 2.5);
+      if (f.add) ctx.globalCompositeOperation = 'lighter';
+      ctx.drawImage(frame.cv, f.x - frame.w * scale / 2, f.y - frame.h * scale / 2, frame.w * scale, frame.h * scale);
+      ctx.restore();
+    } else if (f.kind === 'ringImg') {                          // 그림 링: 회전하며 커지고 사라진다
+      const im = A[f.img]; if (!im || !im.cv) continue;
+      const sz = f.size * (0.3 + 0.9 * pr);
+      ctx.save();
+      ctx.globalAlpha = Math.max(0, 1 - pr) * 0.95; ctx.globalCompositeOperation = 'lighter';
+      ctx.translate(f.x, f.y); ctx.rotate((f.realtime ? f.t : S.time) * (f.spin || 1.2) + (f.phase || 0));
+      ctx.drawImage(im.cv, -sz / 2, -sz / 2, sz, sz);
+      ctx.restore();
+    } else if (f.kind === 'column') {                           // 빛기둥: 아래에서 위로 뻗는다
+      const im = A.acquireColumn; if (!im || !im.cv) continue;
+      const hgt = f.size * Math.min(1, pr * 3), wd = hgt * (im.w / im.h);
+      ctx.save();
+      ctx.globalAlpha = Math.max(0, 1 - pr) * 0.9; ctx.globalCompositeOperation = 'lighter';
+      ctx.drawImage(im.cv, f.x - wd / 2, f.y - hgt, wd, hgt);
+      ctx.restore();
+    } else if (f.kind === 'sprite') {                           // 단일 그림 파티클 (반짝이)
+      const im = A[f.img]; if (!im || !im.cv) continue;
+      const tt = Math.max(0, f.t), sz = f.size * (1 + pr * 0.4);
+      ctx.save();
+      ctx.globalAlpha = Math.max(0, 1 - pr); ctx.globalCompositeOperation = 'lighter';
+      ctx.translate(f.x + (f.vx || 0) * tt, f.y + (f.vy || 0) * tt); ctx.rotate((f.realtime ? f.t : S.time) * 3 + (f.phase || 0));
+      ctx.drawImage(im.cv, -sz / 2, -sz / 2, sz, sz);
+      ctx.restore();
+    } else if (f.kind === 'burst') {
+      const g = 320;                                            // 중력
+      const tt = Math.max(0, f.t);
+      const bx = f.x + f.vx * tt, by = f.y + f.vy * tt + 0.5 * g * tt * tt;
+      ctx.save();
+      ctx.globalAlpha = Math.max(0, 1 - pr) * 0.95;
+      ctx.fillStyle = f.color || '#ffe9a0';
+      ctx.beginPath(); ctx.arc(bx, by, f.size * (1 - pr * 0.5), 0, Math.PI * 2); ctx.fill();
+      ctx.restore();
+    } else if (f.kind === 'spark') {
+      const sp = A.spark;
+      const s = f.size / Math.max(sp.w, sp.h) * (1 + pr * 0.6);
+      ctx.save();
+      ctx.globalAlpha = 1 - pr;
+      ctx.drawImage(sp.cv, f.x - sp.w * s / 2, f.y - sp.h * s / 2, sp.w * s, sp.h * s);
+      ctx.restore();
+    } else if (f.kind === 'frostHit') {
+      ctx.save();
+      ctx.globalAlpha = (1 - pr) * 0.8;
+      ctx.strokeStyle = '#bfe8ff';
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(f.x, f.y, 6 + pr * f.size, 0, Math.PI * 2); ctx.stroke();
+      ctx.restore();
+    } else if (f.kind === 'dust') {
+      ctx.save();
+      ctx.globalAlpha = (1 - pr) * 0.5;
+      ctx.fillStyle = f.color || '#b7a888';
+      ctx.beginPath(); ctx.arc(f.x, f.y, f.size * (1 + pr), 0, Math.PI * 2); ctx.fill();
+      ctx.restore();
+    } else if (f.kind === 'sparkle') {
+      ctx.save();
+      ctx.globalAlpha = 1 - pr;
+      ctx.fillStyle = '#ffe9a0';
+      ctx.beginPath(); ctx.arc(f.x, f.y, f.size * (1 - pr * 0.5), 0, Math.PI * 2); ctx.fill();
+      ctx.restore();
+    } else if (f.kind === 'ring') {
+      if (pr < 0) continue;                                     // 시작을 늦춘 링(t<0)은 아직 그리지 않는다
+      ctx.save();
+      ctx.globalAlpha = (1 - pr) * 0.9;
+      ctx.strokeStyle = f.color || '#ffe9a0';
+      ctx.lineWidth = 3 * (1 - pr) + 1;
+      ctx.beginPath(); ctx.arc(f.x, f.y, 8 + pr * f.size, 0, Math.PI * 2); ctx.stroke();
+      ctx.restore();
+    } else if (f.kind === 'towerHalo') {
+      drawTowerFeedback(f, false);
+    } else if (f.kind === 'circle') {
+      // 배치/합체 마법진: 바닥에 눕힌 이중 원 + 회전하는 룬 눈금 + 별
+      const col = f.color || '#ffe9a0';
+      const grow = Math.min(1, pr * 2.6);
+      const R = f.size * 0.5 * (0.3 + 0.7 * grow);
+      ctx.save();
+      ctx.translate(f.x, f.y);
+      ctx.scale(1, 0.5);
+      ctx.globalAlpha = (1 - pr) * 0.95;
+      ctx.strokeStyle = col;
+      ctx.lineWidth = 2.5;
+      ctx.beginPath(); ctx.arc(0, 0, R, 0, Math.PI * 2); ctx.stroke();
+      ctx.lineWidth = 1.2;
+      ctx.beginPath(); ctx.arc(0, 0, R * 0.72, 0, Math.PI * 2); ctx.stroke();
+      ctx.rotate((f.realtime ? f.t : S.time) * 1.8 + (f.spin || 0));
+      const n = f.pips || 6;
+      for (let i = 0; i < n; i++) {
+        const a = Math.PI * 2 * i / n;
+        ctx.beginPath();
+        ctx.moveTo(Math.cos(a) * R * 0.72, Math.sin(a) * R * 0.72);
+        ctx.lineTo(Math.cos(a) * R, Math.sin(a) * R);
+        ctx.stroke();
+        ctx.beginPath(); ctx.arc(Math.cos(a) * R * 0.86, Math.sin(a) * R * 0.86, 2.6, 0, Math.PI * 2);
+        ctx.fillStyle = col; ctx.fill();
+      }
+      ctx.rotate(-(f.realtime ? f.t : S.time) * 3);
+      ctx.beginPath();
+      const k = f.merge ? 6 : 5;
+      for (let i = 0; i < k * 2; i++) {
+        const a = Math.PI * i / k, r = (i % 2 === 0 ? R * 0.62 : R * 0.26);
+        if (i === 0) ctx.moveTo(Math.cos(a) * r, Math.sin(a) * r); else ctx.lineTo(Math.cos(a) * r, Math.sin(a) * r);
+      }
+      ctx.closePath();
+      ctx.lineWidth = 1.4; ctx.stroke();
+      ctx.restore();
+      // 솟아오르는 빛기둥
+      if (pr < 0.6) {
+        ctx.save();
+        ctx.globalAlpha = (0.6 - pr) * 0.55;
+        const gr = ctx.createLinearGradient(0, f.y - 90 * grow, 0, f.y);
+        gr.addColorStop(0, col + '00'); gr.addColorStop(1, col);
+        ctx.fillStyle = gr;
+        ctx.fillRect(f.x - R * 0.5, f.y - 90 * grow, R, 90 * grow);
+        ctx.restore();
+      }
+    } else if (f.kind === 'laserMuzzle' || f.kind === 'muzzleFlash') {
+      const sp = f.kind === 'laserMuzzle' ? A.laserMuzzle : A.muzzleFlash;
+      if (sp) {
+        const s = f.size / Math.max(sp.w, sp.h) * (1 + pr * 0.4);
+        ctx.save();
+        ctx.globalAlpha = 1 - pr;
+        ctx.drawImage(sp.cv, f.x - sp.w * s / 2, f.y - sp.h * s / 2, sp.w * s, sp.h * s);
+        ctx.restore();
+      }
+    } else { // hit
+      ctx.save();
+      ctx.globalAlpha = (1 - pr) * 0.9;
+      ctx.fillStyle = '#ffe9a0';
+      ctx.beginPath(); ctx.arc(f.x, f.y, 3 + pr * f.size * 0.5, 0, Math.PI * 2); ctx.fill();
+      ctx.restore();
+    }
+  }
+
+}
+
 function draw() {
   ctx.clearRect(0, 0, W, H);
   if (S.phase === 'loading') return;
@@ -4653,6 +4841,8 @@ function draw() {
     ctx.restore();
   }
 
+  drawEffects('ground');
+
   // 개체 (y순 정렬)
   const ents = [];
   // 들어올린 타워는 다른 타워·적에 가려지지 않게 맨 위에 그린다
@@ -4665,7 +4855,6 @@ function draw() {
     if (ent.kind === 't') {
       const t = ent.o;
       const sp = towerSpr(t.face, t.skin);
-      if (t.kick > 0) t.kick = Math.max(0, t.kick - 0.045);
       const face = heldFace();
       const mergeable = face && heldMergeable(t);
       const hovered = mergeable && DRAG.active && DRAG.overSpot === t.spot;
@@ -4688,6 +4877,7 @@ function draw() {
         paintTowerBody(t, sp);
         ctx.restore();
       }
+      for (const f of S.fxs) if (f.kind === 'towerHalo' && f.anchorTower === t && f.t >= 0) drawTowerFeedback(f, true);
       if (!sp.dedicated) drawTopper(t);
       if (deckRun() || t.deckSystem || t.face > 6) drawStarBadge(t);
       if (S.selTower === t) {
@@ -4869,7 +5059,6 @@ function draw() {
       const w = 26 + (p.star ? (p.star - 6) * 1.1 : 0);   // ★ 가 높을수록 큰 탄
       const s = w / sp.w;
       ctx.rotate(p.spin);
-      ctx.shadowColor = p.color || '#ff5555'; ctx.shadowBlur = p.star ? 15 : 8;
       ctx.drawImage(sp.cv, -w / 2, -sp.h * s / 2, w, sp.h * s);
     } else {
       const sp = A[p.kind];
@@ -4917,8 +5106,8 @@ function draw() {
         for (let i = 0; i < b.pts.length - 1; i++) {
           const a = b.pts[i], c = b.pts[i + 1];
           ctx.moveTo(a.x, a.y);
-          const midx = (a.x + c.x) / 2 + (fxRandom() - 0.5) * 14;
-          const midy = (a.y + c.y) / 2 + (fxRandom() - 0.5) * 14;
+          const midx = (a.x + c.x) / 2 + Math.sin(i * 2.71 + b.t * 48) * 6;
+          const midy = (a.y + c.y) / 2 + Math.cos(i * 3.17 + b.t * 48) * 6;
           ctx.lineTo(midx, midy);
           ctx.lineTo(c.x, c.y);
         }
@@ -4943,216 +5132,8 @@ function draw() {
     }
   }
 
-  // 이펙트
-  const sheetMap = {
-    impact: A.impact, cannonBlast: A.cannonBlast, arcaneBurst: A.arcaneBurst,
-    frostBurst: A.frostBurst, dieExplode: A.dieExplode,
-    acquireBurst: A.acquireBurst, confetti: A.confetti, chestOpen: A.chestOpen,
-  };
-  for (const f of S.fxs) {
-    if (f.anchorTower) { f.x = f.anchorTower.x + f.anchorDx; f.y = f.anchorTower.y + f.anchorDy; }
-    const pr = f.t / f.dur;
-    if (pr < 0) continue;                                       // 지연 시작 (t 가 음수)
-    if (sheetMap[f.kind]) {
-      const frames = sheetMap[f.kind];
-      const rewardSheet = f.realtime && (f.kind === 'chestOpen' || f.kind === 'acquireBurst' || f.kind === 'confetti');
-      // Four illustrations stretched across a two-second reward looked like a 2 fps slideshow.
-      // Complete the opening promptly; continuous scale, lift and crossfade fill the display frames.
-      const span = f.kind === 'chestOpen' ? 0.62 : f.kind === 'confetti' ? 0.65 : 0.48;
-      const frameAt = rewardSheet ? Math.min(3, Math.max(0, f.t) / span * 3) : Math.min(3, Math.floor(pr * 4));
-      const first = Math.floor(frameAt), blend = rewardSheet ? (frameAt - first) ** 2 * (3 - 2 * (frameAt - first)) : 0;
-      const pop = rewardSheet ? Math.min(1, Math.max(0, f.t) / 0.3) : 1;
-      const ease = 1 - (1 - pop) ** 3;
-      const scale = rewardSheet ? 0.78 + 0.22 * ease + 0.012 * Math.sin(f.t * 8) : 1;
-      const lift = f.kind === 'chestOpen' ? 12 * (1 - ease) : 0;
-      const alpha = rewardSheet ? Math.max(0, Math.min(1, f.t / 0.09, (f.dur - f.t) / 0.25)) : 1 - pr * 0.4;
-      ctx.save();
-      if (f.kind === 'chestOpen') {
-        const halo = ctx.createRadialGradient(f.x, f.y, 4, f.x, f.y, f.size * 0.47 * scale);
-        halo.addColorStop(0, 'rgba(31,20,32,.86)');
-        halo.addColorStop(.7, 'rgba(31,20,32,.56)');
-        halo.addColorStop(1, 'rgba(31,20,32,0)');
-        ctx.globalAlpha = alpha * 0.8;
-        ctx.fillStyle = halo;
-        ctx.beginPath(); ctx.arc(f.x, f.y, f.size * 0.47 * scale, 0, Math.PI * 2); ctx.fill();
-      }
-      if (f.add) ctx.globalCompositeOperation = 'lighter';
-      const paint = (fr, opacity) => {
-        if (!fr || opacity <= 0) return;
-        const s = f.size * scale / Math.max(fr.w, fr.h);
-        ctx.globalAlpha = alpha * opacity;
-        ctx.drawImage(fr.cv, f.x - fr.w * s / 2, f.y + lift - fr.h * s / 2, fr.w * s, fr.h * s);
-      };
-      // Keep the underlying drawing opaque while the next sheet frame fades in;
-      // fading both source-over layers would make the reward pulse darker mid-transition.
-      paint(frames[first], 1);
-      if (rewardSheet && first < 3) paint(frames[first + 1], blend);
-      ctx.restore();
-    } else if (f.kind === 'ringImg') {                          // 그림 링: 회전하며 커지고 사라진다
-      const im = A[f.img]; if (!im || !im.cv) continue;
-      const sz = f.size * (0.3 + 0.9 * pr);
-      ctx.save();
-      ctx.globalAlpha = Math.max(0, 1 - pr) * 0.95; ctx.globalCompositeOperation = 'lighter';
-      ctx.translate(f.x, f.y); ctx.rotate((f.realtime ? f.t : S.time) * (f.spin || 1.2) + (f.phase || 0));
-      ctx.drawImage(im.cv, -sz / 2, -sz / 2, sz, sz);
-      ctx.restore();
-    } else if (f.kind === 'column') {                           // 빛기둥: 아래에서 위로 뻗는다
-      const im = A.acquireColumn; if (!im || !im.cv) continue;
-      const hgt = f.size * Math.min(1, pr * 3), wd = hgt * (im.w / im.h);
-      ctx.save();
-      ctx.globalAlpha = Math.max(0, 1 - pr) * 0.9; ctx.globalCompositeOperation = 'lighter';
-      ctx.drawImage(im.cv, f.x - wd / 2, f.y - hgt, wd, hgt);
-      ctx.restore();
-    } else if (f.kind === 'sprite') {                           // 단일 그림 파티클 (반짝이)
-      const im = A[f.img]; if (!im || !im.cv) continue;
-      const tt = Math.max(0, f.t), sz = f.size * (1 + pr * 0.4);
-      ctx.save();
-      ctx.globalAlpha = Math.max(0, 1 - pr); ctx.globalCompositeOperation = 'lighter';
-      ctx.translate(f.x + (f.vx || 0) * tt, f.y + (f.vy || 0) * tt); ctx.rotate((f.realtime ? f.t : S.time) * 3 + (f.phase || 0));
-      ctx.drawImage(im.cv, -sz / 2, -sz / 2, sz, sz);
-      ctx.restore();
-    } else if (f.kind === 'burst') {
-      const g = 320;                                            // 중력
-      const tt = Math.max(0, f.t);
-      const bx = f.x + f.vx * tt, by = f.y + f.vy * tt + 0.5 * g * tt * tt;
-      ctx.save();
-      ctx.globalAlpha = Math.max(0, 1 - pr) * 0.95;
-      ctx.fillStyle = f.color || '#ffe9a0';
-      if (!f.realtime) { ctx.shadowColor = f.color || '#ffe9a0'; ctx.shadowBlur = 8; }
-      ctx.beginPath(); ctx.arc(bx, by, f.size * (1 - pr * 0.5), 0, Math.PI * 2); ctx.fill();
-      ctx.restore();
-    } else if (f.kind === 'spark') {
-      const sp = A.spark;
-      const s = f.size / Math.max(sp.w, sp.h) * (1 + pr * 0.6);
-      ctx.save();
-      ctx.globalAlpha = 1 - pr;
-      ctx.drawImage(sp.cv, f.x - sp.w * s / 2, f.y - sp.h * s / 2, sp.w * s, sp.h * s);
-      ctx.restore();
-    } else if (f.kind === 'frostHit') {
-      ctx.save();
-      ctx.globalAlpha = (1 - pr) * 0.8;
-      ctx.strokeStyle = '#bfe8ff';
-      ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.arc(f.x, f.y, 6 + pr * f.size, 0, Math.PI * 2); ctx.stroke();
-      ctx.restore();
-    } else if (f.kind === 'dust') {
-      ctx.save();
-      ctx.globalAlpha = (1 - pr) * 0.5;
-      ctx.fillStyle = f.color || '#b7a888';
-      ctx.beginPath(); ctx.arc(f.x, f.y, f.size * (1 + pr), 0, Math.PI * 2); ctx.fill();
-      ctx.restore();
-    } else if (f.kind === 'sparkle') {
-      ctx.save();
-      ctx.globalAlpha = 1 - pr;
-      ctx.fillStyle = '#ffe9a0';
-      ctx.beginPath(); ctx.arc(f.x, f.y, f.size * (1 - pr * 0.5), 0, Math.PI * 2); ctx.fill();
-      ctx.restore();
-    } else if (f.kind === 'ring') {
-      if (pr < 0) continue;                                     // 시작을 늦춘 링(t<0)은 아직 그리지 않는다
-      ctx.save();
-      ctx.globalAlpha = (1 - pr) * 0.9;
-      ctx.strokeStyle = f.color || '#ffe9a0';
-      ctx.lineWidth = 3 * (1 - pr) + 1;
-      ctx.beginPath(); ctx.arc(f.x, f.y, 8 + pr * f.size, 0, Math.PI * 2); ctx.stroke();
-      ctx.restore();
-    } else if (f.kind === 'towerHalo') {
-      const col = f.color || '#ffd452';
-      const fade = Math.min(1, pr * 5, (1 - pr) * 3);
-      const pulse = 1 + Math.sin(f.t * 15) * 0.06;
-      const radius = f.size * (0.42 + pr * 0.12) * pulse;
-      ctx.save();
-      if (f.status !== 'keep') {
-        const beam = ctx.createLinearGradient(f.x, f.y - 105, f.x, f.y + 44);
-        beam.addColorStop(0, hexA(col, 0));
-        beam.addColorStop(.35, hexA(col, 0.2 * fade));
-        beam.addColorStop(1, hexA(col, 0.05 * fade));
-        ctx.fillStyle = beam;
-        ctx.fillRect(f.x - radius * 0.6, f.y - 105, radius * 1.2, 149);
-      }
-      ctx.globalAlpha = Math.max(0, fade);
-      ctx.strokeStyle = col; ctx.shadowColor = col; ctx.shadowBlur = f.status === 'keep' ? 10 : 26;
-      ctx.lineWidth = f.status === 'keep' ? 3 : 6;
-      ctx.beginPath(); ctx.arc(f.x, f.y - 16, radius, 0, Math.PI * 2); ctx.stroke();
-      ctx.globalAlpha *= 0.68;
-      ctx.lineWidth = 2;
-      for (let i = 0; i < 8; i++) {
-        const a = Math.PI * 2 * i / 8 + (f.status === 'power' ? f.t : 0);
-        const inner = radius + 6, outer = radius + 18 + Math.sin(f.t * 12 + i) * 4;
-        ctx.beginPath(); ctx.moveTo(f.x + Math.cos(a) * inner, f.y - 16 + Math.sin(a) * inner);
-        ctx.lineTo(f.x + Math.cos(a) * outer, f.y - 16 + Math.sin(a) * outer); ctx.stroke();
-      }
-      if (f.status !== 'keep') {
-        ctx.globalAlpha = fade * .9;
-        for (const dx of [-25, 25]) {
-          const sx = f.x + dx, sy = f.y - 79 + Math.sin(f.t * 11 + dx) * 4;
-          ctx.lineWidth = 3;
-          ctx.beginPath(); ctx.moveTo(sx - 9, sy); ctx.lineTo(sx + 9, sy);
-          ctx.moveTo(sx, sy - 9); ctx.lineTo(sx, sy + 9); ctx.stroke();
-        }
-      }
-      ctx.restore();
-    } else if (f.kind === 'circle') {
-      // 배치/합체 마법진: 바닥에 눕힌 이중 원 + 회전하는 룬 눈금 + 별
-      const col = f.color || '#ffe9a0';
-      const grow = Math.min(1, pr * 2.6);
-      const R = f.size * 0.5 * (0.3 + 0.7 * grow);
-      ctx.save();
-      ctx.translate(f.x, f.y);
-      ctx.scale(1, 0.5);
-      ctx.globalAlpha = (1 - pr) * 0.95;
-      ctx.strokeStyle = col; ctx.shadowColor = col; ctx.shadowBlur = 12;
-      ctx.lineWidth = 2.5;
-      ctx.beginPath(); ctx.arc(0, 0, R, 0, Math.PI * 2); ctx.stroke();
-      ctx.lineWidth = 1.2;
-      ctx.beginPath(); ctx.arc(0, 0, R * 0.72, 0, Math.PI * 2); ctx.stroke();
-      ctx.rotate((f.realtime ? f.t : S.time) * 1.8 + (f.spin || 0));
-      const n = f.pips || 6;
-      for (let i = 0; i < n; i++) {
-        const a = Math.PI * 2 * i / n;
-        ctx.beginPath();
-        ctx.moveTo(Math.cos(a) * R * 0.72, Math.sin(a) * R * 0.72);
-        ctx.lineTo(Math.cos(a) * R, Math.sin(a) * R);
-        ctx.stroke();
-        ctx.beginPath(); ctx.arc(Math.cos(a) * R * 0.86, Math.sin(a) * R * 0.86, 2.6, 0, Math.PI * 2);
-        ctx.fillStyle = col; ctx.fill();
-      }
-      ctx.rotate(-(f.realtime ? f.t : S.time) * 3);
-      ctx.beginPath();
-      const k = f.merge ? 6 : 5;
-      for (let i = 0; i < k * 2; i++) {
-        const a = Math.PI * i / k, r = (i % 2 === 0 ? R * 0.62 : R * 0.26);
-        if (i === 0) ctx.moveTo(Math.cos(a) * r, Math.sin(a) * r); else ctx.lineTo(Math.cos(a) * r, Math.sin(a) * r);
-      }
-      ctx.closePath();
-      ctx.lineWidth = 1.4; ctx.stroke();
-      ctx.restore();
-      // 솟아오르는 빛기둥
-      if (pr < 0.6) {
-        ctx.save();
-        ctx.globalAlpha = (0.6 - pr) * 0.55;
-        const gr = ctx.createLinearGradient(0, f.y - 90 * grow, 0, f.y);
-        gr.addColorStop(0, col + '00'); gr.addColorStop(1, col);
-        ctx.fillStyle = gr;
-        ctx.fillRect(f.x - R * 0.5, f.y - 90 * grow, R, 90 * grow);
-        ctx.restore();
-      }
-    } else if (f.kind === 'laserMuzzle' || f.kind === 'muzzleFlash') {
-      const sp = f.kind === 'laserMuzzle' ? A.laserMuzzle : A.muzzleFlash;
-      if (sp) {
-        const s = f.size / Math.max(sp.w, sp.h) * (1 + pr * 0.4);
-        ctx.save();
-        ctx.globalAlpha = 1 - pr;
-        ctx.drawImage(sp.cv, f.x - sp.w * s / 2, f.y - sp.h * s / 2, sp.w * s, sp.h * s);
-        ctx.restore();
-      }
-    } else { // hit
-      ctx.save();
-      ctx.globalAlpha = (1 - pr) * 0.9;
-      ctx.fillStyle = '#ffe9a0';
-      ctx.beginPath(); ctx.arc(f.x, f.y, 3 + pr * f.size * 0.5, 0, Math.PI * 2); ctx.fill();
-      ctx.restore();
-    }
-  }
+  drawEffects('world');
+  drawEffects('reward');
 
   // 물리 주사위 (개체 위에 표시)
   drawDie();
@@ -5660,6 +5641,7 @@ function syncInfo() {
     return;
   }
   const t = S.selTower, inf = S.mode === 'infinity';
+  infoPanel.classList.toggle('enhancement-mode', inf && !deckRun());
   const er = $('enhance-result');
   if (er) {
     const same = ENHANCE_NOTICE && ENHANCE_NOTICE.tower === t;
@@ -5725,31 +5707,25 @@ function enhanceTower() {
   if (!t || !S.towers.includes(t) || !en || S.gold < en.cost || S.phase !== 'playing') { SFX.deny(); return null; }
   S.gold -= en.cost;
   S.inf.spent = (S.inf.spent || 0) + en.cost;
-  const x = t.x, y = t.y - 70, oldFace = t.face, r = Math.random();
+  const oldFace = t.face, r = Math.random();
   if (r < en.up) {
     if (growthRun()) t.growthCarry = towerGrowth(t); // Keep the earned multiplier once; never multiply it again.
     t.face = en.next; t.def = TOWER_DEFS[en.next]; t.skin = equippedSkinIndex(t.face);
-    const col = t.def.color || '#ffd452';
-    towerPresentationText(t, { str: `★${oldFace} → ★${t.face} 강화 성공!`, x, y, t: 0, color: col, big: true, realtime: true, dur: 2 });
-    towerPresentationFx(t, { kind: 'towerHalo', status: 'up', x: t.x, y: t.y - 34, t: 0, dur: 1.9, size: 100, color: col, realtime: true });
-    towerPresentationFx(t, { kind: 'ring', x: t.x, y: t.y - 30, t: 0, dur: 1.5, size: 135, color: col, realtime: true });
-    towerPresentationFx(t, { kind: 'circle', x: t.x, y: t.y + 4, t: 0, dur: 1.6, size: 150, color: col, pips: t.face <= 6 ? t.face : 4 + Math.min(8, t.face - 6), realtime: true });
-    if (hasArt('acquireBurst')) towerPresentationFx(t, { kind: 'acquireBurst', x: t.x, y: t.y - 30, t: 0, dur: 1.1, size: 150, add: true, realtime: true });
-    towerUpgradeStars(t);
+    S.fxs = S.fxs.filter(f => !(f.kind === 'towerHalo' && f.anchorTower === t));
+    towerPresentationFx(t, { kind: 'towerHalo', status: 'up', x: t.x, y: t.y - 34,
+      t: 0, dur: 1.9, size: 86, color: '#ffd570', realtime: true });
     enhanceResult(t, 'up', `강화 성공 · ★${oldFace} → ★${t.face}`);
-    if (t.face >= 14) S.shakeT = Math.max(S.shakeT || 0, 0.3);
     netLog(`${t.def.name} 확률강화에 성공했습니다`, 'up');
     SFX.win(); syncUI(); return 'up';
   }
   if (r < en.up + en.keep) {
-    towerPresentationText(t, { str: `★${oldFace} 유지`, x, y, t: 0, color: '#e7d6b8', big: true, realtime: true, dur: 1.8 });
+    S.fxs = S.fxs.filter(f => !(f.kind === 'towerHalo' && f.anchorTower === t));
     towerPresentationFx(t, { kind: 'towerHalo', status: 'keep', x: t.x, y: t.y - 34, t: 0, dur: 1.5, size: 76, color: '#c8b89f', realtime: true });
     enhanceResult(t, 'keep', `강화 유지 · ★${oldFace} 그대로`);
     pushLog('확률강화 실패 — 타워는 그대로', 'sys');
     SFX.deny(); syncUI(); return 'keep';
   }
-  towerPresentationText(t, { str: `★${oldFace} 소멸!`, x, y, t: 0, color: '#ff9494', big: true, realtime: true, dur: 2 });
-  towerPresentationFx(t, { kind: 'impact', x: t.x, y: t.y - 20, t: 0, dur: 1, size: 140, realtime: true });
+  S.fxs = S.fxs.filter(f => !(f.kind === 'towerHalo' && f.anchorTower === t));
   towerPresentationFx(t, { kind: 'towerHalo', status: 'boom', x: t.x, y: t.y - 34, t: 0, dur: 1.7, size: 114, color: '#ff7272', realtime: true });
   enhanceResult(t, 'boom', `강화 실패 · ★${oldFace} 타워 소멸`);
   const lost = t.def.name;
