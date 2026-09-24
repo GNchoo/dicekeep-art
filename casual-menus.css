@@ -133,6 +133,7 @@
 .tree-awakening,
 .deck-synergy,
 .tree-support-section { color: var(--dk-ui-cream); background: var(--dk-ui-panel); border-color: #8f8da0; border-radius: 12px; }
+.tree-branch { border-left-color: var(--branch); }
 .deck-wallet > span { color: var(--dk-ui-muted); font-size: 12px; }
 .deck-wallet b { color: var(--dk-ui-cream); }
 #deck-panel button,
@@ -174,12 +175,14 @@
 .skin-cell button,
 .cosmetic-product button { color: var(--dk-ui-cream); background: var(--dk-ui-raised); border-color: #aaa6b1; border-radius: 10px; min-height: 44px; font-size: 13px; }
 .skin-cell.equipped { border-color: var(--dk-ui-gold); box-shadow: inset 0 0 0 1px var(--dk-ui-gold); }
+.stage-grid { grid-auto-rows: max-content; align-content: start; }
 .stage-grid .stage-cell { color: var(--dk-ui-cream); background: var(--dk-ui-panel); border-color: #9692a2; border-radius: 13px; }
 .stage-grid .stage-cell.cleared { background: #365866; border-color: var(--dk-ui-blue); }
 .stage-grid .stage-cell.current { color: #302a36; background: var(--dk-ui-gold); border-color: #ffe0a1; box-shadow: 0 0 0 2px #ffe0a1; }
 .stage-grid .stage-cell.locked { color: var(--dk-ui-muted); background: #2a2d43; }
 .stage-grid .stage-cell .cell-name { color: inherit; font-size: 12px; }
 .stage-grid .stage-cell .clear-mark { color: #bdeecb; }
+.stage-grid .stage-cell.current .clear-mark { color: #30564f; }
 .tier-legend { background: var(--dk-ui-panel); }
 .tier-pill { background: #424963; color: var(--dk-ui-cream); }
 #mp-block { color: var(--dk-ui-cream); }
@@ -196,7 +199,6 @@
 #lobby-multi #mp-quick { color: #302a36; background: var(--dk-ui-gold); border-color: #ffe0a1; }
 
 /* Results get a real card. The key-art title/loading composition stays intact. */
-#overlay:not(.title) { background-color: #1b2543a8; background-blend-mode: multiply; }
 #overlay-box:not(.title) #ov-desc { font-size: 14px; }
 #overlay-box:not(.title) #ov-desc b { color: var(--dk-ui-gold); }
 #overlay-box:not(.title) #ov-load-track { background: #353a55; border-color: #91899a; }

@@ -28,6 +28,15 @@ fs.mkdirSync(out, { recursive: true });
       await page.click('#btn-stage-select');
       const stageTitle = await page.locator('#stage-select .screen-head h2').evaluate(el => ({ visible: el.getBoundingClientRect().width > 0, clipped: el.scrollWidth > el.clientWidth + 1 }));
       assert.equal(stageTitle.visible && !stageTitle.clipped, true, `${name}: full stage title visible`);
+      const stageRows = await page.locator('#stage-grid').evaluate(grid => {
+        const columns = getComputedStyle(grid).gridTemplateColumns.split(' ').length;
+        const cells = grid.querySelectorAll('.stage-cell');
+        const first = cells[0].getBoundingClientRect();
+        const next = cells[columns].getBoundingClientRect();
+        return { firstBottom: first.bottom, nextTop: next.top, firstWidth: first.width, firstHeight: first.height };
+      });
+      assert.ok(stageRows.nextTop >= stageRows.firstBottom + 3, `${name}: stage rows do not overlap`);
+      assert.ok(Math.abs(stageRows.firstWidth - stageRows.firstHeight) < 2, `${name}: stage cells stay square`);
       await page.screenshot({ path: path.join(out, `${name}-stages.png`) });
 
       await page.evaluate(() => { DKstartInf('clear'); DK.paused = true; DK.gold = 3600; DKsync(); });

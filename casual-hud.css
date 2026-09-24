@@ -371,7 +371,7 @@ body.ui-art #help-btn {
   background: #79414a;
   border-color: var(--dk-ui-red);
 }
-#enhance-confirm-icon { color: var(--dk-ui-red); }
+.enhance-confirm-icon { color: var(--dk-ui-red); }
 #chest-reveal,
 #enhance-toast,
 #toast {
