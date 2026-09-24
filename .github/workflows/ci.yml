@@ -89,7 +89,7 @@ jobs:
       # 문법만이라도 전부 본다 — 배포되는 JS 가 파싱은 되는지.
       - name: 배포 JS 문법
         run: |
-          for f in game.js content.js app.js net.js music.js progression.js \
+          for f in game.js presentation-fx.js content.js app.js net.js music.js progression.js \
                    deck-rules.js tree-rules.js run-save.js directional-art.js \
                    extreme-art.js infinity-art.js cosmetics.js commerce-client.js; do
             [ -f "$f" ] && node --check "$f" && echo "  ok $f"
@@ -157,6 +157,11 @@ jobs:
         run: npm run test:run-resume
       - name: arena-orientation (가로·세로 배치와 공격 범위)
         run: npm run test:arena-orientation
+      - name: presentation-fx (연속 상자·레이어·강화 버튼·입자 이동)
+        run: |
+          npm run test:presentation-fx
+          npm run test:enhancement-flow
+          npm run test:fx-motion
       - name: casual-world (아트 로딩·알파·발사 위치·지역별 렌더)
         run: npm run test:casual-world
       - name: pure-main (순수운빨 계정 독립성·물리 굴림 기준)

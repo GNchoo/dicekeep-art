@@ -24,6 +24,7 @@ const QUANTIZE = ARGS.has('--quantize');
 
 const FIXED_FILES = ['index.html', 'game.js', 'content.js', 'deck-rules.js', 'tree-rules.js', 'deck-ui.js', 'progression.js', 'run-save.js', 'combat-motion.js', 'commerce-config.js', 'commerce-client.js', 'commerce-ui.js', 'cosmetics.js', 'payment.html', 'payment-return.js', 'directional-art.js', 'extreme-art.js', 'infinity-art.js', 'net.js', 'music.js', 'style.css', 'privacy.html', 'account-deletion.html'];
 FIXED_FILES.push('battle-rules.js');
+FIXED_FILES.push('presentation-fx.js');
 FIXED_FILES.push('liveops-rules.js', 'rewards-client.js', 'rewards-ui.js', 'rewards.css', 'mail-admin.js', 'mail-admin.css');
 FIXED_FILES.push('reward-notifications.js', 'home-ui.js', 'home.css', 'menus.css');
 FIXED_FILES.push('casual-theme.css', 'casual-menus.css', 'casual-rewards.css', 'casual-hud.css');
