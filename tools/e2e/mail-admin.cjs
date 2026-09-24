@@ -3,7 +3,7 @@
 const fs = require('node:fs'), path = require('node:path'), assert = require('node:assert/strict'), crypto = require('node:crypto');
 const { launchBrowser } = require('./browser.cjs');
 const root = path.resolve(__dirname, '../..'), out = path.resolve(process.env.E2E_OUTPUT_DIR || 'gen/e2e/mail-admin');
-const sources = Object.fromEntries(['style.css', 'mail-admin.css', 'mail-admin.js', 'commerce-client.js', 'rewards.css', 'rewards-ui.js'].map(file => [file, fs.readFileSync(path.join(root, file), 'utf8')]));
+const sources = Object.fromEntries(['style.css', 'mail-admin.css', 'mail-admin.js', 'commerce-client.js', 'rewards.css', 'rewards-ui.js', 'casual-theme.css', 'casual-rewards.css'].map(file => [file, fs.readFileSync(path.join(root, file), 'utf8')]));
 const clone = value => JSON.parse(JSON.stringify(value));
 async function until(predicate, label) { const end = Date.now() + 10000; while (!predicate()) { if (Date.now() > end) throw Error('Timed out: ' + label); await new Promise(resolve => setTimeout(resolve, 10)); } }
 async function main() {
@@ -18,6 +18,9 @@ async function main() {
       const req = route.request(), url = new URL(req.url()), endpoint = url.pathname.replace('/fixture-commerce', '');
       const send = (body, status = 200) => route.fulfill({ status, contentType: 'application/json', body: JSON.stringify(body) });
       if (url.pathname === '/__mail_admin_fixture__') return route.fulfill({ status: 200, contentType: 'text/html', body: '<!doctype html><html lang="ko"><head><meta name="viewport" content="width=device-width, initial-scale=1"></head><body><button id="fixture-open">운영 우편 관리</button><p id="commerce-status"></p></body></html>' });
+      const artRoot = path.join(root, 'ui', 'rewards') + path.sep;
+      const artPath = path.resolve(root, '.' + url.pathname);
+      if (req.method() === 'GET' && artPath.startsWith(artRoot) && fs.existsSync(artPath)) return route.fulfill({ path: artPath });
       if (!url.pathname.startsWith('/fixture-commerce/')) { errors.push('Unexpected request: ' + req.url()); return send({ error: 'unexpected-fixture-route' }, 404); }
       const payload = req.postData() ? JSON.parse(req.postData()) : null, action = endpoint.startsWith('/admin/mail/') ? endpoint.slice('/admin/mail/'.length) : endpoint;
       fixture.requests.push({ action, method: req.method(), payload: clone(payload), authorization: req.headers().authorization || null });
@@ -55,7 +58,7 @@ async function main() {
       errors.push('Unexpected admin operation: ' + action); return send({ code: 'unexpected-fixture-operation' }, 404);
     });
     await page.goto('http://127.0.0.1:8137/__mail_admin_fixture__');
-    for (const file of ['style.css', 'mail-admin.css', 'rewards.css']) await page.addStyleTag({ content: sources[file] });
+    for (const file of ['style.css', 'mail-admin.css', 'rewards.css', 'casual-theme.css', 'casual-rewards.css']) await page.addStyleTag({ content: sources[file] });
     await page.evaluate(() => {
       localStorage.setItem('dk_commerce_session_v1', JSON.stringify({ token: 'fixture-token-only', accountId: 'fixture-admin', expiresAt: 4102444800000 }));
       window.DKCOMMERCE_CONFIG = { url: 'http://127.0.0.1:8137/fixture-commerce' };
@@ -129,7 +132,7 @@ async function main() {
     check('Game state is unchanged', await page.evaluate(() => JSON.stringify(DK) === __beforeGame));
     check('No payment endpoint was called', fixture.requests.every(r => !/order|payment|billing/.test(r.action)));
     check('Every admin request used fixture bearer authentication', fixture.requests.filter(r => !r.action.startsWith('/')).every(r => r.authorization === 'Bearer fixture-token-only'));
-    check('No script errors or unexpected network requests', errors.length === 0);
+    check('No script errors or unexpected network requests: ' + JSON.stringify(errors), errors.length === 0);
     await context.close();
     fs.writeFileSync(path.join(out, 'report.json'), JSON.stringify({ pass: true, isolated: true, actualAdapter: true, checks, errors, confirmations: fixture.confirmations, requests: fixture.requests, sourceHashes: Object.fromEntries(Object.entries(sources).map(([file, body]) => [file, crypto.createHash('sha256').update(body).digest('hex')])) }, null, 2));
     console.log('PASS mail admin:', checks.length, 'checks');

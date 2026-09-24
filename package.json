@@ -67,7 +67,9 @@
     "test:rewards-visual": "node tools/e2e/rewards-visual.cjs",
     "test:rewards-integration": "node tools/e2e/rewards-integration.cjs",
     "test:mail-admin": "node tools/e2e/mail-admin.cjs",
-    "test:home": "node tools/reward-notifications-test.cjs && node tools/reward-refresh-race-test.cjs && node tools/e2e/home-rewards.cjs"
+    "test:home": "node tools/reward-notifications-test.cjs && node tools/reward-refresh-race-test.cjs && node tools/e2e/home-rewards.cjs",
+    "test:casual-ui": "node tools/e2e/casual-ui.cjs",
+    "test:menus-visual": "node tools/e2e/menus-visual.cjs"
   },
   "dependencies": {
     "@capacitor-community/safe-area": "^7.0.0",
