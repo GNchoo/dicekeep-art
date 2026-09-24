@@ -1982,8 +1982,13 @@ const SLOT = {
 // 덱의 d20은 카드 종류 표기일 뿐 다면체 보상이 아니므로 기존 즉시 소환을 유지한다.
 const manualChestRoll = () => S.mode === 'infinity' && !!S.inf && !deckRun() && SLOT.active && SLOT.phase < 0;
 const manualChestReady = () => manualChestRoll() && SLOT.phase === -1 && DIE.state === 'tray' && !S.heldDie && S.phase === 'playing';
-// 인피니티 HUD는 스토리 HUD보다 높다. 캔버스 안에서 버튼에 가리지 않는 자리.
-const activeTray = () => manualChestRoll() ? { x: TRAY.x, y: Math.min(TRAY.y, H - 125) } : TRAY;
+// 짧은 가로 화면에서는 HUD가 캔버스 위로 겹친다. 실제 아레나 하단 여백을 따라
+// 대기·투척 주사위를 조작창 위에 둔다.
+const activeTray = () => {
+  if (!manualChestRoll()) return TRAY;
+  const inset = (DKCONTENT.maps.find(m => m.key === S.mapKey) || {}).inset || {};
+  return { x: TRAY.x, y: Math.min(TRAY.y, H - 125, H - (inset.bottom || 0) - 55) };
+};
 // 굴림이 끝난 뒤 화면 중앙에 잠깐 남는 주사위 (획득 연출과 겹쳐 '이게 나왔다'를 보여준다). drawCenterRoll 이 그린다
 const ROLL_SHOW = { t: 0, dur: 0.45, R: null, kind: 'd6', face: 0, faceIndex: 0, physical: false };
 
@@ -2914,7 +2919,7 @@ function updateDie(dt) {
 
     // 상자 주사위는 결과가 상·하단 HUD 뒤에 멈추지 않도록 안전한 경기장 안에서 반사한다.
     const manual = manualChestRoll(), side = manual ? 55 : 34;
-    const upper = manual ? Math.min(165, H * .25) : 58, lower = manual ? H - 125 : H - 30;
+    const upper = manual ? Math.min(165, H * .25) : 58, lower = manual ? activeTray().y : H - 30;
     if (DIE.x < side) { DIE.x = side; DIE.vx = Math.abs(DIE.vx) * 0.6; SFX.bounce(0.4); }
     if (DIE.x > W - side) { DIE.x = W - side; DIE.vx = -Math.abs(DIE.vx) * 0.6; SFX.bounce(0.4); }
     if (DIE.y < upper) { DIE.y = upper; DIE.vy = Math.abs(DIE.vy) * 0.6; SFX.bounce(0.4); }
@@ -3072,7 +3077,7 @@ function drawDie() {
   }
 
   // 트레이 대기 중 안내
-  if (DIE.state === 'tray' && canRoll()) {
+  if (DIE.state === 'tray' && canRoll() && !(manual && wrapEl.classList.contains('xnarrow'))) {
     ctx.save();
     if (manual) {
       const ch = chestDef(), label = `${ch.grade[SLOT.kind]} ${ch.label[SLOT.kind]}`;
@@ -5338,6 +5343,8 @@ function fitStage() {
   fitTopRow(w);
   if (window.__coachOn) coachRender();   // 링·말풍선도 새 배치에 맞춘다
   if (S.net && typeof mpLayoutCards === 'function') mpLayoutCards();   // 상대 요약 카드도 새 배치에 맞춘다
+  // HUD 높이가 확정되기 전에 상자를 열었거나 화면을 돌려도 대기 주사위만 안전한 자리로 다시 놓는다.
+  if (manualChestReady()) { const tray = activeTray(); DIE.x = tray.x; DIE.y = tray.y; }
 }
 // 좌상단 칩 + 우상단 미니 버튼이 한 줄에 들어가면 같은 줄, 안 들어가면(작은 폰 + 멀티 채팅 버튼 등) 미니 버튼만 둘째 줄로.
 // 칩은 overflow:hidden 으로 줄어들 수 있어 scrollWidth(원래 폭)로 잰다 — 줄어든 폭으로 재면 항상 '들어간다'가 된다

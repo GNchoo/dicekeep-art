@@ -278,6 +278,24 @@ body.ui-art #help-btn {
 #log-panel .log-line.life { color: #ffb6ae; border-left-color: var(--dk-ui-red); }
 #log-panel .log-line.boss { color: #ffd4a5; border-left-color: #eea66b; }
 #log-panel .log-line .who { color: var(--dk-ui-blue); }
+/* The physical die waits at the left edge. Keep persistent log cards off its tray. */
+#stage:not(.mp) #log-panel { left: auto; right: max(10px, var(--sa-r)); }
+/* In wide multiplayer, rival cards already own the right edge. */
+#wrap.over #stage.mp #log-panel { left: 25%; right: auto; width: min(45%, 460px); }
+/* Portrait rivals form a bottom strip; place logs above it, away from the left die tray. */
+#wrap.bleed:not(.over) #stage.mp #log-panel {
+  left: auto;
+  right: max(6px, var(--sa-r));
+  bottom: calc(112px + var(--kb, 0px));
+}
+/* A very short landscape screen can show three messages, but not eight full chat paragraphs. */
+#wrap.xnarrow #log-lines .log-line:not(:nth-last-child(-n+3)) { display: none; }
+#wrap.xnarrow #log-lines .log-line {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
 #chat-tag { color: var(--dk-ui-gold); }
 #chat-input {
   color: var(--dk-ui-cream);
