@@ -27,14 +27,14 @@ test('reports the current eager SRCS loader deterministically and passes its cei
   assert.equal(report.loadAssets.loadEntries, 776);
   assert.equal(report.loadAssets.uniqueRequests, 776);
   assert.equal(report.loadAssets.uniqueFiles, 776);
-  // The simplified arena props change bytes but not the eager request count.
-  assert.equal(report.loadAssets.transferBytes, 75_557_240);
+  // The corrected arena die and title images change bytes, not eager request count.
+  assert.equal(report.loadAssets.transferBytes, 75_554_622);
   assert.equal(report.loadAssets.decodeBytes, 449_199_252);
   assert.equal(report.startupScenarios.portrait.uniqueRequests, 777);
-  assert.equal(report.startupScenarios.portrait.transferBytes, 75_726_991);
+  assert.equal(report.startupScenarios.portrait.transferBytes, 75_721_400);
   assert.equal(report.startupScenarios.portrait.decodeBytes, 455_490_708);
   assert.equal(report.startupScenarios.landscape.uniqueRequests, 778);
-  assert.equal(report.startupScenarios.landscape.transferBytes, 75_728_172);
+  assert.equal(report.startupScenarios.landscape.transferBytes, 75_724_727);
   assert.equal(report.startupScenarios.landscape.decodeBytes, 455_477_652);
   assert.equal(report.integrity.manifestLinkedFiles, 762);
   assert.equal(report.integrity.notInArtManifest.length, 14);

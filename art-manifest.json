@@ -14,7 +14,7 @@
   ],
   "summary": {
     "files": 2303,
-    "bytes": 264833581,
+    "bytes": 264827163,
     "byCategory": [
       {
         "name": "boss",
@@ -34,7 +34,7 @@
       {
         "name": "tile",
         "files": 24,
-        "bytes": 5793486
+        "bytes": 5790868
       },
       {
         "name": "tower",
@@ -44,7 +44,7 @@
       {
         "name": "ui",
         "files": 46,
-        "bytes": 4055607
+        "bytes": 4051807
       },
       {
         "name": "vfx",
@@ -66,7 +66,7 @@
       {
         "name": "runtime",
         "files": 803,
-        "bytes": 72489460
+        "bytes": 72483042
       },
       {
         "name": "source",
@@ -78,12 +78,12 @@
       {
         "name": "jpeg",
         "files": 95,
-        "bytes": 27292364
+        "bytes": 27288564
       },
       {
         "name": "png",
         "files": 221,
-        "bytes": 38919005
+        "bytes": 38916387
       },
       {
         "name": "webp",
@@ -100,19 +100,19 @@
       {
         "name": "included",
         "files": 2192,
-        "bytes": 232380998
+        "bytes": 232374580
       }
     ],
     "byMobileReason": [
       {
         "name": "casual-tiles-directory",
         "files": 24,
-        "bytes": 5793486
+        "bytes": 5790868
       },
       {
         "name": "fixed-directory",
         "files": 67,
-        "bytes": 6430391
+        "bytes": 6426591
       },
       {
         "name": "legacy-map-background",
@@ -33546,8 +33546,8 @@
     },
     {
       "path": "casual/tiles/arena/prop-3.png",
-      "bytes": 218522,
-      "sha256": "d4f735d1604f88ee7836d6860ef6aae05e7d2a087eba6f1e83a015c0dd66bfbe",
+      "bytes": 215904,
+      "sha256": "5f8e81b6b562b898893f2d0ffcd7038c00cea4b4f801b243d23daa29e5d98dfc",
       "format": "png",
       "width": 1024,
       "height": 1024,
@@ -36602,8 +36602,8 @@
     },
     {
       "path": "ui/title-keyart-l-blur.jpg",
-      "bytes": 4959,
-      "sha256": "c37e7464d5a14afd4a287c754e903b1b23227671ce252f40a7862c8697198335",
+      "bytes": 4945,
+      "sha256": "d0f0dea8dda924515bc53f65def865abf2b959ec21116b8ae68f7ee86435a35c",
       "format": "jpeg",
       "width": 480,
       "height": 270,
@@ -36618,8 +36618,8 @@
     },
     {
       "path": "ui/title-keyart-l.jpg",
-      "bytes": 165973,
-      "sha256": "fb6b84474bce9430ed4618df1041fbd7c7971f60946a6185f4025bc0472ed6dc",
+      "bytes": 165160,
+      "sha256": "f3560d9252dae7123a1ea65f2b567e1a68357b515c45e3b2146f4f9784d6d179",
       "format": "jpeg",
       "width": 1600,
       "height": 900,
@@ -36634,8 +36634,8 @@
     },
     {
       "path": "ui/title-keyart-p.jpg",
-      "bytes": 169751,
-      "sha256": "e5cd907ed9071f4d477efec09fea6a0d414f4cf30babbfb7b2f9c604883a3994",
+      "bytes": 166778,
+      "sha256": "2f110e26fd97c8f3a92e80b8d7a8fbf4a837a9245fa8056128fd0ccfa6bef224",
       "format": "jpeg",
       "width": 1024,
       "height": 1536,

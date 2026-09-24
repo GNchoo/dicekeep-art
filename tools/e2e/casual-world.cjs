@@ -55,7 +55,7 @@ const out='gen/e2e/casual-world';fs.mkdirSync(out,{recursive:true});
   assert.ok(art.arenaTiles.find(t=>t.name==='pad').transparent>0,'Arena pad retains transparent surroundings');
   for(const prop of art.arenaProps){
    assert.ok(prop.loaded&&prop.transparent,`${prop.name} keeps visible transparent artwork`);
-   assert.equal(new URL(prop.url,gameUrl()).searchParams.get('v'),'arena-props-142',`${prop.name} refreshes in an existing browser`);
+   assert.equal(new URL(prop.url,gameUrl()).searchParams.get('v'),'arena-props-143',`${prop.name} refreshes in an existing browser`);
   }
   assert.ok(art.roadSeam.horizontal<3&&art.roadSeam.vertical<3,'The repeated road meets at both tile edges');
   const tag=viewport.width<500?'phone':'desktop';

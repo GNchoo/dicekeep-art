@@ -1,0 +1,14 @@
+[
+  {
+    "mode": "edit",
+    "useCase": "precise-object-edit",
+    "references": ["tools/art-review/arena-props-v142/source-prop-3.png (previous approved sprite)"],
+    "prompt": "Use case: precise-object-edit. Asset type: transparent 2D game sprite, broken six-sided die arena rubble. Edit ONLY the pip markings on the smaller right-hand broken die fragment. Preserve the exact two-piece cracked silhouette, positions, ivory and lavender colors, rocks, cel shading, outlines, transparency, size, and composition of Image 1. Treat the fragments as ONE original standard D6. The large left fragment must stay exactly as shown: five red recessed pips on its upward face and one red pip on its front side. On the smaller right fragment, replace its current single top pip and two side pips: its upward-facing numbered surface should instead have exactly THREE red recessed pips, arranged diagonally like a standard die three-face; its outward right-facing planar surface should be an unnumbered exposed broken interior with ZERO pips. No visible 2-face anywhere. This leaves the only visible numbers 5, 1, and 3, which are pairwise adjacent on a standard D6 (opposites are 1/6, 2/5, 3/4). Keep crisp, clean large red circular recesses and match original lighting. No text or labels."
+  },
+  {
+    "mode": "edit",
+    "useCase": "precise-object-edit",
+    "references": ["first imagegen edit (intermediate, not promoted)"],
+    "prompt": "Use case: precise-object-edit. Game sprite on true transparent canvas. Edit ONLY the red pip markings on the small RIGHT die fragment in Image 1. This is ONE original standard six-sided die cracked into two pieces, not two separate dice. Keep the big LEFT piece completely unchanged: exactly five red pips on its wide upper face and exactly one red pip on its front-left side. The small RIGHT piece has a top-looking cut/fracture plane that must be PLAIN IVORY STONE WITH ZERO PIPS; remove the three pips now on it. On its large outward RIGHT-facing planar side, place exactly THREE red recessed round pips, diagonally arranged, with same pip shape/style as the existing ones. The only numbered outer faces of the whole broken die then read 5 on top, 1 on front, 3 on right: pairwise adjacent, no opposing numbers side by side. Preserve silhouette, fractures, stones, colors, outlines, lighting, shading, alpha transparency, placement, scale and all else exactly. No new objects, text or labels."
+  }
+]

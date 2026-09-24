@@ -1,0 +1,33 @@
+{
+  "generatedWith": "Codex built-in image_gen",
+  "apiKeyUsed": false,
+  "records": [
+    {
+      "source": "source-portrait.png",
+      "sourceSha256": "d7a26b4bf8569e68760295acbef8b1ff7e641bdef671ee130fd91b214a83f202",
+      "target": "ui/title-keyart-p.jpg",
+      "targetSha256": "2f110e26fd97c8f3a92e80b8d7a8fbf4a837a9245fa8056128fd0ccfa6bef224",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 166778
+    },
+    {
+      "source": "source-landscape.png",
+      "sourceSha256": "424fcadbaf1def640ed7923996e28f87ff2b11d448b546f36a4c29cefe1b2324",
+      "target": "ui/title-keyart-l.jpg",
+      "targetSha256": "f3560d9252dae7123a1ea65f2b567e1a68357b515c45e3b2146f4f9784d6d179",
+      "width": 1600,
+      "height": 900,
+      "bytes": 165160
+    },
+    {
+      "source": "source-landscape.png",
+      "sourceSha256": "424fcadbaf1def640ed7923996e28f87ff2b11d448b546f36a4c29cefe1b2324",
+      "target": "ui/title-keyart-l-blur.jpg",
+      "targetSha256": "d0f0dea8dda924515bc53f65def865abf2b959ec21116b8ae68f7ee86435a35c",
+      "width": 480,
+      "height": 270,
+      "bytes": 4945
+    }
+  ]
+}
