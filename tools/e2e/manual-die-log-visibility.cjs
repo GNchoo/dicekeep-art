@@ -10,7 +10,7 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
   try {
     for (const [name, width, height] of [
       ['near-square', 1225, 1280], ['landscape-phone', 844, 390],
-      ['small-landscape', 568, 320], ['phone', 390, 844],
+      ['small-landscape', 568, 320], ['phone', 390, 844], ['small-phone', 320, 740],
     ]) {
       const page = await browser.newPage({ viewport: { width, height } });
       const errors = [];
@@ -18,6 +18,12 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
       await page.addInitScript(() => {
         localStorage.setItem('dk_coachDone', '1');
         localStorage.setItem('dk_infHelpSeen', '1');
+      });
+      await page.route('**/game.js*', async route => {
+        const response = await route.fetch(), source = await response.text();
+        const anchor = 'window.DK = S;';
+        assert.equal(source.split(anchor).length, 2);
+        await route.fulfill({ response, body: source.replace(anchor, 'window.__dieViewScale=dieViewScale; window.__manualBounds=dieBounds; ' + anchor) });
       });
       await page.goto(gameUrl());
       await page.waitForFunction(() => window.DK?.phase === 'title', null, { timeout: 120000 });
@@ -40,7 +46,7 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
         const hud = document.getElementById('hud').getBoundingClientRect();
         const scaleX = rect.width / canvas.width, scaleY = rect.height / canvas.height;
         const die = { x: rect.left + DKDIE.x * scaleX, y: rect.top + DKDIE.y * scaleY,
-          radius: 48 * Math.min(scaleX, scaleY) };
+          radius: 48 * __dieViewScale() * Math.min(scaleX, scaleY) };
         const logs = [...document.querySelectorAll('#log-panel .log-line')]
           .filter(el => getComputedStyle(el).display !== 'none').map(el => {
           const r = el.getBoundingClientRect();
@@ -107,6 +113,36 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
         await page.waitForFunction(() => document.getElementById('wrap').classList.contains('xnarrow'));
         await page.waitForFunction(() => document.querySelector('#roll-btn')?.classList.contains('manual-roll'), null, { timeout: 10000 });
         visible(await measure(), 'pending die after landscape resize');
+      }
+      if (name === 'phone' || name === 'small-phone') {
+        await page.evaluate(() => {
+          document.getElementById('stage').classList.remove('mp');
+          document.getElementById('rivals').replaceChildren();
+          DKthrow(500, 200);
+          const canvas = document.getElementById('game'), r = canvas.getBoundingClientRect();
+          const log = document.getElementById('log-lines').lastElementChild.getBoundingClientRect();
+          DKDIE.x = ((log.left + log.right) / 2 - r.left) * canvas.width / r.width;
+          DKDIE.y = Math.min(__manualBounds().bottom,
+            ((log.top + log.bottom) / 2 - r.top) * canvas.height / r.height);
+          DKDIE.z = 0;
+        });
+        await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+        const layer = await page.evaluate(() => {
+          const die = document.getElementById('physical-die'), main = document.getElementById('game');
+          const css = getComputedStyle(die), logCSS = getComputedStyle(document.getElementById('log-panel'));
+          return { visible: css.display !== 'none', aboveLog: Number(css.zIndex) > Number(logCSS.zIndex),
+            pointerEvents: css.pointerEvents, size: [die.width, die.height], mainSize: [main.width, main.height],
+            alpha: die.getContext('2d').getImageData(Math.round(DKDIE.x), Math.round(DKDIE.y), 1, 1).data[3] };
+        });
+        assert.ok(layer.visible && layer.aboveLog && layer.alpha > 240, `${name}: thrown die stays visible over log corner`);
+        assert.equal(layer.pointerEvents, 'none', `${name}: visible die layer cannot swallow game input`);
+        assert.deepEqual(layer.size, layer.mainSize, `${name}: die rendering and collision coordinates agree`);
+        await page.screenshot({ path: outputPath(path.join('manual-die-log', `${name}-over-log.png`)) });
+        await page.evaluate(() => { DK.phase = 'lobby'; });
+        await page.waitForFunction(() => document.getElementById('physical-die').classList.contains('hidden'));
+        assert.equal(await page.locator('#physical-die').evaluate(el =>
+          el.getContext('2d').getImageData(Math.round(DKDIE.x), Math.round(DKDIE.y), 1, 1).data[3]), 0,
+        `${name}: leaving play clears the die layer`);
       }
       assert.deepEqual(errors, [], `${name}: no browser errors`);
       console.log('PASS pending die visible beside logs', name);
