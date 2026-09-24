@@ -955,7 +955,7 @@ for (const key of ['tl_arena_floor', 'tl_arena_board', 'tl_arena_road', 'tl_aren
   if (SRCS[key]) SRCS[key] = SRCS[key].replace('?v=casual-world1', '?v=arena-clean1');
 }
 for (const key of ['tl_arena_pad', 'tl_arena_start', 'tl_arena_end', 'tl_arena_prop-1', 'tl_arena_prop-2', 'tl_arena_prop-3']) {
-  if (SRCS[key]) SRCS[key] = SRCS[key].replace(/\?v=[^#]*/, '?v=arena-props-142');
+  if (SRCS[key]) SRCS[key] = SRCS[key].replace(/\?v=[^#]*/, '?v=arena-props-143');
 }
 const A = {};
 let corsBlocked = false;
@@ -6900,7 +6900,7 @@ $('shop-back').addEventListener('click', () => gotoLobby('hub'));
 // Keep the home navigation available throughout the player menus.
 for (const selector of ['#lobby-box', '#shop .screen-box', '#stage-select .screen-box']) {
   const nav = document.createElement('nav'); nav.className = 'menu-navigation'; nav.setAttribute('aria-label', '주요 메뉴');
-  for (const [target, label, art] of [['home','홈','ui/title-keyart-p.jpg?v=casual1'], ['deck','다이스','ui/icon-dice.png'], ['battle','전투','ui/icon-trophy.png'], ['shop','상점','ui/icon-shop.png']]) {
+  for (const [target, label, art] of [['home','홈','ui/title-keyart-p.jpg?v=title-d6-143'], ['deck','다이스','ui/icon-dice.png'], ['battle','전투','ui/icon-trophy.png'], ['shop','상점','ui/icon-shop.png']]) {
     const button = document.createElement('button'); button.type = 'button'; button.dataset.menuTarget = target;
     button.innerHTML = (target === 'home' ? '<svg viewBox="0 0 28 28" aria-hidden="true"><path d="M4 11 14 3l10 8v14h-7v-8h-6v8H4Z"/></svg>' : `<img src="${art}" alt="">`) + `<span>${label}</span>`;
     button.addEventListener('click', () => { audio(); if (target === 'shop') gotoShop(); else { gotoLobby(target === 'home' ? 'hub' : 'single'); if (target === 'deck') openDeckMenu(); } });
@@ -8062,7 +8062,7 @@ function drawLoading(pr) {
 (async () => {
   // 키아트는 로딩 첫 프레임부터 깔린다 (CSS 가 직접 받아온다 — 에셋 로딩을 기다리면 로딩 화면이 검은 화면이 된다)
   // 키아트(산 위 주사위 성)는 CSS 배경으로만 쓴다 — SRCS 에 넣으면 loadAssets 가 두 방향을 다 내려받는다. CSS 는 미디어 쿼리에 맞는 한 장만 받는다
-  const KEYART = { l: BASE + 'ui/title-keyart-l.jpg?v=casual1', p: BASE + 'ui/title-keyart-p.jpg?v=casual1', blur: BASE + 'ui/title-keyart-l-blur.jpg?v=casual1' };   // ?v= 는 index.html 의 preload href 와 같아야 한다 (같은 URL 이어야 미리 받은 걸 쓴다)   // l·p: 글자 없는 그림(세로·가로 모두 CSS 금박 제목을 얹는다) · blur: 가로 양옆 밑바탕
+  const KEYART = { l: BASE + 'ui/title-keyart-l.jpg?v=title-d6-143', p: BASE + 'ui/title-keyart-p.jpg?v=title-d6-143', blur: BASE + 'ui/title-keyart-l-blur.jpg?v=title-d6-143' };   // ?v= 는 index.html 의 preload href 와 같아야 한다 (같은 URL 이어야 미리 받은 걸 쓴다)   // l·p: 글자 없는 그림(세로·가로 모두 CSS 금박 제목을 얹는다) · blur: 가로 양옆 밑바탕
   document.body.style.setProperty('--keyart-bg', `linear-gradient(rgba(5,4,3,.45), rgba(5,4,3,.7)), url('${KEYART.l}')`);
   document.body.style.setProperty('--keyart-title', `linear-gradient(rgba(5,4,3,.10), rgba(5,4,3,.10) 45%, rgba(5,4,3,.82) 100%), url('${KEYART.l}'), url('${KEYART.blur}')`);   // 가로·데스크톱 타이틀: 그림을 높이에 맞춰 통째로 + 양옆은 흐린 밑바탕, 위에 CSS 제목
   document.body.style.setProperty('--keyart-title-p', `linear-gradient(rgba(5,4,3,.04), rgba(5,4,3,.04) 80%, rgba(5,4,3,.55) 100%), url('${KEYART.p}')`);   // 세로 타이틀: 그림의 돌 제목을 그대로, 맨 아래(버튼 자리)만 살짝

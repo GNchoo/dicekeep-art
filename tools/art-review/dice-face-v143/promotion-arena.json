@@ -1,0 +1,14 @@
+{
+  "generatedWith": "Codex built-in image_gen",
+  "apiKeyUsed": false,
+  "source": "tools/art-review/dice-face-v143/source-arena-prop-3.png",
+  "sourceSha256": "cea9b62c68cd109edb96fd79a305808d7ec0d1475ad0c160709ed27ec942c366",
+  "previous": "tools/art-review/dice-face-v143/previous-arena-prop-3.png",
+  "previousSha256": "d4f735d1604f88ee7836d6860ef6aae05e7d2a087eba6f1e83a015c0dd66bfbe",
+  "target": "casual/tiles/arena/prop-3.png",
+  "targetSha256": "5f8e81b6b562b898893f2d0ffcd7038c00cea4b4f801b243d23daa29e5d98dfc",
+  "width": 1024,
+  "height": 1024,
+  "hasAlpha": true,
+  "bytes": 215904
+}

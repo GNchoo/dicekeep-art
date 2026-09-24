@@ -220,7 +220,7 @@
       "n": 1,
       "outputFormat": "png",
       "out": "gen/golden-slice/environment/arena-prop-3",
-      "prompt": "Redraw the first reference as one warm-ivory six-sided die broken into two jagged matching halves with red recessed pips, resting on only two or three low muted-lavender stones. The fracture surfaces must face one another so this clearly reads as one broken die, not two intact dice. Match the simplified ivory socket and broad warm paving with large clean two-tone cel-shaded planes and a dark-plum contour. Low silhouette legible at 48 gameplay pixels. No small pebbles, gold rune plates, glow, grass, text or watermark. 3/4 overhead view on a true transparent background.",
+      "prompt": "Redraw the first reference as ONE warm-ivory standard six-sided die broken into two jagged matching halves with red recessed pips, resting on only two or three low muted-lavender stones. Show exactly three numbered outer faces: 5 on the broad top, 1 on the front and 3 on the right. The smaller piece's exposed cut surface is blank. These visible faces meet correctly: a standard D6 has opposite pairs 1/6, 2/5 and 3/4, so NEVER place opposite values on adjacent visible surfaces. The fracture surfaces must face one another so this clearly reads as one broken die, not two intact dice. Match the simplified ivory socket and broad warm paving with large clean two-tone cel-shaded planes and a dark-plum contour. Low silhouette legible at 48 gameplay pixels. No small pebbles, gold rune plates, glow, grass, text or watermark. 3/4 overhead view on a true transparent background.",
       "size": "1024x1024",
       "background": "transparent",
       "refs": [

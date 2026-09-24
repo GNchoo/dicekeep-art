@@ -10,7 +10,10 @@ const sha256 = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
 const records = [];
 
 for (const name of names) {
-  const source = `${review}/source-${name}.png`;
+  // Keep the approved D6 face correction when rebuilding the older prop pack.
+  const source = name === 'prop-3'
+    ? 'tools/art-review/dice-face-v143/source-arena-prop-3.png'
+    : `${review}/source-${name}.png`;
   const original = `${review}/originals/${name}.png`;
   const target = `casual/tiles/arena/${name}.png`;
   const sourceBytes = await fs.readFile(source);

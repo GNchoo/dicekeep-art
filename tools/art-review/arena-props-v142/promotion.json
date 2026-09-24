@@ -43,16 +43,16 @@
     },
     {
       "name": "prop-3",
-      "source": "tools/art-review/arena-props-v142/source-prop-3.png",
-      "sourceSha256": "cd3ef379265ebf95f4fba259955d722f18218eb093687e644b2e44aa10a141a6",
+      "source": "tools/art-review/dice-face-v143/source-arena-prop-3.png",
+      "sourceSha256": "cea9b62c68cd109edb96fd79a305808d7ec0d1475ad0c160709ed27ec942c366",
       "original": "tools/art-review/arena-props-v142/originals/prop-3.png",
       "originalSha256": "bdf0a7562b87c66b4bdc4ce10771bd8869d7e0c8ecf87881a8700f22da7aaea0",
       "target": "casual/tiles/arena/prop-3.png",
-      "targetSha256": "d4f735d1604f88ee7836d6860ef6aae05e7d2a087eba6f1e83a015c0dd66bfbe",
+      "targetSha256": "5f8e81b6b562b898893f2d0ffcd7038c00cea4b4f801b243d23daa29e5d98dfc",
       "width": 1024,
       "height": 1024,
       "hasAlpha": true,
-      "bytes": 218522
+      "bytes": 215904
     }
   ]
 }

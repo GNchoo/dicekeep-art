@@ -22,7 +22,7 @@
 #lobby-box[data-section="deck"] .menu-navigation [data-menu-target="deck"],
 #lobby-box:not([data-section="deck"]) .menu-navigation [data-menu-target="battle"],
 #shop .menu-navigation [data-menu-target="shop"], #stage-select .menu-navigation [data-menu-target="battle"] { background:#49391f; color:#f2d596; box-shadow:inset 0 2px #d4ad61; }
-.menu-hero { padding:22px 20px; border:1px solid #7c7653; border-radius:14px; min-height:144px; background:linear-gradient(90deg,#142c2bf2,#173b3760),url('ui/title-keyart-l.jpg?v=casual1') center 44%/cover; margin-bottom:14px; }
+.menu-hero { padding:22px 20px; border:1px solid #7c7653; border-radius:14px; min-height:144px; background:linear-gradient(90deg,#142c2bf2,#173b3760),url('ui/title-keyart-l.jpg?v=title-d6-143') center 44%/cover; margin-bottom:14px; }
 .menu-hero small, .menu-shop-banner small { color:#f4d58b; font-size:11px; letter-spacing:.06em; }
 .menu-hero h2 { margin:8px 0; color:#fff0c9; font-size:24px; text-wrap:balance; }
 .menu-hero p { max-width:270px; margin:0; color:#e4e6ca; font-size:13px; line-height:1.65; }

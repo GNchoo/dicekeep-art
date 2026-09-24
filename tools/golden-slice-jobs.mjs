@@ -137,7 +137,7 @@ add({
 add({
   id: 'arena-prop-3', category: 'environment', runtimeTarget: 'casual/tiles/arena/prop-3.png',
   ...transparentTile, refs: ['tools/art-review/arena-props-v142/originals/prop-3.png', 'casual/tiles/arena/pad.png', 'casual/tiles/arena/road.png'],
-  prompt: `${TILE_COMMON} Redraw the referenced broken-die rubble as ONE warm ivory die cracked into two jagged matching halves with red pips, resting on just a few muted-lavender rocks. Wide low silhouette and few broad cel-shaded planes. No separate intact dice, tiny rubble, ornate gold rune plates, glow or plants. Centered, grounded, true transparent surroundings.`,
+  prompt: `${TILE_COMMON} Redraw the referenced broken-die rubble as ONE standard D6 cracked into two jagged matching halves with red pips, resting on just a few muted-lavender rocks. On the numbered outer surfaces show exactly 5 on top, 1 on front and 3 on right; leave exposed fracture surfaces blank. Standard D6 opposites are 1/6, 2/5 and 3/4, so opposite faces must never touch. Wide low silhouette and few broad cel-shaded planes. No separate intact dice, tiny rubble, ornate gold rune plates, glow or plants. Centered, grounded, true transparent surroundings.`,
 });
 
 const TOWER_COMMON = 'Redraw the referenced Dicekeep tower as one stable freestanding defense building in 3/4 top-down view, facing slightly right, with the same flat integrated foundation. Preserve its role, footprint, ground pivot and tall readable silhouette. The body is completely still and rigid; no squash, stretch, firing pose, projectile, motion trail, baked glow aura, separate pedestal, text, number, star, logo or watermark. Centered with generous transparent margin.';
