@@ -38,7 +38,7 @@
 
   // The awarded die rises through the mouth, holds where its shape is readable,
   // then follows one continuous arc into the actual input tray.
-  function chestDiePose(f, tray) {
+  function chestDiePose(f, tray, trayDieSize = 43.5) {
     const t = Math.max(0, f.t || 0), scale = clamp(f.size || 230, 100, 270) / 230;
     const rise = 1 - Math.pow(1 - clamp((t - 0.48) / 0.60, 0, 1), 3);
     const flight = smooth(1.55, 2.2, t);
@@ -50,7 +50,7 @@
       visible: t >= 0.48, flight, localX: 8, localY, localSize,
       x: startX + (tray.x - startX) * flight,
       y: startY + (tray.y - startY) * flight - Math.sin(Math.PI * flight) * 42,
-      size: localSize * scale + (43.5 - localSize * scale) * flight,
+      size: localSize * scale + (trayDieSize - localSize * scale) * flight,
       turn: -0.65 * (1 - rise),
     };
   }

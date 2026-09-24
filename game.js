@@ -21,11 +21,13 @@ const uiFont = (px, weight) => `${weight || 'bold'} ${px}px ${UI_FACE}`;
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { /* 로드 완료 — 다음 프레임부터 반영된다 */ });
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
+const dieLayer = document.getElementById('physical-die'), dieCtx = dieLayer.getContext('2d');
 const MOTION = window.DKMOTION;
 function setCanvasSize(w, h) {
   if (!w || !h || (W === w && H === h && canvas.width === w)) return false;
   W = w; H = h;
   canvas.width = w; canvas.height = h;
+  dieLayer.width = w; dieLayer.height = h;
   const st = document.getElementById('stage');
   if (st) st.style.setProperty('--ar', w + ' / ' + h);
   return true;
@@ -2012,12 +2014,24 @@ const autoChestKind = kind => kind === 'd4' || kind === 'd6';
 const manualChestRoll = () => S.mode === 'infinity' && !!S.inf && !deckRun() && SLOT.active && SLOT.phase < 0;
 const chestReveal = () => manualChestRoll() && SLOT.phase === -1 && S.fxs.find(f => f.kind === 'chestOpen' && f.dieKind === SLOT.kind && f.t < f.dur);
 const manualChestReady = () => manualChestRoll() && SLOT.phase === -1 && DIE.state === 'tray' && !chestReveal() && !S.heldDie && S.phase === 'playing';
-// 짧은 가로 화면에서는 HUD가 캔버스 위로 겹친다. 실제 아레나 하단 여백을 따라
-// 대기·투척 주사위를 조작창 위에 둔다.
+// Updated after fitting the stage: portrait dice keep their readable screen
+// size instead of shrinking with the 720-unit canvas on a narrow phone.
+let portraitDieZoom = 1;
+const dieViewScale = () => S.mapKey === 'cInfP' ? portraitDieZoom : 1;
+// 충돌 경계는 현재 캔버스와 HUD로 정한다. 가로 화면의 고정 트레이 높이를
+// 경계로 쓰면 세로 화면의 보드 아래쪽 절반에 들어갈 수 없다.
+function dieBounds() {
+  if (!manualChestRoll()) return { left: 34, right: W - 34, top: 58, bottom: H - 30 };
+  const inset = (DKCONTENT.maps.find(m => m.key === S.mapKey) || {}).inset || {};
+  const pad = 55 * dieViewScale();
+  return { left: pad, right: W - pad, top: Math.min(165, H * .25),
+    bottom: Math.min(H - Math.max(125, pad), H - (inset.bottom || 0) - pad) };
+}
+// 짧은 가로 화면에서도 대기 주사위가 겹침 HUD 위에 보이게 한다.
 const activeTray = () => {
   if (!manualChestRoll()) return TRAY;
-  const inset = (DKCONTENT.maps.find(m => m.key === S.mapKey) || {}).inset || {};
-  return { x: TRAY.x, y: Math.min(TRAY.y, H - 125, H - (inset.bottom || 0) - 55) };
+  const bounds = dieBounds();
+  return { x: Math.max(TRAY.x, bounds.left + 12), y: bounds.bottom };
 };
 // Keep the landed pose/value as a record; only deck cards use a second center reveal.
 const ROLL_SHOW = { t: 0, dur: 0.45, R: null, kind: 'd6', face: 0, faceIndex: 0, physical: false };
@@ -2845,7 +2859,7 @@ function drawCenterRoll() {
     drawDeckReveal(ctx,W/2,H/2,Math.min(W,H)*0.09); ctx.restore(); return;
   }
   if (!live) return;
-  const cx = W / 2, cy = H / 2, base = Math.round(Math.min(W, H) * 0.085);
+  const cx = W / 2, cy = H / 2, base = Math.max(Math.round(Math.min(W, H) * 0.085), 44 * dieViewScale());
   const kind = SLOT.kind || 'd6', scale = SLOT.t < .16 ? .55 + .45 * SLOT.t / .16 : 1;
   const bounce = SLOT.phase === 0 ? Math.abs(Math.sin(SLOT.t * 16)) * base * .35 : 0;
   const size = base * scale, dy = cy - bounce;
@@ -2865,7 +2879,7 @@ function drawCenterRoll() {
 function drawChestReveal(effect) {
   if (VIEW.pid || !effect.dieKind) return;
   const f = { ...effect, x: W/2, y: H/2 }, tray = activeTray();
-  const p = window.DKFX.chestDiePose(f,tray);
+  const p = window.DKFX.chestDiePose(f,tray,43.5 * dieViewScale());
   const R = p.turn ? m3mul(m3axisAngle(0,0,1,p.turn),f.dieR) : f.dieR;
   const paintDie = (g,x,y,size) => drawPolyDie(g,x,y,size,f.dieKind,R);
   // Fade the chest while the die travels; the die itself stays fully opaque.
@@ -2983,12 +2997,11 @@ function updateDie(dt) {
     }
 
     // 상자 주사위는 결과가 상·하단 HUD 뒤에 멈추지 않도록 안전한 경기장 안에서 반사한다.
-    const manual = manualChestRoll(), side = manual ? 55 : 34;
-    const upper = manual ? Math.min(165, H * .25) : 58, lower = manual ? activeTray().y : H - 30;
-    if (DIE.x < side) { DIE.x = side; DIE.vx = Math.abs(DIE.vx) * 0.6; SFX.bounce(0.4); }
-    if (DIE.x > W - side) { DIE.x = W - side; DIE.vx = -Math.abs(DIE.vx) * 0.6; SFX.bounce(0.4); }
-    if (DIE.y < upper) { DIE.y = upper; DIE.vy = Math.abs(DIE.vy) * 0.6; SFX.bounce(0.4); }
-    if (DIE.y > lower) { DIE.y = lower; DIE.vy = -Math.abs(DIE.vy) * 0.6; SFX.bounce(0.4); }
+    const bounds = dieBounds();
+    if (DIE.x < bounds.left) { DIE.x = bounds.left; DIE.vx = Math.abs(DIE.vx) * 0.6; SFX.bounce(0.4); }
+    if (DIE.x > bounds.right) { DIE.x = bounds.right; DIE.vx = -Math.abs(DIE.vx) * 0.6; SFX.bounce(0.4); }
+    if (DIE.y < bounds.top) { DIE.y = bounds.top; DIE.vy = Math.abs(DIE.vy) * 0.6; SFX.bounce(0.4); }
+    if (DIE.y > bounds.bottom) { DIE.y = bounds.bottom; DIE.vy = -Math.abs(DIE.vy) * 0.6; SFX.bounce(0.4); }
 
     // 3D 회전: 공중에선 자유 회전, 바닥에선 진행 방향으로 구름
     if (DIE.z <= 0.01 && spd > 30) {
@@ -3066,7 +3079,7 @@ function updateDie(dt) {
   if (manualChestRoll()) SLOT.R = DIE.R;
 }
 
-function drawDie() {
+function drawDie(g = ctx) {
   if (S.phase !== 'playing') return;
   const manual = manualChestRoll();
   if (chestReveal() || (S.mode === 'infinity' && !manual)) return;
@@ -3074,33 +3087,33 @@ function drawDie() {
   const hidden = S.heldDie > 0 && DIE.state === 'tray';
 
   // 트레이 (항상 표시)
-  ctx.save();
-  ctx.translate(tray.x, tray.y + 12);
-  ctx.scale(1, 0.45);
-  ctx.beginPath(); ctx.arc(0, 0, 34, 0, Math.PI * 2);
-  ctx.fillStyle = 'rgba(20,14,8,0.55)';
-  ctx.fill();
-  ctx.strokeStyle = canRoll() ? `rgba(232,182,74,${0.5 + 0.3 * Math.sin(S.time * 4)})` : 'rgba(120,100,70,0.4)';
-  ctx.lineWidth = 2.5;
-  ctx.stroke();
-  ctx.restore();
+  g.save();
+  g.translate(tray.x, tray.y + 12);
+  g.scale(1, 0.45);
+  g.beginPath(); g.arc(0, 0, 34 * (manual ? dieViewScale() : 1), 0, Math.PI * 2);
+  g.fillStyle = 'rgba(20,14,8,0.55)';
+  g.fill();
+  g.strokeStyle = canRoll() ? `rgba(232,182,74,${0.5 + 0.3 * Math.sin(S.time * 4)})` : 'rgba(120,100,70,0.4)';
+  g.lineWidth = 2.5;
+  g.stroke();
+  g.restore();
   if (hidden) return;
 
   const grabbing = DIE.state === 'grab';
   const size = (DIE.state === 'fly' ? 24 * (1 - Math.min(1, DIE.flyT / 0.38) * 0.4) : 24)
-    * (1 + DIE.z / 300) * (grabbing ? 1.14 : 1) * (manual ? 1.45 : 1);
+    * (1 + DIE.z / 300) * (grabbing ? 1.14 : 1) * (manual ? 1.45 * dieViewScale() : 1);
   const gy = DIE.y - DIE.z * 0.62 - (grabbing ? 10 : 0);
 
   // 그림자
   if (DIE.state !== 'fly') {
     const shScale = Math.max(0.35, 1 - DIE.z / 380);
-    ctx.save();
-    ctx.translate(DIE.x, DIE.y + 10);
-    ctx.scale(1, 0.4);
-    ctx.beginPath(); ctx.arc(0, 0, 24 * shScale, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(0,0,0,${0.4 * shScale})`;
-    ctx.fill();
-    ctx.restore();
+    g.save();
+    g.translate(DIE.x, DIE.y + 10);
+    g.scale(1, 0.4);
+    g.beginPath(); g.arc(0, 0, 24 * shScale * (manual ? dieViewScale() : 1), 0, Math.PI * 2);
+    g.fillStyle = `rgba(0,0,0,${0.4 * shScale})`;
+    g.fill();
+    g.restore();
   }
 
   // 본체: 스토리 주사위와 같은 3D 물리 자세를 다면체 외형에도 적용
@@ -3111,36 +3124,46 @@ function drawDie() {
   }
   if (manual && dieShape(SLOT.kind) !== 'd6') {
     if (glowColor) {
-      ctx.save(); ctx.fillStyle = hexA(glowColor, 0.2 + glowStr * 0.18);
-      ctx.beginPath(); ctx.arc(DIE.x, gy, size * 1.65, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+      g.save(); g.fillStyle = hexA(glowColor, 0.2 + glowStr * 0.18);
+      g.beginPath(); g.arc(DIE.x, gy, size * 1.65, 0, Math.PI * 2); g.fill(); g.restore();
     }
-    drawPolyDie(ctx, DIE.x, gy, size * 1.25, SLOT.kind, DIE.R);
-    if (DIE.state === 'settle') drawPhysicalResultGlow(ctx, DIE.x, gy, size * 1.25, SLOT.kind, DIE.R, DIE.faceIndex);
+    drawPolyDie(g, DIE.x, gy, size * 1.25, SLOT.kind, DIE.R);
+    if (DIE.state === 'settle') drawPhysicalResultGlow(g, DIE.x, gy, size * 1.25, SLOT.kind, DIE.R, DIE.faceIndex);
   } else {
-    drawCube(ctx, DIE.x, gy, size, DIE.R, glowColor, glowStr, undefined, 'full', manual ? null : DIE.labels);
-    if (DIE.state === 'settle') drawPhysicalResultGlow(ctx, DIE.x, gy, size, manual ? SLOT.kind : 'story', DIE.R, DIE.faceIndex, DIE.labels);
+    drawCube(g, DIE.x, gy, size, DIE.R, glowColor, glowStr, undefined, 'full', manual ? null : DIE.labels);
+    if (DIE.state === 'settle') drawPhysicalResultGlow(g, DIE.x, gy, size, manual ? SLOT.kind : 'story', DIE.R, DIE.faceIndex, DIE.labels);
   }
 
   // 트레이 대기 중 안내
   if (DIE.state === 'tray' && canRoll() && !(manual && wrapEl.classList.contains('xnarrow'))) {
-    ctx.save();
+    g.save();
     if (manual) {
       const ch = chestDef(), label = `${ch.grade[SLOT.kind]} ${ch.label[SLOT.kind]}`;
-      ctx.fillStyle = 'rgba(20,15,12,0.88)'; ctx.strokeStyle = hexA(dieKindColor(SLOT.kind), 0.8); ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.roundRect(tray.x + 53, tray.y - 87, 242, 60, 10); ctx.fill(); ctx.stroke();
-      ctx.textAlign = 'left'; ctx.font = uiFont(17); ctx.fillStyle = dieKindColor(SLOT.kind);
-      ctx.fillText(label, tray.x + 65, tray.y - 62);
-      ctx.font = uiFont(12); ctx.fillStyle = '#ffe9bb';
-      ctx.fillText('결과 미정 · 끌어 던지거나 아래 버튼', tray.x + 65, tray.y - 41);
+      g.fillStyle = 'rgba(20,15,12,0.88)'; g.strokeStyle = hexA(dieKindColor(SLOT.kind), 0.8); g.lineWidth = 2;
+      if (S.mapKey === 'cInfP') {
+        const zoom = dieViewScale(), width = 100 * zoom, height = 36 * zoom;
+        const y = tray.y - 51 * zoom - height;
+        g.beginPath(); g.roundRect(tray.x - width / 2, y, width, height, 7 * zoom); g.fill(); g.stroke();
+        g.textAlign = 'center'; g.font = uiFont(13 * zoom); g.fillStyle = dieKindColor(SLOT.kind);
+        g.fillText(label, tray.x, y + 15 * zoom);
+        g.font = uiFont(11 * zoom); g.fillStyle = '#ffe9bb';
+        g.fillText('끌어서 던지기', tray.x, y + 29 * zoom);
+      } else {
+        g.beginPath(); g.roundRect(tray.x + 53, tray.y - 87, 242, 60, 10); g.fill(); g.stroke();
+        g.textAlign = 'left'; g.font = uiFont(17); g.fillStyle = dieKindColor(SLOT.kind);
+        g.fillText(label, tray.x + 65, tray.y - 62);
+        g.font = uiFont(12); g.fillStyle = '#ffe9bb';
+        g.fillText('결과 미정 · 끌어 던지거나 아래 버튼', tray.x + 65, tray.y - 41);
+      }
     } else {
-      ctx.font = uiFont(11); ctx.textAlign = 'center';
-      ctx.fillStyle = `rgba(255,233,160,${0.6 + 0.3 * Math.sin(S.time * 4)})`;
-      ctx.strokeStyle = 'rgba(0,0,0,0.7)';
-      ctx.lineWidth = 3;
-      ctx.strokeText('잡아서 던지기!', tray.x, tray.y - 38);
-      ctx.fillText('잡아서 던지기!', tray.x, tray.y - 38);
+      g.font = uiFont(11); g.textAlign = 'center';
+      g.fillStyle = `rgba(255,233,160,${0.6 + 0.3 * Math.sin(S.time * 4)})`;
+      g.strokeStyle = 'rgba(0,0,0,0.7)';
+      g.lineWidth = 3;
+      g.strokeText('잡아서 던지기!', tray.x, tray.y - 38);
+      g.fillText('잡아서 던지기!', tray.x, tray.y - 38);
     }
-    ctx.restore();
+    g.restore();
   }
 }
 
@@ -4334,6 +4357,7 @@ function drawStarBadge(t) {
   ctx.stroke();
   ctx.restore();
   }
+  if (S.mapKey === 'cInfP') return; // Portrait uses one readable foot label below.
   ctx.save();
   ctx.font = uiFont(13); ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
   const txt = `★${t.face}`;
@@ -4341,6 +4365,54 @@ function drawStarBadge(t) {
   ctx.fillStyle = 'rgba(10,8,14,0.82)'; ctx.beginPath(); ctx.roundRect(t.x - w / 2, y - 9, w, 18, 9); ctx.fill();
   ctx.strokeStyle = col; ctx.lineWidth = 1.5; ctx.stroke();
   ctx.fillStyle = col; ctx.fillText(txt, t.x, y + 0.5);
+  ctx.restore();
+}
+
+// At 390px, the 720px portrait arena shrinks canvas text by ~0.54. A single
+// low plaque per tower keeps ★ and level legible without colliding with the
+// next row's 96px sprite (portrait row pitch: 123px).
+function drawPortraitTowerLabel(t, fontPx) {
+  const star = deckRun() || t.deckSystem || t.face > 6;
+  const grade = star ? `★${t.face}` : '';
+  const level = deckRun() || t.deckSystem ? DECK.pips(t) : t.lvl;
+  const candidates = deckRun() || t.deckSystem
+    ? [`눈${level}`, String(level)]
+    : [`Lv${level}`, `L${level}`, String(level)];
+  const gap = grade ? 5 : 0, padding = 7, maxWidth = 92;
+  ctx.save();
+  ctx.font = uiFont(fontPx); ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  const gradeW = grade ? ctx.measureText(grade).width : 0;
+  let detail = candidates[candidates.length - 1];
+  for (const candidate of candidates) {
+    if (gradeW + (grade ? gap : 0) + ctx.measureText(candidate).width + padding * 2 <= maxWidth) {
+      detail = candidate; break;
+    }
+  }
+  const detailW = ctx.measureText(detail).width;
+  const w = Math.min(maxWidth, gradeW + (grade ? gap : 0) + detailW + padding * 2);
+  const h = fontPx + 8, x = t.x - w / 2, y = t.y + 17 - h / 2;
+  ctx.fillStyle = 'rgba(10,8,14,0.88)';
+  ctx.beginPath(); ctx.roundRect(x, y, w, h, h / 2); ctx.fill();
+  ctx.strokeStyle = star ? starColor(t.def) : 'rgba(232,182,74,0.85)';
+  ctx.lineWidth = 1.5; ctx.stroke();
+  let tx = x + padding;
+  if (grade) {
+    ctx.fillStyle = starColor(t.def);
+    ctx.fillText(grade, tx + gradeW / 2, t.y + 17 + 0.5);
+    tx += gradeW + gap;
+  }
+  // At narrow phone widths the level contracts to one digit. Give that digit
+  // its own gold chip so "★17" followed by level 3 cannot read as "★173".
+  const singleDigit = grade && /^\d+$/.test(detail);
+  if (singleDigit) {
+    ctx.fillStyle = '#f4cf70';
+    ctx.beginPath(); ctx.roundRect(tx - 3, y + 3, detailW + 6, h - 6, (h - 6) / 2); ctx.fill();
+  } else if (grade) {
+    ctx.fillStyle = 'rgba(255,230,170,0.7)';
+    ctx.fillRect(tx - gap / 2 - 1, y + 6, 2, h - 12);
+  }
+  ctx.fillStyle = singleDigit ? '#251930' : '#ffe6a4';
+  ctx.fillText(detail, tx + detailW / 2, t.y + 17 + 0.5);
   ctx.restore();
 }
 
@@ -4770,6 +4842,9 @@ function drawEffects(layer) {
 }
 
 function draw() {
+  dieCtx.clearRect(0, 0, W, H);
+  const manualDieLayer = S.phase === 'playing' && !VIEW.pid && manualChestRoll() && !chestReveal();
+  dieLayer.classList.toggle('hidden', !manualDieLayer);
   ctx.clearRect(0, 0, W, H);
   if (S.phase === 'loading') return;
   ctx.save();
@@ -5056,7 +5131,9 @@ function draw() {
   // 합체 레벨 점 — 개체 정렬 뒤에 한 번에 그린다.
   // 예전에는 타워마다 제 몸과 같이 그려서, 앞줄 타워가 뒷줄 타워의 점을 가려 몇 강인지 보이지 않았다.
   // 어두운 알약 배경을 깔아 무엇 위에 얹혀도 읽히게 한다.
+  const portraitLabelFont = S.mapKey === 'cInfP' ? Math.ceil(12.5 / Math.max(0.1, stageScale())) : 0;
   for (const t of S.towers) {
+    if (portraitLabelFont) { drawPortraitTowerLabel(t, portraitLabelFont); continue; }
     if (deckRun() || t.deckSystem) { drawDeckPipNumber(t); continue; }
     const px = t.x, py = t.y + 15, w = 12 * (MAX_LVL - 1) + 16, h = 12;
     ctx.save();
@@ -5172,7 +5249,10 @@ function draw() {
   drawEffects('reward');
 
   // 물리 주사위 (개체 위에 표시)
-  drawDie();
+  if (manualDieLayer) {
+    dieCtx.save(); dieCtx.setTransform(ctx.getTransform());
+    drawDie(dieCtx); dieCtx.restore();
+  } else drawDie();
   // 뽑기·굴림 주사위를 화면 중앙에 크게 (좌하단 슬롯의 작은 굴림은 그대로 두고, 눈에 띄는 쪽을 하나 더)
   drawCenterRoll();
 
@@ -5441,6 +5521,7 @@ function fitStage() {
     }
   }
   setPx(stageEl, 'width', w);
+  portraitDieZoom = Math.max(1, W / Math.max(1, Math.floor(w)));
   // 칩·미니버튼 축소는 뷰포트 폭이 아니라 실제 스테이지 폭으로 정한다 (가로 폰은 폭이 넓어도 스테이지가 좁다)
   stageEl.classList.toggle('small', w < 680);
   stageEl.classList.toggle('tiny', w < 520);
@@ -5978,6 +6059,32 @@ function remapArenaPoint(x, y, oldCenter, newCenter, fromKey, toKey, ratio) {
   return fromKey === 'cInf' ? { x: newCenter.x - dy, y: newCenter.y + dx }
     : { x: newCenter.x + dy, y: newCenter.y - dx };
 }
+function relayoutDie(oldBounds, fromKey, toKey) {
+  const next = dieBounds();
+  const oldWidth = oldBounds.right - oldBounds.left, oldHeight = oldBounds.bottom - oldBounds.top;
+  const newWidth = next.right - next.left, newHeight = next.bottom - next.top;
+  const rotate = (x, y) => fromKey === toKey ? [x, y]
+    : fromKey === 'cInf' ? [-y, x] : [y, -x];
+  const point = (x, y) => {
+    const [u, v] = rotate((x - oldBounds.left) / oldWidth - .5, (y - oldBounds.top) / oldHeight - .5);
+    return [next.left + (u + .5) * newWidth, next.top + (v + .5) * newHeight];
+  };
+  // Resizing moves the visible playing surface, not the physical face/result.
+  // Transform the flight too, so its next tick cannot hit an obsolete wall.
+  if (DIE.state === 'tray' || DIE.state === 'grab') {
+    DIE.state = 'tray';
+    const tray = activeTray(); DIE.x = tray.x; DIE.y = tray.y;
+    DIE.z = 0; DIE.w = [0, 0, 0]; DIE.history = [];
+  } else {
+    [DIE.x, DIE.y] = point(DIE.x, DIE.y);
+    const [vx, vy] = rotate(DIE.vx / oldWidth, DIE.vy / oldHeight);
+    DIE.vx = vx * newWidth; DIE.vy = vy * newHeight;
+    if (DIE.state === 'fly') {
+      // Continue the return from this visible point toward the new tray.
+      DIE.fromX = DIE.x; DIE.fromY = DIE.y; DIE.flyT = 0;
+    }
+  }
+}
 // force: 같은 방향이라도 캔버스 비율이 화면과 어긋났을 때 다시 굽는다 (타워는 같은 칸, 적은 같은 진행률)
 function relayoutArena(key, force) {
   const INF = window.DKCONTENT && DKCONTENT.INFINITY;
@@ -5986,6 +6093,7 @@ function relayoutArena(key, force) {
   // Rotating the arena must preserve in-flight attacks in every Infinity mode,
   // including pure-luck runs that have no account growth.
   const from = S.mapKey, keepCombat = S.mode === 'infinity', oldW = W, oldH = H;
+  const oldDieBounds = manualChestRoll() ? dieBounds() : null;
   const oldCenter = arenaBoardCenter(boardOf(from)), oldScale = arenaWorldScale();
   const lastingFx = S.fxs.filter(f => f.realtime);
   const lastingText = S.texts.filter(t => t.realtime);
@@ -6046,6 +6154,7 @@ function relayoutArena(key, force) {
   if (DRAG.active) stopPlaceDrag();
   if (MOVE.tower || MOVE.armed) moveAbort();
   fitStage();
+  if (oldDieBounds) relayoutDie(oldDieBounds, from, key);
   syncUI();
   return true;
 }
@@ -6601,7 +6710,7 @@ canvas.addEventListener('pointerdown', ev => {
   const p = canvasPos(ev);
   S.mouse = p;
   // 트레이의 주사위 잡기
-  if (canRoll() && Math.hypot(p.x - DIE.x, p.y - DIE.y) < (manualChestReady() ? 55 : 42)) {
+  if (canRoll() && Math.hypot(p.x - DIE.x, p.y - DIE.y) < (manualChestReady() ? 55 * dieViewScale() : 42)) {
     DIE.state = 'grab';
     DIE.grabDX = DIE.x - p.x;
     DIE.grabDY = DIE.y - p.y;
@@ -6620,8 +6729,9 @@ canvas.addEventListener('pointermove', ev => {
   S.mouse = p;
   if (MOVE.armed || MOVE.tower) { if (ev.pointerId === MOVE.pid) { moveTrack(p); ev.preventDefault(); } }
   if (DIE.state === 'grab') {
-    DIE.x = Math.max(30, Math.min(W - 30, p.x + DIE.grabDX));
-    DIE.y = Math.max(56, Math.min(H - 26, p.y + DIE.grabDY));
+    const bounds = manualChestRoll() ? dieBounds() : { left: 30, right: W - 30, top: 56, bottom: H - 26 };
+    DIE.x = Math.max(bounds.left, Math.min(bounds.right, p.x + DIE.grabDX));
+    DIE.y = Math.max(bounds.top, Math.min(bounds.bottom, p.y + DIE.grabDY));
     DIE.history.push({ t: performance.now(), x: p.x, y: p.y });
     if (DIE.history.length > 12) DIE.history.shift();
     // 손 움직임에 따라 자연스럽게 기우뚱거리는 회전

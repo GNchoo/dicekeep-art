@@ -28,6 +28,7 @@
     "test:commerce": "cd commerce && npm test",
     "test:game-modes": "node tools/e2e/game-modes.cjs",
     "test:manual-chest-roll": "node tools/e2e/manual-chest-roll.cjs",
+    "test:die-arena-bounds": "node tools/e2e/die-arena-bounds.cjs",
     "test:manual-die-visibility": "node tools/e2e/manual-die-log-visibility.cjs",
     "test:physical-dice-outcomes": "node tools/e2e/physical-dice-outcomes.cjs",
     "test:dice-rest-pose": "node tools/e2e/dice-rest-pose.cjs",

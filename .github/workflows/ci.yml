@@ -145,6 +145,11 @@ jobs:
         run: npm run test:game-modes
       - name: manual-chest-roll (다면체 직접 투척·보상 큐)
         run: npm run test:manual-chest-roll
+      - name: portrait-readability (주사위 경계·모바일 가독성)
+        run: |
+          npm run test:die-arena-bounds
+          npm run test:manual-die-visibility
+          node tools/e2e/portrait-tower-labels.cjs
       - name: physical-dice-outcomes (실제 착지 면·지급 결과 일치)
         run: npm run test:physical-dice-outcomes
       - name: dice-rotation (면체 회전 대칭)
