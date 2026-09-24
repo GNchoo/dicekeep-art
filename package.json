@@ -48,6 +48,7 @@
     "test:commerce-client": "node tools/commerce-client-test.cjs",
     "measure:growth": "node tools/e2e/growth-balance.cjs",
     "test:run-resume": "node tools/e2e/run-resume.cjs",
+    "test:arena-orientation": "node tools/e2e/arena-orientation.cjs",
     "test:extreme-multi": "node tools/e2e/extreme-multiplayer.cjs",
     "test:campaign": "node tools/e2e/campaign.cjs",
     "measure:campaign": "node tools/e2e/campaign.cjs --full-combat",

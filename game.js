@@ -236,10 +236,17 @@ function dimOutsideTrack(g, m) {
   o.globalCompositeOperation = 'destination-out';
   o.shadowColor = '#000'; o.shadowBlur = 56; o.fillStyle = '#000';
   o.beginPath(); o.roundRect(t.L - pad, t.T - pad, t.R - t.L + pad * 2, t.B - t.T + pad * 2, t.rad + pad); o.fill();
-  if (m.roads && t.mid != null) { // 입구·출구 길: 연석 옆은 밝고 화면 가장자리로 갈수록 어둠 속으로 사라진다
+  if (m.roads && t.mid != null) { // 입구 길은 가로에서는 왼쪽, 세로에서는 위쪽으로 이어진다
     o.shadowBlur = 28;
-    const lane = (x0, x1) => { const gr = o.createLinearGradient(x0, 0, x1, 0); gr.addColorStop(0, 'rgba(0,0,0,1)'); gr.addColorStop(1, 'rgba(0,0,0,0)'); o.fillStyle = gr; o.fillRect(Math.min(x0, x1), t.mid - pad, Math.abs(x1 - x0), pad * 2); };
-    lane(t.L, 30);
+    if (m.arenaPortrait) {
+      const gr = o.createLinearGradient(0, t.T, 0, 30);
+      gr.addColorStop(0, 'rgba(0,0,0,1)'); gr.addColorStop(1, 'rgba(0,0,0,0)');
+      o.fillStyle = gr; o.fillRect((t.L + t.R) / 2 - pad, 30, pad * 2, t.T - 30);
+    } else {
+      const gr = o.createLinearGradient(t.L, 0, 30, 0);
+      gr.addColorStop(0, 'rgba(0,0,0,1)'); gr.addColorStop(1, 'rgba(0,0,0,0)');
+      o.fillStyle = gr; o.fillRect(30, t.mid - pad, t.L - 30, pad * 2);
+    }
   }
   g.drawImage(ov, 0, 0);
 }
@@ -1438,6 +1445,17 @@ function towerVisualEmitter(t) {
     y: t.y + 6 + (xy[1] * sp.h - sp.baseY) * (1 - recoil * 0.09) };
 }
 function projectileDrawPosition(p) {
+  if (p.groundFlight) {
+    // The projectile travels between ground anchors for equal hit timing in
+    // both arena orientations. Only its painted position rises from the muzzle
+    // toward the enemy sprite; that visual lift never changes the collision.
+    const target = epos(p.tgt), remaining = Math.hypot(target.x - p.x, target.y - p.y);
+    const travelled = Math.max(0, p.travelled || 0);
+    const blend = travelled / Math.max(1, travelled + remaining);
+    const lift = -p.tgt.def.size * 0.4 - (p.tgt.move === 'air' ? 42 : 0);
+    return { x: p.x + (p.launchOffset?.[0] || 0) * (1 - blend),
+      y: p.y + (p.launchOffset?.[1] || 0) * (1 - blend) + lift * blend };
+  }
   const u = Math.max(0, Math.min(1, (p.visualAge || 0) / 0.1)), weight = (1 - u) ** 2;
   return { x: p.x + (p.launchOffset ? p.launchOffset[0] * weight : 0),
     y: p.y + (p.launchOffset ? p.launchOffset[1] * weight : 0) };
@@ -2395,6 +2413,20 @@ function projectedFacePolygon(shape, face, R) {
 function drawPhysicalFaceOutline(g, cx, cy, size, kind, R, faceIndex) {
   const shape = kind === 'story' ? 'd6' : dieShape(kind);
   if (!faceIndex) return;
+  if (shape === 'd4') {
+    // A top-read tetrahedron is numbered at its vertices, on all three
+    // adjoining faces. Highlight the winning apex rather than an unrelated
+    // triangular face.
+    const p = m3apply(R, POLY.d4.verts[faceIndex - 1]);
+    const perspective = 10 / (10 - p[2]);
+    g.save(); g.beginPath();
+    g.arc(cx + p[0] * size * perspective, cy + p[1] * size * perspective,
+      Math.max(9, size * .28), 0, Math.PI * 2);
+    g.strokeStyle = '#ffe08a'; g.lineWidth = Math.max(1.8, size * .035);
+    g.shadowColor = '#ffbb4b'; g.shadowBlur = Math.max(6, size * .2);
+    g.stroke(); g.restore();
+    return;
+  }
   const face = shape === 'd6' ? FACES.find(f => f.val === faceIndex) : POLY[shape]?.faces[faceIndex - 1];
   if (!face) return;
   const polygon = projectedFacePolygon(shape, face, R);
@@ -2410,6 +2442,19 @@ function drawPhysicalFaceOutline(g, cx, cy, size, kind, R, faceIndex) {
 function physicalFaceIndex(kind, R) { return supportFaceIndex(kind, R); }
 function supportFaceIndex(kind, R) {
   if (kind === 'story' || dieShape(kind) === 'd6') return topFace(R);
+  if (dieShape(kind) === 'd4') {
+    // On a top-read d4, the three faces meeting at the upper apex all print
+    // the same number. The vertex carried highest by the actual orientation
+    // is the result; no separate face-center number is sampled afterward.
+    const up = supportRestDirection(kind);
+    let best = -Infinity, index = 0;
+    for (let i = 0; i < POLY.d4.verts.length; i++) {
+      const v = m3apply(R, POLY.d4.verts[i]);
+      const height = v[0] * up[0] + v[1] * up[1] + v[2] * up[2];
+      if (height > best) { best = height; index = i; }
+    }
+    return index + 1;
+  }
   const P = POLY[dieShape(kind)];
   let best = -Infinity, index = 0;
   for (let i = 0; i < P.faces.length; i++) {
@@ -2424,13 +2469,15 @@ function physicalFaceValue(kind, R, labels = dieFaceLabels(kind)) {
 function physicalTopVector(kind, R) {
   const shape = dieShape(kind), index = supportFaceIndex(kind, R);
   if (kind === 'story' || shape === 'd6') return m3apply(R, FACES.find(f => f.val === index).n);
+  if (shape === 'd4') return m3apply(R, POLY.d4.verts[index - 1]);
   return m3apply(R, POLY[shape].faces[index - 1].n);
 }
-// Finished dice show the winning face toward the player. A tetrahedron is the
-// exception: it naturally rests on a triangular face with its apex raised.
+// Finished dice show their winning face toward the player. A tetrahedron
+// instead rests on its opposite triangular face, with the numbered apex raised
+// on screen and toward the player so both adjacent printed sides are readable.
 function supportRestDirection(kind) {
   const shape = dieShape(kind);
-  return shape === 'd4' ? [0, .7, Math.sqrt(1 - .7 * .7)] : [0, 0, 1];
+  return shape === 'd4' ? [0, -.75, Math.sqrt(1 - .75 * .75)] : [0, 0, 1];
 }
 function physicalRestAlignment(kind, R) {
   const n = physicalTopVector(kind, R);
@@ -2463,7 +2510,22 @@ function alignR(n) {
 // 대기 중인 주사위는 결과와 무관하게 한 면이 카메라를 향하도록 놓는다.
 function polyRestR(shape) {
   // A d4 rests with an apex up rather than presenting a flat triangular face.
-  if (shape === 'd4') return m3mul(m3axisAngle(1, 0, 0, 1.42), alignR(POLY.d4.verts[0]));
+  if (shape === 'd4') {
+    const apex = supportRestDirection('d4');
+    const base = m3mul(m3axisAngle(1, 0, 0, Math.asin(.75)), alignR(POLY.d4.verts[0]));
+    // Put one opposite vertex at screen-bottom. This gives the idle/preview
+    // tetrahedron two balanced visible sides like a real top-read d4. Rolled
+    // dice still keep their own physical twist when they come to rest.
+    const lower = m3apply(base, POLY.d4.verts[1]);
+    const tangent = lower.map((v, i) => v + apex[i] / 3);
+    const target = [0, apex[2], -apex[1]];
+    const cross = [tangent[1] * target[2] - tangent[2] * target[1],
+      tangent[2] * target[0] - tangent[0] * target[2],
+      tangent[0] * target[1] - tangent[1] * target[0]];
+    const angle = Math.atan2(apex[0] * cross[0] + apex[1] * cross[1] + apex[2] * cross[2],
+      tangent[0] * target[0] + tangent[1] * target[1] + tangent[2] * target[2]);
+    return m3mul(m3axisAngle(...apex, angle), base);
+  }
   // Waiting dice also sit on a face; their number is only a visible marking,
   // and the awarded result is still determined by the later physical throw.
   return alignR(POLY[shape].faces[0].n);
@@ -2564,7 +2626,20 @@ function buildDiceMaterial(skin) {
     const rim = g.createLinearGradient(0, 0, T, T);
     rim.addColorStop(0, 'rgba(255,243,211,.85)'); rim.addColorStop(.45, 'rgba(238,220,181,.4)'); rim.addColorStop(1, 'rgba(129,93,52,.38)');
     path(.97); g.strokeStyle = rim; g.lineWidth = 2.7; g.stroke();
-    engraveDiceValue(g, dieFaceLabels(kind)[i], T / 2, T / 2, T * (f.idx.length === 5 ? .36 : i < 9 ? .32 : .27), skin.mark || '#542b30');
+    if (kind === 'd4') {
+      // Match a conventional top-read d4: each vertex has one value, repeated
+      // on every triangular side that touches it. The three visible marks at
+      // the raised apex therefore agree with the physical result.
+      for (let j = 0; j < f.idx.length; j++) {
+        const dx = uv[j][0] - T / 2, dy = uv[j][1] - T / 2;
+        g.save(); g.translate(T / 2 + dx * .52, T / 2 + dy * .52);
+        g.rotate(Math.atan2(dx, -dy));
+        engraveDiceValue(g, f.idx[j] + 1, 0, 0, T * .17, skin.mark || '#542b30');
+        g.restore();
+      }
+    } else {
+      engraveDiceValue(g, dieFaceLabels(kind)[i], T / 2, T / 2, T * (f.idx.length === 5 ? .36 : i < 9 ? .32 : .27), skin.mark || '#542b30');
+    }
     g.restore();
     return { cv, uv };
   });
@@ -2787,7 +2862,7 @@ function drawCenterRoll() {
     if (linger && ROLL_SHOW.physical) drawPhysicalFaceOutline(ctx, cx, dy, size, kind, R, ROLL_SHOW.faceIndex);
   }
   if (linger && ROLL_SHOW.physical && ROLL_SHOW.face) {
-    const caption = `하늘을 향한 면 ${ROLL_SHOW.face} · ★${ROLL_SHOW.face}`;
+    const caption = `${dieShape(kind) === 'd4' ? '위 꼭짓점' : '하늘을 향한 면'} ${ROLL_SHOW.face} · ★${ROLL_SHOW.face}`;
     ctx.font = uiFont(Math.max(17, base * .29)); ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     ctx.lineJoin = 'round'; ctx.lineWidth = 6; ctx.strokeStyle = 'rgba(22,16,14,.95)';
     ctx.strokeText(caption, cx, cy + base * 2.05); ctx.fillStyle = '#fff1c7'; ctx.fillText(caption, cx, cy + base * 2.05);
@@ -3772,7 +3847,12 @@ const towerDmg   = t => {
   if (S.mode === 'infinity' && S.inf) m *= towerGrowth(t);
   return t.def.dmg * m;
 };
-// 인피니티 사거리 보너스는 아레나마다 다르다 — 세로 아레나는 트랙이 길어 중앙 타워가 더 멀리 닿아야 한다
+// 세로 아레나는 같은 전장을 1.4배로 표시한다. 전투 수치는 논리 단위로 유지한다.
+function arenaWorldScale() {
+  if (S.mode !== 'infinity' || !window.DKCONTENT) return 1;
+  const m = DKCONTENT.maps && DKCONTENT.maps.find(x => x.key === S.mapKey);
+  return (m && m.arenaScale) || 1;
+}
 function arenaRangeBonus() {
   if (S.mode !== 'infinity' || !window.DKCONTENT) return 0;
   const m = DKCONTENT.maps && DKCONTENT.maps.find(x => x.key === S.mapKey);
@@ -3841,14 +3921,15 @@ function towerFire(t, dt) {
   if (t.moving) return;   // 들어올려 옮기는 중에는 사격하지 않는다 (커서로 적을 쫓는 것을 막는다)
   t.cd -= dt;
   if (t.cd > 0) return;
-  const range = towerRange(t);
+  const range = towerRange(t) * arenaWorldScale();
   let best = null;
   for (const e of S.enemies) {
     if (e.dead) continue;
     if (e.hidden) continue;
     if (e.move === 'air' && !t.def.canAir) continue;
     const p = epos(e);
-    const d = Math.hypot(p.x - t.x, p.y - (t.y - 30) - (e.move === 'air' ? 42 : 0));
+    // 공격 판정은 양쪽 모두 경로/석단의 바닥 좌표를 사용한다. 몸통·공중 오프셋은 그림에만 쓴다.
+    const d = Math.hypot(p.x - t.x, p.y - t.y);
     if (d <= range && (!best || (deckRun() && t.def.ability==='hunter' && e.isBoss && !best.isBoss) || (!(deckRun() && t.def.ability==='hunter' && best.isBoss && !e.isBoss) && e.dist > best.dist))) best = e;
   }
   if (!best) return;
@@ -3857,7 +3938,8 @@ function towerFire(t, dt) {
   let dmg = towerDmg(t);
   const pulse = deckRun() && t.def.ability==='pulse' && t.shotSerial%deckStats(t).pulseEvery===0;
   if (deckRun()) { const st=deckStats(t); if ((COSMETIC ? fxRandom() : Math.random())<st.critChance) dmg*=st.critDamage; if (pulse) dmg*=2; }
-  const from = { x: t.x, y: t.y - 64 };
+  const groundFlight = S.mode === 'infinity';
+  const from = { x: t.x, y: t.y - (groundFlight ? 0 : 64) };
   const visualFrom = towerVisualEmitter(t);
 
   if (t.def.laser) {
@@ -3874,7 +3956,7 @@ function towerFire(t, dt) {
     let cur = best;
     while (hitList.length < maxChain) {
       const cp = epos(cur);
-      let next = null, nd = 115;
+      let next = null, nd = 115 * arenaWorldScale();
       for (const e of S.enemies) {
         if (e.dead || e.hidden || hitList.includes(e)) continue;
         if (e.move === 'air' && !t.def.canAir) continue;
@@ -3900,7 +3982,8 @@ function towerFire(t, dt) {
     S.projs.push({
       kind: t.def.proj, x: from.x, y: from.y, tgt: best,
       launchOffset: [visualFrom.x - from.x, visualFrom.y - from.y], visualAge: 0,
-      spd: t.def.pspd, dmg, splash: pulse ? 100 : towerSplash(t),
+      groundFlight, travelled: 0,
+      spd: t.def.pspd * arenaWorldScale(), dmg, splash: (pulse ? 100 : towerSplash(t)) * arenaWorldScale(),
       star: t.def.star || 0, color: t.def.star ? starColor(t.def) : null, trail: [],
       slow: t.def.slow ? { pct: towerSlowPct(t), dur: deckRun()?deckStats(t).slowDur:1.8 } : null,
       rot: 0, spin: 0, src: t,
@@ -3924,7 +4007,7 @@ function updateVisuals(dt) {
   for (const p of S.projs) {
     if (p.tgt.dead || (LANES[p.tgt.lane || 0].loopAt == null && p.tgt.dist >= laneLen(p.tgt))) { p.gone = true; continue; }
     const tp = epos(p.tgt);
-    const tx = tp.x, ty = tp.y - p.tgt.def.size * 0.4 - (p.tgt.move === 'air' ? 42 : 0);
+    const tx = tp.x, ty = p.groundFlight ? tp.y : tp.y - p.tgt.def.size * 0.4 - (p.tgt.move === 'air' ? 42 : 0);
     const dx = tx - p.x, dy = ty - p.y;
     const d = Math.hypot(dx, dy);
     p.rot = Math.atan2(dy, dx);
@@ -3932,8 +4015,8 @@ function updateVisuals(dt) {
     const step = p.spd * dt;
     if (p.trail) { p.trail.push(projectileDrawPosition(p)); if (p.trail.length > 3) p.trail.shift(); }
     p.visualAge = (p.visualAge || 0) + dt;
-    if (d <= step + 8) { projHit(p); p.gone = true; }
-    else { p.x += dx / d * step; p.y += dy / d * step; }
+    if (d <= step + 8 * (p.groundFlight ? arenaWorldScale() : 1)) { projHit(p); p.gone = true; }
+    else { p.x += dx / d * step; p.y += dy / d * step; p.travelled = (p.travelled || 0) + step; }
   }
   S.projs = S.projs.filter(p => !p.gone);
 
@@ -3989,11 +4072,9 @@ function projHit(p) {
     for (const e of S.enemies) {
       if (e.dead) continue;
       const ep = epos(e);
-      // hy 는 이미 '명중 지점의 몸통 중심' 이다. 상대도 같은 기준(발밑 - 크기×0.4)으로 맞춰 빼야 한다.
-      // 예전에는 더하고 있어서, 조준해서 맞힌 대상 자신과의 거리가 0 이 아니라 0.8×크기 로 나왔다.
-      // 그래서 큰 적일수록 광역 타워에 면역이 됐다 — 대형 보스(크기 120)는 거리 96 이라
-      // 2·6·7~16 눈의 폭발이 통째로 빗나갔다.
-      if (Math.hypot(ep.x - hx, (ep.y - e.def.size * 0.4) - hy) <= p.splash) damageEnemy(e, p.dmg, p.src);
+      // 광역 피해는 시각적 몸통 중심이 아닌 경로의 바닥 좌표끼리 비교한다.
+      // 적 크기나 가로·세로 화면 배율이 달라도 같은 상대 범위를 맞힌다.
+      if (Math.hypot(ep.x - tp.x, ep.y - tp.y) <= p.splash) damageEnemy(e, p.dmg, p.src);
     }
     if (p.kind === 'dieBomb' || p.kind === 'die6') {
       sheetHit('dieExplode', hx, hy, p.splash * 2.2, 0.4);
@@ -4049,12 +4130,14 @@ function update(dt) {
       e.entranceT = -1;
     }
     if (e.stunT > 0) { e.stunT -= dt; continue; } // 락다운
-    let sp = e.def.speed * (e.spdMult || 1);
+    const worldScale = arenaWorldScale();
+    let sp = e.def.speed * (e.spdMult || 1) * worldScale;
     if (e.slowT > 0) { e.slowT -= dt; sp *= (1 - e.slowPct); }
-    const previousDist = e.dist;
-    e.dist += sp * dt;
-    if (e.appearanceCode || (e.artWalk && e.artWalkStride > 0)) e.artWalkDistance += Math.max(0, e.dist - previousDist);
-    e.animT += dt * (sp / 38);
+    const travel = sp * dt;
+    e.dist += travel;
+    const logicalTravel = travel / worldScale;
+    if (e.appearanceCode || (e.artWalk && e.artWalkStride > 0)) e.artWalkDistance += Math.max(0, logicalTravel);
+    e.animT += logicalTravel / 38;
     if (e.move === 'burrow') {
       e.burrowT += dt;
       e.hidden = (e.burrowT % 2.6) < 1.15;
@@ -4548,17 +4631,18 @@ function draw() {
   // 사거리 원 (선택된 타워 / 배치 미리보기)
   let rangePrev = null;
   if (S.selTower) {
-    rangePrev = { x: S.selTower.x, y: S.selTower.y, r: towerRange(S.selTower), c: S.selTower.def.color };
+    rangePrev = { x: S.selTower.x, y: S.selTower.y, r: towerRange(S.selTower) * arenaWorldScale(), c: S.selTower.def.color };
   } else if (S.heldDie) {
     const idx = DRAG.active ? DRAG.overSpot : spotAt(S.mouse.x, S.mouse.y);
     if (idx >= 0 && !towerAt(idx)) {
-      rangePrev = { x: SPOTS[idx][0], y: SPOTS[idx][1], r: combatDef(S.heldDie).range, c: combatDef(S.heldDie).color };
+      rangePrev = { x: SPOTS[idx][0], y: SPOTS[idx][1],
+        r: (combatDef(S.heldDie).range + arenaRangeBonus()) * arenaWorldScale(), c: combatDef(S.heldDie).color };
     }
   }
   if (rangePrev) {
     ctx.save();
     ctx.beginPath();
-    ctx.arc(rangePrev.x, rangePrev.y - 30, rangePrev.r, 0, Math.PI * 2);
+    ctx.arc(rangePrev.x, rangePrev.y, rangePrev.r, 0, Math.PI * 2);
     ctx.fillStyle = 'rgba(140,200,255,0.08)';
     ctx.fill();
     ctx.strokeStyle = rangePrev.c || 'rgba(160,210,255,0.45)';
@@ -5147,19 +5231,30 @@ function draw() {
     // 화면에서 항상 같은 크기로 읽히게 한다 (세로 아레나는 캔버스가 커서 그냥 비례시키면 깨알같이 작다)
     const sc = stageScale() || 1;
     let fs = Math.round(17 / sc);
+    const map = S.mode === 'infinity' && DKCONTENT.maps.find(m => m.key === S.mapKey);
+    const boardTop = map?.board?.y ?? Infinity;
+    // 작은 가로 화면에서는 중앙 말풍선이 타워 지붕을, 세로 화면에서는 적의 위쪽 진입로를 가린다.
+    const compact = !!map && (map.arenaPortrait || boardTop < hudTopPx() / sc + fs + 18 + 8 / sc);
+    if (compact) {
+      msg = picking ? '이동할 빈 칸 선택' : bossT > 0
+        ? `보스 ${S.wave} · ${Math.floor(bossT / 60)}:${String(Math.floor(bossT % 60)).padStart(2, '0')}`
+        : S.wave === 0 ? '뽑기 후 석단에 배치' : `다음 웨이브 · ${cd}초`;
+    }
+    const sideWidth = compact ? (map.arenaPortrait ? W / 2 - 40 : Math.max(130, W - map.track.R - 24)) : W - 40;
     ctx.font = uiFont(fs);
-    while (fs > 12 && ctx.measureText(msg).width > W - 48) { fs -= 1; ctx.font = uiFont(fs); }
+    while (fs > 12 && ctx.measureText(msg).width > sideWidth - 20) { fs -= 1; ctx.font = uiFont(fs); }
     const tw = ctx.measureText(msg).width;
-    const pw = Math.min(W - 40, tw + 34), ph = fs + 18;
+    const pw = Math.min(sideWidth, tw + 34), ph = fs + 18;
     // 좌상단 칩·우상단 미니 버튼(HTML) 바로 아래. 높이는 화면 기준이라 캔버스로 환산한다 (좁은 세로 화면은 미니 버튼이 둘째 줄로 내려온다)
     const by = Math.round(hudTopPx() / sc + ph / 2);
+    const bx = compact ? (map.arenaPortrait ? W / 4 : W - pw / 2 - 16) : W / 2;
     ctx.fillStyle = picking ? 'rgba(8,34,52,0.82)' : bossT > 0 ? 'rgba(46,8,8,0.78)' : 'rgba(14,10,6,0.72)';                         // 보스: 붉은 말풍선, 30초 밑이면 테두리·글자가 깜빡인다
     ctx.strokeStyle = picking ? 'rgba(127,212,255,0.9)' : urgent ? (Math.floor(S.time * 2) % 2 ? 'rgba(255,110,110,0.95)' : 'rgba(255,60,60,0.6)') : bossT > 0 ? 'rgba(255,140,120,0.65)' : 'rgba(232,182,74,0.5)';
     ctx.lineWidth = urgent ? 2 : 1.5;
-    ctx.beginPath(); ctx.roundRect(W / 2 - pw / 2, by - ph / 2, pw, ph, ph / 2); ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.roundRect(bx - pw / 2, by - ph / 2, pw, ph, ph / 2); ctx.fill(); ctx.stroke();
     ctx.fillStyle = picking ? '#d6f2ff' : urgent ? '#ffb0a0' : bossT > 0 ? '#ffe0d0' : 'rgba(255,240,200,0.95)';
     ctx.textBaseline = 'middle';
-    ctx.fillText(msg, W / 2, by);
+    ctx.fillText(msg, bx, by, pw - 18);
     ctx.restore();
   }
 
@@ -5849,35 +5944,80 @@ function remapSpot(fromKey, toKey, idx) {
   if (!a || !b || !a.cols || !b.cols) return idx;
   if (a.cols === b.cols) return idx;
   const cf = idx % a.cols, rf = Math.floor(idx / a.cols);
-  // 넓어지면(세로→가로) 시계방향, 좁아지면(가로→세로) 반시계방향으로 돈다 — 되돌리면 제자리
-  const ct = b.cols > a.cols ? (b.cols - 1 - rf) : rf;
-  const rt = b.cols > a.cols ? cf : (a.cols - 1 - cf);
+  // 왼쪽 입구가 위쪽 입구로 가는 시계 방향 회전. 세로→가로는 정확한 역변환.
+  const ct = b.cols < a.cols ? (a.rows - 1 - rf) : rf;
+  const rt = b.cols < a.cols ? cf : (a.cols - 1 - cf);
   const out = rt * b.cols + ct;
   return (out >= 0 && out < b.cols * b.rows) ? out : idx;
+}
+function remapLaneDistance(dist, oldLen, oldLoop, newLen, newLoop) {
+  if (oldLoop == null || newLoop == null || oldLen <= oldLoop || newLen <= newLoop)
+    return Math.min(newLen - 1, dist / Math.max(1, oldLen) * newLen);
+  if (dist < oldLoop) return Math.max(0, dist / Math.max(1, oldLoop) * newLoop);
+  return Math.min(newLen - 1, newLoop + (dist - oldLoop) / (oldLen - oldLoop) * (newLen - newLoop));
+}
+function arenaBoardCenter(board) {
+  return board ? { x: board.x + board.w / 2, y: board.y + board.h / 2 } : { x: W / 2, y: H / 2 };
+}
+function remapArenaPoint(x, y, oldCenter, newCenter, fromKey, toKey, ratio) {
+  const dx = (x - oldCenter.x) * ratio, dy = (y - oldCenter.y) * ratio;
+  if (fromKey === toKey) return { x: newCenter.x + dx, y: newCenter.y + dy };
+  return fromKey === 'cInf' ? { x: newCenter.x - dy, y: newCenter.y + dx }
+    : { x: newCenter.x + dy, y: newCenter.y - dx };
 }
 // force: 같은 방향이라도 캔버스 비율이 화면과 어긋났을 때 다시 굽는다 (타워는 같은 칸, 적은 같은 진행률)
 function relayoutArena(key, force) {
   const INF = window.DKCONTENT && DKCONTENT.INFINITY;
   if (!INF || S.mode !== 'infinity' || (S.mapKey === key && !force)) return false;
   // 좌표는 버리고 '어느 칸', '경로의 몇 %' 만 남긴다
-  const from = S.mapKey, keepCombat = growthRun(), oldW = W, oldH = H;
+  // Rotating the arena must preserve in-flight attacks in every Infinity mode,
+  // including pure-luck runs that have no account growth.
+  const from = S.mapKey, keepCombat = S.mode === 'infinity', oldW = W, oldH = H;
+  const oldCenter = arenaBoardCenter(boardOf(from)), oldScale = arenaWorldScale();
   const lastingFx = S.fxs.filter(f => f.realtime);
   const lastingText = S.texts.filter(t => t.realtime);
   const noticeSelected = !!(ENHANCE_NOTICE && ENHANCE_NOTICE.tower === S.selTower);
   const selectedSpot = S.selTower ? S.selTower.spot : -1;
   const towers = S.towers.map(t => keepCombat ? Object.assign(t, { spot: remapSpot(from, key, t.spot) }) : ({ spot: remapSpot(from, key, t.spot), face: t.face, def: t.def, lvl: t.lvl, skin: t.skin, cd: t.cd, ...(t.growthCarry ? { growthCarry: t.growthCarry } : {}), ...(t.deckSystem ? { deckSystem:1,pips:t.pips,abilityT:t.abilityT||0,shotSerial:t.shotSerial||0,...(t.copyHaste?{copyHaste:true}:{}) } : {}) }));
   const selSpot = selectedSpot >= 0 ? remapSpot(from, key, selectedSpot) : -1;
-  const enemies = [...new Set(keepCombat ? [...S.enemies, ...S.projs.map(p => p.tgt)] : S.enemies)].map(e => ({ e, ratio: e.dist / Math.max(1, laneLen(e)) }));
+  const enemies = [...new Set(keepCombat ? [...S.enemies, ...S.projs.map(p => p.tgt)] : S.enemies)]
+    .map(e => ({ e, len: laneLen(e), loopAt: (LANES[e.lane || 0] || LANES[0]).loopAt }));
   if (keepCombat) for (const t of new Set(S.projs.map(p => p.src))) if (!S.towers.includes(t)) t.spot = remapSpot(from, key, t.spot);
   S.mapKey = key;
   applyMapLayout(key, INF.tier);
+  const newCenter = arenaBoardCenter(boardOf(key)), scaleRatio = arenaWorldScale() / oldScale;
   for (const t of towers) { const sp = SPOTS[t.spot]; if (sp) { t.x = sp[0]; t.y = sp[1]; } }
   S.towers = towers.filter(t => SPOTS[t.spot]).map(t => Object.assign(t, { kick: 0 }));
-  for (const { e, ratio } of enemies) e.dist = Math.min(laneLen(e) - 1, ratio * laneLen(e));
+  for (const { e, len, loopAt } of enemies) {
+    const lane = LANES[e.lane || 0] || LANES[0];
+    e.dist = remapLaneDistance(e.dist, len, loopAt, lane.len, lane.loopAt);
+  }
+  if (VIEW.pid) {
+    for (const t of VIEW.towers) {
+      t.spot = remapSpot(from, key, t.spot);
+      const sp = SPOTS[t.spot]; if (sp) { t.x = sp[0]; t.y = sp[1]; }
+    }
+    for (const e of VIEW.enemies) {
+      const lane = LANES[e.lane || 0] || LANES[0];
+      const sourceLen = e.sourceLength || lane.len, sourceLoop = e.sourceLoopAt;
+      e.dist = remapLaneDistance(e.viewSourceDist ?? e.sourceDist ?? 0, sourceLen, sourceLoop, lane.len, lane.loopAt);
+    }
+    VIEW.projs = []; VIEW.beams = []; VIEW.fxs = [];
+  }
   S.selTower = selSpot >= 0 ? (S.towers.find(t => t.spot === selSpot) || null) : null;
   if (noticeSelected) ENHANCE_NOTICE.tower = S.selTower;
   if (keepCombat) {
-    for (const p of S.projs) { p.x *= W / oldW; p.y *= H / oldH; p.trail = []; const sp = SPOTS[p.src.spot]; if (sp) { p.src.x = sp[0]; p.src.y = sp[1]; } }
+    for (const p of S.projs) {
+      const xy = remapArenaPoint(p.x, p.y, oldCenter, newCenter, from, key, scaleRatio);
+      p.x = xy.x; p.y = xy.y; p.spd *= scaleRatio; p.splash *= scaleRatio;
+      if (p.groundFlight) {
+        p.travelled = (p.travelled || 0) * scaleRatio;
+        const emitter = towerVisualEmitter(p.src);
+        p.launchOffset = [emitter.x - p.src.x, emitter.y - p.src.y];
+      }
+      p.trail = []; p.visualAge = 1;
+      const sp = SPOTS[p.src.spot]; if (sp) { p.src.x = sp[0]; p.src.y = sp[1]; }
+    }
   } else S.projs = [];
   // 화면 방향·HUD 높이가 바뀌어도 중요한 보상/강화 연출은 남겨 두고 새 좌표에 붙인다.
   const reanchor = item => {
@@ -6984,8 +7124,10 @@ function readRunSave(multi) {
 }
 function persistRun() {
   if (!growthRun() || S.phase !== 'playing' || S.inf.settledResult || S.lives <= 0) return false;
+  const center = arenaBoardCenter(boardOf(S.mapKey));
   const p = RUNSAVE.capture(S, SLOT, { owner: runOwner(), savedAt: Date.now(), elapsed: Math.max(0, (performance.now() - S.inf.startedAt) / 1000),
-    size: [W, H], mapKey: S.mapKey, lanes: LANES.map(l => l.len),
+    size: [W, H], mapKey: S.mapKey, lanes: LANES.map(l => l.len), laneLoops: LANES.map(l => l.loopAt ?? null),
+    arenaCenter: [center.x, center.y], arenaScale: arenaWorldScale(),
     match: S.net ? { code: S.net.code, pid: S.net.pid, t0: S.net.t0, seed: S.net.seed, doneW: S.net.doneW,
       ...(battleRun() ? { matchId:S.net.battle?.matchId,transport:DKNET.battleExport() } : {}) } : null });
   runStore(!!S.net).setItem(runSaveKey(!!S.net), RUNSAVE.encode(p));
@@ -7025,14 +7167,29 @@ async function restoreRunSave(p, net) {
   const snap = S.inf.growthSnapshot;
   S.inf.growthSnapshot = Object.freeze({ ...snap, deck: Object.freeze(snap.deck), levels: Object.freeze(snap.levels), ...Object.fromEntries(['classes','mastery','talents','awakenings'].filter(key=>snap[key]).map(key=>[key,Object.freeze(snap[key])])) });
   const sx = W / p.size[0], sy = H / p.size[1];
+  const oldCenter = p.arenaCenter ? { x: p.arenaCenter[0], y: p.arenaCenter[1] } : null;
+  const newCenter = oldCenter ? arenaBoardCenter(boardOf(S.mapKey)) : null;
+  const scaleRatio = p.arenaScale ? arenaWorldScale() / p.arenaScale : 1;
   const allTowers = new Set([...S.towers, ...S.projs.map(q => q.src)]);
   for (const t of allTowers) { t.spot = remapSpot(p.mapKey, S.mapKey, t.spot); t.x = SPOTS[t.spot][0]; t.y = SPOTS[t.spot][1]; }
   for (const e of new Set([...S.enemies, ...S.projs.map(q => q.tgt)])) {
-    e.dist *= LANES[e.lane].len / p.lanes[e.lane];
+    const lane = LANES[e.lane || 0] || LANES[0];
+    e.dist = remapLaneDistance(e.dist, p.lanes[e.lane || 0], p.laneLoops?.[e.lane || 0], lane.len, lane.loopAt);
     // Correct old checkpoints without discarding their board, HP or run ticket.
     if (e.isBoss) e.move = DKCONTENT.INFINITY.bossMoveFor(e.wave, e.bossRole || 0, e.move);
   }
-  for (const q of S.projs) { q.x *= sx; q.y *= sy; q.trail = []; }
+  for (const q of S.projs) {
+    if (oldCenter) {
+      const xy = remapArenaPoint(q.x, q.y, oldCenter, newCenter, p.mapKey, S.mapKey, scaleRatio);
+      q.x = xy.x; q.y = xy.y; q.spd *= scaleRatio; q.splash *= scaleRatio;
+      if (q.groundFlight) {
+        q.travelled = (q.travelled || 0) * scaleRatio;
+        const emitter = towerVisualEmitter(q.src);
+        q.launchOffset = [emitter.x - q.src.x, emitter.y - q.src.y];
+      }
+    } else { q.x *= sx; q.y *= sy; } // 이전 저장 형식은 기존 비율 보정을 유지한다.
+    q.trail = []; q.visualAge = 1;
+  }
   Object.assign(SLOT, slot); DIE.state = 'tray'; DIE.hits = [];
   if (SLOT.active && !deckRun() && SLOT.kind !== 'd1') {
     const ch = chestDef();
@@ -7421,7 +7578,7 @@ function mpSummary(withField) {
     w: Math.max(0, Math.min(maxWave, Math.floor(S.wave))), dw: Math.max(0, Math.min(maxWave, Math.floor(net.doneW))),
     l: Math.max(0, Math.min(20, S.lives | 0)), g: Math.max(0, Math.min(1e7, Math.floor(S.gold))), k: Math.max(0, Math.min(1e6, S.inf.kills | 0)),
     f: Math.min(200, S.enemies.length), sp: Math.max(1, Math.min(3, S.speed | 0)), hid: document.hidden ? 1 : 0,
-    b: boss ? Math.max(0, Math.min(1, boss.hp / Math.max(1, boss.max))) : null, o: W < H ? 'p' : 'l',
+    b: boss ? Math.max(0, Math.min(1, boss.hp / Math.max(1, boss.max))) : null, o: S.mapKey === 'cInfP' ? 'p' : 'l',
     tw: S.towers.slice(0, 15).map(t => deckRun() ? [t.spot,t.face,1,DECK.pips(t)] : [t.spot, t.face, t.lvl]),
     ...(deckRun() ? { ds:1 } : {}),
   };
@@ -7521,10 +7678,20 @@ function mpViewBuild(sum) {
     const idx = remapSpot(fromKey, myKey, spot), def = sum.ds===1 ? deckDef(face) : TOWER_DEFS[face];
     if (!def || idx < 0 || !SPOTS[idx]) continue;
     towers.push(prevT.get(viewKey(idx,face,lvl,sum.ds,sum.ds===1?t[3]:0)) || { face, def, lvl, spot: idx, x: SPOTS[idx][0], y: SPOTS[idx][1], cd: fxRandom() * 0.5, kick: 0, skin: 0, ...(sum.ds===1 ? { deckSystem:1,pips:Math.max(1,Math.min(7,t[3]|0)) } : {}) });
-    if (sum.ds===1) { const viewed=towers[towers.length-1]; viewed.def=def; viewed.deckSystem=1; viewed.pips=Math.max(1,Math.min(7,t[3]|0)); }
+    const viewed=towers[towers.length-1];
+    viewed.spot=idx; viewed.x=SPOTS[idx][0]; viewed.y=SPOTS[idx][1]; viewed.def=def;
+    if (sum.ds===1) { viewed.deckSystem=1; viewed.pips=Math.max(1,Math.min(7,t[3]|0)); }
   }
   VIEW.towers = towers;
   const ll = sum.ll | 0, len = LANES[0] ? LANES[0].len : 0, k = ll > 0 && len > 0 ? len / ll : 1;
+  const sourceMap = C.maps.find(m => m.key === fromKey);
+  // Only the off-screen entry changes with viewport size. The ring is fixed
+  // for each orientation, so infer its boundary from the streamed total length.
+  const sourceRing = sourceMap?.roads?.[1] ? C.pathLength(sourceMap.roads[1]) : 0;
+  const sourceLoop = sourceRing > 0 && ll > sourceRing ? ll - sourceRing : null;
+  const localLoop = LANES[0]?.loopAt;
+  const segmentScale = d => sourceLoop != null && localLoop != null
+    ? (d < sourceLoop ? localLoop / sourceLoop : (len - localLoop) / sourceRing) : k;
   const prev = new Map();
   for (const e of VIEW.enemies) prev.set(e.key, e);
   const enemies = [];
@@ -7557,13 +7724,18 @@ function mpViewBuild(sum) {
       const stamp = performance.now(), elapsed = old && old.sourceAt != null ? (stamp - old.sourceAt) / 1000 : 0;
       if (elapsed > 0.05 && elapsed < 5 && old.sourceLength === ll) {
         let delta = d - old.sourceDist;
-        const loopStart = (LANES[0] && LANES[0].loopAt || 0) * (ll / Math.max(1, len));
-        if (delta < -ll / 2) delta += ll - loopStart;
-        const maxSpeed = base.speed * (e.spdMult || 1) * Math.max(1, sum.sp || 1) * k * 1.5;
-        e.viewSpeed = Math.max(0, Math.min(maxSpeed, delta * k / elapsed));
-      } else e.viewSpeed = null;
-      e.dist = d * k; e.max = base.hp; e.hp = base.hp * h / 9;
-      e.sourceDist = d; e.sourceLength = ll; e.sourceAt = stamp; e.viewSourceScale = k;
+        if (delta < -ll / 2 && sourceLoop != null) delta += ll - sourceLoop;
+        const sourceScale = sourceLoop != null && d < sourceLoop ? sourceLoop / 290
+          : (fromKey === 'cInfP' ? 1.4 : 1);
+        const maxSourceSpeed = base.speed * (e.spdMult || 1) * Math.max(1, sum.sp || 1) * sourceScale * 1.5;
+        e.viewSourceSpeed = Math.max(0, Math.min(maxSourceSpeed, delta / elapsed));
+      } else e.viewSourceSpeed = null;
+      e.dist = remapLaneDistance(d, ll, sourceLoop, len, localLoop);
+      e.max = base.hp; e.hp = base.hp * h / 9;
+      e.sourceDist = d; e.viewSourceDist = d; e.sourceLength = ll; e.sourceLoopAt = sourceLoop;
+      e.sourceAt = stamp; e.viewArenaScale = fromKey === 'cInfP' ? 1.4 : 1;
+      e.viewSourceScale = segmentScale(d);
+      e.viewSpeed = Number.isFinite(e.viewSourceSpeed) ? e.viewSourceSpeed * e.viewSourceScale : null;
       const entry = directionalArt && directionalArt.entry(e.artAssetId);
       const stride = entry && entry.cycleStride * e.drawHeight / entry.referenceHeight;
       if (!Number.isFinite(e.viewPhase)) e.viewPhase = row.p != null ? row.p : stride > 0 ? DIR_ART.phase(e.dist, stride) : 0;
@@ -7583,18 +7755,32 @@ function mpViewAdvance(dt) {
   const sp = VIEW.sum ? Math.max(1, Math.min(3, VIEW.sum.sp | 0)) : 1;
   for (const e of VIEW.enemies) {
     const ln = LANES[e.lane || 0] || LANES[0]; if (!ln) continue;
-    const spd = Number.isFinite(e.viewSpeed) ? e.viewSpeed : ((e.def && e.def.speed) || 40) * (e.spdMult || 1) * sp * (e.viewSourceScale || 1);
-    const advance = Math.max(0, spd * dt);
-    e.dist += advance;
-    e.artWalkDistance = (e.artWalkDistance || 0) + advance;
+    const sourceAt = e.viewSourceDist ?? e.sourceDist ?? 0;
+    const fallbackScale = e.sourceLoopAt != null && sourceAt < e.sourceLoopAt
+      ? e.sourceLoopAt / 290 : (e.viewArenaScale || 1);
+    const sourceSpeed = Number.isFinite(e.viewSourceSpeed) ? e.viewSourceSpeed
+      : ((e.def && e.def.speed) || 40) * (e.spdMult || 1) * sp * fallbackScale;
+    const oldDist = e.dist, sourceLen = e.sourceLength || ln.len, sourceLoop = e.sourceLoopAt;
+    let sourceDist = sourceAt + Math.max(0, sourceSpeed * dt);
+    const wrapped = sourceLoop != null && sourceDist >= sourceLen;
+    if (wrapped) sourceDist = sourceLoop + (sourceDist - sourceLen) % (sourceLen - sourceLoop);
+    else sourceDist = Math.min(sourceDist, sourceLen);
+    e.viewSourceDist = sourceDist;
+    e.dist = remapLaneDistance(sourceDist, sourceLen, sourceLoop, ln.len, ln.loopAt);
+    const ratio = sourceLoop != null && ln.loopAt != null
+      ? (sourceDist < sourceLoop ? ln.loopAt / sourceLoop : (ln.len - ln.loopAt) / (sourceLen - sourceLoop))
+      : ln.len / sourceLen;
+    e.viewSourceScale = ratio; e.viewSpeed = sourceSpeed * ratio;
+    const advance = Math.max(0, e.dist - oldDist + (wrapped ? ln.len - (ln.loopAt || 0) : 0));
+    const logicalAdvance = advance / arenaWorldScale();
+    e.artWalkDistance = (e.artWalkDistance || 0) + logicalAdvance;
     const entry = directionalArt && directionalArt.entry(e.artAssetId), stride = entry && entry.cycleStride * e.drawHeight / entry.referenceHeight;
     if (entry) {
       const correction = (e.viewPhaseCorrection || 0) * (1 - Math.exp(-dt / 0.15));
-      const phaseAdvance = stride > 0 ? advance / stride : DIR_ART.timePhaseAdvance(advance, e.viewSourceScale || 1, entry.cycleSeconds || entry.views.side.frames / 5);
+      const phaseAdvance = stride > 0 ? logicalAdvance / stride : DIR_ART.timePhaseAdvance(logicalAdvance, 1, entry.cycleSeconds || entry.views.side.frames / 5);
       e.viewPhase = DIR_ART.phase((e.viewPhase || 0) + phaseAdvance + correction, 1);
       e.viewPhaseCorrection = (e.viewPhaseCorrection || 0) - correction;
     }
-    if (e.dist >= ln.len) { if (ln.loopAt != null) e.dist = ln.loopAt + (e.dist - ln.len); else e.dist = ln.len; }
     e.animT += dt * sp;
     const p = posAt(e.dist, e.lane || 0);
     if (Math.abs(p.dx) > 0.3) e.face = Math.sign(p.dx);

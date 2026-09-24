@@ -27,30 +27,38 @@ process.env.E2E_OUTPUT_DIR ||= path.join(repo, 'gen/e2e/directional-review');
       let stamp = 100000;
       Object.defineProperty(performance, 'now', { configurable: true, value: () => stamp });
       try {
-        for (const wave of [4, 12, 52]) for (const pathRatio of [.6, 1, 1.8]) for (const speed of [1, 3]) for (const status of ['normal', 'slow', 'stun']) {
+        for (const wave of [4, 12, 52]) for (const [sourceSide, sourceExtent] of [['l', 1024], ['p', 1080], ['p', 1500]]) for (const speed of [1, 3]) for (const status of ['normal', 'slow', 'stun']) {
           DK.net = null; VIEW.pid = null; VIEW.enemies = []; DK.wave = wave; DK.enemies = []; DK.spawnQ = [];
           spawnEnemy(buildInfinityWave(wave)[0]);
           const e = DK.enemies[0], entry = DKART.entry(e.artAssetId), cycle = entry.cycleSeconds;
-          e.animT = cycle / 4; e.dist = 400; e.entranceT = -1;
+          e.animT = cycle / 4; e.entranceT = -1;
           e.stunT = status === 'stun' ? 3 : 0; e.slowT = status === 'slow' ? 3 : 0; e.slowPct = .5;
-          const sourceVelocity = status === 'stun' ? 0 : e.def.speed * e.spdMult * speed * (status === 'slow' ? .5 : 1);
-          const sourceLength = Math.round(LANES[0].len / pathRatio), k = LANES[0].len / sourceLength;
+          const source = sourceSide === 'l' ? DKCONTENT.buildArenaLayout(sourceExtent, 576, {})
+            : DKCONTENT.buildArenaLayoutPortrait(720, sourceExtent, {});
+          const sourceRing = DKCONTENT.pathLength(source.roads[1]);
+          const sourceLength = Math.round(DKCONTENT.pathLength(source.path));
+          const sourceLoop = sourceLength - sourceRing;
+          const k = (LANES[0].len - LANES[0].loopAt) / sourceRing;
+          const sourceVelocity = status === 'stun' ? 0 : e.def.speed * e.spdMult * speed
+            * (sourceSide === 'p' ? 1.4 : 1) * (status === 'slow' ? .5 : 1);
+          const sourceDist = Math.round(sourceLoop + sourceRing * .37);
           const i = DKCONTENT.bases.findIndex(b => b.id === e.type);
           DK.net = { rivals: { peer: {} }, status: 'alive' }; VIEW.pid = 'peer';
-          const sum = { w: wave, sp: speed, o: 'p', ll: sourceLength, l: 20, f: 1, tw: [] };
-          mpViewBuild({ ...sum, en: `${i},${400 - Math.round(sourceVelocity)},9,${e.appearanceCode},64` });
+          const sum = { w: wave, sp: speed, o: sourceSide, ll: sourceLength, l: 20, f: 1, tw: [] };
+          mpViewBuild({ ...sum, en: `${i},${sourceDist - Math.round(sourceVelocity)},9,${e.appearanceCode},64` });
           stamp += 1000;
-          mpViewBuild({ ...sum, en: `${i},400,9,${e.appearanceCode},64` });
+          mpViewBuild({ ...sum, en: `${i},${sourceDist},9,${e.appearanceCode},64` });
           const v = VIEW.enemies[0];
-          e.animT = cycle / 4; v.viewPhase = .25; v.viewPhaseCorrection = 0;
+          e.dist = v.dist; e.animT = cycle / 4; v.viewPhase = .25; v.viewPhaseCorrection = 0;
           const before = { distance: e.dist, phase: directionalPhase(e), hp: e.hp };
           const dt = .02;
           for (let step = 0; step < speed; step++) update(dt);
           mpViewAdvance(dt);
-          rows.push({ wave, status, speed, sourceScale: k, sourceVelocity, measuredSourceVelocity: v.viewSpeed / k,
+          rows.push({ wave, status, speed, sourceSide, sourceScale: k, sourceVelocity, measuredSourceVelocity: v.viewSpeed / k,
+            localDrawHeight:e.drawHeight, spectatorDrawHeight:v.drawHeight, localWalk:e.artWalkDistance, spectatorWalk:v.artWalkDistance,
             localPhaseAdvance: DKappearance.phaseError(directionalPhase(e), before.phase),
             spectatorPhaseAdvance: DKappearance.phaseError(v.viewPhase, .25),
-            localDistance: e.dist - before.distance, expectedDistance: sourceVelocity * dt,
+            localDistance: e.dist - before.distance, expectedDistance: sourceVelocity * k * dt,
             hpUnchanged: e.hp === before.hp, tolerance: dt / 38 / cycle + 1e-10 });
         }
       } finally {

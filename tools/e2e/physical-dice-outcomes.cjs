@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 'use strict';
 
-// A chest die must award the center number on the face pointed most
-// toward the player (+Z), including automatically rolled d4/d6. The topmost numeral in 2D screen
-// coordinates can belong to another face. Buying a rare die chooses its set
+// A chest die must award the number its final geometry presents: the upper
+// apex on a top-read d4, or the camera-facing side on all other solids.
+// Buying a rare die chooses its set
 // of printed numbers, not its landing result.
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
+const path = require('node:path');
 const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
 const { cameraFacingDieResult } = require('./camera-facing-die.cjs');
 
@@ -44,7 +45,7 @@ async function boot(browser, name, viewport, mobile) {
     const response = await route.fetch(), source = await response.text(), anchor = 'window.DK = S;';
     assert.equal(source.split(anchor).length, 2, 'unique private-test hook');
     await route.fulfill({ response, body: source.replace(anchor,
-      'window.__physicalQA={dieFaceLabels,physicalFaceValue,dieShape,POLY,FACES,DIE_SYMMETRIES,m3apply,m3mul,updateDie,updateSlot};\n' +
+      'window.__physicalQA={dieFaceLabels,physicalFaceValue,dieShape,POLY,FACES,DIE_SYMMETRIES,m3apply,m3mul,updateDie,updateSlot,buildDiceMaterial,diceSkin,drawPolyDie,polyRestR};\n' +
       'window.__physicalQA.cameraFace=' + cameraFacingDieResult.toString() + ';\n' + anchor) });
   });
   await page.goto(gameUrl());
@@ -57,22 +58,55 @@ async function boot(browser, name, viewport, mobile) {
 async function inspectLabels(page, kind, basePose) {
   return page.evaluate(({ kind, basePose }) => {
     const q = __physicalQA, shape = q.dieShape(kind), labels = q.dieFaceLabels(kind);
-    const normals = shape === 'd6' ? q.FACES.map(f => f.n) : q.POLY[shape].faces.map(f => f.n);
+    const normals = shape === 'd6' ? q.FACES.map(f => f.n) :
+      shape === 'd4' ? q.POLY.d4.verts : q.POLY[shape].faces.map(f => f.n);
     const printedAt = i => shape === 'd6' ? labels[q.FACES[i].val - 1] : labels[i];
     const samples = normals.map((normal, i) => {
       // Right-multiplication by a solid symmetry permutes its engraved faces
       // without changing the world-space silhouette or the settled support.
       // Every controlled pose therefore stays physically at rest while a
-      // different printed face occupies the same camera-facing position.
+      // different printed face or d4 apex occupies the same viewing position.
       const pose = q.DIE_SYMMETRIES[shape].map(G => q.m3mul(basePose, G))
         .find(R => q.cameraFace(kind, R, labels, q).index === i);
-      if (!pose) throw Error(`${kind} face ${i + 1}: cannot expose it toward the camera`);
+      if (!pose) throw Error(`${kind} marking ${i + 1}: cannot expose it toward the camera`);
       const visible = q.cameraFace(kind, pose, labels, q);
       return { face: i, R: pose, expected: printedAt(i), visible: visible.value,
         physical: q.physicalFaceValue(kind, pose) };
     });
     return { shape, labels, samples };
   }, { kind, basePose });
+}
+
+async function inspectD4VertexMarkings(page, screenshotPath) {
+  const result = await page.evaluate(() => {
+    const q = __physicalQA, original = CanvasRenderingContext2D.prototype.strokeText;
+    const marks = new Map();
+    CanvasRenderingContext2D.prototype.strokeText = function (value, ...args) {
+      if (!marks.has(this.canvas)) marks.set(this.canvas, []);
+      marks.get(this.canvas).push(Number(value));
+      return original.call(this, value, ...args);
+    };
+    let material;
+    try { material = q.buildDiceMaterial(q.diceSkin()); }
+    finally { CanvasRenderingContext2D.prototype.strokeText = original; }
+    const printed = material.faces.d4.map(face => marks.get(face.cv) || []);
+    const expected = q.POLY.d4.faces.map(face => face.idx.map(i => i + 1));
+    const frequency = [1, 2, 3, 4].map(value => printed.flat().filter(mark => mark === value).length);
+    const cv = document.createElement('canvas'); cv.width = 960; cv.height = 320;
+    const g = cv.getContext('2d'); g.fillStyle = '#39344f'; g.fillRect(0, 0, cv.width, cv.height);
+    const pose = q.polyRestR('d4');
+    const samples = [1, 2, 3, 4].map(value => {
+      const R = q.DIE_SYMMETRIES.d4.map(sym => q.m3mul(pose, sym))
+        .find(candidate => q.physicalFaceValue('d4', candidate) === value);
+      q.drawPolyDie(g, 120 + (value - 1) * 240, 150, 110, 'd4', R);
+      return { value, awarded: q.physicalFaceValue('d4', R),
+        verts: q.POLY.d4.verts.map(v => q.m3apply(R, v)) };
+    });
+    return { printed, expected, frequency, samples, image: cv.toDataURL('image/png') };
+  });
+  fs.writeFileSync(screenshotPath, Buffer.from(result.image.split(',')[1], 'base64'));
+  delete result.image;
+  return result;
 }
 
 async function inspectChestBounds(page) {
@@ -310,12 +344,24 @@ async function run(browser, name, viewport, mobile) {
       assert.equal(boundary.after, boundary.expectedAfter, 'grade immediately above a boundary');
     }
     row.chestBounds = chestBounds;
+    row.d4Markings = await inspectD4VertexMarkings(page,
+      path.join(path.dirname(reportPath), `d4-top-read-${name}.png`));
+    assert.deepEqual(row.d4Markings.printed, row.d4Markings.expected,
+      'each actual d4 texture engraves its three vertex numbers, not one face-center number');
+    assert.deepEqual(row.d4Markings.frequency, [3, 3, 3, 3],
+      'each result is repeated on the three faces that meet at its apex');
+    for (const sample of row.d4Markings.samples) {
+      assert.equal(sample.awarded, sample.value, `d4 vertex ${sample.value} controls its result`);
+      const y = sample.verts.map(v => v[1]);
+      assert.equal(y.indexOf(Math.min(...y)), sample.value - 1,
+        `d4 result ${sample.value} is also the highest visible apex after settling`);
+    }
     for (const kind of kinds) {
       const realResult = await throwAndObserve(page, kind);
       const info = await inspectLabels(page, kind, realResult.landing.R), actual = new Map();
       for (const value of info.labels) actual.set(value, (actual.get(value) || 0) + 1);
       assert.deepEqual([...actual].sort((a, b) => a[0] - b[0]), expectedLabels[kind], `${kind}: every physical side has the promised printed grade label`);
-      assert.ok(info.samples.every(s => s.expected === s.visible && s.visible === s.physical), `${kind}: face-center geometry and value mapping agree`);
+      assert.ok(info.samples.every(s => s.expected === s.visible && s.visible === s.physical), `${kind}: printed geometry and awarded value agree`);
       const odds = await sampleOrientationOdds(page, kind);
       const expected = odds.sampleCount / expectedLabels[kind].length;
       for (const [value] of expectedLabels[kind]) {

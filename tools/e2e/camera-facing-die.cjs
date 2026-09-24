@@ -1,12 +1,22 @@
 'use strict';
 
-// Independent camera-facing reading of a die. The game camera looks along +Z:
-// the face whose outward normal points most toward the player is the result.
-// This deliberately ignores which numeral happens to be highest on the 2D
-// screen. Keep the oracle outside game.js so a reward/visible-face mismatch
-// cannot be hidden by reusing the production face picker.
+// Independent read of the value visibly presented by a die. Ordinary dice use
+// the face whose normal points most toward the camera (+Z). A top-read d4 uses
+// the upper apex: its number is repeated on all three touching faces.
+// Keep this oracle outside game.js so a reward/marking mismatch cannot be
+// hidden by reusing the production picker.
 function cameraFacingDieResult(kind, R, labels, api) {
   const shape = kind === 'story' ? 'd6' : api.dieShape(kind);
+  if (shape === 'd4') {
+    const up = [0, -.75, Math.sqrt(1 - .75 * .75)];
+    const vertices = api.POLY.d4.verts.map((v, index) => {
+      const p = api.m3apply(R, v);
+      return { index, value: labels[index], y: p[1], z: p[2],
+        alignment: p[0] * up[0] + p[1] * up[1] + p[2] * up[2] };
+    });
+    vertices.sort((a, b) => b.alignment - a.alignment || a.index - b.index);
+    return { ...vertices[0], area: 0, totalArea: 0 };
+  }
   const project = v => {
     const p = api.m3apply(R, v), w = 10 / (10 - p[2]);
     return [p[0] * w, p[1] * w];

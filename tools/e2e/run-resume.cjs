@@ -13,7 +13,7 @@ fs.mkdirSync(out, { recursive: true });
       await page.route('**/game.js*', async route => {
         const r = await route.fetch(), s = await r.text();
         assert.ok(s.includes('window.DK = S;'), 'run-resume closure hook exists');
-        const hook = 'window.__resumeQA={persistRun,readRunSave,restoreRunSave,spawnEnemy,buildInfinityWave,towerDmg,relayoutArena,update,updateSlot,laneLen,manualChestReady}; window.DK = S;';
+        const hook = 'window.__resumeQA={persistRun,readRunSave,restoreRunSave,spawnEnemy,buildInfinityWave,towerDmg,relayoutArena,update,updateSlot,laneLen,manualChestReady,lanePhase:e=>{const l=LANES[e.lane||0],b=l.loopAt;return b==null?e.dist/l.len:e.dist<b?e.dist/b:1+(e.dist-b)/(l.len-b)}}; window.DK = S;';
         await route.fulfill({ response: r, body: s.replace('window.DK = S;', hook) });
       });
       async function boot() {
@@ -36,7 +36,7 @@ fs.mkdirSync(out, { recursive: true });
         });
       }
       async function geometry() {
-        return page.evaluate(() => ({ mapKey:DK.mapKey,progress:DK.enemies.map(e=>e.dist/__resumeQA.laneLen(e)),
+        return page.evaluate(() => ({ mapKey:DK.mapKey,progress:DK.enemies.map(e=>__resumeQA.lanePhase(e)),
           finite:[...DK.towers,...DK.projs].every(x=>Number.isFinite(x.x)&&Number.isFinite(x.y)),
           definitions:DK.towers.every(t=>t.def.name===(DK.inf.growthSnapshot.deckSystem===1?DKDECKRULES.get(t.face).name:DKTD[t.face].name)) }));
       }
@@ -92,6 +92,13 @@ fs.mkdirSync(out, { recursive: true });
           return __resumeQA.readRunSave(false);
         }, schema);
         assert.ok(saved && saved.enemies.length && saved.projs.length);
+        assert.ok(saved.laneLoops?.length && saved.arenaCenter?.length === 2 && saved.arenaScale >= 1,
+          'new checkpoint records lane boundary and arena transform');
+        assert.equal(await page.evaluate(saved => {
+          const old = structuredClone(saved);
+          delete old.laneLoops; delete old.arenaCenter; delete old.arenaScale;
+          return DKRUNSAVE.valid(old);
+        }, saved), true, 'older checkpoints without arena metadata still load');
         const expected=await inspect(), initialGeometry=await geometry();
         if (schema==='legacy') { Object.assign(expected.slot,{phase:0,final:0,t:0,t2:0,sndT:0}); }
         assert.equal(saved.inf.growthSnapshot.deckSystem,schema==='collection'?1:undefined);
@@ -115,13 +122,13 @@ fs.mkdirSync(out, { recursive: true });
         if (schema==='legacy') assert.equal(await page.evaluate(()=>__resumeQA.manualChestReady()),false,'interrupted d6 resumes as an automatic roll');
         const restoredGeometry=await geometry();
         assert.ok(restoredGeometry.finite && restoredGeometry.definitions);
-        restoredGeometry.progress.forEach((n,i)=>assert.ok(Math.abs(n-initialGeometry.progress[i])<1e-10,'path progress survives restore'));
+        restoredGeometry.progress.forEach((n,i)=>assert.ok(Math.abs(n-initialGeometry.progress[i])<1e-10,'entry/ring phase survives restore'));
         await page.setViewportSize({width:viewport.height,height:viewport.width});
         await page.waitForFunction(previous=>DK.mapKey!==previous,restoredGeometry.mapKey);
         assert.deepEqual(await inspect(),expected,'rotation preserves frozen classes/pips/powers/ability clocks and legacy growth');
         const rotated=await geometry();
         assert.ok(rotated.finite && rotated.definitions);
-        rotated.progress.forEach((n,i)=>assert.ok(Math.abs(n-restoredGeometry.progress[i])<1e-10,'rotation preserves path progress'));
+        rotated.progress.forEach((n,i)=>assert.ok(Math.abs(n-restoredGeometry.progress[i])<1e-10,'rotation preserves entry/ring phase'));
         const resaved=await page.evaluate(()=>{__resumeQA.persistRun();return __resumeQA.readRunSave(false);});
         assert.deepEqual(resaved.inf.growthSnapshot,saved.inf.growthSnapshot);
         assert.deepEqual(resaved.inf.deckPower,saved.inf.deckPower);

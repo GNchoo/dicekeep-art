@@ -53,6 +53,13 @@
     if (inf.accountTicket !== null && !(typeof inf.accountTicket === 'string' && /^[a-f0-9]{64}$/.test(inf.accountTicket))) return false;
     if (!num(s.gold, 0, 1e15) || !int(s.lives, 1, 20) || !int(s.heldDie, 0, 20) || typeof s.waveActive !== 'boolean' || !num(s.waveT, 0, 1e12) || !num(s.autoT, 0, 1e12)) return false;
     if (!Array.isArray(p.size) || p.size.length !== 2 || !p.size.every(n => num(n, 1, 100000)) || !Array.isArray(p.lanes) || !p.lanes.length || !p.lanes.every(n => num(n, 1, 1e7))) return false;
+    // Optional on older checkpoints; new saves retain the entry/ring boundary
+    // and board origin so rotation restores the same combat position.
+    if (p.laneLoops !== undefined && (!Array.isArray(p.laneLoops) || p.laneLoops.length !== p.lanes.length ||
+      !p.laneLoops.every((n, i) => n === null || num(n, 0, p.lanes[i])))) return false;
+    if (p.arenaCenter !== undefined && (!Array.isArray(p.arenaCenter) || p.arenaCenter.length !== 2 ||
+      !p.arenaCenter.every(n => num(n, -100000, 100000)))) return false;
+    if (p.arenaScale !== undefined && !num(p.arenaScale, 0.1, 10)) return false;
     if (!Array.isArray(p.towers) || p.towers.length > 512 || !Array.isArray(p.board) || p.board.length > 15 || new Set(p.board).size !== p.board.length) return false;
     // Idle towers keep ticking below zero while no enemy is in range. Preserve
     // that ready-to-fire state over long matches instead of rejecting the save.

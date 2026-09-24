@@ -116,17 +116,11 @@ async function inspect(page, fixture) {
       const dieX = rect.left + DKDIE.x * rect.width / canvas.width;
       const dieY = rect.top + DKDIE.y * rect.height / canvas.height;
       const cameraFace = window.__diceRestQA.cameraFace(kind, actual, window.__diceRestQA.dieFaceLabels(kind), window.__diceRestQA);
-      const faceChecks = shape === 'd4' ? POLY.d4.faces.map((face, i) => {
-        const pose = window.__diceRestQA.alignR(face.n);
-        return { face: i + 1,
-          camera: window.__diceRestQA.cameraFace(kind, pose, window.__diceRestQA.dieFaceLabels(kind), window.__diceRestQA).value,
-          award: window.__diceRestQA.physicalFaceValue(kind, pose) };
-      }) : [];
       return {
         bought, shape, phase: DKSLOT.phase, state: DKDIE.state, held: DK.heldDie,
         actual, expected, matchesSymmetry, symmetryCount, projected, hull, visibleFaces, maxVertexDepth,
         cameraFace: cameraFace.value, cameraDepth: cameraFace.z,
-        awardedFace: window.__diceRestQA.physicalFaceValue(kind, actual), faceChecks,
+        awardedFace: window.__diceRestQA.physicalFaceValue(kind, actual),
         mesh: { vertices: model.verts.length, faces: model.faces.length, sides: [...new Set(model.faces.map(f => f.idx.length))] },
         dieTarget: document.elementFromPoint(dieX, dieY)?.id || null,
       };
@@ -171,8 +165,8 @@ async function inspectPhysicalResults(page, kind) {
 }
 
 // Cover the passive, near-rest rocking separately from the moving throw. A
-// settled d4 must not switch its camera-facing result merely because it is
-// being aligned to the floor; the old vertex-based stabilizer did exactly that.
+// A top-read d4 must keep the same raised apex while rocking toward its rest
+// pose; the awarded vertex cannot change after it slows down.
 async function inspectD4Stabilization(page) {
   return page.evaluate(() => {
     const qa = window.__diceRestQA, labels = qa.dieFaceLabels('d4');
@@ -196,24 +190,24 @@ async function inspectD4Stabilization(page) {
         2 * (x * z - y * w), 2 * (y * z + x * w), 1 - 2 * (x * x + y * y),
       ];
     };
-    const faces = [0, 0, 0, 0];
+    const vertices = [0, 0, 0, 0];
     let maxSteps = 0;
     for (let sample = 0; sample < 256; sample++) {
       let R = rotation();
       const expected = qa.cameraFace('d4', R, labels, qa).value;
-      if (qa.physicalFaceValue('d4', R) !== expected) throw Error(`d4 sample ${sample}: initial face disagrees with camera`);
-      faces[expected - 1]++;
+      if (qa.physicalFaceValue('d4', R) !== expected) throw Error(`d4 sample ${sample}: initial apex disagrees with visible result`);
+      vertices[expected - 1]++;
       let step = 0;
       while (qa.physicalRestAlignment('d4', R) < qa.restThreshold('d4') - 1e-6 && step < 180) {
         R = qa.stabilizeRestPose('d4', R, 1 / 60);
         step++;
-        if (qa.physicalFaceValue('d4', R) !== expected) throw Error(`d4 sample ${sample}: face switched during settle at step ${step}`);
+        if (qa.physicalFaceValue('d4', R) !== expected) throw Error(`d4 sample ${sample}: apex switched during settle at step ${step}`);
       }
       if (step === 180) throw Error(`d4 sample ${sample}: failed to settle`);
-      if (qa.cameraFace('d4', R, labels, qa).value !== expected) throw Error(`d4 sample ${sample}: final face disagrees with camera`);
+      if (qa.cameraFace('d4', R, labels, qa).value !== expected) throw Error(`d4 sample ${sample}: final apex disagrees with visual result`);
       maxSteps = Math.max(maxSteps, step);
     }
-    return { samples: 256, faces, maxSteps };
+    return { samples: 256, vertices, maxSteps };
   });
 }
 
@@ -224,7 +218,7 @@ async function run(browser, name, viewport, mobile) {
   try {
     for (const fixture of fixtures) {
       const result = await inspect(page, fixture);
-      if (fixture.kind === 'd4' || fixture.kind === 'd8') {
+      if (fixture.kind === 'd8') {
         await page.screenshot({ path: path.join(path.dirname(reportPath), `${name}-${fixture.kind}-rest.png`) });
       }
       assert.equal(result.bought, fixture.kind, fixture.kind + ': correct chest reward');
@@ -236,17 +230,7 @@ async function run(browser, name, viewport, mobile) {
         fixture.kind + ': full rotational symmetry group randomizes numbered faces fairly');
       const expectedMesh = { d4: [4, 4, 3], d8: [6, 8, 3], d12: [20, 12, 5], d20: [12, 20, 3] }[fixture.shape];
       if (expectedMesh) assert.deepEqual([result.mesh.vertices, result.mesh.faces, ...result.mesh.sides], expectedMesh, fixture.kind + ': renderer uses the correct mesh');
-      if (fixture.shape === 'd4') {
-        assert.ok(result.visibleFaces >= 2, 'd4 shows at least two triangular faces instead of a flat shard');
-        assert.ok(result.maxVertexDepth < .9,
-          `d4 does not point a vertex straight at the camera (depth=${result.maxVertexDepth})`);
-        assert.equal(result.awardedFace, result.cameraFace, 'waiting d4 advertises the face pointed toward the player');
-        assert.ok(result.faceChecks.every(check => check.camera === check.face && check.award === check.camera),
-          'all four d4 face-center labels, not screen-highest vertices, determine the result: ' + JSON.stringify(result.faceChecks));
-      }
-      if (fixture.shape !== 'd4') {
-        assert.ok(result.cameraDepth >= .999, `${fixture.kind}: waiting die rests with one face toward the player (z=${result.cameraDepth})`);
-      }
+      assert.ok(result.cameraDepth >= .999, `${fixture.kind}: waiting die rests with one face toward the player (z=${result.cameraDepth})`);
       if (fixture.shape === 'd8') {
         assert.ok(result.hull.length >= 6, 'face-up d8 keeps a hexagonal silhouette, never a tetrahedron-like triangle');
         assert.ok(result.visibleFaces >= 4, 'd8 shows its winning triangle and three neighbouring faces');
@@ -270,8 +254,8 @@ async function run(browser, name, viewport, mobile) {
     row.previewHulls = previewHulls;
     if (name === 'desktop') {
       row.d4Stabilization = await inspectD4Stabilization(page);
-      assert.ok(row.d4Stabilization.faces.every(n => n > 0),
-        'deterministic d4 settle samples include all four physical result faces');
+      assert.ok(row.d4Stabilization.vertices.every(n => n > 0),
+        'deterministic d4 settle samples include all four physical result vertices');
     }
     for (const kind of ['d8']) {
       const outcomes = await inspectPhysicalResults(page, kind);

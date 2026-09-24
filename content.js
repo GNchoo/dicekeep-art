@@ -282,17 +282,14 @@ window.DKCONTENT = (function () {
       center: L.end, portals: [L.start].concat(L.start2 ? [L.start2] : []),
     });
   }
-  // 인피니티 전용 아레나: 배경은 '바닥 그림'만 쓰고 순환 도로·석단·포탈은 코드가 만든다 (buildArenaLayout, game.js buildRoadLayer)
+  // 인피니티 전용 아레나: 바닥 그림 위에 코드로 순환 도로와 석단을 놓고 시작 포탈 그림을 표시한다.
   maps.push({ key: 'cInf', name: '무한 투기장', infinity: true, arena: true, renderRoads: true, canvas: [1024, 576], rangeBonus: 160 });
-  // 세로 화면용 아레나: 같은 15칸을 3열×5행으로 세우고 트랙을 세로로 길게 두른다
-  maps.push({ key: 'cInfP', name: '무한 투기장 (세로)', infinity: true, arena: true, arenaPortrait: true, renderRoads: true, canvas: [720, 1080], rangeBonus: 280 });
+  // 세로 화면은 같은 전장을 시계 방향으로 돌려 표시한다. 사거리 수치는 두 방향에서 같다.
+  maps.push({ key: 'cInfP', name: '무한 투기장 (세로)', infinity: true, arena: true, arenaPortrait: true, renderRoads: true, canvas: [720, 1080], rangeBonus: 160 });
 
-  // ===== 무한 투기장: 나선 순환 도로 생성기 =====
-  // 왼쪽 가장자리 포탈에서 출발해 중심 크리스탈을 1.5바퀴 돌아 들어간다. 오른쪽 포탈은 두 번째 바퀴로 곧장 합류하는 지름길.
   // ===== 무한 투기장: 고정 보드 + 둘레 트랙 =====
-  // 가운데 3×5 석단 보드(15개, 처음부터 전부 개방), 둘레를 도는 둥근 사각형 트랙 하나. 왼쪽 변 가운데가 열려 있어
-  // 아래쪽 포탈에서 출발한 적이 (종류와 상관없이 전부) 시계 반대 방향으로 한 바퀴 돌아 위쪽 크리스탈에 닿는다.
-  // 인피니티 아레나: 시작·도착 지점이 없다. 적은 왼쪽 화면 밖에서 입구 길로 들어와 가운데 트랙을 영원히 돈다.
+  // 가운데 5×3 석단 보드(15개)와 둘레의 둥근 사각형 트랙 하나.
+  // 적은 왼쪽 포탈의 고정 길이 입구를 지나 트랙을 영원히 돈다. 도착 지점은 없다.
   // 목숨은 '도착'이 아니라 필드 한계선(INFINITY.fieldCap)으로 깎인다 — game.js spawnEnemy.
   // W×H 는 화면 비율에 맞춰 game.js 가 정한다(arenaCanvasForScreen). 트랙·보드 치수는 고정이고 중심만 옮긴다.
   // inset: 화면 위(자원 칩)·아래(겹침 HUD)가 가리는 만큼 트랙을 그 사이 가운데에 세운다.
@@ -306,13 +303,18 @@ window.DKCONTENT = (function () {
     const ring = dedupe([[L, MID],
       ...arc(L + rad, B - rad, Math.PI, Math.PI / 2, 6), ...arc(R - rad, B - rad, Math.PI / 2, 0, 6),
       ...arc(R - rad, T + rad, 0, -Math.PI / 2, 6), ...arc(L + rad, T + rad, -Math.PI / 2, -Math.PI, 6), [L, MID]]);
-    const entry = [[-40, MID], [L, MID]];   // 캔버스 왼쪽 끝 밖에서 들어온다 — 캔버스가 넓어지면 입구 길도 같이 길어진다
+    // Fix the approach in world units so combat exposure does not depend on
+    // viewport width. On a wide canvas it may start inside the visible area.
+    const entry = [[L - 290, MID], [L, MID]];
     const path = dedupe([...entry, ...ring]);
     const loopAt = L - entry[0][0]; // 입구 길이. 경로 끝에 닿으면 여기로 되돌아가 계속 돈다
     // 석단 보드 3×5
     const spots = [];
     for (let r = 0; r < 3; r++) for (let c = 0; c < 5; c++) spots.push([cx + (c - 2) * 88, cy + (r - 1) * 72]);
-    return { path, path2: null, airPts: null, spots, spots2: [], portals: [], center: null, noGoal: true, loopAt,
+    // The spawn point may be off-screen on narrow viewports. Keep the combat
+    // path fixed, but place its decorative entrance marker on the visible road.
+    const portal = [Math.max(48, entry[0][0]), MID];
+    return { path, path2: null, airPts: null, spots, spots2: [], portals: [portal], center: null, noGoal: true, loopAt,
              roads: [entry, ring], board: { x: cx - 222, y: cy - 122, w: 444, h: 244, cols: 5, rows: 3, gapX: 88, gapY: 72 }, track: { L, R, T, B, rad, mid: MID } };
   }
 
@@ -1126,29 +1128,33 @@ window.DKCONTENT = (function () {
     { id: 'toyKing', name: '장난감왕', hp: 1220, speed: 24, gold: 150, dmg: 5, size: 92, move: 'ground', sprite: 'cToyKing', src: 'casual/bosses/toy-king.webp' },
     { id: 'lanternKoi', name: '등불잉어', hp: 1080, speed: 30, gold: 146, dmg: 5, size: 92, move: 'air', sprite: 'cLanternKoi', src: 'casual/bosses/lantern-koi.webp' },
   ];
-  // 세로 화면용 아레나: 캔버스 720×1080, 보드 3열×5행, 트랙은 세로로 긴 링. 가로 아레나를 시계 방향 90° 회전한 배치(입구 위쪽)
+  // 세로 화면: 가로 전장의 모든 칸·길·보드를 시계 방향 90° 돌리고 같은 비율로 키운다.
+  // 별도의 경로를 손으로 그리면 타워와 적 사이의 거리 및 공격 범위가 달라진다.
   function buildArenaLayoutPortrait(W, H, inset) {
     W = W || 720; H = H || 1080; inset = inset || {};
     const cx = Math.round(W / 2), cy = Math.round((inset.top || 0) + (H - (inset.top || 0) - (inset.bottom || 0)) / 2);
-    const L = cx - 270, R = cx + 270, T = cy - 360, B = cy + 360, rad = 60, MID = cy;
-    const arc = (ax, ay, a0, a1, n) => {
-      const out = [];
-      for (let i = 0; i <= n; i++) { const a = a0 + (a1 - a0) * (i / n); out.push([ax + Math.cos(a) * rad, ay + Math.sin(a) * rad]); }
-      return out;
-    };
-    const dedupe = (pts) => pts.filter((p, i) => i === 0 || Math.hypot(p[0] - pts[i - 1][0], p[1] - pts[i - 1][1]) > 0.5);
-    // 가로 아레나를 시계 방향으로 90° 돌린 것과 같게: 입구가 위(12시) 가운데, 트랙은 위 변 왼쪽으로 → 왼쪽 변 아래로 → 바닥 → 오른쪽 변 위로 → 위 변 가운데
-    const ring = dedupe([[cx, T],
-      ...arc(L + rad, T + rad, -Math.PI / 2, -Math.PI, 6), ...arc(L + rad, B - rad, Math.PI, Math.PI / 2, 6),
-      ...arc(R - rad, B - rad, Math.PI / 2, 0, 6), ...arc(R - rad, T + rad, 0, -Math.PI / 2, 6), [cx, T]]);
-    const entry = [[cx, -40], [cx, T]];   // 캔버스 위쪽 끝 밖에서 들어온다 (가로의 왼쪽 입구에 해당)
-    const path = dedupe([...entry, ...ring]);
-    const loopAt = T - entry[0][1];
-    const gapX = 150, gapY = 118;
-    const spots = [];
-    for (let r = 0; r < 5; r++) for (let c = 0; c < 3; c++) spots.push([cx + (c - 1) * gapX, MID + (r - 2) * gapY]);
-    return { path, path2: null, airPts: null, spots, spots2: [], portals: [], center: null, noGoal: true, loopAt,
-             roads: [entry, ring], board: { x: cx - 210, y: MID - 310, w: 420, h: 620, cols: 3, rows: 5, gapX, gapY }, track: { L, R, T, B, rad, mid: MID } };
+    const scale = 1.4, base = buildArenaLayout(1024, 576, {});
+    const rotate = ([x, y]) => [cx - (y - 288) * scale, cy + (x - 512) * scale];
+    const ring = base.roads[1].map(rotate);
+    // Rotate the same fixed 290-unit approach with the ring (×1.4).
+    const entry = base.roads[0].map(rotate);
+    const path = [entry[0], ...ring];
+    const spots = Array(15);
+    base.spots.forEach((point, i) => {
+      const col = i % 5, row = Math.floor(i / 5);
+      spots[col * 3 + (2 - row)] = rotate(point);
+    });
+    const board = { x: cx - base.board.h * scale / 2, y: cy - base.board.w * scale / 2,
+      w: base.board.h * scale, h: base.board.w * scale, cols: 3, rows: 5,
+      gapX: base.board.gapY * scale, gapY: base.board.gapX * scale };
+    const track = { L: cx - 150 * scale, R: cx + 150 * scale, T: cy - 262 * scale,
+      B: cy + 262 * scale, rad: base.track.rad * scale, mid: cy };
+    // On a short portrait canvas the visible approach is entirely under the
+    // HUD. Tuck only the decorative prop into the ring entrance there; the
+    // enemy path and its off-screen spawn stay at their rotated coordinates.
+    const portal = [cx, Math.max(110, Math.min(track.T - 16, Math.max(148, entry[0][1])))];
+    return { path, path2: null, airPts: null, spots, spots2: [], portals: [portal], center: null,
+      noGoal: true, loopAt: base.loopAt * scale, roads: [entry, ring], board, track, arenaScale: scale };
   }
 
   // 아레나 맵에 레이아웃을 (다시) 굽는다. 캔버스 크기가 화면 비율을 따르므로 game.js 가 판 시작·회전·리사이즈 때마다 부른다.
@@ -1157,6 +1163,7 @@ window.DKCONTENT = (function () {
     inf.path = L.path; inf.path2 = L.path2; inf.airPts = L.airPts; inf.spots = L.spots; inf.spots2 = L.spots2;
     inf.portals = L.portals; inf.center = L.center; inf.board = L.board; inf.track = L.track;
     inf.noGoal = L.noGoal; inf.roads = L.roads; inf.loopAt = L.loopAt;
+    inf.arenaScale = L.arenaScale || 1;
     if (W && H) inf.canvas = [W, H];
     inf.inset = { top: (inset && inset.top) || 0, bottom: (inset && inset.bottom) || 0 };
     return inf;
