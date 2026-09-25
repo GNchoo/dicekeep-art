@@ -475,9 +475,10 @@ body.ui-art #help-btn {
 #enhance-toast[data-result="boom"] { --result-line: var(--dk-ui-red); --result-glow: #ec786b88; }
 #enhance-toast[data-result="keep"] { --result-line: var(--dk-ui-muted); --result-glow: #d5c7ab55; }
 #enhance-toast[data-result="power"] { --result-line: var(--dk-ui-blue); --result-glow: #74b9dc44; }
+#wrap.over #chest-reveal,
 #wrap #chest-reveal,
 #wrap #enhance-toast {
-  top: max(52px, 7%);
+  top: var(--stage-notice-top, 100px);
   font-size: 16px;
   padding: 8px 14px;
   box-shadow: 0 3px 0 var(--dk-ui-shadow), 0 4px 12px #16152466;
@@ -501,8 +502,9 @@ body.ui-art #help-btn {
 #wrap.over.narrow .inf-face .inf-lv { font-size: 9px; }
 #wrap.over.narrow #help-btn { width: 24px; height: 24px; }
 
-/* Portrait combat HUD: reserve space for readable state and steady touch targets. */
-@media (max-width: 480px) and (orientation: portrait) {
+/* The stage, not the viewport, sets the tiny HUD class. Keep its values readable
+   on 481–519px portrait stages as well as on narrower phones. */
+@media (orientation: portrait) {
   #stage.tiny .chip {
     font-size: 13px;
     gap: 3px;
@@ -515,6 +517,13 @@ body.ui-art #help-btn {
   #stage.tiny #wave-val { font-size: 14px; }
   #stage.tiny #stats .chip:first-child { flex: 0 1 auto; }
   #stage.tiny #stats .chip:first-child b { min-width: 0; }
+}
+@media (min-width: 390px) and (max-width: 800px) and (orientation: portrait) {
+  #wrap.bleed:not(.over) #mini-top button { width: 42px; height: 40px; }
+}
+
+/* Portrait combat HUD: reserve space for readable state and steady touch targets. */
+@media (max-width: 480px) and (orientation: portrait) {
 
   #wrap.bleed:not(.over) #roll-btn {
     font-size: 15px;

@@ -167,6 +167,7 @@ jobs:
       - name: combat-controls (모바일 HUD·타워 교환·1/2/4 배속)
         run: |
           npm run test:mobile-controls
+          npm run test:hud-notice-layout
           npm run test:tower-move
           npm run test:speed-cycle
       - name: presentation-fx (연속 상자·레이어·강화 버튼·입자 이동)

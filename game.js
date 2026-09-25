@@ -2111,6 +2111,7 @@ function chestDef() { const C = window.DKCONTENT; return C && C.INFINITY && C.IN
 function chestCost() { if (deckRun()) return DECK.summonCost(S.inf.chests); const ch = chestDef(); return ch && S.inf ? ch.cost(S.inf.chests || 0) : Infinity; }
 function stageNotice(id, message, tag, ms) {
   const el = $(id); if (!el) return;
+  hudTopPx(true); // Share the timer's reserved row, including a just-resized HUD.
   for (const otherId of ['chest-reveal', 'enhance-toast']) {
     if (otherId === id) continue;
     const other = $(otherId);
@@ -5406,7 +5407,7 @@ function draw() {
     ctx.font = uiFont(fs);
     while (fs > 12 && ctx.measureText(msg).width > sideWidth - 20) { fs -= 1; ctx.font = uiFont(fs); }
     const tw = ctx.measureText(msg).width;
-    const pw = Math.min(sideWidth, tw + 34), ph = fs + 18;
+    const pw = Math.min(sideWidth, tw + 34), ph = HUD_TIMER_HEIGHT / sc;
     // 좌상단 칩·우상단 미니 버튼(HTML) 바로 아래. 높이는 화면 기준이라 캔버스로 환산한다 (좁은 세로 화면은 미니 버튼이 둘째 줄로 내려온다)
     const by = Math.round(hudTopPx() / sc + ph / 2);
     const bx = compact ? (map.arenaPortrait ? W / 4 : W - pw / 2 - 16) : W / 2;
@@ -5464,6 +5465,9 @@ function draw() {
 const $ = id => document.getElementById(id);
 const overlayEl = $('overlay'), statsEl = $('stats'), hudEl = $('hud'), miniEl = $('mini-top');
 const wrapEl = $('wrap'), stageEl = $('stage');
+// Canvas timer and DOM notices share CSS-pixel rows, independent of arena scale.
+const HUD_TIMER_HEIGHT = 34;
+const HUD_TOP = { v: 58, at: -1e9 };
 
 // 화면에 맞춰 스테이지와 HUD 를 배치한다. 세 가지 배치가 있고 JS 가 실제 가용 공간으로 고른다
 // (스테이지 크기는 뷰포트 폭이 아니라 세로 여유가 정하므로 미디어쿼리로는 맞출 수 없다):
@@ -5590,7 +5594,11 @@ function fitStage() {
   // 칩·미니버튼 축소는 뷰포트 폭이 아니라 실제 스테이지 폭으로 정한다 (가로 폰은 폭이 넓어도 스테이지가 좁다)
   stageEl.classList.toggle('small', w < 680);
   stageEl.classList.toggle('tiny', w < 520);
-  fitTopRow(w);
+  // Reformat the wave chip immediately when the available width changes, even
+  // while paused or waiting for the first wave.
+  if (S.phase === 'playing') syncStats();
+  else fitTopRow(w);
+  hudTopPx(true);
   if (window.__coachOn) coachRender();   // 링·말풍선도 새 배치에 맞춘다
   if (S.net && typeof mpLayoutCards === 'function') mpLayoutCards();   // 상대 요약 카드도 새 배치에 맞춘다
   // HUD 높이가 확정되기 전에 상자를 열었거나 화면을 돌려도 대기 주사위만 안전한 자리로 다시 놓는다.
@@ -5601,6 +5609,7 @@ function fitStage() {
 function fitTopRow(w) {
   w = w || stageEl.clientWidth || stageEl.offsetWidth;
   if (!w || miniEl.classList.contains('hidden') || statsEl.classList.contains('hidden')) { stageEl.classList.remove('mini-drop'); return; }
+  stageEl.style.setProperty('--mini-w', miniEl.offsetWidth + 'px');
   // 여백·칩 간격은 CSS 가 화면 폭마다 다르게 준다(10/6px, gap 8/3px) — 추정하지 말고 실측한다 (추정치는 360px 폰에서 6~8px 과대 → 늘 둘째 줄이었다)
   const sg = stageEl.getBoundingClientRect(), sr = statsEl.getBoundingClientRect(), mr = miniEl.getBoundingClientRect();
   const gap = parseFloat(getComputedStyle(statsEl).columnGap) || 8;
@@ -5608,7 +5617,10 @@ function fitTopRow(w) {
   for (const c of statsEl.children) { if (c.classList.contains('hidden') || !c.offsetWidth) continue; chips += Math.max(c.offsetWidth, c.scrollWidth + 2); n++; }
   const left = Math.max(0, sr.left - sg.left), right = Math.max(0, sg.right - mr.right);
   const need = left + chips + gap * Math.max(0, n - 1) + 6 + miniEl.offsetWidth + right;
-  stageEl.classList.toggle('mini-drop', need > w + 0.5);
+  const drop = need > w + 0.5;
+  const changed = stageEl.classList.contains('mini-drop') !== drop;
+  stageEl.classList.toggle('mini-drop', drop);
+  if (changed) hudTopPx(true);
 }
 window.addEventListener('resize', fitStage);
 window.addEventListener('orientationchange', fitStage);
@@ -6446,16 +6458,17 @@ function canvasToClient(cx, cy) {
 // 터치 판정은 화면(CSS px) 기준으로 고정해야 작은 폰에서도 석단을 누를 수 있다.
 function stageScale() { const r = canvas.getBoundingClientRect(); return r.width > 0 ? r.width / W : 1; }
 // 캔버스 위에 얹힌 HTML(좌상단 칩·우상단 미니 버튼)의 아래 끝 — 캔버스 위쪽 기준 css px. 안내 말풍선을 그 밑에 놓는다. 0.5초 캐시
-let HUD_TOP = { v: 58, at: -1e9 };
 // 위쪽 HUD·안내 말풍선 밑에 놓는 알림 글자의 y (캔버스 좌표)
 function topTextY() { const sc = stageScale() || 1; return Math.round((hudTopPx() + 62) / sc); }
-function hudTopPx() {
+function hudTopPx(force = false) {
   const now = performance.now();
-  if (now - HUD_TOP.at < 500) return HUD_TOP.v;
+  if (!force && now - HUD_TOP.at < 500) return HUD_TOP.v;
   HUD_TOP.at = now;
   const cr = canvas.getBoundingClientRect(); let bottom = 0;
   for (const id of ['stats', 'mini-top']) { const el = $(id); if (!el || el.classList.contains('hidden')) continue; const r = el.getBoundingClientRect(); if (r.height > 0) bottom = Math.max(bottom, r.bottom - cr.top); }
   HUD_TOP.v = Math.max(58, Math.round(bottom + 6));
+  const noticeTop = (HUD_TOP.v + HUD_TIMER_HEIGHT + 8) + 'px';
+  if (stageEl.style.getPropertyValue('--stage-notice-top') !== noticeTop) stageEl.style.setProperty('--stage-notice-top', noticeTop);
   return HUD_TOP.v;
 }
 // 화면 기준 반경(css px) 을 캔버스 내부 좌표 여유로 바꾼다
