@@ -1,6 +1,5 @@
-// 보스는 상성 없이 1배로 받는다 — 잡몹은 상성을 그대로 받는다.
-// 순수운빨은 뽑은 눈이 전부라, 보스 크기와 공격형이 안 맞아 판이 통째로 막히면 운빨이 아니게 된다.
-// 실제 damageEnemy(window.DKdamage)를 통해 확인한다 (산수 재구현이 아니라 게임 코드 그대로).
+// 순수운빨의 모든 타워는 적의 크기와 보스 여부에 관계없이 같은 기본 피해를 준다.
+// 실제 damageEnemy(window.DKdamage)로 1~20눈 전부를 검사하고, 방어력 감산은 유지되는지 확인한다.
 //   E2E_BASE_URL=http://localhost:8137/ node tools/e2e/boss-matchup.cjs
 const fs = require('node:fs');
 const path = require('node:path');
@@ -11,7 +10,7 @@ const repo = path.resolve(__dirname, '../..');
 const out = path.resolve(process.env.E2E_OUTPUT_DIR || path.join(repo, 'gen/e2e/boss-matchup'));
 const base = (process.env.E2E_BASE_URL || 'http://localhost:8137/').replace(/\/?$/, '/');
 fs.mkdirSync(out, { recursive: true });
-const report = { scope: '보스는 상성 배수를 받지 않고, 잡몹은 받는다.', base, checks: [], pass: false };
+const report = { scope: '1~20눈의 피해는 적 크기·보스 여부와 무관하며 방어력은 유지된다.', base, checks: [], pass: false };
 
 (async () => {
   const browser = await launchBrowser();
@@ -32,49 +31,58 @@ const report = { scope: '보스는 상성 배수를 받지 않고, 잡몹은 받
     const result = await page.evaluate(() => {
       DKstartInf('clear');
       DK.paused = true;
-      const INF = DKCONTENT.INFINITY, HP = 1e9, DMG = 1000;
-      // 방어력·에픽 락다운·스턴이 섞이지 않게 방어 0 · 폭발형/진동형/일반형만 본다.
-      const hit = (isBoss, cls, face) => {
-        const e = { hp: HP, max: HP, dead: false, armor: 0, sizeClass: cls, isBoss, stunT: 0, flashT: 0, gold: 0, def: { gold: 0 } };
-        DKdamage(e, DMG, { def: DKTD[face], face });
-        return +((HP - e.hp) / DMG).toFixed(4);   // 실제로 들어간 배수
+      const HP = 1e9, DMG = 1000;
+      const hit = (isBoss, cls, face, armor = 0) => {
+        const e = { hp: HP, max: HP, dead: false, armor, sizeClass: cls, isBoss, stunT: 0, flashT: 0, gold: 0, def: { gold: 0 } };
+        DKdamage(e, DMG, face == null ? null : { def: DKTD[face], face });
+        return +(HP - e.hp).toFixed(4);
       };
-      const FACES = { vib: 1, exp: 2, norm: 3 };   // 1눈 진동형 · 2눈 폭발형 · 3눈 일반형
       const rows = [];
-      for (const [atk, face] of Object.entries(FACES)) {
-        for (const cls of ['S', 'M', 'L']) {
-          rows.push({ atk, face, cls, boss: hit(true, cls, face), mob: hit(false, cls, face), table: INF.sizeMult[atk][cls] });
-        }
+      for (let face = 1; face <= 20; face++) for (const cls of ['S', 'M', 'L']) for (const isBoss of [false, true]) {
+        rows.push({ face, cls, isBoss, bare: hit(isBoss, cls, face), armored: hit(isBoss, cls, face, 37) });
       }
-      // 히든 타워(7★ 이상)도 같은지 — 실제로 문제가 됐던 구간
-      const stars = [];
-      for (const face of [15, 19, 20]) for (const cls of ['S', 'M', 'L']) {
-        stars.push({ face, atk: DKTD[face].atk, cls, boss: hit(true, cls, face), mob: hit(false, cls, face), table: INF.sizeMult[DKTD[face].atk][cls] });
-      }
-      return { rows, stars, mode: DK.mode };
+      const absentClass = Array.from({ length: 20 }, (_, i) => i + 1).flatMap(face =>
+        [false, true].map(isBoss => ({ face, isBoss, damage: hit(isBoss, undefined, face) })));
+      const noSource = [false, true].flatMap(isBoss => ['S', 'M', 'L', undefined].map(cls =>
+        ({ isBoss, cls: cls || null, bare: hit(isBoss, cls, null), armored: hit(isBoss, cls, null, 37) })));
+      const selected = { face: 18, def: DKTD[18], lvl: 1, spot: 0, x: 200, y: 200, cd: 0, skin: 0 };
+      DK.towers.push(selected);
+      DK.selTower = selected;
+      DKsync();
+      const badge = document.getElementById('info-atk');
+      const uiAttackBadgeVisible = !!(badge && badge.getClientRects().length);
+      DK.wave = 57;
+      DK.waveActive = false;
+      DKsync();
+      document.getElementById('wave-btn').click();
+      const announcement = DK.texts.map(t => t.str).filter(s => s.includes('웨이브 58'));
+      return { rows, absentClass, noSource, uiAttackBadgeVisible, announcedWave: DK.wave, announcement, mode: DK.mode,
+        faces: Object.keys(DKTD).map(Number).filter(f => f >= 1 && f <= 20) };
     });
 
     const check = (name, actual, expected) => { assert.deepEqual(actual, expected, name); report.checks.push({ name, pass: true }); console.log('  PASS', name); };
 
     check('인피니티 런에서 검사한다', result.mode, 'infinity');
-    // 1) 보스는 공격형·크기와 무관하게 정확히 1배
-    check('보스는 모든 공격형 × 모든 크기에서 1배로 받는다',
-      result.rows.filter(r => r.boss !== 1).map(r => `${r.atk}×${r.cls}=${r.boss}`), []);
-    check('히든 타워(15·19·20★)도 보스에게 1배로 들어간다',
-      result.stars.filter(r => r.boss !== 1).map(r => `${r.face}★×${r.cls}=${r.boss}`), []);
-    // 2) 잡몹은 상성표 그대로 (검사가 헛돌지 않는지 — 표와 어긋나면 잡는다)
-    check('잡몹은 상성표 배수를 그대로 받는다',
-      result.rows.filter(r => r.mob !== r.table).map(r => `${r.atk}×${r.cls}=${r.mob}≠${r.table}`), []);
-    check('히든 타워도 잡몹에는 상성이 걸린다',
-      result.stars.filter(r => r.mob !== r.table).map(r => `${r.face}★×${r.cls}=${r.mob}≠${r.table}`), []);
-    // 3) 반증: 상성이 실제로 1이 아닌 조합이 있어야 위 검사가 의미가 있다
-    check('상성이 1이 아닌 조합이 실제로 존재한다 (검사 민감도)',
-      result.rows.some(r => r.table !== 1) && result.stars.some(r => r.table !== 1), true);
-    // 4) 문제가 됐던 바로 그 조합: 소형 보스 × 폭발형 15★
-    const s15 = result.stars.find(r => r.face === 15 && r.cls === 'S');
-    check('소형 보스 × 폭발형 15★ — 보스 1배 / 잡몹 0.5배', [s15.boss, s15.mob, s15.atk], [1, 0.5, 'exp']);
-
-    report.rows = result.rows; report.stars = result.stars;
+    check('1~20눈 정의가 모두 존재한다', result.faces, Array.from({ length: 20 }, (_, i) => i + 1));
+    check('1~20눈 × S/M/L × 일반/보스 120조합을 검사한다', result.rows.length, 120);
+    report.rows = result.rows;
+    report.absentClass = result.absentClass;
+    report.noSource = result.noSource;
+    check('모든 크기·보스 여부에서 원 피해 1000 그대로 적용',
+      result.rows.filter(r => r.bare !== 1000).map(r => `${r.face}눈/${r.cls}/${r.isBoss ? 'boss' : 'mob'}=${r.bare}`), []);
+    check('방어 37은 963 피해로 감산, 14~17★ 에픽만 방어 무시',
+      result.rows.filter(r => r.armored !== (r.face >= 14 && r.face <= 17 ? 1000 : 963))
+        .map(r => `${r.face}눈/${r.cls}/${r.isBoss ? 'boss' : 'mob'}=${r.armored}`), []);
+    check('크기 정보가 없는 기존 적도 모든 눈에서 원 피해 유지',
+      result.absentClass.filter(r => r.damage !== 1000).map(r => `${r.face}눈/${r.isBoss ? 'boss' : 'mob'}=${r.damage}`), []);
+    check('발사 주체가 없는 피해도 크기와 무관하고 방어는 감산',
+      result.noSource.filter(r => r.bare !== 1000 || r.armored !== 963)
+        .map(r => `${r.cls}/${r.isBoss ? 'boss' : 'mob'}=${r.bare}/${r.armored}`), []);
+    check('선택한 타워 정보에 제거된 공격형 배지가 표시되지 않는다', result.uiAttackBadgeVisible, false);
+    check('실제 웨이브 버튼으로 58웨이브를 예고한다', result.announcedWave, 58);
+    check('58웨이브 예고 텍스트가 실제로 표시된다', result.announcement.length > 0, true);
+    check('웨이브 예고에도 피해 상성으로 오해할 크기·공격형 문구가 없다',
+      result.announcement.filter(text => /소형|중형|대형|진동형|폭발형|일반형/.test(text)), []);
     assert.deepEqual(errors, [], '브라우저 오류');
     report.pass = true;
     await context.close();
@@ -82,5 +90,5 @@ const report = { scope: '보스는 상성 배수를 받지 않고, 잡몹은 받
     fs.writeFileSync(path.join(out, 'report.json'), JSON.stringify(report, null, 2));
     await browser.close();
   }
-  console.log('PASS 보스 상성 면제', report.checks.length, '검사;', path.join(out, 'report.json'));
+  console.log('PASS 전 타워 크기 상성 제거', report.checks.length, '검사;', path.join(out, 'report.json'));
 })().catch(e => { console.error('FAIL', e); process.exitCode = 1; });

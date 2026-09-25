@@ -203,11 +203,6 @@ body.ui-art #mini-top button[data-icon="menu"] { background-image: url(ui/icon-m
   border-radius: 8px;
 }
 #info-head b { color: var(--dk-ui-cream); }
-#info-atk {
-  color: var(--dk-ui-cream);
-  background: #396789;
-  border-color: var(--dk-ui-blue);
-}
 #info-body,
 #enhance-odds { color: var(--dk-ui-muted); }
 #enhance-odds .up { color: #a7ebc7; }
@@ -248,7 +243,6 @@ body.ui-art #mini-top button[data-icon="menu"] { background-image: url(ui/icon-m
 }
 #info-panel.enhancement-mode #info-head img { flex: 0 0 22px; }
 #info-panel.enhancement-mode #info-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-#info-panel.enhancement-mode #info-atk { flex: 0 0 auto; }
 #info-panel.enhancement-mode #info-body {
   grid-column: 1; grid-row: 2;
   min-height: 0; max-height: 32px; overflow: auto; font-size: 11px; line-height: 16px;
@@ -569,7 +563,6 @@ body.ui-art #help-btn {
 
   #wrap.bleed:not(.over) #info-panel { border-top-color: #8af7ff; }
   #wrap.bleed:not(.over) #info-panel #info-head b { font-size: 15px; }
-  #wrap.bleed:not(.over) #info-panel #info-atk { font-size: 12px; }
   #wrap.bleed:not(.over) #info-close { top: 4px; width: 40px; height: 40px; font-size: 18px; }
   #wrap.bleed:not(.over) #info-panel.enhancement-mode #info-body {
     min-height: 40px;

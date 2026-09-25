@@ -568,7 +568,6 @@ body { touch-action: manipulation; }
 #info-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; flex-shrink: 0; padding-right: 30px; }
 #info-head img { width: 22px; height: 22px; object-fit: contain; }
 #info-head b { color: var(--gold); font-size: 13px; }
-#info-atk { font-size: 10px; color: #cfe4ff; background: rgba(80,120,190,.28); border: 1px solid #5b7fb8; border-radius: 999px; padding: 1px 7px; }
 #info-body { color: #cfc3a5; line-height: 1.4; }
 #enhance-result {
   flex-shrink: 0; padding: 6px 9px; border-radius: 7px;
