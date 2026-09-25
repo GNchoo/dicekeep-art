@@ -44,6 +44,7 @@
     "test:boss-matchup": "node tools/e2e/boss-matchup.cjs",
     "test:tower-move": "node tools/e2e/tower-move.cjs",
     "test:mobile-controls": "node tools/e2e/mobile-controls.cjs",
+    "test:hud-notice-layout": "node tools/e2e/hud-notice-layout.cjs",
     "test:enhancement-flow": "node tools/e2e/enhancement-flow.cjs",
     "test:presentation-fx": "node tools/e2e/presentation-fx.cjs",
     "test:fx-motion": "node tools/e2e/fx-motion.cjs",
