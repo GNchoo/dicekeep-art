@@ -106,11 +106,12 @@ let LANES = []; // { kind, pts, segs, len, label }
 const avoidCache = {}; // mapKey → 물 판정 함수
 let ROAD_LAYER = null;   // 코드 렌더 맵(아레나)의 바닥+도로 오프스크린 캔버스
 let ARENA = null;        // { center, portals } — 코드 렌더 맵일 때만
-const ARENA_PORTAL = { height: 84, footOffset: 26 };
 function arenaPortalStyle(m) {
-  const scale = m?.arenaPortrait ? 1.7 : 1;
-  return { height: ARENA_PORTAL.height * scale, footOffset: ARENA_PORTAL.footOffset * scale,
-    flip: !!m?.arena && !m.arenaPortrait };
+  // Anchor the portrait doorway at the road's start; the side-view arch sits
+  // behind the landscape threshold instead of halfway along the approach.
+  if (m?.arenaPortrait) return { art: 'start-front', height: 142.8, footOffset: 0, xOffset: 0, flip: false };
+  if (m?.arena) return { art: 'start', height: 120, footOffset: 22, xOffset: -22, flip: true };
+  return { art: 'start', height: 84, footOffset: 26, xOffset: 0, flip: false };
 }
 function buildLane(kind, pts, label) {
   const segs = [];
@@ -226,14 +227,14 @@ function buildRoadLayer(m) {
     if (rubble) for (const [x, y] of [[W * 0.16, H * 0.19], [W * 0.84, H * 0.19], [W * 0.29, H * 0.95], [W * 0.71, H * 0.95]]) drawGroundSprite(g, rubble, x, y, 48, rnd() < 0.5);
   }
   // 5. 시작·도착 그림 (있으면 포탈 그림·크리스탈 대신)
-  const st = art('start'), en = art('end');
+  const portal = arenaPortalStyle(m);
+  const st = art(portal.art) || art('start'), en = art('end');
   if (en && m.center) drawGroundSprite(g, en, m.center[0], m.center[1] + 28, 128);
   // 6. 연석 바깥은 어둡게: 플레이 영역(보드·트랙)만 밝게 남겨 장식이 타워로 읽히지 않게 한다
   if (m.track) dimOutsideTrack(g, m);
   // The entrance is a gameplay landmark, so keep it above the outer-map shade.
-  const portal = arenaPortalStyle(m);
   if (st && m.portals) for (const p of m.portals)
-    drawGroundSprite(g, st, p[0], p[1] + portal.footOffset, portal.height, portal.flip);
+    drawGroundSprite(g, st, p[0] + portal.xOffset, p[1] + portal.footOffset, portal.height, portal.flip);
   if (ARENA) { ARENA.hasStart = !!st; ARENA.hasEnd = !!en; ARENA.brazierArt = !!brazierArtFlag(m); }
   return cv;
 }
@@ -919,6 +920,7 @@ const TILE_ASSET_FILES = Object.freeze([
   'arena/prop-2.png',
   'arena/prop-3.png',
   'arena/road.png',
+  'arena/start-front.png',
   'arena/start.png',
   'plains/end.png',
   'plains/floor.jpg',
@@ -5513,7 +5515,7 @@ function arenaCanvasForScreen(key) {
     return { w: Math.round(availW / sc), h: Math.round(boxH / sc),
       inset: { top: topReach - bottomReach + topPx / sc, bottom: bottomPx / sc } };
   }
-  const w = Math.max(800, Math.min(OVER_MAX_W, Math.round(576 * availW / Math.max(200, availH)))); // ring + short approach + full portal width
+  const w = Math.max(880, Math.min(OVER_MAX_W, Math.round(576 * availW / Math.max(200, availH)))); // ring + short approach + full portal width
   const sc = Math.min(availH, availW / (w / 576)) / 576;      // 캔버스 1px 이 화면에서 몇 px 인지
   return { w, h: 576, inset: { top: Math.round(OVER_TOP_INSET / sc), bottom: Math.round((hudH + 4) / sc) } };
 }

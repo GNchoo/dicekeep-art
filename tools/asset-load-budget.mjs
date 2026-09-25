@@ -35,8 +35,8 @@ const VIRTUAL_BASE = `${VIRTUAL_ORIGIN}/dicekeep/`;
 // These are regression ceilings, not desired targets. Lower numbers pass.
 // Update a ceiling only when an intentional asset change genuinely requires it.
 const CHECK_BUDGET = Object.freeze({
-  loadEntries: 776,
-  uniqueRequests: 776,
+  loadEntries: 777,          // v156: one 512px portrait portal (101,790 bytes)
+  uniqueRequests: 777,
   transferBytes: 93_765_659,   // 무손실 WebP 변환 후 실측 (이전 120_497_599)
   decodeBytes: 456_974_188,
 });
