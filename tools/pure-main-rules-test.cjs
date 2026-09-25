@@ -25,11 +25,13 @@ if (process.argv.includes('--capture-reference')) fs.writeFileSync(fixture, JSON
 // instead of treating those presentation fields as balance changes.
 function mechanical(table) {
   const config = { ...table.config };
-  for (const key of ['themeChapters', 'extremeThemeChapters', 'monsters', 'tiers', 'palette', 'artReady', 'artSize', 'artSizeBoss', 'roster', 'pureRounds']) delete config[key];
+  // The user removed size-based damage matchups. Keep the frozen legacy table
+  // intact, but compare all remaining mechanics independently of those keys.
+  for (const key of ['themeChapters', 'extremeThemeChapters', 'monsters', 'tiers', 'palette', 'artReady', 'artSize', 'artSizeBoss', 'roster', 'pureRounds', 'sizeMult', 'sizeName']) delete config[key];
   const towers = { ...table.towers, TOWER_DEFS: Object.fromEntries(
     Object.entries(table.towers.TOWER_DEFS).map(([face, original]) => {
       const tower = { ...original };
-      for (const key of ['name', 'desc', 'color', 'topper', 'rainbow']) delete tower[key];
+      for (const key of ['name', 'desc', 'color', 'topper', 'rainbow', 'atk']) delete tower[key];
       return [face, tower];
     })) };
   const waves = table.waves.map(({ wave, values, monster }) => {
@@ -39,6 +41,21 @@ function mechanical(table) {
   });
   return { config, power: table.power, towers, waves };
 }
-const current = mechanical(inspect(false)), reference = mechanical(JSON.parse(fs.readFileSync(fixture, 'utf8')));
+const currentTable = inspect(false), referenceTable = JSON.parse(fs.readFileSync(fixture, 'utf8'));
+assert.deepEqual(referenceTable.config.sizeMult, {
+  vib: { S: 1, M: .5, L: .25 }, exp: { S: .5, M: .75, L: 1 }, norm: { S: 1, M: 1, L: 1 },
+}, 'frozen fixture retains its former size-damage table');
+assert.deepEqual(referenceTable.config.sizeName, { S: '소형', M: '중형', L: '대형' },
+  'frozen fixture retains its former size labels');
+assert.equal(Object.hasOwn(currentTable.config, 'sizeMult'), false, 'retired size-damage table stays absent');
+assert.equal(Object.hasOwn(currentTable.config, 'sizeName'), false, 'retired size labels stay absent');
+for (let face = 1; face <= 20; face++) {
+  assert.equal(Object.hasOwn(referenceTable.towers.TOWER_DEFS[face], 'atk'), true,
+    `frozen fixture retains face ${face} former attack type`);
+  assert.equal(Object.hasOwn(currentTable.towers.TOWER_DEFS[face], 'atk'), false,
+    `face ${face} has no obsolete attack type`);
+}
+const current = mechanical(currentTable), reference = mechanical(referenceTable);
 assert.deepEqual(current, reference);
-console.log('PASS main 55204fe pure-luck combat: 101-wave stats, economy/odds, 20 tower rules and power table');
+require('./pure-wave-rules-test.cjs'); // v150 clear-only 79-enemy/140-second/HP policy, all 101 waves
+console.log('PASS frozen 55204fe economy/odds, legacy wave donors, 20 base tower rules and removed size matchups');
