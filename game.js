@@ -3198,15 +3198,29 @@ function buildInfinityWave(w) {
     }
     return q;
   }
-  const eliteSlots = new Set();
-  if (w % INF.eliteEvery === 0) for (let k = 0; k < P.elites; k++) eliteSlots.add(Math.floor((k + 0.5) * M.count / P.elites));
-  for (let i = 0; i < M.count; i++) {
+  const count = P.normalCount || M.count, eliteSlots = new Set();
+  if (w % INF.eliteEvery === 0) for (let k = 0; k < P.elites; k++) eliteSlots.add(Math.floor((k + 0.5) * count / P.elites));
+  for (let i = 0; i < count; i++) {
     const elite = eliteSlots.has(i);
     add(M.base.id, {
       name: (elite ? '정예 ' : '') + M.name, hue: M.hue, lane: laneFor(M.base.move, i), art: M.art && M.art.key, artWalk: M.art && M.art.walkKey, artWalkStride: M.art && M.art.walkStride,
       hpMult: P.hpMult * M.hpMult * (elite ? 3 : 1), goldMult: P.goldMult * (elite ? 3 : 1), isElite: elite,
     });
-    t += P.gap * (FAST_AIR.has(M.base.id) ? 0.72 : 1);
+    t += P.gap * (!P.roundSeconds && FAST_AIR.has(M.base.id) ? 0.72 : 1);
+  }
+  if (P.normalCount) {
+    // Keep the round's gold budget, including elites, without rounding away
+    // early income when it is split between many more enemies.
+    const elites = eliteSlots.size;
+    const budget = (M.count - elites) * Math.round(M.base.gold * P.goldMult)
+      + elites * Math.round(M.base.gold * P.goldMult * 3);
+    const totalWeight = count + elites * 2;
+    let weight = 0, paid = 0;
+    for (const item of q) {
+      weight += item.isElite ? 3 : 1;
+      const cumulative = Math.round(budget * weight / totalWeight);
+      item.gold = cumulative - paid; paid = cumulative;
+    }
   }
   return q;
 }
@@ -3279,6 +3293,19 @@ function startWave() {
   coachHit('wave');
   syncUI();
 }
+function normalRoundSeconds() {
+  if (S.mode !== 'infinity' || !S.inf || S.inf.mode !== 'clear' || S.wave < 1) return 0;
+  return DKCONTENT.INFINITY.isBossWave(S.wave) ? 0 : DKCONTENT.INFINITY.pureRounds.seconds;
+}
+function normalRoundRemaining() {
+  return Math.max(0, (finalRoundCleanup() ? DKCONTENT.INFINITY.bossTimeLimit : normalRoundSeconds()) - S.waveT);
+}
+function finalRoundCleanup() {
+  return normalRoundSeconds() > 0 && S.wave >= S.inf.clearWave && S.waveT >= normalRoundSeconds();
+}
+function normalRoundLabel() {
+  return S.inf && S.wave >= S.inf.clearWave ? (finalRoundCleanup() ? '최종 정리' : '최종 웨이브') : '다음 물량';
+}
 // 인피니티: 크기·방어력 예고
 function announceWave(n) {
   if (S.mode !== 'infinity') {
@@ -3288,7 +3315,8 @@ function announceWave(n) {
   if (!window.DKCONTENT) return;
   const INF = DKCONTENT.INFINITY, M = INF.monsterFor(n), hi = INF.highArmor(n);
   const theme = INF.themeFor && INF.themeFor(n);
-  const who = M.boss ? '보스' : `${M.name} ×${M.count}`;
+  const P = INF.waveForMode(n, S.inf && S.inf.mode);
+  const who = M.boss ? '보스' : `${M.name} ×${P.normalCount || M.count}`;
   if (theme && (n === theme.start || theme.finale)) {
     const range = theme.finale ? `웨이브 ${n}` : `웨이브 ${theme.start}~${theme.end}`;
     S.texts.push({ str: `${range} · ${theme.name}`, x: W / 2, y: H / 2 - 112, t: 0, big: true, color: theme.accent });
@@ -3469,7 +3497,7 @@ function infResultHTML(won, res) {
   const line = S.inf.clearWave;
   return (won
       ? `<b>${modeName}</b> ${line}웨이브 완주 — <b>클리어!</b><br>이 모드 클리어 <b>${resultRecord.clears}</b>회<br>`
-      : `${S.inf.bossLeak ? `보스 <b>${escapeHtml(S.inf.bossLeak)}</b>를 막지 못했습니다.<br>` : ''}<b>${modeName}</b> 완료 웨이브 <b>${res.wave}</b>${res.isBest ? ' — <b>최고 기록 갱신!</b>' : ` (최고 ${resultRecord.best})`}<br>`) +
+      : `${S.inf.finalTimeout ? '마지막 웨이브의 남은 적을 제한시간 안에 처치하지 못했습니다.<br>' : S.inf.bossLeak ? `보스 <b>${escapeHtml(S.inf.bossLeak)}</b>를 막지 못했습니다.<br>` : S.lives <= 0 ? '처치하지 못한 적이 누적되어 필드 한계를 넘었습니다.<br>' : ''}<b>${modeName}</b> 완료 웨이브 <b>${res.wave}</b>${res.isBest ? ' — <b>최고 기록 갱신!</b>' : ` (최고 ${resultRecord.best})`}<br>`) +
     `<div class="stat-grid"><span>완료 웨이브</span><b>${won ? `${line} 완주` : res.wave}</b><span>처치</span><b>${S.inf.kills}</b><span>${deckRun()?'쓴 SP':'쓴 골드'}</span><b>${S.inf.spent}</b><span>젬</span><b class="gem">+${res.gems}</b><span>성장 조각</span><b>+${res.shards || 0}</b>${res.collectionRewards ? `<span>연구 골드</span><b>+${res.collectionRewards.gold||0}</b>` : ''}</div>` +
     (res.collectionRewards?.gold>0 ? '<p>로비의 <b>다이스 트리 / 덱</b>에서 연구 골드로 원하는 종류를 해금하고 숙련·각성을 연구하세요.</p>' : '') +
     `<small>${res.pending ? '계정 보상을 확인 중입니다. 상점에서 다시 확인할 수 있습니다.' : res.error ? escapeHtml(res.error) : res.newly.length ? `마일스톤 ${res.newly.join(', ')} 달성 보너스 포함` : ''}${won && res.gems ? ` · 클리어 젬 +${INF.clearGems} 포함` : ''}</small>`;
@@ -3510,6 +3538,9 @@ function onStageClear() {
 // 인피니티 필드 한계선: 살아있는 적이 fieldCap 을 넘으면 가장 먼저 스폰된 적이 사라지며 목숨 차감. 보스가 사라지면 런 종료.
 function enforceFieldCap() {
   const INF = DKCONTENT.INFINITY, cap = INF.fieldCap || 200;
+  // Tower/projectile kills can remain in the array until the next update.
+  // Only living enemies consume capacity; corpses must never cost a life.
+  S.enemies = S.enemies.filter(x => !x.dead);
   while (S.enemies.length > cap) {
     const old = S.enemies.find(x => !x.dead); if (!old) break;
     old.dead = true;
@@ -3562,7 +3593,7 @@ function spawnEnemy(item) {
     type: item.type, def, isElite: !!item.isElite, spdMult: item.spdMult || 1,
     sizeClass: item.sizeClass || null, armor: item.armor || 0, wave: item.wave || S.wave, stunT: 0,
     hp: def.hp * (item.hpMult || 1), max: def.hp * (item.hpMult || 1),
-    gold: Math.round(def.gold * (item.goldMult || 1)),
+    gold: item.gold ?? Math.round(def.gold * (item.goldMult || 1)),
     dist: 0, slowT: 0, slowPct: 0,
     animT: fxRandom(), face: 1, dead: false,
     move, sprite, hue, name: name || def.name,
@@ -3591,6 +3622,7 @@ function spawnEnemy(item) {
   }
   S.enemies.push(e);
   if (S.mode === 'infinity') enforceFieldCap();
+  if (S.phase !== 'playing') return; // A capacity loss may have ended the run.
   const p = epos(e);
   if (isBoss && !battleRun() && S.mode === 'infinity' && S.inf && !(S.inf.bossT > 0)) S.inf.bossT = S.net ? (S.net.timing.bossLimit / 1000) : (DKCONTENT.INFINITY.bossTimeLimit || 320); // 인피니티: 보스 제한시간 (멀티는 방 규칙)
   if (isBoss) {
@@ -4139,8 +4171,11 @@ function update(dt) {
 
   // 스폰
   if (S.waveActive) {
+    const previousSecond = Math.floor(S.waveT);
     if (!battleRun()) S.waveT += dt;
-    while (S.spawnQ.length && S.spawnQ[0].t <= S.waveT) spawnEnemy(S.spawnQ.shift());
+    while (S.phase === 'playing' && S.spawnQ.length && S.spawnQ[0].t <= S.waveT) spawnEnemy(S.spawnQ.shift());
+    if (S.phase !== 'playing') return;
+    if (normalRoundSeconds() && Math.floor(S.waveT) !== previousSecond) syncWaveBtn();
   }
 
   // 적 이동
@@ -4226,7 +4261,13 @@ function update(dt) {
   // 웨이브 종료 판정
   // 인피니티: 스폰이 끝나면 완료 (남은 적은 계속 돈다). 단 보스 웨이브는 보스를 잡을 때까지 다음 웨이브를 막는다 (제한시간 5분 20초)
   const infBossHold = S.mode === 'infinity' && DKCONTENT.INFINITY.isBossWave(S.wave) && S.enemies.some(e => e.isBoss && !e.dead);
-  if (S.waveActive && S.spawnQ.length === 0 && (S.enemies.length === 0 || (S.mode === 'infinity' && !infBossHold))) {
+  const roundSeconds = normalRoundSeconds();
+  const finalRound = roundSeconds > 0 && S.wave >= S.inf.clearWave;
+  const remaining = finalRound && S.enemies.some(e => !e.dead);
+  if (S.waveActive && remaining && S.waveT >= DKCONTENT.INFINITY.bossTimeLimit) {
+    S.inf.finalTimeout = true; S.lives = 0; syncUI(); endInfinity(); return;
+  }
+  if (S.waveActive && S.spawnQ.length === 0 && !remaining && (!roundSeconds || S.waveT + 1e-8 >= roundSeconds) && (S.enemies.length === 0 || (S.mode === 'infinity' && !infBossHold))) {
     S.waveActive = false;
     const bonus = 20 + S.wave * 3 + S.stage * 2;
     S.gold += bonus;
@@ -4236,6 +4277,7 @@ function update(dt) {
       S.inf.doneW = S.wave;
       if (S.net) { S.net.doneW = S.wave; if (window.DKNET) DKNET.done(S.wave); }   // 방에 완료 보고 (통계·카드용)
       if (checkInfClear()) return;              // 도전 모드: 101웨이브 완주 = 클리어
+      if (roundSeconds) { startWave(); return; } // The round clock already includes the time between waves.
       S.autoT = DKCONTENT.INFINITY.intermission;
       syncUI();
       return;
@@ -5296,8 +5338,9 @@ function draw() {
 
   // 웨이브 예고 · 보스 남은 시간 — 같은 말풍선. (보스 시간을 칩에 넣으면 칩이 길어져 우상단 미니 버튼이 둘째 줄로 밀린다)
   const bossT = S.mode === 'infinity' && S.inf && S.inf.bossT > 0 ? S.inf.bossT : 0;
+  const roundT = S.waveActive ? normalRoundRemaining() : 0;
   const picking = MOVE.picking && S.towers.includes(MOVE.picking);
-  if (S.phase === 'playing' && !VIEW.pid && (picking || bossT > 0 || (!S.waveActive && S.wave < S.stageWaves))) {
+  if (S.phase === 'playing' && !VIEW.pid && (picking || bossT > 0 || roundT > 0 || (!S.waveActive && S.wave < S.stageWaves))) {
     ctx.save();
     ctx.textAlign = 'center';
     const cd = waveCountdown();
@@ -5309,6 +5352,8 @@ function draw() {
       ? '타워를 놓을 곳을 선택해 주세요 — 빈 석단을 누르면 옮겨집니다'
       : bossT > 0
       ? `보스 웨이브 ${S.wave} · ${currentTheme ? currentTheme.name + ' · ' : ''}남은 시간 ${Math.floor(bossT / 60)}:${String(Math.floor(bossT % 60)).padStart(2, '0')}`
+      : roundT > 0
+      ? `웨이브 ${S.wave} · ${normalRoundLabel()} ${Math.floor(Math.ceil(roundT) / 60)}:${String(Math.ceil(roundT) % 60).padStart(2, '0')}`
       : S.net
         ? (S.wave === 0 ? `첫 웨이브까지 ${cd}초 — 뽑기(160G)로 타워를 놓으세요` : `다음 웨이브까지 ${cd}초`)
         : S.wave === 0
@@ -5318,7 +5363,7 @@ function draw() {
       if (picking) msg='빈 칸은 이동 · 같은 종류·눈금은 합성';
       else if (S.wave===0) msg=`소환 ${chestCost()} SP · 5종 중 무작위 1눈금으로 시작하세요`;
     }
-    if (S.mode === 'infinity' && !battleRun() && !picking && !bossT && S.wave > 0 && DKCONTENT.INFINITY.themeFor) {
+    if (S.mode === 'infinity' && !battleRun() && !picking && !bossT && !roundT && S.wave > 0 && DKCONTENT.INFINITY.themeFor) {
       const next = S.wave + 1, theme = DKCONTENT.INFINITY.themeFor(next);
       const chapter = next === theme.start || theme.finale
         ? `${theme.finale ? next : theme.start + '~' + theme.end} · ${theme.name}`
@@ -5335,6 +5380,7 @@ function draw() {
     if (compact) {
       msg = picking ? '이동할 빈 칸 선택' : bossT > 0
         ? `보스 ${S.wave} · ${Math.floor(bossT / 60)}:${String(Math.floor(bossT % 60)).padStart(2, '0')}`
+        : roundT > 0 ? `${normalRoundLabel()} · ${Math.floor(Math.ceil(roundT) / 60)}:${String(Math.ceil(roundT) % 60).padStart(2, '0')}`
         : S.wave === 0 ? '뽑기 후 석단에 배치' : `다음 웨이브 · ${cd}초`;
     }
     const sideWidth = compact ? (map.arenaPortrait ? W / 2 - 40 : Math.max(130, W - map.track.R - 24)) : W - 40;
@@ -5732,8 +5778,9 @@ function syncWaveBtn() {
   if (S.phase === 'spectate') { waveBtn.disabled = true; waveBtn.textContent = '관전 중'; return; }
   if (S.phase !== 'playing' || (S.wave >= S.stageWaves && !S.waveActive)) { waveBtn.disabled = true; waveBtn.textContent = '웨이브 종료'; return; }
   waveBtn.disabled = S.waveActive;
+  const roundT = S.waveActive ? normalRoundRemaining() : 0;
   waveBtn.textContent = S.waveActive
-    ? (S.enemies.some(e => e.isBoss && !e.dead) ? `보스 웨이브 ${S.wave}` : `웨이브 ${S.wave} 진행 중`)
+    ? (S.enemies.some(e => e.isBoss && !e.dead) ? `보스 웨이브 ${S.wave}` : roundT > 0 ? `${normalRoundLabel()} ${Math.floor(Math.ceil(roundT) / 60)}:${String(Math.ceil(roundT) % 60).padStart(2, '0')}` : `웨이브 ${S.wave} 진행 중`)
     : (S.wave === 0 ? (S.net ? `첫 웨이브 (${waveCountdown()}초)` : '웨이브 시작') : `다음 웨이브 (${waveCountdown()}초)`);
 }
 

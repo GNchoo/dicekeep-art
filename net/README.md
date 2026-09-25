@@ -69,15 +69,15 @@ node test/ws-smoke.mjs [ws://localhost:8787] # TIMING=fast 서버 상대. 한 �
 
 - **모드**: 방 생성·참가·빠른 매칭은 `mode:'clear'|'extreme'`를 사용한다. 방 안에서는 모드를 바꿀 수 없으며 다른 모드 참가를 거절한다. v4 메시지나 저장 상태의 모드가 생략된 경우만 `clear`로 해석한다. 이는 v3 클라이언트 접속 허용을 뜻하지 않는다.
 - **start**(방장 · lobby · 접속 ≥ 2): 서버가 `seed` 를 만들고 `t0 = now + prep`, 전원 `alive`. `start{seed, t0, timing:{prep, bossLimit, clearWave}, mode, now}` → `room{phase:'playing'}`. 막간(intermission)은 클라가 `content.js` 값을 쓴다.
-- `clear`의 `timing.clearWave`는 101(fast: 12)이다. `extreme`의 값 **0은 완주 목표가 없다는 표식**이다. 0웨이브 종료나 무제한 숫자 허용이 아니며, 보고 웨이브는 `MAX_WAVE=1,000,000`까지 제한한다. 극한도 기존 100분 `GAME_CAP`을 유지한다.
+- `clear`의 `timing.clearWave`는 101(fast: 12)이다. `extreme`의 값 **0은 완주 목표가 없다는 표식**이다. 0웨이브 종료나 무제한 숫자 허용이 아니며, 보고 웨이브는 `MAX_WAVE=1,000,000`까지 제한한다. 순수운빨 방의 서버 상한은 5시간, 극한·대전·협동은 기존 100분이다. 이 상한은 저장 방의 모드에서 계산하므로 기존 저장 방에도 적용된다.
 - 그 뒤 **각 클라는 싱글처럼 자기 웨이브를 돈다**(배속 1~3 자유). 서버는 웨이브 시계·보스 홀드·스케줄이 없고 보고만 받는다:
   - `sum` — 진행 요약. `wave`·`kills`·`dw` 는 max 로 기록한다. `w`·`dw`는 clear에서 `0..clearWave`, extreme에서 `0..MAX_WAVE`로 클램프한다. 중계는 아래.
   - `done{w}` — 통계용. clear는 `1..clearWave`, extreme은 `1..MAX_WAVE`만 받는다.
   - `dead{w,k,r}` — alive 만. 모드 상한으로 제한한 `w`에 대해 `deathWave = max(0, w−1)`. `player{status:'dead', wave, deathWave, kills}` 방송.
   - `clear{w,k}` — clear 모드의 alive만, `w ≥ clearWave`면 수락(보스 처치·완주 검증은 클라 몫). `clearAt = now`. `player{status:'cleared', wave, kills, clearAt}` 방송. 미달이면 anomaly 로그. extreme은 `err mode`로 거절한다.
 - **순위** `end.ranking[]`: `cleared` 는 `clearAt` 오름차순(먼저 완주 = 1위, **공동 없음**, 동시각은 joinedAt) → 그다음 `lost`/`dead`/`left` 는 `deathWave` 내림차순 → `kills` 내림차순 → joinedAt. 항목 `{ pid, name, rank, status, wave, deathWave, kills, clearAt }` (극한은 `reachedWave`도 포함), `rank` 는 1부터 연속.
-- **종료**: alive 0 → `cleared`(완주자 있음) / `all-dead`(dead·lost 있음) / `empty`(전원 left). `t0 + GAME_CAP` → 남은 alive 를 `lost`(극한 deathWave = dw, 순수운빨 deathWave = wave) 로 → `timeout`. 플레이 중 전원 끊김 `EMPTY_END` → `empty`. 재접속 유예 180 s 뒤 alive 는 `left`.
-- 클라이언트의 `dead`·`clear` 보고 없이 서버가 종료 status를 정하는 경우는 `left`(유예 만료·leave)·`lost`(GAME_CAP)다. 보스 시간초과는 각 클라가 `dead{r:'bossTimeout'}` 으로 보고한다.
+- **종료**: alive 0 → `cleared`(완주자 있음) / `all-dead`(dead·lost 있음) / `empty`(전원 left). `t0 + gameCapFor(mode)` → 남은 alive 를 `lost`(극한 deathWave = dw, 순수운빨 deathWave = wave) 로 → `timeout`. 플레이 중 전원 끊김 `EMPTY_END` → `empty`. 재접속 유예 180 s 뒤 alive 는 `left`.
+- 클라이언트의 `dead`·`clear` 보고 없이 서버가 종료 status를 정하는 경우는 `left`(유예 만료·leave)·`lost`(모드별 시간 상한)다. 보스 시간초과는 각 클라가 `dead{r:'bossTimeout'}` 으로 보고한다.
 - **검증 한계**: 진행·처치·완주·적 외형 스트림은 클라이언트 보고값이다. 서버는 형식·범위·모드·상태·전송량을 검사하고 방 안 순위를 계산하지만 전투를 재실행하거나 조작을 판별하지 않는다. 이 순위는 서버 권위의 부정행위 방지 기록이나 결제·재화 지급 근거가 아니다. 순수운빨은 기존 `dead = 보고 웨이브 - 1`, `left/lost = 도달 wave` 규칙을 유지한다. 극한은 모든 종료 사유에서 `dw`를 사용하며 시작한 웨이브를 완료 점수로 세지 않는다. 극한 `sum.dw`는 함께 보고한 `w` 이하로 제한한다.
 
 ## 프로토콜 요약 (v4)
@@ -118,7 +118,8 @@ node test/ws-smoke.mjs [ws://localhost:8787] # TIMING=fast 서버 상대. 한 �
 | MAX_WAVE (`src/modes.js`) | 1,000,000 | extreme 모드 보고 웨이브 상한. 완주 목표가 아님 |
 | RECONNECT_GRACE | 180 s | 플레이 중 끊김 → left |
 | LOBBY_GRACE | 45 s | 대기실 끊김(새로고침·백그라운드) → 좌석·방장을 지키다 제거 (leave 는 즉시) |
-| LOBBY_TTL / END_TTL / GAME_CAP / EMPTY_END / CLAIM_TTL | 15 분 / 10 분 / 100 분 / 3 분 / 60 s | 만료 알람 → room 키 삭제; 보상 영수증은 별도 보존 |
+| GAME_CAP / CLEAR_GAME_CAP | 100 분 / 5 시간 | 극한·대전·협동 / 순수운빨의 `t0` 기준 서버 시간 상한 |
+| LOBBY_TTL / END_TTL / EMPTY_END / CLAIM_TTL | 15 분 / 10 분 / 3 분 / 60 s | 만료 알람 → room 키 삭제; 보상 영수증은 별도 보존 |
 | RESERVE_TTL | 30 s | 빠른 매칭 예약 좌석 접속 마감 |
 | SUM_RELAY_MIN / SUM_WATCH_MIN | 1.5 s / 1 s | sum 중계 최소 간격(멤버당) — 일반 / 보는 사람(en·ll 포함) |
 | EN_MAX / LANE_MAX | 5,120자 / 100,000 | `sum.en` 길이 · `sum.ll` 상한; 200개 적의 외형·위상 포함 |

@@ -227,7 +227,9 @@ async function endings(page, row, dir) {
       const before = { phase: DK.phase, wave: DK.wave, done: DK.inf.doneW, queued: DK.spawnQ.length };
       const prematurelyCleared = __modeQA.checkInfClear();
       // Prepared completion boundary: remove combat fixtures and call real update.
-      DK.spawnQ = []; DK.enemies = []; __modeQA.update(0);
+      DK.spawnQ = []; DK.enemies = [];
+      DK.waveT = DKCONTENT.INFINITY.waveForMode(101, mode).roundSeconds || 0;
+      __modeQA.update(0);
       const completed = { phase: DK.phase, wave: DK.wave, done: DK.inf.doneW, cleared: DK.inf.cleared, result: DK.inf.settledResult && { shards: DK.inf.settledResult.shards, wave: DK.inf.settledResult.wave }, record: DKSAVE.progression.records[mode] };
       if (mode === 'extreme') { DK.autoT = .01; __modeQA.update(.02); }
       return { mode, before, prematurelyCleared, completed, afterWave: DK.wave, afterPhase: DK.phase };
