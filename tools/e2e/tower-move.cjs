@@ -1,4 +1,4 @@
-// 놓인 타워 옮기기: 잠깐 누르고 있으면 떠올라 손끝을 따라오고, 빈 석단에 놓으면 옮겨진다.
+// 놓인 타워 옮기기: 빈 석단 이동, 점유 석단 교환, 덱의 끌기 합성을 검사한다.
 // 실제 포인터 이벤트로 조작한다 (내부 함수를 직접 부르지 않는다).
 //   E2E_BASE_URL=http://localhost:8137/ node tools/e2e/tower-move.cjs
 const fs = require('node:fs');
@@ -10,7 +10,7 @@ const repo = path.resolve(__dirname, '../..');
 const out = path.resolve(process.env.E2E_OUTPUT_DIR || path.join(repo, 'gen/e2e/tower-move'));
 const base = (process.env.E2E_BASE_URL || 'http://localhost:8137/').replace(/\/?$/, '/');
 fs.mkdirSync(out, { recursive: true });
-const report = { scope: '타워 길게 눌러 이동', base, checks: [], pass: false };
+const report = { scope: '타워 이동·교환', base, checks: [], pass: false };
 const check = (name, actual, expected) => { assert.deepEqual(actual, expected, name); report.checks.push({ name }); console.log('  PASS', name); };
 
 // 석단 idx 의 화면 좌표
@@ -85,18 +85,34 @@ async function longPress(page, from, opts = {}) {
     const s5c = await page.evaluate(() => { const s = DKspots()[5]; const t = DK.towers[0]; return [t.x === s[0], t.y === s[1]]; });
     check('좌표가 석단에 딱 맞는다', s5c, [true, true]);
 
-    // ── 4. 이미 타워가 있는 석단에는 놓을 수 없다 (제자리로) ───────────────
+    // ── 4. 점유된 석단에서는 두 타워의 자리를 교환한다 ───────────────────
     await page.evaluate(() => { DK.heldDie = 2; DK.dieFocus = true; DKplace(9); DKsync(); });
     check('두 번째 타워를 9번에 놓았다', (await state()).towers.length, 2);
     const s9 = await at(9), s5b = await at(5);
+    await page.evaluate(() => {
+      window.moveRefs = { first: DK.towers.find(t => t.face === 4), second: DK.towers.find(t => t.face === 2) };
+      window.moveRefs.projectile = { src: window.moveRefs.first };
+    });
     await longPress(page, s5b);
     await page.mouse.move(s9.x, s9.y, { steps: 12 });
-    check('점유된 석단은 놓을 자리로 잡히지 않는다', (await state()).over, -1);
+    check('점유된 석단도 놓을 자리로 잡힌다', (await state()).over, 9);
     await page.mouse.up();
     await page.waitForTimeout(120);
     st = await state();
-    const moved = st.towers.find(t => t.face === 4);
-    check('점유된 곳에 놓으면 제자리로 돌아온다', [moved.spot, moved.moving], [5, false]);
+    check('점유된 곳에 놓으면 두 타워가 자리를 바꾼다',
+      [st.towers.find(t => t.face === 4).spot, st.towers.find(t => t.face === 2).spot, st.towers.length, st.lifted],
+      [9, 5, 2, false]);
+    check('교환 후 기존 타워와 투사체 소유 참조가 유지된다', await page.evaluate(() => [
+      DK.towers.includes(window.moveRefs.first), DK.towers.includes(window.moveRefs.second),
+      window.moveRefs.projectile.src === window.moveRefs.first,
+      DK.towers.every(t => { const s = DKspots()[t.spot]; return t.x === s[0] && t.y === s[1] && !t.moving; }),
+    ]), [true, true, true, true]);
+    // 다음 검사들은 원래 5번 타워 위치를 사용한다.
+    await longPress(page, s9);
+    await page.mouse.move(s5b.x, s5b.y, { steps: 12 });
+    await page.mouse.up();
+    check('다시 교환하면 원래 위치로 돌아간다',
+      [(await state()).towers.find(t => t.face === 4).spot, (await state()).towers.find(t => t.face === 2).spot], [5, 9]);
 
     // ── 5. 주사위 배치 대기 중에도 길게 누르면 기존 타워를 옮긴다 ────────
     await page.evaluate(() => { DK.heldDie = 6; DK.dieFocus = true; DKsync(); });
@@ -152,7 +168,7 @@ async function longPress(page, from, opts = {}) {
       const b = document.getElementById('move-btn'), h = document.getElementById('hud-hint');
       return { picking: !!DKMOVE.picking, text: b.textContent, cls: b.classList.contains('picking'),
         hint: h.classList.contains('hidden') ? null : h.textContent };
-    }), { picking: true, text: '이동 취소', cls: true, hint: '타워를 놓을 곳을 선택해 주세요 — 빈 석단을 누르면 옮겨집니다.' });
+    }), { picking: true, text: '이동 취소', cls: true, hint: '다른 석단을 선택해 주세요 — 타워가 있으면 자리를 바꿉니다.' });
 
     const s7 = await at(7);
     await page.mouse.click(s7.x, s7.y);
@@ -161,15 +177,19 @@ async function longPress(page, from, opts = {}) {
     const moved2 = st.towers.find(t => t.face === 4);
     check('빈 석단을 탭하면 그리로 옮겨진다', [moved2.spot, st.lifted, await page.evaluate(() => !!DKMOVE.picking)], [7, false, false]);
 
-    // 점유된 칸을 고르면 고르기가 유지된다
+    // 이동 버튼은 점유 칸에서도 합성 없이 자리를 바꾼다.
     await page.evaluate(() => { DK.selTower = DK.towers.find(t => t.face === 4); DKsync(); });
     await page.click('#move-btn');
     await page.mouse.click(s9.x, s9.y);
     await page.waitForTimeout(120);
-    check('점유된 칸을 고르면 옮기지 않고 고르기를 유지한다',
-      [await page.evaluate(() => !!DKMOVE.picking), (await state()).towers.find(t => t.face === 4).spot], [true, 7]);
+    check('이동 버튼으로 점유 칸을 고르면 바로 교환한다',
+      [await page.evaluate(() => !!DKMOVE.picking), (await state()).towers.find(t => t.face === 4).spot,
+        (await state()).towers.find(t => t.face === 2).spot, (await state()).towers.length],
+      [false, 9, 7, 3]);
 
     // 다시 누르면 취소
+    await page.click('#move-btn');
+    check('이동 버튼으로 새 고르기를 시작한다', await page.evaluate(() => !!DKMOVE.picking), true);
     await page.click('#move-btn');
     check('이동 버튼을 다시 누르면 취소된다', await page.evaluate(() => !!DKMOVE.picking), false);
 
@@ -184,7 +204,7 @@ async function longPress(page, from, opts = {}) {
     });
     check('상자 주사위가 물리 투척을 기다린다', pending,
       { kind: 'd8', active: true, phase: -1, held: 0, die: 'tray' });
-    await longPress(page, await at(7));
+    await longPress(page, await at(9));
     check('상자 주사위 대기 중에도 기존 타워가 떠오른다', (await state()).lifted, true);
     await page.mouse.move(s6.x, s6.y, { steps: 12 });
     await page.mouse.up();
@@ -193,6 +213,92 @@ async function longPress(page, from, opts = {}) {
       [st.towers.find(t => t.face === 4).spot, st.lifted,
         await page.evaluate(() => [DKSLOT.active, DKSLOT.phase, DK.heldDie, DKDIE.state])],
       [6, false, [true, -1, 0, 'tray']]);
+
+    // ── 10. 가득 찬 보드에서도 이동 버튼이 활성화되고 점유지끼리 교환한다 ────
+    const full = await page.evaluate(() => {
+      DKstartInf('clear'); DK.paused = true;
+      for (let i = 0; i < DKspots().length; i++) {
+        DK.heldDie = i % 2 ? 2 : 4; DK.dieFocus = true; DKplace(i);
+      }
+      window.fullMoveRefs = { first: DK.towers[0], last: DK.towers.at(-1) };
+      DK.towers[0].lvl = 2;
+      DK.selTower = DK.towers[0]; DKsync();
+      return { spots: DKspots().length, towers: DK.towers.length, disabled: document.getElementById('move-btn').disabled };
+    });
+    check('가득 찬 보드에서 이동 버튼을 사용할 수 있다', full, { spots: 15, towers: 15, disabled: false });
+    await page.click('#move-btn');
+    await page.mouse.click((await at(full.spots - 1)).x, (await at(full.spots - 1)).y);
+    check('가득 찬 보드에서 교환해도 객체·레벨·모든 석단 점유가 유지된다', await page.evaluate(() => {
+      const a = window.fullMoveRefs.first, b = window.fullMoveRefs.last;
+      return {
+        firstSpot: a.spot, lastSpot: b.spot, firstLevel: a.lvl,
+        sameObjects: DK.towers.includes(a) && DK.towers.includes(b),
+        uniqueSpots: new Set(DK.towers.map(t => t.spot)).size,
+        aligned: DK.towers.every(t => { const s = DKspots()[t.spot]; return t.x === s[0] && t.y === s[1]; }),
+        picking: !!DKMOVE.picking,
+      };
+    }), { firstSpot: full.spots - 1, lastSpot: 0, firstLevel: 2, sameObjects: true, uniqueSpots: 15, aligned: true, picking: false });
+
+    // ── 11. 덱의 명시적 이동은 같은 타워라도 교환, 끌기는 기존 합성 ────────
+    await page.evaluate(() => {
+      DKstartInf('build'); DK.paused = true;
+      for (const i of [0, 1]) { DK.heldDie = 1; DK.dieFocus = true; DKplace(i); }
+      window.deckMoveRefs = { first: DK.towers[0], second: DK.towers[1] };
+      DK.selTower = DK.towers[0]; DKsync();
+    });
+    await page.click('#move-btn');
+    const d1 = await at(1);
+    await page.mouse.click(d1.x, d1.y);
+    check('덱 이동 버튼은 같은 종류·눈금도 합성하지 않고 교환한다', await page.evaluate(() => ({
+      count: DK.towers.length,
+      firstSpot: window.deckMoveRefs.first.spot, secondSpot: window.deckMoveRefs.second.spot,
+      firstPips: window.deckMoveRefs.first.pips, secondPips: window.deckMoveRefs.second.pips,
+    })), { count: 2, firstSpot: 1, secondSpot: 0, firstPips: 1, secondPips: 1 });
+    await longPress(page, d1);
+    const d0 = await at(0);
+    await page.mouse.move(d0.x, d0.y, { steps: 12 });
+    await page.mouse.up();
+    check('덱 끌기는 호환되는 두 타워를 기존대로 합성한다', await page.evaluate(() => ({
+      count: DK.towers.length, pips: DK.towers[0]?.pips,
+      targetRetained: DK.towers.includes(window.deckMoveRefs.second),
+      sourceRemoved: !DK.towers.includes(window.deckMoveRefs.first),
+      moving: !!DKMOVE.tower,
+    })), { count: 1, pips: 2, targetRetained: true, sourceRemoved: true, moving: false });
+
+    // ── 12. 모사 타워를 끌어 옮기면 기존 복제 동작도 유지한다 ─────────────
+    await page.evaluate(() => {
+      DKstartInf('build'); DK.paused = true;
+      DK.heldDie = 13; DK.dieFocus = true; DKplace(0);
+      DK.heldDie = 1; DK.dieFocus = true; DKplace(1);
+      window.copyMoveRefs = { source: DK.towers[0], target: DK.towers[1] };
+    });
+    await longPress(page, await at(0));
+    await page.mouse.move(d1.x, d1.y, { steps: 12 });
+    await page.mouse.up();
+    check('모사 끌기는 타워 교환 대신 기존 복제를 수행한다', await page.evaluate(() => ({
+      count: DK.towers.length,
+      sourceAtOriginal: window.copyMoveRefs.source.spot === 0,
+      copiedFace: window.copyMoveRefs.source.face,
+      targetUntouched: window.copyMoveRefs.target.face === 1 && window.copyMoveRefs.target.spot === 1,
+      moving: !!DKMOVE.tower,
+    })), { count: 2, sourceAtOriginal: true, copiedFace: 1, targetUntouched: true, moving: false });
+
+    await page.evaluate(() => {
+      DKstartInf('build'); DK.paused = true;
+      DK.heldDie = 1; DK.dieFocus = true; DKplace(0);
+      DK.heldDie = 2; DK.dieFocus = true; DKplace(1);
+      window.incompatibleMoveRefs = { source: DK.towers[0], target: DK.towers[1] };
+    });
+    await longPress(page, await at(0));
+    await page.mouse.move(d1.x, d1.y, { steps: 12 });
+    await page.mouse.up();
+    check('덱의 호환되지 않는 타워 끌기는 합성 대신 교환한다', await page.evaluate(() => ({
+      count: DK.towers.length,
+      sourceSpot: window.incompatibleMoveRefs.source.spot,
+      targetSpot: window.incompatibleMoveRefs.target.spot,
+      sourceFace: window.incompatibleMoveRefs.source.face,
+      targetFace: window.incompatibleMoveRefs.target.face,
+    })), { count: 2, sourceSpot: 1, targetSpot: 0, sourceFace: 1, targetFace: 2 });
 
     assert.deepEqual(errors, [], '브라우저 오류');
     report.pass = true;

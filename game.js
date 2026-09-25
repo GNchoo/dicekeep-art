@@ -4883,6 +4883,35 @@ function drawEffects(layer) {
 
 }
 
+// Selection stays readable at phone scale and above combat effects. Brackets
+// frame only this tower; the broad range circle remains a separate aid.
+function drawTowerFocus(t) {
+  if (!t || t.moving || !S.towers.includes(t) || VIEW.pid) return;
+  const sp = towerSpr(t.face, t.skin), px = 1 / Math.max(.1, stageScale());
+  const x = t.x - (sp.cx ?? TS_CX) - 4 * px;
+  const y = t.y + 6 - (sp.baseY ?? TS_BASE_Y) - 3 * px;
+  const w = sp.w + 8 * px, h = (sp.baseY ?? TS_BASE_Y) + 6 * px;
+  const arm = Math.min(9 * px, w * .22);
+  ctx.save();
+  ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  ctx.beginPath();
+  for (const [cx, cy, dx, dy] of [[x,y,1,1],[x+w,y,-1,1],[x,y+h,1,-1],[x+w,y+h,-1,-1]]) {
+    ctx.moveTo(cx, cy + dy * arm); ctx.lineTo(cx, cy); ctx.lineTo(cx + dx * arm, cy);
+  }
+  ctx.strokeStyle = '#162b40'; ctx.lineWidth = 5.5 * px; ctx.stroke();
+  ctx.strokeStyle = '#8af7ff'; ctx.lineWidth = 2.5 * px; ctx.stroke();
+  // Small inward pointers make the target clear even on a fully occupied board.
+  for (const side of [-1, 1]) {
+    const tip = side < 0 ? x : x + w, mid = y + h * .5;
+    ctx.beginPath(); ctx.moveTo(tip, mid);
+    ctx.lineTo(tip + side * 6 * px, mid - 4 * px);
+    ctx.lineTo(tip + side * 6 * px, mid + 4 * px); ctx.closePath();
+    ctx.strokeStyle = '#162b40'; ctx.lineWidth = 2 * px; ctx.stroke();
+    ctx.fillStyle = '#8af7ff'; ctx.fill();
+  }
+  ctx.restore();
+}
+
 function draw() {
   dieCtx.clearRect(0, 0, W, H);
   const manualDieLayer = S.phase === 'playing' && !VIEW.pid && manualChestRoll() && !chestReveal();
@@ -4911,7 +4940,7 @@ function draw() {
     const hover = Math.hypot(S.mouse.x - sx, S.mouse.y - sy) < SPOT_R
       || (DRAG.active && DRAG.overSpot === i)
       || (MOVE.tower && MOVE.overSpot === i)   // 타워 이동: 내려놓을 자리
-      || (MOVE.picking && !occupied && MOVE.picking.spot !== i);   // 이동 버튼으로 고르는 중: 놓을 수 있는 칸
+      || (MOVE.picking && MOVE.picking.spot !== i);   // 빈 칸은 이동, 점유된 칸은 교환
     const dragging = DRAG.active && S.heldDie;
     const mergePad = occupied && heldMergeable(occupied);
     if (extra) {
@@ -4954,6 +4983,8 @@ function draw() {
       ctx.strokeStyle = `rgba(255,255,255,${held ? 0.5 : 0.28})`;
       ctx.lineWidth = 1.5;
       ctx.stroke();
+    } else if ((MOVE.picking && MOVE.picking.spot !== i) || (MOVE.tower && MOVE.overSpot === i)) {
+      ctx.strokeStyle = '#8af7ff'; ctx.lineWidth = 4; ctx.stroke();
     } else if (heldMergeable(occupied)) {
       const pulse = 0.55 + 0.4 * Math.sin(S.time * 7);
       ctx.strokeStyle = hover ? `rgba(255,230,120,0.95)` : `rgba(255,210,80,${pulse})`;
@@ -5033,14 +5064,6 @@ function draw() {
       for (const f of S.fxs) if (f.kind === 'towerHalo' && f.anchorTower === t && f.t >= 0) drawTowerFeedback(f, true);
       if (!sp.dedicated) drawTopper(t);
       if (deckRun() || t.deckSystem || t.face > 6) drawStarBadge(t);
-      if (S.selTower === t) {
-        ctx.save();
-        ctx.translate(t.x, t.y + 6);
-        ctx.scale(1, 0.5);
-        ctx.beginPath(); ctx.arc(0, 0, SPOT_R + 4, 0, Math.PI * 2);
-        ctx.strokeStyle = 'rgba(255,225,140,0.85)'; ctx.lineWidth = 2.5; ctx.stroke();
-        ctx.restore();
-      }
     } else if (ent.kind === 'c') {
       // 사망 잔상: 떠오르며 사라진다
       const c = ent.o;
@@ -5288,6 +5311,7 @@ function draw() {
   }
 
   drawEffects('world');
+  drawTowerFocus(S.selTower || MOVE.picking);
   drawEffects('reward');
 
   // 물리 주사위 (개체 위에 표시)
@@ -5349,7 +5373,7 @@ function draw() {
       ? DKCONTENT.INFINITY.themeFor(Math.max(1, S.wave)) : null;
     // 자리를 고르는 동안에는 그 안내가 가장 위다 — 떴다 사라지는 글자만으로는 놓치기 쉽다.
     let msg = picking
-      ? '타워를 놓을 곳을 선택해 주세요 — 빈 석단을 누르면 옮겨집니다'
+      ? '옮길 석단을 선택해 주세요 — 타워가 있으면 서로 자리를 바꿉니다'
       : bossT > 0
       ? `보스 웨이브 ${S.wave} · ${currentTheme ? currentTheme.name + ' · ' : ''}남은 시간 ${Math.floor(bossT / 60)}:${String(Math.floor(bossT % 60)).padStart(2, '0')}`
       : roundT > 0
@@ -5360,7 +5384,7 @@ function draw() {
           ? (S.mode === 'infinity' ? '뽑기(160G)를 눌러 주사위를 뽑고, 굴러 나온 타워를 석단에 놓으세요!' : '주사위를 던져 타워를 배치하고, 준비되면 웨이브를 시작하세요!')
           : `다음 웨이브까지 ${cd}초`;
     if (deckRun() && !bossT) {
-      if (picking) msg='빈 칸은 이동 · 같은 종류·눈금은 합성';
+      if (picking) msg='빈 칸은 이동 · 타워가 있으면 자리 교환';
       else if (S.wave===0) msg=`소환 ${chestCost()} SP · 5종 중 무작위 1눈금으로 시작하세요`;
     }
     if (S.mode === 'infinity' && !battleRun() && !picking && !bossT && !roundT && S.wave > 0 && DKCONTENT.INFINITY.themeFor) {
@@ -5378,7 +5402,7 @@ function draw() {
     // 작은 가로 화면에서는 중앙 말풍선이 타워 지붕을, 세로 화면에서는 적의 위쪽 진입로를 가린다.
     const compact = !!map && (map.arenaPortrait || boardTop < hudTopPx() / sc + fs + 18 + 8 / sc);
     if (compact) {
-      msg = picking ? '이동할 빈 칸 선택' : bossT > 0
+      msg = picking ? '옮길 칸 선택 · 타워는 교환' : bossT > 0
         ? `보스 ${S.wave} · ${Math.floor(bossT / 60)}:${String(Math.floor(bossT % 60)).padStart(2, '0')}`
         : roundT > 0 ? `${normalRoundLabel()} · ${Math.floor(Math.ceil(roundT) / 60)}:${String(Math.ceil(roundT) % 60).padStart(2, '0')}`
         : S.wave === 0 ? '뽑기 후 석단에 배치' : `다음 웨이브 · ${cd}초`;
@@ -5772,16 +5796,15 @@ function syncWaveBtn() {
   if (battleRun()) {
     const remaining = Math.max(0, Math.ceil((S.net.t0 - DKNET.serverNow()) / 1000));
     waveBtn.disabled = true;
-    waveBtn.textContent = S.phase === 'over' ? '전투 종료' : remaining ? `함께 시작 · ${remaining}초` : `자동 진행 · ${S.wave}구간`;
+    waveBtn.textContent = S.phase === 'over' ? '전투 종료' : remaining ? '시작 대기' : '자동 진행';
     return;
   }
   if (S.phase === 'spectate') { waveBtn.disabled = true; waveBtn.textContent = '관전 중'; return; }
   if (S.phase !== 'playing' || (S.wave >= S.stageWaves && !S.waveActive)) { waveBtn.disabled = true; waveBtn.textContent = '웨이브 종료'; return; }
   waveBtn.disabled = S.waveActive;
-  const roundT = S.waveActive ? normalRoundRemaining() : 0;
   waveBtn.textContent = S.waveActive
-    ? (S.enemies.some(e => e.isBoss && !e.dead) ? `보스 웨이브 ${S.wave}` : roundT > 0 ? `${normalRoundLabel()} ${Math.floor(Math.ceil(roundT) / 60)}:${String(Math.ceil(roundT) % 60).padStart(2, '0')}` : `웨이브 ${S.wave} 진행 중`)
-    : (S.wave === 0 ? (S.net ? `첫 웨이브 (${waveCountdown()}초)` : '웨이브 시작') : `다음 웨이브 (${waveCountdown()}초)`);
+    ? (S.enemies.some(e => e.isBoss && !e.dead) ? '보스 전투 중' : '전투 중')
+    : (S.wave === 0 ? '웨이브 시작' : '다음 웨이브');
 }
 
 function syncInfo() {
@@ -5791,16 +5814,16 @@ function syncInfo() {
     $('enhance-result').classList.add('hidden');
     if (hint) {
       // 손에 타워가 있는 그 순간이 "어떻게 놓지?" 인 순간이다 — 이때 숨기지 않는다
-      hint.textContent = S.heldDie
-        ? (S.dieFocus
-            ? '빈 석단을 눌러 타워를 놓으세요 (끌어다 놓아도 됩니다). 같은 눈 위에 놓으면 합체.'
-            : '주사위를 보류했습니다. 타워를 눌러 판매·확률강화할 수 있고, 주사위 칸을 다시 누르면 배치 모드, 아래 "바로 판매"로 팔 수도 있습니다.')
-        : MOVE.tower
-          ? '빈 석단으로 끌어다 놓으면 옮겨집니다. 다른 곳에 놓으면 제자리로 돌아갑니다.'
+      hint.textContent = MOVE.tower
+        ? '다른 석단으로 끌어다 놓으세요. 타워가 있으면 자리를 바꿉니다.'
+        : S.heldDie
+          ? (S.dieFocus
+              ? '빈 석단을 눌러 타워를 놓으세요 (끌어다 놓아도 됩니다). 같은 눈 위에 놓으면 합체.'
+              : '주사위를 보류했습니다. 타워를 눌러 판매·확률강화할 수 있고, 주사위 칸을 다시 누르면 배치 모드, 아래 "바로 판매"로 팔 수도 있습니다.')
           : S.mode === 'infinity'
             ? '석단의 타워를 누르면 판매·확률강화를 할 수 있고, 잠깐 누르고 있으면 들어올려 옮길 수 있습니다.'
             : '석단의 타워를 누르면 능력치와 판매를 볼 수 있고, 잠깐 누르고 있으면 들어올려 옮길 수 있습니다.';
-      if (deckRun()) hint.textContent=S.heldDie ? '빈 석단에 1눈금으로 배치하세요. 같은 종류·눈금은 합성할 수 있습니다.' : '같은 종류·눈금 타워를 서로 끌어 합성하세요. 결과 종류는 덱에서 무작위로 정해집니다.';
+      if (deckRun()) hint.textContent=MOVE.tower ? '호환되는 타워는 합성·복제하고, 다른 타워는 자리를 바꿉니다.' : S.heldDie ? '빈 석단에 1눈금으로 배치하세요. 같은 종류·눈금은 합성할 수 있습니다.' : '같은 종류·눈금 타워를 서로 끌어 합성하세요. 이동 버튼으로는 타워의 자리를 바꿀 수 있습니다.';
       hint.classList.toggle('hidden', S.phase !== 'playing');
     }
     return;
@@ -5816,16 +5839,16 @@ function syncInfo() {
   const mv = $('move-btn');
   if (mv) {
     const picking = MOVE.picking === t;
-    const free = SPOTS.some((sp, i) => i !== t.spot && (!towerAt(i) || (deckRun() && (DECK.canMerge(t,towerAt(i)) || DECK.canCopy(t,towerAt(i))))));
+    const free = SPOTS.some((sp, i) => i !== t.spot && !!sp);
     mv.textContent = picking ? '이동 취소' : '이동';
     mv.classList.toggle('picking', picking);
     mv.disabled = S.phase !== 'playing' || (!picking && !free);
-    mv.title = picking ? '고르기를 그만둡니다' : free ? '이 타워를 다른 빈 석단으로 옮깁니다' : '빈 석단이 없습니다';
+    mv.title = picking ? '고르기를 그만둡니다' : free ? '이 타워를 다른 석단으로 옮기거나 자리를 바꿉니다' : '다른 석단이 없습니다';
   }
   // 자리를 고르는 동안에는 안내를 띄워 둔다 (평소에는 정보창이 안내를 대신한다)
   if (hint) {
     const picking = MOVE.picking === t;
-    hint.textContent = '타워를 놓을 곳을 선택해 주세요 — 빈 석단을 누르면 옮겨집니다.';
+    hint.textContent = '다른 석단을 선택해 주세요 — 타워가 있으면 자리를 바꿉니다.';
     hint.classList.toggle('hidden', !picking);
   }
   infoPanel.classList.remove('hidden');
@@ -6499,7 +6522,7 @@ function tryPlace(idx) {
 }
 
 // ==================== 놓인 타워 옮기기 ====================
-// 석단 위 타워를 잠깐 누르고 있으면 떠올라 손끝을 따라오고, 빈 석단에 놓으면 그리로 옮겨진다.
+// 석단 위 타워를 잠깐 누르고 있으면 떠올라 손끝을 따라온다. 다른 석단이 점유되어 있으면 자리를 바꾼다.
 // 옮기는 동안에는 사격하지 않는다(towerFire). 옮기는 데 드는 비용은 없다 — 위치만 바꾸는 것이라
 // 순수운빨의 뽑기·전투에는 영향이 없다.
 const MOVE = {
@@ -6549,7 +6572,7 @@ function moveLift() {
   S.selTower = null;
   suppressClick = true;
   SFX.place();
-  S.texts.push({ str: '들어올렸습니다 — 빈 석단에 놓으세요', x: t.x, y: t.y - 78, t: 0, color: '#a0e8ff' });
+  S.texts.push({ str: '들어올렸습니다 — 다른 석단에 놓으세요', x: t.x, y: t.y - 78, t: 0, color: '#a0e8ff' });
   syncUI();
 }
 function moveTrack(p) {
@@ -6562,26 +6585,40 @@ function moveTrack(p) {
   if (!t) return;
   MOVE.x = p.x; MOVE.y = p.y;
   const idx = spotAt(p.x, p.y, touchExtra(28));
-  MOVE.overSpot = (idx >= 0 && (idx === MOVE.fromSpot || !towerAt(idx) || (deckRun() && (DECK.canMerge(t,towerAt(idx)) || DECK.canCopy(t,towerAt(idx)))))) ? idx : -1;
+  MOVE.overSpot = idx >= 0 && SPOTS[idx] ? idx : -1;
   t.moveGroundY = p.y;
   t.x = p.x;
   t.y = p.y - 22;             // 떠 있는 만큼 위로
+}
+// Move the same tower objects rather than replacing them; in-flight projectile targets and upgrades keep their references.
+function moveToSpot(t, to) {
+  const from = t.spot, destination = SPOTS[to], origin = SPOTS[from];
+  if (!destination || !origin || to === from) return null;
+  const other = towerAt(to);
+  if (other) {
+    other.spot = from;
+    other.x = origin[0]; other.y = origin[1];
+    other.cd = Math.max(other.cd || 0, 0.25);
+  }
+  t.spot = to;
+  t.x = destination[0]; t.y = destination[1];
+  t.cd = Math.max(t.cd || 0, 0.25);
+  return other ? 'swap' : 'move';
 }
 function moveDrop() {
   const t = MOVE.tower;
   if (!t) { moveCancelArm(); return; }
   const to = MOVE.overSpot;
   if (deckRun() && to>=0 && to!==MOVE.fromSpot && towerAt(to) && combineDeckTowers(t,towerAt(to))) { MOVE.tower=null; MOVE.overSpot=-1; MOVE.pid=-1; suppressClick=true; syncUI(); return; }
-  const ok = to >= 0 && to !== MOVE.fromSpot && !towerAt(to) && SPOTS[to];
-  const spot = SPOTS[ok ? to : MOVE.fromSpot];
-  if (ok) {
-    t.spot = to;
+  const outcome = to >= 0 && to !== MOVE.fromSpot ? moveToSpot(t, to) : null;
+  const spot = SPOTS[t.spot];
+  if (outcome) {
     SFX.place();
     S.fxs.push({ kind: 'ring', x: spot[0], y: spot[1] - 30, t: 0, dur: 0.45, size: 70, color: t.def.color });
-    S.texts.push({ str: '옮겼습니다', x: spot[0], y: spot[1] - 78, t: 0, color: '#a0e8ff' });
+    S.texts.push({ str: outcome === 'swap' ? '자리를 바꿨습니다' : '옮겼습니다', x: spot[0], y: spot[1] - 78, t: 0, color: '#a0e8ff' });
   } else {
     SFX.deny();
-    if (to !== MOVE.fromSpot) S.texts.push({ str: '빈 석단에만 놓을 수 있어요', x: spot[0], y: spot[1] - 78, t: 0, color: '#ff9f9f' });
+    if (to !== MOVE.fromSpot) S.texts.push({ str: '석단 위에 놓아 주세요', x: spot[0], y: spot[1] - 78, t: 0, color: '#ff9f9f' });
   }
   t.x = spot[0]; t.y = spot[1];
   t.moving = false; t.moveGroundY = 0;
@@ -6592,7 +6629,7 @@ function moveDrop() {
 }
 // ── '이동' 버튼으로 옮기기 ────────────────────────────────────────────────
 // 길게 누르기는 발견하기 어렵다는 의견이 있어, 타워 정보창에도 같은 일을 하는 버튼을 뒀다.
-// 버튼을 누르면 자리 고르기 모드가 되고, 빈 석단을 한 번 탭하면 그리로 옮긴다.
+// 버튼을 누르면 자리 고르기 모드가 되고, 점유된 석단을 탭해도 합성 없이 자리를 바꾼다.
 function movePickStart(t) {
   if (!t || S.phase !== 'playing' || VIEW.pid || !S.towers.includes(t)) return;
   moveAbort();
@@ -6616,18 +6653,16 @@ function movePickTap(idx) {
   if (idx < 0) { movePickCancel(); S.texts.push({ str: '이동을 취소했습니다', x: W / 2, y: H / 2 - 40, t: 0, color: '#d9c9a0' }); return true; }
   if (idx === t.spot) { movePickCancel(); S.texts.push({ str: '이동을 취소했습니다', x: t.x, y: t.y - 78, t: 0, color: '#d9c9a0' }); return true; }
   const sp = SPOTS[idx];
-  if (deckRun() && towerAt(idx) && combineDeckTowers(t,towerAt(idx))) { MOVE.picking=null; syncUI(); return true; }
-  if (towerAt(idx) || !sp) {
+  if (!sp) {
     SFX.deny();
-    S.texts.push({ str: '빈 석단을 골라 주세요', x: sp ? sp[0] : W / 2, y: (sp ? sp[1] : H / 2) - 78, t: 0, color: '#ff9f9f' });
+    S.texts.push({ str: '석단을 골라 주세요', x: W / 2, y: H / 2 - 78, t: 0, color: '#ff9f9f' });
     return true;   // 고르기는 계속 — 다시 고를 수 있게 둔다
   }
-  t.spot = idx; t.x = sp[0]; t.y = sp[1];
-  t.cd = Math.max(t.cd || 0, 0.25);
+  const outcome = moveToSpot(t, idx);
   MOVE.picking = null;
   SFX.place();
   S.fxs.push({ kind: 'ring', x: sp[0], y: sp[1] - 30, t: 0, dur: 0.45, size: 70, color: t.def.color });
-  S.texts.push({ str: '옮겼습니다', x: sp[0], y: sp[1] - 78, t: 0, color: '#a0e8ff' });
+  S.texts.push({ str: outcome === 'swap' ? '자리를 바꿨습니다' : '옮겼습니다', x: sp[0], y: sp[1] - 78, t: 0, color: '#a0e8ff' });
   syncUI();
   return true;
 }
@@ -7044,9 +7079,18 @@ $('sell-btn').addEventListener('click', () => {
   SFX.sell();
   syncUI();
 });
-function setSpeed(n) { S.speed = battleRun() ? 1 : Math.max(1, Math.min(3, n | 0)); const b = $('speed-btn'); b.textContent = 'x' + S.speed; b.dataset.icon = 'speed' + S.speed; }
+function setSpeed(n) {
+  const requested = n | 0;
+  S.speed = battleRun() ? 1 : requested >= 3 ? 4 : requested >= 2 ? 2 : 1;
+  const b = $('speed-btn');
+  b.textContent = 'x' + S.speed;
+  b.dataset.icon = 'speed' + (S.speed === 4 ? 3 : S.speed); // Existing triple-chevron artwork is the fastest-speed icon.
+  const next = S.speed === 1 ? 2 : S.speed === 2 ? 4 : 1;
+  b.setAttribute('aria-label', `현재 ${S.speed}배속 · 누르면 ${next}배속`);
+  b.title = `현재 ${S.speed}배속 · 누르면 ${next}배속`;
+}
 $('speed-btn').addEventListener('click', () => {
-  setSpeed(S.speed >= 3 ? 1 : S.speed + 1);           // x1 → x2 → x3 → x1 (싱글·멀티 공통, 멀티는 각자)
+  setSpeed(S.speed === 1 ? 2 : S.speed === 2 ? 4 : 1); // x1 → x2 → x4 → x1 (싱글·멀티 공통, 멀티는 각자)
 });
 const ICON_SOUND = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 8.5a5 5 0 0 1 0 7"/><path d="M20 6a9 9 0 0 1 0 12"/></svg>';
 const ICON_MUTE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 9.5l5 5M22 9.5l-5 5"/></svg>';
@@ -7394,7 +7438,7 @@ async function restoreRunSave(p, net) {
       SLOT.R = DIE.R;
     }
   }
-  setSpeed(Math.max(1, Math.min(3, p.speed || 1)));
+  setSpeed(p.speed || 1); // Legacy x3 checkpoints resume at the new fastest setting, x4.
   S.paused = !net;
   if (net) { net.doneW = S.inf.doneW; mpStartSum(); mpRenderRivals(); mpLayoutCards(); }
   if (battleRun()) battleOnState(DKNET.room?.game?.battle || net.battle);
@@ -7423,7 +7467,7 @@ async function resumeSavedRun(end) {
 // ==================== 멀티 (인피니티 · 함께) ====================
 // 서버(Cloudflare Worker + Room DO)는 방·시계·시드·중계만 갖고, 시뮬레이션은 각자 자기 보드에서 돈다 (GAME-SPEC §6.5).
 // net.js(DKNET) 가 소켓·재접속·시각 동기를 맡고, 여기서는 게임 규칙에 붙인다:
-//   - 시작 신호(start{seed,t0,timing})만 같고, 그 뒤는 각자 싱글과 똑같이 진행한다 (막간 자동·웨이브 버튼·배속 x1~x3). 아무도 기다리지 않는다
+//   - 시작 신호(start{seed,t0,timing})만 같고, 그 뒤는 각자 싱글과 똑같이 진행한다 (막간 자동·웨이브 버튼·배속 x1/x2/x4). 아무도 기다리지 않는다
 //   - 2초마다 요약(sum)을 보내고 상대 요약으로 카드(#rivals)를 그린다
 //   - 먼저 죽으면 기록·젬을 그 즉시 저장하고 관전(#spectate)으로. 전원이 완주/탈락하면 순위표 (완주는 빠른 순, 탈락은 웨이브 순)
 const MP = { sumTimer: 0, sumEvery: 0, tickAt: 0, resumeRoom: null, statsDone: false, quick: false, queue: null, baseIdx: null };
@@ -7594,7 +7638,7 @@ const mpMePid = () => (window.DKNET && DKNET.me && DKNET.me.pid) || '';
 const mpModeInput = () => ['clear','extreme','duel','coop'].includes($('mp-mode').value) ? $('mp-mode').value : 'clear';
 function mpModeDescription(mode) {
   return {
-    clear: '순수운빨 · 성장 미적용 · 각자 x1~x3 · 먼저 101웨이브 완주하면 1위',
+    clear: '순수운빨 · 성장 미적용 · 각자 x1/x2/x4 · 먼저 101웨이브 완주하면 1위',
     extreme: '극한 · 덱 성장 적용 · 100분 동안 완료 웨이브 경쟁 · 싱글 극한은 시간 제한 없음',
     duel: '1대1 대전 · 성장 수치 통일 · 목숨 20 · 5처치마다 적 1마리 전송 · 상대 목숨 0이면 승리 · x1 고정',
     coop: `2인 협동 · 공동 목숨 20 · 합계 ${BATTLE.goal}처치면 함께 승리 · 45초마다 아군 보급 60 SP · x1 고정`,
@@ -7747,7 +7791,7 @@ function mpSummary(withField) {
   const m = {
     w: Math.max(0, Math.min(maxWave, Math.floor(S.wave))), dw: Math.max(0, Math.min(maxWave, Math.floor(net.doneW))),
     l: Math.max(0, Math.min(20, S.lives | 0)), g: Math.max(0, Math.min(1e7, Math.floor(S.gold))), k: Math.max(0, Math.min(1e6, S.inf.kills | 0)),
-    f: Math.min(200, S.enemies.length), sp: Math.max(1, Math.min(3, S.speed | 0)), hid: document.hidden ? 1 : 0,
+    f: Math.min(200, S.enemies.length), sp: Math.max(1, Math.min(4, S.speed | 0)), hid: document.hidden ? 1 : 0,
     b: boss ? Math.max(0, Math.min(1, boss.hp / Math.max(1, boss.max))) : null, o: S.mapKey === 'cInfP' ? 'p' : 'l',
     tw: S.towers.slice(0, 15).map(t => deckRun() ? [t.spot,t.face,1,DECK.pips(t)] : [t.spot, t.face, t.lvl]),
     ...(deckRun() ? { ds:1 } : {}),
@@ -7922,7 +7966,7 @@ function mpViewBuild(sum) {
 }
 // 요약 사이(1초)에는 상대 배속으로 전진시켜 흔들리지 않게 한다
 function mpViewAdvance(dt) {
-  const sp = VIEW.sum ? Math.max(1, Math.min(3, VIEW.sum.sp | 0)) : 1;
+  const sp = VIEW.sum ? Math.max(1, Math.min(4, VIEW.sum.sp | 0)) : 1;
   for (const e of VIEW.enemies) {
     const ln = LANES[e.lane || 0] || LANES[0]; if (!ln) continue;
     const sourceAt = e.viewSourceDist ?? e.sourceDist ?? 0;
@@ -8389,7 +8433,7 @@ function frame(ts) {
     if (growthRun() && S.phase === 'playing' && ts - runSaveAt > 5000) { runSaveAt = ts; try { persistRun(); } catch (_) {} }
   } finally {
     uiInFrame = false;
-    if (uiDirty) syncUI(); // 광역 처치와 x3 시뮬레이션의 DOM 갱신/레이아웃을 화면당 한 번으로 합친다.
+    if (uiDirty) syncUI(); // 광역 처치와 x4 시뮬레이션의 DOM 갱신/레이아웃을 화면당 한 번으로 합친다.
   }
   refreshDirectionalDemand(false);
   if (VIEW.pid) { mpViewAdvance(dt); withView(draw); }   // 상대 필드 보기: 내 시뮬은 위에서 돌았고, 그리기만 상대 것으로

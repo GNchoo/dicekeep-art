@@ -1,4 +1,4 @@
-/* Dicekeep combat chrome. Loaded after the base sheets; geometry stays in style.css.
+/* Dicekeep combat chrome. Loaded after the base sheets, including phone overrides.
    The shared --dk-ui-* colors are defined by the main casual theme. */
 
 /* Separate, readable resource counters and utility buttons. */
@@ -45,6 +45,14 @@ body.ui-art #mini-top button[data-icon="chat"] { background-image: url(ui/icon-c
 body.ui-art #mini-top button[data-icon="speed1"] { background-image: url(ui/icon-speed1.png); }
 body.ui-art #mini-top button[data-icon="speed2"] { background-image: url(ui/icon-speed2.png); }
 body.ui-art #mini-top button[data-icon="speed3"] { background-image: url(ui/icon-speed3.png); }
+body.ui-art #mini-top #speed-btn[data-icon] {
+  background-image: none;
+  color: var(--dk-ui-cream) !important;
+  font-size: 15px !important;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-indent: 0;
+}
 body.ui-art #mini-top button[data-icon="sound"] { background-image: url(ui/icon-sound.png); }
 body.ui-art #mini-top button[data-icon="mute"] { background-image: url(ui/icon-mute.png); }
 body.ui-art #mini-top button[data-icon="menu"] { background-image: url(ui/icon-menu.png); }
@@ -498,6 +506,96 @@ body.ui-art #help-btn {
 #wrap.over.narrow .inf-face .inf-cost { font-size: 9px; }
 #wrap.over.narrow .inf-face .inf-lv { font-size: 9px; }
 #wrap.over.narrow #help-btn { width: 24px; height: 24px; }
+
+/* Portrait combat HUD: reserve space for readable state and steady touch targets. */
+@media (max-width: 480px) and (orientation: portrait) {
+  #stage.tiny .chip {
+    font-size: 13px;
+    gap: 3px;
+    padding: 3px 5px 3px 3px;
+  }
+  #stage.tiny .chip img,
+  #stage.tiny .chip .ico { width: 16px; height: 16px; }
+  #stage.tiny .chip .ico svg { width: 12px; height: 12px; }
+  #stage.tiny .chip b { font-size: 16px; }
+  #stage.tiny #wave-val { font-size: 14px; }
+  #stage.tiny #stats .chip:first-child { flex: 0 1 auto; }
+  #stage.tiny #stats .chip:first-child b { min-width: 0; }
+
+  #wrap.bleed:not(.over) #roll-btn {
+    font-size: 15px;
+    line-height: 1.1;
+    padding: 7px;
+    min-width: 54px;
+  }
+  #wrap.bleed:not(.over) #roll-btn small { font-size: 13px; }
+  #wrap.bleed:not(.over) #hud-hint { display: none; }
+  #wrap.bleed:not(.over) #right-panel { flex: 0 0 102px; }
+  #wrap.bleed:not(.over) #wave-btn {
+    box-sizing: border-box;
+    width: 102px;
+    min-width: 102px;
+    min-height: 56px;
+    padding: 9px 6px;
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  #wrap.bleed:not(.over) #inf-panel {
+    flex-wrap: wrap;
+    row-gap: 2px;
+    padding: 4px 6px;
+  }
+  #wrap.bleed:not(.over) .inf-sp-chip {
+    flex: 0 0 100%;
+    padding: 0 2px;
+    font-size: 12px;
+    line-height: 14px;
+  }
+  #wrap.bleed:not(.over) .inf-face {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 48px;
+    width: auto;
+    height: 56px;
+    padding: 2px 0;
+    gap: 0;
+  }
+  #wrap.bleed:not(.over) .inf-face .inf-pip { font-size: 16px; line-height: 18px; }
+  #wrap.bleed:not(.over) .inf-face .inf-lv,
+  #wrap.bleed:not(.over) .inf-face .inf-cost { font-size: 12px; line-height: 14px; }
+  #wrap.bleed:not(.over) #help-btn { flex: 0 0 28px; width: 28px; height: 28px; margin-left: 2px; }
+
+  #wrap.bleed:not(.over) #info-panel { border-top-color: #8af7ff; }
+  #wrap.bleed:not(.over) #info-panel #info-head b { font-size: 15px; }
+  #wrap.bleed:not(.over) #info-panel #info-atk { font-size: 12px; }
+  #wrap.bleed:not(.over) #info-close { top: 4px; width: 40px; height: 40px; font-size: 18px; }
+  #wrap.bleed:not(.over) #info-panel.enhancement-mode #info-body {
+    min-height: 40px;
+    max-height: 40px;
+    font-size: 13px;
+    line-height: 18px;
+  }
+  #wrap.bleed:not(.over) #info-panel.enhancement-mode #enhance-result { font-size: 13px; }
+  #wrap.bleed:not(.over) #info-panel.enhancement-mode #enhance-odds {
+    min-height: 28px;
+    font-size: 13px;
+    line-height: 16px;
+  }
+  #wrap.bleed:not(.over) #hud #info-panel.enhancement-mode {
+    grid-template-rows: 28px 40px 32px 84px;
+    padding: 11px 12px;
+  }
+  #wrap.bleed:not(.over) #hud #info-panel.enhancement-mode #info-actions {
+    grid-template-rows: 48px 30px;
+  }
+  #wrap.bleed:not(.over) #hud #info-panel.enhancement-mode #info-actions button {
+    min-height: 48px;
+    height: 48px;
+    font-size: 14px;
+  }
+}
 
 /* Strong keyboard feedback and quiet motion on accessibility devices. */
 #hud button:focus-visible,

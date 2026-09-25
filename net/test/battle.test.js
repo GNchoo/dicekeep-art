@@ -82,12 +82,14 @@ test('pending events, seq, and disconnect deadlines survive JSON reload; reconne
   h.step({k:'close',sid:'b-new'});h.now+=RECONNECT_GRACE;h.step({k:'alarm'});
   assert.deepEqual(h.state.game.battle.result.winners,[A]);
 });
-test('boss boundaries use server real time; new summaries reject speed3 and personal clear cannot win',()=>{
+test('boss boundaries use server real time; battle summaries reject x3/x4 and personal clear cannot win',()=>{
   const h=harness().start(),b=h.state.game.battle;
   assert.equal(nextAlarm(h.state,h.live,h.now),b.t0+90000);
   h.now+=90000;h.step({k:'alarm'});assert.equal(b.bossRound,1);assert.equal(b.nextBossAt,b.t0+180000);
-  const r=h.msg(A,{t:'sum',w:1,dw:0,l:0,g:0,k:0,f:0,sp:3,hid:0,b:null,o:'l',ds:1,tw:[]});
-  assert.ok(messages(r).some(m=>m.code==='mode'));assert.equal(b.seats[A].lives,20);
+  for(const sp of [3,4]) {
+    const r=h.msg(A,{t:'sum',w:1,dw:0,l:0,g:0,k:0,f:0,sp,hid:0,b:null,o:'l',ds:1,tw:[]});
+    assert.ok(messages(r).some(m=>m.code==='mode'));assert.equal(b.seats[A].lives,20);
+  }
   h.msg(A,{t:'clear',w:101,k:0});assert.equal(h.state.phase,'playing');
   const before=clone(b);h.now=b.t0-1;h.report(A,'leak',{count:100});assert.deepEqual(b,before,'no pre-start damage');
 });
