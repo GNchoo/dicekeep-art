@@ -58,7 +58,7 @@ async function probe(page, name, viewport, expectedKey) {
     const zoom = DK.mapKey === 'cInfP' ? Math.max(1,w/Math.max(1,Math.floor(canvas.width))) : 1;
     const pad = 55 * zoom;
     const inset = (DKCONTENT.maps.find(m => m.key === DK.mapKey) || {}).inset || {};
-    const expected = { left: pad, right: w - pad, top: Math.min(165, h * .25),
+    const expected = { left: pad, right: w - pad, top: Math.max(pad, Math.min(165, h * .25)),
       bottom: Math.min(h - Math.max(125,pad), h - (inset.bottom || 0) - pad) };
     const tray = QA.activeTray(), liveBounds = QA.dieBounds();
     window.__dieDrawProbe=[];QA.drawDie();
@@ -91,9 +91,14 @@ async function probe(page, name, viewport, expectedKey) {
       }
       if (DKDIE.state !== 'throw') break;
     }
+    // Even on a small screen, the full ground-level die/hit envelope must
+    // remain inside the canvas when it reflects from the top boundary.
+    launch(w / 2, liveBounds.top + 1, 0, -900);
+    QA.updateDie(1 / 60);
+    const topBounce = { y: DKDIE.y, vy: DKDIE.vy, edge: (DKDIE.y - pad) * canvas.height / h };
     return { name, viewport: [innerWidth,innerHeight], mapKey: DK.mapKey,
       canvasSize:[w,h], inset, expected, liveBounds, tray, hudTopWorld, zoom, cssDieDiameter,
-      lowerHalf, startY, firstBounce, maxY, minY, steps,
+      lowerHalf, startY, firstBounce, topBounce, maxY, minY, steps,
       slotFinal:DKSLOT.final, held:DK.heldDie };
   }, name);
   report.samples.push(sample);
@@ -104,6 +109,8 @@ async function probe(page, name, viewport, expectedKey) {
 function validate(sample) {
   const { name, expected, liveBounds, tray, lowerHalf, firstBounce, maxY, hudTopWorld, canvasSize, cssDieDiameter } = sample;
   assert.ok(firstBounce, `${name}: die must contact a lower boundary`);
+  assert.ok(sample.topBounce.vy > 0 && sample.topBounce.edge >= -0.1,
+    `${name}: upper reflection keeps the enlarged die envelope on screen: ${JSON.stringify(sample.topBounce)}`);
   assert.ok(Math.abs(firstBounce.y - expected.bottom) < 1.1,
     `${name}: first reflection y=${firstBounce.y}, expected playable floor ${expected.bottom}`);
   assert.ok(maxY <= expected.bottom + 1.1, `${name}: die must stay above HUD-safe floor`);
@@ -314,6 +321,8 @@ async function transition(page,name,viewport,expectedKey,rotated) {
   try {
     const { context, page, errors } = await boot(browser);
     try {
+      const smallPortrait = await probe(page, 'small-portrait', { width: 320, height: 568 }, 'cInfP');
+      if (!repro) validate(smallPortrait);
       const portrait = await probe(page, 'portrait', { width: 440, height: 956 }, 'cInfP');
       if (!repro) validate(portrait);
       const landscape = await probe(page, 'rotated-landscape', { width: 1240, height: 860 }, 'cInf');

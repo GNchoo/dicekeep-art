@@ -106,6 +106,7 @@ let LANES = []; // { kind, pts, segs, len, label }
 const avoidCache = {}; // mapKey → 물 판정 함수
 let ROAD_LAYER = null;   // 코드 렌더 맵(아레나)의 바닥+도로 오프스크린 캔버스
 let ARENA = null;        // { center, portals } — 코드 렌더 맵일 때만
+const ARENA_PORTAL = { height: 84, footOffset: 26 };
 function buildLane(kind, pts, label) {
   const segs = [];
   let len = 0;
@@ -221,10 +222,12 @@ function buildRoadLayer(m) {
   }
   // 5. 시작·도착 그림 (있으면 포탈 그림·크리스탈 대신)
   const st = art('start'), en = art('end');
-  if (st && m.portals) for (const p of m.portals) drawGroundSprite(g, st, p[0], p[1] + 26, 84);
   if (en && m.center) drawGroundSprite(g, en, m.center[0], m.center[1] + 28, 128);
   // 6. 연석 바깥은 어둡게: 플레이 영역(보드·트랙)만 밝게 남겨 장식이 타워로 읽히지 않게 한다
   if (m.track) dimOutsideTrack(g, m);
+  // The entrance is a gameplay landmark, so keep it above the outer-map shade.
+  if (st && m.portals) for (const p of m.portals)
+    drawGroundSprite(g, st, p[0], p[1] + ARENA_PORTAL.footOffset, ARENA_PORTAL.height);
   if (ARENA) { ARENA.hasStart = !!st; ARENA.hasEnd = !!en; ARENA.brazierArt = !!brazierArtFlag(m); }
   return cv;
 }
@@ -2023,7 +2026,7 @@ function dieBounds() {
   if (!manualChestRoll()) return { left: 34, right: W - 34, top: 58, bottom: H - 30 };
   const inset = (DKCONTENT.maps.find(m => m.key === S.mapKey) || {}).inset || {};
   const pad = 55 * dieViewScale();
-  return { left: pad, right: W - pad, top: Math.min(165, H * .25),
+  return { left: pad, right: W - pad, top: Math.max(pad, Math.min(165, H * .25)),
     bottom: Math.min(H - Math.max(125, pad), H - (inset.bottom || 0) - pad) };
 }
 // 짧은 가로 화면에서도 대기 주사위가 겹침 HUD 위에 보이게 한다.
@@ -4557,7 +4560,7 @@ function drawEnemyGroundShadow(e, p, fr) {
 function drawLanes() {
   for (let li = 0; li < LANES.length; li++) {
     const lane = LANES[li];
-    if (lane.kind === 'ground') { if (ARENA && !ARENA.noGoal) drawPortal(lane.pts[0][0], lane.pts[0][1], lane); continue; }
+    if (lane.kind === 'ground') { if (ARENA && (!ARENA.noGoal || ARENA.portals.length)) drawPortal(lane.pts[0][0], lane.pts[0][1], lane); continue; }
     const pts = lane.pts;
     ctx.save();
     ctx.lineJoin = 'round'; ctx.lineCap = 'round';
@@ -5487,19 +5490,23 @@ function wrapAvail() {
   return { availW: wrapEl.clientWidth - padX, availH: wrapEl.clientHeight - padY, gap: parseFloat(cs.rowGap) || 8 };
 }
 const arenaPlaying = () => S.mode === 'infinity' && (S.phase === 'playing' || S.phase === 'spectate');
-// 아레나 캔버스 크기: 짧은 변은 고정(가로 576 / 세로 720)이고 긴 변이 화면 비율을 따른다.
+// Fit the fixed battlefield and its entrance without changing combat distances.
 // 가로는 위(칩 줄)·아래(겹침 HUD) 만큼 트랙을 비켜 세우도록 inset 을 캔버스 좌표로 넘긴다.
 function arenaCanvasForScreen(key) {
   const { availW, availH, gap } = wrapAvail();
   const hudH = hudEl.classList.contains('hidden') ? 0 : hudEl.offsetHeight;
   if (key === 'cInfP') {
     const boxH = Math.max(200, availH - hudH - gap);
-    const h = Math.max(880, Math.min(2000, Math.round(720 * boxH / Math.max(200, availW))));   // 880: 트랙(±360)+여백 · 2000: 폴더블 커버·초장신 화면
-    // 거의 정사각형 화면(폴더블 펼침): HUD 두 줄 위의 상자가 납작하면 세로 아레나를 옆으로 넓혀 여백을 채운다 (보드·트랙은 가운데 그대로)
-    const w = h === 880 && boxH / Math.max(200, availW) < 880 / 720 ? Math.min(1400, Math.round(880 * availW / boxH)) : 720;
-    return { w, h, inset: { top: 0, bottom: 0 } };
+    const probe = DKCONTENT.buildArenaLayoutPortrait(720, 1080, {});
+    const topReach = 540 - probe.path[0][1] + ARENA_PORTAL.height - ARENA_PORTAL.footOffset;
+    const bottomReach = probe.track.B - 540 + 40; // road curb and soft edge
+    const topPx = 64 + safeArea().t, bottomPx = 12;
+    const sc = Math.min(availW / 720, Math.max(80, boxH - topPx - bottomPx) / (topReach + bottomReach));
+    // The portal needs more room above the ring than the curb needs below it.
+    return { w: Math.round(availW / sc), h: Math.round(boxH / sc),
+      inset: { top: topReach - bottomReach + topPx / sc, bottom: bottomPx / sc } };
   }
-  const w = Math.max(680, Math.min(OVER_MAX_W, Math.round(576 * availW / Math.max(200, availH))));   // 680: 트랙(±262+52)+여백 — 거의 정사각 화면(폴더블 펼침)도 레터박스 없이
+  const w = Math.max(800, Math.min(OVER_MAX_W, Math.round(576 * availW / Math.max(200, availH)))); // ring + short approach + full portal width
   const sc = Math.min(availH, availW / (w / 576)) / 576;      // 캔버스 1px 이 화면에서 몇 px 인지
   return { w, h: 576, inset: { top: Math.round(OVER_TOP_INSET / sc), bottom: Math.round((hudH + 4) / sc) } };
 }
@@ -7905,8 +7912,8 @@ function mpViewBuild(sum) {
   VIEW.towers = towers;
   const ll = sum.ll | 0, len = LANES[0] ? LANES[0].len : 0, k = ll > 0 && len > 0 ? len / ll : 1;
   const sourceMap = C.maps.find(m => m.key === fromKey);
-  // Only the off-screen entry changes with viewport size. The ring is fixed
-  // for each orientation, so infer its boundary from the streamed total length.
+  // The ring is fixed for each orientation. Infer the approach boundary from
+  // the streamed length, including summaries from older, longer entrances.
   const sourceRing = sourceMap?.roads?.[1] ? C.pathLength(sourceMap.roads[1]) : 0;
   const sourceLoop = sourceRing > 0 && ll > sourceRing ? ll - sourceRing : null;
   const localLoop = LANES[0]?.loopAt;
@@ -7945,7 +7952,7 @@ function mpViewBuild(sum) {
       if (elapsed > 0.05 && elapsed < 5 && old.sourceLength === ll) {
         let delta = d - old.sourceDist;
         if (delta < -ll / 2 && sourceLoop != null) delta += ll - sourceLoop;
-        const sourceScale = sourceLoop != null && d < sourceLoop ? sourceLoop / 290
+        const sourceScale = sourceLoop != null && d < sourceLoop ? sourceLoop / C.arenaEntryLength
           : (fromKey === 'cInfP' ? 1.4 : 1);
         const maxSourceSpeed = base.speed * (e.spdMult || 1) * Math.max(1, sum.sp || 1) * sourceScale * 1.5;
         e.viewSourceSpeed = Math.max(0, Math.min(maxSourceSpeed, delta / elapsed));
@@ -7977,7 +7984,7 @@ function mpViewAdvance(dt) {
     const ln = LANES[e.lane || 0] || LANES[0]; if (!ln) continue;
     const sourceAt = e.viewSourceDist ?? e.sourceDist ?? 0;
     const fallbackScale = e.sourceLoopAt != null && sourceAt < e.sourceLoopAt
-      ? e.sourceLoopAt / 290 : (e.viewArenaScale || 1);
+      ? e.sourceLoopAt / DKCONTENT.arenaEntryLength : (e.viewArenaScale || 1);
     const sourceSpeed = Number.isFinite(e.viewSourceSpeed) ? e.viewSourceSpeed
       : ((e.def && e.def.speed) || 40) * (e.spdMult || 1) * sp * fallbackScale;
     const oldDist = e.dist, sourceLen = e.sourceLength || ln.len, sourceLoop = e.sourceLoopAt;
