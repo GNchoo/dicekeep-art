@@ -379,13 +379,15 @@ test('송신: sum 범위 클램프·tw 15개·sp/ll/en, watch, done/dead/clear/c
   same(s.tw[0], [0, 20, 3]);
   same(s.tw[14], [14, 20, 3]);
   assert.equal(s.w, 101); assert.equal(s.dw, 0); assert.equal(s.l, 20); assert.equal(s.g, 1e7); assert.equal(s.k, 0); assert.equal(s.f, 200);
-  assert.equal(s.sp, 3); assert.equal(s.hid, 1); assert.equal(s.b, 1); assert.equal(s.o, 'p');
+  assert.equal(s.sp, 4); assert.equal(s.hid, 1); assert.equal(s.b, 1); assert.equal(s.o, 'p');
   assert.equal(s.lag, undefined, 'lag 는 v3 에 없다');
   assert.equal(s.ll, 1235); assert.equal(s.en, '1,2,3;4,5,6', 'en 은 숫자·;·, 만');
   assert.equal(N.sum({ w: 1, b: 0.4567, o: 'x' }).valueOf(), true);
   const s2 = ws.last('sum');
   assert.equal(s2.b, 0.457); assert.equal(s2.o, 'l'); assert.equal(s2.hid, 0); same(s2.tw, []);
   assert.equal(s2.sp, 1, 'sp 기본 1'); assert.equal(s2.ll, undefined); assert.equal(s2.en, undefined, 'll/en 은 줬을 때만');
+  N.sum({ sp: 4 }); assert.equal(ws.last('sum').sp, 4, 'x4 reaches the serialized wire frame');
+  N.sum({ sp: 3 }); assert.equal(ws.last('sum').sp, 3, 'legacy x3 remains wire-compatible');
   N.sum({ en: 'x'.repeat(10) + '1;'.repeat(3000) });
   assert.equal(ws.last('sum').en.length, 5120, 'en 5120자 절단');
   const worstEnemies = Array(200).fill('10000,100000,9,2938,255').join(';');

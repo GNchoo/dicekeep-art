@@ -533,7 +533,7 @@ window.DKNET = (function () {
       .map((t) => deck ? [int(t[0],0,14),int(t[1],1,20),1,int(t[3],1,7)] : [int(t[0], 0, 14), int(t[1], 1, 20), int(t[2], 1, 3)]);
     const m = {
       w: int(o.w, 0, waveLimit()), dw: int(o.dw, 0, waveLimit()), l: int(o.l, 0, 20), g: int(o.g, 0, 1e7), k: int(o.k, 0, 1e6), f: int(o.f, 0, 200),
-      sp: battleMode(R.mode)?1:int(o.sp == null ? 1 : o.sp, 1, 3),
+      sp: battleMode(R.mode)?1:int(o.sp == null ? 1 : o.sp, 1, 4),
       hid: o.hid == null ? ((DOC && DOC.hidden) ? 1 : 0) : (o.hid ? 1 : 0),
       b: o.b == null ? null : num(o.b, 0, 1, 3),
       o: o.o === 'p' ? 'p' : 'l',

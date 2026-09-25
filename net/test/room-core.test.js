@@ -262,10 +262,10 @@ test('U5 start: 접속 1명 not-ready · 방장 아님 not-host · 2명 OK → s
 // ==================== U6 개별 진행: sum · done · dead · clear ====================
 test('U6 sum: wave/dw/kills 는 max, clearWave 로 클램프 · done 범위 · dead 는 deathWave = w−1', () => {
   const h = playing([A, B], T0, T.timingFor('fast'));
-  let r = h.sum(A, { w: 3, dw: 2, k: 10, sp: 3 }, t0(h) + 100);
+  let r = h.sum(A, { w: 3, dw: 2, k: 10, sp: 4 }, t0(h) + 100);
   assert.equal(r.persist, false);
   assert.deepEqual([h.state.players[A].wave, h.state.players[A].dw, h.state.players[A].kills], [3, 2, 10]);
-  assert.equal(h.live.players[A].sum.sp, 3);
+  assert.equal(h.live.players[A].sum.sp, 4);
   h.sum(A, { w: 1, dw: 1, k: 5 }, t0(h) + 200);            // 뒤로 가지 않는다
   assert.deepEqual([h.state.players[A].wave, h.state.players[A].dw, h.state.players[A].kills], [3, 2, 10]);
   h.sum(A, { w: 99, dw: 101 }, t0(h) + 300);               // clearWave(12) 클램프
@@ -610,12 +610,12 @@ test('U9 채팅·로그 속도 제한 (1/s 버스트 5 · 2/s 버스트 4)', () 
 
 test('U9 snapshot 필드 · 상태 문서가 JSON 왕복에 안전', () => {
   const h = playing([A, B]);
-  h.sum(A, { w: 2, dw: 1, sp: 3, hid: 1 }, t0(h) + 100);
+  h.sum(A, { w: 2, dw: 1, sp: 4, hid: 1 }, t0(h) + 100);
   const s = snapshot(h.state, h.live, h.now + 1);
   assert.deepEqual(Object.keys(s).sort(), ['code', 'game', 'hostId', 'kind', 'mode', 'now', 'phase', 'players', 'reserveUntil', 't', 'ver'].sort());
   assert.deepEqual(Object.keys(s.players[0]).sort(), ['connected', 'deathWave', 'dw', 'host', 'hidden', 'kills', 'name', 'pid', 'rank', 'sp', 'status', 'wave'].sort());
   assert.deepEqual(Object.keys(s.game).sort(), ['seed', 't0', 'timing', 'mode'].sort());
-  assert.deepEqual([s.players[0].wave, s.players[0].dw, s.players[0].sp, s.players[0].hidden], [2, 1, 3, true]);
+  assert.deepEqual([s.players[0].wave, s.players[0].dw, s.players[0].sp, s.players[0].hidden], [2, 1, 4, true]);
   assert.deepEqual([s.players[1].sp, s.players[1].hidden], [1, false]);
   assert.deepEqual(JSON.parse(JSON.stringify(h.state)), h.state);
 });

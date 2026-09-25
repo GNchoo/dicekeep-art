@@ -82,11 +82,11 @@ const SCHEMA = {
     return {t:'battle',matchId:m.matchId,seq:m.seq,kind:m.kind,count:m.count,...(m.kind==='kill'?{transferred:m.transferred}:{boss:m.boss})};
   },
   battleAck(m) { return isStr(m.matchId,128)&&!!m.matchId&&isStr(m.eventId,160)&&!!m.eventId ? {t:'battleAck',matchId:m.matchId,eventId:m.eventId}:null; },
-  // sp 배속(1|2|3) · ll 레인 길이(선택) · en 적 스트림(선택, ≤ EN_MAX 자, [0-9;,] 만).
+  // sp 배속(1|2|3|4; 3은 기존 클라이언트 호환) · ll 레인 길이(선택) · en 적 스트림(선택, ≤ EN_MAX 자, [0-9;,] 만).
   // ds:1 덱 전투는 [spot, face, 1, pips1..7], ds 생략은 기존 [spot, face, lvl1..3].
   sum(m) {
     if (!isInt(m.w, 0, MAX_WAVE) || !isInt(m.dw, 0, MAX_WAVE) || !isInt(m.l, 0, 20) || !isInt(m.g, 0, 1e7)) return null;
-    if (!isInt(m.k, 0, 1e6) || !isInt(m.f, 0, 200) || !isInt(m.sp, 1, 3)) return null;
+    if (!isInt(m.k, 0, 1e6) || !isInt(m.f, 0, 200) || !isInt(m.sp, 1, 4)) return null;
     if (m.hid !== 0 && m.hid !== 1) return null;
     if (m.b !== null && !isNum(m.b, 0, 1)) return null;
     if (m.o !== 'l' && m.o !== 'p') return null;

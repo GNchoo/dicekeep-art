@@ -93,7 +93,8 @@ test('sum 경계', () => {
   ok({ ...SUM, l: 0 }); bad({ ...SUM, l: 21 });
   ok({ ...SUM, g: 1e7 }); bad({ ...SUM, g: 1e7 + 1 }); bad({ ...SUM, g: 1.5 });
   bad({ ...SUM, k: 1e6 + 1 }); bad({ ...SUM, f: 201 });
-  bad({ ...SUM, sp: 0 }); bad({ ...SUM, sp: 4 }); bad({ ...SUM, sp: 1.5 }); bad({ ...SUM, sp: undefined }); bad({ ...SUM, sp: '1' });
+  ok({ ...SUM, sp: 3 }); ok({ ...SUM, sp: 4 }); // x3 remains accepted for existing clients.
+  bad({ ...SUM, sp: 0 }); bad({ ...SUM, sp: 5 }); bad({ ...SUM, sp: 1.5 }); bad({ ...SUM, sp: undefined }); bad({ ...SUM, sp: '1' });
   assert.ok(!('lag' in ok({ ...SUM, lag: 0.5 })));                       // v2 필드는 버린다
   bad({ ...SUM, ll: -1 }); bad({ ...SUM, ll: 100001 }); bad({ ...SUM, ll: 1.5 }); bad({ ...SUM, ll: '3' }); bad({ ...SUM, ll: null });
   bad({ ...SUM, en: 'a' }); bad({ ...SUM, en: '1 2' }); bad({ ...SUM, en: '1.5' }); bad({ ...SUM, en: 5 }); bad({ ...SUM, en: null });

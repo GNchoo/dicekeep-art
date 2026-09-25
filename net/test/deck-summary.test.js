@@ -81,8 +81,13 @@ test('legacy triples keep the exact existing normalized payload and level range'
   rejected({ ...LEGACY, tw: [[0, 6, 4]] });
 });
 
+test('summary speed accepts x4 and keeps legacy x3, but rejects out-of-range values', () => {
+  for (const sp of [1, 2, 3, 4]) assert.equal(accepted({ ...LEGACY, sp }).sp, sp);
+  for (const sp of [0, 5, -1, 2.5, '4', null]) rejected({ ...LEGACY, sp });
+});
+
 test('a maximal deck summary with enemy data still fits the unchanged frame budget', () => {
-  const m = { ...DECK, w: 1e6, dw: 1e6, l: 20, g: 1e7, k: 1e6, f: 200, sp: 3, hid: 1, b: 1, ll: 100000,
+  const m = { ...DECK, w: 1e6, dw: 1e6, l: 20, g: 1e7, k: 1e6, f: 200, sp: 4, hid: 1, b: 1, ll: 100000,
     tw: Array.from({ length: 15 }, (_, spot) => [spot, 20, 1, 7]), en: '1'.repeat(EN_MAX) };
   assert.equal(decode(m).ok, true);
   assert.ok(byteLength(JSON.stringify(m)) <= MAX_FRAME);

@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="casual-theme.css?v=137" />
 <link rel="stylesheet" href="casual-menus.css?v=143" />
 <link rel="stylesheet" href="casual-rewards.css?v=137" />
-<link rel="stylesheet" href="casual-hud.css?v=149" />
+<link rel="stylesheet" href="casual-hud.css?v=151" />
 <link rel="icon" href="ui/gold.png" />
 </head>
 <body>
@@ -46,7 +46,7 @@
     </div>
     <div id="mini-top" class="mini hidden">
       <button id="chat-btn" class="hidden" data-icon="chat" title="채팅">&#128172;</button>
-      <button id="speed-btn" data-icon="speed1" title="게임 속도">x1</button>
+      <button id="speed-btn" data-icon="speed1" title="현재 1배속 · 누르면 2배속" aria-label="현재 1배속 · 누르면 2배속">x1</button>
       <button id="mute-btn" data-icon="sound" title="소리"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 8.5a5 5 0 0 1 0 7"/><path d="M20 6a9 9 0 0 1 0 12"/></svg></button>
       <button id="exit-btn" data-icon="menu" title="메뉴"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
@@ -236,7 +236,7 @@
         <div id="mp-code-wrap"><span class="mp-code-lbl">방 코드</span><b id="mp-code-big">------</b><button id="mp-copy" class="back-btn" type="button">복사</button></div>
         <div id="mp-queue" class="hidden"><div class="mp-spin"></div><div id="mp-queue-txt">상대를 찾는 중…</div></div>
         <div id="mp-slots"></div>
-        <p id="mp-note" class="screen-sub">각자 보드 · <b>각자 자기 속도(x1~x3)</b> · <b>101웨이브 완주 = 클리어</b> · 먼저 죽으면 관전<br>순위는 <b>완주는 빠른 순, 탈락은 웨이브 순</b>. 왼쪽 상대 카드를 누르면 그 필드를 라이브로 볼 수 있고, Enter(💬)로 채팅합니다.</p>
+        <p id="mp-note" class="screen-sub">각자 보드 · <b>각자 자기 속도(x1·x2·x4)</b> · <b>101웨이브 완주 = 클리어</b> · 먼저 죽으면 관전<br>순위는 <b>완주는 빠른 순, 탈락은 웨이브 순</b>. 왼쪽 상대 카드를 누르면 그 필드를 라이브로 볼 수 있고, Enter(💬)로 채팅합니다.</p>
         <div class="lobby-btns"><button id="mp-start" class="big-btn primary hidden">시작 (0/4)</button></div>
         <div id="mp-room-status" class="screen-sub"></div>
         <div id="mp-chat">
@@ -299,7 +299,7 @@
         <div id="info-body"></div>
         <div id="enhance-result" class="hidden" role="status" aria-live="polite"></div>
         <div id="info-actions">
-          <button id="move-btn" type="button" title="이 타워를 다른 빈 석단으로 옮깁니다">이동</button>
+          <button id="move-btn" type="button" title="이 타워를 다른 석단으로 옮기거나 자리를 바꿉니다">이동</button>
           <button id="sell-btn">판매</button>
           <button id="enhance-btn" class="hidden" title="골드를 걸고 타워를 한 성(★) 위로 올립니다. 실패하면 타워가 사라집니다">확률강화</button>
           <span id="enhance-odds" class="hidden"></span>
@@ -383,9 +383,9 @@
       <li><b>판매</b> — 순수운빨은 7★ 이상을 팔 수 없습니다. 덱빌드·극한에서는 모든 별의 타워를 판매할 수 있습니다.</li>
       <li><b>파워업</b> — 골드로 눈(1~6)을 강화합니다. 강화할수록 비싸집니다. ★ 히든 타워는 6눈 파워업을 따릅니다.</li>
       <li><b>패배</b> — 필드에 적이 200마리를 넘으면 가장 오래된 적이 사라지며 목숨 −1. 보스는 5분 20초 안에 잡아야 합니다.</li>
-      <li><b>순수운빨 라운드</b> — 일반 웨이브마다 79마리가 출현합니다. 처치 속도와 관계없이 게임 시간 2분 20초마다 다음 물량이 오고, 남은 적은 계속 쌓입니다. 마지막 웨이브는 잔여 적까지 모두 처치해야 하며, 시작 후 최대 5분 20초까지 정리할 수 있습니다. 배속 x2·x3에서는 시계도 같은 배속으로 흐릅니다.</li>
+      <li><b>순수운빨 라운드</b> — 일반 웨이브마다 79마리가 출현합니다. 처치 속도와 관계없이 게임 시간 2분 20초마다 다음 물량이 오고, 남은 적은 계속 쌓입니다. 마지막 웨이브는 잔여 적까지 모두 처치해야 하며, 시작 후 최대 5분 20초까지 정리할 수 있습니다. 배속 x2·x4에서는 시계도 같은 배속으로 흐릅니다.</li>
       <li><b>세 가지 모드</b> — <b>순수운빨·덱빌드</b>는 <b>101웨이브 완주가 클리어</b>입니다. 순수운빨은 기존 뽑기와 확률강화로 도전합니다. 덱빌드는 수집한 5종의 조합, 눈금 합성, 전투 중 강화가 핵심입니다. <b>극한</b>은 같은 덱 규칙으로 101웨이브 이후에도 더 강한 적에 도전하며 최고 기록을 남깁니다.</li>
-      <li><b>함께 하기</b> — 2~4명이 <b>각자 보드</b>에서 <b>각자 속도</b>(배속 x1~x3)로 101웨이브 완주에 도전합니다(도전 규칙). 먼저 죽으면 관전, 순위는 <b>완주는 빠른 순, 탈락은 웨이브 순</b>. 첫 웨이브 전 20초 동안 타워를 놓으세요. 상대 카드를 누르면 그 필드를 라이브로 보고, <b>Enter</b>/💬 로 채팅. 방 코드 또는 빠른 매칭(2명 이상 10초, 4명 즉시).</li>
+      <li><b>함께 하기</b> — 2~4명이 <b>각자 보드</b>에서 <b>각자 속도</b>(배속 x1·x2·x4)로 101웨이브 완주에 도전합니다(도전 규칙). 먼저 죽으면 관전, 순위는 <b>완주는 빠른 순, 탈락은 웨이브 순</b>. 첫 웨이브 전 20초 동안 타워를 놓으세요. 상대 카드를 누르면 그 필드를 라이브로 보고, <b>Enter</b>/💬 로 채팅. 방 코드 또는 빠른 매칭(2명 이상 10초, 4명 즉시).</li>
       <li><b>1대1 대전 · 2인 협동</b> — 함께하기에서 선택합니다. 대전은 숙련·특성·각성을 적용하지 않아 성장 수치가 같습니다. 5처치마다 적 1마리를 보내고 상대 목숨을 0으로 만들면 승리합니다. 협동은 공동 목숨 20을 지키며 합계 700처치하면 함께 승리합니다. 아군 보급은 45초마다 60 SP를 보냅니다. x1 고정, 90초마다 보스 등장, 일반 적 이탈 −1, 보스 이탈·45초 초과 −5입니다.</li>
       <li><b>무료 성장 보상</b> — 대전·협동에서 타워 3개 이상을 배치하고 접속한 유효 전투 1분당 연구 골드 300 + 성장 조각 8을 받습니다. 패배해도 기본 보상은 같습니다. 1분 이상 참여한 승리는 골드 100 + 조각 5, 모드별 첫 승리는 추가 골드 300 + 조각 20을 줍니다. 두 모드의 누적 참여 보너스는 다이스 트리에서 확인하세요. 자리 비움 시간은 제외되며, 연속 출석이나 구매 조건은 없습니다. 모든 주사위·숙련·각성·서포터는 무료로 획득할 수 있습니다.</li>
     </ol></div>
@@ -400,7 +400,7 @@
 <!-- APP -->
 <script src="music.js?v=89"></script>
 <script src="battle-rules.js?v=116"></script>
-<script src="net.js?v=150"></script>
+<script src="net.js?v=151"></script>
 <script src="content.js?v=150"></script>
 <script src="deck-rules.js?v=112"></script>
 <script src="tree-rules.js?v=112"></script>
@@ -423,6 +423,6 @@
 <script src="extreme-cache.js?v=1"></script>
 <script src="combat-motion.js?v=123"></script>
 <script src="presentation-fx.js?v=149"></script>
-<script src="game.js?v=150"></script>
+<script src="game.js?v=151"></script>
 </body>
 </html>

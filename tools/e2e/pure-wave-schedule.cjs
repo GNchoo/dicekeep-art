@@ -19,7 +19,13 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
       const source = await response.text();
       const anchor = 'window.DK = S;';
       assert.equal(source.split(anchor).length, 2, 'one test-hook anchor in game.js');
-      await route.fulfill({ response, body: source.replace(anchor, 'window.__pureWaveQA = { buildInfinityWave }; ' + anchor) });
+      const hook = `window.__pureWaveQA = { buildInfinityWave, readRoundClock: () => {
+        const lines = [], original = ctx.fillText;
+        ctx.fillText = function(text, ...args) { lines.push(String(text)); return original.call(this, text, ...args); };
+        try { draw(); } finally { ctx.fillText = original; }
+        return lines.find(text => text.includes(normalRoundLabel())) || '';
+      } }; `;
+      await route.fulfill({ response, body: source.replace(anchor, hook + anchor) });
     });
     await page.goto(gameUrl(), { waitUntil: 'domcontentloaded' });
     await page.waitForFunction(() => window.DK?.phase === 'title' && window.DKcombatStep && window.DKspawnEnemy && window.__pureWaveQA, null, { timeout: 120000 });
@@ -90,7 +96,7 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
       });
 
       begin('clear');
-      const hudClock = { start: document.getElementById('wave-btn').textContent };
+      const hudClock = { start: __pureWaveQA.readRoundClock() };
       const sourceSchedule = { clear1: DK.spawnQ.map(e => e.t) };
       const queuedZero = DK.spawnQ.find(item => item.gold === 0);
       const zeroItem = queuedZero || { ...DK.spawnQ[0], gold: 0 };
@@ -114,10 +120,10 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
       DK.enemies = [];
       DK.waveT = 59.9;
       DKcombatStep(0.2);
-      hudClock.mid = document.getElementById('wave-btn').textContent;
+      hudClock.mid = __pureWaveQA.readRoundClock();
       DK.waveT = 138.9;
       DKcombatStep(0.2);
-      hudClock.lastSecond = document.getElementById('wave-btn').textContent;
+      hudClock.lastSecond = __pureWaveQA.readRoundClock();
       DK.waveT = 139.8;
       DKcombatStep(0.1);
       const beforeDeadline = state();
@@ -125,7 +131,7 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
       const afterEarlyClick = state();
       DKcombatStep(0.2);
       const atDeadline = state();
-      hudClock.nextWave = document.getElementById('wave-btn').textContent;
+      hudClock.nextWave = __pureWaveQA.readRoundClock();
 
       begin('clear', 8);
       sourceSchedule.clear9 = DK.spawnQ.map(e => e.t);
@@ -169,7 +175,7 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
       const finalWithSurvivor = {
         ...state(), phase: DK.phase, lives: DK.lives, finalTimeout: !!DK.inf.finalTimeout,
         cleared: DK.inf.cleared, settledWave: DK.inf.settledResult?.wave ?? null,
-        clock: document.getElementById('wave-btn').textContent,
+        clock: __pureWaveQA.readRoundClock(),
       };
       DK.waveT = 319.9;
       DKcombatStep(0.2);
@@ -184,7 +190,7 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
       DKspawnEnemy({ type: 'mite', wave: 101 });
       DK.waveT = 199.9;
       DKcombatStep(0.2);
-      const finalWaitingAt200 = { ...state(), phase: DK.phase, clock: document.getElementById('wave-btn').textContent };
+      const finalWaitingAt200 = { ...state(), phase: DK.phase, clock: __pureWaveQA.readRoundClock() };
       const lastEnemy = DK.enemies.find(enemy => !enemy.dead);
       if (lastEnemy) DKdamage(lastEnemy, lastEnemy.hp + 1, null);
       DKcombatStep(0.016);
@@ -304,7 +310,7 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
       }
       assert.equal(observed.sourceSchedule.clear10.length, 1);
     });
-    check('wave button displays the 140-second clock throughout a normal round', () => {
+    check('top arena banner displays the 140-second clock throughout a normal round', () => {
       assert.match(observed.hudClock.start, /2:20/);
       assert.match(observed.hudClock.mid, /1:20/);
       assert.match(observed.hudClock.lastSecond, /0:01/);

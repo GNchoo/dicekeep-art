@@ -70,7 +70,7 @@ node test/ws-smoke.mjs [ws://localhost:8787] # TIMING=fast 서버 상대. 한 �
 - **모드**: 방 생성·참가·빠른 매칭은 `mode:'clear'|'extreme'`를 사용한다. 방 안에서는 모드를 바꿀 수 없으며 다른 모드 참가를 거절한다. v4 메시지나 저장 상태의 모드가 생략된 경우만 `clear`로 해석한다. 이는 v3 클라이언트 접속 허용을 뜻하지 않는다.
 - **start**(방장 · lobby · 접속 ≥ 2): 서버가 `seed` 를 만들고 `t0 = now + prep`, 전원 `alive`. `start{seed, t0, timing:{prep, bossLimit, clearWave}, mode, now}` → `room{phase:'playing'}`. 막간(intermission)은 클라가 `content.js` 값을 쓴다.
 - `clear`의 `timing.clearWave`는 101(fast: 12)이다. `extreme`의 값 **0은 완주 목표가 없다는 표식**이다. 0웨이브 종료나 무제한 숫자 허용이 아니며, 보고 웨이브는 `MAX_WAVE=1,000,000`까지 제한한다. 순수운빨 방의 서버 상한은 5시간, 극한·대전·협동은 기존 100분이다. 이 상한은 저장 방의 모드에서 계산하므로 기존 저장 방에도 적용된다.
-- 그 뒤 **각 클라는 싱글처럼 자기 웨이브를 돈다**(배속 1~3 자유). 서버는 웨이브 시계·보스 홀드·스케줄이 없고 보고만 받는다:
+- 그 뒤 **각 클라는 싱글처럼 자기 웨이브를 돈다**(새 클라이언트는 배속 1·2·4, 기존 클라이언트의 3도 서버가 수용). 서버는 웨이브 시계·보스 홀드·스케줄이 없고 보고만 받는다:
   - `sum` — 진행 요약. `wave`·`kills`·`dw` 는 max 로 기록한다. `w`·`dw`는 clear에서 `0..clearWave`, extreme에서 `0..MAX_WAVE`로 클램프한다. 중계는 아래.
   - `done{w}` — 통계용. clear는 `1..clearWave`, extreme은 `1..MAX_WAVE`만 받는다.
   - `dead{w,k,r}` — alive 만. 모드 상한으로 제한한 `w`에 대해 `deathWave = max(0, w−1)`. `player{status:'dead', wave, deathWave, kills}` 방송.
@@ -90,7 +90,7 @@ node test/ws-smoke.mjs [ws://localhost:8787] # TIMING=fast 서버 상대. 한 �
 | `hello{v:4, ver, mode:'clear'\|'extreme', op:'create'\|'join'\|'quick', pid, key, name}` · `start` · `sum{w,dw,l,g,k,f,sp,hid,b,o,tw,ll?,en?}` · `watch{pid\|null}` · `done{w}` · `dead{w,k,r}` · `clear{w,k}` · `chat{text}` · `log{text,kind}` · `time{c}` · `leave` · 문자열 `ping` | `welcome` · `room` · `player` · `start` · `sum{pid,…}` · `watched{n}` · `queued{n,eta,mode}` · `matched{code,mode}` · `chat` · `log` · `time` · `end` · `err` · 문자열 `pong` |
 
 - `hello.v`는 통신 프로토콜 4, `hello.ver`는 클라이언트 호환 그룹이다. 현재 클라이언트는 `net.js?v=…`의 쿼리값을 `ver`로 쓰며, 같은 방과 빠른 매칭은 **같은 ver와 mode**를 요구한다. 파일 캐시 버전 변경도 매칭 그룹에 영향을 준다.
-- `sum` 필드: `sp` 배속(정수 1|2|3, 필수) · `ll` 보내는 쪽 레인 길이(정수 0..100000, 선택) · `en` 적 스트림 문자열(≤ 5,120자, `^[0-9;,]*$`, 선택). `lag` 필드는 사용하지 않는다. 200개 적의 기존 3열과 선택 외형·위상 숫자 열을 담으며, 서버는 외형 코드의 의미나 각 열의 게임 상태를 검증하지 않고 문자열 형식·길이만 검사한다.
+- `sum` 필드: `sp` 배속(정수 1|2|3|4, 필수; 3은 기존 클라이언트 호환용) · `ll` 보내는 쪽 레인 길이(정수 0..100000, 선택) · `en` 적 스트림 문자열(≤ 5,120자, `^[0-9;,]*$`, 선택). `lag` 필드는 사용하지 않는다. 200개 적의 기존 3열과 선택 외형·위상 숫자 열을 담으며, 서버는 외형 코드의 의미나 각 열의 게임 상태를 검증하지 않고 문자열 형식·길이만 검사한다.
 - **sum 중계**: 다른 멤버에게 1.5 s 간격으로 `sum{pid,…}` 을 보내되 `en`·`ll` 은 뗀다. 이 pid 를 보고 있는 멤버(`watch{pid}`)에게는 `en`·`ll` 을 포함해 1 s 간격으로 보낸다(간격은 따로 센다). 본인에게는 오지 않는다.
 - **watch**: `watch{pid}` 로 내가 보는 상대를 알린다(`null` = 그만, 자기 자신은 null 취급, 방에 없는 pid 는 무시). 대상의 관전자 수가 바뀌면 대상에게 `watched{n}`(나를 보는 접속 중인 사람 수). 관전자가 끊기거나 돌아와도 갱신. 대상이 죽거나 나가도 내 watching 은 그대로. 하이버네이션 복귀·재접속 후에는 클라가 `watch` 를 다시 보내는 게 안전하다.
 - `room` 스냅샷: `{ t, code, kind:'code'|'quick', mode:'clear'|'extreme', phase, hostId, ver, reserveUntil, now, players[], game }`. `players[]` 항목 `{ pid, name, host, connected, status, wave, dw, deathWave, kills, sp, hidden, rank }`. `game = { t0, timing, seed, mode } | null`.
@@ -133,7 +133,7 @@ node test/ws-smoke.mjs [ws://localhost:8787] # TIMING=fast 서버 상대. 한 �
 ## 예산 메모 (무료 플랜)
 
 - 기존 clear/extreme은 `storage.put`을 전이에서만 사용한다. v116 duel/coop은 전투 이벤트와 유효 참여 요약도 영속 저장하므로 아래 기존 모드의 예산 추정과 구분해야 한다.
-- sum 이 2초마다 오므로 판 중에는 DO 가 깨어 있다 → 한 판(4인 40분) ≈ 0.67 객체-시간. 개별 진행이라 3배속이면 판이 짧아진다. 대기실·관전·종료 후는 자동응답 ping 만이라 하이버네이션.
+- sum 이 2초마다 오므로 판 중에는 DO 가 깨어 있다 → 한 판(4인 40분) ≈ 0.67 객체-시간. 개별 진행이라 4배속이면 판이 짧아진다. 대기실·관전·종료 후는 자동응답 ping 만이라 하이버네이션.
 - 관전(`watch`)은 보는 사람 수만큼 1 s 간격 `sum{en}`이 늘어난다. 최대 3명에게 각 5,120자 이하의 `en`과 나머지 JSON 필드를 중계하며, 클라이언트 수신 전송량은 실제 패킷 크기로 측정한다. 6,144 B 상한은 서버가 **수신하는** 프레임 제한이며 중계 JSON에는 `pid`·`at` 등이 추가된다.
 - Lobby DO 는 대기열이 비면 하이버네이션, 있으면 5 s 알람으로 깨어 있다. 대기열은 소켓 attachment 로, 방 생성 카운터는 storage 로 복원한다.
 - 배포 후 첫 판 뒤 대시보드에서 rows written · GB-s 를 실측해 여기에 적는다. 부족하면 클라 `sumInterval` 4초 또는 유료 플랜.
