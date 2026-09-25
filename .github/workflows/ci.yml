@@ -182,6 +182,10 @@ jobs:
         run: npm run test:pure-wave-schedule
       - name: field-cap (생존 적 상한·종료 프레임)
         run: npm run test:field-cap
+      - name: size-neutral-damage (모든 타워·몬스터 상성 1배·광역 명중)
+        run: |
+          npm run test:boss-matchup
+          npm run test:splash-hit
       - name: campaign
         run: npm run test:campaign
       - name: rewards-integration

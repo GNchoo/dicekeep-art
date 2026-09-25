@@ -61,12 +61,12 @@ const BOSS_ENTRANCE = 1.25; // 보스 등장 연출 시간(초)
 // 주사위 눈(1~6) = 타워 종류. 눈이 높을수록 강력!
 // 모든 타워는 공중 적을 때릴 수 있다 (canAir 는 전부 true — 공중 적의 기믹은 '동선 무시 직행'뿐)
 const TOWER_DEFS = {
-  1: { name: '궁수 주사위', desc: '붉은 렌즈 속사',        dmg: 8,  rate: 0.50, range: 150, laser: true,                 canAir: true,  color: '#9fd463', topper: 'laserMuzzle', atk: 'vib' },
-  2: { name: '대포 주사위', desc: '쌍포 광역 포격',     dmg: 22, rate: 1.60, range: 135, proj: 'shell',      pspd: 300, splash: 60, canAir: true,  color: '#e0862c', topper: 'muzzleFlash', atk: 'exp' },
-  3: { name: '마법 주사위', desc: '자수정 마력탄',      dmg: 24, rate: 0.95, range: 165, proj: 'bolt',       pspd: 430, canAir: true,  color: '#b78bff', topper: 'bolt', atk: 'norm' },
-  4: { name: '서리 주사위', desc: '사방 냉기 둔화',     dmg: 8,  rate: 0.80, range: 140, proj: 'frostShard', pspd: 400, slow: true, canAir: true, color: '#7fd4ff', topper: 'frostShard', atk: 'norm' },
-  5: { name: '전격 주사위', desc: '연쇄 번개',          dmg: 16, rate: 1.10, range: 150, chain: true, canAir: true, color: '#ffe86b', topper: 'spark', atk: 'norm' },
-  6: { name: '폭군 주사위', desc: '최강! 폭발 주사위 투척', dmg: 40, rate: 1.25, range: 175, proj: 'dieBomb', pspd: 340, splash: 55, canAir: true,  color: '#ff5555', topper: 'dieBomb', atk: 'exp' },
+  1: { name: '궁수 주사위', desc: '붉은 렌즈 속사',        dmg: 8,  rate: 0.50, range: 150, laser: true,                 canAir: true,  color: '#9fd463', topper: 'laserMuzzle' },
+  2: { name: '대포 주사위', desc: '쌍포 광역 포격',     dmg: 22, rate: 1.60, range: 135, proj: 'shell',      pspd: 300, splash: 60, canAir: true,  color: '#e0862c', topper: 'muzzleFlash' },
+  3: { name: '마법 주사위', desc: '자수정 마력탄',      dmg: 24, rate: 0.95, range: 165, proj: 'bolt',       pspd: 430, canAir: true,  color: '#b78bff', topper: 'bolt' },
+  4: { name: '서리 주사위', desc: '사방 냉기 둔화',     dmg: 8,  rate: 0.80, range: 140, proj: 'frostShard', pspd: 400, slow: true, canAir: true, color: '#7fd4ff', topper: 'frostShard' },
+  5: { name: '전격 주사위', desc: '연쇄 번개',          dmg: 16, rate: 1.10, range: 150, chain: true, canAir: true, color: '#ffe86b', topper: 'spark' },
+  6: { name: '폭군 주사위', desc: '최강! 폭발 주사위 투척', dmg: 40, rate: 1.25, range: 175, proj: 'dieBomb', pspd: 340, splash: 55, canAir: true,  color: '#ff5555', topper: 'dieBomb' },
 };
 // 성(★) 타워 7~20: 인피니티 보물상자의 다면체 주사위에서만 나온다. 6눈(폭군)을 바탕으로 기하급수 강화.
 const STAR_BANDS = [
@@ -78,17 +78,16 @@ const STAR_BANDS = [
 const starBand = (g) => STAR_BANDS.find((b) => g >= b.min && g <= b.max) || STAR_BANDS[STAR_BANDS.length - 1];
 for (let g = 7; g <= 20; g++) {
   const b = starBand(g), k = g - 6;
-  // 등급 특전(인피니티): 14~17★ 에픽 = 방어 무시 + 락다운, 18~19★ 신화 = 공속 ×1.5, 20★ 태초 = 트랙 전체 스플래시 (일반형)
+  // 등급 특전(인피니티): 14~17★ 에픽 = 방어 무시 + 락다운, 18~19★ 신화 = 공속 ×1.5, 20★ 태초 = 트랙 전체 스플래시
   const perk = g >= 20 ? 'primal' : g >= 18 ? 'myth' : g >= 14 ? 'epic' : null;
-  const perkDesc = perk === 'primal' ? ' · 태초: 일반형, 트랙 전체 스플래시, 공속 ×1.25' : perk === 'myth' ? ' · 신화: 공속 ×1.5' : perk === 'epic' ? ' · 에픽: 방어 무시 + 락다운' : '';
+  const perkDesc = perk === 'primal' ? ' · 태초: 트랙 전체 스플래시, 공속 ×1.25' : perk === 'myth' ? ' · 신화: 공속 ×1.5' : perk === 'epic' ? ' · 에픽: 방어 무시 + 락다운' : '';
   TOWER_DEFS[g] = {
     name: `${b.name} ★${g}`, desc: `${g}성 히든 타워 · 폭발 주사위 투척${perkDesc}`, star: g,
     dmg: Math.round(40 * Math.pow(1.28, k)), rate: +(1.25 * Math.pow(0.97, k)).toFixed(3), range: 175 + 5 * k,
     proj: 'dieBomb', pspd: 340 + 6 * k, splash: 55 + 4 * k, canAir: true, color: b.color, rainbow: !!b.rainbow, topper: 'dieBomb',
-    atk: perk === 'primal' ? 'norm' : 'exp', perk,
+    perk,
   };
 }
-const ATK_NAME = { vib: '진동형', exp: '폭발형', norm: '일반형' };
 const LVL_DMG   = [1, 1.6, 2.4];
 const LVL_RANGE = [0, 12, 24];
 const LVL_RATE  = [1, 0.92, 0.85];
@@ -3306,7 +3305,7 @@ function finalRoundCleanup() {
 function normalRoundLabel() {
   return S.inf && S.wave >= S.inf.clearWave ? (finalRoundCleanup() ? '최종 정리' : '최종 웨이브') : '다음 물량';
 }
-// 인피니티: 크기·방어력 예고
+// 인피니티: 몬스터·방어력 예고
 function announceWave(n) {
   if (S.mode !== 'infinity') {
     const tip = n === 1 ? stageLesson(S.stage) : n === 3 ? '공중 적은 빠르게 이동합니다. 모든 주사위가 공중 적을 공격할 수 있습니다.' : n === 5 ? '땅굴 적은 숨었을 때 공격받지 않습니다. 모습을 드러내는 구간에 화력을 모으세요.' : '';
@@ -3322,7 +3321,7 @@ function announceWave(n) {
     S.texts.push({ str: `${range} · ${theme.name}`, x: W / 2, y: H / 2 - 112, t: 0, big: true, color: theme.accent });
     pushLog(`새 몬스터 테마 · ${range} · ${theme.name} — ${theme.summary}`, 'sys');
   }
-  S.texts.push({ str: `웨이브 ${n} · ${who} · ${INF.sizeName[M.cls]}${M.armor ? ` · 방어 ${M.armor}` : ''}${hi ? ' · 고방어!' : ''}`, x: W / 2, y: H / 2 - 70, t: 0, color: hi ? '#ff7a7a' : M.boss ? '#ffd452' : '#ffe6b0' });
+  S.texts.push({ str: `웨이브 ${n} · ${who}${M.armor ? ` · 방어 ${M.armor}` : ''}${hi ? ' · 고방어!' : ''}`, x: W / 2, y: H / 2 - 70, t: 0, color: hi ? '#ff7a7a' : M.boss ? '#ffd452' : '#ffe6b0' });
   if (M.boss || hi) pushLog(`웨이브 ${n} — ${who}${hi ? ' · 고방어!' : ''}`, M.boss ? 'boss' : 'sys'); // 굵직한 웨이브만
 }
 
@@ -3658,13 +3657,9 @@ function damageEnemy(e, dmg, src) {
     dmg = Math.max(dmg*0.25,dmg-armor);
     if (ability === 'poison') { const active=e.poisonT>0; e.poisonT=Math.max(e.poisonT||0,st.poisonDur); e.poisonDps=Math.max(treeRun()&&!active?0:e.poisonDps||0,towerDmg(src)*st.poisonScale); }
   }
-  if (!deckRun() && S.mode === 'infinity' && S.inf && window.DKCONTENT) { // 상성 · 방어력 · 에픽 락다운 (인피니티 전용)
+  if (!deckRun() && S.mode === 'infinity' && S.inf && window.DKCONTENT) { // 방어력 · 에픽 락다운 (인피니티 전용)
     const INF = DKCONTENT.INFINITY, def = src && src.def;
-    // 상성은 잡몹에만 건다. 보스는 어떤 공격형이든 1배로 받는다.
-    // 순수운빨은 뽑은 눈이 전부인 모드라, 보스 크기와 공격형이 안 맞는다는 이유로 판이 통째로
-    // 막히면 운이 아니라 상성 퍼즐이 된다 (100웨이브 보스는 소형이라 7~19★ 폭발형이 절반만
-    // 들어갔고, 15★ 3레벨로 15칸을 다 채워도 시간 안에 못 잡았다).
-    if (!e.isBoss && def && e.sizeClass && INF.sizeMult) { const m = INF.sizeMult[def.atk || 'norm']; if (m && m[e.sizeClass] != null) dmg *= m[e.sizeClass]; }
+    // 모든 타워·몬스터의 크기 상성 배율은 1배. 외형 크기는 피해에 영향을 주지 않는다.
     const ignoreArmor = !!(def && def.perk === 'epic');
     if (e.armor > 0 && !ignoreArmor) dmg = Math.max(dmg * 0.1, dmg - e.armor);
     if (def && def.perk === 'epic' && INF.stun && Math.random() < INF.stun.p) e.stunT = Math.max(e.stunT || 0, e.isBoss ? INF.stun.bossDur : INF.stun.dur);
@@ -5854,8 +5849,6 @@ function syncInfo() {
   infoPanel.classList.remove('hidden');
   $('info-dice').src = dieIconURL(t.face);
   $('info-name').textContent = `${t.def.name} · ${deckRun() ? DECK.pips(t)+'눈금'+(towerAwakened(t)?' · 각성':'') : 'Lv'+t.lvl}`;
-  const atkEl = $('info-atk');
-  if (atkEl) { const a = inf && t.def.atk ? ATK_NAME[t.def.atk] : ''; atkEl.textContent = a; atkEl.classList.toggle('hidden', !a); }
   const bits = [`피해 ${Math.round(towerDmg(t))}`, `사거리 ${Math.round(towerRange(t))}`];
   if (t.def.splash) bits.push(`광역 ${Math.round(towerSplash(t))}`);
   if (t.def.slow) bits.push(`둔화 ${Math.round(towerSlowPct(t) * 100)}%`);

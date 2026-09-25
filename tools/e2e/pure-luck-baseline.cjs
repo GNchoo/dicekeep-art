@@ -1,16 +1,17 @@
 // 순수운빨에서 "우리가 일부러 바꾼 것 말고는 아무것도 안 바뀌었다" 를 기준 리비전과 대조해 확인한다.
-// 고정 표(뽑기 확률·타워·경제·로스터·상성표)는 한 톨도 달라지면 안 되고,
-// 의도한 변경들(후반 체력 곡선, 보스 상성 면제, 상자 밴드, 태초 공속)은 정확히 그만큼만 달라야 한다.
+// 고정 표(뽑기 확률·타워 성능·경제·로스터·적 크기 순서)는 한 톨도 달라지면 안 되고,
+// 의도한 변경들(후반 체력 곡선, 크기별 공격 상성 제거, 상자 밴드, 태초 공속)은 정확히 그만큼만 달라야 한다.
 //
 // 뽑기 '순서' 는 더 이상 대조하지 않는다. 광역 명중 부호 수정(9b64b15) 으로 1~9웨이브에서
 // 폭발 타워가 큰 적을 실제로 맞히게 되면서 처치 수가 늘었고(씨앗 20260909 에서 102 → 103),
 // 골드가 달라져 상자를 사는 시점이 밀린다. 전투와 뽑기가 같은 난수 줄기를 쓰므로 그 뒤로는
 // 등급 순서가 어긋나는 게 정상이다 — 확률 자체가 바뀐 게 아니다.
-// 대신 '현재가 기준보다 나빠지지 않는다'(처치·뽑기 횟수)를 방향성 불변량으로 잡는다.
+// 크기별 공격 상성이 모두 1배가 된 뒤에는 같은 씨앗의 전투·골드·뽑기 순서도 갈릴 수 있다.
+// 런은 진행/뽑기 밴드/체력 곡선을 확인하고 차이를 기록하며, 피해 배수는 별도 직접 검사한다.
 // 뽑기 확률은 chest 표(이식분 비교)와 chestFaceOdds(눈별 ppm)로 직접 고정하고,
 // 광역 명중 동작 자체는 tools/e2e/splash-hit.cjs 가 실제 보스 웨이브로 따로 검증한다.
 // 클리어율을 재는 도구가 아니다 — 그건 tools/e2e/pure-luck-clearrate.cjs 다.
-//   E2E_BASE_URL=http://localhost:8137/ E2E_BASELINE_URL=http://localhost:8138/ node tools/e2e/pure-luck-baseline.cjs [--waves=30]
+//   E2E_BASE_URL=http://localhost:8137/ E2E_BASELINE_URL=http://localhost:8138/ node tools/e2e/pure-luck-baseline.cjs [--waves=9] [--seed=20260909] [--probes-only]
 // 기준 리비전은 모드 분리 직전(성장·상거래 도입 전)을 별도 포트로 띄워 둔다.
 const fs = require('node:fs');
 const path = require('node:path');
@@ -22,18 +23,21 @@ const out = path.resolve(process.env.E2E_OUTPUT_DIR || path.join(repo, 'gen/e2e/
 const CURRENT = (process.env.E2E_BASE_URL || 'http://localhost:8137/').replace(/\/?$/, '/');
 const BASELINE = (process.env.E2E_BASELINE_URL || 'http://localhost:8138/').replace(/\/?$/, '/');
 const WAVES = Number((process.argv.find(a => a.startsWith('--waves=')) || '').split('=')[1]) || 9;
-// 런 전체 대조는 보스가 끼는 순간부터 일부러 갈린다 (보스가 상성 없이 1배로 받게 바꿨다).
-// 첫 보스는 10웨이브(bossEvery)이므로 그 앞 구간에서만 전투·뽑기·경제가 그대로임을 증명한다.
+// 전체 런은 첫 보스 전까지만 기록한다. 잡몹의 상성도 제거됐으므로 그 안에서도 전투 결과의
+// 동일성은 요구하지 않는다. --probes-only 는 오래 걸리는 시드 런 없이 표와 직접 피해 검사만 한다.
 const TRACE_LIMIT = 9;
-const SEEDS = [20260909, 777, 31337, 4242, 99999];
+const PROBES_ONLY = process.argv.includes('--probes-only');
+const seedArg = process.argv.find(a => a.startsWith('--seed='));
+const SEEDS = seedArg ? [Number(seedArg.split('=')[1])] : [20260909, 777, 31337, 4242, 99999];
+if (SEEDS.some(seed => !Number.isSafeInteger(seed))) throw new Error('--seed 는 정수여야 한다');
 if (WAVES > TRACE_LIMIT) throw new Error(`--waves 는 ${TRACE_LIMIT} 이하여야 한다: 보스 웨이브부터는 기준 리비전과 일부러 다르다`);
 fs.mkdirSync(out, { recursive: true });
 
-const report = { scope: '고정 표는 그대로인지, 의도한 변경만 갈리는지 기준 리비전과 대조. 절대 클리어율 측정이 아니다.', current: CURRENT, baseline: BASELINE, waves: WAVES, seeds: SEEDS, started: new Date().toISOString(), rows: [], pass: false };
+const report = { scope: '고정 표는 그대로인지, 의도한 변경만 갈리는지 기준 리비전과 대조. 절대 클리어율 측정이 아니다.', current: CURRENT, baseline: BASELINE, waves: WAVES, probesOnly: PROBES_ONLY, seeds: PROBES_ONLY ? [] : SEEDS, started: new Date().toISOString(), rows: [], pass: false };
 
 
-// 기준 리비전과 한 톨도 달라지면 안 되는 표들.
-// (상성표 자체도 여기 포함된다 — 바꾼 것은 "보스에게 적용하지 않는다" 이지 표가 아니다.)
+// 기준 리비전과 한 톨도 달라지면 안 되는 표들. 공격형/상성 배수는 의도적으로 삭제됐으므로
+// 여기서 제외하고 아래 matchupMetadataProbe 및 matchupProbe 에서 삭제와 새 동작을 검증한다.
 function portedTables() {
   const INF = DKCONTENT.INFINITY, C = INF.chest, DP = DKCONTENT.DICE_POWER;
   const TD = window.DKTD || null;
@@ -50,9 +54,9 @@ function portedTables() {
     power: DP ? { maxLv: DP.maxLv, cost: [0, 5, 9].map(l => DP.cost(l)), dmgMult: [0, 5, 10].map(l => DP.dmgMult(l)),
                   rangeAdd: [0, 5, 10].map(l => DP.rangeAdd(l)), special: DP.special } : null,
     towers: TD ? Array.from({ length: 20 }, (_, i) => i + 1).map(f => ({
-      f, dmg: TD[f].dmg, rate: TD[f].rate, range: TD[f].range, atk: TD[f].atk || null, perk: TD[f].perk || null,
+      f, dmg: TD[f].dmg, rate: TD[f].rate, range: TD[f].range, perk: TD[f].perk || null,
       splash: TD[f].splash || 0 })) : null,
-    sizeMult: INF.sizeMult, sizeSeq: INF.sizeSeq.join(''),
+    sizeSeq: INF.sizeSeq.join(''),
     armor: [30, 33, 60, 66, 90, 99].map(w => INF.armor(w)),
     countOf: [1, 25, 50, 75, 101].map(w => INF.countOf(w, 'M')),
     roster: INF.getRoster().map(r => [r.id || null, r.cls, !!r.boss, !!r.tank]),
@@ -87,8 +91,19 @@ function topDpsProbe() {
   return { f18: dps(18), f19: dps(19), f20: dps(20) };
 }
 
-// 보스가 상성을 받는가 — 이 리비전의 실제 동작을 damageEnemy 로 직접 확인한다.
-function bossMatchupProbe() {
+// 제거된 메타데이터와 실제 S/M/L 피해를 따로 본다. 적 크기/로스터 자체는 고정 표에서 계속 비교한다.
+async function matchupMetadataProbe() {
+  const INF = DKCONTENT.INFINITY;
+  const source = await (await fetch('game.js?matchup-metadata')).text();
+  return {
+    towerAtks: Array.from({ length: 20 }, (_, i) => Object.hasOwn(DKTD[i + 1], 'atk') ? DKTD[i + 1].atk : null),
+    attackNameTable: /\bconst\s+ATK_NAME\s*=/.test(source),
+    infoAtkBadge: !!document.getElementById('info-atk'),
+    sizeMult: Object.hasOwn(INF, 'sizeMult') ? INF.sizeMult : null,
+    sizeName: Object.hasOwn(INF, 'sizeName') ? INF.sizeName : null,
+  };
+}
+function matchupProbe() {
   if (!window.DKdamage || !window.DKTD) return null;
   DKstartInf ? DKstartInf('clear') : null;
   DK.paused = true;
@@ -97,7 +112,9 @@ function bossMatchupProbe() {
     DKdamage(e, 1000, { def: DKTD[face], face });
     return +((HP - e.hp) / 1000).toFixed(4);
   };
-  return { bossExpS: hit(true, 'S', 2), mobExpS: hit(false, 'S', 2), bossVibL: hit(true, 'L', 1), mobVibL: hit(false, 'L', 1) };
+  const sizes = ['S', 'M', 'L'], faces = [1, 2, 3, 7, 20];
+  return Object.fromEntries(['mob', 'boss'].map(kind => [kind,
+    Object.fromEntries(faces.map(face => [face, sizes.map(cls => hit(kind === 'boss', cls, face))]))]));
 }
 
 // 계정 상태를 전혀 건드리지 않는 봇. 기준 리비전에는 성장·상거래가 없으므로 양쪽에서 똑같이 돌아간다.
@@ -209,7 +226,7 @@ async function openGame(browser, base, rows) {
     const cur = await openGame(browser, CURRENT, rows);
     const base = await openGame(browser, BASELINE, rows);
     try {
-      for (const seed of SEEDS) {
+      for (const seed of PROBES_ONLY ? [] : SEEDS) {
         await cur.page.evaluate(() => { try { DKlobby(); } catch (e) { /* 첫 런 */ } });
         await base.page.evaluate(() => { try { DKlobby(); } catch (e) { /* 첫 런 */ } });
         const a = await cur.page.evaluate(playRun, { seed, waves: WAVES });
@@ -217,18 +234,16 @@ async function openGame(browser, base, rows) {
         const killDrift = Math.abs(a.kills - b.kills) / Math.max(1, b.kills);
         const same = a.traceHash === b.traceHash;
         report.rows.push({ seed, current: a, baseline: b, identicalTrace: same, killDrift: +killDrift.toFixed(4) });
-        console.log(`씨앗 ${seed}: 현재 ${a.waveReached}웨이브/목숨 ${a.lives}/처치 ${a.kills} · 기준 ${b.waveReached}웨이브/목숨 ${b.lives}/처치 ${b.kills} → ${same ? '완전 동일' : `처치 +${a.kills - b.kills} (광역 수정 반영분, 줄면 실패)`}`);
+        console.log(`씨앗 ${seed}: 현재 ${a.waveReached}웨이브/목숨 ${a.lives}/처치 ${a.kills} · 기준 ${b.waveReached}웨이브/목숨 ${b.lives}/처치 ${b.kills} → ${same ? '동일' : '의도한 전투 피해 차이'}`);
         // 체력 곡선은 앞 구간이 한 톨도 달라지면 안 된다 (뒤 구간은 일부러 낮췄다 — 아래에서 따로 본다).
         assert.deepEqual(a.curveEarly, b.curveEarly, `씨앗 ${seed}: ${a.lateFrom}웨이브까지의 체력 곡선`);
-        // 같은 씨앗이면 같은 웨이브까지, 같은 목숨으로, 같은 상태로 끝나야 한다.
-        assert.equal(a.waveReached, b.waveReached, `씨앗 ${seed}: 도달 웨이브`);
-        assert.equal(a.lives, b.lives, `씨앗 ${seed}: 남은 목숨`);
-        assert.equal(a.phase, b.phase, `씨앗 ${seed}: 런 상태`);
-        assert.ok(a.drawCount > 0 && a.ticks > 100, `씨앗 ${seed}: 런이 실제로 진행되어야 한다`);
-        // 방향성 불변량: 광역 명중 수정은 피해를 더하기만 한다. 그러니 현재가 기준보다 나빠지면 퇴행이다.
-        // (같은 씨앗에서 더 잡고 → 골드가 늘고 → 상자를 더 산다. 씨앗 31337 은 81 → 95 처치.)
-        assert.ok(a.kills >= b.kills, `씨앗 ${seed}: 처치 수가 기준보다 줄었다 (${b.kills} → ${a.kills}) — 광역 수정은 피해를 더하기만 한다`);
-        assert.ok(a.drawCount >= b.drawCount, `씨앗 ${seed}: 뽑기 횟수가 기준보다 줄었다 (${b.drawCount} → ${a.drawCount})`);
+        // 공격 상성·일반 라운드 일정이 바뀌었으므로 웨이브/목숨/처치/뽑기 횟수의
+        // 양쪽 동일성이나 단조 증가를 요구할 수 없다. 대신 두 런이 실제로 진행됐는지 본다.
+        for (const [who, run] of [['현재', a], ['기준', b]]) {
+          assert.ok(run.drawCount > 0 && run.ticks > (WAVES > 1 ? 100 : 0), `씨앗 ${seed}: ${who} 런이 실제로 진행되어야 한다`);
+          assert.ok(run.ticks < 400000, `씨앗 ${seed}: ${who} 런이 제한 틱 전에 끝나야 한다`);
+          assert.ok(run.waveReached >= 1, `씨앗 ${seed}: ${who} 첫 웨이브 진입`);
+        }
         // 뽑은 눈이 그 등급의 밴드 안인지는 양쪽 다 구조적으로 성립해야 한다 (순서는 위 머리말 참고).
         const BAND = { d1: [1, 1], d4: [1, 4], d6: [1, 6], d8: [1, 8], d12: [1, 12], d20: [1, 20], epic: [14, 17], myth: [18, 19], primal: [20, 20] };
         for (const [who, run] of [['현재', a], ['기준', b]]) run.draws.forEach(([kind, final], i) =>
@@ -251,14 +266,25 @@ async function openGame(browser, base, rows) {
       for (const k of keys) assert.deepEqual(curTables[k], baseTables[k], `고정 표 "${k}" 가 기준 리비전과 달라졌다`);
       console.log(`이식분 ${keys.length}종 동일: ${keys.join(' · ')}`);
 
-      // ── 의도한 변경 ①: 보스는 상성을 받지 않는다 (기준 리비전은 받는다) ──────
-      const curProbe = await cur.page.evaluate(bossMatchupProbe);
-      const baseProbe = await base.page.evaluate(bossMatchupProbe);
-      report.bossMatchup = { current: curProbe, baseline: baseProbe };
-      assert.deepEqual([curProbe.bossExpS, curProbe.bossVibL], [1, 1], '현재: 보스는 상성 배수를 받지 않는다');
-      assert.deepEqual([curProbe.mobExpS, curProbe.mobVibL], [0.5, 0.25], '현재: 잡몹은 상성 배수를 그대로 받는다');
-      assert.deepEqual([baseProbe.bossExpS, baseProbe.bossVibL], [0.5, 0.25], '기준: 보스도 상성을 받았다 (변경 전 동작 확인)');
-      console.log(`보스 상성 — 기준 ${baseProbe.bossExpS}·${baseProbe.bossVibL} → 현재 ${curProbe.bossExpS}·${curProbe.bossVibL} (잡몹은 ${curProbe.mobExpS}·${curProbe.mobVibL} 그대로)`);
+      // ── 의도한 변경 ①: 모든 S/M/L 공격 상성과 관련 메타데이터 제거 ────────
+      const curMeta = await cur.page.evaluate(matchupMetadataProbe);
+      const baseMeta = await base.page.evaluate(matchupMetadataProbe);
+      report.matchupMetadata = { current: curMeta, baseline: baseMeta };
+      assert.deepEqual(curMeta, { towerAtks: Array(20).fill(null), attackNameTable: false, infoAtkBadge: false, sizeMult: null, sizeName: null }, '현재: 공격형/상성 메타데이터 삭제');
+      assert.deepEqual(baseMeta.towerAtks, ['vib', 'exp', 'norm', 'norm', 'norm', 'exp', ...Array(13).fill('exp'), 'norm'], '기준: 타워 공격형 표');
+      assert.equal(baseMeta.attackNameTable, true, '기준: 공격형 이름표');
+      assert.equal(baseMeta.infoAtkBadge, true, '기준: 공격형 HUD 배지');
+      assert.deepEqual(baseMeta.sizeMult, { vib: { S: 1, M: .5, L: .25 }, exp: { S: .5, M: .75, L: 1 }, norm: { S: 1, M: 1, L: 1 } }, '기준: 크기별 공격 상성표');
+      assert.deepEqual(baseMeta.sizeName, { S: '소형', M: '중형', L: '대형' }, '기준: 크기 이름표');
+      const curProbe = await cur.page.evaluate(matchupProbe);
+      const baseProbe = await base.page.evaluate(matchupProbe);
+      report.matchupDamage = { current: curProbe, baseline: baseProbe };
+      const legacy = { 1: [1, .5, .25], 2: [.5, .75, 1], 3: [1, 1, 1], 7: [.5, .75, 1], 20: [1, 1, 1] };
+      for (const kind of ['mob', 'boss']) for (const face of [1, 2, 3, 7, 20]) {
+        assert.deepEqual(curProbe[kind][face], [1, 1, 1], `현재: ${kind} 상대 ${face}눈은 S/M/L 모두 1배`);
+        assert.deepEqual(baseProbe[kind][face], legacy[face], `기준: ${kind} 상대 ${face}눈의 기존 상성`);
+      }
+      console.log('상성 — 기준 S/M/L 배수 검증, 현재 잡몹·보스 모두 1배 및 공격형 메타데이터 삭제');
 
       // ── 의도한 변경 ③: 최상위가 더 흔했던 역전을 없앴다 (에픽 14~17 · 신화 18~19) ──
       const curOdds = await cur.page.evaluate(chestFaceOdds);
@@ -298,5 +324,5 @@ async function openGame(browser, base, rows) {
     fs.writeFileSync(path.join(out, 'report.json'), JSON.stringify(report, null, 2));
     await browser.close();
   }
-  console.log('PASS 순수운빨 —', SEEDS.length, '씨앗 ×', WAVES, '웨이브 · 이식분 동일 · 의도한 변경만 갈림;', path.join(out, 'report.json'));
+  console.log('PASS 순수운빨 —', PROBES_ONLY ? '고정 표·직접 피해 검사' : `${SEEDS.length} 씨앗 × ${WAVES} 웨이브`, '· 이식분 동일 · 의도한 변경만 갈림;', path.join(out, 'report.json'));
 })().catch(error => { console.error('FAIL', error); process.exitCode = 1; });
