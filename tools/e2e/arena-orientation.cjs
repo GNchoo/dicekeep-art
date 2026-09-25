@@ -60,8 +60,11 @@ function checkGeometry(name, land, portrait) {
       const response = await route.fetch(), source = await response.text();
       const anchor = 'window.DK = S;';
       assert.ok(source.includes(anchor), 'game closure hook exists');
-      const hook = 'window.__arenaQA={remapSpot,towerRange,arenaWorldScale:typeof arenaWorldScale==="function"?arenaWorldScale:()=>NaN,arenaCanvasForScreen,canvasDims:()=>[W,H],relayoutArena,laneLen,posAt,draw,spawnEnemy,buildInfinityWave,towerFire,update,updateVisuals,mpSummary,mpViewBuild,mpViewAdvance,VIEW,SPOTS:()=>SPOTS,LANES:()=>LANES,startArt:()=>A.tl_arena_start}; window.DK = S;';
-      await route.fulfill({ response, body: source.replace(anchor, hook) });
+      const groundAnchor = 'function drawGroundSprite(g, sp, x, y, h, flip) {';
+      assert.equal(source.split(groundAnchor).length, 2, 'one sprite draw hook anchor');
+      const drawProbe = groundAnchor + ' if (window.__arenaQA && sp === A.tl_arena_start) window.__arenaQA.portalDraws.push({x,y,h,flip:!!flip});';
+      const hook = 'window.__arenaQA={remapSpot,towerRange,arenaWorldScale:typeof arenaWorldScale==="function"?arenaWorldScale:()=>NaN,arenaCanvasForScreen,canvasDims:()=>[W,H],relayoutArena,laneLen,posAt,draw,spawnEnemy,buildInfinityWave,towerFire,update,updateVisuals,mpSummary,mpViewBuild,mpViewAdvance,VIEW,SPOTS:()=>SPOTS,LANES:()=>LANES,startArt:()=>A.tl_arena_start,portalDraws:[]}; window.DK = S;';
+      await route.fulfill({ response, body: source.replace(groundAnchor, drawProbe).replace(anchor, hook) });
     });
     await page.addInitScript(() => {
       localStorage.setItem('dk_coachDone', '1');
@@ -379,6 +382,7 @@ function checkGeometry(name, land, portrait) {
     // A decorative entrance is useful only when it is the actual spawn point
     // and its complete artwork is visible in the player's viewport.
     const measurePortal = async (width, height) => {
+      await page.evaluate(() => { __arenaQA.portalDraws = []; });
       await page.setViewportSize({ width, height });
       await page.waitForFunction(([w, h]) => {
         const want = w / h < 0.95 ? 'cInfP' : 'cInf';
@@ -389,20 +393,21 @@ function checkGeometry(name, land, portrait) {
         const QA = __arenaQA, map = DKCONTENT.maps.find(m => m.key === DK.mapKey);
         const canvas = document.getElementById('game'), cr = canvas.getBoundingClientRect();
         const art = QA.startArt(), portal = map.portals?.[0], spawn = map.path[0];
+        const drawCall = QA.portalDraws.findLast(c => portal && Math.abs(c.x - portal[0]) < 1e-6);
         DK.enemies = [];
         QA.spawnEnemy(QA.buildInfinityWave(1)[0]);
         const enemy = DK.enemies[0], position = QA.posAt(enemy.dist, enemy.lane);
         const sx = cr.width / canvas.width, sy = cr.height / canvas.height;
-        const artWidth = art?.h ? 84 * art.w / art.h : 84;
-        const image = portal && {
-          left: cr.left + (portal[0] - artWidth / 2) * sx,
-          right: cr.left + (portal[0] + artWidth / 2) * sx,
-          top: cr.top + (portal[1] - 58) * sy,
-          bottom: cr.top + (portal[1] + 26) * sy,
+        const artWidth = art?.h && drawCall ? drawCall.h * art.w / art.h : 0;
+        const image = drawCall && {
+          left: cr.left + (drawCall.x - artWidth / 2) * sx,
+          right: cr.left + (drawCall.x + artWidth / 2) * sx,
+          top: cr.top + (drawCall.y - drawCall.h) * sy,
+          bottom: cr.top + drawCall.y * sy,
         };
         return { mapKey: DK.mapKey, canvas: [canvas.width, canvas.height], portal, spawn,
           enemyDist: enemy.dist, enemyPos: [position.x, position.y], artReady: !!art?.cv,
-          image, viewport: [innerWidth, innerHeight] };
+          drawCall, image, viewport: [innerWidth, innerHeight] };
       });
     };
     for (const [width, height] of [[932, 430], [430, 932], [514, 850], [844, 390]]) {
@@ -412,6 +417,12 @@ function checkGeometry(name, land, portrait) {
       near(p.enemyPos[0], p.portal[0], `${label} actual enemy spawn x`);
       near(p.enemyPos[1], p.portal[1], `${label} actual enemy spawn y`);
       assert.ok(p.artReady, `${label} authored portal art is loaded`);
+      assert.ok(p.drawCall, `${label} portal art is actually drawn in the road layer`);
+      const scale = p.mapKey === 'cInfP' ? 1.7 : 1;
+      near(p.drawCall.x, p.portal[0], `${label} drawn portal x`);
+      near(p.drawCall.y, p.portal[1] + 26 * scale, `${label} drawn portal foot y`);
+      near(p.drawCall.h, 84 * scale, `${label} drawn portal height`);
+      assert.equal(p.drawCall.flip, p.mapKey === 'cInf', `${label} drawn portal facing`);
       assert.ok(p.image.left >= -1 && p.image.right <= width + 1,
         `${label} portal art fits viewport horizontally: ${JSON.stringify(p.image)}`);
       assert.ok(p.image.top >= 63 && p.image.bottom <= height - 11,

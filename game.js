@@ -107,6 +107,11 @@ const avoidCache = {}; // mapKey → 물 판정 함수
 let ROAD_LAYER = null;   // 코드 렌더 맵(아레나)의 바닥+도로 오프스크린 캔버스
 let ARENA = null;        // { center, portals } — 코드 렌더 맵일 때만
 const ARENA_PORTAL = { height: 84, footOffset: 26 };
+function arenaPortalStyle(m) {
+  const scale = m?.arenaPortrait ? 1.7 : 1;
+  return { height: ARENA_PORTAL.height * scale, footOffset: ARENA_PORTAL.footOffset * scale,
+    flip: !!m?.arena && !m.arenaPortrait };
+}
 function buildLane(kind, pts, label) {
   const segs = [];
   let len = 0;
@@ -226,8 +231,9 @@ function buildRoadLayer(m) {
   // 6. 연석 바깥은 어둡게: 플레이 영역(보드·트랙)만 밝게 남겨 장식이 타워로 읽히지 않게 한다
   if (m.track) dimOutsideTrack(g, m);
   // The entrance is a gameplay landmark, so keep it above the outer-map shade.
+  const portal = arenaPortalStyle(m);
   if (st && m.portals) for (const p of m.portals)
-    drawGroundSprite(g, st, p[0], p[1] + ARENA_PORTAL.footOffset, ARENA_PORTAL.height);
+    drawGroundSprite(g, st, p[0], p[1] + portal.footOffset, portal.height, portal.flip);
   if (ARENA) { ARENA.hasStart = !!st; ARENA.hasEnd = !!en; ARENA.brazierArt = !!brazierArtFlag(m); }
   return cv;
 }
@@ -5498,7 +5504,8 @@ function arenaCanvasForScreen(key) {
   if (key === 'cInfP') {
     const boxH = Math.max(200, availH - hudH - gap);
     const probe = DKCONTENT.buildArenaLayoutPortrait(720, 1080, {});
-    const topReach = 540 - probe.path[0][1] + ARENA_PORTAL.height - ARENA_PORTAL.footOffset;
+    const portal = arenaPortalStyle({ arenaPortrait: true });
+    const topReach = 540 - probe.path[0][1] + portal.height - portal.footOffset;
     const bottomReach = probe.track.B - 540 + 40; // road curb and soft edge
     const topPx = 64 + safeArea().t, bottomPx = 12;
     const sc = Math.min(availW / 720, Math.max(80, boxH - topPx - bottomPx) / (topReach + bottomReach));
