@@ -13,8 +13,8 @@
     "vfx"
   ],
   "summary": {
-    "files": 2303,
-    "bytes": 264827163,
+    "files": 2304,
+    "bytes": 264928953,
     "byCategory": [
       {
         "name": "boss",
@@ -33,8 +33,8 @@
       },
       {
         "name": "tile",
-        "files": 24,
-        "bytes": 5790868
+        "files": 25,
+        "bytes": 5892658
       },
       {
         "name": "tower",
@@ -65,8 +65,8 @@
       },
       {
         "name": "runtime",
-        "files": 803,
-        "bytes": 72483042
+        "files": 804,
+        "bytes": 72584832
       },
       {
         "name": "source",
@@ -82,8 +82,8 @@
       },
       {
         "name": "png",
-        "files": 221,
-        "bytes": 38916387
+        "files": 222,
+        "bytes": 39018177
       },
       {
         "name": "webp",
@@ -99,15 +99,15 @@
       },
       {
         "name": "included",
-        "files": 2192,
-        "bytes": 232374580
+        "files": 2193,
+        "bytes": 232476370
       }
     ],
     "byMobileReason": [
       {
         "name": "casual-tiles-directory",
-        "files": 24,
-        "bytes": 5790868
+        "files": 25,
+        "bytes": 5892658
       },
       {
         "name": "fixed-directory",
@@ -33571,6 +33571,22 @@
       "lifecycle": "runtime",
       "category": "tile",
       "role": "road",
+      "mobileBuild": {
+        "status": "included",
+        "reason": "casual-tiles-directory"
+      }
+    },
+    {
+      "path": "casual/tiles/arena/start-front.png",
+      "bytes": 101790,
+      "sha256": "f287f47b742c6b930135ae894ca580b1f93326b0b7be14828484ed2fe092e4ba",
+      "format": "png",
+      "width": 512,
+      "height": 512,
+      "hasAlpha": true,
+      "lifecycle": "runtime",
+      "category": "tile",
+      "role": "start-front",
       "mobileBuild": {
         "status": "included",
         "reason": "casual-tiles-directory"

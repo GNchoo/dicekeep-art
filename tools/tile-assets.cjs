@@ -11,7 +11,7 @@ assert.ok(args.every(arg => arg === '--write'), 'Usage: node tools/tile-assets.c
 const context = { window: {} };
 vm.runInNewContext(fs.readFileSync(path.join(root, 'content.js'), 'utf8'), context, { filename: 'content.js' });
 const content = context.window.DKCONTENT;
-const names = ['floor', 'road', 'board', 'pad', 'start', 'end', 'prop-1', 'prop-2', 'prop-3'];
+const names = ['floor', 'road', 'board', 'pad', 'start', 'start-front', 'end', 'prop-1', 'prop-2', 'prop-3'];
 const file = (theme, name) => `${theme}/${name}.${name === 'floor' ? 'jpg' : 'png'}`;
 const candidates = names.map(name => file('arena', name));
 for (const theme of content.THEMES) for (const name of [...content.TILE_ASSETS, 'road-straight']) candidates.push(file(theme.id, name));

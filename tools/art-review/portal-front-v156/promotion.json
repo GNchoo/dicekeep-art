@@ -1,0 +1,12 @@
+{
+  "generatedWith": "Codex built-in image_gen",
+  "apiKeyUsed": false,
+  "source": "tools/art-review/portal-front-v156/source.png",
+  "sourceSha256": "b029e46c7fdf1d2635022ab6c955c695fbb475e7929453e15581007a674fba29",
+  "target": "casual/tiles/arena/start-front.png",
+  "targetSha256": "f287f47b742c6b930135ae894ca580b1f93326b0b7be14828484ed2fe092e4ba",
+  "width": 512,
+  "height": 512,
+  "hasAlpha": true,
+  "bytes": 101790
+}
