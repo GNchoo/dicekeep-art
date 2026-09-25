@@ -1,9 +1,10 @@
 // The portrait arena must be the same battle rotated clockwise, including
 // tower cells, enemy ring progress, and the range used by real targeting.
 const assert = require('node:assert/strict');
-const { launchBrowser, gameUrl } = require('./browser.cjs');
+const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
 
 const SCALE = 1.4;
+const ENTRY = 96;
 const EPS = 1e-6;
 const near = (actual, expected, label) =>
   assert.ok(Math.abs(actual - expected) < EPS, `${label}: ${actual} != ${expected}`);
@@ -22,12 +23,12 @@ function checkGeometry(name, land, portrait) {
   assert.equal(land.spots.length, 15, `${name} landscape cells`);
   assert.equal(portrait.spots.length, 15, `${name} portrait cells`);
   assert.equal(land.ring.length, portrait.ring.length, `${name} ring vertex count`);
-  near(land.loopAt, 290, `${name} landscape entry length`);
-  near(portrait.loopAt, 290 * SCALE, `${name} portrait entry length`);
-  // The spawn can be off-screen. No decorative portal may imply a different
-  // entry point on the visible road or inside the portrait ring.
-  assert.deepEqual(land.portals, [], `${name} landscape has no false entrance marker`);
-  assert.deepEqual(portrait.portals, [], `${name} portrait has no false entrance marker`);
+  near(land.loopAt, ENTRY, `${name} landscape entry length`);
+  near(portrait.loopAt, ENTRY * SCALE, `${name} portrait entry length`);
+  assert.deepEqual(land.portals, [land.path[0]], `${name} landscape portal marks actual spawn`);
+  assert.deepEqual(portrait.portals, [portrait.path[0]], `${name} portrait portal marks actual spawn`);
+  assert.deepEqual(land.path[0], land.entry[0], `${name} landscape road starts at spawn`);
+  assert.deepEqual(portrait.path[0], portrait.entry[0], `${name} portrait road starts at spawn`);
   for (let i = 0; i < 2; i++) {
     const expected = rotate(land.entry[i], lc, pc), actual = portrait.entry[i];
     near(actual[0], expected[0], `${name} entry ${i} x`);
@@ -59,7 +60,7 @@ function checkGeometry(name, land, portrait) {
       const response = await route.fetch(), source = await response.text();
       const anchor = 'window.DK = S;';
       assert.ok(source.includes(anchor), 'game closure hook exists');
-      const hook = 'window.__arenaQA={remapSpot,towerRange,arenaWorldScale:typeof arenaWorldScale==="function"?arenaWorldScale:()=>NaN,arenaCanvasForScreen,canvasDims:()=>[W,H],relayoutArena,laneLen,spawnEnemy,buildInfinityWave,towerFire,update,updateVisuals,mpSummary,mpViewBuild,mpViewAdvance,VIEW,SPOTS:()=>SPOTS,LANES:()=>LANES}; window.DK = S;';
+      const hook = 'window.__arenaQA={remapSpot,towerRange,arenaWorldScale:typeof arenaWorldScale==="function"?arenaWorldScale:()=>NaN,arenaCanvasForScreen,canvasDims:()=>[W,H],relayoutArena,laneLen,posAt,draw,spawnEnemy,buildInfinityWave,towerFire,update,updateVisuals,mpSummary,mpViewBuild,mpViewAdvance,VIEW,SPOTS:()=>SPOTS,LANES:()=>LANES,startArt:()=>A.tl_arena_start}; window.DK = S;';
       await route.fulfill({ response, body: source.replace(anchor, hook) });
     });
     await page.addInitScript(() => {
@@ -74,7 +75,7 @@ function checkGeometry(name, land, portrait) {
       const C = DKCONTENT;
       const pair = (lw, lh, li, pw, ph, pi) => {
         const a = C.buildArenaLayout(lw, lh, li), b = C.buildArenaLayoutPortrait(pw, ph, pi);
-        return [a, b].map(x => ({ spots: x.spots, ring: x.roads[1], entry: x.roads[0],
+        return [a, b].map(x => ({ spots: x.spots, ring: x.roads[1], entry: x.roads[0], path: x.path,
           portals: x.portals, loopAt: x.loopAt, board: x.board, track: x.track }));
       };
       return [
@@ -319,9 +320,8 @@ function checkGeometry(name, land, portrait) {
     assert.ok(nearSquare.canvas[0] > nearSquare.canvas[1], 'near-square portrait viewport has a wide canvas');
     assert.equal(nearSquare.orientation, 'p', 'summary reports layout orientation, not canvas dimensions');
 
-    // Entry starts off-screen, so its geometric length varies with viewport.
-    // Use the real update loop: all players must reach the ring after the
-    // same elapsed time even though that entry path has different lengths.
+    // The shorter entry starts at the visible portal. Use the real update loop:
+    // every orientation must reach the ring after the same elapsed time.
     const measureEntry = async (width, height) => {
       await page.setViewportSize({ width, height });
       await page.waitForFunction(([w, h]) => {
@@ -361,12 +361,12 @@ function checkGeometry(name, land, portrait) {
     assert.equal(entryLand.mapKey, 'cInf');
     assert.equal(entryPortrait.mapKey, 'cInfP');
     assert.equal(entrySquare.mapKey, 'cInfP');
-    near(entryLand.loopAt, 290, 'landscape fixed entry length');
-    near(entryPortrait.loopAt, 290 * SCALE, 'portrait fixed entry length');
-    near(entrySquare.loopAt, 290 * SCALE, 'near-square fixed entry length');
+    near(entryLand.loopAt, ENTRY, 'landscape fixed entry length');
+    near(entryPortrait.loopAt, ENTRY * SCALE, 'portrait fixed entry length');
+    near(entrySquare.loopAt, ENTRY * SCALE, 'near-square fixed entry length');
     for (const [name, measured] of [['landscape', entryLand], ['portrait', entryPortrait], ['near-square', entrySquare]])
-      assert.ok(Math.abs(measured.seconds - 290 / 40) <= 1 / 60 + EPS,
-        `${name} ring arrival ${measured.seconds}s differs from logical 7.25s`);
+      assert.ok(Math.abs(measured.seconds - ENTRY / 40) <= 1 / 60 + EPS,
+        `${name} ring arrival ${measured.seconds}s differs from logical ${ENTRY / 40}s`);
     assert.ok(Math.max(entryLand.seconds, entryPortrait.seconds, entrySquare.seconds)
       - Math.min(entryLand.seconds, entryPortrait.seconds, entrySquare.seconds) <= 1 / 60 + EPS,
     'all viewports have equal real ring-entry time');
@@ -375,6 +375,61 @@ function checkGeometry(name, land, portrait) {
     assert.equal(entrySquare.shots, entryLand.shots, 'near-square tower fires equally often before ring entry');
     near(entryPortrait.hp, entryLand.hp, 'portrait pre-ring enemy HP');
     near(entrySquare.hp, entryLand.hp, 'near-square pre-ring enemy HP');
+
+    // A decorative entrance is useful only when it is the actual spawn point
+    // and its complete artwork is visible in the player's viewport.
+    const measurePortal = async (width, height) => {
+      await page.setViewportSize({ width, height });
+      await page.waitForFunction(([w, h]) => {
+        const want = w / h < 0.95 ? 'cInfP' : 'cInf';
+        const expected = __arenaQA.arenaCanvasForScreen(want), dims = __arenaQA.canvasDims();
+        return DK.mapKey === want && dims[0] === expected.w && dims[1] === expected.h;
+      }, [width, height]);
+      return page.evaluate(() => {
+        const QA = __arenaQA, map = DKCONTENT.maps.find(m => m.key === DK.mapKey);
+        const canvas = document.getElementById('game'), cr = canvas.getBoundingClientRect();
+        const art = QA.startArt(), portal = map.portals?.[0], spawn = map.path[0];
+        DK.enemies = [];
+        QA.spawnEnemy(QA.buildInfinityWave(1)[0]);
+        const enemy = DK.enemies[0], position = QA.posAt(enemy.dist, enemy.lane);
+        const sx = cr.width / canvas.width, sy = cr.height / canvas.height;
+        const artWidth = art?.h ? 84 * art.w / art.h : 84;
+        const image = portal && {
+          left: cr.left + (portal[0] - artWidth / 2) * sx,
+          right: cr.left + (portal[0] + artWidth / 2) * sx,
+          top: cr.top + (portal[1] - 58) * sy,
+          bottom: cr.top + (portal[1] + 26) * sy,
+        };
+        return { mapKey: DK.mapKey, canvas: [canvas.width, canvas.height], portal, spawn,
+          enemyDist: enemy.dist, enemyPos: [position.x, position.y], artReady: !!art?.cv,
+          image, viewport: [innerWidth, innerHeight] };
+      });
+    };
+    for (const [width, height] of [[932, 430], [430, 932], [514, 850], [844, 390]]) {
+      const p = await measurePortal(width, height), label = `${width}x${height}`;
+      assert.deepEqual(p.portal, p.spawn, `${label} portal is exactly at path[0]`);
+      assert.equal(p.enemyDist, 0, `${label} newly spawned enemy starts at distance zero`);
+      near(p.enemyPos[0], p.portal[0], `${label} actual enemy spawn x`);
+      near(p.enemyPos[1], p.portal[1], `${label} actual enemy spawn y`);
+      assert.ok(p.artReady, `${label} authored portal art is loaded`);
+      assert.ok(p.image.left >= -1 && p.image.right <= width + 1,
+        `${label} portal art fits viewport horizontally: ${JSON.stringify(p.image)}`);
+      assert.ok(p.image.top >= 63 && p.image.bottom <= height - 11,
+        `${label} portal art clears 64px top and 12px bottom: ${JSON.stringify(p.image)}`);
+      console.log(`${label} portal ${p.mapKey} ${JSON.stringify(p.image)}`);
+      if (label === '932x430' || label === '430x932') {
+        await page.evaluate(() => {
+          const QA = __arenaQA, lane = QA.LANES()[0], item = QA.buildInfinityWave(1)[0];
+          DK.enemies = [];
+          for (let i = 0; i < 3; i++) {
+            QA.spawnEnemy(item);
+            const e = DK.enemies[i]; e.dist = lane.loopAt * i * 0.38; e.entranceT = -1;
+          }
+          QA.draw();
+        });
+        await page.screenshot({ path: outputPath(`arena-portal-${label}.png`) });
+      }
+    }
 
     // The cannon projectile follows a stationary target on the same ring
     // phase. Compare actual visual-update frames through impact, not only

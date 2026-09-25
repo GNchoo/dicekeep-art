@@ -293,6 +293,7 @@ window.DKCONTENT = (function () {
   // 목숨은 '도착'이 아니라 필드 한계선(INFINITY.fieldCap)으로 깎인다 — game.js spawnEnemy.
   // W×H 는 화면 비율에 맞춰 game.js 가 정한다(arenaCanvasForScreen). 트랙·보드 치수는 고정이고 중심만 옮긴다.
   // inset: 화면 위(자원 칩)·아래(겹침 HUD)가 가리는 만큼 트랙을 그 사이 가운데에 세운다.
+  const arenaEntryLength = 96;
   function buildArenaLayout(W, H, inset) {
     W = W || 1024; H = H || 576; inset = inset || {};
     const cx = Math.round(W / 2), cy = Math.round((inset.top || 0) + (H - (inset.top || 0) - (inset.bottom || 0)) / 2);
@@ -303,17 +304,14 @@ window.DKCONTENT = (function () {
     const ring = dedupe([[L, MID],
       ...arc(L + rad, B - rad, Math.PI, Math.PI / 2, 6), ...arc(R - rad, B - rad, Math.PI / 2, 0, 6),
       ...arc(R - rad, T + rad, 0, -Math.PI / 2, 6), ...arc(L + rad, T + rad, -Math.PI / 2, -Math.PI, 6), [L, MID]]);
-    // Fix the approach in world units so combat exposure does not depend on
-    // viewport width. On a wide canvas it may start inside the visible area.
-    const entry = [[L - 290, MID], [L, MID]];
+    // Keep the short portal approach fixed in world units in both orientations.
+    const entry = [[L - arenaEntryLength, MID], [L, MID]];
     const path = dedupe([...entry, ...ring]);
     const loopAt = L - entry[0][0]; // 입구 길이. 경로 끝에 닿으면 여기로 되돌아가 계속 돈다
     // 석단 보드 3×5
     const spots = [];
     for (let r = 0; r < 3; r++) for (let c = 0; c < 5; c++) spots.push([cx + (c - 2) * 88, cy + (r - 1) * 72]);
-    // The fixed approach can begin off-screen. A decorative portal shifted
-    // onto the visible road would misrepresent where monsters spawn.
-    return { path, path2: null, airPts: null, spots, spots2: [], portals: [], center: null, noGoal: true, loopAt,
+    return { path, path2: null, airPts: null, spots, spots2: [], portals: [entry[0]], center: null, noGoal: true, loopAt,
              roads: [entry, ring], board: { x: cx - 222, y: cy - 122, w: 444, h: 244, cols: 5, rows: 3, gapX: 88, gapY: 72 }, track: { L, R, T, B, rad, mid: MID } };
   }
 
@@ -1135,7 +1133,7 @@ window.DKCONTENT = (function () {
     const scale = 1.4, base = buildArenaLayout(1024, 576, {});
     const rotate = ([x, y]) => [cx - (y - 288) * scale, cy + (x - 512) * scale];
     const ring = base.roads[1].map(rotate);
-    // Rotate the same fixed 290-unit approach with the ring (×1.4).
+    // Rotate the same fixed portal approach with the ring (×1.4).
     const entry = base.roads[0].map(rotate);
     const path = [entry[0], ...ring];
     const spots = Array(15);
@@ -1148,9 +1146,7 @@ window.DKCONTENT = (function () {
       gapX: base.board.gapY * scale, gapY: base.board.gapX * scale };
     const track = { L: cx - 150 * scale, R: cx + 150 * scale, T: cy - 262 * scale,
       B: cy + 262 * scale, rad: base.track.rad * scale, mid: cy };
-    // The real spawn is above the visible approach. Do not place a false
-    // entrance portal inside the ring just to keep it on screen.
-    return { path, path2: null, airPts: null, spots, spots2: [], portals: [], center: null,
+    return { path, path2: null, airPts: null, spots, spots2: [], portals: [entry[0]], center: null,
       noGoal: true, loopAt: base.loopAt * scale, roads: [entry, ring], board, track, arenaScale: scale };
   }
 
@@ -1738,7 +1734,7 @@ window.DKCONTENT = (function () {
   return {
     maps, towerSkins, STAR_TOWER_EMITTERS, DICE_SKINS, skinLetters: SKIN_LETTERS, bases, bossBases, species, bosses, stages,
     INFINITY, DICE_POWER,
-    tiers: TIERS, tierOf, buildLayout, buildArenaLayout, buildArenaLayoutPortrait, layoutArena, makeAvoidFromImage, pathLength, pathAt, pathDist,
+    tiers: TIERS, tierOf, buildLayout, arenaEntryLength, buildArenaLayout, buildArenaLayoutPortrait, layoutArena, makeAvoidFromImage, pathLength, pathAt, pathDist,
     TILE, GW, GH, THEMES, TILE_ASSETS, themeForStage, TEMPLATES_SINGLE, TEMPLATES_DUAL, buildGridLayout, templateForStage,
     mapCount: 50, stageCount: 50,
   };
