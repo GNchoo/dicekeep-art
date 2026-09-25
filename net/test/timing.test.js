@@ -39,5 +39,8 @@ test('상수 값', () => {
   assert.equal(T.IP_QUICK_PER_MIN, 30);
   assert.equal(T.ROOM_SIZE, 4);
   assert.ok(T.RECONNECT_GRACE === 180000 && T.GAME_CAP === 100 * 60000 && T.EMPTY_END === 3 * 60000);
+  assert.equal(T.CLEAR_GAME_CAP, 5 * 60 * 60000);
+  assert.equal(T.gameCapFor('clear'), T.CLEAR_GAME_CAP);
+  for (const mode of ['extreme', 'duel', 'coop']) assert.equal(T.gameCapFor(mode), T.GAME_CAP);
   assert.ok(!('spawnEnd' in T) && !('isBoss' in T) && !('bossWaves' in T) && !('END_GRACE' in T));
 });

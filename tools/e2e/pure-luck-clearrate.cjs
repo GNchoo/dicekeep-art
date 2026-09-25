@@ -9,6 +9,8 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const assert = require('node:assert/strict');
+const { execFileSync } = require('node:child_process');
+const { createHash } = require('node:crypto');
 const { launchBrowser } = require('./browser.cjs');
 
 const repo = path.resolve(__dirname, '../..');
@@ -23,13 +25,21 @@ const LATE_EXP = arg('lateexp') ? Number(arg('lateexp')) : null;
 const BOSS_LIMIT = arg('bosslimit') ? Number(arg('bosslimit')) : null;   // 보스 제한시간(초)
 const HP_EXP = arg('hpexp') ? Number(arg('hpexp')) : null;               // 기본 체력 곡선의 밑 (저장소 값 1.08)
 const LATE_FROM = arg('latefrom') ? Number(arg('latefrom')) : null;      // 후반 곡선이 걸리기 시작하는 웨이브 (저장소 값 90)
+const NORMAL_HP_FACTOR = arg('normalhpfactor') ? Number(arg('normalhpfactor')) : null; // 일반몹만 별도 HP 배율
+const NORMAL_HP_FROM = arg('normalhpfrom') ? Number(arg('normalhpfrom')) : 1;
+const NORMAL_HP_EXP = arg('normalhpexp') ? Number(arg('normalhpexp')) : null;
+const REALTIME_INPUT = arg('realtime-input') === '1'; // 상자 개봉 2.2초에도 전투를 진행한다
+const REFERENCE = arg('reference') || null;
+const SOURCES = Object.fromEntries(['game.js', 'content.js'].map(name => [name, REFERENCE
+  ? execFileSync('git', ['show', `${REFERENCE}:${name}`], { cwd: repo, encoding: 'utf8' })
+  : fs.readFileSync(path.join(repo, name), 'utf8')]));
 const CLEAR_WAVE = 101;
 const base = (process.env.E2E_BASE_URL || 'http://localhost:8137/').replace(/\/?$/, '/');
 fs.mkdirSync(out, { recursive: true });
 
 // ── 페이지 안에서 도는 봇 ────────────────────────────────────────────────
 // 게임의 공개 훅(DKchest/DKplace/판매 버튼)만 쓴다. 규칙(7★ 이상 판매 불가 등)은 게임 코드가 그대로 판정한다.
-function playRun({ seed, policy, clearWave, tune, lateExp, bossLimit, hpExp, lateFrom, mode = 'clear', deck, level = 1 }) {
+function playRun({ seed, policy, clearWave, tune, lateExp, bossLimit, hpExp, lateFrom, normalHpFactor, normalHpFrom = 1, normalHpExp, realtimeInput = false, mode = 'clear', deck, level = 1 }) {
   tune = tune || { reserve: 3, enhMax: 10, powerFirst: false };
   if (lateExp != null) DKCONTENT.INFINITY.lateExp = lateExp;         // 후반 곡선의 밑 (1 미만이면 감산)
   if (lateFrom != null) DKCONTENT.INFINITY.lateFrom = lateFrom;      // 후반 곡선 시작 웨이브
@@ -42,6 +52,15 @@ function playRun({ seed, policy, clearWave, tune, lateExp, bossLimit, hpExp, lat
       const late = gauntlet && w > this.lateFrom ? Math.pow(this.lateExp, w - this.lateFrom) : 1;
       r.hpMult = +Math.min(1e120, 1.8 * Math.pow(hpExp, w - 1) * late).toFixed(3);
       return r;
+    };
+  }
+  if (normalHpFactor != null || normalHpExp != null) {
+    const INF = DKCONTENT.INFINITY;
+    if (!INF.__qaOriginalWaveForMode) INF.__qaOriginalWaveForMode = INF.waveForMode;
+    INF.waveForMode = function (w, key) {
+      const result = this.__qaOriginalWaveForMode.call(this, w, key);
+      if (key === 'clear' && w >= normalHpFrom && !this.isBossWave(w)) result.hpMult *= (normalHpFactor ?? 1) * Math.pow(normalHpExp ?? 1, w - normalHpFrom);
+      return result;
     };
   }
   DKSAVE.progression = DKPROGRESSION.defaultProfile();   // 갓 시작한 무과금 계정
@@ -133,11 +152,44 @@ function playRun({ seed, policy, clearWave, tune, lateExp, bossLimit, hpExp, lat
   };
 
   let ticks = 0, sold = 0, stuck = 0;
+  let maxEnemies = 0, maxEnemiesWave = 0, maxNormalEnemies = 0, maxBossEnemies = 0;
+  let ordinaryLivesLost = 0, firstOrdinaryLifeLossWave = null;
+  const wavePeaks = {}, waveFirstSeconds = {}, waveCompleteSeconds = {};
+  let lastDoneW = DK.inf.doneW;
+  const combatStep = () => {
+    const lives = DK.lives;
+    __pureQA.update(DT);
+    const count = DK.enemies.length, wave = DK.wave;
+    if (wave > 0 && waveFirstSeconds[wave] == null) waveFirstSeconds[wave] = +(ticks * DT).toFixed(3);
+    if (DK.inf.doneW !== lastDoneW) {
+      waveCompleteSeconds[DK.inf.doneW] = +(ticks * DT).toFixed(3);
+      lastDoneW = DK.inf.doneW;
+    }
+    wavePeaks[wave] = Math.max(wavePeaks[wave] || 0, count);
+    if (count > maxEnemies) { maxEnemies = count; maxEnemiesWave = wave; }
+    if (wave % 10 === 0) maxBossEnemies = Math.max(maxBossEnemies, count);
+    else maxNormalEnemies = Math.max(maxNormalEnemies, count);
+    if (DK.lives < lives && !DK.inf.bossTimeout && !DK.inf.bossLeak) {
+      ordinaryLivesLost += lives - DK.lives;
+      firstOrdinaryLifeLossWave ??= wave;
+    }
+  };
   const settleRoll = () => {
     if (!DKSLOT.active || DK.heldDie) return;
     if (DKSLOT.phase === -1) {
+      if (realtimeInput) {
+        let revealTicks = 0;
+        while (DK.phase === 'playing' && !__pureQA.manualChestReady() && revealTicks++ < 180 && ticks < MAX_TICKS) {
+          __pureQA.advancePresentation(DT);
+          __pureQA.updateDie(DT);
+          __pureQA.updateSlot(DT);
+          combatStep();
+          ticks++;
+        }
+        if (DK.phase !== 'playing') return;
+        if (!__pureQA.manualChestReady()) throw new Error('상자 개봉이 투척 대기로 전환되지 않았습니다');
+      } else __pureQA.advancePresentation(2.3); // 기존 빠른 봇: 개봉 시간 동안 전투를 멈춘다.
       const gold = DK.gold;
-      __pureQA.advancePresentation(2.3); // Let the purchased die reach the input tray.
       DKthrow(900, -300);
       if (DKDIE.state !== 'throw' || DK.gold !== gold) throw new Error('수동 상자 투척 실패 또는 이중 결제');
     }
@@ -147,7 +199,7 @@ function playRun({ seed, policy, clearWave, tune, lateExp, bossLimit, hpExp, lat
     while (DK.phase === 'playing' && !DK.heldDie && rollTicks++ < 900 && ticks < MAX_TICKS) {
       __pureQA.updateDie(DT);
       __pureQA.updateSlot(DT);
-      __pureQA.update(DT);
+      combatStep();
       ticks++;
     }
     if (DK.phase === 'playing' && !DK.heldDie && ticks < MAX_TICKS) throw new Error('상자 주사위가 정착하지 않았습니다: ' + DKSLOT.kind);
@@ -170,18 +222,21 @@ function playRun({ seed, policy, clearWave, tune, lateExp, bossLimit, hpExp, lat
       sold++;
     }
     if (!DK.waveActive && !DK.spawnQ.length && !DK.enemies.length) __pureQA.startWave();
-    __pureQA.update(DT);
+    combatStep();
     ticks++;
   }
   const towers = DK.towers.map(t => `${t.face}★Lv${t.lvl}`).sort();
   return {
-    seed, policy, lateExp: DKCONTENT.INFINITY.lateExp, lateFrom: DKCONTENT.INFINITY.lateFrom, bossLimit: DKCONTENT.INFINITY.bossTimeLimit, hpExp, ticks, cleared: !!DK.inf.cleared, doneW: DK.inf.doneW, wave: DK.wave,
+    seed, policy, lateExp: DKCONTENT.INFINITY.lateExp, lateFrom: DKCONTENT.INFINITY.lateFrom, bossLimit: DKCONTENT.INFINITY.bossTimeLimit, hpExp,
+    normalHpFactor, normalHpFrom, normalHpExp, realtimeInput, ticks, seconds: +(ticks * DT).toFixed(3), cleared: !!DK.inf.cleared, doneW: DK.inf.doneW, wave: DK.wave,
     lives: DK.lives, kills: DK.inf.kills, chests: DK.inf.chests, phase: DK.phase, stuck,
     hitTickCap: ticks >= MAX_TICKS, heldStuck: DK.heldDie, towers,
     maxFace: DK.towers.reduce((m, t) => Math.max(m, t.face), 0),
     // 왜 끝났는가 — 보스 제한시간(320초) 초과 / 보스가 한계선 통과 / 목숨 소진
-    reason: DK.inf.bossTimeout ? 'bossTimeout' : DK.inf.bossLeak ? 'bossLeak' : DK.inf.cleared ? 'cleared' : DK.lives <= 0 ? 'lives' : 'stopped',
+    reason: DK.inf.finalTimeout ? 'finalTimeout' : DK.inf.bossTimeout ? 'bossTimeout' : DK.inf.bossLeak ? 'bossLeak' : DK.inf.cleared ? 'cleared' : DK.lives <= 0 ? 'lives' : 'stopped',
     powerUps, enhanced, enhBoom, power: Object.assign({}, DK.inf.power), gold: Math.round(DK.gold),
+    maxEnemies, maxEnemiesWave, maxNormalEnemies, maxBossEnemies,
+    ordinaryLivesLost, firstOrdinaryLifeLossWave, wavePeaks, waveFirstSeconds, waveCompleteSeconds,
   };
 }
 
@@ -204,12 +259,13 @@ async function openGame(browser, errors) {
     };
   });
   await page.route('**/game.js*', async route => {
-    const response = await route.fetch(), original = await response.text();
+    const response = await route.fetch(), original = SOURCES['game.js'];
     const anchor = 'window.DK = S;';
     assert.equal(original.split(anchor).length, 2, '테스트 훅 삽입 지점');
-    const hook = 'window.__pureQA={update,advancePresentation,updateDie,updateSlot,startWave,chestCost,towerAt,SPOTS:()=>SPOTS};\n';
+    const hook = 'window.__pureQA={update,advancePresentation,updateDie,updateSlot,startWave,chestCost,manualChestReady,towerAt,SPOTS:()=>SPOTS};\n';
     await route.fulfill({ response, body: original.replace(anchor, hook + anchor) });
   });
+  await page.route('**/content.js*', route => route.fulfill({ contentType: 'application/javascript', body: SOURCES['content.js'] }));
   const url = new URL('index.html', base);
   url.searchParams.set('net', 'off');
   url.searchParams.set('v', Date.now());
@@ -236,6 +292,8 @@ function summarize(rows) {
     mean: +(waves.reduce((s, w) => s + w, 0) / n).toFixed(1),
     stuckRuns: rows.filter(r => r.heldStuck).length, tickCapped: rows.filter(r => r.hitTickCap).length,
     reasons: rows.reduce((m, r) => (m[r.reason] = (m[r.reason] || 0) + 1, m), {}),
+    maxEnemies: Math.max(...rows.map(r => r.maxEnemies || 0)),
+    ordinaryLifeLossRuns: rows.filter(r => r.ordinaryLivesLost > 0).length,
     // 어디서 죽는가 — 10웨이브 구간 분포
     histogram: Array.from({ length: 11 }, (_, i) => ({ upTo: i * 10 + 10, runs: waves.filter(w => w > i * 10 && w <= i * 10 + 10).length })).filter(b => b.runs),
   };
@@ -247,8 +305,10 @@ if (require.main === module) (async () => {
   const errors = [];
   const report = {
     scope: `순수운빨(clear) 절대 클리어율 측정. 봇 정책별 ${RUNS} 런 × 최대 ${CLEAR_WAVE}웨이브.`,
-    caveat: '사람의 클리어율이 아니라 명시된 봇 정책의 클리어율이다. 확률강화(도박)는 쓰지 않는다.',
-    base, runs: RUNS, seed0: SEED0, policies: POLICIES, clearWave: CLEAR_WAVE, lateExp: LATE_EXP, bossLimit: BOSS_LIMIT, hpExp: HP_EXP, lateFrom: LATE_FROM, tune: TUNE,
+    caveat: '사람의 클리어율이 아니라 명시된 봇 정책의 결과다. realtimeInput=true이면 상자 개봉과 물리 굴림 중 전투가 진행된다. 배치 판단은 즉시이며 위험 강화 확인창 대신 강화 함수를 직접 호출한다. 게임 시간 x1만 측정한다.',
+    reference: REFERENCE, sourceSha256: Object.fromEntries(Object.entries(SOURCES).map(([name, source]) => [name, createHash('sha256').update(source).digest('hex')])),
+    base, runs: RUNS, seed0: SEED0, policies: POLICIES, clearWave: CLEAR_WAVE, lateExp: LATE_EXP, bossLimit: BOSS_LIMIT, hpExp: HP_EXP, lateFrom: LATE_FROM,
+    normalHpFactor: NORMAL_HP_FACTOR, normalHpFrom: NORMAL_HP_FROM, normalHpExp: NORMAL_HP_EXP, realtimeInput: REALTIME_INPUT, tune: TUNE,
     started: new Date().toISOString(), byPolicy: {}, rows: [],
   };
   try {
@@ -260,7 +320,8 @@ if (require.main === module) (async () => {
           const seed = SEED0 + i * 7919;                    // 씨앗을 성기게 흩어 인접 씨앗의 상관을 피한다
           await page.evaluate(() => { try { DKlobby(); } catch (e) { /* 첫 런 */ } });
           const t0 = Date.now();
-          const r = await page.evaluate(playRun, { seed, policy, clearWave: CLEAR_WAVE, tune: TUNE, lateExp: LATE_EXP, bossLimit: BOSS_LIMIT, hpExp: HP_EXP, lateFrom: LATE_FROM });
+          const r = await page.evaluate(playRun, { seed, policy, clearWave: CLEAR_WAVE, tune: TUNE, lateExp: LATE_EXP, bossLimit: BOSS_LIMIT, hpExp: HP_EXP, lateFrom: LATE_FROM,
+            normalHpFactor: NORMAL_HP_FACTOR, normalHpFrom: NORMAL_HP_FROM, normalHpExp: NORMAL_HP_EXP, realtimeInput: REALTIME_INPUT });
           r.ms = Date.now() - t0;
           rows.push(r); report.rows.push(r);
           console.log(`[${policy}] ${String(i + 1).padStart(3)}/${RUNS} 씨앗 ${seed} → ${r.cleared ? '클리어' : `${r.doneW}웨이브`} (${r.reason} · 상자 ${r.chests} · 최고 ${r.maxFace}★ · 파워업 ${r.powerUps} · 강화 ${r.enhanced}/소멸 ${r.enhBoom} · ${(r.ms / 1000).toFixed(1)}s)`);

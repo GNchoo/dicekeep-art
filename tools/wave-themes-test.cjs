@@ -112,7 +112,9 @@ const mechanical = monster => ({
 });
 for (let wave = 1; wave <= 101; wave++) {
   const before = fixture.waves[wave - 1];
-  assert.deepEqual(JSON.parse(JSON.stringify(INF.waveForMode(wave, 'clear'))), before.values, `W${wave} pure-luck numbers unchanged`);
+  // v150's explicit clear-only balance revision is checked by pure-wave-rules.
+  // Themes still must preserve the shared curve and every roster stat donor.
+  assert.deepEqual(JSON.parse(JSON.stringify(INF.wave(wave, true))), before.values, `W${wave} shared wave numbers unchanged`);
   assert.deepEqual(mechanical(INF.monsterFor(wave)), mechanical(before.monster), `W${wave} donor/combat contract unchanged`);
 }
 

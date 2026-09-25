@@ -81,6 +81,8 @@ jobs:
         run: npm run test:free-progression
       - name: wave-themes (10웨이브 편성·보스·전투 수치)
         run: npm run test:wave-themes
+      - name: pure-wave-rules (순수운빨 일반 HP 압력·보스 보존)
+        run: npm run test:pure-wave-rules
       - name: log-dwell (최근 3줄 표시 시간)
         run: npm run test:log-dwell
       - name: economy 모델
@@ -171,6 +173,10 @@ jobs:
         run: npm run test:casual-world
       - name: pure-main (순수운빨 계정 독립성·물리 굴림 기준)
         run: npm run test:pure-main
+      - name: pure-wave-schedule (79마리·140초 라운드·기존 모드 격리)
+        run: npm run test:pure-wave-schedule
+      - name: field-cap (생존 적 상한·종료 프레임)
+        run: npm run test:field-cap
       - name: campaign
         run: npm run test:campaign
       - name: rewards-integration

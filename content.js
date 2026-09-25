@@ -1602,7 +1602,7 @@ window.DKCONTENT = (function () {
     bossEvery: 10,   // 10 웨이브마다 보스 (20 부터 2마리)
     eliteEvery: 5,   // 5 웨이브마다 정예 (HP×3, 크기×1.2, 골드×3)
     unlockAir: 1, unlockBurrow: 1,
-    // 순수운빨은 기존 확률/전투 곡선 그대로. 계정 성장은 build/extreme에만 적용한다.
+    // 계정 성장은 build/extreme에만 적용한다. 순수운빨 라운드 규칙은 별도로 둔다.
     modes: {
       clear: { key: 'clear', name: '순수운빨', sub: '101웨이브 · 계정 성장 미적용 · 기존 뽑기 확률', gauntlet: true, clearWave: 101, growth: false },
       build: { key: 'build', name: '덱빌드', sub: '101웨이브 · 5종 조합 · 눈금 합성과 전투 강화', gauntlet: true, clearWave: 101, growth: true },
@@ -1611,10 +1611,19 @@ window.DKCONTENT = (function () {
       coop: { key: 'coop', name: '2인 협동', sub: '공동 목숨 20 · 합계 700처치 · 아군에게 SP 보급', gauntlet: false, clearWave: 0, growth: true },
     },
     modeOf(key) { return this.modes[key === 'endless' ? 'extreme' : key] || this.modes.clear; },
-    // Growth tuning belongs here, never in the protected pure-luck wave table.
+    // Normal rounds use a full round clock, independent of clearing the field.
+    // Provenance and balance measurements live in docs/pure-waves-v150.md.
+    pureRounds: { seconds: 140, count: 79, spawnEnd: 130, pressureFrom: 10, pressureExp: 1.06, pressureMax: 24 },
     waveForMode(w, key) {
       const mode = this.modeOf(key), result = this.wave(w, mode.gauntlet);
       if (mode.growth) result.hpMult *= mode.hpScale || 1;
+      if (mode.key === 'clear' && !this.isBossWave(w)) {
+        result.roundSeconds = this.pureRounds.seconds;
+        result.normalCount = this.pureRounds.count;
+        result.gap = (this.pureRounds.spawnEnd - 0.45) / (result.normalCount - 1);
+        result.hpMult *= Math.min(this.pureRounds.pressureMax,
+          Math.pow(this.pureRounds.pressureExp, Math.max(0, w - this.pureRounds.pressureFrom)));
+      }
       return result;
     },
     clearWave: 101,   // 도전 모드 클리어 선 (로스터 한 사이클 = 1~101웨이브)

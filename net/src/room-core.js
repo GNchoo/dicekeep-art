@@ -14,7 +14,7 @@
 // 서버는 sum(진행 요약)·done·dead·clear 보고를 받아 중계·순위·종료만 맡는다.
 //   순위: cleared 는 clearAt 오름차순(먼저 완주 = 1위, 공동 없음) → 그다음 lost/dead/left 는 deathWave 내림차순 → kills 내림차순 → joinedAt
 //   종료: alive 0 → cleared(완주자 있음) / all-dead(dead·lost 있음) / empty(전원 left)
-//         t0 + GAME_CAP → 남은 alive 를 lost(극한 deathWave = dw, 순수운빨 deathWave = wave) 로 → timeout · 전원 끊김 EMPTY_END → empty
+//         t0 + gameCapFor(mode) → 남은 alive 를 lost(극한 deathWave = dw, 순수운빨 deathWave = wave) 로 → timeout · 전원 끊김 EMPTY_END → empty
 // 빠른 매칭 방(kind 'quick'): Lobby 가 예약 좌석(pid·key·name)을 넣어 만든다. 방장 없음, 예약 전원 접속 즉시 또는 reserveUntil 에
 //   접속 2명 이상이면 서버가 시작, 1명 이하면 err expired + 4410 후 폐기.
 import * as T from './timing.js';
@@ -132,7 +132,7 @@ export function nextAlarm(state, live, now) {
   for (const p of Object.values(live.pending)) t = Math.min(t, p.openedAt + T.HELLO_TIMEOUT);
   if (!state) return Number.isFinite(t) ? t : null;
   if (state.phase === 'playing') {
-    t = Math.min(t, state.game.t0 + T.GAME_CAP);
+    t = Math.min(t, state.game.t0 + T.gameCapFor(roomMode(state)));
     if (state.game.battle) t=Math.min(t,state.game.battle.nextBossAt);
     for (const p of Object.values(state.players)) {
       const L = live.players[p.pid];
@@ -632,7 +632,7 @@ function tick(c) {
       return !l?.connected && at!=null && now>=at+T.RECONNECT_GRACE;
     });
     if(departed.length)endBattle(b,'disconnect',departed,now);
-    else if(now>=g.t0+T.GAME_CAP)endBattle(b,'timeout',Object.keys(b.seats),now);
+    else if(now>=g.t0+T.gameCapFor(roomMode(st)))endBattle(b,'timeout',Object.keys(b.seats),now);
     else if(c.live.emptySince!=null&&now>=c.live.emptySince+T.EMPTY_END)endBattle(b,'empty',Object.keys(b.seats),now);
     if(changed||b.result)finishBattle(c);
     return;
@@ -645,7 +645,7 @@ function tick(c) {
       c.log('left', { pid: p.pid, w: p.wave });
     }
   }
-  if (now >= g.t0 + T.GAME_CAP) return forceEnd(c, 'lost', 'timeout');
+  if (now >= g.t0 + T.gameCapFor(roomMode(st))) return forceEnd(c, 'lost', 'timeout');
   if (c.live.emptySince != null && now >= c.live.emptySince + T.EMPTY_END) return forceEnd(c, 'left', 'empty');
   checkEnd(c);
 }

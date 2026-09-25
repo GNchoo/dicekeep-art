@@ -13,7 +13,8 @@ export const RECONNECT_GRACE = 180000;   // 플레이 중 끊긴 사람을 기�
 export const LOBBY_GRACE = 45000;        // 대기실에서 끊긴 사람(새로고침·백그라운드)의 좌석을 지키는 시간 → 제거
 export const LOBBY_TTL = 15 * 60000;     // 대기실 유휴 만료 (마지막 전이 기준)
 export const END_TTL = 10 * 60000;       // 종료 뒤 방 보존
-export const GAME_CAP = 100 * 60000;     // 판 최대 길이 (t0 기준) → 남은 alive 는 lost
+export const GAME_CAP = 100 * 60000;     // 극한·대전·협동 판 최대 길이 (t0 기준)
+export const CLEAR_GAME_CAP = 5 * 60 * 60000; // 순수운빨 101웨이브: 일반·보스 라운드 시간을 모두 소화할 여유
 export const EMPTY_END = 3 * 60000;      // 플레이 중 전원 끊김 → end(empty)
 export const CLAIM_TTL = 60000;          // /claim 뒤 hello 없이 방치 → destroy
 export const RESERVE_TTL = 30000;        // 빠른 매칭 예약 좌석의 접속 마감 (matched 뒤)
@@ -39,6 +40,11 @@ export const QUICK_BEAT = 5000;          // queued{n,eta} 재방송 알람 간�
 export function timingFor(mode) {
   const src = String(mode || '').toLowerCase() === 'fast' ? TIMING_FAST : TIMING_BASE;
   return { ...src };
+}
+
+// 저장된 방 문서에 새 필드 없이 모드로 계산한다. 이전 저장 방도 같은 규칙을 적용한다.
+export function gameCapFor(mode) {
+  return mode === 'clear' ? CLEAR_GAME_CAP : GAME_CAP;
 }
 
 // 클라이언트에 건네는 세 값만

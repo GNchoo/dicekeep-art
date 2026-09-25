@@ -247,8 +247,8 @@ test('U5 start: 접속 1명 not-ready · 방장 아님 not-host · 2명 OK → s
   assert.equal(room.phase, 'playing');
   assert.deepEqual(room.players.map((p) => [p.status, p.wave, p.dw, p.sp]), [['alive', 0, 0, 1], ['alive', 0, 0, 1]]);
   assert.deepEqual(room.game, { t0: at + 20000, mode: 'clear', timing: { prep: 20000, bossLimit: 320000, clearWave: 101 }, seed: 0xdeadbeef });
-  assert.equal(h.alarmAt, at + 20000 + T.GAME_CAP);
-  // 시작 뒤 start 거절 · 알람은 GAME_CAP 뿐 (서버 웨이브 시계 없음)
+  assert.equal(h.alarmAt, at + 20000 + T.CLEAR_GAME_CAP);
+  // 시작 뒤 start 거절 · 알람은 모드별 게임 상한뿐 (서버 웨이브 시계 없음)
   r = h.msg(A, { t: 'start' });
   assert.equal(errOf(r), 'not-ready');
   r = h.alarm(at + 60 * 60000);
@@ -389,8 +389,10 @@ test('U7 전원 끊김 3분 → empty · GAME_CAP → 남은 alive 는 lost → 
   assert.deepEqual(Object.values(h.state.players).map((p) => p.status), ['left', 'left']);
   // GAME_CAP: A 는 완주, B 는 미보고 → lost(deathWave = wave)
   const h2 = playing([A, B], T0, T.timingFor('fast'));
-  const cap = t0(h2) + T.GAME_CAP;
+  const cap = t0(h2) + T.CLEAR_GAME_CAP;
   h2.msg(A, { t: 'clear', w: 12, k: 5 }, t0(h2) + 5000);
+  h2.alarm(t0(h2) + T.GAME_CAP);
+  assert.equal(h2.state.phase, 'playing', '기존 100분 상한에서는 순수운빨 방이 끝나지 않는다');
   h2.sum(B, { w: 7, dw: 6 }, cap - 1000);
   assert.equal(h2.alarmAt, cap);
   r = h2.alarm(cap);
@@ -398,6 +400,17 @@ test('U7 전원 끊김 3분 → empty · GAME_CAP → 남은 alive 는 lost → 
   assert.equal(end.reason, 'timeout');
   assert.deepEqual(sends(r, 'player').map((s) => [s.m.pid, s.m.status, s.m.deathWave]), [[B, 'lost', 7]]);
   assert.deepEqual(end.ranking.map((x) => [x.pid, x.rank, x.status, x.wave]), [[A, 1, 'cleared', 12], [B, 2, 'lost', 7]]);
+});
+
+test('기존 저장된 순수운빨 방도 복원 후 100분에 종료되지 않고 5시간에 종료된다', () => {
+  const h = playing(), start = t0(h);
+  const state = JSON.parse(JSON.stringify(h.state));
+  const live = liveFromSockets(state, [{ sid: 'sA', pid: A }, { sid: 'sB', pid: B }], start);
+  assert.equal(nextAlarm(state, live, start), start + T.CLEAR_GAME_CAP);
+  const early = reduce({ state, live }, { k: 'alarm' }, start + T.GAME_CAP);
+  assert.equal(early.state.phase, 'playing');
+  const late = reduce({ state: early.state, live: early.live }, { k: 'alarm' }, start + T.CLEAR_GAME_CAP);
+  assert.equal(late.state.game.reason, 'timeout');
 });
 
 // ==================== U8 재접속 · 유예 ====================
@@ -416,7 +429,7 @@ test('U8 playing 중 close → 180s → left(alive 만) · 유예 안 hello → 
   assert.equal(sends(r, 'player')[0].m.connected, true);
   assert.equal(h.state.players[B].status, 'alive');
   assert.equal(r.persist, false);
-  assert.equal(h.alarmAt, t0(h) + T.GAME_CAP);
+  assert.equal(h.alarmAt, t0(h) + T.CLEAR_GAME_CAP);
   // 다시 끊기고 유예 만료
   h.close('sB2', at + 60000);
   r = h.alarm(at + 60000 + T.RECONNECT_GRACE);
@@ -669,7 +682,7 @@ test('U10 예약 전원 접속 즉시 자동 시작 (방장 없이) · 알람은
   assert.deepEqual(room.players.map((p) => [p.pid, p.status, p.host]), [[A, 'alive', false], [B, 'alive', false]]);
   assert.equal(h.state.reserveUntil, null);
   assert.equal(logs(r, 'start')[0].kind, 'quick');
-  assert.equal(h.alarmAt, T0 + 4000 + T.GAME_CAP);
+  assert.equal(h.alarmAt, T0 + 4000 + T.CLEAR_GAME_CAP);
   // 이후 규칙은 일반 방과 같다 (dead → all-dead)
   h.msg(A, { t: 'dead', w: 2, k: 0, r: 'lives' }, T0 + 9000);
   const r2 = h.msg(B, { t: 'dead', w: 3, k: 0, r: 'lives' }, T0 + 9500);
