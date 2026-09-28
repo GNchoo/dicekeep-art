@@ -73,6 +73,11 @@ jobs:
         run: npm run test:tree-combat-rules
       - name: battle-persistence
         run: npm run test:battle-persistence
+      - name: boss rewards, synthesized audio and combat FX contracts
+        run: |
+          node tools/boss-reward-test.cjs
+          node tools/reward-audio-test.cjs
+          node tools/star-combat-fx-test.cjs
       - name: battle-account (game.js 를 node:vm 에서 구동)
         run: npm run test:battle-account
       - name: liveops
@@ -91,7 +96,7 @@ jobs:
       # 문법만이라도 전부 본다 — 배포되는 JS 가 파싱은 되는지.
       - name: 배포 JS 문법
         run: |
-          for f in game.js presentation-fx.js content.js app.js net.js music.js progression.js \
+          for f in game.js presentation-fx.js reward-audio.js combat-motion.js content.js app.js net.js music.js progression.js \
                    deck-rules.js tree-rules.js run-save.js directional-art.js \
                    extreme-art.js infinity-art.js cosmetics.js commerce-client.js; do
             [ -f "$f" ] && node --check "$f" && echo "  ok $f"
@@ -175,6 +180,9 @@ jobs:
           npm run test:presentation-fx
           npm run test:enhancement-flow
           npm run test:fx-motion
+          node tools/e2e/boss-reward.cjs
+          node tools/e2e/reward-audio.cjs
+          node tools/e2e/star-combat-fx.cjs
       - name: casual-world (아트 로딩·알파·발사 위치·지역별 렌더)
         run: npm run test:casual-world
       - name: pure-main (순수운빨 계정 독립성·물리 굴림 기준)

@@ -19,10 +19,21 @@
 <link rel="stylesheet" href="casual-theme.css?v=137" />
 <link rel="stylesheet" href="casual-menus.css?v=143" />
 <link rel="stylesheet" href="casual-rewards.css?v=137" />
-<link rel="stylesheet" href="casual-hud.css?v=153" />
+<link rel="stylesheet" href="casual-hud.css?v=157" />
 <link rel="icon" href="ui/gold.png" />
 </head>
 <body>
+<div id="boss-reward" class="hidden" role="dialog" aria-modal="true" aria-labelledby="boss-reward-title" tabindex="-1">
+  <div class="boss-reward-card">
+    <p class="boss-reward-kicker">BOSS REWARD</p>
+    <h2 id="boss-reward-title">보스 보상</h2>
+    <button id="boss-reward-open" type="button" aria-label="보스 보상 상자 열기">
+      <canvas id="boss-reward-art" width="720" height="660" aria-hidden="true"></canvas>
+    </button>
+    <p id="boss-reward-message" aria-live="polite">상자를 터치하세요</p>
+    <p id="boss-reward-odds">8 · 12 · 20면체 · 각각 33.33%</p>
+  </div>
+</div>
 <div id="wrap">
   <div id="stage">
     <canvas id="game" width="1024" height="576"></canvas>
@@ -400,14 +411,14 @@
 <!-- APP -->
 <script src="music.js?v=89"></script>
 <script src="battle-rules.js?v=116"></script>
-<script src="net.js?v=154"></script>
-<script src="content.js?v=154"></script>
+<script src="net.js?v=157"></script>
+<script src="content.js?v=157"></script>
 <script src="deck-rules.js?v=112"></script>
 <script src="tree-rules.js?v=112"></script>
 <script src="progression.js?v=116"></script>
 <script src="liveops-rules.js?v=117"></script>
 <script src="deck-ui.js?v=116"></script>
-<script src="run-save.js?v=116"></script>
+<script src="run-save.js?v=157"></script>
 <script src="cosmetics.js?v=101"></script>
 <script src="commerce-config.js?v=101"></script>
 <script src="commerce-client.js?v=118"></script>
@@ -421,8 +432,9 @@
 <script src="extreme-art.js?v=110"></script>
 <script src="infinity-art.js?v=107"></script>
 <script src="extreme-cache.js?v=1"></script>
-<script src="combat-motion.js?v=123"></script>
-<script src="presentation-fx.js?v=149"></script>
-<script src="game.js?v=156"></script>
+<script src="combat-motion.js?v=157"></script>
+<script src="presentation-fx.js?v=157"></script>
+<script src="reward-audio.js?v=157"></script>
+<script src="game.js?v=157"></script>
 </body>
 </html>

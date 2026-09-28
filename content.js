@@ -1518,7 +1518,7 @@ window.DKCONTENT = (function () {
     //  등급 → 주사위: 일반 d1(1★ 확정) · 레어 d4 · 고대 d6 · 유물 d8 · 서사 d12 · 전설 d20 · 에픽 d20(14~17★) · 신화 d20(18~19★) · 태초 20★ 확정
     //  상자 1개에서 나올 확률: 7~13★ 0.025% · 14~17★ 0.075% · 18~19★ 0.065% · 20★ 0.044% (위로 갈수록 희귀)
     //  경제: 시작 400G · 상자 160G 고정(회차 상승 없음) = 시작 2.5회. 골드 곡선과 함께 튜닝한 값이다.
-    //  보스 처치 보상은 bossReward(w) 스케줄 — 장르 관습적인 보스 라운드 간격을 우리 웨이브 표로 재매핑했다.
+    // 보스 골드는 라운드 스케줄을 유지하고, 상자는 터치 개봉 시 d8/d12/d20을 동일 확률로 선택한다.
     chest: {
       cost: () => 160,
       table: [['d1', 0.50], ['d4', 0.331], ['d6', 0.102], ['d8', 0.051], ['d12', 0.008], ['d20', 0.005], ['epic', 0.002], ['myth', 0.0008], ['primal', 0.00019]],
@@ -1531,7 +1531,8 @@ window.DKCONTENT = (function () {
       grade: { d1: '일반', d4: '레어', d6: '고대', d8: '유물', d12: '서사', d20: '전설', epic: '에픽', myth: '신화', primal: '태초' },
       label: { d1: '외눈 주사위', d4: '4면체', d6: '6면체', d8: '8면체', d12: '12면체', d20: '20면체', epic: '에픽 20면체', myth: '신화 20면체', primal: '태초 주사위' },
       shape: { d1: 'd1', d4: 'd4', d6: 'd6', d8: 'd8', d12: 'd12', d20: 'd20', epic: 'd20', myth: 'd20', primal: 'd20' },
-      bossPick: ['d8', 'd12', 'd20'], // (구) 무작위 보스 보상 — 이제 INFINITY.bossReward 스케줄을 쓴다
+      bossPick: ['d8', 'd12', 'd20'],
+      drawBoss(random = Math.random) { return this.bossPick[Math.floor(random() * 3)]; }, // 각각 정확히 1/3
       rank(k) { return this.kinds.indexOf(k); },
       draw(wave) {
         const total = this.table.reduce((sum, [, p]) => sum + p, 0);
@@ -1567,15 +1568,10 @@ window.DKCONTENT = (function () {
     // ---- 방어력: 후반으로 갈수록 타격당 고정 감소, 33의 배수 웨이브는 고방어(버블피시 255) ----
     armor(w) { const base = Math.floor(Math.max(0, w - 30) / 6); return w % 33 === 0 ? Math.max(6, base * 4) : base; }, // w60 5 · w90 10 · 고방어 w33 6 · w66 24 · w99 40 (봇 보정: 33웨이브 벽이 너무 높았다)
     highArmor(w) { return w % 33 === 0; },
-    // ---- 보스 보상 스케줄 (1미네랄 = 16G): 24R 50+유물 · 37/58R 50+서사 · 79R 70+전설 · 90R 100+전설 · 95R 150+전설 · 96~100R 유물·서사 추가 ----
+    // Gold keeps its round schedule; every boss grants one player-opened chest.
     bossReward(w) {
       const n = Math.max(1, this.bossOrdinal(w));
-      if (n === 1) return { gold: 800, dice: ['d8'] };
-      if (n <= 3) return { gold: 800, dice: ['d12'] };
-      if (n === 4) return { gold: 1120, dice: ['d20'] };
-      if (n === 5) return { gold: 1600, dice: ['d20'] };
-      if (n === 6) return { gold: 2400, dice: ['d20'] };
-      return { gold: 1600, dice: ['d20', n % 2 ? 'd8' : 'd12'] };
+      return { gold: [800, 800, 800, 1120, 1600, 2400][n - 1] || 1600, chests: 1 };
     },
     bossTimeLimit: 320, // 보스 라운드 5분 20초 안에 못 잡으면 패배
     // 타워 확률강화(도박): 성공하면 한 단계 위 타워, 유지, 소멸 셋 중 하나. 등급이 높을수록 비싸고 위험하다.

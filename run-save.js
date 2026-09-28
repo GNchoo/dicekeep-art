@@ -80,7 +80,7 @@
     if (!Array.isArray(p.enemies) || p.enemies.length > 512 || !Array.isArray(p.active) || p.active.length > 200 || !p.active.every(i => int(i, 0, p.enemies.length - 1))) return false;
     if (!p.enemies.every(e => object(e) && object(e.def) && num(e.hp, -1e200, 1e200) && num(e.max, 1e-20, 1e200) && num(e.dist, 0, 1e8) && int(e.lane, 0, p.lanes.length - 1))) return false;
     if (!Array.isArray(p.projs) || p.projs.length > 2048 || !p.projs.every(q => object(q) && int(q.target, 0, p.enemies.length - 1) && int(q.source, 0, p.towers.length - 1))) return false;
-    if (!Array.isArray(p.spawnQ) || p.spawnQ.length > 512 || !Array.isArray(inf.queue) || inf.queue.length > 512 || !inf.queue.every(k => kinds.includes(k)) || !object(p.slot) || !kinds.includes(p.slot.kind)) return false;
+    if (!Array.isArray(p.spawnQ) || p.spawnQ.length > 512 || !Array.isArray(inf.queue) || inf.queue.length > 512 || !inf.queue.every(k => kinds.includes(k) || (k === 'boss' && inf.growthSnapshot.deckSystem !== 1)) || !object(p.slot) || !kinds.includes(p.slot.kind)) return false;
     // A physical throw has no result until it lands. Low-tier dice also start
     // their automatic roll without a predetermined face. Older pending chests
     // may still carry an exact card; restore handles that legacy state.

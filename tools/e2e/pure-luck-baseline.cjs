@@ -48,7 +48,7 @@ function portedTables() {
     economy: { startGold: INF.startGold, lives: INF.lives, fieldCap: INF.fieldCap, capDmg: INF.capDmg,
                intermission: INF.intermission, bossEvery: INF.bossEvery, eliteEvery: INF.eliteEvery,
                bossTimeLimit: INF.bossTimeLimit, clearWave: INF.clearWave, rangeBonus: INF.rangeBonus },
-    bossReward: bossWaves.map(w => INF.bossReward(w)),
+    bossGold: bossWaves.map(w => INF.bossReward(w).gold), // v157: dice now come from an equal-thirds touch-open chest.
     enhance: { maxFace: INF.enhance.maxFace, cost: [1, 6, 12, 19].map(f => INF.enhance.cost(f)),
                odds: [1, 6, 12, 19].map(f => INF.enhance.odds(f)) },
     power: DP ? { maxLv: DP.maxLv, cost: [0, 5, 9].map(l => DP.cost(l)), dmgMult: [0, 5, 10].map(l => DP.dmgMult(l)),

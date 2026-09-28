@@ -29,7 +29,7 @@ async function open(browser, {empty=false,offline=false}={}) {
   // Test-only access to closure functions; no diagnostic globals ship in game.js.
   await page.route('**/game.js*',r=>{
     const game=fs.readFileSync(path.join(repo,'game.js'),'utf8');
-    const names=['buildInfinityWave','spawnEnemy','refreshDirectionalDemand','currentEnemyFrame','directionalPhase','posAt','enemyFlip','mpViewBuild','mpViewAdvance','epos','towerFire','projectileDrawPosition','updateVisuals'];
+    const names=['buildInfinityWave','spawnEnemy','refreshDirectionalDemand','currentEnemyFrame','directionalPhase','posAt','enemyFlip','mpViewBuild','mpViewAdvance','epos','towerFire','towerVisualEmitter','projectileDrawPosition','updateVisuals'];
     const hook='Object.assign(window,{'+names.join(',')+',VIEW,TOWER_DEFS}); Object.defineProperty(window,"LANES",{get:()=>LANES});\n';
     return r.fulfill({contentType:'application/javascript',body:game.replace('window.DK = S;',hook+'window.DK = S;')});
   });
@@ -104,12 +104,15 @@ async function collectLogical(page) {
     report.towerPhysics=await test.page.evaluate(()=>{
       DK.enemies=[];DK.towers=[];DK.projs=[];DK.wave=1;spawnEnemy(buildInfinityWave(1)[0]);const e=DK.enemies[0];e.dist=200;e.hp=e.max=1e9;const ep=epos(e);
       const t={face:9,def:TOWER_DEFS[9],lvl:1,skin:0,spot:0,x:ep.x-50,y:ep.y+20,cd:0,kick:0};
-      const run=metadata=>{const saved=DKCONTENT.STAR_TOWER_EMITTERS;DKCONTENT.STAR_TOWER_EMITTERS=metadata;DK.projs=[];DK.fxs=[];t.cd=0;t.kick=0;towerFire(t,0);const p=DK.projs[0];if(!p)throw Error('no projectile');const start={logical:[p.x,p.y],draw:projectileDrawPosition(p),muzzle:DK.fxs.find(f=>f.kind==='muzzleFlash')};
-        const path=[];for(let i=0;i<5;i++){updateVisuals(.01);path.push([p.x,p.y,p.gone||false]);}const end=projectileDrawPosition({...p,visualAge:.1});DKCONTENT.STAR_TOWER_EMITTERS=saved;return{start,path,end,physical:[p.x,p.y]};};
+      const run=metadata=>{const saved=DKCONTENT.STAR_TOWER_EMITTERS;DKCONTENT.STAR_TOWER_EMITTERS=metadata;DK.projs=[];DK.fxs=[];t.cd=0;t.kick=0;towerFire(t,0);const p=DK.projs[0];if(!p)throw Error('no projectile');const start={logical:[p.x,p.y],draw:projectileDrawPosition(p),emitter:towerVisualEmitter(t)};
+        const path=[];for(let i=0;i<5;i++){updateVisuals(.01);path.push([p.x,p.y,p.gone||false]);}const end=projectileDrawPosition({...p,x:ep.x,y:ep.y,visualAge:.1});DKCONTENT.STAR_TOWER_EMITTERS=saved;return{start,path,end,impact:[ep.x,ep.y-e.def.size*.4-(e.move==='air'?42:0)]};};
       const configured=run(DKCONTENT.STAR_TOWER_EMITTERS),legacy=run({});return{configured,legacy};
     });
     assert.deepEqual(report.towerPhysics.configured.path,report.towerPhysics.legacy.path);assert.deepEqual(report.towerPhysics.configured.start.logical,report.towerPhysics.legacy.start.logical);
-    assert.equal(report.towerPhysics.configured.start.draw.x,report.towerPhysics.configured.start.muzzle.x);assert.equal(report.towerPhysics.configured.end.x,report.towerPhysics.configured.physical[0]);
+    assert.equal(report.towerPhysics.configured.start.draw.x,report.towerPhysics.configured.start.emitter.x);
+    assert.equal(report.towerPhysics.configured.start.draw.y,report.towerPhysics.configured.start.emitter.y);
+    assert.equal(report.towerPhysics.configured.end.x,report.towerPhysics.configured.impact[0]);
+    assert.equal(report.towerPhysics.configured.end.y,report.towerPhysics.configured.impact[1]);
     report.checks.push('star emitter changes initial draw/flash only; exact projectile physical trajectory identical');
     report.cacheAfter=await test.page.evaluate(()=>DKART.state());assert.ok(report.cacheAfter.peakTrackedBytes<=96*1024*1024);assert.equal(report.cacheAfter.maxRunning,2);
     assert.deepEqual(test.errors,[]);await test.page.close();
