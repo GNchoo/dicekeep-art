@@ -14,7 +14,7 @@
   ],
   "summary": {
     "files": 2304,
-    "bytes": 264928953,
+    "bytes": 264895827,
     "byCategory": [
       {
         "name": "boss",
@@ -34,7 +34,7 @@
       {
         "name": "tile",
         "files": 25,
-        "bytes": 5892658
+        "bytes": 5859532
       },
       {
         "name": "tower",
@@ -66,7 +66,7 @@
       {
         "name": "runtime",
         "files": 804,
-        "bytes": 72584832
+        "bytes": 72551706
       },
       {
         "name": "source",
@@ -83,7 +83,7 @@
       {
         "name": "png",
         "files": 222,
-        "bytes": 39018177
+        "bytes": 38985051
       },
       {
         "name": "webp",
@@ -100,14 +100,14 @@
       {
         "name": "included",
         "files": 2193,
-        "bytes": 232476370
+        "bytes": 232443244
       }
     ],
     "byMobileReason": [
       {
         "name": "casual-tiles-directory",
         "files": 25,
-        "bytes": 5892658
+        "bytes": 5859532
       },
       {
         "name": "fixed-directory",
@@ -33594,11 +33594,11 @@
     },
     {
       "path": "casual/tiles/arena/start.png",
-      "bytes": 196807,
-      "sha256": "5d7b0c6cff99fddd8f8a2c99aa74dd0dea5ce47138082353f6bed381bb5936da",
+      "bytes": 163681,
+      "sha256": "3933deaf3f7e637ddc311d0fbaac97b48b30b21ac7936e0c49c25f9f63a19748",
       "format": "png",
-      "width": 1024,
-      "height": 1024,
+      "width": 341,
+      "height": 512,
       "hasAlpha": true,
       "lifecycle": "runtime",
       "category": "tile",

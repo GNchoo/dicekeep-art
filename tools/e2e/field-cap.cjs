@@ -52,8 +52,8 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
       DK.wave = 1;
       DK.waveActive = true;
       DK.spawnQ = [];
-      DK.waveT = 139.9;
-      DKcombatStep(0.2); // Pure normal rounds advance at 140 seconds, preserving survivors.
+      DK.waveT = DKCONTENT.INFINITY.waveForMode(1, 'clear').roundSeconds - 0.1;
+      DKcombatStep(0.2); // The round deadline preserves survivors.
       const priorWaveDone = { wave: DK.wave, completedWave: DK.inf.doneW, live: live(), waveActive: DK.waveActive };
       DK.waveT = DK.spawnQ[0].t - 0.001;
       DKcombatStep(0.01); // First wave-2 enemy joins the existing crowd.

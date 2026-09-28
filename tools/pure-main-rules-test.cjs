@@ -57,5 +57,5 @@ for (let face = 1; face <= 20; face++) {
 }
 const current = mechanical(currentTable), reference = mechanical(referenceTable);
 assert.deepEqual(current, reference);
-require('./pure-wave-rules-test.cjs'); // v150 clear-only 79-enemy/140-second/HP policy, all 101 waves
+require('./pure-wave-rules-test.cjs'); // Clear-only pacing and HP policy, all 101 waves.
 console.log('PASS frozen 55204fe economy/odds, legacy wave donors, 20 base tower rules and removed size matchups');
