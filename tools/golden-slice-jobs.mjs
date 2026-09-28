@@ -50,6 +50,7 @@ const trimContain = (maxWidth, maxHeight, anchor = 'center') => ({ mode: 'trim-c
 function runtimeSpecFor(id) {
   if (id === 'arena-floor') return cover(1280, 720);
   if (id === 'arena-board' || id === 'arena-road') return fixed(1024, 1024, 'opaque');
+  if (id === 'arena-start') return fixed(341, 512);
   if (id.startsWith('arena-')) return fixed(1024, 1024);
   if (/^tower-(?:die-[1-6]|premium-)/.test(id)) return trimContain(384, 384, 'bottom-center');
   if (id.startsWith('tower-star-')) return trimContain(140, 192, 'bottom-center');
@@ -116,7 +117,7 @@ add({
 });
 add({
   id: 'arena-start', category: 'environment', runtimeTarget: 'casual/tiles/arena/start.png',
-  ...transparentTile, refs: ['tools/art-review/arena-portals-v142/originals/start.png', 'casual/towers/t1-clean.png', 'casual/tiles/arena/road.png'],
+  ...transparentTile, size: '1024x1536', refs: ['tools/art-review/arena-portals-v142/originals/start.png', 'casual/towers/t1-clean.png', 'casual/tiles/arena/road.png'],
   prompt: `${TILE_COMMON} Redraw the referenced enemy entrance as one compact upright warm-ivory die-stone arch seen from 3/4 top-down. Keep a large vivid deep-violet portal opening, one broad gold accent and a low sturdy foot; the lower edge faces the viewer. Large clean planes and firm outlines must read at 84 gameplay pixels. Centered, grounded, truly transparent surroundings; no tiny masonry, torches, flames or lettering.`,
 });
 add({

@@ -112,8 +112,8 @@
       "runtimeTarget": "casual/tiles/arena/start.png",
       "runtimeSpec": {
         "mode": "fixed",
-        "width": 1024,
-        "height": 1024,
+        "width": 341,
+        "height": 512,
         "alpha": "preserve",
         "anchor": "center"
       },
@@ -121,7 +121,7 @@
       "outputFormat": "png",
       "out": "gen/golden-slice/environment/arena-start",
       "prompt": "Use case: style-transfer. Asset: compact enemy entrance sprite, shown at 84 gameplay pixels. Use the original arena/start.png for the upright arch and violet portal subject; use the approved clean wooden tower and warm ivory arena path only as style and color references. Redraw as one simple warm ivory die-stone arch with a large vivid deep-violet portal, one broad gold accent and a low sturdy foot. Match the tower's firm dark outlines, broad matte color planes and restrained two-tone cel shading. Centered three-quarter top-down view, full object visible, lower gateway edge open toward the viewer. True transparent background. No tiny masonry, cracks, runes, lamps, torches, flames, plants, realistic texture, glow halo, lettering or watermark.",
-      "size": "1024x1024",
+      "size": "1024x1536",
       "background": "transparent",
       "refs": [
         "casual/tiles/arena/start.png",
