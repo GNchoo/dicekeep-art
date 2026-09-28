@@ -110,7 +110,7 @@ function arenaPortalStyle(m) {
   // Anchor the portrait doorway at the road's start; the side-view arch sits
   // behind the landscape threshold instead of halfway along the approach.
   if (m?.arenaPortrait) return { art: 'start-front', height: 142.8, footOffset: 0, xOffset: 0, flip: false };
-  if (m?.arena) return { art: 'start', height: 120, footOffset: 22, xOffset: -22, flip: true };
+  if (m?.arena) return { art: 'start', height: 120, footOffset: 18, xOffset: -3, flip: false };
   return { art: 'start', height: 84, footOffset: 26, xOffset: 0, flip: false };
 }
 function buildLane(kind, pts, label) {
@@ -974,7 +974,7 @@ for (const key of ['tl_arena_floor', 'tl_arena_board', 'tl_arena_road', 'tl_aren
   if (SRCS[key]) SRCS[key] = SRCS[key].replace('?v=casual-world1', '?v=arena-clean1');
 }
 for (const key of ['tl_arena_pad', 'tl_arena_start', 'tl_arena_end', 'tl_arena_prop-1', 'tl_arena_prop-2', 'tl_arena_prop-3']) {
-  if (SRCS[key]) SRCS[key] = SRCS[key].replace(/\?v=[^#]*/, '?v=arena-props-143');
+  if (SRCS[key]) SRCS[key] = SRCS[key].replace(/\?v=[^#]*/, key === 'tl_arena_start' ? '?v=arena-portal-158' : '?v=arena-props-143');
 }
 const A = {};
 let corsBlocked = false;
@@ -3368,7 +3368,7 @@ function startWave() {
 }
 function normalRoundSeconds() {
   if (S.mode !== 'infinity' || !S.inf || S.inf.mode !== 'clear' || S.wave < 1) return 0;
-  return DKCONTENT.INFINITY.isBossWave(S.wave) ? 0 : DKCONTENT.INFINITY.pureRounds.seconds;
+  return DKCONTENT.INFINITY.waveForMode(S.wave, S.inf.mode).roundSeconds || 0;
 }
 function normalRoundRemaining() {
   return Math.max(0, (finalRoundCleanup() ? DKCONTENT.INFINITY.bossTimeLimit : normalRoundSeconds()) - S.waveT);

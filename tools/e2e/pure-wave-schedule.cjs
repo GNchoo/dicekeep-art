@@ -1,4 +1,4 @@
-// Pure-luck normal waves use 79 evenly spaced spawns over a fixed 140-second round.
+// Pure-luck normal waves keep 79 spawns: rounds 1-9 take 60 seconds, later rounds 140.
 // 79 is the chosen all-normal-round design; only round 1 has external count evidence.
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
@@ -57,7 +57,7 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
           const monster = INF.monsterFor(wave);
           const first = q[0]?.t ?? null, last = q.at(-1)?.t ?? null;
           const interval = q.length > 1 ? q[1].t - q[0].t : null;
-          const expectedPureInterval = (130 - 0.45) / 78;
+          const expectedPureInterval = (130 - 0.45) / 78 * (wave <= 9 ? 60 / 140 : 1);
           const maxPureError = boss || mode !== 'clear' ? null : Math.max(...q.map((item, i) => Math.abs(item.t - (0.45 + i * expectedPureInterval))));
           const maxUniformError = q.length < 2 ? 0 : Math.max(...q.map((item, i) => Math.abs(item.t - (first + i * interval))));
           return {
@@ -118,13 +118,13 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
       };
       DK.spawnQ = [];
       DK.enemies = [];
-      DK.waveT = 59.9;
+      DK.waveT = 29.9;
       DKcombatStep(0.2);
       hudClock.mid = __pureWaveQA.readRoundClock();
-      DK.waveT = 138.9;
+      DK.waveT = 58.9;
       DKcombatStep(0.2);
       hudClock.lastSecond = __pureWaveQA.readRoundClock();
-      DK.waveT = 139.8;
+      DK.waveT = 59.8;
       DKcombatStep(0.1);
       const beforeDeadline = state();
       document.getElementById('wave-btn').click();
@@ -138,12 +138,21 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
       DK.spawnQ = [];
       DKspawnEnemy({ type: 'mite', wave: 9 });
       const survivor = DK.enemies[0];
-      DK.waveT = 139.9;
+      DK.waveT = 59.9;
       DKcombatStep(0.2);
       const carryIntoBoss = { ...state(), survivorRetained: DK.enemies.includes(survivor) };
 
       begin('clear', 10);
       sourceSchedule.clear11 = DK.spawnQ.map(e => e.t);
+      hudClock.lateStart = __pureWaveQA.readRoundClock();
+      DK.spawnQ = [];
+      DK.enemies = [];
+      DK.waveT = 59.9;
+      DKcombatStep(0.2);
+      const lateWaveAt60 = state();
+      DK.waveT = 139.9;
+      DKcombatStep(0.2);
+      const lateWaveAt140 = state();
 
       begin('clear', 9);
       sourceSchedule.clear10 = DK.spawnQ.map(e => e.t);
@@ -210,7 +219,7 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
         cleared: DK.inf.cleared, settledWave: DK.inf.settledResult?.wave ?? null,
       };
       return { profiles, sourceAudit, sourceSchedule, spawnGold, hudClock, beforeDeadline, afterEarlyClick, atDeadline,
-        carryIntoBoss, bossSpawn, bossAtNormalDeadline, bossAfterKill, legacy,
+        carryIntoBoss, lateWaveAt60, lateWaveAt140, bossSpawn, bossAtNormalDeadline, bossAfterKill, legacy,
         finalWithSurvivor, finalTimedOut, finalWaitingAt200, finalCleanedAt200, finalEmpty };
     });
 
@@ -226,14 +235,21 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
       const normal = observed.sourceAudit.clear.filter(row => !row.boss);
       assert.equal(normal.length, 91);
       for (const row of normal) {
+        const early = row.wave <= 9;
         assert.equal(row.profileNormalCount, 79, `profile W${row.wave}`);
         assert.equal(row.count, 79, `queue W${row.wave}`);
-        assert.equal(row.roundSeconds, 140, `clock W${row.wave}`);
+        assert.equal(row.roundSeconds, early ? 60 : 140, `clock W${row.wave}`);
         close(row.first, 0.45, `first W${row.wave}`);
-        close(row.last, 130, `last W${row.wave}`);
+        close(row.last, early ? 55.97142857142857 : 130, `last W${row.wave}`);
         assert.ok(row.maxPureError <= 1e-7, `spacing W${row.wave}: ${row.maxPureError}`);
         assert.ok(row.maxUniformError <= 1e-7, `uniformity W${row.wave}: ${row.maxUniformError}`);
       }
+    });
+    check('first nine rounds total 540 game seconds with all 711 monsters retained', () => {
+      const early = observed.sourceAudit.clear.filter(row => row.wave <= 9);
+      assert.equal(early.length, 9);
+      assert.equal(early.reduce((sum, row) => sum + row.roundSeconds, 0), 540);
+      assert.equal(early.reduce((sum, row) => sum + row.count, 0), 711);
     });
     check('all 91 clear round gold sums equal their legacy normal-plus-elite kill budget', () => {
       const normal = observed.sourceAudit.clear.filter(row => !row.boss);
@@ -284,10 +300,10 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
         }
       }
     });
-    check('pure normal profiles specify 140 seconds; bosses do not', () => {
+    check('pure early normal profiles specify 60 seconds, later normals 140; bosses have no round clock', () => {
       for (const key of ['clear1', 'clear9', 'clear11']) {
         assert.equal(p[key].boss, false);
-        assert.equal(p[key].roundSeconds, 140);
+        assert.equal(p[key].roundSeconds, key === 'clear11' ? 140 : 60);
       }
       for (const key of ['clear10', 'clear20']) {
         assert.equal(p[key].boss, true);
@@ -306,15 +322,16 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
         const times = observed.sourceSchedule[key];
         assert.equal(times.length, 79, key);
         close(times[0], 0.45, `${key} first`);
-        close(times.at(-1), 130, `${key} last`);
+        close(times.at(-1), key === 'clear11' ? 130 : 55.97142857142857, `${key} last`);
       }
       assert.equal(observed.sourceSchedule.clear10.length, 1);
     });
-    check('top arena banner displays the 140-second clock throughout a normal round', () => {
-      assert.match(observed.hudClock.start, /2:20/);
-      assert.match(observed.hudClock.mid, /1:20/);
+    check('top arena banner displays the early 1:00 clock and restores 2:20 after the first boss', () => {
+      assert.match(observed.hudClock.start, /1:00/);
+      assert.match(observed.hudClock.mid, /0:30/);
       assert.match(observed.hudClock.lastSecond, /0:01/);
-      assert.match(observed.hudClock.nextWave, /2:20/);
+      assert.match(observed.hudClock.nextWave, /1:00/);
+      assert.match(observed.hudClock.lateStart, /2:20/);
     });
     check('build and extreme actual queues keep the short legacy spacing', () => {
       for (const key of ['build1', 'extreme1']) {
@@ -323,8 +340,9 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
         assert.ok(times.at(-1) < 30, `${key} last spawn ${times.at(-1)}s`);
       }
     });
-    check('empty field and drained queue cannot complete or skip before 140 seconds', () => {
+    check('empty field and drained queue cannot complete or skip at 59.9 seconds', () => {
       const a = observed.beforeDeadline, b = observed.afterEarlyClick;
+      close(a.waveT, 59.9, 'early round before deadline');
       assert.equal(a.wave, 1);
       assert.equal(a.active, true);
       assert.equal(a.completed, 0);
@@ -349,6 +367,17 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
       assert.equal(s.completed, 9);
       assert.equal(s.autoT, 0);
       assert.equal(s.survivorRetained, true);
+    });
+    check('wave 11 remains active at 60 seconds and advances only at 140 seconds', () => {
+      const a = observed.lateWaveAt60, b = observed.lateWaveAt140;
+      assert.equal(a.wave, 11);
+      assert.equal(a.active, true);
+      close(a.waveT, 60.1, 'late round still running');
+      assert.equal(b.wave, 12);
+      assert.equal(b.active, true);
+      assert.equal(b.completed, 11);
+      assert.equal(b.autoT, 0);
+      assert.equal(b.waveT, 0);
     });
     check('boss still uses a 320-second timer and stays active past normal deadline', () => {
       assert.equal(p.bossTimeLimit, 320);

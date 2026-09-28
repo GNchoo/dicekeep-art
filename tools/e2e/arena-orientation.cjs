@@ -70,8 +70,11 @@ function checkGeometry(name, land, portrait) {
       localStorage.setItem('dk_coachDone', '1');
       localStorage.setItem('dk_infHelpSeen', '1');
     });
+    const portalRequests = [];
+    page.on('request', request => { if (new URL(request.url()).pathname.endsWith('/casual/tiles/arena/start.png')) portalRequests.push(request.url()); });
     await page.goto(gameUrl());
     await page.waitForFunction(() => window.DK?.phase === 'title', null, { timeout: 120000 });
+    assert.ok(portalRequests.some(url => new URL(url).searchParams.get('v') === 'arena-portal-158'), 'upright portal bypasses the old image cache');
 
     // Different canvas sizes and safe-area shifts must change only the center.
     const pairs = await page.evaluate(() => {
@@ -421,7 +424,7 @@ function checkGeometry(name, land, portrait) {
       assert.ok(p.drawCall, `${label} ${p.expectedArt} portal art is actually drawn in the road layer`);
       const expected = p.mapKey === 'cInfP'
         ? { source: 'start-front', xOffset: 0, footOffset: 0, height: 142.8, flip: false }
-        : { source: 'start', xOffset: -22, footOffset: 22, height: 120, flip: true };
+        : { source: 'start', xOffset: -3, footOffset: 18, height: 120, flip: false };
       assert.equal(p.drawCall.source, expected.source, `${label} portal uses its orientation art`);
       near(p.drawCall.x, p.portal[0] + expected.xOffset, `${label} drawn portal x`);
       near(p.drawCall.y, p.portal[1] + expected.footOffset, `${label} drawn portal foot y`);

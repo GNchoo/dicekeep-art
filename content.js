@@ -1603,15 +1603,17 @@ window.DKCONTENT = (function () {
     modeOf(key) { return this.modes[key === 'endless' ? 'extreme' : key] || this.modes.clear; },
     // Normal rounds use a full round clock, independent of clearing the field.
     // Provenance and balance measurements live in docs/pure-waves-v150.md.
-    pureRounds: { seconds: 140, count: 79, spawnEnd: 130, pressureFrom: 10, pressureExp: 1.06, pressureMax: 24 },
+    pureRounds: { seconds: 140, earlyThrough: 9, earlySeconds: 60, count: 79, spawnEnd: 130, pressureFrom: 10, pressureExp: 1.06, pressureMax: 24 },
     waveForMode(w, key) {
       const mode = this.modeOf(key), result = this.wave(w, mode.gauntlet);
       if (mode.growth) result.hpMult *= mode.hpScale || 1;
       if (mode.key === 'clear' && !this.isBossWave(w)) {
-        result.roundSeconds = this.pureRounds.seconds;
+        result.roundSeconds = w >= 1 && w <= this.pureRounds.earlyThrough ? this.pureRounds.earlySeconds : this.pureRounds.seconds;
+        // Shorter opening rounds retain the spawn/gold budget; compress HP and cadence together.
+        const pace = result.roundSeconds / this.pureRounds.seconds;
         result.normalCount = this.pureRounds.count;
-        result.gap = (this.pureRounds.spawnEnd - 0.45) / (result.normalCount - 1);
-        result.hpMult *= Math.min(this.pureRounds.pressureMax,
+        result.gap = (this.pureRounds.spawnEnd - 0.45) / (result.normalCount - 1) * pace;
+        result.hpMult *= pace * Math.min(this.pureRounds.pressureMax,
           Math.pow(this.pureRounds.pressureExp, Math.max(0, w - this.pureRounds.pressureFrom)));
       }
       return result;

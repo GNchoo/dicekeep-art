@@ -1,0 +1,12 @@
+{
+  "generatedWith": "Codex built-in image_gen",
+  "source": "tools/art-review/portal-side-v158/source.png",
+  "sourceSha256": "a1b09beeb3a17bfcac7db6f96fc0d8deceaecb972fb95d95ea0db6c441264940",
+  "target": "casual/tiles/arena/start.png",
+  "targetSha256": "3933deaf3f7e637ddc311d0fbaac97b48b30b21ac7936e0c49c25f9f63a19748",
+  "width": 341,
+  "height": 512,
+  "hasAlpha": true,
+  "bytes": 163681,
+  "baseCommit": "f4945a9c796b07f1f1bb866f0a98383db9d1a4fb"
+}

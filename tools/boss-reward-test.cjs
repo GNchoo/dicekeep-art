@@ -5,7 +5,7 @@ const path = require('node:path'), SAVE = require('../run-save.js'), FX = requir
 const source = fs.readFileSync(path.join(__dirname, '../game.js'), 'utf8');
 const html = fs.readFileSync(path.join(__dirname, '../index.html'), 'utf8');
 for (const name of ['net', 'content', 'run-save', 'combat-motion', 'presentation-fx', 'reward-audio', 'game'])
-  assert.ok(html.includes(`src="${name}.js?v=157"`), name + ' runtime version');
+  assert.ok(Number(html.match(new RegExp(`src="${name}\\.js\\?v=(\\d+)"`))?.[1]) >= 157, name + ' includes boss reward runtime');
 for (const id of ['boss-reward', 'boss-reward-title', 'boss-reward-open', 'boss-reward-art', 'boss-reward-message'])
   assert.equal(html.split(`id="${id}"`).length, 2, id + ' unique DOM element');
 function section(start, end) {
