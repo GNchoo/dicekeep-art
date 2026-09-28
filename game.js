@@ -82,7 +82,7 @@ for (let g = 7; g <= 20; g++) {
   const perk = g >= 20 ? 'primal' : g >= 18 ? 'myth' : g >= 14 ? 'epic' : null;
   const perkDesc = perk === 'primal' ? ' · 태초: 트랙 전체 스플래시, 공속 ×1.25' : perk === 'myth' ? ' · 신화: 공속 ×1.5' : perk === 'epic' ? ' · 에픽: 방어 무시 + 락다운' : '';
   TOWER_DEFS[g] = {
-    name: `${b.name} ★${g}`, desc: `${g}성 히든 타워 · 폭발 주사위 투척${perkDesc}`, star: g,
+    name: `${b.name} ★${g}`, desc: `${g}성 히든 타워 · 고유 마력 공격${perkDesc}`, star: g,
     dmg: Math.round(40 * Math.pow(1.28, k)), rate: +(1.25 * Math.pow(0.97, k)).toFixed(3), range: 175 + 5 * k,
     proj: 'dieBomb', pspd: 340 + 6 * k, splash: 55 + 4 * k, canAir: true, color: b.color, rainbow: !!b.rainbow, topper: 'dieBomb',
     perk,
@@ -2024,6 +2024,67 @@ const autoChestKind = kind => kind === 'd4' || kind === 'd6';
 const manualChestRoll = () => S.mode === 'infinity' && !!S.inf && !deckRun() && SLOT.active && SLOT.phase < 0;
 const chestReveal = () => manualChestRoll() && SLOT.phase === -1 && S.fxs.find(f => f.kind === 'chestOpen' && f.dieKind === SLOT.kind && f.t < f.dur);
 const manualChestReady = () => manualChestRoll() && SLOT.phase === -1 && DIE.state === 'tray' && !chestReveal() && !S.heldDie && S.phase === 'playing';
+// Unopened rewards stay in the same saved queue as ordinary dice. Opening
+// replaces just one token, so held/rolling dice and rapid taps cannot lose it.
+let BOSS_REWARD = null;
+function bossRewardSound(kind) {
+  if (S.muted || COSMETIC) return;
+  try { window.DKBOSS_AUDIO?.play(audio(), SFX_BUS, kind); } catch (_) { /* audio may be unavailable */ }
+}
+function openBossReward() {
+  const reward = BOSS_REWARD, index = S.inf?.queue.indexOf('boss');
+  if (!reward || reward.inf !== S.inf || reward.kind || S.phase !== 'playing' || !(index >= 0)) return false;
+  const kind = chestDef().drawBoss();
+  S.inf.queue[index] = kind;
+  reward.kind = kind; reward.t = 0; reward.sounded = false;
+  reward.pose = polyRestR(dieShape(kind));
+  $('boss-reward-open').setAttribute('aria-disabled', 'true');
+  $('boss-reward-title').textContent = kind === 'd20' ? '대박! 전설 20면체' : kind === 'd12' ? '행운! 서사 12면체' : '유물 8면체';
+  $('boss-reward-message').textContent = '상자 속 행운을 확인하세요';
+  $('boss-reward').dataset.grade = kind;
+  bossRewardSound('open');
+  netLog(`보스 상자 · ${chestDef().grade[kind]} ${chestDef().label[kind]} 획득`, 'gacha');
+  if (growthRun()) { try { persistRun(); } catch (_) {} }
+  syncUI();
+  return true;
+}
+function updateBossReward(dt) {
+  const panel = $('boss-reward');
+  if (BOSS_REWARD && (BOSS_REWARD.inf !== S.inf || S.phase !== 'playing' || VIEW.pid)) {
+    BOSS_REWARD = null; panel.classList.add('hidden'); $('wrap').inert = false;
+  }
+  if (!BOSS_REWARD && S.phase === 'playing' && !S.paused && !VIEW.pid && !deckRun() && S.inf?.queue.includes('boss')) {
+    BOSS_REWARD = { inf: S.inf, t: 0, kind: null, focus: document.activeElement };
+    panel.classList.remove('hidden'); panel.dataset.grade = 'closed'; $('wrap').inert = true;
+    $('boss-reward-title').textContent = '보스 보상';
+    $('boss-reward-message').textContent = '상자를 터치하세요';
+    $('boss-reward-open').setAttribute('aria-disabled', 'false'); panel.focus({ preventScroll: true });
+    bossRewardSound('appear');
+  }
+  const reward = BOSS_REWARD;
+  if (!reward) return;
+  reward.t += dt;
+  if (reward.kind && reward.t >= .48 && !reward.sounded) {
+    reward.sounded = true; bossRewardSound(reward.kind);
+    $('boss-reward-message').textContent = S.heldDie || SLOT.active ? '보상 대기열에 보관되었습니다' : '이제 주사위를 굴려 보세요';
+  }
+  if (reward.kind && reward.t >= (reward.kind === 'd20' ? 3 : 2.5)) {
+    BOSS_REWARD = null; panel.classList.add('hidden'); $('wrap').inert = false;
+    if (reward.focus?.isConnected) reward.focus.focus({ preventScroll: true });
+    checkInfClear(); syncUI(); return;
+  }
+  const g = $('boss-reward-art').getContext('2d');
+  g.setTransform(2, 0, 0, 2, 0, 0); g.clearRect(0, 0, 360, 330);
+  const kind = reward.kind, t = kind ? reward.t : .08;
+  const f = { x: 180, y: 228 + (kind ? 0 : Math.sin(reward.t * 3) * 3), t,
+    dur: 4, size: 238, rank: kind === 'd20' ? 5 : kind === 'd12' ? 4 : 3,
+    color: kind ? dieKindColor(kind) : '#edc780' };
+  window.DKFX.drawBossAura(g, f, kind);
+  const pose = window.DKFX.chestDiePose({ ...f, t: Math.min(t, 1.45) }, { x: 180, y: 80 });
+  window.DKFX.drawChest(g, f, paint => {
+    if (kind && pose.visible) drawPolyDie(paint, pose.localX, pose.localY, pose.localSize, kind, reward.pose);
+  });
+}
 // Updated after fitting the stage: portrait dice keep their readable screen
 // size instead of shrinking with the 720-unit canvas on a narrow phone.
 let portraitDieZoom = 1;
@@ -2049,7 +2110,7 @@ const ROLL_SHOW = { t: 0, dur: 0.45, R: null, kind: 'd6', face: 0, faceIndex: 0,
 // 새 굴림을 시작해도 되는가 — 손이 비어 있고 슬롯이 놀고 있을 때만. 뽑기·보상 큐·캐주얼 굴림이 전부 이 하나를 본다
 // (손에 든 주사위를 덮어쓰는 경로가 생기지 않도록 게이트를 한 곳에 둔다)
 function canStartRoll() {
-  return S.phase === 'playing' && !S.heldDie && !SLOT.active && (S.mode === 'infinity' || DIE.state === 'tray');
+  return S.phase === 'playing' && !BOSS_REWARD && !S.heldDie && !SLOT.active && (S.mode === 'infinity' || DIE.state === 'tray');
 }
 function canRoll() {
   if (S.mode === 'infinity') return manualChestReady();
@@ -2219,6 +2280,7 @@ function canPlaceAnywhere() {
 }
 function pumpQueue() {
   if (S.mode !== 'infinity' || !S.inf || !S.inf.queue || !S.inf.queue.length) return;
+  if (S.inf.queue[0] === 'boss' || BOSS_REWARD) return; // Only a player tap opens boss rewards.
   if (!canStartRoll()) return;
   if (!canPlaceAnywhere()) return;   // 자리가 날 때까지 보상은 큐에 남는다
   if (deckRun() ? rollDie('d20',DECK.draw(S.inf.growthSnapshot.deck)) : rollDie(S.inf.queue[0])) S.inf.queue.shift();   // 굴림이 실제로 시작됐을 때만 큐에서 뺀다 (주사위가 조용히 사라지지 않게)
@@ -3437,6 +3499,7 @@ function checkInfClear() {
   if (!INF || !S.inf || S.mode !== 'infinity') return false;
   const line = S.inf.clearWave;
   if (!line || S.wave < line || S.inf.doneW < line || S.inf.cleared) return false;
+  if (!deckRun() && (BOSS_REWARD || S.inf.queue.includes('boss'))) return false;
   S.inf.cleared = 1;
   S.shakeT = Math.max(S.shakeT || 0, 0.5);
   for (let i = 0; i < 5; i++) S.fxs.push({ kind: 'ring', x: W / 2, y: 200, t: 0, dur: 1.1 + i * 0.25, size: 160 + i * 60, color: '#ffd452' });
@@ -3688,15 +3751,16 @@ function damageEnemy(e, dmg, src) {
     spawnDeath(e, p);
     if (e.isBoss || e.type === 'boss') {
       const ch = chestDef();
-      if (S.mode === 'infinity' && S.inf && ch && DKCONTENT.INFINITY.bossReward) { // 보스 보상 — 보스 한 마리마다 (주사위는 전부, 골드는 그 웨이브 보스 수로 나눈다)
+      if (S.mode === 'infinity' && S.inf && ch && DKCONTENT.INFINITY.bossReward) { // One chest per boss; split the round gold across bosses.
         const r = deckRun() ? { gold:180+Math.floor((e.wave||S.wave)*2),dice:['d20'] } : DKCONTENT.INFINITY.bossReward(e.wave || S.wave);
         const nBoss = Math.max(1, e.bossCount || 1);
         const gold = Math.round(r.gold / nBoss);
         S.gold += gold;
-        for (const k of r.dice) S.inf.queue.push(k); // 손이 비면 자동으로 굴러간다 (손이 차 있어도 큐에서 기다린다)
+        if (deckRun()) S.inf.queue.push(...r.dice);
+        else S.inf.queue.push('boss');
         const left = S.enemies.filter(x => x !== e && !x.dead && x.isBoss && x.wave === e.wave).length;
-        S.texts.push({ str: `보스 보상: +${gold}G · ${(deckRun() ? '덱 1눈금 소환' : r.dice.map(k => ch.grade[k] + ' ' + ch.label[k]).join(' + '))}!`, x: W / 2, y: 170, t: 0, color: dieKindColor(r.dice[0]) });
-        netLog(`보스 ${e.name} 처치! +${gold}G · ${(deckRun() ? '덱 소환' : r.dice.map(k => ch.grade[k]).join(' + '))}${left ? ` (보스 ${left}마리 남음)` : ''}`, 'boss');
+        S.texts.push({ str: `보스 보상: +${gold}G · ${deckRun() ? '덱 1눈금 소환' : '보상 상자'}!`, x: W / 2, y: 170, t: 0, color: '#ffd452' });
+        netLog(`보스 ${e.name} 처치! +${gold}G · ${deckRun() ? '덱 소환' : '보상 상자'}${left ? ` (보스 ${left}마리 남음)` : ''}`, 'boss');
         syncUI();   // '보상 대기' 칩을 바로 갱신 (자리가 없으면 큐에 쌓인 채로 기다린다)
         if (!S.enemies.some(x => x !== e && !x.dead && x.isBoss)) S.inf.bossT = 0; // 제한시간 해제
       }
@@ -4036,18 +4100,15 @@ function towerFire(t, dt) {
       launchOffset: [visualFrom.x - from.x, visualFrom.y - from.y], visualAge: 0,
       groundFlight, travelled: 0,
       spd: t.def.pspd * arenaWorldScale(), dmg, splash: (pulse ? 100 : towerSplash(t)) * arenaWorldScale(),
-      star: t.def.star || 0, color: t.def.star ? starColor(t.def) : null, trail: [],
+      star: t.def.star || 0, fxFace: t.def.star || 0,
+      color: t.def.star ? starColor(t.def) : null, trail: t.def.star ? null : [],
       slow: t.def.slow ? { pct: towerSlowPct(t), dur: deckRun()?deckStats(t).slowDur:1.8 } : null,
       rot: 0, spin: 0, src: t,
     });
     if (t.face === 2) {
       S.fxs.push({ kind: 'muzzleFlash', x: visualFrom.x, y: visualFrom.y, t: 0, dur: 0.12, size: 38 });
     }
-    if (t.def.star) { // ★ 타워: 밴드색 발사 섬광 + 링 — 성이 높을수록 크다
-      const sc = starColor(t.def), k = t.def.star - 6;
-      S.fxs.push({ kind: 'muzzleFlash', x: visualFrom.x, y: visualFrom.y, t: 0, dur: 0.13, size: 34 + k * 3 });
-      S.fxs.push({ kind: 'ring', x: visualFrom.x, y: visualFrom.y, t: 0, dur: 0.26, size: 34 + k * 4, color: sc });
-    }
+    // Star launch silhouettes are painted once on the authored emitter by paintMuzzle.
     (SFX['t' + t.face] || SFX.t6)();
   }
 }
@@ -4111,21 +4172,11 @@ function sheetHit(kind, x, y, size, dur) {
   S.fxs.push({ kind, x, y, t: 0, dur: dur || 0.32, size });
 }
 
-// ★ 타워 명중 연출: 밴드색 충격파 + 파편, 등급 특전마다 다르게 보이게 한다
+// One bounded, continuous hit shape per star identity. Combat math stays in projHit.
 function starImpact(p, hx, hy) {
-  const col = p.color || '#ffd452', k = p.star - 6;
-  S.fxs.push({ kind: 'ring', x: hx, y: hy, t: 0, dur: 0.3 + k * 0.012, size: p.splash * 2 + k * 8, color: col });
-  const shards = Math.min(10, 3 + Math.floor(k / 2));
-  for (let i = 0; i < shards; i++) {
-    const a = fxRandom() * Math.PI * 2, v = 90 + fxRandom() * 110;
-    S.fxs.push({ kind: 'spark', x: hx, y: hy, vx: Math.cos(a) * v, vy: Math.sin(a) * v * 0.6, t: 0, dur: 0.3, size: 12 + k, color: col });
-  }
-  const perk = p.src && p.src.def.perk;
-  if (perk === 'epic') {        // 방어 무시: 흰 파쇄 샤드
-    S.fxs.push({ kind: 'ring', x: hx, y: hy, t: 0, dur: 0.22, size: p.splash * 1.3, color: '#ffffff' });
-  } else if (perk === 'myth') { // 공속: 이중 링으로 연타감
-    S.fxs.push({ kind: 'ring', x: hx, y: hy, t: 0, dur: 0.44, size: p.splash * 2.6, color: col }); // 느리게 퍼지는 두 번째 링
-  }
+  const face = p.fxFace || p.star;
+  S.fxs.push({ kind: 'starImpact', face, x: hx, y: hy, angle: p.rot,
+    t: 0, dur: face === 20 ? .52 : .4, size: 76 + (face - 7) * 4 });
 }
 
 function projHit(p) {
@@ -4133,9 +4184,7 @@ function projHit(p) {
   const hx = tp.x, hy = tp.y - p.tgt.def.size * 0.4;
   if (p.src && p.src.def.perk === 'primal' && S.mode === 'infinity') { // 태초: 트랙 위 모든 적에게 스플래시
     for (const e of S.enemies) if (!e.dead) damageEnemy(e, p.dmg, p.src);
-    sheetHit('dieExplode', hx, hy, 260, 0.5);
-    S.fxs.push({ kind: 'ring', x: hx, y: hy, t: 0, dur: 0.5, size: 420, color: '#ffffff' });
-    S.texts.push({ str: '태초의 일격!', x: hx, y: hy - 40, t: 0, color: '#ffffff' });
+    starImpact(p, hx, hy);
   } else if (p.splash) {
     for (const e of S.enemies) {
       if (e.dead) continue;
@@ -4144,12 +4193,13 @@ function projHit(p) {
       // 적 크기나 가로·세로 화면 배율이 달라도 같은 상대 범위를 맞힌다.
       if (Math.hypot(ep.x - tp.x, ep.y - tp.y) <= p.splash) damageEnemy(e, p.dmg, p.src);
     }
-    if (p.kind === 'dieBomb' || p.kind === 'die6') {
+    if (p.star) {
+      starImpact(p, hx, hy);
+    } else if (p.kind === 'dieBomb' || p.kind === 'die6') {
       sheetHit('dieExplode', hx, hy, p.splash * 2.2, 0.4);
     } else {
       sheetHit('cannonBlast', hx, hy, p.splash * 2, 0.34);
     }
-    if (p.star) starImpact(p, hx, hy);
   } else {
     damageEnemy(p.tgt, p.dmg, p.src);
     if (p.slow && !p.tgt.dead) {
@@ -4745,7 +4795,9 @@ function drawEffects(layer) {
     if (f.anchorTower) { f.x = f.anchorTower.x + f.anchorDx; f.y = f.anchorTower.y + f.anchorDy; }
     const pr = f.t / f.dur;
     if (pr < 0) continue;                                       // 지연 시작 (t 가 음수)
-    if (f.kind === 'chestOpen') {
+    if (f.kind === 'starImpact') {
+      MOTION.paintStarImpact(ctx, f);
+    } else if (f.kind === 'chestOpen') {
       drawChestReveal(f);
     } else if (sheetMap[f.kind]) {
       const frames = sheetMap[f.kind];
@@ -5239,7 +5291,9 @@ function draw() {
     ctx.save();
     const drawPoint = projectileDrawPosition(p);
     ctx.translate(drawPoint.x, drawPoint.y);
-    if (p.kind === 'dieBomb' || p.kind === 'die6') {
+    if (MOTION.paintProjectile(ctx, p)) {
+      // The captured visual identity is independent of a later tower enhancement.
+    } else if (p.kind === 'dieBomb' || p.kind === 'die6') {
       const sp = A.dieBomb || A.dice[5];
       const w = 26 + (p.star ? (p.star - 6) * 1.1 : 0);   // ★ 가 높을수록 큰 탄
       const s = w / sp.w;
@@ -7052,6 +7106,7 @@ if (window.DKNET) {
 }
 
 document.addEventListener('keydown', ev => {
+  if (BOSS_REWARD) return;
   if (document.querySelector('dialog[open]')) return;
   if (document.activeElement === chatInput) return;                   // 채팅 입력 중에는 단축키를 막는다
   if (document.activeElement === $('mp-chat-input')) return;
@@ -7072,6 +7127,10 @@ document.addEventListener('keydown', ev => {
   }
 });
 
+$('boss-reward-open').addEventListener('click', openBossReward);
+$('boss-reward').addEventListener('keydown', ev => {
+  if (ev.key === 'Tab') { ev.preventDefault(); $('boss-reward-open').focus(); }
+});
 rollBtn.addEventListener('click', rollByButton);
 waveBtn.addEventListener('click', () => startWave());
 $('held-sell').addEventListener('click', () => {   // 손에 든 주사위 바로 판매
@@ -7129,6 +7188,7 @@ window.DKAPP = {
   saveRun: () => { try { persistRun(); if (growthRun() && !S.net && S.phase === 'playing') openMenu(); } catch (_) {} },
   toast,
   back() {
+    if (BOSS_REWARD) return true;
     const dialogs = document.querySelectorAll('dialog[open]');
     if (dialogs.length) { dialogs[dialogs.length - 1].close(); return true; }
     if (settingsOpen()) { closeSettings(); return true; }
@@ -7307,6 +7367,7 @@ function setPaused(on) {
   if (window.DKBGM) { try { DKBGM.duck(S.paused ? 0.35 : 1, 0.3); } catch (e) { /* 무시 */ } }
 }
 function openMenu() {
+  if (BOSS_REWARD) return;
   if (S.phase !== 'playing' && S.phase !== 'spectate') return;
   audio();
   $('menu').classList.remove('hidden');
@@ -8440,7 +8501,8 @@ function frame(ts) {
   lastTs = ts;
   uiInFrame = true;
   try {
-    if (!S.paused) {
+    updateBossReward(dt);
+    if (!S.paused && !(BOSS_REWARD && !S.net)) {
       for (let i = 0; i < S.speed; i++) update(dt);
       updateDie(dt);
       updateSlot(dt); // Printed results must remain readable at every battle speed.

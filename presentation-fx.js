@@ -268,7 +268,44 @@
     g.restore();
   }
 
-  const api = Object.freeze({ chestPose, chestDiePose, drawChest });
+  // Deterministic, bounded decoration behind the chest; never covers its front.
+  function drawBossAura(g, f, kind) {
+    const t = f.t, reveal = kind ? smooth(.35, .8, t) : .22;
+    const gold = kind === 'd20', rare = kind === 'd12', color = gold ? '#ffd76c' : rare ? '#c68aff' : '#82d7ff';
+    g.save(); g.translate(f.x, f.y - 80);
+    const glow = g.createRadialGradient(0, 0, 10, 0, 0, gold ? 146 : 118);
+    glow.addColorStop(0, rgba(color, reveal * .38)); glow.addColorStop(1, rgba(color, 0));
+    g.fillStyle = glow; g.fillRect(-170, -170, 340, 310);
+    if (kind && reveal > 0) {
+      g.globalAlpha = reveal * (gold ? .36 : .24);
+      if (gold) {
+        for (let i = 0; i < 12; i++) {
+          const a = i * TAU / 12 + t * .12, r = 122 + Math.sin(t * 3 + i) * 13;
+          g.fillStyle = i % 2 ? '#fff2b3' : color;
+          triangle(g, Math.cos(a - .04) * 28, Math.sin(a - .04) * 28,
+            Math.cos(a) * r, Math.sin(a) * r, Math.cos(a + .04) * 28, Math.sin(a + .04) * 28);
+        }
+      } else if (rare) {
+        g.strokeStyle = color; g.lineWidth = 2;
+        for (const d of [-1, 1]) {
+          g.beginPath(); g.ellipse(0, -8, 108, 44, d * .55 + t * .12, 0, TAU); g.stroke();
+        }
+      }
+      g.globalAlpha = reveal;
+      const n = gold ? 16 : rare ? 9 : 4;
+      for (let i = 0; i < n; i++) {
+        const phase = (t * .35 + i / n) % 1, a = i * 2.399 + t * .15;
+        const r = 68 + phase * 70, x = Math.cos(a) * r, y = Math.sin(a) * r - phase * 28;
+        g.save(); g.globalAlpha *= Math.sin(phase * Math.PI);
+        if (gold || !rare) fourStar(g, x, y, gold ? 4 + i % 3 : 3, i % 2 ? '#fff4d0' : color);
+        else { g.fillStyle = i % 2 ? '#f2dfff' : color; g.translate(x,y); g.rotate(a); polygon(g,g.fillStyle,null,0,0,-6,3,0,0,6,-3,0); }
+        g.restore();
+      }
+    }
+    g.restore();
+  }
+
+  const api = Object.freeze({ chestPose, chestDiePose, drawChest, drawBossAura });
   if (root) root.DKFX = api;
   if (typeof module === 'object' && module.exports) module.exports = api;
 })(typeof window === 'undefined' ? null : window);
