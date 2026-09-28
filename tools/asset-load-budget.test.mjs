@@ -27,15 +27,16 @@ test('reports the current eager SRCS loader deterministically and passes its cei
   assert.equal(report.loadAssets.loadEntries, 777);
   assert.equal(report.loadAssets.uniqueRequests, 777);
   assert.equal(report.loadAssets.uniqueFiles, 777);
-  // v156 adds one 512x512 transparent front portal: 101,790 bytes, 1 MiB decoded.
-  assert.equal(report.loadAssets.transferBytes, 75_656_412);
-  assert.equal(report.loadAssets.decodeBytes, 450_247_828);
+  // v158 replaces the 1024x1024 side portal with 341x512: 33,126 fewer transfer bytes,
+  // and 3,495,936 fewer decoded bytes. Request counts and budget ceilings stay intact.
+  assert.equal(report.loadAssets.transferBytes, 75_623_286);
+  assert.equal(report.loadAssets.decodeBytes, 446_751_892);
   assert.equal(report.startupScenarios.portrait.uniqueRequests, 778);
-  assert.equal(report.startupScenarios.portrait.transferBytes, 75_823_190);
-  assert.equal(report.startupScenarios.portrait.decodeBytes, 456_539_284);
+  assert.equal(report.startupScenarios.portrait.transferBytes, 75_790_064);
+  assert.equal(report.startupScenarios.portrait.decodeBytes, 453_043_348);
   assert.equal(report.startupScenarios.landscape.uniqueRequests, 779);
-  assert.equal(report.startupScenarios.landscape.transferBytes, 75_826_517);
-  assert.equal(report.startupScenarios.landscape.decodeBytes, 456_526_228);
+  assert.equal(report.startupScenarios.landscape.transferBytes, 75_793_391);
+  assert.equal(report.startupScenarios.landscape.decodeBytes, 453_030_292);
   assert.equal(report.integrity.manifestLinkedFiles, 763);
   assert.equal(report.integrity.notInArtManifest.length, 14);
 
