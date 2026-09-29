@@ -2171,14 +2171,13 @@ function openInfHelp() {
   }
   const t = $('help-title');
   if (scroll && treeRun()) scroll.innerHTML=scroll.innerHTML.replace(/<li><b>계정 클래스<\/b>[\s\S]*?<\/li>/,'<li><b>다이스 트리</b> — 숙련·특성·각성·서포터는 런 시작 때 고정됩니다. 숙련은 종류별 피해 +3%씩 최대 5단계, 특성은 집중(피해 +10%)과 통찰(종류별 능력 강화) 중 하나를 고릅니다. 판매는 눈금당 10 SP입니다.</li><li><b>7눈금 각성</b> — 트리에서 각성을 해금한 종류만 7눈금에서 고유 능력이 바뀝니다. 타워를 누르면 각성 효과를 확인할 수 있습니다.</li><li><b>서포터</b> — 보급관은 SP를 지급하고, 분쇄관은 선택 타워를 무작위 1눈금으로 교체하며 SP를 지급합니다. 포격관은 선두 최대 8명에게 지원 사격합니다. 버튼에서 직접 사용하며 재사용 시간은 전투가 진행될 때만 흐릅니다.</li>');
-  if (t) t.textContent = '무한 투기장 · ' + DKCONTENT.INFINITY.modeOf(S.inf && S.inf.mode).name;
+  if (t) t.textContent = '튜토리얼 · ' + DKCONTENT.INFINITY.modeOf(S.inf && S.inf.mode).name;
   h.classList.remove('hidden');
+  if (scroll) scroll.querySelector('ol')?.scrollTo(0, 0);
 }
 function closeInfHelp() {
   const h = $('inf-help'); if (h) h.classList.add('hidden');
-  try { localStorage.setItem('dk_infHelpSeen', '1'); } catch (e) { /* 사파리 프라이빗 */ } // 실제로 닫아야 본 것으로 친다
 }
-function helpSeen() { try { return localStorage.getItem('dk_infHelpSeen') === '1'; } catch (e) { return false; } }
 function chestDef() { const C = window.DKCONTENT; return C && C.INFINITY && C.INFINITY.chest; }
 function chestCost() { if (deckRun()) return DECK.summonCost(S.inf.chests); const ch = chestDef(); return ch && S.inf ? ch.cost(S.inf.chests || 0) : Infinity; }
 function stageNotice(id, message, tag, ms) {
@@ -2207,7 +2206,7 @@ function buyChest() {
   const drawn = deckRun() ? { face:DECK.draw(S.inf.growthSnapshot.deck),kind:'d20' } : PROGRESSION.draw(S.inf.growthSnapshot, Math.random);
   const kind = drawn ? drawn.kind : ch.draw(S.wave);
   const rk = ch.rank(kind);
-  if (deckRun()) { S.inf.spent+=cost; rollDie('d20',drawn.face); S.texts.push({ str:`${combatDef(drawn.face).name} · 1눈금`,x:W/2,y:topTextY(),t:0,color:combatDef(drawn.face).color }); coachHit('roll'); syncUI(); return 'd20'; }
+  if (deckRun()) { S.inf.spent+=cost; rollDie('d20',drawn.face); S.texts.push({ str:`${combatDef(drawn.face).name} · 1눈금`,x:W/2,y:topTextY(),t:0,color:combatDef(drawn.face).color }); syncUI(); return 'd20'; }
   const rare = rk >= 5 ? 3 : rk === 4 ? 2 : rk === 3 ? 1 : 0;
   const col = dieKindColor(kind);
   if (rare >= 2) SFX.win(); else if (kind === 'd1') SFX.deny(); else SFX.coin();
@@ -2220,7 +2219,7 @@ function buyChest() {
     acquireFx(drawn.face);
     pushLog(`덱 소환 · ★${drawn.face} ${combatDef(drawn.face).name} 획득`, 'gacha');
     diceSlot.classList.add('pop'); setTimeout(() => diceSlot.classList.remove('pop'), 350);
-    coachHit('roll'); syncUI();
+    syncUI();
     return kind;
   }
   rollDie(kind);
@@ -2231,7 +2230,6 @@ function buyChest() {
       size: Math.min(260, Math.max(190, Math.min(W, H) * 0.32) + rare * 10),
       color: col, rank: rk, realtime: true });
   }
-  coachHit('roll');
   syncUI();
   return kind;
 }
@@ -3363,7 +3361,6 @@ function startWave() {
   refreshDirectionalDemand(true);
   announceWave(S.wave);
   SFX.wave();
-  coachHit('wave');
   syncUI();
 }
 function normalRoundSeconds() {
@@ -3482,12 +3479,6 @@ function startInfinity(kind, net, accountRun) {
   }
   refreshDirectionalDemand(true);
   stageEl.classList.toggle('mp', !!net);
-  // 첫 런은 코치가 먼저 돈다. 코치가 끝나면 도움말을 한 번 연다.
-  // 이미 코치를 본 사람인데 도움말을 아직 안 봤다면 도움말만 연다. (멀티는 시계가 흐르므로 생략)
-  if (!net) {
-    if (!coachDone()) setTimeout(coachStart, 500);
-    else if (!helpSeen()) setTimeout(openInfHelp, 300);
-  }
   showScreen('playing');
   syncUI();
 }
@@ -3891,7 +3882,7 @@ function tryDeckPlace(idx) {
     if (!combineDeckTowers(heldTower(),existing,true)) { SFX.deny(); S.texts.push({str:'같은 종류·같은 눈금끼리 합성하세요',x:existing.x,y:existing.y-85,t:0,color:'#ff9f9f'}); return false; }
   } else {
     const t=createDeckTower(S.heldDie,1,idx); S.towers.push(t); S.heldDie=0;
-    deckMergeFx(t,t.def.name+' · 1눈금'); coachHit('place');
+    deckMergeFx(t,t.def.name+' · 1눈금');
   }
   S.dieFocus=true; S.selTower=null; syncUI(); return true;
 }
@@ -4027,7 +4018,6 @@ function upgradeFace(f) {
   const def = TOWER_DEFS[f];
   for (const t of S.towers) if (t.face === f || (f === 6 && t.face > 6)) powerTowerFx(t, t.def.color || def.color);
   stageNotice('enhance-toast', `${def.name} · 파워업 Lv${lv + 1}`, 'power', 1800);
-  coachHit('power');
   SFX.merge();
   syncUI();
   return true;
@@ -4224,7 +4214,6 @@ function update(dt) {
   if (battleRun() && !battleClock()) return;
 
   if (S.mode === 'infinity') pumpQueue(); // 보상 대기열: 손이 비면 자동으로 굴림
-  if (window.__coachOn) { COACH.t = (COACH.t || 0) + dt; if (COACH.t > 0.4) { COACH.t = 0; coachRender(); } } // 대상이 생기면 잡아준다
 
   // 스폰
   if (S.waveActive) {
@@ -4477,7 +4466,7 @@ function drawPortraitTowerLabel(t, fontPx) {
   const candidates = deckRun() || t.deckSystem
     ? [`눈${level}`, String(level)]
     : [`Lv${level}`, `L${level}`, String(level)];
-  const gap = grade ? 5 : 0, padding = 7, maxWidth = 92;
+  const gap = grade ? 4 : 0, padding = 7, maxWidth = 92;
   ctx.save();
   ctx.font = uiFont(fontPx); ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
   const gradeW = grade ? ctx.measureText(grade).width : 0;
@@ -4494,7 +4483,8 @@ function drawPortraitTowerLabel(t, fontPx) {
   ctx.beginPath(); ctx.roundRect(x, y, w, h, h / 2); ctx.fill();
   ctx.strokeStyle = star ? starColor(t.def) : 'rgba(232,182,74,0.85)';
   ctx.lineWidth = 1.5; ctx.stroke();
-  let tx = x + padding;
+  // Center the compact text even when the plaque reaches its width limit.
+  let tx = t.x - (gradeW + gap + detailW) / 2;
   if (grade) {
     ctx.fillStyle = starColor(t.def);
     ctx.fillText(grade, tx + gradeW / 2, t.y + 17 + 0.5);
@@ -5669,7 +5659,6 @@ function fitStage() {
   if (S.phase === 'playing') syncStats();
   else fitTopRow(w);
   hudTopPx(true);
-  if (window.__coachOn) coachRender();   // 링·말풍선도 새 배치에 맞춘다
   if (S.net && typeof mpLayoutCards === 'function') mpLayoutCards();   // 상대 요약 카드도 새 배치에 맞춘다
   // HUD 높이가 확정되기 전에 상자를 열었거나 화면을 돌려도 대기 주사위만 안전한 자리로 다시 놓는다.
   if (manualChestReady()) { const tray = activeTray(); DIE.x = tray.x; DIE.y = tray.y; }
@@ -5870,18 +5859,10 @@ function syncInfPanel() {
 // 다음 웨이브까지 남은 초 (싱글·멀티 공통 autoT)
 function waveCountdown() { return Math.max(0, Math.ceil(S.autoT)); }
 function syncWaveBtn() {
-  if (battleRun()) {
-    const remaining = Math.max(0, Math.ceil((S.net.t0 - DKNET.serverNow()) / 1000));
-    waveBtn.disabled = true;
-    waveBtn.textContent = S.phase === 'over' ? '전투 종료' : remaining ? '시작 대기' : '자동 진행';
-    return;
-  }
-  if (S.phase === 'spectate') { waveBtn.disabled = true; waveBtn.textContent = '관전 중'; return; }
-  if (S.phase !== 'playing' || (S.wave >= S.stageWaves && !S.waveActive)) { waveBtn.disabled = true; waveBtn.textContent = '웨이브 종료'; return; }
-  waveBtn.disabled = S.waveActive;
-  waveBtn.textContent = S.waveActive
-    ? (S.enemies.some(e => e.isBoss && !e.dead) ? '보스 전투 중' : '전투 중')
-    : (S.wave === 0 ? '웨이브 시작' : '다음 웨이브');
+  const ready = S.phase === 'playing' && !battleRun() && S.wave === 0 && !S.waveActive;
+  waveBtn.classList.toggle('hidden', !ready);
+  waveBtn.disabled = !ready;
+  waveBtn.textContent = '웨이브 시작';
 }
 
 function syncInfo() {
@@ -6080,91 +6061,12 @@ function gotoMpRoom() { S.phase = 'mpRoom'; showScreen('mpRoom'); }
 function gotoStageSelect() { S.phase = 'stageSelect'; showScreen('stageSelect'); }
 function gotoShop() { S.phase = 'shop'; showScreen('shop'); }
 
-// ==================== 첫 런 코치 (단계별 손잡이 안내) ====================
-// 인피니티가 처음부터 열려 있으므로, 스테이지 모드를 거치지 않은 사람에게 조작을 직접 가르친다.
-// 각 단계는 "실제로 그 행동을 했을 때"만 넘어간다. 링·말풍선만 얹고 클릭은 통과시킨다.
-const COACH = {
-  on: false, i: 0,
-  steps: [
-    { key: 'roll',   text: '<b>뽑기</b>를 눌러 주사위를 뽑으세요. 굴러 나온 숫자가 타워가 됩니다.', at: () => $('roll-btn') },
-    { key: 'place',  text: '<b>빈 석단을 눌러</b> 타워를 놓으세요. 끌어다 놓아도 됩니다.', at: () => coachSpot() },
-    { key: 'wave',   text: '준비됐으면 <b>웨이브를 시작</b>하세요. 적이 트랙을 돌기 시작합니다.', at: () => $('wave-btn') },
-    { key: 'select', text: '놓은 <b>타워를 누르면</b> 아래에서 판매·확률강화를 할 수 있습니다.', at: () => coachTower() },
-    { key: 'power',  text: '마지막으로 <b>파워업</b> — 골드로 그 눈의 타워를 전부 세게 만듭니다.', at: () => $('inf-panel') },
-  ],
-};
-function coachDone() { try { return localStorage.getItem('dk_coachDone') === '1'; } catch (e) { return true; } }
-function coachSpot() {   // 비어 있는 첫 석단을 화면 좌표로
-  for (let i = 0; i < SPOTS.length; i++) {
-    if (towerAt(i)) continue;
-    const p = canvasToClient(SPOTS[i][0], SPOTS[i][1]);
-    return { left: p.x - 34, top: p.y - 34, width: 68, height: 68 };
-  }
-  return null;
-}
-function coachTower() {  // 배치된 첫 타워를 화면 좌표로
-  const t = S.towers[0];
-  if (!t) return null;
-  const p = canvasToClient(t.x, t.y);
-  return { left: p.x - 34, top: p.y - 44, width: 68, height: 78 };
-}
-function coachStart() {
-  if (coachDone() || S.mode !== 'infinity') return;
-  COACH.on = true; COACH.i = 0;
-  window.__coachOn = true;
-  coachRender();
-}
-function coachStop(finished) {
-  if (!COACH.on) return;
-  COACH.on = false;
-  window.__coachOn = false;
-  const el = $('coach'); if (el) el.classList.add('hidden');
-  try { localStorage.setItem('dk_coachDone', '1'); } catch (e) { /* 사파리 프라이빗 */ }
-  if (finished && !helpSeen()) setTimeout(openInfHelp, 400); // 조작을 익힌 뒤에 시스템 설명
-}
-// 그 단계의 행동을 했을 때 호출한다 (buyChest / tryPlace / startWave / 타워 선택 / upgradeFace)
-function coachHit(key) {
-  if (!COACH.on) return;
-  const step = COACH.steps[COACH.i];
-  if (!step || step.key !== key) return;
-  COACH.i++;
-  if (COACH.i >= COACH.steps.length) { coachStop(true); return; }
-  // 4단계에서 연 타워 정보창이 5단계 대상(파워업 패널)을 덮는다 — 다음 대상이 HUD 안이면 카드를 닫는다
-  const next = COACH.steps[COACH.i];
-  if (next && next.key === 'power' && S.selTower) { S.selTower = null; syncUI(); }
-  coachRender();
-}
 // 안전영역(노치·홈바) — style.css 의 --sa-* 를 숫자로 (앱은 플러그인, 테스트는 인라인 변수로 채운다)
 function safeArea() {
   const cs = getComputedStyle(document.documentElement);
   const n = (k) => { const v = parseFloat(cs.getPropertyValue(k)); return isFinite(v) ? Math.max(0, v) : 0; };
   return { t: n('--sa-t'), r: n('--sa-r'), b: n('--sa-b'), l: n('--sa-l') };
 }
-function coachRender() {
-  const el = $('coach'), ring = $('coach-ring'), tip = $('coach-tip');
-  if (!el || !COACH.on) return;
-  const step = COACH.steps[COACH.i];
-  const target = step && step.at();
-  if (!target) { el.classList.add('hidden'); return; }   // 대상이 아직 없으면 다음 프레임에
-  const r = target.getBoundingClientRect ? target.getBoundingClientRect() : target;
-  const pad = 6;
-  el.classList.remove('hidden');
-  ring.style.left = (r.left - pad) + 'px';
-  ring.style.top = (r.top - pad) + 'px';
-  ring.style.width = (r.width + pad * 2) + 'px';
-  ring.style.height = (r.height + pad * 2) + 'px';
-  $('coach-step').textContent = `${COACH.i + 1} / ${COACH.steps.length}`;
-  const deckCoach={roll:'<b>소환</b>을 누르면 덱의 5종 중 하나가 1눈금으로 나옵니다.',select:'<b>타워를 누르면</b> 능력과 판매를 확인합니다. 같은 종류·눈금을 겹치면 합성됩니다.',power:'<b>파워업</b>은 같은 종류 전체를 강화합니다. SP를 써서 전투 레벨을 5까지 올려보세요.'};
-  $('coach-text').innerHTML = deckRun() && deckCoach[step.key] ? deckCoach[step.key] : step.text;
-  // 말풍선은 대상 위에, 위가 좁으면 아래에 둔다
-  tip.style.left = '0px'; tip.style.top = '0px';
-  const tw = tip.offsetWidth, th = tip.offsetHeight;
-  const cx = r.left + r.width / 2;
-  const sa = safeArea();
-  tip.style.left = Math.max(8 + sa.l, Math.min(window.innerWidth - sa.r - tw - 8, cx - tw / 2)) + 'px';
-  tip.style.top = (r.top - th - 14 >= 8 + sa.t ? r.top - th - 14 : Math.min(window.innerHeight - sa.b - th - 8, r.top + r.height + 14)) + 'px';
-}
-
 // ==================== 화면 방향에 따른 아레나 교체 ====================
 // 가로/데스크톱은 16:9(cInf), 세로 폰은 세로 아레나(cInfP). 런 도중 돌려도 상태를 보존한 채 갈아끼운다.
 function screenIsPortrait() {
@@ -6568,7 +6470,6 @@ function tryPlace(idx) {
     S.heldDie = 0;
     S.dieFocus = true;
     SFX.place();
-    coachHit('place');
   } else if (existing.face === S.heldDie) {
     if (existing.lvl < MAX_LVL) {
       existing.lvl++;
@@ -6959,7 +6860,6 @@ canvas.addEventListener('click', ev => {
     }
     const hit = towerAt(idx);
     S.selTower = (hit && hit === S.selTower) ? null : hit;   // 같은 타워를 다시 누르면 닫는다
-    if (S.selTower) coachHit('select');
     syncUI();
     return;
   }
@@ -7132,7 +7032,7 @@ $('boss-reward').addEventListener('keydown', ev => {
   if (ev.key === 'Tab') { ev.preventDefault(); $('boss-reward-open').focus(); }
 });
 rollBtn.addEventListener('click', rollByButton);
-waveBtn.addEventListener('click', () => startWave());
+waveBtn.addEventListener('click', () => { if (S.wave === 0) startWave(); });
 $('held-sell').addEventListener('click', () => {   // 손에 든 주사위 바로 판매
   if (!S.heldDie || S.phase !== 'playing') return;
   if (!canSellFace(S.heldDie)) { SFX.deny(); return; }
@@ -7291,8 +7191,8 @@ $('btn-deck-open').addEventListener('click', () => {
 
 for (let f = 1; f <= 6; f++) { const b = $('inf-face-' + f); if (b) b.addEventListener('click', () => upgradeFace(deckRun() ? S.inf.growthSnapshot.deck[f-1] : f)); }
 if ($('supporter-use')) $('supporter-use').addEventListener('click',()=>{audio();useSupporter();});
+$('lobby-help').addEventListener('click', () => { audio(); openInfHelp(); });
 if ($('help-btn')) $('help-btn').addEventListener('click', () => { audio(); openInfHelp(); });
-if ($('coach-skip')) $('coach-skip').addEventListener('click', () => { audio(); coachStop(false); });
 if ($('rotate-hint')) $('rotate-hint').addEventListener('click', () => {
   rotateHintOff = true;
   try { localStorage.setItem('dk_rotateHint', 'off'); } catch (e) { /* 저장 못해도 이번 세션은 닫힌다 */ }
@@ -8625,7 +8525,7 @@ function drawLoading(pr) {
   window.DKmoveHoldMs = () => MOVE_HOLD_MS;       // 길게 누르기 기준 시간
   window.DKend = gameEnd;                         // 결과 화면 (레이아웃 테스트)
   window.DKlobbyView = lobbyShow;                  // 로비 갈래 열기 (테스트: 'hub' | 'single' | 'multi')
-  window.DKlobby = () => { if (S.net) mpLeave(); closeInfHelp(); closeSettings(); if (COACH.on) coachStop(false); S.mode = 'stage'; S.inf = null; S.selTower = null; S.heldDie = 0; DIE.state = 'tray'; SLOT.active = false; gotoLobby(); fitStage(); };   // 레이아웃 테스트: 어느 화면에서든 로비로
+  window.DKlobby = () => { if (S.net) mpLeave(); closeInfHelp(); closeSettings(); S.mode = 'stage'; S.inf = null; S.selTower = null; S.heldDie = 0; DIE.state = 'tray'; SLOT.active = false; gotoLobby(); fitStage(); };   // 레이아웃 테스트: 어느 화면에서든 로비로
   window.DKacquire = acquireFx;                   // 획득 연출 미리보기 (콘솔: DKacquire(20))
   window.DKsync = syncUI;
   window.DKsafeArea = safeArea;

@@ -172,6 +172,7 @@ jobs:
       - name: combat-controls (모바일 HUD·타워 교환·1/2/4 배속)
         run: |
           npm run test:mobile-controls
+          npm run test:galaxy-hud
           npm run test:hud-notice-layout
           npm run test:tower-move
           npm run test:speed-cycle

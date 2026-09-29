@@ -111,6 +111,7 @@ body.ui-art #mini-top button[data-icon="menu"] { background-image: url(ui/icon-m
   box-shadow: 0 2px 0 var(--dk-ui-shadow);
 }
 #queue-chip b { color: var(--dk-ui-gold); }
+#right-panel:not(:has(> :not(.hidden))) { display: none; }
 
 /* Two-step cel buttons, with no metallic bevel or competing green/purple CTAs. */
 #hud button,
@@ -425,14 +426,6 @@ body.ui-art #help-btn {
 #enhance-confirm-desc,
 #chat-report .cr-note { color: var(--dk-ui-muted); }
 .help-scroll::after { background: linear-gradient(#353a5500, var(--dk-ui-panel)); }
-#coach-tip {
-  color: var(--dk-ui-cream);
-  background: var(--dk-ui-panel);
-  border-color: var(--dk-ui-gold);
-  box-shadow: 0 4px 0 var(--dk-ui-shadow), 0 9px 20px #16152488;
-}
-#coach-step { color: var(--dk-ui-gold); }
-#coach-skip,
 #menu .back-btn,
 #settings .back-btn,
 #enhance-confirm-cancel,
@@ -525,13 +518,20 @@ body.ui-art #help-btn {
 /* Portrait combat HUD: reserve space for readable state and steady touch targets. */
 @media (max-width: 480px) and (orientation: portrait) {
 
+  /* The rare-die subtitle must wrap before it pushes the first-wave action
+     onto a third HUD row. Reserve its width only while that action exists. */
+  #wrap.bleed:not(.over) #hud:has(#wave-btn:not(.hidden)) #dice-panel {
+    max-width: calc(100% - 136px);
+  }
+  #wrap.bleed:not(.over) #draw-col { min-width: 0; }
+  #wrap.bleed:not(.over) #dice-slot { flex-shrink: 0; }
   #wrap.bleed:not(.over) #roll-btn {
     font-size: 15px;
     line-height: 1.1;
     padding: 7px;
     min-width: 54px;
   }
-  #wrap.bleed:not(.over) #roll-btn small { font-size: 13px; }
+  #wrap.bleed:not(.over) #roll-btn small { font-size: 13px; white-space: normal; }
   #wrap.bleed:not(.over) #hud-hint { display: none; }
   #wrap.bleed:not(.over) #right-panel { flex: 0 0 102px; }
   #wrap.bleed:not(.over) #wave-btn {
@@ -615,7 +615,6 @@ body.ui-art #help-btn {
   #hud button,
   #mini-top button,
   #stats .chip,
-  #coach-ring,
   #chest-reveal,
   #enhance-toast,
   #toast { animation: none !important; transition: none !important; }

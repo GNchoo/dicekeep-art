@@ -19,7 +19,7 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
       const source = await response.text();
       const anchor = 'window.DK = S;';
       assert.equal(source.split(anchor).length, 2, 'one test-hook anchor in game.js');
-      const hook = `window.__pureWaveQA = { buildInfinityWave, readRoundClock: () => {
+      const hook = `window.__pureWaveQA = { startWave, buildInfinityWave, readRoundClock: () => {
         const lines = [], original = ctx.fillText;
         ctx.fillText = function(text, ...args) { lines.push(String(text)); return original.call(this, text, ...args); };
         try { draw(); } finally { ctx.fillText = original; }
@@ -86,13 +86,14 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
         DK.autoT = 0;
         DKsync();
         const btn = document.getElementById('wave-btn');
-        btn.click();
+        if (previousWave === 0) btn.click(); else __pureWaveQA.startWave();
         return btn;
       };
       const state = () => ({
         wave: DK.wave, active: DK.waveActive, waveT: DK.waveT, autoT: DK.autoT,
         completed: DK.inf.doneW, queue: DK.spawnQ.length, enemies: DK.enemies.filter(e => !e.dead).length,
         buttonDisabled: document.getElementById('wave-btn').disabled,
+        buttonHidden: document.getElementById('wave-btn').getClientRects().length === 0,
       });
 
       begin('clear');
@@ -165,6 +166,10 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
       if (boss) DKdamage(boss, boss.hp + 1, null);
       DKcombatStep(0.016);
       const bossAfterKill = { ...state(), bossTimer: DK.inf.bossT };
+      document.getElementById('wave-btn').click();
+      const bossIntermissionClick = state();
+      DKcombatStep(6.01);
+      const bossAutoContinue = state();
 
       const legacy = {};
       for (const mode of ['build', 'extreme']) {
@@ -174,6 +179,10 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
         DK.enemies = [];
         DKcombatStep(0.016);
         legacy[mode] = state();
+        document.getElementById('wave-btn').click();
+        legacy[mode].afterClick = state();
+        DKcombatStep(6.01);
+        legacy[mode].next = state();
       }
       begin('clear', 100);
       DK.inf.doneW = 100;
@@ -219,7 +228,7 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
         cleared: DK.inf.cleared, settledWave: DK.inf.settledResult?.wave ?? null,
       };
       return { profiles, sourceAudit, sourceSchedule, spawnGold, hudClock, beforeDeadline, afterEarlyClick, atDeadline,
-        carryIntoBoss, lateWaveAt60, lateWaveAt140, bossSpawn, bossAtNormalDeadline, bossAfterKill, legacy,
+        carryIntoBoss, lateWaveAt60, lateWaveAt140, bossSpawn, bossAtNormalDeadline, bossAfterKill, bossIntermissionClick, bossAutoContinue, legacy,
         finalWithSurvivor, finalTimedOut, finalWaitingAt200, finalCleanedAt200, finalEmpty };
     });
 
@@ -347,6 +356,7 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
       assert.equal(a.active, true);
       assert.equal(a.completed, 0);
       assert.equal(a.buttonDisabled, true);
+      assert.equal(a.buttonHidden, true);
       assert.equal(b.wave, 1);
       assert.equal(b.active, true);
       assert.equal(b.completed, 0);
@@ -359,6 +369,7 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
       assert.equal(s.autoT, 0);
       assert.equal(s.waveT, 0);
       assert.ok(s.queue > 0);
+      assert.equal(s.buttonHidden, true);
     });
     check('normal deadline advances to a boss even with previous enemies alive', () => {
       const s = observed.carryIntoBoss;
@@ -395,6 +406,17 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
       assert.equal(s.completed, 10);
       assert.equal(s.autoT, 6);
     });
+    check('boss intermission hides the one-time start action and advances automatically', () => {
+      const before=observed.bossAfterKill, clicked=observed.bossIntermissionClick, next=observed.bossAutoContinue;
+      assert.equal(before.buttonHidden,true);
+      assert.equal(before.buttonDisabled,true);
+      assert.equal(clicked.wave,10);
+      assert.equal(clicked.autoT,6);
+      assert.equal(next.wave,11);
+      assert.equal(next.active,true);
+      assert.equal(next.buttonHidden,true);
+      assert.ok(next.queue>0);
+    });
     check('build and extreme still complete drained waves by legacy rule', () => {
       for (const key of ['build', 'extreme']) {
         const s = observed.legacy[key];
@@ -402,6 +424,13 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
         assert.equal(s.active, false);
         assert.equal(s.completed, 1);
         assert.equal(s.autoT, 6);
+        assert.equal(s.buttonHidden,true);
+        assert.equal(s.buttonDisabled,true);
+        assert.equal(s.afterClick.wave,1);
+        assert.equal(s.afterClick.autoT,6);
+        assert.equal(s.next.wave,2);
+        assert.equal(s.next.active,true);
+        assert.equal(s.next.buttonHidden,true);
       }
     });
     check('final clear round stays active after 140 seconds if one enemy survives', () => {

@@ -21,6 +21,11 @@ const report = { scope: '1~20눈의 피해는 적 크기·보스 여부와 무�
     page.on('pageerror', e => errors.push(e.message));
     page.on('dialog', d => d.accept());
     await page.addInitScript(() => { localStorage.setItem('dk_coachDone', '1'); localStorage.setItem('dk_infHelpSeen', '1'); });
+    await page.route('**/game.js*', async route => {
+      const response=await route.fetch(), source=await response.text(), anchor='window.DK = S;';
+      assert.equal(source.split(anchor).length,2,'one game QA hook anchor');
+      await route.fulfill({response,body:source.replace(anchor,'window.__matchupQA={startWave}; '+anchor)});
+    });
     const url = new URL('index.html', base);
     url.searchParams.set('net', 'off');
     url.searchParams.set('v', '1');
@@ -54,7 +59,7 @@ const report = { scope: '1~20눈의 피해는 적 크기·보스 여부와 무�
       DK.wave = 57;
       DK.waveActive = false;
       DKsync();
-      document.getElementById('wave-btn').click();
+      __matchupQA.startWave();
       const announcement = DK.texts.map(t => t.str).filter(s => s.includes('웨이브 58'));
       return { rows, absentClass, noSource, uiAttackBadgeVisible, announcedWave: DK.wave, announcement, mode: DK.mode,
         faces: Object.keys(DKTD).map(Number).filter(f => f >= 1 && f <= 20) };
@@ -79,7 +84,7 @@ const report = { scope: '1~20눈의 피해는 적 크기·보스 여부와 무�
       result.noSource.filter(r => r.bare !== 1000 || r.armored !== 963)
         .map(r => `${r.cls}/${r.isBoss ? 'boss' : 'mob'}=${r.bare}/${r.armored}`), []);
     check('선택한 타워 정보에 제거된 공격형 배지가 표시되지 않는다', result.uiAttackBadgeVisible, false);
-    check('실제 웨이브 버튼으로 58웨이브를 예고한다', result.announcedWave, 58);
+    check('실제 웨이브 시작 처리로 58웨이브를 예고한다', result.announcedWave, 58);
     check('58웨이브 예고 텍스트가 실제로 표시된다', result.announcement.length > 0, true);
     check('웨이브 예고에도 피해 상성으로 오해할 크기·공격형 문구가 없다',
       result.announcement.filter(text => /소형|중형|대형|진동형|폭발형|일반형/.test(text)), []);

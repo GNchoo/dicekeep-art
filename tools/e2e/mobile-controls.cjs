@@ -1,4 +1,4 @@
-// Player-facing regressions: stable wave action, readable phone controls and
+// Player-facing regressions: optional help, one-time wave start, readable phone controls and
 // a visible focus marker on the tower selected through an actual pointer tap.
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
@@ -7,11 +7,8 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
 (async () => {
   const browser = await launchBrowser(), results = [], errors = [];
   try {
-    const page = await browser.newPage();
+    const page = await browser.newPage({viewport:{width:384,height:824}});
     page.on('pageerror', e => errors.push(e.message));
-    await page.addInitScript(() => {
-      localStorage.setItem('dk_coachDone', '1'); localStorage.setItem('dk_infHelpSeen', '1');
-    });
     await page.route('**/game.js*', async route => {
       const response = await route.fetch(), source = await response.text();
       await route.fulfill({ response, body: source.replace('window.DK = S;',
@@ -19,6 +16,51 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
     });
     await page.goto(gameUrl());
     await page.waitForFunction(() => window.DK?.phase === 'title', null, { timeout: 120000 });
+    assert.deepEqual(await page.evaluate(() => ['dk_coachDone','dk_infHelpSeen'].map(k=>localStorage.getItem(k))),
+      [null,null], 'first visit has no tutorial-completion bypass');
+    const firstDraw = await page.evaluate(() => {
+      DKstartInf('clear'); DK.paused=true; DK.muted=true;
+      const chest=DKCONTENT.INFINITY.chest, draw=chest.draw;
+      try { chest.draw=()=> 'd8'; DKchest(); }
+      finally { chest.draw=draw; }
+      return {kind:DKSLOT.kind,phase:DKSLOT.phase,held:DK.heldDie};
+    });
+    assert.deepEqual(firstDraw,{kind:'d8',phase:-1,held:0},'first relic draw waits for the player to throw');
+    await page.waitForTimeout(650); // Older automatic coaching started after 500 ms.
+    assert.equal(await page.locator('#coach').isVisible(),false,'a first relic draw never opens automatic coaching');
+    assert.equal(await page.locator('#inf-help').isVisible(),false,'help never opens automatically on the first run');
+    await page.click('#help-btn');
+    assert.equal(await page.locator('#inf-help').isVisible(),true,'player can open tutorial from the HUD');
+    assert.match(await page.locator('#inf-help').innerText(),/8면체 이상.*직접 던/,'optional tutorial explains manual rare throws');
+    await page.click('#help-close');
+    await page.click('#exit-btn');
+    await page.click('#menu-help');
+    assert.equal(await page.locator('#inf-help').isVisible(),true,'player can open tutorial from the menu');
+    await page.click('#help-close');
+    assert.equal(await page.locator('#inf-help').isVisible(),false,'tutorial closes without changing the draw');
+    assert.deepEqual(await page.evaluate(()=>({kind:DKSLOT.kind,phase:DKSLOT.phase,held:DK.heldDie})),firstDraw,
+      'viewing the tutorial leaves the waiting relic die intact');
+    await page.evaluate(()=>DKlobby());
+    await page.click('#hub-single');
+    await page.click('#lobby-help');
+    assert.equal(await page.locator('#inf-help').isVisible(),true,'tutorial is available before starting a game');
+    assert.equal(await page.evaluate(()=>DK.phase),'lobby','viewing the tutorial does not start a run');
+    await page.click('#help-close');
+    console.log('PASS first visit: relic throw remains intact and tutorials open only by player choice');
+    for(const mode of ['clear','build','extreme','stage']) {
+      await page.evaluate(mode=>{
+        if(mode==='stage') DKstart(1); else DKstartInf(mode);
+        DK.paused=true; DK.muted=true; DKsync();
+      },mode);
+      assert.equal(await page.locator('#wave-btn').isVisible(),true,`${mode}: new run offers one start button`);
+      assert.equal(await page.locator('#wave-btn').isEnabled(),true,`${mode}: first start is enabled`);
+      await page.click('#wave-btn');
+      assert.equal(await page.evaluate(()=>DK.wave),1,`${mode}: one click starts wave 1`);
+      assert.equal(await page.locator('#wave-btn').isVisible(),false,`${mode}: start button disappears after use`);
+      assert.equal(await page.locator('#wave-btn').isDisabled(),true,`${mode}: hidden start button is disabled`);
+      const repeated = await page.evaluate(()=>{document.getElementById('wave-btn').click();return DK.wave;});
+      assert.equal(repeated,1,`${mode}: a repeated click cannot skip a wave`);
+    }
     for (const [width, height] of [[360,800],[390,844],[430,932],[844,390],[1280,900]]) {
       await page.setViewportSize({width,height});
       await page.evaluate(() => {
@@ -37,14 +79,15 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
           DK.waveActive=active; DK.waveT=time; DK.wave=wave; DK.autoT=5;
           __controlsQA.syncWaveBtn();
           const b=document.getElementById('wave-btn'), r=b.getBoundingClientRect();
-          samples.push({label:b.textContent,x:r.x,y:r.y,w:r.width,h:r.height});
+          samples.push({label:b.textContent,x:r.x,y:r.y,w:r.width,h:r.height,
+            visible:r.width>0&&r.height>0,disabled:b.disabled,first:wave===0&&!active});
         }
         return samples;
       });
       for (const item of wave) {
         assert.ok(!/\d/.test(item.label), `${width}: lower wave action has no duplicate timer`);
-        for (const k of ['x','y','w','h']) assert.ok(Math.abs(item[k]-wave[0][k])<.6,
-          `${width}: wave button ${k} changed between ${wave[0].label} and ${item.label}`);
+        assert.equal(item.visible,item.first,`${width}: wave start is visible only before the first wave`);
+        assert.equal(item.disabled,!item.first,`${width}: wave start is enabled only before the first wave`);
       }
       const position = await page.evaluate(() => {
         DK.wave=2; DK.waveActive=true; DK.waveT=25; DK.selTower=null; DKsync();
@@ -95,7 +138,7 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
       await page.click('#info-close');
       await page.screenshot({path:outputPath(`mobile-controls/${width}-hud.png`)});
       results.push({width,height,wave,measured});
-      console.log(`PASS ${width}x${height}: fixed action, selection${portrait?', readable phone HUD':''}`);
+      console.log(`PASS ${width}x${height}: one-time action, selection${portrait?', readable phone HUD':''}`);
     }
     assert.deepEqual(errors,[],'no page errors');
     fs.writeFileSync(outputPath('mobile-controls/report.json'),JSON.stringify(results,null,2));
