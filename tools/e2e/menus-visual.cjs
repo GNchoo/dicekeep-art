@@ -54,7 +54,7 @@ fs.mkdirSync(out, { recursive: true });
       await capture('home', '#lobby-box');
       await page.click('#hub-single');
       await capture('single', '#lobby-box');
-      await page.click('#btn-deck-open');
+      await page.click('#lobby-box [data-menu-target=deck]');
       await capture('deck', '#deck-panel', { scrollContent: true });
       assert.equal(await page.locator('#btn-inf-clear').isVisible(), false, `${name}: deck is a separate view`);
       await page.click('#lobby-back');
