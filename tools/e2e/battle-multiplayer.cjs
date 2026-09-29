@@ -69,8 +69,8 @@ const base=process.env.E2E_BASE_URL || 'http://127.0.0.1:8137/', net=process.env
     await a.screenshot({path:path.join(out,'coop-result.png')});
     assert.equal(await b.evaluate(()=>DK.net.battle.seats[DK.net.pid].kills),0);
     report.checks.push('real server observes over one minute of participation; zero-kill support seat receives the same per-second formula and victory/first-win bonuses; repeated end cannot credit twice');
-    await b.click('#ov-btn');await b.evaluate(()=>DKlobbyView('single'));await b.click('#btn-deck-open');
-    assert.match(await b.locator('#free-progress').innerText(),/기한·연속 출석·구매 조건이 없습니다/);await b.screenshot({path:path.join(out,'free-progress-phone.png')});
+    await b.click('#ov-btn');await b.evaluate(()=>DKlobbyView('single'));await b.click('#lobby-box [data-menu-target=deck]');await b.click('[data-open-dice=earn]');
+    assert.match(await b.locator('#free-progress').innerText(),/패배해도 지급/);await b.screenshot({path:path.join(out,'free-progress-phone.png')});
     await a.context().close();await b.context().close();
     [a,b]=await pair('duel');
     await a.evaluate(()=>{for(let i=0;i<5;i++){__battle.spawnEnemy(__battle.battleWaveItems(1)[0]);const e=DK.enemies.at(-1);__battle.damageEnemy(e,e.hp*100);}__battle.persistRun();});

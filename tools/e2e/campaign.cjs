@@ -57,7 +57,14 @@ for (const sd of C.stages) {
       await page.reload();await page.waitForFunction(()=>window.DK?.phase==='title');assert.equal(await page.evaluate(()=>DKSAVE.cleared.length),50);
       await page.click('#ov-btn');await page.evaluate(()=>DKlobbyView('single'));await page.click('#btn-stage-select');
       await page.locator('.campaign-help summary').click();
-      const bounds=await page.evaluate(()=>[...document.querySelectorAll('.stage-cell')].every(e=>{const r=e.getBoundingClientRect();return r.width>0&&r.left>=0&&r.right<=innerWidth+1;}));assert.ok(bounds);
+      assert.ok(await page.locator('.menu-subpage').isVisible());await page.locator('.menu-subpage > header button').click();
+      assert.equal(await page.locator('.stage-cell').count(),50);
+      let visibleStages=0;
+      for(let i=0;i<50;i++){
+        const bounds=await page.locator('.stage-cell:visible').evaluateAll(es=>es.map(e=>{const r=e.getBoundingClientRect();return r.width>0&&r.left>=0&&r.right<=innerWidth+1&&r.bottom<=innerHeight;}));assert.ok(bounds.every(Boolean));visibleStages+=bounds.length;
+        const next=page.locator('#stage-grid .page-controls button').last();if(await next.isDisabled())break;await next.click();
+      }
+      assert.equal(visibleStages,50,'all stages are reachable through visible pages');
       await page.screenshot({path:path.join(out,tag+'-campaign.png'),fullPage:true});
       if(tag==='desktop' && !process.argv.includes('--skip-combat')) {
         const rows=await page.evaluate(full=>{

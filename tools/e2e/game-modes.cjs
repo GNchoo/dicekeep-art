@@ -80,16 +80,16 @@ async function boot(browser, viewport, row) {
 async function collection(page, row, dir) {
   check(row, 'old mixed records stay legacy; all seven record lanes start empty', await page.evaluate(() => ({ legacy: DKSAVE.progression.legacy, modes: Object.fromEntries(Object.entries(DKSAVE.progression.records).map(([k, r]) => [k, r.best])) })), { legacy: { best: 77, clears: 3 }, modes: { clear: 0, build: 0, extreme: 0, multi: 0, extremeMulti: 0, duel: 0, coop: 0 } });
   await page.waitForSelector('#btn-inf-build');
-  row.lobbyLayout = await layout(page, ['#btn-inf-clear', '#btn-inf-build', '#btn-infinity', '#btn-deck-open']);
+  row.lobbyLayout = await layout(page, ['#btn-inf-clear', '#btn-inf-build', '#btn-infinity', '#btn-stage-select']);
   check(row, 'three mode buttons fit without overlap', row.lobbyLayout.issues, []);
   await page.click('#theme-guide > summary');
-  const chapters = await page.locator('#theme-guide-list .theme-guide-card').allTextContents();
+  const chapters = await page.locator('.menu-subpage .theme-guide-card').allTextContents();
   check(row, 'ten-wave themes cover both hundred-wave sets', chapters.length, 20);
   for (const [index, label] of [[1, '숲의 야수'], [3, '고블린·오크 군단'], [5, '언데드 군단']]) {
     check(row, `chapter ${index + 1} displays its authored faction`, chapters[index].includes(label), true);
   }
   check(row, 'theme guide fits viewport', await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), true);
-  await page.click('#theme-guide > summary');
+  await page.locator('.menu-subpage > header button').click();
   await page.screenshot({ path: path.join(dir, 'lobby-three-modes.png'), fullPage: true });
   // Full tree editing, deterministic unlocks and supporter UI are covered by tree-collection.cjs.
   check(row, 'legacy record import receives six starters and deterministic tree research', await page.evaluate(() => ({
