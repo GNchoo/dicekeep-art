@@ -58,6 +58,29 @@
 .gem-chip b { color: #bce9ff; }
 
 /* Home: retain its content order and castle key art, but match the simplified scenery. */
+/* Keep the same outer frame when navigating between player menus. */
+:is(#lobby, #shop, #stage-select, #mp-room).screen {
+  padding: max(12px, var(--sa-t)) max(12px, var(--sa-r)) max(12px, var(--sa-b)) max(12px, var(--sa-l));
+}
+#lobby #lobby-box[data-view],
+:is(#shop, #stage-select, #mp-room) > .screen-box {
+  width: min(500px, 100%);
+  max-width: 500px;
+  height: min(850px, calc(100dvh - max(12px, var(--sa-t)) - max(12px, var(--sa-b))));
+  max-height: 100%;
+  border-radius: 20px;
+}
+@media (max-width: 540px) {
+  :is(#lobby, #shop, #stage-select, #mp-room).screen { padding: 0; }
+  #lobby #lobby-box[data-view],
+  :is(#shop, #stage-select, #mp-room) > .screen-box {
+    width: 100%; max-width: 100%; height: 100dvh; border: 0; border-radius: 0;
+  }
+}
+@media (min-aspect-ratio: 4/3) and (max-height: 640px) {
+  #lobby #lobby-box[data-view],
+  :is(#shop, #stage-select, #mp-room) > .screen-box { width: min(720px, 100%); max-width: 720px; }
+}
 #lobby #lobby-box[data-view="hub"] { background: var(--dk-ui-frame); border-color: #a58a6e; box-shadow: 0 12px 0 #17182c4d, 0 24px 64px #1013229c; }
 #lobby #lobby-box[data-view="hub"] #lobby-title { color: var(--dk-ui-cream); text-shadow: none; }
 #lobby-box[data-view="hub"] #lobby-settings,
