@@ -27,7 +27,7 @@ async function boot(browser, viewport) {
       paintTowerBody = (...args) => { window.__paintOrder?.push('tower'); return qaBody(...args); };
       advancePresentation = dt => { if (!window.__qaFreezePresentation) return qaAdvancePresentation(dt); };
       window.__presentationQA={update,advancePresentation:qaAdvancePresentation,draw,drawEffects,relayoutArena,spawnBurst,
-        chestReveal,manualChestReady,activeTray,drawChestReveal,drawCenterRoll,rollShow:ROLL_SHOW};
+        chestReveal,manualChestReady,activeTray,drawChestReveal,drawCenterRoll,rollShow:ROLL_SHOW,finishSlot,slot:SLOT};
       ` + anchor) });
   });
   await page.goto(gameUrl());
@@ -44,7 +44,7 @@ async function boot(browser, viewport) {
 }
 async function capture(page,name,time=.35) {
   await page.evaluate(time => {
-    DK.paused=true; DK.waveActive=true;
+    DK.paused=true; DK.wave=1; DK.waveActive=true; DKsync();
     window.__qaFreezePresentation=true;
     for (const f of DK.fxs) f.t=time;
     __presentationQA.draw();
@@ -151,7 +151,7 @@ async function enhancement(page,row) {
     return{result,face:DK.selTower.face,status:f.status,realtime:f.realtime,kinds:DK.fxs.map(f=>f.kind),notice:document.getElementById('enhance-toast').textContent};
   });
   check(state.result==='up'&&state.face===8&&state.status==='up'&&state.realtime,'success upgrades selected tower with attached feedback');
-  assert.deepEqual(state.kinds,['towerHalo'],'success does not stack competing sheet/ring/column effects');
+  assert.deepEqual(state.kinds,['towerHalo','starCelebration'],'success adds the matching star celebration');
   check(state.notice.includes('★7 → ★8'),'result explains upgrade');
   await capture(page,`enhance-success-${row.name}`,.32);
   row.checks.push('enhancement-success');
@@ -166,10 +166,46 @@ async function highDie(page,row) {
     return{kinds:DK.fxs.map(f=>f.kind),calls,
       before,after:[...document.querySelectorAll('#chest-reveal,#enhance-toast')].map(el=>[el.textContent,el.classList.contains('hidden')])};
   });
-  assert.deepEqual(state.kinds,[],'high-result reward does not spawn a second giant die');
+  assert.deepEqual(state.kinds,['starCelebration'],'high-result celebration does not spawn a second giant die');
   assert.deepEqual(state.after,state.before,'high-result reward adds no new DOM caption');
   assert.equal(state.calls,0,'rendering never consumes gameplay RNG');
   row.checks.push('no-second-high-die-and-rng-isolation');
+}
+async function celebrations(page,row) {
+  const result=await page.evaluate(()=>{
+    const tiers=[6,7,9,10,14,15,18,19,20,21].map(n=>DKFX.celebration(n)?.tier??null);
+    const acquired=[],enhanced=[];
+    for(const face of [7,10,14,15,18,19,20]) {
+      DKstartInf('clear');DK.paused=true;DK.fxs=[];
+      __presentationQA.slot.final=face;__presentationQA.finishSlot();
+      const f=DK.fxs.find(f=>f.kind==='starCelebration');
+      acquired.push([DK.heldDie,f?.face,f?.realtime]);
+    }
+    for(const from of [6,9,14,18,19]) {
+      DKstartInf('clear');DK.paused=true;DK.gold=1000000;DK.heldDie=from;DKplace(4);DK.selTower=DK.towers[0];DK.fxs=[];
+      const random=Math.random;let outcome;
+      try{Math.random=()=>0;outcome=DKenhance();}finally{Math.random=random;}
+      const f=DK.fxs.find(f=>f.kind==='starCelebration');
+      enhanced.push([outcome,f?.face,f?.anchorTower===DK.selTower]);
+    }
+    const f=DK.fxs.find(f=>f.kind==='starCelebration');DK.speed=4;
+    __presentationQA.update(.2);const combat=f.t;
+    __presentationQA.advancePresentation(.2);const real=f.t;
+    __presentationQA.advancePresentation(4);const expired=!DK.fxs.includes(f);
+    return{tiers,acquired,enhanced,combat,real,expired};
+  });
+  assert.deepEqual(result.tiers,[null,0,0,1,1,2,2,3,4,null]);
+  assert.deepEqual(result.acquired,[7,10,14,15,18,19,20].map(n=>[n,n,true]),'physical outcomes trigger their celebration');
+  assert.deepEqual(result.enhanced,[7,10,15,19,20].map(n=>['up',n,true]),'enhancement uses resulting rank and follows its tower');
+  assert.equal(result.combat,0);assert.equal(result.real,.2);assert.ok(result.expired);
+  for(const face of [7,14,18,19,20]) {
+    await page.evaluate(face=>{
+      DKstartInf('clear');DK.paused=true;DK.gold=1000000;DK.heldDie=face-1;DKplace(7);DK.selTower=DK.towers[0];DK.fxs=[];
+      const random=Math.random;try{Math.random=()=>0;DKenhance();}finally{Math.random=random;}
+    },face);
+    await capture(page,`celebration-${face}-${row.name}`,.65);
+  }
+  row.checks.push('five-star-tiers-acquisition-enhancement-realtime');
 }
 async function relayout(page,row) {
   const state=await page.evaluate(()=>{
@@ -186,7 +222,7 @@ async function relayout(page,row) {
   try{
     for(const [name,viewport] of [['desktop',{width:1240,height:860}],['phone',{width:390,height:844}]]){
       const row={name,checks:[]};report.cases.push(row);const {context,page,errors}=await boot(browser,viewport);
-      try{await power(page,row);await clocks(page,row);await chest(page,row,'d8');await chest(page,row,'d20');await enhancement(page,row);await highDie(page,row);await power(page,row,true);if(name==='phone')await relayout(page,row);assert.deepEqual(errors,[]);console.log('PASS',name,row.checks.join(', '));}finally{await context.close();}
+      try{await power(page,row);await clocks(page,row);await chest(page,row,'d8');await chest(page,row,'d20');await enhancement(page,row);await highDie(page,row);await celebrations(page,row);await power(page,row,true);if(name==='phone')await relayout(page,row);assert.deepEqual(errors,[]);console.log('PASS',name,row.checks.join(', '));}finally{await context.close();}
     }
     report.pass=true;
   }finally{fs.writeFileSync(path.join(out,'report.json'),JSON.stringify(report,null,2));await browser.close();}
