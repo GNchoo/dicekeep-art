@@ -12,7 +12,7 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
     await page.route('**/game.js*', async route => {
       const response = await route.fetch(), source = await response.text();
       await route.fulfill({ response, body: source.replace('window.DK = S;',
-        'window.__controlsQA = { draw, ctx, fitStage, syncWaveBtn, towerSpr }; window.DK = S;') });
+        'window.__controlsQA = { draw, ctx, fitStage, syncWaveBtn, towerSpr, openingCost:()=>S.mode === "infinity" ? chestCost() : ROLL_COST }; window.DK = S;') });
     });
     await page.goto(gameUrl());
     await page.waitForFunction(() => window.DK?.phase === 'title', null, { timeout: 120000 });
@@ -55,7 +55,19 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
       },mode);
       assert.equal(await page.locator('#wave-btn').isVisible(),true,`${mode}: new run offers one start button`);
       assert.equal(await page.locator('#wave-btn').isEnabled(),true,`${mode}: first start is enabled`);
+      const highlights=()=>page.evaluate(()=>['roll-btn','wave-btn'].map(id=>document.getElementById(id).classList.contains('opening-guide')));
+      assert.deepEqual(await highlights(),[true,false],`${mode}: initial draw is highlighted`);
+      await page.evaluate(()=>{DK.gold=__controlsQA.openingCost();DKsync();});
+      assert.deepEqual(await highlights(),[true,false],`${mode}: exact price still highlights draw`);
+      await page.evaluate(()=>{DK.gold--;DKsync();});
+      assert.deepEqual(await highlights(),[false,true],`${mode}: insufficient draw funds highlights start`);
+      await page.evaluate(()=>{DK.heldDie=1;DKsync();});
+      assert.deepEqual(await highlights(),[false,false],`${mode}: placement comes before start guidance`);
+      await page.evaluate(()=>{DK.heldDie=0;DKsync();});
       await page.click('#wave-btn');
+      assert.deepEqual(await highlights(),[false,false],`${mode}: no guidance after wave begins`);
+      await page.evaluate(()=>{DK.gold=10000;DKsync();});
+      assert.deepEqual(await highlights(),[false,false],`${mode}: later income never restarts guidance`);
       assert.equal(await page.evaluate(()=>DK.wave),1,`${mode}: one click starts wave 1`);
       assert.equal(await page.locator('#wave-btn').isVisible(),false,`${mode}: start button disappears after use`);
       assert.equal(await page.locator('#wave-btn').isDisabled(),true,`${mode}: hidden start button is disabled`);

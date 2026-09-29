@@ -58,7 +58,8 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
           const first = q[0]?.t ?? null, last = q.at(-1)?.t ?? null;
           const interval = q.length > 1 ? q[1].t - q[0].t : null;
           const expectedPureInterval = (130 - 0.45) / 78 * (wave <= 9 ? 60 / 140 : 1);
-          const maxPureError = boss || mode !== 'clear' ? null : Math.max(...q.map((item, i) => Math.abs(item.t - (0.45 + i * expectedPureInterval))));
+          const packed=i=>Math.floor(i/5)*5+(i%5)*.15;
+          const maxPureError = boss || mode !== 'clear' ? null : Math.max(...q.map((item, i) => Math.abs(item.t - (0.45 + 78 * expectedPureInterval * packed(i)/packed(78)))));
           const maxUniformError = q.length < 2 ? 0 : Math.max(...q.map((item, i) => Math.abs(item.t - (first + i * interval))));
           return {
             wave, boss, count: q.length, profileCount: p.count, profileNormalCount: p.normalCount || 0, profileGap: p.gap,
@@ -240,7 +241,7 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
     const p = observed.profiles;
     const close = (actual, expected, label, tolerance = 1e-7) =>
       assert.ok(Number.isFinite(actual) && Math.abs(actual - expected) <= tolerance, `${label}: ${actual} vs ${expected}`);
-    check('all 91 ordinary clear profiles and queues contain exactly 79 evenly spaced spawns', () => {
+    check('all 91 ordinary clear profiles and queues contain exactly 79 grouped spawns with unchanged first/last times', () => {
       const normal = observed.sourceAudit.clear.filter(row => !row.boss);
       assert.equal(normal.length, 91);
       for (const row of normal) {
@@ -251,7 +252,7 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
         close(row.first, 0.45, `first W${row.wave}`);
         close(row.last, early ? 55.97142857142857 : 130, `last W${row.wave}`);
         assert.ok(row.maxPureError <= 1e-7, `spacing W${row.wave}: ${row.maxPureError}`);
-        assert.ok(row.maxUniformError <= 1e-7, `uniformity W${row.wave}: ${row.maxUniformError}`);
+        assert.ok(row.maxUniformError > 1 && row.interval > 0, `grouped intervals W${row.wave}`);
       }
     });
     check('first nine rounds total 540 game seconds with all 711 monsters retained', () => {

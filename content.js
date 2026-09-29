@@ -1603,7 +1603,7 @@ window.DKCONTENT = (function () {
     modeOf(key) { return this.modes[key === 'endless' ? 'extreme' : key] || this.modes.clear; },
     // Normal rounds use a full round clock, independent of clearing the field.
     // Provenance and balance measurements live in docs/pure-waves-v150.md.
-    pureRounds: { seconds: 140, earlyThrough: 9, earlySeconds: 60, count: 79, spawnEnd: 130, pressureFrom: 10, pressureExp: 1.06, pressureMax: 24 },
+    pureRounds: { seconds: 140, earlyThrough: 9, earlySeconds: 60, count: 79, spawnEnd: 130, pressureFrom: 10, pressureExp: 1.06, pressureMax: 24, packSize: 5, packGap: 0.15 },
     waveForMode(w, key) {
       const mode = this.modeOf(key), result = this.wave(w, mode.gauntlet);
       if (mode.growth) result.hpMult *= mode.hpScale || 1;
@@ -1612,8 +1612,12 @@ window.DKCONTENT = (function () {
         // Shorter opening rounds retain the spawn/gold budget; compress HP and cadence together.
         const pace = result.roundSeconds / this.pureRounds.seconds;
         result.normalCount = this.pureRounds.count;
+        result.packSize = this.pureRounds.packSize; result.packGap = this.pureRounds.packGap;
         result.gap = (this.pureRounds.spawnEnd - 0.45) / (result.normalCount - 1) * pace;
-        result.hpMult *= pace * Math.min(this.pureRounds.pressureMax,
+        // Early volleys push past the entrance; midgame asks for actual growth.
+        // Blend back to the established late curve by wave 50.
+        const growthPressure = w <= 9 ? 1.4 : w <= 20 ? 1.4 + (w - 10) * .18 : w <= 30 ? 3.2 : Math.max(1, 3.2 - (w - 30) * .11);
+        result.hpMult *= pace * growthPressure * Math.min(this.pureRounds.pressureMax,
           Math.pow(this.pureRounds.pressureExp, Math.max(0, w - this.pureRounds.pressureFrom)));
       }
       return result;

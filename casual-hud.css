@@ -640,3 +640,24 @@ body.ui-art #help-btn {
 }
 #hud .inf-face.maxed { border-color: var(--dk-ui-gold); background: var(--dk-ui-raised); }
 #hud .inf-face:active:not(:disabled) { box-shadow: inset 0 1px 3px #16152455; }
+
+/* One-time opening guidance: light only, so button geometry never changes. */
+#wrap #roll-btn.opening-guide,#wrap #stage > #wave-btn.opening-guide {
+  outline:2px solid #fff3bd;
+  outline-offset:2px;
+  animation:opening-guide-glow 1.4s ease-in-out infinite alternate;
+}
+@keyframes opening-guide-glow {
+  from { box-shadow:0 0 5px 2px #ffe18eb3,0 0 10px #ffc34e66; }
+  to { box-shadow:0 0 9px 3px #fff1b5,0 0 20px #ffc34eaa; }
+}
+@media(prefers-reduced-motion:reduce) {
+  #wrap #roll-btn.opening-guide,#wrap #stage > #wave-btn.opening-guide { animation:none; box-shadow:0 0 8px 2px #ffe18e; }
+}
+
+/* Reward content stays wholly inside the arena's HUD-free rectangle. */
+.boss-reward-card { box-sizing:border-box; display:flex; flex-direction:column; align-items:center; gap:4px; width:min(92%,360px); height:min(100%,420px); min-height:0; padding:8px; border:1px solid #c9aa67; border-radius:14px; background:#222940e8; box-shadow:0 4px 18px #11182780; }
+.boss-reward-kicker { display:none; }
+#boss-reward-title { flex:none; font-size:22px; }
+#boss-reward-open { flex:1; min-height:0; width:100%; height:0; }
+#boss-reward-message,#boss-reward-odds { flex:none; margin:0; }

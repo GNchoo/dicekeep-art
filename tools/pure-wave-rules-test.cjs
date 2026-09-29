@@ -46,10 +46,11 @@ for (let wave = 1; wave <= 101; wave++) {
   const early = wave <= 9;
   const pace = early ? 60 / 140 : 1;
   const pressure = Math.min(24, Math.pow(1.06, Math.max(0, wave - 10)));
-  const expectedHp = base.hpMult * pace * pressure;
+  const growth = wave <= 9 ? 1.4 : wave <= 20 ? 1.4 + (wave - 10) * .18 : wave <= 30 ? 3.2 : Math.max(1, 3.2 - (wave - 30) * .11);
+  const expectedHp = base.hpMult * pace * pressure * growth;
   assert.ok(Math.abs(clear.hpMult - expectedHp) <= Math.max(1, expectedHp) * 1e-12,
     `W${wave} HP ${clear.hpMult} vs ${expectedHp}`);
-  assert.ok(clear.hpMult >= base.hpMult * pace && clear.hpMult <= base.hpMult * pace * 24 * (1 + 1e-12),
+  assert.ok(clear.hpMult >= base.hpMult * pace && clear.hpMult <= base.hpMult * pace * 24 * growth * (1 + 1e-12),
     `W${wave} positive capped pressure`);
   assert.equal(clear.roundSeconds, early ? 60 : 140, `W${wave} round seconds`);
   assert.equal(clear.normalCount, 79, `W${wave} spawn count`);
@@ -65,6 +66,6 @@ for (let wave = 1; wave <= 101; wave++) {
 assert.equal(normal, 91);
 assert.equal(boss, 10);
 assert.equal(firstNineSeconds, 540, 'first nine rounds take nine game minutes (135 seconds at x4)');
-assert.equal(INF.waveForMode(11, 'clear').hpMult / INF.wave(11, true).hpMult, 1.06);
+assert.ok(Math.abs(INF.waveForMode(11, 'clear').hpMult / INF.wave(11, true).hpMult - 1.06*1.58)<1e-12);
 assert.equal(INF.waveForMode(101, 'clear').hpMult / INF.wave(101, true).hpMult, 24);
 console.log('PASS pure clear wave rules: nine 60-second rounds / 540 seconds total, proportional HP and spawn pace, 82 later normal curves, 10 unchanged bosses, legacy gold and other modes');

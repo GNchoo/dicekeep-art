@@ -41,6 +41,8 @@ const out = outputPath('boss-reward'); fs.mkdirSync(out, { recursive: true });
         const live=await page.evaluate(()=>({time:DK.time,waveT:DK.waveT,dist:DK.enemies.at(-1).dist,inert:document.getElementById('wrap').inert}));
         assert.ok(live.time>initial.time&&live.waveT>initial.waveT&&live.dist>initial.dist,'unopened reward keeps combat, wave clock and monsters advancing');
         assert.equal(live.inert,false,'reward leaves combat controls interactive');
+        const safe=await page.evaluate(()=>{const panel=document.querySelector('#boss-reward').getBoundingClientRect(),hud=document.querySelector('#hud').getBoundingClientRect();return {bottom:panel.bottom,hudTop:hud.top,inside:[...document.querySelectorAll('#boss-reward-title,#boss-reward-open,#boss-reward-message,#boss-reward-odds')].every(e=>{const r=e.getBoundingClientRect();return r.top>=panel.top&&r.bottom<=panel.bottom+1;})};});
+        assert.ok(safe.inside&&safe.bottom<=safe.hudTop,'reward labels stay between the timer and bottom HUD');
         const button=page.locator('#boss-reward-open'); await button.tap();
         const target=await button.boundingBox(); await page.touchscreen.tap(target.x+target.width/2,target.y+target.height/2);
         const openingTime=await page.evaluate(()=>DK.time);
