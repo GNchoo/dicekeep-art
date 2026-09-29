@@ -23,12 +23,13 @@ assert.ok(['localhost','127.0.0.1'].includes(new URL(gameUrl()).hostname));
   await page.locator('[data-home-action="deck"]').click();
   for(const key of ['overview','lineup','catalog','combos']){await page.click(`[data-dice-page="${key}"]`);await fit(key,'#deck-panel');}
   await page.click('#combo-next');await fit('combo2','#deck-panel');await page.click('#combo-next');await fit('combo3','#deck-panel');assert.ok(await page.locator('#dice-apply-combo').isDisabled());
+  await page.locator('#dice-combos [data-analyze]').click();await fit('analysis','#deck-panel');await page.click('#dice-analysis .analysis-back');
   await page.click('[data-dice-page="catalog"]');
   for(const family of ['engineering','nature','magic','order','chaos']){
    await page.click(`[data-family="${family}"]`);await fit(family,'#deck-panel');
   }
   await page.locator('[data-card="19"]').click();
-  for(const label of ['숙련·해금','특성','각성']){await page.getByRole('button',{name:label,exact:true}).click();await fit(label,'#deck-panel');}
+  for(const label of ['숙련·해금','특성','각성','성능·연계']){await page.getByRole('button',{name:label,exact:true}).click();await fit(label,'#deck-panel');}
   await page.click('[data-dice-page="overview"]');await page.click('[data-open-dice="support"]');await fit('support','#deck-panel');
   await page.click('[data-dice-page="overview"]');await page.click('[data-open-dice="earn"]');await fit('earn','#deck-panel');
   await page.locator('#lobby-box [data-menu-target="battle"]').click();await fit('battle','#lobby-box');

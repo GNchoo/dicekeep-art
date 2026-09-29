@@ -23,3 +23,16 @@ assert.equal(D.powerCost(5),Infinity); assert.equal(D.summonCost(0),30);
 assert.ok(D.stats({face:1,pips:1},snap).dmg/D.stats({face:1,pips:1},snap).rate>D.stats({face:20,pips:1},snap).dmg/D.stats({face:20,pips:1},snap).rate,'higher identity is not an automatic damage upgrade');
 for(const w of [1,10,50,100,101,202,505,1000000]) for(const boss of [false,true]) { const e=D.enemyStats(w,boss,false,1,true); assert.ok(Number.isFinite(e.hp)&&e.hp>0); }
 console.log('PASS deck identities, equal summon odds, pips, merge legality, copy, adjacency, class/power separation and finite enemy curve');
+const viewSnap={treeVersion:1,mastery:{},talents:{},awakenings:{},critDamage:1.5};
+const basePreview=D.preview([1,2,3,4,5],viewSnap);
+assert.ok(Math.abs(basePreview.direct-(18/.55+36/1.5+34+12/.9+22/1.1)*3)<1e-8,'preview uses actual base direct DPS');
+assert.equal(basePreview.boss,basePreview.direct,'no invented boss bonus');
+assert.equal(basePreview.adjacency,0);
+const supported=D.preview([2,4,7,8,10],viewSnap),hunter=supported.board.find(t=>t.face===10);
+assert.ok(Math.abs(supported.boss-supported.direct-hunter.dps*.8)<1e-8,'hunter bonus only applies to hunter');
+assert.ok(supported.adjacency>0,'actual adjacent supports improve the formation');
+assert.deepEqual(D.preview([10,8,7,4,2],viewSnap),supported,'deck selection order does not alter example placement');
+assert.ok(D.preview([1,2,3,4,5],{...viewSnap,mastery:{1:1}}).direct>basePreview.direct,'research reflects in comparison');
+assert.deepEqual(D.preview([1,2,3,4,5],{...viewSnap,awakenings:{1:true}}),basePreview,'7-pip awakening must not inflate 3-pip comparison');
+assert.throws(()=>D.preview([1,1,2,3,4],viewSnap));
+console.log('PASS honest deck comparison and conditional support/boss benefits');
