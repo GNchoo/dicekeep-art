@@ -28,7 +28,7 @@ const document = { activeElement: null };
 function $(id) {
   if (!elements.has(id)) {
     const classes = new Set(['hidden']);
-    elements.set(id, { dataset: {}, isConnected: true, attrs: {},
+    elements.set(id, { dataset: {}, isConnected: true, attrs: {}, inert: false,
       classList: { add: c => classes.add(c), remove: c => classes.delete(c), contains: c => classes.has(c) },
       setAttribute(k, v) { this.attrs[k] = v; }, addEventListener() {},
       focus() { document.activeElement = this; }, getContext: () => canvas });
@@ -69,7 +69,7 @@ for (const [value, kind] of [[.1,'d8'],[.5,'d12'],[.9,'d20']]) {
   $('old-button').focus(); randomValue = value; const before = randomCalls;
   c.updateBossReward(.01); c.pumpQueue();
   assert.equal(randomCalls, before, 'appearance never chooses the reward');
-  assert.equal(S.inf.queue[0], 'boss'); assert.equal($('wrap').inert, true);
+  assert.equal(S.inf.queue[0], 'boss'); assert.equal($('wrap').inert, false);
   assert.equal(c.openBossReward(), true); assert.equal(c.openBossReward(), false);
   assert.equal(randomCalls, before + 1, 'one random choice per chest, even on rapid taps');
   assert.deepEqual(S.inf.queue, [kind]); assert.equal(S.heldDie, 18); assert.equal(S.gold, 100);
@@ -106,7 +106,7 @@ const state = { gold: 400, lives: 20, wave: 10, waveActive: false, autoT: 0, wav
 const saved = SAVE.capture(state, { kind: 'd6', active: false }, { owner:'local', savedAt:1, elapsed:0, size:[430,932], lanes:[1000] });
 assert.deepEqual(SAVE.hydrate(SAVE.decode(SAVE.encode(saved), 'local'), {}).inf.queue, ['boss','d20']);
 saved.inf.queue.push('unknown'); assert.equal(SAVE.valid(saved), false);
-// Exercise the real frame gate: presentation is real-time; only solo combat pauses.
+// Exercise the real frame gate: presentation is real-time; neither solo nor multiplayer combat pauses.
 let ticks = 0;
 Object.assign(c, { uiInFrame: false, uiDirty: false, lastTs: 0, runSaveAt: 0,
   update: () => ticks++, updateDie() {}, updateSlot() {}, advancePresentation() {}, mpTick() {},
@@ -115,10 +115,10 @@ vm.runInContext(section('function frame(ts)', '// ==================== 부팅') 
   section('function openMenu()', 'function closeMenu()') +
   section('window.DKAPP =', '// ---- 설정 모달'), c);
 S.phase = 'playing'; S.speed = 4; S.inf.queue = ['boss']; S.inf.clearWave = 0; S.inf.cleared = 0;
-c.frame(16); assert.equal(ticks, 0, 'solo clock stops while waiting for a tap');
+c.frame(16); assert.equal(ticks, 4, 'solo clock continues while waiting for a tap');
 assert.equal(c.window.DKAPP.back(), true); c.openMenu();
 assert.equal($('menu').classList.contains('hidden'), true, 'native back/background cannot open an inaccessible menu');
-S.net = {}; c.frame(32); assert.equal(ticks, 4, 'multiplayer simulation keeps running');
+S.net = {}; c.frame(32); assert.equal(ticks, 8, 'multiplayer simulation keeps running');
 S.net = null; S.phase = 'over'; c.updateBossReward(.01);
 assert.equal(c.reward, null); assert.equal($('wrap').inert, false, 'leaving the run releases background input');
 console.log('PASS equal thirds, touch-only draw, double-tap guard, held-die queue, multi-boss gold, final reward, save round trip, frame clocks and native back');

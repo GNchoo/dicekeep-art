@@ -30,14 +30,22 @@ const out = outputPath('boss-reward'); fs.mkdirSync(out, { recursive: true });
           const item=__bossQA.buildInfinityWave(10).find(x=>x.isBoss);
           if(!item)throw Error('boss wave missing');
           DKspawnEnemy(item); const e=DK.enemies.at(-1); DKdamage(e,e.hp*100+1e9);
+          DKspawnEnemy(__bossQA.buildInfinityWave(1)[0]);
+          const live=DK.enemies.at(-1);live.hp=live.maxHp=1e9;live.dist=400;
+          DK.waveActive=true;DK.gold=100000;
           __bossQA.updateBossReward(0);
-          return {queue:DK.inf.queue.slice(),time:DK.time,draws:__bossDraws};
+          return {queue:DK.inf.queue.slice(),time:DK.time,waveT:DK.waveT,dist:live.dist,draws:__bossDraws};
         },kind);
         assert.deepEqual(initial.queue,['boss']); assert.equal(initial.draws,0);
         await page.waitForTimeout(130);
-        assert.equal(await page.evaluate(()=>DK.time),initial.time,'solo battle waits for player');
+        const live=await page.evaluate(()=>({time:DK.time,waveT:DK.waveT,dist:DK.enemies.at(-1).dist,inert:document.getElementById('wrap').inert}));
+        assert.ok(live.time>initial.time&&live.waveT>initial.waveT&&live.dist>initial.dist,'unopened reward keeps combat, wave clock and monsters advancing');
+        assert.equal(live.inert,false,'reward leaves combat controls interactive');
         const button=page.locator('#boss-reward-open'); await button.tap();
         const target=await button.boundingBox(); await page.touchscreen.tap(target.x+target.width/2,target.y+target.height/2);
+        const openingTime=await page.evaluate(()=>DK.time);
+        await page.waitForTimeout(130);
+        assert.ok(await page.evaluate(t=>DK.time>t,openingTime),'opening animation keeps combat running');
         const state=await page.evaluate(()=>{
           __bossQA.reward().t=1.25; __bossQA.updateBossReward(0);
           DKAPP.back();
@@ -54,13 +62,21 @@ const out = outputPath('boss-reward'); fs.mkdirSync(out, { recursive: true });
         await page.evaluate(()=>{__bossQA.reward().t=3.1;__bossQA.updateBossReward(0);window.__freezeBoss=false;});
         await page.waitForFunction(()=>document.getElementById('boss-reward').classList.contains('hidden'));
         assert.equal(await page.evaluate(()=>document.getElementById('wrap').inert),false);
+        await page.click('#exit-btn');
+        const menuTime=await page.evaluate(()=>DK.time);await page.waitForTimeout(130);
+        assert.ok(await page.evaluate(t=>!DK.paused&&DK.time>t,menuTime),'menu never pauses combat');
+        assert.equal(await page.locator('#menu-pause').count(),0);
+        await page.click('#menu-resume');
         await page.evaluate(()=>{DK.heldDie=0;});
         await page.waitForFunction(kind=>DKSLOT.active&&DKSLOT.kind===kind&&DKSLOT.phase===-1,kind);
         report.push({viewport,kind,...state});
       }
+      await page.click('#exit-btn');
+      await page.evaluate(()=>DKend(false));
+      assert.equal(await page.locator('#menu').isVisible(),false,'run ending closes the live menu');
       assert.deepEqual(errors,[]); await context.close();
     }
     fs.writeFileSync(path.join(out,'report.json'),JSON.stringify(report,null,2));
-    console.log('PASS boss reward: 6 landscape/portrait reveals, real touch, duplicate taps, battle pause, native back, layout and dice queue');
+    console.log('PASS boss reward: 6 landscape/portrait reveals, real touch, duplicate taps, uninterrupted combat/menu, native back, layout and dice queue');
   } finally { await browser.close(); }
 })().catch(e=>{console.error(e);process.exitCode=1;});
