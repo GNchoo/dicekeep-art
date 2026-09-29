@@ -18,7 +18,8 @@ function trace(source, face) {
     sheetHit:(kind,x,y,size,dur)=>S.fxs.push({kind,x,y,size,dur,t:0}),
     SFX:new Proxy({}, {get:()=>()=>{}})};
   vm.createContext(ctx);
-  const definitions=section(source,'const TOWER_DEFS =','const LVL_DMG');
+  // Compare visual implementations with the same current balance table.
+  const definitions=section(current,'const TOWER_DEFS =','const LVL_DMG');
   vm.runInContext(definitions+'\nglobalThis.defs=TOWER_DEFS;\n'+
     section(source,'function projectileDrawPosition(','// ==================== 사운드')+
     section(source,'function towerFire(','// 투사체·이펙트')+
@@ -39,7 +40,8 @@ function trace(source, face) {
   }
   return JSON.parse(JSON.stringify(results));
 }
-for(let face=1;face<=20;face++) assert.deepEqual(trace(current,face),trace(baseline,face),'combat identity '+face);
+// Rank 2 intentionally changed hit targeting in v169; tower-damage-test covers it.
+for(let face=1;face<=20;face++) if(face!==2) assert.deepEqual(trace(current,face),trace(baseline,face),'combat identity '+face);
 function commands(paint) {
   const calls=[];let depth=0;
   const g=new Proxy({globalAlpha:1},{get:(obj,key)=>key in obj?obj[key]:(...args)=>{
@@ -59,4 +61,4 @@ for(let face=7;face<=20;face++) {
 assert.equal(new Set(shots).size,14,'distinct projectile geometry, ignoring color');
 assert.equal(new Set(hits).size,14,'distinct impact geometry, ignoring color');
 assert.equal(motion.paintProjectile({}, {fxFace:0}),false,'deck projectile stays on existing path');
-console.log('PASS: 20 combat traces unchanged; 14 unique projectile/hit geometries, finite animation endpoints, no canvas state leak');
+console.log('PASS: 19 visual combat traces unchanged with current stats; rank 2 covered by damage tests; 14 unique projectile/hit geometries, finite animation endpoints, no canvas state leak');
