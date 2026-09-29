@@ -624,13 +624,12 @@ body.ui-art #help-btn {
 #wrap #stage > #wave-btn {
   position: absolute;
   z-index: 12;
-  left: 50%;
-  top: 45%;
-  translate: -50% -50%;
-  min-width: 144px;
-  min-height: 52px;
-  padding: 12px 22px;
-  font-size: 17px;
+  right: 10px;
+  top: 58px;
+  min-width: 120px;
+  min-height: 44px;
+  padding: 8px 14px;
+  font-size: 15px;
   box-shadow: 0 3px 12px #16152466;
 }
 /* Keep each power card's edge continuous in enabled, disabled and pressed states. */

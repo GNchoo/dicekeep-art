@@ -34,7 +34,7 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
               font:parseFloat(getComputedStyle(el).fontSize), scroll:el.scrollWidth, client:el.clientWidth };
           };
           return { stage:rect('stage'), hud:rect('hud'), dice:rect('dice-panel'), roll:rect('roll-btn'), cost:rect('roll-cost'),
-            wave:rect('wave-btn'), power:rect('inf-panel'),
+            wave:rect('wave-btn'), controls:rect('mini-top'), power:rect('inf-panel'),
             label:document.getElementById('roll-btn').textContent,
             overflow:document.documentElement.scrollWidth > innerWidth };
         });
@@ -50,6 +50,8 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
         assert.ok(sample.wave.y >= sample.stage.y && sample.wave.bottom <= sample.hud.y,
           `${label}: initial wave action stays inside the arena above the toolbar`);
         assert.equal(await page.locator('#hud #wave-btn').count(), 0, 'no wave action in the toolbar');
+        assert.ok(sample.wave.y >= sample.controls.bottom + 7, `${label}: start below the top controls`);
+        assert.ok(Math.abs(sample.wave.right - sample.controls.right) < 2, `${label}: start aligned to top controls`);
         const cards = await page.locator('.inf-face').evaluateAll(nodes => nodes.map(el => {
           const cs=getComputedStyle(el), r=el.getBoundingClientRect();
           return {top:cs.borderTopWidth,bottom:cs.borderBottomWidth,shadow:cs.boxShadow,height:r.height};

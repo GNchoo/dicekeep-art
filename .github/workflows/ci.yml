@@ -200,6 +200,8 @@ jobs:
         run: npm run test:campaign
       - name: rewards-integration
         run: npm run test:rewards-integration
+      - name: paged-menus (스크롤 없는 메뉴·다이스 성장 안내)
+        run: node tools/e2e/paged-menus.cjs
       - name: home
         run: npm run test:home
 

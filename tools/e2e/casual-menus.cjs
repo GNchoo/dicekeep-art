@@ -28,7 +28,7 @@ assert.ok(['localhost','127.0.0.1'].includes(new URL(gameUrl()).hostname),'Menu 
   assert.ok(home.sh<=home.ch+2, name+' home requires no vertical scrolling '+JSON.stringify(home));
   assert.equal(await page.locator('#lobby-hub [data-reward-tab="pass"]').count(),1);
   await page.click('#hub-single'); await shot('single','#lobby-box');
-  await page.click('#btn-deck-open');await shot('deck','#deck-panel');
+  await page.click('#lobby-box [data-menu-target=deck]');await shot('deck','#deck-panel');
   assert.equal(await page.locator('#btn-inf-clear').isVisible(),false,'deck has its own uncluttered view');
   await page.click('#lobby-back');await page.click('#hub-multi');await shot('multi','#lobby-box');
   await page.click('#lobby-back');await page.click('#btn-shop');await shot('shop','.shop-body');

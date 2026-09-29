@@ -19,7 +19,8 @@
 <link rel="stylesheet" href="casual-theme.css?v=137" />
 <link rel="stylesheet" href="casual-menus.css?v=163" />
 <link rel="stylesheet" href="casual-rewards.css?v=137" />
-<link rel="stylesheet" href="casual-hud.css?v=161" />
+<link rel="stylesheet" href="casual-hud.css?v=164" />
+<link rel="stylesheet" href="menu-pages.css?v=164" />
 <link rel="icon" href="ui/gold.png" />
 </head>
 <body>
@@ -124,24 +125,25 @@
           </details>
           <button id="btn-deck-open" class="big-btn deck-open" type="button" aria-expanded="false" aria-controls="deck-panel">다이스 트리 · 덱 편성</button>
           <section id="deck-panel" class="hidden" aria-label="주사위 컬렉션">
-            <div class="deck-heading"><div><small>다섯 주사위, 나만의 전략</small><h2>나의 전투 덱</h2></div><b id="deck-count">6 / 20종</b></div>
+            <nav class="dice-tabs" aria-label="다이스 페이지">
+              <button data-dice-page="overview">성장 안내</button><button data-dice-page="lineup">내 덱</button><button data-dice-page="catalog">주사위 연구</button><button data-dice-page="combos">추천 조합</button>
+            </nav>
+            <div id="dice-page-title" class="dice-page-title"></div>
+            <section data-dice-view="overview"><div id="dice-growth"></div><p class="dice-mode-note">계정 성장은 덱빌드·극한·협동에 적용됩니다.<br>순수운빨은 성장 미적용 · 대전은 성장 수치 통일</p></section>
+            <section data-dice-view="lineup">
+              <div id="deck-presets" class="deck-presets" aria-label="저장된 덱"></div>
+              <p class="dice-caption">바꿀 자리를 누르고 주사위를 선택하세요.</p>
+              <div id="deck-selected" class="deck-selected"></div>
+              <div id="deck-synergy" class="deck-synergy"></div>
+              <div class="deck-actions"><button id="deck-save" class="big-btn primary" type="button">덱 저장</button><button id="deck-use" type="button">이 덱 사용</button><button id="deck-reset" type="button">변경 취소</button></div>
+            </section>
+            <section data-dice-view="catalog"><div id="tree-families" aria-label="계열 선택"></div><div id="deck-grid" class="tree-grid"></div></section>
+            <section data-dice-view="detail"><aside id="deck-detail" aria-label="선택한 주사위 연구"></aside></section>
+            <section data-dice-view="combos"><div id="dice-combos"></div></section>
+            <section data-dice-view="support"><div id="tree-supporters"></div></section>
+            <section data-dice-view="earn"><section id="free-progress" class="free-progress" aria-label="무료 성장 보상"></section><p id="deck-migration" hidden></p></section>
             <div class="deck-wallet"><span>연구 골드 <b id="deck-gold">0</b></span><span>성장 조각 <b id="deck-shards">0</b></span><span>각성 연구 <b id="tree-progress">0 / 20</b></span></div>
-            <p class="deck-help deck-intro">자리를 고르고, 원하는 주사위를 편성하세요.</p>
-
-            <div id="deck-presets" class="deck-presets" aria-label="저장된 덱"></div>
-            <div id="deck-selected" class="deck-selected"></div>
-            <div id="deck-synergy" class="deck-synergy"></div>
-            <div class="deck-actions"><button id="deck-save" class="big-btn primary" type="button">덱 저장</button><button id="deck-use" type="button">이 덱 사용</button><button id="deck-reset" type="button">변경 취소</button></div>
-            <p id="deck-status" role="status" aria-live="polite"></p>
-            <details class="menu-help"><summary><img src="ui/rewards/attendance-bag.webp" alt="">플레이하며 받는 무료 성장 보상</summary><section id="free-progress" class="free-progress" aria-label="무료 성장 보상"></section>
-            <p id="deck-migration" class="deck-help" hidden></p></details>
-            <details class="menu-help"><summary>눈금과 연구는 어떻게 다른가요?</summary><p class="deck-help">덱에는 서로 다른 능력의 5종을 넣습니다. 모든 종류가 전투에서 1~7눈금으로 성장하며, 연구한 주사위는 7눈금에서 각성합니다. 아래 숫자는 덱의 자리입니다.</p></details>
-            <section class="tree-support-section" aria-label="서포터 선택"><h3>함께할 서포터</h3><p>모두 무료로 선택할 수 있습니다. 다음 전투부터 적용되며, 전투 중 버튼으로 능력을 사용합니다.</p><div id="tree-supporters"></div></section>
-            <div class="tree-heading"><h3>성장 경로</h3><p>선을 따라 주사위를 해금하고, 각 주사위의 숙련과 특성을 연구하세요. 획득과 연구 결과는 확정입니다.</p></div>
-            <div id="tree-families" aria-label="계열 선택"></div>
-            <aside id="deck-detail" aria-label="선택한 주사위 연구"></aside>
-            <div id="deck-grid" class="tree-grid"></div>
-            <p class="deck-help">연구 골드와 성장 조각은 전투 보상으로 얻습니다. 순수운빨의 전투에는 트리·각성·서포터가 적용되지 않습니다.</p>
+            <span id="deck-count" hidden></span><p id="deck-status" role="status" aria-live="polite"></p>
           </section>
           <div class="lobby-btns">
             <button id="btn-stage-select" class="big-btn lobby-inf-btn"><span class="bi" data-icon="stage">&#127937;</span>스테이지 선택<small>50개 스테이지 · 차근차근 배우기</small></button>
@@ -398,7 +400,7 @@
 <script src="tree-rules.js?v=112"></script>
 <script src="progression.js?v=116"></script>
 <script src="liveops-rules.js?v=117"></script>
-<script src="deck-ui.js?v=116"></script>
+<script src="deck-ui.js?v=164"></script>
 <script src="run-save.js?v=157"></script>
 <script src="cosmetics.js?v=101"></script>
 <script src="commerce-config.js?v=101"></script>
@@ -406,9 +408,9 @@
 <script src="rewards-client.js?v=118"></script>
 <script src="reward-notifications.js?v=118"></script>
 <script src="mail-admin.js?v=117"></script>
-<script src="rewards-ui.js?v=119"></script>
+<script src="rewards-ui.js?v=164"></script>
 <script src="home-ui.js?v=162"></script>
-<script src="commerce-ui.js?v=120"></script>
+<script src="commerce-ui.js?v=164"></script>
 <script src="directional-art.js?v=128"></script>
 <script src="extreme-art.js?v=110"></script>
 <script src="infinity-art.js?v=107"></script>
@@ -416,6 +418,7 @@
 <script src="combat-motion.js?v=157"></script>
 <script src="presentation-fx.js?v=160"></script>
 <script src="reward-audio.js?v=157"></script>
-<script src="game.js?v=162"></script>
+<script src="game.js?v=164"></script>
+<script src="menu-pages.js?v=164"></script>
 </body>
 </html>
