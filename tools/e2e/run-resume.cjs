@@ -13,7 +13,8 @@ fs.mkdirSync(out, { recursive: true });
       await page.route('**/game.js*', async route => {
         const r = await route.fetch(), s = await r.text();
         assert.ok(s.includes('window.DK = S;'), 'run-resume closure hook exists');
-        const hook = 'window.__resumeQA={persistRun,readRunSave,restoreRunSave,spawnEnemy,buildInfinityWave,towerDmg,relayoutArena,update,updateSlot,laneLen,manualChestReady,lanePhase:e=>{const l=LANES[e.lane||0],b=l.loopAt;return b==null?e.dist/l.len:e.dist<b?e.dist/b:1+(e.dist-b)/(l.len-b)}}; window.DK = S;';
+        // Assert live restoration, then freeze only this snapshot-comparison fixture.
+        const hook = 'const restoreForQA=restoreRunSave;restoreRunSave=async(...args)=>{const ok=await restoreForQA(...args);if(S.paused)throw Error("restore must remain live");S.paused=true;return ok;};window.__resumeQA={persistRun,readRunSave,restoreRunSave,spawnEnemy,buildInfinityWave,towerDmg,relayoutArena,update,updateSlot,laneLen,manualChestReady,lanePhase:e=>{const l=LANES[e.lane||0],b=l.loopAt;return b==null?e.dist/l.len:e.dist<b?e.dist/b:1+(e.dist-b)/(l.len-b)}}; window.DK = S;';
         await route.fulfill({ response: r, body: s.replace('window.DK = S;', hook) });
       });
       async function boot() {

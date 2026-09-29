@@ -16,7 +16,8 @@ const report = { pass: false, cases: [], scope: 'New tree frozen snapshots, skil
       await page.route('**/game.js*', async route => {
         const response = await route.fetch(), source = await response.text(), anchor = 'window.DK = S;';
         assert.equal(source.split(anchor).length, 2);
-        await route.fulfill({ response, body: source.replace(anchor, 'window.__treeResumeQA={persistRun,readRunSave,restoreRunSave,buildInfinityWave,spawnEnemy,towerDmg,towerAwakened,laneLen,saveSave};\n' + anchor) });
+        // Assert live restoration, then freeze only this snapshot-comparison fixture.
+        await route.fulfill({ response, body: source.replace(anchor, 'const restoreForQA=restoreRunSave;restoreRunSave=async(...args)=>{const ok=await restoreForQA(...args);if(S.paused)throw Error("restore must remain live");S.paused=true;return ok;};window.__treeResumeQA={persistRun,readRunSave,restoreRunSave,buildInfinityWave,spawnEnemy,towerDmg,towerAwakened,laneLen,saveSave};\n' + anchor) });
       });
       const inspect = () => page.evaluate(() => ({
         snapshot: DK.inf.growthSnapshot, gold: DK.gold, wave: DK.wave, done: DK.inf.doneW, runId: DK.inf.runId,

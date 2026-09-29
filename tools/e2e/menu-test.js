@@ -9,15 +9,14 @@ const sleep = (ms) => new Promise(r => setTimeout(r, ms));
   await p.click('#ov-btn'); await sleep(300);
   await p.evaluate(() => { localStorage.setItem('dk_coachDone', '1'); localStorage.setItem('dk_infHelpSeen', '1'); DK.muted = true; DKstartInf('clear'); DK.gold = 90000; });
   await sleep(500);
-  // 1) 메뉴: ≡ → 열림 + 일시정지, 닫기 → 재개
+  // 1) 메뉴: ≡ → 열림, 전투는 계속 진행
   await p.click('#exit-btn'); await sleep(200);
-  const m1 = await p.evaluate(() => ({ open: !document.getElementById('menu').classList.contains('hidden'), paused: DK.paused, pauseTxt: document.getElementById('menu-pause').textContent, note: document.getElementById('menu-note').textContent.slice(0, 20) }));
+  const m1 = await p.evaluate(() => ({ open: !document.getElementById('menu').classList.contains('hidden'), paused: DK.paused, note: document.getElementById('menu-note').textContent.slice(0, 20) }));
   await p.screenshot({ path: 'menu-open.png' });
   const w0 = await p.evaluate(() => DK.time); await sleep(600); const w1 = await p.evaluate(() => DK.time);
-  await p.click('#menu-pause'); await sleep(100); const paused2 = await p.evaluate(() => DK.paused);
   await p.keyboard.press('Escape'); await sleep(100);
   const m2 = await p.evaluate(() => ({ open: !document.getElementById('menu').classList.contains('hidden'), paused: DK.paused, phase: DK.phase }));
-  console.log('menu', JSON.stringify(m1), 'time frozen', w0 === w1, 'toggle', paused2, 'after esc', JSON.stringify(m2));
+  console.log('menu', JSON.stringify(m1), 'time advancing', w1 > w0, 'after esc', JSON.stringify(m2));
   // 2) 손에 든 주사위 바로 판매
   await p.evaluate(() => DKchest()); await p.waitForFunction(() => !!DK.heldDie, null, { timeout: 15000 });
   const g0 = await p.evaluate(() => DK.gold);

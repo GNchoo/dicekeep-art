@@ -2051,14 +2051,14 @@ function openBossReward() {
 function updateBossReward(dt) {
   const panel = $('boss-reward');
   if (BOSS_REWARD && (BOSS_REWARD.inf !== S.inf || S.phase !== 'playing' || VIEW.pid)) {
-    BOSS_REWARD = null; panel.classList.add('hidden'); $('wrap').inert = false;
+    BOSS_REWARD = null; panel.classList.add('hidden');
   }
   if (!BOSS_REWARD && S.phase === 'playing' && !S.paused && !VIEW.pid && !deckRun() && S.inf?.queue.includes('boss')) {
-    BOSS_REWARD = { inf: S.inf, t: 0, kind: null, focus: document.activeElement };
-    panel.classList.remove('hidden'); panel.dataset.grade = 'closed'; $('wrap').inert = true;
+    BOSS_REWARD = { inf: S.inf, t: 0, kind: null };
+    panel.classList.remove('hidden'); panel.dataset.grade = 'closed';
     $('boss-reward-title').textContent = '보스 보상';
     $('boss-reward-message').textContent = '상자를 터치하세요';
-    $('boss-reward-open').setAttribute('aria-disabled', 'false'); panel.focus({ preventScroll: true });
+    $('boss-reward-open').setAttribute('aria-disabled', 'false');
     bossRewardSound('appear');
   }
   const reward = BOSS_REWARD;
@@ -2069,8 +2069,7 @@ function updateBossReward(dt) {
     $('boss-reward-message').textContent = S.heldDie || SLOT.active ? '보상 대기열에 보관되었습니다' : '이제 주사위를 굴려 보세요';
   }
   if (reward.kind && reward.t >= (reward.kind === 'd20' ? 3 : 2.5)) {
-    BOSS_REWARD = null; panel.classList.add('hidden'); $('wrap').inert = false;
-    if (reward.focus?.isConnected) reward.focus.focus({ preventScroll: true });
+    BOSS_REWARD = null; panel.classList.add('hidden');
     checkInfClear(); syncUI(); return;
   }
   const g = $('boss-reward-art').getContext('2d');
@@ -5870,7 +5869,8 @@ function syncInfPanel() {
 // 다음 웨이브까지 남은 초 (싱글·멀티 공통 autoT)
 function waveCountdown() { return Math.max(0, Math.ceil(S.autoT)); }
 function syncWaveBtn() {
-  const ready = S.phase === 'playing' && !battleRun() && S.wave === 0 && !S.waveActive;
+  const ready = S.phase === 'playing' && !battleRun() && S.wave === 0 && !S.waveActive
+    && !S.heldDie && !S.selTower && !MOVE.tower;
   waveBtn.classList.toggle('hidden', !ready);
   waveBtn.disabled = !ready;
   waveBtn.textContent = '웨이브 시작';
@@ -5996,6 +5996,7 @@ const sellPrice = t => deckRun() ? 10*DECK.pips(t) : 6 + 5 * t.face + 12 * (t.lv
 
 function showOverlay(title, descHTML, btnLabel) {
   bgmSync();
+  if (S.phase === 'over') closeMenu();
   const isTitle = S.phase === 'title' || S.phase === 'loading';
   $('overlay-box').classList.toggle('result', !isTitle);
   $('overlay-box').classList.toggle('title', isTitle);
@@ -6015,7 +6016,7 @@ function showOverlay(title, descHTML, btnLabel) {
 const SCREENS = ['lobby', 'stage-select', 'shop', 'mp-room'];   // 전체화면 .screen 들 — 전환 때 전부 숨긴다
 function showScreen(name) {
   if (window.DKCOSMETICS && ['lobby', 'shop', 'title', 'stageSelect', 'mpRoom'].includes(name)) DKCOSMETICS.unlockRun();
-  if (S.paused) setPaused(false);
+  S.paused = false;
   if (menuOpen()) $('menu').classList.add('hidden');
   overlayEl.classList.add('hidden');
   for (const id of SCREENS) $(id).classList.add('hidden');
@@ -7018,7 +7019,6 @@ if (window.DKNET) {
 }
 
 document.addEventListener('keydown', ev => {
-  if (BOSS_REWARD) return;
   if (document.querySelector('dialog[open]')) return;
   if (document.activeElement === chatInput) return;                   // 채팅 입력 중에는 단축키를 막는다
   if (document.activeElement === $('mp-chat-input')) return;
@@ -7040,9 +7040,6 @@ document.addEventListener('keydown', ev => {
 });
 
 $('boss-reward-open').addEventListener('click', openBossReward);
-$('boss-reward').addEventListener('keydown', ev => {
-  if (ev.key === 'Tab') { ev.preventDefault(); $('boss-reward-open').focus(); }
-});
 rollBtn.addEventListener('click', rollByButton);
 waveBtn.addEventListener('click', () => { if (S.wave === 0) startWave(); });
 $('held-sell').addEventListener('click', () => {   // 손에 든 주사위 바로 판매
@@ -7265,35 +7262,24 @@ $('lobby-back').addEventListener('click', () => { audio(); lobbyShow('hub'); });
   if (!el) return;
   el.addEventListener('click', (e) => { if (e.target === el) gotoLobby(id === 'stage-select' ? 'single' : 'hub'); });   // 배경 클릭도 뒤로 버튼과 같은 갈래로
 });
-// ---- 게임 메뉴 (≡): 싱글은 여는 동안 멈춘다. 멀티는 계속 돈다(일시정지 불가) ----
+// Menus and rewards never suspend live combat, in solo or multiplayer.
 function menuOpen() { return !$('menu').classList.contains('hidden'); }
-function setPaused(on) {
-  S.paused = !!on && !S.net && S.phase === 'playing';
-  syncSupporter();
-  const b = $('menu-pause');
-  if (b) {
-    b.disabled = !!S.net || S.phase !== 'playing';
-    $('menu-pause-txt').textContent = S.net ? '일시정지 (멀티에서는 불가)' : S.paused ? '재개 (메뉴는 열어 둠)' : '일시정지';
-    b.querySelector('.bi').dataset.icon = S.paused ? 'speed1' : 'pause';
-  }
-  if (window.DKBGM) { try { DKBGM.duck(S.paused ? 0.35 : 1, 0.3); } catch (e) { /* 무시 */ } }
-}
 function openMenu() {
   if (BOSS_REWARD) return;
   if (S.phase !== 'playing' && S.phase !== 'spectate') return;
   audio();
   $('menu').classList.remove('hidden');
   const spec = S.phase === 'spectate';
-  $('menu-note').innerHTML = spec ? '관전 중입니다. 기록·젬은 이미 저장됐습니다.' : S.net ? '<b>함께하기</b> 중에는 게임이 멈추지 않습니다. 포기하면 관전으로 넘어가고 기록·젬은 저장됩니다.' : (S.mode === 'infinity' ? '메뉴가 열려 있는 동안 게임이 멈춥니다. 포기하면 지금까지의 기록·젬이 저장됩니다.' : '메뉴가 열려 있는 동안 게임이 멈춥니다.');
+  $('menu-note').innerHTML = spec ? '관전 중입니다. 기록·젬은 이미 저장됐습니다.' : S.net ? '<b>함께하기</b> 중에는 게임이 멈추지 않습니다. 포기하면 관전으로 넘어가고 기록·젬은 저장됩니다.' : (S.mode === 'infinity' ? '메뉴가 열려 있어도 전투는 계속됩니다. 포기하면 지금까지의 기록·젬이 저장됩니다.' : '메뉴가 열려 있어도 전투는 계속됩니다.');
   if (battleRun()) $('menu-note').textContent = `${S.net.mode==='coop'?'포기하면 두 사람 모두 패배합니다.':'포기하면 상대가 승리합니다.'} 전투는 계속 진행됩니다. 패배해도 참여한 시간의 기본 보상을 받습니다.`;
   $('menu-quit-txt').textContent = spec ? '관전 끝내고 나가기' : S.mode === 'infinity' ? '포기하고 나가기 (기록 저장)' : '스테이지 선택으로 나가기';
   $('menu-help').classList.toggle('hidden', S.mode !== 'infinity');
   $('menu-save').classList.toggle('hidden', !growthRun() || !!S.net || spec);
-  if (growthRun() && !S.net && !spec) $('menu-note').textContent = `메뉴를 닫을 때까지 멈춥니다. 다음 구간 목표 ${Math.max(25, (Math.floor(S.inf.doneW / 25) + 1) * 25)}웨이브 · 시작할 때의 덱과 성장 유지 · 5초마다 기기에 자동 저장됩니다.`;
+  if (growthRun() && !S.net && !spec) $('menu-note').textContent = `메뉴가 열려 있어도 전투는 계속됩니다. 다음 구간 목표 ${Math.max(25, (Math.floor(S.inf.doneW / 25) + 1) * 25)}웨이브 · 시작할 때의 덱과 성장 유지 · 5초마다 기기에 자동 저장됩니다.`;
   if (S.mode === 'stage' && !spec) $('menu-note').textContent = stageLesson(S.stage) + ' 계정 성장 조각은 투기장 전용입니다.';
-  setPaused(!spec);
+
 }
-function closeMenu() { $('menu').classList.add('hidden'); setPaused(false); }
+function closeMenu() { $('menu').classList.add('hidden'); }
 function quitToMenu() {
   closeMenu();
   if (S.phase === 'spectate') { mpLeave(); S.mode = 'stage'; S.inf = null; gotoLobby('multi'); return; }   // 관전 중 나가기 (기록은 이미 저장됨)
@@ -7311,7 +7297,6 @@ $('run-resume-end').addEventListener('click', () => resumeSavedRun(true));
 window.addEventListener('pagehide', () => { try { persistRun(); } catch (_) {} });
 document.addEventListener('visibilitychange', () => { if (document.hidden) { try { persistRun(); } catch (_) {} if (growthRun() && !S.net && S.phase === 'playing') openMenu(); } });
 $('menu-resume').addEventListener('click', () => { audio(); closeMenu(); });
-$('menu-pause').addEventListener('click', () => { audio(); setPaused(!S.paused); });
 $('menu-settings').addEventListener('click', () => { audio(); openSettings(); });
 $('menu-help').addEventListener('click', () => { audio(); closeMenu(); openInfHelp(); });
 $('menu-quit').addEventListener('click', () => { audio(); quitToMenu(); });
@@ -7434,7 +7419,7 @@ async function restoreRunSave(p, net) {
     }
   }
   setSpeed(p.speed || 1); // Legacy x3 checkpoints resume at the new fastest setting, x4.
-  S.paused = !net;
+  S.paused = false;
   if (net) { net.doneW = S.inf.doneW; mpStartSum(); mpRenderRivals(); mpLayoutCards(); }
   if (battleRun()) battleOnState(DKNET.room?.game?.battle || net.battle);
   refreshDirectionalDemand(true); syncUI();
@@ -8414,7 +8399,7 @@ function frame(ts) {
   uiInFrame = true;
   try {
     updateBossReward(dt);
-    if (!S.paused && !(BOSS_REWARD && !S.net)) {
+    if (!S.paused) {
       for (let i = 0; i < S.speed; i++) update(dt);
       updateDie(dt);
       updateSlot(dt); // Printed results must remain readable at every battle speed.

@@ -19,11 +19,11 @@
 <link rel="stylesheet" href="casual-theme.css?v=137" />
 <link rel="stylesheet" href="casual-menus.css?v=143" />
 <link rel="stylesheet" href="casual-rewards.css?v=137" />
-<link rel="stylesheet" href="casual-hud.css?v=160" />
+<link rel="stylesheet" href="casual-hud.css?v=161" />
 <link rel="icon" href="ui/gold.png" />
 </head>
 <body>
-<div id="boss-reward" class="hidden" role="dialog" aria-modal="true" aria-labelledby="boss-reward-title" tabindex="-1">
+<div id="boss-reward" class="hidden" role="dialog" aria-modal="false" aria-labelledby="boss-reward-title" tabindex="-1">
   <div class="boss-reward-card">
     <p class="boss-reward-kicker">BOSS REWARD</p>
     <h2 id="boss-reward-title">보스 보상</h2>
@@ -361,14 +361,13 @@
     <p class="screen-sub">편안한 소리로 즐겨보세요. 음량 설정은 이 기기에 저장됩니다.</p>
   </div>
 </div>
-<!-- 게임 메뉴 (우상단 ≡): 계속·일시정지·볼륨·게임 방법·포기. 싱글은 열리는 동안 멈추고, 멀티는 계속 돈다 -->
+<!-- 게임 메뉴 (우상단 ≡): 계속·볼륨·게임 방법·포기. 메뉴를 열어도 전투는 계속된다. -->
 <div id="menu" class="hidden">
   <div class="help-card menu-card">
     <h3>메뉴</h3>
     <div id="menu-note" class="screen-sub"></div>
     <button id="menu-save" class="big-btn hidden" type="button">저장하고 로비로</button>
     <button id="menu-resume" class="big-btn primary" type="button">계속하기</button>
-    <button id="menu-pause" class="back-btn" type="button"><span class="bi" data-icon="pause">&#9208;</span><span id="menu-pause-txt">일시정지</span></button>
     <button id="menu-settings" class="back-btn" type="button"><span class="bi" data-icon="sound">&#128266;</span>볼륨 조절</button>
     <button id="menu-help" class="back-btn" type="button"><span class="bi" data-icon="help">&#10067;</span>튜토리얼 · 게임 방법</button>
     <button id="menu-quit" class="back-btn danger" type="button"><span class="bi" data-icon="close">&#10060;</span><span id="menu-quit-txt">포기하고 나가기</span></button>
@@ -428,6 +427,6 @@
 <script src="combat-motion.js?v=157"></script>
 <script src="presentation-fx.js?v=160"></script>
 <script src="reward-audio.js?v=157"></script>
-<script src="game.js?v=160"></script>
+<script src="game.js?v=161"></script>
 </body>
 </html>
