@@ -70,7 +70,10 @@ async function guestCase(browser,name,viewport) {
   await page.click('#rewards-close');await page.evaluate(async()=>{await DKHOME.enter();await DKHOME.refresh();await DKHOME.enter();});
   check('Closing and revisiting home do not reopen in the same visit',await page.evaluate(()=>!document.getElementById('rewards-dialog').open&&__homeOpened.filter(e=>e.automatic).length===1));
   check('Home exposes mailbox, pass, deck and battle entries',await page.locator('#home-mail').isVisible()&&await page.locator('#home-pass').isVisible()&&await page.locator('[data-home-action="deck"]').first().isVisible()&&await page.locator('[data-home-action="battle"]').first().isVisible());
-  check('Home wallet uses the current guest balances',await page.evaluate(()=>[Number(document.getElementById('home-gold').textContent.replace(/[^0-9]/g,'')),Number(document.getElementById('home-shards').textContent.replace(/[^0-9]/g,''))]),await page.evaluate(()=>[DKSAVE.progression.collection.gold,DKSAVE.progression.shards]));
+  check('Home omits research balances, deck details and duplicate pass progress',await page.locator('#lobby-hub .home-wallet,#home-deck,.home-pass-status,.home-record').count(),0);
+  await page.locator('[data-home-action="deck"]').click();
+  check('Research balances live in the dice tab',await page.evaluate(()=>[Number(document.getElementById('deck-gold').textContent.replace(/[^0-9]/g,'')),Number(document.getElementById('deck-shards').textContent.replace(/[^0-9]/g,''))]),await page.evaluate(()=>[DKSAVE.progression.collection.gold,DKSAVE.progression.shards]));
+  await page.locator('#lobby-box [data-menu-target="home"]').click();
   check('Unclaimed attendance has a dot; guest mail and unearned pass do not',await dot(page,'attendance').isVisible()&&!await dot(page,'mail').isVisible()&&!await dot(page,'pass').isVisible());
   await t.noOverflow('Home fits viewport','#lobby .screen-box');await page.screenshot({path:path.join(out,name+'-home.png')});
   await page.reload();await page.waitForFunction(()=>window.DK?.phase==='title'&&!!DKREWARDS.current(),null,{timeout:120000});
@@ -143,7 +146,7 @@ async function delayedRoomCase(browser) {
   check('Deferred room-transition response prompts on safe home return',await page.evaluate(()=>__homeOpened.filter(e=>e.automatic).length),1);
   await page.click('#rewards-close');fixture.fail=true;await page.evaluate(()=>DKHOME.refresh());
   check('Failed list does not invent claimable indicators',!await dot(page,'attendance').isVisible()&&!await dot(page,'mail').isVisible()&&!await dot(page,'pass').isVisible());
-  check('Home explains a failed refresh',/재확인/.test(await page.locator('#home-pass-progress').innerText()));
+  check('Home explains a failed refresh',/다시 확인/.test(await page.locator('#home-reward-status').innerText()));
   fixture.fail=false;await page.evaluate(()=>DKHOME.refresh());check('Successful retry restores claimable mailbox state',await dot(page,'mail').isVisible());
   fixture.hold=true;await page.evaluate(()=>{window.__oldOwnerRefresh=DKHOME.refresh();});await pending();
   await page.evaluate(async()=>{sessionStorage.setItem('__homeSignedOut','1');await DKCOMMERCE.signOut();});release();

@@ -3,7 +3,7 @@ const fs=require('fs'),assert=require('assert/strict');
 const out='gen/e2e/casual-menus';fs.mkdirSync(out,{recursive:true});
 assert.ok(['localhost','127.0.0.1'].includes(new URL(gameUrl()).hostname),'Menu QA must use a local server');
 (async()=>{const browser=await launchBrowser();try{
- for(const [name,width,height] of [['phone',390,844],['small',320,740],['desktop',1280,900]]){
+ for(const [name,width,height] of [['phone',390,844],['small',320,740],['desktop',1280,900],['galaxy-landscape',824,384],['landscape',932,430]]){
   const page=await browser.newPage({viewport:{width,height}}),errors=[];
   page.on('pageerror',e=>errors.push(e.message));
   await page.addInitScript(()=>{localStorage.setItem('dk_coachDone','1');localStorage.setItem('dk_infHelpSeen','1');});
@@ -14,6 +14,10 @@ assert.ok(['localhost','127.0.0.1'].includes(new URL(gameUrl()).hostname),'Menu 
    assert.ok(box.sw<=box.cw+2,`${name} ${label} overflow ${JSON.stringify(box)}`);
   };
   await shot('title','#overlay-box'); await page.click('#ov-btn');await shot('home','#lobby-box');
+  assert.equal(await page.locator('#lobby-hub .home-wallet,#home-deck,.home-pass-status').count(),0);
+  const home=await page.locator('#lobby-box').evaluate(el=>({sh:el.scrollHeight,ch:el.clientHeight}));
+  assert.ok(home.sh<=home.ch+2, name+' home requires no vertical scrolling '+JSON.stringify(home));
+  assert.equal(await page.locator('#lobby-hub [data-reward-tab="pass"]').count(),1);
   await page.click('#hub-single'); await shot('single','#lobby-box');
   await page.click('#btn-deck-open');await shot('deck','#deck-panel');
   assert.equal(await page.locator('#btn-inf-clear').isVisible(),false,'deck has its own uncluttered view');
