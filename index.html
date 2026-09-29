@@ -11,7 +11,7 @@
 <!-- 키아트를 스크립트보다 먼저 받기 시작한다 (세로/가로 중 화면에 맞는 한 장). game.js 는 이 그림이 뜬 뒤에 에셋 로딩을 시작한다 -->
 <link rel="preload" as="image" href="ui/title-keyart-p.jpg?v=title-d6-143" media="(max-aspect-ratio: 3/4)" fetchpriority="high" />
 <link rel="preload" as="image" href="ui/title-keyart-l.jpg?v=title-d6-143" media="(min-aspect-ratio: 3001/4000)" fetchpriority="high" />
-<link rel="stylesheet" href="style.css?v=152" />
+<link rel="stylesheet" href="style.css?v=159" />
 <link rel="stylesheet" href="rewards.css?v=119" />
 <link rel="stylesheet" href="mail-admin.css?v=117" />
 <link rel="stylesheet" href="home.css?v=143" />
@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="casual-theme.css?v=137" />
 <link rel="stylesheet" href="casual-menus.css?v=143" />
 <link rel="stylesheet" href="casual-rewards.css?v=137" />
-<link rel="stylesheet" href="casual-hud.css?v=157" />
+<link rel="stylesheet" href="casual-hud.css?v=159" />
 <link rel="icon" href="ui/gold.png" />
 </head>
 <body>
@@ -120,6 +120,7 @@
         </div>
         <div id="lobby-single" class="lobby-view hidden">
           <div class="menu-hero"><small>나의 다음 도전</small><h2>어떤 전투를 떠날까요?</h2><p>운을 시험하거나, 나만의 덱으로 성채를 지키세요.</p></div>
+          <button id="lobby-help" class="back-btn" type="button">튜토리얼 · 게임 방법</button>
           <div class="lobby-btns inf-btns">
             <button id="btn-inf-clear" class="big-btn primary lobby-inf-btn">순수운빨<small>101웨이브 · 성장 미적용</small></button>
             <button id="btn-inf-build" class="big-btn lobby-inf-btn">덱빌드<small>101웨이브 · 덱과 성장</small></button>
@@ -334,7 +335,7 @@
       <button id="inf-face-4" class="inf-face"><span class="inf-pip">4</span><span class="inf-lv">Lv0</span><span class="inf-cost"><b class="inf-cost-n">150</b><i class="inf-cost-u">G</i></span></button>
       <button id="inf-face-5" class="inf-face"><span class="inf-pip">5</span><span class="inf-lv">Lv0</span><span class="inf-cost"><b class="inf-cost-n">150</b><i class="inf-cost-u">G</i></span></button>
       <button id="inf-face-6" class="inf-face"><span class="inf-pip">6</span><span class="inf-lv">Lv0</span><span class="inf-cost"><b class="inf-cost-n">150</b><i class="inf-cost-u">G</i></span></button>
-      <button id="help-btn" title="무한 투기장 안내">?</button>
+      <button id="help-btn" title="튜토리얼 · 게임 방법" aria-label="튜토리얼 · 게임 방법">?</button>
     </div>
     <div id="supporter-panel" class="hidden" aria-label="전투 서포터"><div><b id="supporter-name"></b><small id="supporter-note"></small></div><button id="supporter-use" type="button">능력 사용</button></div>
   </div>
@@ -350,15 +351,6 @@
     </div>
   </div>
 </dialog>
-<!-- 첫 런 단계별 안내: 대상 요소 위에 링 + 말풍선. 진행을 막지 않는다(pointer-events:none) -->
-<div id="coach" class="hidden" aria-live="polite">
-  <div id="coach-ring"></div>
-  <div id="coach-tip">
-    <b id="coach-step">1 / 5</b>
-    <span id="coach-text"></span>
-    <button id="coach-skip" type="button">건너뛰기</button>
-  </div>
-</div>
 <!-- 설정: 음악·효과음 음량, 음소거 (로비·대기실 ⚙, 앱 뒤로가기 체인 최우선) -->
 <div id="settings" class="hidden">
   <div class="help-card settings-card">
@@ -378,23 +370,24 @@
     <button id="menu-resume" class="big-btn primary" type="button">계속하기</button>
     <button id="menu-pause" class="back-btn" type="button"><span class="bi" data-icon="pause">&#9208;</span><span id="menu-pause-txt">일시정지</span></button>
     <button id="menu-settings" class="back-btn" type="button"><span class="bi" data-icon="sound">&#128266;</span>볼륨 조절</button>
-    <button id="menu-help" class="back-btn" type="button"><span class="bi" data-icon="help">&#10067;</span>게임 방법</button>
+    <button id="menu-help" class="back-btn" type="button"><span class="bi" data-icon="help">&#10067;</span>튜토리얼 · 게임 방법</button>
     <button id="menu-quit" class="back-btn danger" type="button"><span class="bi" data-icon="close">&#10060;</span><span id="menu-quit-txt">포기하고 나가기</span></button>
   </div>
 </div>
 <div id="toast" class="hidden"></div>
 <div id="inf-help" class="hidden">
   <div class="help-card">
-    <h3 id="help-title">무한 투기장 안내</h3>
+    <h3 id="help-title">튜토리얼 · 게임 방법</h3>
     <div class="help-scroll"><ol>
+      <li><b>시작하기</b> — 뽑기와 배치를 마치고 <b>웨이브 시작</b>을 한 번 누르세요. 이후 웨이브는 자동으로 진행됩니다. 이 안내는 싱글플레이 메뉴나 전투 중 <b>메뉴 → 튜토리얼 · 게임 방법</b>, 하단 <b>?</b>에서 언제든 다시 볼 수 있습니다.</li>
       <li><b>조작</b> — <b>뽑기</b>를 누르면 등급이 정해집니다. 4·6면체는 자동으로 굴러가고, 8면체 이상은 전장에 놓인 주사위를 끌어 던지거나 <b>던지기</b> 버튼을 눌러 결과를 확인하세요. <b>빈 석단을 누르면</b> 타워를 놓습니다(끌어다 놓아도 됩니다). <b>같은 눈 타워 위</b>에 놓으면 합체해 레벨이 오릅니다. 놓은 타워를 누르면 아래 상태창에서 <b>판매·확률강화</b>를 할 수 있습니다.<br><small>단축키 — 뽑기·던지기 <b>R</b> · 파워업 <b>1~6</b> · 선택 해제 <b>Esc</b></small></li>
       <li><b>&#127873; 뽑기 160G</b> — 먼저 등급을 정하고, 허용된 숫자를 주사위에 미리 새깁니다. 1면체는 1★ 확정, <b>4·6면체는 자동으로 굴리고 8면체 이상은 직접 던집니다.</b> 대기 중 보이는 숫자는 결과가 아닙니다. 굴러 멈추면 위를 향한 표식을 금색으로 표시하고 그 숫자가 타워 성(★)입니다. 사면체는 각 꼭짓점의 숫자를 만나는 세 면에 반복해 새기며, 위쪽 꼭짓점의 숫자를 읽습니다. 다른 다면체는 하늘을 가장 향한 면 중앙의 숫자를 읽습니다. 결과에 맞춰 마지막에 주사위를 돌리지 않습니다. 손에 타워가 있으면 먼저 석단에 배치해야 다시 뽑을 수 있습니다.<br><small>일반 50% (1★) · 레어 33.1% (1~4★) · 고대 10.2% (1~6★) · 유물 5.1% (1~8★) · 서사 0.8% (1~12★) · 전설 0.5% (1~20★) · 에픽 0.2% (14~17★) · 신화 0.08% (18~19★) · 태초 0.019% (20★)</small></li>
-      <li><b>보상 대기</b> — 보스를 잡으면 주사위를 받습니다. 손이 비는 대로 하나씩 준비되고, 4·6면체는 자동으로 굴리고 8면체 이상은 직접 던집니다.</li>
+      <li><b>보상 대기</b> — 보스를 잡으면 화면 중앙에 보상 상자가 나타납니다. 상자를 터치하면 <b>8·12·20면체 중 하나</b>가 같은 확률(각 1/3)로 나옵니다. 손이 비는 대로 하나씩 준비되며, <b>던지기</b>로 굴린 뒤 배치하세요.</li>
       <li><b>확률강화</b> — 배치한 타워를 누르면 하단 상태창에 <b>판매 / 확률강화</b>가 뜹니다. 골드를 걸고 <b>강화(★+1) · 유지 · 소멸</b> 셋 중 하나가 나오며, 성(★)이 높을수록 비싸고 소멸 확률도 커집니다. 합체 레벨은 강화해도 유지됩니다.</li>
       <li><b>판매</b> — 순수운빨은 7★ 이상을 팔 수 없습니다. 덱빌드·극한에서는 모든 별의 타워를 판매할 수 있습니다.</li>
       <li><b>파워업</b> — 골드로 눈(1~6)을 강화합니다. 강화할수록 비싸집니다. ★ 히든 타워는 6눈 파워업을 따릅니다.</li>
       <li><b>패배</b> — 필드에 적이 200마리를 넘으면 가장 오래된 적이 사라지며 목숨 −1. 보스는 5분 20초 안에 잡아야 합니다.</li>
-      <li><b>순수운빨 라운드</b> — 일반 웨이브마다 79마리가 출현합니다. 처치 속도와 관계없이 게임 시간 2분 20초마다 다음 물량이 오고, 남은 적은 계속 쌓입니다. 마지막 웨이브는 잔여 적까지 모두 처치해야 하며, 시작 후 최대 5분 20초까지 정리할 수 있습니다. 배속 x2·x4에서는 시계도 같은 배속으로 흐릅니다.</li>
+      <li><b>순수운빨 라운드</b> — 일반 웨이브마다 79마리가 출현합니다. 처치 속도와 관계없이 게임 시간 기준 <b>1~9웨이브는 1분, 이후 일반 웨이브는 2분 20초</b>마다 다음 물량이 오고, 남은 적은 계속 쌓입니다. 마지막 웨이브는 잔여 적까지 모두 처치해야 하며, 시작 후 최대 5분 20초까지 정리할 수 있습니다. 배속 x2·x4에서는 시계도 같은 배속으로 흐릅니다.</li>
       <li><b>세 가지 모드</b> — <b>순수운빨·덱빌드</b>는 <b>101웨이브 완주가 클리어</b>입니다. 순수운빨은 기존 뽑기와 확률강화로 도전합니다. 덱빌드는 수집한 5종의 조합, 눈금 합성, 전투 중 강화가 핵심입니다. <b>극한</b>은 같은 덱 규칙으로 101웨이브 이후에도 더 강한 적에 도전하며 최고 기록을 남깁니다.</li>
       <li><b>함께 하기</b> — 2~4명이 <b>각자 보드</b>에서 <b>각자 속도</b>(배속 x1·x2·x4)로 101웨이브 완주에 도전합니다(도전 규칙). 먼저 죽으면 관전, 순위는 <b>완주는 빠른 순, 탈락은 웨이브 순</b>. 첫 웨이브 전 20초 동안 타워를 놓으세요. 상대 카드를 누르면 그 필드를 라이브로 보고, <b>Enter</b>/💬 로 채팅. 방 코드 또는 빠른 매칭(2명 이상 10초, 4명 즉시).</li>
       <li><b>1대1 대전 · 2인 협동</b> — 함께하기에서 선택합니다. 대전은 숙련·특성·각성을 적용하지 않아 성장 수치가 같습니다. 5처치마다 적 1마리를 보내고 상대 목숨을 0으로 만들면 승리합니다. 협동은 공동 목숨 20을 지키며 합계 700처치하면 함께 승리합니다. 아군 보급은 45초마다 60 SP를 보냅니다. x1 고정, 90초마다 보스 등장, 일반 적 이탈 −1, 보스 이탈·45초 초과 −5입니다.</li>
@@ -435,6 +428,6 @@
 <script src="combat-motion.js?v=157"></script>
 <script src="presentation-fx.js?v=157"></script>
 <script src="reward-audio.js?v=157"></script>
-<script src="game.js?v=158"></script>
+<script src="game.js?v=159"></script>
 </body>
 </html>
