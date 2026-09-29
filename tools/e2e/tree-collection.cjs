@@ -134,6 +134,10 @@ async function treeActions(page, row) {
     await resources(page, { gold: cost.gold, shards: cost.shards }); await openCard(page, 1);
     const before = await profile(page); await page.click('#tree-upgrade'); const after = await profile(page);
     check(row, 'mastery ' + (level + 1) + ' exact deterministic debit', { mastery: after.tree.mastery[1], gold: after.collection.gold, shards: after.shards, rng: after.collection.rng }, { mastery: level + 1, gold: 0, shards: 0, rng: before.collection.rng });
+    const rendered = await page.locator('.research-numbers b').first().textContent();
+    const expected = await page.evaluate(() => {const p=__treeUIQA.getSAVE().progression;const st=DKDECKRULES.stats({face:1,pips:3},{treeVersion:1,...p.tree});return (st.dmg/st.rate).toLocaleString('ko-KR',{maximumFractionDigits:1});});
+    check(row, 'research comparison refreshes after mastery '+(level+1), rendered.split(' → ')[0], expected);
+
     if (level + 1 === 2) {
       const baseline = await profile(page);
       await page.getByRole('button',{name:'특성',exact:true}).click();
