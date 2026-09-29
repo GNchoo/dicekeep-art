@@ -2055,7 +2055,7 @@ function updateBossReward(dt) {
   }
   if (!BOSS_REWARD && S.phase === 'playing' && !S.paused && !VIEW.pid && !deckRun() && S.inf?.queue.includes('boss')) {
     BOSS_REWARD = { inf: S.inf, t: 0, kind: null };
-    panel.classList.remove('hidden'); panel.dataset.grade = 'closed';
+    panel.classList.remove('hidden'); panel.dataset.grade = 'closed'; hudTopPx(true);
     $('boss-reward-title').textContent = '보스 보상';
     $('boss-reward-message').textContent = '상자를 터치하세요';
     $('boss-reward-open').setAttribute('aria-disabled', 'false');
@@ -3287,6 +3287,12 @@ function buildInfinityWave(w) {
       hpMult: P.hpMult * M.hpMult * (elite ? 3 : 1), goldMult: P.goldMult * (elite ? 3 : 1), isElite: elite,
     });
     t += P.gap * (!P.roundSeconds && FAST_AIR.has(M.base.id) ? 0.72 : 1);
+  }
+  if (P.packSize && q.length > 1) {
+    const first=q[0].t, duration=q[q.length-1].t-first;
+    const offset=i=>Math.floor(i/P.packSize)*P.packSize+(i%P.packSize)*P.packGap;
+    const end=offset(q.length-1);
+    q.forEach((item,i)=>{item.t=first+duration*offset(i)/end;});
   }
   if (P.normalCount) {
     // Keep the round's gold budget, including elites, without rounding away
@@ -5875,6 +5881,10 @@ function syncWaveBtn() {
   waveBtn.classList.toggle('hidden', !ready);
   waveBtn.disabled = !ready;
   waveBtn.textContent = '웨이브 시작';
+  const idle = ready && !SLOT.active;
+  const canAfford = S.gold >= (S.mode === 'infinity' ? chestCost() : ROLL_COST);
+  rollBtn.classList.toggle('opening-guide', idle && canAfford && !rollBtn.disabled);
+  waveBtn.classList.toggle('opening-guide', idle && !canAfford);
 }
 
 function syncInfo() {
@@ -6458,6 +6468,9 @@ function hudTopPx(force = false) {
   HUD_TOP.v = Math.max(58, Math.round(bottom + 6));
   const noticeTop = (HUD_TOP.v + HUD_TIMER_HEIGHT + 8) + 'px';
   if (stageEl.style.getPropertyValue('--stage-notice-top') !== noticeTop) stageEl.style.setProperty('--stage-notice-top', noticeTop);
+  const reward = $('boss-reward'), safeTop = cr.top + HUD_TOP.v + HUD_TIMER_HEIGHT + 8;
+  const safeBottom = Math.min(cr.bottom, hudEl.getBoundingClientRect().top) - 8;
+  Object.assign(reward.style, { top:safeTop+'px', left:cr.left+'px', width:cr.width+'px', height:Math.max(0,safeBottom-safeTop)+'px', bottom:'auto', right:'auto' });
   return HUD_TOP.v;
 }
 // 화면 기준 반경(css px) 을 캔버스 내부 좌표 여유로 바꾼다

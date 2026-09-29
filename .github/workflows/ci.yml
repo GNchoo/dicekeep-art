@@ -189,7 +189,9 @@ jobs:
       - name: pure-main (순수운빨 계정 독립성·물리 굴림 기준)
         run: npm run test:pure-main
       - name: pure-wave-schedule (79마리·140초 라운드·기존 모드 격리)
-        run: npm run test:pure-wave-schedule
+        run: |
+          npm run test:pure-wave-schedule
+          node tools/e2e/opening-pressure.cjs
       - name: field-cap (생존 적 상한·종료 프레임)
         run: npm run test:field-cap
       - name: size-neutral-damage (모든 타워·몬스터 상성 1배·광역 명중)
