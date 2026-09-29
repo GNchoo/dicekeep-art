@@ -6286,7 +6286,6 @@ function renderDeck(reset) {
 }
 
 function renderLobby() {
-  $('lobby-gems').textContent = SAVE.gems;
   const un = (SAVE.unlockedTowers || []).length;
   $('lobby-progress').innerHTML = `스테이지 <b>${SAVE.cleared.length}</b>/50 클리어 · 해금 타워 <b>${un}</b>/6`;
   syncInfButtons();
@@ -8547,8 +8546,7 @@ function drawLoading(pr) {
     changed: () => { if (S.phase === 'lobby') { renderLobby(); renderDeck(false); } }
   });
   window.DKHOME.configure({
-    model:()=>({profile:progressionProfile(),name:SAVE.name,linked:COMMERCE.linked(),gems:SAVE.gems,theme:COMMERCE.state().cosmetics.equipped}),
-    icon:face=>thumbURL(towerSpr(face,0),96),
+    model:()=>({name:SAVE.name,linked:COMMERCE.linked()}),
     canRefresh:()=>['title','lobby','shop'].includes(S.phase)&&!S.net,
     canAuto:()=> S.phase==='lobby'&&LOBBY_VIEW==='hub'&&!S.net&&!runResumeBusy&&!startingAccountRun&&!MP.resumeRoom&&!DKNET.inRoom()&&!window.DKAUTOSTART&&!menuOpen()&&!settingsOpen(),
     navigate:kind=>{

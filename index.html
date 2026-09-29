@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="style.css?v=159" />
 <link rel="stylesheet" href="rewards.css?v=119" />
 <link rel="stylesheet" href="mail-admin.css?v=117" />
-<link rel="stylesheet" href="home.css?v=143" />
+<link rel="stylesheet" href="home.css?v=162" />
 <link rel="stylesheet" href="menus.css?v=143" />
 <link rel="stylesheet" href="casual-theme.css?v=137" />
 <link rel="stylesheet" href="casual-menus.css?v=143" />
@@ -82,20 +82,13 @@
         <button id="lobby-back" class="back-btn icon-btn hidden" type="button" title="뒤로" aria-label="뒤로" data-icon="back">&#8592;</button>
         <button id="lobby-settings" class="back-btn icon-btn" type="button" title="설정" aria-label="설정" data-icon="gear">&#9881;</button>
         <h1 id="lobby-title">주사위 성채</h1>
-        <!-- 메인: 재화 · 성채 · 보상 바로가기 · 실제 전투 덱 · 전투 메뉴 -->
+        <!-- 홈: 플레이 시작과 보상 바로가기. 연구·덱은 다이스, 기록은 전투, 젬은 상점에서 표시. -->
         <div id="lobby-hub" class="lobby-view">
           <header class="home-profile">
             <span class="home-emblem" aria-hidden="true"><img src="ui/icon-dice.png" alt=""></span>
             <div><b id="home-name">플레이어</b><span id="home-account">게스트 · 이 기기에 저장</span></div>
-            <span class="home-profile-tag">성채 수호자</span>
           </header>
-          <div class="home-wallet" aria-label="보유 재화">
-            <div class="home-currency"><img src="ui/gold.png" alt=""><span><small>연구 골드</small><b id="home-gold">0</b></span></div>
-            <div class="home-currency"><img src="ui/rewards/growth-shards.webp" alt=""><span><small>성장 조각</small><b id="home-shards">0</b></span></div>
-            <div class="home-currency"><img src="ui/icon-gem.png" alt=""><span><small>젬</small><b id="lobby-gems">0</b></span></div>
-          </div>
           <section class="home-citadel" aria-label="나의 주사위 성채">
-            <div class="home-record"><img src="ui/icon-trophy.png" alt=""><span><small>나의 도전 기록</small><b id="home-record">첫 도전을 기다리는 중</b></span></div>
             <nav class="home-reward-shortcuts" aria-label="보상 바로가기">
               <button id="btn-rewards-open" class="home-reward" type="button" data-reward-tab="attendance"><img src="ui/rewards/attendance-bag.webp" width="36" height="36" alt=""><span>출석</span><i class="reward-dot" data-reward-dot="attendance" hidden aria-hidden="true"></i></button>
               <button id="home-mail" class="home-reward" type="button" data-reward-tab="mail"><img src="ui/rewards/mail.webp?v=casual1" width="36" height="36" alt=""><span>우편</span><i class="reward-dot" data-reward-dot="mail" hidden aria-hidden="true"></i></button>
@@ -103,11 +96,7 @@
             </nav>
             <div class="home-citadel-caption"><span>나의 성채</span><p>다섯 주사위로 지켜내는 성채</p></div>
           </section>
-          <button class="home-pass-status" type="button" data-reward-tab="pass"><img src="ui/rewards/growth-pass.webp" width="24" height="24" alt=""><span>성장 패스</span><b id="home-pass-progress">무료 보상 확인</b><span class="home-chevron" aria-hidden="true">›</span></button>
-          <section class="home-deck-section" aria-label="사용 중인 전투 덱">
-            <div class="home-section-heading"><h2>나의 전투 덱</h2><button class="home-text-button" type="button" data-home-action="deck">덱 편성 <span aria-hidden="true">›</span></button></div>
-            <div id="home-deck" class="home-deck" aria-label="선택한 다섯 주사위"><p class="home-deck-loading">전투 덱을 불러오는 중…</p></div>
-          </section>
+          <p id="home-reward-status" role="status" hidden></p>
           <section class="home-battle" aria-label="전투 선택">
             <button id="hub-single" class="home-battle-button home-battle-primary" type="button"><img src="ui/icon-dice.png" alt=""><span><b>싱글플레이</b><small>인피니티 · 스테이지</small></span><span class="home-chevron" aria-hidden="true">›</span></button>
             <button id="hub-multi" class="home-battle-button" type="button"><img src="ui/icon-users.png" alt=""><span><b>멀티플레이</b><small>대전 · 협동 · 기록 경쟁</small></span><span class="home-chevron" aria-hidden="true">›</span></button>
@@ -418,7 +407,7 @@
 <script src="reward-notifications.js?v=118"></script>
 <script src="mail-admin.js?v=117"></script>
 <script src="rewards-ui.js?v=119"></script>
-<script src="home-ui.js?v=118"></script>
+<script src="home-ui.js?v=162"></script>
 <script src="commerce-ui.js?v=120"></script>
 <script src="directional-art.js?v=128"></script>
 <script src="extreme-art.js?v=110"></script>
@@ -427,6 +416,6 @@
 <script src="combat-motion.js?v=157"></script>
 <script src="presentation-fx.js?v=160"></script>
 <script src="reward-audio.js?v=157"></script>
-<script src="game.js?v=161"></script>
+<script src="game.js?v=162"></script>
 </body>
 </html>

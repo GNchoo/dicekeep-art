@@ -10,29 +10,16 @@
   const popupKey=()=>view?.attendance?.dayKey?owner()+'|'+view.attendance.dayKey:null;
   function render(){
     if(!hooks)return;
-    const m=hooks.model(),p=m.profile;
+    const m=hooks.model();
     put('home-name',m.name||'성채 수호자');put('home-account',m.linked?'연결된 계정 · 온라인 저장':'게스트 · 이 기기에 저장');
-    put('home-gold',p.collection.gold.toLocaleString());put('home-shards',p.shards.toLocaleString());put('lobby-gems',m.gems.toLocaleString());
-    put('home-record',p.records.clear.best?'순수운빨 최고 '+p.records.clear.best+' 웨이브':'첫 전투에 도전하세요');
-    const deck=$('home-deck'),key=p.deck.join(',')+'|'+p.deck.map(f=>p.tree.mastery[f]).join(',')+'|'+m.theme;
-    if(deck&&deck.dataset.key!==key){
-      deck.dataset.key=key;deck.replaceChildren();
-      for(const face of p.deck){
-        const b=document.createElement('button'),img=document.createElement('img'),label=document.createElement('b'),level=document.createElement('small');
-        const name=window.DKDECKRULES.get(face).name.replace(' 주사위','');
-        b.className='home-deck-card';b.type='button';b.dataset.face=face;b.setAttribute('aria-label',name+' · 덱 편성');
-        img.src=hooks.icon(face);img.alt=name+' 타워';img.width=img.height=96;
-        label.textContent='★'+face+' '+name;level.textContent='숙련 '+(p.tree.mastery[face]||0);
-        b.append(img,label,level);b.onclick=()=>hooks.navigate('deck');deck.append(b);
-      }
-    }
     const counts=N.counts(view);
     for(const dot of document.querySelectorAll('[data-reward-dot]')){
       const kind=dot.dataset.rewardDot,available=counts[kind]||0;dot.hidden=!available;
       const b=dot.closest('button'),label={attendance:'출석',mail:'우편',pass:'성장 패스'}[kind];
       if(b){b.setAttribute('aria-label',label+(available?' · 받을 보상 '+available+'개':''));b.title=available?'받을 보상 '+available+'개':label;}
     }
-    put('home-pass-progress',error?'보상 연결 재확인 중':view?Math.floor(view.pass.xp/100)+' / 20단계'+(counts.pass?' · 수령 가능':' · '+view.pass.xp+' XP'):'보상 확인 중…');
+    const status=$('home-reward-status');
+    status.hidden=!error;status.textContent=error?'보상 연결을 다시 확인하고 있습니다.':'';
   }
   function maybeOpen(){
     if(!safe()||!view||!hooks.canAuto()||!N.counts(view).attendance)return;
