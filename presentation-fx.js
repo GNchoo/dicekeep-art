@@ -305,7 +305,67 @@
     g.restore();
   }
 
-  const api = Object.freeze({ chestPose, chestDiePose, drawChest, drawBossAura });
+  function celebration(face) {
+    if (!Number.isInteger(face) || face < 7 || face > 20) return null;
+    const tier = face < 10 ? 0 : face < 15 ? 1 : face < 19 ? 2 : face === 19 ? 3 : 4;
+    return { tier, dur: [1.35,1.8,2.3,2.8,3.2][tier], count: [12,22,36,48,64][tier],
+      color: ['#a5e8ff','#c8b1ff','#ffd879','#d5a4ff','#ffe18b'][tier] };
+  }
+  function drawCelebration(g, f) {
+    const p = celebration(f.face); if (!p) return;
+    const t=f.t, fade=smooth(0,.12,t)*(1-smooth(p.dur-.65,p.dur,t));
+    if (fade<=0) return;
+    g.save(); g.translate(f.x,f.y); g.scale(f.size/100,f.size/100);
+    g.globalAlpha*=fade;
+    // A soft source glow, never an opaque disc over the die or tower.
+    const glow=g.createRadialGradient(0,0,0,0,0,50+p.tier*9);
+    glow.addColorStop(0,rgba(p.color,.3)); glow.addColorStop(1,rgba(p.color,0));
+    g.fillStyle=glow;g.fillRect(-90,-90,180,180);
+    for(let i=0;i<p.count;i++) {
+      const delay=(i%3)*.12, age=t-delay;
+      if(age<0) continue;
+      const a=i*2.399963, speed=36+(i%7)*7+p.tier*9;
+      const life=Math.max(0,1-age/(p.dur-delay)); if(!life) continue;
+      const x=Math.cos(a)*speed*age, y=Math.sin(a)*speed*age*.65-42*age+24*age*age;
+      g.save();g.globalAlpha*=life;
+      const color=i%3===0?'#fff6df':p.color;
+      if(p.tier>=2 && i%3===0) {
+        g.translate(x,y);g.rotate(a+age*2);g.fillStyle=color;
+        g.fillRect(-2,-5,4*Math.cos(age*4),10);
+      } else fourStar(g,x,y,(2+i%3)*(.7+life*.3),color);
+      g.restore();
+    }
+    if(p.tier===3) {
+      // 19: a revolving violet constellation; stars ignite along its two orbits.
+      g.strokeStyle=rgba(p.color,.65);g.lineWidth=1.2;
+      for(const sign of [-1,1]) {
+        g.beginPath();g.ellipse(0,-8,62,27,sign*.6+t*.2,0,TAU);g.stroke();
+        for(let i=0;i<5;i++) {
+          const a=i*TAU/5+t*sign*.55;
+          fourStar(g,Math.cos(a)*62,Math.sin(a)*38-8,4,'#f5deff');
+        }
+      }
+    } else if(p.tier===4) {
+      // 20: a rising gold crown followed by a second sunburst.
+      g.save();g.translate(0,-40-12*smooth(0,.6,t));g.scale(smooth(0,.35,t),smooth(0,.35,t));
+      g.fillStyle='#ffdf83';g.strokeStyle='#fff6db';g.lineWidth=1.5;
+      g.beginPath();g.moveTo(-23,9);g.lineTo(-29,-15);g.lineTo(-13,-5);
+      g.lineTo(0,-26);g.lineTo(13,-5);g.lineTo(29,-15);g.lineTo(23,9);g.closePath();g.fill();g.stroke();
+      g.fillStyle='#bd742a';g.fillRect(-22,12,44,4);g.restore();
+      for(let burst=0;burst<2;burst++) {
+        const age=t-burst*.42; if(age<0||age>1.25)continue;
+        g.save();g.globalAlpha*=1-age/1.25;g.strokeStyle='#fff0b5';g.lineWidth=2;
+        for(let i=0;i<12;i++) {
+          const a=i*TAU/12+burst*.15,r=24+age*85;
+          g.beginPath();g.moveTo(Math.cos(a)*r,Math.sin(a)*r);
+          g.lineTo(Math.cos(a)*(r+14),Math.sin(a)*(r+14));g.stroke();
+        }g.restore();
+      }
+    }
+    g.restore();
+  }
+
+  const api = Object.freeze({ chestPose, chestDiePose, drawChest, drawBossAura, celebration, drawCelebration });
   if (root) root.DKFX = api;
   if (typeof module === 'object' && module.exports) module.exports = api;
 })(typeof window === 'undefined' ? null : window);

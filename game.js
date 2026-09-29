@@ -2300,14 +2300,23 @@ function finishSlot() {
 }
 // 그림 에셋이 실제로 로드됐는가 (없으면 코드 그림으로 폴백)
 const hasArt = (k) => { const a = A[k]; return !!(a && !a.missing && (Array.isArray(a) ? a.length && a[0] && a[0].cv : a.cv && a.w > 8)); };
-// Outcomes remain visible on the physical die. Keep only the existing reward
-// log and sound; no second giant die, result caption, rays or number popup.
+// Celebrate around the physical result without a second die or number popup.
 function acquireFx(face) {
   if (deckRun()) return;
   const def = TOWER_DEFS[face]; if (!def || face <= 6) return;
   const name = def.name.replace(/ ★\d+$/, '');
   if (face >= 19) SFX.jackpot(); else if (face >= 15) SFX.win(); else SFX.merge();
+  celebrateStar(face);
   netLog(`★${face}성 ${name} 타워를 획득하였습니다`, 'gacha');
+}
+function celebrateStar(face, tower) {
+  const style = window.DKFX?.celebration(face); if (!style || deckRun()) return;
+  const previous = S.fxs.filter(f => f.kind === 'starCelebration' && f.anchorTower !== tower);
+  S.fxs = S.fxs.filter(f => f.kind !== 'starCelebration' || previous.slice(-2).includes(f));
+  const f = { kind:'starCelebration', face, t:0, dur:style.dur, realtime:true,
+    x:tower ? tower.x : DIE.x, y:tower ? tower.y-45 : DIE.y-(DIE.z||0),
+    size:(style.tier<2 ? 65 : 85)/Math.max(.35,stageScale()) };
+  if(tower) towerPresentationFx(tower,f); else S.fxs.push(f);
 }
 // '#rrggbb' → 'rgba(r,g,b,a)'
 function hexA(hex, a) { const m = /^#?([0-9a-f]{6})$/i.exec(String(hex || '')); if (!m) return `rgba(255,212,82,${a})`; const n = parseInt(m[1], 16); return `rgba(${n >> 16},${(n >> 8) & 255},${n & 255},${a})`; }
@@ -4780,12 +4789,14 @@ function drawEffects(layer) {
   };
   for (const f of S.fxs) {
     const effectLayer = f.kind === 'circle' || f.kind === 'towerHalo' ? 'ground'
-      : f.kind === 'chestOpen' ? 'reward' : 'world';
+      : f.kind === 'chestOpen' || f.kind === 'starCelebration' ? 'reward' : 'world';
     if (effectLayer !== layer) continue;
     if (f.anchorTower) { f.x = f.anchorTower.x + f.anchorDx; f.y = f.anchorTower.y + f.anchorDy; }
     const pr = f.t / f.dur;
     if (pr < 0) continue;                                       // 지연 시작 (t 가 음수)
-    if (f.kind === 'starImpact') {
+    if (f.kind === 'starCelebration') {
+      window.DKFX?.drawCelebration(ctx,f);
+    } else if (f.kind === 'starImpact') {
       MOTION.paintStarImpact(ctx, f);
     } else if (f.kind === 'chestOpen') {
       drawChestReveal(f);
@@ -5960,7 +5971,8 @@ function enhanceTower() {
       t: 0, dur: 1.9, size: 86, color: '#ffd570', realtime: true });
     enhanceResult(t, 'up', `강화 성공 · ★${oldFace} → ★${t.face}`);
     netLog(`${t.def.name} 확률강화에 성공했습니다`, 'up');
-    SFX.win(); syncUI(); return 'up';
+    celebrateStar(t.face,t);
+    if(t.face>=19) SFX.jackpot(); else SFX.win(); syncUI(); return 'up';
   }
   if (r < en.up + en.keep) {
     S.fxs = S.fxs.filter(f => !(f.kind === 'towerHalo' && f.anchorTower === t));

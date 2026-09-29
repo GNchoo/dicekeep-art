@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="casual-theme.css?v=137" />
 <link rel="stylesheet" href="casual-menus.css?v=143" />
 <link rel="stylesheet" href="casual-rewards.css?v=137" />
-<link rel="stylesheet" href="casual-hud.css?v=159" />
+<link rel="stylesheet" href="casual-hud.css?v=160" />
 <link rel="icon" href="ui/gold.png" />
 </head>
 <body>
@@ -36,6 +36,7 @@
 </div>
 <div id="wrap">
   <div id="stage">
+    <button id="wave-btn" class="hidden" type="button">웨이브 시작</button>
     <canvas id="game" width="1024" height="576"></canvas>
     <canvas id="physical-die" width="1024" height="576" class="hidden" aria-hidden="true"></canvas>
     <div id="chest-reveal" class="hidden" role="status" aria-live="polite"></div>
@@ -321,7 +322,6 @@
     </div>
 
     <div id="right-panel">
-      <button id="wave-btn">웨이브 시작</button>
       <button id="battle-assist" class="hidden" type="button">아군 보급 +60 SP</button>
       <div id="battle-status" class="hidden" role="status"></div>
     </div>
@@ -426,8 +426,8 @@
 <script src="infinity-art.js?v=107"></script>
 <script src="extreme-cache.js?v=1"></script>
 <script src="combat-motion.js?v=157"></script>
-<script src="presentation-fx.js?v=157"></script>
+<script src="presentation-fx.js?v=160"></script>
 <script src="reward-audio.js?v=157"></script>
-<script src="game.js?v=159"></script>
+<script src="game.js?v=160"></script>
 </body>
 </html>

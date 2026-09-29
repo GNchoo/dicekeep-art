@@ -1,4 +1,4 @@
-// Rare-die labels must not wrap the first-wave button onto a third phone HUD row.
+// The one-time start belongs to the arena; the bottom toolbar stays readable and clean.
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
@@ -33,7 +33,7 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
             return { x:r.x, y:r.y, w:r.width, h:r.height, right:r.right, bottom:r.bottom,
               font:parseFloat(getComputedStyle(el).fontSize), scroll:el.scrollWidth, client:el.clientWidth };
           };
-          return { hud:rect('hud'), dice:rect('dice-panel'), roll:rect('roll-btn'), cost:rect('roll-cost'),
+          return { stage:rect('stage'), hud:rect('hud'), dice:rect('dice-panel'), roll:rect('roll-btn'), cost:rect('roll-cost'),
             wave:rect('wave-btn'), power:rect('inf-panel'),
             label:document.getElementById('roll-btn').textContent,
             overflow:document.documentElement.scrollWidth > innerWidth };
@@ -41,15 +41,22 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
         const label = `${width}x${height} ${kind}`;
         assert.match(sample.label, /던지기/, `${label}: actual manual-throw state`);
         assert.equal(sample.overflow, false, `${label}: no page overflow`);
-        for (const item of [sample.dice,sample.roll,sample.wave,sample.power]) {
+        for (const item of [sample.dice,sample.roll,sample.power]) {
           assert.ok(item.x >= 0 && item.right <= width + 1 && item.y >= 0 && item.bottom <= height + 1,
             `${label}: HUD control stays on screen ${JSON.stringify(item)}`);
           assert.ok(item.y >= sample.hud.y && item.bottom <= sample.hud.bottom,
             `${label}: HUD contains its controls`);
         }
-        assert.ok(sample.wave.y < sample.dice.bottom && sample.wave.bottom > sample.dice.y,
-          `${label}: wave action stays on the dice row`);
-        assert.ok(sample.wave.x >= sample.dice.right, `${label}: wave and dice do not overlap`);
+        assert.ok(sample.wave.y >= sample.stage.y && sample.wave.bottom <= sample.hud.y,
+          `${label}: initial wave action stays inside the arena above the toolbar`);
+        assert.equal(await page.locator('#hud #wave-btn').count(), 0, 'no wave action in the toolbar');
+        const cards = await page.locator('.inf-face').evaluateAll(nodes => nodes.map(el => {
+          const cs=getComputedStyle(el), r=el.getBoundingClientRect();
+          return {top:cs.borderTopWidth,bottom:cs.borderBottomWidth,shadow:cs.boxShadow,height:r.height};
+        }));
+        assert.ok(cards.every(c=>c.top===c.bottom && c.shadow==='none'), 'power cards have continuous borders');
+        const borders=await page.locator('#tower-panel').evaluate(el=>{const s=getComputedStyle(el);return [s.borderLeftWidth,s.borderRightWidth];});
+        assert.deepEqual(borders,['0px','0px'],'no obsolete toolbar separators');
         assert.ok(sample.cost.scroll <= sample.cost.client + 1, `${label}: subtitle fits its button`);
         if (width <= 480 && height > width) {
           assert.ok(sample.roll.font >= 15 && sample.cost.font >= 13, `${label}: readable throw text`);
@@ -61,7 +68,14 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
         assert.equal(await page.locator('#wave-btn').isVisible(), false, `${label}: first start removes wave control`);
         results.push({ width,height,kind,...sample });
       }
-      console.log(`PASS ${width}x${height}: six rare grades fit before first start; no empty action column afterward`);
+      await page.evaluate(() => {
+        DK.wave=1; DK.heldDie=1; DK.dieFocus=true; DKSLOT.active=false; DK.gold=1000; DKsync(); __galaxyQA.fitStage();
+      });
+      await page.screenshot({path:outputPath(`galaxy-hud/${width}-held.png`)});
+      await page.evaluate(()=>{DK.gold=0;DKsync();});
+      assert.ok(await page.locator('.inf-face').evaluateAll(nodes=>nodes.every(el=>getComputedStyle(el).boxShadow==='none')),
+        'disabled power cards keep the same clean edge');
+      console.log(`PASS ${width}x${height}: in-arena start, six rare grades and clean power cards`);
     }
     assert.deepEqual(errors, [], 'no page errors');
     fs.writeFileSync(outputPath('galaxy-hud/report.json'), JSON.stringify(results,null,2));
