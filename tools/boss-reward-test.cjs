@@ -39,7 +39,7 @@ const S = { mode: 'infinity', phase: 'playing', paused: false, muted: false, gol
   wave: 10, heldDie: 0, enemies: [], texts: [], fxs: [], inf: { queue: [], kills: 0 } };
 const c = { Math: math, window: { DKFX: FX, DKBOSS_AUDIO: { play: (_, __, kind) => sounds.push(kind) } },
   S, SLOT: { active: false }, DIE: { state: 'tray' }, VIEW: {}, COSMETIC: false, document, $, W: 1024, H: 576,
-  audio: () => ({}), SFX_BUS: {}, SFX: { coin() {} }, noise() {}, netLog() {}, syncUI() {},
+  audio: () => ({}), SFX_BUS: {}, SFX: { coin() {} }, noise() {}, netLog() {}, syncUI() {}, hudTopPx() {},
   polyRestR: () => [1, 0, 0, 0, 1, 0, 0, 0, 1], dieShape: k => k,
   dieKindColor: k => ({ d8: '#7fd4ff', d12: '#c78bff', d20: '#ffd452' })[k],
   drawPolyDie: (_, x, y, size, kind) => { assert.ok(size > 0); dice.push(kind); },
