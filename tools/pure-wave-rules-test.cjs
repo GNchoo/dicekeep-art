@@ -1,4 +1,4 @@
-// Clear-only early rounds compress time and HP; later pressure uses the legacy curve.
+// Clear-only difficulty keeps uniform timing and rewards, raises normal and boss health.
 // Keep this contract separate from pure-main-rules-test.cjs and its immutable fixture.
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
@@ -38,7 +38,8 @@ for (let wave = 1; wave <= 101; wave++) {
 
   if (INF.isBossWave(wave)) {
     boss++;
-    assert.deepEqual(JSON.parse(JSON.stringify(clear)), JSON.parse(JSON.stringify(base)), `W${wave} boss profile unchanged`);
+    assert.equal(clear.hpMult, base.hpMult * 6, `W${wave} boss health raised`);
+    assert.deepEqual(JSON.parse(JSON.stringify({...clear, hpMult: base.hpMult})), JSON.parse(JSON.stringify(base)), `W${wave} other boss rules unchanged`);
     continue;
   }
 
@@ -46,7 +47,7 @@ for (let wave = 1; wave <= 101; wave++) {
   const early = wave <= 9;
   const pace = early ? 60 / 140 : 1;
   const pressure = Math.min(24, Math.pow(1.06, Math.max(0, wave - 10)));
-  const growth = wave <= 9 ? 1.6 : wave <= 20 ? 1.4 + (wave - 10) * .18 : wave <= 30 ? 3.2 : Math.max(1, 3.2 - (wave - 30) * .11);
+  const growth = wave <= 9 ? 1.7 : 4;
   const expectedHp = base.hpMult * pace * pressure * growth;
   assert.ok(Math.abs(clear.hpMult - expectedHp) <= Math.max(1, expectedHp) * 1e-12,
     `W${wave} HP ${clear.hpMult} vs ${expectedHp}`);
@@ -66,6 +67,6 @@ for (let wave = 1; wave <= 101; wave++) {
 assert.equal(normal, 91);
 assert.equal(boss, 10);
 assert.equal(firstNineSeconds, 540, 'first nine rounds take nine game minutes (135 seconds at x4)');
-assert.ok(Math.abs(INF.waveForMode(11, 'clear').hpMult / INF.wave(11, true).hpMult - 1.06*1.58)<1e-12);
-assert.equal(INF.waveForMode(101, 'clear').hpMult / INF.wave(101, true).hpMult, 24);
-console.log('PASS pure clear wave rules: nine 60-second rounds / 540 seconds total, proportional HP and spawn pace, 82 later normal curves, 10 unchanged bosses, legacy gold and other modes');
+assert.ok(Math.abs(INF.waveForMode(11, 'clear').hpMult / INF.wave(11, true).hpMult - 1.06*4)<1e-12);
+assert.equal(INF.waveForMode(101, 'clear').hpMult / INF.wave(101, true).hpMult, 96);
+console.log('PASS pure clear wave rules: nine 60-second rounds / 540 seconds total, proportional HP and spawn pace, 82 later normal curves, 10 tougher bosses, legacy gold and other modes');

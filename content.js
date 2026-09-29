@@ -1607,15 +1607,15 @@ window.DKCONTENT = (function () {
     waveForMode(w, key) {
       const mode = this.modeOf(key), result = this.wave(w, mode.gauntlet);
       if (mode.growth) result.hpMult *= mode.hpScale || 1;
+      if (mode.key === 'clear' && this.isBossWave(w)) result.hpMult *= 6;
       if (mode.key === 'clear' && !this.isBossWave(w)) {
         result.roundSeconds = w >= 1 && w <= this.pureRounds.earlyThrough ? this.pureRounds.earlySeconds : this.pureRounds.seconds;
         // Shorter opening rounds retain the spawn/gold budget; compress HP and cadence together.
         const pace = result.roundSeconds / this.pureRounds.seconds;
         result.normalCount = this.pureRounds.count;
         result.gap = (this.pureRounds.spawnEnd - 0.45) / (result.normalCount - 1) * pace;
-        // Early volleys push past the entrance; midgame asks for actual growth.
-        // Blend back to the established late curve by wave 50.
-        const growthPressure = w <= 9 ? 1.6 : w <= 20 ? 1.4 + (w - 10) * .18 : w <= 30 ? 3.2 : Math.max(1, 3.2 - (w - 30) * .11);
+        // Keep pressure after boss rewards; do not ease the health curve after wave 30.
+        const growthPressure = w <= this.pureRounds.earlyThrough ? 1.7 : 4;
         result.hpMult *= pace * growthPressure * Math.min(this.pureRounds.pressureMax,
           Math.pow(this.pureRounds.pressureExp, Math.max(0, w - this.pureRounds.pressureFrom)));
       }
