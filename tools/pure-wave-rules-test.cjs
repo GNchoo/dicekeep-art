@@ -46,7 +46,7 @@ for (let wave = 1; wave <= 101; wave++) {
   const early = wave <= 9;
   const pace = early ? 60 / 140 : 1;
   const pressure = Math.min(24, Math.pow(1.06, Math.max(0, wave - 10)));
-  const growth = wave <= 9 ? 1.4 : wave <= 20 ? 1.4 + (wave - 10) * .18 : wave <= 30 ? 3.2 : Math.max(1, 3.2 - (wave - 30) * .11);
+  const growth = wave <= 9 ? 1.6 : wave <= 20 ? 1.4 + (wave - 10) * .18 : wave <= 30 ? 3.2 : Math.max(1, 3.2 - (wave - 30) * .11);
   const expectedHp = base.hpMult * pace * pressure * growth;
   assert.ok(Math.abs(clear.hpMult - expectedHp) <= Math.max(1, expectedHp) * 1e-12,
     `W${wave} HP ${clear.hpMult} vs ${expectedHp}`);

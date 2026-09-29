@@ -3288,12 +3288,6 @@ function buildInfinityWave(w) {
     });
     t += P.gap * (!P.roundSeconds && FAST_AIR.has(M.base.id) ? 0.72 : 1);
   }
-  if (P.packSize && q.length > 1) {
-    const first=q[0].t, duration=q[q.length-1].t-first;
-    const offset=i=>Math.floor(i/P.packSize)*P.packSize+(i%P.packSize)*P.packGap;
-    const end=offset(q.length-1);
-    q.forEach((item,i)=>{item.t=first+duration*offset(i)/end;});
-  }
   if (P.normalCount) {
     // Keep the round's gold budget, including elites, without rounding away
     // early income when it is split between many more enemies.
