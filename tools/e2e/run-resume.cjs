@@ -111,14 +111,14 @@ fs.mkdirSync(out, { recursive: true });
           assert.deepEqual(Object.values(saved.inf.deckPower),[1,2,3,4,5]);
         }
         await page.click('#exit-btn'); await page.click('#menu-save');
-        assert.ok(await page.locator('#run-resume').isVisible());
+        assert.ok(await page.locator('#run-resume-open').isVisible());
         await page.click('#btn-inf-build');
         assert.equal(await page.evaluate(()=>DK.phase),'lobby','new run cannot silently destroy saved run');
         await page.click('#btn-inf-clear');
         assert.equal(await page.evaluate(()=>DK.phase),'playing','pure mode remains available with unfinished growth run');
         assert.ok(await page.evaluate(()=>__resumeQA.readRunSave(false)));
         await boot(); await page.evaluate(()=>DKlobbyView('single'));
-        await page.click('#run-resume-play'); await page.waitForFunction(()=>DK.phase==='playing');
+        await page.click('#run-resume-open'); await page.click('#run-resume-play'); await page.waitForFunction(()=>DK.phase==='playing');
         assert.deepEqual(await inspect(),expected,'logical combat state survives reload and UI resume');
         if (schema==='legacy') assert.equal(await page.evaluate(()=>__resumeQA.manualChestReady()),false,'interrupted d6 resumes as an automatic roll');
         const restoredGeometry=await geometry();

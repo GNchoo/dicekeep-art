@@ -24,9 +24,12 @@ async function ready(page) {
 }
 async function openCollection(page) {
   await page.click('#ov-btn'); await page.evaluate(() => DKlobbyView('single'));
-  await page.click('#btn-deck-open'); await page.waitForSelector('#deck-presets [data-preset="0"]');
+  await page.click('#lobby-box [data-menu-target=deck]'); await page.click('[data-dice-page=lineup]'); await page.waitForSelector('#deck-presets [data-preset="0"]');
 }
-async function equip(page, index, id) { await slot(page, index).click(); await card(page, id).click(); await page.click('#deck-equip'); }
+async function catalog(page,id) { await page.click('[data-dice-page=catalog]'); const family=await page.evaluate(id=>DKTREERULES.families.find(f=>f.cards.includes(id)).id,id); await page.click(`[data-family="${family}"]`); }
+async function openCard(page,id) { await catalog(page,id); await card(page,id).click(); }
+async function support(page) { await page.click('[data-dice-page=overview]'); await page.click('[data-open-dice=support]'); }
+async function equip(page, index, id) { await page.click('[data-dice-page=lineup]'); await slot(page, index).click(); await openCard(page, id); await page.click('#deck-equip'); }
 async function resources(page, values) {
   await page.evaluate(values => {
     const p = __treeUIQA.getSAVE().progression;
@@ -72,17 +75,17 @@ async function decks(page, row) {
   await preset(page, 1).click();
 }
 async function treeActions(page, row) {
+  await page.click('[data-dice-page=catalog]');
   const families = await page.evaluate(() => DKTREERULES.families);
   check(row, 'tree exposes five distinct four-card families', { families: families.length, cards: new Set(families.flatMap(f => f.cards)).size }, { families: 5, cards: 20 });
   for (const f of families) {
     await page.locator(`#tree-families [data-family="${f.id}"]`).click();
     check(row, f.name + ' filter displays its four cards in prerequisite order', await page.locator('#deck-grid [data-card]').evaluateAll(els => els.map(el => +el.dataset.card)), f.cards);
   }
-  await page.locator('#tree-families [data-family="all"]').click();
-  check(row, 'all-family tree shows every identity once', await page.locator('#deck-grid [data-card]').count(), 20);
+
   row.icons = [];
   for (let id = 1; id <= 20; id++) {
-    await card(page, id).scrollIntoViewIfNeeded();
+    await catalog(page,id);
     await page.waitForFunction(id => { const img = document.querySelector(`#deck-grid [data-card="${id}"] img`); return img?.complete && img.naturalWidth > 0; }, id);
     const icon = await card(page, id).locator('img').first().evaluate(async img => { await img.decode(); return { src: img.currentSrc || img.src, width: img.naturalWidth, height: img.naturalHeight }; });
     row.icons.push({ id, ...icon });
@@ -93,6 +96,7 @@ async function treeActions(page, row) {
   row.icons = row.icons.map(({ src, ...icon }) => ({ ...icon, kind: src.startsWith('data:image/') ? 'generated tower thumbnail' : src }));
   const beforeChoice = await profile(page);
   check(row, 'all three supporters are available without currency', await page.locator('#tree-supporters [data-supporter]').count(), 3);
+  await support(page);
   for (const id of ['crusher', 'barrage', 'supply']) {
     await page.locator(`#tree-supporters [data-supporter="${id}"]`).click();
     const after = await profile(page);
@@ -101,37 +105,38 @@ async function treeActions(page, row) {
   for (const f of families) {
     const last = f.cards[f.cards.length - 1], initial = await profile(page);
     if (!initial.collection.cards[last].owned && !initial.collection.cards[f.cards.at(-2)].owned) {
-      await resources(page, { gold: 100000, shards: 100000 }); await card(page, last).click();
+      await resources(page, { gold: 100000, shards: 100000 }); await openCard(page, last);
       check(row, f.name + ' final card remains locked before its prerequisite', await page.locator('#tree-unlock').isDisabled(), true);
     }
     for (const id of f.cards) {
       if ((await profile(page)).collection.cards[id].owned) continue;
       const cost = await page.evaluate(id => DKTREERULES.unlockCost(id), id);
-      await resources(page, { gold: cost.gold - 1, shards: cost.shards }); await card(page, id).click();
+      await resources(page, { gold: cost.gold - 1, shards: cost.shards }); await openCard(page, id);
       check(row, 'card ' + id + ' unlock disabled below exact gold cost', await page.locator('#tree-unlock').isDisabled(), true);
       if (cost.shards) {
-        await resources(page, { gold: cost.gold, shards: cost.shards - 1 }); await card(page, id).click();
+        await resources(page, { gold: cost.gold, shards: cost.shards - 1 }); await openCard(page, id);
         check(row, 'card ' + id + ' unlock disabled below exact shard cost', await page.locator('#tree-unlock').isDisabled(), true);
       }
-      await resources(page, { gold: cost.gold, shards: cost.shards }); await card(page, id).click();
+      await resources(page, { gold: cost.gold, shards: cost.shards }); await openCard(page, id);
       const before = await profile(page); await page.click('#tree-unlock'); const after = await profile(page);
       check(row, 'card ' + id + ' deterministic unlock spends exact shown resources', { owned: after.collection.cards[id].owned, gold: after.collection.gold, shards: after.shards, mastery: after.tree.mastery[id], rng: after.collection.rng, packs: after.collection.packs }, { owned: true, gold: 0, shards: 0, mastery: 0, rng: before.collection.rng, packs: before.collection.packs });
       for (let other = 1; other <= 20; other++) if (other !== id) assert.deepEqual(after.collection.cards[other], before.collection.cards[other], 'unlock changed unrelated card ' + other);
     }
   }
   check(row, 'all 20 types can be acquired through their five tree paths', Object.values((await profile(page)).collection.cards).filter(c => c.owned).length, 20);
-  await card(page, 1).click();
+  await openCard(page, 1);
   check(row, 'talent requires mastery 2', await page.locator('[data-talent="force"]').isDisabled(), true);
   check(row, 'awakening requires mastery 3', await page.locator('#tree-awaken').isDisabled(), true);
   for (let level = 0; level < 5; level++) {
     const cost = await page.evaluate(level => DKTREERULES.masteryCost(level), level);
-    await resources(page, { gold: cost.gold - 1, shards: cost.shards }); await card(page, 1).click();
+    await resources(page, { gold: cost.gold - 1, shards: cost.shards }); await openCard(page, 1);
     check(row, 'mastery ' + (level + 1) + ' disabled below gold cost', await page.locator('#tree-upgrade').isDisabled(), true);
-    await resources(page, { gold: cost.gold, shards: cost.shards }); await card(page, 1).click();
+    await resources(page, { gold: cost.gold, shards: cost.shards }); await openCard(page, 1);
     const before = await profile(page); await page.click('#tree-upgrade'); const after = await profile(page);
     check(row, 'mastery ' + (level + 1) + ' exact deterministic debit', { mastery: after.tree.mastery[1], gold: after.collection.gold, shards: after.shards, rng: after.collection.rng }, { mastery: level + 1, gold: 0, shards: 0, rng: before.collection.rng });
     if (level + 1 === 2) {
       const baseline = await profile(page);
+      await page.getByRole('button',{name:'특성',exact:true}).click();
       for (const talent of ['force', 'insight', 'force']) {
         await page.locator(`[data-talent="${talent}"]`).click();
         const changed = await profile(page);
@@ -141,8 +146,8 @@ async function treeActions(page, row) {
     }
     if (level + 1 === 3) {
       const awaken = await page.evaluate(() => DKTREERULES.awakeningCost(1));
-      await resources(page, { gold: awaken.gold, shards: awaken.shards }); await card(page, 1).click();
-      await page.click('#tree-awaken'); const awakened = await profile(page);
+      await resources(page, { gold: awaken.gold, shards: awaken.shards }); await openCard(page, 1);
+      await page.getByRole('button',{name:'각성',exact:true}).click(); await page.click('#tree-awaken'); const awakened = await profile(page);
       check(row, 'mastery 3 awakening unlock debits exact one-time cost', { unlocked: awakened.tree.awakenings[1], gold: awakened.collection.gold, shards: awakened.shards }, { unlocked: true, gold: 0, shards: 0 });
       check(row, 'unlocked awakening cannot be charged twice', await page.locator('#tree-awaken').isDisabled(), true);
       check(row, 'detail explains seven-pip awakening trigger', /7\s*눈금/.test(await page.locator('#deck-detail').innerText()), true);
@@ -150,9 +155,9 @@ async function treeActions(page, row) {
   }
   check(row, 'mastery is capped at five in the UI', await page.locator('#tree-upgrade').isDisabled(), true);
   // A progression choice must not throw away an unrelated unsaved deck edit.
-  await equip(page, 0, 4); const pending = await draft(page); await page.locator('#tree-supporters [data-supporter="crusher"]').click();
+  await equip(page, 0, 4); const pending = await draft(page); await support(page); await page.locator('#tree-supporters [data-supporter="crusher"]').click();
   check(row, 'supporter choice preserves an unsaved deck draft', await draft(page), pending);
-  await page.click('#deck-reset');
+  await page.click('[data-dice-page=lineup]'); await page.click('#deck-reset');
   check(row, 'random pack and duplicate-card upgrade UI is retired for tree profiles', { packs: await page.locator('#deck-open-pack:visible').count(), classes: await page.locator('#deck-class-up:visible').count(), craft: await page.locator('#deck-craft:visible').count() }, { packs: 0, classes: 0, craft: 0 });
 }
 async function viewport(browser, tag, size) {
@@ -175,14 +180,14 @@ async function viewport(browser, tag, size) {
     check(row, 'fresh test context has no network or linked commerce', await page.evaluate(() => ({ net: !!DKNET.CFG.url, linked: DKCOMMERCE.linked() })), { net: false, linked: false });
     await layout(page, row, 'initial tree');
     if (layoutOnly) {
-      await card(page, 20).click(); await layout(page, row, 'locked-card detail');
-      await card(page, 20).scrollIntoViewIfNeeded(); await layout(page, row, 'last tree node remains unobscured');
-      await card(page, 1).click();
+      await openCard(page, 20); await layout(page, row, 'locked-card detail');
+      await catalog(page,20); await layout(page, row, 'last tree node remains unobscured');
+      await openCard(page, 1);
     } else { await decks(page, row); await treeActions(page, row); }
     await layout(page, row, 'after tree actions');
     for (const [name, selector] of [['overview', '.deck-heading'], ['supporters', '#tree-supporters'], ['tree', '#deck-grid'], ['detail', '#deck-detail']]) {
       if (!await page.locator(selector).count()) continue;
-      await page.locator(selector).scrollIntoViewIfNeeded(); const file = path.join(out, tag + (layoutOnly ? '-initial-' : '-') + name + '.png');
+      if(name==='supporters')await support(page); if(name==='tree')await catalog(page,1); if(name==='detail')await openCard(page,1); if(!await page.locator(selector).isVisible())continue; const file = path.join(out, tag + (layoutOnly ? '-initial-' : '-') + name + '.png');
       await page.screenshot({ path: file }); row.screenshots.push(file);
     }
     if (!layoutOnly) {

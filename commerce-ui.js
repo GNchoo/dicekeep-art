@@ -37,7 +37,7 @@
       for (const tower of result.towers) { const figure = document.createElement('figure'), image = document.createElement('img'), caption = document.createElement('figcaption'); image.src = tower.url; image.alt = `${P.themes[id].name} ${tower.face}성 타워`; image.width = image.height = 96; caption.textContent = '★' + tower.face; figure.append(image, caption); $('cosmetic-tower-preview').append(figure); }
       $('cosmetic-preview-status').textContent = 'D1·D4·D6은 눈, D8·D12·D20은 숫자를 유지합니다. 미리보기는 소유권이나 게임 외형을 바꾸지 않습니다.';
     } catch (error) { if (revision === previewRevision) $('cosmetic-preview-status').textContent = error.message + ' 기본 스킨으로 계속 플레이할 수 있습니다.'; }
-    finally { previewBusy = false; render(); }
+    finally { previewBusy = false; render(); if(revision===previewRevision&&!$('shop').classList.contains('hidden'))window.DKMENUPAGES?.open('테마 미리보기', [canvas, ...$('cosmetic-tower-preview').children, $('cosmetic-preview-status')]); }
   }
   function renderCosmetics(list, state, enabled, profile) {
     const container = $('cosmetic-products'), P = window.DKCOSMETICS; if (!container || !P) return;

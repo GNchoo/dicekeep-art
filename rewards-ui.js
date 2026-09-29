@@ -4,6 +4,7 @@
   const daily = [[100, 3], [120, 3], [140, 4], [160, 4], [180, 5], [200, 5], [300, 10]];
   const state = { api: null, view: null, tab: 'attendance', loading: false, busy: false, error: '', notice: '', generation: 0, context: 0, helpOpen: new Set() };
   let dialog, body, status, account, tabBar, review, opener;
+  const pages = {attendance:0, mail:0, pass:0};
   const el = (tag, className, text) => { const node = document.createElement(tag); if (className) node.className = className; if (text != null) node.textContent = text; return node; };
   const button = (text, fn, className) => { const node = el('button', className || 'rw-button', text); node.type = 'button'; node.addEventListener('click', fn); return node; };
   const api = () => state.api || window.DKREWARDS;
@@ -77,7 +78,7 @@
       grid.append(card);
     }); panel.append(grid);
     const action = el('div', 'rw-attendance-action');
-    action.append(claimButton(attendance.claimedToday ? '오늘 출석 완료' : '출석 보상 받기', () => perform('claimAttendance', [], '출석 보상을 받았습니다.'), !!attendance.claimedToday, 'rewards-attendance-claim'));
+    action.append(claimButton(attendance.claimedToday ? '오늘 출석 완료' : `${next}회차 출석 보상 받기`, () => perform('claimAttendance', [], '출석 보상을 받았습니다.'), !!attendance.claimedToday, 'rewards-attendance-claim'));
     action.append(el('p', 'rw-detail', '출석마다 +' + number(attendance.xp ?? 20) + ' XP · 7회 출석 뒤 다시 1회차'));
     panel.append(action);
   }
@@ -91,7 +92,12 @@
     items.forEach(mail => {
       const expired = typeof mail.expired === 'boolean' ? mail.expired : (!!mail.expiresAt && +new Date(mail.expiresAt) <= Date.now()), card = el('article', 'rw-mail' + (mail.claimed || expired ? ' rw-mail-done' : '')); card.dataset.mailId = mail.id;
       const top = el('div', 'rw-mail-heading'); top.append(el('h4', '', mail.title || '성채 우편'), el('span', 'rw-mail-label', mail.claimed ? '보관함' : expired ? '기간 만료' : '도착한 선물'));
-      card.append(top, el('p', 'rw-mail-body', mail.body || ''));
+      card.append(top, el('p', 'rw-mail-body', String(mail.body || '').slice(0,80)+(String(mail.body || '').length>80?'…':'')));
+      if(String(mail.body || '').length>80) {
+        const source=el('div','menu-source'),chunks=String(mail.body).match(/[\s\S]{1,180}/gu)||[];
+        const pages=chunks.map(text=>el('p','rw-detail',text));source.append(...pages);
+        card.append(button('우편 내용 보기',()=>window.DKMENUPAGES?.open(mail.title||'우편 내용',pages)),source);
+      }
       const attachments = el('div', 'rw-mail-attachments'); attachments.append(rewards(mail.reward || mail));
       const receive = claimButton(mail.claimed ? '수령 완료' : expired ? '기간 만료' : '보상 받기', () => perform('claimMail', [mail.id], '우편 보상을 받았습니다.'), mail.claimed || expired); receive.dataset.claimMail = mail.id;
       attachments.append(receive); card.append(attachments, el('p', 'rw-mail-dates', '발행 ' + date(mail.createdAt) + ' · 만료 ' + date(mail.expiresAt) + ' (한국 시간)')); list.append(card);
@@ -147,6 +153,21 @@
     if (data) ({ attendance: renderAttendance, mail: renderMail, pass: renderPass })[state.tab](panel, data);
     else panel.append(el('p', 'rw-empty rw-detail', state.error ? '연결을 확인한 뒤 다시 불러와 주세요.' : '출석과 성장 보상을 준비하고 있어요.'));
     body.append(panel);
+    const selector = {attendance:'.rw-day',mail:'.rw-mail',pass:'.rw-pass-tier'}[state.tab];
+    const items = [...panel.querySelectorAll(selector)];
+    pages[state.tab] = Math.min(pages[state.tab], Math.max(0,items.length-1));
+    items.forEach((item,i)=>item.hidden=i!==pages[state.tab]);
+    if(state.tab==='pass') {
+      const info=[...panel.querySelectorAll(':scope > .rw-pass-hero,:scope > .rw-help,:scope > .rw-pass-offer')];
+      const storage=el('div','menu-source');storage.append(...info);panel.append(storage);
+      panel.prepend(button('패스 안내 · 구매 정보',()=>window.DKMENUPAGES?.open('성장 패스 안내',info),'rw-button'));
+    }
+    if(items.length>1) {
+      const nav=el('nav','page-controls');nav.setAttribute('aria-label','보상 페이지');
+      const prev=button('이전',()=>{pages[state.tab]--;render();}),next=button('다음',()=>{pages[state.tab]++;render();});
+      prev.disabled=pages[state.tab]===0;next.disabled=pages[state.tab]===items.length-1;
+      nav.append(prev,el('span','',`${pages[state.tab]+1} / ${items.length}`),next);panel.append(nav);
+    }
   }
   async function refresh() {
     const service = api(), generation = ++state.generation;
@@ -181,6 +202,7 @@
   async function open(tab, options={}) {
     create();if(!dialog.open)opener=document.activeElement;
     if(options.view){state.view=options.view;state.error='';state.notice='';state.loading=false;}
+    if((tab||state.tab)==='attendance')pages.attendance=Math.max(0,Math.min(6,((options.view||api()?.current?.()||state.view)?.attendance?.nextDay||1)-1));
     select(tab||state.tab);if(!dialog.open)dialog.showModal();document.getElementById('rewards-tab-'+state.tab).focus();
     window.dispatchEvent(new CustomEvent('rewards:opened',{detail:{tab:state.tab,automatic:options.automatic===true}}));
     if(!options.view)await refresh();

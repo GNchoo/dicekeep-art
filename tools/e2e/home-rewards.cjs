@@ -108,11 +108,12 @@ async function linkedCase(browser) {
   check('Mailbox and pass tabs have the same claimable indicators',await tabDot(page,'mail').isVisible()&&await tabDot(page,'pass').isVisible());
   await page.click('[data-claim-mail="available"]');await page.waitForFunction(()=>document.querySelector('[data-claim-mail="available"]')?.disabled);await page.evaluate(()=>DKHOME.refresh());
   check('Last available mail clears both mailbox indicators',!await dot(page,'mail').isVisible()&&!await tabDot(page,'mail').isVisible());
-  await page.click('#rewards-tab-pass');await page.click('[data-claim-pass="2:free"]');await page.waitForFunction(()=>document.querySelector('[data-claim-pass="2:free"]')?.disabled);await page.evaluate(()=>DKHOME.refresh());
+  await page.click('#rewards-tab-pass');await page.locator('.rw-panel > .page-controls button').last().click();await page.click('[data-claim-pass="2:free"]');await page.waitForFunction(()=>document.querySelector('[data-claim-pass="2:free"]')?.disabled);await page.evaluate(()=>DKHOME.refresh());
   check('Premium rewards requiring purchase do not create a false dot',!await dot(page,'pass').isVisible()&&!await tabDot(page,'pass').isVisible());
   fixture.premium=true;await page.evaluate(async()=>{DKREWARDS.changed();await DKHOME.refresh();await DKREWARDSUI.open('pass');});
   check('Owned premium with earned unclaimed rewards creates a dot',await dot(page,'pass').isVisible()&&await tabDot(page,'pass').isVisible());
-  for(const tier of [1,2]){await page.click(`[data-claim-pass="${tier}:premium"]`);await page.waitForFunction(tier=>document.querySelector(`[data-claim-pass="${tier}:premium"]`)?.disabled,tier);}
+  if(await page.locator('.rw-panel > .page-controls button').first().isEnabled())await page.locator('.rw-panel > .page-controls button').first().click();
+  for(const tier of [1,2]){if(tier===2)await page.locator('.rw-panel > .page-controls button').last().click();await page.click(`[data-claim-pass="${tier}:premium"]`);await page.waitForFunction(tier=>document.querySelector(`[data-claim-pass="${tier}:premium"]`)?.disabled,tier);}
   await page.evaluate(()=>DKHOME.refresh());check('All earned rewards claimed clears pass dot despite unreached tiers',!await dot(page,'pass').isVisible()&&!await tabDot(page,'pass').isVisible());
   await page.click('#rewards-close');await page.screenshot({path:path.join(out,'linked-home.png')});
   check('Only the selected local mail was claimed',fixture.requests.filter(r=>r.endpoint==='/mail/claim').map(r=>r.payload.id),['available']);

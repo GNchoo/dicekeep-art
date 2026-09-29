@@ -2173,6 +2173,7 @@ function openInfHelp() {
   if (t) t.textContent = '튜토리얼 · ' + DKCONTENT.INFINITY.modeOf(S.inf && S.inf.mode).name;
   h.classList.remove('hidden');
   if (scroll) scroll.querySelector('ol')?.scrollTo(0, 0);
+  window.DKMENUPAGES?.help();
 }
 function closeInfHelp() {
   const h = $('inf-help'); if (h) h.classList.add('hidden');
@@ -6066,6 +6067,7 @@ function openDeckMenu() {
   $('deck-panel').classList.remove('hidden');
   $('btn-deck-open').setAttribute('aria-expanded', 'true');
   renderDeck(true);
+  window.DKDECKUI.open();
   $('deck-panel').setAttribute('tabindex', '-1');
   $('deck-panel').focus({preventScroll:true});
 }
@@ -6449,7 +6451,10 @@ function hudTopPx(force = false) {
   if (!force && now - HUD_TOP.at < 500) return HUD_TOP.v;
   HUD_TOP.at = now;
   const cr = canvas.getBoundingClientRect(); let bottom = 0;
-  for (const id of ['stats', 'mini-top']) { const el = $(id); if (!el || el.classList.contains('hidden')) continue; const r = el.getBoundingClientRect(); if (r.height > 0) bottom = Math.max(bottom, r.bottom - cr.top); }
+  const sr = stageEl.getBoundingClientRect(), controls = miniEl.getBoundingClientRect();
+  $('wave-btn').style.top = (controls.bottom - sr.top + 8) + 'px';
+  $('wave-btn').style.right = Math.max(0, sr.right - controls.right) + 'px';
+  for (const id of ['stats', 'mini-top', 'wave-btn']) { const el = $(id); if (!el || el.classList.contains('hidden')) continue; const r = el.getBoundingClientRect(); if (r.height > 0) bottom = Math.max(bottom, r.bottom - cr.top); }
   HUD_TOP.v = Math.max(58, Math.round(bottom + 6));
   const noticeTop = (HUD_TOP.v + HUD_TIMER_HEIGHT + 8) + 'px';
   if (stageEl.style.getPropertyValue('--stage-notice-top') !== noticeTop) stageEl.style.setProperty('--stage-notice-top', noticeTop);
@@ -6973,7 +6978,7 @@ function pushRoomChat(name, text, color, pid) {
     who.addEventListener('click', () => mpReportMenu(pid, name));
   }
   box.appendChild(el);
-  while (box.childElementCount > 30) box.removeChild(box.firstChild);
+  while (box.querySelectorAll('.mp-chat-line').length > 30) box.querySelector('.mp-chat-line').remove();
   box.scrollTop = box.scrollHeight;
 }
 function clearRoomChat() { const box = $('mp-chat-lines'); if (box) box.innerHTML = ''; MP_MUTED.clear(); }
