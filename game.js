@@ -62,11 +62,11 @@ const BOSS_ENTRANCE = 1.25; // 보스 등장 연출 시간(초)
 // 모든 타워는 공중 적을 때릴 수 있다 (canAir 는 전부 true — 공중 적의 기믹은 '동선 무시 직행'뿐)
 const TOWER_DEFS = {
   1: { name: '궁수 주사위', desc: '붉은 렌즈 속사',        dmg: 8,  rate: 0.50, range: 150, laser: true,                 canAir: true,  color: '#9fd463', topper: 'laserMuzzle' },
-  2: { name: '대포 주사위', desc: '쌍포 광역 포격',     dmg: 22, rate: 1.60, range: 135, proj: 'shell',      pspd: 300, splash: 60, canAir: true,  color: '#e0862c', topper: 'muzzleFlash' },
-  3: { name: '마법 주사위', desc: '자수정 마력탄',      dmg: 24, rate: 0.95, range: 165, proj: 'bolt',       pspd: 430, canAir: true,  color: '#b78bff', topper: 'bolt' },
-  4: { name: '서리 주사위', desc: '사방 냉기 둔화',     dmg: 8,  rate: 0.80, range: 140, proj: 'frostShard', pspd: 400, slow: true, canAir: true, color: '#7fd4ff', topper: 'frostShard' },
-  5: { name: '전격 주사위', desc: '연쇄 번개',          dmg: 16, rate: 1.10, range: 150, chain: true, canAir: true, color: '#ffe86b', topper: 'spark' },
-  6: { name: '폭군 주사위', desc: '최강! 폭발 주사위 투척', dmg: 40, rate: 1.25, range: 175, proj: 'dieBomb', pspd: 340, splash: 55, canAir: true,  color: '#ff5555', topper: 'dieBomb' },
+  2: { name: '대포 주사위', desc: '집중 포격 · 주변 2마리 25% 피해',     dmg: 32, rate: 1.60, range: 150, proj: 'shell',      pspd: 300, splash: 60, splashTargets: 3, splashFalloff: 0.25, canAir: true,  color: '#e0862c', topper: 'muzzleFlash' },
+  3: { name: '마법 주사위', desc: '자수정 마력탄',      dmg: 32, rate: 0.95, range: 165, proj: 'bolt',       pspd: 430, canAir: true,  color: '#b78bff', topper: 'bolt' },
+  4: { name: '서리 주사위', desc: '사방 냉기 둔화',     dmg: 40, rate: 0.80, range: 165, proj: 'frostShard', pspd: 400, slow: true, canAir: true, color: '#7fd4ff', topper: 'frostShard' },
+  5: { name: '전격 주사위', desc: '연쇄 번개',          dmg: 60, rate: 1.10, range: 170, chain: true, canAir: true, color: '#ffe86b', topper: 'spark' },
+  6: { name: '폭군 주사위', desc: '최강! 폭발 주사위 투척', dmg: 72, rate: 1.25, range: 175, proj: 'dieBomb', pspd: 340, splash: 55, canAir: true,  color: '#ff5555', topper: 'dieBomb' },
 };
 // 성(★) 타워 7~20: 인피니티 보물상자의 다면체 주사위에서만 나온다. 6눈(폭군)을 바탕으로 기하급수 강화.
 const STAR_BANDS = [
@@ -83,7 +83,7 @@ for (let g = 7; g <= 20; g++) {
   const perkDesc = perk === 'primal' ? ' · 태초: 트랙 전체 스플래시, 공속 ×1.25' : perk === 'myth' ? ' · 신화: 공속 ×1.5' : perk === 'epic' ? ' · 에픽: 방어 무시 + 락다운' : '';
   TOWER_DEFS[g] = {
     name: `${b.name} ★${g}`, desc: `${g}성 히든 타워 · 고유 마력 공격${perkDesc}`, star: g,
-    dmg: Math.round(40 * Math.pow(1.28, k)), rate: +(1.25 * Math.pow(0.97, k)).toFixed(3), range: 175 + 5 * k,
+    dmg: Math.round(72 * Math.pow(1.28, k)), rate: +(1.25 * Math.pow(0.97, k)).toFixed(3), range: 175 + 5 * k,
     proj: 'dieBomb', pspd: 340 + 6 * k, splash: 55 + 4 * k, canAir: true, color: b.color, rainbow: !!b.rainbow, topper: 'dieBomb',
     perk,
   };
@@ -4099,6 +4099,7 @@ function towerFire(t, dt) {
       launchOffset: [visualFrom.x - from.x, visualFrom.y - from.y], visualAge: 0,
       groundFlight, travelled: 0,
       spd: t.def.pspd * arenaWorldScale(), dmg, splash: (pulse ? 100 : towerSplash(t)) * arenaWorldScale(),
+      splashTargets: t.def.splashTargets || 0, splashFalloff: t.def.splashFalloff ?? 1,
       star: t.def.star || 0, fxFace: t.def.star || 0,
       color: t.def.star ? starColor(t.def) : null, trail: t.def.star ? null : [],
       slow: t.def.slow ? { pct: towerSlowPct(t), dur: deckRun()?deckStats(t).slowDur:1.8 } : null,
@@ -4185,13 +4186,13 @@ function projHit(p) {
     for (const e of S.enemies) if (!e.dead) damageEnemy(e, p.dmg, p.src);
     starImpact(p, hx, hy);
   } else if (p.splash) {
-    for (const e of S.enemies) {
-      if (e.dead) continue;
-      const ep = epos(e);
-      // 광역 피해는 시각적 몸통 중심이 아닌 경로의 바닥 좌표끼리 비교한다.
-      // 적 크기나 가로·세로 화면 배율이 달라도 같은 상대 범위를 맞힌다.
-      if (Math.hypot(ep.x - tp.x, ep.y - tp.y) <= p.splash) damageEnemy(e, p.dmg, p.src);
+    let hits = S.enemies.filter(e => !e.dead && Math.hypot(epos(e).x - tp.x, epos(e).y - tp.y) <= p.splash);
+    if (p.splashTargets) {
+      // Keep the aimed enemy at full damage, then hit only the nearest neighbours.
+      hits.sort((a,b) => a === p.tgt ? -1 : b === p.tgt ? 1 : Math.hypot(epos(a).x-tp.x,epos(a).y-tp.y)-Math.hypot(epos(b).x-tp.x,epos(b).y-tp.y));
+      hits = hits.slice(0, p.splashTargets);
     }
+    for (const e of hits) damageEnemy(e, p.dmg * (e === p.tgt ? 1 : (p.splashFalloff ?? 1)), p.src);
     if (p.star) {
       starImpact(p, hx, hy);
     } else if (p.kind === 'dieBomb' || p.kind === 'die6') {
@@ -5929,7 +5930,7 @@ function syncInfo() {
   $('info-dice').src = dieIconURL(t.face);
   $('info-name').textContent = `${t.def.name} · ${deckRun() ? DECK.pips(t)+'눈금'+(towerAwakened(t)?' · 각성':'') : 'Lv'+t.lvl}`;
   const bits = [`피해 ${Math.round(towerDmg(t))}`, `사거리 ${Math.round(towerRange(t))}`];
-  if (t.def.splash) bits.push(`광역 ${Math.round(towerSplash(t))}`);
+  if (t.def.splash) bits.push(t.def.splashTargets ? `주변 ${t.def.splashTargets - 1}마리 ${Math.round(t.def.splashFalloff * 100)}% 피해` : `광역 ${Math.round(towerSplash(t))}`);
   if (t.def.slow) bits.push(`둔화 ${Math.round(towerSlowPct(t) * 100)}%`);
   if (t.def.chain) bits.push(`연쇄 ${towerChain(t)}회`);
   if (deckRun()) { bits.push(`공격 ${ (1/towerRate(t)).toFixed(1) }회/초`,t.def.desc,DECK.pips(t)<7 ? '같은 종류·눈금 합성 → 무작위 종류 +1눈금' : '최대 7눈금'); }

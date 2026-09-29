@@ -32,6 +32,10 @@ function mechanical(table) {
     Object.entries(table.towers.TOWER_DEFS).map(([face, original]) => {
       const tower = { ...original };
       for (const key of ['name', 'desc', 'color', 'topper', 'rainbow', 'atk']) delete tower[key];
+      // v169 deliberately retunes base damage and low-rank reach; tower-damage-test covers their progression.
+      if (+face >= 2) delete tower.dmg;
+      if ([2,4,5].includes(+face)) delete tower.range;
+      delete tower.splashTargets; delete tower.splashFalloff;
       return [face, tower];
     })) };
   const waves = table.waves.map(({ wave, values, monster }) => {
@@ -57,5 +61,6 @@ for (let face = 1; face <= 20; face++) {
 }
 const current = mechanical(currentTable), reference = mechanical(referenceTable);
 assert.deepEqual(current, reference);
+require('./tower-damage-test.cjs');
 require('./pure-wave-rules-test.cjs'); // Clear-only pacing and HP policy, all 101 waves.
-console.log('PASS frozen 55204fe economy/odds, legacy wave donors, 20 base tower rules and removed size matchups');
+console.log('PASS frozen 55204fe economy/odds, legacy wave donors, unchanged tower mechanics outside the v169 damage/reach retune and removed size matchups');
