@@ -1,9 +1,10 @@
 (function () {
   'use strict';
   const C = window.DKCOMMERCE, $ = id => document.getElementById(id);
-  let playProducts = null, querying = false, previewBusy = false, previewRevision = 0;
+  let playProducts = null, querying = false, previewBusy = false, previewRevision = 0, previewPager;
   const report = error => { if ($('commerce-status')) $('commerce-status').textContent = C.errorText(error); };
   const productArt = (src) => { const img=document.createElement('img'); img.src=src; img.alt=''; img.loading='lazy'; img.className='shop-product-art'; return img; };
+  const productLabel = text => { const label=document.createElement('small'); label.className='shop-product-label'; label.textContent=text; return label; };
   const draft = [
     { sku: 'shards200', kind: 'currency', shards: 200, amount: 1100, currency: 'KRW', playProductId: 'dicekeep.shards200' },
     { sku: 'shards600', kind: 'currency', shards: 600, amount: 3300, currency: 'KRW', playProductId: 'dicekeep.shards600' },
@@ -37,7 +38,16 @@
       for (const tower of result.towers) { const figure = document.createElement('figure'), image = document.createElement('img'), caption = document.createElement('figcaption'); image.src = tower.url; image.alt = `${P.themes[id].name} ${tower.face}성 타워`; image.width = image.height = 96; caption.textContent = '★' + tower.face; figure.append(image, caption); $('cosmetic-tower-preview').append(figure); }
       $('cosmetic-preview-status').textContent = 'D1·D4·D6은 눈, D8·D12·D20은 숫자를 유지합니다. 미리보기는 소유권이나 게임 외형을 바꾸지 않습니다.';
     } catch (error) { if (revision === previewRevision) $('cosmetic-preview-status').textContent = error.message + ' 기본 스킨으로 계속 플레이할 수 있습니다.'; }
-    finally { previewBusy = false; render(); if(revision===previewRevision&&!$('shop').classList.contains('hidden'))window.DKMENUPAGES?.open('테마 미리보기', [canvas, ...$('cosmetic-tower-preview').children, $('cosmetic-preview-status')]); }
+    finally {
+      previewBusy = false; render();
+      if(revision===previewRevision&&!$('shop').classList.contains('hidden')&&window.DKMENUPAGES){
+        let gallery=$('shop-theme-preview');if(!gallery){gallery=document.createElement('section');gallery.id='shop-theme-preview';gallery.className='shop-preview-page';$('cosmetic-preview').append(gallery);}
+        const dice=document.createElement('figure');dice.className='shop-preview-dice';const caption=document.createElement('figcaption');caption.textContent='6종 주사위 · 실제 재질';dice.append(canvas,caption);
+        gallery.replaceChildren(dice,$('cosmetic-tower-preview'),$('cosmetic-preview-status'));
+        previewPager?.();previewPager=window.DKMENUPAGES.listPages($('cosmetic-tower-preview'),'figure',5);
+        window.DKMENUPAGES.open(P.themes[id].name+' 미리보기',[gallery]);
+      }
+    }
   }
   function renderCosmetics(list, state, enabled, profile) {
     const container = $('cosmetic-products'), P = window.DKCOSMETICS; if (!container || !P) return;
@@ -45,12 +55,15 @@
     for (const product of [{ kind: 'cosmetic', skinId: 'base', amount: 0 }, ...list.filter(p => p.kind === 'cosmetic')]) {
       const id = product.skinId, base = id === 'base', owned = authority.owned.includes(id), equipped = authority.equipped === id;
       const card = document.createElement('article'); card.className = 'cosmetic-product cosmetic-' + id; card.dataset.theme = id;
-      card.append(productArt(base ? 'casual/towers/t1-a.png?v=casual3' : `casual/towers/skins/${id}/t01.png`));
+      const visual=document.createElement('div');visual.className='shop-theme-art';
+      if(base)visual.append(productArt('casual/towers/t1-a.png?v=casual3'));
+      else for(const face of ['01','12','20'])visual.append(productArt(`casual/towers/skins/${id}/t${face}.png`));
+      card.append(visual,productLabel(base?'기본 테마':'테마 외형 묶음'));
       const title = document.createElement('h4'); title.textContent = base ? '나의 상아 성채' : P.themes[id].name;
       const detail = document.createElement('p'); detail.textContent = base ? '기본 주사위와 성채 외형' : '주사위 재질 6종 + 고유 타워 1~20성';
       const status = document.createElement('p'); status.className = 'cosmetic-status'; status.textContent = art.loading.includes(id) ? '그림을 불러오는 중…' : art.failures[id] ? '그림 준비 중 · 기본 스킨 유지' : equipped ? (art.active === id ? '장착 중' : '장착 그림 준비 중') : owned ? '소유 중' : '외형 묶음 · 전투 효과 없음';
       card.append(title, detail, status);
-      if (!base) { const show = document.createElement('button'); show.type = 'button'; show.dataset.preview = id; show.textContent = '6종 주사위 · 20종 타워 보기'; show.disabled = previewBusy; show.addEventListener('click', () => preview(id)); card.append(show); }
+      if (!base) { const show = document.createElement('button'); show.type = 'button'; show.dataset.preview = id; show.textContent = '무료 미리보기'; show.disabled = previewBusy; show.addEventListener('click', () => preview(id)); card.append(show); }
       const button = document.createElement('button'); button.type = 'button';
       if (owned) {
         button.dataset.equip = id; button.textContent = equipped ? '장착 중' : '장착'; button.disabled = equipped || !profile || state.busy || previewBusy || !P.canEquip();
@@ -75,27 +88,30 @@
     $('commerce-restore').disabled = !profile || state.busy;
     $('commerce-signin').disabled = !state.configured || !cfg || !cfg.googleClientId;
     $('commerce-availability').textContent = !enabled ? '상점 준비 중 · 현재 실제 결제는 청구되지 않습니다.' : cfg.paymentMode === 'test' ? '테스트 결제 · 실제 판매 전 검증 환경' : '확정 수량 구매 · 결제 전 최종 금액을 확인해 주세요.';
+    if($('shop-sale-state'))$('shop-sale-state').textContent=!enabled?'실제 판매 준비 중':cfg.paymentMode==='test'?'테스트 결제 환경':'확정 상품 구매';
     const container = $('commerce-products'); container.replaceChildren();
     for (const product of list.filter(p => p.kind === 'currency')) {
       const nativeProduct = playProducts && playProducts.find(p => p.productId === product.playProductId);
       const card = document.createElement('article'); card.className = 'commerce-product';
       const name = document.createElement('h4'); name.textContent = `성장 조각 ${product.shards.toLocaleString()}개`;
-      card.append(productArt('ui/rewards/growth-shards.webp'));
-      const detail = document.createElement('p'); detail.textContent = '무료 조각과 동일 · 대전·협동 기본 보상 1분당 8조각 · 연구 골드는 플레이로 획득';
+      card.append(productArt('ui/rewards/growth-shards.webp'),productLabel('성장 재료 · 확정 지급'));
+      const detail = document.createElement('p'); detail.textContent = '주사위 해금 · 숙련 · 각성 연구 재료';
+      const note=document.createElement('small');note.className='shop-product-note';note.textContent='무료 플레이 조각과 동일 · 연구 골드는 전투에서 획득';
       const button = document.createElement('button'); button.type = 'button'; button.dataset.sku = product.sku;
       const price = state.native ? nativeProduct && nativeProduct.formattedPrice : `${product.amount.toLocaleString()}원`;
       button.textContent = !enabled ? `${product.amount.toLocaleString()}원 · 준비 중` : state.native && !nativeProduct ? '스토어 가격 확인 중' : `${price} · 구매`;
       button.disabled = !enabled || !profile || state.busy || (state.native && !nativeProduct);
       button.addEventListener('click', () => reviewPurchase(product, price));
-      card.append(name, detail, button); container.appendChild(card);
+      card.append(name, detail, note, button); container.appendChild(card);
     }
     if (window.DKREWARDSUI) {
       const card = document.createElement('article'); card.className = 'commerce-product';
       const name = document.createElement('h4'); name.textContent = '기한 없는 성장 패스';
-      card.append(productArt('ui/rewards/growth-pass.webp'));
-      const detail = document.createElement('p'); detail.textContent = '무료 20단계 · 선택 구매 2,900원 · 조각 200개와 왕실 외형 · 달성 후 수령 · 자동 갱신 없음';
+      card.append(productArt('ui/rewards/growth-pass.webp'),productLabel('플레이 보상 · 기한 없음'));
+      const detail = document.createElement('p'); detail.textContent = '무료 20단계 · 플레이로 달성하고 보상 수령';
+      const note=document.createElement('small');note.className='shop-product-note';note.textContent='선택 구매 2,900원 · 조각 200개 + 왕실 외형 · 자동 갱신 없음';
       const button = document.createElement('button'); button.type = 'button'; button.textContent = '무료 보상 · 패스 보기'; button.onclick = () => window.DKREWARDSUI.open('pass');
-      card.append(name,detail,button); container.append(card);
+      card.append(name,detail,note,button); container.append(card);
     }
     const accountInfo = $('commerce-account-id');
     if (accountInfo) accountInfo.textContent = state.accountId ? '계정 ID: ' + state.accountId : '';
