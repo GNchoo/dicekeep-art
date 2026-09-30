@@ -6260,7 +6260,7 @@ function syncInfButtons() {
       const cards = group.chapters.map((theme, i) => {
         const start = group.first + i * 10, end = start + 9;
         const boss = theme.boss || INF.directionalArt(end, 0)?.name || '보스';
-        const roster=Array.from({length:10},(_,j)=>{const w=start+j,art=INF.directionalArt(w,0);return art?.entry?.views?.side?.still?`<figure><div class="roster-portrait"><img loading="lazy" src="${art.entry.views.side.still}" alt="${art.name}"></div><figcaption><small>${w}웨이브${j===9?' · 보스':''}</small><b>${art.name}</b></figcaption></figure>`:'';}).join('');
+        const roster=Array.from({length:10},(_,j)=>{const w=start+j,art=INF.directionalArt(w,0);return art?.entry?.views?.side?.still?`<figure><div class="roster-portrait"><img loading="lazy" src="${artLoadUrl(art.entry.views.side.still)}" alt="${art.name}"></div><figcaption><small>${w}웨이브${j===9?' · 보스':''}</small><b>${art.name}</b></figcaption></figure>`:'';}).join('');
         return `<div class="theme-guide-card" style="--theme-accent:${theme.accent}"><span class="theme-guide-range">${start}~${end}웨이브</span><b class="theme-guide-name">${theme.name}</b><p>${theme.summary||theme.foes}</p><div class="theme-roster">${roster}</div><span class="theme-guide-members">${theme.foes}</span><span class="theme-guide-boss">보스 · ${boss}</span></div>`;
       }).join('');
       return `<h3 class="theme-guide-group">${group.heading}<small> · ${group.finale}는 별도 관문</small></h3>${cards}`;
