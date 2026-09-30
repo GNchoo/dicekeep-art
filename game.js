@@ -4481,7 +4481,7 @@ function drawPortraitTowerLabel(t, fontPx) {
   const candidates = deckRun() || t.deckSystem
     ? [`눈${level}`, String(level)]
     : [`Lv${level}`, `L${level}`, String(level)];
-  const gap = grade ? 4 : 0, padding = 7, maxWidth = 92;
+  const gap = grade ? 4 : 0, padding = 7, maxWidth = 100;
   ctx.save();
   ctx.font = uiFont(fontPx); ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
   const gradeW = grade ? ctx.measureText(grade).width : 0;
@@ -4493,7 +4493,7 @@ function drawPortraitTowerLabel(t, fontPx) {
   }
   const detailW = ctx.measureText(detail).width;
   const w = Math.min(maxWidth, gradeW + (grade ? gap : 0) + detailW + padding * 2);
-  const h = fontPx + 8, x = t.x - w / 2, y = t.y + 17 - h / 2;
+  const h = fontPx + 4, x = t.x - w / 2, y = t.y + 17 - h / 2;
   ctx.fillStyle = 'rgba(10,8,14,0.88)';
   ctx.beginPath(); ctx.roundRect(x, y, w, h, h / 2); ctx.fill();
   ctx.strokeStyle = star ? starColor(t.def) : 'rgba(232,182,74,0.85)';
