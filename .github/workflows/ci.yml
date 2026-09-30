@@ -176,6 +176,7 @@ jobs:
           npm run test:mobile-controls
           npm run test:galaxy-hud
           npm run test:hud-notice-layout
+          npm run test:hud-interaction
           npm run test:tower-move
           npm run test:speed-cycle
       - name: presentation-fx (연속 상자·레이어·강화 버튼·입자 이동)

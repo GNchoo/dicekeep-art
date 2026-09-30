@@ -2010,15 +2010,22 @@ const manualChestReady = () => manualChestRoll() && SLOT.phase === -1 && DIE.sta
 // Unopened rewards stay in the same saved queue as ordinary dice. Opening
 // replaces just one token, so held/rolling dice and rapid taps cannot lose it.
 let BOSS_REWARD = null;
+function bossRewardBlocked() {
+  return S.heldDie || SLOT.active || DIE.state !== 'tray' || S.selTower
+    || MOVE.armed || MOVE.tower || MOVE.picking || DRAG.active
+    || menuOpen() || settingsOpen() || !$('inf-help').classList.contains('hidden')
+    || document.querySelector('dialog[open]');
+}
 function bossRewardSound(kind) {
   if (S.muted || COSMETIC) return;
   try { window.DKBOSS_AUDIO?.play(audio(), SFX_BUS, kind); } catch (_) { /* audio may be unavailable */ }
 }
 function openBossReward() {
-  const reward = BOSS_REWARD, index = S.inf?.queue.indexOf('boss');
-  if (!reward || reward.inf !== S.inf || reward.kind || S.phase !== 'playing' || !(index >= 0)) return false;
+  const reward = BOSS_REWARD;
+  if (!reward || reward.inf !== S.inf || reward.kind || S.phase !== 'playing'
+      || S.inf.queue[0] !== 'boss' || bossRewardBlocked() || !canPlaceAnywhere()) return false;
   const kind = chestDef().drawBoss();
-  S.inf.queue[index] = kind;
+  S.inf.queue[0] = kind;
   reward.kind = kind; reward.t = 0; reward.sounded = false;
   reward.pose = polyRestR(dieShape(kind));
   $('boss-reward-open').setAttribute('aria-disabled', 'true');
@@ -2036,16 +2043,23 @@ function updateBossReward(dt) {
   if (BOSS_REWARD && (BOSS_REWARD.inf !== S.inf || S.phase !== 'playing' || VIEW.pid)) {
     BOSS_REWARD = null; panel.classList.add('hidden');
   }
-  if (!BOSS_REWARD && S.phase === 'playing' && !S.paused && !VIEW.pid && !deckRun() && S.inf?.queue.includes('boss')) {
+  const blocked = bossRewardBlocked();
+  if (BOSS_REWARD && !BOSS_REWARD.kind && blocked) {
+    BOSS_REWARD = null; panel.classList.add('hidden'); syncUI();
+  }
+  if (!BOSS_REWARD && !S.paused && !VIEW.pid && !deckRun() && canStartRoll()
+      && !blocked && canPlaceAnywhere() && S.inf?.queue[0] === 'boss') {
     BOSS_REWARD = { inf: S.inf, t: 0, kind: null };
     panel.classList.remove('hidden'); panel.dataset.grade = 'closed'; hudTopPx(true);
     $('boss-reward-title').textContent = '보스 보상';
     $('boss-reward-message').textContent = '상자를 터치하세요';
     $('boss-reward-open').setAttribute('aria-disabled', 'false');
     bossRewardSound('appear');
+    syncUI();
   }
   const reward = BOSS_REWARD;
   if (!reward) return;
+  panel.classList.toggle('hidden', !!blocked);
   reward.t += dt;
   if (reward.kind && reward.t >= .48 && !reward.sounded) {
     reward.sounded = true; bossRewardSound(reward.kind);
@@ -2263,7 +2277,7 @@ function canPlaceAnywhere() {
 function pumpQueue() {
   if (S.mode !== 'infinity' || !S.inf || !S.inf.queue || !S.inf.queue.length) return;
   if (S.inf.queue[0] === 'boss' || BOSS_REWARD) return; // Only a player tap opens boss rewards.
-  if (!canStartRoll()) return;
+  if (!canStartRoll() || bossRewardBlocked()) return;
   if (!canPlaceAnywhere()) return;   // 자리가 날 때까지 보상은 큐에 남는다
   if (deckRun() ? rollDie('d20',DECK.draw(S.inf.growthSnapshot.deck)) : rollDie(S.inf.queue[0])) S.inf.queue.shift();   // 굴림이 실제로 시작됐을 때만 큐에서 뺀다 (주사위가 조용히 사라지지 않게)
 }
@@ -2276,6 +2290,7 @@ function finishSlot() {
   ROLL_SHOW.face = SLOT.final; ROLL_SHOW.faceIndex = SLOT.faceIndex; ROLL_SHOW.physical = physical;
   S.heldDie = SLOT.final;
   S.dieFocus = true;      // 새로 온 주사위는 배치 모드로 시작
+  S.selTower = null;
   if (SLOT.final <= 6) SFX.coin();   // ★7+ 는 acquireFx 가 소리를 낸다 (겹침 방지)
   diceSlot.classList.add('pop');
   setTimeout(() => diceSlot.classList.remove('pop'), 350);
@@ -3483,7 +3498,8 @@ function checkInfClear() {
   if (!INF || !S.inf || S.mode !== 'infinity') return false;
   const line = S.inf.clearWave;
   if (!line || S.wave < line || S.inf.doneW < line || S.inf.cleared) return false;
-  if (!deckRun() && (BOSS_REWARD || S.inf.queue.includes('boss'))) return false;
+  // Completed full boards settle without waiting for unused battle dice.
+  if (!deckRun() && S.towers.length < SPOTS.length && (BOSS_REWARD || S.inf.queue.includes('boss'))) return false;
   S.inf.cleared = 1;
   S.shakeT = Math.max(S.shakeT || 0, 0.5);
   for (let i = 0; i < 5; i++) S.fxs.push({ kind: 'ring', x: W / 2, y: 200, t: 0, dur: 1.1 + i * 0.25, size: 160 + i * 60, color: '#ffd452' });
@@ -5451,7 +5467,7 @@ function draw() {
     let fs = Math.round(17 / sc);
     const map = S.mode === 'infinity' && DKCONTENT.maps.find(m => m.key === S.mapKey);
     const boardTop = map?.board?.y ?? Infinity;
-    // 작은 가로 화면에서는 중앙 말풍선이 타워 지붕을, 세로 화면에서는 적의 위쪽 진입로를 가린다.
+    // 좁은 화면은 문구만 줄이고 안내 위치는 상단 중앙에 유지한다.
     const compact = !!map && (map.arenaPortrait || boardTop < hudTopPx() / sc + fs + 18 + 8 / sc);
     if (compact) {
       msg = picking ? '옮길 칸 선택 · 타워는 교환' : bossT > 0
@@ -5459,14 +5475,14 @@ function draw() {
         : roundT > 0 ? `${normalRoundLabel()} · ${Math.floor(Math.ceil(roundT) / 60)}:${String(Math.ceil(roundT) % 60).padStart(2, '0')}`
         : S.wave === 0 ? '뽑기 후 석단에 배치' : `다음 웨이브 · ${cd}초`;
     }
-    const sideWidth = compact ? (map.arenaPortrait ? W / 2 - 40 : Math.max(130, W - map.track.R - 24)) : W - 40;
+    const sideWidth = W - 40;
     ctx.font = uiFont(fs);
     while (fs > 12 && ctx.measureText(msg).width > sideWidth - 20) { fs -= 1; ctx.font = uiFont(fs); }
     const tw = ctx.measureText(msg).width;
     const pw = Math.min(sideWidth, tw + 34), ph = HUD_TIMER_HEIGHT / sc;
     // 좌상단 칩·우상단 미니 버튼(HTML) 바로 아래. 높이는 화면 기준이라 캔버스로 환산한다 (좁은 세로 화면은 미니 버튼이 둘째 줄로 내려온다)
     const by = Math.round(hudTopPx() / sc + ph / 2);
-    const bx = compact ? (map.arenaPortrait ? W / 4 : W - pw / 2 - 16) : W / 2;
+    const bx = W / 2;
     ctx.fillStyle = picking ? 'rgba(8,34,52,0.82)' : bossT > 0 ? 'rgba(46,8,8,0.78)' : 'rgba(14,10,6,0.72)';                         // 보스: 붉은 말풍선, 30초 밑이면 테두리·글자가 깜빡인다
     ctx.strokeStyle = picking ? 'rgba(127,212,255,0.9)' : urgent ? (Math.floor(S.time * 2) % 2 ? 'rgba(255,110,110,0.95)' : 'rgba(255,60,60,0.6)') : bossT > 0 ? 'rgba(255,140,120,0.65)' : 'rgba(232,182,74,0.5)';
     ctx.lineWidth = urgent ? 2 : 1.5;
@@ -5579,7 +5595,7 @@ function fitStage() {
   const { availW, availH, gap } = wrapAvail();
   // 좁은 가로(작은 폰 가로): 겹침 HUD 한 줄이 안 들어가면 부품을 줄이고(narrow), 그래도 모자라면 파워업 줄을 아래로(xnarrow)
   wrapEl.classList.toggle('narrow', over && availW < 760);
-  wrapEl.classList.toggle('xnarrow', over && availW < 600);
+  wrapEl.classList.toggle('xnarrow', over && availW < 520);
   wrapEl.classList.toggle('short', !inf && availH < 480);
   // 우상단 미니 버튼 폭 → 좌상단 칩이 비킬 여유 (버튼 수가 멀티에서 늘어난다)
   stageEl.style.setProperty('--mini-w', miniEl.classList.contains('hidden') ? '0px' : miniEl.offsetWidth + 'px');
@@ -5804,7 +5820,7 @@ function syncUIRest() {
     if (chestReveal()) rollBtn.childNodes[0].nodeValue='개봉 중';
     if (manualReady) { rollBtn.childNodes[0].nodeValue='던지기'; rollBtn.title='상자 주사위를 직접 끌어 던지거나 이 버튼으로 물리 투척합니다. 추가 비용은 없습니다.'; }
     rollBtn.classList.toggle('manual-roll', manualReady);
-    const busy = SLOT.active || !!S.heldDie;
+    const busy = SLOT.active || !!S.heldDie || !!BOSS_REWARD;
     const full = !busy && !canPlaceAnywhere();   // 빈 칸도 합체 여지도 없다
     $('roll-cost').textContent = manualReady ? `${chestDef().grade[SLOT.kind]} ${chestDef().label[SLOT.kind]} · 추가 비용 0G` : chestReveal() ? `${chestDef().grade[SLOT.kind]} ${chestDef().label[SLOT.kind]}` : SLOT.active ? '굴리는 중…' : S.heldDie ? (S.dieFocus ? '배치 후 가능' : '주사위 보류 중') : full ? '석단이 가득 참' : `${cost} ${deckRun()?'SP':'G'}`;
     rollBtn.disabled = !manualReady && (busy || full || !(S.inf && S.phase === 'playing' && S.gold >= cost));
@@ -6466,14 +6482,16 @@ function hudTopPx(force = false) {
   HUD_TOP.at = now;
   const cr = canvas.getBoundingClientRect(); let bottom = 0;
   const sr = stageEl.getBoundingClientRect(), controls = miniEl.getBoundingClientRect();
-  $('wave-btn').style.top = (controls.bottom - sr.top + 8) + 'px';
   $('wave-btn').style.right = Math.max(0, sr.right - controls.right) + 'px';
-  for (const id of ['stats', 'mini-top', 'wave-btn']) { const el = $(id); if (!el || el.classList.contains('hidden')) continue; const r = el.getBoundingClientRect(); if (r.height > 0) bottom = Math.max(bottom, r.bottom - cr.top); }
+  for (const id of ['stats', 'mini-top']) { const el = $(id); if (!el || el.classList.contains('hidden')) continue; const r = el.getBoundingClientRect(); if (r.height > 0) bottom = Math.max(bottom, r.bottom - cr.top); }
   HUD_TOP.v = Math.max(58, Math.round(bottom + 6));
+  $('wave-btn').style.top = (cr.top - sr.top + HUD_TOP.v + HUD_TIMER_HEIGHT + 8) + 'px';
   const noticeTop = (HUD_TOP.v + HUD_TIMER_HEIGHT + 8) + 'px';
   if (stageEl.style.getPropertyValue('--stage-notice-top') !== noticeTop) stageEl.style.setProperty('--stage-notice-top', noticeTop);
   const reward = $('boss-reward'), safeTop = cr.top + HUD_TOP.v + HUD_TIMER_HEIGHT + 8;
-  const safeBottom = Math.min(cr.bottom, hudEl.getBoundingClientRect().top) - 8;
+  const info = $('info-panel');
+  const safeBottom = Math.min(cr.bottom, hudEl.getBoundingClientRect().top,
+    info.classList.contains('hidden') ? Infinity : info.getBoundingClientRect().top) - 8;
   Object.assign(reward.style, { top:safeTop+'px', left:cr.left+'px', width:cr.width+'px', height:Math.max(0,safeBottom-safeTop)+'px', bottom:'auto', right:'auto' });
   return HUD_TOP.v;
 }
@@ -7119,7 +7137,7 @@ window.DKAPP = {
   saveRun: () => { try { persistRun(); if (growthRun() && !S.net && S.phase === 'playing') openMenu(); } catch (_) {} },
   toast,
   back() {
-    if (BOSS_REWARD) return true;
+    if (BOSS_REWARD && !$('boss-reward').classList.contains('hidden')) return true;
     const dialogs = document.querySelectorAll('dialog[open]');
     if (dialogs.length) { dialogs[dialogs.length - 1].close(); return true; }
     if (settingsOpen()) { closeSettings(); return true; }
@@ -7287,7 +7305,7 @@ $('lobby-back').addEventListener('click', () => { audio(); lobbyShow('hub'); });
 // Menus and rewards never suspend live combat, in solo or multiplayer.
 function menuOpen() { return !$('menu').classList.contains('hidden'); }
 function openMenu() {
-  if (BOSS_REWARD) return;
+  if (BOSS_REWARD && !$('boss-reward').classList.contains('hidden')) return;
   if (S.phase !== 'playing' && S.phase !== 'spectate') return;
   audio();
   $('menu').classList.remove('hidden');

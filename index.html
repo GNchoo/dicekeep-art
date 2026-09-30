@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="casual-theme.css?v=137" />
 <link rel="stylesheet" href="casual-menus.css?v=163" />
 <link rel="stylesheet" href="casual-rewards.css?v=137" />
-<link rel="stylesheet" href="casual-hud.css?v=166" />
+<link rel="stylesheet" href="casual-hud.css?v=177" />
 <link rel="stylesheet" href="menu-pages.css?v=176" />
 <link rel="icon" href="ui/gold.png" />
 </head>
@@ -37,7 +37,7 @@
 </div>
 <div id="wrap">
   <div id="stage">
-    <button id="wave-btn" class="hidden" type="button">웨이브 시작</button>
+    <button id="wave-btn" class="hidden" type="button" aria-label="웨이브 시작">웨이브 시작</button>
     <canvas id="game" width="1024" height="576"></canvas>
     <canvas id="physical-die" width="1024" height="576" class="hidden" aria-hidden="true"></canvas>
     <div id="chest-reveal" class="hidden" role="status" aria-live="polite"></div>
@@ -49,14 +49,6 @@
       <span class="chip"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#ffd452" stroke-width="2.2" stroke-linecap="round"><path d="M4 12c0-2.2 1.6-3.6 3.4-3.6 2.6 0 3.6 3.6 6.2 3.6 1.8 0 3.4-1.4 3.4-3.6M4 12c0 2.2 1.6 3.6 3.4 3.6 2.6 0 3.6-3.6 6.2-3.6 1.8 0 3.4 1.4 3.4 3.6"/></svg></span><b id="wave-val">웨이브 0 / 10</b></span>
     </div>
 
-    <!-- 로그·채팅 오버레이: 화면에 잠깐 남았다 사라진다. 로그는 싱글에서도, 채팅은 멀티에서만 -->
-    <div id="log-panel">
-      <div id="log-lines"></div>
-      <form id="chat-form" class="hidden" autocomplete="off">
-        <span id="chat-tag">전체</span>
-        <input id="chat-input" type="text" maxlength="120" placeholder="메시지를 입력하고 Enter" />
-      </form>
-    </div>
     <div id="mini-top" class="mini hidden">
       <button id="chat-btn" class="hidden" data-icon="chat" title="채팅">&#128172;</button>
       <button id="speed-btn" data-icon="speed1" title="현재 1배속 · 누르면 2배속" aria-label="현재 1배속 · 누르면 2배속">x1</button>
@@ -327,6 +319,13 @@
       <button id="help-btn" title="튜토리얼 · 게임 방법" aria-label="튜토리얼 · 게임 방법">?</button>
     </div>
     <div id="supporter-panel" class="hidden" aria-label="전투 서포터"><div><b id="supporter-name"></b><small id="supporter-note"></small></div><button id="supporter-use" type="button">능력 사용</button></div>
+    <div id="log-panel" role="log" aria-live="polite" aria-label="전투 알림">
+      <div id="log-lines"></div>
+      <form id="chat-form" class="hidden" autocomplete="off">
+        <span id="chat-tag">전체</span>
+        <input id="chat-input" type="text" maxlength="120" placeholder="메시지를 입력하고 Enter" />
+      </form>
+    </div>
   </div>
 </div>
 <dialog id="enhance-confirm" aria-labelledby="enhance-confirm-title" aria-describedby="enhance-confirm-desc">
@@ -417,7 +416,7 @@
 <script src="combat-motion.js?v=157"></script>
 <script src="presentation-fx.js?v=160"></script>
 <script src="reward-audio.js?v=157"></script>
-<script src="game.js?v=175"></script>
+<script src="game.js?v=177"></script>
 <script src="menu-pages.js?v=176"></script>
 </body>
 </html>

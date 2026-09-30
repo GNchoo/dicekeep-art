@@ -34,13 +34,17 @@ const out = outputPath('boss-reward'); fs.mkdirSync(out, { recursive: true });
           const live=DK.enemies.at(-1);live.hp=live.maxHp=1e9;live.dist=400;
           DK.waveActive=true;DK.gold=100000;
           __bossQA.updateBossReward(0);
-          return {queue:DK.inf.queue.slice(),time:DK.time,waveT:DK.waveT,dist:live.dist,draws:__bossDraws};
+          return {queue:DK.inf.queue.slice(),time:DK.time,waveT:DK.waveT,dist:live.dist,draws:__bossDraws,
+            hidden:document.getElementById('boss-reward').classList.contains('hidden')};
         },kind);
         assert.deepEqual(initial.queue,['boss']); assert.equal(initial.draws,0);
+        assert.equal(initial.hidden,true,'unopened reward waits while a tower is held');
         await page.waitForTimeout(130);
         const live=await page.evaluate(()=>({time:DK.time,waveT:DK.waveT,dist:DK.enemies.at(-1).dist,inert:document.getElementById('wrap').inert}));
         assert.ok(live.time>initial.time&&live.waveT>initial.waveT&&live.dist>initial.dist,'unopened reward keeps combat, wave clock and monsters advancing');
         assert.equal(live.inert,false,'reward leaves combat controls interactive');
+        await page.evaluate(()=>{DKplace(7);__bossQA.updateBossReward(0);});
+        assert.equal(await page.locator('#boss-reward').isVisible(),true,'reward becomes available once the held tower is placed');
         const safe=await page.evaluate(()=>{const panel=document.querySelector('#boss-reward').getBoundingClientRect(),hud=document.querySelector('#hud').getBoundingClientRect();return {bottom:panel.bottom,hudTop:hud.top,inside:[...document.querySelectorAll('#boss-reward-title,#boss-reward-open,#boss-reward-message,#boss-reward-odds')].every(e=>{const r=e.getBoundingClientRect();return r.top>=panel.top&&r.bottom<=panel.bottom+1;})};});
         assert.ok(safe.inside&&safe.bottom<=safe.hudTop,'reward labels stay between the timer and bottom HUD');
         const button=page.locator('#boss-reward-open'); await button.tap();
@@ -56,7 +60,7 @@ const out = outputPath('boss-reward'); fs.mkdirSync(out, { recursive: true });
             menu:!document.getElementById('menu').classList.contains('hidden'),
             boxes:ids.map(id=>{const e=document.getElementById(id),r=e.getBoundingClientRect();return{id,x:r.x,y:r.y,right:r.right,bottom:r.bottom,font:parseFloat(getComputedStyle(e).fontSize)};})};
         });
-        assert.deepEqual(state.queue,[kind]); assert.equal(state.draws,1); assert.equal(state.held,4);
+        assert.deepEqual(state.queue,[kind]); assert.equal(state.draws,1); assert.equal(state.held,0);
         assert.equal(state.paused,false); assert.equal(state.menu,false);
         for(const box of state.boxes){assert.ok(box.x>=0&&box.y>=0&&box.right<=viewport.width+1&&box.bottom<=viewport.height+1,JSON.stringify(box));}
         assert.ok(state.boxes.find(b=>b.id==='boss-reward-message').font>=18);
