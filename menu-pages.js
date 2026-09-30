@@ -78,6 +78,7 @@
   listPages(accountGuide,'article',()=>{if(matchMedia('(min-aspect-ratio:4/3) and (max-height:640px)').matches)return 1;const height=(accountPage.clientHeight-$('#shop .commerce-account-actions').clientHeight-24)/2;return height>=260?3:Math.max(1,Math.floor((height-44)/90));});
   listPages(policy,'.shop-policy-card',1);
   listPages($('#stage-grid'),'.stage-cell',()=>innerWidth>innerHeight?5:9);
+  listPages($('#tree-supporters'),'.supporter-card',1);
   // Long help lists become individual pages; the text is preserved rather than truncated.
   let disposeHelp;
   const single=$('#lobby-single'),links=document.createElement('div');links.className='menu-battle-links';
