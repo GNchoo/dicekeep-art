@@ -93,6 +93,25 @@ test('boss boundaries use server real time; battle summaries reject x3/x4 and pe
   h.msg(A,{t:'clear',w:101,k:0});assert.equal(h.state.phase,'playing');
   const before=clone(b);h.now=b.t0-1;h.report(A,'leak',{count:100});assert.deepEqual(b,before,'no pre-start damage');
 });
+
+test('grade and saved deck battle summaries both qualify, while kills and boss leaks retain server authority',()=>{
+  for(const mode of ['duel','coop']) {
+    const h=harness(mode,'175').start(),b=h.state.game.battle;
+    const sum={t:'sum',w:1,dw:0,l:0,g:400,k:0,f:0,sp:1,hid:0,b:null,o:'p',gs:1,tw:[[0,1,1],[1,7,2],[2,20,3]]};
+    for(const patch of [{gs:undefined},{sp:2},{sp:3},{sp:4}]) {
+      const r=h.msg(A,{...sum,...patch});assert.ok(messages(r).some(m=>m.code==='mode'));
+      assert.equal(h.live.players[A].sum,null);assert.equal(h.state.players[A].wave,0);
+    }
+    assert.ok(!messages(h.msg(A,sum)).some(m=>m.t==='err'));assert.equal(h.live.players[A].sum.gs,1);
+    h.now+=1000;h.msg(A,sum);assert.equal(b.seats[A].activeSeconds,1);
+    assert.equal(mode==='coop'?b.teamLives:b.seats[A].lives,20,'summary cannot claim HP');
+    h.report(A,'kill',{count:5});assert.equal(b.seats[A].kills,5);
+    h.report(A,'leak',{count:1,boss:true});assert.equal(mode==='coop'?b.teamLives:b.seats[A].lives,15);
+    const {gs,...legacy}=sum;
+    assert.ok(!messages(h.msg(B,{...legacy,ds:1,tw:[[0,7,1,1],[1,8,1,3],[2,20,1,7]]})).some(m=>m.t==='err'));
+    assert.equal(h.live.players[B].sum.ds,1,'saved deck clients still qualify');
+  }
+});
 test('battle schema discards claimed winners/HP/amount and rejects malformed seq/count/flags',()=>{
   const m={t:'battle',matchId:'room:1:2',seq:1,kind:'leak',count:1,boss:false};
   assert.deepEqual(parse(JSON.stringify({...m,hp:0,winner:A,sp:999})).m,m);

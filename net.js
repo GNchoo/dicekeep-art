@@ -527,6 +527,7 @@ window.DKNET = (function () {
   // 요약 — 서버 스키마 범위로 자르고(위반은 서버가 폐기한다) 타워는 최대 15개
   function sum(o) {
     o = o || {};
+    if (o.gs !== undefined && (o.gs !== 1 || o.ds !== undefined)) return false;
     const deck = (R.mode === 'extreme' || battleMode(R.mode)) && o.ds === 1;
     const tw = (Array.isArray(o.tw) ? o.tw : []).slice(0, 15)
       .filter((t) => Array.isArray(t) && t.length >= 3)
@@ -539,6 +540,7 @@ window.DKNET = (function () {
       o: o.o === 'p' ? 'p' : 'l',
       tw,
       ...(deck ? { ds:1 } : {}),
+      ...(o.gs === 1 ? { gs:1 } : {}),
     };
     if (o.ll != null) m.ll = int(o.ll, 0, 100000);
     if (typeof o.en === 'string') m.en = o.en.replace(/[^0-9;,]/g, '').slice(0, EN_MAX);   // 적 스트림 "i,d,h;…" (보는 사람이 있을 때만)

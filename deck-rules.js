@@ -118,5 +118,78 @@
     const hp=(isBoss ? 900+85*Math.pow(step,1.5) : 48+4.4*Math.pow(step,1.45))*scale*(elite?1.7:1)/(isBoss?Math.max(1,count):1);
     return { hp:Math.round(hp),armor:Math.min(50,Math.floor(step/12)+cycle*2),gold:isBoss?120:5+Math.floor(step/20) };
   }
-  return Object.freeze({ VERSION:1,catalog,get,rarities,validDeck,draw,summon,canMerge,canCopy,merge,pips,powerCost,summonCost,adjacent,stats,preview,enemyStats,treeSnapshot,awakened,awakeningInfo,talentInfo,supporterInfo });
+  // Original grade combat is shared by the game and its growth/combination guide.
+  const gradeBases = [
+    ['궁수','속사','붉은 렌즈 속사',{dmg:8,rate:.5,range:150,laser:true,color:'#9fd463',topper:'laserMuzzle'}],
+    ['대포','광역','집중 포격 · 주변 2마리 25% 피해',{dmg:32,rate:1.6,range:150,proj:'shell',pspd:300,splash:60,splashTargets:3,splashFalloff:.25,color:'#e0862c',topper:'muzzleFlash'}],
+    ['마법','마법','자수정 마력탄',{dmg:32,rate:.95,range:165,proj:'bolt',pspd:430,color:'#b78bff',topper:'bolt'}],
+    ['서리','제어','사방 냉기 둔화',{dmg:40,rate:.8,range:165,proj:'frostShard',pspd:400,slow:true,color:'#7fd4ff',topper:'frostShard'}],
+    ['전격','연쇄','연쇄 번개',{dmg:60,rate:1.1,range:170,chain:true,color:'#ffe86b',topper:'spark'}],
+    ['폭군','광역','폭발 주사위 투척',{dmg:72,rate:1.25,range:175,proj:'dieBomb',pspd:340,splash:55,color:'#ff5555',topper:'dieBomb'}],
+  ];
+  const gradeCatalog = Object.freeze(Array.from({length:20},(_,i)=>{
+    const grade=i+1;
+    let shortName,role,description,base;
+    if(grade<=6) [shortName,role,description,base]=gradeBases[i];
+    else {
+      const k=grade-6,perk=grade>=20?'primal':grade>=18?'myth':grade>=14?'epic':null;
+      shortName=grade<=10?'별빛 첨탑':grade<=14?'성운 요새':grade<=18?'천공 옥좌':'차원 군주';
+      role=perk==='primal'?'전체 광역':perk==='myth'?'고속 광역':perk==='epic'?'방어 무시':'광역';
+      description=perk==='primal'?'트랙 전체 광역 · 공격속도 ×1.25':perk==='myth'?'광역 공격 · 공격속도 ×1.5':perk==='epic'?'방어 무시 · 확률 기절':'고유 마력 광역 공격';
+      base={star:grade,dmg:Math.round(72*Math.pow(1.28,k)),rate:+(1.25*Math.pow(.97,k)).toFixed(3),range:175+5*k,proj:'dieBomb',pspd:340+6*k,splash:55+4*k,color:grade<=10?'#7fd4ff':grade<=14?'#c78bff':grade<=18?'#ffd452':'#ff7ad9',rainbow:grade>=19,topper:'dieBomb',perk};
+    }
+    const name=grade<=6?shortName+' 주사위':shortName+' ★'+grade;
+    return Object.freeze({id:grade,grade,name,shortName,role,description,stats:Object.freeze({...base,canAir:true,name,desc:description})});
+  }));
+  const gradeGet = face => gradeCatalog[Number(face)-1] || null;
+  const gradeRange=(start,end)=>Array.from({length:end-start+1},(_,i)=>start+i);
+  const gradeSynergyCatalog=Object.freeze([
+    {id:'swift',name:'속사 지원',groups:[[1],gradeRange(2,20)],rate:1.1,description:'궁수 옆의 다른 타워 공격속도 +10%'},
+    {id:'frost',name:'빙결 포격',groups:[[4],[2,5,...gradeRange(6,20)]],slowDamage:1.2,description:'서리 옆 광역 타워가 둔화된 적에게 피해 +20%'},
+    {id:'arcane',name:'마력 공명',groups:[[3],gradeRange(7,20)],damage:1.12,description:'마법 옆 7강 이상 타워 피해 +12%'},
+    {id:'stars',name:'별빛 진형',groups:[gradeRange(7,10),gradeRange(11,13)],damage:1.1,both:true,description:'7~10강과 11~13강을 나란히 두면 양쪽 피해 +10%'},
+    {id:'ascension',name:'초월 연계',groups:[gradeRange(14,17),gradeRange(18,20)],damage:1.1,both:true,description:'14~17강과 18~20강을 나란히 두면 양쪽 피해 +10%'},
+  ].map(s=>Object.freeze({...s,groups:Object.freeze(s.groups.map(g=>Object.freeze(g)))})));
+  function gradeSynergies(t,board=[],columns=5) {
+    const result={damage:1,rate:1,slowDamage:1,active:[]};
+    if(!gradeGet(t?.face)||t.moving)return result;
+    const neighbors=board.filter(n=>!n.moving&&adjacent(t,n,columns));
+    for(const s of gradeSynergyCatalog){
+      const applies=s.groups[1].includes(t.face)&&neighbors.some(n=>s.groups[0].includes(n.face))
+        ||s.both&&s.groups[0].includes(t.face)&&neighbors.some(n=>s.groups[1].includes(n.face));
+      if(!applies)continue;
+      result.active.push(s.id);
+      for(const key of ['damage','rate','slowDamage'])result[key]=Math.max(result[key],s[key]||1);
+    }
+    return result;
+  }
+  const gradeTalentInfo=(face,choice)=>gradeGet(face)&&['force','insight'].includes(choice)?{name:choice==='force'?'집중':'통찰',description:choice==='force'?'해당 강 타워 피해 +10%':'해당 강 타워 공격속도 +10%'}:null;
+  const gradeAwakeningInfo=face=>gradeGet(face)?{name:'성채 각성',description:'해당 강 타워 피해 +15% · 연구 완료 후 전투 시작부터 적용'}:null;
+  const gradeSupporterInfo=id=>({supply:{...supporterRows.supply,description:'80 + 필드 총 강(최대 40) 골드를 얻습니다.'},crusher:{...supporterRows.crusher,description:'선택한 타워를 해체하고 강당 40골드를 얻습니다. 타워는 사라집니다.'},barrage:{...supporterRows.barrage,description:'선두 최대 8명에게 80 + 필드 총 강 × 18 피해를 줍니다. 보스 피해는 25%입니다.'}}[id]||null);
+  function gradeGrowth(face,snapshot={}) {
+    if(snapshot.growth===false||!gradeGet(face))return 1;
+    if(snapshot.treeVersion===1)return (1+.03*(snapshot.mastery?.[face]||0))*(snapshot.talents?.[face]==='force'?1.1:1)*(snapshot.awakenings?.[face]?1.15:1);
+    if(!snapshot.levels?.[face])return 1;
+    if(snapshot.classes)return 1+.03*(snapshot.classes[face]-get(face).baseClass);
+    const level=Math.min(snapshot.levels[face],snapshot.levelCap),base=1+.08*(Math.min(level,20)-1);
+    const result=snapshot.levelCap>20&&level>20?base*Math.pow(1.08,level-20):base;
+    return Number.isFinite(result)&&result>=1?result:1;
+  }
+  // Lv1 / power0 / armor0. Slow-target bonus is conditional and shown separately.
+  function gradePreview(faces,snapshot={},columns=5) {
+    const input=faces.map((t,i)=>typeof t==='number'?{face:t,spot:i,lvl:1}:t);
+    let direct=0,solo=0;
+    const active=new Set(),board=input.map(t=>{
+      const c=gradeGet(t.face);if(!c)throw Error('1~20강 타워가 필요합니다.');
+      const synergy=gradeSynergies(t,input,columns),lvl=Math.floor(clamp(t.lvl,1,3));
+      const research=gradeGrowth(t.face,snapshot);
+      const growth=snapshot.growth===false?1:Math.max(research,Number.isFinite(t.growthCarry)?t.growthCarry:1);
+      const talentSpeed=snapshot.growth!==false&&snapshot.treeVersion===1&&snapshot.talents?.[t.face]==='insight'?1.1:1;
+      const damage=c.stats.dmg*[1,1.6,2.4][lvl-1]*growth,rate=c.stats.rate*[1,.92,.85][lvl-1]/(c.stats.perk==='myth'?1.5:c.stats.perk==='primal'?1.25:1)/talentSpeed;
+      const dps=damage*synergy.damage/rate*synergy.rate;direct+=dps;solo+=damage/rate;synergy.active.forEach(id=>active.add(id));
+      return {...t,lvl,damage:damage*synergy.damage,rate:rate/synergy.rate,range:c.stats.range+[0,12,24][lvl-1],dps,active:synergy.active,slowDamage:synergy.slowDamage};
+    });
+    return {board,direct,boss:direct,solo,active:[...active]};
+  }
+  return Object.freeze({ VERSION:1,catalog,get,rarities,validDeck,draw,summon,canMerge,canCopy,merge,pips,powerCost,summonCost,adjacent,stats,preview,enemyStats,treeSnapshot,awakened,awakeningInfo,talentInfo,supporterInfo,gradeCatalog,gradeGet,gradeSynergyCatalog,gradeSynergies,gradeGrowth,gradePreview,gradeTalentInfo,gradeAwakeningInfo,gradeSupporterInfo });
 });

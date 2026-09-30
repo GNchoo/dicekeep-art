@@ -1595,8 +1595,8 @@ window.DKCONTENT = (function () {
     // 계정 성장은 build/extreme에만 적용한다. 순수운빨 라운드 규칙은 별도로 둔다.
     modes: {
       clear: { key: 'clear', name: '순수운빨', sub: '101웨이브 · 계정 성장 미적용 · 기존 뽑기 확률', gauntlet: true, clearWave: 101, growth: false },
-      build: { key: 'build', name: '덱빌드', sub: '101웨이브 · 5종 조합 · 눈금 합성과 전투 강화', gauntlet: true, clearWave: 101, growth: true },
-      extreme: { key: 'extreme', name: '극한', sub: '끝없는 웨이브 · 수집한 덱으로 도전', gauntlet: false, clearWave: 0, growth: true },
+      build: { key: 'build', name: '성장·조합', sub: '101웨이브 · 1~20강 · 운빨과 배치 연계', gauntlet: true, clearWave: 101, growth: true },
+      extreme: { key: 'extreme', name: '극한', sub: '끝없는 웨이브 · 20강 성장과 배치 연계', gauntlet: false, clearWave: 0, growth: true },
       duel: { key: 'duel', name: '1대1 대전', sub: '2인 · 5처치마다 적 전송 · 상대 성채를 먼저 무너뜨리기', gauntlet: false, clearWave: 0, growth: true },
       coop: { key: 'coop', name: '2인 협동', sub: '공동 목숨 20 · 합계 700처치 · 아군에게 SP 보급', gauntlet: false, clearWave: 0, growth: true },
     },

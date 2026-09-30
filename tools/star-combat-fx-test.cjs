@@ -10,7 +10,7 @@ function section(source, start, end) { const a=source.indexOf(start),b=source.in
 function trace(source, face) {
   const enemies = [0, 35, 350].map((x, i) => ({ x, y: 0, dist: 100-i, hp: 1e9, dead: false, def: { size: 42 } }));
   const S={mode:'infinity',towers:[],enemies,projs:[],beams:[],fxs:[],texts:[]};
-  const ctx={S,Math,Number,window:{},LANES:[{loopAt:0}],COSMETIC:false,
+  const ctx={S,Math,Number,window:{DKDECKRULES:require('../deck-rules.js')},LANES:[{loopAt:0}],COSMETIC:false,
     epos:e=>({x:e.x,y:e.y}),deckRun:()=>false,arenaWorldScale:()=>1,fxRandom:()=>.5,
     towerRange:()=>250,towerRate:t=>t.def.rate,towerDmg:t=>t.def.dmg,towerSplash:t=>t.def.splash||0,
     towerSlowPct:()=>.3,towerChain:()=>3,starColor:d=>d.color,

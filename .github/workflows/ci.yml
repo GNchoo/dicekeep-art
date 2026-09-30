@@ -150,6 +150,8 @@ jobs:
 
       - name: game-modes
         run: npm run test:game-modes
+      - name: grade-synergy (20강·배치 효과·연구 수치·저장 복구)
+        run: npm run test:grade-synergy
       - name: manual-chest-roll (다면체 직접 투척·보상 큐)
         run: npm run test:manual-chest-roll
       - name: portrait-readability (주사위 경계·모바일 가독성)

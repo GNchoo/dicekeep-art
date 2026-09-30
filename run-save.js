@@ -1,8 +1,10 @@
 (function (root, factory) {
-  const api = factory();
+  const progression = typeof module === 'object' && module.exports && typeof require === 'function'
+    ? require('./progression.js') : root && root.DKPROGRESSION;
+  const api = factory(progression);
   if (typeof module === 'object' && module.exports) module.exports = api;
   if (root) root.DKRUNSAVE = api;
-})(typeof window === 'undefined' ? null : window, function () {
+})(typeof window === 'undefined' ? null : window, function (PROGRESSION) {
   'use strict';
   // Device-local recovery, not an authoritative combat proof. Account rewards
   // still require the original server ticket. Bump RULES for incompatible combat state changes.
@@ -38,6 +40,7 @@
     if (!object(p) || p.version !== VERSION || p.rules !== RULES || !safeTree(p)) return false;
     const s = p.state, inf = p.inf;
     if (!object(s) || !object(inf) || !['build', 'extreme', 'duel', 'coop'].includes(inf.mode) || !inf.growthSnapshot?.growth || inf.settledResult) return false;
+    if (inf.growthSnapshot.gradeSystem !== undefined && (!PROGRESSION?.snapshotValid(inf.growthSnapshot) || inf.growthSnapshot.gradeSystem !== 1)) return false;
     const battle = battleMode(inf.mode);
     if (typeof p.owner !== 'string' || !p.owner || p.owner.length > 128 || !num(p.savedAt, 0, 1e15) || !num(p.elapsed, 0, 1e12)) return false;
     if (typeof inf.runId !== 'string' || !inf.runId || inf.runId.length > 128 || !int(inf.doneW, 0, 1e6) || !int(s.wave, inf.doneW, 1e6)) return false;
@@ -47,7 +50,7 @@
         || !Array.isArray(inf.battleApplied) || inf.battleApplied.length > 128 || new Set(inf.battleApplied).size !== inf.battleApplied.length
         || !inf.battleApplied.every(eventId => id(eventId, 160) && eventId.startsWith(p.match.matchId + ':'))
         || !battleTransportValid(p.match.transport, p.match.matchId)
-        || inf.growthSnapshot.mode !== inf.mode || inf.growthSnapshot.levelCap !== 20 || inf.growthSnapshot.deckSystem !== 1) return false;
+        || inf.growthSnapshot.mode !== inf.mode || inf.growthSnapshot.levelCap !== 20 || (inf.growthSnapshot.deckSystem !== 1 && inf.growthSnapshot.gradeSystem !== 1)) return false;
     }
     if (!int(inf.kills, 0, 1e9) || !object(inf.power) || ![1,2,3,4,5,6].every(f => int(inf.power[f], 0, 200)) || !num(inf.bossT, 0, 1e8)) return false;
     if (inf.accountTicket !== null && !(typeof inf.accountTicket === 'string' && /^[a-f0-9]{64}$/.test(inf.accountTicket))) return false;
@@ -64,6 +67,7 @@
     // Idle towers keep ticking below zero while no enemy is in range. Preserve
     // that ready-to-fire state over long matches instead of rejecting the save.
     if (!p.towers.every(t => object(t) && int(t.face, 1, 20) && int(t.lvl, 1, 3) && int(t.spot, 0, 14) && num(t.cd, -1e12, 1e6) && (t.growthCarry === undefined || num(t.growthCarry, 1, 1e8)))) return false;
+    if (inf.growthSnapshot.gradeSystem === 1 && !p.towers.every(t => t.deckSystem === undefined)) return false;
     if (inf.growthSnapshot.deckSystem === 1) {
       const deck=inf.growthSnapshot.deck;
       if (!Array.isArray(deck) || deck.length!==5 || new Set(deck).size!==5 || !deck.every(id=>int(id,1,20))) return false;
@@ -71,10 +75,10 @@
       if (!p.towers.every(t=>t.deckSystem===1 && deck.includes(t.face) && t.lvl===1 && int(t.pips,1,7) && (t.abilityT===undefined || num(t.abilityT,0,1e12)) && (t.shotSerial===undefined || int(t.shotSerial,0,1e12)))) return false;
       if (s.heldDie && !deck.includes(s.heldDie)) return false;
       if (p.slot?.active && !deck.includes(p.slot.final)) return false;
-      if (inf.growthSnapshot.treeVersion===1) {
-        if (!['supply','crusher','barrage'].includes(inf.growthSnapshot.supporter) || !num(inf.supporterCooldown,0,45) || !int(inf.supporterUses,0,1e9)) return false;
-        if (!p.towers.every(t=>t.copyHaste===undefined||typeof t.copyHaste==='boolean')) return false;
-      }
+    }
+    if (inf.growthSnapshot.treeVersion===1 && (inf.growthSnapshot.deckSystem===1 || inf.growthSnapshot.gradeSystem===1)) {
+      if (!['supply','crusher','barrage'].includes(inf.growthSnapshot.supporter) || !num(inf.supporterCooldown,0,45) || !int(inf.supporterUses,0,1e9)) return false;
+      if (!p.towers.every(t=>t.copyHaste===undefined||typeof t.copyHaste==='boolean')) return false;
     }
     if (!p.board.every(i => int(i, 0, p.towers.length - 1)) || new Set(p.board.map(i => p.towers[i].spot)).size !== p.board.length) return false;
     if (!Array.isArray(p.enemies) || p.enemies.length > 512 || !Array.isArray(p.active) || p.active.length > 200 || !p.active.every(i => int(i, 0, p.enemies.length - 1))) return false;

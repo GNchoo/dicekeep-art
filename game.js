@@ -60,14 +60,7 @@ const BOSS_ENTRANCE = 1.25; // 보스 등장 연출 시간(초)
 
 // 주사위 눈(1~6) = 타워 종류. 눈이 높을수록 강력!
 // 모든 타워는 공중 적을 때릴 수 있다 (canAir 는 전부 true — 공중 적의 기믹은 '동선 무시 직행'뿐)
-const TOWER_DEFS = {
-  1: { name: '궁수 주사위', desc: '붉은 렌즈 속사',        dmg: 8,  rate: 0.50, range: 150, laser: true,                 canAir: true,  color: '#9fd463', topper: 'laserMuzzle' },
-  2: { name: '대포 주사위', desc: '집중 포격 · 주변 2마리 25% 피해',     dmg: 32, rate: 1.60, range: 150, proj: 'shell',      pspd: 300, splash: 60, splashTargets: 3, splashFalloff: 0.25, canAir: true,  color: '#e0862c', topper: 'muzzleFlash' },
-  3: { name: '마법 주사위', desc: '자수정 마력탄',      dmg: 32, rate: 0.95, range: 165, proj: 'bolt',       pspd: 430, canAir: true,  color: '#b78bff', topper: 'bolt' },
-  4: { name: '서리 주사위', desc: '사방 냉기 둔화',     dmg: 40, rate: 0.80, range: 165, proj: 'frostShard', pspd: 400, slow: true, canAir: true, color: '#7fd4ff', topper: 'frostShard' },
-  5: { name: '전격 주사위', desc: '연쇄 번개',          dmg: 60, rate: 1.10, range: 170, chain: true, canAir: true, color: '#ffe86b', topper: 'spark' },
-  6: { name: '폭군 주사위', desc: '최강! 폭발 주사위 투척', dmg: 72, rate: 1.25, range: 175, proj: 'dieBomb', pspd: 340, splash: 55, canAir: true,  color: '#ff5555', topper: 'dieBomb' },
-};
+const TOWER_DEFS = Object.fromEntries(window.DKDECKRULES.gradeCatalog.map(c=>[c.grade,{...c.stats}]));
 // 성(★) 타워 7~20: 인피니티 보물상자의 다면체 주사위에서만 나온다. 6눈(폭군)을 바탕으로 기하급수 강화.
 const STAR_BANDS = [
   { min: 7,  max: 10, name: '별빛 첨탑', color: '#7fd4ff' },
@@ -76,18 +69,6 @@ const STAR_BANDS = [
   { min: 19, max: 20, name: '차원 군주', color: '#ff7ad9', rainbow: true },
 ];
 const starBand = (g) => STAR_BANDS.find((b) => g >= b.min && g <= b.max) || STAR_BANDS[STAR_BANDS.length - 1];
-for (let g = 7; g <= 20; g++) {
-  const b = starBand(g), k = g - 6;
-  // 등급 특전(인피니티): 14~17★ 에픽 = 방어 무시 + 락다운, 18~19★ 신화 = 공속 ×1.5, 20★ 태초 = 트랙 전체 스플래시
-  const perk = g >= 20 ? 'primal' : g >= 18 ? 'myth' : g >= 14 ? 'epic' : null;
-  const perkDesc = perk === 'primal' ? ' · 태초: 트랙 전체 스플래시, 공속 ×1.25' : perk === 'myth' ? ' · 신화: 공속 ×1.5' : perk === 'epic' ? ' · 에픽: 방어 무시 + 락다운' : '';
-  TOWER_DEFS[g] = {
-    name: `${b.name} ★${g}`, desc: `${g}성 히든 타워 · 고유 마력 공격${perkDesc}`, star: g,
-    dmg: Math.round(72 * Math.pow(1.28, k)), rate: +(1.25 * Math.pow(0.97, k)).toFixed(3), range: 175 + 5 * k,
-    proj: 'dieBomb', pspd: 340 + 6 * k, splash: 55 + 4 * k, canAir: true, color: b.color, rainbow: !!b.rainbow, topper: 'dieBomb',
-    perk,
-  };
-}
 const LVL_DMG   = [1, 1.6, 2.4];
 const LVL_RANGE = [0, 12, 24];
 const LVL_RATE  = [1, 0.92, 0.85];
@@ -1584,8 +1565,10 @@ const progressionProfile = () => (COMMERCE && COMMERCE.profile()) || SAVE.progre
 const growthRun = () => S.mode === 'infinity' && !!(S.inf && S.inf.growthSnapshot && S.inf.growthSnapshot.growth);
 const DECK = window.DKDECKRULES;
 const deckRun = () => growthRun() && !!DECK && S.inf.growthSnapshot.deckSystem === 1;
-const treeRun = () => deckRun() && S.inf.growthSnapshot.treeVersion === 1;
-const towerAwakened = t => treeRun() && !COSMETIC && !(VIEW.pid && S.towers === VIEW.towers) && DECK.awakened(t,S.inf.growthSnapshot);
+const gradeRun = () => S.mode === 'infinity' && S.inf?.growthSnapshot?.gradeSystem === 1 && !deckRun();
+const treeRun = () => growthRun() && (deckRun() || gradeRun()) && S.inf.growthSnapshot.treeVersion === 1;
+const towerAwakened = t => treeRun() && !COSMETIC && !(VIEW.pid && S.towers === VIEW.towers) && (gradeRun() ? S.inf.growthSnapshot.awakenings?.[t.face]===true : DECK.awakened(t,S.inf.growthSnapshot));
+const towerSynergy = t => gradeRun() ? DECK.gradeSynergies(t,S.towers,S.mapKey==='cInfP'?3:5) : {damage:1,rate:1,slowDamage:1,active:[]};
 const combatDef = face => deckRun() ? deckDef(face) : TOWER_DEFS[face];
 function deckDef(face) { const card = DECK.get(face); return card ? { ...card.stats, name:card.name, desc:card.description, color:TOWER_DEFS[face].color, topper:TOWER_DEFS[face].topper } : TOWER_DEFS[face]; }
 const deckPower = face => deckRun() ? (S.inf.deckPower?.[face] || 1) : 1;
@@ -2169,7 +2152,8 @@ function openInfHelp() {
     scroll.innerHTML=deckRun() ? '<ol><li><b>5종 덱</b> — 덱의 다섯 종류가 각각 20% 확률로 1눈금 소환됩니다. 카드 번호와 희귀도는 전투 눈금이 아닙니다.</li><li><b>소환과 SP</b> — 첫 소환 30 SP, 이후 5 SP씩 증가(최대 530 SP). 빈 석단에 배치하세요. 판이 가득 차면 먼저 합성하거나 판매하세요.</li><li><b>합성</b> — 같은 종류·같은 눈금 두 개를 겹치면 하나가 됩니다. 종류는 덱에서 무작위로 정해지고 눈금은 +1, 최대 7입니다. 배치한 타워를 길게 눌러 끌거나 이동 버튼으로 합성할 수 있습니다.</li><li><b>파워업</b> — 아래 다섯 버튼은 해당 종류 전체의 전투 레벨을 1~5까지 높입니다. 비용은 100 / 200 / 400 / 700 SP이며, 새 게임에서는 초기화됩니다.</li><li><b>조합</b> — 박동·증폭은 상하좌우를 강화하고, 서리와 빙쇄는 둔화로 연계합니다. 모사는 같은 눈금의 다른 종류를 복제하며, 새싹은 전투 중 28초 후 성장합니다. 카드 설명을 확인해 배치를 정하세요.</li><li><b>계정 클래스</b> — 소장 카드의 클래스와 수집 치명타는 런 시작 시 고정됩니다. 전투 눈금·SP 파워업과 별개입니다. 판매는 눈금당 10 SP를 돌려줍니다.</li></ol>' : legacyInfHelpHTML;
   }
   const t = $('help-title');
-  if (scroll && treeRun()) scroll.innerHTML=scroll.innerHTML.replace(/<li><b>계정 클래스<\/b>[\s\S]*?<\/li>/,'<li><b>다이스 트리</b> — 숙련·특성·각성·서포터는 런 시작 때 고정됩니다. 숙련은 종류별 피해 +3%씩 최대 5단계, 특성은 집중(피해 +10%)과 통찰(종류별 능력 강화) 중 하나를 고릅니다. 판매는 눈금당 10 SP입니다.</li><li><b>7눈금 각성</b> — 트리에서 각성을 해금한 종류만 7눈금에서 고유 능력이 바뀝니다. 타워를 누르면 각성 효과를 확인할 수 있습니다.</li><li><b>서포터</b> — 보급관은 SP를 지급하고, 분쇄관은 선택 타워를 무작위 1눈금으로 교체하며 SP를 지급합니다. 포격관은 선두 최대 8명에게 지원 사격합니다. 버튼에서 직접 사용하며 재사용 시간은 전투가 진행될 때만 흐릅니다.</li>');
+  if (scroll && treeRun() && deckRun()) scroll.innerHTML=scroll.innerHTML.replace(/<li><b>계정 클래스<\/b>[\s\S]*?<\/li>/,'<li><b>다이스 트리</b> — 숙련·특성·각성·서포터는 런 시작 때 고정됩니다. 숙련은 종류별 피해 +3%씩 최대 5단계, 특성은 집중(피해 +10%)과 통찰(종류별 능력 강화) 중 하나를 고릅니다. 판매는 눈금당 10 SP입니다.</li><li><b>7눈금 각성</b> — 트리에서 각성을 해금한 종류만 7눈금에서 고유 능력이 바뀝니다. 타워를 누르면 각성 효과를 확인할 수 있습니다.</li><li><b>서포터</b> — 보급관은 SP를 지급하고, 분쇄관은 선택 타워를 무작위 1눈금으로 교체하며 SP를 지급합니다. 포격관은 선두 최대 8명에게 지원 사격합니다. 버튼에서 직접 사용하며 재사용 시간은 전투가 진행될 때만 흐릅니다.</li>');
+  if(scroll && gradeRun() && treeRun())scroll.querySelector('ol')?.insertAdjacentHTML('beforeend','<li><b>연구 효과</b> — 런 시작 시 숙련·특성·각성을 고정합니다. 숙련은 단계당 피해 +3%, 집중은 피해 +10%, 통찰은 공격속도 +10%, 각성은 해당 강 피해 +15%입니다. 대전은 이 수치를 적용하지 않습니다. 미연구 타워도 기존 확률로 얻습니다.</li><li><b>서포터</b> — 보급관은 골드를 지급하고, 분쇄관은 선택 타워를 해체하여 골드를 돌려줍니다. 포격관은 선두 최대 8명을 공격합니다. 능력 설명과 재사용 시간을 버튼에서 확인하세요.</li>');
   if (t) t.textContent = '튜토리얼 · ' + DKCONTENT.INFINITY.modeOf(S.inf && S.inf.mode).name;
   h.classList.remove('hidden');
   if (scroll) scroll.querySelector('ol')?.scrollTo(0, 0);
@@ -3734,6 +3718,7 @@ function damageEnemy(e, dmg, src) {
   }
   if (!deckRun() && S.mode === 'infinity' && S.inf && window.DKCONTENT) { // 방어력 · 에픽 락다운 (인피니티 전용)
     const INF = DKCONTENT.INFINITY, def = src && src.def;
+    if(src && e.slowT>0) dmg*=towerSynergy(src).slowDamage;
     // 모든 타워·몬스터의 크기 상성 배율은 1배. 외형 크기는 피해에 영향을 주지 않는다.
     const ignoreArmor = !!(def && def.perk === 'epic');
     if (e.armor > 0 && !ignoreArmor) dmg = Math.max(dmg * 0.1, dmg - e.armor);
@@ -3920,7 +3905,7 @@ function updateDeckAbilities(dt) {
 
 function supporterState() {
   if (!treeRun()) return null;
-  const info=DECK.supporterInfo(S.inf.growthSnapshot.supporter); if (!info) return null;
+  const info=(gradeRun()?DECK.gradeSupporterInfo:DECK.supporterInfo)(S.inf.growthSnapshot.supporter); if (!info) return null;
   const cooldown=Math.max(0,S.inf.supporterCooldown||0),live=S.enemies.filter(e=>!e.dead&&!e.hidden);
   let reason='';
   if (S.phase!=='playing'||COSMETIC) reason='전투 중에만 사용';
@@ -3933,12 +3918,15 @@ function supporterState() {
 }
 function useSupporter() {
   const state=supporterState(); if (!state?.ready) return false;
-  const total=S.towers.reduce((sum,t)=>sum+DECK.pips(t),0);
+  const total=S.towers.reduce((sum,t)=>sum+(gradeRun()?t.face:DECK.pips(t)),0),unit=gradeRun()?' G':' SP';
   let label='';
-  if (state.id==='supply') { const amount=80+Math.min(40,total); S.gold+=amount; label=`보급관 +${amount} SP`; }
+  if (state.id==='supply') { const amount=80+Math.min(40,total); S.gold+=amount; label=`보급관 +${amount}${unit}`; }
   else if (state.id==='crusher') {
-    const target=S.selTower,amount=40*DECK.pips(target); replaceDeckTower(target,DECK.draw(S.inf.growthSnapshot.deck),1); S.gold+=amount; S.selTower=null;
-    deckMergeFx(target,`분쇄 · 1눈금 교체 +${amount} SP`); label=`분쇄관 +${amount} SP`;
+    const target=S.selTower,amount=40*(gradeRun()?target.face:DECK.pips(target));
+    if(gradeRun()){S.towers=S.towers.filter(t=>t!==target);S.fxs=S.fxs.filter(f=>f.anchorTower!==target);}
+    else replaceDeckTower(target,DECK.draw(S.inf.growthSnapshot.deck),1);
+    S.gold+=amount; S.selTower=null;
+    deckMergeFx(target,`${gradeRun()?'해체':'분쇄 · 1눈금 교체'} +${amount}${unit}`); label=`분쇄관 +${amount}${unit}`;
   } else {
     for (const e of S.enemies.filter(e=>!e.dead&&!e.hidden).sort((a,b)=>b.dist-a.dist).slice(0,8)) {
       const p=epos(e); damageEnemy(e,(80+total*18)*(e.isBoss?0.25:1),null);
@@ -3959,7 +3947,7 @@ function syncSupporter() {
   const panel=$('supporter-panel'); if (!panel) return;
   const state=supporterState(),on=!!state&&S.phase==='playing'; panel.classList.toggle('hidden',!on); $('hud').classList.toggle('tree-hud',on); if (!on) return;
   $('supporter-name').textContent=state.name;
-  $('supporter-note').textContent=state.id==='crusher'&&S.selTower?`${S.selTower.def.name} ${DECK.pips(S.selTower)}눈금 → 무작위 1눈금 · +${40*DECK.pips(S.selTower)} SP`:state.description;
+  $('supporter-note').textContent=state.id==='crusher'&&S.selTower?(gradeRun()?`${S.selTower.face}강 타워 해체 · +${40*S.selTower.face} G · 타워 소멸`:`${S.selTower.def.name} ${DECK.pips(S.selTower)}눈금 → 무작위 1눈금 · +${40*DECK.pips(S.selTower)} SP`):state.description;
   const button=$('supporter-use'); button.disabled=!state.ready; button.textContent=state.ready?'능력 사용':state.reason; button.title=state.description+` 재사용 ${DECK.supporterInfo(state.id).cooldown}초 · 전투 중에만 감소`;
 }
 
@@ -3975,7 +3963,7 @@ const towerDmg   = t => {
   const d = DP();
   if (d) { m *= d.dmgMult(powerLv(t.face)); const ex = powerSpecial(t.face, 'dmg'); if (ex) m *= 1 + ex * powerTier(t.face); }
   if (S.mode === 'infinity' && S.inf) m *= towerGrowth(t);
-  return t.def.dmg * m;
+  return t.def.dmg * m * towerSynergy(t).damage;
 };
 // 세로 아레나는 같은 전장을 1.4배로 표시한다. 전투 수치는 논리 단위로 유지한다.
 function arenaWorldScale() {
@@ -3990,7 +3978,8 @@ function arenaRangeBonus() {
 }
 const towerRange = t => deckRun() ? deckStats(t).range + arenaRangeBonus() : t.def.range + LVL_RANGE[t.lvl - 1] + (DP() ? DP().rangeAdd(powerLv(t.face)) : 0) + arenaRangeBonus();
 const towerRate  = t => { if (deckRun()) return deckStats(t).rate; let r = t.def.rate * LVL_RATE[t.lvl - 1]; const ex = powerSpecial(t.face, 'rate'); if (ex) r *= Math.pow(ex, powerTier(t.face)); if (S.mode === 'infinity' && window.DKCONTENT) { const INF = DKCONTENT.INFINITY; if (t.def.perk === 'myth') r /= INF.mythRate || 1.5; else if (t.def.perk === 'primal') r /= INF.primalRate || 1; }   // 태초도 공속을 받는다 — 없으면 19★ 보다 1대1 피해가 낮았다
-  return r; };
+  if(gradeRun()&&treeRun()&&S.inf.growthSnapshot.talents?.[t.face]==='insight')r/=1.1;
+  return r/towerSynergy(t).rate; };
 const towerSplash = t => deckRun() ? deckStats(t).splash || 0 : (t.def.splash || 0) + ((powerSpecial(t.face, 'splash') || 0) * powerTier(t.face));
 const towerSlowPct = t => deckRun() ? deckStats(t).slowPct : 0.26 + 0.06 * t.lvl + ((powerSpecial(t.face, 'slow') || 0) * powerTier(t.face));
 const towerChain = t => deckRun() ? deckStats(t).chain : 2 + t.lvl + ((powerSpecial(t.face, 'chain') || 0) * powerTier(t.face));
@@ -5899,6 +5888,10 @@ function syncInfo() {
             ? '석단의 타워를 누르면 판매·확률강화를 할 수 있고, 잠깐 누르고 있으면 들어올려 옮길 수 있습니다.'
             : '석단의 타워를 누르면 능력치와 판매를 볼 수 있고, 잠깐 누르고 있으면 들어올려 옮길 수 있습니다.';
       if (deckRun()) hint.textContent=MOVE.tower ? '호환되는 타워는 합성·복제하고, 다른 타워는 자리를 바꿉니다.' : S.heldDie ? '빈 석단에 1눈금으로 배치하세요. 같은 종류·눈금은 합성할 수 있습니다.' : '같은 종류·눈금 타워를 서로 끌어 합성하세요. 이동 버튼으로는 타워의 자리를 바꿀 수 있습니다.';
+      if (gradeRun() && !MOVE.tower && !S.heldDie) {
+        const active=new Set(S.towers.flatMap(t=>towerSynergy(t).active));
+        hint.textContent=active.size ? `배치 시너지 ${active.size}종 활성 · 타워를 누르면 적용 효과를 확인할 수 있습니다.` : '상하좌우에 타워를 나란히 놓아 시너지를 만드세요. 타워를 누르면 확률강화할 수 있습니다.';
+      }
       hint.classList.toggle('hidden', S.phase !== 'playing');
     }
     return;
@@ -5928,14 +5921,20 @@ function syncInfo() {
   }
   infoPanel.classList.remove('hidden');
   $('info-dice').src = dieIconURL(t.face);
-  $('info-name').textContent = `${t.def.name} · ${deckRun() ? DECK.pips(t)+'눈금'+(towerAwakened(t)?' · 각성':'') : 'Lv'+t.lvl}`;
+  $('info-name').textContent = `${gradeRun()?t.face+'강 · ':''}${t.def.name} · ${deckRun() ? DECK.pips(t)+'눈금'+(towerAwakened(t)?' · 각성':'') : 'Lv'+t.lvl}`;
   const bits = [`피해 ${Math.round(towerDmg(t))}`, `사거리 ${Math.round(towerRange(t))}`];
   if (t.def.splash) bits.push(t.def.splashTargets ? `주변 ${t.def.splashTargets - 1}마리 ${Math.round(t.def.splashFalloff * 100)}% 피해` : `광역 ${Math.round(towerSplash(t))}`);
   if (t.def.slow) bits.push(`둔화 ${Math.round(towerSlowPct(t) * 100)}%`);
   if (t.def.chain) bits.push(`연쇄 ${towerChain(t)}회`);
   if (deckRun()) { bits.push(`공격 ${ (1/towerRate(t)).toFixed(1) }회/초`,t.def.desc,DECK.pips(t)<7 ? '같은 종류·눈금 합성 → 무작위 종류 +1눈금' : '최대 7눈금'); }
   else bits.push(t.lvl < MAX_LVL ? `같은 눈 합체 시 Lv${t.lvl + 1}` : '최대 레벨');
-  if (treeRun()) { if (towerAwakened(t)) bits.push(DECK.awakeningInfo(t.face).name+': '+DECK.awakeningInfo(t.face).description); else if (S.inf.growthSnapshot.awakenings[t.face]) bits.push('7눈금 도달 시 '+DECK.awakeningInfo(t.face).name+' 각성'); if (t.copyHaste) bits.push('완전모사: 공격속도 +25%'); }
+  if(gradeRun()){
+    const synergy=towerSynergy(t);
+    bits.push(`${(towerDmg(t)/towerRate(t)).toFixed(1)} 피해/초`);
+    bits.push(...DECK.gradeSynergyCatalog.filter(s=>synergy.active.includes(s.id)&&['damage','rate','slowDamage'].some(key=>s[key]===synergy[key])).map(s=>s.description));
+    if(!synergy.active.length)bits.push('인접 타워 연계 없음');
+  }
+  if (treeRun()) { if (towerAwakened(t)) {const info=(gradeRun()?DECK.gradeAwakeningInfo:DECK.awakeningInfo)(t.face);bits.push(info.name+': '+info.description);} else if (!gradeRun()&&S.inf.growthSnapshot.awakenings[t.face]) bits.push('7눈금 도달 시 '+DECK.awakeningInfo(t.face).name+' 각성'); if (t.copyHaste) bits.push('완전모사: 공격속도 +25%'); }
   $('info-body').textContent = bits.join(' · ');
   const noSell = !canSellFace(t.face);
   $('sell-btn').disabled = noSell;
@@ -6237,8 +6236,8 @@ function syncInfButtons() {
     b.innerHTML = `<span class="bi" data-icon="${icon}">${emoji}</span>${name}<small>${sub}</small>`;
   };
   setBtn('btn-inf-clear', 'trophy', '&#127942;', '순수운빨', `${line}웨이브 · 성장 미적용`);
-  setBtn('btn-inf-build', 'dice', '&#127922;', '덱빌드', `${line}웨이브 · 5종 조합 · 눈금 합성`);
-  setBtn('btn-infinity', 'infinity', '&#8734;', '극한', '끝없는 웨이브 · 수집한 덱으로 도전');
+  setBtn('btn-inf-build', 'dice', '&#127922;', '성장·조합', `${line}웨이브 · 1~20강 · 운빨과 배치 연계`);
+  setBtn('btn-infinity', 'infinity', '&#8734;', '극한', '끝없는 웨이브 · 20강 성장과 배치 연계');
   const info = $('lobby-inf');
   if (info) {
     const P = progressionProfile();
@@ -6253,7 +6252,7 @@ function syncInfButtons() {
   const guide = $('theme-guide-list');
   if (guide && INF.themeChapters && INF.extremeThemeChapters) {
     const groups = [
-      { heading: '순수운빨·덱빌드 · 1~100', first: 1, chapters: INF.themeChapters, finale: '101 · 종말의 사자' },
+      { heading: '순수운빨·성장·조합 · 1~100', first: 1, chapters: INF.themeChapters, finale: '101 · 종말의 사자' },
       { heading: '극한 · 102~201', first: 102, chapters: INF.extremeThemeChapters, finale: '202 · 새벽 등대사자' },
     ];
     guide.innerHTML = groups.map(group => {
@@ -6670,6 +6669,7 @@ function movePickTap(idx) {
     S.texts.push({ str: '석단을 골라 주세요', x: W / 2, y: H / 2 - 78, t: 0, color: '#ff9f9f' });
     return true;   // 고르기는 계속 — 다시 고를 수 있게 둔다
   }
+  if(deckRun() && towerAt(idx) && combineDeckTowers(t,towerAt(idx))){MOVE.picking=null;syncUI();return true;}
   const outcome = moveToSpot(t, idx);
   MOVE.picking = null;
   SFX.place();
@@ -7297,7 +7297,7 @@ function openMenu() {
   $('menu-quit-txt').textContent = spec ? '관전 끝내고 나가기' : S.mode === 'infinity' ? '포기하고 나가기 (기록 저장)' : '스테이지 선택으로 나가기';
   $('menu-help').classList.toggle('hidden', S.mode !== 'infinity');
   $('menu-save').classList.toggle('hidden', !growthRun() || !!S.net || spec);
-  if (growthRun() && !S.net && !spec) $('menu-note').textContent = `메뉴가 열려 있어도 전투는 계속됩니다. 다음 구간 목표 ${Math.max(25, (Math.floor(S.inf.doneW / 25) + 1) * 25)}웨이브 · 시작할 때의 덱과 성장 유지 · 5초마다 기기에 자동 저장됩니다.`;
+  if (growthRun() && !S.net && !spec) $('menu-note').textContent = `메뉴가 열려 있어도 전투는 계속됩니다. 다음 구간 목표 ${Math.max(25, (Math.floor(S.inf.doneW / 25) + 1) * 25)}웨이브 · 시작할 때의 연구 효과 유지 · 5초마다 기기에 자동 저장됩니다.`;
   if (S.mode === 'stage' && !spec) $('menu-note').textContent = stageLesson(S.stage) + ' 계정 성장 조각은 투기장 전용입니다.';
 
 }
@@ -7537,8 +7537,9 @@ function battleOnState(b) {
     if (!S.inf.battleApplied.includes(event.id)) {
       if (event.kind === 'supply') {
         S.gold += event.sp;
-        pushLog(`아군 보급 도착 · +${event.sp} SP`, 'up');
-        S.texts.push({str:`아군 보급 +${event.sp} SP`,x:W/2,y:H/2-40,t:0,color:'#a0ffc8'});
+        const unit=gradeRun()?'G':'SP';
+        pushLog(`아군 보급 도착 · +${event.sp} ${unit}`, 'up');
+        S.texts.push({str:`아군 보급 +${event.sp} ${unit}`,x:W/2,y:H/2-40,t:0,color:'#a0ffc8'});
       } else if (event.kind === 'incoming') {
         for (let i=0; i<event.count; i++) {
           const item = battleWaveItems(Math.max(1,S.wave))[0];
@@ -7568,7 +7569,7 @@ function syncBattleUI() {
     S.net.mode === 'coop' ? `공동 ♥${b?.teamLives ?? 20} · ${b?.kills || 0}/${b?.goal || BATTLE.goal}처치 · ${bossText}` : `내 ♥${me?.lives ?? 20} · 상대 ♥${other?.lives ?? 20} · ${bossText}`;
   const ready = Math.max(0, Math.ceil(((me?.assistReadyAt || 0) - DKNET.serverNow()) / 1000));
   assist.disabled = !b || ready > 0 || DKNET.state !== 'playing' || !!S.net.battleWaiting || DKNET.serverNow() < S.net.t0;
-  assist.textContent = ready ? `아군 보급 · ${ready}초` : '아군 보급 +60 SP';
+  assist.textContent = ready ? `아군 보급 · ${ready}초` : `아군 보급 +60 ${gradeRun()?'G':'SP'}`;
 }
 function battleFinish(m) {
   if (!battleRun() || !m.battle?.result) return;
@@ -7643,7 +7644,7 @@ function mpModeDescription(mode) {
     clear: '순수운빨 · 성장 미적용 · 각자 x1/x2/x4 · 먼저 101웨이브 완주하면 1위',
     extreme: '극한 · 덱 성장 적용 · 100분 동안 완료 웨이브 경쟁 · 싱글 극한은 시간 제한 없음',
     duel: '1대1 대전 · 성장 수치 통일 · 목숨 20 · 5처치마다 적 1마리 전송 · 상대 목숨 0이면 승리 · x1 고정',
-    coop: `2인 협동 · 공동 목숨 20 · 합계 ${BATTLE.goal}처치면 함께 승리 · 45초마다 아군 보급 60 SP · x1 고정`,
+    coop: `2인 협동 · 공동 목숨 20 · 합계 ${BATTLE.goal}처치면 함께 승리 · 45초마다 아군 보급 60 ${gradeRun()?'G':'SP'} · x1 고정`,
   }[mode] || '';
 }
 $('mp-mode').addEventListener('change', () => {
@@ -7797,6 +7798,7 @@ function mpSummary(withField) {
     b: boss ? Math.max(0, Math.min(1, boss.hp / Math.max(1, boss.max))) : null, o: S.mapKey === 'cInfP' ? 'p' : 'l',
     tw: S.towers.slice(0, 15).map(t => deckRun() ? [t.spot,t.face,1,DECK.pips(t)] : [t.spot, t.face, t.lvl]),
     ...(deckRun() ? { ds:1 } : {}),
+    ...(gradeRun() ? { gs:1 } : {}),
   };
   if (withField) { m.ll = Math.round(LANES[0] ? LANES[0].len : 0); m.en = mpEnemyStream(); }
   return m;

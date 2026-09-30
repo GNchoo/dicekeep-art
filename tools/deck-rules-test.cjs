@@ -36,3 +36,30 @@ assert.ok(D.preview([1,2,3,4,5],{...viewSnap,mastery:{1:1}}).direct>basePreview.
 assert.deepEqual(D.preview([1,2,3,4,5],{...viewSnap,awakenings:{1:true}}),basePreview,'7-pip awakening must not inflate 3-pip comparison');
 assert.throws(()=>D.preview([1,1,2,3,4],viewSnap));
 console.log('PASS honest deck comparison and conditional support/boss benefits');
+assert.equal(D.gradeCatalog.length,20);
+let previous=0;
+for(let face=1;face<=20;face++){
+ const row=D.gradePreview([face]).board[0];
+ assert.ok(row.dps>previous,'each higher grade improves standalone Lv1 DPS: '+face);previous=row.dps;
+ assert.equal(D.gradeGet(face).grade,face);
+}
+for(const s of D.gradeSynergyCatalog){
+ const target={face:s.groups[1][0],spot:1,lvl:1},source={face:s.groups[0][0],spot:0,lvl:1};
+ const active=D.gradeSynergies(target,[source,target]);
+ assert.ok(active.active.includes(s.id),s.name+' activates beside its partner');
+ assert.deepEqual(D.gradeSynergies(target,[source,target,{...source,spot:6}]),active,'same support never stacks');
+ assert.ok(!D.gradeSynergies({...target,spot:4},[source,{...target,spot:4}]).active.includes(s.id),'distant partner does not activate');
+}
+const swiftBoard=[{face:1,spot:0},{face:20,spot:1}],swift=D.gradePreview(swiftBoard);
+assert.ok(Math.abs(swift.direct/swift.solo-1)>0,'combination preview uses its actual adjacent bonus');
+assert.equal(swift.boss,swift.direct,'no invented unconditional boss score');
+assert.equal(D.gradePreview([1],{treeVersion:1,mastery:{1:5},talents:{1:'force'},awakenings:{1:true}}).direct,16*1.15*1.1*1.15);
+assert.equal(D.gradePreview([1],{growth:false,treeVersion:1,mastery:{1:5},talents:{1:'force'},awakenings:{1:true}}).direct,16,'pure preview ignores account investment');
+assert.equal(D.gradeSupporterInfo('crusher').description.includes('타워는 사라집니다'),true);
+const classOnly={growth:true,levels:{1:1},classes:{1:10}};
+assert.equal(D.gradeGrowth(1,classOnly),1.27);
+assert.equal(D.gradePreview([1],classOnly).direct,16*1.27);
+assert.equal(D.gradePreview([1],{growth:true,levels:{1:20},levelCap:20}).direct,16*2.52);
+const strongest=D.gradeSynergies({face:7,spot:1},[{face:3,spot:0},{face:11,spot:2}]);
+assert.deepEqual(strongest.active,['arcane','stars']);assert.equal(strongest.damage,1.12,'different damage effects use the strongest one');
+console.log('PASS 20-grade progression, adjacent combinations, non-stacking effects and honest conditional preview');

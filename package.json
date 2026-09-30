@@ -18,6 +18,7 @@
     "test:net": "cd net && npm test",
     "test:progression": "node tools/progression-test.cjs && node tools/collection-test.cjs && node tools/tree-progression-test.cjs",
     "test:deck-rules": "node tools/deck-rules-test.cjs",
+    "test:grade-synergy": "node tools/e2e/grade-synergy.cjs",
     "test:deck-collection": "node tools/e2e/deck-collection.cjs",
     "test:deck-combat": "node tools/e2e/deck-combat.cjs",
     "test:tree-collection": "node tools/e2e/tree-collection.cjs",

@@ -10,6 +10,7 @@ const A = 'aaaa1111', B = 'bbbb2222', C = 'cccc3333';
 const key = pid => pid.repeat(4);
 const LEGACY = { t: 'sum', w: 3, dw: 2, l: 20, g: 400, k: 12, f: 30, sp: 1, hid: 0, b: null, o: 'l', tw: [[0, 6, 2], [14, 20, 3]] };
 const DECK = { ...LEGACY, ds: 1, tw: [[0, 7, 1, 1], [14, 20, 1, 7]], ll: 950, en: '1,2,3;4,5,6' };
+const GRADE = { ...LEGACY, gs: 1, ll: 950, en: '1,2,3;4,5,6' };
 const decode = m => parse(JSON.stringify(m));
 const accepted = m => { const r = decode(m); assert.equal(r.ok, true, JSON.stringify(m)); return r.m; };
 const rejected = m => assert.equal(decode(m).ok, false, JSON.stringify(m));
@@ -81,6 +82,36 @@ test('legacy triples keep the exact existing normalized payload and level range'
   rejected({ ...LEGACY, tw: [[0, 6, 4]] });
 });
 
+test('grade summaries preserve all 20 grades and Lv1–3 without admitting deck tuples or duplicate pads', () => {
+  for (let face = 1; face <= 20; face++) for (let lvl = 1; lvl <= 3; lvl++) {
+    const m = { ...GRADE, tw: [[0, face, lvl]] };
+    assert.deepEqual(accepted({ ...m, unknown: 'discard' }), m);
+  }
+  assert.deepEqual(accepted({ ...GRADE, tw: [] }), { ...GRADE, tw: [] });
+  assert.deepEqual(accepted({ ...GRADE, tw: Array.from({ length: 15 }, (_, spot) => [spot, 20, 3]) }).tw.length, 15);
+  for (const gs of [0, 2, -1, 1.5, null, true, false, '1', [], {}]) rejected({ ...GRADE, gs });
+  rejected({ ...GRADE, ds: 1 }); rejected({ ...DECK, gs: 1 });
+  rejected({ ...GRADE, tw: DECK.tw });
+  rejected({ ...GRADE, tw: [[0, 20, 3], [0, 19, 1]] });
+  for (const face of [0, 21, 1.5, '20']) rejected({ ...GRADE, tw: [[0, face, 3]] });
+  for (const lvl of [0, 4, 1.5, '3']) rejected({ ...GRADE, tw: [[0, 20, lvl]] });
+});
+
+test('grade marker and triples survive light relay, spectator relay and reconnect', async () => {
+  const h = await playing();
+  await h.send(B, { t: 'watch', pid: A }); h.clearSent();
+  await h.send(A, GRADE);
+  assert.equal(h.sums(A).length, 2);
+  for (const { m } of h.sums(A)) { assert.equal(m.gs, 1); assert.equal('ds' in m, false); assert.deepEqual(m.tw, GRADE.tw); }
+  assert.equal(h.sums(A).find(x => x.sid === h.atts.get(B).sid).m.en, GRADE.en);
+  assert.equal('en' in h.sums(A).find(x => x.sid === h.atts.get(C).sid).m, false);
+  h.advance(); h.clearSent(); await h.connect(A);
+  assert.equal(h.sent.find(x => x.m.t === 'welcome').m.resumed, true);
+  assert.equal(h.host.live.players[A].sum, null);
+  h.clearSent(); await h.send(A, { ...GRADE, tw: [[0, 20, 3]] });
+  for (const { m } of h.sums(A)) { assert.equal(m.gs, 1); assert.deepEqual(m.tw, [[0, 20, 3]]); }
+});
+
 test('summary speed accepts x4 and keeps legacy x3, but rejects out-of-range values', () => {
   for (const sp of [1, 2, 3, 4]) assert.equal(accepted({ ...LEGACY, sp }).sp, sp);
   for (const sp of [0, 5, -1, 2.5, '4', null]) rejected({ ...LEGACY, sp });
@@ -127,6 +158,9 @@ test('clear rooms reject deck summaries before changing progress, then accept le
     const { pid, at, ...payload } = m;
     assert.deepEqual(payload, LEGACY);
   }
+  h.advance(); h.clearSent(); await h.send(A, GRADE);
+  assert.equal(h.sums(A).length, 2);
+  for (const { m } of h.sums(A)) { assert.equal(m.gs, 1); assert.deepEqual(m.tw, GRADE.tw); }
 });
 
 test('malformed deck reports never mutate scores or relay and retain three-strike close', async () => {
