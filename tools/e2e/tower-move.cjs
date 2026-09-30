@@ -1,4 +1,4 @@
-// 놓인 타워 옮기기: 빈 석단 이동, 점유 석단 교환, 덱의 끌기 합성을 검사한다.
+// 놓인 타워 옮기기: 20강 전투의 교환과 이전 덱 저장의 끌기 합성을 검사한다.
 // 실제 포인터 이벤트로 조작한다 (내부 함수를 직접 부르지 않는다).
 //   E2E_BASE_URL=http://localhost:8137/ node tools/e2e/tower-move.cjs
 const fs = require('node:fs');
@@ -239,35 +239,63 @@ async function longPress(page, from, opts = {}) {
       };
     }), { firstSpot: full.spots - 1, lastSpot: 0, firstLevel: 2, sameObjects: true, uniqueSpots: 15, aligned: true, picking: false });
 
-    // ── 11. 덱의 명시적 이동은 같은 타워라도 교환, 끌기는 기존 합성 ────────
+    // ── 11. 새 20강 전투에서는 같은 타워도 이동 버튼과 끌기로 교환한다 ────
     await page.evaluate(() => {
       DKstartInf('build'); DK.paused = true;
       for (const i of [0, 1]) { DK.heldDie = 1; DK.dieFocus = true; DKplace(i); }
       window.deckMoveRefs = { first: DK.towers[0], second: DK.towers[1] };
+      DK.towers[0].lvl = 2; DK.towers[1].lvl = 3;
       DK.selTower = DK.towers[0]; DKsync();
     });
     await page.click('#move-btn');
     const d1 = await at(1);
     await page.mouse.click(d1.x, d1.y);
-    check('덱 이동 버튼은 같은 종류·눈금도 합성하지 않고 교환한다', await page.evaluate(() => ({
+    check('20강 이동 버튼은 같은 종류도 레벨을 보존해 교환한다', await page.evaluate(() => ({
       count: DK.towers.length,
       firstSpot: window.deckMoveRefs.first.spot, secondSpot: window.deckMoveRefs.second.spot,
-      firstPips: window.deckMoveRefs.first.pips, secondPips: window.deckMoveRefs.second.pips,
-    })), { count: 2, firstSpot: 1, secondSpot: 0, firstPips: 1, secondPips: 1 });
+      firstLevel: window.deckMoveRefs.first.lvl, secondLevel: window.deckMoveRefs.second.lvl,
+      grade: DK.inf.growthSnapshot.gradeSystem, deck: DK.inf.growthSnapshot.deckSystem ?? null,
+      pips: DK.towers.map(t => t.pips ?? null),
+    })), { count: 2, firstSpot: 1, secondSpot: 0, firstLevel: 2, secondLevel: 3, grade: 1, deck: null, pips: [null, null] });
     await longPress(page, d1);
     const d0 = await at(0);
     await page.mouse.move(d0.x, d0.y, { steps: 12 });
     await page.mouse.up();
-    check('덱 끌기는 호환되는 두 타워를 기존대로 합성한다', await page.evaluate(() => ({
-      count: DK.towers.length, pips: DK.towers[0]?.pips,
-      targetRetained: DK.towers.includes(window.deckMoveRefs.second),
-      sourceRemoved: !DK.towers.includes(window.deckMoveRefs.first),
+    check('20강 끌기도 두 타워의 객체와 레벨을 보존해 교환한다', await page.evaluate(() => ({
+      count: DK.towers.length,
+      firstSpot: window.deckMoveRefs.first.spot, secondSpot: window.deckMoveRefs.second.spot,
+      firstLevel: window.deckMoveRefs.first.lvl, secondLevel: window.deckMoveRefs.second.lvl,
+      retained: DK.towers.includes(window.deckMoveRefs.first) && DK.towers.includes(window.deckMoveRefs.second),
       moving: !!DKMOVE.tower,
-    })), { count: 1, pips: 2, targetRetained: true, sourceRemoved: true, moving: false });
+    })), { count: 2, firstSpot: 0, secondSpot: 1, firstLevel: 2, secondLevel: 3, retained: true, moving: false });
+
+    // A previous frozen snapshot must continue to use its original five-card rules.
+    await page.evaluate(() => {
+      window.startLegacyMoveRun = () => {
+        const profile = DKPROGRESSION.defaultProfile(), faces = [1, 2, 3, 4, 13];
+        profile.levels[13] = 1;
+        Object.assign(profile.collection.cards[13], { owned: true, class: DKDECKRULES.get(13).baseClass });
+        if (!DKPROGRESSION.setPreset(profile, 0, faces).ok) throw Error('legacy move fixture rejected');
+        const { gradeSystem, ...legacy } = DKPROGRESSION.snapshot(profile, 'build'); legacy.deckSystem = 1;
+        DKSAVE.progression = profile; DKstartInf('build', null, { snapshot: Object.freeze(legacy), ticket: null }); DK.paused = true;
+      };
+      startLegacyMoveRun();
+      for (const i of [0, 1]) { DK.heldDie = 1; DK.dieFocus = true; DKplace(i); }
+      window.legacyMoveRefs = { source: DK.towers[0], target: DK.towers[1] };
+    });
+    await longPress(page, await at(0));
+    await page.mouse.move(d1.x, d1.y, { steps: 12 });
+    await page.mouse.up();
+    check('이전 덱 저장의 끌기는 같은 종류·눈금의 타워를 합성한다', await page.evaluate(() => ({
+      count: DK.towers.length, pips: DK.towers[0]?.pips,
+      targetRetained: DK.towers.includes(window.legacyMoveRefs.target),
+      sourceRemoved: !DK.towers.includes(window.legacyMoveRefs.source),
+      moving: !!DKMOVE.tower, deck: DK.inf.growthSnapshot.deckSystem, grade: DK.inf.growthSnapshot.gradeSystem ?? null,
+    })), { count: 1, pips: 2, targetRetained: true, sourceRemoved: true, moving: false, deck: 1, grade: null });
 
     // ── 12. 모사 타워를 끌어 옮기면 기존 복제 동작도 유지한다 ─────────────
     await page.evaluate(() => {
-      DKstartInf('build'); DK.paused = true;
+      startLegacyMoveRun();
       DK.heldDie = 13; DK.dieFocus = true; DKplace(0);
       DK.heldDie = 1; DK.dieFocus = true; DKplace(1);
       window.copyMoveRefs = { source: DK.towers[0], target: DK.towers[1] };
@@ -284,7 +312,7 @@ async function longPress(page, from, opts = {}) {
     })), { count: 2, sourceAtOriginal: true, copiedFace: 1, targetUntouched: true, moving: false });
 
     await page.evaluate(() => {
-      DKstartInf('build'); DK.paused = true;
+      startLegacyMoveRun();
       DK.heldDie = 1; DK.dieFocus = true; DKplace(0);
       DK.heldDie = 2; DK.dieFocus = true; DKplace(1);
       window.incompatibleMoveRefs = { source: DK.towers[0], target: DK.towers[1] };

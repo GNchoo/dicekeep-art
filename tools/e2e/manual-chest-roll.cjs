@@ -268,10 +268,17 @@ async function runAutoQueue(page, row) {
 
 async function runDeck(page, row) {
   const result = await page.evaluate(() => {
-    DKstartInf('build'); DK.paused = true; DK.gold = 1000;
+    // This is the saved five-card/pip combat contract, not a new grade run.
+    const { gradeSystem, ...legacy } = DKPROGRESSION.snapshot(DKSAVE.progression, 'build');
+    legacy.deckSystem = 1;
+    if (!DKPROGRESSION.snapshotValid(legacy)) throw Error('legacy deck-system snapshot is invalid');
+    DKstartInf('build', null, { snapshot: Object.freeze(legacy), ticket: null });
+    DK.paused = true; DK.gold = 1000;
     const before = DK.gold, kind = DKchest();
-    return { kind, spent: before - DK.gold, phase: DKSLOT.phase, active: DKSLOT.active, held: DK.heldDie };
+    return { kind, spent: before - DK.gold, phase: DKSLOT.phase, active: DKSLOT.active, held: DK.heldDie,
+      deckSystem: DK.inf.growthSnapshot.deckSystem, gradeSystem: DK.inf.growthSnapshot.gradeSystem ?? null, deck: DK.inf.growthSnapshot.deck };
   });
+  assert.deepEqual([result.deckSystem, result.gradeSystem], [1, null], 'saved deck fixture explicitly excludes the new grade system');
   assert.equal(result.kind, 'd20', 'deck summon still advertises its card draw');
   assert.equal(result.spent, 30, 'first deck summon keeps its 30 SP cost');
   assert.equal(result.active, true);
@@ -279,8 +286,13 @@ async function runDeck(page, row) {
   assert.equal(result.held, 0);
   const done = await stepSlot(page, 120);
   assert.equal(done.active, false);
-  assert.ok(done.held >= 1 && done.held <= 20, 'deck card reaches the hand without manual throw');
-  row.deck = { result, done };
+  assert.ok(result.deck.includes(done.held), 'saved deck card reaches the hand without manual throw');
+  const placed = await page.evaluate(() => {
+    const face = DK.heldDie, ok = DKplace(0), t = DK.towers[0];
+    return { ok, face: t?.face, pips: t?.pips, lvl: t?.lvl, deckSystem: t?.deckSystem, originalCard: t?.def.name === DKDECKRULES.get(face).name };
+  });
+  assert.deepEqual(placed, { ok: true, face: done.held, pips: 1, lvl: 1, deckSystem: 1, originalCard: true }, 'saved card keeps its separate pip system and old card definition');
+  row.deck = { result, done, placed };
 }
 
 async function runLegacyDeck(page, row) {
@@ -291,7 +303,7 @@ async function runLegacyDeck(page, row) {
     const result = await page.evaluate(({ deck, index }) => {
       DKstartInf('build'); DK.paused = true; DK.muted = true; DK.gold = 1000;
       const legacy = JSON.parse(JSON.stringify(DK.inf.growthSnapshot));
-      delete legacy.deckSystem; delete legacy.treeVersion;
+      delete legacy.gradeSystem; delete legacy.deckSystem; delete legacy.treeVersion;
       delete legacy.duelRules; delete legacy.mastery; delete legacy.talents;
       delete legacy.awakenings; delete legacy.supporter;
       legacy.deck = deck.slice();
