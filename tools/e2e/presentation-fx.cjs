@@ -57,7 +57,10 @@ async function power(page,row,deck=false) {
     if (deck) {
       const profile=DKPROGRESSION.defaultProfile(), cards=[1,4,7,13,14];
       for(const face of cards){profile.levels[face]=1;Object.assign(profile.collection.cards[face],{owned:true,class:DKDECKRULES.get(face).baseClass});}
-      profile.deck=cards; DKSAVE.progression=profile; DKstartInf('build');
+      profile.deck=cards; DKSAVE.progression=profile;
+      // Keep the previous five-card power feedback contract as a saved-run fixture.
+      const {gradeSystem,...legacy}=DKPROGRESSION.snapshot(profile,'build');legacy.deckSystem=1;
+      DKstartInf('build',null,{snapshot:Object.freeze(legacy),ticket:null});
     } else DKstartInf('clear');
     DK.paused=true;DK.gold=1000000;DK.towers=[];DK.fxs=[];DK.texts=[];
     const faces=deck?[1,1,4,7]:[6,7,14,20,5];
