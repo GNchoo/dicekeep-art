@@ -1,15 +1,15 @@
 const assert=require('node:assert/strict'),fs=require('node:fs');
 const {launchBrowser,gameUrl}=require('./browser.cjs');
-const shopOnly=process.argv.includes('--shop-only'),shopFailures=[];
+const shopOnly=process.argv.includes('--shop-only'),supportOnly=process.argv.includes('--support-only'),shopFailures=[];
 assert.ok(['localhost','127.0.0.1'].includes(new URL(gameUrl()).hostname));
 (async()=>{const browser=await launchBrowser();try{
- for(const [width,height] of (process.argv.includes('--landscape')?[[824,384],[932,430]]:shopOnly?[[320,740],[384,824],[500,900],[514,850],[540,780],[640,720],[824,384],[932,430],[1240,860]]:process.argv.includes('--remaining')?[[640,720],[702,896],[824,384],[932,430]]:[[320,740],[384,824],[500,900],[514,850],[540,780],[640,720],[702,896],[824,384],[932,430]])) {
+ for(const [width,height] of (process.argv.includes('--landscape')?[[824,384],[932,430]]:shopOnly?[[320,740],[384,824],[500,900],[514,850],[540,780],[640,720],[824,384],[932,430],[1240,860]]:supportOnly?[[320,740],[384,824],[500,900],[514,850],[540,780],[640,720],[824,384],[932,430]]:process.argv.includes('--remaining')?[[640,720],[702,896],[824,384],[932,430]]:[[320,740],[384,824],[500,900],[514,850],[540,780],[640,720],[702,896],[824,384],[932,430]])) {
   const page=await browser.newPage({viewport:{width,height}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
   page.setDefaultTimeout(10000);
   await page.goto(gameUrl());await page.waitForFunction(()=>window.DK?.phase==='title',null,{timeout:120000});await page.click('#ov-btn');
   const homeFrame=await page.locator('#lobby-box').evaluate(el=>{const r=el.getBoundingClientRect();return {left:r.left,top:r.top,width:r.width,height:r.height};});
   const fit=async(label,selector)=>{
-   await page.evaluate(()=>document.fonts.ready);
+   await page.evaluate(async()=>{await document.fonts.ready;await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));});
    const issues=await page.locator(selector).evaluate((el,homeFrame)=>{
     const r=el.getBoundingClientRect(),issues=[];
     if(r.top<-2||r.left<-2||r.bottom>innerHeight+2||r.right>innerWidth+2)issues.push('window outside viewport');
@@ -31,9 +31,9 @@ assert.ok(['localhost','127.0.0.1'].includes(new URL(gameUrl()).hostname));
       for(const q of range.getClientRects())if(q.width&&q.height&&(q.bottom>box.bottom+2||q.right>box.right+2||q.left<box.left-2||q.top<box.top-2))issues.push('text outside card: '+node.textContent.trim());
      }
     }
-    for(const card of el.querySelectorAll('.commerce-product,.cosmetic-product,.shop-account-guide article,.shop-account-hero')) {
+    for(const card of el.querySelectorAll('.commerce-product,.cosmetic-product,.shop-account-guide article,.shop-account-hero,.supporter-card')) {
      if(!card.checkVisibility())continue;
-     const parts=[...card.querySelectorAll('h3,h4,b,p,small,button')].filter(n=>getComputedStyle(n).display!=='none'&&getComputedStyle(n).visibility!=='hidden').map(node=>{
+     const parts=[...card.querySelectorAll('h3,h4,b,strong,p,small,button,.supporter-heading,.supporter-ability,.supporter-example,.supporter-purpose,.supporter-choice')].filter(n=>getComputedStyle(n).display!=='none'&&getComputedStyle(n).visibility!=='hidden').map(node=>{
       const rects=[];
       if(node.matches('button'))rects.push(node.getBoundingClientRect());
       else {const text=document.createTreeWalker(node,NodeFilter.SHOW_TEXT);for(let n;n=text.nextNode();){if(!n.textContent.trim())continue;const range=document.createRange();range.selectNodeContents(n);rects.push(...range.getClientRects());}}
@@ -41,7 +41,7 @@ assert.ok(['localhost','127.0.0.1'].includes(new URL(gameUrl()).hostname));
      });
      for(let i=0;i<parts.length;i++)for(let j=i+1;j<parts.length;j++) {
       const a=parts[i],b=parts[j];if(a.node.contains(b.node)||b.node.contains(a.node))continue;
-      if(a.rects.some(p=>b.rects.some(q=>Math.min(p.right,q.right)-Math.max(p.left,q.left)>1&&Math.min(p.bottom,q.bottom)-Math.max(p.top,q.top)>1)))issues.push('shop overlap: '+a.node.textContent.trim()+' / '+b.node.textContent.trim());
+      if(a.rects.some(p=>b.rects.some(q=>Math.min(p.right,q.right)-Math.max(p.left,q.left)>1&&Math.min(p.bottom,q.bottom)-Math.max(p.top,q.top)>1)))issues.push((card.matches('.supporter-card')?'supporter':'shop')+' overlap: '+a.node.textContent.trim()+' / '+b.node.textContent.trim());
      }
     }
     for(const body of el.querySelectorAll('.menu-page-content,[data-dice-view],.help-scroll,.rw-panel,.shop-catalog-view')) {
@@ -88,6 +88,19 @@ assert.ok(['localhost','127.0.0.1'].includes(new URL(gameUrl()).hostname));
    }
    assert.deepEqual(errors,[]);console.log(shopFailures.some(f=>f.width===width)?'FAIL shop menus':'PASS shop menus',width,height);await page.close();continue;
   }
+  if(supportOnly){
+   await page.locator('[data-home-action="deck"]').click();await page.click('[data-open-dice="support"]');
+   await pages('support','#deck-panel','#tree-supporters .page-controls button',3);
+   assert.equal(await page.locator('#tree-supporters .supporter-card:visible').count(),1,'one supporter per page');
+   const supporter=await page.locator('#tree-supporters .supporter-card:visible').getAttribute('data-supporter');
+   await page.locator('#tree-supporters .supporter-card:visible').click();
+   await page.waitForFunction(id=>document.querySelector(`.supporter-card[data-supporter="${id}"]`)?.getAttribute('aria-pressed')==='true',supporter);
+   await page.waitForFunction(()=>document.querySelectorAll('#tree-supporters .page-controls button').length===2);
+   const prev=page.locator('#tree-supporters .page-controls button').first();while(!await prev.isDisabled())await prev.click();
+   await pages('support after selection','#deck-panel','#tree-supporters .page-controls button',3);
+   assert.equal(await page.locator('#tree-supporters > .page-controls').count(),1,'selection re-render has one pager');
+   assert.deepEqual(errors,[]);console.log('PASS supporter menus',width,height);await page.close();continue;
+  }
   await page.click('#lobby-settings');await fit('settings','#settings .help-card');await page.click('#settings-close');
   await page.locator('[data-home-action="deck"]').click();
   for(const key of ['overview','lineup','catalog','combos']){await page.click(`[data-dice-page="${key}"]`);await fit(key,'#deck-panel');}
@@ -103,7 +116,7 @@ assert.ok(['localhost','127.0.0.1'].includes(new URL(gameUrl()).hostname));
   for(const label of ['숙련·해금','특성','각성','성능·연계']){await page.getByRole('button',{name:label,exact:true}).click();await fit(label,'#deck-panel');}
   await page.click('[data-dice-page="catalog"]');await page.click('[data-family="engineering"]');await page.click('[data-card="1"]');
   for(const label of ['숙련·해금','특성','각성','성능·연계']){await page.getByRole('button',{name:label,exact:true}).click();await fit('starter '+label,'#deck-panel');}
-  await page.click('[data-dice-page="overview"]');await page.click('[data-open-dice="support"]');await fit('support','#deck-panel');
+  await page.click('[data-dice-page="overview"]');await page.click('[data-open-dice="support"]');await pages('support','#deck-panel','#tree-supporters .page-controls button',3);
   await page.click('[data-dice-page="overview"]');await page.click('[data-open-dice="earn"]');await pages('earn','#deck-panel','#earn-next',8);
   await page.locator('#lobby-box [data-menu-target="battle"]').click();await fit('battle','#lobby-box');
   await page.click('#lobby-help');const helpCount=await page.locator('#inf-help li').count();
