@@ -815,7 +815,8 @@
  #deck-panel #free-progress > .earn-hero { grid-column:1; grid-row:1; gap:4px; padding:8px; }
  #deck-panel .earn-hero h3 { font-size:18px; }#deck-panel .earn-hero > small { font-size:12px; }
  #deck-panel .earn-reward-pair > span { padding:5px; gap:2px; }#deck-panel .earn-reward-pair b { font-size:23px; }
- #deck-panel #free-progress > .earn-detail { grid-column:2; grid-row:1; justify-content:center; gap:7px; padding:10px; }
+ #deck-panel #free-progress > .earn-detail { grid-column:2; grid-row:1; justify-content:center; gap:3px; padding:6px; }
+ #deck-panel .earn-progress-info { gap:3px; }#deck-panel .earn-current span { gap:1px; }#deck-panel .earn-first-win { gap:5px; }
  #deck-panel #free-progress .earn-detail p { font-size:13px; }#deck-panel .earn-detail > small,#deck-panel .earn-progress-info small { font-size:11px; }
  #deck-panel .earn-current b { font-size:17px; }#deck-panel .earn-progress-info > b,#deck-panel .earn-first-win > b { font-size:14px; }
  #deck-panel .earn-first-win .earn-reward-pair b { font-size:20px; }#deck-panel .earn-win-states > span { padding:5px; font-size:11px; }
