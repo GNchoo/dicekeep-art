@@ -1,8 +1,9 @@
 const assert=require('node:assert/strict'),fs=require('node:fs');
 const {launchBrowser,gameUrl}=require('./browser.cjs');
+const shopOnly=process.argv.includes('--shop-only'),shopFailures=[];
 assert.ok(['localhost','127.0.0.1'].includes(new URL(gameUrl()).hostname));
 (async()=>{const browser=await launchBrowser();try{
- for(const [width,height] of (process.argv.includes('--landscape')?[[824,384],[932,430]]:process.argv.includes('--remaining')?[[640,720],[702,896],[824,384],[932,430]]:[[320,740],[384,824],[500,900],[514,850],[540,780],[640,720],[702,896],[824,384],[932,430]])) {
+ for(const [width,height] of (process.argv.includes('--landscape')?[[824,384],[932,430]]:shopOnly?[[320,740],[384,824],[500,900],[514,850],[540,780],[640,720],[824,384],[932,430],[1240,860]]:process.argv.includes('--remaining')?[[640,720],[702,896],[824,384],[932,430]]:[[320,740],[384,824],[500,900],[514,850],[540,780],[640,720],[702,896],[824,384],[932,430]])) {
   const page=await browser.newPage({viewport:{width,height}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
   page.setDefaultTimeout(10000);
   await page.goto(gameUrl());await page.waitForFunction(()=>window.DK?.phase==='title',null,{timeout:120000});await page.click('#ov-btn');
@@ -18,9 +19,9 @@ assert.ok(['localhost','127.0.0.1'].includes(new URL(gameUrl()).hostname));
     if(frame?.closest('#inf-help')){const q=frame.getBoundingClientRect();if(Math.abs(q.width-Math.min(innerWidth>innerHeight?720:500,innerWidth-24))>2||Math.abs(q.height-Math.min(850,innerHeight-24))>2)issues.push('tutorial is not a full frame');}
     if(el.scrollHeight>el.clientHeight+2||el.scrollWidth>el.clientWidth+2)issues.push(`overflow ${el.clientWidth}x${el.clientHeight}/${el.scrollWidth}x${el.scrollHeight}`);
     for(const c of el.querySelectorAll('.rw-body,.rw-panel,[data-dice-view],.menu-page-content,.help-scroll,ol,#stage-grid,.shop-body,.shop-catalog-view,.shop-policy-card,.shop-preview-page,.deck-tactics,.tactics-body,.tactic-chain,.dice-route,.current-deck,.deck-slot,.tree-node,.research-preview,.effect-card')) {
-     if(c.getBoundingClientRect().height && (c.scrollHeight>c.clientHeight+2||c.scrollWidth>c.clientWidth+2))issues.push('nested overflow '+(c.id||c.className||c.tagName));
+     if(c.getBoundingClientRect().height && (c.scrollHeight>c.clientHeight+2||c.scrollWidth>c.clientWidth+2))issues.push('nested overflow '+(c.id||c.className||c.tagName)+` ${c.clientWidth}x${c.clientHeight}/${c.scrollWidth}x${c.scrollHeight}`);
     }
-    for(const card of el.querySelectorAll('.dice-route,.deck-tactics,.menu-route-grid > button,.menu-subpage > header,.menu-reading-page,.help-step-copy,.help-visual-step,.rw-empty,.theme-guide-card,.shop-policy-card,.commerce-product,.cosmetic-product,.supporter-card,.earn-detail')) {
+    for(const card of el.querySelectorAll('.dice-route,.deck-tactics,.menu-route-grid > button,.menu-subpage > header,.menu-reading-page,.help-step-copy,.help-visual-step,.rw-empty,.theme-guide-card,.shop-policy-card,.commerce-product,.cosmetic-product,.shop-account-guide article,.shop-account-hero,.supporter-card,.earn-detail')) {
      const box=card.getBoundingClientRect();if(!box.width||!box.height||!card.checkVisibility()||card.closest('details:not([open])')&&!card.closest('summary'))continue;
      const walker=document.createTreeWalker(card,NodeFilter.SHOW_TEXT);
      for(let node;node=walker.nextNode();) {
@@ -28,6 +29,19 @@ assert.ok(['localhost','127.0.0.1'].includes(new URL(gameUrl()).hostname));
       if(node.parentElement.closest('details:not([open])')&&!node.parentElement.closest('summary'))continue;
       const range=document.createRange();range.selectNodeContents(node);
       for(const q of range.getClientRects())if(q.width&&q.height&&(q.bottom>box.bottom+2||q.right>box.right+2||q.left<box.left-2||q.top<box.top-2))issues.push('text outside card: '+node.textContent.trim());
+     }
+    }
+    for(const card of el.querySelectorAll('.commerce-product,.cosmetic-product,.shop-account-guide article,.shop-account-hero')) {
+     if(!card.checkVisibility())continue;
+     const parts=[...card.querySelectorAll('h3,h4,b,p,small,button')].filter(n=>getComputedStyle(n).display!=='none'&&getComputedStyle(n).visibility!=='hidden').map(node=>{
+      const rects=[];
+      if(node.matches('button'))rects.push(node.getBoundingClientRect());
+      else {const text=document.createTreeWalker(node,NodeFilter.SHOW_TEXT);for(let n;n=text.nextNode();){if(!n.textContent.trim())continue;const range=document.createRange();range.selectNodeContents(n);rects.push(...range.getClientRects());}}
+      return {node,rects:rects.filter(q=>q.width&&q.height)};
+     });
+     for(let i=0;i<parts.length;i++)for(let j=i+1;j<parts.length;j++) {
+      const a=parts[i],b=parts[j];if(a.node.contains(b.node)||b.node.contains(a.node))continue;
+      if(a.rects.some(p=>b.rects.some(q=>Math.min(p.right,q.right)-Math.max(p.left,q.left)>1&&Math.min(p.bottom,q.bottom)-Math.max(p.top,q.top)>1)))issues.push('shop overlap: '+a.node.textContent.trim()+' / '+b.node.textContent.trim());
      }
     }
     for(const body of el.querySelectorAll('.menu-page-content,[data-dice-view],.help-scroll,.rw-panel,.shop-catalog-view')) {
@@ -49,7 +63,7 @@ assert.ok(['localhost','127.0.0.1'].includes(new URL(gameUrl()).hostname));
     return issues;
    },homeFrame);
    if(issues.length){fs.mkdirSync('gen/e2e/paged-menus',{recursive:true});await page.screenshot({path:`gen/e2e/paged-menus/${width}-failure.png`});}
-   assert.deepEqual([...new Set(issues)],[],`${width} ${label}`);
+   const unique=[...new Set(issues)];if(shopOnly&&unique.length)shopFailures.push({width,height,label,issues:unique});else assert.deepEqual(unique,[],`${width} ${label}`);
   };
   const pages=async(label,selector,nextSelector,expected)=>{
    let count=0;
@@ -57,6 +71,23 @@ assert.ok(['localhost','127.0.0.1'].includes(new URL(gameUrl()).hostname));
    assert.ok(count<60,label+' pagination terminates');if(expected!==undefined)assert.equal(count,expected,label+' page count');
   };
   const closePage=()=>page.locator('.menu-subpage > header button').click();
+  const shopCatalog=async()=>{
+   for(const [key,container] of [['materials','#commerce-products'],['themes','#cosmetic-products'],['account','.shop-account-guide']]){
+    await page.click(`[data-shop-tab="${key}"]`);await pages('shop '+key,'#shop .screen-box',container+' .page-controls button');
+   }
+  };
+  if(shopOnly){
+   await page.click('#btn-shop');await shopCatalog();
+   if(width===320){
+    await page.click('[data-shop-tab="themes"]');
+    for(const viewport of [{width:824,height:384},{width,height}]){
+     const theme=await page.locator('.cosmetic-product:visible').first().getAttribute('data-theme');
+     await page.setViewportSize(viewport);await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+     assert.ok(await page.locator(`.cosmetic-product[data-theme="${theme}"]`).isVisible(),'resizing keeps the previously first visible product');
+    }
+   }
+   assert.deepEqual(errors,[]);console.log(shopFailures.some(f=>f.width===width)?'FAIL shop menus':'PASS shop menus',width,height);await page.close();continue;
+  }
   await page.click('#lobby-settings');await fit('settings','#settings .help-card');await page.click('#settings-close');
   await page.locator('[data-home-action="deck"]').click();
   for(const key of ['overview','lineup','catalog','combos']){await page.click(`[data-dice-page="${key}"]`);await fit(key,'#deck-panel');}
@@ -89,9 +120,7 @@ assert.ok(['localhost','127.0.0.1'].includes(new URL(gameUrl()).hostname));
    await page.locator('#stage-select '+selector).click();await pages(label,'.menu-subpage','.menu-subpage > .page-controls button',count);await closePage();
   }
   await page.locator('#stage-select [data-menu-target="shop"]').click();await fit('shop','#shop .screen-box');
-  for(const [key,container] of [['materials','#commerce-products'],['themes','#cosmetic-products'],['account',null]]){
-   await page.click(`[data-shop-tab="${key}"]`);await pages('shop '+key,'#shop .screen-box',container?container+' .page-controls button':'.no-pagination');
-  }
+  await shopCatalog();
   await page.click('[data-shop-tab="stage"]');
   for(const [key,container] of [['dice','#shop-towers'],['skins','#shop-skins']]){
    await page.click(`[data-stage-tab="${key}"]`);
@@ -128,4 +157,5 @@ assert.ok(['localhost','127.0.0.1'].includes(new URL(gameUrl()).hostname));
   }
   assert.deepEqual(errors,[]);console.log('PASS paged menus',width,height);await page.close();
  }
+ assert.deepEqual(shopFailures,[],'shop product text and controls do not overlap');
 }finally{await browser.close();}})().catch(e=>{console.error(e);process.exitCode=1});

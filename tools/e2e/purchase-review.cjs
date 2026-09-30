@@ -44,7 +44,12 @@ fs.mkdirSync(out, { recursive: true });
       await page.waitForFunction(() => document.getElementById('commerce-status').textContent.length > 0);
       assert.equal(orders, 1);
       await page.click('[data-shop-tab="themes"]');
-      while(!await page.locator('[data-sku="skinRoyal"]').isVisible())await page.locator('#cosmetic-products .page-controls button').last().click();
+      await page.evaluate(async()=>{await document.fonts.ready;await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));});
+      while(!await page.locator('[data-sku="skinRoyal"]').isVisible()){
+        const next=page.locator('#cosmetic-products .page-controls button').last();
+        assert.ok(!await next.isDisabled(),'royal purchase reachable: '+JSON.stringify(await page.locator('#cosmetic-products').evaluate(el=>({size:el.dataset.shopPageSize,count:el.querySelector('.page-controls span')?.textContent,cards:[...el.querySelectorAll('.cosmetic-product')].map(c=>({theme:c.dataset.theme,hidden:c.hasAttribute('data-page-hidden'),sku:c.querySelector('[data-sku]')?.dataset.sku}))}))));
+        await next.click();
+      }
       await page.locator('[data-sku="skinRoyal"]').click();
       assert.match(await page.locator('#purchase-review-item').innerText(), /20종 타워 외형/);
       assert.match(await page.locator('#purchase-review-price').innerText(), /2,900/);

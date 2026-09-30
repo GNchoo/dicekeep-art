@@ -94,7 +94,7 @@ async function main() {
           DKREWARDS.changed(); await DKREWARDSUI.open('pass');
         });
         await page.waitForSelector('[data-claim-pass="1:free"]');
-        check('Actual XP fixture displays two earned tiers in a twenty-tier pass', await page.evaluate(() => document.querySelectorAll('.rw-pass-tier').length === 20 && document.querySelector('progress').value === 200));
+        check('Actual XP fixture displays two earned tiers in a twenty-tier pass', await page.evaluate(() => document.querySelectorAll('.rw-pass-tier').length === 20 && document.querySelector('#rewards-dialog progress').value === 200));
         check('Unlocked free claims need no purchase while unreached tiers remain locked', !(await page.locator('[data-claim-pass="1:free"]').isDisabled()) && await page.locator('[data-claim-pass="3:free"]').isDisabled());
         check('Guest premium claims and purchase button stay disabled', await page.locator('[data-claim-pass="1:premium"]').isDisabled() && await page.locator('#rewards-buy-pass').isDisabled());
         const beforePremium = await snapshot(); check('Direct premium bypass is rejected', (await reject('claimPass', [1, 'premium'])).code, 'premium-required');

@@ -39,14 +39,14 @@
   function listPages(container,selector,size=1) {
     if(!container)return;
     const nav=document.createElement('nav');nav.className='page-controls';container.append(nav);
-    let index=0;
+    let index=0,lastSize;
     const prev=button('이전',()=>{index--;paint();}),next=button('다음',()=>{index++;paint();}),count=document.createElement('span');nav.append(prev,count,next);
-    function paint(){if(!container.contains(nav))container.append(nav);const items=[...container.querySelectorAll(selector)],n=typeof size==='function'?size():size,total=Math.max(1,Math.ceil(items.length/n));index=Math.min(index,total-1);items.forEach((node,i)=>node.toggleAttribute('data-page-hidden',Math.floor(i/n)!==index));prev.disabled=index===0;next.disabled=index===total-1;const label=`${index+1} / ${total}`;if(count.textContent!==label)count.textContent=label;nav.hidden=items.length<=n;
+    function paint(){if(!container.contains(nav))container.append(nav);const items=[...container.querySelectorAll(selector)],n=typeof size==='function'?size():size,total=Math.max(1,Math.ceil(items.length/n));if(lastSize&&lastSize!==n)index=Math.floor(index*lastSize/n);lastSize=n;index=Math.min(index,total-1);items.forEach((node,i)=>node.toggleAttribute('data-page-hidden',Math.floor(i/n)!==index));prev.disabled=index===0;next.disabled=index===total-1;const label=`${index+1} / ${total}`;if(count.textContent!==label)count.textContent=label;nav.hidden=items.length<=n;
       if(container.id==='stage-grid')container.style.setProperty('--page-rows',Math.ceil(Math.min(n,items.length-index*n)/(innerWidth>innerHeight?5:3)));
-      if(container.matches('#commerce-products,#cosmetic-products,#shop-towers')){const visible=Math.max(1,Math.min(n,items.length-index*n));container.style.setProperty('--shop-page-size',visible);container.dataset.shopPageSize=String(visible);}
+      if(container.matches('#commerce-products,#cosmetic-products,#shop-towers,.shop-account-guide')){const visible=Math.max(1,Math.min(n,items.length-index*n));container.style.setProperty('--shop-page-size',visible);container.dataset.shopPageSize=String(visible);}
     }
-    const observer=new MutationObserver(paint);observer.observe(container,{childList:true,subtree:true});window.addEventListener('resize',paint);paint();
-    return ()=>{observer.disconnect();window.removeEventListener('resize',paint);nav.remove();};
+    const observer=new MutationObserver(paint);observer.observe(container,{childList:true,subtree:true});const bounds=new ResizeObserver(paint);bounds.observe(container);window.addEventListener('resize',paint);paint();
+    return ()=>{observer.disconnect();bounds.disconnect();window.removeEventListener('resize',paint);nav.remove();};
   }
   const shop=$('#shop .shop-body'),stored=document.createElement('div');stored.className='menu-source';
   stored.append(...shop.childNodes);shop.append(stored);shop.after($('#commerce-status'));
@@ -64,17 +64,18 @@
   const stageSelect=kind=>{stage.dataset.stageKind=kind;stageTabs.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.stageTab===kind)));stage.querySelector('#shop-towers').hidden=kind!=='dice';stage.querySelector('#shop-skins').hidden=kind!=='skins';};
   for(const [key,label] of [['dice','주사위 해금'],['skins','타워 외형']]){const tab=button(label,()=>stageSelect(key));tab.dataset.stageTab=key;stageTabs.append(tab);}stage.append(stageTabs,$('#shop-towers'),$('#shop-skins'));stageSelect('dice');
   const accountPage=views.querySelector('[data-shop-view="account"]');accountPage.classList.add('shop-account-page');
-  const accountHero=document.createElement('div');accountHero.className='shop-account-hero';accountHero.innerHTML='<img src="casual/towers/skins/royal/t12.png" loading="lazy" alt=""><div><small>나의 성채 기록</small><h3>진행을 안전하게 이어가세요</h3></div>';accountHero.append($('#commerce-account'),$('#commerce-account-id'));accountPage.append(accountHero,account.querySelector('.commerce-account-actions'),$('#commerce-google'));
+  const accountHero=document.createElement('div');accountHero.className='shop-account-hero';accountHero.innerHTML='<img src="casual/towers/skins/royal/t12.png" loading="lazy" alt=""><div><small>계정 관리</small><h3>나의 성채 기록</h3></div>';accountHero.lastChild.append($('#commerce-account'),$('#commerce-account-id'));accountPage.append(accountHero,account.querySelector('.commerce-account-actions'),$('#commerce-google'));
   const accountGuide=document.createElement('div');accountGuide.className='shop-account-guide';accountGuide.innerHTML='<article><img src="ui/icon-dice.png" alt=""><div><b>게스트 진행</b><p>현재 기기에 무료 진행을 저장합니다.</p></div></article><article><img src="ui/icon-users.png" alt=""><div><b>계정 진행</b><p>연결 후 온라인으로 저장합니다. 게스트 진행과 자동 합산되지 않습니다.</p></div></article><article><img src="ui/icon-chest.png" alt=""><div><b>구매·잔액 확인</b><p>같은 계정의 구매와 잔액을 다시 확인합니다.</p></div></article>';accountPage.append(accountGuide);
   const utilities=document.createElement('footer');utilities.className='shop-utilities';const notice=document.createElement('span');notice.id='shop-sale-state';const policyButton=button('판매·개인정보 안내',()=>open('상점 이용 안내',[policy]));policyButton.dataset.shopPolicy='';utilities.append(notice,policyButton);
   storefront.append(tabs,banner,views,utilities);shop.append(storefront);
   function select(key){storefront.dataset.category=key;$('#shop .gem-chip').hidden=key!=='stage';tabs.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.shopTab===key)));views.querySelectorAll('[data-shop-view]').forEach(view=>view.hidden=view.dataset.shopView!==key);const entry=categories.find(c=>c[0]===key);banner.querySelector('img').src=entry[2];banner.querySelector('small').textContent=entry[1];banner.querySelector('h3').textContent=entry[3];banner.querySelector('p').textContent=entry[4];}
   select('materials');window.DKrenderCommerce?.();
-  const pageSize=kind=>{const portrait=innerWidth<=innerHeight;let n=kind==='themes'?2:3;if(portrait){if(kind==='materials')n=innerHeight<=740||innerWidth<=380?1:innerHeight<=820||innerWidth<=430?2:3;else if(kind==='themes')n=innerHeight<=780||innerWidth<=380?1:2;else n=innerHeight<=820||innerWidth<=430?2:3;}return n;};
+  const pageSize=kind=>{const portrait=!matchMedia('(min-aspect-ratio:4/3) and (max-height:640px)').matches;if(kind==='stage')return portrait&&(innerHeight<=820||innerWidth<=430)?2:3;const container=$(kind==='themes'?'#cosmetic-products':'#commerce-products'),max=kind==='themes'?2:3;if(portrait&&container.clientWidth<=340||kind==='materials'&&container.clientHeight<190)return 1;const capacity=portrait?Math.floor((container.clientHeight-44)/(kind==='themes'?240:210)):Math.floor((container.clientWidth+10)/250);return Math.max(1,Math.min(max,capacity));};
   listPages($('#commerce-products'),'.commerce-product',()=>pageSize('materials'));
   listPages($('#cosmetic-products'),'.cosmetic-product',()=>pageSize('themes'));
   listPages($('#shop-towers'),'.shop-tower',()=>pageSize('stage'));
   listPages($('#shop-skins'),'.skin-face',1);
+  listPages(accountGuide,'article',()=>{if(matchMedia('(min-aspect-ratio:4/3) and (max-height:640px)').matches)return 1;const height=(accountPage.clientHeight-$('#shop .commerce-account-actions').clientHeight-24)/2;return height>=260?3:Math.max(1,Math.floor((height-44)/90));});
   listPages(policy,'.shop-policy-card',1);
   listPages($('#stage-grid'),'.stage-cell',()=>innerWidth>innerHeight?5:9);
   // Long help lists become individual pages; the text is preserved rather than truncated.
