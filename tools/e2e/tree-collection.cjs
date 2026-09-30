@@ -170,6 +170,7 @@ async function treeActions(page, row) {
   await page.click('[data-dice-page=lineup]'); await page.click('#deck-reset');
   for(const [i,id] of [7,18,14,13,6].entries())await equip(page,i,id);
   check(row, 'support guide preserves solitary tower condition and avoids double signs', {condition:/고독은 이웃을 비우세요/.test(await page.locator('#deck-synergy .deck-tactics').innerText()),negative:/−17.2%/.test(await page.locator('#deck-synergy .tactic-chain > strong').innerText()),doubleSign:/\+[-−]/.test(await page.locator('#deck-synergy .tactic-chain > strong').innerText())}, {condition:true,negative:true,doubleSign:false});
+  check(row, 'negative solitary formation never draws a false support connection', await page.locator('#deck-synergy .tactic-pair b').allTextContents(), ['고독']);
   await page.click('#deck-reset');
   check(row, 'random pack and duplicate-card upgrade UI is retired for tree profiles', { packs: await page.locator('#deck-open-pack:visible').count(), classes: await page.locator('#deck-class-up:visible').count(), craft: await page.locator('#deck-craft:visible').count() }, { packs: 0, classes: 0, craft: 0 });
 }

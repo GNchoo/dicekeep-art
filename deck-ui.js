@@ -69,9 +69,11 @@
       pair=[4,12];effect=`둔화된 적 피해 +${decimal((st(12).shatterMult-1)*100)}%`;
       condition='서리가 먼저 적중 → 둔화된 적을 빙쇄가 공격';
     } else if(support) {
-      const targets=value.board.filter(t=>t.face!==support&&t.face!==18);
-      pair=[support,targets.reduce((best,t)=>t.dps>best.dps?t:best).face];effect=`단독 대비 화력 ${value.adjacency>=0?'+':'−'}${decimal(Math.abs(value.adjacency)*100)}%`;
-      condition=faces.includes(18)?'고독은 이웃을 비우세요. 지원은 다른 공격 타워에 붙이세요.':'지원 타워를 공격 타워의 상하좌우에 붙이세요.';
+      const origin=value.board.find(t=>t.face===support),targets=value.board.filter(t=>rules().adjacent(origin,t));
+      const target=targets.reduce((best,t)=>t.dps>best.dps?t:best);
+      pair=value.adjacency<0&&target.face===18?[18]:[support,target.face];
+      effect=`${value.adjacency<0?'배치 손실 · 전체 화력':'단독 대비 화력'} ${value.adjacency>=0?'+':'−'}${decimal(Math.abs(value.adjacency)*100)}%`;
+      condition=target.face===18?'이 그림은 고독의 독립 효과 +70%가 꺼져요. 고독은 이웃을 비우세요.':'지원 타워를 공격 타워의 상하좌우에 붙이세요.';
     } else if(faces.includes(4)&&area) {
       pair=[4,area];effect=`명중한 적 이동속도 −${decimal(st(4).slowPct*100)}%`;
       condition='서리로 늦추고, 같은 길에 광역 공격을 겹치세요.';
