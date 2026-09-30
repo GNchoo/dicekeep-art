@@ -166,6 +166,9 @@
 #rewards-dialog .rw-pass-tier { margin:0; }
 #rewards-dialog .rw-mail-list { min-height:0; }
 #rewards-dialog .rw-mail-body { max-height:none; overflow:visible; }
+@media(min-height:641px) and (max-height:840px) {
+ #rewards-dialog .rw-panel { gap:6px; }
+}
 @media(min-aspect-ratio:4/3) and (max-height:640px) {
  #deck-panel #deck-selected { padding:0; }
  #deck-panel .deck-actions { padding-top:0; }
@@ -297,7 +300,7 @@
 .deck-metrics { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
 .deck-metrics > div { display:flex; flex-direction:column; gap:6px; padding:12px; background:#303950; border:1px solid #6e819e; border-radius:11px; }
 #deck-panel .deck-metrics small,#deck-panel .deck-metrics span { font-size:13px; line-height:1.35; color:#d1d8e5; }
-#deck-panel .deck-metrics b { color:#ffda82; font-size:28px; line-height:1.15; font-variant-numeric:tabular-nums; }
+#deck-panel .deck-metrics b { color:#ffda82; font-size:28px; line-height:1.4; font-variant-numeric:tabular-nums; }
 .deck-metrics b em { font:12px var(--font-ui,sans-serif); margin-left:5px; color:#d1d8e5; white-space:nowrap; }
 #deck-panel .deck-metrics .metric-up { color:#a5e4b2; }.deck-metrics .metric-down { color:#ffb6a0; }
 #deck-panel .metric-condition { display:block; font-size:12px; line-height:1.4; color:#c8cfdf; margin:0; }
@@ -546,6 +549,9 @@
 #deck-panel #dice-combos .grade-combo-pair img { width:100%; height:0; flex:1; min-height:0; object-fit:contain; }
 #deck-panel #dice-combos .grade-combo-pair b { font-size:16px; }
 #deck-panel .grade-tactics .tactic-chain > p { display:block; }
+#deck-panel .grade-tactics { min-height:min-content; }
+#deck-panel .grade-tactics .tactics-body { min-height:min-content; }
+#deck-panel #dice-combos .grade-tactics > header { display:none; }
 #deck-panel .grade-analysis-effects { display:flex; flex-direction:column; gap:10px; flex:1; min-height:0; }
 #deck-panel .formation-grid { grid-template-columns:repeat(5,minmax(0,1fr)); grid-template-rows:repeat(3,minmax(0,1fr)); }
 #deck-panel .formation-grid > div { flex-direction:column; gap:3px; }
@@ -557,7 +563,7 @@
 #deck-panel #deck-detail[data-tab="research"] .research-numbers span { padding:10px; gap:8px; }
 #deck-panel .research-partners .page-controls { flex:none; margin:0; gap:8px; }
 #deck-panel .research-partners .page-controls button { flex:none; padding:5px 10px; min-height:32px; }
-@media(max-width:430px),(max-height:780px) and (max-aspect-ratio:1/1) {
+@media(max-width:430px),(max-height:840px) {
  #deck-panel .grade-overview { padding:10px; gap:8px; }
  #deck-panel .grade-overview-steps { gap:5px; }#deck-panel .grade-overview-steps > span { padding:7px 3px; }
  #deck-panel .grade-overview-steps small { font-size:11px; }
@@ -575,8 +581,24 @@
  #deck-panel .grade-partner { padding:7px; gap:7px; }
  #deck-panel #dice-combos .grade-combo-pair { height:130px; }
 }
+@media(max-height:840px) {
+ #deck-panel #deck-detail { gap:6px; }
+ #deck-panel .tree-node { gap:4px; }
+ #deck-panel .tree-node img { width:44px; height:44px; }
+ #deck-panel .tree-node b { font-size:16px; }
+ #deck-panel .node-name { flex-direction:row; gap:6px; }
+ #deck-panel #dice-combos { gap:6px; }
+ #deck-panel #dice-combos .grade-combo-pair { height:100px; }
+ #deck-panel #dice-combos .deck-metrics > div { padding:8px; gap:3px; }
+ #deck-panel #dice-combos .deck-metrics b { font-size:22px; }
+ #deck-panel #dice-combos .deck-metrics small,#deck-panel #dice-combos .deck-metrics span { font-size:12px; }
+ #deck-panel #dice-combos .grade-tactics { padding:8px; }
+}
 @media(min-aspect-ratio:4/3) and (max-height:640px) {
  #deck-panel[data-page="lineup"] .dice-page-title,#deck-panel[data-page="overview"] .dice-page-title { display:none; }
+ #deck-panel .tree-node { gap:3px; }
+ #deck-panel .tree-node img { width:30px; height:30px; }
+ #deck-panel .tree-node b { font-size:15px; }
  #deck-panel #dice-growth { display:grid; grid-template-columns:1.15fr 1fr; grid-template-rows:minmax(0,1fr); }
  #deck-panel .grade-overview { padding:8px; gap:5px; }
  #deck-panel .grade-overview-steps > span { padding:5px; gap:2px; }
@@ -612,10 +634,34 @@
  #deck-panel .grade-tactics .tactic-pair img { width:20px; height:28px; }
  #deck-panel .grade-tactics .tactic-chain > strong { font-size:13px; }
  #deck-panel .grade-tactics .tactic-chain > p { font-size:11px; line-height:1.3; }
+ #deck-panel #dice-combos .deck-metrics > div { padding:4px 8px; gap:2px; }
+ #deck-panel #dice-combos .deck-metrics b { font-size:21px; }
  #deck-panel .research-partners { flex-direction:column; gap:5px; }
  #deck-panel .research-partners > button { gap:7px; padding:5px; }
  #deck-panel .research-partners > button b { font-size:13px; }
  #deck-panel .research-partners > button span { gap:4px; }
+}
+@media(max-height:640px) and (max-aspect-ratio:4/3) {
+ #deck-panel .dice-page-title { display:none; }
+ #deck-panel .tree-node { gap:3px; }
+ #deck-panel .tree-node img { width:30px; height:30px; }
+ #deck-panel .tree-node b { font-size:15px; }
+ #deck-panel #deck-selected { height:76px; }
+ #deck-panel .deck-slot { padding:3px 2px; gap:2px; }
+ #deck-panel .deck-slot img { width:22px; height:22px; }
+ #deck-panel .grade-tower-preview { padding:7px; }
+ #deck-panel .grade-tower-copy { gap:4px; }
+ #deck-panel .grade-next { padding:5px; }
+ #deck-panel #deck-detail .deck-detail-head { min-height:50px; padding-bottom:0; }
+ #deck-panel #deck-detail .deck-detail-head img { width:40px; height:50px; }
+ #deck-panel #deck-detail[data-tab="research"] > p { margin:0; }
+ #deck-panel #deck-detail .research-preview { gap:8px; }
+ #deck-panel #deck-detail[data-tab="research"] .research-numbers span { padding:8px; gap:4px; }
+ #deck-panel #dice-combos .grade-combo-pair { height:60px; }
+ #deck-panel #dice-combos .grade-combo-pair button { display:grid; grid-template-columns:32px minmax(0,1fr); grid-template-rows:1fr 1fr; gap:3px 7px; padding:6px; }
+ #deck-panel #dice-combos .grade-combo-pair img { grid-column:1; grid-row:1/3; width:32px; height:100%; }
+ #deck-panel #dice-combos .grade-combo-pair b { grid-column:2; grid-row:1; }
+ #deck-panel #dice-combos .grade-combo-pair small { grid-column:2; grid-row:2; }
 }
 
 /* Full pages use actual maps, opponents and progress to explain the next choice. */
