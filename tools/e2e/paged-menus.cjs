@@ -3,7 +3,7 @@ const {launchBrowser,gameUrl}=require('./browser.cjs');
 const shopOnly=process.argv.includes('--shop-only'),supportOnly=process.argv.includes('--support-only'),gradeOnly=process.argv.includes('--grade-only'),gradeNotes=process.argv.includes('--grade-notes'),shopFailures=[];
 assert.ok(['localhost','127.0.0.1'].includes(new URL(gameUrl()).hostname));
 (async()=>{const browser=await launchBrowser();try{
- for(const [width,height] of (gradeNotes?[[320,740],[640,720],[824,384],[932,430]]:gradeOnly&&process.argv.includes('--remaining')?[[640,720],[824,384],[932,430]]:process.argv.includes('--landscape')?[[824,384],[932,430]]:shopOnly?[[320,740],[384,824],[500,900],[514,850],[540,780],[640,720],[824,384],[932,430],[1240,860]]:(supportOnly||gradeOnly)?[[320,740],[384,824],[500,900],[514,850],[540,780],[640,720],[824,384],[932,430]]:process.argv.includes('--remaining')?[[640,720],[702,896],[824,384],[932,430]]:[[320,740],[384,824],[500,900],[514,850],[540,780],[640,720],[702,896],[824,384],[932,430]])) {
+ for(const [width,height] of (process.argv.includes('--iab')?[[1280,720]]:process.argv.includes('--desktop')?[[1024,768],[1280,720],[1366,768],[1440,900],[1240,860],[1600,900],[1280,800],[1280,801],[1280,820],[700,640]]:gradeNotes?[[320,740],[640,720],[824,384],[932,430]]:gradeOnly&&process.argv.includes('--remaining')?[[640,720],[824,384],[932,430]]:process.argv.includes('--landscape')?[[824,384],[932,430]]:shopOnly?[[320,740],[384,824],[500,900],[514,850],[540,780],[640,720],[824,384],[932,430],[1240,860]]:(supportOnly||gradeOnly)?[[320,740],[384,824],[500,900],[514,850],[540,780],[640,720],[824,384],[932,430]]:process.argv.includes('--remaining')?[[640,720],[702,896],[824,384],[932,430]]:[[320,740],[384,824],[500,900],[514,850],[540,780],[640,720],[702,896],[824,384],[932,430],[1280,720]])) {
   const page=await browser.newPage({viewport:{width,height}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
   page.setDefaultTimeout(10000);
   await page.goto(gameUrl());await page.waitForFunction(()=>window.DK?.phase==='title',null,{timeout:120000});await page.click('#ov-btn');
@@ -16,7 +16,7 @@ assert.ok(['localhost','127.0.0.1'].includes(new URL(gameUrl()).hostname));
     const frame=el.closest('.screen-box,.help-card,.rw-dialog');
     if(frame&&frame!==el){const q=frame.getBoundingClientRect();if(r.top<q.top-2||r.bottom>q.bottom+2||r.left<q.left-2||r.right>q.right+2)issues.push('page outside frame');}
     if(frame?.closest('.screen')){const q=frame.getBoundingClientRect();for(const key of ['left','top','width','height'])if(Math.abs(q[key]-homeFrame[key])>2)issues.push('main frame differs: '+key);}
-    if(frame?.closest('#inf-help')){const q=frame.getBoundingClientRect();if(Math.abs(q.width-Math.min(innerWidth>innerHeight?720:500,innerWidth-24))>2||Math.abs(q.height-Math.min(850,innerHeight-24))>2)issues.push('tutorial is not a full frame');}
+    if(frame?.closest('#inf-help')){const q=frame.getBoundingClientRect();const tutorialWidth=matchMedia('(min-aspect-ratio:4/3) and (max-height:640px)').matches?720:500;if(Math.abs(q.width-Math.min(tutorialWidth,innerWidth-24))>2||Math.abs(q.height-Math.min(850,innerHeight-24))>2)issues.push('tutorial is not a full frame');}
     if(el.scrollHeight>el.clientHeight+2||el.scrollWidth>el.clientWidth+2)issues.push(`overflow ${el.clientWidth}x${el.clientHeight}/${el.scrollWidth}x${el.scrollHeight}`);
     for(const c of el.querySelectorAll('.rw-body,.rw-panel,[data-dice-view],.menu-page-content,.help-scroll,ol,#stage-grid,.shop-body,.shop-catalog-view,.shop-policy-card,.shop-preview-page,.deck-tactics,.tactics-body,.tactic-chain,.dice-route,.current-deck,.deck-slot,.tree-node,.research-preview,.effect-card,.grade-tower-preview,.grade-overview,.grade-next,.grade-partner')) {
      if(c.getBoundingClientRect().height && (c.scrollHeight>c.clientHeight+2||c.scrollWidth>c.clientWidth+2))issues.push('nested overflow '+(c.id||c.className||c.tagName)+` ${c.clientWidth}x${c.clientHeight}/${c.scrollWidth}x${c.scrollHeight}`);
@@ -31,9 +31,9 @@ assert.ok(['localhost','127.0.0.1'].includes(new URL(gameUrl()).hostname));
       for(const q of range.getClientRects())if(q.width&&q.height&&(q.bottom>box.bottom+2||q.right>box.right+2||q.left<box.left-2||q.top<box.top-2))issues.push('text outside card: '+node.textContent.trim());
      }
     }
-    for(const card of el.querySelectorAll('.commerce-product,.cosmetic-product,.shop-account-guide article,.shop-account-hero,.supporter-card')) {
+    for(const card of el.querySelectorAll('.commerce-product,.cosmetic-product,.shop-account-guide article,.shop-account-hero,.supporter-card,.grade-tower-preview,.grade-next,.grade-partner,.grade-tactics,.grade-combo-pair,.deck-metrics > div,.research-numbers > span,.tree-node')) {
      if(!card.checkVisibility())continue;
-     const parts=[...card.querySelectorAll('h3,h4,b,strong,p,small,button,.supporter-heading,.supporter-ability,.supporter-example,.supporter-purpose,.supporter-choice')].filter(n=>getComputedStyle(n).display!=='none'&&getComputedStyle(n).visibility!=='hidden').map(node=>{
+     const parts=[...card.querySelectorAll('h3,h4,b,strong,p,small,span,em,button,.supporter-heading,.supporter-ability,.supporter-example,.supporter-purpose,.supporter-choice')].filter(n=>getComputedStyle(n).display!=='none'&&getComputedStyle(n).visibility!=='hidden').map(node=>{
       const rects=[];
       if(node.matches('button'))rects.push(node.getBoundingClientRect());
       else {const text=document.createTreeWalker(node,NodeFilter.SHOW_TEXT);for(let n;n=text.nextNode();){if(!n.textContent.trim())continue;const range=document.createRange();range.selectNodeContents(n);rects.push(...range.getClientRects());}}
@@ -41,7 +41,7 @@ assert.ok(['localhost','127.0.0.1'].includes(new URL(gameUrl()).hostname));
      });
      for(let i=0;i<parts.length;i++)for(let j=i+1;j<parts.length;j++) {
       const a=parts[i],b=parts[j];if(a.node.contains(b.node)||b.node.contains(a.node))continue;
-      if(a.rects.some(p=>b.rects.some(q=>Math.min(p.right,q.right)-Math.max(p.left,q.left)>1&&Math.min(p.bottom,q.bottom)-Math.max(p.top,q.top)>1)))issues.push((card.matches('.supporter-card')?'supporter':'shop')+' overlap: '+a.node.textContent.trim()+' / '+b.node.textContent.trim());
+      if(a.rects.some(p=>b.rects.some(q=>Math.min(p.right,q.right)-Math.max(p.left,q.left)>1&&Math.min(p.bottom,q.bottom)-Math.max(p.top,q.top)>1)))issues.push((card.matches('.supporter-card')?'supporter':card.closest('#deck-panel')?'grade':'shop')+' overlap: '+a.node.textContent.trim()+' / '+b.node.textContent.trim());
      }
     }
     for(const body of el.querySelectorAll('.menu-page-content,[data-dice-view],.help-scroll,.rw-panel,.shop-catalog-view')) {
@@ -52,14 +52,17 @@ assert.ok(['localhost','127.0.0.1'].includes(new URL(gameUrl()).hostname));
     }
     for(const b of el.querySelectorAll('button,input,select')) {const q=b.getBoundingClientRect();if(!q.width||!q.height)continue;if(q.bottom>r.bottom+2||q.right>r.right+2||q.left<r.left-2||q.top<r.top-2)issues.push('clipped '+b.textContent.trim());}
     for(const detail of el.querySelectorAll('.menu-reading-page > .rw-help'))if(detail.getBoundingClientRect().height&&!detail.open)issues.push('dedicated help body is collapsed');
+    const stageHeights=[];
     for(const cell of el.querySelectorAll('.stage-cell')) {
      if(!cell.getBoundingClientRect().height)continue;
+     stageHeights.push(cell.getBoundingClientRect().height);
      const n=Number(cell.querySelector('.stage-number')?.textContent),map=window.DKCONTENT.maps[n-1],svg=cell.querySelector('svg');
      if(svg?.querySelector('polyline')?.getAttribute('points')!==map.path.map(p=>p.join(',')).join(' '))issues.push('stage '+n+' preview path differs');
      if(svg?.querySelectorAll('circle').length!==map.spots.length+(map.spots2?.length||0)+map.portals.length+1)issues.push('stage '+n+' preview pads differ');
      const water=[...svg.querySelectorAll('rect')].slice(1).map(rect=>[Number(rect.getAttribute('y'))/64,Number(rect.getAttribute('x'))/64]);
      if(JSON.stringify(water)!==JSON.stringify(map.layout.water||[]))issues.push('stage '+n+' preview water differs');
     }
+    if(stageHeights.length&&Math.max(...stageHeights)-Math.min(...stageHeights)>2)issues.push('stage card heights differ');
     return issues;
    },homeFrame);
    if(issues.length){fs.mkdirSync('gen/e2e/paged-menus',{recursive:true});await page.screenshot({path:`gen/e2e/paged-menus/${width}-failure.png`});}
@@ -150,12 +153,14 @@ assert.ok(['localhost','127.0.0.1'].includes(new URL(gameUrl()).hostname));
   await pages('tutorial','#inf-help .help-card','#inf-help .page-controls button',helpCount);await page.click('#help-close');
   await page.click('#lobby-help');await fit('tutorial reopened','#inf-help .help-card');
   assert.equal(await page.locator('#inf-help li .help-step-art').count(),helpCount,'one illustration per tutorial page after reopening');
+  const helpIllustrations=(await page.locator('#inf-help .help-step-art').allTextContents()).join(' ');assert.doesNotMatch(helpIllustrations,/5종 덱/);assert.match(helpIllustrations,/20강 연계/);
   assert.equal(await page.locator('#inf-help .page-controls').count(),1,'one tutorial pager after reopening');await page.click('#help-close');
   await page.click('#theme-guide summary');await pages('monster themes','.menu-subpage','.menu-subpage > .page-controls button',20);await closePage();
   await page.getByRole('button',{name:'내 기록',exact:true}).click();await pages('records','.menu-subpage','.menu-subpage > .page-controls button',2);await closePage();
   await page.evaluate(()=>{document.querySelector('#run-resume-title').textContent='순수운빨 · 웨이브 24';document.querySelector('#run-resume-note').textContent='저장한 전투를 이어하거나 종료하고 참여 보상을 받으세요.';document.querySelector('#run-resume').classList.remove('hidden');});
   await page.click('#run-resume-open');await fit('saved battle','.menu-subpage');await closePage();await page.evaluate(()=>document.querySelector('#run-resume').classList.add('hidden'));
-  await page.click('#btn-stage-select');await pages('stages','#stage-select .screen-box','#stage-grid .page-controls button',Math.ceil(50/(width>height?5:9)));
+  const stagePageSize=await page.evaluate(()=>matchMedia('(min-aspect-ratio:4/3) and (max-height:640px)').matches?5:9);
+  await page.click('#btn-stage-select');await pages('stages','#stage-select .screen-box','#stage-grid .page-controls button',Math.ceil(50/stagePageSize));
   for(const [selector,label,count] of [['.campaign-help summary','campaign guide',6],['.menu-help summary','region guide',5]]){
    await page.locator('#stage-select '+selector).click();await pages(label,'.menu-subpage','.menu-subpage > .page-controls button',count);await closePage();
   }
