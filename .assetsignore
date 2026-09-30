@@ -2,6 +2,7 @@
 .git
 .github
 .claude
+.codex-remote-attachments
 node_modules
 .wrangler
 *.md

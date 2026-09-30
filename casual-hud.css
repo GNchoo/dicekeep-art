@@ -77,6 +77,26 @@ body.ui-art #mini-top button[data-icon="menu"] { background-image: url(ui/icon-m
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
 }
+/* The latest battle event owns a fixed row below the controls. */
+#wrap #hud:not(.hidden) {
+  --log-row-h: 32px;
+  --log-bottom: max(6px, var(--sa-b));
+  --log-space: calc(var(--log-row-h) + var(--log-bottom) + 6px);
+  padding-bottom: var(--log-space);
+}
+#wrap #hud:has(#chat-form:not(.hidden)) {
+  --log-row-h: 68px;
+  translate: 0 calc(-1 * var(--kb, 0px));
+}
+#wrap #hud #info-panel {
+  bottom: var(--log-space);
+  min-height: calc(100% - var(--log-space) - 6px);
+}
+#wrap #hud.tree-hud #info-panel {
+  top: auto;
+  bottom: calc(var(--log-space) + 58px);
+  min-height: 0;
+}
 #dice-panel {
   background: var(--dk-ui-panel);
   border: 1px solid var(--dk-ui-line);
@@ -325,10 +345,33 @@ body.ui-art #help-btn {
 }
 
 /* In-game notices and multiplayer overlays use the same visual family. */
+#wrap #hud > #log-panel {
+  position: absolute;
+  z-index: 13;
+  left: max(8px, var(--sa-l));
+  right: max(8px, var(--sa-r));
+  bottom: var(--log-bottom);
+  width: auto;
+  max-width: none;
+  height: var(--log-row-h);
+  gap: 4px;
+  overflow: hidden;
+  pointer-events: none;
+}
+#log-lines { flex: 0 0 32px; min-height: 32px; justify-content: center; }
+#log-panel #chat-form { flex: 0 0 32px; height: 32px; }
+#log-lines .log-line:not(:last-child) { display: none; }
 #log-panel .log-line {
-  width: fit-content;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  width: 100%;
   max-width: 100%;
-  padding: 3px 7px;
+  max-height: 32px;
+  overflow: hidden;
+  padding: 1px 7px;
+  font-size: 11px;
+  line-height: 15px;
   color: var(--dk-ui-cream);
   background: #24273de8;
   border-left: 3px solid var(--dk-ui-line);
@@ -342,30 +385,8 @@ body.ui-art #help-btn {
 #log-panel .log-line.life { color: #ffb6ae; border-left-color: var(--dk-ui-red); }
 #log-panel .log-line.boss { color: #ffd4a5; border-left-color: #eea66b; }
 #log-panel .log-line .who { color: var(--dk-ui-blue); }
-/* The physical die waits at the left edge. Keep persistent log cards off its tray. */
-#stage:not(.mp) #log-panel { left: auto; right: max(10px, var(--sa-r)); }
-/* Leave room for the readable 87px portrait die, including on 320px phones. */
-#wrap.bleed:not(.over) #stage:not(.mp) #log-panel { max-width: calc(100% - 128px); }
 /* A thrown die can cross the entire board, including the log corner. */
 #physical-die { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 7; pointer-events: none; }
-/* In wide multiplayer, rival cards already own the right edge. */
-#wrap.over #stage.mp #log-panel { left: 25%; right: auto; width: min(45%, 460px); }
-/* Portrait rivals form a bottom strip; place logs above it, away from the left die tray. */
-#wrap.bleed:not(.over) #stage.mp #log-panel {
-  left: auto;
-  right: max(6px, var(--sa-r));
-  bottom: calc(112px + var(--kb, 0px));
-}
-/* A very short landscape screen can show three messages, but not eight full chat paragraphs. */
-#wrap.xnarrow #log-lines .log-line:not(:nth-last-child(-n+3)),
-#wrap.bleed:not(.over) #stage.tiny #log-lines .log-line:not(:nth-last-child(-n+3)) { display: none; }
-#wrap.xnarrow #log-lines .log-line,
-#wrap.bleed:not(.over) #stage.tiny #log-lines .log-line {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  overflow: hidden;
-}
 #chat-tag { color: var(--dk-ui-gold); }
 #chat-input {
   color: var(--dk-ui-cream);
@@ -481,7 +502,6 @@ body.ui-art #help-btn {
 @media (max-width: 720px), (max-height: 520px) {
   #hud-hint,
   #info-body { color: var(--dk-ui-muted); font-size: 12px; }
-  #log-panel .log-line { font-size: 11px; padding: 3px 6px; }
 }
 #stage.tiny .chip { font-size: 11px; padding: 2px 4px 2px 2px; gap: 2px; letter-spacing: 0; }
 #stage.tiny .chip img,
@@ -626,12 +646,37 @@ body.ui-art #help-btn {
   z-index: 12;
   right: 10px;
   top: 58px;
-  min-width: 120px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-width: 128px;
   min-height: 44px;
-  padding: 8px 14px;
+  padding: 8px 11px;
   font-size: 15px;
-  box-shadow: 0 3px 12px #16152466;
+  line-height: 1.2;
+  color: #292536;
+  background: linear-gradient(180deg, #ffe6a8 0 48%, #efbc5b 48% 100%);
+  border: 2px solid #6c5260;
+  border-bottom: 3px solid #8c633f;
+  border-radius: 12px;
+  box-shadow: inset 0 1px 0 #fff4ce, 0 3px 0 #24273d, 0 5px 12px #16152466;
 }
+#wrap #stage > #wave-btn::before {
+  content: '\25b6';
+  display: grid;
+  place-items: center;
+  flex: 0 0 20px;
+  width: 20px;
+  height: 20px;
+  padding-left: 1px;
+  color: #fff0c9;
+  background: #574250;
+  border-radius: 50%;
+  font: 10px/1 sans-serif;
+}
+#wrap #stage > #wave-btn:hover:not(:disabled) { filter: brightness(1.06); }
+#wrap #stage > #wave-btn:active:not(:disabled) { box-shadow: inset 0 1px 3px #57425055, 0 1px 0 #24273d; }
 /* Keep each power card's edge continuous in enabled, disabled and pressed states. */
 #hud .inf-face {
   border: 1px solid var(--dk-ui-blue);
@@ -661,3 +706,20 @@ body.ui-art #help-btn {
 #boss-reward-title { flex:none; font-size:22px; }
 #boss-reward-open { flex:1; min-height:0; width:100%; height:0; }
 #boss-reward-message,#boss-reward-odds { flex:none; margin:0; }
+@media (max-height: 460px) and (orientation: landscape) {
+  .boss-reward-card {
+    display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    grid-template-rows:auto minmax(0,1fr) auto;
+    width:min(92%,520px); height:min(100%,240px); gap:4px 8px;
+  }
+  #boss-reward-title { grid-column:1; grid-row:1; }
+  #boss-reward-message { grid-column:1; grid-row:2; align-self:center; }
+  #boss-reward-odds { grid-column:1; grid-row:3; }
+  #boss-reward-open { grid-column:2; grid-row:1 / 4; height:100%; }
+}
+@media (max-width: 600px) and (max-height: 460px) and (orientation: landscape) {
+  .boss-reward-card { padding:6px; gap:2px 6px; }
+  #boss-reward-title { font-size:20px; line-height:1.2; }
+  #boss-reward-message { font-size:16px; line-height:1.3; }
+  #boss-reward-odds { font-size:11px; line-height:1.4; }
+}

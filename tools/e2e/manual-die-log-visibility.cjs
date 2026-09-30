@@ -60,19 +60,22 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
           const r = el.getBoundingClientRect();
           return { left: r.left, top: r.top, right: r.right, bottom: r.bottom };
         });
-        return { die, logs, rivals, hud: { left: hud.left, top: hud.top, right: hud.right, bottom: hud.bottom },
+        return { die, logs, rivals, inHud: !!document.getElementById('log-panel').closest('#hud'),
+          retained: document.querySelectorAll('#log-lines .log-line').length,
+          hud: { left: hud.left, top: hud.top, right: hud.right, bottom: hud.bottom },
           stage: { left: stage.left, top: stage.top, right: stage.right, bottom: stage.bottom },
           state: DKDIE.state, slotPhase: DKSLOT.phase };
       });
       const visible = (layout, label) => {
         assert.equal(layout.state, 'tray', `${label}: physical die is waiting to be thrown`);
         assert.equal(layout.slotPhase, -1, `${label}: manual chest is pending`);
-        assert.ok(layout.logs.length >= 2, `${label}: multiple messages are visible`);
+        assert.ok(layout.logs.length >= 1 && layout.retained >= 2, `${label}: latest message is visible and earlier messages remain in the log`);
+        assert.equal(layout.inHud, true, `${label}: notifications occupy the HUD`);
         assert.ok(layout.logs.every(log => !log.coversDie), `${label}: die is not hidden by logs ${JSON.stringify(layout)}`);
         assert.ok(layout.logs.every(log => log.opacity > .8 && log.right - log.left > 10 && log.bottom - log.top > 10 &&
-          log.left >= layout.stage.left - 1 && log.right <= layout.stage.right + 1 &&
-          log.top >= layout.stage.top - 1 && log.bottom <= layout.stage.bottom + 1),
-        `${label}: log cards remain readable inside the stage ${JSON.stringify(layout)}`);
+          log.left >= layout.hud.left - 1 && log.right <= layout.hud.right + 1 &&
+          log.top >= layout.hud.top - 1 && log.bottom <= layout.hud.bottom + 1),
+        `${label}: latest notification remains readable inside the HUD ${JSON.stringify(layout)}`);
         const overlap = (a, b) => a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
         assert.ok(layout.die.y + layout.die.radius < layout.hud.top - 4,
           `${label}: pending die clears the bottom controls ${JSON.stringify(layout)}`);
@@ -110,7 +113,7 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
           document.getElementById('rivals').replaceChildren();
         });
         await page.setViewportSize({ width: 568, height: 320 });
-        await page.waitForFunction(() => document.getElementById('wrap').classList.contains('xnarrow'));
+        await page.waitForFunction(() => document.getElementById('wrap').classList.contains('narrow'));
         await page.waitForFunction(() => document.querySelector('#roll-btn')?.classList.contains('manual-roll'), null, { timeout: 10000 });
         visible(await measure(), 'pending die after landscape resize');
       }
@@ -129,15 +132,16 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
         await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
         const layer = await page.evaluate(() => {
           const die = document.getElementById('physical-die'), main = document.getElementById('game');
-          const css = getComputedStyle(die), logCSS = getComputedStyle(document.getElementById('log-panel'));
-          return { visible: css.display !== 'none', aboveLog: Number(css.zIndex) > Number(logCSS.zIndex),
+          const css = getComputedStyle(die);
+          return { visible: css.display !== 'none',
             pointerEvents: css.pointerEvents, size: [die.width, die.height], mainSize: [main.width, main.height],
             alpha: die.getContext('2d').getImageData(Math.round(DKDIE.x), Math.round(DKDIE.y), 1, 1).data[3] };
         });
-        assert.ok(layer.visible && layer.aboveLog && layer.alpha > 240, `${name}: thrown die stays visible over log corner`);
+        assert.ok(layer.visible && layer.alpha > 240, `${name}: thrown die remains opaque at the HUD boundary`);
+        assert.ok((await measure()).logs.every(log => !log.coversDie), `${name}: collision bounds keep the thrown die clear of HUD notifications`);
         assert.equal(layer.pointerEvents, 'none', `${name}: visible die layer cannot swallow game input`);
         assert.deepEqual(layer.size, layer.mainSize, `${name}: die rendering and collision coordinates agree`);
-        await page.screenshot({ path: outputPath(path.join('manual-die-log', `${name}-over-log.png`)) });
+        await page.screenshot({ path: outputPath(path.join('manual-die-log', `${name}-hud-boundary.png`)) });
         await page.evaluate(() => { DK.phase = 'lobby'; });
         await page.waitForFunction(() => document.getElementById('physical-die').classList.contains('hidden'));
         assert.equal(await page.locator('#physical-die').evaluate(el =>
