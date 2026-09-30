@@ -11,7 +11,7 @@ assert.ok(['localhost','127.0.0.1'].includes(new URL(gameUrl()).hostname));
    const issues=await page.locator(selector).evaluate(el=>{
     const r=el.getBoundingClientRect(),issues=[];
     if(el.scrollHeight>el.clientHeight+2||el.scrollWidth>el.clientWidth+2)issues.push(`overflow ${el.clientWidth}x${el.clientHeight}/${el.scrollWidth}x${el.scrollHeight}`);
-    for(const c of el.querySelectorAll('.rw-body,.rw-panel,[data-dice-view],.menu-page-content,.help-scroll,ol,#stage-grid,.shop-body')) {
+    for(const c of el.querySelectorAll('.rw-body,.rw-panel,[data-dice-view],.menu-page-content,.help-scroll,ol,#stage-grid,.shop-body,.deck-tactics,.tactics-body,.current-deck,.deck-slot,.tree-node,.research-preview,.effect-card')) {
      if(c.getBoundingClientRect().height && (c.scrollHeight>c.clientHeight+2||c.scrollWidth>c.clientWidth+2))issues.push('nested overflow '+(c.id||c.className||c.tagName));
     }
     for(const b of el.querySelectorAll('button,input,select')) {const q=b.getBoundingClientRect();if(!q.width||!q.height)continue;if(q.bottom>r.bottom+2||q.right>r.right+2||q.left<r.left-2||q.top<r.top-2)issues.push('clipped '+b.textContent.trim());}
@@ -23,7 +23,9 @@ assert.ok(['localhost','127.0.0.1'].includes(new URL(gameUrl()).hostname));
   await page.locator('[data-home-action="deck"]').click();
   for(const key of ['overview','lineup','catalog','combos']){await page.click(`[data-dice-page="${key}"]`);await fit(key,'#deck-panel');}
   await page.click('#combo-next');await fit('combo2','#deck-panel');await page.click('#combo-next');await fit('combo3','#deck-panel');assert.ok(await page.locator('#dice-apply-combo').isDisabled());
-  await page.locator('#dice-combos [data-analyze]').click();await fit('analysis','#deck-panel');await page.click('#dice-analysis .analysis-back');
+  await page.locator('#dice-combos [data-analyze]').click();
+  for(const tab of ['placement','effects','basis']){await page.click(`[data-analysis-tab="${tab}"]`);await fit('analysis '+tab,'#deck-panel');if(tab==='effects')for(let i=1;i<5;i++){await page.click('#effect-next');await fit('effect '+i,'#deck-panel');}}
+  await page.click('#dice-analysis .analysis-back');
   await page.click('[data-dice-page="catalog"]');
   for(const family of ['engineering','nature','magic','order','chaos']){
    await page.click(`[data-family="${family}"]`);await fit(family,'#deck-panel');
