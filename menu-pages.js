@@ -33,19 +33,19 @@
   }
   function routes(container,entries) {
     const hub=document.createElement('div');hub.className='menu-route-grid';
-    entries.forEach(([label,detail,read])=>{const b=button('',()=>open(label,read()));const strong=document.createElement('strong'),small=document.createElement('small');strong.textContent=label;small.textContent=detail;b.append(strong,small);hub.append(b);});container.append(hub);
+    entries.forEach(([label,detail,read,icon])=>{const b=button('',()=>open(label,read()));const img=document.createElement('img'),strong=document.createElement('strong'),small=document.createElement('small');img.src=icon;img.alt='';strong.textContent=label;small.textContent=detail;b.append(img,strong,small);hub.append(b);});container.append(hub);
   }
   const shop=$('#shop .shop-body'),stored=document.createElement('div');stored.className='menu-source';
   stored.append(...shop.childNodes);shop.append(stored);shop.after($('#commerce-status'));
   const accountInfo=document.createElement('div'),account=stored.querySelector('.shop-account');
   accountInfo.append($('#commerce-account'),$('#commerce-account-id'),account.querySelector('.commerce-account-actions'),$('#commerce-google'));account.prepend(accountInfo);
   routes(shop,[
-    ['성장 재료','상품과 가격 확인',()=>[document.getElementById('commerce-products')]],
-    ['테마 스킨','외형 미리보기 · 장착',()=>[document.getElementById('cosmetic-products')]],
-    ['계정 관리','로그인 · 구매 복원',()=>[...stored.querySelector('.shop-account').children].filter(n=>n.tagName!=='SUMMARY')],
-    ['스테이지 주사위','젬으로 확정 해금',()=>[$('#shop-towers')]],
-    ['스테이지 스킨','눈별 외형 장착',()=>[$('#shop-skins')]],
-    ['이용 안내','판매 상태 · 개인정보',()=>[stored.querySelector('#commerce-availability'),...stored.querySelectorAll('#commerce-shop > .commerce-policy')]]
+    ['성장 재료','상품과 가격 확인',()=>[document.getElementById('commerce-products')],'ui/icon-gem.png'],
+    ['테마 스킨','외형 미리보기 · 장착',()=>[document.getElementById('cosmetic-products')],'ui/icon-stage.png'],
+    ['계정 관리','로그인 · 구매 복원',()=>[...stored.querySelector('.shop-account').children].filter(n=>n.tagName!=='SUMMARY'),'ui/icon-users.png'],
+    ['스테이지 주사위','젬으로 확정 해금',()=>[$('#shop-towers')],'ui/icon-dice.png'],
+    ['스테이지 스킨','눈별 외형 장착',()=>[$('#shop-skins')],'ui/icon-enhance.png'],
+    ['이용 안내','판매 상태 · 개인정보',()=>[stored.querySelector('#commerce-availability'),...stored.querySelectorAll('#commerce-shop > .commerce-policy')],'ui/icon-help.png']
   ]);
   listPages($('#commerce-products'),'.commerce-product',1);
   listPages($('#cosmetic-products'),'.cosmetic-product',1);

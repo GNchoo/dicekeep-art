@@ -56,13 +56,19 @@ async function layout(page, row, name) {
   row.layouts.push({ name, ...result }); check(row, name + ': no horizontal overflow', result.issues, []);
 }
 async function decks(page, row) {
+  check(row, 'five cards have five readable roles', await page.locator('#deck-synergy .deck-roles b').allTextContents(), ['2','2','1','0','0']);
+  check(row, 'initial direct and boss DPS match combat formula', await page.locator('#deck-synergy .deck-metrics b').evaluateAll(els=>els.map(el=>parseFloat(el.textContent.replace(/,/g,'')))), [372.2,372.2]);
   await equip(page, 0, 6); check(row, 'owned card replaces selected slot', await draft(page), [6, 2, 3, 4, 5]);
+  check(row, 'economic replacement lowers direct damage and warns before saving', {score:await page.locator('#deck-synergy .deck-metrics b').first().evaluate(el=>parseFloat(el.textContent)),down:await page.locator('#deck-synergy .metric-down').count()}, {score:299,down:2});
   await equip(page, 0, 2); check(row, 'already equipped card swaps without duplicates', await draft(page), [2, 6, 3, 4, 5]);
   await page.click('#deck-save');
   let p = await profile(page);
   check(row, 'active preset save persists its five distinct identities', { deck: p.deck, preset: p.collection.presets[0].faces }, { deck: [2, 6, 3, 4, 5], preset: [2, 6, 3, 4, 5] });
   await preset(page, 1).click(); await equip(page, 4, 6); await page.click('#deck-save'); p = await profile(page);
   check(row, 'inactive preset save preserves active deck', { active: p.collection.activePreset, deck: p.deck, other: p.collection.presets[1].faces }, { active: 0, deck: [2, 6, 3, 4, 5], other: [1, 2, 3, 4, 6] });
+  await page.click('[data-dice-page=overview]');
+  check(row, 'overview identifies browsed inactive deck', /덱 2 · 미사용/.test(await page.locator('.current-deck').innerText()), true);
+  await page.locator('.current-deck').click();check(row, 'overview opens the exact deck it shows', await draft(page), [1,2,3,4,6]);
   await page.click('#deck-use'); p = await profile(page);
   check(row, 'activate preset preserves other saved decks', { active: p.collection.activePreset, deck: p.deck, preserved: p.collection.presets[0].faces }, { active: 1, deck: [1, 2, 3, 4, 6], preserved: [2, 6, 3, 4, 5] });
   await equip(page, 0, 3); const unsaved = await draft(page), before = await profile(page);
@@ -162,6 +168,9 @@ async function treeActions(page, row) {
   await equip(page, 0, 4); const pending = await draft(page); await support(page); await page.locator('#tree-supporters [data-supporter="crusher"]').click();
   check(row, 'supporter choice preserves an unsaved deck draft', await draft(page), pending);
   await page.click('[data-dice-page=lineup]'); await page.click('#deck-reset');
+  for(const [i,id] of [7,18,14,13,6].entries())await equip(page,i,id);
+  check(row, 'support guide preserves solitary tower condition and avoids double signs', {condition:/고독은 이웃을 비우세요/.test(await page.locator('#deck-synergy .deck-tactics').innerText()),negative:/−17.2%/.test(await page.locator('#deck-synergy .tactic-chain > strong').innerText()),doubleSign:/\+[-−]/.test(await page.locator('#deck-synergy .tactic-chain > strong').innerText())}, {condition:true,negative:true,doubleSign:false});
+  await page.click('#deck-reset');
   check(row, 'random pack and duplicate-card upgrade UI is retired for tree profiles', { packs: await page.locator('#deck-open-pack:visible').count(), classes: await page.locator('#deck-class-up:visible').count(), craft: await page.locator('#deck-craft:visible').count() }, { packs: 0, classes: 0, craft: 0 });
 }
 async function viewport(browser, tag, size) {
