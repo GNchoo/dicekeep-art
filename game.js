@@ -6242,9 +6242,12 @@ function syncInfButtons() {
   const info = $('lobby-inf');
   if (info) {
     const P = progressionProfile();
-    info.innerHTML = ['clear', 'build', 'extreme'].map(k => `${INF.modeOf(k).name} 최고 <b>${P.records[k].best}</b>`).join(' · ') +
-      `<br>모든 투기장 모드에서 성장 조각 획득 · 현재 <b>${P.shards}</b>개` +
-      `<br><small>극한 다음 목표 ${Math.max(25, (Math.floor(P.records.extreme.best / 25) + 1) * 25)}웨이브 · 102부터 새 로스터 · 203부터 진화</small>` +
+    info.innerHTML = '<div class="record-grid">'+['clear', 'build', 'extreme'].map((k,i) => {
+      const best=P.records[k].best,goal=k==='extreme'?Math.max(25,(Math.floor(best/25)+1)*25):line;
+      return `<article><img src="ui/icon-${['trophy','dice','infinity'][i]}.png" alt=""><h4>${INF.modeOf(k).name}</h4><strong>${best}<small>최고 웨이브</small></strong><progress max="${goal}" value="${Math.min(best,goal)}" aria-label="${INF.modeOf(k).name} 다음 목표"></progress><span>${goal}웨이브 ${k==='extreme'?'다음 목표':'완주 목표'}</span></article>`;
+    }).join('')+'</div>' +
+      `<div class="record-material"><img src="ui/rewards/growth-shards.webp" alt=""><span>모든 투기장 모드에서 성장 조각 획득<strong>현재 ${P.shards}개</strong></span></div>` +
+      '<small>극한 · 102부터 새 로스터 · 203부터 진화</small>' +
       (P.legacy.best ? `<br><small>이전 버전 통합 최고 ${P.legacy.best} · 새 모드 기록과 별도 보관</small>` : '');
   }
   const guide = $('theme-guide-list');
@@ -6257,7 +6260,8 @@ function syncInfButtons() {
       const cards = group.chapters.map((theme, i) => {
         const start = group.first + i * 10, end = start + 9;
         const boss = theme.boss || INF.directionalArt(end, 0)?.name || '보스';
-        return `<div class="theme-guide-card" style="--theme-accent:${theme.accent}"><span class="theme-guide-range">${start}~${end}웨이브</span><b class="theme-guide-name">${theme.name}</b><span class="theme-guide-members">${theme.foes}</span><span class="theme-guide-boss">보스 · ${boss}</span></div>`;
+        const roster=Array.from({length:10},(_,j)=>{const w=start+j,art=INF.directionalArt(w,0);return art?.entry?.views?.side?.still?`<figure><div class="roster-portrait"><img loading="lazy" src="${artLoadUrl(art.entry.views.side.still)}" alt="${art.name}"></div><figcaption><small>${w}웨이브${j===9?' · 보스':''}</small><b>${art.name}</b></figcaption></figure>`:'';}).join('');
+        return `<div class="theme-guide-card" style="--theme-accent:${theme.accent}"><span class="theme-guide-range">${start}~${end}웨이브</span><b class="theme-guide-name">${theme.name}</b><p>${theme.summary||theme.foes}</p><div class="theme-roster">${roster}</div><span class="theme-guide-members">${theme.foes}</span><span class="theme-guide-boss">보스 · ${boss}</span></div>`;
       }).join('');
       return `<h3 class="theme-guide-group">${group.heading}<small> · ${group.finale}는 별도 관문</small></h3>${cards}`;
     }).join('');
@@ -6294,7 +6298,8 @@ function renderDeck(reset) {
 
 function renderLobby() {
   const un = (SAVE.unlockedTowers || []).length;
-  $('lobby-progress').innerHTML = `스테이지 <b>${SAVE.cleared.length}</b>/50 클리어 · 해금 타워 <b>${un}</b>/6`;
+  const next=Math.min(50,(SAVE.cleared.length?Math.max(...SAVE.cleared):0)+1);
+  $('lobby-progress').innerHTML = `<div class="campaign-record-art">${stagePreview(next)}</div><h3>캠페인 진행</h3><div class="record-grid"><article><strong>${SAVE.cleared.length}<small>/50 스테이지 클리어</small></strong><progress max="50" value="${SAVE.cleared.length}" aria-label="스테이지 완료"></progress></article><article><strong>${un}<small>/6 타워 해금</small></strong><progress max="6" value="${un}" aria-label="타워 해금"></progress></article></div>`;
   syncInfButtons();
   renderRunResume();
 }
@@ -6302,6 +6307,11 @@ window.addEventListener('commerce:change', () => {
   if (S.phase === 'lobby') { renderLobby(); if (!$('deck-panel').classList.contains('hidden')) renderDeck(true); }
 });
 
+function stagePreview(n) {
+  const map=window.DKCONTENT?.maps[n-1];if(!map?.path)return '';
+  const t=map.theme,points=p=>p.map(x=>x.join(',')).join(' '),end=map.path.at(-1);
+  return `<svg class="stage-preview" viewBox="0 0 1024 576" aria-hidden="true"><rect width="1024" height="576" fill="${t.floor[0]}"/>${(map.layout.water||[]).map(([row,col])=>`<rect x="${col*64}" y="${row*64}" width="64" height="64" fill="${t.water}"/>`).join('')}${[map.path,map.path2].filter(p=>p?.length).map(p=>`<polyline points="${points(p)}" fill="none" stroke="rgb(${t.road})" stroke-width="48" stroke-linejoin="round" stroke-linecap="round"/>`).join('')}${[...map.spots,...(map.spots2||[])].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="26" fill="#dad1b8" stroke="#595340" stroke-width="9"/>`).join('')}${map.portals.map(([x,y])=>`<circle cx="${x}" cy="${y}" r="32" fill="#a98fe5" stroke="#faf1d4" stroke-width="6"/>`).join('')}<circle cx="${end[0]}" cy="${end[1]}" r="32" fill="#e8b75c" stroke="#faf1d4" stroke-width="6"/></svg>`;
+}
 function renderStageSelect() {
   $('ss-gems').textContent = SAVE.gems;
   syncInfButtons();
@@ -6326,7 +6336,7 @@ function renderStageSelect() {
     if (cleared) cell.classList.add('cleared');
     if (n === S.stage) cell.classList.add('current');
     cell.classList.add('tier-' + (sd.tier || 1));
-    let html = `<span>${n}</span>`;
+    let html = stagePreview(n)+`<span class="stage-number">${n}</span>`;
     if (cleared) html += '<span class="clear-mark">&#10003;</span>';
     if (!unlocked) html += '<span class="lock">&#128274;</span>';
     html += `<span class="cell-name">${sd.name}</span>`;

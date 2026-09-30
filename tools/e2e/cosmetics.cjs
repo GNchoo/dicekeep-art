@@ -75,23 +75,24 @@ async function run(browser, name, viewport) {
     await page.goto(url.href); await page.waitForFunction(() => window.DK && DK.phase === 'title', null, { timeout: 120000 });
     check(row, 'boot does not request premium assets', row.assets.length, 0);
     await page.click('#ov-btn'); await page.evaluate(() => { DK.muted = true; }); await page.click('#btn-shop');
-    check(row, 'three currency products and three cosmetic purchase bundles', await page.locator('#commerce-products .commerce-product').count(), 3);
+    const showTheme=async(theme,action='preview')=>{await page.click('[data-shop-tab="themes"]');const prev=page.locator('#cosmetic-products > .page-controls button').first();while(!await prev.isDisabled())await prev.click();while(!await page.locator(`[data-${action}="${theme}"]`).isVisible())await page.locator('#cosmetic-products > .page-controls button').last().click();};
+    check(row, 'three currency products and three cosmetic purchase bundles', await page.locator('#commerce-products .commerce-product:has([data-sku])').count(), 3);
     check(row, 'four cosmetic cards include base', await page.locator('#cosmetic-products .cosmetic-product').count(), 4);
     check(row, 'unowned frost cannot be equipped', await page.locator('[data-equip="frost"]').count(), 0);
     const guest = await page.evaluate(() => JSON.stringify(DKSAVE.progression));
     if (unready) {
-      await page.click('[data-preview="royal"]');
+      await showTheme('royal');await page.click('[data-preview="royal"]');
       await page.waitForFunction(() => document.getElementById('cosmetic-preview-status').textContent.includes('준비되지'));
       check(row, 'missing art never equips or produces a partial pack', await page.evaluate(() => ({ active: DKCOSMETICS.current(), packs: DKCOSMETICS.state().packs })), { active: 'base', packs: [] });
       await page.screenshot({ path: path.join(dir, 'unready-shop.png'), fullPage: true });
     } else {
       for (const theme of themes) {
-        await page.click(`[data-preview="${theme}"]`);
+        await showTheme(theme);await page.click(`[data-preview="${theme}"]`);
         await page.waitForFunction(() => document.querySelectorAll('#cosmetic-tower-preview figure').length === 20);
         check(row, theme + ' free preview preserves equipped appearance', await page.evaluate(() => DKCOSMETICS.current()), 'base');
         check(row, theme + ' preview includes 20 decoded unique tower icons', await page.evaluate(() => { const images = [...document.querySelectorAll('#cosmetic-tower-preview img')]; return images.length === 20 && new Set(images.map(img => img.src)).size === 20 && images.every(img => img.complete && img.naturalWidth > 0); }));
-        await page.locator('#cosmetic-preview').screenshot({ path: path.join(dir, theme + '-shop-preview.png') });
-        await page.click('#cosmetic-preview-close');
+        await page.locator('.shop-preview-page').screenshot({ path: path.join(dir, theme + '-shop-preview.png') });
+        await page.locator('.menu-subpage > header button').click();
       }
       check(row, 'preview never changes guest progression', await page.evaluate(() => JSON.stringify(DKSAVE.progression)), guest);
       authority = { owned: ['base', ...themes], equipped: 'base' }; await page.evaluate(() => DKCOMMERCE.refresh());
@@ -102,7 +103,7 @@ async function run(browser, name, viewport) {
       });
       await page.click('#btn-shop');
       for (const theme of themes) {
-        await page.click(`[data-equip="${theme}"]`); await page.waitForFunction(id => DKCOSMETICS.current() === id, theme);
+        await showTheme(theme,'equip');await page.click(`[data-equip="${theme}"]`); await page.waitForFunction(id => DKCOSMETICS.current() === id, theme);
         const item = { id: theme, rolls: [] }; row.themes.push(item);
         item.pack = await page.evaluate(() => ({ ...DKCOSMETICS.state(), ...DKcosmeticRender.stats() }));
         check(row, theme + ' obeys bounded pack/decode/material caches', item.pack.packs.length <= 2 && item.pack.peak <= 2 && item.pack.materialSets <= 2 && item.pack.textures <= 104);
@@ -145,7 +146,7 @@ async function run(browser, name, viewport) {
       check(row, 'only three user equip actions reached mock server', actions.map(action => action.skinId), themes);
       authority = { owned: ['base'], equipped: 'base' }; await page.evaluate(() => DKCOMMERCE.refresh()); await tick(page);
       check(row, 'refund of last entitlement restores base', await page.evaluate(() => DKCOSMETICS.current()), 'base');
-      await page.click('#commerce-signout');
+      await page.click('[data-shop-tab="account"]');await page.click('#commerce-signout');
       check(row, 'logout preserves guest file and clears account cosmetics', await page.evaluate(() => ({ owned: DKCOSMETICS.state().owned, equipped: DKCOSMETICS.state().equipped, guestHasCosmetics: Object.hasOwn(DKSAVE.progression, 'cosmetics') })), { owned: ['base'], equipped: 'base', guestHasCosmetics: false });
     }
     // Separate byte audit after actual decode/use, with at most two audit HTTP requests.
