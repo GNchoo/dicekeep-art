@@ -447,7 +447,7 @@ function onSum(c, P, L, m) {
   const st = c.state;
   if (st.phase !== 'playing' || P.status !== ALIVE) return;
   if (m.ds === 1 && !deckMode(roomMode(st))) return c.err(P.pid, 'mode', '이 방에서는 덱 전투 요약을 보낼 수 없습니다');
-  if (st.game.battle && (m.sp!==1 || m.ds!==1)) return c.err(P.pid,'mode','대전과 협동은 덱 전투 1배속으로 진행합니다');
+  if (st.game.battle && (m.sp!==1 || m.ds!==1 && m.gs!==1)) return c.err(P.pid,'mode','대전과 협동은 등급 또는 기존 덱 전투 1배속으로 진행합니다');
   if (st.game.battle) {
     const eligible=L.connected && m.hid===0 && m.tw.length>=3;
     if (battleActivity(st.game.battle,P.pid,eligible,L.rewardActivityAt,c.now)) c.persist=true;

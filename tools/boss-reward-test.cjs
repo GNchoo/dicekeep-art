@@ -43,7 +43,7 @@ const c = { Math: math, window: { DKFX: FX, DKBOSS_AUDIO: { play: (_, __, kind) 
   polyRestR: () => [1, 0, 0, 0, 1, 0, 0, 0, 1], dieShape: k => k,
   dieKindColor: k => ({ d8: '#7fd4ff', d12: '#c78bff', d20: '#ffd452' })[k],
   drawPolyDie: (_, x, y, size, kind) => { assert.ok(size > 0); dice.push(kind); },
-  deckRun: () => false, growthRun: () => false, battleRun: () => false,
+  deckRun: () => false, growthRun: () => false, battleRun: () => false, towerSynergy:()=>({slowDamage:1}),
   canPlaceAnywhere: () => true, rollDie: k => { c.SLOT.active = true; c.SLOT.kind = k; return true; },
   epos: () => ({ x: 100, y: 100 }), spawnDeath() {}, endInfinity: () => { S.phase = 'over'; } };
 vm.createContext(c);

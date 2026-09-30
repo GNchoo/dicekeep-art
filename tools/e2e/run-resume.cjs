@@ -51,16 +51,17 @@ fs.mkdirSync(out, { recursive: true });
           if (schema === 'legacy') {
             // Explicit pre-collection frozen run; never attach legacy carry to a new snapshot.
             delete p.collection; p.levels[6] = 20; p.deck = deck;
-            const oldSnapshot = DKPROGRESSION.snapshot(p, 'extreme');
+            const { gradeSystem, ...oldSnapshot } = DKPROGRESSION.snapshot(p, 'extreme');
             if ('deckSystem' in oldSnapshot || 'classes' in oldSnapshot) throw Error('legacy snapshot schema changed');
             DKSAVE.progression = DKPROGRESSION.sanitize(p);
-            DKstartInf('extreme', null, { snapshot:oldSnapshot, ticket:null });
+            DKstartInf('extreme', null, { snapshot:Object.freeze(oldSnapshot), ticket:null });
           } else {
             deck.forEach((id,i) => { p.levels[id]=1; Object.assign(p.collection.cards[id],{owned:true,class:DKDECKRULES.get(id).baseClass+i+1}); });
             if (!DKPROGRESSION.setPreset(p,0,deck).ok) throw Error('collection fixture deck invalid');
             // Exercise the old collection payload through the real profile
             // migration before the lobby reads its tree summary.
-            DKSAVE.progression=DKPROGRESSION.sanitize(p); DKstartInf('extreme');
+            const { gradeSystem, ...oldSnapshot } = DKPROGRESSION.snapshot(p, 'extreme'); oldSnapshot.deckSystem = 1;
+            DKSAVE.progression=DKPROGRESSION.sanitize(p); DKstartInf('extreme', null, { snapshot:Object.freeze(oldSnapshot), ticket:null });
             if (DK.inf.growthSnapshot.deckSystem!==1) throw Error('collection fixture uses old combat');
           }
           DK.paused=true; DK.gold=20000;

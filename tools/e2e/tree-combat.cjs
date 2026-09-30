@@ -8,19 +8,20 @@ const out=path.resolve('gen/e2e/tree-combat');fs.mkdirSync(out,{recursive:true})
    const context=await browser.newContext({viewport}),page=await context.newPage(),errors=[];
    page.on('pageerror',e=>errors.push(e.message));
    await page.addInitScript(()=>{localStorage.setItem('dk_coachDone','1');localStorage.setItem('dk_infHelpSeen','1');});
-   await page.route('**/game.js*',async route=>{const r=await route.fetch();await route.fulfill({response:r,body:(await r.text()).replace('window.DK = S;','window.__treeQA={persistRun,readRunSave,restoreRunSave,buildInfinityWave,relayoutArena,towerFire,openInfHelp,syncSupporter}; window.DK = S;')});});
+   await page.route('**/game.js*',async route=>{const r=await route.fetch();await route.fulfill({response:r,body:(await r.text()).replace('window.DK = S;','window.__treeQA={persistRun,readRunSave,restoreRunSave,buildInfinityWave,relayoutArena,towerFire,openInfHelp,syncSupporter,arenaWorldScale}; window.DK = S;')});});
    try {
     await page.goto(gameUrl(false));await page.waitForFunction(()=>window.DK?.phase==='title',null,{timeout:120000});await page.click('#ov-btn');
     const result=await page.evaluate(async()=>{
      const checks=[],check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
      const setRun=(deck,supporter='supply',awake=true)=>{
       const p=DKPROGRESSION.defaultProfile();for(const id of deck){p.levels[id]=1;Object.assign(p.collection.cards[id],{owned:true,class:DKDECKRULES.get(id).baseClass});p.tree.mastery[id]=3;p.tree.awakenings[id]=awake;}
-      p.tree.supporter=supporter;p.deck=deck;DKSAVE.progression=p;DKstartInf('build');DK.paused=true;DK.muted=true;DKSLOT.active=false;DK.heldDie=0;
+      p.tree.supporter=supporter;p.deck=deck;const {gradeSystem,...legacy}=DKPROGRESSION.snapshot(p,'build');legacy.deckSystem=1;
+      DKSAVE.progression=p;DKstartInf('build',null,{snapshot:Object.freeze(legacy),ticket:null});DK.paused=true;DK.muted=true;DKSLOT.active=false;DK.heldDie=0;
       DK.wave=1;DK.waveActive=true;DK.waveT=1;DK.spawnQ=[];
      };
      const put=(face,pips,spot)=>{DK.heldDie=face;if(!DKplace(spot))throw Error('placement '+face);const t=DK.towers.find(t=>t.spot===spot);t.pips=pips;return t;};
      const enemy=(boss=false)=>{DKspawnEnemy({type:'mite',wave:1});const e=DK.enemies.at(-1);e.hp=e.max=100000;e.armor=0;e.isBoss=boss;return e;};
-     setRun([1,4,7,13,14]);check(DK.inf.growthSnapshot.treeVersion===1,'new run freezes tree snapshot');
+     setRun([1,4,7,13,14]);check(DK.inf.growthSnapshot.treeVersion===1&&DK.inf.growthSnapshot.deckSystem===1&&!DK.inf.growthSnapshot.gradeSystem,'explicit legacy deck run freezes tree snapshot');
      let t=put(1,7,0),base=DKtowerDamage(t);DKSAVE.progression.tree.mastery[1]=5;check(DKtowerDamage(t)===base,'live account upgrades cannot alter current battle');
      check(DKsupporter.state().reason==='일시정지 중'&&!DKsupporter.use(),'paused supporter rejected');
      DK.paused=false;let gold=DK.gold;check(DKsupporter.use()&&DK.gold-gold===87,'supply grants base plus field pips');check(!DKsupporter.use(),'supply cannot repeat before cooldown');
@@ -42,7 +43,7 @@ const out=path.resolve('gen/e2e/tree-combat');fs.mkdirSync(out,{recursive:true})
      e.isBoss=false;DKdamage(e,100,towers[3]);check(e.fractureT===5&&e.fracturePct===.8,'awakened fracture lowers armor80% for5sec');e.slowT=1;hp=e.hp;DKdamage(e,100,towers[4]);check(Math.abs(hp-e.hp-230)<1e-6,'awakened shatter has130% slow bonus');
      const strongPoison=e.poisonDps;e.poisonT=e.fractureT=.001;DKcombatStep(.002);towers[1].pips=towers[3].pips=1;
      DKdamage(e,100,towers[1]);DKdamage(e,100,towers[3]);check(Math.abs(e.poisonDps*2-strongPoison)<1e-6,'expired awakened poison does not boost later ordinary poison');check(e.fracturePct===.5&&e.fractureT===3,'expired awakened fracture does not boost later ordinary fracture');
-     setRun([1,2,4,5,20]);t=put(20,7,0);e=enemy();const entry=DKLANES()[0].pts[0];t.x=entry[0];t.y=entry[1]+30;for(let n=0;n<3;n++){t.cd=0;__treeQA.towerFire(t,0);}check(DK.projs.length===3&&!DK.projs[0].splash&&!DK.projs[1].splash&&DK.projs[2].splash===100,'awakened pulse fires third shot explosion');
+     setRun([1,2,4,5,20]);t=put(20,7,0);e=enemy();const entry=DKLANES()[0].pts[0];t.x=entry[0];t.y=entry[1]+30;for(let n=0;n<3;n++){t.cd=0;__treeQA.towerFire(t,0);}check(DK.projs.length===3&&!DK.projs[0].splash&&!DK.projs[1].splash&&DK.projs[2].splash===100*__treeQA.arenaWorldScale(),'awakened pulse fires third shot explosion at the arena world scale');
      setRun([1,2,4,5,20],'crusher');DK.paused=false;check(!DKsupporter.use()&&DK.inf.supporterCooldown===0,'crusher requires selection without consuming cooldown');t=put(20,7,0);DK.selTower=t;DKsync();
      const button=document.getElementById('supporter-use'),r=button.getBoundingClientRect();check(document.elementFromPoint(r.x+r.width/2,r.y+r.height/2)===button,'selected tower info leaves crusher button visible and clickable');
      gold=DK.gold;check(DKsupporter.use()&&t.pips===1&&DK.inf.growthSnapshot.deck.includes(t.face)&&DK.gold-gold===280,'crusher replaces selected7pip with random1pip and280SP');

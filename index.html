@@ -20,7 +20,7 @@
 <link rel="stylesheet" href="casual-menus.css?v=163" />
 <link rel="stylesheet" href="casual-rewards.css?v=137" />
 <link rel="stylesheet" href="casual-hud.css?v=166" />
-<link rel="stylesheet" href="menu-pages.css?v=174" />
+<link rel="stylesheet" href="menu-pages.css?v=175" />
 <link rel="icon" href="ui/gold.png" />
 </head>
 <body>
@@ -114,7 +114,7 @@
           <button id="lobby-help" class="back-btn" type="button">튜토리얼 · 게임 방법</button>
           <div class="lobby-btns inf-btns">
             <button id="btn-inf-clear" class="big-btn primary lobby-inf-btn">순수운빨<small>101웨이브 · 성장 미적용</small></button>
-            <button id="btn-inf-build" class="big-btn lobby-inf-btn">덱빌드<small>101웨이브 · 덱과 성장</small></button>
+            <button id="btn-inf-build" class="big-btn lobby-inf-btn">성장·조합<small>101웨이브 · 20강 성장과 배치 연계</small></button>
             <div id="run-resume" class="run-resume hidden"><b id="run-resume-title"></b><small id="run-resume-note"></small><div><button id="run-resume-play" class="big-btn primary" type="button">이어하기</button><button id="run-resume-end" class="big-btn" type="button">종료하고 보상받기</button></div></div>
             <button id="btn-infinity" class="big-btn inf lobby-inf-btn">극한<small>끝없는 웨이브 · 최대 성장</small></button>
           </div>
@@ -126,16 +126,14 @@
           <button id="btn-deck-open" class="big-btn deck-open" type="button" aria-expanded="false" aria-controls="deck-panel">다이스 트리 · 덱 편성</button>
           <section id="deck-panel" class="hidden" aria-label="주사위 컬렉션">
             <nav class="dice-tabs" aria-label="다이스 페이지">
-              <button data-dice-page="overview">성장 안내</button><button data-dice-page="lineup">내 덱</button><button data-dice-page="catalog">주사위 연구</button><button data-dice-page="combos">추천 조합</button>
+              <button data-dice-page="overview">성장 안내</button><button data-dice-page="lineup">성장·조합</button><button data-dice-page="catalog">타워 연구</button><button data-dice-page="combos">배치 시너지</button>
             </nav>
             <div id="dice-page-title" class="dice-page-title"></div>
-            <section data-dice-view="overview"><div id="dice-growth"></div><p class="dice-mode-note">계정 성장은 덱빌드·극한·협동에 적용됩니다.<br>순수운빨은 성장 미적용 · 대전은 성장 수치 통일</p></section>
+            <section data-dice-view="overview"><div id="dice-growth"></div><p class="dice-mode-note">계정 연구는 성장·조합·극한·협동에 적용됩니다.<br>순수운빨은 연구 미적용 · 대전은 연구 수치 통일</p></section>
             <section data-dice-view="lineup">
-              <div id="deck-presets" class="deck-presets" aria-label="저장된 덱"></div>
-              <p class="dice-caption">바꿀 자리를 누르고 주사위를 선택하세요.</p>
+              <div id="deck-presets" class="deck-presets" aria-label="타워 강화 구간"></div>
               <div id="deck-selected" class="deck-selected"></div>
               <div id="deck-synergy" class="deck-synergy"></div>
-              <div class="deck-actions"><button id="deck-save" class="big-btn primary" type="button">덱 저장</button><button id="deck-use" type="button">이 덱 사용</button><button id="deck-reset" type="button">변경 취소</button></div>
             </section>
             <section data-dice-view="catalog"><div id="tree-families" aria-label="계열 선택"></div><div id="deck-grid" class="tree-grid"></div></section>
             <section data-dice-view="detail"><aside id="deck-detail" aria-label="선택한 주사위 연구"></aside></section>
@@ -313,7 +311,7 @@
     </div>
 
     <div id="right-panel">
-      <button id="battle-assist" class="hidden" type="button">아군 보급 +60 SP</button>
+      <button id="battle-assist" class="hidden" type="button">아군 보급 +60 G</button>
       <div id="battle-status" class="hidden" role="status"></div>
     </div>
 
@@ -374,13 +372,14 @@
       <li><b>&#127873; 뽑기 160G</b> — 먼저 등급을 정하고, 허용된 숫자를 주사위에 미리 새깁니다. 1면체는 1★ 확정, <b>4·6면체는 자동으로 굴리고 8면체 이상은 직접 던집니다.</b> 대기 중 보이는 숫자는 결과가 아닙니다. 굴러 멈추면 위를 향한 표식을 금색으로 표시하고 그 숫자가 타워 성(★)입니다. 사면체는 각 꼭짓점의 숫자를 만나는 세 면에 반복해 새기며, 위쪽 꼭짓점의 숫자를 읽습니다. 다른 다면체는 하늘을 가장 향한 면 중앙의 숫자를 읽습니다. 결과에 맞춰 마지막에 주사위를 돌리지 않습니다. 손에 타워가 있으면 먼저 석단에 배치해야 다시 뽑을 수 있습니다.<br><small>일반 50% (1★) · 레어 33.1% (1~4★) · 고대 10.2% (1~6★) · 유물 5.1% (1~8★) · 서사 0.8% (1~12★) · 전설 0.5% (1~20★) · 에픽 0.2% (14~17★) · 신화 0.08% (18~19★) · 태초 0.019% (20★)</small></li>
       <li><b>보상 대기</b> — 보스를 잡으면 화면 중앙에 보상 상자가 나타납니다. 상자를 터치하면 <b>8·12·20면체 중 하나</b>가 같은 확률(각 1/3)로 나옵니다. 손이 비는 대로 하나씩 준비되며, <b>던지기</b>로 굴린 뒤 배치하세요.</li>
       <li><b>확률강화</b> — 배치한 타워를 누르면 하단 상태창에 <b>판매 / 확률강화</b>가 뜹니다. 골드를 걸고 <b>강화(★+1) · 유지 · 소멸</b> 셋 중 하나가 나오며, 성(★)이 높을수록 비싸고 소멸 확률도 커집니다. 합체 레벨은 강화해도 유지됩니다.</li>
-      <li><b>판매</b> — 순수운빨은 7★ 이상을 팔 수 없습니다. 덱빌드·극한에서는 모든 별의 타워를 판매할 수 있습니다.</li>
+      <li><b>판매</b> — 순수운빨은 7★ 이상을 팔 수 없습니다. 성장·조합과 극한에서는 모든 강의 타워를 판매할 수 있습니다.</li>
       <li><b>파워업</b> — 골드로 눈(1~6)을 강화합니다. 강화할수록 비싸집니다. ★ 히든 타워는 6눈 파워업을 따릅니다.</li>
       <li><b>패배</b> — 필드에 적이 200마리를 넘으면 가장 오래된 적이 사라지며 목숨 −1. 보스는 5분 20초 안에 잡아야 합니다.</li>
       <li><b>순수운빨 라운드</b> — 일반 웨이브마다 79마리가 출현합니다. 처치 속도와 관계없이 게임 시간 기준 <b>1~9웨이브는 1분, 이후 일반 웨이브는 2분 20초</b>마다 다음 물량이 오고, 남은 적은 계속 쌓입니다. 마지막 웨이브는 잔여 적까지 모두 처치해야 하며, 시작 후 최대 5분 20초까지 정리할 수 있습니다. 배속 x2·x4에서는 시계도 같은 배속으로 흐릅니다.</li>
-      <li><b>세 가지 모드</b> — <b>순수운빨·덱빌드</b>는 <b>101웨이브 완주가 클리어</b>입니다. 순수운빨은 기존 뽑기와 확률강화로 도전합니다. 덱빌드는 수집한 5종의 조합, 눈금 합성, 전투 중 강화가 핵심입니다. <b>극한</b>은 같은 덱 규칙으로 101웨이브 이후에도 더 강한 적에 도전하며 최고 기록을 남깁니다.</li>
+      <li><b>운빨과 조합</b> — 모든 투기장에서 <b>1~20강 전체 타워</b>를 상자 확률과 확률강화로 얻습니다. 다이스 메뉴의 조합은 배치 계획이며 뽑기 종류를 제한하지 않습니다. 상하좌우 타워가 조건을 만족하면 시너지가 적용되고, 같은 효과는 가장 강한 하나만 적용됩니다.</li>
+      <li><b>세 가지 모드</b> — <b>순수운빨·성장·조합</b>은 <b>101웨이브 완주가 클리어</b>입니다. 순수운빨은 계정 성장 없이 뽑기·강화·배치 연계로 도전합니다. 성장·조합은 연구 효과를 더하고, <b>극한</b>은 같은 20강 규칙으로 101웨이브 이후에도 도전합니다.</li>
       <li><b>함께 하기</b> — 2~4명이 <b>각자 보드</b>에서 <b>각자 속도</b>(배속 x1·x2·x4)로 101웨이브 완주에 도전합니다(도전 규칙). 먼저 죽으면 관전, 순위는 <b>완주는 빠른 순, 탈락은 웨이브 순</b>. 첫 웨이브 전 20초 동안 타워를 놓으세요. 상대 카드를 누르면 그 필드를 라이브로 보고, <b>Enter</b>/💬 로 채팅. 방 코드 또는 빠른 매칭(2명 이상 10초, 4명 즉시).</li>
-      <li><b>1대1 대전 · 2인 협동</b> — 함께하기에서 선택합니다. 대전은 숙련·특성·각성을 적용하지 않아 성장 수치가 같습니다. 5처치마다 적 1마리를 보내고 상대 목숨을 0으로 만들면 승리합니다. 협동은 공동 목숨 20을 지키며 합계 700처치하면 함께 승리합니다. 아군 보급은 45초마다 60 SP를 보냅니다. x1 고정, 90초마다 보스 등장, 일반 적 이탈 −1, 보스 이탈·45초 초과 −5입니다.</li>
+      <li><b>1대1 대전 · 2인 협동</b> — 함께하기에서 선택합니다. 대전은 숙련·특성·각성을 적용하지 않아 성장 수치가 같습니다. 5처치마다 적 1마리를 보내고 상대 목숨을 0으로 만들면 승리합니다. 협동은 공동 목숨 20을 지키며 합계 700처치하면 함께 승리합니다. 아군 보급은 45초마다 60 G를 보냅니다. x1 고정, 90초마다 보스 등장, 일반 적 이탈 −1, 보스 이탈·45초 초과 −5입니다.</li>
       <li><b>무료 성장 보상</b> — 대전·협동에서 타워 3개 이상을 배치하고 접속한 유효 전투 1분당 연구 골드 300 + 성장 조각 8을 받습니다. 패배해도 기본 보상은 같습니다. 1분 이상 참여한 승리는 골드 100 + 조각 5, 모드별 첫 승리는 추가 골드 300 + 조각 20을 줍니다. 두 모드의 누적 참여 보너스는 다이스 트리에서 확인하세요. 자리 비움 시간은 제외되며, 연속 출석이나 구매 조건은 없습니다. 모든 주사위·숙련·각성·서포터는 무료로 획득할 수 있습니다.</li>
     </ol></div>
     <button id="help-close">알겠어요</button>
@@ -394,14 +393,14 @@
 <!-- APP -->
 <script src="music.js?v=89"></script>
 <script src="battle-rules.js?v=116"></script>
-<script src="net.js?v=158"></script>
-<script src="content.js?v=168"></script>
-<script src="deck-rules.js?v=165"></script>
+<script src="net.js?v=175"></script>
+<script src="content.js?v=175"></script>
+<script src="deck-rules.js?v=175"></script>
 <script src="tree-rules.js?v=112"></script>
-<script src="progression.js?v=116"></script>
+<script src="progression.js?v=175"></script>
 <script src="liveops-rules.js?v=117"></script>
-<script src="deck-ui.js?v=172"></script>
-<script src="run-save.js?v=157"></script>
+<script src="deck-ui.js?v=175"></script>
+<script src="run-save.js?v=175"></script>
 <script src="cosmetics.js?v=101"></script>
 <script src="commerce-config.js?v=101"></script>
 <script src="commerce-client.js?v=118"></script>
@@ -418,7 +417,7 @@
 <script src="combat-motion.js?v=157"></script>
 <script src="presentation-fx.js?v=160"></script>
 <script src="reward-audio.js?v=157"></script>
-<script src="game.js?v=172"></script>
+<script src="game.js?v=175"></script>
 <script src="menu-pages.js?v=174"></script>
 </body>
 </html>

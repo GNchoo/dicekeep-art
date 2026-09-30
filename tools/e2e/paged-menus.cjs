@@ -1,9 +1,9 @@
 const assert=require('node:assert/strict'),fs=require('node:fs');
 const {launchBrowser,gameUrl}=require('./browser.cjs');
-const shopOnly=process.argv.includes('--shop-only'),supportOnly=process.argv.includes('--support-only'),shopFailures=[];
+const shopOnly=process.argv.includes('--shop-only'),supportOnly=process.argv.includes('--support-only'),gradeOnly=process.argv.includes('--grade-only'),gradeNotes=process.argv.includes('--grade-notes'),shopFailures=[];
 assert.ok(['localhost','127.0.0.1'].includes(new URL(gameUrl()).hostname));
 (async()=>{const browser=await launchBrowser();try{
- for(const [width,height] of (process.argv.includes('--landscape')?[[824,384],[932,430]]:shopOnly?[[320,740],[384,824],[500,900],[514,850],[540,780],[640,720],[824,384],[932,430],[1240,860]]:supportOnly?[[320,740],[384,824],[500,900],[514,850],[540,780],[640,720],[824,384],[932,430]]:process.argv.includes('--remaining')?[[640,720],[702,896],[824,384],[932,430]]:[[320,740],[384,824],[500,900],[514,850],[540,780],[640,720],[702,896],[824,384],[932,430]])) {
+ for(const [width,height] of (gradeNotes?[[320,740],[640,720],[824,384],[932,430]]:gradeOnly&&process.argv.includes('--remaining')?[[640,720],[824,384],[932,430]]:process.argv.includes('--landscape')?[[824,384],[932,430]]:shopOnly?[[320,740],[384,824],[500,900],[514,850],[540,780],[640,720],[824,384],[932,430],[1240,860]]:(supportOnly||gradeOnly)?[[320,740],[384,824],[500,900],[514,850],[540,780],[640,720],[824,384],[932,430]]:process.argv.includes('--remaining')?[[640,720],[702,896],[824,384],[932,430]]:[[320,740],[384,824],[500,900],[514,850],[540,780],[640,720],[702,896],[824,384],[932,430]])) {
   const page=await browser.newPage({viewport:{width,height}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
   page.setDefaultTimeout(10000);
   await page.goto(gameUrl());await page.waitForFunction(()=>window.DK?.phase==='title',null,{timeout:120000});await page.click('#ov-btn');
@@ -18,10 +18,10 @@ assert.ok(['localhost','127.0.0.1'].includes(new URL(gameUrl()).hostname));
     if(frame?.closest('.screen')){const q=frame.getBoundingClientRect();for(const key of ['left','top','width','height'])if(Math.abs(q[key]-homeFrame[key])>2)issues.push('main frame differs: '+key);}
     if(frame?.closest('#inf-help')){const q=frame.getBoundingClientRect();if(Math.abs(q.width-Math.min(innerWidth>innerHeight?720:500,innerWidth-24))>2||Math.abs(q.height-Math.min(850,innerHeight-24))>2)issues.push('tutorial is not a full frame');}
     if(el.scrollHeight>el.clientHeight+2||el.scrollWidth>el.clientWidth+2)issues.push(`overflow ${el.clientWidth}x${el.clientHeight}/${el.scrollWidth}x${el.scrollHeight}`);
-    for(const c of el.querySelectorAll('.rw-body,.rw-panel,[data-dice-view],.menu-page-content,.help-scroll,ol,#stage-grid,.shop-body,.shop-catalog-view,.shop-policy-card,.shop-preview-page,.deck-tactics,.tactics-body,.tactic-chain,.dice-route,.current-deck,.deck-slot,.tree-node,.research-preview,.effect-card')) {
+    for(const c of el.querySelectorAll('.rw-body,.rw-panel,[data-dice-view],.menu-page-content,.help-scroll,ol,#stage-grid,.shop-body,.shop-catalog-view,.shop-policy-card,.shop-preview-page,.deck-tactics,.tactics-body,.tactic-chain,.dice-route,.current-deck,.deck-slot,.tree-node,.research-preview,.effect-card,.grade-tower-preview,.grade-overview,.grade-next,.grade-partner')) {
      if(c.getBoundingClientRect().height && (c.scrollHeight>c.clientHeight+2||c.scrollWidth>c.clientWidth+2))issues.push('nested overflow '+(c.id||c.className||c.tagName)+` ${c.clientWidth}x${c.clientHeight}/${c.scrollWidth}x${c.scrollHeight}`);
     }
-    for(const card of el.querySelectorAll('.dice-route,.deck-tactics,.menu-route-grid > button,.menu-subpage > header,.menu-reading-page,.help-step-copy,.help-visual-step,.rw-empty,.theme-guide-card,.shop-policy-card,.commerce-product,.cosmetic-product,.shop-account-guide article,.shop-account-hero,.supporter-card,.earn-detail')) {
+    for(const card of el.querySelectorAll('.dice-route,.deck-tactics,.menu-route-grid > button,.menu-subpage > header,.menu-reading-page,.help-step-copy,.help-visual-step,.rw-empty,.theme-guide-card,.shop-policy-card,.commerce-product,.cosmetic-product,.shop-account-guide article,.shop-account-hero,.supporter-card,.earn-detail,.grade-tower-preview,.grade-next,.grade-partner')) {
      const box=card.getBoundingClientRect();if(!box.width||!box.height||!card.checkVisibility()||card.closest('details:not([open])')&&!card.closest('summary'))continue;
      const walker=document.createTreeWalker(card,NodeFilter.SHOW_TEXT);
      for(let node;node=walker.nextNode();) {
@@ -103,11 +103,35 @@ assert.ok(['localhost','127.0.0.1'].includes(new URL(gameUrl()).hostname));
   }
   await page.click('#lobby-settings');await fit('settings','#settings .help-card');await page.click('#settings-close');
   await page.locator('[data-home-action="deck"]').click();
+  if(gradeNotes){
+   await page.click('[data-dice-page="lineup"]');await page.click('[data-grade-page="3"]');await page.click('[data-grade="20"]');await fit('grade20 basic range','#deck-panel');
+   assert.match(await page.locator('.grade-tower-copy').innerText(),/기본 사거리/);
+   await page.click('[data-research-grade="20"]');await page.click('[data-detail-tab="performance"]');await fit('research basic range','#deck-panel');
+   assert.match(await page.locator('#deck-detail .research-numbers').innerText(),/기본 사거리/);
+   await page.click('[data-dice-page="combos"]');await page.locator('#dice-combos [data-analyze]').click();
+   for(const tab of ['effects','basis']){await page.click(`[data-analysis-tab="${tab}"]`);await fit('grade note '+tab,'#deck-panel');}
+   assert.match(await page.locator('.grade-analysis-effects').innerText(),/피해·공격속도·둔화 추가 피해는 각각 가장 강한 효과/);
+   assert.match(await page.locator('.analysis-basis').innerText(),/기본 사거리 \+160/);
+   assert.deepEqual(errors,[]);console.log('PASS grade notes',width,height);await page.close();continue;
+  }
   for(const key of ['overview','lineup','catalog','combos']){await page.click(`[data-dice-page="${key}"]`);await fit(key,'#deck-panel');}
-  await page.click('#combo-next');await fit('combo2','#deck-panel');await page.click('#combo-next');await fit('combo3','#deck-panel');assert.ok(await page.locator('#dice-apply-combo').isDisabled());
-  await page.locator('#dice-combos [data-analyze]').click();
-  for(const tab of ['placement','effects','basis']){await page.click(`[data-analysis-tab="${tab}"]`);await fit('analysis '+tab,'#deck-panel');if(tab==='effects')for(let i=1;i<5;i++){await page.click('#effect-next');await fit('effect '+i,'#deck-panel');}}
-  await page.click('#dice-analysis .analysis-back');
+  await page.click('[data-dice-page="lineup"]');
+  for(let i=0;i<4;i++){
+   await page.click(`[data-grade-page="${i}"]`);
+   assert.deepEqual(await page.locator('#deck-selected [data-grade]').evaluateAll(nodes=>nodes.map(node=>+node.dataset.grade)),Array.from({length:5},(_,j)=>i*5+j+1));
+   for(let j=0;j<5;j++){await page.click(`[data-grade="${i*5+j+1}"]`);await fit('grade '+(i*5+j+1),'#deck-panel');}
+  }
+  assert.equal(await page.locator('#deck-save,#deck-use,#deck-equip').count(),0,'no five-kind lineup actions');
+  await page.click('[data-dice-page="combos"]');
+  for(let i=0;i<5;i++){
+   await fit('synergy '+(i+1),'#deck-panel');
+   assert.equal(await page.locator('#dice-combos [data-combo-card]').count(),2,'two towers are a placement example');
+   await page.locator('#dice-combos [data-analyze]').click();
+   for(const tab of ['placement','effects','basis']){await page.click(`[data-analysis-tab="${tab}"]`);await fit('synergy '+(i+1)+' '+tab,'#deck-panel');}
+   assert.equal(await page.locator('#dice-analysis .formation-grid > div').count(),15,'all fifteen actual arena pads shown');
+   await page.click('#dice-analysis [data-open-dice="combos"]');
+   if(i<4)await page.click('#combo-next');else assert.ok(await page.locator('#combo-next').isDisabled());
+  }
   await page.click('[data-dice-page="catalog"]');
   for(const family of ['engineering','nature','magic','order','chaos']){
    await page.click(`[data-family="${family}"]`);await fit(family,'#deck-panel');
@@ -116,8 +140,11 @@ assert.ok(['localhost','127.0.0.1'].includes(new URL(gameUrl()).hostname));
   for(const label of ['숙련·해금','특성','각성','성능·연계']){await page.getByRole('button',{name:label,exact:true}).click();await fit(label,'#deck-panel');}
   await page.click('[data-dice-page="catalog"]');await page.click('[data-family="engineering"]');await page.click('[data-card="1"]');
   for(const label of ['숙련·해금','특성','각성','성능·연계']){await page.getByRole('button',{name:label,exact:true}).click();await fit('starter '+label,'#deck-panel');}
+  await page.click('[data-dice-page="lineup"]');await page.click('[data-grade-page="1"]');await page.click('[data-grade="7"]');await page.click('[data-research-grade="7"]');await page.click('[data-detail-tab="performance"]');
+  await pages('grade7 all research partners','#deck-panel','#partner-next',4);
   await page.click('[data-dice-page="overview"]');await page.click('[data-open-dice="support"]');await pages('support','#deck-panel','#tree-supporters .page-controls button',3);
   await page.click('[data-dice-page="overview"]');await page.click('[data-open-dice="earn"]');await pages('earn','#deck-panel','#earn-next',8);
+  if(gradeOnly){assert.deepEqual(errors,[]);console.log('PASS grade menus',width,height);await page.close();continue;}
   await page.locator('#lobby-box [data-menu-target="battle"]').click();await fit('battle','#lobby-box');
   await page.click('#lobby-help');const helpCount=await page.locator('#inf-help li').count();
   await pages('tutorial','#inf-help .help-card','#inf-help .page-controls button',helpCount);await page.click('#help-close');

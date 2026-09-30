@@ -527,18 +527,19 @@
         levels[face] = owned ? 1 : 0; classes[face] = owned ? baseClass(face) : 0;
         mastery[face] = 0; talents[face] = null; awakenings[face] = false;
       }
-      return Object.freeze({ mode, growth: true, levelCap: levelCap(mode), duelRules: 1, deckSystem: 1, treeVersion: TREE_VERSION,
+      return Object.freeze({ mode, growth: true, levelCap: levelCap(mode), duelRules: 1, gradeSystem: 1, treeVersion: TREE_VERSION,
         deck: Object.freeze(profile.deck.slice()), levels: Object.freeze(levels), classes: Object.freeze(classes),
         mastery: Object.freeze(mastery), talents: Object.freeze(talents), awakenings: Object.freeze(awakenings),
         supporter: TREE.supporters.some(s => s.id === profile.tree?.supporter) ? profile.tree.supporter : 'supply', critChance: .1, critDamage: 1.5 });
     }
     const growth = growthMode(mode), levels = {};
     for (let face = 1; face <= 20; face++) levels[face] = growth ? profile.levels[face] : face <= 6 ? 1 : 0;
-    const result = { mode, growth, levelCap: levelCap(mode), deck: Object.freeze(growth ? profile.deck.slice() : PURE_DECK.slice()), levels: Object.freeze(levels) };
+    const result = { mode, growth, levelCap: levelCap(mode), gradeSystem: 1, deck: Object.freeze(growth ? profile.deck.slice() : PURE_DECK.slice()), levels: Object.freeze(levels) };
+    if (!growth) result.classes = Object.freeze(Object.fromEntries(Array.from({ length: 20 }, (_, i) => [i + 1, i < 6 ? baseClass(i + 1) : 0])));
     if (growth && collectionValid(profile.collection)) {
       const summary = collectionSummary(profile), classes = {};
       for (let face = 1; face <= 20; face++) classes[face] = profile.collection.cards[face].owned ? profile.collection.cards[face].class : profile.levels[face] > 0 ? baseClass(face) : 0;
-      Object.assign(result, { deckSystem: 1, classes: Object.freeze(classes), critChance: summary.critChance, critDamage: summary.critDamage });
+      Object.assign(result, { classes: Object.freeze(classes), critChance: summary.critChance, critDamage: summary.critDamage });
     }
     if (growth && treeValid(profile.tree, profile.collection)) {
       const t = profile.tree;
@@ -551,8 +552,9 @@
   // Caller-side fail-safe. If the mode table and this module ever disagree about
   // which modes grow, the caller can fall back to this constant and keep the run pure.
   const PURE_SNAPSHOT = Object.freeze({
-    mode: 'clear', growth: false, levelCap: 0, deck: Object.freeze(PURE_DECK.slice()),
+    mode: 'clear', growth: false, levelCap: 0, gradeSystem: 1, deck: Object.freeze(PURE_DECK.slice()),
     levels: Object.freeze(Object.fromEntries(Array.from({ length: 20 }, (_, i) => [i + 1, i < 6 ? 1 : 0]))),
+    classes: Object.freeze(Object.fromEntries(Array.from({ length: 20 }, (_, i) => [i + 1, i < 6 ? baseClass(i + 1) : 0]))),
   });
   const pureSnapshot = () => PURE_SNAPSHOT;
 
@@ -560,20 +562,29 @@
     return isObject(value) && MODES.includes(value.mode) && value.growth === growthMode(value.mode) && value.levelCap === levelCap(value.mode)
       && isObject(value.levels) && Array.isArray(value.deck) && value.deck.length === DECK_SIZE && new Set(value.deck).size === DECK_SIZE
       && value.deck.every(face => faceValid(face) && integer(value.levels[face], 1, MAX_LEVEL))
+      && (value.gradeSystem === undefined || value.gradeSystem === 1 && value.deckSystem === undefined
+        && Object.keys(value.levels).length === 20 && Array.from({ length: 20 }, (_, i) => i + 1).every(face => integer(value.levels[face], 0, MAX_LEVEL))
+        && (value.classes === undefined || isObject(value.classes) && Object.keys(value.classes).length === 20
+          && Array.from({ length: 20 }, (_, i) => i + 1).every(face => value.levels[face] ? integer(value.classes[face], baseClass(face), MAX_CLASS) : value.classes[face] === 0)
+          && (!value.growth || value.critChance === .1 && Number.isFinite(value.critDamage) && value.critDamage >= 1.5 && value.critDamage <= 2.5))
+        && (value.growth || value.treeVersion === undefined && value.deck.every((face, i) => face === PURE_DECK[i])
+          && Array.from({ length: 20 }, (_, i) => i + 1).every(face => value.levels[face] === (face <= 6 ? 1 : 0) && value.classes?.[face] === (face <= 6 ? baseClass(face) : 0))))
       && (value.deckSystem === undefined || value.deckSystem === 1 && value.growth && isObject(value.classes)
         && value.deck.every(face => integer(value.classes[face], baseClass(face), MAX_CLASS))
         && value.critChance === .1 && Number.isFinite(value.critDamage) && value.critDamage >= 1.5 && value.critDamage <= 2.5)
-      && (value.treeVersion === undefined || value.treeVersion === TREE_VERSION && value.deckSystem === 1 && value.growth
-        && treeSnapshotMapsValid(value) && TREE.supporters.some(s => s.id === value.supporter) && value.critDamage === 1.5)
+      && (value.treeVersion === undefined || value.treeVersion === TREE_VERSION && (value.deckSystem === 1 || value.gradeSystem === 1) && value.growth
+        && treeSnapshotMapsValid(value) && TREE.supporters.some(s => s.id === value.supporter) && value.critDamage === 1.5
+        && (value.gradeSystem !== 1 || isObject(value.classes) && Array.from({ length: 20 }, (_, i) => i + 1).every(face => value.levels[face] || value.mastery[face] === 0 && value.talents[face] === null && value.awakenings[face] === false)))
       && (value.duelRules === undefined || value.duelRules === 1 && value.mode === 'duel' && value.treeVersion === TREE_VERSION
-        && Object.keys(value.levels).length === 20 && Object.keys(value.classes).length === 20
+        && isObject(value.classes) && Object.keys(value.levels).length === 20 && Object.keys(value.classes).length === 20
         && Array.from({ length: 20 }, (_, i) => i + 1).every(face => integer(value.levels[face], 0, 1)
           && value.classes[face] === (value.levels[face] ? baseClass(face) : 0)
           && value.mastery[face] === 0 && value.talents[face] === null && value.awakenings[face] === false));
   }
 
   function damageMultiplier(value, face) {
-    if (!snapshotValid(value) || !value.growth || !faceValid(face) || !value.deck.includes(face)) return 1;
+    if (!snapshotValid(value) || !value.growth || !faceValid(face) || (value.gradeSystem !== 1 && !value.deck.includes(face))) return 1;
+    if (value.gradeSystem === 1) return RULES.gradeGrowth(face, value);
     if (value.treeVersion === TREE_VERSION) return (1 + .03 * value.mastery[face]) * (value.talents[face] === 'force' ? 1.1 : 1);
     if (value.deckSystem === 1) return 1 + .03 * (value.classes[face] - baseClass(face));
     const level = Math.min(value.levels[face], value.levelCap);
@@ -596,9 +607,9 @@
   }
 
   // Exactly one random draw, uniform over the five selected faces.
-  // Pure modes return null without consuming RNG; callers retain chest.draw/roll.
+  // Grade and pure modes return null without consuming RNG; callers retain chest.draw/roll.
   function draw(value, rng = Math.random) {
-    if (!snapshotValid(value) || !value.growth || typeof rng !== 'function') return null;
+    if (!snapshotValid(value) || !value.growth || value.gradeSystem === 1 || typeof rng !== 'function') return null;
     const sample = rng();
     if (typeof sample !== 'number' || !Number.isFinite(sample) || sample < 0 || sample >= 1) return null;
     const face = value.deck[Math.floor(sample * DECK_SIZE)];

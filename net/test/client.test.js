@@ -87,6 +87,18 @@ async function connectBattle(env,mode='duel') {
   ws._recv({t:'start',mode,at:5000000,t0:5000000,seed:123,timing:{prep:20000,bossLimit:45000,clearWave:0},battle:b});
   return {ws,pid,b};
 }
+test('grade summary serializer preserves gs and triples while retaining saved deck pips',async()=>{
+  const e=makeEnv(),{ws}=await connectBattle(e);
+  assert.equal(e.N.sum({gs:1,tw:[[0,20,3]],sp:4}),true);
+  assert.equal(ws.last('sum').gs,1);assert.equal(ws.last('sum').ds,undefined);
+  same(ws.last('sum').tw,[[0,20,3]]);assert.equal(ws.last('sum').sp,1);
+  assert.equal(e.N.sum({ds:1,tw:[[0,7,1,6]]}),true);
+  assert.equal(ws.last('sum').ds,1);assert.equal(ws.last('sum').gs,undefined);same(ws.last('sum').tw,[[0,7,1,6]]);
+  const before=ws.sent.length;
+  for(const patch of [{gs:1,ds:1},{gs:0},{gs:'1'}])assert.equal(e.N.sum({...patch,tw:[]}),false);
+  assert.equal(ws.sent.length,before,'invalid grade marker never reaches the socket');
+});
+
 function welcomeMsg(pid, extra = {}) {
   const room = Object.assign({
     code: CODE, phase: 'lobby', hostId: pid, ver: '78', now: 5000000,

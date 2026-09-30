@@ -3,7 +3,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('nod
 const source=fs.readFileSync(require('node:path').join(__dirname,'../game.js'),'utf8');
 function part(a,b){const start=source.indexOf(a),end=source.indexOf(b,start);assert.ok(start>=0&&end>start);return source.slice(start,end);}
 const S={mode:'infinity',inf:{power:{}},projs:[],beams:[],fxs:[],texts:[],enemies:[]};
-const c={window:{},S,COSMETIC:false,deckRun:()=>false,growthRun:()=>false,epos:e=>({x:e.x,y:e.y}),
+const c={window:{DKDECKRULES:require('../deck-rules.js')},S,COSMETIC:false,deckRun:()=>false,gradeRun:()=>false,treeRun:()=>false,towerSynergy:()=>({damage:1,rate:1,slowDamage:1}),growthRun:()=>false,epos:e=>({x:e.x,y:e.y}),
  towerVisualEmitter:t=>({x:t.x,y:t.y}),starColor:d=>d.color,SFX:new Proxy({},{get:()=>()=>{}}),sheetHit(){}};
 vm.createContext(c);vm.runInContext(fs.readFileSync(require('node:path').join(__dirname,'../content.js'),'utf8'),c);c.DKCONTENT=c.window.DKCONTENT;
 vm.runInContext(part('const TOWER_DEFS =','const ENEMY_DEFS =')+part('const powerLv =','// SP 로 눈 강화')+part('function towerFire(','// 투사체·이펙트')+part('function starImpact(','// ==================== 업데이트')+part('function damageEnemy(','// 그림을 좌우로')+'\nglobalThis.defs=TOWER_DEFS;globalThis.stats=t=>({dmg:towerDmg(t),rate:towerRate(t)});',c);

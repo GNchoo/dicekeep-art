@@ -83,7 +83,8 @@ const SCHEMA = {
   },
   battleAck(m) { return isStr(m.matchId,128)&&!!m.matchId&&isStr(m.eventId,160)&&!!m.eventId ? {t:'battleAck',matchId:m.matchId,eventId:m.eventId}:null; },
   // sp 배속(1|2|3|4; 3은 기존 클라이언트 호환) · ll 레인 길이(선택) · en 적 스트림(선택, ≤ EN_MAX 자, [0-9;,] 만).
-  // ds:1 덱 전투는 [spot, face, 1, pips1..7], ds 생략은 기존 [spot, face, lvl1..3].
+  // gs:1 등급 전투는 [spot, face1..20, lvl1..3], ds:1은 기존 덱의 [spot, face, 1, pips1..7].
+  // 두 표식은 배타적이며, 표식 없는 기존 등급 요약도 계속 허용한다.
   sum(m) {
     if (!isInt(m.w, 0, MAX_WAVE) || !isInt(m.dw, 0, MAX_WAVE) || !isInt(m.l, 0, 20) || !isInt(m.g, 0, 1e7)) return null;
     if (!isInt(m.k, 0, 1e6) || !isInt(m.f, 0, 200) || !isInt(m.sp, 1, 4)) return null;
@@ -91,18 +92,20 @@ const SCHEMA = {
     if (m.b !== null && !isNum(m.b, 0, 1)) return null;
     if (m.o !== 'l' && m.o !== 'p') return null;
     if (m.ds !== undefined && m.ds !== 1) return null;
-    const deck = m.ds === 1;
+    if (m.gs !== undefined && m.gs !== 1 || m.gs !== undefined && m.ds !== undefined) return null;
+    const deck = m.ds === 1, grade = m.gs === 1;
     if (!Array.isArray(m.tw) || m.tw.length > TOWERS_MAX) return null;
     const tw = [], spots = new Set();
     for (const it of m.tw) {
       if (!Array.isArray(it) || it.length !== (deck ? 4 : 3)) return null;
       if (!isInt(it[0], 0, 14) || !isInt(it[1], 1, 20) || !isInt(it[2], 1, deck ? 1 : 3)) return null;
-      if (deck && (!isInt(it[3], 1, 7) || spots.has(it[0]))) return null;
+      if (deck && !isInt(it[3], 1, 7) || (deck || grade) && spots.has(it[0])) return null;
       spots.add(it[0]);
       tw.push(deck ? [it[0], it[1], 1, it[3]] : [it[0], it[1], it[2]]);
     }
     const out = { t: 'sum', w: m.w, dw: m.dw, l: m.l, g: m.g, k: m.k, f: m.f, sp: m.sp, hid: m.hid, b: m.b, o: m.o, tw };
     if (deck) out.ds = 1;
+    if (grade) out.gs = 1;
     if (m.ll !== undefined) { if (!isInt(m.ll, 0, LANE_MAX)) return null; out.ll = m.ll; }
     if (m.en !== undefined) { if (!isStr(m.en, EN_MAX) || !EN_RE.test(m.en)) return null; out.en = m.en; }
     return out;

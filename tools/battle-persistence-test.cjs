@@ -13,9 +13,10 @@ function profile() {
   p.tree.supporter = 'crusher';
   return p;
 }
-function fixture(mode, multiplayer = modes.includes(mode)) {
-  const p = profile(), snapshot = P.snapshot(p, mode), matchId = 'ABCD:123:456';
-  const tower = { face: 6, lvl: 1, spot: 0, cd: .25, deckSystem: 1, pips: 7, abilityT: 12, shotSerial: 4 };
+function fixture(mode, multiplayer = modes.includes(mode), legacy = false) {
+  const p = profile(), snapshot = clone(P.snapshot(p, mode)), matchId = 'ABCD:123:456';
+  if (legacy) { delete snapshot.gradeSystem; snapshot.deckSystem = 1; }
+  const tower = { face: 6, lvl: 1, spot: 0, cd: .25, abilityT: 12, shotSerial: 4, ...(legacy ? { deckSystem: 1, pips: 7 } : {}) };
   const enemy = { def: { id: 'm1' }, hp: 20, max: 100, dist: 30, lane: 0, poisonT: 2, poisonDps: 3, transferred: true };
   const s = { gold: 234, lives: 12, wave: 7, waveActive: true, autoT: 1, waveT: 3, heldDie: 6, time: 78, speed: 1,
     towers: [tower], enemies: [enemy], projs: [{ tgt: enemy, src: tower, dmg: 5, trail: [] }], spawnQ: [],
@@ -41,7 +42,7 @@ test('duel freezes normalized stats while coop preserves earned growth and both 
     const s = P.snapshot(p, mode);
     assert.equal(P.snapshotValid(s), true); assert.equal(P.growsIn(mode), true); assert.equal(s.levelCap, 20);
     assert.equal(s.treeVersion, 1); assert.equal(s.supporter, 'crusher'); assert.deepEqual(s.deck, [6, 5, 4, 3, 2]);
-    assert.equal(P.damageMultiplier(s, 6), mode === 'duel' ? 1 : 1.09 * 1.1);
+    assert.equal(P.damageMultiplier(s, 6), mode === 'duel' ? 1 : 1.09 * 1.1 * 1.15);
     const before = clone(s); p.tree.mastery[6] = 4;
     assert.deepEqual(clone(s), before); p.tree.mastery[6] = 3;
     for (const key of ['deck', 'mastery', 'talents', 'awakenings', 'levels']) assert.ok(Object.isFrozen(s[key]));
@@ -130,6 +131,23 @@ test('growth-105 solo and extreme multiplayer checkpoints remain valid without n
   for (const [mode, multi] of [['build', false], ['extreme', false], ['extreme', true]]) {
     const f = fixture(mode, multi), saved = SAVE.capture(f.s, f.slot, f.meta);
     assert.equal(saved.inf.battleModeVersion, undefined); assert.deepEqual(SAVE.decode(SAVE.encode(saved), 'local'), saved);
+  }
+});
+
+test('grade checkpoints retain all20-tier towers, pending original rolls, boss rewards and supporter state while legacy deck saves still resume', () => {
+  for (const mode of ['build', 'extreme', 'duel', 'coop']) {
+    const f = fixture(mode); f.s.towers[0].face = 20; f.s.heldDie = 20; f.s.inf.queue = ['boss', 'primal'];
+    f.slot = { kind: 'd20', active: true, phase: -1, final: 0 };
+    const saved = SAVE.capture(f.s, f.slot, f.meta); assert.equal(saved.inf.growthSnapshot.gradeSystem, 1);
+    const restored = SAVE.hydrate(SAVE.decode(SAVE.encode(saved), 'local'), { 20: {} });
+    assert.equal(restored.towers[0].face, 20); assert.deepEqual(restored.inf.queue, ['boss', 'primal']); assert.equal(restored.slot.final, 0);
+    for (const mutate of [p => { p.inf.supporterCooldown = -1; }, p => { p.inf.supporterUses = .5; }, p => { p.towers[0].deckSystem = 1; },
+      p => { delete p.inf.growthSnapshot.levels[20]; }, p => { p.inf.growthSnapshot.classes[20] = 21; }]) {
+      const bad = clone(saved); mutate(bad); assert.equal(SAVE.valid(bad), false);
+    }
+    const old = fixture(mode, modes.includes(mode), true), legacy = SAVE.capture(old.s, old.slot, old.meta);
+    assert.equal(legacy.inf.growthSnapshot.deckSystem, 1); assert.equal(legacy.inf.growthSnapshot.gradeSystem, undefined);
+    assert.deepEqual(SAVE.decode(SAVE.encode(legacy), 'local'), legacy);
   }
 });
 

@@ -8,19 +8,19 @@ const out=path.resolve('gen/e2e/deck-combat'); fs.mkdirSync(out,{recursive:true}
    const context=await browser.newContext({viewport}),page=await context.newPage(),errors=[];
    page.on('pageerror',e=>errors.push(e.message));
    await page.addInitScript(()=>{localStorage.setItem('dk_coachDone','1');localStorage.setItem('dk_infHelpSeen','1');});
-   await page.route('**/game.js*',async route=>{const r=await route.fetch();await route.fulfill({response:r,body:(await r.text()).replace('window.DK = S;','window.__deckQA={finishSlot,persistRun,readRunSave,restoreRunSave,buildInfinityWave,mpSummary,relayoutArena,movePickStart,movePickTap,update,towerFire,settleInfRun,infResultHTML}; window.DK = S;')});});
+   await page.route('**/game.js*',async route=>{const r=await route.fetch();await route.fulfill({response:r,body:(await r.text()).replace('window.DK = S;','window.__deckQA={finishSlot,persistRun,readRunSave,restoreRunSave,buildInfinityWave,mpSummary,relayoutArena,movePickStart,movePickTap,update,towerFire,settleInfRun,infResultHTML,arenaWorldScale}; window.DK = S;')});});
    try {
     await page.goto(gameUrl(false));await page.waitForFunction(()=>window.DK?.phase==='title',null,{timeout:120000}); await page.click('#ov-btn');
     const result=await page.evaluate(async()=>{
      const checks=[],check=(ok,msg)=>{if(!ok)throw Error(msg);checks.push(msg);};
      const setRun=(deck,mode='build')=>{
       const P=DKPROGRESSION.defaultProfile(); for(const id of deck){P.levels[id]=1;Object.assign(P.collection.cards[id],{owned:true,class:DKDECKRULES.get(id).baseClass});} P.deck=deck;
-      DKSAVE.progression=P; DKstartInf(mode); DK.paused=true; DK.muted=true; DK.gold=20000; DKSLOT.active=false; DK.heldDie=0;
-      // Continue testing the frozen v111 contract after new accounts adopt trees.
-      const {treeVersion,mastery,talents,awakenings,supporter,...legacy}=DK.inf.growthSnapshot;DK.inf.growthSnapshot=Object.freeze(legacy);
+      // Explicit frozen v111 fixture: new starts use the20-tier grade contract.
+      const {gradeSystem,treeVersion,mastery,talents,awakenings,supporter,...legacy}=DKPROGRESSION.snapshot(P,mode);legacy.deckSystem=1;
+      DKSAVE.progression=P; DKstartInf(mode,null,{snapshot:Object.freeze(legacy),ticket:null}); DK.paused=true; DK.muted=true; DK.gold=20000; DKSLOT.active=false; DK.heldDie=0;
      };
      const put=(face,pips,spot)=>{DK.heldDie=face;check(DKplace(spot),'place '+face);const t=DK.towers.find(t=>t.spot===spot);t.pips=pips;return t;};
-     setRun([1,4,7,13,14]); check(DK.inf.growthSnapshot.deckSystem===1,'new snapshot selects deck combat');
+     setRun([1,4,7,13,14]); check(DK.inf.growthSnapshot.deckSystem===1&&!DK.inf.growthSnapshot.gradeSystem,'explicit v111 snapshot retains deck combat');
      let start=DK.gold;DKchest();check(start-DK.gold===30 && DKSLOT.active,'first summon costs 30');__deckQA.finishSlot();check(DK.inf.growthSnapshot.deck.includes(DK.heldDie),'summon only comes from deck');DKplace(0);check(DK.towers[0].pips===1,'summon is one pip');
      DK.towers=[]; let a=put(1,3,0),b=put(1,3,1);check(DKdeckMerge(a,b),'board merge accepts same identity and pips');check(DK.towers.length===1&&b.pips===4&&DK.inf.growthSnapshot.deck.includes(b.face),'merge consumes two into random deck +1 pip');
      a=put(1,2,2); b=put(1,3,3);check(!DKdeckMerge(a,b),'unequal pips reject');a.pips=b.pips=7;check(!DKdeckMerge(a,b),'seven pip merge rejects');
@@ -36,7 +36,7 @@ const out=path.resolve('gen/e2e/deck-combat'); fs.mkdirSync(out,{recursive:true}
      enemy.isBoss=true;start=enemy.hp;DKdamage(enemy,100,special[1]);check(Math.abs(start-enemy.hp-180)<1e-9,'hunter deals 80 percent additional boss damage');enemy.isBoss=false;
      DKdamage(enemy,100,special[2]);check(enemy.fractureT===3,'fracture hit applies armor reduction');enemy.slowT=1;start=enemy.hp;DKdamage(enemy,100,special[3]);check(Math.abs(start-enemy.hp-165)<1e-9,'shatter only benefits slowed targets');
      const pulse=special[4],entry=DKLANES()[0].pts[0];pulse.x=entry[0];pulse.y=entry[1]+30;
-     for(let shot=0;shot<4;shot++){pulse.cd=0;__deckQA.towerFire(pulse,0);}check(DK.projs.length===4&&DK.projs.slice(0,3).every(p=>!p.splash)&&DK.projs[3].splash===100,'pulse fourth shot creates area attack');
+     for(let shot=0;shot<4;shot++){pulse.cd=0;__deckQA.towerFire(pulse,0);}check(DK.projs.length===4&&DK.projs.slice(0,3).every(p=>!p.splash)&&DK.projs[3].splash===100*__deckQA.arenaWorldScale(),'pulse fourth shot creates area attack at the arena world scale');
      setRun([1,6,15,16,20],'extreme');a=put(6,2,0);start=DK.gold;DKdeckTick(12);check(DK.gold-start===18,'income scales with pips');
      a=put(16,2,1);b=put(16,2,2);start=DK.gold;DKdeckMerge(a,b);check(DK.gold-start===90,'sacrifice merge returns pip-scaled SP');
      a=put(15,2,3);b=put(15,2,4);const n=DK.towers.length;DKdeckMerge(a,b);check(DK.towers.length===n,'summoner merge adds extra one-pip unit');

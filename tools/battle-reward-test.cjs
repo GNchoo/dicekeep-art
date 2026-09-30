@@ -63,7 +63,7 @@ test('new duel snapshots normalize every account statistic while retaining owned
  assert.deepEqual(P.snapshot(low,'duel'),P.snapshot(high,'duel'));const duel=P.snapshot(high,'duel');assert.equal(duel.duelRules,1);assert.equal(P.damageMultiplier(duel,1),1);assert.equal(P.snapshotValid(duel),true);
  for(let face=1;face<=20;face++){assert.equal(duel.mastery[face],0);assert.equal(duel.talents[face],null);assert.equal(duel.awakenings[face],false);assert.equal(duel.levels[face],face<=6?1:0);assert.equal(duel.classes[face],face<=6?D.get(face).baseClass:0);}
  for(const key of['deck','levels','classes','mastery','talents','awakenings'])assert.equal(Object.isFrozen(duel[key]),true);
- const prior={...copy(P.snapshot(high,'coop')),mode:'duel'};assert.equal(P.snapshotValid(prior),true);assert.equal(P.damageMultiplier(prior,1),1.15*1.1);
+ const {gradeSystem,...prior}=copy(P.snapshot(high,'coop'));prior.mode='duel';prior.deckSystem=1;assert.equal(P.snapshotValid(prior),true);assert.equal(P.damageMultiplier(prior,1),1.15*1.1);
  const malformed=copy(duel);malformed.mastery[1]=1;assert.equal(P.snapshotValid(malformed),false);assert.equal(P.snapshotValid({...duel,duelRules:2}),false);assert.equal(P.snapshotValid({...duel,mode:'coop'}),false);
  high.collection.gold=10000;high.shards=100;assert.equal(P.treeUnlock(high,7).ok,true);P.setDeck(high,[7,1,2,3,4]);const chosen=P.snapshot(high,'duel');assert.deepEqual(chosen.deck,[7,1,2,3,4]);assert.equal(chosen.levels[7],1);assert.equal(chosen.classes[7],D.get(7).baseClass);
 });

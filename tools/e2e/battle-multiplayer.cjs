@@ -3,6 +3,7 @@ const {launchBrowser} = require('./browser.cjs');
 const out = path.resolve(process.env.E2E_OUTPUT_DIR || 'gen/e2e/battle-multiplayer');
 fs.mkdirSync(out,{recursive:true});
 const base=process.env.E2E_BASE_URL || 'http://127.0.0.1:8137/', net=process.env.NET || 'ws://127.0.0.1:8790';
+for (const target of [base, net]) assert.ok(['localhost','127.0.0.1'].includes(new URL(target).hostname), 'multiplayer QA must use local static and memory servers');
 (async()=>{
   const browser=await launchBrowser(), errors=[], report={checks:[],pass:false};
   async function pair(mode){
@@ -12,7 +13,7 @@ const base=process.env.E2E_BASE_URL || 'http://127.0.0.1:8137/', net=process.env
       p.on('pageerror',e=>errors.push(e.message));
       p.on('console',m=>{if(m.type()==='warning' && m.text().startsWith('[net]'))errors.push(m.text());});
       await p.addInitScript(()=>{localStorage.setItem('dk_coachDone','1');localStorage.setItem('dk_infHelpSeen','1');});
-      await p.route('**/game.js*',async route=>{const r=await route.fetch();await route.fulfill({response:r,body:(await r.text()).replace('window.DK = S;','window.__battle={persistRun,readRunSave,update,spawnEnemy,damageEnemy,battleWaveItems,battleOnState,mpOnEnd,saveSave,createDeckTower,lanes:()=>LANES};window.DK = S;')});});
+      await p.route('**/game.js*',async route=>{const r=await route.fetch();await route.fulfill({response:r,body:(await r.text()).replace('window.DK = S;','window.__battle={persistRun,readRunSave,update,spawnEnemy,damageEnemy,battleWaveItems,battleOnState,mpOnEnd,saveSave,lanes:()=>LANES};window.DK = S;')});});
       await p.goto(new URL('index.html?net='+encodeURIComponent(net),base).href);
       await p.waitForFunction(()=>window.DK?.phase==='title',null,{timeout:120000});await p.click('#ov-btn');
       await p.evaluate(()=>DKlobbyView('multi'));await p.selectOption('#mp-mode',mode);await p.fill('#mp-name',mode+i);
@@ -27,10 +28,13 @@ const base=process.env.E2E_BASE_URL || 'http://127.0.0.1:8137/', net=process.env
   }
   try{
     let [a,b]=await pair('coop');
-    assert.deepEqual(await a.evaluate(()=>({mode:DK.inf.growthSnapshot.mode,deck:DK.inf.growthSnapshot.deckSystem,ticket:DK.inf.accountTicket,stored:!!__battle.readRunSave(true)})),{mode:'coop',deck:1,ticket:null,stored:true});
+    assert.deepEqual(await a.evaluate(()=>({mode:DK.inf.growthSnapshot.mode,grade:DK.inf.growthSnapshot.gradeSystem,deck:DK.inf.growthSnapshot.deckSystem??null,ticket:DK.inf.accountTicket,stored:!!__battle.readRunSave(true)})),{mode:'coop',grade:1,deck:null,ticket:null,stored:true});
     // Board fixtures isolate server participation accounting from combat outcome.
     // No clock warp: the room must observe a full minute via actual summaries.
-    for (const p of [a,b]) await p.evaluate(()=>{for(let i=0;i<3;i++)DK.towers.push(__battle.createDeckTower(DK.inf.growthSnapshot.deck[i],1,i));__battle.persistRun();});
+    for (const p of [a,b]) {
+      const board=await p.evaluate(()=>{for(let i=0;i<3;i++){DK.heldDie=1;DKplace(i);}__battle.persistRun();return DK.towers.map(t=>({spot:t.spot,face:t.face,lvl:t.lvl,pips:t.pips??null,deck:t.deckSystem??null}));});
+      assert.deepEqual(board,Array.from({length:3},(_,spot)=>({spot,face:1,lvl:1,pips:null,deck:null})));
+    }
     await a.evaluate(()=>DKMP.speed(3));assert.equal(await a.evaluate(()=>DK.speed),1);
     const gold=await b.evaluate(()=>DK.gold);
     await b.evaluate(()=>{window.__lostBattleAck=DKNET.battleAck;DKNET.battleAck=()=>false;});
@@ -40,14 +44,14 @@ const base=process.env.E2E_BASE_URL || 'http://127.0.0.1:8137/', net=process.env
     assert.ok(applied.id);assert.equal(await b.evaluate(()=>__battle.readRunSave(true).state.gold),applied.gold);
     await b.evaluate(()=>__battle.battleOnState(DK.net.battle));
     assert.equal(await b.evaluate(()=>DK.gold),applied.gold);
-    report.checks.push('real two-client coop starts a saved deck match; x3 is blocked; free supply is server-approved once and checkpointed before ack');
+    report.checks.push('real two-client coop starts a saved grade match with three original placed towers; x3 is blocked; free supply is server-approved once and checkpointed before ack');
     await b.reload();await b.waitForFunction(()=>window.DK?.phase==='title'&&DKNET.inRoom(),null,{timeout:120000});await b.click('#ov-btn');
     await b.waitForFunction(id=>DK.phase==='playing'&&DK.inf?.runId===id,applied.run,{timeout:20000});await b.evaluate(()=>DK.paused=true);
     const after=await b.evaluate(()=>({gold:DK.gold,wave:DK.wave}));
     let waveBonus=0;for(let i=Math.max(1,applied.wave);i<after.wave;i++)waveBonus+=20+i*3;
     assert.equal(after.gold,applied.gold+waveBonus,'an unacknowledged supply in the restored checkpoint is not granted twice');
     assert.equal(await b.evaluate(()=>DK.net.pid),applied.pid);
-    report.checks.push('phone reload restores the same match/run and acknowledged supply without duplicate SP');
+    report.checks.push('phone reload restores the same grade match/run and acknowledged supply without duplicate gold');
     await b.screenshot({path:path.join(out,'coop-phone.png')});
     const rewardAt=await b.evaluate(()=>DKNET.serverNow()+68000);
     await a.waitForFunction(at=>DKNET.serverNow()>=at,rewardAt,{timeout:85000});

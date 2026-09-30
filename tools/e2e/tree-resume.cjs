@@ -1,9 +1,9 @@
-// Explicit tree-version checkpoint coverage, separate from the legacy/v111
+// Explicit legacy deck/tree-version checkpoint coverage, separate from the v111
 // run-resume fixtures. Local fresh browser contexts only; no account or payments.
 const fs = require('node:fs'), path = require('node:path'), assert = require('node:assert/strict');
 const { launchBrowser, gameUrl } = require('./browser.cjs');
 const out = path.resolve(process.env.E2E_OUTPUT_DIR || 'gen/e2e/tree-resume'); fs.mkdirSync(out, { recursive: true });
-const report = { pass: false, cases: [], scope: 'New tree frozen snapshots, skill cooldowns and counters, seven-pip awakened towers, account changes, reload and mobile/desktop rotation. Resource/board preconditions are explicit test fixtures.' };
+const report = { pass: false, cases: [], scope: 'Legacy deck/tree frozen snapshots, skill cooldowns and counters, seven-pip awakened towers, account changes, reload and mobile/desktop rotation. Resource/board preconditions are explicit test fixtures.' };
 (async () => {
   const browser = await launchBrowser();
   try {
@@ -35,7 +35,8 @@ const report = { pass: false, cases: [], scope: 'New tree frozen snapshots, skil
           const p = DKPROGRESSION.defaultProfile(), deck = [1, 6, 13, 14, 20];
           for (const id of deck) { p.levels[id] = 1; Object.assign(p.collection.cards[id], { owned: true, class: DKDECKRULES.get(id).baseClass }); p.tree.mastery[id] = 3; p.tree.talents[id] = id === 6 ? 'insight' : 'force'; p.tree.awakenings[id] = true; }
           if (!DKPROGRESSION.setPreset(p, 0, deck).ok) throw Error('tree fixture deck rejected');
-          p.tree.supporter = 'supply'; DKSAVE.progression = p; DKstartInf('extreme'); DK.muted = true; DK.gold = 10000;
+          p.tree.supporter = 'supply'; const { gradeSystem, ...legacy } = DKPROGRESSION.snapshot(p, 'extreme'); legacy.deckSystem = 1;
+          DKSAVE.progression = p; DKstartInf('extreme', null, { snapshot: Object.freeze(legacy), ticket: null }); DK.muted = true; DK.gold = 10000;
           DK.wave = 33; DK.inf.doneW = 32; DK.waveActive = true; DKSLOT.active = false;
           deck.forEach((face, i) => {
             DK.heldDie = face; if (!DKplace(i)) throw Error('tree fixture placement rejected');
@@ -61,7 +62,7 @@ const report = { pass: false, cases: [], scope: 'New tree frozen snapshots, skil
         check('seven-pip unlocked towers awaken while six-pip stays dormant', expected.towers.map(t => t.awakened), [true, false, true, true, true]);
         const expectedProgress = await page.evaluate(() => DK.enemies.map(e => e.dist / __treeResumeQA.laneLen(e)));
         await page.reload(); await page.waitForFunction(() => window.DK?.phase === 'title', null, { timeout: 120000 }); await page.click('#ov-btn'); await page.evaluate(() => DKlobbyView('single'));
-        await page.click('#run-resume-play'); await page.waitForFunction(() => DK.phase === 'playing');
+        await page.click('#run-resume-open'); await page.click('#run-resume-play'); await page.waitForFunction(() => DK.phase === 'playing');
         check('reload restores frozen tree combat, cooldown, uses, awakened statistics and projectile references', await inspect(), expected);
         check('account edits remain separate from resumed snapshot', await page.evaluate(() => ({ profile: DKSAVE.progression.tree.supporter, run: DK.inf.growthSnapshot.supporter })), { profile: 'barrage', run: 'supply' });
         const oldMap = await page.evaluate(() => DK.mapKey); await page.setViewportSize({ width: viewport.height, height: viewport.width });

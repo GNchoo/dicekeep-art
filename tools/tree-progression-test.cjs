@@ -58,7 +58,7 @@ test('migration conserves old class/duplicate/pack value exactly once and retain
   const p = P.defaultProfile(); delete p.tree; p.collection.gold = 500; p.collection.packs = 7;
   p.collection.cards[1].class = 12; p.collection.cards[1].copies = 31; p.collection.cards[20] = { owned: true, class: 10, copies: 3 }; p.levels[20] = 87; p.shards = 321;
   P.setPreset(p, 2, [20, 1, 2, 3, 4]); P.activatePreset(p, 2);
-  const before = structuredClone(p), oldSnapshot = P.snapshot(p, 'build'); assert.equal(oldSnapshot.treeVersion, undefined);
+  const before = structuredClone(p), { gradeSystem, ...oldSnapshot } = P.snapshot(p, 'build'); oldSnapshot.deckSystem = 1; assert.equal(oldSnapshot.treeVersion, undefined);
   const result = P.migrateTree(p), m = result.migration;
   assert.equal(result.migrated, true); assert.deepEqual(p.levels, before.levels); assert.deepEqual(p.records, before.records); assert.equal(p.shards, 321);
   assert.deepEqual(p.collection.presets, before.collection.presets); assert.equal(p.collection.cards[20].class, 10); assert.equal(p.collection.cards[20].owned, true);
@@ -81,6 +81,16 @@ test('new snapshots freeze tree choices, reject invalid/missing maps, replace cl
   for (const patch of [{ mastery: {} }, { treeVersion: 2 }, { supporter: 'invalid' }, { critDamage: 1.9 }, { talents: { ...s.talents, 2: 'force' } }, { awakenings: { ...s.awakenings, 2: true } }]) assert.equal(P.snapshotValid({ ...s, ...patch }), false);
   for (const mode of ['clear', 'multi']) assert.deepEqual(P.snapshot(p, mode), P.snapshot(P.defaultProfile(), mode));
   delete p.tree; const legacy = P.snapshot(p, 'build'); assert.equal(legacy.treeVersion, undefined); assert.ok(Math.abs(P.damageMultiplier(legacy, 1) - 1.57) < 1e-12);
+});
+
+test('grade growth applies mastery, talent and awakening to all20 tiers while old deck runs retain their original bonuses', () => {
+  const p = funded(); for (const family of T.families) for (const face of family.faces) if (!p.collection.cards[face].owned) assert.equal(P.treeUnlock(p, face).ok, true);
+  for (let face = 1; face <= 20; face++) { p.tree.mastery[face] = 3; p.tree.talents[face] = 'force'; p.tree.awakenings[face] = true; }
+  const s = P.snapshot(p, 'build'); assert.equal(P.snapshotValid(s), true);
+  for (let face = 1; face <= 20; face++) assert.equal(P.damageMultiplier(s, face), 1.09 * 1.1 * 1.15);
+  const { gradeSystem, ...old } = s; old.deckSystem = 1; assert.equal(P.snapshotValid(old), true);
+  assert.equal(P.damageMultiplier(old, 1), 1.09 * 1.1); assert.equal(P.damageMultiplier(old, 20), 1);
+  assert.equal(P.damageMultiplier(P.snapshot(P.defaultProfile(), 'build'), 20), 1, 'unresearched high tiers can still appear with no account boost');
 });
 test('settlement replaces random packs with fixed research gold and pays existing free shards once', () => {
   const p = P.defaultProfile(), result = P.settle(p, run('first'));

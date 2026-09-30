@@ -1,3 +1,2 @@
-// Keep the existing CI command pointed at the current collection screen.
-// v111 class/pack behavior remains covered by collection-test.cjs and deck-combat.cjs.
+// Keep the legacy runner pointed at the twenty-grade catalog and research UI.
 require('./tree-collection.cjs');

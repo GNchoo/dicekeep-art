@@ -6,6 +6,7 @@ const P = require('../progression.js');
 
 // Explicit v111 fixtures retain coverage of the supported legacy APIs.
 const legacyProfile = (...args) => { const p = P.defaultProfile(...args); delete p.tree; p.collection.gold = 600; p.collection.packs = 3; return p; };
+const legacySnapshot = (p, mode) => { const { gradeSystem, ...s } = P.snapshot(p, mode); if (s.growth && s.classes) s.deckSystem = 1; return s; };
 
 const run = (id, overrides = {}) => ({ id, mode: 'clear', wave: 25, kills: 300, won: false, date: '2026-09-08', elapsed: 125.5, ...overrides });
 const funded = () => { const p = legacyProfile(); p.shards = P.MAX_SHARDS; return p; };
@@ -103,10 +104,11 @@ test('legacy snapshots still cap build growth at20 and retain extreme levels200;
     const snap = P.snapshot(p, mode); assert.equal(snap.growth, false); assert.equal(P.damageMultiplier(snap, 1), 1);
     assert.equal(P.draw(snap, () => { throw Error('pure RNG must not be consumed'); }), null);
   }
-  const build = P.snapshot(p, 'build'), extreme = P.snapshot(p, 'extreme');
+  const build = legacySnapshot(p, 'build'), extreme = legacySnapshot(p, 'extreme');
   assert.equal(P.damageMultiplier(build, 1), 2.52);
   assert.equal(P.damageMultiplier(extreme, 1), 2.52 * Math.pow(1.08, 180));
   assert.equal(P.damageMultiplier(extreme, 6), 1, 'nonselected card has no deck multiplier');
+  assert.equal(P.damageMultiplier(P.snapshot(p, 'extreme'), 6), 2.52 * Math.pow(1.08, 180), 'grade runs apply investment outside stored legacy presets');
   for (let level = 1; level <= 200; level++) {
     p.levels[1] = level;
     const mult = P.damageMultiplier(P.snapshot(p, 'extreme'), 1); assert.ok(Number.isFinite(mult) && mult >= 1);
@@ -118,7 +120,7 @@ test('every face maps to a legal renderer, and each selected deck entry has an e
   const legal = { d1: [1, 1], d4: [1, 4], d6: [1, 6], d8: [1, 8], d12: [1, 12], d20: [1, 20], epic: [14, 20], myth: [18, 20], primal: [20, 20] };
   for (let first = 1; first <= 16; first++) {
     const deck = Array.from({ length: 5 }, (_, i) => first + i); P.setDeck(p, deck);
-    const snap = P.snapshot(p, 'build'), counts = new Map(deck.map(f => [f, 0]));
+    const snap = legacySnapshot(p, 'build'), counts = new Map(deck.map(f => [f, 0]));
     for (let i = 0; i < 1000; i++) {
       let calls = 0; const result = P.draw(snap, () => { calls++; return (i + .5) / 1000; });
       assert.equal(calls, 1); assert.ok(result.face >= legal[result.kind][0] && result.face <= legal[result.kind][1]);
@@ -126,7 +128,35 @@ test('every face maps to a legal renderer, and each selected deck entry has an e
     }
     assert.deepEqual([...counts.values()], [200, 200, 200, 200, 200]);
   }
-  for (const value of [-1, 1, NaN, Infinity, '0.5']) assert.equal(P.draw(P.snapshot(p, 'extreme'), () => value), null);
+  for (const value of [-1, 1, NaN, Infinity, '0.5']) assert.equal(P.draw(legacySnapshot(p, 'extreme'), () => value), null);
+});
+
+test('new grade snapshots use the original chest without consuming RNG, validate all20 maps and preserve preset data', () => {
+  const p = P.defaultProfile(), before = JSON.stringify(p);
+  for (const mode of P.MODES) {
+    const s = P.snapshot(p, mode); assert.equal(s.gradeSystem, 1); assert.equal(s.deckSystem, undefined); assert.equal(P.snapshotValid(s), true);
+    assert.equal(Object.keys(s.levels).length, 20);
+    assert.equal(P.draw(s, () => { throw Error('grade draw must use original chest RNG'); }), null);
+    for (const patch of [{ gradeSystem: 2 }, { deckSystem: 1 }, { levels: { ...s.levels, 20: undefined } }, { levels: { ...s.levels, 21: 1 } }, { classes: {} }]) assert.equal(P.snapshotValid({ ...s, ...patch }), false);
+    if (s.treeVersion) {
+      assert.equal(P.snapshotValid({ ...s, classes: undefined }), false);
+      assert.equal(P.snapshotValid({ ...s, mastery: { ...s.mastery, 20: 3 } }), false, 'locked tiers cannot carry invented research bonuses');
+    }
+  }
+  assert.equal(JSON.stringify(p), before, 'generating grade runs cannot rewrite any profile or preset');
+  const pure = P.pureSnapshot(); assert.equal(P.snapshotValid({ ...pure, levels: { ...pure.levels, 7: 1 } }), false);
+  assert.equal(P.snapshotValid({ ...pure, treeVersion: 1 }), false);
+});
+
+test('shared grade growth keeps pure, research, old class/level investment and normalized duel multipliers identical', () => {
+  const D = require('../deck-rules.js'), tree = P.defaultProfile(), classes = legacyProfile(), levels = legacyProfile();
+  tree.tree.mastery[1] = 3; tree.tree.talents[1] = 'force'; tree.tree.awakenings[1] = true;
+  classes.collection.cards[1].class = 10; delete levels.collection; levels.levels[1] = 21;
+  for (const [p, mode, expected] of [[tree, 'clear', 1], [tree, 'build', 1.09 * 1.1 * 1.15], [classes, 'build', 1.27],
+    [levels, 'build', 2.52], [levels, 'extreme', 2.52 * 1.08], [tree, 'duel', 1]]) {
+    const s = P.snapshot(p, mode); assert.equal(P.snapshotValid(s), true);
+    assert.equal(P.damageMultiplier(s, 1), expected); assert.equal(D.gradeGrowth(1, s), expected);
+  }
 });
 
 test('established arena modes pay completed waves and independent first milestones, without touching gems/legacy', () => {

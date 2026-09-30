@@ -8,7 +8,7 @@ function read(name, reference) {
 }
 function inspect(reference) {
   const c = { window: {} }; vm.runInNewContext(read('content.js', reference), c);
-  const C = c.window.DKCONTENT, INF = C.INFINITY, s = read('game.js', reference), t = {};
+  const C = c.window.DKCONTENT, INF = C.INFINITY, s = read('game.js', reference), t = {window:{DKDECKRULES:require('../deck-rules.js')}};
   vm.runInNewContext(s.slice(s.indexOf('const TOWER_DEFS ='), s.indexOf('const ENEMY_DEFS =')) + '\nresult={TOWER_DEFS,LVL_DMG,LVL_RANGE,LVL_RATE};', t);
   const table = { config: { ...INF, modes: { clear: INF.modes.clear } }, power: C.DICE_POWER, towers: t.result,
     waves: Array.from({ length: 101 }, (_, i) => ({ wave: i + 1, values: INF.wave(i + 1, true), monster: INF.monsterFor(i + 1) })) };

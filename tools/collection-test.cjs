@@ -88,13 +88,15 @@ test('established modes award collection resources without changing legacy shard
 
 test('new classes and collection crit freeze at run start while legacy and pure snapshots remain distinct', () => {
   const p = legacyProfile(); p.collection.cards[1].class = 10;
-  const snap = P.snapshot(p, 'build'); assert.equal(snap.deckSystem, 1); assert.equal(snap.classes[1], 10);
+  const snap = P.snapshot(p, 'build'); assert.equal(snap.gradeSystem, 1); assert.equal(snap.deckSystem, undefined); assert.equal(snap.classes[1], 10);
   assert.equal(P.damageMultiplier(snap, 1), 1.27); assert.equal(snap.critChance, .1); assert.equal(snap.critDamage, 1.545);
   assert.equal(Object.isFrozen(snap.classes), true); p.collection.cards[1].class = 20; assert.equal(snap.classes[1], 10);
   assert.equal(P.snapshotValid(snap), true); assert.equal(P.snapshotValid({ ...snap, critDamage: 100 }), false);
   for (const mode of ['clear', 'multi']) assert.deepEqual(P.snapshot(p, mode), P.snapshot(legacyProfile(), mode));
   const legacy = { mode: 'build', growth: true, levelCap: 20, deck: [1, 2, 3, 4, 5], levels: { 1: 20, 2: 1, 3: 1, 4: 1, 5: 1 } };
   assert.equal(P.snapshotValid(legacy), true); assert.equal(P.damageMultiplier(legacy, 1), 2.52);
+  const { gradeSystem, ...oldCollection } = snap; oldCollection.deckSystem = 1;
+  assert.equal(P.snapshotValid(oldCollection), true); assert.equal(P.damageMultiplier(oldCollection, 1), 1.27);
 });
 
 test('old-client upgrades after migration retain their exact equivalent collection credit without fractional loss', () => {
