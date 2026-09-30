@@ -71,7 +71,7 @@
     const details=summary.parentElement;
     e.preventDefault();
     const nodes=details.id==='theme-guide'?[...details.querySelectorAll('.theme-guide-card')]:[...details.children].filter(n=>n!==summary).flatMap(n=>n.matches('ol,ul,#tier-legend')?[...n.children]:[n]);
-    open(summary.textContent.trim(),nodes);
+    open((summary.querySelector('strong')||summary).textContent.trim(),nodes);
   });
   window.DKMENUPAGES={open,listPages,help:()=>{disposeHelp?.();disposeHelp=listPages($('#inf-help .help-scroll ol'),'li',1);}};
 })();
