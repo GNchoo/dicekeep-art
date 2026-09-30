@@ -61,7 +61,7 @@
     const groups=[['공격',['주력','보스','지속','배치']],['광역',['광역']],['제어',['제어']],['지원',['지원']],['운영',['경제','변환','성장','운영']]];
     return `<div class="deck-roles" aria-label="덱 역할 구성">${groups.map(([name,kinds])=>{const count=faces.filter(id=>kinds.includes(card(id).role)).length;return `<span class="${count?'filled':''}"><b>${count}</b>${name}</span>`;}).join('')}</div>`;
   }
-  function tactics(faces,showFormation=false) {
+  function tactics(faces) {
     const value=rules().preview(faces,snapshot()),st=id=>rules().stats({face:id,pips:3},snapshot());
     const area=faces.find(id=>card(id).role==='광역'),support=faces.find(id=>[7,8,17].includes(id));
     let pair=[],effect='',condition='';
@@ -82,14 +82,13 @@
     } else {
       const id=faces.find(id=>[6,18,19,14].includes(id))||faces[0];pair=[id];effect=benefit(id,st(id));condition=card(id).description;
     }
-    const advice=!area?'몰려오는 적 대비: 광역 주사위 추가를 추천해요.':!faces.includes(4)?'빠른 적 대비: 서리로 이동을 늦출 수 있어요.':'공격·광역·제어가 있어 여러 상황에 대응할 수 있어요.';
-    return `<section class="deck-tactics"><header><b>이 조합의 핵심</b><small>${advice}</small></header><div class="tactics-body"><div class="tactic-chain"><div class="tactic-pair">${pair.map((id,i)=>(i?'<span>→</span>':'')+`<div>${img(id)}<b>${shortName(id)}</b></div>`).join('')}</div><strong>${effect}</strong><p>${esc(condition)}</p></div>${showFormation?formation(faces):''}</div></section>`;
+    return `<section class="deck-tactics"><header><b>이 조합의 핵심</b></header><div class="tactics-body"><div class="tactic-chain"><div class="tactic-pair">${pair.map((id,i)=>(i?'<span>→</span>':'')+`<div>${img(id)}<b>${shortName(id)}</b></div>`).join('')}</div><strong>${effect}</strong><p>${esc(condition)}</p></div></div></section>`;
   }
   function analyzeButton(faces,back) {
     return `<button type="button" data-analyze="${faces.join(',')}" data-analysis-back="${back}" class="analysis-link">배치 · 시너지 자세히 보기 →</button>`;
   }
   function selectionSummary() {
-    return metrics(draft)+`<small class="metric-condition">3눈금 × 5기 · 직접 피해 기준 · 덱빌드용</small>`+roles(draft)+tactics(draft,true)+analyzeButton(draft,'lineup');
+    return metrics(draft)+`<small class="metric-condition">3눈금 × 5기 · 직접 피해 기준 · 덱빌드용</small>`+roles(draft)+tactics(draft)+analyzeButton(draft,'lineup');
   }
   function formation(faces) {
     const result=rules().preview(faces,snapshot());
@@ -179,7 +178,7 @@
       {name:'보스 집중 공격',faces:[2,4,7,8,10]}
     ];
     const combo=combos[comboIndex],missing=combo.faces.filter(id=>!owned(id));
-    $('dice-combos').innerHTML=`<h3>${combo.name}</h3><div class="combo-comparison">${metrics(combo.faces)}</div><p class="metric-condition">3눈금 × 5기 · 직접 피해 기준 · 덱빌드용</p><div class="combo-deck">${combo.faces.map(id=>`<button data-combo-card="${id}" type="button">${img(id)}<b>${shortName(id)}</b><small>${owned(id)?roleLabel(id):'해금 필요'}</small></button>`).join('')}</div>${roles(combo.faces)}${tactics(combo.faces,true)}${analyzeButton(combo.faces,'combos')}<button id="dice-apply-combo" type="button" ${missing.length||blocked()?'disabled':''}>${missing.length?'먼저 해금: '+missing.map(shortName).join(' · '):'이 조합으로 편성'}</button><div class="page-controls"><button id="combo-prev" ${comboIndex===0?'disabled':''}>이전</button><span>${comboIndex+1} / ${combos.length}</span><button id="combo-next" ${comboIndex===combos.length-1?'disabled':''}>다음 조합</button></div>`;
+    $('dice-combos').innerHTML=`<h3>${combo.name}</h3><div class="combo-comparison">${metrics(combo.faces)}</div><p class="metric-condition">3눈금 × 5기 · 직접 피해 기준 · 덱빌드용</p><div class="combo-deck">${combo.faces.map(id=>`<button data-combo-card="${id}" type="button">${img(id)}<b>${shortName(id)}</b><small>${owned(id)?roleLabel(id):'해금 필요'}</small></button>`).join('')}</div>${roles(combo.faces)}${tactics(combo.faces)}${analyzeButton(combo.faces,'combos')}<button id="dice-apply-combo" type="button" ${missing.length||blocked()?'disabled':''}>${missing.length?'먼저 해금: '+missing.map(shortName).join(' · '):'이 조합으로 편성'}</button><div class="page-controls"><button id="combo-prev" ${comboIndex===0?'disabled':''}>이전</button><span>${comboIndex+1} / ${combos.length}</span><button id="combo-next" ${comboIndex===combos.length-1?'disabled':''}>다음 조합</button></div>`;
     $('combo-prev').onclick=()=>{comboIndex--;render();};$('combo-next').onclick=()=>{comboIndex++;render();};
     $('dice-apply-combo').onclick=()=>{if(blocked()||missing.length)return;draft=combo.faces.slice();dirty=true;go('lineup');};
     $('dice-combos').querySelectorAll('[data-combo-card]').forEach(b=>b.onclick=()=>selectCard(+b.dataset.comboCard));

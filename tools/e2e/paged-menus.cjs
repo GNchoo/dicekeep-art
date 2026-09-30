@@ -2,7 +2,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs');
 const {launchBrowser,gameUrl}=require('./browser.cjs');
 assert.ok(['localhost','127.0.0.1'].includes(new URL(gameUrl()).hostname));
 (async()=>{const browser=await launchBrowser();try{
- for(const [width,height] of (process.argv.includes('--landscape')?[[824,384],[932,430]]:[[320,740],[384,824],[514,850],[702,896],[824,384],[932,430]])) {
+ for(const [width,height] of (process.argv.includes('--landscape')?[[824,384],[932,430]]:[[320,740],[384,824],[500,900],[514,850],[540,780],[640,720],[702,896],[824,384],[932,430]])) {
   const page=await browser.newPage({viewport:{width,height}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
   page.setDefaultTimeout(10000);
   await page.goto(gameUrl());await page.waitForFunction(()=>window.DK?.phase==='title',null,{timeout:120000});await page.click('#ov-btn');
@@ -10,9 +10,25 @@ assert.ok(['localhost','127.0.0.1'].includes(new URL(gameUrl()).hostname));
    await page.evaluate(()=>document.fonts.ready);
    const issues=await page.locator(selector).evaluate(el=>{
     const r=el.getBoundingClientRect(),issues=[];
+    if(r.top<-2||r.left<-2||r.bottom>innerHeight+2||r.right>innerWidth+2)issues.push('window outside viewport');
+    const frame=el.closest('.screen-box,.help-card,.rw-dialog');
+    if(frame&&frame!==el){const q=frame.getBoundingClientRect();if(r.top<q.top-2||r.bottom>q.bottom+2||r.left<q.left-2||r.right>q.right+2)issues.push('page outside frame');}
     if(el.scrollHeight>el.clientHeight+2||el.scrollWidth>el.clientWidth+2)issues.push(`overflow ${el.clientWidth}x${el.clientHeight}/${el.scrollWidth}x${el.scrollHeight}`);
-    for(const c of el.querySelectorAll('.rw-body,.rw-panel,[data-dice-view],.menu-page-content,.help-scroll,ol,#stage-grid,.shop-body,.deck-tactics,.tactics-body,.current-deck,.deck-slot,.tree-node,.research-preview,.effect-card')) {
+    for(const c of el.querySelectorAll('.rw-body,.rw-panel,[data-dice-view],.menu-page-content,.help-scroll,ol,#stage-grid,.shop-body,.deck-tactics,.tactics-body,.tactic-chain,.dice-route,.current-deck,.deck-slot,.tree-node,.research-preview,.effect-card')) {
      if(c.getBoundingClientRect().height && (c.scrollHeight>c.clientHeight+2||c.scrollWidth>c.clientWidth+2))issues.push('nested overflow '+(c.id||c.className||c.tagName));
+    }
+    for(const card of el.querySelectorAll('.dice-route,.deck-tactics,.menu-route-grid > button,.menu-subpage > header')) {
+     const box=card.getBoundingClientRect();if(!box.height)continue;
+     const walker=document.createTreeWalker(card,NodeFilter.SHOW_TEXT);
+     for(let node;node=walker.nextNode();) {
+      if(!node.textContent.trim())continue;
+      const range=document.createRange();range.selectNodeContents(node);
+      for(const q of range.getClientRects())if(q.width&&q.height&&(q.bottom>box.bottom+2||q.right>box.right+2||q.left<box.left-2||q.top<box.top-2))issues.push('text outside card: '+node.textContent.trim());
+     }
+    }
+    for(const body of el.querySelectorAll('.menu-page-content')) {
+     const children=Array.from(body.children).map(c=>c.getBoundingClientRect()).filter(q=>q.height);
+     if(children.length&&body.clientHeight>Math.max(...children.map(q=>q.bottom))-Math.min(...children.map(q=>q.top))+32)issues.push('empty space in detail');
     }
     for(const b of el.querySelectorAll('button,input,select')) {const q=b.getBoundingClientRect();if(!q.width||!q.height)continue;if(q.bottom>r.bottom+2||q.right>r.right+2||q.left<r.left-2||q.top<r.top-2)issues.push('clipped '+b.textContent.trim());}
     return issues;
@@ -36,14 +52,23 @@ assert.ok(['localhost','127.0.0.1'].includes(new URL(gameUrl()).hostname));
   await page.click('[data-dice-page="overview"]');await page.click('[data-open-dice="earn"]');await fit('earn','#deck-panel');
   await page.locator('#lobby-box [data-menu-target="battle"]').click();await fit('battle','#lobby-box');
   await page.click('#lobby-help');await fit('tutorial','#inf-help .help-card');
+  assert.ok(await page.locator('#inf-help .help-card').evaluate(el=>el.clientHeight)<Math.min(550,height*.8),'short tutorial fits its content');
   for(let i=1;i<await page.locator('#inf-help li').count();i++){await page.locator('#inf-help .page-controls button').last().click();await fit('tutorial page','#inf-help .help-card');}
   assert.ok(await page.locator('#inf-help .page-controls button').last().isDisabled());
-  await page.click('#help-close');await page.click('#btn-stage-select');await fit('stages','#stage-select .screen-box');
+  await page.click('#help-close');
+  for(const route of ['웨이브별 몬스터 테마','내 기록']) {
+   if(route==='내 기록')await page.getByRole('button',{name:route,exact:true}).click();else await page.click('#theme-guide summary');
+   await fit(route,'.menu-subpage');
+   const next=page.locator('.menu-subpage > .page-controls button').last();
+   if(await next.count()&&!await next.isDisabled()){await next.click();await fit(route+' page2','.menu-subpage');}
+   await page.locator('.menu-subpage > header button').click();
+  }
+  await page.click('#btn-stage-select');await fit('stages','#stage-select .screen-box');
   await page.locator('#stage-grid .page-controls button').last().click();await fit('stages2','#stage-select .screen-box');
   await page.locator('#stage-select [data-menu-target="shop"]').click();await fit('shop','#shop .screen-box');
   await page.getByRole('button',{name:'성장 재료 상품과 가격 확인'}).click();await fit('product','.menu-subpage');
   await page.locator('.menu-subpage > header button').click();
-  if(width===320||width===824)for(const name of ['계정 관리 로그인 · 구매 복원','테마 스킨 외형 미리보기 · 장착','스테이지 주사위 젬으로 확정 해금','스테이지 스킨 눈별 외형 장착','이용 안내 판매 상태 · 개인정보']) {
+  if(width===320||width===500||width===824)for(const name of ['계정 관리 로그인 · 구매 복원','테마 스킨 외형 미리보기 · 장착','스테이지 주사위 젬으로 확정 해금','스테이지 스킨 눈별 외형 장착','이용 안내 판매 상태 · 개인정보']) {
    await page.getByRole('button',{name,exact:true}).click();
    for(let i=0;i<60;i++){await fit(name+i,'.menu-subpage');const next=page.locator('.menu-subpage .page-controls:visible button').last();if(!await next.count()||await next.isDisabled())break;await next.click();assert.ok(i<59,'pagination terminates');}
    await page.locator('.menu-subpage > header button').click();
