@@ -1,4 +1,4 @@
-// The one-time start belongs to the arena; the bottom toolbar stays readable and clean.
+// Start/skip belongs to the arena and yields input priority to rare dice.
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
@@ -19,8 +19,25 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
     for (const [width, height] of [[360,800],[384,824],[430,932],[514,850],[824,384]]) {
       await page.setViewportSize({ width, height });
       for (const kind of ['d8','d12','d20','epic','myth','primal']) {
-        await page.evaluate(kind => {
+        const label = `${width}x${height} ${kind}`;
+        await page.evaluate(() => {
           DKstartInf('clear'); DK.paused = true; DK.muted = true;
+          DKsync(); __galaxyQA.fitStage();
+        });
+        const opening = await page.evaluate(() => {
+          const rect = id => { const r = document.getElementById(id).getBoundingClientRect(); return { y:r.y, bottom:r.bottom, right:r.right, w:r.width, h:r.height }; };
+          return { stage:rect('stage'), hud:rect('hud'), wave:rect('wave-btn'), controls:rect('mini-top') };
+        });
+        assert.ok(opening.wave.w >= 44 && opening.wave.h >= 44, `${label}: visible opening action has a touch target`);
+        assert.ok(opening.wave.y >= opening.stage.y && opening.wave.bottom <= opening.hud.y,
+          `${label}: initial wave action stays inside the arena above the toolbar`);
+        assert.equal(await page.locator('#hud #wave-btn').count(), 0, 'no wave action in the toolbar');
+        assert.ok(opening.wave.y >= opening.controls.bottom + 7, `${label}: start below the top controls`);
+        assert.ok(Math.abs(opening.wave.right - opening.controls.right) < 2, `${label}: start aligned to top controls`);
+        await page.click('#wave-btn');
+        await page.waitForFunction(() => document.getElementById('wave-btn').dataset.action === 'skip');
+        assert.equal(await page.locator('#wave-btn').isVisible(), true, `${label}: first start keeps the skip action available`);
+        await page.evaluate(kind => {
           const chest = DKCONTENT.INFINITY.chest, draw = chest.draw;
           try { chest.draw = () => kind; DKchest(); } finally { chest.draw = draw; }
           __galaxyQA.advancePresentation(2.3); DKsync(); __galaxyQA.fitStage();
@@ -38,7 +55,6 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
             label:document.getElementById('roll-btn').textContent,
             overflow:document.documentElement.scrollWidth > innerWidth };
         });
-        const label = `${width}x${height} ${kind}`;
         assert.match(sample.label, /던지기/, `${label}: actual manual-throw state`);
         assert.equal(sample.overflow, false, `${label}: no page overflow`);
         for (const item of [sample.dice,sample.roll,sample.power]) {
@@ -47,11 +63,7 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
           assert.ok(item.y >= sample.hud.y && item.bottom <= sample.hud.bottom,
             `${label}: HUD contains its controls`);
         }
-        assert.ok(sample.wave.y >= sample.stage.y && sample.wave.bottom <= sample.hud.y,
-          `${label}: initial wave action stays inside the arena above the toolbar`);
-        assert.equal(await page.locator('#hud #wave-btn').count(), 0, 'no wave action in the toolbar');
-        assert.ok(sample.wave.y >= sample.controls.bottom + 7, `${label}: start below the top controls`);
-        assert.ok(Math.abs(sample.wave.right - sample.controls.right) < 2, `${label}: start aligned to top controls`);
+        assert.equal(await page.locator('#wave-btn').isVisible(), false, `${label}: rare die input hides the skip action`);
         const cards = await page.locator('.inf-face').evaluateAll(nodes => nodes.map(el => {
           const cs=getComputedStyle(el), r=el.getBoundingClientRect();
           return {top:cs.borderTopWidth,bottom:cs.borderBottomWidth,shadow:cs.boxShadow,height:r.height};
@@ -62,13 +74,11 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
         assert.ok(sample.cost.scroll <= sample.cost.client + 1, `${label}: subtitle fits its button`);
         if (width <= 480 && height > width) {
           assert.ok(sample.roll.font >= 15 && sample.cost.font >= 13, `${label}: readable throw text`);
-          assert.ok(sample.power.y >= Math.max(sample.dice.bottom,sample.wave.bottom), `${label}: separate power row`);
+          assert.ok(sample.power.y >= sample.dice.bottom, `${label}: separate power row`);
         }
         if (kind === 'd8') await page.screenshot({ path:outputPath(`galaxy-hud/${width}-ready.png`) });
-        await page.click('#wave-btn');
         await page.waitForFunction(() => getComputedStyle(document.getElementById('right-panel')).display === 'none');
-        assert.equal(await page.locator('#wave-btn').isVisible(), false, `${label}: first start removes wave control`);
-        results.push({ width,height,kind,...sample });
+        results.push({ width,height,kind,opening,...sample });
       }
       await page.evaluate(() => {
         DK.wave=1; DK.heldDie=1; DK.dieFocus=true; DKSLOT.active=false; DK.gold=1000; DKsync(); __galaxyQA.fitStage();

@@ -18,7 +18,8 @@
     const close=()=>{nodes.forEach((node,i)=>{origins[i].replaceWith(node);node.removeAttribute('data-page-hidden');});detailStates.forEach(([node,opened])=>node.open=opened);if(status)statusOrigin.replaceWith(status);siblings.forEach(el=>el.inert=false);page.remove();opener?.focus({preventScroll:true});};
     head.append(button('← 뒤로',close),h);let index=0;
     const prev=button('이전',()=>{index--;paint();}),next=button('다음',()=>{index++;paint();}),count=document.createElement('span');
-    const paint=()=>{nodes.forEach((node,i)=>node.toggleAttribute('data-page-hidden',i!==index));prev.disabled=index===0;next.disabled=index===nodes.length-1;count.textContent=`${index+1} / ${nodes.length}`;};
+    const paged=nodes.some(node=>node.matches('.theme-guide-card'));
+    const paint=()=>{nodes.forEach((node,i)=>node.toggleAttribute('data-page-hidden',paged&&i!==index));prev.disabled=index===0;next.disabled=index===nodes.length-1;count.textContent=`${index+1} / ${nodes.length}`;};
     for(const node of nodes){
       if(node.matches('p,li,.tier-pill,.rw-help')){
         const card=document.createElement('article');card.className='menu-reading-page';if(node.matches('.rw-help'))node.open=true;
@@ -30,9 +31,9 @@
       }else content.append(node);
     }
     const pages=[...content.children];
-    const show=()=>{paint();pages.forEach((node,i)=>node.toggleAttribute('data-page-hidden',i!==index));};
+    const show=()=>{paint();pages.forEach((node,i)=>node.toggleAttribute('data-page-hidden',paged&&i!==index));};
     prev.onclick=()=>{index--;show();};next.onclick=()=>{index++;show();};
-    controls.append(prev,count,next);controls.hidden=nodes.length<2;page.prepend(head,content,controls);parent.append(page);show();head.firstChild.focus({preventScroll:true});
+    controls.append(prev,count,next);controls.hidden=!paged||nodes.length<2;page.prepend(head,content,controls);parent.append(page);show();head.firstChild.focus({preventScroll:true});
     page.addEventListener('click',e=>{if(e.target.closest('#run-resume-play,#run-resume-end'))close();});
     page.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();e.stopPropagation();close();}});
   }
@@ -55,30 +56,40 @@
   const storefront=document.createElement('section');storefront.className='shop-storefront';storefront.setAttribute('aria-label','성채 상점');
   const tabs=document.createElement('nav');tabs.className='shop-category-tabs';tabs.setAttribute('aria-label','상점 분류');
   const banner=stored.querySelector('.menu-shop-banner');banner.classList.add('shop-category-banner');
+  const wallet=document.createElement('nav');wallet.className='menu-wallet';wallet.setAttribute('aria-label','보유 재화와 사용처');
+  for(const [key,label,src] of [['gold','연구 골드','ui/gold.png'],['shards','성장 조각','ui/rewards/growth-shards.webp'],['gems','스테이지 젬','ui/icon-gem.png']]){
+    const item=button('',()=>{if(key==='gems')select('stage');else{window.DKlobby();$('#lobby-box [data-menu-target="deck"]').click();window.DKDECKUI?.open('catalog');}});
+    item.className='menu-currency';item.dataset.currency=key;item.innerHTML=`<img src="${src}" alt=""><span><small>${label}</small><b>0</b></span>`;wallet.append(item);
+  }
   const views=document.createElement('div');views.className='shop-catalog-views';
-  const categories=[['materials','성장 재료','ui/rewards/growth-shards.webp','원하는 주사위를 확정 연구','무료 조각과 같은 재료 · 확률형 상품 없음'],['themes','테마 스킨','casual/towers/skins/royal/t20.png','나의 성채를 새롭게','6종 주사위 + 20종 타워 · 외형만 변경'],['stage','스테이지','ui/icon-dice.png','눈별로 해금하고 꾸미기','플레이로 모은 젬 사용 · 스테이지 전용'],['account','계정','ui/icon-users.png','진행과 구매를 확인하기','계정 연결 · 잔액 확인 · 구매 복원']];
+  const categories=[['materials','연구 재료','ui/rewards/growth-shards.webp','원하는 타워의 능력을 높이세요','연구 골드는 전투에서, 성장 조각은 전투·출석으로 모을 수 있어요.'],['themes','성채 외형','casual/towers/skins/royal/t20.png','나의 성채를 고르는 즐거움','주사위 6종과 1~20강 타워의 모습이 함께 바뀝니다.'],['stage','스테이지','ui/icon-dice.png','캠페인에서 쓸 주사위','스테이지 전용 6종 주사위 · 투기장의 20강 등장과는 별개예요.'],['account','계정·저장','ui/icon-users.png','진행과 구매를 확인하기','저장 상태와 전투 기록 · 계정 연결과 구매 복원']];
   for(const [key,label,icon,title,detail] of categories){const tab=button(label,()=>select(key));tab.dataset.shopTab=key;tabs.append(tab);const view=document.createElement('section');view.className='shop-catalog-view';view.dataset.shopView=key;view.hidden=true;view.setAttribute('aria-label',label);views.append(view);}
   views.querySelector('[data-shop-view="materials"]').append($('#commerce-products'));
+  const freeRoute=button('출석·패스 보상 보기',()=>window.DKREWARDSUI?.open('attendance'));freeRoute.className='shop-free-route';
+  freeRoute.innerHTML='<img src="ui/rewards/attendance-chest.webp" alt=""><span><b>플레이로 모으는 연구 재료</b><small>출석과 성장 패스의 무료 보상을 확인하세요.</small></span><strong>보상 보기</strong>';
+  views.querySelector('[data-shop-view="materials"]').append(freeRoute);
   views.querySelector('[data-shop-view="themes"]').append($('#cosmetic-products'));
   const stage=views.querySelector('[data-shop-view="stage"]'),stageTabs=document.createElement('nav');stageTabs.className='shop-stage-tabs';stageTabs.setAttribute('aria-label','스테이지 상품 분류');
   const stageSelect=kind=>{stage.dataset.stageKind=kind;stageTabs.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.stageTab===kind)));stage.querySelector('#shop-towers').hidden=kind!=='dice';stage.querySelector('#shop-skins').hidden=kind!=='skins';};
   for(const [key,label] of [['dice','주사위 해금'],['skins','타워 외형']]){const tab=button(label,()=>stageSelect(key));tab.dataset.stageTab=key;stageTabs.append(tab);}stage.append(stageTabs,$('#shop-towers'),$('#shop-skins'));stageSelect('dice');
   const accountPage=views.querySelector('[data-shop-view="account"]');accountPage.classList.add('shop-account-page');
-  const accountHero=document.createElement('div');accountHero.className='shop-account-hero';accountHero.innerHTML='<img src="casual/towers/skins/royal/t12.png" loading="lazy" alt=""><div><small>계정 관리</small><h3>나의 성채 기록</h3></div>';accountHero.lastChild.append($('#commerce-account'),$('#commerce-account-id'));accountPage.append(accountHero,account.querySelector('.commerce-account-actions'),$('#commerce-google'));
+  const accountHero=document.createElement('div');accountHero.className='shop-account-hero';accountHero.innerHTML='<img src="casual/towers/skins/royal/t12.png" loading="lazy" alt=""><div><small>진행 보관함</small><h3>나의 성채</h3></div>';accountHero.lastChild.append($('#commerce-account'),$('#commerce-account-id'));accountPage.append(accountHero,account.querySelector('.commerce-account-actions'),$('#commerce-google'));
+  const accountState=document.createElement('p');accountState.className='shop-account-state';accountPage.append(accountState);
+  const recordBoard=document.createElement('section');recordBoard.className='shop-account-records';recordBoard.innerHTML='<h3>내 최고 기록</h3><div></div>';accountPage.append(recordBoard);
   const accountGuide=document.createElement('div');accountGuide.className='shop-account-guide';accountGuide.innerHTML='<article><img src="ui/icon-dice.png" alt=""><div><b>게스트 진행</b><p>현재 기기에 무료 진행을 저장합니다.</p></div></article><article><img src="ui/icon-users.png" alt=""><div><b>계정 진행</b><p>연결 후 온라인으로 저장합니다. 게스트 진행과 자동 합산되지 않습니다.</p></div></article><article><img src="ui/icon-chest.png" alt=""><div><b>구매·잔액 확인</b><p>같은 계정의 구매와 잔액을 다시 확인합니다.</p></div></article>';accountPage.append(accountGuide);
   const utilities=document.createElement('footer');utilities.className='shop-utilities';const notice=document.createElement('span');notice.id='shop-sale-state';const policyButton=button('판매·개인정보 안내',()=>open('상점 이용 안내',[policy]));policyButton.dataset.shopPolicy='';utilities.append(notice,policyButton);
-  storefront.append(tabs,banner,views,utilities);shop.append(storefront);
-  function select(key){storefront.dataset.category=key;$('#shop .gem-chip').hidden=key!=='stage';tabs.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.shopTab===key)));views.querySelectorAll('[data-shop-view]').forEach(view=>view.hidden=view.dataset.shopView!==key);const entry=categories.find(c=>c[0]===key);banner.querySelector('img').src=entry[2];banner.querySelector('small').textContent=entry[1];banner.querySelector('h3').textContent=entry[3];banner.querySelector('p').textContent=entry[4];}
+  storefront.append(wallet,tabs,banner,views,utilities);shop.append(storefront);
+  function refreshWallet(){
+    const p=window.DKCOMMERCE?.profile()||window.DKSAVE?.progression,values={gold:p?.collection?.gold||0,shards:p?.shards||0,gems:window.DKSAVE?.gems||0};
+    for(const item of wallet.children){const amount=Number(values[item.dataset.currency]),exact=amount.toLocaleString('ko-KR');item.querySelector('b').textContent=amount.toLocaleString('ko-KR',amount>=10000?{notation:'compact',maximumFractionDigits:1}:undefined);item.title=item.querySelector('small').textContent+' '+exact;item.setAttribute('aria-label',item.title);}
+    const state=window.DKCOMMERCE?.state();accountState.textContent=!state?.configured?'계정 연결은 준비 중입니다. 현재 기기의 진행은 계속 자동 저장됩니다.':state.ready?'계정 진행과 기기 진행은 별도로 보관됩니다.':'계정 연결 후 온라인으로 진행을 보관할 수 있습니다.';
+    recordBoard.lastChild.innerHTML=[['clear','순수운빨'],['build','성장·조합'],['extreme','극한']].map(([key,label])=>`<article><small>${label}</small><b>${Number(p?.records?.[key]?.best)||0}<span>웨이브</span></b></article>`).join('');
+  }
+  function select(key){storefront.dataset.category=key;$('#shop .gem-chip').hidden=true;tabs.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.shopTab===key)));views.querySelectorAll('[data-shop-view]').forEach(view=>view.hidden=view.dataset.shopView!==key);const entry=categories.find(c=>c[0]===key);banner.querySelector('img').src=entry[2];banner.querySelector('small').textContent=entry[1];banner.querySelector('h3').textContent=entry[3];banner.querySelector('p').textContent=entry[4];refreshWallet();}
+  for(const event of ['commerce:change','rewards:change','rewards:updated'])window.addEventListener(event,refreshWallet);
   select('materials');window.DKrenderCommerce?.();
-  const pageSize=kind=>{const portrait=!matchMedia('(min-aspect-ratio:4/3) and (max-height:640px)').matches;if(kind==='stage')return portrait&&(innerHeight<=820||innerWidth<=430)?2:3;const container=$(kind==='themes'?'#cosmetic-products':'#commerce-products'),max=kind==='themes'?2:3;if(portrait&&container.clientWidth<=340||kind==='materials'&&container.clientHeight<190)return 1;const capacity=portrait?Math.floor((container.clientHeight-44)/(kind==='themes'?240:210)):Math.floor((container.clientWidth+10)/250);return Math.max(1,Math.min(max,capacity));};
-  listPages($('#commerce-products'),'.commerce-product',()=>pageSize('materials'));
-  listPages($('#cosmetic-products'),'.cosmetic-product',()=>pageSize('themes'));
-  listPages($('#shop-towers'),'.shop-tower',()=>pageSize('stage'));
-  listPages($('#shop-skins'),'.skin-face',1);
-  listPages(accountGuide,'article',()=>{if(matchMedia('(min-aspect-ratio:4/3) and (max-height:640px)').matches)return 1;const height=(accountPage.clientHeight-$('#shop .commerce-account-actions').clientHeight-24)/2;return height>=260?3:Math.max(1,Math.floor((height-44)/90));});
-  listPages(policy,'.shop-policy-card',1);
   listPages($('#stage-grid'),'.stage-cell',()=>matchMedia('(min-aspect-ratio:4/3) and (max-height:640px)').matches?5:9);
-  listPages($('#tree-supporters'),'.supporter-card',1);
+  const campaignLinks=document.createElement('div');campaignLinks.className='campaign-links';campaignLinks.append($('#stage-select .campaign-help'),$('#stage-select .menu-help'));$('#stage-grid').before(campaignLinks);
   // Long help lists become individual pages; the text is preserved rather than truncated.
   let disposeHelp;
   const single=$('#lobby-single'),links=document.createElement('div');links.className='menu-battle-links';
@@ -94,13 +105,13 @@
   listPages($('#mp-chat-lines'),'.mp-chat-line',1);
 
   document.addEventListener('click',e=>{
-    const summary=e.target.closest('summary');if(!summary||!summary.closest('.screen,.rw-dialog'))return;
+    const summary=e.target.closest('summary');if(!summary||!summary.closest('.screen')||summary.closest('.rw-help'))return;
     const details=summary.parentElement;
     e.preventDefault();
     const nodes=details.id==='theme-guide'?[...details.querySelectorAll('.theme-guide-card')]:[...details.children].filter(n=>n!==summary).flatMap(n=>n.matches('ol,ul,#tier-legend')?[...n.children]:[n]);
     open((summary.querySelector('strong')||summary).textContent.trim(),nodes);
   });
-  window.DKMENUPAGES={open,listPages,help:()=>{disposeHelp?.();const list=$('#inf-help .help-scroll ol');
+  window.DKMENUPAGES={open,listPages,refresh:refreshWallet,help:()=>{disposeHelp?.();const list=$('#inf-help .help-scroll ol');
     const images=[['ui/icon-chest.png','ui/icon-dice.png','ui/icon-wave.png'],['ui/icon-dice.png','ui/icon-enhance.png'],['ui/icon-dice.png','ui/icon-chest.png']];
     for(const li of list.children){if(li.matches('nav')||li.querySelector(':scope > .help-step-art'))continue;const figure=document.createElement('figure');figure.className='help-step-art';
       const label=li.querySelector('b')?.textContent||'',srcs=/보상 대기/.test(label)?['ui/rewards/attendance-chest.webp','ui/icon-dice.png']:/보상|성장/.test(label)?['ui/rewards/attendance-chest.webp','ui/rewards/growth-shards.webp']:/함께|협동|대전/.test(label)?['ui/icon-users.png','ui/icon-trophy.png']:/파워업|강화|합성|각성/.test(label)?['ui/icon-dice.png','ui/icon-enhance.png']:/판매|SP/.test(label)?['ui/icon-dice.png','ui/icon-sell.png']:/패배|라운드/.test(label)?['ui/icon-wave.png','ui/icon-trophy.png']:images[Math.min([...list.children].indexOf(li),2)];

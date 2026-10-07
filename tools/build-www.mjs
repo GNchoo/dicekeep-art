@@ -29,7 +29,7 @@ FIXED_FILES.push('reward-audio.js');
 FIXED_FILES.push('liveops-rules.js', 'rewards-client.js', 'rewards-ui.js', 'rewards.css', 'mail-admin.js', 'mail-admin.css');
 FIXED_FILES.push('reward-notifications.js', 'home-ui.js', 'home.css', 'menus.css');
 FIXED_FILES.push('casual-theme.css', 'casual-menus.css', 'casual-rewards.css', 'casual-hud.css');
-FIXED_FILES.push('menu-pages.css', 'menu-pages.js');
+FIXED_FILES.push('menu-pages.css', 'menu-pages.js', 'commerce-ui.css');
 const FIXED_DIRS = ['fonts', 'ui', 'vfx', 'dice', 'props', 'map', 'towers', 'enemies', 'audio'];
 const CAP_UMD = [
   '@capacitor/core/dist/capacitor.js',

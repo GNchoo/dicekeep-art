@@ -6,12 +6,13 @@
 const fs = require('node:fs'), path = require('node:path'), crypto = require('node:crypto'), assert = require('node:assert/strict');
 const { launchBrowser } = require('./browser.cjs');
 const PG = require('../../progression.js');
+const LR = require('../../liveops-rules.js');
 const repo = path.resolve(__dirname, '../..'), out = path.resolve(process.env.E2E_OUTPUT_DIR || path.join(repo, 'gen/e2e/cosmetics'));
 const base = (process.env.E2E_BASE_URL || 'http://localhost:8138/').replace(/\/?$/, '/');
 assert.ok(['localhost', '127.0.0.1', '[::1]'].includes(new URL(base).hostname), 'mock-account QA is restricted to localhost');
 const unready = process.argv.includes('--unready'), themes = ['royal', 'frost', 'ember'];
 const sha = data => crypto.createHash('sha256').update(data).digest('hex');
-const report = { scope: 'Real HTTP code/PNG and actual game render. Test-only account responses and selected roll results; no real login, charge or persistent entitlement. No combat odds claim.', url: base, unready, started: new Date().toISOString(), viewports: [], pass: false };
+const report = { scope: 'Real HTTP code/PNG and actual game render. Test-only account responses; dice outcomes come from their actual physical landing. No real login, charge or persistent entitlement. No combat odds claim.', url: base, unready, started: new Date().toISOString(), viewports: [], pass: false };
 fs.mkdirSync(out, { recursive: true });
 function save() { fs.writeFileSync(path.join(out, 'report.json'), JSON.stringify(report, null, 2)); }
 function check(row, name, actual, expected = true) { assert.deepEqual(actual, expected, name); row.checks.push({ name, pass: true }); save(); }
@@ -56,6 +57,7 @@ async function run(browser, name, viewport) {
     else if (endpoint === '/profile') body = PG.defaultProfile();
     else if (endpoint === '/wallet') body = { free: 0, paid: 0, debt: 0 };
     else if (endpoint === '/cosmetics') body = authority;
+    else if (endpoint === '/liveops') body = { profile: PG.defaultProfile(), wallet: { free: 0, paid: 0, debt: 0 }, liveops: LR.view(LR.defaultState()), inbox: [], canAdmin: false, serverNow: Date.now() };
     else if (endpoint === '/auth/logout') body = { ok: true };
     else if (endpoint === '/profile/action') {
       const action = route.request().postDataJSON(); actions.push(action);
@@ -68,14 +70,14 @@ async function run(browser, name, viewport) {
     const response = await route.fetch(), source = await response.text(); row.gameSha256 = sha(source);
     assert.equal(row.gameSha256, sha(fs.readFileSync(path.join(repo, 'game.js'))), 'HTTP game matches current source');
     const anchor = 'window.DK = S;'; assert.equal(source.split(anchor).length, 2);
-    await route.fulfill({ response, body: source.replace(anchor, 'window.__cosmeticQA={rollDie,diceMaterial,drawPolyDie,drawCube,slotTargetR,POLY,TRAY_TILT,m3mul,faceTopR,ROLL_SHOW};\n' + anchor) });
+    await route.fulfill({ response, body: source.replace(anchor, 'window.__cosmeticQA={rollDie,physicalFaceValue,diceMaterial,drawPolyDie,drawCube,slotTargetR,POLY,TRAY_TILT,m3mul,faceTopR,ROLL_SHOW};\n' + anchor) });
   });
   const url = new URL('index.html', base); url.searchParams.set('net', 'off'); url.searchParams.set('unlock', 'all'); url.searchParams.set('v', Date.now());
   try {
     await page.goto(url.href); await page.waitForFunction(() => window.DK && DK.phase === 'title', null, { timeout: 120000 });
     check(row, 'boot does not request premium assets', row.assets.length, 0);
     await page.click('#ov-btn'); await page.evaluate(() => { DK.muted = true; }); await page.click('#btn-shop');
-    const showTheme=async(theme,action='preview')=>{await page.click('[data-shop-tab="themes"]');const prev=page.locator('#cosmetic-products > .page-controls button').first();while(!await prev.isDisabled())await prev.click();while(!await page.locator(`[data-${action}="${theme}"]`).isVisible())await page.locator('#cosmetic-products > .page-controls button').last().click();};
+    const showTheme=async(theme,action='preview')=>{await page.click('[data-shop-tab="themes"]');await page.locator(`[data-${action}="${theme}"]`).scrollIntoViewIfNeeded();};
     check(row, 'three currency products and three cosmetic purchase bundles', await page.locator('#commerce-products .commerce-product:has([data-sku])').count(), 3);
     check(row, 'four cosmetic cards include base', await page.locator('#cosmetic-products .cosmetic-product').count(), 4);
     check(row, 'unowned frost cannot be equipped', await page.locator('[data-equip="frost"]').count(), 0);
@@ -129,14 +131,15 @@ async function run(browser, name, viewport) {
         check(row, theme + ' actual game drawImage observes all 20 tower sprites', item.observedTowers.length, 20);
         await page.evaluate(() => { DK.towers = []; DK.paused = false; DK.lives = 999; DK.gold = 999999; });
         for (const kind of ['d1', 'd4', 'd6', 'd8', 'd12', 'd20']) {
-          const started = await page.evaluate(k => { DK.heldDie = 0; DKSLOT.active = false; DKDIE.state = 'tray'; DK.inf.queue = []; return __cosmeticQA.rollDie(k, k === 'd1' ? 1 : Number(k.slice(1))); }, kind);
+          const started = await page.evaluate(k => { DK.heldDie = 0; DKSLOT.active = false; DKDIE.state = 'tray'; DK.inf.queue = []; return __cosmeticQA.rollDie(k); }, kind);
           check(row, theme + ' ' + kind + ' actual roll starts', started);
+          if (Number(kind.slice(1)) >= 8) await page.click('#roll-btn');
           const before = await page.evaluate(() => DKSLOT.R.slice()); await tick(page, 4);
           const rotated = await page.evaluate(R => DKSLOT.R.some((v, i) => Math.abs(v - R[i]) > .001), before); check(row, theme + ' ' + kind + ' geometry rotates', rotated);
           await page.screenshot({ path: path.join(dir, theme + '-' + kind + '-rolling.png') });
           await page.waitForFunction(() => !DKSLOT.active && DK.heldDie > 0, null, { timeout: 15000 });
-          const final = await page.evaluate(() => ({ face: DK.heldDie, active: DKCOSMETICS.current(), ...DKcosmeticRender.stats() }));
-          check(row, theme + ' ' + kind + ' correct reward and unchanged skin', [final.face, final.active], [kind === 'd1' ? 1 : Number(kind.slice(1)), theme]);
+          const final = await page.evaluate(k => ({ face: DK.heldDie, physical: k === 'd1' ? 1 : __cosmeticQA.physicalFaceValue(k, DKSLOT.R), active: DKCOSMETICS.current(), ...DKcosmeticRender.stats() }), kind);
+          check(row, theme + ' ' + kind + ' actual landed reward and unchanged skin', [final.face, final.active], [final.physical, theme]);
           item.rolls.push({ kind, rotated, ...final });
         }
         const blocked = await page.evaluate(async () => { try { await DKCOMMERCE.action('skinEquip', { skinId: 'base' }); return false; } catch (e) { return /게임|굴리|장착/.test(e.message); } });
