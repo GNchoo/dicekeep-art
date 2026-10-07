@@ -132,5 +132,5 @@
     $('deck-panel').querySelectorAll('[data-analysis-tab]').forEach(b=>b.onclick=()=>{analysisTab=b.dataset.analysisTab;render();});
     $('deck-status').textContent=notice;
   }
-  window.DKDECKUI=Object.freeze({render,open:()=>go('overview')});
+  window.DKDECKUI=Object.freeze({render,open:(target='overview')=>go(target)});
 })();

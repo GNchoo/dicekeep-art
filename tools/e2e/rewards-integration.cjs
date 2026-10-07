@@ -108,7 +108,7 @@ async function main() {
         check('Direct duplicate free pass claim is rejected', (await reject('claimPass', [1, 'free'])).code, 'already-claimed');
         check('Duplicate pass claim leaves stored and live balances equal', await snapshot(), passOne);
 
-        await quota(true); await page.locator('.rw-panel > .page-controls button').last().click(); await page.click('[data-claim-pass="2:free"]'); await page.waitForSelector('.rw-error');
+        await quota(true); await page.click('[data-claim-pass="2:free"]'); await page.waitForSelector('.rw-error');
         check('Quota failure preserves the second free tier and both wallets', await snapshot(), passOne);
         check('Failed free tier remains available', !(await page.locator('[data-claim-pass="2:free"]').isDisabled()));
         await quota(false); await page.click('[data-claim-pass="2:free"]');

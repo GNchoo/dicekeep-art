@@ -12,15 +12,16 @@
 <link rel="preload" as="image" href="ui/title-keyart-p.jpg?v=title-d6-143" media="(max-aspect-ratio: 3/4)" fetchpriority="high" />
 <link rel="preload" as="image" href="ui/title-keyart-l.jpg?v=title-d6-143" media="(min-aspect-ratio: 3001/4000)" fetchpriority="high" />
 <link rel="stylesheet" href="style.css?v=159" />
-<link rel="stylesheet" href="rewards.css?v=119" />
+<link rel="stylesheet" href="rewards.css?v=180" />
 <link rel="stylesheet" href="mail-admin.css?v=117" />
 <link rel="stylesheet" href="home.css?v=162" />
 <link rel="stylesheet" href="menus.css?v=143" />
 <link rel="stylesheet" href="casual-theme.css?v=137" />
 <link rel="stylesheet" href="casual-menus.css?v=163" />
-<link rel="stylesheet" href="casual-rewards.css?v=137" />
+<link rel="stylesheet" href="casual-rewards.css?v=180" />
 <link rel="stylesheet" href="casual-hud.css?v=179" />
-<link rel="stylesheet" href="menu-pages.css?v=176" />
+<link rel="stylesheet" href="menu-pages.css?v=180" />
+<link rel="stylesheet" href="commerce-ui.css?v=180" />
 <link rel="icon" href="ui/gold.png" />
 </head>
 <body>
@@ -102,8 +103,8 @@
           </nav>
         </div>
         <div id="lobby-single" class="lobby-view hidden">
-          <div class="menu-hero"><small>나의 다음 도전</small><h2>어떤 전투를 떠날까요?</h2><p>운을 시험하거나, 나만의 덱으로 성채를 지키세요.</p></div>
-          <button id="lobby-help" class="back-btn" type="button">튜토리얼 · 게임 방법</button>
+          <div class="menu-hero"><small>나의 다음 도전</small><h2>어떤 전투를 떠날까요?</h2><p>주사위를 굴리고, 타워를 배치해 성채를 지키세요.</p></div>
+          <button id="lobby-help" class="back-btn" type="button">게임 방법</button>
           <div class="lobby-btns inf-btns">
             <button id="btn-inf-clear" class="big-btn primary lobby-inf-btn">순수운빨<small>101웨이브 · 성장 미적용</small></button>
             <button id="btn-inf-build" class="big-btn lobby-inf-btn">성장·조합<small>101웨이브 · 20강 성장과 배치 연계</small></button>
@@ -112,7 +113,7 @@
           </div>
           <div id="lobby-inf" class="screen-sub inf-sub"></div>
           <details id="theme-guide" class="theme-guide">
-            <summary><span class="theme-guide-heading"><strong>웨이브별 몬스터 테마</strong><small>10웨이브마다 달라지는 적 군단</small></span></summary>
+            <summary><span class="theme-guide-heading"><strong>몬스터 도감</strong><small>10웨이브마다 달라지는 적 군단</small></span></summary>
             <div id="theme-guide-list" class="theme-guide-list" aria-label="웨이브 구간별 등장 몬스터"></div>
           </details>
           <button id="btn-deck-open" class="big-btn deck-open" type="button" aria-expanded="false" aria-controls="deck-panel">다이스 트리 · 덱 편성</button>
@@ -171,6 +172,7 @@
           <h2>스테이지 선택</h2>
           <div class="gem-chip"><span class="gem-ico">&#128142;</span><b id="ss-gems">0</b></div>
         </div>
+        <section id="campaign-status" class="campaign-status" aria-label="캠페인 진행과 다음 전투"></section>
         <details class="campaign-help"><summary>캠페인 진행과 성장 안내</summary><p>1~50 스테이지를 차례로 클리어합니다. 뽑기는 40G, 같은 눈 합체는 최대 Lv3입니다. 클리어 젬으로 상점에서 4~6눈을 해금하세요. 계정 성장 조각과 유료 성장은 투기장에만 적용됩니다.</p><ol><li>1~10: 배치·합체·판매를 익힙니다.</li><li>11~20: 하늘길을 함께 지킵니다. 모든 타워가 공중을 공격합니다.</li><li>21~30: 땅굴에서 적이 나오는 구간을 지킵니다.</li><li>31~40: 두 번째 흙길까지 화력을 나눕니다.</li><li>41~50: 모든 길을 광역·둔화·합체로 방어합니다.</li></ol></details>
         <details class="menu-help"><summary>지역과 길 안내</summary><div id="tier-legend" class="tier-legend"></div></details>
         <div id="stage-grid" class="stage-grid"></div>
@@ -398,7 +400,7 @@
 <script src="tree-rules.js?v=112"></script>
 <script src="progression.js?v=175"></script>
 <script src="liveops-rules.js?v=117"></script>
-<script src="deck-ui.js?v=175"></script>
+<script src="deck-ui.js?v=180"></script>
 <script src="run-save.js?v=179"></script>
 <script src="cosmetics.js?v=101"></script>
 <script src="commerce-config.js?v=101"></script>
@@ -406,9 +408,9 @@
 <script src="rewards-client.js?v=118"></script>
 <script src="reward-notifications.js?v=118"></script>
 <script src="mail-admin.js?v=117"></script>
-<script src="rewards-ui.js?v=164"></script>
+<script src="rewards-ui.js?v=180"></script>
 <script src="home-ui.js?v=162"></script>
-<script src="commerce-ui.js?v=172"></script>
+<script src="commerce-ui.js?v=180"></script>
 <script src="directional-art.js?v=128"></script>
 <script src="extreme-art.js?v=110"></script>
 <script src="infinity-art.js?v=107"></script>
@@ -416,7 +418,7 @@
 <script src="combat-motion.js?v=157"></script>
 <script src="presentation-fx.js?v=160"></script>
 <script src="reward-audio.js?v=157"></script>
-<script src="game.js?v=179"></script>
-<script src="menu-pages.js?v=176"></script>
+<script src="game.js?v=180"></script>
+<script src="menu-pages.js?v=180"></script>
 </body>
 </html>

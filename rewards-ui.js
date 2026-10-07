@@ -2,9 +2,8 @@
   'use strict';
   const tabs = [['attendance', '출석'], ['mail', '우편함'], ['pass', '성장 패스']];
   const daily = [[100, 3], [120, 3], [140, 4], [160, 4], [180, 5], [200, 5], [300, 10]];
-  const state = { api: null, view: null, tab: 'attendance', loading: false, busy: false, error: '', notice: '', generation: 0, context: 0, helpOpen: new Set() };
+  const state = { api: null, view: null, tab: 'attendance', loading: false, busy: false, error: '', notice: '', generation: 0, context: 0, focusPass: true, helpOpen: new Set() };
   let dialog, body, status, account, tabBar, review, opener;
-  const pages = {attendance:0, mail:0, pass:0};
   const el = (tag, className, text) => { const node = document.createElement(tag); if (className) node.className = className; if (text != null) node.textContent = text; return node; };
   const button = (text, fn, className) => { const node = el('button', className || 'rw-button', text); node.type = 'button'; node.addEventListener('click', fn); return node; };
   const api = () => state.api || window.DKREWARDS;
@@ -24,8 +23,8 @@
   }
   function rewards(value) {
     const box = el('div', 'rw-rewards');
-    if (value.gold) box.append(el('span', 'rw-reward rw-gold', '골드 ' + number(value.gold)));
-    if (value.shards) box.append(el('span', 'rw-reward rw-shards', '조각 ' + number(value.shards)));
+    if (value.gold) box.append(el('span', 'rw-reward rw-gold', '연구 골드 ' + number(value.gold)));
+    if (value.shards) box.append(el('span', 'rw-reward rw-shards', '성장 조각 ' + number(value.shards)));
     if (value.skinId) box.append(el('span', 'rw-reward rw-skin', value.skinId === 'royal' ? '왕실 외형' : '외형 보상'));
     return box;
   }
@@ -33,7 +32,7 @@
     if (dialog) return;
     dialog = el('dialog', 'rw-dialog'); dialog.id = 'rewards-dialog'; dialog.setAttribute('aria-labelledby', 'rewards-title');
     const header = el('header', 'rw-header'), titles = el('div', 'rw-titles');
-    titles.append(el('p', 'rw-eyebrow', 'DICEKEEP · REWARDS'), el('h2', '', '성채의 선물')); titles.lastChild.id = 'rewards-title';
+    titles.append(el('p', 'rw-eyebrow', '출석과 플레이로 모으는 선물'), el('h2', '', '성채의 선물')); titles.lastChild.id = 'rewards-title';
     const closeButton = button('닫기', close, 'rw-close'); closeButton.id = 'rewards-close';
     header.append(titles, closeButton); account = el('p', 'rw-account'); account.id = 'rewards-account';
     tabBar = el('div', 'rw-tabs'); tabBar.setAttribute('role', 'tablist'); tabBar.setAttribute('aria-label', '보상 종류');
@@ -58,23 +57,28 @@
     dialog.addEventListener('close', () => { if (review.open) review.close(); if (opener?.isConnected) opener.focus(); });
     document.body.append(dialog, review);
   }
-  function select(id) { const next = tabs.some(tab => tab[0] === id) ? id : 'attendance'; if (next !== state.tab) state.notice = ''; state.tab = next; if (body) body.scrollTop = 0; render(); }
+  function select(id) { const next = tabs.some(tab => tab[0] === id) ? id : 'attendance'; if (next !== state.tab) { state.notice = ''; state.focusPass = true; } state.tab = next; if (body) body.scrollTop = 0; render(); }
   function heading(title, detail) { const box = el('div', 'rw-intro'); box.append(el('h3', '', title), el('p', 'rw-detail', detail)); return box; }
   function claimButton(text, action, disabled, id) {
     const node = button(text, action, 'rw-button rw-primary'); node.disabled = disabled || state.busy || state.loading; if (id) node.id = id; return node;
   }
   function renderAttendance(panel, view) {
     const attendance = view.attendance || {}, next = Math.max(1, Math.min(7, attendance.nextDay || 1));
-    const intro = heading('오늘도 성채에 오신 걸 환영해요', '한국 시간 자정에 새 출석 · 놓친 날에도 순서는 유지돼요.');
-    const tally = el('span', 'rw-attendance-tally', (attendance.claimedToday ? next : next - 1) + ' / 7'); tally.setAttribute('aria-label', '이번 보상 주기 ' + (attendance.claimedToday ? next : next - 1) + '회 수령'); intro.append(tally); panel.append(intro);
+    const cycle = attendance.rewards || daily.map(([gold, shards]) => ({ gold, shards }));
+    const intro = heading('7회 출석 선물', '한국 시간 자정에 새 출석 · 놓친 날에도 순서는 유지돼요.');
+    const tally = el('span', 'rw-attendance-tally', (attendance.claimedToday ? next : next - 1) + ' / 7 수령'); tally.setAttribute('aria-label', '이번 보상 주기 ' + (attendance.claimedToday ? next : next - 1) + '회 수령'); intro.append(tally);
+    const summary = el('div', 'rw-attendance-summary'); summary.append(intro); panel.append(summary);
+    const current = el('div', 'rw-current-gift'), currentText = el('div', 'rw-current-gift-text');
+    currentText.append(el('span', 'rw-gift-label', attendance.claimedToday ? '오늘의 선물 수령 완료' : '오늘 받을 선물'), el('h3', '', next + '회차 출석 보상'), rewards(cycle[next - 1]), el('p', 'rw-detail', '성장 패스 경험치 +' + number(attendance.xp ?? 20) + ' XP'));
+    current.append(art(next === 7 ? 'attendance-chest' : 'attendance-bag', 'rw-gift-art'), currentText); summary.append(current);
     const grid = el('div', 'rw-attendance');
-    (attendance.rewards || daily.map(([gold, shards]) => ({ gold, shards }))).forEach((reward, index) => {
+    cycle.forEach((reward, index) => {
       const day = index + 1, received = day < next || (day === next && attendance.claimedToday), current = day === next;
       const card = el('article', 'rw-day' + (day === 7 ? ' rw-day-final' : '') + (current ? ' rw-day-current' : '') + (received ? ' rw-day-done' : ''));
       const picture = el('div', 'rw-day-art'); picture.append(art(day === 7 ? 'attendance-chest' : 'attendance-bag'));
       const content = el('div', 'rw-day-content'); content.append(el('h4', '', day + '회차'), rewards(reward));
       if (day === 7) content.prepend(el('span', 'rw-final-label', '일곱 번째 선물'));
-      card.dataset.day = day; card.append(picture, content, el('p', 'rw-day-state', received ? '수령 완료' : current ? '이번 출석' : '다음 출석'));
+      card.dataset.day = day; card.append(picture, content, el('p', 'rw-day-state', received ? '수령 완료' : current ? '오늘' : '다음 출석'));
       grid.append(card);
     }); panel.append(grid);
     const action = el('div', 'rw-attendance-action');
@@ -83,10 +87,10 @@
     panel.append(action);
   }
   function renderMail(panel, view) {
-    panel.append(heading('성채에 도착한 소식', '운영 선물과 모험에 필요한 보상을 모아 두었어요.'));
+    const items = view.mail || [], available = items.filter(mail => !mail.claimed && !(typeof mail.expired === 'boolean' ? mail.expired : !!mail.expiresAt && +new Date(mail.expiresAt) <= Date.now())).length;
+    panel.append(heading('성채 우편함', view.account?.linked ? '받을 선물 ' + available + '개 · 보관한 우편 ' + items.filter(mail => mail.claimed).length + '개' : '로그인 계정으로 도착하는 운영 선물'));
     if (view.canAdmin) { const admin = button('운영 우편 관리', () => window.DKMAILADMIN?.open()); admin.id = 'rewards-mail-admin'; panel.append(admin); }
-    if (!view.account?.linked) { const empty = el('div', 'rw-empty'); empty.append(art('mail', 'rw-empty-art'), el('span', 'rw-empty-kicker', '성채 우편함'), el('h4', '', '운영 우편은 로그인 후 확인해요'), el('p', 'rw-detail', '선물은 로그인한 계정으로 도착합니다.\n게스트도 출석과 무료 성장 패스를 이용할 수 있어요.')); panel.append(empty); return; }
-    const items = view.mail || [];
+    if (!view.account?.linked) { const empty = el('div', 'rw-empty'); empty.append(art('mail', 'rw-empty-art'), el('h4', '', '운영 우편은 로그인 후 확인해요'), el('p', 'rw-detail', '선물은 로그인한 계정으로 도착합니다.\n게스트도 출석과 무료 성장 패스를 이용할 수 있어요.')); panel.append(empty); const free = el('div', 'rw-mail-alternatives'); free.append(button('오늘의 출석 선물', () => select('attendance')), button('무료 성장 패스', () => select('pass'))); panel.append(free); return; }
     if (!items.length) { const empty = el('div', 'rw-empty'); empty.append(art('mail', 'rw-empty-art'), el('span', 'rw-empty-kicker', '성채 우편함'), el('h4', '', '새 우편이 없습니다'), el('p', 'rw-detail', '선물이 도착하면 우편함에 붉은 점으로 알려드려요.')); panel.append(empty); return; }
     const list = el('div', 'rw-mail-list');
     items.forEach(mail => {
@@ -107,18 +111,19 @@
     const pass = view.pass || {}, xp = Math.max(0, Number(pass.xp) || 0), tiers = pass.tiers || Array.from({ length: 20 }, (_, i) => ({ tier: i + 1, requiredXp: (i + 1) * 100, free: { gold: 100, shards: 2 }, premium: { shards: 10, skinId: i === 9 ? 'royal' : undefined } }));
     const maxXp = Math.max(1, ...tiers.map(tier => tier.requiredXp)), reached = tiers.filter(tier => xp >= tier.requiredXp).length;
     const hero = el('div', 'rw-pass-hero'), heroText = el('div', 'rw-pass-hero-text');
-    heroText.append(el('span', 'rw-eyebrow', '기한 없는 성장'), el('h3', '', '모험을 쌓고, 선물을 열어요'), el('p', 'rw-detail', '출석과 플레이로 경험치를 모으세요.')); hero.append(heroText, art('growth-pass', 'rw-pass-hero-art')); panel.append(hero);
+    heroText.append(el('h3', '', '성장 패스'), el('p', 'rw-detail', '출석과 전투로 XP를 모아 20단계 선물을 열어요.')); hero.append(heroText, art('growth-pass', 'rw-pass-hero-art')); panel.append(hero);
     const progress = el('div', 'rw-progress'), caption = el('div', 'rw-progress-label'); caption.append(el('strong', '', reached + ' / ' + tiers.length + '단계'), el('span', '', number(xp) + ' / ' + number(maxXp) + ' XP'));
     const bar = el('progress'); bar.max = maxXp; bar.value = Math.min(xp, maxXp); bar.setAttribute('aria-label', '성장 패스 경험치'); progress.append(caption, bar);
     const nextTier = tiers.find(tier => xp < tier.requiredXp);
-    progress.append(el('p', 'rw-next-tier', nextTier ? nextTier.tier + '단계까지 ' + number(nextTier.requiredXp - xp) + ' XP 남았어요' : '모든 단계를 달성했어요. 남은 선물을 받아 주세요.')); panel.append(progress);
-    panel.append(help('경험치는 어떻게 모으나요?', '총 20단계 · 단계마다 100 XP. 출석 20 XP · 투기장 완료 웨이브마다 2 XP · 대전·협동 유효 참여 1분당 15 XP. 전투 XP는 종료 정산 때 반영하며 캠페인은 제외됩니다. 달성한 보상은 아래에서 직접 받아요.'));
-    const offer = el('div', 'rw-pass-offer'), offerHeading = el('div', 'rw-offer-heading'); offerHeading.append(el('strong', '', pass.premiumOwned ? '프리미엄 패스 보유 중' : '프리미엄 · 선택 구매'), el('span', 'rw-offer-tag', '영구 이용')); offer.append(offerHeading, el('p', 'rw-detail', '성장 조각과 왕실 외형을 추가로 받아요. 무료 보상은 구매 없이 이용할 수 있습니다.'));
+    progress.append(el('p', 'rw-next-tier', nextTier ? nextTier.tier + '단계까지 ' + number(nextTier.requiredXp - xp) + ' XP 남았어요' : '모든 단계를 달성했어요. 남은 선물을 받아 주세요.'));
+    if (nextTier) { const gift = el('div', 'rw-next-gift'); gift.append(el('span', '', '다음 무료 선물'), rewards(nextTier.free || {})); progress.append(gift); } panel.append(progress);
+    const offer = el('div', 'rw-pass-offer'), offerHeading = el('div', 'rw-offer-heading'); offerHeading.append(el('strong', '', pass.premiumOwned ? '프리미엄 패스 보유 중' : '프리미엄 · 선택 구매'), el('span', 'rw-offer-tag', '기한 없음')); offer.append(offerHeading, el('p', 'rw-detail', '성장 조각과 10단계 왕실 외형 추가 · 무료 선물은 구매 없이 수령'));
     if (!pass.premiumOwned) {
-      const buy = claimButton(!view.account?.linked ? '로그인 후 구매 가능' : !pass.purchaseEnabled ? '2,900원 · 판매 준비 중' : (pass.priceLabel || '2,900원') + ' · 구매 내용 보기', showPurchase, !view.account?.linked || !pass.purchaseEnabled, 'rewards-buy-pass');
+      const commerce = window.DKCOMMERCE?.state?.(), selling = commerce ? commerce.configured && commerce.config?.purchasesEnabled : pass.purchaseEnabled;
+      const buy = claimButton(!selling ? '프리미엄 판매 준비 중' : !view.account?.linked ? '로그인 후 구매 가능' : !pass.purchaseEnabled ? '프리미엄 판매 준비 중' : (pass.priceLabel || '2,900원') + ' · 구매 내용 보기', showPurchase, !selling || !view.account?.linked || !pass.purchaseEnabled, 'rewards-buy-pass');
       offer.append(buy);
     } offer.append(help('구매 및 보상 안내', '기한 없음 · 한 번 구매 · 자동 갱신 없음. 구매 전에 달성한 단계도 소급 수령합니다. 다이스 해금은 무료 플레이로 가능합니다. 단계마다 성장 조각 10개, 10단계에는 왕실 외형을 드립니다. 이미 왕실 외형을 보유했다면 중복 보상은 없습니다.')); panel.append(offer);
-    const columns = el('div', 'rw-pass-columns'); columns.append(el('span', '', '단계'), el('strong', '', '무료'), el('strong', 'rw-premium-label', '프리미엄')); panel.append(columns);
+    const columns = el('div', 'rw-pass-columns'); columns.append(el('span', '', '단계'), el('strong', '', '무료 선물'), el('strong', 'rw-premium-label', pass.premiumOwned ? '프리미엄 보유' : '프리미엄 구매'));
     const list = el('div', 'rw-pass-list');
     tiers.forEach(tier => {
       const row = el('article', 'rw-pass-tier' + (xp >= tier.requiredXp ? ' rw-tier-reached' : '') + (nextTier === tier ? ' rw-tier-next' : '')); row.dataset.tier = tier.tier;
@@ -132,10 +137,14 @@
         const loot = el('div', 'rw-pass-loot'); loot.append(art(reward.skinId ? 'attendance-chest' : track === 'free' ? 'attendance-bag' : 'growth-shards', 'rw-reward-art'), rewards(reward));
         cell.append(loot, claim); row.append(cell);
       }); list.append(row);
-    }); panel.append(list);
+    });
+    const focusTier = tiers.find(tier => xp >= tier.requiredXp && (!tier.free?.claimed || pass.premiumOwned && !tier.premium?.claimed)) || nextTier || tiers[tiers.length - 1];
+    if (focusTier) list.querySelector('[data-tier="' + focusTier.tier + '"]').classList.add('rw-tier-focus'); const track = el('div', 'rw-pass-track'); track.append(columns, list); panel.append(track);
+    const guidance = el('div', 'rw-pass-guidance'); guidance.append(help('경험치는 어떻게 모으나요?', '총 20단계 · 단계마다 100 XP. 출석 20 XP · 투기장 완료 웨이브마다 2 XP · 대전·협동 유효 참여 1분당 15 XP. 전투 XP는 종료 정산 때 반영하며 캠페인은 제외됩니다. 달성한 보상은 위에서 직접 받아요.')); panel.append(guidance);
   }
   function render(view) {
     if (view) state.view = view; create();
+    const scroll = body.scrollTop, trackScroll = body.querySelector('.rw-pass-list')?.scrollTop || 0;
     const data = state.view;
     account.textContent = !data ? '계정 정보를 확인하는 중…' : data.account?.linked ? (data.account.label || '로그인 계정') + ' · 계정에 보관' : '게스트 · 이 기기에 무료 진행 저장';
     const counts=state.error?{}:window.DKREWARDNOTIFICATIONS?.counts(data)||{};
@@ -153,21 +162,9 @@
     if (data) ({ attendance: renderAttendance, mail: renderMail, pass: renderPass })[state.tab](panel, data);
     else panel.append(el('p', 'rw-empty rw-detail', state.error ? '연결을 확인한 뒤 다시 불러와 주세요.' : '출석과 성장 보상을 준비하고 있어요.'));
     body.append(panel);
-    const selector = {attendance:'.rw-day',mail:'.rw-mail',pass:'.rw-pass-tier'}[state.tab];
-    const items = [...panel.querySelectorAll(selector)];
-    pages[state.tab] = Math.min(pages[state.tab], Math.max(0,items.length-1));
-    items.forEach((item,i)=>item.hidden=i!==pages[state.tab]);
-    if(state.tab==='pass') {
-      const info=[...panel.querySelectorAll(':scope > .rw-pass-hero,:scope > .rw-help,:scope > .rw-pass-offer')];
-      const storage=el('div','menu-source');storage.append(...info);panel.append(storage);
-      panel.prepend(button('패스 안내 · 구매 정보',()=>window.DKMENUPAGES?.open('성장 패스 안내',info),'rw-button'));
-    }
-    if(items.length>1) {
-      const nav=el('nav','page-controls');nav.setAttribute('aria-label','보상 페이지');
-      const prev=button('이전',()=>{pages[state.tab]--;render();}),next=button('다음',()=>{pages[state.tab]++;render();});
-      prev.disabled=pages[state.tab]===0;next.disabled=pages[state.tab]===items.length-1;
-      nav.append(prev,el('span','',`${pages[state.tab]+1} / ${items.length}`),next);panel.append(nav);
-    }
+    body.scrollTop = scroll;
+    const track = panel.querySelector('.rw-pass-list');
+    if (track) { track.scrollTop = trackScroll; if (state.focusPass) requestAnimationFrame(() => { if (!track.isConnected) return; const row = track.querySelector('.rw-tier-focus'); if (row) track.scrollTop += row.getBoundingClientRect().top - track.getBoundingClientRect().top; state.focusPass = false; }); }
   }
   async function refresh() {
     const service = api(), generation = ++state.generation;
@@ -202,7 +199,7 @@
   async function open(tab, options={}) {
     create();if(!dialog.open)opener=document.activeElement;
     if(options.view){state.view=options.view;state.error='';state.notice='';state.loading=false;}
-    if((tab||state.tab)==='attendance')pages.attendance=Math.max(0,Math.min(6,((options.view||api()?.current?.()||state.view)?.attendance?.nextDay||1)-1));
+    state.focusPass = true;
     select(tab||state.tab);if(!dialog.open)dialog.showModal();document.getElementById('rewards-tab-'+state.tab).focus();
     window.dispatchEvent(new CustomEvent('rewards:opened',{detail:{tab:state.tab,automatic:options.automatic===true}}));
     if(!options.view)await refresh();

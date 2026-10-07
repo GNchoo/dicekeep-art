@@ -325,6 +325,17 @@ test('phone/desktop shop UI is disabled offline; mock account profile never over
         const off = await page.evaluate(() => ({ configured: DKCOMMERCE.state().configured, disabled: [...document.querySelectorAll('#commerce-products [data-sku]')].every(b => b.disabled), count: document.querySelectorAll('#commerce-products [data-sku]').length, signinDisabled: document.getElementById('commerce-signin').disabled, scripts: [...document.scripts].map(s => s.src).filter(s => /accounts\.google|tosspayments/.test(s)) }));
         assert.deepEqual(off, { configured: false, disabled: true, count: 2, signinDisabled: true, scripts: [] });
         assert.deepEqual(row.api, []); row.checks.push('unconfigured: both purchase buttons/login disabled; API and provider SDK requests zero');
+        const catalog = await page.evaluate(() => [...document.querySelectorAll('#commerce-products article:has([data-sku])')].map(card => ({
+          quantity: card.querySelector('.shop-pack-quantity')?.textContent,
+          images: card.querySelectorAll('.shop-pack-art img').length,
+          state: card.querySelector('.shop-purchase-state')?.textContent,
+          price: card.querySelector('[data-sku]').textContent,
+        })));
+        assert.deepEqual(catalog, [
+          { quantity: '200개', images: 1, state: '판매 준비 중', price: '1,100원' },
+          { quantity: '600개', images: 3, state: '판매 준비 중', price: '3,300원' },
+        ], 'offline catalog distinguishes the real pack quantities and separates unavailable state from displayed price');
+        row.checks.push('real 200/600 quantities, different pack art and separate unavailable state');
         await page.locator('#commerce-products').scrollIntoViewIfNeeded(); await page.screenshot({ path: path.join(dir, 'shop-unconfigured.png') });
         const guest = profile(35); guest.deck = [2, 3, 4, 5, 6]; guest.collection.presets[0].faces = guest.deck.slice();
         await page.evaluate(({ guest, session }) => {
@@ -337,21 +348,18 @@ test('phone/desktop shop UI is disabled offline; mock account profile never over
         await page.evaluate(() => DKCOMMERCE.action('treeUpgrade', { face: 1 }));
         assert.deepEqual(await page.evaluate(() => ({ account: DKCOMMERCE.profile().shards, guest: DKSAVE.progression.shards, saved: JSON.parse(localStorage.getItem('DKSAVE')).progression.shards })), { account: 690, guest: 35, saved: 35 });
         row.checks.push('server account profile and action remain separate from in-memory/localStorage guest SAVE');
-        const boxes = []; let pages = 0;
-        for (; pages < 10; pages++) {
+        const boxes = [], productActions = page.locator('#commerce-products article button');
+        for (let index = 0; index < await productActions.count(); index++) {
+          const action = productActions.nth(index); await action.scrollIntoViewIfNeeded();
           await page.evaluate(async () => { await document.fonts.ready; await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))); });
-          const visible = await page.evaluate(() => [...document.querySelectorAll('#commerce-products article button')].filter(button => button.checkVisibility()).map(button => {
+          const visible = await action.evaluate(button => {
             const r = button.getBoundingClientRect(), card = button.closest('article').getBoundingClientRect();
             return { sku: button.dataset.sku || null, disabled: button.disabled, text: button.textContent, fits: r.width > 0 && r.x >= 0 && r.right <= innerWidth + 1 && r.top >= 0 && r.bottom <= innerHeight + 1 && r.x >= card.x - 1 && r.right <= card.right + 1 && r.top >= card.top - 1 && r.bottom <= card.bottom + 1 };
-          }));
-          assert.ok(visible.length && visible.every(b => !b.disabled && b.fits), 'every displayed product action fits its card and viewport');
-          boxes.push(...visible);
-          await page.screenshot({ path: path.join(dir, `shop-mock-account-${pages + 1}.png`) });
-          const next = page.locator('#commerce-products > .page-controls button').last();
-          if (!await next.count() || !await next.isVisible() || await next.isDisabled()) break;
-          await next.click();
+          });
+          assert.ok(!visible.disabled && visible.fits, 'every displayed product action fits its card and viewport');
+          boxes.push(visible);
+          await page.screenshot({ path: path.join(dir, `shop-mock-account-${index + 1}.png`) });
         }
-        assert.ok(pages < 10, 'product pagination terminates');
         assert.deepEqual([...new Set(boxes.map(b => b.sku).filter(Boolean))].sort(), config.products.filter(p => p.kind === 'currency').map(p => p.sku).sort(), 'every purchase product is checked across visible pages');
         row.productButtons = boxes; row.checks.push('all configured mock account product pages have enabled actions fitting the actual viewport');
         await page.click('[data-shop-tab="account"]');

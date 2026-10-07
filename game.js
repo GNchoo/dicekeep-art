@@ -6290,11 +6290,12 @@ function syncInfButtons() {
     if (!b) return;
     b.disabled = false;
     b.classList.remove('locked');
-    b.innerHTML = `<span class="bi" data-icon="${icon}">${emoji}</span>${name}<small>${sub}</small>`;
+    b.innerHTML = `<img class="mode-art" src="ui/icon-${icon}.png" alt=""><span class="mode-copy">${name}<small>${sub}</small></span><span class="mode-enter" aria-hidden="true">›</span>`;
   };
   setBtn('btn-inf-clear', 'trophy', '&#127942;', '순수운빨', `${line}웨이브 · 성장 미적용`);
   setBtn('btn-inf-build', 'dice', '&#127922;', '성장·조합', `${line}웨이브 · 1~20강 · 운빨과 배치 연계`);
   setBtn('btn-infinity', 'infinity', '&#8734;', '극한', '끝없는 웨이브 · 20강 성장과 배치 연계');
+  setBtn('btn-stage-select', 'stage', '', '스테이지 선택', '50개 스테이지 · 차근차근 배우기');
   const info = $('lobby-inf');
   if (info) {
     const P = progressionProfile();
@@ -6375,6 +6376,8 @@ function renderStageSelect() {
   grid.innerHTML = '';
   const C = window.DKCONTENT;
   if (!C || !C.stages) return;
+  const next = C.stages.find((sd, i) => stageUnlocked(i + 1) && !stageCleared(i + 1)) || C.stages[49];
+  $('campaign-status').innerHTML = `<img src="ui/icon-stage.png" alt=""><div><small>${SAVE.cleared.length} / 50 스테이지 완료</small><h3>다음 도전 · ${next.n} ${next.name}</h3><p>${next.waves}웨이브 · ${next.tierName}</p><progress value="${SAVE.cleared.length}" max="50" aria-label="캠페인 완료 진행도"></progress></div>`;
   const legend = $('tier-legend');
   if (legend && C.tiers) {
     legend.innerHTML = C.tiers.map((T) => {
@@ -6413,6 +6416,7 @@ function skinThumb(key) {
 function renderShop() {
   COMMERCE.init().then(() => { if (window.DKrenderCommerce) DKrenderCommerce(); }).catch(() => {});
   $('shop-gems').textContent = SAVE.gems;
+  window.DKMENUPAGES?.refresh();
   const C = window.DKCONTENT;
   if (!C) return;
   const towersEl = $('shop-towers');
@@ -6424,13 +6428,13 @@ function renderShop() {
     const card = document.createElement('div');
     card.className = 'shop-tower' + (owned ? '' : ' locked');
     const img = dieIconURL(f);
-    card.innerHTML = `<img src="${img}" alt=""><div class="t-name">${f}눈 · ${def.name}</div>`;
+    card.innerHTML = `<img src="${img}" alt="${f}눈 주사위"><div class="t-name">${f}눈 · ${def.name}</div><small class="t-role">${DECK.gradeGet(f).role}</small>`;
     if (owned) {
       const s = document.createElement('div'); s.className = 'owned'; s.textContent = '보유중';
       card.appendChild(s);
     } else {
       const btn = document.createElement('button');
-      btn.innerHTML = `&#128142; ${cost}`;
+      btn.innerHTML = `해금 · &#128142; ${cost}`;
       btn.disabled = SAVE.gems < cost;
       btn.addEventListener('click', () => buyTower(f, cost));
       card.appendChild(btn);

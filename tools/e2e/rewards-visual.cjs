@@ -100,7 +100,7 @@ async function capture(page, name) {
   await page.locator('#rewards-dialog').evaluate(async dialog => {
     await Promise.all(dialog.getAnimations({ subtree: true }).filter(animation => Number.isFinite(animation.effect?.getComputedTiming().endTime)).map(animation => animation.finished.catch(() => {})));
   });
-  check(name + ': illustrated artwork loads', images.length > 0 && images.every(img => img.loaded && img.rendered));
+  check(name + ': illustrated artwork loads', images.some(img => img.rendered) && images.every(img => img.loaded));
   const layout = await page.evaluate(() => {
     const dialog = document.getElementById('rewards-dialog'), box = dialog.getBoundingClientRect();
     const nodes = [dialog, ...dialog.querySelectorAll('.rw-body,.rw-panel,.rw-attendance,.rw-day,.rw-mail,.rw-pass-tier')];
