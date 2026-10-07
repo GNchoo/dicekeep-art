@@ -166,12 +166,12 @@
     if (!session) return null;
     if (!current) await refresh();
     await retryPending(!['duel','coop'].includes(mode));
-    const result = await updateAccount('/runs/start', { mode, ...(options.battle?{battle:options.battle}:{}) });
+    const result = await updateAccount('/runs/start', { mode, ...(!['duel','coop'].includes(mode) ? { waveSkip: 1 } : {}), ...(options.battle?{battle:options.battle}:{}) });
     if (window.DKCOSMETICS) await DKCOSMETICS.sync().catch(() => false); return result;
   }
-  async function resumeRun(ticket) {
+  async function resumeRun(ticket, options = {}) {
     if (!session) throw new Error('저장한 계정으로 다시 로그인해 주세요.');
-    return updateAccount('/runs/resume', { ticket });
+    return updateAccount('/runs/resume', { ticket, ...(options.waveSkip === 1 ? { waveSkip: 1 } : {}) });
   }
   function pendingList() { const list = read(PENDING, []); return Array.isArray(list) ? list : []; }
   function queueRun(ticket, run) {

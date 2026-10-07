@@ -153,6 +153,7 @@ const noticeKey = id => id === 'enhance-toast' ? 'enhance' : 'chest';
       for (const [id, state] of Object.entries(notices)) {
         const n = state[noticeKey(id)];
         assert.ok(n.visible, `${label}: ${id} is visible`);
+        assert.ok(rectOverlap(n, state.waveButton) <= 1, `${label}: ${id} does not cover the wave action`);
         assert.ok(n.left >= -1 && n.right <= layout.width + 1 && n.top >= -1 && n.bottom <= layout.height + 1,
           `${label}: ${id} stays inside viewport`);
         assert.ok(state.timer && rectOverlap(state.timer, n) <= 1,

@@ -155,3 +155,18 @@ test('account battle checkpoint retains its settlement ticket through reload', (
   const p = capture('coop'); p.owner = 'account:reward-test'; p.inf.accountTicket = 'a'.repeat(64);
   assert.equal(SAVE.valid(p), true); assert.equal(SAVE.decode(JSON.stringify(p), p.owner).inf.accountTicket, p.inf.accountTicket);
 });
+
+test('overlapping wave checkpoints retain a large pending queue and reject invalid batch or boss clocks', () => {
+  const f = fixture('build', false);
+  f.s.wave = 30; f.s.waveBatchStart = 6; f.s.inf.doneW = 5;
+  f.s.spawnQ = Array.from({ length: 792 }, (_, i) => ({ type: 'mite', wave: 6 + Math.floor(i / 36), t: .45 + i * .01 }));
+  f.s.enemies[0].bossT = 43;
+  const saved = SAVE.capture(f.s, f.slot, f.meta);
+  const restored = SAVE.hydrate(SAVE.decode(SAVE.encode(saved), 'local'), { 6: {} });
+  assert.equal(restored.waveBatchStart, 6); assert.equal(restored.enemies[0].bossT, 43);
+  assert.deepEqual(restored.spawnQ, f.s.spawnQ);
+  for (const mutate of [p => { p.state.waveBatchStart = 31; }, p => { p.state.waveBatchStart = .5; },
+    p => { p.enemies[0].bossT = -1; }, p => { p.spawnQ = Array.from({ length: 4097 }, () => saved.spawnQ[0]); }]) {
+    const bad = clone(saved); mutate(bad); assert.equal(SAVE.valid(bad), false);
+  }
+});

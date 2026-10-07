@@ -1,4 +1,4 @@
-// Player-facing regressions: optional help, one-time wave start, readable phone controls and
+// Player-facing regressions: optional help, overlapping wave skips, readable phone controls and
 // a visible focus marker on the tower selected through an actual pointer tap.
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
@@ -69,10 +69,13 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
       await page.evaluate(()=>{DK.gold=10000;DKsync();});
       assert.deepEqual(await highlights(),[false,false],`${mode}: later income never restarts guidance`);
       assert.equal(await page.evaluate(()=>DK.wave),1,`${mode}: one click starts wave 1`);
-      assert.equal(await page.locator('#wave-btn').isVisible(),false,`${mode}: start button disappears after use`);
-      assert.equal(await page.locator('#wave-btn').isDisabled(),true,`${mode}: hidden start button is disabled`);
-      const repeated = await page.evaluate(()=>{document.getElementById('wave-btn').click();return DK.wave;});
-      assert.equal(repeated,1,`${mode}: a repeated click cannot skip a wave`);
+      assert.equal(await page.locator('#wave-btn').isVisible(),true,`${mode}: the wave action remains available`);
+      assert.equal(await page.locator('#wave-btn').textContent(),'웨이브 스킵',`${mode}: start changes to skip`);
+      await page.waitForFunction(()=>!document.getElementById('wave-btn').disabled);
+      const pending = await page.evaluate(()=>DK.spawnQ.length);
+      await page.click('#wave-btn');
+      assert.equal(await page.evaluate(()=>DK.wave),2,`${mode}: another click starts wave 2 immediately`);
+      assert.ok(await page.evaluate(n=>DK.spawnQ.length>n,pending),`${mode}: the previous spawns remain queued`);
     }
     for (const [width, height] of [[360,800],[390,844],[430,932],[844,390],[1280,900]]) {
       await page.setViewportSize({width,height});
@@ -99,8 +102,9 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
       });
       for (const item of wave) {
         assert.ok(!/\d/.test(item.label), `${width}: lower wave action has no duplicate timer`);
-        assert.equal(item.visible,item.first,`${width}: wave start is visible only before the first wave`);
-        assert.equal(item.disabled,!item.first,`${width}: wave start is enabled only before the first wave`);
+        assert.equal(item.visible,true,`${width}: start and skip use the same visible action`);
+        assert.equal(item.disabled,false,`${width}: the wave action is enabled during combat and intermission`);
+        assert.equal(item.label,item.first?'웨이브 시작':'웨이브 스킵',`${width}: the action describes the next wave`);
       }
       const position = await page.evaluate(() => {
         DK.wave=2; DK.waveActive=true; DK.waveT=25; DK.selTower=null; DKsync();
@@ -151,7 +155,7 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
       await page.click('#info-close');
       await page.screenshot({path:outputPath(`mobile-controls/${width}-hud.png`)});
       results.push({width,height,wave,measured});
-      console.log(`PASS ${width}x${height}: one-time action, selection${portrait?', readable phone HUD':''}`);
+      console.log(`PASS ${width}x${height}: wave start/skip, selection${portrait?', readable phone HUD':''}`);
     }
     assert.deepEqual(errors,[],'no page errors');
     fs.writeFileSync(outputPath('mobile-controls/report.json'),JSON.stringify(results,null,2));

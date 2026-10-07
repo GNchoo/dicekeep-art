@@ -213,7 +213,8 @@ export class CommerceLedger {
     });
   }
   async startRun(id, b) {
-    fields(b, ['mode', 'battle']); requireThat(PG.MODES.includes(b.mode), 'invalid-mode');
+    fields(b, ['mode', 'battle', 'waveSkip']); requireThat(PG.MODES.includes(b.mode), 'invalid-mode');
+    requireThat(b.waveSkip === undefined || (b.waveSkip === 1 && !battleMode(b.mode)), 'invalid-run');
     if (battleMode(b.mode)) return this.startBattleRun(id, b);
     requireThat(b.battle === undefined, 'unexpected-field');
     const ticket = random();
@@ -221,38 +222,52 @@ export class CommerceLedger {
       const a = await tx.get('account:' + id); requireThat(a.wallet.debt === 0 || ['clear', 'multi'].includes(b.mode), 'refund-debt', 409);
       if (a.activeRun) { const previous = await tx.get('run:' + a.activeRun); if (previous && !previous.status) { previous.status = 'abandoned'; await tx.put('run:' + a.activeRun, previous); } }
       const snapshot = PG.snapshot(a.profile, b.mode);
-      await tx.put('run:' + ticket, { id: ticket, accountId: id, mode: b.mode, startedAt: this.now(), snapshot });
+      await tx.put('run:' + ticket, { id: ticket, accountId: id, mode: b.mode, startedAt: this.now(), snapshot, ...(b.waveSkip === 1 ? { waveSkip: 1 } : {}) });
       // 계정 삭제가 이 계정의 런만 찾아 지울 수 있게 하는 색인. 없으면 run: 전체를 훑어야 한다.
       await tx.put(`run-of:${id}:${ticket}`, 1);
-      a.activeRun = ticket; await tx.put('account:' + id, a); return { ticket, ...this.accountView(a), snapshot, startedAt: this.now() };
+      a.activeRun = ticket; await tx.put('account:' + id, a); return { ticket, ...this.accountView(a), snapshot, startedAt: this.now(), ...(b.waveSkip === 1 ? { waveSkip: 1 } : {}) };
     });
   }
   async resumeRun(id, b) {
-    fields(b, ['ticket']);
+    fields(b, ['ticket', 'waveSkip']);
     requireThat(typeof b.ticket === 'string' && /^[a-f0-9]{64}$/.test(b.ticket), 'invalid-run');
+    requireThat(b.waveSkip === undefined || b.waveSkip === 1, 'invalid-run');
     return this.storage.transaction(async tx => {
       const run = await tx.get('run:' + b.ticket), a = await tx.get('account:' + id);
       requireThat(run && run.accountId === id, 'run-not-found', 404);
       requireThat(!run.status && (battleMode(run.mode) || a.activeRun === b.ticket), 'run-inactive', 409);
       requireThat(!a.wallet.debt || ['clear', 'multi'].includes(run.mode), 'refund-debt', 409);
-      return { ticket: run.id, ...this.accountView(a), snapshot: run.snapshot, startedAt: run.startedAt, ...(run.battle?{battle:run.battle}:{}) };
+      if (b.waveSkip === 1) {
+        requireThat(!battleMode(run.mode), 'invalid-run');
+        if (run.waveSkip !== 1) { run.waveSkip = 1; await tx.put('run:' + run.id, run); }
+      }
+      return { ticket: run.id, ...this.accountView(a), snapshot: run.snapshot, startedAt: run.startedAt, ...(run.battle?{battle:run.battle}:{}), ...(run.waveSkip === 1 ? { waveSkip: 1 } : {}) };
     });
   }
   async settleRun(id, b) {
     if (b.battle !== undefined) return this.settleBattleRun(id, b);
-    fields(b, ['ticket', 'wave', 'kills', 'won', 'elapsed', 'date']);
+    fields(b, ['ticket', 'wave', 'kills', 'won', 'elapsed', 'date', 'startedWave']);
     requireThat(typeof b.ticket === 'string' && /^[a-f0-9]{64}$/.test(b.ticket) && int(b.wave, 0, 1e6) && int(b.kills, 0, 1e9) && typeof b.won === 'boolean' &&
       (b.elapsed === undefined || (Number.isFinite(b.elapsed) && b.elapsed >= 0)) && (b.date === undefined || (typeof b.date === 'string' && Number.isFinite(Date.parse(b.date)))), 'invalid-run');
-    const fingerprint = await sha(JSON.stringify([b.wave, b.kills, b.won]));
     return this.storage.transaction(async tx => {
       const run = await tx.get('run:' + b.ticket); requireThat(run && run.accountId === id, 'run-not-found', 404);
       requireThat(!battleMode(run.mode), 'battle-proof-required', 409);
+      requireThat(run.waveSkip === 1 ? int(b.startedWave, 0, 1e6) : b.startedWave === undefined, run.waveSkip === 1 ? 'invalid-run' : 'unexpected-field');
+      const fingerprint = await sha(JSON.stringify([b.wave, b.kills, b.won, ...(run.waveSkip === 1 ? [b.startedWave] : [])]));
       const a = await tx.get('account:' + id);
       if (run.status === 'settled') { requireThat(run.fingerprint === fingerprint, 'run-conflict', 409); return { ...this.accountView(a), shards: 0, collectionRewards: { gold: 0, packs: 0 }, duplicate: true }; }
       requireThat(!run.status && a.activeRun === b.ticket, 'run-inactive', 409);
-      const elapsed = Math.floor((this.now() - run.startedAt) / 1000), minimum = Math.max(0, b.wave - 1) * 2;
-      requireThat(int(elapsed, minimum, Number.MAX_SAFE_INTEGER) && b.kills <= elapsed * 100, 'run-time-invalid', 409);
+      const elapsedMs = this.now() - run.startedAt, elapsed = Math.floor(elapsedMs / 1000);
       const endless = ['extreme', 'extremeMulti'].includes(run.mode);
+      if (run.waveSkip === 1) {
+        requireThat(int(b.startedWave, b.wave, endless ? 1e6 : 101), 'invalid-run');
+        // Match the real-time 100ms skip guard and the fastest existing spawn
+        // cadence (0.3 * 0.72 game seconds at x4), preserving overlap bursts.
+        const count = ['clear', 'multi'].includes(run.mode) ? 79 : 36;
+        const spawned = Math.min(count, Math.max(0, 1 + Math.floor((elapsedMs * 4 / 1000 - 0.45) / 0.216)));
+        requireThat(int(elapsed, 0, Number.MAX_SAFE_INTEGER) && b.startedWave <= 1 + Math.floor(elapsedMs / 100)
+          && b.kills <= b.startedWave * spawned, 'run-time-invalid', 409);
+      } else requireThat(int(elapsed, Math.max(0, b.wave - 1) * 2, Number.MAX_SAFE_INTEGER) && b.kills <= elapsed * 100, 'run-time-invalid', 409);
       requireThat(endless ? !b.won : b.wave <= 101 && (!b.won || b.wave === 101), 'run-result-invalid', 409);
       const before = a.profile.shards;
       const settledRun = { id: b.ticket, mode: run.mode, wave: b.wave, kills: b.kills, won: b.won, elapsed, date: new Date(this.now()).toISOString() };

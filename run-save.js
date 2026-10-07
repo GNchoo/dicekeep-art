@@ -10,7 +10,7 @@
   // still require the original server ticket. Bump RULES for incompatible combat state changes.
   const VERSION = 1, RULES = 'growth-105', MAX_BYTES = 2000000;
   const kinds = ['d1', 'd4', 'd6', 'd8', 'd12', 'd20', 'epic', 'myth', 'primal'];
-  const fields = ['gold', 'lives', 'wave', 'waveActive', 'autoT', 'waveT', 'heldDie', 'time'];
+  const fields = ['gold', 'lives', 'wave', 'waveActive', 'waveBatchStart', 'autoT', 'waveT', 'heldDie', 'time'];
   const object = x => !!x && typeof x === 'object' && !Array.isArray(x);
   const num = (x, min, max) => Number.isFinite(x) && x >= min && x <= max;
   const int = (x, min, max) => Number.isSafeInteger(x) && x >= min && x <= max;
@@ -55,6 +55,7 @@
     if (!int(inf.kills, 0, 1e9) || !object(inf.power) || ![1,2,3,4,5,6].every(f => int(inf.power[f], 0, 200)) || !num(inf.bossT, 0, 1e8)) return false;
     if (inf.accountTicket !== null && !(typeof inf.accountTicket === 'string' && /^[a-f0-9]{64}$/.test(inf.accountTicket))) return false;
     if (!num(s.gold, 0, 1e15) || !int(s.lives, 1, 20) || !int(s.heldDie, 0, 20) || typeof s.waveActive !== 'boolean' || !num(s.waveT, 0, 1e12) || !num(s.autoT, 0, 1e12)) return false;
+    if (s.waveBatchStart !== undefined && !int(s.waveBatchStart, 0, s.wave)) return false;
     if (!Array.isArray(p.size) || p.size.length !== 2 || !p.size.every(n => num(n, 1, 100000)) || !Array.isArray(p.lanes) || !p.lanes.length || !p.lanes.every(n => num(n, 1, 1e7))) return false;
     // Optional on older checkpoints; new saves retain the entry/ring boundary
     // and board origin so rotation restores the same combat position.
@@ -82,9 +83,9 @@
     }
     if (!p.board.every(i => int(i, 0, p.towers.length - 1)) || new Set(p.board.map(i => p.towers[i].spot)).size !== p.board.length) return false;
     if (!Array.isArray(p.enemies) || p.enemies.length > 512 || !Array.isArray(p.active) || p.active.length > 200 || !p.active.every(i => int(i, 0, p.enemies.length - 1))) return false;
-    if (!p.enemies.every(e => object(e) && object(e.def) && num(e.hp, -1e200, 1e200) && num(e.max, 1e-20, 1e200) && num(e.dist, 0, 1e8) && int(e.lane, 0, p.lanes.length - 1))) return false;
+    if (!p.enemies.every(e => object(e) && object(e.def) && num(e.hp, -1e200, 1e200) && num(e.max, 1e-20, 1e200) && num(e.dist, 0, 1e8) && int(e.lane, 0, p.lanes.length - 1) && (e.bossT === undefined || num(e.bossT, 0, 1e8)))) return false;
     if (!Array.isArray(p.projs) || p.projs.length > 2048 || !p.projs.every(q => object(q) && int(q.target, 0, p.enemies.length - 1) && int(q.source, 0, p.towers.length - 1))) return false;
-    if (!Array.isArray(p.spawnQ) || p.spawnQ.length > 512 || !Array.isArray(inf.queue) || inf.queue.length > 512 || !inf.queue.every(k => kinds.includes(k) || (k === 'boss' && inf.growthSnapshot.deckSystem !== 1)) || !object(p.slot) || !kinds.includes(p.slot.kind)) return false;
+    if (!Array.isArray(p.spawnQ) || p.spawnQ.length > 4096 || !Array.isArray(inf.queue) || inf.queue.length > 512 || !inf.queue.every(k => kinds.includes(k) || (k === 'boss' && inf.growthSnapshot.deckSystem !== 1)) || !object(p.slot) || !kinds.includes(p.slot.kind)) return false;
     // A physical throw has no result until it lands. Low-tier dice also start
     // their automatic roll without a predetermined face. Older pending chests
     // may still carry an exact card; restore handles that legacy state.
