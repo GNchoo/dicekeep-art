@@ -128,7 +128,7 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
       DK.waveT = 59.8;
       DKcombatStep(0.1);
       const beforeDeadline = state();
-      document.getElementById('wave-btn').click();
+      // This checker observes automatic pacing; manual skips have their own suite.
       const afterEarlyClick = state();
       DKcombatStep(0.2);
       const atDeadline = state();
@@ -166,7 +166,6 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
       if (boss) DKdamage(boss, boss.hp + 1, null);
       DKcombatStep(0.016);
       const bossAfterKill = { ...state(), bossTimer: DK.inf.bossT };
-      document.getElementById('wave-btn').click();
       const bossIntermissionClick = state();
       DKcombatStep(6.01);
       const bossAutoContinue = state();
@@ -179,7 +178,6 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
         DK.enemies = [];
         DKcombatStep(0.016);
         legacy[mode] = state();
-        document.getElementById('wave-btn').click();
         legacy[mode].afterClick = state();
         DKcombatStep(6.01);
         legacy[mode].next = state();
@@ -349,14 +347,13 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
         assert.ok(times.at(-1) < 30, `${key} last spawn ${times.at(-1)}s`);
       }
     });
-    check('empty field and drained queue cannot complete or skip at 59.9 seconds', () => {
+    check('empty field and drained queue cannot auto-complete at 59.9 seconds', () => {
       const a = observed.beforeDeadline, b = observed.afterEarlyClick;
       close(a.waveT, 59.9, 'early round before deadline');
       assert.equal(a.wave, 1);
       assert.equal(a.active, true);
       assert.equal(a.completed, 0);
-      assert.equal(a.buttonDisabled, true);
-      assert.equal(a.buttonHidden, true);
+      assert.equal(a.buttonHidden, false);
       assert.equal(b.wave, 1);
       assert.equal(b.active, true);
       assert.equal(b.completed, 0);
@@ -369,7 +366,7 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
       assert.equal(s.autoT, 0);
       assert.equal(s.waveT, 0);
       assert.ok(s.queue > 0);
-      assert.equal(s.buttonHidden, true);
+      assert.equal(s.buttonHidden, false);
     });
     check('normal deadline advances to a boss even with previous enemies alive', () => {
       const s = observed.carryIntoBoss;
@@ -406,15 +403,14 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
       assert.equal(s.completed, 10);
       assert.equal(s.autoT, 6);
     });
-    check('boss intermission hides the one-time start action and advances automatically', () => {
+    check('boss intermission keeps skip available and still advances automatically without a tap', () => {
       const before=observed.bossAfterKill, clicked=observed.bossIntermissionClick, next=observed.bossAutoContinue;
-      assert.equal(before.buttonHidden,true);
-      assert.equal(before.buttonDisabled,true);
+      assert.equal(before.buttonHidden,false);
       assert.equal(clicked.wave,10);
       assert.equal(clicked.autoT,6);
       assert.equal(next.wave,11);
       assert.equal(next.active,true);
-      assert.equal(next.buttonHidden,true);
+      assert.equal(next.buttonHidden,false);
       assert.ok(next.queue>0);
     });
     check('build and extreme still complete drained waves by legacy rule', () => {
@@ -424,13 +420,12 @@ const { launchBrowser, gameUrl, outputPath } = require('./browser.cjs');
         assert.equal(s.active, false);
         assert.equal(s.completed, 1);
         assert.equal(s.autoT, 6);
-        assert.equal(s.buttonHidden,true);
-        assert.equal(s.buttonDisabled,true);
+        assert.equal(s.buttonHidden,false);
         assert.equal(s.afterClick.wave,1);
         assert.equal(s.afterClick.autoT,6);
         assert.equal(s.next.wave,2);
         assert.equal(s.next.active,true);
-        assert.equal(s.next.buttonHidden,true);
+        assert.equal(s.next.buttonHidden,false);
       }
     });
     check('final clear round stays active after 140 seconds if one enemy survives', () => {

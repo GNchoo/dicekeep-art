@@ -227,6 +227,23 @@ test('battle proofs persist before the board is cleared; pending service failure
   assert.equal(JSON.parse(f.localStorage.getItem('dk_commerce_pending_v1')).length,0);assert.equal(f.C.profile().shards,750);assert.equal(f.localStorage.getItem('DKSAVE'),guest);
 });
 
+test('new single-player account runs request the overlap ticket capability', async () => {
+  const f = fixture({ router(call) { if (call.path === '/runs/start') return { body: { ticket: 'new-run-ticket' } }; } });
+  await f.C.init();
+  for (const mode of ['clear', 'build', 'extreme']) await f.C.startRun(mode);
+  assert.deepEqual(f.calls.filter(call => call.path === '/runs/start').map(call => call.data), [
+    { mode: 'clear', waveSkip: 1 }, { mode: 'build', waveSkip: 1 }, { mode: 'extreme', waveSkip: 1 },
+  ]);
+});
+
+test('resuming an account run sends the overlap capability only when requested', async () => {
+  const f = fixture({ router(call) { if (call.path === '/runs/resume') return { body: { ticket: call.data.ticket } }; } });
+  await f.C.init(); await f.C.resumeRun('solo-ticket', { waveSkip: 1 }); await f.C.resumeRun('battle-ticket');
+  assert.deepEqual(f.calls.filter(call => call.path === '/runs/resume').map(call => call.data), [
+    { ticket: 'solo-ticket', waveSkip: 1 }, { ticket: 'battle-ticket' },
+  ]);
+});
+
 test('logout ignores a late account action response instead of resurrecting that profile', async () => {
   const gate = deferred();
   const f = fixture({ router(call) { if (call.path === '/profile/action') return gate.promise; } });
@@ -307,8 +324,8 @@ test('phone/desktop shop UI is disabled offline; mock account profile never over
         await page.goto(new URL('index.html?net=off&v=commerce-test', base).href); await readyShop();
         const off = await page.evaluate(() => ({ configured: DKCOMMERCE.state().configured, disabled: [...document.querySelectorAll('#commerce-products [data-sku]')].every(b => b.disabled), count: document.querySelectorAll('#commerce-products [data-sku]').length, signinDisabled: document.getElementById('commerce-signin').disabled, scripts: [...document.scripts].map(s => s.src).filter(s => /accounts\.google|tosspayments/.test(s)) }));
         assert.deepEqual(off, { configured: false, disabled: true, count: 2, signinDisabled: true, scripts: [] });
-        assert.deepEqual(row.api, []); row.checks.push('unconfigured: all 3 purchase buttons/login disabled; API and provider SDK requests zero');
-        await page.locator('#commerce-shop').scrollIntoViewIfNeeded(); await page.screenshot({ path: path.join(dir, 'shop-unconfigured.png') });
+        assert.deepEqual(row.api, []); row.checks.push('unconfigured: both purchase buttons/login disabled; API and provider SDK requests zero');
+        await page.locator('#commerce-products').scrollIntoViewIfNeeded(); await page.screenshot({ path: path.join(dir, 'shop-unconfigured.png') });
         const guest = profile(35); guest.deck = [2, 3, 4, 5, 6]; guest.collection.presets[0].faces = guest.deck.slice();
         await page.evaluate(({ guest, session }) => {
           DKSAVE.progression = guest; localStorage.setItem('DKSAVE', JSON.stringify(DKSAVE));
@@ -320,16 +337,29 @@ test('phone/desktop shop UI is disabled offline; mock account profile never over
         await page.evaluate(() => DKCOMMERCE.action('treeUpgrade', { face: 1 }));
         assert.deepEqual(await page.evaluate(() => ({ account: DKCOMMERCE.profile().shards, guest: DKSAVE.progression.shards, saved: JSON.parse(localStorage.getItem('DKSAVE')).progression.shards })), { account: 690, guest: 35, saved: 35 });
         row.checks.push('server account profile and action remain separate from in-memory/localStorage guest SAVE');
-        const boxes = await page.evaluate(() => [...document.querySelectorAll('#commerce-products [data-sku]')].map(button => {
-          const r = button.getBoundingClientRect(), card = button.closest('article').getBoundingClientRect();
-          return { disabled: button.disabled, text: button.textContent, fits: r.width > 0 && r.x >= 0 && r.right <= innerWidth + 1 && r.x >= card.x - 1 && r.right <= card.right + 1 };
-        }));
-        assert.ok(boxes.length && boxes.every(b => !b.disabled && b.fits)); row.productButtons = boxes;
-        row.checks.push('configured mock account price/button fits actual viewport');
-        await page.locator('#commerce-shop').scrollIntoViewIfNeeded(); await page.screenshot({ path: path.join(dir, 'shop-mock-account.png') });
+        const boxes = []; let pages = 0;
+        for (; pages < 10; pages++) {
+          await page.evaluate(async () => { await document.fonts.ready; await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))); });
+          const visible = await page.evaluate(() => [...document.querySelectorAll('#commerce-products article button')].filter(button => button.checkVisibility()).map(button => {
+            const r = button.getBoundingClientRect(), card = button.closest('article').getBoundingClientRect();
+            return { sku: button.dataset.sku || null, disabled: button.disabled, text: button.textContent, fits: r.width > 0 && r.x >= 0 && r.right <= innerWidth + 1 && r.top >= 0 && r.bottom <= innerHeight + 1 && r.x >= card.x - 1 && r.right <= card.right + 1 && r.top >= card.top - 1 && r.bottom <= card.bottom + 1 };
+          }));
+          assert.ok(visible.length && visible.every(b => !b.disabled && b.fits), 'every displayed product action fits its card and viewport');
+          boxes.push(...visible);
+          await page.screenshot({ path: path.join(dir, `shop-mock-account-${pages + 1}.png`) });
+          const next = page.locator('#commerce-products > .page-controls button').last();
+          if (!await next.count() || !await next.isVisible() || await next.isDisabled()) break;
+          await next.click();
+        }
+        assert.ok(pages < 10, 'product pagination terminates');
+        assert.deepEqual([...new Set(boxes.map(b => b.sku).filter(Boolean))].sort(), config.products.filter(p => p.kind === 'currency').map(p => p.sku).sort(), 'every purchase product is checked across visible pages');
+        row.productButtons = boxes; row.checks.push('all configured mock account product pages have enabled actions fitting the actual viewport');
+        await page.click('[data-shop-tab="account"]');
         await page.click('#commerce-signout');
         assert.deepEqual(await page.evaluate(() => ({ linked: DKCOMMERCE.linked(), account: DKCOMMERCE.profile(), guest: DKSAVE.progression, saved: JSON.parse(localStorage.getItem('DKSAVE')).progression })), { linked: false, account: null, guest, saved: guest });
-        await page.click('#shop-back'); await page.evaluate(() => DKlobbyView('single')); await page.click('#btn-deck-open');
+        await page.click('#shop-back');
+        if (await page.locator('#btn-deck-open').isVisible()) await page.click('#btn-deck-open');
+        else await page.locator('[data-menu-target="deck"]:visible, [data-home-action="deck"]:visible').click();
         assert.equal((await page.textContent('#deck-shards')).trim(), '35');
         row.checks.push('logout restores the original guest deck/wallet in actual collection UI');
         await page.screenshot({ path: path.join(dir, 'guest-restored.png') });

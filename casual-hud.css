@@ -640,7 +640,7 @@ body.ui-art #help-btn {
 #boss-reward[data-grade="d20"] #boss-reward-title { color:#ffe07a; text-shadow:0 0 20px #dc9a4599; }
 @media (prefers-reduced-motion: reduce) { #boss-reward-title { text-shadow:none!important; } }
 
-/* The first-wave action belongs to the arena, never the bottom toolbar. */
+/* Wave start and skip share the arena action. */
 #wrap #stage > #wave-btn {
   position: absolute;
   z-index: 12;
@@ -676,6 +676,7 @@ body.ui-art #help-btn {
   font: 10px/1 sans-serif;
 }
 #wrap #stage > #wave-btn:hover:not(:disabled) { filter: brightness(1.06); }
+#wrap #stage > #wave-btn[data-action="skip"]::before { content: '\23ed'; padding-left: 0; }
 #wrap #stage > #wave-btn:active:not(:disabled) { box-shadow: inset 0 1px 3px #57425055, 0 1px 0 #24273d; }
 /* Keep each power card's edge continuous in enabled, disabled and pressed states. */
 #hud .inf-face {

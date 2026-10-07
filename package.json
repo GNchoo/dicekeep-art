@@ -48,6 +48,7 @@
     "test:galaxy-hud": "node tools/e2e/galaxy-hud.cjs",
     "test:hud-notice-layout": "node tools/e2e/hud-notice-layout.cjs",
     "test:hud-interaction": "node tools/e2e/hud-interaction.cjs",
+    "test:wave-skip": "node tools/e2e/wave-skip.cjs",
     "test:enhancement-flow": "node tools/e2e/enhancement-flow.cjs",
     "test:presentation-fx": "node tools/e2e/presentation-fx.cjs",
     "test:fx-motion": "node tools/e2e/fx-motion.cjs",

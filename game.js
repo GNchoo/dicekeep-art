@@ -1543,7 +1543,7 @@ const S = {
   phase: 'loading', // loading | title | lobby | stageSelect | shop | mpRoom | playing | spectate | over | win | stageClear
   gold: START_GOLD, lives: START_LIVES, wave: 0,
   enemies: [], towers: [], projs: [], beams: [], fxs: [], texts: [], corpses: [],
-  spawnQ: [], waveActive: false, autoT: 0, waveT: 0,
+  spawnQ: [], waveActive: false, waveBatchStart: 0, autoT: 0, waveT: 0,
   shakeT: 0, bannerT: 0, bannerName: '',
   heldDie: 0, dieFocus: true, selTower: null,
   mapKey: 'g1',
@@ -2014,6 +2014,7 @@ function bossRewardBlocked() {
   return S.heldDie || SLOT.active || DIE.state !== 'tray' || S.selTower
     || MOVE.armed || MOVE.tower || MOVE.picking || DRAG.active
     || menuOpen() || settingsOpen() || !$('inf-help').classList.contains('hidden')
+    || !$('chest-reveal').classList.contains('hidden') || !$('enhance-toast').classList.contains('hidden')
     || document.querySelector('dialog[open]');
 }
 function bossRewardSound(kind) {
@@ -2172,9 +2173,11 @@ function openInfHelp() {
   h.classList.remove('hidden');
   if (scroll) scroll.querySelector('ol')?.scrollTo(0, 0);
   window.DKMENUPAGES?.help();
+  syncWaveBtn();
 }
 function closeInfHelp() {
   const h = $('inf-help'); if (h) h.classList.add('hidden');
+  syncWaveBtn();
 }
 function chestDef() { const C = window.DKCONTENT; return C && C.INFINITY && C.INFINITY.chest; }
 function chestCost() { if (deckRun()) return DECK.summonCost(S.inf.chests); const ch = chestDef(); return ch && S.inf ? ch.cost(S.inf.chests || 0) : Infinity; }
@@ -2191,7 +2194,8 @@ function stageNotice(id, message, tag, ms) {
   else el.dataset.result = tag;
   el.classList.remove('hidden');
   clearTimeout(el.hideTimer);
-  el.hideTimer = setTimeout(() => el.classList.add('hidden'), ms || 2200);
+  el.hideTimer = setTimeout(() => { el.classList.add('hidden'); syncWaveBtn(); }, ms || 2200);
+  syncWaveBtn();
 }
 function buyChest() {
   const ch = chestDef();
@@ -3314,7 +3318,7 @@ function buildWave(w) {
   // 밸런스: content.js 의 스테이지 필드를 그대로 쓴다 (없으면 옛 공식)
   const hpMult = (sd.hpScale || Math.pow(1.05, S.stage - 1)) * Math.pow(sd.waveGrowth || 1.07, w - 1);
   const goldMult = (sd.goldMult || 1) * (1 + w * 0.03);
-  const add = (type, extra) => { q.push(Object.assign({ type, t, hpMult, goldMult }, extra || {})); };
+  const add = (type, extra) => { q.push(Object.assign({ type, t, hpMult, goldMult, wave: w }, extra || {})); };
   const n = (sd.countBase || 8) + Math.floor(w * 1.2);
   const gap = Math.max(0.34, 0.9 - w * 0.01);
   const unlockAir = w >= 3;
@@ -3358,17 +3362,29 @@ function buildWave(w) {
   return q;
 }
 
-function startWave() {
+const WAVE_SKIP_MS = 100;
+let nextWaveClickAt = 0;
+const waveLimit = () => S.mode === 'infinity' && S.inf?.clearWave || S.stageWaves;
+function startWave(manual = false) {
   if (battleRun()) return; // 대전·협동은 서버 시각에 맞춰 자동 진행한다.
-  if (S.waveActive || S.wave >= S.stageWaves || S.phase !== 'playing') return;
+  if (S.waveActive && !manual || S.wave >= waveLimit() || S.phase !== 'playing') return;
+  if (manual && (performance.now() < nextWaveClickAt || bossRewardBlocked() || BOSS_REWARD)) return;
+  S.waveBatchStart = S.waveActive ? S.waveBatchStart || S.wave : S.wave + 1;
+  // Rebase the unfinished schedules; skipping advances the clock, not the enemies.
+  for (const item of S.spawnQ) item.t = Math.max(0, item.t - S.waveT);
   S.wave++;
-  S.spawnQ = buildWave(S.wave);
+  S.spawnQ.push(...buildWave(S.wave));
+  S.spawnQ.sort((a, b) => a.t - b.t);
   S.waveActive = true;
   S.waveT = 0;
   S.autoT = 0;
   refreshDirectionalDemand(true);
   announceWave(S.wave);
   SFX.wave();
+  if (manual) {
+    nextWaveClickAt = performance.now() + WAVE_SKIP_MS;
+    setTimeout(syncWaveBtn, WAVE_SKIP_MS + 1);
+  }
   syncUI();
 }
 function normalRoundSeconds() {
@@ -3429,7 +3445,7 @@ function startStage(n) {
   S.lives = START_LIVES;
   S.wave = 0;
   S.enemies = []; S.towers = []; S.projs = []; S.beams = []; S.fxs = []; S.texts = []; S.corpses = [];
-  S.spawnQ = []; S.waveActive = false; S.autoT = 0; S.waveT = 0;
+  S.spawnQ = []; S.waveActive = false; S.waveBatchStart = 0; S.autoT = 0; S.waveT = 0; nextWaveClickAt = 0;
   S.heldDie = 0; S.dieFocus = true; S.selTower = null; S.shakeT = 0; S.bannerT = 0;
   DIE.state = 'tray'; DIE.x = TRAY.x; DIE.y = TRAY.y; DIE.z = 0; DIE.final = 0; DIE.face = 6; DIE.faceIndex = 6; DIE.labels = storyDieLabels(); DIE.R = faceTopR(6);
   SLOT.active = false; SLOT.labels = null; ROLL_SHOW.t = 0;
@@ -3464,6 +3480,7 @@ function startInfinity(kind, net, accountRun) {
   S.inf.startedAt = performance.now();
   S.inf.doneW = 0;
   S.inf.accountTicket = accountRun ? accountRun.ticket : null;
+  S.inf.waveSkip = accountRun ? accountRun.waveSkip || 0 : 1;
   if (battleRun()) { S.inf.battleApplied = []; S.inf.battleBossRound = 0; S.inf.battleModeVersion = 1; }
   S.paused = false;
   S.stage = 0;
@@ -3475,7 +3492,7 @@ function startInfinity(kind, net, accountRun) {
   S.lives = INF.lives;
   S.wave = 0;
   S.enemies = []; S.towers = []; S.projs = []; S.beams = []; S.fxs = []; S.texts = []; S.corpses = [];
-  S.spawnQ = []; S.waveActive = false; S.autoT = 0; S.waveT = 0;
+  S.spawnQ = []; S.waveActive = false; S.waveBatchStart = 0; S.autoT = 0; S.waveT = 0; nextWaveClickAt = 0;
   S.heldDie = 0; S.dieFocus = true; S.selTower = null; S.shakeT = 0; S.bannerT = 0;
   DIE.state = 'tray'; DIE.x = TRAY.x; DIE.y = TRAY.y; DIE.z = 0; DIE.final = 0; DIE.face = 6; DIE.faceIndex = 6; DIE.labels = null; DIE.R = faceTopR(6);
   SLOT.active = false; SLOT.final = 0; SLOT.labels = null; ROLL_SHOW.t = 0;
@@ -3524,7 +3541,7 @@ function settleInfRun(won) {
     const inf = S.inf;
     const res = { wave, gems: 0, shards: 0, collectionRewards:{gold:0,packs:0}, isBest, newly: [], record, pending: true };
     inf.settledResult = res;
-    COMMERCE.finishRun(inf.accountTicket, { wave, kills: inf.kills, won: !!won, date: new Date().toISOString(), elapsed: Math.max(0, (performance.now() - inf.startedAt) / 1000) })
+    COMMERCE.finishRun(inf.accountTicket, { wave, ...(inf.waveSkip === 1 ? { startedWave: S.wave } : {}), kills: inf.kills, won: !!won, date: new Date().toISOString(), elapsed: Math.max(0, (performance.now() - inf.startedAt) / 1000) })
       .then(result => {
         res.pending = false; res.shards = result.shards || 0; res.collectionRewards=result.collectionRewards||{gold:0,packs:0}; res.record = progressionProfile().records[inf.recordKey];
         if (!SAVE.accountGemRuns.includes(inf.accountTicket)) {
@@ -3698,7 +3715,12 @@ function spawnEnemy(item) {
   if (S.mode === 'infinity') enforceFieldCap();
   if (S.phase !== 'playing') return; // A capacity loss may have ended the run.
   const p = epos(e);
-  if (isBoss && !battleRun() && S.mode === 'infinity' && S.inf && !(S.inf.bossT > 0)) S.inf.bossT = S.net ? (S.net.timing.bossLimit / 1000) : (DKCONTENT.INFINITY.bossTimeLimit || 320); // 인피니티: 보스 제한시간 (멀티는 방 규칙)
+  if (isBoss && !battleRun() && S.mode === 'infinity' && S.inf) {
+    const sameWave = S.enemies.find(b => b !== e && !b.dead && b.isBoss && b.wave === e.wave);
+    e.bossT = sameWave ? sameWave.bossT ?? S.inf.bossT
+      : S.net ? S.net.timing.bossLimit / 1000 : DKCONTENT.INFINITY.bossTimeLimit || 320;
+    S.inf.bossT = Math.min(...S.enemies.filter(b => !b.dead && b.isBoss).map(b => b.bossT ?? S.inf.bossT));
+  }
   if (isBoss) {
     // 보스 등장: 포탈 폭발 + 화면 흔들림 + 배너 + 포효
     S.shakeT = 0.7;
@@ -4311,26 +4333,28 @@ function update(dt) {
   if (battleRun()) return; // 공동 시계·목표가 기존 101웨이브 종료와 독립이다.
 
   // 보스 제한시간: 보스가 살아있는 동안 카운트다운, 0이 되면 런 종료
-  if (S.mode === 'infinity' && S.inf && S.inf.bossT > 0) {
-    const boss = S.enemies.find(x => !x.dead && x.isBoss);
-    if (!boss) S.inf.bossT = 0;
-    else {
-      S.inf.bossT -= dt;
-      if (S.inf.bossT <= 0) { S.inf.bossT = 0; S.lives = 0; S.inf.bossLeak = boss.name; S.inf.bossTimeout = true; syncUI(); endInfinity(); return; }
+  if (S.mode === 'infinity' && S.inf) {
+    const bosses = S.enemies.filter(e => !e.dead && e.isBoss);
+    for (const boss of bosses) {
+      // Old saves have only the shared countdown; new waves keep their own.
+      boss.bossT = (boss.bossT ?? S.inf.bossT) - dt;
+      if (boss.bossT <= 0) { S.inf.bossT = 0; S.lives = 0; S.inf.bossLeak = boss.name; S.inf.bossTimeout = true; syncUI(); endInfinity(); return; }
     }
+    S.inf.bossT = bosses.length ? Math.min(...bosses.map(b => b.bossT)) : 0;
   }
   // 웨이브 종료 판정
   // 인피니티: 스폰이 끝나면 완료 (남은 적은 계속 돈다). 단 보스 웨이브는 보스를 잡을 때까지 다음 웨이브를 막는다 (제한시간 5분 20초)
-  const infBossHold = S.mode === 'infinity' && DKCONTENT.INFINITY.isBossWave(S.wave) && S.enemies.some(e => e.isBoss && !e.dead);
+  const infBossHold = S.mode === 'infinity' && S.enemies.some(e => e.isBoss && !e.dead);
   const roundSeconds = normalRoundSeconds();
-  const finalRound = roundSeconds > 0 && S.wave >= S.inf.clearWave;
+  const finalRound = S.mode === 'infinity' && S.inf.clearWave > 0 && S.wave >= S.inf.clearWave;
   const remaining = finalRound && S.enemies.some(e => !e.dead);
   if (S.waveActive && remaining && S.waveT >= DKCONTENT.INFINITY.bossTimeLimit) {
     S.inf.finalTimeout = true; S.lives = 0; syncUI(); endInfinity(); return;
   }
   if (S.waveActive && S.spawnQ.length === 0 && !remaining && (!roundSeconds || S.waveT + 1e-8 >= roundSeconds) && (S.enemies.length === 0 || (S.mode === 'infinity' && !infBossHold))) {
     S.waveActive = false;
-    const bonus = 20 + S.wave * 3 + S.stage * 2;
+    const first = Math.max(1, S.waveBatchStart || S.wave), count = S.wave - first + 1;
+    const bonus = count * (20 + S.stage * 2) + 3 * (first + S.wave) * count / 2;
     S.gold += bonus;
     S.texts.push({ str: '웨이브 클리어! +' + bonus + 'G', x: W / 2, y: H / 2 - 40, t: 0, color: '#a0ffc8' });
     SFX.coin();
@@ -4347,7 +4371,7 @@ function update(dt) {
     S.autoT = INTERMISSION;
     syncUI();
   }
-  if (!S.waveActive && (S.wave > 0 || S.net) && S.wave < S.stageWaves && S.autoT > 0) {   // 멀티는 첫 웨이브도 준비 시간이 끝나면 자동
+  if (!S.waveActive && (S.wave > 0 || S.net) && S.wave < waveLimit() && S.autoT > 0) {   // 멀티는 첫 웨이브도 준비 시간이 끝나면 자동
     S.autoT -= dt;
     if (S.autoT <= 0) startWave();
     else syncWaveBtn();
@@ -4678,7 +4702,7 @@ function drawLanes() {
     if (Math.hypot(p0[0] - m0[0], p0[1] - m0[1]) > 30) drawPortal(p0[0], p0[1], lane);
     else if (ARENA && li === 0) drawPortal(p0[0], p0[1], lane);
     // 레인 이름표 (웨이브 전에만)
-    if (!S.waveActive && S.wave < S.stageWaves) {
+    if (!S.waveActive && S.wave < waveLimit()) {
       const lp = pts[Math.floor(pts.length / 2)];
       const ly = Math.max(62, lp[1] - (lane.kind === 'air' ? 56 : 14));
       ctx.save();
@@ -5430,20 +5454,21 @@ function draw() {
 
   // 웨이브 예고 · 보스 남은 시간 — 같은 말풍선. (보스 시간을 칩에 넣으면 칩이 길어져 우상단 미니 버튼이 둘째 줄로 밀린다)
   const bossT = S.mode === 'infinity' && S.inf && S.inf.bossT > 0 ? S.inf.bossT : 0;
+  const bossWave = S.enemies.find(e => !e.dead && e.isBoss && (e.bossT ?? bossT) === bossT)?.wave || S.wave;
   const roundT = S.waveActive ? normalRoundRemaining() : 0;
   const picking = MOVE.picking && S.towers.includes(MOVE.picking);
-  if (S.phase === 'playing' && !VIEW.pid && (picking || bossT > 0 || roundT > 0 || (!S.waveActive && S.wave < S.stageWaves))) {
+  if (S.phase === 'playing' && !VIEW.pid && (picking || bossT > 0 || roundT > 0 || (!S.waveActive && S.wave < waveLimit()))) {
     ctx.save();
     ctx.textAlign = 'center';
     const cd = waveCountdown();
     const urgent = bossT > 0 && bossT < 30;
     const currentTheme = S.mode === 'infinity' && !battleRun() && DKCONTENT.INFINITY.themeFor
-      ? DKCONTENT.INFINITY.themeFor(Math.max(1, S.wave)) : null;
+      ? DKCONTENT.INFINITY.themeFor(Math.max(1, bossT ? bossWave : S.wave)) : null;
     // 자리를 고르는 동안에는 그 안내가 가장 위다 — 떴다 사라지는 글자만으로는 놓치기 쉽다.
     let msg = picking
       ? '옮길 석단을 선택해 주세요 — 타워가 있으면 서로 자리를 바꿉니다'
       : bossT > 0
-      ? `보스 웨이브 ${S.wave} · ${currentTheme ? currentTheme.name + ' · ' : ''}남은 시간 ${Math.floor(bossT / 60)}:${String(Math.floor(bossT % 60)).padStart(2, '0')}`
+      ? `보스 웨이브 ${bossWave} · ${currentTheme ? currentTheme.name + ' · ' : ''}남은 시간 ${Math.floor(bossT / 60)}:${String(Math.floor(bossT % 60)).padStart(2, '0')}`
       : roundT > 0
       ? `웨이브 ${S.wave} · ${normalRoundLabel()} ${Math.floor(Math.ceil(roundT) / 60)}:${String(Math.ceil(roundT) % 60).padStart(2, '0')}`
       : S.net
@@ -5471,7 +5496,7 @@ function draw() {
     const compact = !!map && (map.arenaPortrait || boardTop < hudTopPx() / sc + fs + 18 + 8 / sc);
     if (compact) {
       msg = picking ? '옮길 칸 선택 · 타워는 교환' : bossT > 0
-        ? `보스 ${S.wave} · ${Math.floor(bossT / 60)}:${String(Math.floor(bossT % 60)).padStart(2, '0')}`
+        ? `보스 ${bossWave} · ${Math.floor(bossT / 60)}:${String(Math.floor(bossT % 60)).padStart(2, '0')}`
         : roundT > 0 ? `${normalRoundLabel()} · ${Math.floor(Math.ceil(roundT) / 60)}:${String(Math.ceil(roundT) % 60).padStart(2, '0')}`
         : S.wave === 0 ? '뽑기 후 석단에 배치' : `다음 웨이브 · ${cd}초`;
     }
@@ -5876,12 +5901,16 @@ function syncInfPanel() {
 // 다음 웨이브까지 남은 초 (싱글·멀티 공통 autoT)
 function waveCountdown() { return Math.max(0, Math.ceil(S.autoT)); }
 function syncWaveBtn() {
-  const ready = S.phase === 'playing' && !battleRun() && S.wave === 0 && !S.waveActive
-    && !S.heldDie && !S.selTower && !MOVE.tower;
+  const ready = S.phase === 'playing' && !battleRun() && !VIEW.pid && S.wave < waveLimit()
+    && !bossRewardBlocked() && !BOSS_REWARD;
   waveBtn.classList.toggle('hidden', !ready);
-  waveBtn.disabled = !ready;
-  waveBtn.textContent = '웨이브 시작';
-  const idle = ready && !SLOT.active;
+  waveBtn.disabled = !ready || performance.now() < nextWaveClickAt;
+  const skip = S.wave > 0;
+  waveBtn.textContent = skip ? '웨이브 스킵' : '웨이브 시작';
+  waveBtn.setAttribute('aria-label', waveBtn.textContent);
+  waveBtn.dataset.action = skip ? 'skip' : 'start';
+  waveBtn.title = skip ? '기존 적과 출현은 유지하면서 다음 웨이브를 함께 시작합니다.' : '준비를 마치면 첫 웨이브를 시작합니다.';
+  const idle = ready && !skip;
   const canAfford = S.gold >= (S.mode === 'infinity' ? chestCost() : ROLL_COST);
   rollBtn.classList.toggle('opening-guide', idle && canAfford && !rollBtn.disabled);
   waveBtn.classList.toggle('opening-guide', idle && !canAfford);
@@ -7081,7 +7110,7 @@ document.addEventListener('keydown', ev => {
 
 $('boss-reward-open').addEventListener('click', openBossReward);
 rollBtn.addEventListener('click', rollByButton);
-waveBtn.addEventListener('click', () => { if (S.wave === 0) startWave(); });
+waveBtn.addEventListener('click', () => { if (!waveBtn.disabled) startWave(true); });
 $('held-sell').addEventListener('click', () => {   // 손에 든 주사위 바로 판매
   if (!S.heldDie || S.phase !== 'playing') return;
   if (!canSellFace(S.heldDie)) { SFX.deny(); return; }
@@ -7155,8 +7184,8 @@ window.DKAPP = {
   },
 };
 // ---- 설정 모달 (음악·효과음 음량, 음소거) — 로비·대기실의 ⚙ 와 앱 뒤로가기 체인 ----
-function openSettings() { const el = $('settings'); if (!el) return; audio(); applyAudioSettings(); el.classList.remove('hidden'); }
-function closeSettings() { const el = $('settings'); if (el) el.classList.add('hidden'); }
+function openSettings() { const el = $('settings'); if (!el) return; audio(); applyAudioSettings(); el.classList.remove('hidden'); syncWaveBtn(); }
+function closeSettings() { const el = $('settings'); if (el) el.classList.add('hidden'); syncWaveBtn(); }
 function settingsOpen() { const el = $('settings'); return !!(el && !el.classList.contains('hidden')); }
 for (const id of ['lobby-settings', 'room-settings']) { const b = $(id); if (b) b.addEventListener('click', openSettings); }
 if ($('settings')) {
@@ -7309,6 +7338,7 @@ function openMenu() {
   if (S.phase !== 'playing' && S.phase !== 'spectate') return;
   audio();
   $('menu').classList.remove('hidden');
+  syncWaveBtn();
   const spec = S.phase === 'spectate';
   $('menu-note').innerHTML = spec ? '관전 중입니다. 기록·젬은 이미 저장됐습니다.' : S.net ? '<b>함께하기</b> 중에는 게임이 멈추지 않습니다. 포기하면 관전으로 넘어가고 기록·젬은 저장됩니다.' : (S.mode === 'infinity' ? '메뉴가 열려 있어도 전투는 계속됩니다. 포기하면 지금까지의 기록·젬이 저장됩니다.' : '메뉴가 열려 있어도 전투는 계속됩니다.');
   if (battleRun()) $('menu-note').textContent = `${S.net.mode==='coop'?'포기하면 두 사람 모두 패배합니다.':'포기하면 상대가 승리합니다.'} 전투는 계속 진행됩니다. 패배해도 참여한 시간의 기본 보상을 받습니다.`;
@@ -7319,7 +7349,7 @@ function openMenu() {
   if (S.mode === 'stage' && !spec) $('menu-note').textContent = stageLesson(S.stage) + ' 계정 성장 조각은 투기장 전용입니다.';
 
 }
-function closeMenu() { $('menu').classList.add('hidden'); }
+function closeMenu() { $('menu').classList.add('hidden'); syncWaveBtn(); }
 function quitToMenu() {
   closeMenu();
   if (S.phase === 'spectate') { mpLeave(); S.mode = 'stage'; S.inf = null; gotoLobby('multi'); return; }   // 관전 중 나가기 (기록은 이미 저장됨)
@@ -7389,13 +7419,14 @@ function renderRunResume() {
 }
 async function restoreRunSave(p, net) {
   if (!p || p.owner !== runOwner()) throw new Error('저장한 계정의 도전만 이어갈 수 있습니다.');
-  const accountRun = p.inf.accountTicket ? await COMMERCE.resumeRun(p.inf.accountTicket) : null;
+  const accountRun = p.inf.accountTicket ? await COMMERCE.resumeRun(p.inf.accountTicket, isBattleMode(p.inf.mode) ? {} : { waveSkip: 1 }) : null;
   if (net && !mpSameMatch(net)) return false;
   if (accountRun && JSON.stringify(accountRun.snapshot) !== JSON.stringify(p.inf.growthSnapshot)) throw new Error('저장된 덱이 런 시작 기록과 일치하지 않습니다.');
   if (net && (net.code !== p.match?.code || net.pid !== p.match.pid || net.t0 !== p.match.t0 || net.seed !== p.match.seed)) throw new Error('다른 방의 전투는 복구할 수 없습니다.');
   const restored = RUNSAVE.hydrate(p, p.inf.growthSnapshot.deckSystem === 1 ? Object.fromEntries(DECK.catalog.map(c=>[c.id,deckDef(c.id)])) : TOWER_DEFS), { slot, ...state } = restored;
   startInfinity(p.inf.mode, net, accountRun);
   Object.assign(S, state);
+  if (accountRun) S.inf.waveSkip = accountRun.waveSkip || 0;
   if (battleRun()) DKNET.battleRestore(p.match.transport);
   S.inf.startedAt = performance.now() - p.elapsed * 1000;
   const snap = S.inf.growthSnapshot;
