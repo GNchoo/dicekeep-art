@@ -68,14 +68,23 @@ async function overlap(page, mode) {
   await page.click('#menu-resume');
   await page.evaluate(() => { DK.towers = []; DK.selTower = null; DKsync(); });
 
+  const earlier = await page.evaluate(() => {
+    const gold = DK.gold;
+    DK.spawnQ = DK.spawnQ.filter(item => item.wave !== 1);
+    DK.enemies = DK.enemies.filter(e => e.wave !== 1);
+    __waveSkip.update(0);
+    return [DK.gold-gold, DK.waveBatchStart, DK.inf?.doneW ?? 1, DK.wave, DK.spawnQ.length > 0];
+  });
+  check(earlier, [20+3+(mode === 'stage' ? 2 : 0), 2, 1, 3, true], mode + ': a finished earlier wave pays and records progress while later spawns remain');
+
   // A skipped batch pays every completion bonus exactly once, never on the tap.
   const paid = await page.evaluate(() => {
     const before = DK.gold, stage = DK.stage;
     DK.spawnQ = []; DK.enemies = []; DK.waveT = 1000;
     __waveSkip.update(0); DKsync();
-    return { amount: DK.gold-before, expected: [1,2,3].reduce((sum,w) => sum+20+w*3+stage*2,0), done: DK.inf?.doneW ?? DK.wave, batch: DK.waveBatchStart, wave: DK.wave };
+    return { amount: DK.gold-before, expected: [2,3].reduce((sum,w) => sum+20+w*3+stage*2,0), done: DK.inf?.doneW ?? DK.wave, batch: DK.waveBatchStart, wave: DK.wave };
   });
-  check([paid.amount, paid.done], [paid.expected, 3], mode + ': batch completion pays all three waves once');
+  check([paid.amount, paid.done], [paid.expected, 3], mode + ': batch completion pays the remaining two waves once');
   const once = await page.evaluate(() => DK.gold);
   await page.evaluate(() => __waveSkip.update(0));
   check(await page.evaluate(() => DK.gold), once, mode + ': completion cannot pay twice');

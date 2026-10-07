@@ -3387,6 +3387,18 @@ function startWave(manual = false) {
   }
   syncUI();
 }
+function awardWaveBonuses(first, last) {
+  const count = last - first + 1;
+  const bonus = count * (20 + S.stage * 2) + 3 * (first + last) * count / 2;
+  S.gold += bonus;
+  S.texts.push({ str: '웨이브 클리어! +' + bonus + 'G', x: W / 2, y: H / 2 - 40, t: 0, color: '#a0ffc8' });
+  SFX.coin();
+  S.waveBatchStart = last < S.wave ? last + 1 : 0;
+  if (S.mode === 'infinity') {
+    S.inf.doneW = last;
+    if (S.net) { S.net.doneW = last; if (window.DKNET) DKNET.done(last); }
+  }
+}
 function normalRoundSeconds() {
   if (S.mode !== 'infinity' || !S.inf || S.inf.mode !== 'clear' || S.wave < 1) return 0;
   return DKCONTENT.INFINITY.waveForMode(S.wave, S.inf.mode).roundSeconds || 0;
@@ -4343,7 +4355,7 @@ function update(dt) {
     S.inf.bossT = bosses.length ? Math.min(...bosses.map(b => b.bossT)) : 0;
   }
   // 웨이브 종료 판정
-  // 인피니티: 스폰이 끝나면 완료 (남은 적은 계속 돈다). 단 보스 웨이브는 보스를 잡을 때까지 다음 웨이브를 막는다 (제한시간 5분 20초)
+  // 자동 진행은 출현·시계가 끝나고 보스가 정리되면 이어진다. 스킵한 이전 웨이브는 개별 완료를 기록한다.
   const infBossHold = S.mode === 'infinity' && S.enemies.some(e => e.isBoss && !e.dead);
   const roundSeconds = normalRoundSeconds();
   const finalRound = S.mode === 'infinity' && S.inf.clearWave > 0 && S.wave >= S.inf.clearWave;
@@ -4353,14 +4365,8 @@ function update(dt) {
   }
   if (S.waveActive && S.spawnQ.length === 0 && !remaining && (!roundSeconds || S.waveT + 1e-8 >= roundSeconds) && (S.enemies.length === 0 || (S.mode === 'infinity' && !infBossHold))) {
     S.waveActive = false;
-    const first = Math.max(1, S.waveBatchStart || S.wave), count = S.wave - first + 1;
-    const bonus = count * (20 + S.stage * 2) + 3 * (first + S.wave) * count / 2;
-    S.gold += bonus;
-    S.texts.push({ str: '웨이브 클리어! +' + bonus + 'G', x: W / 2, y: H / 2 - 40, t: 0, color: '#a0ffc8' });
-    SFX.coin();
+    awardWaveBonuses(Math.max(1, S.waveBatchStart || S.wave), S.wave);
     if (S.mode === 'infinity') {
-      S.inf.doneW = S.wave;
-      if (S.net) { S.net.doneW = S.wave; if (window.DKNET) DKNET.done(S.wave); }   // 방에 완료 보고 (통계·카드용)
       if (checkInfClear()) return;              // 도전 모드: 101웨이브 완주 = 클리어
       if (roundSeconds) { startWave(); return; } // The round clock already includes the time between waves.
       S.autoT = DKCONTENT.INFINITY.intermission;
@@ -4370,6 +4376,12 @@ function update(dt) {
     if (S.wave >= S.stageWaves) { onStageClear(); return; }
     S.autoT = INTERMISSION;
     syncUI();
+  }
+  if (S.waveActive && S.waveBatchStart > 0 && S.waveBatchStart < S.wave) {
+    let next = S.waveBatchStart;
+    while (next < S.wave && !S.spawnQ.some(item => item.wave === next)
+      && !S.enemies.some(e => !e.dead && e.wave === next && (S.mode !== 'infinity' || e.isBoss))) next++;
+    if (next > S.waveBatchStart) { awardWaveBonuses(S.waveBatchStart, next - 1); syncUI(); }
   }
   if (!S.waveActive && (S.wave > 0 || S.net) && S.wave < waveLimit() && S.autoT > 0) {   // 멀티는 첫 웨이브도 준비 시간이 끝나면 자동
     S.autoT -= dt;
